@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -63,7 +64,7 @@ final class MapZoomPerformanceTests: XCTestCase {
             XCTAssertEqual(XCTWaiter.wait(for: [warmed], timeout: 900), .completed,
                            "The route cache must be warm before relaunch: \(warmupInventory.label)")
             app.terminate()
-            app.launch()
+            UITestLaunchSupport.launch(app)
         }
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(
@@ -188,24 +189,24 @@ final class MapZoomPerformanceTests: XCTestCase {
 
     private func launch(camera: Camera) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-AppleInterfaceStyle", "Light", "-appearance", "light"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network"
-        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_JOURNEY_INVENTORY"] = "1"
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.layers] = "network"
+        app.uiTestLaunch[.gestureTarget] = "1"
+        app.uiTestLaunch[.journeyInventory] = "1"
         switch camera {
         case .japan:
             // Explicit framing starts Japanese resource loading on a fresh
             // simulator instead of waiting for those resources first.
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "37,138,24"
+            app.uiTestLaunch[.camera] = "37,138,24"
         case .tokyo:
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.68,139.75,0.12"
+            app.uiTestLaunch[.camera] = "35.68,139.75,0.12"
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         return app
     }
 

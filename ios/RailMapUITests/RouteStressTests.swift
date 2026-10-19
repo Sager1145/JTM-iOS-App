@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// Real sample routes and the production import, add, export and MapKit paths.
@@ -66,7 +67,10 @@ final class RouteStressTests: XCTestCase {
         let finished = try wait(status, timeout: 10) { $0["phase"] == "finished" }
         XCTAssertGreaterThan(finished.int("frames"), 20, "No meaningful main display-link sample was recorded.")
         let maximumGap = Int(ProcessInfo.processInfo.environment["RAILMAP_STRESS_MAX_FRAME_GAP_MS"] ?? "") ?? 500
-        XCTAssertLessThanOrEqual(finished.int("maxFrameGapMs"), maximumGap,
+        let measuredGap = try XCTUnwrap(Int(finished["maxFrameGapMs"] ?? ""),
+                                       "Missing or invalid maxFrameGapMs: \(finished.raw)")
+        XCTAssertGreaterThanOrEqual(measuredGap, 0, "A negative gap is missing measurement evidence.")
+        XCTAssertLessThanOrEqual(measuredGap, maximumGap,
                                  "The main display link stalled during rapid highlight/date changes.")
         attach(finished.raw + ";settleSeconds:\(settleSeconds)", name: "rapid-switch-responsiveness")
         attach(selected.raw, name: "rapid-switch-installed-selection")
@@ -78,20 +82,20 @@ final class RouteStressTests: XCTestCase {
 
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-appearance", "light", "-map-follows-selected-date", "NO",
                                "-auto-focus-zoom", "NO"]
-        app.launchEnvironment["RAILMAP_UI_TEST_STRESS"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
+        app.uiTestLaunch[.stress] = "1"
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = "compact"
         // Frame Japan at launch so the first large ride render is on-screen.
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "37,138,24"
+        app.uiTestLaunch[.camera] = "37,138,24"
         for key in ["RAILMAP_STRESS_COUNT", "RAILMAP_STRESS_ADDITIONS", "RAILMAP_STRESS_SWITCHES"] {
             if let value = ProcessInfo.processInfo.environment[key] { app.launchEnvironment[key] = value }
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         return app
     }
 

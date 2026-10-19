@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// Launch hooks shared by the new-trip screen and the edit-mode ride editor.
@@ -15,7 +16,7 @@ enum EditorLaunchSupport {
         environment: [String: String] = [:]
     ) {
         var env = baseEnvironment(sheet: "edit")
-        env["RAILMAP_UI_TEST_STORE_BASE64"] = storeBase64(journey)
+        env[UITestLaunchConfiguration.Key.storeBase64.rawValue] = storeBase64(journey)
         for (key, value) in environment { env[key] = value }
         launch(app, environment: env)
     }
@@ -50,12 +51,7 @@ enum EditorLaunchSupport {
     }
 
     private static func baseEnvironment(sheet: String) -> [String: String] {
-        [
-            "RAILMAP_UI_TEST_STORAGE_ID": UUID().uuidString,
-            "RAILMAP_UI_TEST_TAB": "all",
-            "RAILMAP_UI_TEST_STAGE": "expanded",
-            "RAILMAP_UI_TEST_SHEET": sheet,
-        ]
+        UITestLaunchConfiguration.editor(sheet: sheet).environment
     }
 
     private static func launch(_ app: XCUIApplication, environment: [String: String]) {
@@ -69,7 +65,7 @@ enum EditorLaunchSupport {
                 "-interface-language", "en",
             ]
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
     }
 
     /// `{ schema_version, trains: [journey] }` — the shape `TrainStore` decodes.

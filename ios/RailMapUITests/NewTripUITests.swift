@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -6,6 +7,112 @@ final class NewTripUITests: XCTestCase {
         try await super.setUp()
         continueAfterFailure = false
         XCUIDevice.shared.orientation = .portrait
+    }
+
+    func testFujisanCorridorAndUnprovenSavedProposalStaysPending() {
+        let app = NewTripTimetableTestSupport.launch()
+        defer { app.terminate() }
+        NewTripTimetableTestSupport.setDeparture(month: "January", day: 1, year: 2024, in: app)
+        pickStation(field: "newTripOrigin", query: "003700", code: "003700",
+                    lineID: "jp-小田急電鉄-小田原線", in: app)
+        pickStation(field: "newTripDestination", query: "005115", code: "005115",
+                    lineID: "jp-東海旅客鉄道-御殿場線", in: app)
+        let historicalSavable = waitUntilSavable(app)
+        let historicalState = XCTAttachment(string: app.debugDescription)
+        historicalState.name = "fujisan-2024-native-state"
+        historicalState.lifetime = .keepAlways
+        add(historicalState)
+        // Keep this assertion red if historical availability fails, while still
+        // collecting the independent unproven-save evidence below.
+        continueAfterFailure = true
+        XCTAssertTrue(historicalSavable, routeState(app) + "\n" + app.debugDescription)
+        continueAfterFailure = false
+        let corridor = app.buttons["newTripCorridor-0"]
+        if historicalSavable {
+            XCTAssertTrue(reveal(corridor, in: app))
+            XCTAssertTrue(corridor.label.contains("小田原線"), corridor.label)
+            XCTAssertTrue(corridor.label.contains("御殿場線"), corridor.label)
+            XCTAssertTrue(corridor.label.contains("Through service"), corridor.label)
+        }
+        let current = XCTAttachment(screenshot: app.screenshot())
+        current.name = "fujisan-2024-native-corridor"
+        current.lifetime = .keepAlways
+        add(current)
+
+        // A date beyond the current surveyed network does not acquire a
+        // resolver proof merely because the operational corridor is listed.
+        NewTripTimetableTestSupport.setDeparture(month: "January", day: 1, year: 2030, in: app)
+        XCTAssertTrue(waitUntilSavable(app), routeState(app))
+        typeNumber("FujisanPending", in: app)
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
+        // Reuse the existing save/relaunch test's asynchronous write window.
+        Thread.sleep(forTimeInterval: 1)
+        app.terminate()
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = "FujisanPending"
+        app.uiTestLaunch[.sheet] = ""
+        UITestLaunchSupport.launch(app)
+        let savedRow = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+            "journeyRow-", "FujisanPending")).firstMatch
+        XCTAssertTrue(savedRow.waitForExistence(timeout: 30))
+        savedRow.press(forDuration: 1)
+        let information = app.buttons["Journey information"]
+        XCTAssertTrue(information.waitForExistence(timeout: 5))
+        information.tap()
+        let edit = app.buttons["journeyMenuEdit"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 8))
+        edit.tap()
+        let pending = app.staticTexts["Route pending confirmation"]
+        XCTAssertTrue(EditorUITestSupport.reveal(pending, in: app), app.debugDescription)
+        XCTAssertTrue(pending.waitForExistence(timeout: 10),
+                      "An operational proposal without resolver proof must reload as pending.")
+        let reopened = XCTAttachment(screenshot: app.screenshot())
+        reopened.name = "fujisan-unproven-saved-and-reopened-pending"
+        reopened.lifetime = .keepAlways
+        add(reopened)
+    }
+
+    func testSensekiTohokuCorridorAndPreOpeningDisconnection() {
+        let app = NewTripTimetableTestSupport.launch()
+        defer { app.terminate() }
+        NewTripTimetableTestSupport.setDeparture(month: "January", day: 1, year: 2016, in: app)
+        pickStation(field: "newTripOrigin", query: "仙台", code: "001177",
+                    lineID: "jp-東日本旅客鉄道-東北線", in: app)
+        pickStation(field: "newTripDestination", query: "石巻", code: "001083",
+                    lineID: "jp-東日本旅客鉄道-仙石線", in: app)
+        let historicalSavable = waitUntilSavable(app)
+        let historicalState = XCTAttachment(string: app.debugDescription)
+        historicalState.name = "senseki-tohoku-2016-native-state"
+        historicalState.lifetime = .keepAlways
+        add(historicalState)
+        // A failed active-date assertion must not hide the pre-opening result.
+        continueAfterFailure = true
+        XCTAssertTrue(historicalSavable, routeState(app) + "\n" + app.debugDescription)
+        continueAfterFailure = false
+        let corridor = app.buttons["newTripCorridor-0"]
+        if historicalSavable {
+            XCTAssertTrue(reveal(corridor, in: app))
+            XCTAssertTrue(corridor.label.contains("東北線"), corridor.label)
+            XCTAssertTrue(corridor.label.contains("仙石線"), corridor.label)
+            XCTAssertTrue(corridor.label.contains("Through service"), corridor.label)
+        }
+        let active = XCTAttachment(screenshot: app.screenshot())
+        active.name = "senseki-tohoku-2016-native-corridor"
+        active.lifetime = .keepAlways
+        add(active)
+
+        NewTripTimetableTestSupport.setDeparture(month: "May", day: 29, year: 2015, in: app)
+        let error = app.descendants(matching: .any)["newTripRouteError"]
+        XCTAssertTrue(reveal(error, in: app, timeout: 40), routeState(app))
+        XCTAssertTrue(error.label.contains("not connected"), error.label)
+        XCTAssertFalse(app.buttons["newTripSave"].isEnabled)
+        XCTAssertFalse(app.buttons["newTripCorridor-0"].exists)
+        let unopened = XCTAttachment(screenshot: app.screenshot())
+        unopened.name = "senseki-tohoku-2015-05-29-disconnected"
+        unopened.lifetime = .keepAlways
+        add(unopened)
     }
 
     func testNewTripStartsEmptyAndSaveRequiresRoute() {
@@ -276,6 +383,57 @@ final class NewTripUITests: XCTestCase {
                       "The header Cancel button must stay tappable at accessibility XXXL.")
     }
 
+    func testUntouchedFutureOfflinePlanStaysOutsidePassportUntilReaderConfirmsIt() {
+        let app = NewTripTimetableTestSupport.launch()
+        NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2027, in: app)
+        pickStation(field: "newTripOrigin", query: "品川", code: "004095",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+        pickStation(field: "newTripDestination", query: "大崎", code: "004135",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+        XCTAssertTrue(waitUntilSavable(app), routeState(app))
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
+        assertSavedPassportCount(0, in: app)
+
+        app.terminate()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.sheet] = "edit"
+        UITestLaunchSupport.launch(app)
+        let ridden = app.switches["Ridden"]
+        XCTAssertTrue(reveal(ridden, in: app, timeout: 30))
+        XCTAssertEqual(ridden.value as? String, "0", "The saved future plan must reload unridden.")
+        ridden.tap()
+        app.buttons["rideEditorSave"].tap()
+        XCTAssertTrue(app.buttons["rideEditorSave"].waitForNonExistence(timeout: 20))
+        assertSavedPassportCount(1, in: app)
+    }
+
+    private func assertSavedPassportCount(_ count: Int, in app: XCUIApplication) {
+        app.terminate()
+        app.uiTestLaunch[.tab] = "passport"
+        app.uiTestLaunch[.sheet] = ""
+        UITestLaunchSupport.launch(app)
+        let debug = app.descendants(matching: .any)["statisticsDebug"].firstMatch
+        XCTAssertTrue(debug.waitForExistence(timeout: 30))
+        XCTAssertTrue((debug.value as? String ?? "").hasPrefix("journeys=\(count);"), debug.debugDescription)
+    }
+
+    func testFuturePlanRiderChoiceFollowsDateUntilReaderOverridesIt() {
+        let app = NewTripTimetableTestSupport.launch()
+        NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2027, in: app)
+        let ridden = app.switches["newTripRidden"]
+        XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
+        XCTAssertEqual(ridden.value as? String, "0", "An untouched future plan starts unridden.")
+        ridden.tap()
+        NewTripTimetableTestSupport.setDeparture(month: "October", day: 1, year: 2027, in: app)
+        XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
+        XCTAssertEqual(ridden.value as? String, "1", "A reader-confirmed future ride stays confirmed after a date change.")
+        ridden.tap()
+        NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
+        XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
+        XCTAssertEqual(ridden.value as? String, "0", "The reader's unridden choice also survives a past-date change.")
+    }
+
     func testCancelDoesNotSaveJourney() {
         let number = "Cancel \(UUID().uuidString.prefix(8))"
         let app = XCUIApplication()
@@ -293,12 +451,21 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8))
 
         app.terminate()
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
-        app.launch()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = number
+        UITestLaunchSupport.launch(app)
         let search = app.textFields["journeySearchField"]
         XCTAssertTrue(search.waitForExistence(timeout: 30))
+        let queryApplied = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            search.value as? String == number
+        }, object: search)
+        XCTAssertEqual(XCTWaiter.wait(for: [queryApplied], timeout: 30), .completed,
+                       "The relaunch must finish applying the cancellation-proof query.")
+        let completedEmptyState = app.staticTexts.matching(NSPredicate(
+            format: "label IN %@", ["No matching journeys", "No journeys yet"])).firstMatch
+        XCTAssertTrue(completedEmptyState.waitForExistence(timeout: 30),
+                      "The loaded library must finish searching before absence is meaningful.")
         let row = app.descendants(matching: .any).matching(NSPredicate(
             format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
             "journeyRow-", number)).firstMatch
@@ -314,7 +481,7 @@ final class NewTripUITests: XCTestCase {
         field: String, query: String, code: String, lineID: String? = nil, in app: XCUIApplication
     ) {
         let button = app.buttons[field]
-        XCTAssertTrue(button.waitForExistence(timeout: 20))
+        XCTAssertTrue(reveal(button, in: app, upward: true), app.debugDescription)
         XCTAssertTrue(waitForEnabled(button, timeout: 20), "\(field) stays disabled until the catalog loads.")
         button.tap()
         let search = app.searchFields.firstMatch
@@ -426,13 +593,7 @@ final class NewTripUITests: XCTestCase {
     private func dismissSearchKeyboard(in app: XCUIApplication) {
         let keyboard = app.keyboards.firstMatch
         guard keyboard.exists else { return }
-        for label in ["Search", "検索"] {
-            let key = keyboard.buttons[label]
-            if key.exists {
-                key.tap()
-                break
-            }
-        }
+        app.searchFields.firstMatch.typeText("\n")
         _ = keyboard.waitForNonExistence(timeout: 2)
     }
 

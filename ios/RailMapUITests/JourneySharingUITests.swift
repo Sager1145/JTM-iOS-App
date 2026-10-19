@@ -1,3 +1,4 @@
+import RailPresentation
 import Foundation
 import XCTest
 
@@ -129,17 +130,17 @@ final class JourneySharingUITests: XCTestCase {
 
     private func launch(journeyID: String, syntheticLongRecord: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+        app.uiTestLaunch[.sample] = "train-store"
         if syntheticLongRecord {
-            app.launchEnvironment["RAILMAP_UI_TEST_STORE_BASE64"] = syntheticLongJourney()
+            app.uiTestLaunch[.storeBase64] = syntheticLongJourney()
         }
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = journeyID
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = journeyID
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         return app
     }
 

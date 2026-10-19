@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -22,13 +23,13 @@ final class AppTypographyPolicyTests: XCTestCase {
 
     private func assertBounds(launchCategory: UIContentSizeCategory?, expectedSize: String? = nil) {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchEnvironment["RAILMAP_UI_TEST_TYPOGRAPHY"] = "1"
+        app.uiTestLaunch[.storageId] = UUID().uuidString
+        app.uiTestLaunch[.typography] = "1"
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         if let launchCategory {
             app.launchArguments += ["-UIPreferredContentSizeCategoryName", launchCategory.rawValue]
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         let probe = app.staticTexts["appTypographySize"]
         XCTAssertTrue(probe.waitForExistence(timeout: 15))
         let values = Dictionary((probe.value as? String ?? "").split(separator: ";").compactMap { field in
@@ -43,6 +44,13 @@ final class AppTypographyPolicyTests: XCTestCase {
             compatibleWith: UITraitCollection(preferredContentSizeCategory: .extraLarge)).lineHeight
         XCTAssertLessThanOrEqual(row, Double(maximum) + 0.001,
                                  "UIKit header measurements must obey the same text-size ceiling.")
+        let draftFont = Double(values["draftFont"] ?? "") ?? .infinity
+        let draftMaximum = UIFont.preferredFont(forTextStyle: .caption1,
+            compatibleWith: UITraitCollection(preferredContentSizeCategory: .extraLarge)).pointSize
+        XCTAssertLessThanOrEqual(draftFont, Double(draftMaximum) + 0.001,
+                                 "Draft map pins must use the same UIKit font ceiling.")
+        XCTAssertGreaterThan(Double(values["draftHeight"] ?? "") ?? 0, 0,
+                             "The observed font must come from a configured, measured draft pin.")
         let receipt = XCTAttachment(string: String(describing: values))
         receipt.name = "app-typography-observed-bounds"
         receipt.lifetime = .keepAlways

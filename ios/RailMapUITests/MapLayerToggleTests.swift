@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// The two switches the map is toggled with most, and the master/subordinate
@@ -67,45 +68,27 @@ final class MapLayerToggleTests: XCTestCase {
         attach(app, named: "04-markers-enabled")
     }
 
-    /// The master switch stays operable while it is OFF.
-    ///
-    /// It did not. The three subordinate switches sat in one `Group` carrying a
-    /// single `.disabled(!routes)`, and inside a `Section` that modifier did not
-    /// stay on the group — it reached the master beside them. So 列車経路 could
-    /// be switched off from this sheet and never on again: the switch took the
-    /// tap and moved nothing, and only the map rail's own button could undo it.
-    ///
-    /// Asserted on the SHEET's switch rather than on the state, because the
-    /// state was never the broken half — the rail went on working throughout,
-    /// which is why a one-way switch sat here unnoticed.
-    func testTheMasterSwitchCanBeTurnedBackOnFromTheSheet() {
+    /// The map owns route visibility; the sheet contains subordinate settings.
+    func testRouteVisibilityHasOneControlAndPreservesLayerSettings() {
         let app = launch()
         let routes = app.buttons["mapRoutesToggle"]
         XCTAssertTrue(routes.waitForExistence(timeout: 12))
         routes.tap()
         XCTAssertTrue(waitFor(timeout: 6) { !routes.isSelected })
-
         app.buttons["mapLayersButton"].tap()
-        let master = revealSwitch("layerRoutes", in: app)
-        XCTAssertTrue(master.exists, "the ridden-layer switches were not reachable in the layers sheet")
-        XCTAssertTrue(
-            master.isEnabled,
-            "列車経路 is the only switch in this section that can put the ridden lines back, "
-                + "so it must stay operable while it is the one that is off.")
-        flip(master)
-        settleAfterLayerChange()
-        XCTAssertEqual(
-            master.value as? String, "1",
-            "The master switch took the tap and did not move.")
-        XCTAssertTrue(
-            app.switches["layerStops"].isEnabled,
-            "Turning 列車経路 back on from the sheet must return its subordinates with it.")
-        attach(app, named: "07-master-back-on")
-
+        let stops = revealSwitch("layerStops", in: app)
+        XCTAssertTrue(stops.exists)
+        XCTAssertFalse(stops.isEnabled)
+        XCTAssertFalse(app.switches["layerRoutes"].exists)
+        let savedStops = stops.value as? String
         dismissLayers(app)
-        XCTAssertTrue(
-            waitFor(timeout: 6) { routes.isSelected },
-            "and the rail's own button must report the state the sheet just set.")
+        routes.tap()
+        XCTAssertTrue(waitFor(timeout: 6) { routes.isSelected })
+        app.buttons["mapLayersButton"].tap()
+        let restoredStops = revealSwitch("layerStops", in: app)
+        XCTAssertTrue(restoredStops.isEnabled)
+        XCTAssertEqual(restoredStops.value as? String, savedStops)
+        dismissLayers(app)
     }
 
     /// A ride that is not drawn is not a target either.
@@ -462,11 +445,11 @@ final class MapLayerToggleTests: XCTestCase {
 
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
-        app.launch()
+        app.uiTestLaunch[.storageId] = UUID().uuidString
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = "medium"
+        UITestLaunchSupport.launch(app)
         return app
     }
 
@@ -492,21 +475,21 @@ final class MapLayerToggleTests: XCTestCase {
         waitsForReadyRide: Bool = true
     ) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         // The renderer fixture must not depend on a previous simulator session.
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.tab] = "all"
         // The shared region scope persists across suites and also filters
         // All Journeys' map. Keep the Japanese fixture in that scope.
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
         // Start open, then collapse through the actual header gesture before
         // tapping the map and reopen it to inspect the selected card.
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera ?? (selectingMetro
+        app.uiTestLaunch[.stage] = "medium"
+        app.uiTestLaunch[.camera] = camera ?? (selectingMetro
             ? Self.metroSelectionCamera : Self.tokyoCamera)
-        app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260704_06_marunouchi_line"
-        if let layers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers }
-        app.launch()
+        app.uiTestLaunch[.readyRide] = "20260704_06_marunouchi_line"
+        if let layers { app.uiTestLaunch[.layers] = layers }
+        UITestLaunchSupport.launch(app)
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 15))
         XCTAssertTrue(waitFor(timeout: 45) {

@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -74,14 +75,14 @@ final class JourneyCompletionUITests: XCTestCase {
     func testIntermediateStopsAreReviewedInOrderBeforeApplyingToDraft() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
-        app.launch()
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.query] = "haruka"
+        UITestLaunchSupport.launch(app)
         let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 40))
         row.press(forDuration: 1)

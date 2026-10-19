@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -44,10 +45,10 @@ final class JourneySaveUITests: XCTestCase {
         // journey before closing the app, then the relaunch proves disk state.
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
-        app.launch()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = number
+        UITestLaunchSupport.launch(app)
 
         let savedRow = app.descendants(matching: .any).matching(NSPredicate(
             format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
@@ -152,10 +153,10 @@ final class JourneySaveUITests: XCTestCase {
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8),
                       "Discarding must close the editor without committing the draft.")
         app.terminate()
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = unsavedName
-        app.launch()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = unsavedName
+        UITestLaunchSupport.launch(app)
         let search = app.textFields["journeySearchField"]
         XCTAssertTrue(search.waitForExistence(timeout: 30))
         XCTAssertEqual(search.value as? String, unsavedName,

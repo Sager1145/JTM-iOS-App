@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -110,15 +111,15 @@ final class RailwayRouteEntryUITests: XCTestCase {
 
     private func launchEditor(sheet: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = sheet
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sheet] = sheet
         if sheet == "edit" {
-            app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
+            app.uiTestLaunch[.sample] = "train-store"
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         return app
     }
 

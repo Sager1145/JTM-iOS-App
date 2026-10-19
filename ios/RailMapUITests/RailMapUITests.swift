@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -67,6 +68,151 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "The semantic Search destination must never open without a text field.")
+    }
+
+    func testDuoFoldedSearchKeepsNativeDestinationsReachable() throws {
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "search", stage: "medium",
+                         launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
+        func destination(_ title: String) -> XCUIElement {
+            app.buttons.matching(NSPredicate(format: "label == %@", title)).firstMatch
+        }
+        // Duo exposes vertical native tabs as buttons in the shared bar
+        // region, rather than as a horizontal XCUIElementTypeTabBar.
+        let searchTab = destination("Search")
+        XCTAssertTrue(searchTab.waitForExistence(timeout: 8))
+        let upcomingTab = destination("Upcoming")
+        try XCTSkipUnless(upcomingTab.exists && app.frame.width < 600
+                          && abs(upcomingTab.frame.midX - searchTab.frame.midX) < 4
+                          && upcomingTab.frame.maxY < searchTab.frame.minY,
+                          "Requires the folded Duo native vertical tab bar.")
+        let field = app.textFields["journeySearchField"]
+        XCTAssertTrue(field.waitForExistence(timeout: 8))
+        let header = element("panelHeader", in: app)
+        let viewport = element("workspaceMenuViewport", in: app)
+        let initialHeader = header.frame
+        let initialViewport = viewport.frame
+        attach(app, named: "duo-folded-menu-before-keyboard")
+        field.tap()
+        field.typeText("Tokyo")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5),
+                      "Exercise software keyboard avoidance, not hardware-only input.")
+        XCTAssertEqual(header.frame.minY, initialHeader.minY, accuracy: 2,
+                       "The keyboard must not push the menu upward.")
+        XCTAssertEqual(viewport.frame.height, initialViewport.height, accuracy: 2,
+                       "The keyboard must not resize the menu.")
+        assertMenuBounds(header: header, viewport: viewport,
+                         initialHeader: initialHeader, initialViewport: initialViewport)
+        attach(app, named: "duo-folded-menu-keyboard-fixed")
+        func chooseFromKeyboard(_ tab: String) {
+            let more = element("duoKeyboardMoreButton", in: app)
+            XCTAssertTrue(more.waitForExistence(timeout: 5))
+            XCTAssertTrue(more.isHittable, "Folded navigation must stay above the software keyboard.")
+            XCTAssertTrue(app.buttons["mapLocateToggle"].isHittable)
+            more.tap()
+            if tab == "all" {
+                let mapMenu = destination("Map")
+                XCTAssertTrue(mapMenu.waitForExistence(timeout: 5))
+                mapMenu.tap()
+                // Expanded native submenus expose action titles rather
+                // than SwiftUI's toolbar accessibility identifiers.
+                for title in ["All Railway Lines", "Train Routes", "Map Layers"] {
+                    let action = destination(title)
+                    XCTAssertTrue(action.waitForExistence(timeout: 5))
+                    XCTAssertTrue(action.isHittable, "More must keep every map action reachable above the keyboard.")
+                }
+                attach(app, named: "duo-folded-search-keyboard-map-menu")
+                destination("Map").tap()
+            }
+            let title = ["all": "All", "stats": "Stats", "upcoming": "Upcoming"][tab]!
+            let target = destination(title)
+            XCTAssertTrue(target.waitForExistence(timeout: 5))
+            XCTAssertTrue(target.isHittable)
+            attach(app, named: "duo-folded-search-keyboard-pages-\(tab)")
+            target.tap()
+        }
+        chooseFromKeyboard("all")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(destination("All").isSelected)
+        XCTAssertTrue(app.staticTexts.matching(identifier: "panelHeader")
+            .matching(NSPredicate(format: "label == %@", "All journeys")).firstMatch.isHittable)
+        for identifier in ["mapNetworkToggle", "mapRoutesToggle", "mapLayersButton", "mapLocateToggle"] {
+            let control = app.buttons[identifier]
+            let restored = XCTNSPredicateExpectation(
+                predicate: NSPredicate { _, _ in control.exists && control.isHittable }, object: control)
+            XCTAssertEqual(XCTWaiter.wait(for: [restored], timeout: 5), .completed,
+                           "Map controls must return after leaving Search input.")
+        }
+        searchTab.tap()
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        XCTAssertEqual(field.value as? String, "Tokyo")
+        field.tap()
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        chooseFromKeyboard("stats")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(destination("Stats").isSelected)
+        XCTAssertTrue(app.staticTexts.matching(identifier: "panelHeader")
+            .matching(NSPredicate(format: "label == %@", "Stats")).firstMatch.isHittable)
+        searchTab.tap()
+        field.tap()
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        chooseFromKeyboard("upcoming")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(destination("Upcoming").isSelected)
+        XCTAssertTrue(app.staticTexts.matching(identifier: "panelHeader")
+            .matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch.isHittable)
+        attach(app, named: "duo-folded-search-switched-page")
+    }
+
+    func testDuoExpandedMenuKeepsBoundsWithKeyboard() throws {
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "search", stage: "medium", sample: "train-store",
+                         launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
+        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Search")).firstMatch
+        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 8))
+        try XCTSkipUnless(app.frame.width >= 600 && upcoming.exists
+                          && abs(upcoming.frame.midX - search.frame.midX) < 4,
+                          "Requires the expanded Duo native sidebar.")
+        let header = element("panelHeader", in: app)
+        let settings = element("utilityMenuButton", in: app)
+        XCTAssertTrue(header.waitForExistence(timeout: 8))
+        let titleHeight = header.frame.height
+        let searchTitle = header.label
+        let actionSize = settings.frame.size
+        for (tab, title) in [("All", "All journeys"), ("Stats", "Stats"),
+                             ("Upcoming", "Upcoming"), ("Search", searchTitle)] {
+            app.buttons.matching(NSPredicate(format: "label == %@", tab)).firstMatch.tap()
+            let visibleHeader = app.staticTexts.matching(identifier: "panelHeader")
+                .matching(NSPredicate(format: "label == %@", title)).firstMatch
+            XCTAssertTrue(visibleHeader.waitForExistence(timeout: 5))
+            XCTAssertEqual(visibleHeader.frame.height, titleHeight, accuracy: 2)
+            XCTAssertEqual(settings.frame.width, actionSize.width, accuracy: 2)
+            XCTAssertEqual(settings.frame.height, actionSize.height, accuracy: 2)
+            XCTAssertGreaterThanOrEqual(settings.frame.width, 44)
+            XCTAssertGreaterThanOrEqual(settings.frame.height, 44)
+            attach(app, named: "duo-expanded-menu-\(tab)")
+        }
+        let viewport = element("workspaceMenuViewport", in: app)
+        let initialHeader = header.frame
+        let initialViewport = viewport.frame
+        let field = app.textFields["journeySearchField"]
+        field.tap()
+        field.typeText("Tokyo")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        assertMenuBounds(header: header, viewport: viewport,
+                         initialHeader: initialHeader, initialViewport: initialViewport)
+        attach(app, named: "duo-expanded-menu-keyboard-fixed")
+    }
+
+    private func assertMenuBounds(header: XCUIElement, viewport: XCUIElement,
+                                  initialHeader: CGRect, initialViewport: CGRect) {
+        for (actual, expected) in [(header.frame, initialHeader), (viewport.frame, initialViewport)] {
+            XCTAssertEqual(actual.minX, expected.minX, accuracy: 2)
+            XCTAssertEqual(actual.minY, expected.minY, accuracy: 2)
+            XCTAssertEqual(actual.width, expected.width, accuracy: 2)
+            XCTAssertEqual(actual.height, expected.height, accuracy: 2)
+        }
     }
 
     func testMenuContentFollowsSystemTabBar() {
@@ -271,6 +417,38 @@ final class RailMapUITests: XCTestCase {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
         XCUIDevice.shared.orientation = .portrait
         try assertRepeatedHeaderDrags(isDocked: false)
+    }
+
+    func testDuoHeaderSlowDragExpandsAndReturnsRepeatedly() throws {
+        XCUIDevice.shared.orientation = .portrait
+        let app = launch(tab: "upcoming", stage: "medium",
+                         launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
+        let header = element("panelHeader", in: app)
+        XCTAssertTrue(header.waitForExistence(timeout: 8))
+        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
+        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Search")).firstMatch
+        try XCTSkipUnless(app.frame.width < 600 && upcoming.exists && search.exists
+                          && abs(upcoming.frame.midX - search.frame.midX) < 4
+                          && upcoming.frame.maxY < search.frame.minY,
+                          "Requires folded Duo's native sidebar.")
+        let mediumTop = header.frame.minY
+        let title = header.label
+        for cycle in 1...2 {
+            let start = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -250)),
+                        withVelocity: .slow, thenHoldForDuration: 0.8)
+            XCTAssertLessThan(header.frame.minY, mediumTop - 150,
+                              "A sustained upward header drag must reach the expanded stop.")
+            XCTAssertEqual(header.label, title)
+            attach(app, named: "duo-slow-drag-expanded-\(cycle)")
+            let expandedTop = header.frame.minY
+            let down = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            down.press(forDuration: 0.1, thenDragTo: down.withOffset(CGVector(dx: 0, dy: 330)),
+                       withVelocity: .slow, thenHoldForDuration: 0.8)
+            XCTAssertGreaterThan(header.frame.minY, expandedTop + 150)
+            XCTAssertEqual(header.label, title)
+            attach(app, named: "duo-slow-drag-returned-\(cycle)")
+        }
     }
 
     func testIPadMenuToggleKeepsOrdinaryTitleStable() throws {
@@ -815,29 +993,29 @@ final class RailMapUITests: XCTestCase {
         launchArguments: [String] = []
     ) -> XCUIApplication {
         let app = XCUIApplication()
-        if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] == "1" {
-            app.launchEnvironment["RAILMAP_UI_TEST_TAB_BAR_PROBE"] = "1"
+        if ProcessInfo.processInfo.environment[UITestLaunchConfiguration.Key.tabBarProbe.rawValue] == "1" {
+            app.uiTestLaunch[.tabBarProbe] = "1"
         }
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
+        app.uiTestLaunch[.storageId] = UUID().uuidString
+        app.uiTestLaunch[.tab] = tab
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = stage
         if let selectedJourney {
-            app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selectedJourney
+            app.uiTestLaunch[.select] = selectedJourney
         }
         if let sample {
-            app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = sample
+            app.uiTestLaunch[.sample] = sample
         }
         if let camera {
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
+            app.uiTestLaunch[.camera] = camera
         }
-        if let hiddenLayers { app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = hiddenLayers }
-        if mapGestures { app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1" }
+        if let hiddenLayers { app.uiTestLaunch[.layers] = hiddenLayers }
+        if mapGestures { app.uiTestLaunch[.gestureTarget] = "1" }
         if reportsReduceMotion {
-            app.launchEnvironment["RAILMAP_UI_TEST_REPORT_REDUCE_MOTION"] = "1"
+            app.uiTestLaunch[.reportReduceMotion] = "1"
         }
         app.launchArguments += launchArguments
-        app.launch()
+        UITestLaunchSupport.launch(app)
         return app
     }
 
@@ -861,10 +1039,10 @@ final class TransferGuideImportUITests: XCTestCase {
 
     func testTheScreenshotImporterOpensFromTheDataWorkspace() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.storageId] = UUID().uuidString
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
 
         let gear = app.descendants(matching: .any)
             .matching(identifier: "utilityMenuButton").firstMatch

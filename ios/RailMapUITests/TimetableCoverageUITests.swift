@@ -5,7 +5,7 @@ final class TimetableCoverageUITests: XCTestCase {
     func testPartialDailyInventoryAndIncompleteTripsAreBothExplained() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         EditorLaunchSupport.launchEditing(app, journey: hachiojiJourney(date: "2026-09-30"))
         XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
 
@@ -21,6 +21,8 @@ final class TimetableCoverageUITests: XCTestCase {
             .waitForExistence(timeout: 15), app.debugDescription)
         XCTAssertTrue(app.staticTexts["timetableTripsNotApplicable"]
             .waitForExistence(timeout: 15), app.debugDescription)
+        XCTAssertTrue(app.staticTexts["timetableInventoryIncomplete"].label.contains("still being researched"))
+        XCTAssertTrue(app.staticTexts["timetableTripsNotApplicable"].label.contains("full routes unverified"))
     }
 
     private func hachiojiJourney(date: String) -> [String: Any] {

@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -13,13 +14,13 @@ final class WorkspaceEditingTests: XCTestCase {
 
     func testSearchSurvivesDetailReturn() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
-        app.launch()
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.query] = "haruka"
+        UITestLaunchSupport.launch(app)
         let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
@@ -34,13 +35,13 @@ final class WorkspaceEditingTests: XCTestCase {
 
     func testPlaybackCanPauseResumeAndStop() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         // Sample journeys remain playable after their calendar dates pass.
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
-        app.launch()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.playback] = "1"
+        UITestLaunchSupport.launch(app)
         let toggle = app.buttons["playbackPauseResume"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 60))
         let playing = NSPredicate(format: "label == %@", "Pause")
@@ -60,15 +61,15 @@ final class WorkspaceEditingTests: XCTestCase {
         let fixtureID = "20260704_02_kodama918"
         let originalNumber = "こだま918号（Kodama 918）（918A）"
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = fixtureID
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = fixtureID
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         let row = app.buttons["journeyRow-\(fixtureID)"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
@@ -312,14 +313,14 @@ final class WorkspaceEditingTests: XCTestCase {
         // Train-type autocomplete is an existing-record field; new journeys
         // choose their type through the region-step Picker.
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "20260704_02_kodama918"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = "20260704_02_kodama918"
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         let row = app.buttons["journeyRow-20260704_02_kodama918"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
@@ -392,7 +393,9 @@ final class WorkspaceEditingTests: XCTestCase {
                 let oldAnchorY = anchor.frame.midY
                 evidence("before-native-drag-\(attempt)")
                 let origin = app.coordinate(withNormalizedOffset: .zero)
-                let start = origin.withOffset(CGVector(dx: cell.frame.midX, dy: cell.frame.midY))
+                let start = origin.withOffset(CGVector(
+                    dx: cell.frame.midX - app.frame.minX,
+                    dy: cell.frame.midY - app.frame.minY))
                 let distance = min(visible.height * 0.35, cell.frame.midY - visible.minY - 8)
                 guard distance > 30 else { return false }
                 start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -distance)))
@@ -464,15 +467,15 @@ final class WorkspaceEditingTests: XCTestCase {
         // Line preferences are edited through the saved journey's catalog.
         let fixtureID = "20260727_08_narita_express"
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = fixtureID
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = fixtureID
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         let row = app.buttons["journeyRow-\(fixtureID)"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
@@ -604,7 +607,18 @@ final class WorkspaceEditingTests: XCTestCase {
         EditorUITestSupport.tap(undo, in: app)
 
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        #if targetEnvironment(macCatalyst)
         EditorUITestSupport.tap(origin, in: app)
+        #else
+        // Undo can leave this row mounted above the Form's visible header edge.
+        let navigation = app.navigationBars.containing(.button, identifier: "rideEditorCancel").firstMatch
+        XCTAssertTrue(navigation.exists)
+        let headerFrame = navigation.frame
+        XCTAssertTrue(!headerFrame.isEmpty && [headerFrame.minX, headerFrame.minY,
+            headerFrame.maxX, headerFrame.maxY].allSatisfy { $0.isFinite }
+            && app.frame.contains(headerFrame), navigation.debugDescription)
+        EditorUITestSupport.tap(origin, in: app, minimumVisibleY: headerFrame.maxY)
+        #endif
         let originRole = revealRole("Origin")
         XCTAssertTrue(originRole.isEnabled,
                       "Undo must restore the first stop's authored origin role.")
@@ -701,17 +715,17 @@ final class WorkspaceEditingTests: XCTestCase {
         launchArguments: [String] = []
     ) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(\(language))",
             "-AppleLocale", locale,
             "-interface-language", language,
         ] + launchArguments
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = sheet
-        app.launch()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sheet] = sheet
+        UITestLaunchSupport.launch(app)
         if UIDevice.current.userInterfaceIdiom == .phone {
             let portrait = XCTNSPredicateExpectation(
                 predicate: NSPredicate { object, _ in
@@ -732,10 +746,11 @@ enum EditorUITestSupport {
     /// A lazy Form row must be brought into the viewport before querying it.
     static func reveal(
         _ element: XCUIElement, in app: XCUIApplication,
-        maxDrags: Int = 8, unmountedRowIsAbove: Bool? = nil
+        maxDrags: Int = 8, unmountedRowIsAbove: Bool? = nil, minimumVisibleY: CGFloat? = nil
     ) -> Bool {
         if element.exists, element.isHittable, isUsable(element.frame),
-           app.frame.contains(element.frame) { return true }
+           app.frame.contains(element.frame),
+           minimumVisibleY.map({ element.frame.minY >= $0 }) ?? true { return true }
         let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
         guard form.waitForExistence(timeout: 2) else { return false }
         XCTContext.runActivity(named: "Lazy editor control before reveal") { activity in
@@ -744,7 +759,8 @@ enum EditorUITestSupport {
             activity.add(screenshot)
         }
         for attempt in 0..<maxDrags {
-            let viewport = form.frame.intersection(app.frame)
+            let viewport = frameBelowHeader(
+                form.frame.intersection(app.frame), minimumVisibleY: minimumVisibleY)
             guard isUsable(viewport) else { return false }
             if element.exists, isUsable(element.frame), viewport.contains(element.frame) {
                 return true
@@ -785,10 +801,11 @@ enum EditorUITestSupport {
     static func tap(
         _ element: XCUIElement,
         in app: XCUIApplication,
+        minimumVisibleY: CGFloat? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        _ = reveal(element, in: app)
+        _ = reveal(element, in: app, minimumVisibleY: minimumVisibleY)
         guard element.waitForExistence(timeout: 5) else {
             XCTFail("The element to tap does not exist.", file: file, line: line)
             return
@@ -800,6 +817,11 @@ enum EditorUITestSupport {
             return
         }
 
+        let visibleFrame = frameBelowHeader(appFrame, minimumVisibleY: minimumVisibleY)
+        guard isUsable(visibleFrame) else {
+            XCTFail("The editor has no visible content below its header.", file: file, line: line)
+            return
+        }
         let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
         for attempt in 0...8 {
             guard element.exists else {
@@ -812,7 +834,7 @@ enum EditorUITestSupport {
                 return
             }
 
-            if appFrame.contains(frame) {
+            if visibleFrame.contains(frame) {
                 let center = CGPoint(x: frame.midX, y: frame.midY)
                 let appOrigin = app.coordinate(withNormalizedOffset: .zero)
                 appOrigin.withOffset(CGVector(
@@ -837,13 +859,13 @@ enum EditorUITestSupport {
                         file: file, line: line)
                 return
             }
-            let visibleForm = editorForm.frame.intersection(appFrame)
+            let visibleForm = editorForm.frame.intersection(visibleFrame)
             guard isUsable(visibleForm) else {
                 XCTFail("rideEditorForm has no visible scrolling area.", file: file, line: line)
                 return
             }
 
-            let scrollUp = frame.maxY > appFrame.maxY
+            let scrollUp = frame.maxY > visibleFrame.maxY
             let distance = visibleForm.height * 0.18
             let startPoint = CGPoint(
                 x: visibleForm.midX,
@@ -875,6 +897,13 @@ enum EditorUITestSupport {
                 return
             }
         }
+    }
+
+    /// Opt-in clipping preserves the existing bounds for all other callers.
+    private static func frameBelowHeader(_ frame: CGRect, minimumVisibleY: CGFloat?) -> CGRect {
+        guard let minimumVisibleY else { return frame }
+        let top = max(frame.minY, minimumVisibleY)
+        return CGRect(x: frame.minX, y: top, width: frame.width, height: max(0, frame.maxY - top))
     }
 
     static func enableDate(

@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// Acceptance probe for the opt-in public-API rail surface. Passing this fixed
@@ -16,6 +17,7 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
         let status = app.staticTexts["railIndependentPrototypeStatus"]
         try waitFor(status) { self.value("phase", $0) == 6 && self.value("referenceFrames", $0) > 120 }
         let metrics = status.label
+        try requireMeasurements(metrics)
         attach(app, metrics: metrics, name: "independent-rail-camera-trace")
         XCTAssertGreaterThan(value("samples", metrics), 300,
             "Too few independently displayed native marker samples to assess camera synchronization.")
@@ -65,6 +67,7 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         try waitFor(status) { self.value("viewportHeight", $0) > self.value("viewportWidth", $0) }
         let metrics = status.label
+        try requireMeasurements(metrics)
         attach(app, metrics: metrics, name: "independent-rail-gestures-resize")
         XCTAssertGreaterThan(value("fittedFrames", metrics), 120)
         XCTAssertGreaterThan(value("motionFitSamples", metrics), 30)
@@ -105,11 +108,11 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-auto-focus-zoom", "NO", "-appearance", "light"]
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.68,139.77,0.06"
+        app.uiTestLaunch[.storageId] = UUID().uuidString
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.gestureTarget] = "1"
+        app.uiTestLaunch[.camera] = "35.68,139.77,0.06"
         app.launchEnvironment["RAILMAP_INDEPENDENT_RAIL_PROTOTYPE"] = "1"
         app.launchEnvironment["RAILMAP_INDEPENDENT_RAIL_TRACE"] = trace ? "1" : "0"
         app.launchEnvironment["RAILMAP_INDEPENDENT_RAIL_VERTICES"] = "5000"
@@ -119,7 +122,7 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
             app.launchEnvironment["RAILMAP_INDEPENDENT_RAIL_TRACE_DELAY"] = "10"
             app.launchEnvironment["RAILMAP_INDEPENDENT_RAIL_PHASE_DURATION"] = "4"
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         return app
     }
 
@@ -129,6 +132,26 @@ final class MapIndependentRailPrototypeUITests: XCTestCase {
             if pair.count == 2, pair[0] == key { return Double(pair[1]) ?? -1 }
         }
         return -1
+    }
+
+    private struct MissingMeasurement: Error {}
+
+    private func requireMeasurements(_ text: String) throws {
+        for key in ["holdoutFitP95Px", "motionErrorP95Px", "errorP95Px", "pairedP95Ms",
+                    "projectionP95Ms", "paintP95Ms", "maxFrameGapMs", "veilAlpha", "wrapBreaks"] {
+            let measurement = value(key, text)
+            guard measurement.isFinite && measurement >= 0 else {
+                XCTFail("Missing or invalid \(key) measurement: \(text)")
+                throw MissingMeasurement()
+            }
+        }
+        for key in ["drawnFrames", "frames", "samples", "fittedFrames", "motionSamples", "motionFitSamples"] {
+            let count = value(key, text)
+            guard count.isFinite && count > 0 else {
+                XCTFail("No \(key) samples for the reported measurements: \(text)")
+                throw MissingMeasurement()
+            }
+        }
     }
 
     private func waitFor(_ status: XCUIElement, condition: @escaping (String) -> Bool) throws {

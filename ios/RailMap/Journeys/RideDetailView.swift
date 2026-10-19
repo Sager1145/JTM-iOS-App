@@ -1,0 +1,1317 @@
+import RailCore
+import RailPresentation
+import SwiftUI
+
+private struct DetailActionSizing: ViewModifier {
+    var prominent = false
+    var visualHeight: CGFloat?
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if let visualHeight {
+            content
+                .buttonStyle(RailCapsuleButtonStyle(
+                    prominent: prominent, visualHeight: visualHeight))
+                .railMinimumTouchTarget()
+        } else if prominent {
+            content.buttonStyle(.borderedProminent).frame(minHeight: 44)
+        } else {
+            content.frame(minHeight: 44)
+        }
+    }
+}
+
+/// Resolves the sheet's record from its owner on every update. The presentation
+/// identity stays stable even when the editor changes the record's identifier.
+struct WorkspaceRideDetailView: View {
+    @Bindable var itineraries: ItineraryStore
+    @State private var recordID: String
+    @Environment(\.dismiss) private var dismiss
+    let onSave: (Train, String) -> ItineraryStore.SaveOutcome
+    let onRebuild: (Train) -> Int?
+    var onEditJourney: ((Train) -> Void)? = nil
+
+    init(trainID: String, itineraries: ItineraryStore,
+         onSave: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
+         onRebuild: @escaping (Train) -> Int?,
+         onEditJourney: ((Train) -> Void)? = nil) {
+        self.itineraries = itineraries
+        _recordID = State(initialValue: trainID)
+        self.onSave = onSave
+        self.onRebuild = onRebuild
+        self.onEditJourney = onEditJourney
+    }
+
+    private var train: Train? {
+        itineraries.store?.trains.first { $0.id == recordID }
+    }
+
+    var body: some View {
+        Group {
+            if let train {
+                RideDetailView(train: train, onSave: { edited in
+                    switch onSave(edited, recordID) {
+                    case .saved:
+                        recordID = edited.id
+                        return true
+                    case let .savedKeepingID(keptID, _):
+                        recordID = keptID
+                        return true
+                    case .refusedImportRunning, .notFound, .unsupportedRegion:
+                        return false
+                    }
+                }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [],
+                   onEditJourney: onEditJourney)
+            }
+        }
+        .onChange(of: train == nil, initial: true) { _, missing in
+            if missing { dismiss() }
+        }
+    }
+}
+
+/// A recorded journey expressed with Flighty's information hierarchy while
+/// remaining a railway screen: service identity first, station pair second,
+/// then the chronological stop timeline and lower-priority metadata.
+struct RideDetailView: View {
+    let train: Train
+    var onSave: ((Train) -> Bool)?
+    var onRebuild: (() -> Int?)?
+    var suggestionTrains: [Train] = []
+    var onEditJourney: ((Train) -> Void)? = nil
+
+    @Environment(AppLocalization.self) private var localization
+    @State private var showsEditor = false
+    @State private var showsShare = false
+
+    var body: some View {
+        RideDetailContent(
+            train: train,
+            onRebuild: onRebuild,
+            onEditStops: onSave == nil ? nil : { beginEdit() },
+            // §8.5's "从地图隐藏" is an edit to one field of the record, so it
+            // travels through the same atomic save every other edit does
+            // rather than through a second write path of its own.
+            onSetVisible: onSave.map { save in
+                { visible in
+                    var updated = train
+                    updated.visible = visible
+                    _ = save(updated)
+                }
+            },
+            // The same shape, and for the same reason: confirming a ride is an
+            // edit to the record's own `ride_segment` flags, so it travels
+            // through the one atomic save rather than a second write path.
+            onSetRidden: onSave.map { save in
+                { ridden in _ = save(RideLedger.setRidden(train, ridden)) }
+            })
+            .navigationTitle(train.number)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(localization.text("ios.journeyShare.title"), systemImage: "square.and.arrow.up") {
+                        showsShare = true
+                    }
+                    .accessibilityIdentifier("journeyShareButton")
+                }
+                if onSave != nil {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
+                            beginEdit()
+                        }
+                        .accessibilityIdentifier("rideDetailEdit")
+                    }
+                }
+            }
+            .sheet(isPresented: $showsShare) {
+                JourneyShareView(train: train)
+            }
+            .sheet(isPresented: $showsEditor) {
+                RideEditorView(
+                    train: train,
+                    title: localization.text("ios.editJourney", fallback: "Edit journey"),
+                    suggestionTrains: suggestionTrains,
+                    onCancel: { showsEditor = false },
+                    onSave: { edited in
+                        if onSave?(edited) == true {
+                            showsEditor = false
+                        }
+                    })
+            }
+    }
+
+    private func beginEdit() {
+        if let onEditJourney {
+            onEditJourney(train)
+        } else {
+            showsEditor = true
+        }
+    }
+}
+
+/// The journey itself, with no navigation of its own.
+///
+/// Split out because two surfaces show exactly this and disagree about
+/// everything around it: the sidebar pushes it into a navigation stack with a
+/// title and an Edit button, and the ride panel morphs its own header above it
+/// and supplies its own actions. Duplicating the stop timeline to serve both
+/// would mean fixing every timeline bug twice.
+///
+/// ## The card order is the specification
+///
+/// §5.3 fixes it — identity, route timing, stop timeline, route state, service
+/// metadata, advanced record details — and names the thing that must not
+/// happen: "不得默认把 `id`、`route_policy`、`route_sections` 展开在 Hero
+/// 附近". Those three now live behind one disclosure at the bottom, where they
+/// were previously in the second card on screen.
+///
+/// `includesIdentity` is the one seam between the two surfaces. The pushed
+/// version needs the identity card because its navigation bar only carries the
+/// train number; the panel version does not, because its header *is* the
+/// identity and is still on screen at every stage.
+struct RideDetailContent: View {
+    let train: Train
+    var onRebuild: (() -> Int?)?
+    var includesIdentity = true
+    /// Whether this surface needs its own origin/destination summary card.
+    ///
+    /// The selected-journey panel already presents the same stations and times
+    /// in `RouteTimingView` immediately above its actions. Repeating them in a
+    /// second card adds no information, so that caller turns this off. The
+    /// pushed detail screen keeps it because it has no summary above the cards.
+    var includesStationPair = true
+    /// What a card inside this content is filled with.
+    ///
+    /// Pushed into a navigation stack it sits on a grouped background and
+    /// wants the opaque one. Inside the ride panel it sits on a material over
+    /// the map, and an opaque fill there paints over the very translucency the
+    /// panel exists to have — so the panel passes a tint instead.
+    var surface: AnyShapeStyle = AnyShapeStyle(.background)
+    /// Whether this brings its own `ScrollView`.
+    ///
+    /// The ride panel puts an action row above the journey and needs both to
+    /// scroll as one column, so it supplies the scroll view and asks for the
+    /// cards alone. The `LazyVStack` stays lazy either way — laziness comes
+    /// from the enclosing scroll view, not from this one.
+    var scrolls = true
+    /// §8.4: the recovery a failed route should offer *first*, ahead of a
+    /// retry loop. Absent on surfaces that carry their own Edit action.
+    var onEditStops: (() -> Void)?
+    /// §8.5: hide from the map, or put it back. Absent on surfaces that have
+    /// their own visibility control, so the reader is never offered two.
+    var onSetVisible: ((Bool) -> Void)?
+    /// §5.3: say that this journey was ridden, or take it back.
+    ///
+    /// The passport counts what the record says, and only the reader may say
+    /// it — this is where they do. Absent on a read-only surface, where the
+    /// state is still reported and simply cannot be changed.
+    var onSetRidden: ((Bool) -> Void)?
+    var actionButtonHeight: CGFloat? = nil
+
+    @Environment(AppLocalization.self) private var localization
+    /// The loaded packages, for the passenger spelling of a detected line —
+    /// see ``RouteLogoSquare``, which declares this the same way.
+    @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
+    @Environment(ItineraryStore.self) private var itineraries: ItineraryStore?
+    @Environment(RiddenRouteStore.self) private var riddenRoutes: RiddenRouteStore?
+    @Environment(TraversedLineDetector.self) private var traversedLines: TraversedLineDetector?
+    @Environment(\.colorScheme) private var colorScheme
+    @State private var rebuild: RebuildPhase = .idle
+    @State private var prepared: JourneyDetailSnapshot?
+    @State private var detailRegion: Region = .jp
+
+    private enum RebuildPhase: Equatable {
+        case idle
+        case done(sections: Int)
+    }
+
+    private struct DetailRequest: Equatable {
+        let train: Train
+
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            // Retained COW buffers distinguish exact record edits, including
+            // Unicode spelling changes that Swift String equality folds.
+            lhs.train == rhs.train
+                && ArrayGeneration.same(lhs.train.stops, rhs.train.stops)
+                && ArrayGeneration.same(lhs.train.routeSections ?? [], rhs.train.routeSections ?? [])
+        }
+    }
+
+    var body: some View {
+        Group {
+            if let prepared, DetailRequest(train: prepared.train) == DetailRequest(train: train) {
+                if scrolls {
+                    ScrollView { cards(prepared) }
+                        .accessibilityIdentifier("rideDetailScrollView")
+                } else {
+                    cards(prepared)
+                }
+            } else {
+                ProgressView(localization.journeyText("ios.journey.loadingTitle"))
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+        }
+        .task(id: DetailRequest(train: train)) {
+            let train = train
+            let worker = Task.detached(priority: .userInitiated) {
+                try Task.checkCancellation()
+                let result = JourneyDetailSnapshot(train: train)
+                try Task.checkCancellation()
+                return (result, Region.resolved(train))
+            }
+            do {
+                let result = try await withTaskCancellationHandler {
+                    try await worker.value
+                } onCancel: { worker.cancel() }
+                try Task.checkCancellation()
+                prepared = result.0
+                detailRegion = result.1
+            } catch { }
+        }
+    }
+
+    private func cards(_ detail: JourneyDetailSnapshot) -> some View {
+        LazyVStack(spacing: 16) {
+            if includesIdentity { identityCard }
+            if includesStationPair { stationPairCard }
+            timelineCard(detail)
+            if confirmation == .notRidden { notRiddenCard }
+            if train.visible == false { hiddenCard }
+            if riddenRoutes != nil { routeStateCard }
+            serviceCard
+            advancedCard(detail)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+    }
+
+    // MARK: - 1. Identity
+
+    /// The same identity the list row shows, in the same order: the mark, the
+    /// service, the date, then what railway it ran on.
+    ///
+    /// It matters that this is the same shape as ``JourneySummaryRow``'s
+    /// header rather than merely the same facts. A reader arrives here by
+    /// tapping a row, and the row they tapped led with an operator's mark and
+    /// a bold service name; a screen that opens with a generic tram symbol
+    /// beside the same name reads as a different journey for the moment it
+    /// takes to check.
+    private var identityCard: some View {
+        HStack(alignment: .center, spacing: 12) {
+            RouteLogoSquare(train: train, side: 44)
+
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(train.number)
+                        .font(.title2.bold())
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 4)
+                    if let date = train.date, !date.isEmpty {
+                        Text(date)
+                            .font(.subheadline.weight(.semibold))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                }
+                if !identityDetailText.isEmpty {
+                    Text(identityDetailText)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+        .accessibilityElement(children: .combine)
+    }
+
+    private var pendingConfirmationIDs: Set<String> {
+        itineraries?.pendingConfirmationIDs ?? []
+    }
+
+    /// §5.5, from the route store. With no store injected the phase is idle,
+    /// which the resolver reports as unknown unless this record is unconfirmed.
+    private var routeStatus: RideRouteStatus {
+        if let riddenRoutes {
+            return riddenRoutes.status(
+                forTrainID: train.id, pendingConfirmationIDs: pendingConfirmationIDs)
+        }
+        return RouteStatusResolver.status(
+            id: train.id, resolvingIDs: [], entries: [:], phase: .idle,
+            pendingConfirmationIDs: pendingConfirmationIDs)
+    }
+
+    /// 「特急 · 東海道本線 · JR東海」 — the type, then the line and its
+    /// operator, resolved by the same lookup that chose the mark beside them.
+    /// Reads the detected route ahead of the recorded names, so this redraws
+    /// once ``TraversedLineDetector`` lands.
+    private var identityDetailText: String {
+        let detected = traversedLines?.lines(
+            forTrainID: train.id, pendingConfirmationIDs: pendingConfirmationIDs) ?? []
+        let route = JourneyBranding.routeText(of: train, detected: detected, badges: network?.badges)
+        return [train.trainType.flatMap { $0.isEmpty ? nil : $0 },
+                route.isEmpty ? nil : route]
+            .compactMap { $0 }
+            .joined(separator: " · ")
+    }
+
+    // MARK: - 2. Route timing (§7.3)
+
+    @ViewBuilder
+    private var stationPairCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                stationSummary(
+                    stop: train.stops.first,
+                    fallbackName: train.origin,
+                    fallbackCode: train.originStationCode,
+                    role: localization.countryText("popup.departure", fallback: "Departure"),
+                    isArrival: false
+                )
+                    .accessibilityIdentifier("rideDetailDeparture")
+                Spacer(minLength: 8)
+                Image(systemName: "arrow.right")
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 8)
+                    .accessibilityHidden(true)
+                Spacer(minLength: 8)
+                stationSummary(
+                    stop: train.stops.last,
+                    fallbackName: train.destination,
+                    fallbackCode: train.destinationStationCode,
+                    role: localization.countryText("popup.arrival", fallback: "Arrival"),
+                    isArrival: true
+                )
+                    .accessibilityIdentifier("rideDetailArrival")
+                    .multilineTextAlignment(.trailing)
+            }
+            // §7.3 / §10.4: the 24+ hour spelling stays exactly as recorded —
+            // `25:10` is business data, not a formatting accident — and the
+            // detail is where it gets explained instead of rewritten.
+            if crossesMidnight {
+                Text(localization.text("ios.detail.crossDay"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    private func stationSummary(
+        stop: Stop?,
+        fallbackName: String,
+        fallbackCode: String?,
+        role: String,
+        isArrival: Bool
+    ) -> some View {
+        let time = isArrival ? stop?.arrival ?? stop?.departure
+            : stop?.departure ?? stop?.arrival
+        let platform = stop?.platformNumber.flatMap { $0 >= 0 ? $0 : nil }
+        // The record's own spelling goes to the readings table with the code
+        // the record carries; what the reader sees is the answer.
+        let display = localization.stationName(
+            stop?.name ?? fallbackName, in: train, code: stop == nil ? fallbackCode : stop?.n02StationCode)
+        return VStack(alignment: isArrival ? .trailing : .leading, spacing: 4) {
+            Text(role)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text(display)
+                .font(.title3.bold())
+                .fixedSize(horizontal: false, vertical: true)
+            if let time, !time.isEmpty {
+                HStack(spacing: 5) {
+                    Text(time).font(.headline).monospacedDigit()
+                    if Dates.isCrossDayTimeString(time) { nextDayTag }
+                }
+            }
+            if let platform {
+                PlatformBadge(number: platform, compact: true)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            [role, display, time, time.map(nextDayVoiceOver) ?? nil,
+             platform.map { localization.platformText($0) }]
+                .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ", ")
+        )
+    }
+
+    // MARK: - 3. Stop timeline (§7.4)
+
+    private func timelineCard(_ detail: JourneyDetailSnapshot) -> some View {
+        let sections = detail.sections
+        // Deferring the card alone still lays out every stop when it appears.
+        return LazyVStack(alignment: .leading, spacing: 0) {
+            Text(localization.countryText("sec.stops", fallback: "Stops"))
+                .font(.headline)
+                .padding(.bottom, 12)
+            ForEach(Array(train.stops.enumerated()), id: \.offset) { index, stop in
+                let section = sections.indices.contains(index) ? sections[index] : nil
+                let previous = sections.indices.contains(index - 1) ? sections[index - 1] : nil
+                timelineRow(stop, index: index, detail: detail, section: section ?? previous,
+                            showsLineNames: section != nil && (index == 0
+                                || section?.lineNames != previous?.lineNames
+                                || section?.operatorNames != previous?.operatorNames))
+            }
+            localTimeNote
+        }
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+        .accessibilityLabel(localization.countryText("table.stopsLabel", fallback: "Stops table"))
+        .accessibilityIdentifier("rideDetailStops")
+    }
+
+    /// Which clock the times above are on — said once, under the list.
+    ///
+    /// The app converts nothing: `25:10` is 25:10 in the timetable the reader
+    /// copied it from, and rewriting a printed time into the device's zone
+    /// would be this app editing somebody else's schedule. So this is a note
+    /// about what the record already holds, and it is the answer to the
+    /// question a list of bare times raises for a reader who is not in the
+    /// region — which, with five networks in one store, is most of the time.
+    ///
+    /// One note describes the journey's printed clock; any offset comparison
+    /// uses the journey date rather than the day the record is viewed.
+    private var localTimeNote: some View {
+        Text(clockNote(train.journeyClock))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 12)
+    }
+
+    /// The sentence under the stop list, for one clock or for two.
+    ///
+    /// The offset is read on the journey's own day.
+    private func clockNote(_ clock: JourneyClock) -> String {
+        guard clock.crossesTimeZones, train.stops.count > 1 else {
+            let home = clock.home
+            // Read historical offsets on the recorded day.
+            let instant = home.startOfDay(train.date) ?? Date()
+            return localization.journeyText(
+                "ios.clock.localTimes",
+                [
+                    "zone": .string(localization.journeyText(home.name)),
+                    "offset": .string(home.utcOffsetText(at: instant)),
+                ])
+        }
+        // Zone names only, no offsets. The crossing sentence already carries
+        // two of everything, and the offset that matters to a reader
+        // comparing two printed times is the DIFFERENCE, which the ride
+        // duration already accounts for.
+        let first = clock.clock(atStopIndex: 0)
+        let last = clock.clock(atStopIndex: train.stops.count - 1)
+        return localization.journeyText(
+            "ios.clock.localTimesCrossing",
+            [
+                "fromZone": .string(localization.journeyText(first.name)),
+                "toZone": .string(localization.journeyText(last.name)),
+            ])
+    }
+
+    private func timelineRow(_ stop: Stop, index: Int, detail: JourneyDetailSnapshot, section: RouteSection?,
+                             showsLineNames: Bool) -> some View {
+        let lines = timelineLines(for: section)
+        let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
+        return HStack(alignment: .top, spacing: 12) {
+            VStack(spacing: 0) {
+                Circle()
+                    .fill(stop.stopType == "pass_through" ? Color.clear : markerColor)
+                    .overlay {
+                        Circle().stroke(stop.stopType == "pass_through" ? markerColor : .white,
+                                        lineWidth: 1)
+                    }
+                    .frame(width: stop.stopType == "pass_through" ? 9 : 12,
+                           height: stop.stopType == "pass_through" ? 9 : 12)
+                    .opacity(stop.rideSegment ? 1 : 0.4)
+                    .frame(width: 18, height: 18)
+                    .accessibilityHidden(true)
+                if index < train.stops.count - 1 {
+                    HStack(spacing: 2) {
+                        if lines.isEmpty {
+                            Rectangle().fill(markerColor)
+                        } else {
+                            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                                Rectangle().fill(line.color)
+                            }
+                        }
+                    }
+                        .frame(width: CGFloat(max(lines.count, 1) * 3 + max(lines.count - 1, 0) * 2))
+                        .opacity(stop.rideSegment ? 1 : 0.2)
+                        .frame(minHeight: showsLineNames && !lines.isEmpty ? 44 : 26)
+                        .accessibilityHidden(true)
+                }
+            }
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(localization.stationName(
+                        stop.name, code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
+                        region: detailRegion))
+                        .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
+                        .foregroundStyle(stop.rideSegment ? .primary : .secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if stop.stopType != "passenger_stop" && stop.stopType != "pass_through" {
+                        Text(stopTypeName(stop.stopType))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize()
+                    }
+                }
+                if stop.stopType == "pass_through",
+                   stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+                    Text(localization.text(stop.routeEditing?.generatedBy != nil
+                        ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                if showsLineNames {
+                    ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                        HStack(spacing: 6) {
+                            Rectangle().fill(line.color).frame(width: 18, height: 3)
+                                .accessibilityHidden(true)
+                            Text(line.name).font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+                // …and `ride_segment == false` is spelled out rather than
+                // being carried by opacity alone.
+                if !stop.rideSegment {
+                    Text(localization.text("ios.detail.notRidden"))
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Spacer(minLength: 8)
+            timeColumn(stop)
+        }
+        .frame(minHeight: 44, alignment: .top)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(([accessibilityLabel(for: stop)]
+            + (showsLineNames ? lines.map(\.name) : [])).joined(separator: ", "))
+        .accessibilityIdentifier("rideDetailStop-\(index)")
+    }
+
+    /// Each connecting straight line follows the recorded section's railway
+    /// palette, so a through service changes colour at its changeover station.
+    private func timelineLines(for section: RouteSection?) -> [(name: String, color: Color)] {
+        guard let section else { return [] }
+        let recordedNames = section.lineNames ?? []
+        let names = recordedNames.isEmpty
+            ? (section.lineIDs ?? []).compactMap { network?.badges.lineName(lineID: $0) }
+            : recordedNames
+        let region = detailRegion.code
+        return names.map { name in
+            // Names and IDs are independently normalized in the record;
+            // resolve complete identities rather than pairing array offsets.
+            let colorHex = (section.operatorNames ?? []).lazy.compactMap {
+                    network?.badges.color(region: region, operatorName: $0,
+                                          lineName: name, dark: colorScheme == .dark)
+                }.first
+                ?? (section.lineIDs ?? []).lazy.compactMap { lineID -> String? in
+                    guard network?.badges.lineName(lineID: lineID) == name else { return nil }
+                    return network?.badges.color(lineID: lineID, dark: colorScheme == .dark)
+                }.first
+                ?? network?.badges.color(region: region, operatorName: nil,
+                                         lineName: name, dark: colorScheme == .dark)
+            let displayName = network?.badges.passengerName(
+                region: region, operatorName: section.operatorNames?.first, lineName: name) ?? name
+            return (displayName, colorHex.flatMap { Color(hex: $0) } ?? JourneyBranding.color(of: train))
+        }
+    }
+
+    /// Arrival above departure, always in that order, trailing-aligned and
+    /// monospaced (§7.4). Both slots keep their place even when one is empty,
+    /// so the column does not reshuffle from row to row.
+    private func timeColumn(_ stop: Stop) -> some View {
+        VStack(alignment: .trailing, spacing: 2) {
+            if stop.stopType == "pass_through",
+               stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+                Text("レ")
+                    .font(.subheadline.monospaced())
+                    .foregroundStyle(.secondary)
+                    .frame(width: 52)
+            } else {
+                timeRow(stop.arrival,
+                        title: localization.countryText("tag.arr", fallback: "Arr"), emphasised: true)
+                timeRow(stop.departure,
+                        title: localization.countryText("tag.dep", fallback: "Dep"), emphasised: false)
+            }
+            actualTimeRow(localization.text("ios.editor.actualArrival"),
+                          scheduled: stop.arrival, actual: stop.actualArrival)
+            actualTimeRow(localization.text("ios.editor.actualDeparture"),
+                          scheduled: stop.departure, actual: stop.actualDeparture)
+            if let platform = stop.platformNumber, platform >= 0 {
+                PlatformBadge(number: platform, compact: true)
+            }
+        }
+        .frame(minWidth: 52, alignment: .trailing)
+        .accessibilityHidden(true)
+    }
+
+    @ViewBuilder
+    private func actualTimeRow(_ title: String, scheduled: String?, actual: String?) -> some View {
+        if let actual, !actual.isEmpty {
+            HStack(spacing: 4) {
+                Text("\(title) \(actual)")
+                if let status = StopTimingStatus.localizedLabel(
+                    scheduled: scheduled, actual: actual, localization: localization) {
+                    Text(status).foregroundStyle(
+                        status == localization.text("ios.editor.actualOnTime")
+                            ? Color.secondary : Color.orange)
+                }
+            }
+            .font(.caption2.monospacedDigit())
+        }
+    }
+
+    @ViewBuilder
+    private func timeRow(_ time: String?, title: String, emphasised: Bool) -> some View {
+        if let time, !time.isEmpty {
+            HStack(spacing: 4) {
+                Text(title).font(.caption2).foregroundStyle(.secondary)
+                Text(time)
+                    .font(emphasised ? .subheadline : .caption)
+                    .monospacedDigit()
+                    .foregroundStyle(emphasised ? AnyShapeStyle(.primary) : AnyShapeStyle(.secondary))
+                if Dates.isCrossDayTimeString(time) { nextDayTag }
+            }
+        }
+    }
+
+    private var nextDayTag: some View {
+        Text(localization.text("ios.detail.nextDay"))
+            .font(.caption2.weight(.semibold))
+            .padding(.horizontal, 5)
+            .padding(.vertical, 1)
+            .background(Color.secondary.opacity(0.14), in: Capsule())
+            .foregroundStyle(.secondary)
+            .accessibilityHidden(true)
+    }
+
+    // MARK: - 4a. Not ridden yet (§5.3)
+
+    /// What the record says about whether this journey happened.
+    private var confirmation: RideLedger.Confirmation {
+        RideLedger.confirmation(of: train)
+    }
+
+    private var confirmationKey: String {
+        switch confirmation {
+        case .ridden: "ios.detail.riddenYes"
+        case .partly: "ios.detail.riddenPartly"
+        case .notRidden: "ios.detail.riddenNo"
+        }
+    }
+
+    /// The prominent half of the ride confirmation, shown only while the
+    /// journey is not being counted.
+    ///
+    /// Written the way ``hiddenCard`` is, and placed in the same slot, because
+    /// it is the same kind of statement: a record is in a state that changes
+    /// what the rest of the app shows, and the action out of that state is the
+    /// primary one while it lasts. The copy has to carry the whole rule — that
+    /// nothing is wrong, that the mileage is simply not counted, and that a
+    /// date will never decide this — because this card is the only place the
+    /// reader meets it.
+    private var notRiddenCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(
+                localization.text("ios.detail.notRiddenTitle"),
+                systemImage: "circle.dashed"
+            )
+            .font(.headline)
+            Text(localization.text("ios.detail.notRiddenDetail"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let onSetRidden {
+                Button(localization.text("ios.detail.confirmRidden")) { onSetRidden(true) }
+                    .modifier(DetailActionSizing(prominent: true, visualHeight: actionButtonHeight))
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    // MARK: - 4b. Hidden (§8.5)
+
+    private var hiddenCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(
+                localization.text("ios.detail.hiddenTitle"),
+                systemImage: "eye.slash"
+            )
+            .font(.headline)
+            Text(localization.text("ios.detail.hiddenDetail"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            // §8.5: showing it again is the primary action while hidden.
+            if let onSetVisible {
+                Button(localization.text("ios.detail.showOnMap")) { onSetVisible(true) }
+                    .modifier(DetailActionSizing(prominent: true, visualHeight: actionButtonHeight))
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    // MARK: - 4c. Route state (§5.5)
+
+    private var routeStateCard: some View {
+        RideRouteStateCard(
+            train: train,
+            status: routeStatus,
+            surface: surface,
+            rebuiltSections: rebuiltSections,
+            onRebuild: onRebuild.map { rebuildAction in
+                {
+                    if let sections = rebuildAction() {
+                        rebuild = .done(sections: sections)
+                    }
+                }
+            },
+            onEditStops: onEditStops,
+            resourceWarnings: routeResourceWarnings)
+    }
+
+    private var routeResourceWarnings: [String] {
+        var messages = riddenRoutes?.resourceWarnings(for: train) ?? []
+        if let failure = traversedLines?.failureMessage(forTrainID: train.id), !messages.contains(failure) {
+            messages.append(failure)
+        }
+        return messages
+    }
+
+    private var rebuiltSections: Int? {
+        if case .done(let sections) = rebuild { return sections }
+        return nil
+    }
+
+    // MARK: - 5. Service metadata
+
+    private var serviceCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(localization.text("ios.detail.service")).font(.headline)
+            if let notes = train.notes, !notes.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(localization.text("ios.ai.notes")).font(.subheadline.weight(.semibold))
+                    Text(notes).font(.subheadline).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if let company = train.company, !company.isEmpty {
+                LabeledContent(
+                    localization.countryText("field.company", fallback: "Operator"), value: company)
+            }
+            if let type = train.trainType, !type.isEmpty {
+                LabeledContent(
+                    localization.countryText("field.trainType", fallback: "Train type"), value: type)
+            }
+            if let vehicleType = train.vehicleType, !vehicleType.isEmpty {
+                LabeledContent(localization.text("ios.editor.vehicleType"), value: vehicleType)
+            }
+            if let direction = train.direction, !direction.isEmpty {
+                LabeledContent(
+                    localization.countryText("field.direction", fallback: "Direction"),
+                    value: direction)
+            }
+            LabeledContent(
+                localization.text("ios.recordedStops", fallback: "Recorded stops"),
+                value: train.stops.count.formatted()
+            )
+            LabeledContent(
+                localization.text("ios.detail.riddenState"),
+                value: localization.text(confirmationKey)
+            )
+            // Offered only while the journey IS counted — while it is not, the
+            // opposite action is the prominent one on the card above, and two
+            // copies of one control on one screen is two answers to one
+            // question. The same rule ``onSetVisible`` follows two rows down.
+            if let onSetRidden, confirmation != .notRidden {
+                Button(
+                    localization.text("ios.detail.markNotRidden"),
+                    systemImage: "circle.dashed"
+                ) {
+                    onSetRidden(false)
+                }
+                .modifier(DetailActionSizing(visualHeight: actionButtonHeight))
+            }
+            LabeledContent(
+                localization.text("ios.visibility", fallback: "Visibility"),
+                value: train.visible == false
+                    ? localization.countryText("state.hidden", fallback: "Hidden")
+                    : localization.countryText("state.shown", fallback: "Shown")
+            )
+            // §5.4 wording: a specific verb, not "toggle display". Offered
+            // only while the journey is shown — while it is hidden the same
+            // action is the prominent one on the card above, and two copies of
+            // one control on one screen is two answers to one question.
+            if let onSetVisible, train.visible != false {
+                Button(localization.text("ios.detail.hideFromMap"), systemImage: "eye.slash") {
+                    onSetVisible(false)
+                }
+                .accessibilityIdentifier("rideDetailHide")
+                .modifier(DetailActionSizing(visualHeight: actionButtonHeight))
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    // MARK: - 6. Advanced record details
+
+    private func advancedCard(_ detail: JourneyDetailSnapshot) -> some View {
+        DisclosureGroup {
+            LazyVStack(alignment: .leading, spacing: 12) {
+                LabeledContent(
+                    localization.countryText("field.id", fallback: "Identifier"), value: train.id)
+                LabeledContent(
+                    localization.text("ios.routePolicy", fallback: "Route policy"),
+                    value: routePolicySummary)
+                Divider()
+                Text(
+                    localization.text(
+                        "ios.detail.routeSections", params: ["count": .number(Double(train.routeSections?.count ?? 0))])
+                )
+                .font(.subheadline.weight(.semibold))
+                if let sections = train.routeSections, !sections.isEmpty {
+                    ForEach(Array(sections.enumerated()), id: \.offset) { index, section in
+                        Text(sectionLabel(section, index: index, detail: detail))
+                            .font(.caption)
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("rideDetailSection-\(index)")
+                    }
+                } else {
+                    Text(localization.text("ios.detail.noRouteSections"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 8)
+        } label: {
+            Text(localization.text("ios.detail.advanced")).font(.headline)
+        }
+        .accessibilityIdentifier("rideDetailAdvancedToggle")
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    private var routePolicySummary: String {
+        guard let policy = train.routePolicy else {
+            return localization.text("ios.editor.automatic")
+        }
+        switch policy.institutionFilterMode {
+        case "hard": return localization.text("ios.editor.hardConstraint")
+        case "soft": return localization.text("ios.editor.softPreference")
+        default: return localization.text("ios.editor.automatic")
+        }
+    }
+
+    private func sectionLabel(_ section: RouteSection, index: Int, detail: JourneyDetailSnapshot) -> String {
+        localization.text(
+            "ios.route.affectedSection", params: [
+                "index": .number(Double(index + 1)),
+                "from": .string(localization.sectionEndpoint(name: section.from, code: section.fromN02StationCode,
+                    in: train, stopIndex: index, resolveCode: detail.stationCode(named:recorded:))),
+                "to": .string(localization.sectionEndpoint(name: section.to, code: section.toN02StationCode,
+                    in: train, stopIndex: index + 1, resolveCode: detail.stationCode(named:recorded:))),
+            ])
+    }
+
+    // MARK: - Values
+
+    private var crossesMidnight: Bool {
+        Dates.hasCrossDayTimes(train)
+    }
+
+    private func nextDayVoiceOver(_ time: String) -> String? {
+        Dates.isCrossDayTimeString(time)
+            ? localization.text("ios.detail.nextDay") : nil
+    }
+
+    private func stopTypeName(_ type: String) -> String {
+        localization.countryText("stoptype.\(type)", fallback: type)
+    }
+
+    /// §7.4's reading order: 站名，类型，到达时间，出发时间，是否乘坐.
+    private func accessibilityLabel(for stop: Stop) -> String {
+        var values = [stop.name, stopTypeName(stop.stopType)]
+        if stop.stopType == "pass_through",
+           stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+            values.append(localization.text(stop.routeEditing?.generatedBy != nil
+                ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+        }
+        if let arrival = stop.arrival, !arrival.isEmpty {
+            values.append(
+                [
+                    localization.countryText("popup.arrival", fallback: "arrival"), arrival,
+                    nextDayVoiceOver(arrival),
+                ].compactMap { $0 }.joined(separator: " "))
+        }
+        if let departure = stop.departure, !departure.isEmpty {
+            values.append(
+                [
+                    localization.countryText("popup.departure", fallback: "departure"), departure,
+                    nextDayVoiceOver(departure),
+                ].compactMap { $0 }.joined(separator: " "))
+        }
+        if let actual = stop.actualArrival, !actual.isEmpty {
+            values.append([
+                localization.text("ios.editor.actualArrival"), actual,
+                StopTimingStatus.localizedLabel(
+                    scheduled: stop.arrival, actual: actual, localization: localization),
+            ].compactMap { $0 }.joined(separator: " "))
+        }
+        if let actual = stop.actualDeparture, !actual.isEmpty {
+            values.append([
+                localization.text("ios.editor.actualDeparture"), actual,
+                StopTimingStatus.localizedLabel(
+                    scheduled: stop.departure, actual: actual, localization: localization),
+            ].compactMap { $0 }.joined(separator: " "))
+        }
+        values.append(
+            "\(localization.countryText("popup.rideSegment", fallback: "ridden")): "
+                + localization.countryText(
+                    stop.rideSegment ? "popup.yes" : "popup.no",
+                    fallback: stop.rideSegment ? "yes" : "no")
+        )
+        return values.joined(separator: ", ")
+    }
+}
+
+// MARK: - Route state (§5.5, §8.4, §13.3)
+
+/// The card that answers "路线是否可信，用户是否需要参与？".
+///
+/// Every failing state is written in §13.3's four parts, in this order:
+///
+///   title      发生了什么      "Route needs review"
+///   detail     影响了什么      which sections did not draw, by name
+///   kept       保留了什么      the record is unchanged, no straight line
+///   actions    下一步          edit the stops first, rebuild second
+///
+/// The affected-section list is the part that could not exist before this
+/// slice. `RiddenRouteStore` answered "did this journey draw?" with one bit,
+/// so a six-section journey that drew four looked exactly like one that drew
+/// six; `RouteOutcome.partial` now carries the stretches that did not, and
+/// they are named here rather than summarised as "something failed".
+private struct RideRouteStateCard: View {
+    let train: Train
+    let status: RideRouteStatus
+    let surface: AnyShapeStyle
+    /// Set once a rebuild has written sections back, so §8.4's "在原位置显示
+    /// 完成状态" is an in-place line rather than an alert.
+    let rebuiltSections: Int?
+    let onRebuild: (() -> Void)?
+    let onEditStops: (() -> Void)?
+    var resourceWarnings: [String] = []
+
+    @Environment(AppLocalization.self) private var localization
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            header
+            if let detail {
+                Text(detail)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if !resourceWarnings.isEmpty {
+                VStack(alignment: .leading, spacing: 6) {
+                    Label(localization.text("ios.route.resourceSupplementFailed"), systemImage: "exclamationmark.triangle")
+                        .font(.subheadline.weight(.semibold))
+                    ForEach(resourceWarnings, id: \.self) { message in
+                        Text(message).font(.footnote)
+                    }
+                }
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            if !gaps.isEmpty { affectedSections }
+            // §13.3 line three, and §1.1's promise: nothing was deleted and no
+            // straight line stood in for railway.
+            if status.isNoteworthy, status != .unknown, status != .resolving {
+                Text(localization.text("ios.route.recordKept"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if status.blocksPlayback, status != .noRoute {
+                Text(localization.text("ios.route.playbackBlocked"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            actions
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .background(
+            surface,
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.cardCornerRadius,
+                style: .continuous))
+    }
+
+    private var header: some View {
+        HStack(spacing: 8) {
+            if isBusy {
+                ProgressView().controlSize(.small)
+            } else {
+                Image(systemName: symbol)
+                    .foregroundStyle(tint)
+                    .accessibilityHidden(true)
+            }
+            Text(title)
+                .font(.headline)
+                .foregroundStyle(tint)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        // §10.2: the state changes under the reader while a solve runs.
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isBusy ? .updatesFrequently : [])
+    }
+
+    private var affectedSections: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(localization.text("ios.route.affected"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            ForEach(gaps, id: \.segmentIndex) { gap in
+                Text(gap.isBoundary
+                    ? localization.text("ios.route.connectionUnverified", params: [
+                        "station": .string(name(gap.from, stopIndex: gap.segmentIndex)),
+                    ])
+                    : localization.text(
+                        "ios.route.affectedSection", params: [
+                            "index": .number(Double(gap.segmentIndex + 1)),
+                            "from": .string(name(gap.from, stopIndex: gap.segmentIndex)),
+                            "to": .string(name(gap.to, stopIndex: gap.segmentIndex + 1)),
+                        ])
+                )
+                .font(.footnote)
+                .monospacedDigit()
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            tint.opacity(0.12),
+            in: RoundedRectangle(
+                cornerRadius: RailStyle.controlCornerRadius,
+                style: .continuous))
+    }
+
+    @ViewBuilder
+    private var actions: some View {
+        // §8.4: the explanation comes *before* the button, so a rebuild is
+        // never a verb with no stated consequence.
+        if onRebuild != nil {
+            Text(localization.text("ios.route.rebuildExplain"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+
+        VStack(alignment: .leading, spacing: 10) {
+            // §8.4 / §5.5: for a route that needs a human decision, editing the
+            // stops leads. Offering "retry" as the prominent action against a
+            // solver that already failed on the same input is the dead loop the
+            // spec names.
+            if needsHumanFix, let onEditStops {
+                Button(localization.text("ios.route.editStops"), systemImage: "list.bullet") {
+                    onEditStops()
+                }
+                .buttonStyle(.borderedProminent)
+                .frame(minHeight: 44)
+            }
+            if let onRebuild {
+                let button = Button(
+                    localization.countryText("btn.rebuildRoute", fallback: "Rebuild route"),
+                    systemImage: "arrow.trianglehead.2.clockwise.rotate.90",
+                    action: onRebuild
+                )
+                .frame(minHeight: 44)
+                .disabled(isBusy)
+                // §3.1: exactly one filled button on a surface. When the stops
+                // need a human decision, "Edit stops" above holds that slot.
+                if prefersProminentRebuild {
+                    button.buttonStyle(.borderedProminent)
+                } else {
+                    button.buttonStyle(.bordered)
+                }
+            }
+            if needsHumanFix, onEditStops == nil, onRebuild == nil {
+                Text(localization.text("ios.route.viewConstraints"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+
+        if let rebuiltSections {
+            // §8.4: "普通成功无需弹窗；在原位置显示完成状态".
+            Text(
+                localization.countryText(
+                    "status.routeSectionsRebuilt",
+                    params: ["count": .number(Double(rebuiltSections))],
+                    fallback: "Rebuilt \(rebuiltSections) route sections.")
+            )
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityAddTraits(.updatesFrequently)
+        }
+    }
+
+    // MARK: - What the state says
+
+    private var isBusy: Bool { status == .resolving || status == .unknown }
+
+    private var needsHumanFix: Bool {
+        switch status {
+        case .pendingConfirmation, .needsReview, .unavailable, .noRoute: true
+        default: false
+        }
+    }
+
+    /// The rebuild is the prominent action only when nothing better is offered
+    /// — §3.1 allows exactly one filled button on a surface.
+    private var prefersProminentRebuild: Bool {
+        !needsHumanFix || onEditStops == nil
+    }
+
+    private var title: String {
+        switch status {
+        case .pendingConfirmation: localization.text("ios.routeGuide.pending")
+        case .unknown: localization.text("ios.route.preparing")
+        case .resolving: localization.text("ios.route.resolving")
+        case .resolved: localization.text("ios.route.resolved")
+        case .needsReview: localization.text("ios.route.needsReview")
+        case .unavailable: localization.text("ios.route.unavailable")
+        case .noRoute: localization.text("ios.route.noSections")
+        }
+    }
+
+    private var detail: String? {
+        switch status {
+        case .pendingConfirmation:
+            localization.text("ios.routeGuide.pendingNote")
+        case .unknown:
+            localization.text("ios.route.preparingDetail")
+        case .resolving:
+            localization.text("ios.route.resolvingDetail")
+        case .resolved(let sections):
+            localization.text(
+                "ios.route.resolvedDetail", params: ["count": .number(Double(sections))])
+        case .needsReview(let solved, let expected, _):
+            localization.text(
+                "ios.route.needsReviewDetail", params: ["solved": .number(Double(solved)), "expected": .number(Double(expected))])
+        case .unavailable(let expected, let reason):
+            // §13.3 line two — what it affected. A load failure carries its own
+            // message; the ordinary "no path fits the constraints" case is said
+            // in the catalog's words, which both apps already share.
+            reason
+                ?? (localization.text(
+                    "ios.route.unavailableDetail", params: ["expected": .number(Double(expected))])
+                    + "\n"
+                    + localization.countryText("status.routeNoPath", fallback: ""))
+        case .noRoute:
+            localization.text("ios.route.noSectionsDetail")
+        }
+    }
+
+    /// The stretches with no drawn railway.
+    ///
+    /// `partial` carries them; `unavailable` does not, because nothing solved
+    /// and the store has no per-section answer to report — so the journey's own
+    /// section list is what is affected, and it is read off the record here.
+    private var gaps: [RiddenRouteStore.SectionGap] {
+        switch status {
+        case .needsReview(_, _, let gaps):
+            return gaps
+        case .unavailable:
+            return (train.routeSections ?? []).enumerated().map { index, section in
+                RiddenRouteStore.SectionGap(
+                    segmentIndex: index, from: section.from, to: section.to)
+            }
+        default:
+            return []
+        }
+    }
+
+    private func name(_ value: String?, stopIndex: Int) -> String {
+        let stop = train.stops.indices.contains(stopIndex) ? train.stops[stopIndex] : nil
+        if let value, !value.isEmpty {
+            return localization.stationName(value, in: train, code: stop?.n02StationCode)
+        }
+        if let stop, !stop.name.isEmpty {
+            return localization.stationName(stop.name, in: train, code: stop.n02StationCode)
+        }
+        return localization.text("ios.route.unnamedStation")
+    }
+
+    private var symbol: String {
+        switch status {
+        case .pendingConfirmation: "questionmark.circle"
+        case .resolved: "checkmark.circle"
+        case .needsReview: "exclamationmark.triangle"
+        case .unavailable: "xmark.octagon"
+        case .noRoute: "point.topleft.down.to.point.bottomright.curvepath"
+        case .unknown, .resolving: "clock"
+        }
+    }
+
+    /// §10.5: colour is the second encoding, never the only one — the title
+    /// beside it already says the state in words.
+    private var tint: Color {
+        switch status {
+        case .needsReview: .orange
+        case .unavailable: .red
+        default: .primary
+        }
+    }
+}

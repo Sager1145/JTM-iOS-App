@@ -1,16 +1,17 @@
+import RailPresentation
 import XCTest
 
 @MainActor
 final class StatisticsRhythmYearUITests: XCTestCase {
     func testPassportYearBarScopesRidesAndMonthColumns() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "stats"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "new-year-grand-loop"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "jp"
-        app.launch()
+        app.uiTestLaunch[.tab] = "stats"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sample] = "new-year-grand-loop"
+        app.uiTestLaunch[.statsRegion] = "jp"
+        UITestLaunchSupport.launch(app)
 
         let bar = element("statisticsYearBar", in: app)
         XCTAssertTrue(bar.waitForExistence(timeout: 120))
@@ -43,12 +44,18 @@ final class StatisticsRhythmYearUITests: XCTestCase {
         screenshot.lifetime = .keepAlways
         add(screenshot)
 
+        let widget = element("statisticsWidget-rhythm", in: app)
+        for _ in 0..<8 where !widget.isHittable { app.swipeUp() }
+        XCTAssertTrue(widget.isHittable)
+        widget.tap()
+
         let januaryColumn = element("statisticsRhythmColumn-1", in: app)
         for _ in 0..<8 where !januaryColumn.isHittable { app.swipeUp() }
         XCTAssertTrue(januaryColumn.isHittable)
         XCTAssertEqual(januaryColumn.value as? String, "\(january) train(s)")
         XCTAssertEqual(element("statisticsRhythmColumn-12", in: app).value as? String,
                        "\(december) train(s)")
+        app.buttons["Done"].tap()
     }
 
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {

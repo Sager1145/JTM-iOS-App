@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -13,18 +14,18 @@ final class BasemapRenderingTests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-AppleInterfaceStyle", "Light", "-appearance", "light",
                                "-interface-language", "en",
                                "-auto-focus-zoom", "NO"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = "network,routes"
-        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "35.68,139.75,0.12"
-        app.launch()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.statsRegion] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.layers] = "network,routes"
+        app.uiTestLaunch[.gestureTarget] = "1"
+        app.uiTestLaunch[.camera] = "35.68,139.75,0.12"
+        UITestLaunchSupport.launch(app)
 
         let status = app.staticTexts["railMapRenderStatus"]
         let target = app.otherElements["railMapGestureTarget"]

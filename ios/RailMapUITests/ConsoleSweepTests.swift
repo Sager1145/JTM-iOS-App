@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -370,16 +371,16 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func launch(tab: String, stage: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
+        app.uiTestLaunch[.tab] = tab
+        app.uiTestLaunch[.stage] = stage
         // A fresh installation deliberately starts empty. Sharing statistics
         // requires actual ridden journeys, so load a known bundled sample.
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store-tw"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "tw"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store-tw"
+        app.uiTestLaunch[.statsRegion] = "tw"
+        UITestLaunchSupport.launch(app)
         return app
     }
 

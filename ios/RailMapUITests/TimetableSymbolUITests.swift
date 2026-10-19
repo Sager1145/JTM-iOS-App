@@ -6,8 +6,8 @@ final class TimetableSymbolUITests: XCTestCase {
 
     func testPassAndNotViaSymbolsRemainVisibleInSourceTimetable() {
         for (service, tripPrefix, expectedLabel) in [
-            ("北斗", "timetableDetails-jr-hokkaido.hokuto.1.", "通過"),
-            ("ハウステンボス", "timetableDetails-jr-kyushu.huis-ten-bosch.11.", "この列車は経由しません"),
+            ("北斗", "timetableDetails-jr-hokkaido.hokuto.1.", "Passes through"),
+            ("ハウステンボス", "timetableDetails-jr-kyushu.huis-ten-bosch.11.", "This train does not run via this station"),
         ] {
             let app = XCUIApplication()
             app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",

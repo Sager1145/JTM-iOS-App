@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -30,20 +31,20 @@ final class PlaybackVideoExportTests: XCTestCase {
         }
 
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             "-playback-video-v1", "{ shape = native; quality = q540; bitrate = small; }",
         ]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.playback] = "1"
         // One bundled, single-source-line journey; asynchronous route arrival
         // must not silently select a different sample for another test.
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+        app.uiTestLaunch[.playbackTrainId] =
             "20260703_02_tokaido_shinkansen_hikari_kodama"
-        app.launch()
+        UITestLaunchSupport.launch(app)
 
         let pauseResume = element("playbackPauseResume", in: app)
         XCTAssertTrue(pauseResume.waitForExistence(timeout: 60))
@@ -100,21 +101,21 @@ final class PlaybackVideoExportTests: XCTestCase {
         }
 
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = [
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             // VideoExportSettings reads one persisted preferences dictionary.
             "-playback-video-v1", "{ shape = native; quality = q540; bitrate = small; }",
         ]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.playback] = "1"
         // One bundled, single-source-line journey; asynchronous route arrival
         // must not silently select a different sample for another test.
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+        app.uiTestLaunch[.playbackTrainId] =
             "20260703_02_tokaido_shinkansen_hikari_kodama"
-        app.launch()
+        UITestLaunchSupport.launch(app)
 
         let pauseResume = element("playbackPauseResume", in: app)
         XCTAssertTrue(pauseResume.waitForExistence(timeout: 60))

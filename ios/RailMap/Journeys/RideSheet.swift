@@ -1,0 +1,333 @@
+import RailPresentation
+import SwiftUI
+
+// MARK: - where the panel is
+
+/// What the ride panel is showing.
+///
+/// The panel is *one* surface whose content is replaced. It is not a stack of
+/// surfaces: opening a journey does not present a second card over the list,
+/// it swaps what the single card draws. The list stays mounted underneath —
+/// its search text, its scroll offset and its expanded sections are still
+/// there when the reader comes back, because the view was never torn down.
+///
+/// That is the whole reason this is an enum and not a `NavigationPath`. A push
+/// would give correct navigation and lose the state; a second `.sheet` would
+/// give correct state and stack two translucent surfaces over the map, which
+/// is the one thing a map-first layout cannot afford.
+enum RideRoute: Equatable {
+    case home
+    case ride(String)
+
+    /// The route's *kind*, which is what detents and measurements are keyed
+    /// by. Two different journeys are two `.ride` routes but one card: the
+    /// reader who left the card half-open expects it half-open for the next
+    /// journey too, not reset because the identifier changed.
+    enum Kind: Hashable {
+        case home
+        case ride
+    }
+
+    var kind: Kind {
+        switch self {
+        case .home: .home
+        case .ride: .ride
+        }
+    }
+
+    var rideID: String? {
+        if case .ride(let id) = self { return id }
+        return nil
+    }
+
+    var isHome: Bool { self == .home }
+}
+
+/// How much of the panel is showing.
+///
+/// Named rather than measured, because the content is written against these
+/// three states: at `.compact` a card shows only enough to say what it is, at
+/// `.medium` it shows its body, at `.expanded` it takes the window. Content
+/// that branches on a raw height ends up with a different answer on every
+/// device; content that branches on a stage does not.
+enum SheetStage: Int, CaseIterable, Comparable {
+    case compact
+    case medium
+    case expanded
+
+    static func < (lhs: SheetStage, rhs: SheetStage) -> Bool { lhs.rawValue < rhs.rawValue }
+
+    /// The same stop, in the vocabulary §4.3 gives the reader.
+    ///
+    /// Two names for three states looks like duplication and is not. This enum
+    /// keys *measurements* — `compactChrome`, `mediumHeight`, the detent
+    /// dictionary — and its cases are named for what the CONTENT does at each
+    /// one. `PanelDetent` is what the interface SAYS, it is shared with the web
+    /// app, and it is what the release physics are written against. Renaming
+    /// the cases here would have renamed a measurement key to a user-facing
+    /// word; keeping two names and one mapping is what makes the boundary
+    /// visible.
+    var detent: PanelDetent {
+        switch self {
+        case .compact: .docked
+        case .medium: .half
+        case .expanded: .full
+        }
+    }
+
+    init(_ detent: PanelDetent) {
+        switch detent {
+        case .docked: self = .compact
+        case .half: self = .medium
+        case .full: self = .expanded
+        }
+    }
+
+    /// What a tap on the grabber advances to. Wraps, so the control is never
+    /// inert — see ``PanelDetent/next``.
+    var next: SheetStage { SheetStage(detent.next) }
+    var higher: SheetStage { SheetStage(detent.higher) }
+    var lower: SheetStage { SheetStage(detent.lower) }
+}
+
+extension View {
+    /// Keeps a covered card mounted while taking it out of the reader's way.
+    ///
+    /// Deliberately *not* `frame(maxHeight: 0)`, which is how this is usually
+    /// written: the panel states its own height, so nothing here contributes
+    /// to layout anyway, and proposing zero height to a covered `ScrollView`
+    /// is what loses its offset. Hidden, inert, unspoken — and unchanged.
+    ///
+    /// ## The swap is a single frame, on purpose
+    ///
+    /// Both layers draw straight onto the panel's surface and neither carries
+    /// a background of its own, so any interval in which both are partly
+    /// visible is an interval in which the reader is looking at two sets of
+    /// text through one another. A cross-fade between them IS that interval —
+    /// it was 0.16 seconds here, short enough to pass for a flicker and long
+    /// enough to look like one, and slowing it down only made the double
+    /// exposure legible.
+    ///
+    /// So the layers do not animate at all: `nil` rather than no modifier,
+    /// which also stops a `withAnimation` around the selection from putting
+    /// the fade back on the layer that is leaving. The motion belongs to the
+    /// card that ARRIVES, over its own content, where there is nothing behind
+    /// it to show through — see ``ArrivingJourneyCard``.
+    func residentLayer(isTop: Bool) -> some View {
+        self
+            .opacity(isTop ? 1 : 0)
+            .allowsHitTesting(isTop)
+            .accessibilityHidden(!isTop)
+            .animation(nil, value: isTop)
+    }
+}
+
+/// The journey card, settling into the place the list just left.
+///
+/// ## Why this is a view with state, and not a transition
+///
+/// The obvious spelling of an arrival is a `.transition` on the card, or an
+/// offset on the layer that holds it. Neither works here, and the reason is
+/// the same for both: `ridesList` is mounted before the reader taps a row and
+/// after it, so anything the LIST layer animates has a previous value to
+/// travel from — but the card is built when a journey is selected and taken
+/// down when it is not. On the frame it arrives, every value it has is being
+/// created at its resting state. Measured over a slowed-down handover, the
+/// list moved and the card simply appeared, fully drawn, in one frame.
+///
+/// So the arrival is driven by state that changes AFTER the card is mounted.
+/// `settled` is `false` for exactly one rendered frame — the card is laid out
+/// where it belongs and drawn slightly small, slightly low and invisible —
+/// and then `task` springs it to its resting state. That is a transaction
+/// like any other, with a before and an after, which is the one thing an
+/// insertion cannot give.
+///
+/// Rising rather than sliding in from a side, because the row it came from
+/// was below it in the same panel; scaling from `.top` rather than the
+/// middle, because the header is the part that has to look planted while the
+/// rest of the card is still on its way.
+///
+/// There is no matching departure. Closing the card puts the reader back on a
+/// list that is ALREADY drawn underneath it, so a card animating out is a
+/// card the list is read through for the length of the animation — the one
+/// thing this arrangement cannot afford. Going in is a movement; coming back
+/// is a cut.
+///
+/// Changing journey is going in again. The caller keys this view to the
+/// journey's id, so a second selection takes the first card down in the same
+/// frame and mounts a fresh one that arrives the same way — over a panel
+/// with nothing else drawn on it, since the list is under the card, not
+/// beside it. Nothing here can tell a first selection from a switch, and
+/// nothing needs to. The one exception is the caller's as well: while the
+/// transport is on screen it keeps a single identity through the run's
+/// hand-offs, so the card arrives when the run begins and when it is
+/// stopped, not at every journey in between.
+struct ArrivingJourneyCard<Content: View>: View {
+    /// §9.4: less motion means the card fades into place from where it
+    /// belongs, rather than travelling or growing there.
+    var reduceMotion: Bool
+    @ViewBuilder var content: Content
+
+    @State private var settled = false
+
+    var body: some View {
+        content
+            .scaleEffect(scale, anchor: .top)
+            .offset(y: rise)
+            .opacity(settled ? 1 : 0)
+            .task {
+                withAnimation(
+                    RailMotion.animation(RailMotion.spring, reduceMotion: reduceMotion)
+                ) {
+                    settled = true
+                }
+            }
+    }
+
+    private var scale: CGFloat {
+        settled || reduceMotion ? 1 : RailMotion.arrivalScale
+    }
+
+    private var rise: CGFloat {
+        settled || reduceMotion ? 0 : RailMotion.arrivalRise
+    }
+}
+
+// MARK: - shared card furniture, and what used to sit above it
+//
+// The hand-drawn panel that lived here is gone: `RideSheetMetrics` (three
+// measured stops, `dragging`, the rubber band), `SheetHandle` and
+// `railSheetSurface()` were the geometry, gesture and material of a panel this
+// app drew itself, and §9.5.6 replaced all three with one resident system
+// Sheet — which owns detents, direction, predicted endpoint, velocity handoff,
+// boundary resistance and the iOS 26 morph to edge-to-edge (see
+// `BottomChrome.swift`). They had no callers left, and leaving them meant the
+// question "where is this app's panel physics written" had two answers that
+// disagreed; `PanelDetentResolver` still holds the shared arithmetic in
+// RailPresentation, where the web app and its tests read it.
+//
+// `SheetCompactHeightKey` and `compactChromeProbe` went with them: nothing
+// read the preference, and `RideCard` was still rendering a hidden second copy
+// of its own header on every layout pass to publish it. What they were built
+// to do — measure the collapsed stop rather than guess it — is done now by
+// `BottomChromeMetrics.compactRow`, from the reader's text size.
+
+
+/// A round icon button in a card's top row.
+///
+/// Drawn and laid out at the reference menu's 40 points.
+struct SheetIconButton<Label: View>: View {
+    var accessibilityLabel: Text
+    var action: () -> Void
+    @ViewBuilder var label: Label
+
+    static var visualSide: CGFloat { WorkspaceMenuMetrics.buttonSide }
+
+    // Compact glyphs share the menu's visual size and 44-point hit target.
+
+    var body: some View {
+        Button(action: action) {
+            label
+                .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
+                .foregroundStyle(Color.primary)
+                .frame(width: Self.visualSide, height: Self.visualSide)
+                .railMenuControlSurface(in: Circle())
+                .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
+                .contentShape(.rect)
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(RailPressStyle())
+        .accessibilityLabel(accessibilityLabel)
+    }
+}
+
+extension SheetIconButton where Label == Image {
+    init(systemImage: String, accessibilityLabel: Text, action: @escaping () -> Void) {
+        self.init(accessibilityLabel: accessibilityLabel, action: action) {
+            Image(systemName: systemImage)
+        }
+    }
+}
+
+/// Popup menus share the same compact close command as their other actions.
+struct SheetCloseButton: View {
+    var accessibilityLabel: Text
+    var action: () -> Void
+
+    var body: some View {
+        SheetIconButton(systemImage: "xmark", accessibilityLabel: accessibilityLabel, action: action)
+            .keyboardShortcut(.cancelAction)
+    }
+}
+
+/// The same shape as ``SheetIconButton`` for things that open a menu, which
+/// cannot be expressed as a `Button`'s action.
+///
+/// ## `isActive`, and what it is for
+///
+/// A scope control drawn as a glyph does not say what its value is. The two
+/// scope buttons in the panel header — the date filter and the region — used
+/// to be capsules wide enough to spell theirs, and the round shape the reader
+/// asked for cannot. So the button states the one thing that cannot be
+/// recovered by opening it: whether the scope is NARROWED at all.
+///
+/// The tint role is §6.2's — "可点击、选中、当前路线" — and a filter the reader
+/// has switched on is the selected case of it. Off, nothing changes: an
+/// unfiltered scope is the ordinary state and must not read as a badge.
+/// The active SF Symbol badge keeps that state visible without relying on hue.
+struct SheetIconLabel: View {
+    var systemImage: String
+    /// Whether the control this labels is currently narrowing something.
+    var isActive: Bool = false
+
+    var body: some View {
+        Image(systemName: systemImage)
+            .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
+            .foregroundStyle(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(Color.primary))
+            .frame(width: SheetIconButton<Image>.visualSide, height: SheetIconButton<Image>.visualSide)
+            .railMenuControlSurface(in: Circle(), isActive: isActive)
+            .overlay(alignment: .bottomTrailing) {
+                if isActive {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 14, weight: .semibold))
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color(.systemBackground), Color.accentColor)
+                        .offset(x: 3, y: 3)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+            }
+            .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
+            .contentShape(.rect)
+    }
+}
+
+/// Shared hierarchy for map popup menus: identity first, round commands at
+/// the trailing edge, and scrolling detail beneath the fixed header.
+struct PopupMenuHeader<Actions: View>: View {
+    let title: String
+    var subtitle: String? = nil
+    @ViewBuilder var actions: () -> Actions
+    @ScaledMetric(relativeTo: .title2) private var titleSize: CGFloat = WorkspaceMenuMetrics.titleSize
+
+    var body: some View {
+        HStack(alignment: .top, spacing: WorkspaceMenuMetrics.titleActionSpacing) {
+            VStack(alignment: .leading, spacing: WorkspaceMenuMetrics.subtitleSpacing) {
+                Text(title)
+                    .font(.system(size: titleSize, weight: .bold))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle).font(.footnote).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(spacing: WorkspaceMenuMetrics.actionSpacing) { actions() }
+        }
+        .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
+        .padding(.top, WorkspaceMenuMetrics.topInset)
+        .padding(.bottom, WorkspaceMenuMetrics.bottomInset)
+        .accessibilityElement(children: .contain)
+    }
+}

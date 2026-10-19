@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -233,12 +234,12 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         // Match existing JourneySave coverage's asynchronous storage completion window.
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
-        app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_STORE_BASE64")
-        app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_SAMPLE")
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
-        app.launch()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.storeBase64] = nil
+        app.uiTestLaunch[.sample] = nil
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = number
+        UITestLaunchSupport.launch(app)
         XCTAssertTrue(search.waitForExistence(timeout: 30))
         XCTAssertEqual(search.value as? String, number)
         let persisted = app.buttons.matching(predicate).firstMatch
@@ -559,9 +560,10 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
             let top = max(bounds.minY, bar.frame.maxY)
             bounds = CGRect(x: bounds.minX, y: top, width: bounds.width, height: max(0, bounds.maxY - top))
         }
-        // The covered editor's Next button is not a guide-sheet boundary.
-        let footerIDs = container.identifier == "rideEditorForm"
-            ? ["rideEditorNext"] : ["routeGuideConfirm", "routeGuideApply", "routeGuidePrevious"]
+        // Guide-sheet controls cover the sheet. The editor wizard Next button
+        // (rideEditorNext) left with that mode, so the full editor has no such footer.
+        let footerIDs: [String] = container.identifier == "rideEditorForm"
+            ? [] : ["routeGuideConfirm", "routeGuideApply", "routeGuidePrevious"]
         for id in footerIDs {
             let button = app.buttons[id]
             if button.exists && button.frame.intersects(bounds) {

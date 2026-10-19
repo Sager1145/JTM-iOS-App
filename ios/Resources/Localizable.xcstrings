@@ -59,6 +59,35 @@
         }
       }
     },
+    "app.title.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China Railway Manager"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国列車管理"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国列车管理"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中國列車管理"
+          }
+        }
+      }
+    },
     "app.title.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1766,6 +1795,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "把目前畫面上的內容儲存為我的資料？之後的編輯會自動儲存在此瀏覽器。"
+          }
+        }
+      }
+    },
+    "country.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中國"
           }
         }
       }
@@ -4235,6 +4293,35 @@
         }
       }
     },
+    "info.packageBody.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uses the cn-2025 China railway package."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国鉄道データパッケージ cn-2025 を使用しています。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 cn-2025 中国铁路数据包。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 cn-2025 中國鐵路資料包。"
+          }
+        }
+      }
+    },
     "info.packageBody.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5308,6 +5395,35 @@
         }
       }
     },
+    "map.riddenJr.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conventional railway"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在来線"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速鐵路"
+          }
+        }
+      }
+    },
     "map.riddenJr.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5449,6 +5565,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "私鐵・其他"
+          }
+        }
+      }
+    },
+    "map.riddenPriv.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other railway"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他の鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他鐵路"
           }
         }
       }
@@ -6841,6 +6986,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "特急／普通／新幹線"
+          }
+        }
+      }
+    },
+    "ph.trainType.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High speed / EMU / Conventional"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速列車／動車組／在来線"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高铁／动车／普速"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高鐵／動車／普速"
           }
         }
       }
@@ -8875,6 +9049,35 @@
         }
       }
     },
+    "stat.all.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network-wide"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全線"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全网"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全網"
+          }
+        }
+      }
+    },
     "stat.all.hk" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9049,6 +9252,35 @@
         }
       }
     },
+    "stat.conv.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conventional railway"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在来線"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速鐵路"
+          }
+        }
+      }
+    },
     "stat.conv.kr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9132,6 +9364,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新幹線"
+          }
+        }
+      }
+    },
+    "stat.hsr.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High Speed Rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速鐵路"
           }
         }
       }
@@ -9252,6 +9513,35 @@
         }
       }
     },
+    "stat.jrconv.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conventional railway"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在来線"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普速鐵路"
+          }
+        }
+      }
+    },
     "stat.jrconv.kr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9339,6 +9629,35 @@
         }
       }
     },
+    "stat.ltdexp.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Express services"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "優等列車"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "优等列车"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "優等列車"
+          }
+        }
+      }
+    },
     "stat.ltdexp.kr" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9422,6 +9741,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "地下鐵"
+          }
+        }
+      }
+    },
+    "stat.metro.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urban rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城市轨道交通"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "城市軌道交通"
           }
         }
       }
@@ -9596,6 +9944,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "私鐵・第三部門"
+          }
+        }
+      }
+    },
+    "stat.priv.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other railway"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他の鉄道"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他铁路"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他鐵路"
           }
         }
       }
@@ -9799,6 +10176,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "路面電車"
+          }
+        }
+      }
+    },
+    "stat.tram.cn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tram & light rail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "路面電車・ライトレール"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有轨电车与轻轨"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "路面電車與輕軌"
           }
         }
       }

@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -29,7 +30,7 @@ final class JourneyTranslationUITests: XCTestCase {
         XCTAssertTrue(row.label.contains("(特急 はるか38号"), row.label)
 
         app.terminate()
-        app.launch()
+        UITestLaunchSupport.launch(app)
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         openTranslationSwitchSettings(in: app)
         let persistedToggle = translationSwitchControl(in: app)
@@ -40,13 +41,13 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launchTranslationSwitch() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         XCTAssertTrue(app.buttons["journeyRow-20260703_01_haruka"].waitForExistence(timeout: 30))
         return app
     }
@@ -160,13 +161,13 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launchOfficialNameScenario() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.stage] = "expanded"
+        UITestLaunchSupport.launch(app)
         XCTAssertTrue(app.buttons["journeyRow-20260703_01_haruka"].waitForExistence(timeout: 30))
         return app
     }
@@ -273,15 +274,15 @@ final class JourneyTranslationUITests: XCTestCase {
 
     private func launch(sheet: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = sheet
-        app.launch()
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.select] = "20260703_01_haruka"
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sheet] = sheet
+        UITestLaunchSupport.launch(app)
         return app
     }
 

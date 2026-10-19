@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// The runner seeds a separately owned container with the committed two-ride fixture.
@@ -7,7 +8,7 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         continueAfterFailure = false
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launch()
+        UITestLaunchSupport.launch(app, storage: .existingContainer)
         let map = app.descendants(matching: .any)["railwayMap"]
         XCTAssertTrue(map.waitForExistence(timeout: 60), app.debugDescription)
         XCTAssertEqual(map.label, "Map")
@@ -53,7 +54,7 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         continueAfterFailure = false
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launch()
+        UITestLaunchSupport.launch(app, storage: .existingContainer)
         let map = app.descendants(matching: .any)["railwayMap"]
         XCTAssertTrue(map.waitForExistence(timeout: 60), app.debugDescription)
         XCTAssertEqual(map.label, "Map")
@@ -187,4 +188,23 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         return true
     }
 
+    func testFiveRegionStatisticsReachesReady() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        UITestLaunchSupport.launch(app, storage: .existingContainer)
+        let stats = app.tabBars.buttons["Stats"]
+        XCTAssertTrue(stats.waitForExistence(timeout: 60), app.debugDescription)
+        stats.tap()
+        let share = app.descendants(matching: .any)["statisticsShareButton"]
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            share.exists && share.isEnabled
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 180), .completed, app.debugDescription)
+        let region = app.descendants(matching: .any)["regionScopeButton"]
+        XCTAssertEqual(region.value as? String, "All regions")
+        // Hold the same ready screen for external footprint sampling.
+        let settled = XCTNSPredicateExpectation(predicate: NSPredicate(value: false), object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 8), .timedOut)
+    }
 }

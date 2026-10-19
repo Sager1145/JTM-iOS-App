@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 /// Exercise the real sample-import controls before loading Japan's national map.
@@ -8,14 +9,14 @@ final class MapLargeDatasetTests: XCTestCase {
     func testAll287SampleJourneysWithJapanNetworkLoadingPanAndToggle() throws {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "medium"
-        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_JOURNEY_INVENTORY"] = "1"
-        app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = "37,138,24"
-        app.launch()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "medium"
+        app.uiTestLaunch[.gestureTarget] = "1"
+        app.uiTestLaunch[.journeyInventory] = "1"
+        app.uiTestLaunch[.camera] = "37,138,24"
+        UITestLaunchSupport.launch(app)
         defer { app.terminate() }
         let status = app.staticTexts["railMapRenderStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 20))
@@ -99,7 +100,7 @@ final class MapLargeDatasetTests: XCTestCase {
         // Imports deliberately focus their region. Relaunch the persisted
         // complete store to apply the Japan camera before testing its network.
         app.terminate()
-        app.launch()
+        UITestLaunchSupport.launch(app)
         XCTAssertTrue(status.waitForExistence(timeout: 20))
         let japanCamera = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
             let state = fields()
@@ -128,7 +129,7 @@ final class MapLargeDatasetTests: XCTestCase {
         record("all-287-japan-loading-pan")
         waitForNetwork()
         record("all-287-network-rendered")
-        XCTAssertFalse(app.navigationBars["Overlapping lines"].exists,
+        XCTAssertFalse(app.buttons["rideChooserClose"].exists,
                        "A map drag must not also select overlapping journeys.")
         func setNetwork(_ enabled: Bool) {
             let beforeToggle = XCUIScreen.main.screenshot()

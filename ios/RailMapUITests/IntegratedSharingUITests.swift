@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -6,13 +7,13 @@ final class IntegratedSharingUITests: XCTestCase {
 
     func testShareComposerExportsSelectedScope() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "stats"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launch()
+        app.uiTestLaunch[.tab] = "stats"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sample] = "train-store"
+        UITestLaunchSupport.launch(app)
 
         let share = element("statisticsShareButton", in: app)
         XCTAssertTrue(share.waitForExistence(timeout: 120))
@@ -23,6 +24,10 @@ final class IntegratedSharingUITests: XCTestCase {
         let japan = app.buttons["Japan"]
         XCTAssertTrue(japan.waitForExistence(timeout: 5), app.debugDescription)
         japan.tap()
+        // Japan now opens the area submenu; choose the whole country explicitly.
+        let wholeJapan = app.buttons["Japan (all)"]
+        XCTAssertTrue(wholeJapan.waitForExistence(timeout: 5), app.debugDescription)
+        wholeJapan.tap()
         XCTAssertEqual(region.value as? String, "Japan")
         waitUntilEnabled(share)
         let date = element("statisticsDateButton", in: app)

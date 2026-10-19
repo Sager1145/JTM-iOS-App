@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -176,24 +177,24 @@ final class MapCameraIntentTests: XCTestCase {
                         camera: String? = "40.735,-74.027,0.016", region: String? = nil,
                         layers: String = "routes,focus") -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-auto-focus-zoom", autoFocus ? "YES" : "NO"]
         if let region {
             app.launchArguments += ["-region-scope", region, "-interface-language", "en"]
         }
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = tab
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = stage
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = "haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_READY_RIDE"] = "20260703_01_haruka"
-        app.launchEnvironment["RAILMAP_UI_TEST_LAYERS"] = layers
+        app.uiTestLaunch[.tab] = tab
+        app.uiTestLaunch[.stage] = stage
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.query] = "haruka"
+        app.uiTestLaunch[.readyRide] = "20260703_01_haruka"
+        app.uiTestLaunch[.layers] = layers
         if let camera {
-            app.launchEnvironment["RAILMAP_UI_TEST_CAMERA"] = camera
+            app.uiTestLaunch[.camera] = camera
         }
-        app.launchEnvironment["RAILMAP_UI_TEST_SELECT"] = selected
-        app.launchEnvironment["RAILMAP_UI_TEST_GESTURE_TARGET"] = "1"
-        app.launch()
+        app.uiTestLaunch[.select] = selected
+        app.uiTestLaunch[.gestureTarget] = "1"
+        UITestLaunchSupport.launch(app)
         return app
     }
 

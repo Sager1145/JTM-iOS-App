@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -148,11 +149,11 @@ final class LocalJourneyAutofillUITests: XCTestCase {
         // Match the normal save/relaunch regression's asynchronous store-write window.
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
-        app.launchEnvironment["RAILMAP_UI_TEST_SHEET"] = ""
-        app.launchEnvironment.removeValue(forKey: "RAILMAP_UI_TEST_STORE_BASE64")
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "search"
-        app.launchEnvironment["RAILMAP_UI_TEST_QUERY"] = number
-        app.launch()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.storeBase64] = nil
+        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.query] = number
+        UITestLaunchSupport.launch(app)
         let saved = app.descendants(matching: .any).matching(rowPredicate).firstMatch
         XCTAssertTrue(saved.waitForExistence(timeout: 30))
         saved.press(forDuration: 1)

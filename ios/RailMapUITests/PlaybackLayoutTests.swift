@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 import UIKit
 
@@ -59,7 +60,7 @@ final class PlaybackLayoutTests: XCTestCase {
         XCUIDevice.shared.orientation = orientation
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         if accessibilitySize {
             app.launchArguments += [
@@ -67,18 +68,18 @@ final class PlaybackLayoutTests: XCTestCase {
                 UIContentSizeCategory.accessibilityExtraExtraExtraLarge.rawValue,
             ]
         }
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "all"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "compact"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "train-store"
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK"] = "1"
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.stage] = "compact"
+        app.uiTestLaunch[.sample] = "train-store"
+        app.uiTestLaunch[.playback] = "1"
         // Match the video regression's explicit, longer surveyed journey;
         // asynchronous first-ready routes can finish before the hit checks.
-        app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_TRAIN_ID"] =
+        app.uiTestLaunch[.playbackTrainId] =
             "20260703_02_tokaido_shinkansen_hikari_kodama"
-        if ProcessInfo.processInfo.environment["RAILMAP_UI_TEST_PLAYBACK_HIT_PROBE"] == "1" {
-            app.launchEnvironment["RAILMAP_UI_TEST_PLAYBACK_HIT_PROBE"] = "1"
+        if ProcessInfo.processInfo.environment[UITestLaunchConfiguration.Key.playbackHitProbe.rawValue] == "1" {
+            app.uiTestLaunch[.playbackHitProbe] = "1"
         }
-        app.launch()
+        UITestLaunchSupport.launch(app)
         let device = UIDevice.current.userInterfaceIdiom == .pad ? "ipad" : "iphone"
         let direction = orientation == .portrait ? "portrait" : "landscape"
         let name = "playback-\(device)-\(direction)-\(accessibilitySize ? "ax5" : "standard")\(rotationRequests.isEmpty ? "" : "-rotation-locked")"
@@ -108,6 +109,16 @@ final class PlaybackLayoutTests: XCTestCase {
         // The English catalog translates the resume action as "Play".
         waitForLabel("Play", on: toggle)
         attachScreen(named: "\(name)-paused")
+        let controlState = XCTAttachment(string: [
+            "playbackPauseResume", "playbackStopButton", "playbackFollow",
+            "playbackSpeedSlider", "playbackVideoButton", "mapNetworkToggle",
+        ].map { identifier in
+            let control = element(identifier, in: app)
+            return "\(identifier): frame=\(control.frame) enabled=\(control.isEnabled) hittable=\(control.isHittable)"
+        }.joined(separator: "\n"))
+        controlState.name = "\(name)-paused-control-hit-state"
+        controlState.lifetime = .keepAlways
+        add(controlState)
 
         let surface = element("playbackTransportSurface", in: app)
         XCTAssertTrue(surface.waitForExistence(timeout: 8))

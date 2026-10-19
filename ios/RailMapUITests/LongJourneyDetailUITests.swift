@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -13,6 +14,22 @@ final class LongJourneyDetailUITests: XCTestCase {
 
     func testLongJourneyInformationOpensScrollsAndCloses() {
         assertResponsiveDetail(mode: "detail", closeID: "longJourneyClose")
+    }
+
+    func testPartlyRiddenDetailKeepsEndpointStationClockAndPlatformTogether() {
+        let app = launch(mode: "partial")
+        let departure = app.descendants(matching: .any)["rideDetailDeparture"].firstMatch
+        let arrival = app.descendants(matching: .any)["rideDetailArrival"].firstMatch
+        XCTAssertTrue(departure.waitForExistence(timeout: 15))
+        XCTAssertTrue(arrival.waitForExistence(timeout: 15))
+        XCTAssertTrue(departure.label.contains("Origin A"), departure.label)
+        XCTAssertTrue(departure.label.contains("08:00"), departure.label)
+        XCTAssertTrue(departure.label.contains("Platform 1"), departure.label)
+        XCTAssertFalse(departure.label.contains("08:30"), departure.label)
+        XCTAssertTrue(arrival.label.contains("Destination D"), arrival.label)
+        XCTAssertTrue(arrival.label.contains("09:30"), arrival.label)
+        XCTAssertTrue(arrival.label.contains("Platform 4"), arrival.label)
+        XCTAssertFalse(arrival.label.contains("09:00"), arrival.label)
     }
 
     func testLargeAdvancedSectionListExpandsWithoutRenderingEverySection() {
@@ -68,10 +85,10 @@ final class LongJourneyDetailUITests: XCTestCase {
 
     private func launch(mode: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_LONG_DETAIL"] = mode
-        app.launch()
+        app.uiTestLaunch[.longDetail] = mode
+        UITestLaunchSupport.launch(app)
         return app
     }
 }

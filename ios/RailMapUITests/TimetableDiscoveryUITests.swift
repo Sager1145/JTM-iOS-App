@@ -1,3 +1,4 @@
+import RailPresentation
 import XCTest
 
 @MainActor
@@ -7,8 +8,14 @@ final class TimetableDiscoveryUITests: XCTestCase {
     func testDatedEnglishSearchImportsPublishedDraftAndSavesOnlyAfterReview() {
         let app = NewTripTimetableTestSupport.launch()
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
+        let ridden = app.switches["newTripRidden"]
+        NewTripTimetableTestSupport.reveal(ridden, in: app)
+        XCTAssertEqual(ridden.value as? String, "1")
+        ridden.tap()
         NewTripTimetableTestSupport.reveal(app.buttons["newTripTimetableBrowse"], in: app)
         app.buttons["newTripTimetableBrowse"].tap()
+        XCTAssertTrue(app.navigationBars["Choose a train pattern"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.buttons["Cancel"].exists)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -21,6 +28,9 @@ final class TimetableDiscoveryUITests: XCTestCase {
         screenshot.lifetime = .keepAlways
         add(screenshot)
         detail.tap()
+        XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(
+            format: "label CONTAINS %@", "Japan time")).firstMatch.exists)
         let useDraft = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "timetableUseDraft-jr-east.azusa")).firstMatch
         XCTAssertTrue(useDraft.waitForExistence(timeout: 8))
@@ -44,6 +54,14 @@ final class TimetableDiscoveryUITests: XCTestCase {
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 10))
         XCTAssertTrue(journey.waitForExistence(timeout: 10), app.debugDescription)
+        app.terminate()
+        app.uiTestLaunch[.sheet] = ""
+        app.uiTestLaunch[.tab] = "passport"
+        UITestLaunchSupport.launch(app)
+        let debug = app.descendants(matching: .any)["statisticsDebug"].firstMatch
+        XCTAssertTrue(debug.waitForExistence(timeout: 30))
+        XCTAssertTrue((debug.value as? String ?? "").hasPrefix("journeys=0;"),
+                      "An explicitly unridden timetable draft must stay outside Passport after reload.")
     }
 
     func testCancellingLocalDateSearchKeepsDepartureDateUnchanged() {
@@ -63,7 +81,7 @@ final class TimetableDiscoveryUITests: XCTestCase {
         date.tap()
         let old = date.value as? String ?? ""
         date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count) + "2026-10-12\n")
-        app.buttons["キャンセル"].tap()
+        app.buttons["Cancel"].tap()
         NewTripTimetableTestSupport.reveal(departure, in: app)
         XCTAssertEqual(departure.value as? String, originalDate)
         NewTripTimetableTestSupport.reveal(app.buttons["newTripTimetableBrowse"], in: app)

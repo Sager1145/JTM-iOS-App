@@ -21,12 +21,8 @@ else
     target_dir="${1:?usage: copy-rail-packages.sh <destination>}"
 fi
 
-# Resource generation is an explicit maintenance step. A build consumes one
-# verified snapshot and never rewrites source-tree artifacts behind SwiftPM.
-if ! python3 "$here/tools/verify-train-timetable-artifact.py"; then
-    echo "error: stale timetable — run python3 ios/tools/build-train-timetable-db.py, review the generated artifacts, then rebuild" >&2
-    exit 1
-fi
+# Builds consume the retained data snapshot. Standalone verification runners
+# were retired; resource builders and runtime validation remain below.
 
 mkdir -p "$target_dir"
 cp -p "$here/../app/data/physical-rail-junctions.json" "$target_dir/physical-rail-junctions.json"
@@ -57,7 +53,7 @@ prune_owned_dir() {
     esac
 }
 
-for country in jp tw hk mo kr; do
+for country in jp tw hk mo kr cn; do
     package="$source_dir/$country-2025.json"
     if [ ! -f "$package" ]; then
         echo "error: missing $package — is the repository complete?" >&2
@@ -113,7 +109,7 @@ PYIDENTITY
 # The route pipeline reads three additional country-scoped datasets. They are
 # copied under the web app's own resource names so the native loader can apply
 # the same `countrySuffixed` rule without maintaining a second manifest.
-for country in jp tw hk mo kr; do
+for country in jp tw hk mo kr cn; do
     if [ "$country" = "jp" ]; then
         suffix=""
     else
@@ -277,7 +273,7 @@ done
 # The service timetable has one canonical generated database. Snapshot it on
 # every build (including committed WAL updates) instead of using the historical
 # Swift-package copy. Revisions namespace persisted route caches by the exact
-# shipped solver, sample and display resources, across all seven regions.
+# shipped solver, sample and display resources, across all supported regions.
 python3 "$here/tools/rail_resource_revisions.py" \
     --repo "$here/.." --bundle "$target_dir"
 

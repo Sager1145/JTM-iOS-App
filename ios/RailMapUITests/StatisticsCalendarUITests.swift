@@ -1,16 +1,17 @@
+import RailPresentation
 import XCTest
 
 @MainActor
 final class StatisticsCalendarUITests: XCTestCase {
     func testCalendarRangeDeselectAndMutuallyExclusiveClassification() {
         let app = XCUIApplication()
-        app.launchEnvironment["RAILMAP_UI_TEST_STORAGE_ID"] = UUID().uuidString
+        app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launchEnvironment["RAILMAP_UI_TEST_TAB"] = "stats"
-        app.launchEnvironment["RAILMAP_UI_TEST_STAGE"] = "expanded"
-        app.launchEnvironment["RAILMAP_UI_TEST_SAMPLE"] = "new-year-grand-loop"
-        app.launchEnvironment["RAILMAP_UI_TEST_STATS_REGION"] = "jp"
-        app.launch()
+        app.uiTestLaunch[.tab] = "stats"
+        app.uiTestLaunch[.stage] = "expanded"
+        app.uiTestLaunch[.sample] = "new-year-grand-loop"
+        app.uiTestLaunch[.statsRegion] = "jp"
+        UITestLaunchSupport.launch(app)
 
         let calendar = element("statisticsDateButton", in: app)
         XCTAssertTrue(calendar.waitForExistence(timeout: 120))
