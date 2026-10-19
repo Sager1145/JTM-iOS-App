@@ -109,6 +109,9 @@ public struct Train: Codable, Equatable, Sendable {
     /// only when set, so a store that never had one stays byte-identical.
     /// `company` is still written unchanged.
     public var operatorID: String?
+    /// Ordered operators for a slash-joined company. Written only when set.
+    /// A single company keeps `operatorID` and leaves this absent.
+    public var operatorIDs: [String]?
     public var origin: String
     public var destination: String
     /// Recommended `up` / `down` / `unknown`, but free text in practice — see
@@ -166,7 +169,8 @@ public struct Train: Codable, Equatable, Sendable {
         notes: String? = nil,
         journeyGroup: JourneyGroup? = nil,
         routeConfirmation: RouteConfirmation? = nil,
-        operatorID: String? = nil
+        operatorID: String? = nil,
+        operatorIDs: [String]? = nil
     ) {
         self.id = id
         self.date = date
@@ -188,6 +192,7 @@ public struct Train: Codable, Equatable, Sendable {
         self.journeyGroup = journeyGroup
         self.routeConfirmation = routeConfirmation
         self.operatorID = operatorID
+        self.operatorIDs = operatorIDs.flatMap { $0.isEmpty ? nil : $0 }
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -197,6 +202,7 @@ public struct Train: Codable, Equatable, Sendable {
         case vehicleType = "vehicle_type"
         case company
         case operatorID = "operator_id"
+        case operatorIDs = "operator_ids"
         case routePolicy = "route_policy"
         case routeSections = "route_sections"
         case region, notes
@@ -223,6 +229,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(vehicleType, forKey: .vehicleType)
         try container.encodeIfPresent(company, forKey: .company)
         try container.encodeIfPresent(operatorID, forKey: .operatorID)
+        try container.encodeIfPresent(operatorIDs, forKey: .operatorIDs)
         try container.encode(origin, forKey: .origin)
         try container.encode(destination, forKey: .destination)
         try container.encodeIfPresent(direction, forKey: .direction)
@@ -1071,6 +1078,17 @@ public enum TrainValidation {
         ) {
             issues.append(issue)
         }
+        if let operatorIDs = train.operatorIDs {
+            for (offset, identifier) in operatorIDs.enumerated() {
+                let field = "operator_ids[\(offset)]"
+                if let issue = registryIdentityDiagnostic(
+                    identifier, field: field, kind: "op",
+                    path: field, location: "", trainRegion: train.region
+                ) {
+                    issues.append(issue)
+                }
+            }
+        }
         if let date = train.date, date != undated, !Dates.isValidDateString(date) {
             issues.append(Diagnostic(
                 path: "date",
@@ -1325,6 +1343,28 @@ public enum TrainValidation {
                 return issue
             }
         }
+        if let value = json["operator_ids"], value != .null {
+            guard case .array(let items) = value else {
+                return Diagnostic(
+                    path: "operator_ids",
+                    reason: "operator_ids must be an array of operator ids.")
+            }
+            let trainRegion = (json["region"] ?? .null).stringOrNilIfNotString
+            for (offset, item) in items.enumerated() {
+                let field = "operator_ids[\(offset)]"
+                guard item.isString else {
+                    return Diagnostic(
+                        path: field,
+                        reason: "\(field) must match \(operatorIDPatternSource).")
+                }
+                if let issue = registryIdentityDiagnostic(
+                    item.stringOrNilIfNotString, field: field, kind: "op",
+                    path: field, location: "", trainRegion: trainRegion
+                ) {
+                    return issue
+                }
+            }
+        }
         return nil
     }
 
@@ -1481,7 +1521,14 @@ public enum TrainValidation {
             region: optionalText(json, "region"),
             notes: optionalText(json, "notes"),
             routeConfirmation: try normalizeImportedRouteConfirmation(json["route_confirmation"]),
-            operatorID: optionalText(json, "operator_id"))
+            operatorID: optionalText(json, "operator_id"),
+            operatorIDs: optionalOperatorIDs(json["operator_ids"]))
+    }
+
+    private static func optionalOperatorIDs(_ value: JSON?) -> [String]? {
+        guard let value, case .array(let items) = value else { return nil }
+        let ids = items.compactMap(\.stringOrNilIfNotString).map(jsTrim).filter { !$0.isEmpty }
+        return ids.isEmpty ? nil : ids
     }
 
     private static func requiredText(_ json: JSON, _ key: String) -> String {
@@ -1779,7 +1826,7 @@ public enum TrainValidation {
         try assertOnlyKeys(
             train,
             [
-                "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "origin",
+                "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
             ],
@@ -1842,7 +1889,8 @@ public enum TrainValidation {
             notes: (train["notes"] ?? .null).stringOrNilIfNotString.map(jsTrim),
             journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]),
             routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]),
-            operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString)
+            operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString,
+            operatorIDs: optionalOperatorIDs(train["operator_ids"]))
     }
 
     private static func normalizeImportedRouteConfirmation(_ value: JSON?) throws -> RouteConfirmation? {
@@ -2072,7 +2120,8 @@ public enum TrainValidation {
             notes: train.notes,
             journeyGroup: train.journeyGroup,
             routeConfirmation: train.routeConfirmation,
-            operatorID: train.operatorID)
+            operatorID: train.operatorID,
+            operatorIDs: train.operatorIDs)
     }
 
     /// Route inputs for solving and geometry display. Pending hints are

@@ -626,6 +626,9 @@ extension StoreOperations {
         if let vehicleType = train.vehicleType { pairs.append(("vehicle_type", .string(vehicleType))) }
         if let company = train.company { pairs.append(("company", .string(company))) }
         if let operatorID = train.operatorID { pairs.append(("operator_id", .string(operatorID))) }
+        if let operatorIDs = train.operatorIDs, !operatorIDs.isEmpty {
+            pairs.append(("operator_ids", .array(operatorIDs.map { .string($0) })))
+        }
         pairs.append(("origin", .string(train.origin)))
         pairs.append(("destination", .string(train.destination)))
         if let direction = train.direction { pairs.append(("direction", .string(direction))) }

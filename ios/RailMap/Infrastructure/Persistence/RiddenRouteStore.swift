@@ -1917,7 +1917,8 @@ final class RiddenRouteStore {
             preferredOperatorNames: policy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: policy?.allowedInstitutionTypeCodes,
             institutionFilterMode: policy?.institutionFilterMode,
-            operatorID: raw.operatorID ?? canonical.operatorID)
+            operatorID: raw.operatorID ?? canonical.operatorID,
+            operatorIDs: raw.operatorIDs ?? canonical.operatorIDs ?? [])
         guard let context = RouteGraph.solveContext(
             train: cacheTrain, routeSections: sections, country: country,
             rideDate: Dates.normalizeDateString(canonical.date),

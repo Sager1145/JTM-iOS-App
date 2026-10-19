@@ -321,16 +321,22 @@ final class PlaybackController {
                     let key = StationKey(name: stop.name, code: stop.n02StationCode)
                     let display = RegistryStationDisplay.resolve(
                         storedName: stop.name, stationID: stop.stationID,
-                        region: train.region ?? region.code)
+                        region: train.region)
                     let localized: String
                     if display.unresolved {
                         let word = localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved"
                         localized = stop.name + "\n" + word
                     } else {
+                        let namingRegion = (train.region?.isEmpty == false ? train.region : nil)
+                            .flatMap(Region.init(rawValue:))
+                            ?? stop.stationID.flatMap(SolverRegistryInput.regionCode).flatMap(Region.init(rawValue:))
+                            ?? region
                         localized = localization?.stationName(
                             display.primary,
-                            code: display.readingCodes.first ?? stop.n02StationCode,
-                            region: region, allowNameFallback: false) ?? display.primary
+                            code: localization?.preferredReadingCode(
+                                display.readingCodes, region: namingRegion,
+                                fallback: stop.n02StationCode),
+                            region: namingRegion, allowNameFallback: false) ?? display.primary
                     }
                     return (key, localized)
                 },

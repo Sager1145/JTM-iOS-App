@@ -2,10 +2,19 @@ import Foundation
 
 /// Selectable timetable browse rows and fallback visibility, independent of view lifecycle.
 public enum ServicePatternBrowsePolicy {
-    /// Passenger JR companies, by identity code. 国鉄 has no identity code and is not in this set.
+    /// Passenger JR companies, by identity code.
     private static let jrIdentityCodes: Set<String> = [
         "jp.jr-hokkaido", "jp.jr-east", "jp.jr-central",
         "jp.jr-west", "jp.jr-shikoku", "jp.jr-kyushu",
+        "jp.jnr",
+    ]
+
+    /// Legal names and the short 国鉄 spelling. Used when the registry is missing
+    /// or that part does not convert to an operator id.
+    private static let jrAndNationalOperatorNames: Set<String> = [
+        "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
+        "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
+        "日本国有鉄道", "国鉄",
     ]
 
     /// A row carries the object the editor will select. Occurrences never
@@ -56,7 +65,10 @@ public enum ServicePatternBrowsePolicy {
         public let incompleteTrips: [TrainTimetableDatabase.Trip]
         public let unknownPatterns: [TrainServicePatterns.Pattern]
         public let outsidePatterns: [TrainServicePatterns.Pattern]
+        /// Facade or localized labels, parallel to ``companyIDs``.
         public let companyLabels: [String]
+        /// Operator ids. The company filter compares these, not the labels.
+        public let companyIDs: [String]
         public let lineNames: [String]
         /// `searchGeneration` this result belongs to. `-1` until the first build,
         /// so the list is loading rather than "no results" at launch and after
@@ -69,7 +81,7 @@ public enum ServicePatternBrowsePolicy {
 
         public static let empty = SearchSnapshot(
             groups: [], incompleteTrips: [], unknownPatterns: [], outsidePatterns: [],
-            companyLabels: [], lineNames: [],
+            companyLabels: [], companyIDs: [], lineNames: [],
             generation: -1,
             filters: SearchFilters(
                 region: "", rideDate: nil, companyFilter: nil, lineFilter: nil,
@@ -186,13 +198,20 @@ public enum ServicePatternBrowsePolicy {
         }
         let companyNames = sources.patterns.map(\.company)
             + sources.occurrences.flatMap { $0.operatorSegments.map(\.displayName) }
-        let companyLabels = Array(Set(companyNames.flatMap { name -> [String] in
-            catalogLabels(name, region: input.region)
-        })).sorted {
-            companyDisplayName($0, language: input.language)
-                .localizedStandardCompare(companyDisplayName($1, language: input.language))
-                == .orderedAscending
+        let identity = RegistryIdentityCache.identity(forRegion: input.region)
+        var chips: [String: String] = [:]
+        if let identity {
+            for name in companyNames {
+                for identifier in identity.operatorIDs(forCatalogName: name) {
+                    chips[identifier] = companyDisplayName(
+                        identifier, language: input.language, identity: identity)
+                }
+            }
         }
+        let companyIDs = chips.keys.sorted {
+            (chips[$0] ?? $0).localizedStandardCompare(chips[$1] ?? $1) == .orderedAscending
+        }
+        let companyLabels = companyIDs.map { chips[$0] ?? $0 }
         let lineNames = Array(Set(
             sources.patterns.flatMap(\.lines)
                 + sources.occurrences.flatMap { $0.lineSegments.map(\.lineName) }
@@ -211,7 +230,7 @@ public enum ServicePatternBrowsePolicy {
         return SearchSnapshot(
             groups: groups, incompleteTrips: incompleteTrips,
             unknownPatterns: unknownPatterns, outsidePatterns: outsidePatterns,
-            companyLabels: companyLabels, lineNames: lineNames,
+            companyLabels: companyLabels, companyIDs: companyIDs, lineNames: lineNames,
             generation: input.generation,
             filters: SearchFilters(
                 region: input.region, rideDate: input.rideDate,
@@ -223,10 +242,8 @@ public enum ServicePatternBrowsePolicy {
     private static func matchesFilters(companies: [String], lines: [String], input: SearchInput) -> Bool {
         if let companyFilter = input.companyFilter {
             guard let identity = RegistryIdentityCache.identity(forRegion: input.region) else { return false }
-            let wanted = Set(identity.operatorIDs(forCatalogName: companyFilter))
-            guard !wanted.isEmpty else { return false }
             let got = Set(companies.flatMap { identity.operatorIDs(forCatalogName: $0) })
-            if got.isDisjoint(with: wanted) { return false }
+            if !got.contains(companyFilter) { return false }
         }
         if let lineFilter = input.lineFilter {
             let line = TrainServiceBranding.canonicalLineName(lineFilter)
@@ -237,17 +254,36 @@ public enum ServicePatternBrowsePolicy {
         return true
     }
 
-    private static func companyDisplayName(_ code: String, language: String) -> String {
-        OperatorIdentity.displayName(code: code, language: language) ?? code
+    /// Localized name from the operator's identity code. The facade label is the fallback.
+    private static func companyDisplayName(
+        _ identifier: String, language: String, identity: RegistryIdentity
+    ) -> String {
+        if let code = identity.operator(for: identifier)?.identity,
+           let translated = OperatorIdentity.displayName(code: code, language: language) {
+            return translated
+        }
+        return identity.operatorLabel(identifier) ?? identifier
     }
 
     private static func isJROrNationalRailway(
         _ pattern: TrainServicePatterns.Pattern, region: String
     ) -> Bool {
-        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return false }
-        return identity.operatorIDs(forCatalogName: pattern.company).contains { identifier in
-            guard let code = identity.operator(for: identifier)?.identity else { return false }
-            return jrIdentityCodes.contains(code)
+        let parts = pattern.company.components(separatedBy: CharacterSet(charactersIn: "/／"))
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        guard !parts.isEmpty else { return false }
+        let identity = RegistryIdentityCache.identity(forRegion: region)
+        return parts.contains { part in
+            if let identity {
+                let identifiers = identity.operatorIDs(forCatalogName: part)
+                if !identifiers.isEmpty {
+                    return identifiers.contains { identifier in
+                        guard let code = identity.operator(for: identifier)?.identity else { return false }
+                        return jrIdentityCodes.contains(code)
+                    }
+                }
+            }
+            return jrAndNationalOperatorNames.contains(part)
         }
     }
 

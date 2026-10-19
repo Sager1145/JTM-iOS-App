@@ -131,4 +131,32 @@ test("null registry ids are omitted and non-strings are rejected like Swift", ()
     rejection(context, wrongRegion),
     "Train 1: operator_id region must equal the train region.",
   );
+
+  const joint = ride({ operator_ids: ["op:jp:1", "op:jp:2"] });
+  const shaped = roundTrip(context, joint);
+  for (const copy of [shaped.imported, shaped.exported]) {
+    const keys = Object.keys(copy);
+    assert.equal(keys[keys.indexOf("company") + 1], "operator_ids");
+    assert.equal(keys[keys.indexOf("operator_ids") + 1], "origin");
+    assert.deepEqual(copy.operator_ids, ["op:jp:1", "op:jp:2"]);
+    assert.equal(Object.hasOwn(copy, "operator_id"), false);
+  }
+  const both = roundTrip(context, ride({ operator_id: "op:jp:4", operator_ids: ["op:jp:1"] }));
+  for (const copy of [both.imported, both.exported]) {
+    const keys = Object.keys(copy);
+    assert.equal(keys[keys.indexOf("operator_id") + 1], "operator_ids");
+    assert.equal(keys[keys.indexOf("operator_ids") + 1], "origin");
+  }
+  assert.equal(rejection(context, joint), null);
+  const omitted = roundTrip(context, ride({ operator_ids: [] }));
+  assert.equal(Object.hasOwn(omitted.exported, "operator_ids"), false);
+  assert.equal(Object.hasOwn(omitted.imported, "operator_ids"), false);
+  assert.equal(
+    rejection(context, ride({ operator_ids: "op:jp:1" })),
+    "Train 1: operator_ids must be an array of operator ids.",
+  );
+  assert.equal(
+    rejection(context, ride({ operator_ids: ["op:jp:0"] })),
+    `Train 1: operator_ids[0] must match ${OPERATOR_PATTERN}.`,
+  );
 });

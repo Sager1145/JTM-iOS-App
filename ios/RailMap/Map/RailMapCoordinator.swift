@@ -692,7 +692,8 @@ extension RailMapView.Surface {
             /// name would come back untouched. Callers that hold a ride pass
             /// its region. See `StationNaming.swift`.
             func localized(
-                _ name: String, code: String? = nil, region: Region? = nil, stationID: String? = nil
+                _ name: String, code: String? = nil, region: Region? = nil, stationID: String? = nil,
+                lookupByName: Bool = true
             ) -> Named {
                 guard !name.isEmpty, let localization else {
                     return Named(display: name, readings: [])
@@ -705,14 +706,23 @@ extension RailMapView.Surface {
                             .init(kind: .zh, text: localization.text(RegistryStationDisplay.unresolvedKey))
                         ])
                     }
-                    let readingCode = display.readingCodes.first ?? code
                     return MainActor.assumeIsolated {
-                        Named(
+                        let namingRegion = region
+                            ?? SolverRegistryInput.regionCode(stationID).flatMap(Region.init(rawValue:))
+                        let readingCode = localization.preferredReadingCode(
+                            display.readingCodes, region: namingRegion, fallback: code)
+                        return Named(
                             display: localization.stationName(
-                                display.primary, code: readingCode, region: region, allowNameFallback: false),
+                                display.primary, code: readingCode, region: namingRegion, allowNameFallback: false),
                             readings: localization.nameReadingsTyped(
-                                display.primary, code: readingCode, region: region, allowNameFallback: false))
+                                display.primary, code: readingCode, region: namingRegion, allowNameFallback: false))
                     }
+                }
+                if !lookupByName {
+                    let word = localization.text(RegistryStationDisplay.unresolvedKey)
+                    return Named(display: name + "\n" + word, readings: [
+                        .init(kind: .zh, text: word)
+                    ])
                 }
                 return MainActor.assumeIsolated {
                     Named(
@@ -2323,7 +2333,7 @@ extension RailMapView.Surface {
                     // reader's language.
                     let stationName = localized(
                         labelName, code: item.stationCode, region: item.region,
-                        stationID: annotation.stationID).display
+                        stationID: annotation.stationID, lookupByName: false).display
                     let roleTag = selected && !RailwayLinePreview.isPreviewRide(feature.tid)
                         ? (feature.role == "pass" ? naming.passTag
                         : feature.role == "stop" ? naming.stopTag : "") : ""
@@ -3344,7 +3354,8 @@ extension RailMapView.Surface {
                 }
                 let named = localized(
                     endpoint.stop.name, code: endpoint.stop.n02StationCode,
-                    region: Region(rawValue: ride.country), stationID: endpoint.stop.stationID)
+                    region: Region(rawValue: ride.country), stationID: endpoint.stop.stationID,
+                    lookupByName: false)
                 let unresolved = endpoint.stop.stationID?.isEmpty != false
                 // An origin shows when the ride LEFT and a destination when it
                 // arrived — never both, because a card that showed both would

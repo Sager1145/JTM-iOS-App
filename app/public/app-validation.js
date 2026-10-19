@@ -177,6 +177,16 @@ function validateTrain(train, index, ids) {
   const operatorIDError = registryIDError(
     train.operator_id, REGISTRY_OPERATOR_ID, "operator_id", train.region);
   if (operatorIDError) throw new Error(`${prefix}: ${operatorIDError}`);
+  if (train.operator_ids != null) {
+    if (!Array.isArray(train.operator_ids)) {
+      throw new Error(`${prefix}: operator_ids must be an array of operator ids.`);
+    }
+    train.operator_ids.forEach((identifier, offset) => {
+      const error = registryIDError(
+        identifier, REGISTRY_OPERATOR_ID, `operator_ids[${offset}]`, train.region);
+      if (error) throw new Error(`${prefix}: ${error}`);
+    });
+  }
   // §3.2: ids feed route_id / cache keys / DOM ids, so keep them to the
   // documented charset instead of accepting arbitrary text.
   if (!TRAIN_ID_PATTERN.test(train.id))

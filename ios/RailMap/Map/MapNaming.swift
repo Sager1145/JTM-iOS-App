@@ -43,6 +43,8 @@ struct MapNaming: Equatable, Sendable {
     /// get the right answer either way — but it is the witness that a table
     /// which arrived after the last build is now in place.
     var readingsGeneration = 0
+    /// Registry preloads that have settled since launch. See ``AppLocalization/registryGeneration``.
+    var registryGeneration = 0
 
     /// `tag.dep` / `tag.arr` — the 発 / 着 prefix an endpoint card puts before
     /// its time.
@@ -63,6 +65,7 @@ struct MapNaming: Equatable, Sendable {
     @MainActor
     init(_ localization: AppLocalization) {
         readingsGeneration = localization.readingsGeneration
+        registryGeneration = localization.registryGeneration
         departureTag = localization.text("tag.dep", fallback: "Dep")
         arrivalTag = localization.text("tag.arr", fallback: "Arr")
         startTag = localization.text("tag.start", fallback: "Start")
@@ -77,6 +80,7 @@ struct MapNaming: Equatable, Sendable {
             prefs.zh ? "z" : "-",
             // The table-arrival witness. See the type's note.
             String(readingsGeneration),
+            String(registryGeneration),
             departureTag, arrivalTag, startTag, endTag, stopTag, passTag,
         ].joined(separator: "\u{0000}")
     }

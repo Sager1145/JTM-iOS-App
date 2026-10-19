@@ -67,6 +67,11 @@ final class AppLocalization {
     init() {
         let saved = UserDefaults.standard.string(forKey: Self.preferenceKey)
         language = Localization.Language(rawValue: saved ?? "") ?? Self.systemLanguage
+        BundledRegistry.onSettled = { [weak self] in
+            Task { @MainActor in
+                self?.registryGeneration += 1
+            }
+        }
 
         guard let url = Bundle.main.url(forResource: "Localizable", withExtension: "json"),
             let catalog = try? Localization.Catalog(contentsOf: url)
@@ -160,6 +165,18 @@ final class AppLocalization {
     /// landing — see ``MapNaming``, which carries this number so that a map
     /// drawn before a table arrived is rebuilt once it has.
     private(set) var readingsGeneration = 0
+
+    /// How many registry preloads have settled. Labels drawn from stored text
+    /// while a bundle was still decoding rebuild once this moves.
+    private(set) var registryGeneration = 0
+
+    /// The first of `codes` that has a readings row, else the first code, else `fallback`.
+    func preferredReadingCode(_ codes: [String], region: Region?, fallback: String?) -> String? {
+        let chosen = RegistryStationDisplay.firstCodeWithReading(codes) { code in
+            naming(region, code)?.hasStationReading(code: code) ?? false
+        }
+        return chosen ?? codes.first ?? fallback
+    }
 
     /// `I18N.setNameReadings`. `nil` puts the three toggles back to following
     /// the UI language.

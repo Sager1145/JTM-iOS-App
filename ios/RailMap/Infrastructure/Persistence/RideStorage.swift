@@ -96,6 +96,7 @@ actor RideStorage {
     /// uniquely. A missing `registry-<cc>.json` leaves the train unchanged.
     private func upgraded(_ store: TrainStore) -> TrainStore {
         var store = store
+        BundledRegistry.preload(regions: MergedStore.regions(of: store.trains).map(\.code))
         store.trains = store.trains.map(BundledRegistry.upgrade)
         return store
     }

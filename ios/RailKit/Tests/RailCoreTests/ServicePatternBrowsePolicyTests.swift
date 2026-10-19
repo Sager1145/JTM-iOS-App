@@ -8,9 +8,10 @@ struct ServicePatternBrowsePolicyTests {
                        excerpts: [LineServiceCatalog.TimetableTrip] = [],
                        availability: ServicePatternBrowsePolicy.OccurrenceAvailability = .ready(.verified),
                        allHistory: Bool = false,
-                       company: String? = nil, line: String? = nil) -> ServicePatternBrowsePolicy.SearchInput {
+                       company: String? = nil, line: String? = nil,
+                       language: String = "en") -> ServicePatternBrowsePolicy.SearchInput {
         .init(query: query, region: "jp", rideDate: date, companyFilter: company, lineFilter: line,
-              showsAllHistory: allHistory, language: "en",
+              showsAllHistory: allHistory, language: language,
               sources: .init(availability: availability, occurrences: occurrences,
                              patterns: patterns ?? TrainServicePatterns.patterns, excerpts: excerpts,
                              patternCatalog: .loaded, excerptCatalog: .loaded), generation: 7)
@@ -98,8 +99,15 @@ struct ServicePatternBrowsePolicyTests {
         }
         #expect(selected.id == pattern.id)
         #expect(result.primaryRowsArePatterns)
-        #expect(result.companyLabels.contains("TEST-EAST"))
+        #expect(result.companyIDs.contains("op:jp:e"))
+        #expect(result.companyLabels.contains("East Japan Railway Company"))
+        #expect(!result.companyLabels.contains("TEST-EAST"))
         #expect(!result.companyLabels.contains("jp.jr-east"))
+        let chinese = RegistryIdentityTestGate.withProvider(Self.passengerJR) {
+            ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+                date: nil, patterns: [pattern], language: "zh-Hans"))
+        }
+        #expect(chinese.companyLabels.contains("东日本旅客铁道"))
         #expect(result.lineNames == ["中央本線"])
         #expect(ServicePatternBrowsePolicy.makeSearchSnapshot(input(
             date: nil, patterns: [pattern], company: "西日本旅客鉄道")).groups.isEmpty)
@@ -157,6 +165,67 @@ struct ServicePatternBrowsePolicyTests {
         let result = ServicePatternBrowsePolicy.makeSearchSnapshot(searchInput)
         #expect(result.groups.isEmpty)
         #expect(result.incompleteTrips.isEmpty)
+    }
+
+    @Test func municipalFilterUsesOperatorIdsWhileChipsShowLabels() {
+        let toei = TrainServicePatterns.Pattern(
+            id: "toei", serviceId: "fixture", name: "三田線", company: "東京都交通局", label: "三田",
+            origin: "A", destination: "B", stopRefs: [], optionalStopRefs: [], via: [],
+            confidence: nil, source: nil, lines: ["都営三田線"])
+        let yoko = TrainServicePatterns.Pattern(
+            id: "yoko", serviceId: "fixture", name: "ブルーライン", company: "横浜市交通局", label: "青",
+            origin: "A", destination: "B", stopRefs: [], optionalStopRefs: [], via: [],
+            confidence: nil, source: nil, lines: ["横浜市営"])
+        let selected = RegistryIdentityTestGate.withProvider(Self.municipal) {
+            ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+                date: nil, patterns: [toei, yoko], company: "op:jp:toei"))
+        }
+        #expect(selected.companyIDs.contains("op:jp:toei"))
+        #expect(selected.companyIDs.contains("op:jp:yoko"))
+        #expect(selected.companyLabels.contains("都営"))
+        #expect(selected.companyLabels.contains("横浜市営"))
+        #expect(!selected.companyLabels.contains("東京都交通局"))
+        let ids = selected.groups.flatMap(\.rows).compactMap { row -> String? in
+            if case .pattern(let pattern) = row { return pattern.id }
+            return nil
+        }
+        #expect(ids == ["toei"])
+    }
+
+    @Test func nationalRailwayNamesStayInsideTheJRGate() {
+        func row(_ company: String) -> TrainServicePatterns.Pattern {
+            .init(id: company, serviceId: "fixture", name: company, company: company, label: company,
+                  origin: "A", destination: "B", stopRefs: [], optionalStopRefs: [], via: [],
+                  confidence: nil, source: nil, lines: ["中央本線"])
+        }
+        let rows = [row("国鉄"), row("日本国有鉄道"), row("架空鉄道")]
+        let bare = ServicePatternBrowsePolicy.makeSearchSnapshot(input(patterns: rows))
+        #expect(!bare.unknownPatterns.contains { $0.company == "国鉄" })
+        #expect(!bare.unknownPatterns.contains { $0.company == "日本国有鉄道" })
+        #expect(bare.unknownPatterns.contains { $0.company == "架空鉄道" })
+        let converted = RegistryIdentityTestGate.withProvider(Self.national) {
+            ServicePatternBrowsePolicy.makeSearchSnapshot(input(patterns: rows))
+        }
+        #expect(!converted.unknownPatterns.contains { $0.company == "国鉄" })
+        #expect(!converted.unknownPatterns.contains { $0.company == "日本国有鉄道" })
+        #expect(converted.unknownPatterns.contains { $0.company == "架空鉄道" })
+    }
+
+    private static let municipal: RegistryIdentityLookup.Provider = { region in
+        guard region == "jp" else { return nil }
+        return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:toei": RegistryOperatorRecord(names: ["東京都交通局"], label: "都営"),
+            "op:jp:yoko": RegistryOperatorRecord(names: ["横浜市交通局"], label: "横浜市営"),
+        ]))
+    }
+
+    private static let national: RegistryIdentityLookup.Provider = { region in
+        guard region == "jp" else { return nil }
+        return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:jnr": RegistryOperatorRecord(
+                names: ["国鉄", "日本国有鉄道"], label: "国鉄", identity: "jp.jnr"),
+            "op:jp:fake": RegistryOperatorRecord(names: ["架空鉄道"], label: "架空", identity: "jp.fake"),
+        ]))
     }
 
     private static let passengerJR: RegistryIdentityLookup.Provider = { region in

@@ -44,19 +44,102 @@ enum BundledRegistry {
             identities[cc] = built
             return built
         }
+
+        func cachedIdentity(_ region: String) -> RegistryIdentity? {
+            identities[region]
+        }
+
+        func cachedBundle(_ region: String) -> RegistryBundle? {
+            bundles[region]
+        }
+
+        func hasFailed(_ region: String) -> Bool {
+            failed.contains(region)
+        }
     }
+
+    /// Fired after a background decode settles. The app bumps its label generation here.
+    /// `install()` does not clear it: AppLocalization sets the hook from its own init.
+    nonisolated(unsafe) static var onSettled: (@Sendable () -> Void)?
+    nonisolated(unsafe) private static var decoding = Set<String>()
 
     static func install() {
         RegistryIdentityUpgrade.installBundleProvider { region in
             bundle(for: region)
         }
         StationNameLookup.install { region in
-            guard let bundle = bundle(for: region) else { return nil }
-            return StationNameDirectory(bundle: bundle)
+            directoryFromCache(region)
         }
-        RegistryIdentityLookup.install { region in
-            identity(for: region)
+        RegistryIdentityLookup.installPhase { region in
+            phase(for: region)
         }
+    }
+
+    /// Starts a background decode for each region the store actually contains.
+    static func preload(regions: [String]) {
+        for region in regions {
+            let cc = region.lowercased()
+            guard !cc.isEmpty, fileExists(cc) else { continue }
+            startDecode(cc)
+        }
+    }
+
+    /// Ready when decoded, absent when there is no file or the decode failed,
+    /// pending while a background decode is in flight. Never decodes on the caller.
+    private static func phase(for region: String) -> RegistryPhase {
+        let cc = region.lowercased()
+        guard !cc.isEmpty else { return .absent }
+        lock.lock()
+        if let identity = decodeCache.cachedIdentity(cc) {
+            lock.unlock()
+            return .ready(identity)
+        }
+        let failed = decodeCache.hasFailed(cc)
+        lock.unlock()
+        if failed { return .absent }
+        guard fileExists(cc) else { return .absent }
+        startDecode(cc)
+        return .pending
+    }
+
+    /// A directory only when the bundle is already decoded. A miss starts the preload.
+    private static func directoryFromCache(_ region: String) -> StationNameDirectory? {
+        let cc = region.lowercased()
+        guard !cc.isEmpty else { return nil }
+        lock.lock()
+        let bundle = decodeCache.cachedBundle(cc)
+        lock.unlock()
+        if let bundle { return StationNameDirectory(bundle: bundle) }
+        guard fileExists(cc) else { return nil }
+        startDecode(cc)
+        return nil
+    }
+
+    private static func startDecode(_ cc: String) {
+        lock.lock()
+        if decodeCache.cachedIdentity(cc) != nil || decodeCache.hasFailed(cc) || decoding.contains(cc) {
+            lock.unlock()
+            return
+        }
+        decoding.insert(cc)
+        lock.unlock()
+        Task.detached(priority: .utility) {
+            _ = identity(for: cc)
+            finishDecode(cc)
+            RegistryIdentityLookup.notifySettled(region: cc)
+            onSettled?()
+        }
+    }
+
+    /// Synchronous so the lock stays out of the detached task.
+    private static func finishDecode(_ cc: String) {
+        lock.lock()
+        decoding.remove(cc)
+        lock.unlock()
+    }
+
+    private static func fileExists(_ cc: String) -> Bool {
+        Bundle.main.url(forResource: "registry-\(cc)", withExtension: "json") != nil
     }
 
     /// Registry identity for one region. The decoded bundle and its maps are cached together.

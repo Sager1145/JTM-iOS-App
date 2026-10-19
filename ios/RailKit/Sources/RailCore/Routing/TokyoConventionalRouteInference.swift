@@ -128,11 +128,11 @@ enum TokyoConventionalRouteInference {
         _ code: String?, name: String?, stationID: String? = nil, corridor: [String]? = nil
     ) -> String? {
         let explicit = code.flatMap { $0.isEmpty ? nil : $0 }
-        if SolverRegistryInput.installedIdentity(region: "jp") != nil {
-            guard let stationID, !stationID.isEmpty,
-                  let identity = SolverRegistryInput.installedIdentity(region: "jp") else {
-                return explicit
-            }
+        switch SolverRegistryInput.availability(region: "jp") {
+        case .pending:
+            return nil
+        case .ready(let identity):
+            guard let stationID, !stationID.isEmpty else { return explicit }
             let owned = Set(identity.codes(of: stationID).map { StationCodeAliases.canonical($0) })
             guard !owned.isEmpty else { return nil }
             if let explicit {
@@ -141,9 +141,10 @@ enum TokyoConventionalRouteInference {
             guard let narrowed = narrowedStationCode(name, corridor: corridor),
                   owned.contains(StationCodeAliases.canonical(narrowed)) else { return nil }
             return narrowed
+        case .absent:
+            if let explicit { return explicit }
+            return narrowedStationCode(name, corridor: corridor)
         }
-        if let explicit { return explicit }
-        return narrowedStationCode(name, corridor: corridor)
     }
 
     private static func narrowedStationCode(_ name: String?, corridor: [String]?) -> String? {

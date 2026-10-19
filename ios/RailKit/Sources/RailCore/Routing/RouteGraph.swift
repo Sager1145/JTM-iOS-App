@@ -554,6 +554,7 @@ public enum RouteGraph {
         public var allowedInstitutionTypeCodes: [String]?
         public var institutionFilterMode: String?
         public var operatorID: String?
+        public var operatorIDs: [String]
 
         public init(
             id: String = "",
@@ -566,7 +567,8 @@ public enum RouteGraph {
             preferredOperatorNames: [String] = [],
             allowedInstitutionTypeCodes: [String]? = nil,
             institutionFilterMode: String? = nil,
-            operatorID: String? = nil
+            operatorID: String? = nil,
+            operatorIDs: [String] = []
         ) {
             self.id = id
             self.number = number
@@ -579,6 +581,7 @@ public enum RouteGraph {
             self.allowedInstitutionTypeCodes = allowedInstitutionTypeCodes
             self.institutionFilterMode = institutionFilterMode
             self.operatorID = operatorID
+            self.operatorIDs = operatorIDs
         }
     }
 
@@ -588,10 +591,10 @@ public enum RouteGraph {
     /// `ROUTE_SOLVER_CACHE_VERSION`, from `app-config.js`. Bumping it in the
     /// web app retires every persisted route cache entry, so it is a
     /// parameter here rather than a constant this file owns. The explicit
-    /// coordinate parity version stays 25; physical version 27 rejects cached
-    /// paths produced by coordinate merging or passenger transfer edges.
+    /// coordinate parity version stays 25. Version 28 retires routes solved
+    /// from legacy company spellings before registry inputs.
     public static let legacyCoordinateSolverCacheVersion = "25"
-    public static let routeSolverCacheVersion = "27"
+    public static let routeSolverCacheVersion = "28"
 
     /// On-disk drawn-route cache (`RiddenRouteStore` save/read). Not part of
     /// `solveContext` or the route digest: version 22 files may have
@@ -806,19 +809,25 @@ public enum RouteGraph {
         historyRevision: String? = nil
     ) -> SolveContext? {
         guard !routeSections.isEmpty else { return nil }
+        let availability = SolverRegistryInput.availability(region: country)
+        if case .pending = availability { return nil }
         let templateKey = templateKey(sections: routeSections)
         let allowedCodes = allowedInstitutionTypeCodes(train, country: country)
         var policyParts = train.preferredLineNames.map { "line:\($0)" }
-        if let identity = SolverRegistryInput.installedIdentity(region: country) {
+        switch availability {
+        case .ready(let identity):
             policyParts += SolverRegistryInput.packageOperatorNames(
-                operatorIDs: train.operatorID.map { [$0] } ?? [],
+                operatorIDs: SolverRegistryInput.recordedOperatorIDs(
+                    operatorID: train.operatorID, operatorIDs: train.operatorIDs),
                 storedNames: train.preferredOperatorNames, identity: identity
             ).map { "operator:\($0)" }
-        } else {
+        case .absent:
             policyParts += train.preferredOperatorNames.map { "operator:\($0)" }
             policyParts += derivedPreferredOperatorNames(
                 company: train.company, country: country
             ).map { "operator:\($0)" }
+        case .pending:
+            return nil
         }
         // Duplicates are NOT removed — a preferred operator that is also
         // derived from the company field appears twice, and does so in the
@@ -835,7 +844,7 @@ public enum RouteGraph {
         let inferContext = RouteSolver.TrainContext(
             id: train.id, number: train.number, trainType: train.trainType,
             company: train.company, origin: train.origin, destination: train.destination,
-            operatorID: train.operatorID, region: country)
+            operatorID: train.operatorID, operatorIDs: train.operatorIDs, region: country)
         for (index, section) in routeSections.enumerated() {
             // `inferSectionRouteConstraints` only reads `from`/`to`, but takes
             // the top-level `RouteSection` (from `Train.swift`), not this
@@ -858,6 +867,22 @@ public enum RouteGraph {
         return SolveContext(
             templateKey: templateKey, allowedCodes: allowedCodes,
             policyKey: policyKey, cacheKey: cacheKey)
+    }
+
+    /// Waits until this region's registry is ready or absent, then builds the key.
+    /// A pending bundle never contributes a legacy company spelling to the key.
+    public static func solveContextAwaitingRegistry(
+        train: CacheKeyTrain,
+        routeSections: [RouteSection],
+        country: String,
+        cacheVersion: String = routeSolverCacheVersion,
+        rideDate: String? = nil,
+        historyRevision: String? = nil
+    ) async -> SolveContext? {
+        _ = await SolverRegistryInput.awaitReady(region: country)
+        return solveContext(
+            train: train, routeSections: routeSections, country: country,
+            cacheVersion: cacheVersion, rideDate: rideDate, historyRevision: historyRevision)
     }
 
     /// `/^\d{4}-\d{2}-\d{2}$/` — shape only, no calendar validation.

@@ -15,8 +15,38 @@ public enum SolverRegistryInput {
         return region.isEmpty ? nil : region
     }
 
+    public enum Availability: Sendable {
+        case ready(RegistryIdentity)
+        case pending
+        case absent
+    }
+
+    public static func availability(region: String) -> Availability {
+        switch RegistryIdentityLookup.phase(forRegion: region) {
+        case .ready(let identity): return .ready(identity)
+        case .pending: return .pending
+        case .absent: return .absent
+        }
+    }
+
     public static func installedIdentity(region: String) -> RegistryIdentity? {
-        RegistryIdentityLookup.identity(forRegion: region)
+        if case .ready(let identity) = availability(region: region) { return identity }
+        return nil
+    }
+
+    /// Waits for a pending preload, then returns the ready identity. Absent stays nil.
+    public static func awaitReady(region: String) async -> RegistryIdentity? {
+        await RegistryIdentityLookup.waitUntilSettled(region: region)
+        return installedIdentity(region: region)
+    }
+
+    public static func recordedOperatorIDs(operatorID: String?, operatorIDs: [String]) -> [String] {
+        var ids: [String] = []
+        if let operatorID, !operatorID.isEmpty { ids.append(operatorID) }
+        for identifier in operatorIDs where !identifier.isEmpty && !ids.contains(identifier) {
+            ids.append(identifier)
+        }
+        return ids
     }
 
     /// Package names on `edge.operator`. A stored spelling converts to an
@@ -88,12 +118,20 @@ public enum SolverRegistryInput {
     }
 
     public static func solveInputCodes(stops: [Stop], region: String) -> [String] {
-        guard let identity = installedIdentity(region: region) else {
+        switch availability(region: region) {
+        case .pending:
+            return []
+        case .absent:
             return stops.compactMap { stop in
                 guard let code = stop.n02StationCode, !code.isEmpty else { return nil }
                 return code
             }
+        case .ready(let identity):
+            return solveInputCodes(stops, identity: identity)
         }
+    }
+
+    private static func solveInputCodes(_ stops: [Stop], identity: RegistryIdentity) -> [String] {
         var result: [String] = []
         var seen = Set<String>()
         for stop in stops {
@@ -106,11 +144,19 @@ public enum SolverRegistryInput {
     }
 
     public static func solvableEndpointCount(stops: [Stop], region: String) -> Int {
-        guard let identity = installedIdentity(region: region) else {
+        switch availability(region: region) {
+        case .pending:
+            return 0
+        case .absent:
             return stops.reduce(into: 0) { count, stop in
                 if let code = stop.n02StationCode, !code.isEmpty { count += 1 }
             }
+        case .ready(let identity):
+            return solvableEndpointCount(stops, identity: identity)
         }
+    }
+
+    private static func solvableEndpointCount(_ stops: [Stop], identity: RegistryIdentity) -> Int {
         return stops.reduce(into: 0) { count, stop in
             if let identifier = stop.stationID, !identity.codes(of: identifier).isEmpty { count += 1 }
         }
@@ -122,9 +168,21 @@ public enum SolverRegistryInput {
         stationID: String?, rawCode: String?, region: String,
         eligibility: StationRouteEligibility?
     ) -> String? {
-        guard let identity = installedIdentity(region: region) else {
+        switch availability(region: region) {
+        case .pending:
+            return nil
+        case .absent:
             return eligibility?.stationCode(rawCode)
+        case .ready(let identity):
+            return graphStationCode(
+                stationID: stationID, rawCode: rawCode, identity: identity, eligibility: eligibility)
         }
+    }
+
+    private static func graphStationCode(
+        stationID: String?, rawCode: String?, identity: RegistryIdentity,
+        eligibility: StationRouteEligibility?
+    ) -> String? {
         guard let stationID, !stationID.isEmpty else { return nil }
         let owned = identity.codes(of: stationID)
         guard !owned.isEmpty else { return nil }
@@ -146,9 +204,14 @@ public enum SolverRegistryInput {
         stationID: String?, rawCode: String?, region: String,
         eligibility: StationRouteEligibility?
     ) -> String? {
-        guard installedIdentity(region: region) != nil else {
+        switch availability(region: region) {
+        case .pending:
+            return nil
+        case .absent:
             guard let eligibility else { return rawCode }
             return eligibility.stationCode(rawCode) ?? rawCode
+        case .ready:
+            break
         }
         return graphStationCode(
             stationID: stationID, rawCode: rawCode, region: region, eligibility: eligibility)

@@ -109,8 +109,13 @@ struct ServicePatternPickerView: View {
         searchSnapshotMatchesGeneration && searchSnapshotMatchesFilters && !isLoadingTimetable
     }
 
-    private func companyDisplayName(_ code: String) -> String {
-        OperatorIdentity.displayName(code: code, language: localization.language.rawValue) ?? code
+    private func companyChipTitle(_ identifier: String?, results: ServicePatternBrowsePolicy.SearchSnapshot) -> String {
+        guard let identifier else { return pickerText("allCompanies") }
+        if let index = results.companyIDs.firstIndex(of: identifier),
+           results.companyLabels.indices.contains(index) {
+            return results.companyLabels[index]
+        }
+        return identifier
     }
 
 
@@ -174,11 +179,11 @@ struct ServicePatternPickerView: View {
                     HStack {
                         Menu {
                             Button(pickerText("allCompanies")) { companyFilter = nil }
-                            ForEach(results.companyLabels, id: \.self) { label in
-                                Button(companyDisplayName(label)) { companyFilter = label }
+                            ForEach(Array(results.companyIDs.enumerated()), id: \.element) { index, identifier in
+                                Button(results.companyLabels[index]) { companyFilter = identifier }
                             }
                         } label: {
-                            Label(companyFilter.map(companyDisplayName) ?? pickerText("allCompanies"), systemImage: "building.2")
+                            Label(companyChipTitle(companyFilter, results: results), systemImage: "building.2")
                         }
                         .railMenuButtonStyle()
                         .accessibilityIdentifier("servicePatternCompanyFilter")

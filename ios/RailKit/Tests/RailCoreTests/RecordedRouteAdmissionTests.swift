@@ -190,7 +190,25 @@ extension RecordedRouteAdmissionTests {
         #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
         #expect(RecordedRouteAdmission.admission(in: draft, package: package).automaticChoice == nil)
         draft.routeSections?[0].operatorNames = ["Other"]
-        #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.isEmpty)
+        #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.first?.lineIDs == ["Branch"])
+    }
+
+    @Test("A ride whose company does not convert still admits lines")
+    func unconvertibleCompanyStillAdmitsLines() throws {
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(names: ["Operator"], label: "Operator"),
+            ]))
+        }) {
+            let package = try fixture([line("Branch", ["A", "B"], [1])])
+            var draft = train(["A", "B"])
+            draft.routeSections = [RouteSection(
+                fromN02StationCode: "A", toN02StationCode: "B",
+                lineNames: ["Legal"], operatorNames: ["架空鉄道"], lineIDs: ["legal-id"],
+                sectionCodes: ["legal-section"])]
+            #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.first?.lineIDs == ["Branch"])
+        }
     }
 
     @Test("Partial service statuses remain searchable but whole-line substitute buses do not")

@@ -523,7 +523,7 @@ test("buildTrainRouteSolveContext keys on ride date and history revision", () =>
   assert.ok(undated.cacheKey.endsWith("|date:none|history:jp:none"), undated.cacheKey);
   assert.deepEqual({ ...dated.historyRevisions }, { jp: "none" });
   const serialized = get(train("2019-12-31"));
-  assert.equal(serialized.solver_version, "27");
+  assert.equal(serialized.solver_version, "28");
   assert.equal(serialized.ride_date, "2019-12-31");
   assert.equal(
     serialized.route_cache_digest,

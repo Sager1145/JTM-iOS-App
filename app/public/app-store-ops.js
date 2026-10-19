@@ -131,6 +131,14 @@ function carriedRegistryID(key, value) {
   return { [key]: value };
 }
 
+// Null and [] are absence. A non-array, or a non-empty array, is passed
+// through so validateTrain can reject a bad element.
+function carriedOperatorIDs(value) {
+  if (value == null) return {};
+  if (Array.isArray(value) && value.length === 0) return {};
+  return { operator_ids: value };
+}
+
 function canonicalStopShape(stop) {
   const actualArrival = normalizeNullableTime(stop.actual_arrival);
   const actualDeparture = normalizeNullableTime(stop.actual_departure);
@@ -332,6 +340,7 @@ function normalizeExportTrain(train) {
       : {}),
     company: normalizeTrainCompany(train.company),
     ...carriedRegistryID("operator_id", train.operator_id),
+    ...carriedOperatorIDs(train.operator_ids),
     origin: train.origin || "",
     destination: train.destination || "",
     direction: train.direction || "down",
@@ -630,6 +639,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       "notes",
       "company",
       "operator_id",
+      "operator_ids",
       "origin",
       "destination",
       "direction",
@@ -669,6 +679,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       : {}),
     company: normalizeTrainCompany(train.company),
     ...carriedRegistryID("operator_id", train.operator_id),
+    ...carriedOperatorIDs(train.operator_ids),
     origin: train.origin,
     destination: train.destination,
     direction: train.direction || "down",

@@ -193,12 +193,15 @@ public enum RecordedRouteAdmission {
         operatorsAgree(required, actual, identity: RegistryIdentityCache.identity(forRegion: region))
     }
 
+    /// True when the line may stay. Missing registry, or either side failing to
+    /// convert, is unknown and does not reject the line. Disjoint converted sets reject.
     private static func operatorsAgree(
         _ required: [String], _ actual: String, identity: RegistryIdentity?
     ) -> Bool {
-        guard let identity else { return false }
+        guard let identity else { return true }
         let wanted = Set(required.flatMap { identity.operatorIDs(forCatalogName: $0) })
-        guard !wanted.isEmpty else { return false }
-        return !Set(identity.operatorIDs(forCatalogName: actual)).isDisjoint(with: wanted)
+        let actualIDs = Set(identity.operatorIDs(forCatalogName: actual))
+        if wanted.isEmpty || actualIDs.isEmpty { return true }
+        return !actualIDs.isDisjoint(with: wanted)
     }
 }

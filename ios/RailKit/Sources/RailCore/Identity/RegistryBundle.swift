@@ -267,11 +267,12 @@ public enum RegistryIdentityUpgrade {
     }
 
     /// Company text is the source. The same text keeps the cached ids.
-    /// A different value drops `operatorID` and every stop and section station id.
+    /// A different value drops both operator fields and every stop and section station id.
     public static func reassignCompany(_ company: String?, on train: inout Train) {
         guard train.company != company else { return }
         train.company = company
         train.operatorID = nil
+        train.operatorIDs = nil
         for index in train.stops.indices {
             train.stops[index].stationID = nil
         }
@@ -312,8 +313,25 @@ public enum RegistryIdentityUpgrade {
         return matched
     }
 
+    private static func companyParts(_ company: String) -> [String] {
+        company.components(separatedBy: CharacterSet(charactersIn: "/／"))
+            .map { JSString.trim($0) }
+            .filter { !$0.isEmpty }
+    }
+
     private static func recomputeOperator(_ train: inout Train, bundle: RegistryBundle) {
-        let matches = train.company.map { matchingOperators($0, bundle: bundle) } ?? []
+        let company = train.company ?? ""
+        let parts = companyParts(company)
+        if parts.count >= 2 {
+            let converted = parts.map { matchingOperators($0, bundle: bundle) }
+            if converted.allSatisfy({ $0.count == 1 }) {
+                train.operatorIDs = converted.map { $0[0] }
+                train.operatorID = nil
+                return
+            }
+        }
+        train.operatorIDs = nil
+        let matches = matchingOperators(company, bundle: bundle)
         if matches.count == 1 {
             train.operatorID = matches[0]
             return
@@ -323,7 +341,7 @@ public enum RegistryIdentityUpgrade {
             train.operatorID = nil
             return
         }
-        let wanted = train.company.map { normalizedCompany($0, region: bundle.region) } ?? ""
+        let wanted = normalizedCompany(company, region: bundle.region)
         let consistent = !wanted.isEmpty && names.contains {
             sameCodeUnits(normalizedCompany($0, region: bundle.region), wanted)
         }

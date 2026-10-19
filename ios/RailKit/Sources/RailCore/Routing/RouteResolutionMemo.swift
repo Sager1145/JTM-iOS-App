@@ -80,13 +80,15 @@ public final class RouteResolutionMemo: @unchecked Sendable {
             preferredLineNames: context.preferredLineNames,
             preferredOperatorNames: context.preferredOperatorNames,
             allowedInstitutionTypeCodes: context.allowedInstitutionTypeCodes,
-            institutionFilterMode: context.institutionFilterMode)
+            institutionFilterMode: context.institutionFilterMode,
+            operatorID: context.operatorID, operatorIDs: context.operatorIDs)
         let graphSection = RouteGraph.RouteSection(constraintSection)
         // A one-section context always exists. Keep the exact date separately:
         // solveContext normalizes its spelling, while the solver reads it raw.
-        let constraintKey = RouteGraph.solveContext(
+        // Pending registry: no key and no cached miss. The caller retries after preload.
+        guard let constraintKey = RouteGraph.solveContext(
             train: train, routeSections: [graphSection], country: country,
-            rideDate: context.rideDate)!.cacheKey
+            rideDate: context.rideDate)?.cacheKey else { return nil }
         let key = Key.solve(.init(section: section, constraintKey: constraintKey,
             country: country, rideDate: context.rideDate,
             hardExcludedCodes: context.policy.hardExcludedInstitutionTypeCodes,

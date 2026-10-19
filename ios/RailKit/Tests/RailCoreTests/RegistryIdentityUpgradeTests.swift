@@ -374,6 +374,7 @@ struct RegistryIdentityUpgradeTests {
         let encoded = try JSONEncoder().encode(train)
         let decoded = try JSONDecoder().decode(Train.self, from: encoded)
         #expect(decoded.operatorID == "op:jp:4")
+        #expect(decoded.operatorIDs == nil)
         #expect(decoded.stops.map(\.stationID) == ["st:jp:1", "st:jp:2"])
         #expect(decoded.company == "JR東海")
         #expect(decoded.stops[0].n02StationCode == "003700")
@@ -460,6 +461,46 @@ struct RegistryIdentityUpgradeTests {
         #expect(section?.toStationID == nil)
         #expect(section?.fromN02StationCode == "111111")
         #expect(section?.toN02StationCode == "222222")
+    }
+
+    @Test func slashJoinedCompaniesBecomeOperatorIds() throws {
+        let tables = bundle(operators: [
+            "op:jp:1": ["JR東日本"],
+            "op:jp:2": ["JR東海"],
+        ])
+        let joint = RegistryIdentityUpgrade.apply(
+            ride(company: "JR東日本／JR東海", operatorID: "op:jp:9", stops: pair()),
+            bundle: tables)
+        #expect(joint.operatorIDs == ["op:jp:1", "op:jp:2"])
+        #expect(joint.operatorID == nil)
+        let ascii = RegistryIdentityUpgrade.apply(
+            ride(company: "JR東日本/JR東海", stops: pair()), bundle: tables)
+        #expect(ascii.operatorIDs == ["op:jp:1", "op:jp:2"])
+        let mixed = RegistryIdentityUpgrade.apply(
+            ride(company: "JR東日本/架空", operatorID: "op:jp:1", stops: pair()), bundle: tables)
+        #expect(mixed.operatorIDs == nil)
+        #expect(mixed.operatorID == nil)
+        var singleSource = ride(company: "JR東日本", stops: pair())
+        singleSource.operatorIDs = ["op:jp:1", "op:jp:2"]
+        let single = RegistryIdentityUpgrade.apply(singleSource, bundle: tables)
+        #expect(single.operatorID == "op:jp:1")
+        #expect(single.operatorIDs == nil)
+
+        var cleared = joint
+        RegistryIdentityUpgrade.reassignCompany(nil, on: &cleared)
+        #expect(cleared.operatorID == nil)
+        #expect(cleared.operatorIDs == nil)
+
+        var encodedTrain = Train(
+            id: "t1", number: "1", company: "JR東日本／JR東海",
+            origin: "A", destination: "B", stops: pair())
+        encodedTrain.operatorIDs = ["op:jp:1", "op:jp:2"]
+        let text = StoreOperations.stringify(StoreOperations.json(encodedTrain))
+        #expect(text.contains("\"operator_ids\":[\"op:jp:1\",\"op:jp:2\"]"))
+        #expect(!text.contains("\"operator_id\":"))
+        let roundTrip = try JSONDecoder().decode(Train.self, from: JSONEncoder().encode(encodedTrain))
+        #expect(roundTrip.operatorIDs == ["op:jp:1", "op:jp:2"])
+        #expect(roundTrip.operatorID == nil)
     }
 
     @Test func reassignCompanyClearsSectionStationIds() {

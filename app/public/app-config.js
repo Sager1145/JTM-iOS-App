@@ -239,7 +239,8 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // cannot settle a route made only from station-transfer connectors.
 // 25: source station memberships prevent transfer connectors from attaching
 // to a sibling branch that does not serve the station.
-const ROUTE_SOLVER_CACHE_VERSION = "27";
+// 28: retires routes solved from legacy company spellings before registry inputs.
+const ROUTE_SOLVER_CACHE_VERSION = "28";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],

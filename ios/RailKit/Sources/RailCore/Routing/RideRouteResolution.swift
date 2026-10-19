@@ -606,7 +606,8 @@ public struct RideRouteResolution {
             allowedInstitutionTypeCodes: train.routePolicy?.allowedInstitutionTypeCodes,
             institutionFilterMode: train.routePolicy?.institutionFilterMode ?? "soft",
             rideDate: Dates.normalizeDateString(train.date),
-            operatorID: train.operatorID, region: train.region ?? "")
+            operatorID: train.operatorID, operatorIDs: train.operatorIDs ?? [],
+            region: train.region ?? "")
     }
 
 }

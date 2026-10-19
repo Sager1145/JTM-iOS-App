@@ -332,4 +332,29 @@ struct RegistrySolverInputTests {
                 stationID: "st:jp:99", region: "jp") == nil)
         }
     }
+
+    @Test func solveRequestedBeforePreloadUsesRegistryAfterItCompletes() async {
+        let readyIdentity = identity()
+        final class Gate: @unchecked Sendable { var ready = false }
+        let gate = Gate()
+        await RegistryIdentityTestGate.withPhase({ region in
+            guard region == "jp" else { return .absent }
+            return gate.ready ? .ready(readyIdentity) : .pending
+        }) {
+            let train = RouteGraph.CacheKeyTrain(trainType: "ソニック", operatorID: "op:jp:1")
+            let sections = [RouteGraph.RouteSection(from: "大分", to: "小倉")]
+            #expect(RouteGraph.solveContext(train: train, routeSections: sections, country: "jp") == nil)
+            let pending = Task {
+                await RouteGraph.solveContextAwaitingRegistry(
+                    train: train, routeSections: sections, country: "jp")
+            }
+            gate.ready = true
+            RegistryIdentityLookup.notifySettled(region: "jp")
+            let key = await pending.value?.cacheKey ?? ""
+            #expect(key.hasPrefix("solver:28|"))
+            #expect(key.contains("JR East Package"))
+            #expect(key.contains("日豊線"))
+            #expect(!key.contains("九州旅客鉄道"))
+        }
+    }
 }

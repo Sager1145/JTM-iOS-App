@@ -479,6 +479,12 @@ public struct Localization: Sendable {
     /// The readings row for a station: the exact code first, then a tolerant
     /// name match. Code before name because the code is the official identity
     /// and two stations share a name often enough to matter.
+    /// Whether the readings table has a row for this station code.
+    public func hasStationReading(code: String) -> Bool {
+        guard !code.isEmpty else { return false }
+        return stationReadings.byCode[JSStringKey(code)] != nil
+    }
+
     func stationReadingRow(code: String?, name: String?, allowNameFallback: Bool = true) -> StationReadingRow? {
         if let code, !code.isEmpty, let row = stationReadings.byCode[JSStringKey(code)] {
             return row

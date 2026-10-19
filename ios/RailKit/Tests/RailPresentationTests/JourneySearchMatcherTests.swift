@@ -118,6 +118,13 @@ struct JourneySearchMatcherTests {
             #expect(JourneySearchMatcher.matches(train, query: "JR EAST"))
             #expect(JourneyRouteIdentity.operatorLabels(of: train) == ["TEST-LABEL"])
             #expect(JourneyRouteIdentity.operatorLogo(of: train) == "/logos/test.svg")
+            var joint = train
+            joint.operatorID = nil
+            joint.operatorIDs = ["op:jp:1", "op:jp:west"]
+            #expect(JourneySearchMatcher.matches(joint, query: "JR EAST"))
+            #expect(JourneySearchMatcher.matches(joint, query: "東日本"))
+            #expect(JourneySearchMatcher.matches(joint, query: "JR西"))
+            #expect(JourneyRouteIdentity.operatorLabels(of: joint) == ["TEST-LABEL", "JR西日本"])
         }
     }
 
@@ -250,9 +257,22 @@ struct JourneySearchMatcherTests {
         #expect(counter.calls == 1)
         #expect(!JourneySearchMatcher.matches(ride, query: "のぞみ", alsoNamed: names))
         #expect(counter.calls == 2)
-        // The stored company does not match, and the caller's station names cannot supply it.
-        #expect(!JourneySearchMatcher.matches(ride, query: "桃園捷運", alsoNamed: names))
-        #expect(counter.calls == 3)
+        RegistryIdentityTestGate.withProvider({ region in
+            guard region == "tw" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "tw", run: 1, operatorRecords: [
+                "op:tw:ty": RegistryOperatorRecord(
+                    names: ["桃園捷運", "桃園大眾捷運股份有限公司"], label: "桃園捷運"),
+            ]))
+        }) {
+            var linked = ride
+            linked.region = "tw"
+            linked.operatorID = "op:tw:ty"
+            #expect(JourneySearchMatcher.matches(linked, query: "桃園捷運", alsoNamed: names))
+            #expect(counter.calls == 2)
+            linked.operatorID = nil
+            #expect(!JourneySearchMatcher.matches(linked, query: "桃園捷運", alsoNamed: names))
+            #expect(counter.calls == 2)
+        }
     }
 
     /// §5.1 is reviewed by reading ``JourneySearchMatcher/fields(of:)``, so
@@ -571,8 +591,11 @@ private func referenceMatch(_ train: Train, needle: String, aliases: [String] = 
        let identity = RegistryIdentityCache.identity(forRegion: region) {
         let operatorIDs = identity.operatorIDs(matchingQuery: needle)
         if !operatorIDs.isEmpty {
-            guard let operatorID = train.operatorID else { return false }
-            return operatorIDs.contains(operatorID)
+            var ride: Set<String> = []
+            if let operatorID = train.operatorID, !operatorID.isEmpty { ride.insert(operatorID) }
+            if let more = train.operatorIDs { ride.formUnion(more) }
+            guard !ride.isEmpty else { return false }
+            return !ride.isDisjoint(with: operatorIDs)
         }
     }
     let names = [train.number, train.numberEn, train.origin, train.destination,

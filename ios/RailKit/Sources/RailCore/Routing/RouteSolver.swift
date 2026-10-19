@@ -81,6 +81,8 @@ public enum RouteSolver {
         var rideDate: String?
         /// Registry operator. Nil keeps the legacy company-alias hints.
         var operatorID: String?
+        /// Joint operators, in company-field order. Empty when the ride has one operator.
+        var operatorIDs: [String]
         /// Ride region used to find the installed registry. Empty defers to
         /// the solve's country argument.
         var region: String
@@ -93,6 +95,7 @@ public enum RouteSolver {
             institutionFilterMode: String = "soft",
             rideDate: String? = nil,
             operatorID: String? = nil,
+            operatorIDs: [String] = [],
             region: String = ""
         ) {
             self.id = id
@@ -107,6 +110,7 @@ public enum RouteSolver {
             self.institutionFilterMode = institutionFilterMode
             self.rideDate = rideDate
             self.operatorID = operatorID
+            self.operatorIDs = operatorIDs
             self.region = region
         }
 
@@ -1027,13 +1031,22 @@ public enum RouteSolver {
         return (lines, operators)
     }
 
-    /// Package names of `train.operatorID` when a registry is installed.
-    /// Nil means the lookup is absent, so the caller keeps its legacy spelling.
+    /// Package names of the ride's operator ids when the registry is ready.
+    /// Nil means the region has no bundle, so the caller keeps its legacy spelling.
+    /// An empty array means the registry is pending or the ride has no convertible id,
+    /// and the caller must not substitute a hardcoded company.
     private static func registryServiceOperators(train: TrainContext, country: String) -> [String]? {
         let region = train.region.isEmpty ? country : train.region
-        guard let identity = SolverRegistryInput.installedIdentity(region: region) else { return nil }
-        guard let operatorID = train.operatorID else { return [] }
-        return identity.operator(for: operatorID)?.names ?? []
+        switch SolverRegistryInput.availability(region: region) {
+        case .ready(let identity):
+            let ids = SolverRegistryInput.recordedOperatorIDs(
+                operatorID: train.operatorID, operatorIDs: train.operatorIDs)
+            return ids.flatMap { identity.operator(for: $0)?.names ?? [] }
+        case .pending:
+            return []
+        case .absent:
+            return nil
+        }
     }
 
     static func buildSegmentRouteHints(
@@ -1056,13 +1069,18 @@ public enum RouteSolver {
         let region = train.region.isEmpty ? country : train.region
         var preferredOperators: Set<String>
         var explicitOperators: Set<String>
-        if let identity = SolverRegistryInput.installedIdentity(region: region) {
+        switch SolverRegistryInput.availability(region: region) {
+        case .ready(let identity):
             preferredOperators = Set(SolverRegistryInput.packageOperatorNames(
-                operatorIDs: train.operatorID.map { [$0] } ?? [],
+                operatorIDs: SolverRegistryInput.recordedOperatorIDs(
+                    operatorID: train.operatorID, operatorIDs: train.operatorIDs),
                 storedNames: train.preferredOperatorNames, identity: identity))
             explicitOperators = Set(SolverRegistryInput.packageOperatorNames(
                 operatorIDs: [], storedNames: section.operatorNames ?? [], identity: identity))
-        } else {
+        case .pending:
+            preferredOperators = []
+            explicitOperators = []
+        case .absent:
             preferredOperators = Set(train.preferredOperatorNames.filter { !$0.isEmpty })
             preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(
                 company: train.company, country: country))
@@ -2898,13 +2916,17 @@ public enum RouteSolver {
         preferredLines.formUnion(requiredLines)
         let region = train.region.isEmpty ? country : train.region
         var preferredOperators: Set<String>
-        if let identity = SolverRegistryInput.installedIdentity(region: region) {
+        switch SolverRegistryInput.availability(region: region) {
+        case .ready(let identity):
             preferredOperators = Set(normalizedHintValues(
                 SolverRegistryInput.packageOperatorNames(
-                    operatorIDs: train.operatorID.map { [$0] } ?? [],
+                    operatorIDs: SolverRegistryInput.recordedOperatorIDs(
+                        operatorID: train.operatorID, operatorIDs: train.operatorIDs),
                     storedNames: train.preferredOperatorNames, identity: identity)
                     + [match.operatorName]))
-        } else {
+        case .pending:
+            preferredOperators = Set(normalizedHintValues([match.operatorName]))
+        case .absent:
             preferredOperators = Set(normalizedHintValues(
                 train.preferredOperatorNames
                     + RouteGraph.derivedPreferredOperatorNames(
@@ -3204,13 +3226,16 @@ public enum RouteSolver {
         let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: country)
         let fromStations: [Int]
         let toStations: [Int]
-        if SolverRegistryInput.installedIdentity(region: country) != nil {
+        switch SolverRegistryInput.availability(region: country) {
+        case .pending:
+            return nil
+        case .ready:
             guard let ends = registryEndpointIndices(
                 section: section, country: country, stations: stations, rideDate: train.rideDate)
             else { return nil }
             fromStations = ends.from
             toStations = ends.to
-        } else {
+        case .absent:
             let lineNames = (section.lineNames ?? []).filter { !$0.isEmpty }
             let fromStop = Stations.Stop(
                 name: section.from, n02StationCode: section.fromN02StationCode)

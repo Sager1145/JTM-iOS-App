@@ -55,6 +55,7 @@ public enum JourneyRouteIdentity {
     public static func operatorIDs(of train: Train, detected: [Statistics.TraversedLine] = []) -> [String] {
         var ids: [String] = []
         if let operatorID = train.operatorID, !operatorID.isEmpty { ids.append(operatorID) }
+        if let more = train.operatorIDs { ids.append(contentsOf: more) }
         if let identity = identity(for: train) {
             for name in operatorNames(of: train, detected: detected) {
                 ids.append(contentsOf: identity.operatorIDs(forCatalogName: name))
@@ -65,14 +66,16 @@ public enum JourneyRouteIdentity {
 
     /// Facade label when the name converts. An unconverted name stays as stored text.
     public static func operatorLabels(of train: Train, detected: [Statistics.TraversedLine] = []) -> [String] {
+        if let operatorIDs = train.operatorIDs, !operatorIDs.isEmpty,
+           let identity = identity(for: train) {
+            return operatorIDs.map { identity.operatorLabel($0) ?? $0 }
+        }
         let names = operatorNames(of: train, detected: detected)
         guard let identity = identity(for: train) else { return names }
-        return unique(names.map { name in
+        return unique(names.flatMap { name -> [String] in
             let ids = identity.operatorIDs(forCatalogName: name)
-            if let identifier = ids.first, let label = identity.operatorLabel(identifier), !label.isEmpty {
-                return label
-            }
-            return name
+            if ids.isEmpty { return [name] }
+            return ids.map { identity.operatorLabel($0) ?? name }
         })
     }
 

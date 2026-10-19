@@ -113,6 +113,7 @@ extension Train {
 struct StationNamingGeneration: Equatable {
     var language: Localization.Language
     var readings: Int
+    var registry: Int
 }
 
 @MainActor
@@ -142,14 +143,20 @@ extension AppLocalization {
             ?? train.stops.first { $0.name == name }
         let region = Region.resolved(train)
         let display = RegistryStationDisplay.resolve(
-            storedName: name, stationID: stop?.stationID, region: train.region ?? region.code)
+            storedName: name, stationID: stop?.stationID, region: train.region)
         if display.unresolved {
             return name
         }
+        let namingRegion = (train.region?.isEmpty == false ? train.region : nil)
+            .flatMap(Region.init(rawValue:))
+            ?? stop?.stationID.flatMap(SolverRegistryInput.regionCode).flatMap(Region.init(rawValue:))
+            ?? region
         return stationName(
             display.primary,
-            code: display.readingCodes.first ?? code ?? train.stationCode(named: name),
-            region: region,
+            code: preferredReadingCode(
+                display.readingCodes, region: namingRegion,
+                fallback: code ?? train.stationCode(named: name)),
+            region: namingRegion,
             allowNameFallback: false)
     }
 
@@ -191,7 +198,7 @@ extension AppLocalization {
     /// The current value of everything ``localizedStationNames(of:)`` reads
     /// besides the journey itself.
     var stationNamingGeneration: StationNamingGeneration {
-        StationNamingGeneration(language: language, readings: readingsGeneration)
+        StationNamingGeneration(language: language, readings: readingsGeneration, registry: registryGeneration)
     }
 
     /// Every station on a journey under the spelling the reader is actually

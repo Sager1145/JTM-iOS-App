@@ -67,8 +67,11 @@ public enum JourneySearchMatcher {
         guard !prepared.whole.isEmpty else { return false }
         let operatorIDs = queryOperatorIDs(needle, region: train.region)
         if !operatorIDs.isEmpty {
-            guard let operatorID = train.operatorID else { return false }
-            return operatorIDs.contains(operatorID)
+            var ride: Set<String> = []
+            if let operatorID = train.operatorID, !operatorID.isEmpty { ride.insert(operatorID) }
+            if let more = train.operatorIDs { ride.formUnion(more) }
+            guard !ride.isEmpty else { return false }
+            return !ride.isDisjoint(with: operatorIDs)
         }
         func hit(_ field: String?) -> Bool {
             guard let field, !field.isEmpty else { return false }
