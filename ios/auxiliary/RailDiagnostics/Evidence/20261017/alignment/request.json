@@ -1,0 +1,12 @@
+{
+  "action" : "capture",
+  "captureLimit" : 1,
+  "intervalIndices" : [
+    0
+  ],
+  "lineID" : "jp-相模鉄道-相鉄本線",
+  "requestID" : "unified-native-sotetsu-0",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment",
+  "workspace" : "alignment"
+}

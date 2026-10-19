@@ -1,0 +1,325 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-三岐鉄道-三岐線#2",
+      "latitude" : 35.028440000000003,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.61842999999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#2#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-三岐鉄道-三岐線#2",
+      "latitude" : 35.029679575886895,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.61489779769201,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#2#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-三岐鉄道-三岐線#2",
+      "latitude" : 35.030912991238544,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.61136308314371,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#2#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-三岐鉄道-三岐線#2",
+      "latitude" : 35.032183380047307,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.60784760654047,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#2#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000001\/000004",
+      "itemID" : "jp-三岐鉄道-三岐線#2",
+      "latitude" : 35.032820000000001,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.60595499999999,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#2#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.046774999999997,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.56592000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.049088548060865,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.56343013560601,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000002",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.052114002257241,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.56374036484803,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000003",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.054867094492238,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.56559795828113,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000004",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.057828586489478,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.5666002174635,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000002\/000005",
+      "itemID" : "jp-三岐鉄道-三岐線#5",
+      "latitude" : 35.060605000000002,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.566045,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#5#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.16404,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.48793000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.166054278349549,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.48497144042534,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.167644783986731,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.48169932412722,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.169625715870211,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.47876714318394,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.170195,
+      "lineDependency" : "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548",
+      "longitude" : 136.47812999999999,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-4"
+    }
+  ]
+}

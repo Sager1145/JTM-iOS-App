@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "B68164D1-E7E0-444D-82C3-704C53E12F8C",
+  "message" : "4\/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 92679,
+  "requestID" : "alpico-kamikochi-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:07:12Z"
+}

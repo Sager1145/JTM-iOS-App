@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "FFF6DDA2-41CA-4019-85F3-B36BF7E56B74",
+  "message" : "Selected pattern\/date evidence exported. Through-service display does not prove physical connectivity.",
+  "requestID" : "remake-through-digest-validation",
+  "resultPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017-remake\/through\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T02:40:08Z"
+}

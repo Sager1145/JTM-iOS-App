@@ -1,0 +1,22 @@
+{
+  "catalog": {
+    "before": "56a9e210df0badf68f934a6bc3abadf52db4a9aacd7273ecbc6b89f3dd8335d2",
+    "after": "56a9e210df0badf68f934a6bc3abadf52db4a9aacd7273ecbc6b89f3dd8335d2",
+    "equal": true
+  },
+  "physicalPackage": {
+    "before": "b340684d949e32de36eab2baf71c9868e3746e0e6f12f601577cf19267a7083b",
+    "after": "b340684d949e32de36eab2baf71c9868e3746e0e6f12f601577cf19267a7083b",
+    "equal": true
+  },
+  "history": {
+    "before": "27af664d51135ed9c7d8d854f3a0b8e64452f4c1fd011002e8807b8b00312adf",
+    "after": "27af664d51135ed9c7d8d854f3a0b8e64452f4c1fd011002e8807b8b00312adf",
+    "equal": true
+  },
+  "physicalJunctions": {
+    "before": "4192eab506ab2055b25019ecd7aa71f9ec476e6dbe1e943a46cb7c34489a88bf",
+    "after": "4192eab506ab2055b25019ecd7aa71f9ec476e6dbe1e943a46cb7c34489a88bf",
+    "equal": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/candidate-tasks.json",
+  "capturedCount" : 55,
+  "captureIndexPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment",
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "FE5D8E93-FD4C-47E8-AAE0-BEC2E142866B",
+  "itemIDs" : [
+    "jp-一畑電車-北松江線#1",
+    "jp-一畑電車-北松江線#2",
+    "jp-一畑電車-北松江線#4",
+    "jp-一畑電車-北松江線#5",
+    "jp-一畑電車-北松江線#6",
+    "jp-一畑電車-北松江線#7",
+    "jp-一畑電車-北松江線#8",
+    "jp-一畑電車-北松江線#9",
+    "jp-一畑電車-北松江線#11",
+    "jp-一畑電車-北松江線#20"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "55\/55 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 92679,
+  "requestID" : "ichibata-kitamatsue-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:11:24Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "requestID": "bad-setting-validation",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/private/tmp/jtm-diagnostics-remake-native-session",
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "captureSetting": {
+    "zoom": 20
+  }
+}

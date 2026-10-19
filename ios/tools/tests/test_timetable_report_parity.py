@@ -8,7 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
 AUDITS = ROOT / "app/data/train-service-history/audits"
-REPORT = ROOT / "docs/train-timetable-verification-2026-09-29.md"
+REPORT = ROOT / "docs/reports/timetable/train-timetable-verification-2026-09-29.md"
 
 
 class TimetableReportParityTests(unittest.TestCase):

@@ -1,0 +1,82 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : [
+    "jp-一畑電車-北松江線#11#point-2",
+    "jp-一畑電車-北松江線#6#point-1",
+    "jp-一畑電車-北松江線#6#point-2"
+  ],
+  "spacingMetres" : 116.71920721178313,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-source-details-20261019\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.471332554961222,
+      "lineDependency" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+      "longitude" : 132.929285839898,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-source-details-20261019\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.470800358920918,
+      "lineDependency" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+      "longitude" : 132.92817640840281,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-source-details-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.451466379656353,
+      "lineDependency" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+      "longitude" : 132.86004774481341,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-2"
+    }
+  ]
+}

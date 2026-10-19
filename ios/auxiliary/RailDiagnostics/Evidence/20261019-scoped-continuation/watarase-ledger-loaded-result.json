@@ -1,0 +1,57 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/candidate-tasks.json",
+  "capturedCount" : 40,
+  "captureIndexPath" : "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 3,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "d2d5de20749bc89ecb46760604887da0bd9e344fa5e6be739be6de86bf458c08",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/alignment",
+    "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "2183437D-9566-4B17-BAE8-F183BEB5C2E1",
+  "itemIDs" : [
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#14"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "40\/40 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 92679,
+  "requestID" : "watarase-keikoku-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-watarase-keikoku-missing-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:07:40Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

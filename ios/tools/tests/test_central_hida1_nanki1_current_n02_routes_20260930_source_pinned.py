@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 
@@ -20,6 +21,16 @@ SPEC.loader.exec_module(MODULE)
 
 def read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def fixture_package(directory: Path) -> Path:
+    # The reviewed normalizer pins older package metadata. Keep the retained
+    # line/station memberships in this isolated fixture, without repinning live input.
+    package = json.loads(MODULE.RAIL_PACKAGE.read_text(encoding="utf-8"))
+    package["version"] = "2025.5.0"
+    path = directory / "rail-fixture.json"
+    path.write_text(json.dumps(package, ensure_ascii=False), encoding="utf-8")
+    return path
 
 
 class CentralHidaNankiCurrentN02RouteTests(unittest.TestCase):
@@ -103,21 +114,31 @@ class CentralHidaNankiCurrentN02RouteTests(unittest.TestCase):
             self.assertIn("no physical-line validity interval", route_row["notes"])
             self.assertEqual(research_row["status"], "open")
             self.assertIn("2026-09-30", research_row["notes"])
-        before = {path: path.read_bytes() for path in observed_paths}
-        self.assertEqual(
-            MODULE.normalize(BASE, MODULE.CANDIDATE, MODULE.RAIL_PACKAGE),
-            {"trips": 2, "segments": 24, "route_only_stations": 1},
-        )
-        self.assertEqual(before, {path: path.read_bytes() for path in observed_paths})
+        with tempfile.TemporaryDirectory() as temp_dir:
+            fixture = Path(temp_dir) / "history"
+            shutil.copytree(BASE, fixture)
+            fixture_paths = [fixture / path.relative_to(BASE) for path in observed_paths]
+            before = {path: path.read_bytes() for path in fixture_paths}
+            self.assertEqual(
+                MODULE.normalize(fixture, MODULE.CANDIDATE, fixture_package(Path(temp_dir))),
+                {"trips": 2, "segments": 24, "route_only_stations": 1},
+            )
+            self.assertEqual([], [str(path) for path in fixture_paths
+                                  if before[path] != path.read_bytes()])
 
     def test_changed_passenger_path_is_rejected_before_writing(self) -> None:
         altered = json.loads(json.dumps(self.candidate))
         altered["trips"][1]["expected_passenger_path"][3] = "jp.n02.006285"
         with tempfile.TemporaryDirectory() as temp_dir:
+            fixture = Path(temp_dir) / "history"
+            shutil.copytree(BASE, fixture)
+            before = {path: path.read_bytes() for path in fixture.rglob("*.jsonl")}
             path = Path(temp_dir) / "altered-candidate.json"
             path.write_text(json.dumps(altered, ensure_ascii=False), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "passenger-call chain drift"):
-                MODULE.normalize(BASE, path, MODULE.RAIL_PACKAGE)
+                MODULE.normalize(fixture, path, fixture_package(Path(temp_dir)))
+            self.assertEqual([], [str(path) for path in before
+                                  if before[path] != path.read_bytes()])
 
 
 if __name__ == "__main__":

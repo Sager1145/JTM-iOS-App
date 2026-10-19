@@ -82,6 +82,31 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         data, origins = timetable.load_dataset(self.canonical, manifest)
         return manifest, data, origins
 
+    def test_non_passenger_default_permissions_are_not_boardable(self):
+        for kind in ("pass", "operational_stop", "unknown"):
+            with self.subTest(call_type=kind):
+                row = timetable.prepared_row("stop_times", {"call_type": kind})
+                self.assertEqual((row["pickup_allowed"], row["dropoff_allowed"]), (0, 0))
+        passenger = timetable.prepared_row("stop_times", {"call_type": "passenger_stop"})
+        self.assertEqual((passenger["pickup_allowed"], passenger["dropoff_allowed"]), (1, 1))
+
+    def test_malformed_access_date_collects_errors_without_crashing(self):
+        for value in (None, 123):
+            with self.subTest(accessed_at=value):
+                manifest, data, origins = self.load()
+                if value is None:
+                    data["source_documents"][0].pop("accessed_at")
+                else:
+                    data["source_documents"][0]["accessed_at"] = value
+                errors = timetable.validate_dataset(data, origins, manifest)
+                self.assertTrue(any("accessed_at: expected ISO date" in error for error in errors))
+
+    def test_boolean_historical_generation_is_rejected(self):
+        manifest, data, origins = self.load()
+        data["services"][0]["historical_generation"] = True
+        self.assertTrue(any("historical_generation: expected positive integer" in error
+                            for error in timetable.validate_dataset(data, origins, manifest)))
+
     def test_passing_station_requires_same_row_and_source_evidence(self):
         manifest, data, origins = self.load()
         stop = data["stop_times"][0]

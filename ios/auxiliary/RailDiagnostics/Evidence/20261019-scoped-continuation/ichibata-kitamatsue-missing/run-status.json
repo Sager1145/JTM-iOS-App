@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "FE5D8E93-FD4C-47E8-AAE0-BEC2E142866B",
+  "message" : "55\/55 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 92679,
+  "requestID" : "ichibata-kitamatsue-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:11:24Z"
+}

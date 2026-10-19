@@ -40,13 +40,13 @@ normalizer.EXPECTED = {
 
 
 def main():
-    normalizer.main()
     candidate = json.loads(normalizer.CANDIDATE.read_text())
     english_source = candidate["english_name_source"]
     if english_source["url_or_locator"] != (
         "https://timetables.jreast.co.jp/en/2610/train/075/076101.html"
     ):
         raise ValueError("Akagi English name source changed")
+    normalizer.main()
     source_file = normalizer.BASE / f"sources/source-registry-{normalizer.SUFFIX}.jsonl"
     with source_file.open("a") as output:
         output.write(json.dumps(english_source, ensure_ascii=False, sort_keys=True) + "\n")

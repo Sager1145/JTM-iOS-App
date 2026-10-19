@@ -1,0 +1,10 @@
+{
+  "successfulResultUnchanged": true,
+  "captureCount": 7,
+  "lastError": {
+    "dependenciesVerified": false,
+    "message": "Invalid request: Unsupported diagnostic request fields: captureSetting.",
+    "state": "failed",
+    "updatedAt": "2026-10-18T02:41:01Z"
+  }
+}

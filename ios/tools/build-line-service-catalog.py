@@ -59,7 +59,14 @@ def build():
     corridors = {entry['id']: entry for entry in json.loads((ROOT / 'ios/RailKit/Sources/RailCore/Resources/japan-through-services.json').read_text())['patterns']}
     def reviewed_corridor(identity, labels, url, section_note, legs=None):
         corridor = corridors[identity]
-        for leg in legs if legs is not None else corridor['legs']:
+        observed = OBSERVED
+        # Include only patterns and legs active on the recorded observation day.
+        if (corridor.get('validTo') and observed >= corridor['validTo']) or (corridor.get('validFrom') and corridor['validFrom'] > observed):
+            return
+        selected = legs if legs is not None else corridor['legs']
+        for leg in selected:
+            if (leg.get('validTo') and observed >= leg['validTo']) or (leg.get('validFrom') and leg['validFrom'] > observed):
+                continue
             identities = [leg['lineID']]
             if leg.get('reverseLineID'):
                 identities.append(leg['reverseLineID'])

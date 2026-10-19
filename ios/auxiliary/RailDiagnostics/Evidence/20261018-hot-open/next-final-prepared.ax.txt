@@ -1,0 +1,168 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 text Description: Rail Diagnostics, Secondary Actions: Cancel
+			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+				5 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+			11 text Secondary Actions: Cancel, Description: Finish the current operation and close any open dialog before opening another task. The current task is unchanged.
+			12 container Secondary Actions: Cancel
+				13 text Description: Tasks & evidence, Secondary Actions: Cancel
+				14 button Description: Copy result path, Secondary Actions: Cancel
+				15 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+				16 container Secondary Actions: Cancel
+					17 text Description: Prepared, Secondary Actions: Cancel
+					18 text Description: Alignment, Secondary Actions: Cancel
+					19 text Description: hot-open-existing-window, Secondary Actions: Cancel
+					20 text Description: jp-東急電鉄-田園都市線 · intervals 7, 9, 12, Secondary Actions: Cancel
+					21 text Description: Package: /Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json, Secondary Actions: Cancel
+					22 text Description: Zoom 17.0 · 1,024 × 768 pt · standard · light · basemap, smooth, Secondary Actions: Cancel
+					23 text Description: /private/tmp/jtm-hot-open-prepare, Secondary Actions: Cancel
+					24 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+					25 button Description: Copy request JSON, Secondary Actions: Cancel
+					26 button Description: Agent request, Secondary Actions: Cancel
+				27 text Description: Progress, Secondary Actions: Cancel
+				28 text Description: 0/13 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+				29 text Description: 0, Secondary Actions: Cancel
+				30 text Description: 13, Secondary Actions: Cancel
+				31 text Description: 0, Secondary Actions: Cancel
+				32 text Description: Captured, Secondary Actions: Cancel
+				33 text Description: Pending, Secondary Actions: Cancel
+				34 text Description: Failed, Secondary Actions: Cancel
+				35 text Description: /private/tmp/jtm-hot-open-prepare/result.json, Secondary Actions: Cancel
+				36 text Description: Captured views · 0, Secondary Actions: Cancel
+				37 text Description: Screenshots appear here as captures finish., Secondary Actions: Cancel
+				38 text Description: Evidence files, Secondary Actions: Cancel
+				39 image Description: Document, ID: doc, Secondary Actions: Cancel
+				40 text Description: /private/tmp/jtm-hot-open-prepare/alignment, Secondary Actions: Cancel
+				41 button Description: Copy path, Secondary Actions: Cancel
+				42 image Description: Document, ID: doc, Secondary Actions: Cancel
+				43 text Description: /private/tmp/jtm-hot-open-prepare/alignment-geometry.json, Secondary Actions: Cancel
+				44 button Description: Copy path, Secondary Actions: Cancel
+				45 text Description: Review observations · 0 / 21, Secondary Actions: Cancel
+				46 container Secondary Actions: Cancel
+					47 heading Description: Record an observation, Secondary Actions: Cancel
+					48 pop up button Description: Candidate, Choose candidate, Secondary Actions: Cancel
+					49 pop up button Description: Conclusion, Insufficient evidence, Secondary Actions: Cancel
+					50 text field Placeholder: Observation and limits, Secondary Actions: Cancel
+					51 text field Placeholder: Evidence file paths · one absolute path per line, Secondary Actions: Cancel
+					52 button (disabled) Description: Save observation  ⌃⌘S, Secondary Actions: Cancel
+				53 text field (settable) Placeholder: Filter review candidates, Secondary Actions: Cancel
+				54 text Description: lineOffset, Secondary Actions: Cancel
+				55 text Description: Pending review, Secondary Actions: Cancel
+				56 text Description: jp-東急電鉄-田園都市線#7/lineOffset, Secondary Actions: Cancel
+				57 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				58 text Description: stationApproach, Secondary Actions: Cancel
+				59 text Description: Pending review, Secondary Actions: Cancel
+				60 text Description: jp-東急電鉄-田園都市線#7/stationApproach, Secondary Actions: Cancel
+				61 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				62 text Description: disconnectedParts, Secondary Actions: Cancel
+				63 text Description: Pending review, Secondary Actions: Cancel
+				64 text Description: jp-東急電鉄-田園都市線#7/disconnectedParts, Secondary Actions: Cancel
+				65 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				66 text Description: stationOffset, Secondary Actions: Cancel
+				67 text Description: Pending review, Secondary Actions: Cancel
+				68 text Description: jp-東急電鉄-田園都市線/station/004198, Secondary Actions: Cancel
+				69 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				70 text Description: stationOffset, Secondary Actions: Cancel
+				71 text Description: Pending review, Secondary Actions: Cancel
+				72 text Description: jp-東急電鉄-田園都市線/station/004230, Secondary Actions: Cancel
+				73 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				74 text Description: intervalSeam, Secondary Actions: Cancel
+				75 text Description: Pending review, Secondary Actions: Cancel
+				76 text Description: jp-東急電鉄-田園都市線#6/seam, Secondary Actions: Cancel
+				77 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				78 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				79 text Description: intervalSeam, Secondary Actions: Cancel
+				80 text Description: Pending review, Secondary Actions: Cancel
+				81 text Description: jp-東急電鉄-田園都市線#7/seam, Secondary Actions: Cancel
+				82 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				83 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				84 text Description: lineOffset, Secondary Actions: Cancel
+				85 text Description: Pending review, Secondary Actions: Cancel
+				86 text Description: jp-東急電鉄-田園都市線#9/lineOffset, Secondary Actions: Cancel
+				87 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				88 text Description: stationApproach, Secondary Actions: Cancel
+				89 text Description: Pending review, Secondary Actions: Cancel
+				90 text Description: jp-東急電鉄-田園都市線#9/stationApproach, Secondary Actions: Cancel
+				91 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				92 text Description: disconnectedParts, Secondary Actions: Cancel
+				93 text Description: Pending review, Secondary Actions: Cancel
+				94 text Description: jp-東急電鉄-田園都市線#9/disconnectedParts, Secondary Actions: Cancel
+				95 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				96 text Description: stationOffset, Secondary Actions: Cancel
+				97 text Description: Pending review, Secondary Actions: Cancel
+				98 text Description: jp-東急電鉄-田園都市線/station/004238, Secondary Actions: Cancel
+				99 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				100 text Description: stationOffset, Secondary Actions: Cancel
+				101 text Description: Pending review, Secondary Actions: Cancel
+				102 text Description: jp-東急電鉄-田園都市線/station/004257, Secondary Actions: Cancel
+				103 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				104 text Description: intervalSeam, Secondary Actions: Cancel
+				105 text Description: Pending review, Secondary Actions: Cancel
+				106 text Description: jp-東急電鉄-田園都市線#8/seam, Secondary Actions: Cancel
+				107 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				108 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				109 text Description: intervalSeam, Secondary Actions: Cancel
+				110 text Description: Pending review, Secondary Actions: Cancel
+				111 text Description: jp-東急電鉄-田園都市線#9/seam, Secondary Actions: Cancel
+				112 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				113 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				114 text Description: lineOffset, Secondary Actions: Cancel
+				115 text Description: Pending review, Secondary Actions: Cancel
+				116 text Description: jp-東急電鉄-田園都市線#12/lineOffset, Secondary Actions: Cancel
+				117 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				118 text Description: stationApproach, Secondary Actions: Cancel
+				119 text Description: Pending review, Secondary Actions: Cancel
+				120 text Description: jp-東急電鉄-田園都市線#12/stationApproach, Secondary Actions: Cancel
+				121 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				122 text Description: disconnectedParts, Secondary Actions: Cancel
+				123 text Description: Pending review, Secondary Actions: Cancel
+				124 text Description: jp-東急電鉄-田園都市線#12/disconnectedParts, Secondary Actions: Cancel
+				125 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				126 text Description: stationOffset, Secondary Actions: Cancel
+				127 text Description: Pending review, Secondary Actions: Cancel
+				128 text Description: jp-東急電鉄-田園都市線/station/004274, Secondary Actions: Cancel
+				129 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				130 text Description: stationOffset, Secondary Actions: Cancel
+				131 text Description: Pending review, Secondary Actions: Cancel
+				132 text Description: jp-東急電鉄-田園都市線/station/004290, Secondary Actions: Cancel
+				133 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				134 text Description: intervalSeam, Secondary Actions: Cancel
+				135 text Description: Pending review, Secondary Actions: Cancel
+				136 text Description: jp-東急電鉄-田園都市線#11/seam, Secondary Actions: Cancel
+				137 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				138 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				139 text Description: intervalSeam, Secondary Actions: Cancel
+				140 text Description: Pending review, Secondary Actions: Cancel
+				141 text Description: jp-東急電鉄-田園都市線#12/seam, Secondary Actions: Cancel
+				142 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				143 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				144 text Description: Recent tasks, Secondary Actions: Cancel
+				145 button Description: hot-open-existing-window, jp-東急電鉄-田園都市線 · intervals 7, 9, 12, Secondary Actions: Cancel
+				146 button Description: denentoshi-own-curve-3-candidate, jp-東急電鉄-田園都市線 · intervals 3, Secondary Actions: Cancel
+				147 button Description: human-candidate-input, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				148 button Secondary Actions: Cancel, Description: route-49af879a, /Users/sager/Library/Application Support/RailDiagnostics/Inputs/FCF23257-5B67-42A9-B2E1-A7777D56CD03/journeys.json
+				149 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				150 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				151 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				152 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+			153 text Description: Prepared, Secondary Actions: Cancel
+			154 text Description: hot-open-existing-window, Secondary Actions: Cancel
+			155 text Description: z17.0 · 1,024×768, Secondary Actions: Cancel
+			156 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	157 text Rail Diagnostics
+	158 menu button Window sharing
+159 menu bar
+	160 RailDiagnostics, ID: com.apple.menu.application
+	161 File, ID: com.apple.menu.file
+	162 Edit, ID: com.apple.menu.edit
+	163 View, ID: com.apple.menu.view
+	164 Diagnostics, ID: com.apple.menu.dynamic.5E29B7F4-B7AE-4CF1-A365-BA3DDFD8EF43
+	165 Window, ID: com.apple.menu.window
+	166 Help, ID: com.apple.menu.help

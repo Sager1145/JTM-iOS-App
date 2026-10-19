@@ -1,0 +1,59 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 text Description: Rail Diagnostics, Secondary Actions: Cancel
+			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+				5 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+			11 container Secondary Actions: Cancel
+				12 text Description: Tasks & evidence, Secondary Actions: Cancel
+				13 button Description: Copy result path, Secondary Actions: Cancel
+				14 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+				15 container Secondary Actions: Cancel
+					16 text Description: Task failed, Secondary Actions: Cancel
+					17 text Description: Alignment, Secondary Actions: Cancel
+					18 text Description: missing-candidate-must-fail, Secondary Actions: Cancel
+					19 text Description: jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+					20 text Description: Package: /private/tmp/jtm-corner-repair-20261018/does-not-exist.json, Secondary Actions: Cancel
+					21 text Description: Zoom 19.0 · 1,600 × 1,200 pt · light · basemap, smooth, Secondary Actions: Cancel
+					22 text Description: /private/tmp/jtm-corner-repair-20261018/missing-input, Secondary Actions: Cancel
+					23 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+					24 button Description: Copy request JSON, Secondary Actions: Cancel
+					25 button Description: Agent request, Secondary Actions: Cancel
+				26 text Description: Progress, Secondary Actions: Cancel
+				27 text Description: The file “does-not-exist.json” couldn’t be opened because there is no such file., Secondary Actions: Cancel
+				28 text Description: 0, Secondary Actions: Cancel
+				29 text Description: 0, Secondary Actions: Cancel
+				30 text Description: 0, Secondary Actions: Cancel
+				31 text Description: Captured, Secondary Actions: Cancel
+				32 text Description: Pending, Secondary Actions: Cancel
+				33 text Description: Failed, Secondary Actions: Cancel
+				34 text Description: /private/tmp/jtm-corner-repair-20261018/missing-input/result.json, Secondary Actions: Cancel
+				35 text Description: Captured views · 0, Secondary Actions: Cancel
+				36 text Description: Screenshots appear here as captures finish., Secondary Actions: Cancel
+				37 text Description: Evidence files, Secondary Actions: Cancel
+				38 text Description: Recent tasks, Secondary Actions: Cancel
+				39 button Secondary Actions: Cancel, Description: route-49af879a, /Users/sager/Library/Application Support/RailDiagnostics/Inputs/FCF23257-5B67-42A9-B2E1-A7777D56CD03/journeys.json
+				40 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				41 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				42 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				43 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+			44 text Description: Task failed, Secondary Actions: Cancel
+			45 text Description: missing-candidate-must-fail, Secondary Actions: Cancel
+			46 text Description: z19.0 · 1,600×1,200, Secondary Actions: Cancel
+			47 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	48 text Rail Diagnostics
+	49 menu button Window sharing
+50 menu bar
+	51 RailDiagnostics, ID: com.apple.menu.application
+	52 File, ID: com.apple.menu.file
+	53 Edit, ID: com.apple.menu.edit
+	54 View, ID: com.apple.menu.view
+	55 Diagnostics, ID: com.apple.menu.dynamic.D0DD7E29-60FB-499E-A5A0-452C2DF8A792
+	56 Window, ID: com.apple.menu.window
+	57 Help, ID: com.apple.menu.help

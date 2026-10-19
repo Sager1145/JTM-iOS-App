@@ -1,0 +1,109 @@
+{
+  "elapsedSeconds" : 0.5163871049880981,
+  "findings" : [
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "inspection_station_005260"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/1/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 1,
+      "severity" : "review",
+      "trainID" : "inspection_station_005260"
+    }
+  ],
+  "importElapsedSeconds" : 0.010648012161254883,
+  "inspectionElapsedSeconds" : 6.257892966270447,
+  "inspectionState" : "0 项失败 · 2 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "宮ノ下",
+      "expectedSectionCount" : 2,
+      "id" : "inspection_station_005260",
+      "indicesAreAuthoritative" : true,
+      "number" : "客运进出站检查 大平台",
+      "origin" : "塔ノ沢",
+      "parts" : [
+        {
+          "from" : "塔ノ沢",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005269",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 2.596154933805845,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005260"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 128,
+          "temporalKind" : "current",
+          "to" : "大平台"
+        },
+        {
+          "from" : "大平台",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005260",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 1.8809171834912575,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005254"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 91,
+          "temporalKind" : "current",
+          "to" : "宮ノ下"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 2,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 0,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 0,
+    "retainedVertices" : 0,
+    "scope" : "processLifetime",
+    "startedOperations" : 0,
+    "subscribers" : 0
+  },
+  "source" : "journeys.json",
+  "timingScope" : "routeLoad"
+}

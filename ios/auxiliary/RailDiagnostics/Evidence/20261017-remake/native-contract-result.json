@@ -1,0 +1,180 @@
+{
+  "result": {
+    "action": "capture",
+    "candidateTasksPath": "/private/tmp/jtm-diagnostics-remake-native-session/candidate-tasks.json",
+    "capturedCount": 7,
+    "captureIndexPath": "/private/tmp/jtm-diagnostics-remake-native-session/capture-index.json",
+    "captureSettings": {
+      "appearance": "dark",
+      "height": 600,
+      "outputModes": [
+        "smooth"
+      ],
+      "width": 800,
+      "zoom": 18
+    },
+    "currentReviewerObservationCount": 0,
+    "dependencies": {
+      "diagnosticContract": "rail-diagnostics-v1",
+      "lineRender": "624b21f0cd80790b89495a06257130635ecb449e6a213e502ac3de194e2b48cb",
+      "packageVersion": "2025.5.2"
+    },
+    "dependenciesVerified": true,
+    "evidencePaths": [
+      "/private/tmp/jtm-diagnostics-remake-native-session/alignment",
+      "/private/tmp/jtm-diagnostics-remake-native-session/alignment-geometry.json"
+    ],
+    "failedCount": 0,
+    "itemIDs": [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "mainFinalCheck": "pending — separate production composition evidence required",
+    "message": "7/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "pendingCount": 0,
+    "requestID": "diagnostics-remake-z18-dark-validation",
+    "requestPath": "/private/tmp/jtm-diagnostics-remake-native-session/request.json",
+    "reviewMessage": "",
+    "reviewNotesPath": "/private/tmp/jtm-diagnostics-remake-native-session/review-notes.json",
+    "runStatusPath": "/private/tmp/jtm-diagnostics-remake-native-session/run-status.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-18T02:34:40Z",
+    "verdict": "pendingReview",
+    "workspace": "alignment"
+  },
+  "views": [
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-0",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        17.999999999986564,
+        17.999999999986564
+      ],
+      "actualCenterPoints": [
+        399.9999999995672,
+        299.9999999987276
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-1",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        17.999999999991044,
+        17.999999999991044
+      ],
+      "actualCenterPoints": [
+        399.9999999894323,
+        299.9999999989948
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-2",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        17.999999999986564,
+        17.999999999986564
+      ],
+      "actualCenterPoints": [
+        400.0000000006506,
+        299.9999999989692
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-3",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        18,
+        18
+      ],
+      "actualCenterPoints": [
+        400.00000000018997,
+        299.9999999977919
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-4",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        18,
+        18
+      ],
+      "actualCenterPoints": [
+        399.9999999975448,
+        299.9999999967842
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-5",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        17.999999999986564,
+        17.999999999986564
+      ],
+      "actualCenterPoints": [
+        400.00000000046896,
+        300.000000000213
+      ]
+    },
+    {
+      "viewpointID": "jp-相模鉄道-相鉄本線#0#point-6",
+      "pngs": [
+        "smooth.png"
+      ],
+      "pixels": [
+        800,
+        600
+      ],
+      "actualZoom": [
+        17.999999999986564,
+        17.999999999986564
+      ],
+      "actualCenterPoints": [
+        399.99999999666227,
+        299.9999999982014
+      ]
+    }
+  ],
+  "pausedFirstCaptureFilesUnchangedAfterResume": true,
+  "observedUI": [
+    "Escape paused 1/7",
+    "Command Return resumed 7/7",
+    "Quick Look opened actual smooth.png",
+    "Control Command N did not open background task while Quick Look active"
+  ]
+}

@@ -1,0 +1,7 @@
+The following is a diff from the previous accessibility tree for Window: "Untitled" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 139, 141-145
++				158 switch Description: Original basemap, Value: 1, Secondary Actions: Cancel
++				159 switch Description: Display geometry, Value: 1, Secondary Actions: Cancel
++				160 switch Description: Smoothed geometry, Value: 1, Secondary Actions: Cancel
++				161 text field (settable) Description: Viewpoint IDs, Placeholder: Optional exact IDs, comma separated, Secondary Actions: Cancel
++				162 text field (settable) Placeholder: Optional capture limit · blank captures all pending views, Secondary Actions: Cancel

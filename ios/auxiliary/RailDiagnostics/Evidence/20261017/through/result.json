@@ -1,0 +1,35 @@
+{
+  "action" : "inspect",
+  "candidateTasksPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/through\/candidate-tasks.json",
+  "capturedCount" : 0,
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "catalog" : "56a9e210df0badf68f934a6bc3abadf52db4a9aacd7273ecbc6b89f3dd8335d2",
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "history" : "27af664d51135ed9c7d8d854f3a0b8e64452f4c1fd011002e8807b8b00312adf",
+    "patternSHA256" : "4b29851d032544fa534b77b90d756717cdc6f386c51a9c5ff1785bd916081808",
+    "physicalJunctions" : "4192eab506ab2055b25019ecd7aa71f9ec476e6dbe1e943a46cb7c34489a88bf",
+    "physicalPackage" : "b340684d949e32de36eab2baf71c9868e3746e0e6f12f601577cf19267a7083b",
+    "reviewDay" : "2026-10-17"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/through\/through-pattern.json",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/through\/through-report.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "JK"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "Selected pattern\/date evidence exported. Through-service display does not prove physical connectivity.",
+  "pendingCount" : 0,
+  "requestID" : "unified-native-through-one",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/through\/review-notes.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-17T23:21:16Z",
+  "verdict" : "pendingReview",
+  "workspace" : "through"
+}

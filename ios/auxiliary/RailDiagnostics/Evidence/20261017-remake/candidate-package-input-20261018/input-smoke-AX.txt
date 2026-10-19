@@ -1,0 +1,99 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 text Description: Rail Diagnostics, Secondary Actions: Cancel
+			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+				5 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+			11 container Secondary Actions: Cancel
+				12 text Description: Tasks & evidence, Secondary Actions: Cancel
+				13 button Description: Copy result path, Secondary Actions: Cancel
+				14 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+				15 container Secondary Actions: Cancel
+					16 text Description: Prepared, Secondary Actions: Cancel
+					17 text Description: Alignment, Secondary Actions: Cancel
+					18 text Description: corner-candidate-input-smoke, Secondary Actions: Cancel
+					19 text Description: jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+					20 text Description: Package: /Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json, Secondary Actions: Cancel
+					21 text Description: Zoom 19.0 · 1,600 × 1,200 pt · light · basemap, smooth, Secondary Actions: Cancel
+					22 text Description: /private/tmp/jtm-corner-repair-20261018/input-smoke, Secondary Actions: Cancel
+					23 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+					24 button Description: Copy request JSON, Secondary Actions: Cancel
+					25 button Description: Agent request, Secondary Actions: Cancel
+				26 text Description: Progress, Secondary Actions: Cancel
+				27 text Description: 0/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+				28 text Description: 0, Secondary Actions: Cancel
+				29 text Description: 7, Secondary Actions: Cancel
+				30 text Description: 0, Secondary Actions: Cancel
+				31 text Description: Captured, Secondary Actions: Cancel
+				32 text Description: Pending, Secondary Actions: Cancel
+				33 text Description: Failed, Secondary Actions: Cancel
+				34 text Description: /private/tmp/jtm-corner-repair-20261018/input-smoke/result.json, Secondary Actions: Cancel
+				35 text Description: Captured views · 0, Secondary Actions: Cancel
+				36 text Description: Screenshots appear here as captures finish., Secondary Actions: Cancel
+				37 text Description: Evidence files, Secondary Actions: Cancel
+				38 image Description: Document, ID: doc, Secondary Actions: Cancel
+				39 text Description: /private/tmp/jtm-corner-repair-20261018/input-smoke/alignment, Secondary Actions: Cancel
+				40 button Description: Copy path, Secondary Actions: Cancel
+				41 image Description: Document, ID: doc, Secondary Actions: Cancel
+				42 text Description: /private/tmp/jtm-corner-repair-20261018/input-smoke/alignment-geometry.json, Secondary Actions: Cancel
+				43 button Description: Copy path, Secondary Actions: Cancel
+				44 text Description: Review observations · 0 / 6, Secondary Actions: Cancel
+				45 container Secondary Actions: Cancel
+					46 heading Description: Record an observation, Secondary Actions: Cancel
+					47 pop up button Description: Candidate, Choose candidate, Secondary Actions: Cancel
+					48 pop up button Description: Conclusion, Insufficient evidence, Secondary Actions: Cancel
+					49 text field Placeholder: Observation and limits, Secondary Actions: Cancel
+					50 text field Placeholder: Evidence file paths · one absolute path per line, Secondary Actions: Cancel
+					51 button (disabled) Description: Save observation  ⌃⌘S, Secondary Actions: Cancel
+				52 text field (settable) Placeholder: Filter review candidates, Secondary Actions: Cancel
+				53 text Description: lineOffset, Secondary Actions: Cancel
+				54 text Description: Pending review, Secondary Actions: Cancel
+				55 text Description: jp-相模鉄道-相鉄本線#0/lineOffset, Secondary Actions: Cancel
+				56 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				57 text Description: stationApproach, Secondary Actions: Cancel
+				58 text Description: Pending review, Secondary Actions: Cancel
+				59 text Description: jp-相模鉄道-相鉄本線#0/stationApproach, Secondary Actions: Cancel
+				60 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				61 text Description: disconnectedParts, Secondary Actions: Cancel
+				62 text Description: Pending review, Secondary Actions: Cancel
+				63 text Description: jp-相模鉄道-相鉄本線#0/disconnectedParts, Secondary Actions: Cancel
+				64 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				65 text Description: stationOffset, Secondary Actions: Cancel
+				66 text Description: Pending review, Secondary Actions: Cancel
+				67 text Description: jp-相模鉄道-相鉄本線/station/004633, Secondary Actions: Cancel
+				68 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				69 text Description: stationOffset, Secondary Actions: Cancel
+				70 text Description: Pending review, Secondary Actions: Cancel
+				71 text Description: jp-相模鉄道-相鉄本線/station/004653, Secondary Actions: Cancel
+				72 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				73 text Description: intervalSeam, Secondary Actions: Cancel
+				74 text Description: Pending review, Secondary Actions: Cancel
+				75 text Description: jp-相模鉄道-相鉄本線#0/seam, Secondary Actions: Cancel
+				76 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				77 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				78 text Description: Recent tasks, Secondary Actions: Cancel
+				79 button Secondary Actions: Cancel, Description: route-49af879a, /Users/sager/Library/Application Support/RailDiagnostics/Inputs/FCF23257-5B67-42A9-B2E1-A7777D56CD03/journeys.json
+				80 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				81 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				82 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				83 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+			84 text Description: Prepared, Secondary Actions: Cancel
+			85 text Description: corner-candidate-input-smoke, Secondary Actions: Cancel
+			86 text Description: z19.0 · 1,600×1,200, Secondary Actions: Cancel
+			87 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	88 text Rail Diagnostics
+	89 menu button Window sharing
+90 menu bar
+	91 RailDiagnostics, ID: com.apple.menu.application
+	92 File, ID: com.apple.menu.file
+	93 Edit, ID: com.apple.menu.edit
+	94 View, ID: com.apple.menu.view
+	95 Diagnostics, ID: com.apple.menu.dynamic.CDAB6F7C-EC53-4DFC-8B97-E8352BD8DB25
+	96 Window, ID: com.apple.menu.window
+	97 Help, ID: com.apple.menu.help

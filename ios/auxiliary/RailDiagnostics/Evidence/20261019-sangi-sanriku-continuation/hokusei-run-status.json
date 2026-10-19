@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "E79E923E-38CD-43B2-86B3-DA7D8ABE5752",
+  "message" : "4\/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 20655,
+  "requestID" : "sangi-hokusei-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-sangi-hokusei-missing-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:54:59Z"
+}

@@ -1,0 +1,53 @@
+{
+  "result": {
+    "action": "capture",
+    "candidateTasksPath": "/private/tmp/jtm-diagnostics-remake-native-session/candidate-tasks.json",
+    "capturedCount": 1,
+    "captureIndexPath": "/private/tmp/jtm-diagnostics-remake-native-session/capture-index.json",
+    "captureSettings": {
+      "appearance": "dark",
+      "height": 600,
+      "outputModes": [
+        "smooth"
+      ],
+      "width": 800,
+      "zoom": 18
+    },
+    "currentReviewerObservationCount": 0,
+    "dependencies": {
+      "diagnosticContract": "rail-diagnostics-v1",
+      "lineRender": "624b21f0cd80790b89495a06257130635ecb449e6a213e502ac3de194e2b48cb",
+      "packageVersion": "2025.5.2"
+    },
+    "dependenciesVerified": true,
+    "evidencePaths": [
+      "/private/tmp/jtm-diagnostics-remake-native-session/alignment",
+      "/private/tmp/jtm-diagnostics-remake-native-session/alignment-geometry.json"
+    ],
+    "failedCount": 0,
+    "itemIDs": [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "mainFinalCheck": "pending — separate production composition evidence required",
+    "message": "1/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "pendingCount": 6,
+    "requestID": "diagnostics-remake-z18-dark-validation",
+    "requestPath": "/private/tmp/jtm-diagnostics-remake-native-session/request.json",
+    "reviewMessage": "",
+    "reviewNotesPath": "/private/tmp/jtm-diagnostics-remake-native-session/review-notes.json",
+    "runStatusPath": "/private/tmp/jtm-diagnostics-remake-native-session/run-status.json",
+    "schemaVersion": 1,
+    "state": "partial",
+    "updatedAt": "2026-10-18T02:34:16Z",
+    "verdict": "pendingReview",
+    "workspace": "alignment"
+  },
+  "capturedFiles": {
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/display-stage-distance-samples.json": "b1ac177978e2399347df3ce79042ffa4aeaafa742b4f028d2a920c9440e7bd87",
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/distance-samples.json": "bbc22a0bff58956c176c4a700ab564ecbb1e8391bd40bd9bca361169166868ec",
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/view.json": "cf4bbca0dbd08c53d3f2321b26e4571cccab64a85b3f4faad4be163e59f12180",
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/smooth.png": "413bd59c22eaf8ccebb5d634338d669dccf419c95228c2c50ee46f4767fcd1ab",
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/capture-state.json": "f4a2d9080309b1678904739b1dbdba2ad4ed8a8aeff036f4abeab2795c3532ba",
+    "/private/tmp/jtm-diagnostics-remake-native-session/alignment/captures/000000/000000/README.txt": "3b55bf6559e9b7a99d126bdd20dfc2a8842554398562c2933874237f4c84651f"
+  }
+}

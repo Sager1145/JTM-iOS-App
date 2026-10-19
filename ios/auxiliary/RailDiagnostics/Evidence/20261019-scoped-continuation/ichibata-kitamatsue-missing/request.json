@@ -1,0 +1,32 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    11,
+    20
+  ],
+  "lineID" : "jp-一畑電車-北松江線",
+  "requestID" : "ichibata-kitamatsue-missing-own-intervals",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019",
+  "workspace" : "alignment"
+}

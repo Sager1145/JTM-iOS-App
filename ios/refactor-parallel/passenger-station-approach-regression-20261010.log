@@ -1,0 +1,13 @@
+Command: swift test --package-path /Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit --scratch-path /private/tmp/railkit-build-bis --jobs 2 --filter PassengerStationApproachTests
+Building for debugging...
+Build complete! (0.31 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite PassengerStationApproachTests started.
+◇ Test "Passenger display anchors weld both approaches without changing physical station identity" started.
+◇ Test case passing 1 argument stationID → "005725" to "Passenger display anchors weld both approaches without changing physical station identity" started.
+◇ Test case passing 1 argument stationID → "005260" to "Passenger display anchors weld both approaches without changing physical station identity" started.
+✔ Test "Passenger display anchors weld both approaches without changing physical station identity" with 2 test cases passed after 0.343 seconds.
+✔ Suite PassengerStationApproachTests passed after 0.343 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.343 seconds.

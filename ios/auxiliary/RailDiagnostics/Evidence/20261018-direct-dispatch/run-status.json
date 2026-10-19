@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "A0B99B1B-9B1E-4639-B349-CC356793051A",
+  "message" : "28\/28 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 52148,
+  "requestID" : "miyazu-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T22:18:48Z"
+}

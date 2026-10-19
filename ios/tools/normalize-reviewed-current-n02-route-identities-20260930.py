@@ -488,6 +488,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
     }
     if set(partial_state) != target_trip_ids:
         raise ValueError("partial route-state scope does not match normalized trips")
+    state_outputs = {}
     completeness_seen = set()
     for path in sorted((base / "normalized").glob("fact-completeness*.jsonl")):
         rows = read_jsonl(path)
@@ -501,7 +502,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
                 completeness_seen.add(trip_id)
                 changed = True
         if changed:
-            write_jsonl(path, rows)
+            state_outputs[path] = rows
     if completeness_seen != target_trip_ids:
         raise ValueError(
             f"missing route completeness rows: {sorted(target_trip_ids - completeness_seen)}"
@@ -520,7 +521,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
                 queue_seen.add(trip_id)
                 changed = True
         if changed:
-            write_jsonl(path, rows)
+            state_outputs[path] = rows
     if queue_seen != target_trip_ids:
         raise ValueError(f"missing route research rows: {sorted(target_trip_ids - queue_seen)}")
 
@@ -540,6 +541,8 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
     if len(fact_keys) != len(set(fact_keys)):
         raise ValueError("duplicate generated fact-source key")
 
+    for path, rows in state_outputs.items():
+        write_jsonl(path, rows)
     for path in changed_paths:
         write_jsonl(path, rows_by_file[path])
     write_jsonl(source_output, new_sources)

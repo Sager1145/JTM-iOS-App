@@ -1,0 +1,97 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-アルピコ交通-上高地線#1",
+      "latitude" : 36.226999999999997,
+      "lineDependency" : "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "longitude" : 137.96317500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-アルピコ交通-上高地線#1#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-アルピコ交通-上高地線#1",
+      "latitude" : 36.225651039266012,
+      "lineDependency" : "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "longitude" : 137.95982718262565,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-アルピコ交通-上高地線#1#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-アルピコ交通-上高地線#1",
+      "latitude" : 36.226984712590486,
+      "lineDependency" : "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "longitude" : 137.95635089341599,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-アルピコ交通-上高地線#1#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-アルピコ交通-上高地線#1",
+      "latitude" : 36.227134999999997,
+      "lineDependency" : "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "longitude" : 137.956085,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-アルピコ交通-上高地線#1#point-3"
+    }
+  ]
+}

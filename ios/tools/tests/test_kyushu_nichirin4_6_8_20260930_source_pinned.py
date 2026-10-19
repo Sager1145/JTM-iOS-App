@@ -101,7 +101,7 @@ class KyushuNichirin468SourcePinnedTests(unittest.TestCase):
                               row.get('car_count'), row.get('vehicle_series')),
                              (False, True, None, None))
             self.assertTrue(all(seat in row['notes'] for seat in PRINTED[number][2]))
-        for kind in ('trip-line-segments', 'trip-operator-segments'):
+        for kind in ('trip-lines', 'trip-operator-segments'):
             self.assertFalse((BASE / f'normalized/{kind}/{SUFFIX}/seeds.jsonl').exists())
 
 

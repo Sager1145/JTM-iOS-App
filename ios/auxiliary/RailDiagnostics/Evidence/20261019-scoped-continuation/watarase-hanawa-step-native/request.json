@@ -1,0 +1,23 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "inputPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-candidate-20261019\/jp-2025.json",
+  "intervalIndices" : [
+    8
+  ],
+  "lineID" : "jp-わたらせ渓谷鐵道-わたらせ渓谷線",
+  "requestID" : "watarase-hanawa-step-candidate-complete-interval",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019",
+  "workspace" : "alignment"
+}

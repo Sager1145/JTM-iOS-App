@@ -1,0 +1,175 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 117.15558811494171,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.16404,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48793000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.164713349314745,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48693875807874,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.165385560481461,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48594634623475,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.166062557668916,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48495887870845,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.166732831122992,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48396451082456,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.167300620603648,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48288188551496,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.167654251218039,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48166920116881,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.168150986267136,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48053852065289,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.16889664392847,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.47962925186354,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.169653965903315,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.47873324305178,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-z19-plan-20261019\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.170195,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.47812999999999,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-10"
+    }
+  ]
+}

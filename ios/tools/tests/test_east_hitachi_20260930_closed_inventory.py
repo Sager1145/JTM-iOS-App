@@ -13,7 +13,7 @@ import train_timetable as timetable
 
 
 BASE = ROOT / "app/data/train-service-history"
-INVENTORY = ROOT / "docs/train-timetable-east-hitachi-2026-09-30-inventory.md"
+INVENTORY = ROOT / "docs/reports/timetable/train-timetable-east-hitachi-2026-09-30-inventory.md"
 ROW = re.compile(r"^\| (\d+) \| (下行|上行) \| \[(\d+)\]\((https://timetables\.jreast\.co\.jp/2610/train/\d+/\d+\.html)\) \| `td\.ok` \|")
 
 

@@ -1,0 +1,2 @@
+There has been no change in the accessibility tree for Window: "Untitled".
+The focused UI element is 45 text field (settable) Value: 0, Placeholder: Intervals · optional, zero-based, comma-separated, Secondary Actions: Cancel

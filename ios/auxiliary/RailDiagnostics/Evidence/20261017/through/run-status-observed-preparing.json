@@ -1,0 +1,11 @@
+{
+  "active": true,
+  "dependenciesVerified": false,
+  "invocationID": "C7B55803-899C-4C8E-905A-50593A0002E1",
+  "message": "Preparing exact through request scope\u2026",
+  "requestID": "unified-native-through-one",
+  "resultPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/auxiliary/RailDiagnostics/Evidence/20261017/through/result.json",
+  "schemaVersion": 1,
+  "state": "preparing",
+  "updatedAt": "2026-10-17T23:21:11Z"
+}

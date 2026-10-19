@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "requestID": "remake-through-digest-validation",
+  "workspace": "through",
+  "action": "inspect",
+  "patternID": "JK",
+  "reviewDay": "2026-10-17",
+  "sessionDirectory": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/auxiliary/RailDiagnostics/Evidence/20261017-remake/through"
+}

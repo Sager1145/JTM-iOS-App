@@ -1,0 +1,31 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/candidate-tasks.json",
+  "capturedCount" : 1,
+  "currentReviewerObservationCount" : 1,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "06f7237a52cc9ea2b94c3807960f5c84597d168e60360819555834a25de1925b",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-相模鉄道-相鉄本線#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "1\/3 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "pendingCount" : 2,
+  "requestID" : "unified-native-sotetsu-0",
+  "reviewMessage" : "Saved reviewer observation; Main final check remains separate.",
+  "reviewNotesPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/review-notes.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-17T23:14:34Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

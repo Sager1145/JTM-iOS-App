@@ -279,6 +279,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
     partial_state = {row["trip_id"]: row for row in candidate["partial_route_state"]}
     if set(partial_state) != target_trip_ids:
         raise ValueError("partial route-state scope does not match normalized trips")
+    state_outputs = {}
     completeness_seen = set()
     for path in sorted((base / "normalized").glob("fact-completeness*.jsonl")):
         rows = read_jsonl(path)
@@ -299,7 +300,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
                 completeness_seen.add(trip_id)
                 changed = True
         if changed:
-            write_jsonl(path, rows)
+            state_outputs[path] = rows
     if completeness_seen != target_trip_ids:
         raise ValueError(
             f"missing route completeness rows: {sorted(target_trip_ids - completeness_seen)}"
@@ -322,7 +323,7 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
                 queue_seen.add(trip_id)
                 changed = True
         if changed:
-            write_jsonl(path, rows)
+            state_outputs[path] = rows
     if queue_seen != target_trip_ids:
         raise ValueError(
             f"missing route research rows: {sorted(target_trip_ids - queue_seen)}"
@@ -340,6 +341,8 @@ def normalize(base: Path, candidate_path: Path, rail_package_path: Path) -> dict
     if any("rail_history_id" in row for row in line_rows):
         raise ValueError("priority current-N02 output must not assert history ids")
 
+    for path, rows in state_outputs.items():
+        write_jsonl(path, rows)
     write_jsonl(source_output, new_sources)
     write_jsonl(line_output, sorted(line_rows, key=lambda row: (row["trip_id"], row["sequence"])))
     write_jsonl(fact_output, sorted(fact_rows, key=lambda row: (row["entity_id"], row["field_name"], row["source_id"])))

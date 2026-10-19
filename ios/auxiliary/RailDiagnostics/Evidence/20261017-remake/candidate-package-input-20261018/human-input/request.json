@@ -1,0 +1,23 @@
+{
+  "action" : "prepare",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 18
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    0
+  ],
+  "lineID" : "jp-相模鉄道-相鉄本線",
+  "requestID" : "human-candidate-input",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-corner-repair-20261018\/human-input",
+  "workspace" : "alignment"
+}

@@ -1,0 +1,117 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.73021736361805,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.464424000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.62046599999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.463549298426301,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61989323713189,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.462700678731359,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61913453533012,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461853937198612,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61837280268759,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461022515810988,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61758594474577,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.460198179714048,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61678791853913,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.459845000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61646500000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-6"
+    }
+  ]
+}

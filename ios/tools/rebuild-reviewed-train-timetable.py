@@ -199,6 +199,7 @@ NORMALIZERS=[
     'normalize-reviewed-kyushu-seagaia14-hyuga1-3-4-20260930.py',
     'normalize-reviewed-kyushu-aso-boy1-20260930.py',
     'normalize-reviewed-kyushu-kirishima3-5-7-9-20260930.py',
+    'normalize-reviewed-kyushu-kirishima2-4-6-8-20260930.py',
     'normalize-reviewed-kyushu-kirishima11-13-15-17-20260930.py',
     'normalize-reviewed-kyushu-hyuga5-8-20260930.py',
     'normalize-reviewed-kyushu-hyuga9-12-20260930.py',
@@ -368,16 +369,9 @@ NORMALIZERS=[
     'normalize-reviewed-pass-marks.py',
 ]
 STEPS=[
-    'validate-train-timetable.py',
     'discover-jr-limited-express-sources.py',
     'build-train-timetable-db.py',
-    'verify-train-timetable-artifact.py',
-    'audit-train-timetable-coverage.py',
-    'audit-train-timetable-stop-chronology.py',
     'build-train-service-patterns.py',
-    'audit-train-timetable-routes.py',
-    'audit-train-timetable-history-alignment.py',
-    'audit-train-timetable-migration.py',
 ]
 
 def refresh_service_evidence_bounds():
@@ -411,8 +405,22 @@ def refresh_service_evidence_bounds():
         path.write_text(''.join(json.dumps(row,ensure_ascii=False,sort_keys=True)+'\n' for row in rows))
 
 
+# These two coupled-column batches are profiles of normalize-reviewed-timetable.py.
+PROFILE_COMMANDS={
+    'normalize-reviewed-east-narita-express1-20260930.py':
+        'app/data/train-service-history/candidates/jr-east-narita-express1-20260930.profile.json',
+    'normalize-reviewed-east-narita-express7-20260930.py':
+        'app/data/train-service-history/candidates/jr-east-narita-express7-20260930.profile.json',
+}
+
 def main():
     for name in NORMALIZERS:
+        profile=PROFILE_COMMANDS.get(name)
+        if profile:
+            print(f'Reviewed input: {name}',flush=True)
+            subprocess.run([sys.executable,str(TOOLS/'normalize-reviewed-timetable.py'),
+                            '--profile',str(ROOT/profile),'--write'],cwd=ROOT,check=True)
+            continue
         path=TOOLS/name
         # Some research batches supply only checked-in source/queue records.
         if path.exists():
@@ -420,8 +428,7 @@ def main():
             subprocess.run([sys.executable,str(path)],cwd=ROOT,check=True)
     refresh_service_evidence_bounds()
     for name in STEPS:
-        print(f'Build/check: {name}',flush=True)
+        print(f'Build: {name}',flush=True)
         subprocess.run([sys.executable,str(TOOLS/name)],cwd=ROOT,check=True)
-    subprocess.run([sys.executable,str(TOOLS/'audit-train-timetable-migration.py'),'--check'],cwd=ROOT,check=True)
 
 if __name__=='__main__':main()

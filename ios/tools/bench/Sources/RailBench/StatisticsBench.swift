@@ -8,14 +8,6 @@ import RailCore
 /// changes, which since the shell's route key covered the whole record means
 /// on every edit. Knowing which of the three that costs is the difference
 /// between caching the right thing and adding a cache that buys nothing.
-private func benchDates(_ train: Train) -> Dates.Train {
-    Dates.Train(
-        id: train.id, date: train.date,
-        stops: train.stops.map {
-            Dates.Stop(arrival: $0.arrival, departure: $0.departure, stopType: $0.stopType)
-        })
-}
-
 func benchmarkStatistics(root: URL) {
     let sectionsURL = root.appending(path: "app/data/rail-sections.json")
     let storeURL = root.appending(path: "app/data/sample-data/sample-full.json")
@@ -46,15 +38,10 @@ func benchmarkStatistics(root: URL) {
     let trains = store.trains
 
     func features(for train: Train) -> [Statistics.RouteFeature] {
-        let stops = train.stops.map {
-            Statistics.Stop(
-                arrival: $0.arrival, departure: $0.departure,
-                stopType: $0.stopType, rideSegment: $0.rideSegment)
-        }
-        return (ridesByID[train.id]?.strokes ?? []).enumerated().map { offset, stroke in
+        (ridesByID[train.id]?.strokes ?? []).enumerated().map { offset, stroke in
             Statistics.RouteFeature(
                 lines: [stroke], hasGeometry: true,
-                rideSegment: Statistics.isRideSegment(stops, segmentIndex: offset),
+                rideSegment: Statistics.isRideSegment(train.stops, segmentIndex: offset),
                 from: nil, to: nil)
         }
     }
@@ -77,24 +64,14 @@ func benchmarkStatistics(root: URL) {
         }
     }
 
-    let statisticsTrains = trains.map { train in
-        Statistics.Train(
-            id: train.id, trainType: train.trainType,
-            date: Dates.trainDate(benchDates(train)),
-            stops: train.stops.map {
-                Statistics.Stop(
-                    arrival: $0.arrival, departure: $0.departure,
-                    stopType: $0.stopType, rideSegment: $0.rideSegment)
-            })
-    }
     let entries = prepared.map {
         Statistics.collectTrainStatsEntry(features: $0.features, index: index)
     }
     measure("aggregate (buildMileageStatsView, all dates)", repeats: 7) {
         Statistics.buildMileageStatsView(
-            index: index, trains: statisticsTrains, entries: entries,
+            index: index, trains: trains, entries: entries,
             country: "jp", selectedDate: Dates.allDates,
-            trainDate: { $0.date ?? Dates.undated }, dateLabel: { $0 }
+            trainDate: { Dates.trainDate($0) }, dateLabel: { $0 }
         ).overall.lineRidByCat.pairs.count
     }
 }

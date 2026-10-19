@@ -1,0 +1,1066 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.477350000000001,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 133.003985,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.477685288406519,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 133.00016267236413,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.477435037096008,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.99637750991232,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.477626105083822,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.9926284390323,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.479757831125902,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.9898009400292,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-一畑電車-北松江線#1",
+      "latitude" : 35.480907000000002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.98788200000001,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#1#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-一畑電車-北松江線#2",
+      "latitude" : 35.480907000000002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.98788200000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#2#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-一畑電車-北松江線#2",
+      "latitude" : 35.48151417984306,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.98421009455799,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#2#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000002\/000002",
+      "itemID" : "jp-一畑電車-北松江線#2",
+      "latitude" : 35.480582976572173,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.98052973902253,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#2#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000002\/000003",
+      "itemID" : "jp-一畑電車-北松江線#2",
+      "latitude" : 35.479238619706628,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.97704873231967,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#2#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000002\/000004",
+      "itemID" : "jp-一畑電車-北松江線#2",
+      "latitude" : 35.479840000000003,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.97431499999999,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#2#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000004\/000000",
+      "itemID" : "jp-一畑電車-北松江線#4",
+      "latitude" : 35.477229999999999,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.95672999999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#4#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000004\/000001",
+      "itemID" : "jp-一畑電車-北松江線#4",
+      "latitude" : 35.475774569571328,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.95332706489191,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#4#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000004\/000002",
+      "itemID" : "jp-一畑電車-北松江線#4",
+      "latitude" : 35.475010224775481,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.94961955044914,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#4#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000004\/000003",
+      "itemID" : "jp-一畑電車-北松江線#4",
+      "latitude" : 35.474872486351245,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.94588302422784,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#4#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000004\/000004",
+      "itemID" : "jp-一畑電車-北松江線#4",
+      "latitude" : 35.474905,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.94370000000001,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#4#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000005\/000000",
+      "itemID" : "jp-一畑電車-北松江線#5",
+      "latitude" : 35.474905,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.94370000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#5#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000005\/000001",
+      "itemID" : "jp-一畑電車-北松江線#5",
+      "latitude" : 35.47416705217551,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.94010125400027,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#5#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000005\/000002",
+      "itemID" : "jp-一畑電車-北松江線#5",
+      "latitude" : 35.472702474969694,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.93669675053164,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#5#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000005\/000003",
+      "itemID" : "jp-一畑電車-北松江線#5",
+      "latitude" : 35.472487091526482,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.93287429414488,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#5#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000005\/000004",
+      "itemID" : "jp-一畑電車-北松江線#5",
+      "latitude" : 35.471800000000002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.93043499999999,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#5#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000006\/000000",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.471800000000002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.93043499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000006\/000001",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.470275281600117,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.92706463363601,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000006\/000002",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.468323930262045,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.92423439460046,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000006\/000003",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.466788020417084,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.92116037005974,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000006\/000004",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.466349999999998,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.91905,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000000",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.466349999999998,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.91905,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000001",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.465656598464285,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.91528629128459,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000002",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.464816404090683,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.91159388783325,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000003",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.463097161508315,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.90846875217559,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000004",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.461623823887599,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.90513068753222,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000005",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.461118092009542,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.90139969334334,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000007\/000006",
+      "itemID" : "jp-一畑電車-北松江線#7",
+      "latitude" : 35.461244999999998,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.90088499999999,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#7#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000000",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.461244999999998,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.90088499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000001",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.461950000202918,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.89713470409734,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000002",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.461775276144792,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.8932870147444,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000003",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.461669244448721,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.88943057779821,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000004",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.46202362458002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.8855925375623,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000005",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.46385214063578,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.88283392891552,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000008\/000006",
+      "itemID" : "jp-一畑電車-北松江線#8",
+      "latitude" : 35.464599999999997,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.882845,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#8#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000000",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.464599999999997,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.882845,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000001",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.461596787487146,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.88202571664726,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000002",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.460613624028213,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.87844130774411,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000003",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.459378977036813,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.87490892587803,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000004",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.458126411451801,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.87138735093853,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000005",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.456235485612581,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.86830005218556,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000009\/000006",
+      "itemID" : "jp-一畑電車-北松江線#9",
+      "latitude" : 35.456135000000003,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.86813000000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#9#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.452685000000002,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.862145,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.450884353049368,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.85898053786676,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.450278899797354,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.85527852851101,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.450234999999999,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.85500500000001,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000003\/000000",
+      "itemID" : "jp-一畑電車-北松江線#20",
+      "latitude" : 35.363064999999999,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.76651000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#20#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000003\/000001",
+      "itemID" : "jp-一畑電車-北松江線#20",
+      "latitude" : 35.361997572345381,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.76287955014863,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#20#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000003\/000002",
+      "itemID" : "jp-一畑電車-北松江線#20",
+      "latitude" : 35.361305896256233,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.75911716337288,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#20#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-missing-20261019\/alignment\/captures\/000003\/000003",
+      "itemID" : "jp-一畑電車-北松江線#20",
+      "latitude" : 35.361145,
+      "lineDependency" : "f8ee03e70cfe4b1bcc5b9ed7f9b59a73f5dad1f7efcd9365e483a986d8180f60",
+      "longitude" : 132.75780499999999,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#20#point-3"
+    }
+  ]
+}

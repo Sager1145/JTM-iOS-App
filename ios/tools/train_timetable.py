@@ -313,6 +313,8 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
                     errors.append(f"{where}.{field}: invalid ISO month")
         accessed = row.get("accessed_at")
         try:
+            if not isinstance(accessed, str):
+                raise ValueError("string required")
             if DATE_RE.fullmatch(accessed):
                 strict_date(accessed, f"{where}.accessed_at")
             else:
@@ -332,7 +334,7 @@ def validate_dataset(data, origins, manifest, rail_history=None, current_package
 
     for i, row in enumerate(data["services"]):
         where = origins[("services", i)]
-        if not isinstance(row.get("historical_generation"), int) or row["historical_generation"] < 1:
+        if type(row.get("historical_generation")) is not int or row["historical_generation"] < 1:
             errors.append(f"{where}.historical_generation: expected positive integer")
         if row.get("first_verified_date"):
             try: first = strict_date(row["first_verified_date"], where + ".first_verified_date")
@@ -999,8 +1001,9 @@ def prepared_row(entity, row):
             result[field] = int(result[field])
     if entity == "stop_times":
         result.setdefault("day_offset", 0)
-        result.setdefault("pickup_allowed", 1)
-        result.setdefault("dropoff_allowed", 1)
+        passenger = result.get("call_type") not in {"pass", "operational_stop", "unknown"}
+        result.setdefault("pickup_allowed", int(passenger))
+        result.setdefault("dropoff_allowed", int(passenger))
         result.setdefault("time_accuracy", "unknown")
         result["arrival_seconds"] = service_seconds(
             result.get("arrival_time"), stop_day_offset(result, "arrival"), "stop_times.arrival_time")

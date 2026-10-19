@@ -1,0 +1,53 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/candidate-tasks.json",
+  "capturedCount" : 1,
+  "captureIndexPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "dcf0fedc4b2b54170e1eb06826ac65544bf027e369fbf99a1931c812bc61ed6c",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/alignment",
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "CF07194E-1275-4BBD-B42F-7E276DCED69F",
+  "itemIDs" : [
+    "jp-一畑電車-北松江線#6"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "1\/1 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-candidate-20261019\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 8847,
+  "requestID" : "ichibata-kitamatsue-step-candidate-detail",
+  "requestPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : [
+    "jp-一畑電車-北松江線#6#point-3"
+  ],
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:14:01Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

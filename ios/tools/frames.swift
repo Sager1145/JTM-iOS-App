@@ -78,7 +78,19 @@ func meanAbsDiff(_ a: [UInt8], _ b: [UInt8]) -> Double {
 
 switch mode {
 case "scan":
-    let fps = args.count > 3 ? Double(args[3]) ?? 30 : 30
+    // A non-positive or non-finite step never advances, so reject it before
+    // the asset duration is loaded.
+    let fps: Double
+    if args.count > 3 {
+        guard let parsed = Double(args[3]), parsed.isFinite, parsed > 0 else {
+            FileHandle.standardError.write(Data(
+                "frames: scan fps must be finite and > 0\nusage: frames scan <mov> [fps] | frames dump <mov> <t0> <t1> <n> <dir>\n".utf8))
+            exit(2)
+        }
+        fps = parsed
+    } else {
+        fps = 30
+    }
     let total = duration()
     var previous: [UInt8]?
     var time = 0.0

@@ -1,0 +1,107 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container Secondary Actions: Cancel
+		2 text Description: Rail Diagnostics, Secondary Actions: Cancel
+		3 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+			4 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+			5 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+			6 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+			7 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+		8 button Description: New task, Control Command N, Secondary Actions: Cancel
+		9 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+		10 container Secondary Actions: Cancel
+			11 text Description: Tasks & evidence, Secondary Actions: Cancel
+			12 button Description: Copy result path, Secondary Actions: Cancel
+			13 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+			14 container Secondary Actions: Cancel
+				15 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+				16 text Description: Alignment, Secondary Actions: Cancel
+				17 text Description: hokuriku-eastern-arc-candidate, Secondary Actions: Cancel
+				18 text Description: jp-西日本旅客鉄道-北陸線-p1 · intervals 0, Secondary Actions: Cancel
+				19 text Description: Package: /private/tmp/jtm-corner-repair-20261018/hokuriku-candidate/jp-2025.json, Secondary Actions: Cancel
+				20 text Description: Zoom 17.0 · 1,024 × 768 pt · light · basemap, display, smooth, Secondary Actions: Cancel
+				21 text Description: /private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate, Secondary Actions: Cancel
+				22 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+				23 button Description: Copy request JSON, Secondary Actions: Cancel
+				24 button Description: Agent request, Secondary Actions: Cancel
+			25 text Description: Progress, Secondary Actions: Cancel
+			26 text Description: 34/34 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+			27 text Description: 34, Secondary Actions: Cancel
+			28 text Description: 0, Secondary Actions: Cancel
+			29 text Description: 0, Secondary Actions: Cancel
+			30 text Description: Captured, Secondary Actions: Cancel
+			31 text Description: Pending, Secondary Actions: Cancel
+			32 text Description: Failed, Secondary Actions: Cancel
+			33 text Description: /private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate/result.json, Secondary Actions: Cancel
+			34 text Description: Captured views · 34, Secondary Actions: Cancel
+			35 button Description: Preview full image, Secondary Actions: Cancel
+			36 button (disabled) Description: Previous view  ⌃⌘J, Secondary Actions: Cancel
+			37 button Description: Next view  ⌃⌘K, Secondary Actions: Cancel
+			38 text Description: Interval and view numbers match capture-index.json (zero-based)., Secondary Actions: Cancel
+			39 pop up button Description: Viewpoint, jp-西日本旅客鉄道-北陸線-p1#0 · view #0, Secondary Actions: Cancel
+			40 tab group Secondary Actions: Cancel
+				41 tab (selected) Description: Basemap, Value: 1, Secondary Actions: Cancel
+				42 tab Description: Display, Value: 0, Secondary Actions: Cancel
+				43 tab Description: Smooth, Value: 0, Secondary Actions: Cancel
+			44 button Description: Preview captured basemap.png at full resolution, Secondary Actions: Cancel
+			45 text Secondary Actions: Cancel, Description: /private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate/alignment/captures/000000/000000/basemap.png
+			46 text Description: Evidence files, Secondary Actions: Cancel
+			47 image Description: Document, ID: doc, Secondary Actions: Cancel
+			48 text Description: /private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate/alignment, Secondary Actions: Cancel
+			49 button Description: Copy path, Secondary Actions: Cancel
+			50 image Description: Document, ID: doc, Secondary Actions: Cancel
+			51 text Description: /private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate/alignment-geometry.json, Secondary Actions: Cancel
+			52 button Description: Copy path, Secondary Actions: Cancel
+			53 text Description: Review observations · 1 / 5, Secondary Actions: Cancel
+			54 container Secondary Actions: Cancel
+				55 heading Description: Record an observation, Secondary Actions: Cancel
+				56 pop up button Description: Candidate, jp-西日本旅客鉄道-北陸線-p1#0/lineOffset, Secondary Actions: Cancel
+				57 pop up button Description: Conclusion, Insufficient evidence, Secondary Actions: Cancel
+				58 text field (settable) Secondary Actions: Cancel, Value: Hatsuhara false crossing turn repaired using its own eastern arc. All 34 views and Main reviewed. Southern offsets and station platforms remain unresolved.
+				59 text field (settable) Secondary Actions: Cancel, Value: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/sharp-corner-repair-20261018/main-production/crossing-on.png
+				60 button Description: Save observation  ⌃⌘S, Secondary Actions: Cancel
+				61 text Description: Saved reviewer observation; Main final check remains separate., Secondary Actions: Cancel
+			62 text field (settable) Placeholder: Filter review candidates, Secondary Actions: Cancel
+			63 text Description: lineOffset, Secondary Actions: Cancel
+			64 text Description: insufficientEvidence, Secondary Actions: Cancel
+			65 text Description: jp-西日本旅客鉄道-北陸線-p1#0/lineOffset, Secondary Actions: Cancel
+			66 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+			67 text Description: stationApproach, Secondary Actions: Cancel
+			68 text Description: Pending review, Secondary Actions: Cancel
+			69 text Description: jp-西日本旅客鉄道-北陸線-p1#0/stationApproach, Secondary Actions: Cancel
+			70 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+			71 text Description: disconnectedParts, Secondary Actions: Cancel
+			72 text Description: Pending review, Secondary Actions: Cancel
+			73 text Description: jp-西日本旅客鉄道-北陸線-p1#0/disconnectedParts, Secondary Actions: Cancel
+			74 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+			75 text Description: stationOffset, Secondary Actions: Cancel
+			76 text Description: Pending review, Secondary Actions: Cancel
+			77 text Description: jp-西日本旅客鉄道-北陸線-p1/station/010186, Secondary Actions: Cancel
+			78 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+			79 text Description: stationOffset, Secondary Actions: Cancel
+			80 text Description: Pending review, Secondary Actions: Cancel
+			81 text Description: jp-西日本旅客鉄道-北陸線-p1/station/004256, Secondary Actions: Cancel
+			82 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+			83 text Description: Recent tasks, Secondary Actions: Cancel
+			84 button Description: human-candidate-input, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+			85 button Secondary Actions: Cancel, Description: route-49af879a, /Users/sager/Library/Application Support/RailDiagnostics/Inputs/FCF23257-5B67-42A9-B2E1-A7777D56CD03/journeys.json
+			86 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+			87 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+			88 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+			89 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+		90 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+		91 text Description: hokuriku-eastern-arc-candidate, Secondary Actions: Cancel
+		92 text Description: z17.0 · 1,024×768, Secondary Actions: Cancel
+		93 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	94 text Rail Diagnostics
+	95 menu button Window sharing
+96 menu bar
+	97 RailDiagnostics, ID: com.apple.menu.application
+	98 File, ID: com.apple.menu.file
+	99 Edit, ID: com.apple.menu.edit
+	100 View, ID: com.apple.menu.view
+	101 Diagnostics, ID: com.apple.menu.dynamic.31CBF86A-6C42-43C4-9162-9B2E60A0C559
+	102 Window, ID: com.apple.menu.window
+	103 Help, ID: com.apple.menu.help
+
+The focused UI element is 59 text field (settable) Secondary Actions: Cancel, Value: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/sharp-corner-repair-20261018/main-production/crossing-on.png

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "requestID": "diagnostics-remake-z18-dark-validation",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/private/tmp/jtm-diagnostics-remake-native-session",
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "intervalIndices": [
+    0
+  ],
+  "captureSettings": {
+    "zoom": 18,
+    "width": 800,
+    "height": 600,
+    "appearance": "dark",
+    "outputModes": [
+      "smooth"
+    ]
+  }
+}

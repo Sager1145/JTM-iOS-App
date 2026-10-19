@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.3",
+  "trains": [
+    {
+      "id": "inspection_hakone_continuous_passenger",
+      "date": "2026-10-10",
+      "number": "客运长区间检查 箱根湯本→強羅",
+      "train_type": "普通",
+      "company": "小田急箱根",
+      "origin": "箱根湯本",
+      "destination": "強羅",
+      "direction": "unknown",
+      "visible": true,
+      "region": "jp",
+      "notes": "Inspection-only explicit continuous passenger intervals4..9, no timetable-specific platform allocation. Canonical physical evidence remains subject to production verification.",
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "preferred_line_names": [
+          "鉄道線"
+        ],
+        "preferred_operator_names": [
+          "小田急箱根"
+        ]
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "005271",
+          "to_n02_station_code": "005269",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005269",
+          "to_n02_station_code": "005260",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005260",
+          "to_n02_station_code": "005254",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005254",
+          "to_n02_station_code": "005258",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005258",
+          "to_n02_station_code": "005246",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005246",
+          "to_n02_station_code": "005231",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "箱根湯本",
+          "n02_station_code": "005271",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "塔ノ沢",
+          "n02_station_code": "005269",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "大平台",
+          "n02_station_code": "005260",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "宮ノ下",
+          "n02_station_code": "005254",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "小涌谷",
+          "n02_station_code": "005258",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "彫刻の森",
+          "n02_station_code": "005246",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "強羅",
+          "n02_station_code": "005231",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": false
+        }
+      ]
+    }
+  ]
+}

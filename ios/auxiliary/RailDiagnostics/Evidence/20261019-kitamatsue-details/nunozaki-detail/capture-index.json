@@ -1,0 +1,62 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : [
+    "jp-一畑電車-北松江線#11#point-5",
+    "jp-一畑電車-北松江線#11#point-6"
+  ],
+  "spacingMetres" : 116.74704553770323,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.45042965907821,
+      "lineDependency" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+      "longitude" : 132.85654125090824,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-一畑電車-北松江線#11",
+      "latitude" : 35.450278061418217,
+      "lineDependency" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+      "longitude" : 132.85527330474429,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#11#point-6"
+    }
+  ]
+}

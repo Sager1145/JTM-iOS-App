@@ -1,0 +1,40 @@
+{
+  "aliases" : [
+    "JK",
+    "京浜東北線",
+    "根岸線",
+    "Keihin-Tohoku",
+    "Negishi"
+  ],
+  "id" : "JK",
+  "kind" : "operationalAlias",
+  "legs" : [
+    {
+      "fromStationCode" : "002914",
+      "lineID" : "jp-東日本旅客鉄道-東北線",
+      "toStationCode" : "003155"
+    },
+    {
+      "fromStationCode" : "003155",
+      "lineID" : "jp-東日本旅客鉄道-東北線-2",
+      "toStationCode" : "003766"
+    },
+    {
+      "fromStationCode" : "003766",
+      "lineID" : "jp-東日本旅客鉄道-東海道線",
+      "toStationCode" : "004633"
+    },
+    {
+      "fromStationCode" : "004633",
+      "lineID" : "jp-東日本旅客鉄道-根岸線",
+      "toStationCode" : "004961"
+    }
+  ],
+  "name" : "京浜東北線・根岸線",
+  "notes" : "大宮–東京–横浜–大船の京浜東北・根岸直通。根岸線の大船延伸は1973年で、2005-01-01以降この区間は変わっていない。上野–東京は京浜東北線として2015-03-14より前から運行しているため、上野東京ラインの日付は付けない。",
+  "serviceCode" : "JK",
+  "sourceURLs" : [
+    "https:\/\/ja.wikipedia.org\/wiki\/%E4%BA%AC%E6%B5%9C%E6%9D%B1%E5%8C%97%E7%B7%9A",
+    "https:\/\/www.jreast.co.jp\/"
+  ]
+}

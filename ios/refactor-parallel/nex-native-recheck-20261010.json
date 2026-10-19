@@ -1,0 +1,93 @@
+{
+  "elapsedSeconds" : 21.789361000061035,
+  "findings" : [
+    {
+      "code" : "route_partial",
+      "id" : "result/0/route_partial",
+      "message" : "Published route is incomplete; review available evidence and unresolved sections.",
+      "severity" : "review",
+      "trainID" : "20260727_08_narita_express"
+    }
+  ],
+  "importElapsedSeconds" : 0.24042201042175293,
+  "inspectionElapsedSeconds" : 0.006276965141296387,
+  "inspectionState" : "0 项失败 · 1 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "品川",
+      "expectedSectionCount" : 1,
+      "id" : "20260727_08_narita_express",
+      "indicesAreAuthoritative" : true,
+      "number" : "成田エクスプレス（Narita Express）（車号不明・時刻推定）",
+      "origin" : "東京",
+      "parts" : [
+        {
+          "from" : "東京",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003766",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-総武線-3@003766:003872",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-総武線-3@003872:004095",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 6.6664709670985545,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3",
+                "name" : "総武線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "explicit",
+            "toStationCode" : "004095"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 92,
+          "temporalKind" : "current",
+          "to" : "品川"
+        }
+      ],
+      "physicalGaps" : [
+        {
+          "isBoundary" : false,
+          "segmentIndex" : 0
+        }
+      ],
+      "resolvedSectionCount" : 0,
+      "status" : "部分解析 0/1",
+      "unresolvedSections" : [
+        {
+          "from" : "東京",
+          "isBoundary" : false,
+          "sectionIndex" : 0,
+          "to" : "品川"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 1,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 1,
+    "retainedVertices" : 99,
+    "scope" : "processLifetime",
+    "startedOperations" : 1,
+    "subscribers" : 0
+  },
+  "source" : "jtm-nex-final-input.json",
+  "timingScope" : "routeLoad"
+}

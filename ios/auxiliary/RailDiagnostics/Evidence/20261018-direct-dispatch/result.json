@@ -1,0 +1,53 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/candidate-tasks.json",
+  "capturedCount" : 28,
+  "captureIndexPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-miyazu-missing-20261018\/alignment",
+    "\/private\/tmp\/jtm-miyazu-missing-20261018\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "A0B99B1B-9B1E-4639-B349-CC356793051A",
+  "itemIDs" : [
+    "jp-WILLER　TRAINS-宮津線#3",
+    "jp-WILLER　TRAINS-宮津線#6",
+    "jp-WILLER　TRAINS-宮津線#15"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "28\/28 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 52148,
+  "requestID" : "miyazu-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-miyazu-missing-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T22:18:48Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

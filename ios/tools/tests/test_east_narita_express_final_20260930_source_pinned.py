@@ -34,7 +34,11 @@ class SourcePinnedTests(unittest.TestCase):
    if n in ['34','38','40','46','50','52','54']:
     self.assertEqual(sorted((r['from_sequence'],r['to_sequence']) for r in relations),[(1,3),(1,3)] if n in ['40','54'] else [(1,4),(1,4)])
     for r in relations:self.assertEqual(r['relation_type'],'couples_with')
-   for t in c['trips']:self.assertIsNone(t['formation'])
+   for t in c['trips']:
+    formations=[row for row in self.data['trip_formations'] if row['trip_id']==t['trip_id'] and row['service_date']=='2026-09-30']
+    self.assertEqual(len(formations),1)
+    for field in ['formation_label','vehicle_series','car_count','reserved_seat_capacity']:
+     self.assertIsNone(formations[0].get(field))
  def test_source_pinned_normalizers(self):
   for n,expected in EXPECTED.items():
    c=json.loads((BASE/f'candidates/jr-east-narita-express{n}-20260930.json').read_text())

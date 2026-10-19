@@ -1,0 +1,51 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/candidate-tasks.json",
+  "capturedCount" : 4,
+  "captureIndexPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment",
+    "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "B68164D1-E7E0-444D-82C3-704C53E12F8C",
+  "itemIDs" : [
+    "jp-アルピコ交通-上高地線#1"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "4\/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 92679,
+  "requestID" : "alpico-kamikochi-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-alpico-kamikochi-missing-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:07:12Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

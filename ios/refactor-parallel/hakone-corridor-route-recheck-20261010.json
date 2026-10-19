@@ -1,0 +1,237 @@
+{
+  "elapsedSeconds" : 25.536221981048584,
+  "findings" : [
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/1/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 1,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/2/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 2,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/3/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 3,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/4/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 4,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/5/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 5,
+      "severity" : "review",
+      "trainID" : "inspection_hakone_continuous_passenger"
+    }
+  ],
+  "importElapsedSeconds" : 0.18644702434539795,
+  "inspectionElapsedSeconds" : 0.014040946960449219,
+  "inspectionState" : "0 项失败 · 6 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "強羅",
+      "expectedSectionCount" : 6,
+      "id" : "inspection_hakone_continuous_passenger",
+      "indicesAreAuthoritative" : true,
+      "number" : "客运长区间检查 箱根湯本→強羅",
+      "origin" : "箱根湯本",
+      "parts" : [
+        {
+          "from" : "箱根湯本",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005271",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 0.9519214476368658,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005269"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 37,
+          "temporalKind" : "current",
+          "to" : "塔ノ沢"
+        },
+        {
+          "from" : "塔ノ沢",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005269",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 2.647859453090496,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005260"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 129,
+          "temporalKind" : "current",
+          "to" : "大平台"
+        },
+        {
+          "from" : "大平台",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005260",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 1.8809171834912575,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005254"
+          },
+          "sectionIndex" : 2,
+          "sourceVertexCount" : 91,
+          "temporalKind" : "current",
+          "to" : "宮ノ下"
+        },
+        {
+          "from" : "宮ノ下",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005254",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 1.2889633691830855,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005258"
+          },
+          "sectionIndex" : 3,
+          "sourceVertexCount" : 53,
+          "temporalKind" : "current",
+          "to" : "小涌谷"
+        },
+        {
+          "from" : "小涌谷",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005258",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 0.9106629044228941,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005246"
+          },
+          "sectionIndex" : 4,
+          "sourceVertexCount" : 36,
+          "temporalKind" : "current",
+          "to" : "彫刻の森"
+        },
+        {
+          "from" : "彫刻の森",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005246",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 0.7330467501514617,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005231"
+          },
+          "sectionIndex" : 5,
+          "sourceVertexCount" : 22,
+          "temporalKind" : "current",
+          "to" : "強羅"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 6,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 2,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 1,
+    "retainedVertices" : 594,
+    "scope" : "processLifetime",
+    "startedOperations" : 2,
+    "subscribers" : 0
+  },
+  "source" : "jtm-hakone-corridor-route-input.json",
+  "timingScope" : "routeLoad"
+}

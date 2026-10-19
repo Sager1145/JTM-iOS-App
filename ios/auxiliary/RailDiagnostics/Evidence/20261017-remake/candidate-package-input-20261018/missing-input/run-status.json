@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : false,
+  "invocationID" : "789BB34D-242E-4D84-AD71-B250DB3633A5",
+  "message" : "The file “does-not-exist.json” couldn’t be opened because there is no such file.",
+  "requestID" : "missing-candidate-must-fail",
+  "resultPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/missing-input\/result.json",
+  "schemaVersion" : 1,
+  "state" : "failed",
+  "updatedAt" : "2026-10-18T04:10:40Z"
+}

@@ -1,0 +1,56 @@
+{
+  "format" : "jtm-scoped-evidence-index-v1",
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.464424000000001,
+      "lineDependency" : "06f7237a52cc9ea2b94c3807960f5c84597d168e60360819555834a25de1925b",
+      "longitude" : 139.62046599999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461855296867384,
+      "lineDependency" : "06f7237a52cc9ea2b94c3807960f5c84597d168e60360819555834a25de1925b",
+      "longitude" : 139.6183740851142,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.459845000000001,
+      "lineDependency" : "06f7237a52cc9ea2b94c3807960f5c84597d168e60360819555834a25de1925b",
+      "longitude" : 139.61646500000001,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-2"
+    }
+  ]
+}

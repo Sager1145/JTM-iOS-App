@@ -1,0 +1,8 @@
+{
+  "action" : "solve",
+  "inputPath" : "\/private\/tmp\/jtm-unified-route-input.json",
+  "requestID" : "unified-native-route-one",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/ios\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/route",
+  "workspace" : "route"
+}

@@ -1,0 +1,116 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 text Description: Rail Diagnostics, Secondary Actions: Cancel
+			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+				5 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+			11 container Secondary Actions: Cancel
+				12 text Description: Tasks & evidence, Secondary Actions: Cancel
+				13 button Description: Copy result path, Secondary Actions: Cancel
+				14 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+				15 container Secondary Actions: Cancel
+					16 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+					17 text Description: Alignment, Secondary Actions: Cancel
+					18 text Description: sangi-nishinojiri-own-guard-detail, Secondary Actions: Cancel
+					19 text Description: jp-三岐鉄道-三岐線 · intervals 13 · 1 exact viewpoints, Secondary Actions: Cancel
+					20 text Description: Package: /Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json, Secondary Actions: Cancel
+					21 text Description: Zoom 19.0 · 1,600 × 1,200 pt · standard · light · basemap, smooth, Secondary Actions: Cancel
+					22 text Description: /private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019, Secondary Actions: Cancel
+					23 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+					24 button Description: Copy request JSON, Secondary Actions: Cancel
+					25 button Description: Agent request, Secondary Actions: Cancel
+				26 text Description: Progress, Secondary Actions: Cancel
+				27 text Description: 1/1 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+				28 text Description: 1, Secondary Actions: Cancel
+				29 text Description: 0, Secondary Actions: Cancel
+				30 text Description: 0, Secondary Actions: Cancel
+				31 text Description: Captured, Secondary Actions: Cancel
+				32 text Description: Pending, Secondary Actions: Cancel
+				33 text Description: Failed, Secondary Actions: Cancel
+				34 text Description: /private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/result.json, Secondary Actions: Cancel
+				35 text Description: Captured views · 1, Secondary Actions: Cancel
+				36 button Description: Preview full image, Secondary Actions: Cancel
+				37 button (disabled) Description: Previous view  ⌃⌘J, Secondary Actions: Cancel
+				38 button (disabled) Description: Next view  ⌃⌘K, Secondary Actions: Cancel
+				39 text Description: Interval and view numbers match capture-index.json (zero-based)., Secondary Actions: Cancel
+				40 pop up button Description: Viewpoint, jp-三岐鉄道-三岐線#13 · view #5, Secondary Actions: Cancel
+				41 tab group Secondary Actions: Cancel
+					42 tab (selected) Description: Basemap, Value: 1, Secondary Actions: Cancel
+					43 tab Description: Smooth, Value: 0, Secondary Actions: Cancel
+				44 button Description: Preview captured basemap.png at full resolution, Secondary Actions: Cancel
+				45 text Secondary Actions: Cancel, Description: /private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment/captures/000000/000005/basemap.png
+				46 text Description: Evidence files, Secondary Actions: Cancel
+				47 image Description: Document, ID: doc, Secondary Actions: Cancel
+				48 text Description: /private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment, Secondary Actions: Cancel
+				49 button Description: Copy path, Secondary Actions: Cancel
+				50 image Description: Document, ID: doc, Secondary Actions: Cancel
+				51 text Description: /private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment-geometry.json, Secondary Actions: Cancel
+				52 button Description: Copy path, Secondary Actions: Cancel
+				53 text Description: Review observations · 0 / 6, Secondary Actions: Cancel
+				54 container Secondary Actions: Cancel
+					55 heading Description: Record an observation, Secondary Actions: Cancel
+					56 pop up button Description: Candidate, Choose candidate, Secondary Actions: Cancel
+					57 pop up button Description: Conclusion, Insufficient evidence, Secondary Actions: Cancel
+					58 text field Placeholder: Observation and limits, Secondary Actions: Cancel
+					59 text field Placeholder: Evidence file paths · one absolute path per line, Secondary Actions: Cancel
+					60 button (disabled) Description: Save observation  ⌃⌘S, Secondary Actions: Cancel
+				61 text field (settable) Placeholder: Filter review candidates, Secondary Actions: Cancel
+				62 text Description: lineOffset, Secondary Actions: Cancel
+				63 text Description: Pending review, Secondary Actions: Cancel
+				64 text Description: jp-三岐鉄道-三岐線#13/lineOffset, Secondary Actions: Cancel
+				65 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				66 text Description: stationApproach, Secondary Actions: Cancel
+				67 text Description: Pending review, Secondary Actions: Cancel
+				68 text Description: jp-三岐鉄道-三岐線#13/stationApproach, Secondary Actions: Cancel
+				69 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				70 text Description: disconnectedParts, Secondary Actions: Cancel
+				71 text Description: Pending review, Secondary Actions: Cancel
+				72 text Description: jp-三岐鉄道-三岐線#13/disconnectedParts, Secondary Actions: Cancel
+				73 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				74 text Description: stationOffset, Secondary Actions: Cancel
+				75 text Description: Pending review, Secondary Actions: Cancel
+				76 text Description: jp-三岐鉄道-三岐線/station/005481, Secondary Actions: Cancel
+				77 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				78 text Description: stationOffset, Secondary Actions: Cancel
+				79 text Description: Pending review, Secondary Actions: Cancel
+				80 text Description: jp-三岐鉄道-三岐線/station/005458, Secondary Actions: Cancel
+				81 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				82 text Description: intervalSeam, Secondary Actions: Cancel
+				83 text Description: Pending review, Secondary Actions: Cancel
+				84 text Description: jp-三岐鉄道-三岐線#12/seam, Secondary Actions: Cancel
+				85 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				86 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				87 text Description: Recent tasks, Secondary Actions: Cancel
+				88 button Description: sangi-nishinojiri-own-guard-detail, jp-三岐鉄道-三岐線 · intervals 13 · 1 exact viewpoints, Secondary Actions: Cancel
+				89 button Description: sangi-nishinojiri-own-detail, jp-三岐鉄道-三岐線 · intervals 13 · 2 exact viewpoints, Secondary Actions: Cancel
+				90 button Description: sangi-nishinojiri-z19-plan, jp-三岐鉄道-三岐線 · intervals 13, Secondary Actions: Cancel
+				91 button Description: sanriku-rias-missing-own-intervals, jp-三陸鉄道-リアス線 · intervals 1, 2, 3, 4, Secondary Actions: Cancel
+				92 button Description: sangi-hokusei-missing-own-intervals, jp-三岐鉄道-北勢線 · intervals 11, Secondary Actions: Cancel
+				93 button Description: sangi-sangi-missing-own-intervals, jp-三岐鉄道-三岐線 · intervals 2, 5, 13, Secondary Actions: Cancel
+				94 button Description: sapporo-toshin-missing-own-intervals, jp-一般社団法人札幌市交通事業振興公社-都心線 · intervals 1, Secondary Actions: Cancel
+				95 button Description: ichibata-kitamatsue-step-candidate-detail, jp-一畑電車-北松江線 · intervals 6 · 1 exact viewpoints, Secondary Actions: Cancel
+				96 button Description: ichibata-kitamatsue-candidate-z19-plan, jp-一畑電車-北松江線 · intervals 6, Secondary Actions: Cancel
+				97 button Description: ichibata-kitamatsue-step-candidate-complete-interval, jp-一畑電車-北松江線 · intervals 6, Secondary Actions: Cancel
+				98 button Description: ichibata-kitamatsue-takanomiya-detail, jp-一畑電車-北松江線 · intervals 6 · 2 exact viewpoints, Secondary Actions: Cancel
+				99 button Description: ichibata-kitamatsue-nunozaki-detail, jp-一畑電車-北松江線 · intervals 11 · 2 exact viewpoints, Secondary Actions: Cancel
+				100 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+			101 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+			102 text Description: sangi-nishinojiri-own-guard-detail, Secondary Actions: Cancel
+			103 text Description: z19.0 · 1,600×1,200, Secondary Actions: Cancel
+			104 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	105 text Rail Diagnostics
+	106 menu button Window sharing
+107 menu bar
+	108 RailDiagnostics, ID: com.apple.menu.application
+	109 File, ID: com.apple.menu.file
+	110 Edit, ID: com.apple.menu.edit
+	111 View, ID: com.apple.menu.view
+	112 Diagnostics, ID: com.apple.menu.dynamic.FABC97DE-36F3-442C-90E8-B1AC787F0FA4
+	113 Window, ID: com.apple.menu.window
+	114 Help, ID: com.apple.menu.help

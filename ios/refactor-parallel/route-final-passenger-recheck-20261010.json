@@ -1,0 +1,856 @@
+{
+  "elapsedSeconds" : 25.892351984977722,
+  "findings" : [
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "20260705_03_chuo_line"
+    },
+    {
+      "code" : "route_partial",
+      "id" : "result/1/route_partial",
+      "message" : "Published route is incomplete; review available evidence and unresolved sections.",
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/1/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 1,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/2/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 2,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/3/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 3,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/4/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 4,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/1/segment/5/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 5,
+      "severity" : "review",
+      "trainID" : "20260706_02_super_tsugaru2"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/2/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "20260720_42_astram_hondori_johoku"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/2/segment/1/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 1,
+      "severity" : "review",
+      "trainID" : "20260720_42_astram_hondori_johoku"
+    }
+  ],
+  "importElapsedSeconds" : 0.15805697441101074,
+  "inspectionElapsedSeconds" : 0.014199018478393555,
+  "inspectionState" : "0 项失败 · 10 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "新宿",
+      "expectedSectionCount" : 10,
+      "id" : "20260705_03_chuo_line",
+      "indicesAreAuthoritative" : true,
+      "number" : "中央線快速（Chūō Rapid）（1057T）",
+      "origin" : "東京",
+      "parts" : [
+        {
+          "from" : "東京",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003766",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-東北線-2@003677:003766",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-東北線-2"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.252755601683626,
+                "lineID" : "jp-東日本旅客鉄道-東北線-2",
+                "name" : "東北線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "003677"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 11,
+          "temporalKind" : "current",
+          "to" : "神田"
+        },
+        {
+          "from" : "神田",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003677",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003615:003677",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.2032804682950187,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003615"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 18,
+          "temporalKind" : "current",
+          "to" : "御茶ノ水"
+        },
+        {
+          "from" : "御茶ノ水",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003615",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003580:003615",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.0820409619119657,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003580"
+          },
+          "sectionIndex" : 2,
+          "sourceVertexCount" : 16,
+          "temporalKind" : "current",
+          "to" : "水道橋"
+        },
+        {
+          "from" : "水道橋",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003580",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003580:003595",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.0316778381211775,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003595"
+          },
+          "sectionIndex" : 3,
+          "sourceVertexCount" : 17,
+          "temporalKind" : "current",
+          "to" : "飯田橋"
+        },
+        {
+          "from" : "飯田橋",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003595",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003595:003671",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.2646255290423432,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003671"
+          },
+          "sectionIndex" : 4,
+          "sourceVertexCount" : 17,
+          "temporalKind" : "current",
+          "to" : "市ヶ谷"
+        },
+        {
+          "from" : "市ヶ谷",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003671",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003671:003728",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 0.7876871247515818,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003728"
+          },
+          "sectionIndex" : 5,
+          "sourceVertexCount" : 13,
+          "temporalKind" : "current",
+          "to" : "四ツ谷"
+        },
+        {
+          "from" : "四ツ谷",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003728",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003728:003774",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 1.1397139161871959,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003774"
+          },
+          "sectionIndex" : 6,
+          "sourceVertexCount" : 20,
+          "temporalKind" : "current",
+          "to" : "信濃町"
+        },
+        {
+          "from" : "信濃町",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003774",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003767:003774",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 0.8768036321520613,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003767"
+          },
+          "sectionIndex" : 7,
+          "sourceVertexCount" : 8,
+          "temporalKind" : "current",
+          "to" : "千駄ヶ谷"
+        },
+        {
+          "from" : "千駄ヶ谷",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003767",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003743:003767",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 0.9797041982917554,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003743"
+          },
+          "sectionIndex" : 8,
+          "sourceVertexCount" : 20,
+          "temporalKind" : "current",
+          "to" : "代々木"
+        },
+        {
+          "from" : "代々木",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003743",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-中央線@003700:003743",
+                "direction" : -1,
+                "lineID" : "jp-東日本旅客鉄道-中央線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 0.7331709598109477,
+                "lineID" : "jp-東日本旅客鉄道-中央線",
+                "name" : "中央線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "003700"
+          },
+          "sectionIndex" : 9,
+          "sourceVertexCount" : 14,
+          "temporalKind" : "current",
+          "to" : "新宿"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 10,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    },
+    {
+      "destination" : "秋田",
+      "expectedSectionCount" : 6,
+      "id" : "20260706_02_super_tsugaru2",
+      "indicesAreAuthoritative" : true,
+      "number" : "スーパーつがる2号（Super Tsugaru 2）（2022M）",
+      "origin" : "新青森",
+      "parts" : [
+        {
+          "from" : "新青森",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000534",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 33.15343258977183,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000586"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 223,
+          "temporalKind" : "current",
+          "to" : "弘前"
+        },
+        {
+          "from" : "弘前",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000586",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000586:000606",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000606:000618",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 11.886142663779266,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000618"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 83,
+          "temporalKind" : "current",
+          "to" : "大鰐温泉"
+        },
+        {
+          "from" : "大鰐温泉",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000618",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000618:000623",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000623:000631",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000631:000639",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000639:000644",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線-p1@000644:000654",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線-p1"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000654:000660",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 24.488048632840883,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              },
+              {
+                "km" : 8.016415146227851,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線-p1",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000660"
+          },
+          "sectionIndex" : 2,
+          "sourceVertexCount" : 274,
+          "temporalKind" : "current",
+          "to" : "大館"
+        },
+        {
+          "from" : "大館",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000660",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000660:000663",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000663:000665",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000665:000672",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000672:000673",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 18.067908740037844,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000673"
+          },
+          "sectionIndex" : 3,
+          "sourceVertexCount" : 165,
+          "temporalKind" : "current",
+          "to" : "鷹ノ巣"
+        },
+        {
+          "from" : "鷹ノ巣",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000673",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000673:000683",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000683:000685",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000682:000685",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000682:000691",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000691:000692",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 29.04481935456879,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000692"
+          },
+          "sectionIndex" : 4,
+          "sourceVertexCount" : 318,
+          "temporalKind" : "current",
+          "to" : "東能代"
+        },
+        {
+          "from" : "東能代",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "000692",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000692:000703",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000703:000712",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000712:000723",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000723:000730",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000730:000738",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000738:000747",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000747:000753",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000753:000759",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000759:000766",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000766:000772",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000772:000774",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000774:000778",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-奥羽線@000778:000783",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 56.82704031135967,
+                "lineID" : "jp-東日本旅客鉄道-奥羽線",
+                "name" : "奥羽線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "000783"
+          },
+          "sectionIndex" : 5,
+          "sourceVertexCount" : 397,
+          "temporalKind" : "current",
+          "to" : "秋田"
+        }
+      ],
+      "physicalGaps" : [
+        {
+          "isBoundary" : false,
+          "segmentIndex" : 2
+        },
+        {
+          "isBoundary" : true,
+          "segmentIndex" : 2
+        },
+        {
+          "isBoundary" : true,
+          "segmentIndex" : 3
+        }
+      ],
+      "resolvedSectionCount" : 4,
+      "status" : "部分解析 4/6",
+      "unresolvedSections" : [
+        {
+          "from" : "大鰐温泉",
+          "isBoundary" : false,
+          "sectionIndex" : 2,
+          "to" : "大館"
+        },
+        {
+          "from" : "大館",
+          "isBoundary" : true,
+          "sectionIndex" : 3,
+          "to" : "鷹ノ巣"
+        }
+      ]
+    },
+    {
+      "destination" : "城北",
+      "expectedSectionCount" : 2,
+      "id" : "20260720_42_astram_hondori_johoku",
+      "indicesAreAuthoritative" : true,
+      "number" : "アストラムライン（本通→城北）",
+      "origin" : "本通",
+      "parts" : [
+        {
+          "from" : "本通",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "008060",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 0.29885314958022935,
+                "lineID" : "jp-広島高速交通-広島新交通1号線",
+                "name" : "広島新交通1号線",
+                "operatorName" : "広島高速交通"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "008037"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 2,
+          "temporalKind" : "current",
+          "to" : "県庁前"
+        },
+        {
+          "from" : "県庁前",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "008037",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 1.0438199140858082,
+                "lineID" : "jp-広島高速交通-広島新交通1号線",
+                "name" : "広島新交通1号線",
+                "operatorName" : "広島高速交通"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "008009"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 17,
+          "temporalKind" : "current",
+          "to" : "城北"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 2,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    },
+    {
+      "destination" : "品川",
+      "expectedSectionCount" : 1,
+      "id" : "20260727_08_narita_express",
+      "indicesAreAuthoritative" : true,
+      "number" : "成田エクスプレス（Narita Express）（車号不明・時刻推定）",
+      "origin" : "東京",
+      "parts" : [
+        {
+          "from" : "東京",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003766",
+            "intervals" : [
+              {
+                "code" : "jp-東日本旅客鉄道-総武線-3@003766:003872",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3"
+              },
+              {
+                "code" : "jp-東日本旅客鉄道-総武線-3@003872:004095",
+                "direction" : 1,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 6.6664709670985545,
+                "lineID" : "jp-東日本旅客鉄道-総武線-3",
+                "name" : "総武線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "explicit",
+            "toStationCode" : "004095"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 92,
+          "temporalKind" : "current",
+          "to" : "品川"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 1,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 7,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 4,
+    "retainedVertices" : 1762,
+    "scope" : "processLifetime",
+    "startedOperations" : 7,
+    "subscribers" : 0
+  },
+  "source" : "jtm-route-four-partial-recheck-input.json",
+  "timingScope" : "routeLoad"
+}

@@ -1,0 +1,51 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/candidate-tasks.json",
+  "capturedCount" : 4,
+  "captureIndexPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "82dac0b50d769f7fea3dc24d2e047b7174ad98aa84dfd1ba663378458b5f003b",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/alignment",
+    "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "0712A27D-75A7-45D7-BEBC-7E6A48DBABAD",
+  "itemIDs" : [
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "4\/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-candidate-20261019\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 92679,
+  "requestID" : "watarase-hanawa-step-candidate-complete-interval",
+  "requestPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:09:55Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

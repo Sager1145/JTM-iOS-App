@@ -1,0 +1,23 @@
+Building for debugging...
+[1 / 6]
+[2 / 7] RailInspection
+[3 / 8] RailInspection
+[7 / 11] RailInspection
+[10 / 12] RailInspectionTests-product
+[12 / 14] RailInspectionTests-product
+[17 / 18] RailInspectionTests-product
+Build complete! (2.59 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DiagnosticRequestTests started.
+◇ Test seamRetainsNeighborIdentityWithoutAcceptingConnectivity() started.
+◇ Test intervalAndStationScopesIntersect() started.
+◇ Test invalidActionAndCaptureLimitRejectBeforeWork() started.
+◇ Test scopeNeverFallsBackToAnotherLineOrUnknownInterval() started.
+✔ Test intervalAndStationScopesIntersect() passed after 0.001 seconds.
+✔ Test invalidActionAndCaptureLimitRejectBeforeWork() passed after 0.001 seconds.
+✔ Test scopeNeverFallsBackToAnotherLineOrUnknownInterval() passed after 0.001 seconds.
+✔ Test seamRetainsNeighborIdentityWithoutAcceptingConnectivity() passed after 0.001 seconds.
+✔ Suite DiagnosticRequestTests passed after 0.001 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.001 seconds.

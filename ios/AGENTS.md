@@ -5,8 +5,9 @@ these boundaries; do not remove or weaken them to make a later audit pass.
 
 - Every app surface, including Debug test surfaces, clamps Dynamic Type to
   `AppTypographyPolicy.supportedSizes` (`.xSmall ... .xLarge`). Keep the
-  typography regression gate enabled in `verify.sh` and CI. UIKit font
-  measurements must respect the same bounds.
+  typography regression requirements in scoped chat review and existing native
+  tests (the standalone runners and CI pipelines are retired; see `VERIFICATION.md`).
+  UIKit font measurements must respect the same bounds.
 - iPhone supports portrait only. Keep rotation-lock regression coverage.
   iPad retains its own orientation support.
 - North America is retired. Do not package, load, migrate, or provide

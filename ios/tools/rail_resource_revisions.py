@@ -15,7 +15,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 
-REGIONS = ("jp", "tw", "hk", "mo", "kr")
+REGIONS = ("jp", "tw", "hk", "mo", "kr", "cn")
 MANIFEST_NAME = "rail-resource-revisions.json"
 SHARED_DISPLAY_INPUTS = (
     "shared-corridors.json", "display-lanes.json", "display-hubs.json",
@@ -96,7 +96,7 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
         suffix = "" if region == "jp" else f"-{region}"
         names = [f"{region}-2025.json"] + [
             f"{family}{suffix}.json" for family in
-            ("stations", "rail-sections", "station-readings", "rail-history", "train-store")
+            ("stations", "rail-sections", "station-readings", "station-names", "rail-history", "train-store")
         ] + [f"rail-display-network/{region}.{ending}" for ending in
              ("display.bin", "stations.json", "display-history.json")]
         inputs = shared + [(name, bundle / name) for name in names]

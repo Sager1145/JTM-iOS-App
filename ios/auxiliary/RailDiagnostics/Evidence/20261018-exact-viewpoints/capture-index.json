@@ -1,0 +1,62 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 18
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : [
+    "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-2",
+    "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-8"
+  ],
+  "spacingMetres" : 230.13775411775191,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "latitude" : 36.590451731938721,
+      "lineDependency" : "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "longitude" : 136.66594274229817,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "latitude" : 36.58334904685691,
+      "lineDependency" : "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "longitude" : 136.65332637302114,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-8"
+    }
+  ]
+}

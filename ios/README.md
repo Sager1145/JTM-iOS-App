@@ -1,30 +1,44 @@
 # ios/ — the Swift fork
 
-Native iPhone app. Apple Maps for the basemap, the railway drawn over it, and
+Native iPhone and iPad app. Apple Maps for the basemap, the railway drawn over it, and
 the pure logic ported from the web app one verified function at a time.
 
-Open `RailMap.xcodeproj`. It builds with no setup: the local `RailKit` package
-resolves from disk and the rail packages are copied into the bundle by a build
-phase. There are no remote dependencies.
+Open `JTM.xcworkspace` for the main app and all three diagnostic apps, or
+`RailMap.xcodeproj` for the main app alone. The local RailKit package resolves
+from disk; the build phase copies railway resources from their canonical paths.
+There are no remote package dependencies.
 
-    ios/
-      RailMap.xcodeproj      the app
-      RailMap/               SwiftUI shell — the only place MapKit is imported
-        ContentView          picks the layout from the window's shape
-        BottomBar            tabs + three drag detents (tall windows)
-        MapControlBar        the map's own controls, down the right edge
-        RailMapView          MKMapView, batched overlays
-        NetworkLOD           what is drawn at a zoom — ours, not a port
-        GlassStyle           Liquid Glass on 26+, material below
-      RailKit/               local package
-        Sources/RailCore/    domain algorithms (Foundation; scoped read-only SQLite)
-        Sources/RailPresentation/ platform-free display rules
-        Sources/RailApplication/ snapshot use cases, independent of presentation
-        Tests/RailApplicationTests/ import, editing and mileage contracts
-        Tests/RailCoreTests/ parity against the JavaScript, via port-fixtures/
-      PORTING.md             how a function gets ported
-      verify.sh              the gate
-      copy-rail-packages.sh  build phase: app/public/rail → app bundle
+```text
+ios/
+  JTM.xcworkspace             main app and diagnostic project entry point
+  RailMap.xcodeproj           main app and native UI regression target
+  RailMap/
+    App/                     lifecycle and composition
+    Workspace/               resident map workspace and navigation
+    Journeys/, JourneyEditor/ records, details and editing components
+    Map/                     MapKit view, coordinator, rendering and annotations
+    Statistics/              passport and statistics presentation
+    Sharing/, Playback/      share composer, playback and video export
+    Import/, Timetable/      data import and timetable selection
+    Infrastructure/          network, persistence and subscription adapters
+    Design/, Localization/, Settings/, Diagnostics/
+  RailKit/Sources/
+    RailCore/                domain algorithms, grouped by feature
+    RailPresentation/        portable presentation rules, grouped by feature
+    RailApplication/         snapshot use cases, grouped by feature
+  RailKit/Tests/              module-level production regression tests
+  RailMapUITests/             native UI production regression tests
+  auxiliary/
+    RouteWorkbench/          route solver diagnostic app
+    ThroughWorkbench/        historical through-service diagnostic app
+    RailAlignmentInspector/  display geometry diagnostic app
+  Resources/                 native packaging resources
+  copy-rail-packages.sh       resource packaging build phase
+  VERIFICATION.md            focused verification policy
+```
+
+See [source organization](docs/source-structure.md) for file responsibilities,
+naming, access boundaries and the review inventory.
 
 Built and run against **Xcode 27.0 beta (27A5237l), Swift 6.4, iOS 27 SDK**,
 deployment target iOS 17.
@@ -34,6 +48,19 @@ Mac Catalyst and disables the separate **Designed for iPad/iPhone** destination
 so Xcode does not offer two different builds under the same Mac name. A Mac
 build belongs in `Debug-maccatalyst`; `Debug-iphoneos` is the iOS executable.
 After changing destinations, stop the previous run and select My Mac again.
+
+## Mac keyboard shortcuts
+
+The Mac Catalyst apps expose these actions in their menu bars. Shortcuts call the
+same actions as the visible controls; their availability follows the same loaded,
+busy and current-selection state.
+
+| App | Shortcuts |
+|---|---|
+| RailMap | `⌘F` search, `⇧⌘L` railway network, `⌥⌘←` / `⌥⌘→` previous/next date, `⌘+` / `⌘-` zoom, `⌥⌘S` panel, `⌘N` new journey |
+| RouteWorkbench | `⌘F` search, `⌥⌘←` / `⌥⌘→` previous/next journey, `⌘O` import, `⌥⌘E` export resolved journeys, `⇧⌥⌘E` export report |
+| ThroughWorkbench | `⌘F` search, `⌥⌘←` / `⌥⌘→` previous/next pattern, `⌘O` import working document, `⌥⌘E` export working document, `⇧⌥⌘E` export expanded catalog; existing `⌘N` adds a pattern and `⌘1` returns to the overview |
+| RailAlignmentInspector | `⌘1`…`⌘6` view modes, `⌥⌘←` / `⌥⌘→` previous/next viewpoint, `⇧⌥⌘←` / `⇧⌥⌘→` previous/next station, `⇧⌘N` next pending interval, `⇧⌘C` capture current interval, `⌥⇧⌘C` capture current line, `⌥⌘E` extract, `⇧⌥⌘E` export extraction, `⇧⌘S` export viewpoint record, `⌘F` search; Return selects an exact single result in the Lines tab |
 
 When using Xcode beta in the app, point command-line builds at that same Xcode
 without changing the machine-wide selection:
@@ -49,17 +76,19 @@ DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
 `RailCore` imports Foundation, with SQLite3 restricted to the read-only
 `TrainTimetableDatabase`. It has no MapKit, SwiftUI or app-owned persistence.
 `RailPresentation` and `RailApplication` depend on Core independently; neither
-imports the other. The domain functions can be run against
+imports the other. `RideLedger` lives in RailCore beside `Statistics.isRideSegment`.
+`RegionClock` and `JourneyClock` stay in RailPresentation. The domain functions can be run against
 the same inputs as the JavaScript, and `port-fixtures/` at the repository root
 holds those inputs and the answers the JavaScript gives.
 
     cd app && node scripts/build/build-port-fixtures.mjs   # regenerate
     cd ios/RailKit && swift test                           # check this port against them
 
-The fixtures' expected values are *whatever the JavaScript returns today*, not
-a second opinion about what is correct. A failure means this Swift disagrees
-with the app it was forked from — which of the two is right is a separate
-question, and one that cannot even be asked until the disagreement is visible.
+The fixtures preserve the JavaScript contract, including explicitly isolated
+legacy browser routing. Native production routing additionally requires physical
+source edges and dated reviewed identity boundaries; passenger-transfer shortcuts
+are not native railway paths. History tests keep original browser golds while
+checking native outcomes separately. A fixture change still requires review.
 
 ## What porting this way has already caught
 
@@ -124,7 +153,7 @@ is worth being explicit about it.
 
 ### Workspace and map responsibilities
 
-`AppShell.ContentView` owns the shared stores and the single `PlaybackController`.
+`AppShell` owns the shared stores and the single `PlaybackController`.
 `RailWorkspaceView` connects those owners to the resident list/detail layers and
 the shared map, and retains selection, search and presentation coordination.
 `WorkspaceTabs` hosts the four system destinations through the existing non-generic
@@ -158,8 +187,11 @@ Network overlay preparation and overlay installation remain separate steps;
 style-only updates retain their independent path. Playback, ride markers and layer
 styles remain in `MapPlaybackLayer`, `MapRideMarkers` and `MapLayers`.
 
-`RailApplication` owns import preflight/staging, typed draft validation and
-cached mileage matching. App stores retain cancellation acceptance, generation
+`RailApplication` owns import preflight/staging, typed draft validation,
+route-repair search, route-proof admission, and cached mileage matching.
+A 2026-10-15 deletion test kept the product: each of the six files owns a
+snapshot policy or a transaction boundary, and moving those rules into SwiftUI
+would hide them from the package tests. App stores retain cancellation acceptance, generation
 checks and publication. `RideLibrary` owns save coalescing and visible status;
 `RidePersistenceQueue` orders operations and `RideStorage` performs disk access.
 Debug UI tests can set `RAILMAP_UI_TEST_STORAGE_ID` to a UUID. AppShell injects
@@ -173,22 +205,19 @@ belong to `MapInteractionCoordinator`, `MapStationLabelCoordinator` and
 existing AppShell lifetimes.
 
 Every active Swift source has an explicit responsibility in `source-ownership.json`.
-Run `ios/verify.sh --boundaries` for the fast ownership/import check.
-`ios/verify.sh --native` builds the packages and runs native lifecycle/source
-contracts; the full package suite remains in `--core` and the default gate. Adding a
-source requires assigning its owner and verification entry, not extending a
-catch-all directory glob. See `FULL_CODEBASE_REFACTOR_PLAN.md` and
-`REFACTOR_FEATURE_MATRIX.md` for the migration scope and remaining acceptance.
+Review ownership and imports for changed sources in chat. Add the source owner
+to `source-ownership.json` when necessary. The retired scripts are explained in
+`VERIFICATION.md`; use focused existing tests only when the change needs execution.
+See [the historical refactor plan](../docs/reports/integration/full-codebase-refactor-plan.md) and [the historical responsibility matrix](../docs/reports/integration/refactor-feature-matrix.md) for product
+scope; their historical verification commands are superseded by this policy.
 
 Resource assembly consumes verified inputs. If a timetable is stale, run
 `python3 ios/tools/build-train-timetable-db.py` explicitly and review its outputs;
 Xcode no longer rewrites source-tree artifacts during a build.
 
-Run `ios/verify.sh` for fixture parity, Swift tests, app compilation and source
-contracts. This does not execute UI tests. Run
-`ios/tools/verify-layout-ui-smoke.sh` for the wide-iPad path, or pass `iphone`
-for editing/import, search/list return, panel gestures, layer toggles and playback
-regressions. Both commands retain the xcodebuild log and xcresult under `SCRATCH`.
+Use `VERIFICATION.md` to select evidence for the changed behavior. A UI change may
+need one existing test on an affected device; reuse a suitable incremental build
+and keep its log/result. Broad simulator matrices are no longer a default gate.
 
 ### Layout
 
@@ -252,7 +281,7 @@ different map rather than a darker one.
 ## The typography contract
 
 **Every text role in this app has a stated font-size floor and ceiling, and
-this rule may not be removed.** It is spelled once, in `RailMap/RailType.swift`,
+this rule may not be removed.** It is spelled once, in `RailMap/Design/RailType.swift`,
 and applied with `.railType(_:)`.
 
 This is a contract rather than a convention because the same failure has
@@ -270,36 +299,22 @@ shrink without a stated bound:
 
 | Role | Dynamic Type range | Lines | For |
 | --- | --- | --- | --- |
-| `.metricValue` | `xSmall … accessibility5` | 1 | a figure in a dense tile; states its true width |
-| `.metricValueStacked` | `xSmall … accessibility5` | 2 | the same figure in the grid's last candidate, where it must wrap rather than overflow |
-| `.metricLabel` | `xSmall … accessibility1` | 2 | that figure's caption; held at or below the value |
-| `.chrome` | `xSmall … xxLarge` | 1 | control glyphs, bar labels, scope capsules |
-| `.title` | `xSmall … accessibility5` | 2 | headings |
-| `.content` | `xSmall … accessibility5` | unbounded | reading text |
+| `.metricValue` | `xSmall … xLarge` | 1 | a figure in a dense tile; states its true width |
+| `.metricValueStacked` | `xSmall … xLarge` | 2 | the same figure in the grid's last candidate, where it must wrap rather than overflow |
+| `.metricLabel` | `xSmall … xLarge` | 2 | that figure's caption; held at or below the value |
+| `.chrome` | `xSmall … xLarge` | 1 | control glyphs, bar labels, scope capsules |
+| `.title` | `xSmall … xLarge` | 2 | headings |
+| `.content` | `xSmall … xLarge` | unbounded | reading text |
 
-### Why a ceiling is not a Dynamic Type cap
+### Permanent app-wide bounds
 
-There used to be an app-wide Dynamic Type ceiling in `RailMapApp.swift`. It was
-removed on purpose, and this is not it coming back. Clamping the text was the
-wrong lever: it made every accessibility-size code path in the app — the
-stacked `RouteTimingView`, the three-line journey name, the measured compact
-row — unreachable by the readers they were written for.
-
-A ceiling is only safe when it is not below the ceiling of text sitting beside
-it in the same card. `.metricValue` was briefly capped at `accessibility1`, and
-that was wrong twice over: on a statistics screen the figure IS the content, so
-at AX5 the prose would have rendered larger than the number it describes; and
-the cap bought nothing, because `StatisticsMetricGrid` already degrades
-row → pairs → column on its own once the figure states its true width. What is
-bounded on that role is its SHAPE — one line — not its size.
-
-The difference is that these bounds are **per role**. `.content` is the role
-§14.4 is about and its ceiling is the system maximum: reading text reaches
-`accessibility5` intact and carries no line limit, because when it does not fit
-the CONTAINER changes shape. That is the whole of §10.1 — 「空间不足时改为纵向，
-不通过无限缩小字体解决」. The tight bounds are on chrome and on dense numeric
-tiles, which are not reading text and which §7.7 already says should not grow
-past their own capsules.
+`AppTypographyPolicy.supportedSizes` permanently limits every app surface,
+including DEBUG test surfaces, to `.xSmall ... .xLarge`. Scene roots, each
+`RailType` role and UIKit preferred-font measurements use the same bounds.
+An AX5 system setting therefore renders the app at xLarge; it does not enable
+an AX5 app layout. Layouts must still wrap or change arrangement within these
+bounds, and must not shrink text to hide an overflow. Scoped review and existing
+typography tests retain these requirements.
 
 ### Two rules that are easy to get wrong
 
@@ -391,26 +406,14 @@ replacement map as ready. Camera callbacks defer style changes until the same
 120 ms quiet period as geometry; playback applies its own frame's style directly.
 iPhone remains portrait-only; wide iPad windows use the docked layout.
 
-Run the representative cases serially across explicitly chosen simulators:
-
-```sh
-DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
-python3 ios/tools/verify-zoom-platforms.py \
-  --device <small-iphone-udid> --device <ipad-udid> \
-  --output /tmp/jtm-platform-zoom-results
-```
-
-Select devices across installed runtimes and screen sizes; `--full` runs all
-zoom cases on each device. The runner builds once, reuses that test build on
-the remaining devices, and writes logs, screenshot-bearing `.xcresult` bundles
-and `summary.json`. Use idle simulators and avoid other builds or app launches
-during performance measurements. Generic iOS and Mac Catalyst builds check the
-iOS 17 deployment baseline and both Catalyst architectures; they do not replace
-runtime testing on older OS versions or frame-presentation profiling on hardware.
+For a zoom change, review the relevant existing tests and captures first. Run one
+affected test on one selected simulator only when fresh runtime evidence is needed.
+Coordinate an idle simulator and one shared build across chats. Expand device or
+OS coverage only when the changed API or behavior requires it.
 Instruments can distinguish background `map.geometry.prepare` from main-thread
 `map.rebuild` and its overlay/annotation phases.
 Recorded platform results, including unresolved intermittent timing failures,
-are in [the September 8 validation report](../docs/PARALLEL_RAIL_ZOOM_VALIDATION_2026-09-08.md).
+are in [the September 8 validation report](../docs/reports/map-display/PARALLEL_RAIL_ZOOM_VALIDATION_2026-09-08.md).
 
 The first version drew one SwiftUI `MapPolyline` per station interval. On
 Japan that is 9,568 overlays, and the simulator was explicit about the result:
@@ -504,7 +507,7 @@ That is the next thing to put a number on rather than assume.
 The numbers above are all about the map's *geometry*. A second pass went after
 everything else a reader touches, and it was run the same way — measure first,
 in release, over the real data. `ios/tools/bench` is the harness and its README
-says what it can and cannot answer; `RailMap/RailSignpost.swift` is the
+says what it can and cannot answer; `RailMap/Infrastructure/Network/RailSignpost.swift` is the
 instrumentation that ships in the app for the half no host benchmark can see.
 
 Four findings, in the order of how much they were worth:
@@ -588,20 +591,30 @@ systematic displacement in Korea; its 1,412 station anchors require a
 only at the MapKit presentation boundary; the WebUI, route cache, statistics
 and Japan coordinates remain WGS84.
 
-## What is not here yet
+## Current implementation and acceptance
 
-The pure tier is 20 files. Ported and verified: coordinates and keys, haversine
-distance, Douglas–Peucker, compact-package intervals, the visibility ladder,
-station-dot level of detail, micro-kink grooming, operator branding, the date
-rules, and `canonicalizeRouteFeature` — 50 parity tests over roughly 8,600
-fixture cases.
+The package contains Core, Presentation and Application modules. Routing,
+overlap geometry, mileage matching, station resolution, train models,
+validation and localization have production implementations. The app also
+implements persistence, import, journey editing, playback and video export.
+Their existence does not establish complete acceptance.
 
-Not ported: the route solver, overlap lanes and corridor smoothing, mileage
-statistics, display parts, station resolution, the train model and validation,
-and the i18n catalogs — several of those are in flight. Nothing of persistence,
-import, the editor or playback exists yet, and playback's video export has no
-MapKit equivalent at all, so it will be new work rather than a port.
+The 2026-10-03 refactor ledger records native gates, app/Catalyst builds,
+package tests, actual UI flows and their limits separately. The latest full
+service-catalog run has 105 issues; the frozen phone UI suite has 126 registered
+cases, 77 passed, 36 failed and 13 skipped. Later targeted repairs do not rewrite
+that suite's result. Full-viewport basemap dimming remains NO-GO, and comparable
+cold/warm device performance acceptance is still outstanding. See
+[the execution ledger](../docs/reports/integration/refactor-execution-2026-10-03.md) and
+[the responsibility matrix](../docs/reports/integration/refactor-feature-matrix.md) for current evidence.
 
-The order to continue in, and the reasoning behind it, is in
-[`../REFACTOR_FOR_SWIFT_FORK_PROMPT.md`](../REFACTOR_FOR_SWIFT_FORK_PROMPT.md)
-§四 Phase 7, and the recipe for one port is [`PORTING.md`](PORTING.md).
+The app supports jp/tw/hk/mo/kr. North America resources remain offline under
+`backups/north-america/2026-10-03/` and are never app inputs. iPhone is portrait
+only; iPad retains four orientations. Through-service display stays independent
+of physical route proof, and unresolved railway paths remain pending rather
+than receiving invented connections or complete precise mileage.
+
+## Documentation
+
+See [the documentation index](../docs/README.md), [current features](docs/features.md),
+[porting shared behavior](docs/porting.md) and [source ownership](docs/source-structure.md).

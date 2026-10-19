@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.3",
+  "trains": [
+    {
+      "id": "inspection_station_005260",
+      "date": "2026-10-10",
+      "number": "客运进出站检查 大平台",
+      "train_type": "普通",
+      "company": "小田急箱根",
+      "origin": "塔ノ沢",
+      "destination": "宮ノ下",
+      "direction": "unknown",
+      "visible": true,
+      "region": "jp",
+      "notes": "Inspection-only source interval selection. Not a claim of a scheduled passenger journey. Canonical physical coordinates retained.",
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "preferred_line_names": [
+          "鉄道線"
+        ],
+        "preferred_operator_names": [
+          "小田急箱根"
+        ]
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "005269",
+          "to_n02_station_code": "005260",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        },
+        {
+          "from_n02_station_code": "005260",
+          "to_n02_station_code": "005254",
+          "line_ids": [
+            "jp-小田急箱根-鉄道線"
+          ],
+          "line_names": [
+            "鉄道線"
+          ],
+          "operator_names": [
+            "小田急箱根"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "塔ノ沢",
+          "n02_station_code": "005269",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "大平台",
+          "n02_station_code": "005260",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "宮ノ下",
+          "n02_station_code": "005254",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    },
+    {
+      "id": "inspection_station_005725",
+      "date": "2026-10-10",
+      "number": "客运进出站检查 三井野原",
+      "train_type": "普通",
+      "company": "西日本旅客鉄道",
+      "origin": "出雲坂根",
+      "destination": "油木",
+      "direction": "unknown",
+      "visible": true,
+      "region": "jp",
+      "notes": "Inspection-only source interval selection. Not a claim of a scheduled passenger journey. Canonical physical coordinates retained.",
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "preferred_line_names": [
+          "木次線"
+        ],
+        "preferred_operator_names": [
+          "西日本旅客鉄道"
+        ]
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "005694",
+          "to_n02_station_code": "005725",
+          "line_ids": [
+            "jp-西日本旅客鉄道-木次線"
+          ],
+          "line_names": [
+            "木次線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
+        },
+        {
+          "from_n02_station_code": "005725",
+          "to_n02_station_code": "005846",
+          "line_ids": [
+            "jp-西日本旅客鉄道-木次線"
+          ],
+          "line_names": [
+            "木次線"
+          ],
+          "operator_names": [
+            "西日本旅客鉄道"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "出雲坂根",
+          "n02_station_code": "005694",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "三井野原",
+          "n02_station_code": "005725",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "油木",
+          "n02_station_code": "005846",
+          "platform_number": null,
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    },
+    {
+      "id": "inspection_keiyo2_midcurve",
+      "date": "2026-10-10",
+      "number": "客运京叶支线检查",
+      "train_type": "普通",
+      "company": "東日本旅客鉄道",
+      "origin": "西船橋",
+      "destination": "南船橋",
+      "direction": "unknown",
+      "visible": true,
+      "region": "jp",
+      "notes": "Inspection-only source interval selection, not scheduled journey evidence.",
+      "route_sections": [
+        {
+          "from_n02_station_code": "003547",
+          "to_n02_station_code": "003761",
+          "line_ids": [
+            "jp-東日本旅客鉄道-京葉線-2"
+          ],
+          "line_names": [
+            "京葉線"
+          ],
+          "operator_names": [
+            "東日本旅客鉄道"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "西船橋",
+          "n02_station_code": "003547",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "南船橋",
+          "n02_station_code": "003761",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    }
+  ]
+}

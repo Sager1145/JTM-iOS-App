@@ -1,0 +1,857 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.630409999999998,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.96093500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.627397880469964,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.95992468809564,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.625725218819682,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.95658956916401,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.62439021361989,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.95295827763829,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.62205421874171,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.95022111964226,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.619875149802411,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94728386548246,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-三陸鉄道-リアス線#1",
+      "latitude" : 39.619298999999998,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94636700000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#1#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.619298999999998,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94636700000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.617315149941895,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94319478914241,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.61533868683189,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94001589886281,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.612673927272439,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93793588573365,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000004",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.610531869120528,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93500753621009,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000005",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.608000879228726,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93259412866584,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000006",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.605108735260828,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93163866344491,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000007",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.602264377240388,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93332836304216,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000008",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.599913832382136,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93604419537243,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000009",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.597553184637256,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.9387446184486,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000010",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.594941583976166,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94099694045477,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000011",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.592210715910227,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94299511266328,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000012",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.589836598848066,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94557091569823,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000013",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.586859267817317,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94478169826883,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000014",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.58425604257237,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.94254559368503,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000015",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.582739448481874,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.9390688967666,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000001\/000016",
+      "itemID" : "jp-三陸鉄道-リアス線#2",
+      "latitude" : 39.581499999999998,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93778499999999,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#2#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.581499999999998,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93778499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.578716320086933,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.9359441276662,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000002",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.575825028754366,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93443912908199,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000003",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.572812350174424,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93325931241077,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000004",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.569804377625047,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93205974559854,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000005",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.566726027929732,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93144135732811,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000002\/000006",
+      "itemID" : "jp-三陸鉄道-リアス線#3",
+      "latitude" : 39.564397,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93282400000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#3#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000000",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.564397,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93282400000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000001",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.561846217719115,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93521574020414,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000002",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.559301180211833,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93761631812734,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000003",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.556735618039077,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93996365466754,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000004",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.553636726140816,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93985818159499,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000005",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.550559744462987,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93929298122561,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000006",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.547459909849557,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93894737855186,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000007",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.545320156029362,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93608471284179,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000008",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.543480075112576,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.93277339387663,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000009",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.541640078167745,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.92946230957071,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000010",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.539663973668212,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.92630723077042,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000011",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.536712957281125,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.92514508308778,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sanriku-rias-missing-20261019\/alignment\/captures\/000003\/000012",
+      "itemID" : "jp-三陸鉄道-リアス線#4",
+      "latitude" : 39.534239999999997,
+      "lineDependency" : "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7",
+      "longitude" : 141.92471499999999,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三陸鉄道-リアス線#4#point-12"
+    }
+  ]
+}

@@ -35,8 +35,7 @@ class HokkaidoFirstS130PlatformsTests(unittest.TestCase):
         self.assertEqual((candidate["candidate_status"], candidate["canonical"],
                           candidate["service_date"], candidate["source_url"]),
                          ("visually_reviewed_official_exact_date", False, DAY, URL))
-        self.assertEqual(len(candidate["platforms"]), len(overrides), 2)
-        self.assertEqual(len(facts), 2)
+        self.assertEqual((len(candidate["platforms"]), len(overrides), len(facts)), (2, 2, 2))
         for reviewed, override, fact, expected in zip(candidate["platforms"], overrides,
                                                       facts, EXPECTED):
             trip_id, train_number, departure, platform, source_id = expected

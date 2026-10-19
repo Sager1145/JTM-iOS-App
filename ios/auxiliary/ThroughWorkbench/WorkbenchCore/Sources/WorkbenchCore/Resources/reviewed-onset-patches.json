@@ -1,0 +1,104 @@
+[
+  {
+    "id": "reviewed-onset-JS-utsunomiya-zushi",
+    "patternID": "JS-utsunomiya-zushi",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "2001-12-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+        "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html",
+    "note": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+    "removePattern": false
+  },
+  {
+    "id": "reviewed-onset-JS-takasaki-odawara",
+    "patternID": "JS-takasaki-odawara",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "2001-12-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+        "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.jreast.co.jp/press/2001_1/20010914/06.html",
+    "note": "湘南新宿サービスの開始。現行の全停車駅・外側端点が初日から同一だったとは証明しない。",
+    "removePattern": false
+  },
+  {
+    "id": "reviewed-onset-gakkentoshi-tozai-kobe",
+    "patternID": "gakkentoshi-tozai-kobe",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "1997-03-08",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+        "sourceURL": "https://www.kr-railway.co.jp/corporate/"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.kr-railway.co.jp/corporate/",
+    "note": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+    "removePattern": false
+  },
+  {
+    "id": "reviewed-onset-gakkentoshi-tozai-takarazuka",
+    "patternID": "gakkentoshi-tozai-takarazuka",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "1997-03-08",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+        "sourceURL": "https://www.kr-railway.co.jp/corporate/"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.kr-railway.co.jp/corporate/",
+    "note": "JR東西線開業と学研都市・神戸・宝塚線の接続。現行外側端点の初日運転は別途確認。",
+    "removePattern": false
+  },
+  {
+    "id": "reviewed-onset-akita-shinkansen-komachi",
+    "patternID": "akita-shinkansen-komachi",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "1997-03-22",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "秋田新幹線こまちの開始。個々の歴史的停車パターンは未収録。",
+        "sourceURL": "https://www.jreast.co.jp/press/2021/akita/20220127_a01.pdf"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.jreast.co.jp/press/2021/akita/20220127_a01.pdf",
+    "note": "秋田新幹線こまちの開始。個々の歴史的停車パターンは未収録。",
+    "removePattern": false
+  },
+  {
+    "id": "reviewed-onset-hakutaka",
+    "patternID": "hakutaka",
+    "effectiveFrom": "1996-12-31",
+    "changes": {
+      "validFrom": "1997-03-22",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "ほくほく線経由はくたかの開始。福井延長・和倉温泉系統は別途確認。",
+        "sourceURL": "https://www.hokuhoku.co.jp/hakutaka.html"
+      }
+    },
+    "legChanges": [],
+    "sourceURL": "https://www.hokuhoku.co.jp/hakutaka.html",
+    "note": "ほくほく線経由はくたかの開始。福井延長・和倉温泉系統は別途確認。",
+    "removePattern": false
+  }
+]

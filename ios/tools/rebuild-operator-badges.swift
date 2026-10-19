@@ -145,28 +145,29 @@ func manifestNumber(_ value: Double) -> String {
 func manifestUpdating(_ text: String, _ additions: [(runtimeAsset: String, lines: String)])
     throws -> String
 {
-    // A rerun replaces its own last answer rather than stacking a second copy
-    // of it. Both keys hold arrays and only ever arrive by being appended, so
-    // the pair `,\n    "key": [` and the next `\n    ]` bracket exactly one of
-    // them.
     var text = text
-    for key in ["cropResolved", "badgePixels"] {
-        while let start = text.range(of: ",\n    \"\(key)\": [") {
-            guard let end = text.range(of: "\n    ]", range: start.upperBound..<text.endIndex)
-            else { break }
-            text.removeSubrange(start.lowerBound..<end.upperBound)
-        }
-    }
     for addition in additions {
         guard let anchor = text.range(of: "\"runtimeAsset\": \"\(addition.runtimeAsset)\"") else {
             throw Failure("no manifest row names \(addition.runtimeAsset)")
         }
-        // Top-level rows close at indent 2; their arrays close at indent 4, so
-        // the first such brace after the row's own key is the row's own end.
-        guard let close = text.range(of: "\n  }", range: anchor.upperBound..<text.endIndex) else {
+        guard let open = text.range(of: "\n  {", options: .backwards,
+                                    range: text.startIndex..<anchor.lowerBound),
+              let close = text.range(of: "\n  }", range: anchor.upperBound..<text.endIndex) else {
             throw Failure("the row for \(addition.runtimeAsset) never closes")
         }
-        text.replaceSubrange(close, with: ",\n\(addition.lines)\n  }")
+        // Replace measurements only in the row whose PNG was successfully written.
+        // Skipped and failed badges retain their prior measurements and image.
+        var row = String(text[open.lowerBound..<close.upperBound])
+        for key in ["cropResolved", "badgePixels"] {
+            while let start = row.range(of: ",\n    \"\(key)\": [") {
+                guard let end = row.range(of: "\n    ]", range: start.upperBound..<row.endIndex)
+                else { break }
+                row.removeSubrange(start.lowerBound..<end.upperBound)
+            }
+        }
+        let rowClose = row.range(of: "\n  }", options: .backwards)!
+        row.replaceSubrange(rowClose, with: ",\n\(addition.lines)\n  }")
+        text.replaceSubrange(open.lowerBound..<close.upperBound, with: row)
     }
     return text
 }
@@ -829,21 +830,25 @@ func report() -> Never {
         exit(1)
     }
 
+    var writtenAssets = Set<String>()
     for result in writable {
         let target = publicRoot.appending(path: String(result.row.runtimeAsset.dropFirst()))
-        do { try result.png!.write(to: target, options: .atomic) }
+        do {
+            try result.png!.write(to: target, options: .atomic)
+            writtenAssets.insert(result.row.runtimeAsset)
+        }
         catch { failures.append("\(result.row.badgeName): \(error.localizedDescription)") }
     }
     do {
-        try manifestUpdating(manifestText, additions).write(
+        try manifestUpdating(manifestText, additions.filter { writtenAssets.contains($0.runtimeAsset) }).write(
             to: manifestURL, atomically: true, encoding: .utf8)
     } catch {
         failures.append("manifest.json: \(error.localizedDescription)")
     }
 
     for message in failures { FileHandle.standardError.write(Data("error: \(message)\n".utf8)) }
-    print("\nrebuild-operator-badges: wrote \(writable.count) badges and "
-        + "\(additions.count) manifest rows")
+    print("\nrebuild-operator-badges: wrote \(writtenAssets.count) badges and "
+        + "\(additions.filter { writtenAssets.contains($0.runtimeAsset) }.count) manifest rows")
     exit(failures.isEmpty ? 0 : 1)
 }
 

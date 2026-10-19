@@ -1,0 +1,46 @@
+{
+  "action" : "prepare",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/candidate-tasks.json",
+  "capturedCount" : 0,
+  "captureIndexPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment",
+    "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-相模鉄道-相鉄本線#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "0\/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 7,
+  "requestID" : "corner-candidate-input-smoke",
+  "requestPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "prepared",
+  "updatedAt" : "2026-10-18T04:10:19Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

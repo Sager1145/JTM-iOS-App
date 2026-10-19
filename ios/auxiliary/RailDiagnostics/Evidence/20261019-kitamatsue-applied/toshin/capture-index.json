@@ -1,0 +1,59 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : null,
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-一般社団法人札幌市交通事業振興公社-都心線#1",
+      "latitude" : 43.057043999999998,
+      "lineDependency" : "0eb34186c7675b0356c848df137e037b32dbc7d45afa03ee993274f3c0176500",
+      "longitude" : 141.35284999999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一般社団法人札幌市交通事業振興公社-都心線#1#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-一般社団法人札幌市交通事業振興公社-都心線#1",
+      "latitude" : 43.05556,
+      "lineDependency" : "0eb34186c7675b0356c848df137e037b32dbc7d45afa03ee993274f3c0176500",
+      "longitude" : 141.35273000000001,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一般社団法人札幌市交通事業振興公社-都心線#1#point-1"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Same-window request workflow
+
+Incremental build succeeded: /private/tmp/jtm-diagnostic-hot-open-build.log. Actual native file open previewed Den-en-toshi candidate, labelled CommandReturn ran same session,14/14 captures finished. While same app remained running, malformed JSON was rejected visibly without replacing completedtask. Next valid request previewed in same window,CommandReturn beganprepare; busy fileopen rejectedvisibly without changingcurrentrequest. Final native Prepared0/13 result andactive=false status verified. Firstprepare wasclosed prematurely duringpreparing; resumedsame request to itsactualfinal state; this isnot recordedasfirstattemptcompletion. AXoriginals retainedhere. No duplicateapp/window,daemon orrequestformatadded. Systemsheet-specificrouting/latency notmeasured.
+
+Later source-only simplification selects diagnosticRequest.lineID initially instead of rendering unrelated Yamanote then immediately switchingowner. This one-line change postdates this build; needsnextincrementalbuild before claimingbundled.

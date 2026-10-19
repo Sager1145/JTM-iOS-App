@@ -1,0 +1,42 @@
+{
+  "issues" : [
+    {
+      "id" : "coverage-after-check",
+      "message" : "所选日期晚于目录核对日 2026-10-02，后续运营变化尚未证实。",
+      "severity" : "unknown"
+    },
+    {
+      "id" : "history-overlay-evidence",
+      "message" : "已保留历史几何叠加；所选直通路径仍使用线路包锚点。旧版 N02 运营者补全和再分发条件需要单独核实。",
+      "severity" : "unknown"
+    },
+    {
+      "id" : "JK-unknown-start",
+      "message" : "服务开始日期未明确；覆盖起点以前的存在性需要来源。",
+      "severity" : "unknown"
+    },
+    {
+      "id" : "JK-junction-evidence-0",
+      "message" : "显示直通关系和相同站码不能证明物理轨道连接；需要经审查的物理连接证据。",
+      "severity" : "unknown"
+    },
+    {
+      "id" : "JK-junction-evidence-1",
+      "message" : "显示直通关系和相同站码不能证明物理轨道连接；需要经审查的物理连接证据。",
+      "severity" : "unknown"
+    },
+    {
+      "id" : "JK-physical-gap-2",
+      "message" : "相同站码的两个物理端点不重合。直通运营关系不能填补轨道几何缺口，需复核连接。",
+      "severity" : "warning"
+    },
+    {
+      "id" : "JK-junction-evidence-2",
+      "message" : "显示直通关系和相同站码不能证明物理轨道连接；需要经审查的物理连接证据。",
+      "severity" : "unknown"
+    }
+  ],
+  "patternID" : "JK",
+  "reviewDay" : "2026-10-17",
+  "scope" : "Selected date and pattern; historical range plan and physical routing remain separate."
+}

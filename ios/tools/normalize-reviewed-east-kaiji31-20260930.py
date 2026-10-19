@@ -5,6 +5,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from reviewed_timetable_staging import (
+    emit_jsonl, iter_jsonl, jr_east_forced_station_ids, stage_jr_east_single_trip,
+)
+
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / 'app/data/train-service-history'
 SUFFIX = 'east-kaiji31-20260930'
@@ -19,17 +23,11 @@ PLATFORMS = {'新宿': '９', '立川': '６', '八王子': '４', '大月': '�
 
 
 def rows(pattern, exclude=None):
-    for path in sorted(BASE.glob(pattern)):
-        if path == exclude:
-            continue
-        for line in path.read_text(encoding='utf-8').splitlines():
-            if line.strip():
-                yield json.loads(line)
+    return iter_jsonl(BASE, pattern, exclude)
 
 
 def write(path, records):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(''.join(json.dumps(row, ensure_ascii=False, sort_keys=True) + '\n' for row in records), encoding='utf-8')
+    emit_jsonl(path, records)
 
 
 def validate(c):
@@ -63,36 +61,11 @@ def validate(c):
 
 
 def station_ids(stops):
-    package = json.loads((ROOT / 'app/public/rail/jp-2025.json').read_text(encoding='utf-8'))
-    result = {}
-    for name, _, _ in stops:
-        codes = {s[0] for line in package['lines'] if line['operator'] == '東日本旅客鉄道'
-                 for s in line['stations'] if s[1] == name}
-        if name == '東京':
-            codes &= {'003766'}
-        if len(codes) != 1:
-            raise ValueError(f'Ambiguous JR East station: {name} {sorted(codes)}')
-        result[name] = 'jp.n02.' + next(iter(codes))
-    return result
+    return jr_east_forced_station_ids(
+        ROOT, [{"stops": stops}], {}, forced_codes={'東京': {'003766'}})
 
 
 def main():
-    c = json.loads(CANDIDATE.read_text(encoding='utf-8'))
-    validate(c)
-    stations = station_ids(c['stops'])
-    known = {r['station_id'] for r in rows('normalized/station-identities*.jsonl', BASE / f'normalized/station-identities-{SUFFIX}.jsonl')}
-    station_rows = [{'station_id': sid, 'name_snapshot': name, 'reference_kind': 'current_n02',
-                     'current_source_code': sid.removeprefix('jp.n02.'), 'rail_history_id': None}
-                    for name, sid in sorted(stations.items()) if sid not in known]
-    vid, cid = TRIP + '.version', TRIP + '.calendar'
-    stops = []
-    for sequence, (name, arrival, departure) in enumerate(c['stops'], 1):
-        call_type = 'origin' if sequence == 1 else 'destination' if sequence == len(c['stops']) else 'passenger_stop'
-        stops.append({'trip_id': TRIP, 'stop_sequence': sequence, 'station_id': stations[name],
-                      'arrival_time': arrival, 'departure_time': departure, 'day_offset': 0,
-                      'call_type': call_type, 'pickup_allowed': int(call_type != 'destination'),
-                      'dropoff_allowed': int(call_type != 'origin'), 'platform': PLATFORMS.get(name),
-                      'time_accuracy': 'minute', 'source_id': SOURCE})
     statuses = {
         'identity': ('verified', 'high', 'Official Kaiji 31 train-detail page.'),
         'train_number': ('verified', 'high', 'Official page prints 3131M.'),
@@ -105,54 +78,50 @@ def main():
         'route_lines': ('unknown', 'low', 'No dated ordered physical line identities.'),
         'provenance': ('partial', 'medium', 'Official page pinned; reuse grant unconfirmed.'),
     }
-    completeness = [{'entity_type': 'trip', 'entity_id': TRIP, 'dimension': dim,
-                     'status': status, 'confidence': confidence, 'notes': note}
-                    for dim, (status, confidence, note) in statuses.items()]
-    facts = [{'entity_type': 'trip', 'entity_id': TRIP, 'field_name': dim,
-              'source_id': 'jtm-current-station-directory' if dim == 'station_refs' else SOURCE,
-              'page_or_locator': 'app/public/rail/jp-2025.json' if dim == 'station_refs' else c['source_locator'],
-              'confidence': confidence, 'verification_status': status}
-             for dim, (status, confidence, _) in statuses.items() if status == 'verified']
-    queue = [{'research_id': f'{TRIP}.{dim}', 'entity_type': 'trip', 'entity_id': TRIP,
-              'missing_dimension': dim, 'status': 'open', 'notes': note}
-             for dim, (status, _, note) in statuses.items() if status != 'verified']
-    outputs = {
-        BASE / f'sources/source-registry-{SUFFIX}.jsonl': [{
-            'source_id': SOURCE, 'publisher': '東日本旅客鉄道株式会社 / 株式会社交通新聞社',
+    copy = {
+        'source_record': {
+            'source_id': SOURCE,
+            'publisher': '東日本旅客鉄道株式会社 / 株式会社交通新聞社',
             'title': '特急かいじ 31号（新宿－甲府）停車駅一覧',
-            'source_type': 'official_train_timetable', 'url_or_locator': URL,
-            'issue': 'JR時刻表2026年10月号', 'publication_date': None,
-            'effective_date': DAY, 'accessed_at': DAY,
-            'license_status': 'no_reuse_grant_identified', 'redistribution_status': 'verification_only',
+            'source_type': 'official_train_timetable',
+            'url_or_locator': URL,
+            'issue': 'JR時刻表2026年10月号',
+            'publication_date': None,
+            'effective_date': DAY,
+            'accessed_at': DAY,
+            'license_status': 'no_reuse_grant_identified',
+            'redistribution_status': 'verification_only',
             'automated_extraction_allowed': False,
             'notes': 'September 30 td.ok current-variant cell and full 3131M station table reviewed.',
-        }],
-        BASE / f'normalized/timetable-versions-{SUFFIX}.jsonl': [{
-            'timetable_version_id': vid, 'operator_scope': 'jr-east',
-            'effective_from': DAY, 'effective_until': UNTIL,
-            'edition_name': 'JR時刻表2026年10月号; Kaiji 31 exact 2026-09-30',
-            'revision_type': 'source_snapshot', 'completeness': 'partial', 'source_ids': [SOURCE]}],
-        BASE / f'normalized/station-identities-{SUFFIX}.jsonl': station_rows,
-        BASE / f'normalized/trips/{SUFFIX}/seeds.jsonl': [{
-            'trip_id': TRIP, 'timetable_version_id': vid, 'service_id': 'kaiji', 'calendar_id': cid,
-            'train_number': '3131M', 'public_number': '31', 'direction': 'down',
-            'origin_station_id': stations['新宿'], 'destination_station_id': stations['甲府'],
+        },
+        'edition_name': 'JR時刻表2026年10月号; Kaiji 31 exact 2026-09-30',
+        'trip_fields': {
+            'service_id': 'kaiji',
+            'train_number': '3131M',
+            'public_number': '31',
+            'direction': 'down',
             'service_class': 'limited_express',
-            'notes': 'Exact-date official Kaiji column; dated physical route/operator segments and formation remain unknown.'}],
-        BASE / f'normalized/stop-times/{SUFFIX}/seeds.jsonl': stops,
-        BASE / f'normalized/calendars/{SUFFIX}/seeds.jsonl': [{
-            'calendar_id': cid, 'valid_from': DAY, 'valid_until': UNTIL,
-            'holiday_policy': 'none', **{day: 0 for day in WEEKDAYS}}],
-        BASE / f'normalized/calendar-exceptions/{SUFFIX}/seeds.jsonl': [{
-            'calendar_id': cid, 'service_date': DAY, 'exception_type': 'add',
-            'reason': 'September 30 current-variant calendar cell', 'source_id': SOURCE}],
-        BASE / f'normalized/fact-completeness-{SUFFIX}.jsonl': completeness,
-        BASE / f'normalized/fact-sources-{SUFFIX}.jsonl': facts,
-        BASE / f'normalized/research-queue-{SUFFIX}.jsonl': queue,
+            'notes': 'Exact-date official Kaiji column; dated physical route/operator segments and formation remain unknown.',
+        },
+        'summary': 'Staged Kaiji 31: 1 trip, 8 passenger calls',
     }
-    for path, records in outputs.items():
-        write(path, records)
-    print('Staged Kaiji 31: 1 trip, 8 passenger calls')
+    stage_jr_east_single_trip(
+        base=BASE,
+        candidate_path=CANDIDATE,
+        suffix=SUFFIX,
+        trip_id=TRIP,
+        day=DAY,
+        until=UNTIL,
+        source_id=SOURCE,
+        weekdays=WEEKDAYS,
+        platforms=PLATFORMS,
+        validate=validate,
+        station_ids=station_ids,
+        rows=rows,
+        write=write,
+        statuses=statuses,
+        copy=copy,
+    )
 
 
 if __name__ == '__main__':

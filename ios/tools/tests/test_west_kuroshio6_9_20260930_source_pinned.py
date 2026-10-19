@@ -40,6 +40,9 @@ class KuroshioSeptember30BatchTests(unittest.TestCase):
         sources = {row["source_id"]: row for row in rows(BASE / f"sources/source-registry-{SUFFIX}.jsonl")}
         trips = {row["trip_id"]: row for row in rows(BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl")}
         stops = rows(BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl")
+        station_names = {row["station_id"]: row["name_snapshot"]
+                         for path in (BASE / "normalized").glob("station-identities*.jsonl")
+                         for row in rows(path)}
         formations = {row["trip_id"]: row for row in rows(BASE / f"normalized/trip-formations/{SUFFIX}/seeds.jsonl")}
         self.assertEqual((candidate["service_date"], len(candidate["trips"]), len(sources), len(stops)),
                          (DAY, 4, 4, 49))
@@ -63,8 +66,8 @@ class KuroshioSeptember30BatchTests(unittest.TestCase):
                                   for stop in entry["stops"]], expected_calls)
                 actual = sorted((stop for stop in stops if stop["trip_id"] == tid),
                                 key=lambda stop: stop["stop_sequence"])
-                self.assertEqual([(stop["arrival_time"], stop["departure_time"], stop["platform"])
-                                  for stop in actual], [call[1:] for call in expected_calls])
+                self.assertEqual([(station_names[stop["station_id"]], stop["arrival_time"], stop["departure_time"], stop["platform"])
+                                  for stop in actual], expected_calls)
                 formation = formations[tid]
                 self.assertEqual((formation["service_date"], formation["evidence_kind"],
                                   formation["all_reserved"], formation["green_car_available"]),

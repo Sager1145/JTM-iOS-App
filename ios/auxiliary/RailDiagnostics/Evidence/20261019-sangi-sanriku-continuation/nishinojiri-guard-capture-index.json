@@ -1,0 +1,42 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : [
+    "jp-三岐鉄道-三岐線#13#point-5"
+  ],
+  "spacingMetres" : 117.15558811494171,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sangi-nishinojiri-own-guard-detail-20261019\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-三岐鉄道-三岐線#13",
+      "latitude" : 35.167300620603648,
+      "lineDependency" : "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+      "longitude" : 136.48288188551496,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-三岐鉄道-三岐線#13#point-5"
+    }
+  ]
+}

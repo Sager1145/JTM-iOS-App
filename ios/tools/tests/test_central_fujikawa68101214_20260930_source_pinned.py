@@ -42,6 +42,9 @@ class SourcePinnedTests(unittest.TestCase):
     spec=importlib.util.spec_from_file_location(f'fujikawa{n}',ROOT/f'ios/tools/normalize-reviewed-central-fujikawa{n}-20260930.py')
     mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
     source=json.loads((BASE/f'sources/source-registry-central-fujikawa{n}-20260930.jsonl').read_text())
+    self.assertEqual(source['publisher'],'東日本旅客鉄道株式会社 / 株式会社交通新聞社')
+    version=json.loads((BASE/f'normalized/timetable-versions-central-fujikawa{n}-20260930.jsonl').read_text())
+    self.assertEqual(version['edition_name'],f'JR East 2026-09-30 Fujikawa {n} selected timetable')
     mod.validate(c,source)
     c['calendar_observation']['cell_class']='drivingday-02'
     with self.assertRaises(ValueError): mod.validate(c,source)

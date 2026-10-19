@@ -1,8 +1,6 @@
 """Source-pinned checks for the independent JR East 2026 discovery batch."""
 import json
 from pathlib import Path
-import subprocess
-import sys
 import unittest
 
 
@@ -18,13 +16,6 @@ def load_jsonl(path):
 class EastDiscoverySourcePinnedTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        subprocess.run(
-            [sys.executable, str(ROOT / "ios/tools/normalize-reviewed-east-shiosai6-discovery.py")],
-            cwd=ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
         cls.registry = load_jsonl(BASE / "sources/source-registry-discovery-east-2026.jsonl")
         cls.candidate = json.loads(
             (BASE / "candidates/jr-east-shiosai6-20260930-discovery.json").read_text()

@@ -1,0 +1,11 @@
+{
+  "active": false,
+  "dependenciesVerified": true,
+  "invocationID": "C7B55803-899C-4C8E-905A-50593A0002E1",
+  "message": "Selected pattern/date evidence exported. Through-service display does not prove physical connectivity.",
+  "requestID": "unified-native-through-one",
+  "resultPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/auxiliary/RailDiagnostics/Evidence/20261017/through/result.json",
+  "schemaVersion": 1,
+  "state": "evidenceReady",
+  "updatedAt": "2026-10-17T23:21:16Z"
+}

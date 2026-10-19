@@ -1,0 +1,173 @@
+{
+  "recordedAt": "2026-10-18T23:42:26.474196+00:00",
+  "processObservation": "Focused ps listed exactly one RailDiagnostics exe at PID61534, no Main or xcodebuild at observation",
+  "completedRequests": 10,
+  "scopedCaptures": 160,
+  "failures": 0,
+  "extraRunClicks": 0,
+  "nativeUI": "Mac locked; no current human/window observation claimed",
+  "alignmentVerdicts": "separate original reviews; completion is not acceptance",
+  "requests": [
+    {
+      "sessionDirectory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "9332CF0B-707B-4D54-9B66-80BA27AA25CC",
+        "message": "11/11 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "miyafuku-gujo-final-own-candidate",
+        "resultPath": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:17:06Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "DD82A968-F8F6-40EA-B8E7-8B78652DD1A3",
+        "message": "2/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "miyafuku-own-terminal-imagery",
+        "resultPath": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:17:30Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-mikuni-awara-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "649651A1-15FD-4C5E-B950-1B891B50C722",
+        "message": "8/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "mikuni-awara-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-mikuni-awara-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:18:51Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "31E8BB23-C9E3-4665-9797-966DFFB94E09",
+        "message": "11/11 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "katsuyama-eiheiji-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:19:45Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "550BF5A1-C039-4F75-91FA-CCB5B006CF41",
+        "message": "13/13 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "kumagawa-yunomae-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:20:13Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-tosaden-ino-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "0CBB9516-820E-4E01-95D9-CF509B63F494",
+        "message": "38/38 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "tosaden-ino-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-tosaden-ino-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:25:39Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-tosaden-gomen-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "C08BAA61-1936-42EB-BFF8-2FB2E264D375",
+        "message": "42/42 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "tosaden-gomen-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-tosaden-gomen-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:26:22Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "541ED4DB-11E2-43E1-B29D-AB30EE794ED6",
+        "message": "7/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "tosaden-sanbashi-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:26:57Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-tosaden-ekimae-missing-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "D338E5CF-2E0D-4595-897F-6D4E3F5FED80",
+        "message": "2/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "tosaden-ekimae-missing-own-intervals",
+        "resultPath": "/private/tmp/jtm-tosaden-ekimae-missing-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:37:01Z"
+      }
+    },
+    {
+      "sessionDirectory": "/private/tmp/jtm-kita-shinano-step-native-20261018",
+      "runStatus": {
+        "active": false,
+        "dependenciesVerified": true,
+        "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+        "invocationID": "E2F53A26-52EF-441B-A788-E8259DADDBDC",
+        "message": "26/26 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+        "processID": 61534,
+        "requestID": "kita-shinano-step-candidate-complete-interval",
+        "resultPath": "/private/tmp/jtm-kita-shinano-step-native-20261018/result.json",
+        "schemaVersion": 1,
+        "state": "evidenceReady",
+        "updatedAt": "2026-10-18T23:43:54Z"
+      }
+    }
+  ],
+  "termination": "After all captures and builds finished, exact exe/PID61534 rechecked then idle app SIGTERM; receipts retained."
+}

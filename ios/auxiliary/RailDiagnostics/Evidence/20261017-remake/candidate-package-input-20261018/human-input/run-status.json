@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "1AAA04A9-F005-46B2-A405-F8127A08068A",
+  "message" : "0\/6 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "human-candidate-input",
+  "resultPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/human-input\/result.json",
+  "schemaVersion" : 1,
+  "state" : "prepared",
+  "updatedAt" : "2026-10-18T04:11:56Z"
+}

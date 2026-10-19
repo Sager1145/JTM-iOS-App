@@ -89,7 +89,7 @@ class KyushuKirishima11131517SourcePinnedTests(unittest.TestCase):
         self.assertTrue(all(source['effective_date'] == '2026-09-30'
                             and source['automated_extraction_allowed'] is False
                             for source in sources))
-        for kind in ('trip-line-segments', 'trip-operator-segments'):
+        for kind in ('trip-lines', 'trip-operator-segments'):
             self.assertFalse((BASE / f'normalized/{kind}/{SUFFIX}/seeds.jsonl').exists())
 
 

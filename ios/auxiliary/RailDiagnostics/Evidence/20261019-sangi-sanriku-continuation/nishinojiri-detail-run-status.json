@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "B840FC0F-8260-4429-9E1A-58C89FD3C00A",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 20655,
+  "requestID" : "sangi-nishinojiri-own-detail",
+  "resultPath" : "\/private\/tmp\/jtm-sangi-nishinojiri-own-detail-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T09:03:28Z"
+}

@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "5F3A1B3D-78B7-44A3-B97E-9660ECEE0312",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 14553,
+  "requestID" : "sapporo-toshin-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:21:21Z"
+}

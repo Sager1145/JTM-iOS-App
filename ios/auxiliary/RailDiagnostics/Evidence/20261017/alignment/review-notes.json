@@ -1,0 +1,19 @@
+{
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "06f7237a52cc9ea2b94c3807960f5c84597d168e60360819555834a25de1925b",
+    "packageVersion" : "2025.5.2"
+  },
+  "notes" : [
+    {
+      "conclusion" : "insufficientEvidence",
+      "evidenceSHA256" : {
+        "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/iOS\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment\/captures\/000000\/000000\/basemap.png" : "3bb09cc1991789aa47a38df2320dec9e7d2e40b5206398799af630d525b48473"
+      },
+      "id" : "jp-相模鉄道-相鉄本線#0\/lineOffset",
+      "note" : "One loaded viewport only; interval alignment and connectivity remain unreviewed.\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/iOS\/auxiliary\/RailDiagnostics\/Evidence\/20261017\/alignment\/alignment\/captures\/000000\/000000\/basemap.png\t"
+    }
+  ],
+  "requestID" : "unified-native-sotetsu-0",
+  "schemaVersion" : 1
+}

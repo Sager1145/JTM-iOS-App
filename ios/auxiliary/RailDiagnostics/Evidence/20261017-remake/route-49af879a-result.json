@@ -1,0 +1,35 @@
+{
+  "action" : "solve",
+  "candidateTasksPath" : "\/Users\/sager\/Library\/Application Support\/RailDiagnostics\/Sessions\/route-49af879a\/candidate-tasks.json",
+  "capturedCount" : 0,
+  "captureIndexPath" : null,
+  "captureSettings" : null,
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "journeyInputSHA256" : "3099d24febed6402a3b58d039a10f842a0b5008cd5624060dcd76a9c81c061a6",
+    "rail\/jp" : "jp:7a2375c70ef8d2606b18645562d27f52b845af29844366abcff3127c4793b121",
+    "timetable" : "8be2a83ff69195ce8cd112a55a8d365d0842cfe8c6f9911bf35136f2cf2e82bc"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "inspection_station_005260"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "Preparing exact route request scope…",
+  "pendingCount" : 0,
+  "requestID" : "route-49af879a",
+  "requestPath" : "\/Users\/sager\/Library\/Application Support\/RailDiagnostics\/Sessions\/route-49af879a\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/Users\/sager\/Library\/Application Support\/RailDiagnostics\/Sessions\/route-49af879a\/review-notes.json",
+  "runStatusPath" : "\/Users\/sager\/Library\/Application Support\/RailDiagnostics\/Sessions\/route-49af879a\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "running",
+  "updatedAt" : "2026-10-18T02:38:53Z",
+  "verdict" : "pendingReview",
+  "workspace" : "route"
+}

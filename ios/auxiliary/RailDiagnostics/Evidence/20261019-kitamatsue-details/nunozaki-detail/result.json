@@ -1,0 +1,54 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/candidate-tasks.json",
+  "capturedCount" : 2,
+  "captureIndexPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "5345a3ff3d970fed4afdcaf7790132063bd5a926a2764092fec74b6cc9f532f6",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/alignment",
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "E0392396-6893-4E77-A043-416303BB9E9E",
+  "itemIDs" : [
+    "jp-一畑電車-北松江線#11"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 8847,
+  "requestID" : "ichibata-kitamatsue-nunozaki-detail",
+  "requestPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-nunozaki-detail-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : [
+    "jp-一畑電車-北松江線#11#point-5",
+    "jp-一畑電車-北松江線#11#point-6"
+  ],
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T07:49:38Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

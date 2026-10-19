@@ -1,0 +1,51 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/candidate-tasks.json",
+  "capturedCount" : 2,
+  "captureIndexPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "0eb34186c7675b0356c848df137e037b32dbc7d45afa03ee993274f3c0176500",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/alignment",
+    "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "5F3A1B3D-78B7-44A3-B97E-9660ECEE0312",
+  "itemIDs" : [
+    "jp-一般社団法人札幌市交通事業振興公社-都心線#1"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 14553,
+  "requestID" : "sapporo-toshin-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-sapporo-toshin-missing-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:21:21Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

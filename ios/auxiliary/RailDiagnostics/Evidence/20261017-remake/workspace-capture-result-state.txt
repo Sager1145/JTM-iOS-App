@@ -1,0 +1,28 @@
+The following is a diff from the previous accessibility tree for Window: "Rail Diagnostics" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 149, 196, 200
+~			118 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+~				120 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+~				121 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+~				122 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+~			123 button Description: New task, Control Command N, Secondary Actions: Cancel
+~			124 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+~					130 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+~					136 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+~				140 text Description: 6/6 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+~				141 text Description: 6, Secondary Actions: Cancel
+~				142 text Description: 0, Secondary Actions: Cancel
+~				148 text Description: Captured views · 6, Secondary Actions: Cancel
++				200 button Description: Preview full image, Secondary Actions: Cancel
++				201 pop up button Description: Viewpoint, jp-相模鉄道-相鉄本線#0 · viewpoint 1, Secondary Actions: Cancel
++				202 tab group Secondary Actions: Cancel
++					203 tab (selected) Description: Basemap, Value: 1, Secondary Actions: Cancel
++					204 tab Description: Display, Value: 0, Secondary Actions: Cancel
++					205 tab Description: Smooth, Value: 0, Secondary Actions: Cancel
++				206 button Description: Preview captured basemap.png at full resolution, Secondary Actions: Cancel
++				207 text Secondary Actions: Cancel, Description: /Users/sager/Library/Application Support/RailDiagnostics/Sessions/capture-fd55fc80/alignment/captures/000000/000000/basemap.png
+~				192 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+~				193 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+~				194 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+~			197 text Description: Evidence ready · review pending, Secondary Actions: Cancel
++			208 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+~	25 Diagnostics, ID: com.apple.menu.dynamic.6DC15674-E339-4F3C-84A2-670A00B15B75

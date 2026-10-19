@@ -1,0 +1,27 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    6
+  ],
+  "lineID" : "jp-一畑電車-北松江線",
+  "requestID" : "ichibata-kitamatsue-takanomiya-detail",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-takanomiya-detail-20261019",
+  "viewpointIDs" : [
+    "jp-一畑電車-北松江線#6#point-3",
+    "jp-一畑電車-北松江線#6#point-4"
+  ],
+  "workspace" : "alignment"
+}

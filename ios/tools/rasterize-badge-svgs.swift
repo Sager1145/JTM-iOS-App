@@ -339,12 +339,19 @@ func step() {
                     stale.append("\(label): no PNG companion")
                 } else if let existing,
                           let source = CGImageSourceCreateWithData(existing as CFData, nil),
+                          CGImageSourceCreateImageAtIndex(source, 0, nil) != nil,
                           let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil)
                             as? [CFString: Any],
                           let w = properties[kCGImagePropertyPixelWidth] as? Int,
-                          let h = properties[kCGImagePropertyPixelHeight] as? Int,
-                          w != image.width || h != image.height {
-                    stale.append("\(label): \(w)×\(h) on disk, \(image.width)×\(image.height) from source")
+                          let h = properties[kCGImagePropertyPixelHeight] as? Int {
+                    // A decoded companion whose pixel size still matches is current.
+                    // Mismatch stays the only size failure; decode or property
+                    // failure is the else below, not a silent match.
+                    if w != image.width || h != image.height {
+                        stale.append("\(label): \(w)×\(h) on disk, \(image.width)×\(image.height) from source")
+                    }
+                } else {
+                    stale.append("\(label): PNG companion cannot be decoded")
                 }
             } else {
                 do {

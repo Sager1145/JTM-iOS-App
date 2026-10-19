@@ -1,0 +1,17 @@
+[
+  {
+    "original": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app",
+    "retained": "/private/tmp/jtm-retired-diagnostics-20261017/app-bundles/RailAlignmentInspector.app.retired",
+    "restore": "Move back to original path and remove .retired suffix; all original bundle contents retained."
+  },
+  {
+    "original": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app",
+    "retained": "/private/tmp/jtm-retired-diagnostics-20261017/app-bundles/Kisuki Keiyo Inspector.app.retired",
+    "restore": "Move back to original path and remove .retired suffix; all original bundle contents retained."
+  },
+  {
+    "original": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app",
+    "retained": "/private/tmp/jtm-retired-diagnostics-20261017/app-bundles/Hakone Inspector.app.retired",
+    "restore": "Move back to original path and remove .retired suffix; all original bundle contents retained."
+  }
+]

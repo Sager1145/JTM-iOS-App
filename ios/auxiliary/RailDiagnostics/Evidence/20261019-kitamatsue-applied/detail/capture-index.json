@@ -1,0 +1,42 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "selectedViewpointIDs" : [
+    "jp-一畑電車-北松江線#6#point-3"
+  ],
+  "spacingMetres" : 116.71920721178313,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-detail-native-20261019\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-一畑電車-北松江線#6",
+      "latitude" : 35.470274569988057,
+      "lineDependency" : "dcf0fedc4b2b54170e1eb06826ac65544bf027e369fbf99a1931c812bc61ed6c",
+      "longitude" : 132.92706312831163,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-一畑電車-北松江線#6#point-3"
+    }
+  ]
+}

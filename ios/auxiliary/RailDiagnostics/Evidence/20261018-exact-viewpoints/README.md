@@ -1,0 +1,9 @@
+# Exact viewpoint request: native proof2026-10-18
+
+Reused successful shared Release build `/private/tmp/railmap-cn-cache-option-release-build.log`, which compiled the current request/composer/session/controller sources. No extra Debug build.13 DiagnosticRequestTests passed in worker terminal18780; no logfile was retained for that run.
+
+Actual unified app preview showed2 exact viewpoints. Agent request selected original IDs#point-2 and#point-8, captureLimit1. Labelled Run Command Return captured onlypoint2; UI/JSON reported1captured/1pending/0failed and partial. Clicking the human Run/resume button in the same task captured onlypoint8; final UI/result/index report2captured/0pending/0failed and evidenceReady. Exactlytwo capture directories exist; point0 and preceding unselected views were not captured. Existing broader immutable13-view plan remains; selected counts/index exclude11 unselected pending records. These two raw renders were used to verify dispatch, not geographic acceptance.
+
+The New task keyboard command Control Command N opens the single composer; its labelled Viewpoint IDs field was actually observed, with Start task Command Return and Cancel Esc visible. Form was cancelled without submission. Source review confirms comma-separated human input constructs the same DiagnosticRequest and existing start(viewpointIDs:) path; no separate capture engine. Keyboard first run and button resume exercised that same task. Runtime failed-retry and invalid-ID paths were not newly exercised; package admission tests and source review cover them.
+
+Original capture session remains `/private/tmp/jtm-ir-selected-views-20261018`. Saved UI originals/AX, request, final result/index and broader checkpoint are retained here. Native capture success does not establish own rail alignment, platform position or Main composition.

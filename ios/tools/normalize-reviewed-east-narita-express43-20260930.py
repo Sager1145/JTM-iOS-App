@@ -5,6 +5,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+import reviewed_timetable_staging as staging
+
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "app/data/train-service-history"
@@ -22,18 +24,25 @@ EXPECTED = {
 }
 
 
+STAGING_FACTS = {
+    'edition_prefix': 'JR時刻表2026年10月号; 成田エクスプレス43号 ',
+    'public_number': '43',
+    'coupling_note': '東京－成田空港は2243Mを併結 / 東京－成田空港は2043Mに併結 ',
+    'incomplete_note': 'After Tokyo this column prints no independent clock or platform; unknown cells remain null.',
+    'identity_note': 'Official numbered-column Narita Express 43 page.',
+    'partial_stops_note': 'Post-Tokyo coupled-column cells are blank; shared calls follow coupling note.',
+    'partial_times_note': 'Tokyo departure and all later coupled-column clocks are unprinted.',
+    'title': '成田エクスプレス 43号 2043M / 2243M 停車駅一覧',
+    'summary': 'Staged NEX43: 2 trips',
+    'relations': [{'trip_id': 'jr-east.narita-express.43.2043m.exact-2026-09-30', 'related_trip_id': 'jr-east.narita-express.43.2243m.exact-2026-09-30', 'relation_type': 'couples_with', 'from_sequence': 6, 'to_sequence': 9, 'source_id': 'jr-east-narita-express43-20260930'}, {'trip_id': 'jr-east.narita-express.43.2243m.exact-2026-09-30', 'related_trip_id': 'jr-east.narita-express.43.2043m.exact-2026-09-30', 'relation_type': 'couples_with', 'from_sequence': 4, 'to_sequence': 7, 'source_id': 'jr-east-narita-express43-20260930'}],
+}
+
 def read_rows(pattern, exclude=None):
-    for path in sorted(BASE.glob(pattern)):
-        if path == exclude:
-            continue
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                yield json.loads(line)
+    yield from staging.iter_jsonl(BASE, pattern, exclude)
 
 
 def write_jsonl(path, rows):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows), encoding="utf-8")
+    staging.emit_jsonl(path, rows)
 
 
 PINNED = {'candidate_id': 'jr-east-narita-express43-20260930',
@@ -79,117 +88,29 @@ PINNED = {'candidate_id': 'jr-east-narita-express43-20260930',
 
 
 def validate(candidate):
-    if candidate != PINNED:
-        raise ValueError('Source-pinned column, calendar, seat or coupling fact changed')
-    return candidate['trips']
+    return staging.reject_unless_pinned(candidate, PINNED)
 
 
 def station_ids(trips):
-    package = json.loads((ROOT / "app/public/rail/jp-2025.json").read_text(encoding="utf-8"))
-    names = {stop[0] for trip in trips for stop in trip["stops"]}
-    result = {}
-    for name in names:
-        directory_name = STATION_NAME_ALIASES.get(name, name)
-        codes = {station[0] for line in package["lines"] if line["operator"] == "東日本旅客鉄道"
-                 for station in line["stations"] if station[1] == directory_name}
-        if name in {"東京", "武蔵小杉"}:
-            codes &= {"東京": {"003766"}, "武蔵小杉": {"004301"}}[name]
-        if len(codes) != 1:
-            raise ValueError(f"Ambiguous JR East station group for {name}: {sorted(codes)}")
-        result[name] = "jp.n02." + next(iter(codes))
-    return result
+    return staging.jr_east_forced_station_ids(ROOT, trips, STATION_NAME_ALIASES)
 
 
 def main():
-    candidate = json.loads(CANDIDATE.read_text(encoding="utf-8"))
-    trips = validate(candidate)
-    stations = station_ids(trips)
-    known_stations = {row["station_id"] for row in read_rows(
-        "normalized/station-identities*.jsonl", BASE / f"normalized/station-identities-{SUFFIX}.jsonl")}
-    station_rows = [{"station_id": sid, "name_snapshot": STATION_NAME_ALIASES.get(name, name),
-                     "reference_kind": "current_n02", "current_source_code": sid.removeprefix("jp.n02."),
-                     "rail_history_id": None} for name, sid in sorted(stations.items()) if sid not in known_stations]
-    versions, trip_rows, stop_rows, calendars, exceptions = [], [], [], [], []
-    completeness, facts, queue = [], [], []
-    for trip in trips:
-        tid, number = trip["trip_id"], trip["train_number"]
-        version, calendar = tid + ".version", tid + ".calendar"
-        complete = all(stop[1] or stop[2] or stop[4]=='pass' for stop in trip['stops'])
-        versions.append({"timetable_version_id": version, "operator_scope": "jr-east",
-                         "effective_from": DAY, "effective_until": NEXT_DAY,
-                         "edition_name": f"JR時刻表2026年10月号; 成田エクスプレス43号 {number} exact 9/30",
-                         "revision_type": "source_snapshot", "completeness": "partial", "source_ids": [SOURCE]})
-        trip_rows.append({"trip_id": tid, "timetable_version_id": version, "service_id": SERVICE,
-                          "calendar_id": calendar, "train_number": number, "public_number": "43",
-                          "origin_station_id": stations[trip["origin"]],
-                          "destination_station_id": stations[trip["destination"]],
-                          "service_class": "limited_express",
-                          "notes": '東京－成田空港は2243Mを併結 / 東京－成田空港は2043Mに併結 ' + ("This column prints all passenger-call clocks."
-                          if complete else "After Tokyo this column prints no independent clock or platform; unknown cells remain null.")})
-        for sequence, (name, arrival, departure, platform, call_type) in enumerate(trip["stops"], 1):
-            stop_rows.append({"trip_id": tid, "stop_sequence": sequence, "station_id": stations[name],
-                              "arrival_time": arrival, "departure_time": departure, "day_offset": 0,
-                              "call_type": call_type,
-                              "pickup_allowed": int(call_type in {"origin", "passenger_stop"}),
-                              "dropoff_allowed": int(call_type in {"passenger_stop", "destination"}),
-                              "platform": platform,
-                              "time_accuracy": "minute" if arrival or departure else "unknown",
-                              "source_id": SOURCE})
-        calendars.append({"calendar_id": calendar, "valid_from": DAY, "valid_until": NEXT_DAY,
-                          "holiday_policy": "none", **{weekday: 0 for weekday in WEEKDAYS}})
-        exceptions.append({"calendar_id": calendar, "service_date": DAY, "exception_type": "add",
-                           "reason": "September 30 current-variant calendar cell", "source_id": SOURCE})
-        statuses = {
-            "identity": ("verified", "high", "Official numbered-column Narita Express 43 page."),
-            "train_number": ("verified", "high", f"Official column prints {number}."),
-            "validity_calendar": ("verified", "high", "September 30 uses this displayed variant."),
-            "origin_destination": ("verified", "high", "Official title names both branch endpoints."),
-            "stops": (("verified", "high", "All passenger calls in this column printed.") if complete else
-                      ("partial", "medium", "Post-Tokyo coupled-column cells are blank; shared calls follow coupling note.")),
-            "times": (("verified", "high", "All printed passenger-call clocks captured.") if complete else
-                      ("partial", "medium", "Tokyo departure and all later coupled-column clocks are unprinted.")),
-            "station_refs": ("verified", "high", "Names matched to current JR East N02 station groups."),
-            "operator": ("unknown", "low", "No dated ordered operator segments."),
-            "route_lines": ("unknown", "low", "No dated ordered physical-line IDs."),
-            "provenance": ("partial", "medium", "Official URL pinned; redistribution grant unconfirmed."),
-        }
-        for dimension, (status, confidence, note) in statuses.items():
-            completeness.append({"entity_type": "trip", "entity_id": tid, "dimension": dimension,
-                                 "status": status, "confidence": confidence, "notes": note})
-            if status in {"verified", "partial"} and dimension != "provenance":
-                facts.append({"entity_type": "trip", "entity_id": tid, "field_name": dimension,
-                              "source_id": "jtm-current-station-directory" if dimension == "station_refs" else SOURCE,
-                              "page_or_locator": "app/public/rail/jp-2025.json" if dimension == "station_refs" else candidate["source_locator"],
-                              "confidence": confidence, "verification_status": status})
-            if status != "verified":
-                queue.append({"research_id": f"{tid}.{dimension}", "entity_type": "trip", "entity_id": tid,
-                              "missing_dimension": dimension, "status": "open", "notes": note})
-    relations = [{'trip_id': 'jr-east.narita-express.43.2043m.exact-2026-09-30', 'related_trip_id': 'jr-east.narita-express.43.2243m.exact-2026-09-30', 'relation_type': 'couples_with', 'from_sequence': 6, 'to_sequence': 9, 'source_id': 'jr-east-narita-express43-20260930'}, {'trip_id': 'jr-east.narita-express.43.2243m.exact-2026-09-30', 'related_trip_id': 'jr-east.narita-express.43.2043m.exact-2026-09-30', 'relation_type': 'couples_with', 'from_sequence': 4, 'to_sequence': 7, 'source_id': 'jr-east-narita-express43-20260930'}]
-    outputs = {
-        BASE / f"sources/source-registry-{SUFFIX}.jsonl": [{
-            "source_id": SOURCE, "publisher": "東日本旅客鉄道株式会社 / 株式会社交通新聞社",
-            "title": "成田エクスプレス 43号 2043M / 2243M 停車駅一覧",
-            "source_type": "official_train_timetable", "url_or_locator": URL,
-            "issue": "JR時刻表2026年10月号", "publication_date": None,
-            "effective_date": DAY, "accessed_at": DAY,
-            "license_status": "no_reuse_grant_identified", "redistribution_status": "verification_only",
-            "automated_extraction_allowed": False,
-            "notes": "September30 td.ok and full printed columns verified; unprinted cells remain unknown.",
-        }],
-        BASE / f"normalized/timetable-versions-{SUFFIX}.jsonl": versions,
-        BASE / f"normalized/station-identities-{SUFFIX}.jsonl": station_rows,
-        BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl": trip_rows,
-        BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl": stop_rows,
-        BASE / f"normalized/trip-relations/{SUFFIX}/seeds.jsonl": relations,
-        BASE / f"normalized/calendars/{SUFFIX}/seeds.jsonl": calendars,
-        BASE / f"normalized/calendar-exceptions/{SUFFIX}/seeds.jsonl": exceptions,
-        BASE / f"normalized/fact-completeness-{SUFFIX}.jsonl": completeness,
-        BASE / f"normalized/fact-sources-{SUFFIX}.jsonl": facts,
-        BASE / f"normalized/research-queue-{SUFFIX}.jsonl": queue,
-    }
-    for path, rows in outputs.items():
-        write_jsonl(path, rows)
-    print('Staged NEX43: 2 trips')
+    staging.stage_jr_east_coupled_columns(
+        base=BASE,
+        root=ROOT,
+        candidate_path=CANDIDATE,
+        suffix=SUFFIX,
+        day=DAY,
+        next_day=NEXT_DAY,
+        source_id=SOURCE,
+        url=URL,
+        service=SERVICE,
+        aliases=STATION_NAME_ALIASES,
+        weekdays=WEEKDAYS,
+        pinned=PINNED,
+        copy=STAGING_FACTS,
+    )
 
 
 if __name__ == "__main__":

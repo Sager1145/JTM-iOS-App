@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "0712A27D-75A7-45D7-BEBC-7E6A48DBABAD",
+  "message" : "4\/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 92679,
+  "requestID" : "watarase-hanawa-step-candidate-complete-interval",
+  "resultPath" : "\/private\/tmp\/jtm-watarase-hanawa-step-native-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:09:55Z"
+}

@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Stage the dated JR Odekake Fujikawa 14 timetable without route guesses."""
+"""Stage the dated JR East Fujikawa 14 timetable without route guesses."""
 
 import json
 from pathlib import Path
+
+import reviewed_timetable_staging as staging
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "app/data/train-service-history"
 SUFFIX = "central-fujikawa14-20260930"
 DATE, UNTIL = "2026-09-30", "2026-10-01"
 TRIP = "jr-central.fujikawa.14.2026-09-30"
+# Opaque legacy identity retained; publisher and edition follow the pinned JR East URL.
 SOURCE = "jr-west-odekake-fujikawa14-4014m-20260930"
 URL = "https://timetables.jreast.co.jp/2610/train/010/011131.html"
 STOPS = [('甲府', '003867', None, '18:36', None, 'origin'), ('南甲府', '004018', '18:40', '18:41', None, 'passenger_stop'), ('東花輪', '004252', '18:49', '18:49', None, 'passenger_stop'), ('市川大門', '004337', '18:56', '18:56', None, 'passenger_stop'), ('鰍沢口', '004397', '19:00', '19:00', None, 'passenger_stop'), ('甲斐岩間', '004545', '19:07', '19:07', None, 'passenger_stop'), ('下部温泉', '004754', '19:17', '19:20', None, 'passenger_stop'), ('身延', '004939', '19:30', '19:31', None, 'passenger_stop'), ('内船', '005155', '19:45', '19:45', None, 'passenger_stop'), ('富士宮', '005304', '20:16', '20:16', None, 'passenger_stop'), ('富士', '005522', '20:27', '20:31', None, 'passenger_stop'), ('清水', '005898', '20:50', '20:51', None, 'passenger_stop'), ('静岡', '006128', '21:00', None, '４', 'destination')]
@@ -17,19 +20,26 @@ DIRECTION = 'up'
 WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
 
 
+STAGING_FACTS = {
+    'candidate_path': 'candidates/jr-central-fujikawa14-20260930.json',
+    'identity_note': 'Dated page prints ふじかわ14号.',
+    'train_number_note': 'Dated page prints 4014M.',
+    'stops_note': '13 timed calls; レ rows excluded.',
+    'edition_name': 'JR East 2026-09-30 Fujikawa 14 selected timetable',
+    'service_id': 'fujikawa',
+    'train_number': '4014M',
+    'public_number': '14',
+    'origin_station_id': 'jp.n02.003867',
+    'destination_station_id': 'jp.n02.006128',
+    'summary_suffix': ': 13 timed passenger calls, exact date only',
+}
+
 def rows(pattern, exclude=None):
-    for path in sorted(BASE.glob(pattern)):
-        if path == exclude:
-            continue
-        for raw in path.read_text(encoding="utf-8").splitlines():
-            if raw.strip():
-                yield json.loads(raw)
+    yield from staging.iter_jsonl(BASE, pattern, exclude)
 
 
 def write(path, data):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
-                            for row in data), encoding="utf-8")
+    staging.emit_jsonl(path, data)
 
 
 def validate(candidate, source):
@@ -85,70 +95,19 @@ def station_additions():
 
 
 def main():
-    candidate = json.loads((BASE / "candidates/jr-central-fujikawa14-20260930.json").read_text())
-    source = json.loads((BASE / f"sources/source-registry-{SUFFIX}.jsonl").read_text())
-    validate(candidate, source)
-    version, calendar = TRIP + ".version", TRIP + ".calendar"
-    facts = {
-        "identity": ("verified", "high", "Dated page prints ふじかわ14号."),
-        "train_number": ("verified", "high", "Dated page prints 4014M."),
-        "operator": ("unknown", "low", "Ordered operator segments not established."),
-        "validity_calendar": ("verified", "high", "Only September 30 is promoted."),
-        "origin_destination": ("verified", "high", "Both termini printed."),
-        "stops": ("verified", "high", "13 timed calls; レ rows excluded."),
-        "times": ("verified", "high", "Printed minute clocks and side blanks retained."),
-        "route_lines": ("unknown", "low", "Dated physical line identities not established."),
-        "station_refs": ("verified", "high", "Exact current N02 name-code matches."),
-        "provenance": ("partial", "medium", "Official page is verification-only."),
-    }
-    outputs = {
-        BASE / f"normalized/station-identities-{SUFFIX}.jsonl": station_additions(),
-        BASE / f"normalized/timetable-versions-{SUFFIX}.jsonl": [{
-            "timetable_version_id": version, "operator_scope": "jr-central",
-            "effective_from": DATE, "effective_until": UNTIL,
-            "edition_name": "JR Odekake 2026-09-30 Fujikawa 14 selected timetable",
-            "revision_type": "observed_date", "publication_date": None,
-            "completeness": "partial", "source_ids": [SOURCE]}],
-        BASE / f"normalized/calendars/{SUFFIX}/seeds.jsonl": [{
-            "calendar_id": calendar, "valid_from": DATE, "valid_until": UNTIL,
-            "holiday_policy": "none", **{d: 0 for d in WEEKDAYS}}],
-        BASE / f"normalized/calendar-exceptions/{SUFFIX}/seeds.jsonl": [{
-            "calendar_id": calendar, "service_date": DATE, "exception_type": "add",
-            "reason": "September 30 selected in the official dated page", "source_id": SOURCE}],
-        BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl": [{
-            "trip_id": TRIP, "timetable_version_id": version, "service_id": "fujikawa",
-            "calendar_id": calendar, "train_number": "4014M", "public_number": "14",
-            "origin_station_id": "jp.n02.003867", "destination_station_id": "jp.n02.006128",
-            "service_class": "limited_express", "notes": "Exact date only; operator and route lines unknown."}],
-        BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl": [{
-            "trip_id": TRIP, "stop_sequence": i, "station_id": "jp.n02." + code,
-            "arrival_time": a, "departure_time": d, "day_offset": 0, "call_type": kind,
-            "pickup_allowed": int(kind != "destination"), "dropoff_allowed": int(kind != "origin"),
-            "platform": platform, "time_accuracy": "minute", "source_id": SOURCE
-        } for i, (_, code, a, d, platform, kind) in enumerate(STOPS, 1)],
-        BASE / f"normalized/fact-completeness-{SUFFIX}.jsonl": [{
-            "entity_type": "trip", "entity_id": TRIP, "dimension": dim,
-            "status": status, "confidence": confidence, "notes": note
-        } for dim, (status, confidence, note) in facts.items()],
-        BASE / f"normalized/fact-sources-{SUFFIX}.jsonl": [{
-            "entity_type": "trip", "entity_id": TRIP, "field_name": dim,
-            "source_id": "jtm-current-station-directory" if dim == "station_refs" else SOURCE,
-            "page_or_locator": note, "confidence": confidence, "verification_status": status
-        } for dim, (status, confidence, note) in facts.items()
-          if dim not in {"operator", "route_lines"}],
-        BASE / f"normalized/research-queue-{SUFFIX}.jsonl": [{
-            "research_id": f"{TRIP}.{dim}", "entity_type": "trip", "entity_id": TRIP,
-            "missing_dimension": dim, "status": "license_blocked" if dim == "provenance" else "open",
-            "notes": note
-        } for dim, note in {
-            "operator": "Obtain ordered operator segments.",
-            "route_lines": "Obtain dated physical-line identities.",
-            "provenance": "Resolve timetable fact redistribution permission.",
-        }.items()],
-    }
-    for path, data in outputs.items():
-        write(path, data)
-    print(f"Staged {TRIP}: 13 timed passenger calls, exact date only")
+    staging.stage_odekake_single_trip(
+        base=BASE,
+        suffix=SUFFIX,
+        trip_id=TRIP,
+        service_date=DATE,
+        valid_until=UNTIL,
+        source_id=SOURCE,
+        weekdays=WEEKDAYS,
+        stops=STOPS,
+        validate=validate,
+        station_additions=station_additions,
+        copy=STAGING_FACTS,
+    )
 
 
 if __name__ == "__main__":

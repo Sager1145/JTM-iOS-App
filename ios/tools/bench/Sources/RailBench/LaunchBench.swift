@@ -3,15 +3,14 @@ import RailCore
 
 /// What a cold launch reads, per country.
 ///
-/// The app holds seven networks and reads three families of file for them: the
-/// rail package (the drawn network, and the line attributes a journey's badge
-/// comes from), `rail-sections*.json` (the N02 edge index the statistics and
-/// the ridden-line filter are built on, and the solver's graph), and
-/// `stations*.json` (the solver's station table). This prints the cost of each
-/// one for each region, which is the measurement `Region.DataWeight` is a
-/// decision about: Japan and the United States are an order of magnitude past
-/// the other five, and a launch that reads all seven of anything eagerly is a
-/// launch spent in those two.
+/// The benchmark reads three families of file for the five measured regions
+/// jp, tw, hk, mo, and kr: the rail package (the drawn network, and the line
+/// attributes a journey's badge comes from), `rail-sections*.json` (the N02
+/// edge index the statistics and the ridden-line filter are built on, and the
+/// solver's graph), and `stations*.json` (the solver's station table). This
+/// prints the cost of each one for each of those regions, which is the
+/// measurement `Region.DataWeight` is a decision about: jp is large, and tw,
+/// hk, mo, and kr are compact.
 func benchmarkLaunchLoad(root: URL) {
     print("\n-- what one country costs to read --")
     let rail = root.appending(path: "app/public/rail")

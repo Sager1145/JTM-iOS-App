@@ -1,0 +1,23 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "inputPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-candidate-20261019\/jp-2025.json",
+  "intervalIndices" : [
+    6
+  ],
+  "lineID" : "jp-一畑電車-北松江線",
+  "requestID" : "ichibata-kitamatsue-step-candidate-complete-interval",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019",
+  "workspace" : "alignment"
+}

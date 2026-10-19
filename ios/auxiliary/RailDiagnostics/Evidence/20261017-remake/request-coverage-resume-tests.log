@@ -1,0 +1,182 @@
+Building for debugging...
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/DerivedSources/Entitlements.plist' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/DerivedSources/test_entry_point.swift' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/AppleMapRailExtractionTests.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/AppleMapRailExtractionTests.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/BatchInspectionTests.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/BatchInspectionTests.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/DiagnosticRequestTests.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/DiagnosticRequestTests.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/InspectionTests.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/InspectionTests.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests Swift Compilation Finished' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests Swift Compilation Requirements Finished' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests-OutputFileMap.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests-dependency-scan.dia' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.LinkFileList' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.SwiftFileList' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.abi.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.swiftdoc' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.swiftmodule' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests.swiftsourceinfo' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests_const_extract_protocols.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests_dependency_info.dat' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/RailInspectionTests_lto.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/test_entry_point.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/Objects-normal/arm64/test_entry_point.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/RailInspectionTests.xctest.xcent' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/RailInspectionTests.xctest.xcent.der' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspectionTests-p.build/empty-RailInspectionTests.plist' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.swiftmodule/arm64-apple-macos.abi.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.swiftmodule/arm64-apple-macos.swiftdoc' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.swiftmodule/arm64-apple-macos.swiftmodule' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest/Contents' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest/Contents/Info.plist' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest/Contents/MacOS' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest/Contents/MacOS/RailInspectionTests' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspectionTests.xctest/_CodeSignature' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-product-p.build/Objects-normal/arm64/RailInspection.LinkFileList' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-product-p.build/Objects-normal/arm64/RailInspection_libtool_dependency_info.dat' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/libRailInspection.a' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/GeneratedModuleMaps/RailInspection-Swift.h' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/GeneratedModuleMaps/RailInspection.modulemap' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/AppleMapPlatformExtractor.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/AppleMapPlatformExtractor.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/AppleMapRailExtractor.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/AppleMapRailExtractor.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/BatchInspection.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/BatchInspection.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/DiagnosticRequest.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/DiagnosticRequest.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/Inspection.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/Inspection.swiftconstvalues' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection Swift Compilation Finished' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection Swift Compilation Requirements Finished' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection-OutputFileMap.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection-Swift.h' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection-dependency-scan.dia' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.LinkFileList' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.SwiftFileList' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.abi.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.swiftdoc' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.swiftmodule' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection.swiftsourceinfo' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection_const_extract_protocols.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection_dependency_info.dat' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/Objects-normal/arm64/RailInspection_lto.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Intermediates.noindex/InspectionKit.build/Debug/RailInspection-t.build/RailInspection.modulemap' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspection.o' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspection.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspection.swiftmodule/arm64-apple-macos.abi.json' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspection.swiftmodule/arm64-apple-macos.swiftdoc' is located outside of the allowed root paths.
+
+warning: Stale file '/tmp/jtm-inspection-kit-tests/out/Products/Debug/RailInspection.swiftmodule/arm64-apple-macos.swiftmodule' is located outside of the allowed root paths.
+
+[8 / 32]
+[9 / 33] RailInspection
+[12 / 39] RailInspection
+[17 / 38] RailInspection
+[19 / 38] RailInspection
+[22 / 38] RailInspection
+[27 / 38] RailInspectionTests-product
+[30 / 44] RailInspectionTests-product
+[31 / 44] RailInspectionTests-product
+[33 / 44] RailInspectionTests-product
+[38 / 44] RailInspectionTests-product
+[40 / 44] RailInspectionTests-product
+Build complete! (6.37 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DiagnosticRequestTests started.
+◇ Test scopedEvidencePlanPreservesOriginalTargetsAndRejectsChangedInputs() started.
+◇ Test specifiedHighZoomRetainsOverlappingCoverageAndEndpoints() started.
+◇ Test intervalAndStationScopesIntersect() started.
+◇ Test scopeNeverFallsBackToAnotherLineOrUnknownInterval() started.
+◇ Test invalidActionAndCaptureLimitRejectBeforeWork() started.
+◇ Test captureSettingsRejectUnsupportedRequestsAndSurviveRoundTrip() started.
+◇ Test seamRetainsNeighborIdentityWithoutAcceptingConnectivity() started.
+◇ Test misspelledRootCaptureSettingsNeverFallsBackToDefaultZoom() started.
+✔ Test seamRetainsNeighborIdentityWithoutAcceptingConnectivity() passed after 0.001 seconds.
+✔ Test intervalAndStationScopesIntersect() passed after 0.001 seconds.
+✔ Test scopeNeverFallsBackToAnotherLineOrUnknownInterval() passed after 0.001 seconds.
+✔ Test specifiedHighZoomRetainsOverlappingCoverageAndEndpoints() passed after 0.001 seconds.
+✔ Test scopedEvidencePlanPreservesOriginalTargetsAndRejectsChangedInputs() passed after 0.002 seconds.
+✔ Test invalidActionAndCaptureLimitRejectBeforeWork() passed after 0.001 seconds.
+✔ Test misspelledRootCaptureSettingsNeverFallsBackToDefaultZoom() passed after 0.002 seconds.
+✔ Test captureSettingsRejectUnsupportedRequestsAndSurviveRoundTrip() passed after 0.003 seconds.
+✔ Suite DiagnosticRequestTests passed after 0.003 seconds.
+✔ Test run with 8 tests in 1 suite passed after 0.003 seconds.

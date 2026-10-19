@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage the dated JR Odekake Fujikawa 2 timetable without route guesses."""
+"""Stage the dated JR East Fujikawa 2 timetable without route guesses."""
 
 import json
 from pathlib import Path
@@ -9,6 +9,7 @@ BASE = ROOT / "app/data/train-service-history"
 SUFFIX = "central-fujikawa2-20260930"
 DATE, UNTIL = "2026-09-30", "2026-10-01"
 TRIP = "jr-central.fujikawa.2.2026-09-30"
+# Opaque legacy identity retained; publisher and edition follow the pinned JR East URL.
 SOURCE = "jr-west-odekake-fujikawa2-4002m-20260930"
 URL = "https://timetables.jreast.co.jp/2610/train/010/011061.html"
 STOPS = [('甲府', '003867', None, '06:20', None, 'origin'), ('南甲府', '004018', '06:24', '06:25', None, 'passenger_stop'), ('東花輪', '004252', '06:33', '06:34', None, 'passenger_stop'), ('市川大門', '004337', '06:41', '06:42', None, 'passenger_stop'), ('鰍沢口', '004397', '06:45', '06:46', None, 'passenger_stop'), ('甲斐岩間', '004545', '06:53', '06:53', None, 'passenger_stop'), ('下部温泉', '004754', '07:04', '07:04', None, 'passenger_stop'), ('身延', '004939', '07:14', '07:15', None, 'passenger_stop'), ('内船', '005155', '07:27', '07:28', None, 'passenger_stop'), ('富士宮', '005304', '07:59', '08:00', None, 'passenger_stop'), ('富士', '005522', '08:11', '08:14', None, 'passenger_stop'), ('清水', '005898', '08:32', '08:33', None, 'passenger_stop'), ('静岡', '006128', '08:43', None, '３', 'destination')]
@@ -32,7 +33,7 @@ def write(path, data):
                             for row in data), encoding="utf-8")
 
 
-def validate(candidate, source):
+def validate(candidate, source, proposed_service=None):
     trip = candidate["trip"]
     if candidate["calendar_observation"] != CALENDAR or trip["equipment"] != ["普通車一部指定席"] or trip["formation"] is not None or trip["direction"] != DIRECTION:
         raise ValueError("Dated calendar/equipment/direction changed")
@@ -57,7 +58,10 @@ def validate(candidate, source):
                r["platform"], r["call_type"]) for r in trip["stop_times"]]
     if actual != expected or [r["stop_sequence"] for r in trip["stop_times"]] != list(range(1, 14)):
         raise ValueError("Printed passenger timetable changed")
-    if len([r for r in rows("normalized/services*.jsonl") if r["service_id"] == "fujikawa"]) != 1:
+    service_path = BASE / "normalized/services-central-fujikawa-20260930.jsonl"
+    services = list(rows("normalized/services*.jsonl", service_path))
+    services.extend(proposed_service if proposed_service is not None else list(rows("normalized/services-central-fujikawa-20260930.jsonl")))
+    if len([r for r in services if r["service_id"] == "fujikawa"]) != 1:
         raise ValueError("Shared Fujikawa service identity missing or duplicate")
     if any(r["trip_id"] == TRIP for r in rows("normalized/trips/*/*.jsonl",
                     BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl")):
@@ -85,10 +89,10 @@ def station_additions():
 
 
 def main():
-    write(BASE / "normalized/services-central-fujikawa-20260930.jsonl", [{'canonical_name': 'ふじかわ', 'first_verified_date': '2026-09-30', 'historical_generation': 1, 'jr_scope': 'jr', 'last_verified_date': '2026-09-30', 'service_class': 'limited_express', 'service_id': 'fujikawa'}])
+    service = [{'canonical_name': 'ふじかわ', 'first_verified_date': '2026-09-30', 'historical_generation': 1, 'jr_scope': 'jr', 'last_verified_date': '2026-09-30', 'service_class': 'limited_express', 'service_id': 'fujikawa'}]
     candidate = json.loads((BASE / "candidates/jr-central-fujikawa2-20260930.json").read_text())
     source = json.loads((BASE / f"sources/source-registry-{SUFFIX}.jsonl").read_text())
-    validate(candidate, source)
+    validate(candidate, source, service)
     version, calendar = TRIP + ".version", TRIP + ".calendar"
     facts = {
         "identity": ("verified", "high", "Dated page prints ふじかわ2号."),
@@ -103,11 +107,12 @@ def main():
         "provenance": ("partial", "medium", "Official page is verification-only."),
     }
     outputs = {
+        BASE / "normalized/services-central-fujikawa-20260930.jsonl": service,
         BASE / f"normalized/station-identities-{SUFFIX}.jsonl": station_additions(),
         BASE / f"normalized/timetable-versions-{SUFFIX}.jsonl": [{
             "timetable_version_id": version, "operator_scope": "jr-central",
             "effective_from": DATE, "effective_until": UNTIL,
-            "edition_name": "JR Odekake 2026-09-30 Fujikawa 2 selected timetable",
+            "edition_name": "JR East 2026-09-30 Fujikawa 2 selected timetable",
             "revision_type": "observed_date", "publication_date": None,
             "completeness": "partial", "source_ids": [SOURCE]}],
         BASE / f"normalized/calendars/{SUFFIX}/seeds.jsonl": [{

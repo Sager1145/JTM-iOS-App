@@ -1,0 +1,233 @@
+{
+  "elapsedSeconds" : 25.7052880525589,
+  "findings" : [
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "inspection_station_005260"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/0/segment/1/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 1,
+      "severity" : "review",
+      "trainID" : "inspection_station_005260"
+    },
+    {
+      "code" : "physical_intervals_unproven",
+      "id" : "result/2/segment/0/physical_intervals_unproven",
+      "message" : "Missing or geometry-matched intervals require physical evidence review.",
+      "sectionIndex" : 0,
+      "severity" : "review",
+      "trainID" : "inspection_keiyo2_midcurve"
+    }
+  ],
+  "importElapsedSeconds" : 0.16708290576934814,
+  "inspectionElapsedSeconds" : 0.015347957611083984,
+  "inspectionState" : "0 项失败 · 3 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "宮ノ下",
+      "expectedSectionCount" : 2,
+      "id" : "inspection_station_005260",
+      "indicesAreAuthoritative" : true,
+      "number" : "客运进出站检查 大平台",
+      "origin" : "塔ノ沢",
+      "parts" : [
+        {
+          "from" : "塔ノ沢",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005269",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 2.596154933805845,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005260"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 128,
+          "temporalKind" : "current",
+          "to" : "大平台"
+        },
+        {
+          "from" : "大平台",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005260",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 1.8809171834912575,
+                "lineID" : "jp-小田急箱根-鉄道線",
+                "name" : "鉄道線",
+                "operatorName" : "小田急箱根"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "005254"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 91,
+          "temporalKind" : "current",
+          "to" : "宮ノ下"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 2,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    },
+    {
+      "destination" : "油木",
+      "expectedSectionCount" : 2,
+      "id" : "inspection_station_005725",
+      "indicesAreAuthoritative" : true,
+      "number" : "客运进出站检查 三井野原",
+      "origin" : "出雲坂根",
+      "parts" : [
+        {
+          "from" : "出雲坂根",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005694",
+            "intervals" : [
+              {
+                "code" : "jp-西日本旅客鉄道-木次線@005694:005725",
+                "direction" : 1,
+                "lineID" : "jp-西日本旅客鉄道-木次線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 6.338388850568357,
+                "lineID" : "jp-西日本旅客鉄道-木次線",
+                "name" : "木次線",
+                "operatorName" : "西日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "005725"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 185,
+          "temporalKind" : "current",
+          "to" : "三井野原"
+        },
+        {
+          "from" : "三井野原",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "005725",
+            "intervals" : [
+              {
+                "code" : "jp-西日本旅客鉄道-木次線@005725:005846",
+                "direction" : 1,
+                "lineID" : "jp-西日本旅客鉄道-木次線"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 5.6738974918231895,
+                "lineID" : "jp-西日本旅客鉄道-木次線",
+                "name" : "木次線",
+                "operatorName" : "西日本旅客鉄道"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "005846"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 151,
+          "temporalKind" : "current",
+          "to" : "油木"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 2,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    },
+    {
+      "destination" : "南船橋",
+      "expectedSectionCount" : 1,
+      "id" : "inspection_keiyo2_midcurve",
+      "indicesAreAuthoritative" : true,
+      "number" : "客运京叶支线检查",
+      "origin" : "西船橋",
+      "parts" : [
+        {
+          "from" : "西船橋",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "003547",
+            "intervals" : [
+
+            ],
+            "lines" : [
+              {
+                "km" : 5.256192978371145,
+                "lineID" : "jp-東日本旅客鉄道-京葉線-2",
+                "name" : "京葉線",
+                "operatorName" : "東日本旅客鉄道"
+              }
+            ],
+            "provenance" : "matchedGeometry",
+            "toStationCode" : "003761"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 60,
+          "temporalKind" : "current",
+          "to" : "南船橋"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 1,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 5,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 3,
+    "retainedVertices" : 575,
+    "scope" : "processLifetime",
+    "startedOperations" : 5,
+    "subscribers" : 0
+  },
+  "source" : "jtm-station-passenger-route-input.json",
+  "timingScope" : "routeLoad"
+}

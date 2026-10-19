@@ -1,0 +1,106 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/lineOffset",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/stationApproach",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 35.71726,
+        "longitude" : 139.81658
+      },
+      "displayVertexIndex" : 1,
+      "incomingMetres" : 117.31237050462406,
+      "outgoingMetres" : 6.319601213959305,
+      "turnDegrees" : 87.4858876530789
+    },
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/displayVertex\/1\/sharpTurn",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Sharp-turn candidate for jp-東武鉄道-伊勢崎線-2#0 at own display vertex 1, [139.81658, 35.71726]: 87.4858876530789°; incoming 117.31237050462406 m; outgoing 6.319601213959305 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 35.71726,
+        "longitude" : 139.81651
+      },
+      "displayVertexIndex" : 2,
+      "incomingMetres" : 6.319601213959305,
+      "outgoingMetres" : 168.05960610376331,
+      "turnDegrees" : 87.53694170262808
+    },
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/displayVertex\/2\/sharpTurn",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Sharp-turn candidate for jp-東武鉄道-伊勢崎線-2#0 at own display vertex 2, [139.81651, 35.71726]: 87.53694170262808°; incoming 6.319601213959305 m; outgoing 168.05960610376331 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 35.71184,
+        "longitude" : 139.81437
+      },
+      "displayVertexIndex" : 13,
+      "incomingMetres" : 36.45947361209107,
+      "outgoingMetres" : 111.41150249192528,
+      "turnDegrees" : 23.849921538726207
+    },
+    "id" : "jp-東武鉄道-伊勢崎線-2#0\/displayVertex\/13\/sharpTurn",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Sharp-turn candidate for jp-東武鉄道-伊勢崎線-2#0 at own display vertex 13, [139.81437, 35.71184]: 23.849921538726207°; incoming 36.45947361209107 m; outgoing 111.41150249192528 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東武鉄道-伊勢崎線-2\/station\/003479",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "003479"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東武鉄道-伊勢崎線-2\/station\/003526",
+    "itemIDs" : [
+      "jp-東武鉄道-伊勢崎線-2#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "003526"
+  }
+]

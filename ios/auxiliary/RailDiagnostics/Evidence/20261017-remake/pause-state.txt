@@ -1,0 +1,14 @@
+The following is a diff from the previous accessibility tree for Window: "Rail Diagnostics" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 78, 82
+~			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+~				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+~				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+~				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+~			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+~			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+~					16 text Description: Partial evidence, Secondary Actions: Cancel
+~					22 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+~				26 text Description: 1/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+~			79 text Description: Partial evidence, Secondary Actions: Cancel
++			103 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+~	92 Diagnostics, ID: com.apple.menu.dynamic.02B3777B-A0F7-43D4-AE5E-FDAB679927EA

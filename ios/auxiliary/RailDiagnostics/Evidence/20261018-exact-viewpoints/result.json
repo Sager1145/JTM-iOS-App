@@ -1,0 +1,51 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/candidate-tasks.json",
+  "capturedCount" : 2,
+  "captureIndexPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 18
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-ir-selected-views-20261018\/alignment",
+    "\/private\/tmp\/jtm-ir-selected-views-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-ir-kanazawa-candidate-20261018\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "ir-exact-viewpoints-native",
+  "requestPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : [
+    "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-2",
+    "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-8"
+  ],
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T21:39:08Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "5AE608BF-DE8E-4143-99EB-9D68AEC303DE",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "ir-exact-viewpoints-native",
+  "resultPath" : "\/private\/tmp\/jtm-ir-selected-views-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T21:39:08Z"
+}

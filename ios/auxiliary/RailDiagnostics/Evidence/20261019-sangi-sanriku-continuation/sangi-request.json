@@ -1,0 +1,25 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    2,
+    5,
+    13
+  ],
+  "lineID" : "jp-三岐鉄道-三岐線",
+  "requestID" : "sangi-sangi-missing-own-intervals",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-sangi-sangi-missing-20261019",
+  "workspace" : "alignment"
+}

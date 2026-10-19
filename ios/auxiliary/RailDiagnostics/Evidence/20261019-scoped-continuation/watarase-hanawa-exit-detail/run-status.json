@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "837E7AAC-158B-46D6-B4FF-A97654C62455",
+  "message" : "2\/2 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 92679,
+  "requestID" : "watarase-hanawa-exit-detail",
+  "resultPath" : "\/private\/tmp\/jtm-watarase-hanawa-exit-detail-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T06:06:50Z"
+}

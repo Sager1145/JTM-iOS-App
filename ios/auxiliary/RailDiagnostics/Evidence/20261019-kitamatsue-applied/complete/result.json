@@ -1,0 +1,51 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/candidate-tasks.json",
+  "capturedCount" : 5,
+  "captureIndexPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "36478a53df9925093a5ee4fd0a130dde4b86328358833021112691da346125cc",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/alignment",
+    "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/alignment-geometry.json"
+  ],
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "failedCount" : 0,
+  "invocationID" : "8FE1C836-24C2-4E8D-8B75-F5BA9E3DF892",
+  "itemIDs" : [
+    "jp-一畑電車-北松江線#6"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "5\/5 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-candidate-20261019\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "processID" : 8847,
+  "requestID" : "ichibata-kitamatsue-step-candidate-complete-interval",
+  "requestPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/run-status.json",
+  "schemaVersion" : 1,
+  "selectedViewpointIDs" : null,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:12:45Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

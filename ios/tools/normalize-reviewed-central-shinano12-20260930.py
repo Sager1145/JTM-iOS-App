@@ -4,6 +4,8 @@
 import json
 from pathlib import Path
 
+import reviewed_timetable_staging as staging
+
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "app/data/train-service-history"
@@ -23,240 +25,87 @@ WEEKDAYS = (
 EXPECTED_STOPS = [('長野', '002031', None, '12:00', '６', 'origin'), ('篠ノ井', '002096', '12:08', '12:08', None, 'passenger_stop'), ('松本', '002506', '12:51', '12:53', '１', 'passenger_stop'), ('塩尻', '002616', '13:01', '13:03', None, 'passenger_stop'), ('木曽福島', '003015', '13:30', '13:30', None, 'passenger_stop'), ('中津川', '004521', '14:05', '14:06', None, 'passenger_stop'), ('恵那', '004662', '14:14', '14:14', None, 'passenger_stop'), ('多治見', '005009', '14:34', '14:34', None, 'passenger_stop'), ('千種', '005450', '14:52', '14:53', None, 'passenger_stop'), ('名古屋', '005451', '15:01', None, '１１', 'destination')]
 
 
+STAGING_FACTS = {
+    'identity_note': 'Official selected variant prints しなの12号.',
+    'train_number_note': 'Official selected variant prints 1012M.',
+    'calendar_note': 'September 30 selects official schedule variant 000301.',
+    'stops_note': 'The selected variant prints 10 passenger calls.',
+    'edition_name': 'JR時刻表2026年10月号; exact-date しなの12号',
+    'exception_reason': 'September 30 selects official Shinano 12 schedule variant 000301',
+    'train_number': '1012M',
+    'public_number': '12',
+    'origin_name': '長野',
+    'destination_name': '名古屋',
+    'trip_notes': 'Equipment: グリーン車指定席; 普通車一部指定席. Exact-date selected variant with 10 passenger calls. Operator segments and ordered physical lines remain unknown.',
+    'summary_prefix': 'Normalized exact-date Shinano 12 with ',
+    'status_error': 'Shinano 12 candidate must remain reviewed_official_html',
+    'cutoff_error': 'Shinano 12 candidate cutoff changed',
+    'date_error': 'Shinano 12 date exceeds the database cutoff',
+    'pinned_trip_id': 'jr-central.shinano.12.2026-09-30',
+    'pinned_public_number': '12',
+    'pinned_train_number': '1012M',
+    'identity_error': 'Reviewed Shinano 12 identity/date changed',
+    'source_error': 'Reviewed Shinano 12 source changed',
+    'direction': 'up',
+    'stops_error': 'Reviewed September 30 Shinano 12 stop table changed',
+    'stop_sequence_end': 11,
+    'sequence_error': 'Shinano 12 stop sequence changed',
+}
+
 def read_jsonl(path):
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()
-            if line.strip()]
+    return staging.read_jsonl(path)
 
 
 def write_jsonl(path, rows):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(
-        json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows
-    ), encoding="utf-8")
+    staging.emit_jsonl(path, rows)
 
 
 def other_rows(pattern, target):
-    return [
-        json.loads(line)
-        for path in sorted((BASE / "normalized").glob(pattern))
-        if path.resolve() != target.resolve()
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
+    return staging.other_normalized_rows(BASE, pattern, target)
 
 
 def validate_candidate(candidate):
-    trip = candidate["trip"]
-    source = trip["source"]
-    if candidate["candidate_status"] != "reviewed_official_html":
-        raise ValueError("Shinano 12 candidate must remain reviewed_official_html")
-    if candidate["database_as_of_date"] != SERVICE_DATE:
-        raise ValueError("Shinano 12 candidate cutoff changed")
-    if SERVICE_DATE > json.loads((BASE / "manifest.json").read_text())["as_of_date"]:
-        raise ValueError("Shinano 12 date exceeds the database cutoff")
-    if (
-        trip["trip_id"], trip["service_id"], trip["service_name"],
-        trip["public_number"], trip["train_number"], trip["service_date"],
-    ) != (
-        "jr-central.shinano.12.2026-09-30", "shinano", "しなの",
-        "12", "1012M", SERVICE_DATE,
-    ):
-        raise ValueError("Reviewed Shinano 12 identity/date changed")
-    if (source["source_id"], source["url_or_locator"],
-            source["automated_extraction_allowed"]) != (SOURCE_ID, SOURCE_URL, False):
-        raise ValueError("Reviewed Shinano 12 source changed")
-    if trip["calendar_observation"] != {
-        "month": "2026年9月", "day": 30, "cell_class": "ok", "variant_url": SOURCE_URL,
-    }:
-        raise ValueError("Reviewed September 30 operating cell changed")
-    if trip["equipment"] != ["グリーン車指定席", "普通車一部指定席"]:
-        raise ValueError("Reviewed equipment labels changed")
-    if trip["direction"] != 'up':
-        raise ValueError("Reviewed direction changed")
-    actual_stops = [(
-        row["name_snapshot"], row["arrival_time"], row["departure_time"],
-        row["platform"], row["call_type"],
-    ) for row in trip["stop_times"]]
-    expected_stops = [(name, arrival, departure, platform, call_type)
-                      for name, _, arrival, departure, platform, call_type
-                      in EXPECTED_STOPS]
-    if actual_stops != expected_stops:
-        raise ValueError("Reviewed September 30 Shinano 12 stop table changed")
-    if [row["stop_sequence"] for row in trip["stop_times"]] != list(range(1, 11)):
-        raise ValueError("Shinano 12 stop sequence changed")
-    english = candidate["official_english_name"]
-    if (english["name"], english["source_id"], english["url_or_locator"]) != (
-        "Shinano", ENGLISH_SOURCE_ID, ENGLISH_SOURCE_URL,
-    ):
-        raise ValueError("Official English Shinano source changed")
+    staging.validate_shinano_candidate(
+        candidate,
+        base=BASE,
+        service_date=SERVICE_DATE,
+        source_id=SOURCE_ID,
+        source_url=SOURCE_URL,
+        expected_stops=EXPECTED_STOPS,
+        english_source_id=ENGLISH_SOURCE_ID,
+        english_source_url=ENGLISH_SOURCE_URL,
+        copy=STAGING_FACTS,
+    )
 
 
 def verify_existing_service_and_english_name():
-    services = {
-        row["service_id"]: row
-        for path in sorted((BASE / "normalized").glob("services*.jsonl"))
-        for row in read_jsonl(path)
-    }
-    if services.get("shinano", {}).get("canonical_name") != "しなの":
-        raise ValueError("Existing Shinano service identity is missing or conflicting")
-    sources = {
-        row["source_id"]: row
-        for path in sorted((BASE / "sources").glob("source-registry*.jsonl"))
-        for row in read_jsonl(path)
-    }
-    if sources.get(ENGLISH_SOURCE_ID, {}).get("url_or_locator") != ENGLISH_SOURCE_URL:
-        raise ValueError("Official English Shinano source is missing")
-    names = [
-        row
-        for path in sorted((BASE / "normalized").glob("service-name-periods*.jsonl"))
-        for row in read_jsonl(path)
-        if row["service_id"] == "shinano" and row["language"] == "en"
-        and row["name"] == "Shinano" and row["source_id"] == ENGLISH_SOURCE_ID
-        and row["valid_from"] <= SERVICE_DATE < row["valid_until"]
-    ]
-    if not names:
-        raise ValueError("Official English Shinano name does not cover September 30")
+    staging.verify_shinano_service(
+        BASE,
+        english_source_id=ENGLISH_SOURCE_ID,
+        english_source_url=ENGLISH_SOURCE_URL,
+        service_date=SERVICE_DATE,
+    )
 
 
 def resolve_stations():
-    package = json.loads((ROOT / "app/public/rail/jp-2025.json").read_text())
-    allowed_operators = {"東海旅客鉄道", "東日本旅客鉄道"}
-    stations = {}
-    for name, code, *_ in EXPECTED_STOPS:
-        matches = {
-            (station[0], station[1])
-            for line in package["lines"] if line["operator"] in allowed_operators
-            for station in line["stations"]
-            if station[0] == code and station[1] == name
-        }
-        if matches != {(code, name)}:
-            raise ValueError(f"Reviewed current station group disappeared: {(code, name)}")
-        stations[name] = {
-            "station_id": "jp.n02." + code,
-            "name_snapshot": name,
-            "reference_kind": "current_n02",
-            "current_source_code": code,
-            "rail_history_id": None,
-        }
-    target = BASE / f"normalized/station-identities-{SUFFIX}.jsonl"
-    existing = {row["station_id"]: row
-                for row in other_rows("station-identities*.jsonl", target)}
-    additions = []
-    for station in stations.values():
-        prior = existing.get(station["station_id"])
-        if prior and prior["name_snapshot"] != station["name_snapshot"]:
-            raise ValueError(f"Station identity conflict: {station['station_id']}")
-        if not prior:
-            additions.append(station)
-    return stations, sorted(additions, key=lambda row: row["station_id"])
+    return staging.resolve_shinano_stations(BASE, ROOT, SUFFIX, EXPECTED_STOPS)
 
 
 def main():
-    candidate = json.loads(CANDIDATE.read_text(encoding="utf-8"))
-    validate_candidate(candidate)
-    verify_existing_service_and_english_name()
-    stations, new_stations = resolve_stations()
-    trip = candidate["trip"]
-    source = trip["source"]
-    trip_id = trip["trip_id"]
-    version_id = trip_id + ".version"
-    calendar_id = trip_id + ".calendar"
-    dimensions = {
-        "identity": ("verified", "high", "Official selected variant prints しなの12号."),
-        "train_number": ("verified", "high", "Official selected variant prints 1012M."),
-        "operator": ("unknown", "low", "Publisher identity is not ordered operator-segment evidence."),
-        "validity_calendar": ("verified", "high", "September 30 selects official schedule variant 000301."),
-        "origin_destination": ("verified", "high", "First and last timed passenger calls are printed."),
-        "stops": ("verified", "high", "The selected variant prints 10 passenger calls."),
-        "times": ("verified", "high", "All printed arrival/departure minute clocks are retained."),
-        "route_lines": ("unknown", "low", "No ordered physical-line evidence is promoted."),
-        "station_refs": ("verified", "high", "Names and pinned codes match current JR Central/East groups."),
-        "provenance": ("partial", "medium", "Official page is verification-only; redistribution grant unresolved."),
-    }
-    outputs = {
-        BASE / f"sources/source-registry-{SUFFIX}.jsonl": [source],
-        BASE / f"normalized/station-identities-{SUFFIX}.jsonl": new_stations,
-        BASE / f"normalized/timetable-versions-{SUFFIX}.jsonl": [{
-            "timetable_version_id": version_id,
-            "operator_scope": "jr-central",
-            "effective_from": SERVICE_DATE,
-            "effective_until": VALID_UNTIL,
-            "edition_name": "JR時刻表2026年10月号; exact-date しなの12号",
-            "revision_type": "source_snapshot",
-            "completeness": "partial",
-            "source_ids": [SOURCE_ID],
-        }],
-        BASE / f"normalized/calendars/{SUFFIX}/seeds.jsonl": [{
-            "calendar_id": calendar_id,
-            "valid_from": SERVICE_DATE,
-            "valid_until": VALID_UNTIL,
-            "holiday_policy": "none",
-            **{weekday: 0 for weekday in WEEKDAYS},
-        }],
-        BASE / f"normalized/calendar-exceptions/{SUFFIX}/seeds.jsonl": [{
-            "calendar_id": calendar_id,
-            "service_date": SERVICE_DATE,
-            "exception_type": "add",
-            "reason": "September 30 selects official Shinano 12 schedule variant 000301",
-            "source_id": SOURCE_ID,
-        }],
-        BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl": [{
-            "trip_id": trip_id,
-            "timetable_version_id": version_id,
-            "service_id": "shinano",
-            "calendar_id": calendar_id,
-            "train_number": "1012M",
-            "public_number": "12",
-            "origin_station_id": stations["長野"]["station_id"],
-            "destination_station_id": stations["名古屋"]["station_id"],
-            "service_class": "limited_express",
-            "direction": trip["direction"],
-            "notes": "Equipment: グリーン車指定席; 普通車一部指定席. Exact-date selected variant with 10 passenger calls. Operator segments and ordered physical lines remain unknown.",
-        }],
-        BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl": [{
-            "trip_id": trip_id,
-            "stop_sequence": row["stop_sequence"],
-            "station_id": stations[row["name_snapshot"]]["station_id"],
-            "arrival_time": row["arrival_time"],
-            "departure_time": row["departure_time"],
-            "day_offset": 0,
-            "call_type": row["call_type"],
-            "pickup_allowed": 0 if row["call_type"] == "destination" else 1,
-            "dropoff_allowed": 0 if row["call_type"] == "origin" else 1,
-            "platform": row["platform"],
-            "time_accuracy": "minute",
-            "source_id": SOURCE_ID,
-        } for row in trip["stop_times"]],
-        BASE / f"normalized/fact-completeness-{SUFFIX}.jsonl": [{
-            "entity_type": "trip", "entity_id": trip_id, "dimension": dimension,
-            "status": status, "confidence": confidence, "notes": notes,
-        } for dimension, (status, confidence, notes) in dimensions.items()],
-        BASE / f"normalized/fact-sources-{SUFFIX}.jsonl": [{
-            "entity_type": "trip", "entity_id": trip_id, "field_name": dimension,
-            "source_id": STATION_SOURCE_ID if dimension == "station_refs" else SOURCE_ID,
-            "page_or_locator": (
-                "app/public/rail/jp-2025.json; exact pinned (code, name) match"
-                if dimension == "station_refs" else note
-            ),
-            "confidence": confidence,
-            "verification_status": status,
-        } for dimension, (status, confidence, note) in dimensions.items()
-          if dimension not in {"operator", "route_lines"}],
-        BASE / f"normalized/research-queue-{SUFFIX}.jsonl": [{
-            "research_id": f"{trip_id}.{dimension}",
-            "entity_type": "trip", "entity_id": trip_id,
-            "missing_dimension": dimension,
-            "status": "license_blocked" if dimension == "provenance" else "open",
-            "notes": notes,
-        } for dimension, notes in {
-            "operator": "Obtain explicit ordered JR Central / JR East operator-boundary evidence.",
-            "route_lines": "Obtain dated ordered physical-line identities and transition boundaries.",
-            "provenance": "Resolve permission to redistribute transcribed official timetable facts.",
-        }.items()],
-    }
-    for path, rows in outputs.items():
-        write_jsonl(path, rows)
-    print(f"Normalized exact-date Shinano 12 with {len(trip['stop_times'])} passenger calls")
+    staging.stage_shinano_exact_date(
+        base=BASE,
+        candidate_path=CANDIDATE,
+        suffix=SUFFIX,
+        service_date=SERVICE_DATE,
+        valid_until=VALID_UNTIL,
+        source_id=SOURCE_ID,
+        weekdays=WEEKDAYS,
+        station_source_id=STATION_SOURCE_ID,
+        copy=STAGING_FACTS,
+        validate_candidate=validate_candidate,
+        verify_existing_service_and_english_name=verify_existing_service_and_english_name,
+        resolve_stations=resolve_stations,
+    )
 
 
 if __name__ == "__main__":

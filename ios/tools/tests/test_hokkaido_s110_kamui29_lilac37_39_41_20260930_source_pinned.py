@@ -83,7 +83,7 @@ class HokkaidoS110LateColumnsTests(unittest.TestCase):
                           '3037M': (True, True, 6, '789系0代'),
                           '3039M': (True, True, 6, '789系0代'),
                           '3041M': (True, True, 6, '789系0代')})
-        for directory in ('trip-line-segments', 'trip-operator-segments'):
+        for directory in ('trip-lines', 'trip-operator-segments'):
             self.assertFalse((BASE / f'normalized/{directory}/{SUFFIX}/seeds.jsonl').exists())
 
 

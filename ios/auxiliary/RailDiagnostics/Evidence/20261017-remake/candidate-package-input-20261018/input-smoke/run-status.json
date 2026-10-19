@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "4CDF1E1E-B20D-44A1-9F39-19FE390F09D4",
+  "message" : "0\/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "corner-candidate-input-smoke",
+  "resultPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/input-smoke\/result.json",
+  "schemaVersion" : 1,
+  "state" : "prepared",
+  "updatedAt" : "2026-10-18T04:10:19Z"
+}

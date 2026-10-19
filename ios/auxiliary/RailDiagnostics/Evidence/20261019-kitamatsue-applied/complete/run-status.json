@@ -1,0 +1,13 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "executablePath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/MacOS\/RailDiagnostics",
+  "invocationID" : "8FE1C836-24C2-4E8D-8B75-F5BA9E3DF892",
+  "message" : "5\/5 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "processID" : 8847,
+  "requestID" : "ichibata-kitamatsue-step-candidate-complete-interval",
+  "resultPath" : "\/private\/tmp\/jtm-ichibata-kitamatsue-step-native-20261019\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-19T08:12:45Z"
+}

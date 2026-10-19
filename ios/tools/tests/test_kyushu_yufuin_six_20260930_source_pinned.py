@@ -91,8 +91,7 @@ class KyushuYufuinSixSeptember30Tests(unittest.TestCase):
         stops_path = BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl"
         formations_path = BASE / f"normalized/trip-formations/{SUFFIX}/seeds.jsonl"
         cars_path = BASE / f"normalized/trip-formation-cars/{SUFFIX}/seeds.jsonl"
-        if not trips_path.exists():
-            self.skipTest("New normalized rows are staged by the unified rebuild")
+        self.assertTrue(trips_path.is_file(), "Required normalized Yufuin trips are missing")
         trips = read_rows(trips_path)
         self.assertEqual(len(trips), 6)
         self.assertEqual({t["train_number"] for t in trips},

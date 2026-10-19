@@ -38,6 +38,9 @@ class YakumoThirteenToSixteenTests(unittest.TestCase):
         sources = {row["source_id"]: row for row in rows(BASE / f"sources/source-registry-{SUFFIX}.jsonl")}
         trips = {row["trip_id"]: row for row in rows(BASE / f"normalized/trips/{SUFFIX}/seeds.jsonl")}
         stops = rows(BASE / f"normalized/stop-times/{SUFFIX}/seeds.jsonl")
+        station_names = {row["station_id"]: row["name_snapshot"]
+                         for path in (BASE / "normalized").glob("station-identities*.jsonl")
+                         for row in rows(path)}
         formations = {row["trip_id"]: row for row in rows(BASE / f"normalized/trip-formations/{SUFFIX}/seeds.jsonl")}
         self.assertEqual((candidate["service_date"], len(candidate["trips"]), len(sources), len(stops)),
                          (DAY, 4, 3, 32))
@@ -65,8 +68,8 @@ class YakumoThirteenToSixteenTests(unittest.TestCase):
                                  (number, str(public)))
                 actual = sorted((s for s in stops if s["trip_id"] == tid),
                                 key=lambda s: s["stop_sequence"])
-                self.assertEqual([(s["arrival_time"], s["departure_time"], s["platform"])
-                                  for s in actual], [call[1:] for call in expected])
+                self.assertEqual([(station_names[s["station_id"]], s["arrival_time"], s["departure_time"], s["platform"])
+                                  for s in actual], expected)
                 formation = formations[tid]
                 self.assertEqual((formation["service_date"], formation["evidence_kind"],
                                   formation["all_reserved"], formation["green_car_available"]),
