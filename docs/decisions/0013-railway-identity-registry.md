@@ -1,6 +1,6 @@
 # 0013: 铁路身份注册表 —— 公司 / 线路 / 车站的统一重构方案
 
-- Status: Proposed（实施中：P0–P2、P1b、身份迁移 M1–M5 已在分支 adr-0013-identity-registry 实施（未合并 main）；本文不构成提交、推送或发布的授权）
+- Status: Proposed（实施中：P0–P2、P1b、身份迁移 M1–M5 已在分支 adr-0013-identity-registry 实施，P3 CN 已在分支 adr-0013-p3-cn 实施；两分支已推送、未合并 main。实施记录见 [实施报告](../reports/registry/adr-0013-implementation-report-20261020.md)；本文不构成提交、推送或发布的授权）
 - Date: 2026-10-19（同日按 [重构准备与交接](../reference/railway-data-overhaul-preparation.md) 修订）
 - Decision owners: Project maintainers
 - Extends: 0004 (WGS84/MapKit 边界), 0008 (display identity tables), 0010 (station code grammar), 0011 (dated history), 0012 (fail-closed resolution)
@@ -644,7 +644,9 @@ P0 的校验器把这项统计作为 `name-line-not-unique` 报告输出，P1 �
 - **M5**（`45d494fcd`）：注册表 phase `ready` / `pending` / `unavailable` 取代旧回退，旧规则只留在 `RegistryIdentityUpgrade` 与求解器代码级图（见 `ios/VERIFICATION.md`）；bundle 解码在注册表锁外进行，不可读 bundle 记为 failed；admission 拒绝不同的已转换 operator、跳过未知；operator 搜索用预计算索引；`operator_ids` 校验在 Swift 与 JS 一致；零长度的已审定历史周期用补偿事件修正。
 - 来源化输入（`47ae5ee7f`）：2026-10-19 网络调研写入 JP 的 44 条线（来自 104 个 line part）、122 个站房（46 共用 / 76 边界，含 manager）、86 条乘客换乘 link（非物理）、5 个公司别名、57 条历史覆写。
 
-M5 后续修复（提交待定，commit pending）：注册表 phase（ready / pending / unavailable）在各入口一致处理；settle 后在内存中升级已加载的旧记录；导入等待 settle；启动时预载 bundle；按地区重放；查询缓存有界；修正校验器；新增历史与注册表差异守卫文件 `app/data/registry/jp/history-registry-differences.json`（schema 含 `differences` 列表，当前 139 条），防止历史叠加与注册表的偏差被静默吞掉。
+M5 后续修复（`3e132ae27`、`9f0330b94`）：注册表 phase（ready / pending / unavailable）在各入口一致处理；settle 后在内存中升级已加载的旧记录；导入等待 settle；启动时预载 bundle；按地区重放；查询缓存有界；修正校验器；新增历史与注册表差异守卫文件 `app/data/registry/jp/history-registry-differences.json`（schema 含 `differences` 列表，当前 139 条），防止历史叠加与注册表的偏差被静默吞掉。
+
+- **P3 CN**（分支 `adr-0013-p3-cn`：`de616191b`、`f08100024`）：运营者合并、线路运营者覆写、上位运营者归属、官方站码站群合并四类审定输入；17 项带来源合并与 9 组上位—下属关系使共用 12306 站码冲突由 699 降至 184；按 OSM `route_master` 得 434 条 CN 线路；由注册表生成 198 个 CN 运营者身份；bundle 携带退役 id → 现行 id 映射，RailCore 解析并升级旧 id。详见 [实施报告](../reports/registry/adr-0013-implementation-report-20261020.md)。
 
 ## 13. 待办与关口
 
