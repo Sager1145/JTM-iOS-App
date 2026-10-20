@@ -269,13 +269,14 @@ final class RiddenRouteStore {
         }
     }
 
-    /// Replace the solved-route table and drop every in-flight single solve.
-    /// A later finish for a superseded ticket must not write back into this table.
+    /// Replace the solved-route table, keeping `landed` entries and the
+    /// resolving status of solves still in flight (they hold a live ticket).
     private func noteRouteEntries(for rides: [DrawnRide], wanted: [String], keeping landed: Set<String> = []) {
         let kept = routeEntries.filter { landed.contains($0.key) }
         routeEntries = Self.statusEntries(for: rides, wanted: wanted)
         for (id, entry) in kept { routeEntries[id] = entry }
-        resolvingIDs.removeAll()
+        // A solve still in flight keeps its resolving status until it lands.
+        resolvingIDs = resolvingIDs.filter { resolutionTickets[$0] != nil }
     }
 
     private func landedSince(_ mark: Int) -> Set<String> {
@@ -362,7 +363,7 @@ final class RiddenRouteStore {
                     rides = mergedRides(retained: retained, batch: [primed], since: landingMark)
                     visibleRides = rides.filter(\.visible)
                     if !landedSince(landingMark).contains(primed.id) { completedInputs[primed.id] = wanted[primed.id] }
-                    noteRouteEntries(for: rides, wanted: [])
+                    noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
                     lineDetector.publishSelected(rides: rides)
                 }
                 let decoded = try await Self.decode(
@@ -425,7 +426,7 @@ final class RiddenRouteStore {
                 loadingInputs = nil
                 loadTask = nil
                 state = .failed(error.localizedDescription)
-                noteRouteEntries(for: rides, wanted: [])
+                noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
             }
             }
         }

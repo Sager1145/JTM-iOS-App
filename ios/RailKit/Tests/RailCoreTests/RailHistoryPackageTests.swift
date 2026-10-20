@@ -18,11 +18,6 @@ import Testing
 /// (observed as a segfault in the test process, not an assertion failure).
 @Suite(.serialized)
 struct RailHistoryPackageTests {
-    /// This suite solves with no registry installed. The no-lookup path is
-    /// deliberate here; other suites opt in on their own.
-    init() {
-    }
-
     struct Environment {
         let graphStore: RouteGraph.RouteGraphStore
         let stations: Stations.Index
