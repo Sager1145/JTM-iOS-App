@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 /// `app-route-graph.js` §27–28 against `port-fixtures/route-graph.json`.
 ///

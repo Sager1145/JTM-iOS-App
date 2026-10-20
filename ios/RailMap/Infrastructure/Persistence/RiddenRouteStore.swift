@@ -208,6 +208,11 @@ final class RiddenRouteStore {
     /// journey, so a same-ID edit cannot leave stale route geometry behind.
     private var completedInputs: [String: Train] = [:]
     private var resolutionTickets: [String: UUID] = [:]
+    /// Per-ride landing stamp. A resolution task stamps the ride it lands; a
+    /// load publishes its older batch snapshot only for rides not stamped since
+    /// the load began, so the latest landing always wins.
+    private var landingCounter = 0
+    private var landedAt: [String: Int] = [:]
     private var resolutionTasks: [String: Task<Void, Never>] = [:]
     /// What the last completed solve produced, per journey. Which §5.5 state
     /// that is remains ``RouteStatusResolver``'s rule.
@@ -266,9 +271,25 @@ final class RiddenRouteStore {
 
     /// Replace the solved-route table and drop every in-flight single solve.
     /// A later finish for a superseded ticket must not write back into this table.
-    private func noteRouteEntries(for rides: [DrawnRide], wanted: [String]) {
+    private func noteRouteEntries(for rides: [DrawnRide], wanted: [String], keeping landed: Set<String> = []) {
+        let kept = routeEntries.filter { landed.contains($0.key) }
         routeEntries = Self.statusEntries(for: rides, wanted: wanted)
+        for (id, entry) in kept { routeEntries[id] = entry }
         resolvingIDs.removeAll()
+    }
+
+    private func landedSince(_ mark: Int) -> Set<String> {
+        Set(landedAt.filter { $0.value > mark }.keys)
+    }
+
+    /// `retained + batch`, except rides a resolution landed after `mark`: the
+    /// current entry (or its absence) wins over the batch's older snapshot.
+    private func mergedRides(retained: [DrawnRide], batch: [DrawnRide], since mark: Int) -> [DrawnRide] {
+        let landed = landedSince(mark)
+        guard !landed.isEmpty else { return ordered(retained + batch) }
+        let current = rides.filter { landed.contains($0.id) }
+        return ordered(retained.filter { !landed.contains($0.id) }
+            + batch.filter { !landed.contains($0.id) } + current)
     }
 
     /// Solve and draw every ride, whatever region each belongs to.
@@ -279,7 +300,7 @@ final class RiddenRouteStore {
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
     func load(trains: [Train], preferredTrainID: String? = nil) {
-        Self.attachPendingReplay(self)
+        bindPendingOwner()
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -301,6 +322,7 @@ final class RiddenRouteStore {
         cancelResolutions()
         loadRevision += 1
         let revision = loadRevision
+        let landingMark = landingCounter
         loadingInputs = wanted
         let unchanged = Set(wanted.compactMap { id, train in
             completedInputs[id] == train ? id : nil
@@ -329,15 +351,17 @@ final class RiddenRouteStore {
         // instead; the final result below still lands at once.
         let partials = PartialRidePublication()
         let inbox = PartialRideInbox()
+        let owner = pendingSolveOwner
         loadTask = Task(priority: .userInitiated) {
+            await Self.$activePendingOwner.withValue(owner) {
             do {
                 let primed = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 if let primed {
-                    rides = ordered(retained + [primed])
+                    rides = mergedRides(retained: retained, batch: [primed], since: landingMark)
                     visibleRides = rides.filter(\.visible)
-                    completedInputs[primed.id] = wanted[primed.id]
+                    if !landedSince(landingMark).contains(primed.id) { completedInputs[primed.id] = wanted[primed.id] }
                     noteRouteEntries(for: rides, wanted: [])
                     lineDetector.publishSelected(rides: rides)
                 }
@@ -351,10 +375,11 @@ final class RiddenRouteStore {
                                   self.loadRevision == revision else { return }
                             partials.submit(p) { partial in
                                 guard self.loadRevision == revision else { return }
-                                self.rides = self.ordered(retained + partial)
+                                self.rides = self.mergedRides(retained: retained, batch: partial, since: landingMark)
                                 self.visibleRides = self.rides.filter(\.visible)
-                                for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
-                                self.noteRouteEntries(for: self.rides, wanted: [])
+                                let landed = self.landedSince(landingMark)
+                                for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
+                                self.noteRouteEntries(for: self.rides, wanted: [], keeping: landed)
                                 self.lineDetector.publishSelected(rides: self.rides)
                             }
                         }
@@ -364,13 +389,16 @@ final class RiddenRouteStore {
                 partials.cancel()
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
-                rides = ordered(retained + decoded)
+                let landed = landedSince(landingMark)
+                rides = mergedRides(retained: retained, batch: decoded, since: landingMark)
                 visibleRides = rides.filter(\.visible)
-                completedInputs = wanted
+                var finalInputs = wanted
+                for id in landed { if let latest = completedInputs[id] { finalInputs[id] = latest } }
+                completedInputs = finalInputs
                 loadingInputs = nil
                 loadTask = nil
                 state = .loaded(rides: rides)
-                noteRouteEntries(for: rides, wanted: wantedIDs)
+                noteRouteEntries(for: rides, wanted: wantedIDs, keeping: landed)
                 detectTraversedLines()
                 Self.sweepRouteCacheOnce()
             } catch is CancellationError {
@@ -383,10 +411,11 @@ final class RiddenRouteStore {
                 if let pending = inbox.take() {
                     partials.submit(pending) { partial in
                         guard self.loadRevision == revision else { return }
-                        self.rides = self.ordered(retained + partial)
+                        self.rides = self.mergedRides(retained: retained, batch: partial, since: landingMark)
                         self.visibleRides = self.rides.filter(\.visible)
-                        for ride in partial { self.completedInputs[ride.id] = wanted[ride.id] }
-                        self.noteRouteEntries(for: self.rides, wanted: [])
+                        let landed = self.landedSince(landingMark)
+                        for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
+                        self.noteRouteEntries(for: self.rides, wanted: [], keeping: landed)
                         self.lineDetector.publishSelected(rides: self.rides)
                     }
                 }
@@ -397,6 +426,7 @@ final class RiddenRouteStore {
                 loadTask = nil
                 state = .failed(error.localizedDescription)
                 noteRouteEntries(for: rides, wanted: [])
+            }
             }
         }
     }
@@ -469,7 +499,10 @@ final class RiddenRouteStore {
         resolutionTasks[id]?.cancel()
         resolutionTickets[id] = ticket
         resolvingIDs.insert(id)
+        bindPendingOwner()
+        let owner = pendingSolveOwner
         resolutionTasks[id] = Task(priority: .userInitiated) {
+            await Self.$activePendingOwner.withValue(owner) {
             let resolved: SingleResolve
             do {
                 let ride = try await Self.resolveOne(train, scope: scope)
@@ -502,6 +535,8 @@ final class RiddenRouteStore {
             resolutionTasks[id] = nil
             resolutionTickets[id] = nil
             completedInputs[id] = train
+            landingCounter += 1
+            landedAt[id] = landingCounter
             let entry: RouteStatusEntry
             switch resolved {
             case .ride(let solved):
@@ -531,6 +566,7 @@ final class RiddenRouteStore {
             resolvingIDs.remove(id)
             routeEntries[id] = entry
             detectTraversedLines()
+            }
         }
     }
 
@@ -1155,7 +1191,13 @@ final class RiddenRouteStore {
         let timetableFailure: String?
     }
 
+    /// Registry ids the solver reads. A pending region leaves the stored train alone.
+    nonisolated static func upgradedSolveTrain(_ raw: Train) -> Train {
+        BundledRegistry.upgradeIfReady(raw)
+    }
+
     private nonisolated static func canonicalRouteInput(_ raw: Train, country: String) async throws -> CanonicalRouteInput {
+        let raw = Self.upgradedSolveTrain(raw)
         var base = TrainValidation.normalizeExportTrain(
             TrainValidation.restoringRouteSectionEndpointNames(raw), country: country,
             stations: TrainValidation.StationTable.empty)
@@ -1227,9 +1269,9 @@ final class RiddenRouteStore {
         if let providedInputs { inputs = providedInputs }
         else { inputs = try await SolverInputCache.shared.inputs(scope: scope) }
         let graphStoreBox = graphStore.map(UncheckedGraphStoreBox.init)
-        await awaitScopeRegistry(scope, trains: trains)
+        let skipped = await awaitScopeRegistry(scope, trains: trains)
         var results: [DrawnRide] = []
-        for train in trains where !train.requiresRouteConfirmation {
+        for train in trains where !train.requiresRouteConfirmation && !skipped.contains(train.id) {
             try Task.checkCancellation()
             let routeInput = try await canonicalRouteInput(train, country: scope.code)
             let canonical = routeInput.train
@@ -1681,7 +1723,7 @@ final class RiddenRouteStore {
             preparedNetwork = await SolverInputCache.shared.networkIndexes(
                 scope: scope, network: displayNetwork, inputs: inputs)
         } else { preparedNetwork = nil }
-        await awaitScopeRegistry(scope, trains: trains)
+        let skipped = await awaitScopeRegistry(scope, trains: trains)
         let officialIntervals = await SolverInputCache.shared.officialIntervals(scope: scope, inputs: inputs)
         var resolver = RideRouteResolution(inputs: inputs, country: country, network: preparedNetwork,
             officialIntervals: officialIntervals, graphStore: graphStore)
@@ -1690,7 +1732,7 @@ final class RiddenRouteStore {
         precondition(providedCanonicalInputs == nil || providedCanonicalInputs?.count == trains.count)
         for (trainIndex, train) in trains.enumerated() {
             try Task.checkCancellation()
-            guard !train.requiresRouteConfirmation else { continue }
+            guard !train.requiresRouteConfirmation, !skipped.contains(train.id) else { continue }
             let routeInput: CanonicalRouteInput
             if let prepared = providedCanonicalInputs {
                 routeInput = prepared[trainIndex]
@@ -1900,65 +1942,62 @@ final class RiddenRouteStore {
         return RouteGraph.keyDigest(RouteGraph.templateKey(sections: sections))
     }
 
-    private nonisolated static let pendingSolveLock = NSLock()
-    nonisolated(unsafe) private static weak var pendingSolveStore: RiddenRouteStore?
-    nonisolated(unsafe) private static var pendingSolveIDs = Set<String>()
-    private nonisolated static let installPendingReplay: Void = {
-        BundledRegistry.addSettledHandler {
-            pendingSolveLock.lock()
-            let ids = pendingSolveIDs
-            pendingSolveIDs.removeAll()
-            let store = pendingSolveStore
-            pendingSolveLock.unlock()
-            guard let store, !ids.isEmpty else { return }
-            Task { @MainActor in
-                for id in ids where store.requestedOrder.contains(id) {
-                    if let train = store.completedInputs[id] ?? store.loadingInputs?[id] {
-                        store.resolve(train)
-                    }
-                }
+    @TaskLocal nonisolated static var activePendingOwner: PendingSolveOwner?
+
+    let pendingSolveOwner = PendingSolveOwner()
+
+    func bindPendingOwner() {
+        pendingSolveOwner.store = self
+        PendingSolveRegistry.register(pendingSolveOwner)
+    }
+
+    /// Replay only the ids this store had waiting on the settled region.
+    /// The train is upgraded before `resolve`, because the itinerary publish
+    /// that fills memory is a separate task.
+    func replayPending(_ ids: [String]) {
+        for id in ids where requestedOrder.contains(id) {
+            guard var train = completedInputs[id] ?? loadingInputs?[id] else { continue }
+            train = Self.upgradedSolveTrain(train)
+            if completedInputs[id] != nil { completedInputs[id] = train }
+            if var loading = loadingInputs, loading[id] != nil {
+                loading[id] = train
+                loadingInputs = loading
             }
+            resolve(train)
         }
-    }()
-
-    private nonisolated static func attachPendingReplay(_ store: RiddenRouteStore) {
-        _ = installPendingReplay
-        pendingSolveLock.lock()
-        pendingSolveStore = store
-        pendingSolveLock.unlock()
     }
 
-    private nonisolated static func notePendingSolve(_ id: String) {
-        guard !id.isEmpty else { return }
-        _ = installPendingReplay
-        pendingSolveLock.lock()
-        pendingSolveIDs.insert(id)
-        pendingSolveLock.unlock()
-    }
-
-    private nonisolated static func clearPendingSolve(_ id: String) {
-        pendingSolveLock.lock()
-        pendingSolveIDs.remove(id)
-        pendingSolveLock.unlock()
-    }
-
-    /// Waits out a pending registry before a production solve. Rides noted while
-    /// pending are solved again when that region settles.
-    private nonisolated static func awaitScopeRegistry(_ scope: RouteScope, trains: [Train]) async {
+    /// Waits out a pending registry before a production solve. A waiting solve
+    /// always solves after the settle itself; the replay never claims it.
+    /// Returns the ids to skip, which is always empty now and kept for callers.
+    private nonisolated static func awaitScopeRegistry(_ scope: RouteScope, trains: [Train]) async -> Set<String> {
+        let owner = activePendingOwner
         for train in trains where !train.requiresRouteConfirmation {
-            let waiting = RouteScope(train).graphRegions.contains { region in
-                if case .pending = RegistryIdentityLookup.phase(forRegion: region.code) { return true }
-                return false
+            let pendingRegions = Set(RouteScope(train).graphRegions.compactMap { region -> String? in
+                if case .pending = RegistryIdentityLookup.phase(forRegion: region.code) {
+                    return region.code.lowercased()
+                }
+                return nil
+            })
+            if !pendingRegions.isEmpty {
+                owner?.noteAwaiting(id: train.id, regions: pendingRegions)
             }
-            if waiting { notePendingSolve(train.id) }
         }
         for region in scope.graphRegions {
-            let identity = await SolverRegistryInput.awaitReady(region: region.code)
-            guard identity != nil else { continue }
-            for train in trains where RouteScope(train).graphRegions.contains(where: { $0.code == region.code }) {
-                clearPendingSolve(train.id)
+            _ = await SolverRegistryInput.awaitReady(region: region.code)
+        }
+        if let owner {
+            for train in trains where !train.requiresRouteConfirmation {
+                owner.finishAwaiting(id: train.id)
+                // Settled without a registry: remember it so a later settle can replay it.
+                let missing = Set(RouteScope(train).graphRegions.compactMap { region -> String? in
+                    if case .ready = RegistryIdentityLookup.phase(forRegion: region.code) { return nil }
+                    return region.code.lowercased()
+                })
+                if !missing.isEmpty { owner.noteSolvedUnavailable(id: train.id, regions: missing) }
             }
         }
+        return []
     }
 
     private nonisolated static func routeCacheDigest(
@@ -2690,5 +2729,84 @@ private final class PartialRidePublication {
         flush = nil
         pending = nil
         pendingApply = nil
+    }
+}
+
+/// One route store's pending solves. Several stores each keep their own box.
+final class PendingSolveOwner: @unchecked Sendable {
+    weak var store: RiddenRouteStore?
+    private let lock = NSLock()
+    /// Solves still waiting on the registry. They solve themselves after the
+    /// settle, so a replay never touches these.
+    private var awaiting: [String: Set<String>] = [:]
+    /// Solves that completed while a region had no registry. Only these replay.
+    private var solvedUnavailable: [String: Set<String>] = [:]
+
+    func noteAwaiting(id: String, regions: Set<String>) {
+        guard !id.isEmpty, !regions.isEmpty else { return }
+        lock.lock()
+        defer { lock.unlock() }
+        awaiting[id] = regions
+    }
+
+    func finishAwaiting(id: String) {
+        lock.lock()
+        defer { lock.unlock() }
+        awaiting.removeValue(forKey: id)
+    }
+
+    func isAwaiting(id: String) -> Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return awaiting[id] != nil
+    }
+
+    func noteSolvedUnavailable(id: String, regions: Set<String>) {
+        guard !id.isEmpty, !regions.isEmpty else { return }
+        lock.lock()
+        defer { lock.unlock() }
+        solvedUnavailable[id] = regions
+    }
+
+    /// Ids that already solved without `region`'s registry; each is claimed once.
+    /// An id whose solve is still waiting is never returned.
+    func claimForReplay(region: String) -> [String] {
+        lock.lock()
+        defer { lock.unlock() }
+        let cc = region.lowercased()
+        let claimed = solvedUnavailable.compactMap { id, regions -> String? in
+            regions.contains(cc) && awaiting[id] == nil ? id : nil
+        }
+        for id in claimed { solvedUnavailable.removeValue(forKey: id) }
+        return claimed
+    }
+}
+
+enum PendingSolveRegistry {
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var owners: [PendingSolveOwner] = []
+    private static let installed: Void = {
+        BundledRegistry.addSettledHandler { region in
+            lock.lock()
+            owners = owners.filter { $0.store != nil }
+            let snapshot = owners
+            lock.unlock()
+            for owner in snapshot {
+                let ids = owner.claimForReplay(region: region)
+                guard !ids.isEmpty, let store = owner.store else { continue }
+                Task { @MainActor in
+                    store.replayPending(ids)
+                }
+            }
+        }
+    }()
+
+    static func register(_ owner: PendingSolveOwner) {
+        _ = installed
+        lock.lock()
+        if !owners.contains(where: { $0 === owner }) {
+            owners.append(owner)
+        }
+        lock.unlock()
     }
 }

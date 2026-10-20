@@ -56,6 +56,8 @@ struct NewTripView: View {
     @State private var routeProofFailure: String?
     /// Bumped when the region changes. A search or plan started earlier must not write this draft.
     @State private var draftGeneration = 0
+    /// Bumped when this region's registry settles so the timetable query resolves again.
+    @State private var registryEpoch = 0
     @State private var searching = false
     @State private var selectedCorridorID: String?
     @State private var corridorsRemovedByDate = false
@@ -191,6 +193,10 @@ struct NewTripView: View {
         }
         .onChange(of: companyName) { _, _ in
             saveIssues = []
+        }
+        .task(id: region.code) {
+            await SolverRegistryInput.awaitReady(region: region.code)
+            registryEpoch += 1
         }
         .onChange(of: region) { _, _ in
             draftGeneration += 1
@@ -425,6 +431,8 @@ struct NewTripView: View {
     private var timetableQuery: Train {
         // Quick match only looks up once the endpoints carry departure and
         // arrival clocks, so the query uses the Time section's values.
+        // `registryEpoch` is read so a settle rebuilds this derived train.
+        _ = registryEpoch
         var query = timetableBase
         if query.stops.count == 2 {
             query.stops[0].departure = clock(departure, extraDays: 0)

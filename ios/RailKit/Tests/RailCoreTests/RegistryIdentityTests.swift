@@ -257,6 +257,28 @@ struct RegistryIdentityTests {
         #expect(RegistryStationDisplay.firstCodeWithReading(["000000"]) { _ in false } == nil)
     }
 
+    @Test func queryMatchCacheDropsTheOldestQuery() {
+        let cache = QueryMatchCache(limit: 2)
+        var builds: [String] = []
+        func value(_ key: String) -> Set<String> {
+            builds.append(key)
+            return [key]
+        }
+        _ = cache.matches("a") { value("a") }
+        _ = cache.matches("b") { value("b") }
+        _ = cache.matches("a") { value("a-hit") }
+        _ = cache.matches("c") { value("c") }
+        _ = cache.matches("a") { value("a-kept") }
+        _ = cache.matches("b") { value("b-miss") }
+        #expect(builds == ["a", "b", "c", "b-miss"])
+    }
+
+    @Test func uninstalledLookupNoteRequiresAnExplicitPermit() {
+        #expect(RegistryIdentityLookup.shouldNoteUninstalledLookup(installed: false, permitted: false))
+        #expect(!RegistryIdentityLookup.shouldNoteUninstalledLookup(installed: true, permitted: false))
+        #expect(!RegistryIdentityLookup.shouldNoteUninstalledLookup(installed: false, permitted: true))
+    }
+
     @Test func pendingRegistryShowsStoredTextUntilItSettles() {
         let built = RegistryIdentity(bundle: tokyoBundle())
         final class Gate: @unchecked Sendable { var ready = false }

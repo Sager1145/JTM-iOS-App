@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 struct OperatorIdentityTests {
     @Test func multilingualIdentities() {
@@ -28,12 +28,21 @@ struct OperatorIdentityTests {
     }
 
     @Test func catalogAndTimetableUseOperatorAliases() throws {
-        let patterns = TrainServicePatterns.search("JR West")
-        #expect(!patterns.isEmpty)
-        let pattern = try #require(patterns.first { OperatorIdentity.code(for: $0.company) == "jp.jr-west" })
-        #expect(TimetableSearch("西日本旅客鐵道").matches(pattern))
-        #expect(TrainServicePatterns.search("", filter: .init(company: "jp.jr-west"))
-            .contains { $0.id == pattern.id })
+        let root = try PortFixtures.repositoryRoot()
+        let data = try Data(contentsOf: root.appending(path: "app/data/registry-bundle/jp.json"))
+        let identity = RegistryIdentity(bundle: try JSONDecoder().decode(RegistryBundle.self, from: data))
+        let westIDs = Set(identity.bundle.operatorRecords.filter { $0.value.identity == "jp.jr-west" }.keys)
+        #expect(!westIDs.isEmpty)
+        try RegistryIdentityLookup.withTestProvider({ region in region == "jp" ? identity : nil }) {
+            let patterns = TrainServicePatterns.search("JR West")
+            #expect(!patterns.isEmpty)
+            let pattern = try #require(patterns.first {
+                !westIDs.isDisjoint(with: identity.operatorIDs(forCatalogName: $0.company))
+            })
+            #expect(TimetableSearch("西日本旅客鐵道").matches(pattern))
+            #expect(TrainServicePatterns.search("", filter: .init(company: "JR西日本"))
+                .contains { $0.id == pattern.id })
+        }
     }
 
     @Test func registryCoverageAndUniqueness() throws {

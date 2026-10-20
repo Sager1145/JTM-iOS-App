@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 struct RouteRepairTests {
     @Test("Adjacent section gaps merge, and a boundary covers the joining station")
@@ -67,17 +67,49 @@ struct RouteRepairTests {
         train.routeSections = [
             RouteSection(
                 from: "A", to: "C", fromN02StationCode: "A", toN02StationCode: "C",
-                operatorNames: ["Not A Real Operator"])
+                operatorNames: ["Other Operator"])
         ]
-        let attempt = RouteRepair.attempt(
-            span: RouteRepair.Span(fromVisitIndex: 0, toVisitIndex: 1, reason: .section),
-            train: train, package: one)
+        // An operator the registry converts to a different id rejects the
+        // labeled line; an unconvertible name would be unknown and not reject.
+        let identity = RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:1": RegistryOperatorRecord(names: ["Operator"], label: "Operator", identity: "jp.test-a"),
+            "op:jp:2": RegistryOperatorRecord(names: ["Other Operator"], label: "Other Operator", identity: "jp.test-b"),
+        ]))
+        let attempt = RegistryIdentityLookup.withTestProvider({ region in region == "jp" ? identity : nil }) {
+            RouteRepair.attempt(
+                span: RouteRepair.Span(fromVisitIndex: 0, toVisitIndex: 1, reason: .section),
+                train: train, package: one)
+        }
         guard case .ambiguous(let choices) = attempt else {
             Issue.record("expected the guide, got \(attempt)")
             return
         }
         #expect(choices.count == 1)
         #expect(choices.first?.lineIDs == ["only"])
+    }
+
+    @Test("An unconvertible operator is skipped and does not reject the labeled line")
+    func unknownOperatorDoesNotReject() throws {
+        let one = try package([line("only", ["A", "B", "C"])])
+        var train = ride(["A", "C"])
+        train.routeSections = [
+            RouteSection(
+                from: "A", to: "C", fromN02StationCode: "A", toN02StationCode: "C",
+                operatorNames: ["Not A Real Operator"])
+        ]
+        let identity = RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:1": RegistryOperatorRecord(names: ["Operator"], label: "Operator", identity: "jp.test-a"),
+        ]))
+        let attempt = RegistryIdentityLookup.withTestProvider({ region in region == "jp" ? identity : nil }) {
+            RouteRepair.attempt(
+                span: RouteRepair.Span(fromVisitIndex: 0, toVisitIndex: 1, reason: .section),
+                train: train, package: one)
+        }
+        guard case .unique(let choice) = attempt else {
+            Issue.record("expected the labeled line to stay admitted, got \(attempt)")
+            return
+        }
+        #expect(choice.lineIDs == ["only"])
     }
 
     @Test("サンライズ出雲's 新見→米子 gap is one visit span")

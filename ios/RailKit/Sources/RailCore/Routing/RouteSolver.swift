@@ -2847,6 +2847,7 @@ public enum RouteSolver {
                     in: stations, rideDate: train.rideDate)
             }
         case .unavailable:
+            RegistryIdentityLookup.noteUninstalledLookup("solveOfficialInterval")
             guard !RegistryIdentityLookup.lookupInstalled else { return nil }
             fromStations = filterStationCandidatesByRideDate(
                 stations.candidateIndices(for: .stop(.init(
@@ -3273,6 +3274,7 @@ public enum RouteSolver {
             fromStations = ends.from
             toStations = ends.to
         case .unavailable:
+            RegistryIdentityLookup.noteUninstalledLookup("prepareSectionEndpoints")
             guard !RegistryIdentityLookup.lookupInstalled else { return nil }
             let lineNames = (section.lineNames ?? []).filter { !$0.isEmpty }
             let fromStop = Stations.Stop(

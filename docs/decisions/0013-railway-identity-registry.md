@@ -1,6 +1,6 @@
 # 0013: 铁路身份注册表 —— 公司 / 线路 / 车站的统一重构方案
 
-- Status: Proposed（尚未实施；本文不构成提交、推送或发布的授权）
+- Status: Proposed（实施中：P0–P2、P1b、身份迁移 M1–M5 已在分支 adr-0013-identity-registry 实施（未合并 main）；本文不构成提交、推送或发布的授权）
 - Date: 2026-10-19（同日按 [重构准备与交接](../reference/railway-data-overhaul-preparation.md) 修订）
 - Decision owners: Project maintainers
 - Extends: 0004 (WGS84/MapKit 边界), 0008 (display identity tables), 0010 (station code grammar), 0011 (dated history), 0012 (fail-closed resolution)
@@ -307,6 +307,13 @@ CN（P3，单独项目）的边界（准备文档 L24、L26、L75、L92–93）�
 | 5 | 账本格式 | **JSON Lines**，按地区 × 实体种类分文件，规范化序列化，行不可变（§9.2）。曾考虑 SQLite：触发器强制更强，但二进制不可 diff、不可合并，且本仓库位于 iCloud 同步目录，二进制冲突副本无法调和。 |
 | 6 | NA | **排除**（`ios/AGENTS.md`）。 |
 | 7 | `line` 归并 | **只按显式 crosswalk**；同名/去后缀只出报告。 |
+| 8 | 旧规则的去向（用户 2026-10-19） | 所有功能迁移到注册表规则；旧规则只保留在加载/导入升级（`RegistryIdentityUpgrade`）与求解器代码级图中，其余路径不得回退旧名称/代码规则。 |
+| 9 | 派生缓存 | `station_id` / `operator_id` / `operator_ids` 及路线区间的 `from_station_id` / `to_station_id` 都是派生缓存，每次加载、导入、保存重新推导，唯一答案可覆盖旧值（见 §10-6）。 |
+| 10 | 括号站名 | 拆为独立字段 `base` / `bracket` / `position` / `kind` / `status`；状态类别 `reserved` / `planned` / `closed` / `suspended` / `historical`，只用于显示，不作乘车过滤（§3.5）。 |
+| 11 | 精确站名优先 | 目录车站名称恰好等于输入时，精确站名优先于 base-only 匹配（§11.2）。 |
+| 12 | 注册表状态 | `ready` / `pending` / `unavailable`；`pending` 时求解与导入等待或保持未解析，settle 后重跑，不回退旧规则；`unavailable` 是显式结果。 |
+| 13 | 研究类输入的来源 | 共用站房/换乘 `link`、公司别名、历史覆写由带来源的网络调研产生（2026-10-19），每条保存来源 URL 与 `note`。 |
+| 14 | 账本格式 | JSON Lines（已有，即 #5），沿用，不另立方案。 |
 
 仍待决：
 
@@ -625,3 +632,25 @@ P0 的校验器把这项统计作为 `name-line-not-unique` 报告输出，P1 �
 - **P1b**：在 RailCore 实现语法解析与 §11.3 的解析顺序（依赖随 app 打包的身份表与别名）；
   `JourneyTextImport` / CSV / JSON 导入共用现有导入 interface 下的同一个解析器；界面加小字限定词。不阻塞 P1 的乘车记录升级。
 - **P3 之后**：CN 归并完成、`name-line-not-unique` 复测为 0 后，CN 才获得与其他地区相同的唯一性保证；此前 CN 的歧义一律拒绝自动选择。
+
+## 12. 身份迁移 M1–M5（实施记录）
+
+分支 `adr-0013-identity-registry`（基于 main `daeae8516`，未合并）。账本与 P0–P2 先行：`13e82fcac` 冻结与 P0、`11d1fe126` 在 main 上重铸（含 CN）、`fd402ac3b` P1、`01072a7b4` P1b/P2。以下为其后的身份迁移。
+
+- **M1**（`69676356a`）：app bundle 增加反向映射（站码 → `st`、`package-line` → `lp`），建立身份 facade 与 station-id 覆盖率统计。覆盖：JP 1530/1537，TW 470/476，其余为 §13 所列未映射源记录。
+- **M2**（`f4d1cad8f`）：显示、搜索、过滤与品牌（logo、公司标签）改用注册表 id；评审修正在 `52857ae9f`（公司过滤比较 operator id、`operator_ids` 有序、国鉄回到 JR 门、bundle 后台预载）。
+- **M3**（`b575ef10c`）：求解器端点码取自公司车站自己的站码，同站群他社不是 sibling；无 id 的停靠或区间 fail closed；路线区间增加派生 `from_station_id` / `to_station_id`（JS parity 同步）；路线缓存版本升到 28。物理图与算法不变。
+- **M4**（`dc61bbbc1`）：键入、粘贴、向导与 LLM 文本统一经 `StationReference` 与注册表解析（精确站名优先、唯一基名、歧义列出，自由文本只提出 span）；导入与补全中的旧名称回退已移除；选择器写 `station_id` 与派生码，公司字段由 operator id 写出。
+- **M5**（`45d494fcd`）：注册表 phase `ready` / `pending` / `unavailable` 取代旧回退，旧规则只留在 `RegistryIdentityUpgrade` 与求解器代码级图（见 `ios/VERIFICATION.md`）；bundle 解码在注册表锁外进行，不可读 bundle 记为 failed；admission 拒绝不同的已转换 operator、跳过未知；operator 搜索用预计算索引；`operator_ids` 校验在 Swift 与 JS 一致；零长度的已审定历史周期用补偿事件修正。
+- 来源化输入（`47ae5ee7f`）：2026-10-19 网络调研写入 JP 的 44 条线（来自 104 个 line part）、122 个站房（46 共用 / 76 边界，含 manager）、86 条乘客换乘 link（非物理）、5 个公司别名、57 条历史覆写。
+
+M5 后续修复（提交待定，commit pending）：注册表 phase（ready / pending / unavailable）在各入口一致处理；settle 后在内存中升级已加载的旧记录；导入等待 settle；启动时预载 bundle；按地区重放；查询缓存有界；修正校验器；新增历史与注册表差异守卫文件 `app/data/registry/jp/history-registry-differences.json`（schema 含 `differences` 列表，当前 139 条），防止历史叠加与注册表的偏差被静默吞掉。
+
+## 13. 待办与关口
+
+- **P3 CN**：699 个被多家公司共用的 12306 站码需审定；OSM relation 归并（方向/分支 relation 只作候选）；`name-line-not-unique` 的 CN 81 组待归并后复测。
+- **P5 网站仓库 builders**：包的区间上写出注册表 id（`lp` / `st`），再切换历史匹配（名字 + bbox → id）；丸ノ内線等未映射源码；TW 左營 / 苗栗的站群归属（§11.4）；P2 运行时切换随之移到 P5。
+- **未决研究项**（JP，来自 `station-derivation-exceptions.json` 与 `facility-review-report.json`）：`unmapped-source` 6、`ambiguous-company-text` 19、`history-unmatched` 48、`history-unresolved` 62、`cross-complex-same-station` 3、`name-line-not-unique` 3、`line-label-collision` 28、`line-family-candidate` 83、`shared-facility-candidate` 225、`facility-unresolved` 22、`facility-transfer-mixed` 29；其余地区见各自报告。
+- **CN 公司身份覆盖**：`OperatorIdentityTests.registryCoverageAndUniqueness` 在 main 上即有 434 项失败——`stations-cn.json` 中 434 个 CN 运营者名称（如 `北京市地铁运营二分有限公司`）不在 `operator-identities.json` 中。需在 P3 先判明 CN 重复运营者（见 699 个共用 12306 站码），再补齐身份条目。
+- **既有测试失败**（基线，非本分支引入）：ContinuousStrokeParityTests (166)、DatedEndpointNameShadowTests (2)、DirectionalAlignmentSelectionTests (1)、DisplayPartsParityTests (25)、FixtureParityTests (8)、GroomingParityTests (4)、JapanThroughServicesTests (2)、JourneyThroughCompletionTests (1)、JunctionApproachTests (1)、KeishinDisplayCurveTests (4)、LocalizationParityTests (952)、OSMTrackConnectorTests (1)、OnEdgeCertificationTests (1)、OperatorIdentityTests (434)、PassengerStationApproachTests (10)、RailHistoryPackageTests (17)、RecordedRouteAdmissionTests (1)、RouteDirectionAndBranchTests (1)、SamplePrecomputeProvenanceTests (804)、SharedRouteWorkTests (10)、ShortLinkJunctionTests (2)、StationDisplayParityTests (5877)、StationVisibilityParityTests (6)、StoreOperationsParityTests (11)、TrainServicePatternRouteTests (2)、TrainValidationParityTests (1)。
+- **关口**：合并 main 前须重跑 `validate-registry.mjs --base`、`node app/scripts/build/build-port-fixtures.mjs --check`，并由独立评审确认；NA 不在范围内。

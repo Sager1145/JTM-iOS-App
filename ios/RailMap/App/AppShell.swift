@@ -144,6 +144,14 @@ struct AppShell: View {
                 Task { await AppleMapDatumProbe.run(within: .seconds(30)) }
             }
             network.loadAll()
+            // An empty store never names a region, so the file reader does not
+            // start a decode. Preload the default region anyway: imports that
+            // run before the first ride still have a registry to wait on.
+            let launchRegion = WorkspaceJourneyRules.defaultRegion(
+                selectedTrain: nil, trains: [],
+                orderedRegionCodes: Region.enabledOrdered.map(\.code),
+                rule: Region.scopeRule)
+            BundledRegistry.preload(regions: [launchRegion])
             itineraries.load(from: library)
             // Playback bakes its station names when it compiles a path, so it
             // needs the readings tables rather than only the records. See

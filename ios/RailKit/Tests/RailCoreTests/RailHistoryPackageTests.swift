@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 /// End-to-end coverage for ADR 0011's rail-history overlay
 /// (`app/data/rail-history.json`) against the real Japanese solver package:
@@ -18,6 +18,11 @@ import Testing
 /// (observed as a segfault in the test process, not an assertion failure).
 @Suite(.serialized)
 struct RailHistoryPackageTests {
+    /// This suite solves with no registry installed. The no-lookup path is
+    /// deliberate here; other suites opt in on their own.
+    init() {
+    }
+
     struct Environment {
         let graphStore: RouteGraph.RouteGraphStore
         let stations: Stations.Index
@@ -435,6 +440,89 @@ struct RailHistoryPackageTests {
                     rideDate: answer.train.date, id: answer.id)
             }
         }
+    }
+
+    /// Same generated boundaries as the fixture replay, with the shipped jp
+    /// registry installed. A boundary is recorded only when the registry
+    /// changes the fixture outcome or digest. The fixture-replay test is unchanged.
+    @Test func generatedBoundariesWithInstalledRegistryMatchExpectedDifferences() throws {
+        struct Difference: Codable, Equatable {
+            var id: String
+            var fixtureOutcome: String
+            var registryOutcome: String
+            var reason: String
+        }
+        struct Document: Codable {
+            var schema: String
+            var differences: [Difference]
+        }
+        let root = try PortFixtures.repositoryRoot()
+        let bundleData = try Data(contentsOf: root.appending(path: "app/data/registry-bundle/jp.json"))
+        let bundle = try JSONDecoder().decode(RegistryBundle.self, from: bundleData)
+        let identity = RegistryIdentity(bundle: bundle)
+        let expectedData = try Data(contentsOf: root.appending(
+            path: "app/data/registry/jp/history-registry-differences.json"))
+        let expected = try JSONDecoder().decode(Document.self, from: expectedData)
+        let fixture = try PortFixtures.decode(HistoricalRoutesFixture.self, "historical-routes.json")
+        let answers = fixture.eventBoundaries.flatMap { [$0.before, $0.at] } + fixture.pinned
+        var found: [Difference] = []
+        RegistryIdentityLookup.withTestProvider({ region in
+            region.lowercased() == "jp" ? identity : nil
+        }) {
+            for answer in answers {
+                // Upgrade exactly as production does at load, before solving.
+                let raw = RouteSection(
+                    from: answer.section.from, to: answer.section.to,
+                    fromN02StationCode: answer.section.fromStationCode,
+                    toN02StationCode: answer.section.toStationCode,
+                    lineNames: answer.section.lineNames,
+                    operatorNames: answer.section.operatorNames)
+                let company = answer.section.operatorNames.filter { !$0.isEmpty }.joined(separator: "/")
+                let upgradedTrain = RegistryIdentityUpgrade.apply(
+                    Train(id: answer.id, date: answer.train.date, number: "", company: company.isEmpty ? nil : company,
+                          origin: answer.section.from, destination: answer.section.to,
+                          routeSections: [raw], stops: [], region: "jp"),
+                    bundle: bundle)
+                let section = upgradedTrain.routeSections?.first ?? raw
+                let native = Self.solve(section, rideDate: answer.train.date)
+                if native == nil && answer.outcome != "solved" { continue }
+                if let native {
+                    let digest = RouteGraph.keyDigest(Self.canonicalPath(native.coordinates))
+                    if digest == answer.pathDigest && answer.outcome == "solved" { continue }
+                    let reason = digest == answer.pathDigest
+                        ? "registry solve succeeded where the fixture was recorded as \(answer.outcome)"
+                        : "registry solve changed the path digest (from_station_id \(section.fromStationID ?? "nil"), to_station_id \(section.toStationID ?? "nil"))"
+                    found.append(Difference(
+                        id: answer.id, fixtureOutcome: answer.outcome,
+                        registryOutcome: "solved", reason: reason))
+                } else {
+                    func label(_ name: String, _ code: String?) -> String { code.map { "\($0)" } ?? "name \(name)" }
+                    var missing: [String] = []
+                    if section.fromStationID == nil { missing.append("from \(label(section.from ?? "", section.fromN02StationCode))") }
+                    if section.toStationID == nil { missing.append("to \(label(section.to ?? "", section.toN02StationCode))") }
+                    let reason = missing.isEmpty
+                        ? "station_id resolves for both endpoints (\(section.fromStationID ?? ""), \(section.toStationID ?? "")) but the registry solve found no path"
+                        : "endpoint has no station_id after upgrade: " + missing.joined(separator: "; ")
+                    found.append(Difference(
+                        id: answer.id, fixtureOutcome: answer.outcome,
+                        registryOutcome: "unsolved", reason: reason))
+                }
+            }
+        }
+        found.sort { $0.id < $1.id }
+        if ProcessInfo.processInfo.environment["JTM_REGENERATE_HISTORY_REGISTRY_DIFFERENCES"] != nil {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+            var out = try encoder.encode(Document(schema: "jtm-history-registry-differences/1", differences: found))
+            out.append(0x0A)
+            try out.write(to: root.appending(path: "app/data/registry/jp/history-registry-differences.json"))
+            return
+        }
+        let mismatched = zip(found, expected.differences).filter { $0 != $1 }.prefix(3)
+            .map { "\($0.id) vs \($1.id)" }
+        #expect(expected.schema == "jtm-history-registry-differences/1")
+        #expect(found.count == expected.differences.count, "count \(found.count) vs \(expected.differences.count); first \(mismatched)")
+        #expect(found == expected.differences)
     }
 
     /// The six Gate A rides, solved on demand, against the dual-solver fixture.

@@ -653,13 +653,24 @@ public enum RegistryPhase: Sendable {
 }
 
 /// Per-query results for ``RegistryIdentity/operatorIDs(matchingQuery:)``.
-private final class QueryMatchCache: @unchecked Sendable {
+/// The newest query stays. Past ``limit`` entries, the oldest is dropped.
+final class QueryMatchCache: @unchecked Sendable {
+    static let defaultLimit = 256
+
     private let lock = NSLock()
+    private let limit: Int
     private var stored: [String: Set<String>] = [:]
+    /// Oldest query first.
+    private var order: [String] = []
+
+    init(limit: Int = defaultLimit) {
+        self.limit = max(1, limit)
+    }
 
     func matches(_ query: String, compute: () -> Set<String>) -> Set<String> {
         lock.lock()
         if let hit = stored[query] {
+            touchLocked(query)
             lock.unlock()
             return hit
         }
@@ -667,12 +678,29 @@ private final class QueryMatchCache: @unchecked Sendable {
         let built = compute()
         lock.lock()
         if let hit = stored[query] {
+            touchLocked(query)
             lock.unlock()
             return hit
         }
         stored[query] = built
+        order.append(query)
+        evictLocked()
         lock.unlock()
         return built
+    }
+
+    private func touchLocked(_ query: String) {
+        if let index = order.firstIndex(of: query) {
+            order.remove(at: index)
+        }
+        order.append(query)
+    }
+
+    private func evictLocked() {
+        while stored.count > limit, !order.isEmpty {
+            let oldest = order.removeFirst()
+            stored.removeValue(forKey: oldest)
+        }
     }
 }
 
@@ -719,25 +747,26 @@ public enum RegistryIdentityLookup {
     }
 
     /// Runs `operation` with a task-local synchronous provider. The app-wide install is unchanged.
-    public static func withTestProvider<T>(
+    @_spi(Testing) public static func withTestProvider<T>(
         _ provider: Provider?, operation: () throws -> T
     ) rethrows -> T {
         try $testOverride.withValue(.sync(provider), operation: operation)
     }
 
     /// Runs `operation` with a task-local phase provider. The app-wide install is unchanged.
-    public static func withTestPhase<T>(
+    @_spi(Testing) public static func withTestPhase<T>(
         _ provider: PhaseProvider?, operation: () throws -> T
     ) rethrows -> T {
         try $testOverride.withValue(.phase(provider), operation: operation)
     }
 
     /// Async overload. Child tasks inherit the override; `Task.detached` does not.
-    public static func withTestPhase<T: Sendable>(
+    @_spi(Testing) public static func withTestPhase<T>(
         _ provider: PhaseProvider?,
-        operation: nonisolated(nonsending) @Sendable () async throws -> T
+        isolation: isolated (any Actor)? = #isolation,
+        operation: () async throws -> T
     ) async rethrows -> T {
-        try await $testOverride.withValue(.phase(provider), operation: operation)
+        try await $testOverride.withValue(.phase(provider), operation: operation, isolation: isolation)
     }
 
     /// The app's background-preload provider. A nil provider is unavailable for every region.
@@ -783,6 +812,32 @@ public enum RegistryIdentityLookup {
         return nil
     }
 
+    /// One-shot watches. A settle for another region leaves them in place.
+    private struct SettledWatch: Sendable {
+        var region: String
+        var handler: @Sendable (String) -> Void
+    }
+
+    nonisolated(unsafe) private static var settledWatches: [SettledWatch] = []
+
+    /// Runs `handler` once when `region` settles. A region that is not pending runs it now.
+    public static func whenSettled(region: String, _ handler: @escaping @Sendable (String) -> Void) {
+        let cc = region.lowercased()
+        guard !cc.isEmpty else { return }
+        if !isPending(cc) {
+            handler(cc)
+            return
+        }
+        let stamp = settledStamp(cc)
+        lock.lock()
+        let raced = (settled[cc] ?? 0) != stamp
+        if !raced {
+            settledWatches.append(SettledWatch(region: cc, handler: handler))
+        }
+        lock.unlock()
+        if raced { handler(cc) }
+    }
+
     /// Resume waiters for one region and drop cached misses. Called when a preload finishes.
     public static func notifySettled(region: String) {
         let cc = region.lowercased()
@@ -791,8 +846,13 @@ public enum RegistryIdentityLookup {
         generation &+= 1
         settled[cc] = generation
         let resumed = waiters.removeValue(forKey: cc) ?? []
+        let watches = settledWatches
+        settledWatches.removeAll { $0.region == cc }
         lock.unlock()
         for waiter in resumed { waiter.resume() }
+        for watch in watches where watch.region == cc {
+            watch.handler(cc)
+        }
     }
 
     /// True when this task or the process has a lookup or phase provider installed.
@@ -801,6 +861,37 @@ public enum RegistryIdentityLookup {
         lock.lock()
         defer { lock.unlock() }
         return provider != nil || phaseProvider != nil
+    }
+
+    /// Retained for source compatibility. Missing-lookup solves are tolerated under a test runner, so this is a no-op.
+    @_spi(Testing) public static func permitMissingLookup() {}
+
+    @_spi(Testing) public static var missingLookupPermitted: Bool { runningUnderTestRunner }
+
+    /// True when the process is hosted by XCTest or swift-testing.
+    static let runningUnderTestRunner: Bool = {
+        let env = ProcessInfo.processInfo.environment
+        if env["XCTestConfigurationFilePath"] != nil || env["XCTestBundlePath"] != nil
+            || env["XCTestSessionIdentifier"] != nil || env["SWT_ENABLE_EXPERIMENTAL_CONSOLE_OUTPUT"] != nil {
+            return true
+        }
+        if NSClassFromString("XCTestCase") != nil { return true }
+        let name = ProcessInfo.processInfo.processName.lowercased()
+        return name.contains("xctest") || name.contains("swiftpm-testing-helper")
+            || name.hasSuffix("pm-testing-helper")
+    }()
+
+    /// True when a solve should report that no lookup is installed.
+    public static func shouldNoteUninstalledLookup(installed: Bool, permitted: Bool) -> Bool {
+        !installed && !permitted
+    }
+
+    static func noteUninstalledLookup(_ context: String) {
+        guard shouldNoteUninstalledLookup(installed: lookupInstalled, permitted: runningUnderTestRunner) else { return }
+        #if DEBUG
+        assertionFailure(
+            "Solving \(context) without RegistryIdentityLookup.install().")
+        #endif
     }
 
     /// Waits until the region is ready or unavailable. A region that is already settled returns immediately.
@@ -817,6 +908,11 @@ public enum RegistryIdentityLookup {
                 }
             }
         }
+    }
+
+    private static func isPending(_ region: String) -> Bool {
+        if case .pending = phase(forRegion: region) { return true }
+        return false
     }
 
     /// Synchronous so the lock stays out of an async context.

@@ -14,6 +14,7 @@ struct RailMapApp: App {
 
     init() {
         BundledRegistry.install()
+        BundledRegistry.preload(regions: [Region.jp.code])
     }
 
     var body: some Scene {

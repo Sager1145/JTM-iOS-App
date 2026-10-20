@@ -76,21 +76,47 @@ enum BundledRegistry {
     }
 
     /// Handlers run after a background decode settles, outside the decode lock.
+    /// The argument is the region code that settled.
     private static let handlerLock = NSLock()
-    nonisolated(unsafe) private static var settledHandlers: [@Sendable () -> Void] = []
+    nonisolated(unsafe) private static var settledHandlers: [Int: @Sendable (String) -> Void] = [:]
+    nonisolated(unsafe) private static var nextHandlerToken = 0
     nonisolated(unsafe) private static var decoding = Set<String>()
 
-    static func addSettledHandler(_ handler: @escaping @Sendable () -> Void) {
+    @discardableResult
+    static func addSettledHandler(_ handler: @escaping @Sendable (String) -> Void) -> Int {
         handlerLock.lock()
-        settledHandlers.append(handler)
+        defer { handlerLock.unlock() }
+        nextHandlerToken += 1
+        settledHandlers[nextHandlerToken] = handler
+        return nextHandlerToken
+    }
+
+    static func removeSettledHandler(_ token: Int) {
+        handlerLock.lock()
+        settledHandlers.removeValue(forKey: token)
         handlerLock.unlock()
     }
 
-    private static func notifySettledHandlers() {
+    static var settledHandlerCount: Int {
         handlerLock.lock()
-        let handlers = settledHandlers
+        defer { handlerLock.unlock() }
+        return settledHandlers.count
+    }
+
+    /// Removes its handler when released, so a per-instance registration cannot outlive its owner.
+    final class SettledRegistration: Sendable {
+        private let token: Int
+        init(_ handler: @escaping @Sendable (String) -> Void) {
+            token = BundledRegistry.addSettledHandler(handler)
+        }
+        deinit { BundledRegistry.removeSettledHandler(token) }
+    }
+
+    private static func notifySettledHandlers(_ region: String) {
+        handlerLock.lock()
+        let handlers = Array(settledHandlers.values)
         handlerLock.unlock()
-        for handler in handlers { handler() }
+        for handler in handlers { handler(region) }
     }
 
     static func install() {
@@ -157,7 +183,7 @@ enum BundledRegistry {
             _ = identity(for: cc)
             finishDecode(cc)
             RegistryIdentityLookup.notifySettled(region: cc)
-            notifySettledHandlers()
+            notifySettledHandlers(cc)
         }
     }
 
@@ -216,9 +242,12 @@ enum BundledRegistry {
     }
 
     /// Leaves stored fields in place until this train's region is ready.
+    /// Phase comes from the installed lookup so a test phase override is honored.
+    /// Production install points that lookup at ``phase(for:)``.
     static func upgradeIfReady(_ train: Train) -> Train {
         let region = train.region?.lowercased() ?? ""
-        guard !region.isEmpty, case .ready = phase(for: region) else { return train }
+        guard !region.isEmpty else { return train }
+        guard case .ready = RegistryIdentityLookup.phase(forRegion: region) else { return train }
         return upgrade(train)
     }
 

@@ -112,14 +112,14 @@ actor RideStorage {
     private static let settleLock = NSLock()
     nonisolated(unsafe) private static var settleStorages: [StorageBox] = []
     private static let settleUpgrade: Void = {
-        BundledRegistry.addSettledHandler {
+        BundledRegistry.addSettledHandler { region in
             let storages: [RideStorage]
             settleLock.lock()
             settleStorages = settleStorages.filter { $0.storage != nil }
             storages = settleStorages.compactMap(\.storage)
             settleLock.unlock()
             for storage in storages {
-                Task { await storage.upgradeSettledFile() }
+                Task { await storage.upgradeSettledFile(region: region) }
             }
         }
     }()
@@ -137,15 +137,34 @@ actor RideStorage {
         Self.settleLock.unlock()
     }
 
-    /// Rewrites the saved store once a pending region can fill registry ids.
-    func upgradeSettledFile() {
+    /// Rewrites trains of one settled region once its registry can fill ids.
+    func upgradeSettledFile(region: String) {
         guard FileManager.default.fileExists(atPath: storeURL().path),
               let data = try? Data(contentsOf: storeURL()),
               let store = try? JSONDecoder().decode(TrainStore.self, from: data)
         else { return }
-        let trains = store.trains.map(BundledRegistry.upgradeIfReady)
+        let cc = region.lowercased()
+        let trains = store.trains.map { train in
+            guard train.region?.lowercased() == cc else { return train }
+            return upgradeOnce(train)
+        }
         guard zip(store.trains, trains).contains(where: identityFieldsChanged) else { return }
         try? writeStore(TrainStore(schemaVersion: store.schemaVersion, trains: trains))
+    }
+
+    /// Outputs of earlier upgrades by train id. A train that is already such an
+    /// output is not upgraded again on every save.
+    private var upgradeOutputs: [String: Train] = [:]
+
+    func upgradeOnce(_ train: Train) -> Train {
+        guard upgradeOutputs[train.id] != train else { return train }
+        let upgraded = BundledRegistry.upgradeIfReady(train)
+        // Only a ready region produces an output worth remembering.
+        if let region = train.region?.lowercased(),
+           case .ready = RegistryIdentityLookup.phase(forRegion: region) {
+            upgradeOutputs[train.id] = upgraded
+        }
+        return upgraded
     }
 
     private func identityFieldsChanged(_ before: Train, _ after: Train) -> Bool {
@@ -159,10 +178,18 @@ actor RideStorage {
     // MARK: - writing
 
     /// Validate before touching the previous snapshot, then replace it atomically.
+    /// A snapshot taken while the registry was pending is upgraded here, so it
+    /// cannot replace a settled file with a copy that still lacks station ids.
     func writeStore(_ store: TrainStore) throws -> Date {
+        var store = store
+        store.trains = store.trains.map(upgradeOnce)
         for train in store.trains { try TrainValidation.validateSupportedRegions(train) }
         try createDirectory()
-        try writeExport(store, to: storeURL())
+        // The settle upgrade and the itinerary commit both write the same
+        // bytes; the second one finds them already on disk and stops here.
+        let data = Data(MergedStore.export(store, cache: &exportCache).utf8)
+        if let existing = try? Data(contentsOf: storeURL()), existing == data { return Date() }
+        try writeData(data, storeURL())
         return Date()
     }
 
@@ -294,7 +321,7 @@ actor RideStorage {
     /// replaced. With every region drawn at once there is one working set, so
     /// there is one file — and each ride says which region it belongs to
     /// (`Train.region`) rather than being told by which file it was in.
-    private func storeURL() -> URL {
+    func storeURL() -> URL {
         directory().appending(path: "train-store.json")
     }
 

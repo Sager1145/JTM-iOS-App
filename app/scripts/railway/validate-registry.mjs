@@ -114,7 +114,7 @@ function referenceViolations(ledger) {
     const count = keyRefs.get(entity.id) ?? 0;
     if (count !== 1) violations.push(`key ref ${entity.id} has ${count} ${scheme}`);
   }
-  const knownRuns = new Set(ledger.runs.map((run) => run.run));
+  const knownRuns = new Set((ledger.runs ?? []).map((run) => run.run));
   const checkRun = (record, label) => {
     if (!knownRuns.has(record.run)) violations.push(`run missing ${label}`);
   };
@@ -457,7 +457,10 @@ function aliasViolations(root, ledger) {
 export function collectViolations({ root, db, base, freeze }) {
   const violations = [];
   if (!fs.existsSync(root)) violations.push(`ledger root missing ${root}`);
-  const parsed = fs.existsSync(root) ? parseLedger(root) : { ledger: { entities: new Map(), refs: [], events: [], aliases: [] }, violations: [] };
+  const parsed = fs.existsSync(root) ? parseLedger(root) : {
+    ledger: { entities: new Map(), refs: [], events: [], aliases: [], runs: [] },
+    violations: [],
+  };
   violations.push(...parsed.violations);
   violations.push(...referenceViolations(parsed.ledger));
   violations.push(...facilityViolations(parsed.ledger));

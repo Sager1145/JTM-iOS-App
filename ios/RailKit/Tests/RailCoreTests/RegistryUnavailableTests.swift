@@ -1,5 +1,5 @@
 import Testing
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 /// Identity entry points refuse when no registry is installed. They do not
 /// fall back to name folding, the alias table, or corridor guessing.
@@ -135,6 +135,70 @@ struct RegistryUnavailableTests {
                 in: edited, catalogs: ["jp": catalog()])
             #expect(resolved.stops.map(\.n02StationCode) == [nil, nil])
             #expect(resolved.stops.map(\.stationID) == [nil, nil])
+        }
+    }
+
+    @Test func importWhilePendingResolvesAfterSettle() async {
+        let bundle = RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["SHIN": "st:jp:9"],
+            operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(
+                    names: ["JR東日本"], label: "JR東日本", identity: "jp.jr-east"),
+            ],
+            stations: [
+                "st:jp:9": RegistryStationRecord(
+                    cx: "cx:jp:9", group: "SHIN", codes: ["SHIN"], op: "op:jp:1",
+                    name: "品川", lines: ["lp:jp:1"]),
+            ],
+            complexes: [
+                "cx:jp:9": RegistryComplexRecord(
+                    group: "SHIN", name: "品川", stations: ["st:jp:9"], lon: 139.7, lat: 35.6),
+            ],
+            lineParts: [
+                "lp:jp:1": RegistryLinePartRecord(
+                    packageLine: "lp:jp:1", name: "山手線", op: "op:jp:1", rank: 1),
+            ])
+        let identity = RegistryIdentity(bundle: bundle)
+        final class PhaseBox: @unchecked Sendable {
+            var phase: RegistryPhase = .pending
+        }
+        let box = PhaseBox()
+        let east = StationIndex.LineRef(name: "山手線", operatorName: "JR東日本")
+        let index = StationIndex([
+            StationIndex.Entry(
+                code: "SHIN", name: "品川", coordinate: Coordinate(lon: 139.7, lat: 35.6), line: east),
+        ])
+        let route = TransferGuide.Route(legs: [
+            TransferGuide.Leg(service: "JR山手線", calls: [
+                TransferGuide.Call(name: "品川", departure: "09:00"),
+                TransferGuide.Call(name: "品川", arrival: "09:20"),
+            ]),
+        ])
+        final class Built: @unchecked Sendable {
+            var result: TransferGuide.BuildResult?
+        }
+        let built = Built()
+        await RegistryIdentityLookup.withTestPhase({ _ in box.phase }) {
+            let pending = TransferGuide.build(
+                route: route, options: TransferGuide.BuildOptions(region: "jp"), stations: index)
+            #expect(pending.resolvedCalls == 0)
+            #expect(pending.trains.first?.stops.allSatisfy { $0.stationID == nil } == true)
+            RegistryIdentityLookup.whenSettled(region: "jp") { _ in
+                built.result = TransferGuide.build(
+                    route: route, options: TransferGuide.BuildOptions(region: "jp"), stations: index)
+            }
+            let waited = Task {
+                _ = await SolverRegistryInput.awaitReady(region: "jp")
+                return TransferGuide.build(
+                    route: route, options: TransferGuide.BuildOptions(region: "jp"), stations: index)
+            }
+            box.phase = .ready(identity)
+            RegistryIdentityLookup.notifySettled(region: "jp")
+            let resolved = await waited.value
+            #expect(resolved.resolvedCalls == 2)
+            #expect(resolved.trains.first?.stops.map(\.stationID) == ["st:jp:9", "st:jp:9"])
+            #expect(built.result?.trains.first?.stops.map(\.stationID) == ["st:jp:9", "st:jp:9"])
         }
     }
 }

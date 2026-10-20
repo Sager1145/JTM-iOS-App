@@ -67,7 +67,7 @@ final class AppLocalization {
     init() {
         let saved = UserDefaults.standard.string(forKey: Self.preferenceKey)
         language = Localization.Language(rawValue: saved ?? "") ?? Self.systemLanguage
-        BundledRegistry.addSettledHandler { [weak self] in
+        BundledRegistry.addSettledHandler { [weak self] _ in
             Task { @MainActor in
                 self?.registryGeneration += 1
             }

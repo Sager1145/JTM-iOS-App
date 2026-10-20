@@ -85,10 +85,36 @@ final class ItineraryStore {
     private(set) var lastViewedTrainID: String?
 
     @ObservationIgnored private let preferences: UserDefaults
+    @ObservationIgnored private var settleRegistration: BundledRegistry.SettledRegistration?
 
     init(preferences: UserDefaults = .standard) {
         self.preferences = preferences
         lastViewedTrainID = preferences.string(forKey: Self.lastViewedTrainKey)
+        settleRegistration = BundledRegistry.SettledRegistration { [weak self] region in
+            Task { @MainActor in
+                self?.applySettledIdentity(region: region)
+            }
+        }
+    }
+
+    /// Fills registry ids on in-memory rides of one settled region and saves
+    /// through the normal commit, so the UI and the file both see them.
+    func applySettledIdentity(region: String) {
+        guard var current = store else { return }
+        let cc = region.lowercased()
+        var changed = false
+        for index in current.trains.indices {
+            guard current.trains[index].region?.lowercased() == cc else { continue }
+            let upgraded = BundledRegistry.upgradeIfReady(current.trains[index])
+            if upgraded != current.trains[index] {
+                current.trains[index] = upgraded
+                changed = true
+            }
+        }
+        guard changed else { return }
+        _ = commitWorkingSet(current)
+        publishRecordIndex()
+        regroup(self.store ?? current)
     }
 
     private(set) var selectionRevision = 0

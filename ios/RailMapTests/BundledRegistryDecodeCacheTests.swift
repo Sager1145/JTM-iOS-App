@@ -1,4 +1,5 @@
 import Foundation
+import RailCore
 import Testing
 
 @testable import RailMap

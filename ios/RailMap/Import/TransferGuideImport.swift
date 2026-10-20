@@ -28,12 +28,23 @@ final class TransferGuideImport {
     ) async throws -> TransferGuideOCR.Reading
 
     @ObservationIgnored private let recognize: Recognizer
+    @ObservationIgnored private var settleRegistration: BundledRegistry.SettledRegistration?
 
     init(recognize: @escaping Recognizer = { pages, progress in
         try await TransferGuideOCR.read(pages, onProgress: progress)
     }) {
         self.recognize = recognize
+        settleRegistration = BundledRegistry.SettledRegistration { [weak self] region in
+            guard region.lowercased() == Region.jp.code else { return }
+            Task { @MainActor in
+                self?.rebuildAfterSettle()
+            }
+        }
     }
+
+    /// Set when a rebuild ran while Japan's registry was still pending.
+    private var builtWhilePending = false
+    private var lastExistingIDs: Set<String> = []
 
     enum Phase {
         case waiting
@@ -141,6 +152,9 @@ final class TransferGuideImport {
                 }
                 try Task.checkCancellation()
                 guard self.readingID == readingID else { return }
+                await SolverRegistryInput.awaitReady(region: Region.jp.code)
+                try Task.checkCancellation()
+                guard self.readingID == readingID else { return }
                 self.parsed(reading, existingIDs: existingIDs)
             } catch is CancellationError {
                 return
@@ -220,6 +234,14 @@ final class TransferGuideImport {
         phase = .read
     }
 
+    /// A draft built while the registry was pending is parsed again after it settles.
+    private func rebuildAfterSettle() {
+        guard builtWhilePending, var draft, case .read = phase else { return }
+        builtWhilePending = false
+        rebuild(&draft, existingIDs: lastExistingIDs)
+        self.draft = draft
+    }
+
     // MARK: - the reader's changes
 
     func setDate(_ date: Date, existingIDs: Set<String>) {
@@ -281,6 +303,12 @@ final class TransferGuideImport {
                 ridden: draft.ridden,
                 existingIDs: existingIDs),
             stations: stationIndex(forISODate: isoDate))
+        if case .pending = RegistryIdentityLookup.phase(forRegion: Region.jp.code) {
+            builtWhilePending = true
+            lastExistingIDs = existingIDs
+        } else {
+            builtWhilePending = false
+        }
         func isEmpty(_ value: String?) -> Bool {
             (value ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         }

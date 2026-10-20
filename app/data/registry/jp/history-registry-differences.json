@@ -1,0 +1,845 @@
+{
+  "differences" : [
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "aonami:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2527, to_station_id st:jp:2615)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "chizu:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4093, to_station_id st:jp:4078)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "disney-resort:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7362, to_station_id st:jp:7362)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "guideway-shidami:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2497, to_station_id st:jp:2509)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hidaka:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 鵡川; to name 様似",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hiroden-ekimae-new-approach:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3961, st:jp:3979) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hiroden-ekimae-old-approach:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3961, to_station_id st:jp:3945)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hiroden-ekimae-old-approach:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3961, to_station_id st:jp:3945)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hokkaido-shinkansen:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2051, to_station_id st:jp:1971)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "hokuhoku:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2303, to_station_id st:jp:2290)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "joban:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 相馬; to name 亘理",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "joban:post-relocation-2020-06-01",
+      "reason" : "endpoint has no station_id after upgrade: from name 相馬; to name 亘理",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-fukuoka-nanakuma-2005:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7215, to_station_id st:jp:7199)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-fukuoka-nanakuma-hakata:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7199, to_station_id st:jp:696)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-fukutoshin-ikebukuro-shibuya:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to 003925",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-hanshin-namba-extension:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7618, to_station_id st:jp:8950)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-hokuriku-shinkansen-joetsu-kanazawa:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:118, to_station_id st:jp:8)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-hokuriku-shinkansen-kanazawa-tsuruga:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:8, to_station_id st:jp:414)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-hokuriku-shinkansen-nagano-joetsu:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:231, to_station_id st:jp:117)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-jre-hazawa-link:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:5578, to_station_id st:jp:5556)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-kabe-akikameyama:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7475, to_station_id st:jp:7473)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-keihanna-gakken:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:8686, to_station_id st:jp:8683)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-kitaosaka-senrichuo-minoh:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:1952, st:jp:1954) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-kyushu-shinkansen-hakata:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:695, to_station_id st:jp:703)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-linimo:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2511, to_station_id st:jp:4040)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-narita-sky-access:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1282, to_station_id st:jp:1279)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-okinawa-shuri-urasoe:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:6916, to_station_id st:jp:6920)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-osaka-chuo-yumeshima:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3389, st:jp:3390) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-osaka-higashi-north:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3323, to_station_id st:jp:7388)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-osaka-higashi-south:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7388, to_station_id st:jp:7395)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-portliner-kobe-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7093, to_station_id st:jp:7096)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-saito-saito-nishi:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3301, st:jp:3303) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-sanriku-rias-kamaishi-miyako:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:558, to_station_id st:jp:543)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-sotetsu-hazawa-shinyokohama:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:5579, to_station_id st:jp:4522)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-sotetsu-nishiya-hazawa:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7027, to_station_id st:jp:5579)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-tohoku-shinkansen-shinaomori:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4909, to_station_id st:jp:2052)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-h2005-h1-yurikamome-toyosu:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:350, to_station_id st:jp:354)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ainokaze-transfer-2015-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:92, to_station_id st:jp:2)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ainokaze-transfer-2015-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:92, to_station_id st:jp:2)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-aoimori-metoki-hachinohe-2002-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:376, to_station_id st:jp:4910)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-aoimori-metoki-hachinohe-2002-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:376, to_station_id st:jp:4910)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-donan-isaribi-transfer-2016-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2049, to_station_id st:jp:1967)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-donan-isaribi-transfer-2016-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2049, to_station_id st:jp:1967)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-echigo-hisui-transfer-2015-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:122, to_station_id st:jp:93)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-echigo-hisui-transfer-2015-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:122, to_station_id st:jp:93)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-echigo-myoko-transfer-2015-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:110, to_station_id st:jp:122)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-echigo-myoko-transfer-2015-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:111, to_station_id st:jp:123)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-hapi-line-transfer-2024-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:25, to_station_id st:jp:413)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-hapi-line-transfer-2024-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:25, to_station_id st:jp:414)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-igr-transfer-2002-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:396, to_station_id st:jp:375)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-igr-transfer-2002-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:396, to_station_id st:jp:375)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ir-kanazawa-daishoji-transfer-2024-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7, to_station_id st:jp:24)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ir-kanazawa-daishoji-transfer-2024-before:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from 002092",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ir-kurikara-kanazawa-transfer-2015-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1, to_station_id st:jp:7)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-ir-kurikara-kanazawa-transfer-2015-before:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to 002092",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-jr-tohoku-hachinohe-aomori-2010-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4910, to_station_id st:jp:5141)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-jr-tohoku-hachinohe-aomori-2010-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4910, to_station_id st:jp:5141)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-north-shinano-transfer-2015-after:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:230, to_station_id st:jp:111)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-id-north-shinano-transfer-2015-before:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:230, to_station_id st:jp:111)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-1999-techno-sakaki:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:207, to_station_id st:jp:206)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2001-yashiro-kokomae:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:202, to_station_id st:jp:201)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2002-shinano-kokubunji:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:212, to_station_id st:jp:211)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2006-aoyama:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:396, to_station_id st:jp:395)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2009-chikuma:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:204, to_station_id st:jp:203)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2018-takaoka-yabunami:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:72, to_station_id st:jp:71)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2021-echigo-oshiage-hisui-kaigan:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:132, to_station_id st:jp:131)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-opening-2022-shin-toyamaguchi:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:77, to_station_id st:jp:79)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk01-osaka-umeda-kobe-after-name:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 大阪梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk01-osaka-umeda-kobe-before-name:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk01-osaka-umeda-takarazuka-after-name:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 大阪梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk01-osaka-umeda-takarazuka-before-name:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk86-kyoto-kawaramachi-after-name:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 京都河原町",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hankyu-hk86-kyoto-kawaramachi-before-name:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 河原町",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hanshin-hs01-osaka-umeda-after-name:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 大阪梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hanshin-hs01-osaka-umeda-before-name:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 梅田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hanshin-hs13-naruo-mukogawajoshidai-mae-after-name:at-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 鳴尾・武庫川女子大前",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jp-station-rename-hanshin-hs13-naruo-mukogawajoshidai-mae-before-name:before-event",
+      "reason" : "endpoint has no station_id after upgrade: to name 鳴尾",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jr-kansai-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:8411, to_station_id st:jp:2425)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "jr-tozai:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1632, to_station_id st:jp:7376)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kamiiida:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2604, to_station_id st:jp:2548)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kobe-kaigan:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:7070, to_station_id st:jp:7072)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-karasuma-kokusai-kaikan-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1602, to_station_id st:jp:1603)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-karasuma-kokusai-kaikan-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1602, to_station_id st:jp:1603)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-karasuma-kokusai-kaikan:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1603, to_station_id st:jp:1605)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-rokujizo-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1583, to_station_id st:jp:1584)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-rokujizo-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1583, to_station_id st:jp:1584)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-rokujizo:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1586, to_station_id st:jp:1584)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-uzumasa-tenjingawa-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1571, to_station_id st:jp:1569)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-uzumasa-tenjingawa-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1571, to_station_id st:jp:1569)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "kyoto-tozai-uzumasa-tenjingawa:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1569, to_station_id st:jp:1567)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "mashike:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 深川; to name 増毛",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "meitetsu-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2772, to_station_id st:jp:2846)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "minatomirai:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1417, to_station_id st:jp:6847)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "miyazaki-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:771, to_station_id st:jp:772)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "mojiko-retro:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3897, to_station_id st:jp:3900)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "myoko-joetsu-myoko-rename:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:115, to_station_id st:jp:116)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "myoko-wakinoda-relocation:at-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 北新井; to name 脇野田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "myoko-wakinoda-relocation:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 北新井; to name 脇野田",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-sakuradori-nonami-tokushige-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2598, to_station_id st:jp:2599)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-sakuradori-nonami-tokushige-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2598, to_station_id st:jp:2599)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-sakuradori-nonami-tokushige:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2599, to_station_id st:jp:2603)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-tsurumai-kamiotai-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2572, to_station_id st:jp:2573)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-tsurumai-kamiotai-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2572, to_station_id st:jp:2573)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nagoya-tsurumai-kamiotai:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2574, to_station_id st:jp:2573)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nakanoshima:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1606, to_station_id st:jp:1610)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nankai-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:2397, to_station_id st:jp:2424)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "nippori-toneri:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1341, to_station_id st:jp:4454)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "ofunato:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 気仙沼; to name 盛",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "osaka-monorail-minami-ibaraki-kadomashi-shared-control:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3311, st:jp:3309) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "osaka-monorail-minami-ibaraki-kadomashi-shared-control:before-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3311, st:jp:3309) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "osaka-monorail-minami-ibaraki-kadomashi:at-event",
+      "reason" : "station_id resolves for both endpoints (st:jp:3309, st:jp:1642) but the registry solve found no path",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-osaki-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4358, to_station_id st:jp:4142)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-osaki-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4358, to_station_id st:jp:4142)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-osaki:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4142, to_station_id st:jp:4352)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-tennozu-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4359, to_station_id st:jp:4358)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-tennozu-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4359, to_station_id st:jp:4358)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "rinkai-tennozu:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4358, to_station_id st:jp:4142)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "saitama-rapid:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3242, to_station_id st:jp:3234)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-toho-fukuzumi-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4101, to_station_id st:jp:4133)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-toho-fukuzumi-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4101, to_station_id st:jp:4133)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-toho-fukuzumi:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4133, to_station_id st:jp:4128)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-tozai-miyanosawa-shared-control:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4124, to_station_id st:jp:4125)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-tozai-miyanosawa-shared-control:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4124, to_station_id st:jp:4125)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sapporo-tozai-miyanosawa:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4125, to_station_id st:jp:4127)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sassho-covid-service-end:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 北海道医療大学; to name 新十津川",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sendai-airport:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1735, to_station_id st:jp:1739)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sendai-tozai:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1723, to_station_id st:jp:1734)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "shibayama:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:1345, to_station_id st:jp:7365)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "sukumo:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3193, to_station_id st:jp:3192)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "takachiho:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 延岡; to name 高千穂",
+      "registryOutcome" : "unsolved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "tokyu-shin-yokohama:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4518, to_station_id st:jp:4524)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "toyama-city-loop:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3536, to_station_id st:jp:3552)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "toyama-station-connection:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3537, to_station_id st:jp:3556)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "unsolvable",
+      "id" : "toyama-station-connection:before-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3537, to_station_id st:jp:3556)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "toyo:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4269, to_station_id st:jp:6746)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "tsukuba:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4206, to_station_id st:jp:9398)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "utsunomiya-lrt:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:3497, to_station_id st:jp:3479)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "west-kyushu-shinkansen:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:722, to_station_id st:jp:1073)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "yokohama-green:at-event",
+      "reason" : "registry solve changed the path digest (from_station_id st:jp:4525, to_station_id st:jp:5601)",
+      "registryOutcome" : "solved"
+    },
+    {
+      "fixtureOutcome" : "solved",
+      "id" : "yubari:before-event",
+      "reason" : "endpoint has no station_id after upgrade: from name 新夕張; to name 夕張",
+      "registryOutcome" : "unsolved"
+    }
+  ],
+  "schema" : "jtm-history-registry-differences/1"
+}

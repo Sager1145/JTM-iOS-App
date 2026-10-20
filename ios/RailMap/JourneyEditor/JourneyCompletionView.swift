@@ -82,7 +82,12 @@ struct JourneyCompletionView: View {
                     Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
                 }
             }
-            .task { await prepareCatalogs() }
+            .task {
+                let region = initialTrains.first.map { Region.resolved($0).code } ?? Region.jp.code
+                await SolverRegistryInput.awaitReady(region: region)
+                await prepareCatalogs()
+                rebuildDraftsAfterSettle()
+            }
             .onChange(of: response) { _, value in
                 if value != previewResponse { proposed = nil; failure = nil }
             }
@@ -243,6 +248,16 @@ struct JourneyCompletionView: View {
             ShareLink(item: full) {
                 Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
             }
+        }
+    }
+
+    /// Re-runs the synchronous draft builders after the region's registry settles.
+    private func rebuildDraftsAfterSettle() {
+        if !rawText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            extractRawText()
+        }
+        if !response.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            preview()
         }
     }
 

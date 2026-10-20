@@ -1851,3 +1851,15 @@ test("reviewed history periods mint one operation per line and a changed start i
     fs.rmSync(fixture.dir, { recursive: true, force: true });
   }
 });
+
+test("--freeze --no-base does not throw when the ledger root is missing", () => {
+  const missingRoot = path.join(os.tmpdir(), `jtm-registry-missing-${process.pid}`);
+  const missingDb = path.join(missingRoot, "no-rail.db");
+  fs.rmSync(missingRoot, { recursive: true, force: true });
+  const result = runNode(VALIDATE, ["--root", missingRoot, "--db", missingDb, "--freeze", "--no-base"]);
+  assert.equal(result.error, undefined, result.stderr);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /ledger root missing/);
+  assert.equal(result.stderr.includes("ledger.runs"), false);
+  assert.equal((result.stdout + result.stderr).includes("Cannot read properties of undefined"), false);
+});

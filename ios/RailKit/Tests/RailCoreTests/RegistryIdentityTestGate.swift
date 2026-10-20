@@ -1,5 +1,5 @@
 import Foundation
-import RailCore
+@_spi(Testing) import RailCore
 
 /// Installs a task-local registry lookup so parallel tests keep the process-wide one unset.
 enum RegistryIdentityTestGate {

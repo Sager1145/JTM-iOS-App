@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 struct RecordedRouteAdmissionTests {
     @Test("Existing authored physical selections remain guide-only when inference is rerun")
