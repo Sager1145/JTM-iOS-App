@@ -344,7 +344,7 @@ export function bundleDocument(db, ledger, region, root = null) {
   const run = ledger.runs.reduce((max, item) => Math.max(max, Number(item.run) || 0), 0);
   const brackets = bracketFields(db, region);
   const reversed = reverseTables(db, ledger, region, {
-    live, packageNames, stOp, childrenByParent, stationCodes,
+    live, packageNames, stOp, childrenByParent, stationCodes, root,
   });
   const places = bundleFacilities(ledger, region, live);
   return {
@@ -366,7 +366,19 @@ export function bundleDocument(db, ledger, region, root = null) {
   };
 }
 
-function reverseTables(db, ledger, region, { live, packageNames, stOp, childrenByParent, stationCodes }) {
+function lineOperatorOverrides(root, region) {
+  const overrides = new Map();
+  if (!root) return overrides;
+  const file = path.join(root, region, "line-operators.json");
+  if (!fs.existsSync(file)) return overrides;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (doc?.schema !== "jtm-line-operators/1" || !Array.isArray(doc.lines)) return overrides;
+  for (const item of doc.lines) overrides.set(String(item.lp), String(item.op));
+  return overrides;
+}
+
+function reverseTables(db, ledger, region, { live, packageNames, stOp, childrenByParent, stationCodes, root = null }) {
+  const lpOverride = lineOperatorOverrides(root, region);
   const country = region.toUpperCase();
   const groupOfCx = new Map();
   const codesOfStation = new Map();
@@ -491,11 +503,12 @@ function reverseTables(db, ledger, region, { live, packageNames, stOp, childrenB
     for (const [id, names] of packageNames) {
       if (names.includes(row.operator_name)) holders.add(id);
     }
-    if (holders.size !== 1) continue;
+    const override = lpOverride.get(entity.id);
+    if (holders.size !== 1 && !(override && live(override))) continue;
     const record = {
       packageLine: packageLines[0],
       name: String(row.name),
-      op: [...holders][0],
+      op: override && live(override) ? override : [...holders][0],
       rank: row.rank == null ? 0 : Number(row.rank),
     };
     const network = lnOfLp.get(entity.id);

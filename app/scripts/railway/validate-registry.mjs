@@ -59,12 +59,17 @@ function pushMap(map, key, value) {
 function referenceViolations(ledger) {
   const violations = [];
   const retired = new Map();
+  const retiredIds = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
   const refSeen = new Map();
+  const transferredRefs = new Set();
   for (const ref of ledger.refs) {
     if (!ledger.entities.has(ref.id)) violations.push(`ref target missing ${ref.id}`);
     const key = `${regionOf(ref.id)}\0${ref.scheme}\0${ref.value}\0${ref.from ?? ""}`;
-    if (refSeen.has(key)) violations.push(`duplicate ref ${ref.scheme} ${ref.value}`);
-    else refSeen.set(key, ref.id);
+    // An operator merge / line-operator move re-appends a ref for the new holder once the old holder retired.
+    if (refSeen.has(key) && !(refSeen.get(key) !== ref.id && retiredIds.has(refSeen.get(key)))) {
+      violations.push(`duplicate ref ${ref.scheme} ${ref.value}`);
+    } else if (refSeen.has(key)) transferredRefs.add(ref);
+    refSeen.set(key, ref.id);
   }
   for (const entity of ledger.entities.values()) {
     const kind = kindOf(entity.id);
@@ -99,6 +104,15 @@ function referenceViolations(ledger) {
   }
   for (const alias of ledger.aliases) {
     if (!ledger.entities.has(alias.id)) violations.push(`alias target missing ${alias.id}`);
+    else if ((alias.scheme === "operator-merge" || alias.scheme === "line-operator") && retiredIds.has(alias.id)) {
+      violations.push(`alias target retired ${alias.id}`);
+    }
+  }
+  for (const ref of ledger.refs) {
+    if (ref.scheme !== "derivation" || kindOf(ref.id) !== "st" || ref.from) continue;
+    if (!ledger.entities.has(ref.id) || retiredIds.has(ref.id)) continue;
+    const op = String(ref.value).split("|")[1] ?? "";
+    if (retiredIds.has(op)) violations.push(`live st from retired op ${ref.id}`);
   }
   const keyRefs = new Map();
   for (const ref of ledger.refs) {
@@ -106,6 +120,7 @@ function referenceViolations(ledger) {
     if (KEY_SCHEME[kind] !== ref.scheme) continue;
     // A dated package-operator ref is a rename of the same op, not a second key.
     if (kind === "op" && ref.from) continue;
+    if (transferredRefs.has(ref)) continue;
     keyRefs.set(ref.id, (keyRefs.get(ref.id) ?? 0) + 1);
   }
   for (const entity of ledger.entities.values()) {
@@ -175,7 +190,85 @@ function operationViolations(ledger, retired) {
   return violations;
 }
 
-function coverageViolations(dbPath, ledger) {
+function readRegionDoc(root, region, name, schema, listKey) {
+  const file = path.join(root, region, name);
+  if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return null;
+  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (!doc || doc.schema !== schema || !Array.isArray(doc[listKey])) return { bad: true };
+  return doc;
+}
+
+function reviewedInputViolations(root, ledger) {
+  const violations = [];
+  if (!root || !fs.existsSync(root)) return violations;
+  const retired = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const merged = new Set(ledger.aliases.filter((alias) => alias.scheme === "operator-merge").map((alias) => `${alias.old}\0${alias.id}`));
+  for (const region of REGIONS) {
+    const merges = readRegionDoc(root, region, "operator-merges.json", "jtm-operator-merges/1", "merges");
+    if (merges?.bad) violations.push(`operator-merges schema ${region}`);
+    else if (merges) {
+      const intos = new Set(merges.merges.map((item) => String(item.into ?? "")));
+      const froms = new Map();
+      for (const item of merges.merges) {
+        const into = String(item.into ?? "");
+        if (!live(into) || kindOf(into) !== "op" || regionOf(into) !== region) violations.push(`merge into not live ${into}`);
+        const list = Array.isArray(item.from) ? item.from.map(String) : [];
+        if (!list.length) violations.push(`merge without from ${into}`);
+        for (const from of list) {
+          if (from === into) violations.push(`merge from equals into ${from}`);
+          if (intos.has(from)) violations.push(`merge op both into and from ${from}`);
+          if (froms.has(from) && froms.get(from) !== into) violations.push(`merge from twice ${from}`);
+          froms.set(from, into);
+          const ok = ledger.entities.has(from) && kindOf(from) === "op" && (!retired.has(from) || merged.has(`${from}\0${into}`));
+          if (!ok) violations.push(`merge from not live ${from}`);
+        }
+      }
+    }
+    const overrides = readRegionDoc(root, region, "line-operators.json", "jtm-line-operators/1", "lines");
+    if (overrides?.bad) violations.push(`line-operators schema ${region}`);
+    else if (overrides) {
+      const seen = new Map();
+      for (const item of overrides.lines) {
+        const lp = String(item.lp ?? "");
+        const op = String(item.op ?? "");
+        if (!live(lp) || kindOf(lp) !== "lp" || regionOf(lp) !== region) violations.push(`line operator lp not live ${lp}`);
+        if (!live(op) || kindOf(op) !== "op" || regionOf(op) !== region) violations.push(`line operator op not live ${op}`);
+        if (seen.has(lp) && seen.get(lp) !== op) violations.push(`line operator twice ${lp}`);
+        seen.set(lp, op);
+      }
+    }
+    const generics = readRegionDoc(root, region, "generic-operators.json", "jtm-generic-operators/1", "generics");
+    if (generics?.bad) violations.push(`generic-operators schema ${region}`);
+    else if (generics) {
+      const seenGeneric = new Set();
+      for (const item of generics.generics) {
+        const generic = String(item.generic ?? "");
+        const specifics = Array.isArray(item.specifics) ? item.specifics.map(String) : [];
+        if (!live(generic) || kindOf(generic) !== "op" || regionOf(generic) !== region) violations.push(`generic operator not live ${generic}`);
+        if (seenGeneric.has(generic)) violations.push(`generic operator twice ${generic}`);
+        seenGeneric.add(generic);
+        if (!specifics.length) violations.push(`generic operator without specifics ${generic}`);
+        for (const op of specifics) {
+          if (!live(op) || kindOf(op) !== "op" || regionOf(op) !== region) violations.push(`specific operator not live ${op}`);
+          if (op === generic) violations.push(`generic operator in own specifics ${generic}`);
+        }
+      }
+      for (const item of generics.generics) {
+        const generic = String(item.generic ?? "");
+        for (const other of generics.generics) {
+          const specifics = Array.isArray(other.specifics) ? other.specifics.map(String) : [];
+          if (specifics.includes(generic) && Array.isArray(item.specifics) && item.specifics.map(String).includes(String(other.generic))) {
+            violations.push(`generic operators mutually specific ${generic}`);
+          }
+        }
+      }
+    }
+  }
+  return violations;
+}
+
+function coverageViolations(dbPath, ledger, root = null) {
   const violations = [];
   if (!fs.existsSync(dbPath)) {
     violations.push(`db missing ${dbPath}`);
@@ -215,17 +308,48 @@ function coverageViolations(dbPath, ledger) {
         JOIN line l ON l.id = ls.line_id
         JOIN operator o ON o.id = l.operator_id
     `).all();
-    const expected = new Set();
-    for (const stop of stops) {
+    const overrideOf = new Map();
+    for (const region of REGIONS) {
+      const doc = root ? readRegionDoc(root, region, "line-operators.json", "jtm-line-operators/1", "lines") : null;
+      if (doc && !doc.bad) for (const item of doc.lines) overrideOf.set(String(item.lp), String(item.op));
+    }
+    const genericOf = new Map();
+    for (const region of REGIONS) {
+      const doc = root ? readRegionDoc(root, region, "generic-operators.json", "jtm-generic-operators/1", "generics") : null;
+      if (doc && !doc.bad) for (const item of doc.generics) genericOf.set(String(item.generic), new Set((item.specifics ?? []).map(String)));
+    }
+    const resolveStop = (stop) => {
       const region = String(stop.country_code).toLowerCase();
       const lps = (liveLp.get(stop.line_id) ?? []).filter((id) => regionOf(id) === region);
       const cxs = liveCx.get(`${region}\0${stop.code}`) ?? [];
-      const ops = liveOp.get(`${region}\0${stop.operator_name}`) ?? [];
+      const overrideOp = lps.length === 1 ? overrideOf.get(lps[0]) : null;
+      const ops = overrideOp ? [overrideOp] : liveOp.get(`${region}\0${stop.operator_name}`) ?? [];
+      return { region, lps, cxs, ops };
+    };
+    const opsAtCx = new Map();
+    if (genericOf.size) {
+      for (const stop of stops) {
+        const { region, cxs, ops } = resolveStop(stop);
+        if (cxs.length !== 1 || ops.length !== 1) continue;
+        const key = `${region}\0${cxs[0]}`;
+        if (!opsAtCx.has(key)) opsAtCx.set(key, new Set());
+        opsAtCx.get(key).add(ops[0]);
+      }
+    }
+    const expected = new Set();
+    for (const stop of stops) {
+      const { region, lps, cxs, ops } = resolveStop(stop);
       if (lps.length !== 1 || cxs.length !== 1 || ops.length !== 1) {
         violations.push(`line_station ${stop.line_id}#${stop.seq} unresolved`);
         continue;
       }
-      const sts = liveSt.get(`${region}\0${cxs[0]}|${ops[0]}`) ?? [];
+      let op = ops[0];
+      const specifics = genericOf.get(op);
+      if (specifics) {
+        const present = [...specifics].filter((id) => opsAtCx.get(`${region}\0${cxs[0]}`)?.has(id));
+        if (present.length === 1) op = present[0];
+      }
+      const sts = liveSt.get(`${region}\0${cxs[0]}|${op}`) ?? [];
       if (sts.length !== 1) {
         violations.push(`line_station ${stop.line_id}#${stop.seq} unresolved`);
         continue;
@@ -465,7 +589,8 @@ export function collectViolations({ root, db, base, freeze }) {
   violations.push(...referenceViolations(parsed.ledger));
   violations.push(...facilityViolations(parsed.ledger));
   violations.push(...aliasViolations(root, parsed.ledger));
-  if (db) violations.push(...coverageViolations(db, parsed.ledger));
+  violations.push(...reviewedInputViolations(root, parsed.ledger));
+  if (db) violations.push(...coverageViolations(db, parsed.ledger, root));
   if (base) violations.push(...baseViolations(root, base));
   if (freeze) violations.push(...freezeViolations(root));
   return { violations, ledger: parsed.ledger };

@@ -1,0 +1,10 @@
+{
+ "schema": "jtm-official-codes/1",
+ "schemes": [
+  {
+   "prefix": "CN-12306-",
+   "source": "https://kyfw.12306.cn (12306 station telecodes)",
+   "note": "one telecode = one station"
+  }
+ ]
+}

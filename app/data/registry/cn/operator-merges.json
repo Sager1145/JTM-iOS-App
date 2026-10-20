@@ -1,0 +1,250 @@
+{
+ "schema": "jtm-operator-merges/1",
+ "merges": [
+  {
+   "into": "op:cn:92",
+   "intoName": "北京市地铁运营二分有限公司",
+   "from": [
+    "op:cn:91"
+   ],
+   "fromNames": [
+    "北京地铁运营二分有限公司"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/北京地铁"
+   ],
+   "note": "Spelling variant (市 omitted); same Line 1/Batong unit; branch legal form not sourced",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:90",
+   "intoName": "南京地铁",
+   "from": [
+    "op:cn:213"
+   ],
+   "fromNames": [
+    "Nanjing Metro Group"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/南京地铁"
+   ],
+   "note": "Wiki names 南京地铁集团有限公司 as sole operator; English alias is the same group",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:108",
+   "intoName": "北京市地铁运营一分有限公司",
+   "from": [
+    "op:cn:107"
+   ],
+   "fromNames": [
+    "北京地铁运营一分有限公司"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/北京地铁",
+    "https://zh.wikipedia.org/wiki/北京市地铁运营有限公司"
+   ],
+   "note": "Merge only the two 一分 spellings; 北京市地铁运营有限公司 is the parent running lines 5/9/10, keep apart; Both are spellings of the 运营一分公司 (Lines 5/6/7/亦庄); both rows are Line 7.",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:168",
+   "intoName": "青岛地铁",
+   "from": [
+    "op:cn:127"
+   ],
+   "fromNames": [
+    "Qingdao Metro Corporation"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/青岛地铁"
+   ],
+   "note": "Wiki: 青岛地铁集团有限公司 is operator, 青岛地铁 short name",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:201",
+   "intoName": "南通城市轨道交通有限公司",
+   "from": [
+    "op:cn:188"
+   ],
+   "fromNames": [
+    "Nantong Rail Transit"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/南通轨道交通"
+   ],
+   "note": "English name is system title only; one operator company on wiki",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:8",
+   "intoName": "中国铁路昆明局集团有限公司",
+   "from": [
+    "op:cn:71"
+   ],
+   "fromNames": [
+    "中国铁路昆明局"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/中国国家铁路集团有限公司"
+   ],
+   "note": "Short form of the same bureau (昆明局集团)",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:101",
+   "intoName": "大连交通集团",
+   "from": [
+    "op:cn:136"
+   ],
+   "fromNames": [
+    "Dalian Public Transportation Group"
+   ],
+   "sources": [
+    "https://www.chinanews.com.cn/shipin/cns-d/2024/03-19/news985162.shtml"
+   ],
+   "note": "English/Chinese forms; both Line 3. Search says 2022 merger gave 大连公共交通建设投资集团有限公司 (weak).",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:2",
+   "intoName": "中国铁路",
+   "from": [
+    "op:cn:26"
+   ],
+   "fromNames": [
+    "中国铁路总公司"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/中国国家铁路集团有限公司"
+   ],
+   "note": "总公司 renamed 国铁集团 (approved 2018-12-05, established 2019-06-18); 中国铁路 is its abbreviation.",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:113",
+   "intoName": "长沙轨道交通集团有限公司",
+   "from": [
+    "op:cn:126"
+   ],
+   "fromNames": [
+    "长沙地铁"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/长沙地铁"
+   ],
+   "note": "Wiki infobox gives 长沙市轨道交通集团有限公司 as operator (with 市); brand/entity link inferred.",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:94",
+   "intoName": "深圳市地铁集团有限公司",
+   "from": [
+    "op:cn:189",
+    "op:cn:95"
+   ],
+   "fromNames": [
+    "深圳地铁集团有限公司",
+    "深圳市地铁集团"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/深圳地铁集团"
+   ],
+   "note": "Legal name is 深圳市地铁集团有限公司; the other is a truncation. Line 12 is run by a PPP subsidiary.; Legal name 深圳市地铁集团有限公司; the others are shorthand; Legal name per Wikipedia; others shorthand; Legal name 深圳市地",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:144",
+   "intoName": "成都轨道交通集团有限公司",
+   "from": [
+    "op:cn:96"
+   ],
+   "fromNames": [
+    "成都地铁"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/成都地铁"
+   ],
+   "note": "成都地铁有限责任公司 renamed to 集团 in 2017-02; 成都地铁 is the system name. Infobox operator is 成都地铁运营有限公司.",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:4",
+   "intoName": "中国铁路广州局集团有限公司",
+   "from": [
+    "op:cn:31"
+   ],
+   "fromNames": [
+    "中国铁路广州局集团"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/中国国家铁路集团有限公司"
+   ],
+   "note": "Page lists 广州局集团 as one of 18 bureaus; one body, with/without 有限公司.",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:199",
+   "intoName": "武汉地铁集团",
+   "from": [
+    "op:cn:88"
+   ],
+   "fromNames": [
+    "武汉地铁"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/武汉地铁"
+   ],
+   "note": "武汉地铁 is the system name; 集团有限公司 is builder/operator; weak",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:135",
+   "intoName": "苏州轨道交通公司",
+   "from": [
+    "op:cn:115"
+   ],
+   "fromNames": [
+    "苏州轨道交通"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/苏州轨道交通"
+   ],
+   "note": "Wiki: operator 苏州市轨道交通集团有限公司, brand 苏州轨道交通; variant name not on page",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:98",
+   "intoName": "长春市轨道交通集团",
+   "from": [
+    "op:cn:99"
+   ],
+   "fromNames": [
+    "Changchun Rail Transit Corporation"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/长春轨道交通"
+   ],
+   "note": "Wiki treats a single operator; English name not sourced, inferred",
+   "reviewedBy": "web-research 2026-10-20"
+  },
+  {
+   "into": "op:cn:167",
+   "intoName": "杭州市地铁集团有限责任公司",
+   "from": [
+    "op:cn:112",
+    "op:cn:145"
+   ],
+   "fromNames": [
+    "杭州地铁",
+    "杭州地铁集团责任有限公司"
+   ],
+   "sources": [
+    "https://zh.wikipedia.org/wiki/杭州地铁"
+   ],
+   "note": "Wiki legal name 杭州市地铁集团有限责任公司; first is a typo variant, 杭州地铁 the brand; Wiki legal name 杭州市地铁集团有限责任公司; first is a typo variant, 杭州地铁 the brand",
+   "reviewedBy": "web-research 2026-10-20"
+  }
+ ]
+}

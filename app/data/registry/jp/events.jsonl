@@ -1149,3 +1149,9 @@
 {"id":"lp:jp:229","event":"operation","value":"op:jp:75","on":"2018-04-01","why":"jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.sections","run":7}
 {"id":"lp:jp:229","event":"operation-withdrawn","value":"op:jp:75","on":"2018-04-01","why":"jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations","run":7}
 {"id":"lp:jp:229","event":"operation","value":"op:jp:75","on":"2018-04-01","why":"jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations","run":7}
+{"id":"lp:jp:460","event":"operation","value":"op:jp:122","why":"jp.h2005.h4.rename-041.identity.period0.stations","run":8}
+{"id":"lp:jp:460","event":"operation-end","value":"op:jp:122","on":"2011-03-01","why":"jp.h2005.h4.rename-041.identity.period0.stations","run":8}
+{"id":"lp:jp:479","event":"operation","value":"op:jp:131","why":"jp.h2005.h4.rename-111.identity.period0.stations","run":8}
+{"id":"lp:jp:479","event":"operation-end","value":"op:jp:131","on":"2011-07-01","why":"jp.h2005.h4.rename-111.identity.period0.stations","run":8}
+{"id":"lp:jp:479","event":"operation","value":"op:jp:131","why":"jp.h2005.h4.rename-138.identity.period0.stations","run":8}
+{"id":"lp:jp:479","event":"operation-end","value":"op:jp:131","on":"2011-07-01","why":"jp.h2005.h4.rename-138.identity.period0.stations","run":8}

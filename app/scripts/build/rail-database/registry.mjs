@@ -319,6 +319,9 @@ function blankAdditions() {
     crosswalkConflicts: [],
     operatorRenameInvalid: [],
     operatorNameAmbiguous: [],
+    operatorMergeInvalid: [],
+    lineOperatorInvalid: [],
+    genericOperatorInvalid: [],
   };
 }
 
@@ -527,6 +530,22 @@ function readRoutePatterns(root, region) {
 
 function readHistoryCrosswalk(root, region) {
   return readReviewed(root, region, "history-crosswalk.json", "jtm-history-crosswalk/1", "entries");
+}
+
+function readOperatorMerges(root, region) {
+  return readReviewed(root, region, "operator-merges.json", "jtm-operator-merges/1", "merges");
+}
+
+function readLineOperators(root, region) {
+  return readReviewed(root, region, "line-operators.json", "jtm-line-operators/1", "lines");
+}
+
+function readGenericOperators(root, region) {
+  return readReviewed(root, region, "generic-operators.json", "jtm-generic-operators/1", "generics");
+}
+
+function readOfficialCodeSchemes(root, region) {
+  return readReviewed(root, region, "official-code-schemes.json", "jtm-official-codes/1", "schemes");
 }
 
 function readStationFacilities(root, region) {
@@ -764,9 +783,15 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const parts = String(ref.id).split(":");
     if (parts[1] !== region) continue;
     refIndex.set(`${ref.scheme}\0${ref.value}`, ref.id);
-    refUniq.set(`${ref.scheme}\0${ref.value}\0${ref.from ?? ""}`, ref.id);
-    if (DERIV_SCHEME[parts[0]] === ref.scheme && !ref.from) derivByEntity.set(ref.id, ref.value);
-    if (KEY_SCHEME[parts[0]] === ref.scheme && !(parts[0] === "op" && ref.from)) {
+    const uniqKey = `${ref.scheme}\0${ref.value}\0${ref.from ?? ""}`;
+    const prior = refUniq.get(uniqKey);
+    // A ref re-appended for a new holder after the old holder retired (operator merge) is not a second key.
+    const transferred = prior !== undefined && prior !== ref.id && retired.has(prior);
+    refUniq.set(uniqKey, ref.id);
+    if (DERIV_SCHEME[parts[0]] === ref.scheme && !ref.from && !(parts[0] === "cx" && derivByEntity.has(ref.id))) {
+      derivByEntity.set(ref.id, ref.value);
+    }
+    if (KEY_SCHEME[parts[0]] === ref.scheme && !(parts[0] === "op" && ref.from) && !transferred) {
       keyRefCount.set(ref.id, (keyRefCount.get(ref.id) ?? 0) + 1);
     }
     if (ref.scheme === "package-operator" && parts[0] === "op" && entities.has(ref.id) && !retired.has(ref.id)) {
@@ -794,15 +819,21 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     additions.reappeared.push(entry);
   };
 
+  const pendingRetire = new Set();
   const addRef = (kind, id, scheme, value, from = null) => {
     const uniq = `${scheme}\0${value}\0${from ?? ""}`;
-    if (refUniq.has(uniq)) return false;
+    const holder = refUniq.get(uniq);
+    if (holder !== undefined) {
+      const transferable = (scheme === "station-code" || scheme === "group-code") && holder !== id
+        && (retired.has(holder) || pendingRetire.has(holder));
+      if (!transferable) return false;
+    }
     refUniq.set(uniq, id);
     refIndex.set(`${scheme}\0${value}`, id);
     const rec = { id, scheme, value, run: runId };
     if (from) rec.from = from;
     additions.refs.push({ region, kind, rec });
-    if (DERIV_SCHEME[kind] === scheme && !from) derivByEntity.set(id, value);
+    if (DERIV_SCHEME[kind] === scheme && !from && !(kind === "cx" && derivByEntity.has(id))) derivByEntity.set(id, value);
     return true;
   };
 
@@ -873,6 +904,109 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     additions.operatorRenameInvalid.sort((a, b) => compareText(a.op, b.op) || compareText(a.from, b.from) || compareText(a.name, b.name));
   }
 
+  const aliasSeen = new Set(ledger.aliases.map((alias) => `${alias.old}\0${alias.scheme}\0${alias.id}`));
+  const pushAlias = (old, scheme, id) => {
+    const key = `${old}\0${scheme}\0${id}`;
+    if (aliasSeen.has(key)) return;
+    aliasSeen.add(key);
+    additions.aliases.push({ region, rec: { old, scheme, id, run: runId } });
+  };
+  const retireWhy = new Map();
+  const liveOp = (id) => ID_RE.test(id) && id.startsWith(`op:${region}:`) && entities.has(id) && !retired.has(id);
+
+  const mergeOf = new Map();
+  const mergeDoc = readOperatorMerges(root, region);
+  if (mergeDoc) {
+    const intoSet = new Set();
+    const fromSet = new Set();
+    for (const merge of mergeDoc.merges) {
+      intoSet.add(String(merge.into ?? ""));
+      for (const from of Array.isArray(merge.from) ? merge.from : []) fromSet.add(String(from));
+    }
+    const merges = [...mergeDoc.merges].sort((a, b) => compareId(String(a.into ?? ""), String(b.into ?? "")));
+    for (const merge of merges) {
+      const into = String(merge.into ?? "");
+      const froms = (Array.isArray(merge.from) ? merge.from.map(String) : []).sort(compareId);
+      const problems = [];
+      if (!liveOp(into)) problems.push("into not live");
+      if (fromSet.has(into)) problems.push("into is also from");
+      if (!froms.length) problems.push("no from");
+      for (const from of froms) {
+        const done = aliasSeen.has(`${from}\0operator-merge\0${into}`);
+        if (from === into) problems.push(`from equals into ${from}`);
+        else if (intoSet.has(from)) problems.push(`from is also into ${from}`);
+        else if (!(liveOp(from) || (done && entities.has(from)))) problems.push(`from not live ${from}`);
+        else if (mergeOf.has(from) && mergeOf.get(from) !== into) problems.push(`from merged twice ${from}`);
+      }
+      if (problems.length) {
+        additions.operatorMergeInvalid.push({ into, from: froms, problems });
+        continue;
+      }
+      for (const from of froms) {
+        mergeOf.set(from, into);
+        const names = ledger.refs.concat(additions.refs.map((item) => item.rec))
+          .filter((ref) => ref.id === from && ref.scheme === "package-operator");
+        for (const ref of names) {
+          const key = `package-operator\0${ref.value}\0${ref.from ?? ""}`;
+          if (refUniq.get(key) !== into) {
+            const rec = { id: into, scheme: "package-operator", value: ref.value, run: runId };
+            if (ref.from) rec.from = ref.from;
+            additions.refs.push({ region, kind: "op", rec });
+            refUniq.set(key, into);
+          }
+          refIndex.set(`package-operator\0${ref.value}`, into);
+          const holders = liveOpsByName.get(ref.value) ?? new Set();
+          holders.delete(from);
+          holders.add(into);
+          liveOpsByName.set(ref.value, holders);
+        }
+        if (!retired.has(from)) {
+          additions.events.push({
+            region,
+            rec: { id: from, event: "retire", on: at, why: `merged into ${into}`, run: runId },
+          });
+          retired.add(from);
+        }
+        pushAlias(from, "operator-merge", into);
+      }
+    }
+    additions.operatorMergeInvalid.sort((a, b) => compareId(a.into, b.into));
+  }
+
+  const lpOverride = new Map();
+  const overrideDoc = readLineOperators(root, region);
+  if (overrideDoc) {
+    for (const item of overrideDoc.lines) {
+      const lp = String(item.lp ?? "");
+      const op = String(item.op ?? "");
+      const lpLive = ID_RE.test(lp) && lp.startsWith(`lp:${region}:`) && entities.has(lp) && !retired.has(lp);
+      if (!lpLive || !liveOp(op) || mergeOf.has(op) || (lpOverride.has(lp) && lpOverride.get(lp) !== op)) {
+        additions.lineOperatorInvalid.push({ lp, op });
+        continue;
+      }
+      lpOverride.set(lp, op);
+    }
+    additions.lineOperatorInvalid.sort((a, b) => compareId(a.lp, b.lp));
+  }
+
+  const genericSpecifics = new Map();
+  const genericDoc = readGenericOperators(root, region);
+  if (genericDoc) {
+    for (const item of genericDoc.generics) {
+      const generic = String(item.generic ?? "");
+      const specifics = Array.isArray(item.specifics) ? item.specifics.map(String) : [];
+      const bad = !liveOp(generic) || mergeOf.has(generic) || specifics.length === 0
+        || specifics.some((op) => !liveOp(op) || mergeOf.has(op) || op === generic)
+        || genericSpecifics.has(generic);
+      if (bad) {
+        additions.genericOperatorInvalid.push({ generic, specifics });
+        continue;
+      }
+      genericSpecifics.set(generic, new Set(specifics));
+    }
+    additions.genericOperatorInvalid.sort((a, b) => compareId(a.generic, b.generic));
+  }
+
   const operators = db.prepare(
     "SELECT id, name FROM operator WHERE country_code = ? ORDER BY id",
   ).all(country);
@@ -929,8 +1063,61 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
       `).all(country)
     : [];
 
+  // An official station code is authoritative identity: complexes sharing one are the same station.
+  const complexMerge = new Map();
+  const schemeDoc = readOfficialCodeSchemes(root, region);
+  const prefixes = (schemeDoc?.schemes ?? []).map((item) => String(item.prefix ?? "")).filter(Boolean);
+  if (prefixes.length) {
+    const holders = new Map();
+    for (const row of codeRows) {
+      const sc = row.station_code;
+      if (!sc || !prefixes.some((prefix) => String(sc).startsWith(prefix))) continue;
+      const cx = cxByCode.get(row.group_code);
+      if (!cx) continue;
+      if (!holders.has(sc)) holders.set(sc, new Set());
+      holders.get(sc).add(cx);
+    }
+    const parent = new Map();
+    const find = (x) => {
+      if (!parent.has(x)) parent.set(x, x);
+      while (parent.get(x) !== x) x = parent.get(x);
+      return x;
+    };
+    const viaCode = new Map();
+    for (const code of [...holders.keys()].sort(compareText)) {
+      const set = [...holders.get(code)];
+      if (set.length < 2) continue;
+      for (const cx of set) if (!viaCode.has(cx)) viaCode.set(cx, code);
+      for (const cx of set.slice(1)) parent.set(find(cx), find(set[0]));
+    }
+    const groups = new Map();
+    for (const cx of viaCode.keys()) pushMap(groups, find(cx), cx);
+    for (const members of groups.values()) {
+      members.sort((a, b) => seqOf(a) - seqOf(b));
+      const kept = members[0];
+      for (const old of members.slice(1)) {
+        if (!retired.has(old)) {
+          additions.events.push({
+            region,
+            rec: { id: old, event: "retire", on: at, why: `merged by official code ${viaCode.get(old)}`, run: runId },
+          });
+          retired.add(old);
+        }
+        pushAlias(old, "complex-merge", kept);
+        complexMerge.set(old, kept);
+        const keys = ledger.refs.concat(additions.refs.map((item) => item.rec))
+          .filter((ref) => ref.id === old && ref.scheme === "group-code" && !ref.from)
+          .map((ref) => ref.value);
+        for (const value of keys) addRef("cx", kept, "group-code", value);
+      }
+    }
+    for (const [code, cx] of cxByCode) {
+      if (complexMerge.has(cx)) cxByCode.set(code, complexMerge.get(cx));
+    }
+  }
+
   const pairs = db.prepare(`
-    SELECT DISTINCT s.code AS code, o.id AS operator_id, o.name AS operator_name
+    SELECT DISTINCT s.code AS code, o.id AS operator_id, o.name AS operator_name, l.id AS line_id
       FROM line_station ls
       JOIN line l ON l.id = ls.line_id
       JOIN station s ON s.id = ls.station_id
@@ -938,29 +1125,95 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
      WHERE l.country_code = ?
   `).all(country);
   const stRows = [];
+  const stRowSeen = new Set();
+  const moveCandidates = [];
+  const opsAtCx = new Map();
+  if (genericSpecifics.size) {
+    for (const row of pairs) {
+      const cx = cxByCode.get(row.code);
+      const op = lpOverride.get(lpByLineId.get(row.line_id)) ?? opByOperatorId.get(row.operator_id);
+      if (!cx || !op) continue;
+      if (!opsAtCx.has(cx)) opsAtCx.set(cx, new Set());
+      opsAtCx.get(cx).add(op);
+    }
+  }
+  // A generic operator's stop belongs to the one specific operator present in the same complex.
+  const genericResolved = (cx, op) => {
+    const specifics = genericSpecifics.get(op);
+    if (!specifics) return op;
+    const present = [...specifics].filter((id) => opsAtCx.get(cx)?.has(id));
+    return present.length === 1 ? present[0] : op;
+  };
   for (const row of pairs) {
     const cx = cxByCode.get(row.code);
-    const op = opByOperatorId.get(row.operator_id);
+    const baseOp = opByOperatorId.get(row.operator_id);
+    const lineOp = lpOverride.get(lpByLineId.get(row.line_id)) ?? baseOp;
+    const op = cx && lineOp ? genericResolved(cx, lineOp) : lineOp;
     if (!cx || !op) continue;
-    stRows.push({ ...row, cx, op, cxSeq: seqOf(cx), opSeq: seqOf(op) });
+    if (op !== baseOp && baseOp) moveCandidates.push({ cx, baseOp, op });
+    const dedupe = `${cx}|${op}`;
+    if (stRowSeen.has(dedupe)) continue;
+    stRowSeen.add(dedupe);
+    stRows.push({ ...row, cx, op, overridden: op !== baseOp, cxSeq: seqOf(cx), opSeq: seqOf(op) });
   }
   stRows.sort((a, b) => a.cxSeq - b.cxSeq || a.opSeq - b.opSeq || compareText(a.code, b.code));
   const stByCxOp = new Map();
+  const overrideStByCx = new Map();
   for (const row of stRows) {
     const value = `${row.cx}|${row.op}`;
     const id = ensureEntity("st", "derivation", value, { parent: row.cx });
     if (!id) continue;
     stByCxOp.set(`${row.cx}|${row.op}`, id);
+    if (row.overridden) pushMap(overrideStByCx, row.cx, id);
+  }
+  // Stations whose derivation is no longer produced retire; moved ones are aliased to their replacement.
+  const oldStFor = new Map();
+  const noteMove = (newSt, oldSt, scheme) => {
+    if (!newSt || !oldSt || newSt === oldSt) return;
+    if (!oldStFor.has(newSt)) oldStFor.set(newSt, new Map());
+    oldStFor.get(newSt).set(oldSt, scheme);
+  };
+  const liveSt = (id) => id && entities.has(id) && !retired.has(id);
+  for (const [id] of entities) {
+    if (!id.startsWith(`st:${region}:`) || retired.has(id)) continue;
+    const value = derivByEntity.get(id);
+    if (value === undefined || inputs.st.has(value)) continue;
+    pendingRetire.add(id);
+    const [cx, op] = value.split("|");
+    if (complexMerge.has(cx)) {
+      const target = stByCxOp.get(`${complexMerge.get(cx)}|${mergeOf.get(op) ?? op}`);
+      if (target) retireWhy.set(id, `merged into ${target}`);
+      noteMove(target, id, "station-merge");
+    } else if (mergeOf.has(op)) {
+      retireWhy.set(id, `merged into ${mergeOf.get(op)}`);
+      noteMove(stByCxOp.get(`${cx}|${mergeOf.get(op)}`), id, "operator-merge");
+    }
+  }
+  for (const item of moveCandidates) {
+    const oldSt = refIndex.get(`derivation\0${item.cx}|${item.baseOp}`);
+    if (!liveSt(oldSt)) continue;
+    if (pendingRetire.has(oldSt)) retireWhy.set(oldSt, "line operator override");
+    noteMove(stByCxOp.get(`${item.cx}|${item.op}`), oldSt, "line-operator");
+  }
+  for (const [newSt, olds] of oldStFor) {
+    // A station still used by other lines stays live and unaliased; only its stops move.
+    for (const [oldSt, scheme] of olds) if (pendingRetire.has(oldSt)) pushAlias(oldSt, scheme, newSt);
   }
   const opIdByName = new Map(operators.map((row) => [row.name, row.id]));
   const stationCodeRows = [];
   for (const row of codeRows) {
     if (!row.station_code) continue;
     const operatorId = opIdByName.get(row.operator);
-    const op = operatorId == null ? null : opByOperatorId.get(operatorId);
+    const baseOp = operatorId == null ? null : opByOperatorId.get(operatorId);
     const cx = cxByCode.get(row.group_code);
+    const op = baseOp && cx ? genericResolved(cx, baseOp) : baseOp;
     const stId = op && cx ? stByCxOp.get(`${cx}|${op}`) ?? null : null;
-    stationCodeRows.push({ code: row.station_code, operator: row.operator, stId });
+    const overridden = !stId && cx ? overrideStByCx.get(cx) : null;
+    stationCodeRows.push({
+      code: row.station_code,
+      operator: stId || !overridden || overridden.length !== 1 ? (op ?? row.operator) : "override",
+      stId: stId ?? (overridden?.length === 1 ? overridden[0] : null),
+    });
   }
   const stationCodes = planStationCodes(stationCodeRows);
   for (const conflict of stationCodes.conflicts) {
@@ -980,12 +1233,19 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
   for (const row of stops) {
     const lp = lpByLineId.get(row.line_id);
     const cx = cxByCode.get(row.code);
-    const op = opByOperatorId.get(row.operator_id);
+    const lineOp = lpOverride.get(lp) ?? opByOperatorId.get(row.operator_id);
+    const op = cx && lineOp ? genericResolved(cx, lineOp) : lineOp;
     if (!lp || !cx || !op) continue;
     if (retired.has(lp) || retired.has(cx) || retired.has(op)) continue;
     const stId = stByCxOp.get(`${cx}|${op}`);
     if (!stId || retired.has(stId)) continue;
-    ensureEntity("ls", "derivation", `${lp}|${stId}`, { parent: stId, part: lp });
+    const lsId = ensureEntity("ls", "derivation", `${lp}|${stId}`, { parent: stId, part: lp });
+    for (const [oldSt, scheme] of oldStFor.get(stId) ?? []) {
+      const oldLs = refIndex.get(`derivation\0${lp}|${oldSt}`);
+      if (!lsId || !oldLs || oldLs === lsId || !entities.has(oldLs) || retired.has(oldLs)) continue;
+      retireWhy.set(oldLs, scheme === "operator-merge" || scheme === "station-merge" ? `merged into ${stId}` : "line operator override");
+      pushAlias(oldLs, scheme, lsId);
+    }
   }
 
   const patternDoc = readRoutePatterns(root, region);
@@ -1088,7 +1348,7 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
   for (const id of retireIds) {
     additions.events.push({
       region,
-      rec: { id, event: "retire", on: at, why: "absent from inputs", run: runId },
+      rec: { id, event: "retire", on: at, why: retireWhy.get(id) ?? "absent from inputs", run: runId },
     });
     retired.add(id);
   }
@@ -1161,28 +1421,42 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     if (operationEvents.has(item.rec.event)) seenOperation.add(operationEventKey(item.rec));
   }
   const queued = [];
+  const opState = new Map();
+  const ledgerWithdrawn = withdrawnOperationPairs(ledger.events);
+  for (const event of [...ledger.events, ...additions.events.map((item) => item.rec)]) {
+    if (event.event !== "operation" && event.event !== "operation-withdrawn") continue;
+    opState.set([event.id, event.value ?? "", event.on ?? "", event.why ?? ""].join("\0"), event.event === "operation" ? "live" : "withdrawn");
+  }
   const historyPlan = planHistoryCrosswalk(historyCrosswalkEntries(root, region));
   for (const planned of historyPlan.accepted) {
     const { lp, op, validFrom, validTo } = planned;
     if (!entities.has(lp) || retired.has(lp) || !entities.has(op) || retired.has(op)) continue;
     const why = String(planned.entry.history_id ?? "");
     const newOn = validFrom ?? "";
+    const stateKey = (id, v, on, w) => [id, v ?? "", on ?? "", w ?? ""].join("\0");
     for (const event of ledger.events) {
       if (event.event !== "operation" || event.id !== lp || (event.value ?? "") !== op || (event.why ?? "") !== why) continue;
       const sameOn = (event.on ?? "") === newOn;
       const end = operationEndEvent(ledger.events, event);
-      const empty = operationIntervalEmpty(event, end);
+      const empty = operationIntervalEmpty(event, end) && !operationEventWithdrawn(end, ledgerWithdrawn);
       if (sameOn && !empty) continue;
-      queueOperationWithdrawal(queued, seenOperation, { id: lp, value: op, why, on: event.on }, runId);
-      if (sameOn) seenOperation.delete(operationEventKey(event));
+      if (opState.get(stateKey(lp, op, event.on, why)) !== "live") continue;
+      queueOperationWithdrawal(queued, new Set(), { id: lp, value: op, why, on: event.on }, runId);
+      opState.set(stateKey(lp, op, event.on, why), "withdrawn");
       if (validTo && end) seenOperation.delete(operationEventKey(end));
     }
     const start = { id: lp, event: "operation", value: op, why, run: runId };
     if (validFrom) start.on = validFrom;
-    const pair = [start];
+    let startAppended = false;
+    if (opState.get(stateKey(lp, op, validFrom, why)) !== "live") {
+      opState.set(stateKey(lp, op, validFrom, why), "live");
+      queued.push(start);
+      startAppended = true;
+    }
+    const pair = [];
     if (validTo) pair.push({ id: lp, event: "operation-end", value: op, on: validTo, why, run: runId });
     for (const rec of pair) {
-      if (seenOperation.has(operationEventKey(rec))) continue;
+      if (!startAppended && seenOperation.has(operationEventKey(rec))) continue;
       seenOperation.add(operationEventKey(rec));
       queued.push(rec);
     }
@@ -1191,7 +1465,12 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const why = String(planned.entry.history_id ?? "");
     const prior = ledger.events.filter((event) => event.event === "operation"
       && event.id === planned.lp && (event.value ?? "") === planned.op && (event.why ?? "") === why);
-    for (const event of prior) queueOperationWithdrawal(queued, seenOperation, event, runId);
+    for (const event of prior) {
+      const key = [event.id, event.value ?? "", event.on ?? "", event.why ?? ""].join("\0");
+      if (opState.get(key) !== "live") continue;
+      opState.set(key, "withdrawn");
+      queueOperationWithdrawal(queued, new Set(), event, runId);
+    }
   }
   queued.sort((a, b) => compareText(a.why ?? "", b.why ?? "")
     || (operationQueueRank(a.event) - operationQueueRank(b.event))

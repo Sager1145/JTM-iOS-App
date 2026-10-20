@@ -6436,6 +6436,15 @@
       "metres": 105
     },
     {
+      "name": "万盛东",
+      "op": "op:cn:108",
+      "cx": [
+        "cx:cn:7938",
+        "cx:cn:7960"
+      ],
+      "metres": 10
+    },
+    {
       "name": "万科新城",
       "op": "op:cn:123",
       "cx": [
@@ -6797,7 +6806,7 @@
     },
     {
       "name": "世荣路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7742",
         "cx:cn:9903"
@@ -6896,12 +6905,30 @@
     },
     {
       "name": "东大桥",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7734",
         "cx:cn:9910"
       ],
       "metres": 4
+    },
+    {
+      "name": "东大桥",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:7734",
+        "cx:cn:13809"
+      ],
+      "metres": 236
+    },
+    {
+      "name": "东大桥",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:9910",
+        "cx:cn:13809"
+      ],
+      "metres": 239
     },
     {
       "name": "东安路",
@@ -7037,6 +7064,15 @@
         "cx:cn:10243"
       ],
       "metres": 84
+    },
+    {
+      "name": "东方之门",
+      "op": "op:cn:135",
+      "cx": [
+        "cx:cn:9933",
+        "cx:cn:10900"
+      ],
+      "metres": 6
     },
     {
       "name": "东方体育中心",
@@ -7237,6 +7273,15 @@
       "metres": 15
     },
     {
+      "name": "临顿路",
+      "op": "op:cn:135",
+      "cx": [
+        "cx:cn:9938",
+        "cx:cn:13286"
+      ],
+      "metres": 80
+    },
+    {
       "name": "丹水池",
       "op": "op:cn:2",
       "cx": [
@@ -7334,6 +7379,15 @@
         "cx:cn:9294"
       ],
       "metres": 153
+    },
+    {
+      "name": "五和",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7659",
+        "cx:cn:11189"
+      ],
+      "metres": 43
     },
     {
       "name": "五洲大道",
@@ -7561,8 +7615,17 @@
       "metres": 17
     },
     {
+      "name": "八卦岭",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:9201",
+        "cx:cn:11177"
+      ],
+      "metres": 174
+    },
+    {
       "name": "公平路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7737",
         "cx:cn:9908"
@@ -7760,7 +7823,7 @@
     },
     {
       "name": "北海路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7741",
         "cx:cn:9904"
@@ -7814,7 +7877,7 @@
     },
     {
       "name": "升仙湖",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:7557",
         "cx:cn:10035"
@@ -7868,7 +7931,7 @@
     },
     {
       "name": "华强北",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7631",
         "cx:cn:9199"
@@ -7877,7 +7940,7 @@
     },
     {
       "name": "华强南",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:8981",
         "cx:cn:9198"
@@ -7886,7 +7949,7 @@
     },
     {
       "name": "华西坝",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:7550",
         "cx:cn:11148"
@@ -8012,7 +8075,7 @@
     },
     {
       "name": "南门",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:9961",
         "cx:cn:11659"
@@ -8156,7 +8219,7 @@
     },
     {
       "name": "双龙",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7455",
         "cx:cn:12724"
@@ -8192,12 +8255,30 @@
     },
     {
       "name": "吉林大路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7736",
         "cx:cn:9909"
       ],
       "metres": 4
+    },
+    {
+      "name": "吉林大路",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:7736",
+        "cx:cn:10541"
+      ],
+      "metres": 104
+    },
+    {
+      "name": "吉林大路",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:9909",
+        "cx:cn:10541"
+      ],
+      "metres": 102
     },
     {
       "name": "吉祥街",
@@ -8210,7 +8291,7 @@
     },
     {
       "name": "后海",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7618",
         "cx:cn:8984"
@@ -8525,7 +8606,7 @@
     },
     {
       "name": "坪山围",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:12575",
         "cx:cn:12717"
@@ -8804,7 +8885,7 @@
     },
     {
       "name": "大运",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7450",
         "cx:cn:12570"
@@ -8849,7 +8930,7 @@
     },
     {
       "name": "天府机场3号4号航站楼",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10700",
         "cx:cn:11203"
@@ -9065,7 +9146,7 @@
     },
     {
       "name": "威海路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7740",
         "cx:cn:9905"
@@ -9073,8 +9154,26 @@
       "metres": 6
     },
     {
+      "name": "威海路",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:7740",
+        "cx:cn:13766"
+      ],
+      "metres": 138
+    },
+    {
+      "name": "威海路",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:9905",
+        "cx:cn:13766"
+      ],
+      "metres": 134
+    },
+    {
       "name": "娇子立交",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:11146",
         "cx:cn:13665"
@@ -9334,6 +9433,15 @@
       "metres": 164
     },
     {
+      "name": "岗厦北",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7630",
+        "cx:cn:11183"
+      ],
+      "metres": 119
+    },
+    {
       "name": "岚皋路",
       "op": "op:cn:81",
       "cx": [
@@ -9407,7 +9515,7 @@
     },
     {
       "name": "市一医院",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10452",
         "cx:cn:13671"
@@ -9416,7 +9524,7 @@
     },
     {
       "name": "市民中心",
-      "op": "op:cn:145",
+      "op": "op:cn:167",
       "cx": [
         "cx:cn:10493",
         "cx:cn:11509"
@@ -9704,7 +9812,7 @@
     },
     {
       "name": "广埠屯站",
-      "op": "op:cn:88",
+      "op": "op:cn:199",
       "cx": [
         "cx:cn:8394",
         "cx:cn:10355"
@@ -9748,8 +9856,17 @@
       "metres": 44
     },
     {
+      "name": "广济南路",
+      "op": "op:cn:135",
+      "cx": [
+        "cx:cn:8266",
+        "cx:cn:9941"
+      ],
+      "metres": 35
+    },
+    {
       "name": "应天寺",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10026",
         "cx:cn:10135"
@@ -9983,7 +10100,7 @@
     },
     {
       "name": "怡心湖",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10461",
         "cx:cn:13065"
@@ -10061,6 +10178,24 @@
         "cx:cn:10131"
       ],
       "metres": 17
+    },
+    {
+      "name": "成都西站",
+      "op": "op:cn:144",
+      "cx": [
+        "cx:cn:8943",
+        "cx:cn:10306"
+      ],
+      "metres": 140
+    },
+    {
+      "name": "成都西站",
+      "op": "op:cn:144",
+      "cx": [
+        "cx:cn:8943",
+        "cx:cn:10924"
+      ],
+      "metres": 140
     },
     {
       "name": "成都西站",
@@ -10217,7 +10352,7 @@
     },
     {
       "name": "新荣",
-      "op": "op:cn:88",
+      "op": "op:cn:199",
       "cx": [
         "cx:cn:7069",
         "cx:cn:10626"
@@ -10325,7 +10460,7 @@
     },
     {
       "name": "明蜀王陵",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:8958",
         "cx:cn:10133"
@@ -10610,6 +10745,15 @@
         "cx:cn:7382"
       ],
       "metres": 35
+    },
+    {
+      "name": "机场东",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7425",
+        "cx:cn:12645"
+      ],
+      "metres": 67
     },
     {
       "name": "李子园",
@@ -10979,6 +11123,15 @@
         "cx:cn:11425"
       ],
       "metres": 139
+    },
+    {
+      "name": "梨园",
+      "op": "op:cn:92",
+      "cx": [
+        "cx:cn:7173",
+        "cx:cn:7206"
+      ],
+      "metres": 5
     },
     {
       "name": "梨园路",
@@ -11423,7 +11576,7 @@
     },
     {
       "name": "洞子口",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10441",
         "cx:cn:11385"
@@ -11549,7 +11702,7 @@
     },
     {
       "name": "浦东路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7739",
         "cx:cn:9906"
@@ -11584,6 +11737,15 @@
       "metres": 42
     },
     {
+      "name": "海上世界",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:11990",
+        "cx:cn:12662"
+      ],
+      "metres": 138
+    },
+    {
       "name": "海伦路",
       "op": "op:cn:81",
       "cx": [
@@ -11612,7 +11774,7 @@
     },
     {
       "name": "海口路",
-      "op": "op:cn:99",
+      "op": "op:cn:98",
       "cx": [
         "cx:cn:7738",
         "cx:cn:9907"
@@ -11648,7 +11810,7 @@
     },
     {
       "name": "海昌路",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10121",
         "cx:cn:10695"
@@ -11737,6 +11899,15 @@
       "metres": 4
     },
     {
+      "name": "深圳北站",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7657",
+        "cx:cn:11173"
+      ],
+      "metres": 90
+    },
+    {
       "name": "渌水道",
       "op": "op:cn:185",
       "cx": [
@@ -11783,7 +11954,7 @@
     },
     {
       "name": "湖贝",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7633",
         "cx:cn:7669"
@@ -11864,7 +12035,7 @@
     },
     {
       "name": "火车南站",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:7546",
         "cx:cn:10693"
@@ -11926,6 +12097,15 @@
       "metres": 120
     },
     {
+      "name": "狮子山",
+      "op": "op:cn:135",
+      "cx": [
+        "cx:cn:9946",
+        "cx:cn:10915"
+      ],
+      "metres": 58
+    },
+    {
       "name": "玉树路",
       "op": "op:cn:139",
       "cx": [
@@ -11981,7 +12161,7 @@
     },
     {
       "name": "琼姬墩",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:13291",
         "cx:cn:13326"
@@ -12152,7 +12332,7 @@
     },
     {
       "name": "石厦",
-      "op": "op:cn:95",
+      "op": "op:cn:94",
       "cx": [
         "cx:cn:7428",
         "cx:cn:9193"
@@ -12179,7 +12359,7 @@
     },
     {
       "name": "石湖东路",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:8274",
         "cx:cn:9965"
@@ -12239,6 +12419,33 @@
         "cx:cn:11585"
       ],
       "metres": 10
+    },
+    {
+      "name": "福民",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:9195",
+        "cx:cn:11182"
+      ],
+      "metres": 335
+    },
+    {
+      "name": "福永",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:8990",
+        "cx:cn:12642"
+      ],
+      "metres": 290
+    },
+    {
+      "name": "福祉大路",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:7746",
+        "cx:cn:13155"
+      ],
+      "metres": 167
     },
     {
       "name": "秀水湾",
@@ -12323,7 +12530,7 @@
     },
     {
       "name": "索山桥西",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:10912",
         "cx:cn:11662"
@@ -12394,6 +12601,24 @@
       "metres": 222
     },
     {
+      "name": "红岭",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7435",
+        "cx:cn:10594"
+      ],
+      "metres": 70
+    },
+    {
+      "name": "红岭南",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:8980",
+        "cx:cn:10595"
+      ],
+      "metres": 174
+    },
+    {
       "name": "红旗大道",
       "op": "op:cn:144",
       "cx": [
@@ -12404,7 +12629,7 @@
     },
     {
       "name": "红星桥",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:9029",
         "cx:cn:10686"
@@ -12413,7 +12638,7 @@
     },
     {
       "name": "红牌楼",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:9034",
         "cx:cn:10020"
@@ -12500,6 +12725,15 @@
         "cx:cn:9319"
       ],
       "metres": 143
+    },
+    {
+      "name": "群芳",
+      "op": "op:cn:108",
+      "cx": [
+        "cx:cn:7937",
+        "cx:cn:7961"
+      ],
+      "metres": 13
     },
     {
       "name": "耀华路",
@@ -12710,7 +12944,7 @@
     },
     {
       "name": "航空總部",
-      "op": "op:cn:88",
+      "op": "op:cn:199",
       "cx": [
         "cx:cn:8372",
         "cx:cn:10356"
@@ -12746,7 +12980,7 @@
     },
     {
       "name": "花桥",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10030",
         "cx:cn:10134"
@@ -12773,7 +13007,7 @@
     },
     {
       "name": "苏州新区火车站",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:10923",
         "cx:cn:13274"
@@ -12916,8 +13150,17 @@
       "metres": 15
     },
     {
+      "name": "萧山国际机场",
+      "op": "op:cn:167",
+      "cx": [
+        "cx:cn:11498",
+        "cx:cn:11785"
+      ],
+      "metres": 18
+    },
+    {
       "name": "葑亭大道",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:10891",
         "cx:cn:11645"
@@ -13070,7 +13313,7 @@
     },
     {
       "name": "西河",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:8959",
         "cx:cn:10132"
@@ -13348,6 +13591,15 @@
       "metres": 105
     },
     {
+      "name": "购物公园",
+      "op": "op:cn:94",
+      "cx": [
+        "cx:cn:7404",
+        "cx:cn:7429"
+      ],
+      "metres": 218
+    },
+    {
       "name": "赖家桥",
       "op": "op:cn:87",
       "cx": [
@@ -13573,8 +13825,17 @@
       "metres": 215
     },
     {
+      "name": "金家渡",
+      "op": "op:cn:167",
+      "cx": [
+        "cx:cn:8110",
+        "cx:cn:10511"
+      ],
+      "metres": 82
+    },
+    {
       "name": "金尚路",
-      "op": "op:cn:115",
+      "op": "op:cn:135",
       "cx": [
         "cx:cn:8285",
         "cx:cn:13409"
@@ -13601,7 +13862,7 @@
     },
     {
       "name": "金星",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:13055",
         "cx:cn:13070"
@@ -13700,7 +13961,7 @@
     },
     {
       "name": "钱江路",
-      "op": "op:cn:145",
+      "op": "op:cn:167",
       "cx": [
         "cx:cn:8093",
         "cx:cn:11783"
@@ -13951,6 +14212,15 @@
       "metres": 64
     },
     {
+      "name": "长春站北",
+      "op": "op:cn:98",
+      "cx": [
+        "cx:cn:7732",
+        "cx:cn:9915"
+      ],
+      "metres": 39
+    },
+    {
       "name": "长春西站",
       "op": "op:cn:98",
       "cx": [
@@ -14177,7 +14447,7 @@
     },
     {
       "name": "青六中路",
-      "op": "op:cn:145",
+      "op": "op:cn:167",
       "cx": [
         "cx:cn:11493",
         "cx:cn:11761"
@@ -14222,7 +14492,7 @@
     },
     {
       "name": "韦家碾",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:7558",
         "cx:cn:11382"
@@ -14456,7 +14726,7 @@
     },
     {
       "name": "黄石",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:13056",
         "cx:cn:13069"
@@ -14573,7 +14843,7 @@
     },
     {
       "name": "龙桥路",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:9040",
         "cx:cn:13060"
@@ -14582,7 +14852,7 @@
     },
     {
       "name": "龙港",
-      "op": "op:cn:96",
+      "op": "op:cn:144",
       "cx": [
         "cx:cn:10623",
         "cx:cn:13062"
@@ -14752,17 +15022,6 @@
       ]
     },
     {
-      "cx": "cx:cn:180",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 241,
-      "sharedCodes": [
-        "CN-12306-HIK"
-      ]
-    },
-    {
       "cx": "cx:cn:227",
       "operators": [
         "op:cn:2",
@@ -14804,17 +15063,6 @@
       "metres": 895,
       "sharedCodes": [
         "CN-12306-ZIK"
-      ]
-    },
-    {
-      "cx": "cx:cn:336",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 206,
-      "sharedCodes": [
-        "CN-OSM-N8455171505"
       ]
     },
     {
@@ -15032,10 +15280,9 @@
       "cx": "cx:cn:668",
       "operators": [
         "op:cn:2",
-        "op:cn:4",
-        "op:cn:31"
+        "op:cn:4"
       ],
-      "metres": 210,
+      "metres": 747,
       "sharedCodes": [
         "CN-12306-CSQ"
       ]
@@ -15055,7 +15302,7 @@
       "cx": "cx:cn:686",
       "operators": [
         "op:cn:2",
-        "op:cn:31"
+        "op:cn:4"
       ],
       "metres": 40,
       "sharedCodes": [
@@ -16550,17 +16797,6 @@
       ]
     },
     {
-      "cx": "cx:cn:3945",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 449,
-      "sharedCodes": [
-        "CN-OSM-N3259307096"
-      ]
-    },
-    {
       "cx": "cx:cn:3946",
       "operators": [
         "op:cn:2",
@@ -16649,17 +16885,6 @@
       ]
     },
     {
-      "cx": "cx:cn:4061",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N8429540526"
-      ]
-    },
-    {
       "cx": "cx:cn:4204",
       "operators": [
         "op:cn:2",
@@ -16745,39 +16970,6 @@
       "metres": 1201,
       "sharedCodes": [
         "CN-12306-LUF"
-      ]
-    },
-    {
-      "cx": "cx:cn:4293",
-      "operators": [
-        "op:cn:4",
-        "op:cn:31"
-      ],
-      "metres": 345,
-      "sharedCodes": [
-        "CN-12306-KIQ"
-      ]
-    },
-    {
-      "cx": "cx:cn:4308",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 151,
-      "sharedCodes": [
-        "CN-OSM-N6254324863"
-      ]
-    },
-    {
-      "cx": "cx:cn:4325",
-      "operators": [
-        "op:cn:2",
-        "op:cn:26"
-      ],
-      "metres": 36,
-      "sharedCodes": [
-        "CN-OSM-N3629303026"
       ]
     },
     {
@@ -16965,17 +17157,6 @@
       "metres": 0,
       "sharedCodes": [
         "CN-OSM-N7740376249"
-      ]
-    },
-    {
-      "cx": "cx:cn:4641",
-      "operators": [
-        "op:cn:8",
-        "op:cn:71"
-      ],
-      "metres": 892,
-      "sharedCodes": [
-        "CN-12306-KAM"
       ]
     },
     {
@@ -17972,9 +18153,7 @@
     {
       "cx": "cx:cn:7169",
       "operators": [
-        "op:cn:91",
         "op:cn:92",
-        "op:cn:107",
         "op:cn:108"
       ],
       "metres": 3,
@@ -17985,9 +18164,7 @@
     {
       "cx": "cx:cn:7170",
       "operators": [
-        "op:cn:91",
         "op:cn:92",
-        "op:cn:107",
         "op:cn:108"
       ],
       "metres": 3,
@@ -17996,21 +18173,9 @@
       ]
     },
     {
-      "cx": "cx:cn:7171",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N6716238810"
-      ]
-    },
-    {
       "cx": "cx:cn:7172",
       "operators": [
         "op:cn:89",
-        "op:cn:91",
         "op:cn:92"
       ],
       "metres": 0,
@@ -18022,7 +18187,6 @@
       "cx": "cx:cn:7174",
       "operators": [
         "op:cn:89",
-        "op:cn:91",
         "op:cn:92"
       ],
       "metres": 0,
@@ -18031,109 +18195,10 @@
       ]
     },
     {
-      "cx": "cx:cn:7175",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 3,
-      "sharedCodes": [
-        "CN-OSM-N8073325262"
-      ]
-    },
-    {
-      "cx": "cx:cn:7176",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 3,
-      "sharedCodes": [
-        "CN-OSM-N5444674048"
-      ]
-    },
-    {
-      "cx": "cx:cn:7177",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N5442190079"
-      ]
-    },
-    {
-      "cx": "cx:cn:7178",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N5441536712"
-      ]
-    },
-    {
-      "cx": "cx:cn:7179",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N5444677242"
-      ]
-    },
-    {
-      "cx": "cx:cn:7180",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 7,
-      "sharedCodes": [
-        "CN-OSM-N5444680534"
-      ]
-    },
-    {
-      "cx": "cx:cn:7181",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N8978629464"
-      ]
-    },
-    {
-      "cx": "cx:cn:7182",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N5430491074"
-      ]
-    },
-    {
-      "cx": "cx:cn:7183",
-      "operators": [
-        "op:cn:91",
-        "op:cn:92"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N5430493577"
-      ]
-    },
-    {
       "cx": "cx:cn:7185",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 178,
       "sharedCodes": [
@@ -18144,7 +18209,7 @@
       "cx": "cx:cn:7187",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 65,
       "sharedCodes": [
@@ -18155,7 +18220,7 @@
       "cx": "cx:cn:7188",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 132,
       "sharedCodes": [
@@ -18166,7 +18231,7 @@
       "cx": "cx:cn:7189",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 66,
       "sharedCodes": [
@@ -18177,7 +18242,7 @@
       "cx": "cx:cn:7193",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 65,
       "sharedCodes": [
@@ -18188,7 +18253,7 @@
       "cx": "cx:cn:7196",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 209,
       "sharedCodes": [
@@ -18199,7 +18264,7 @@
       "cx": "cx:cn:7197",
       "operators": [
         "op:cn:89",
-        "op:cn:91"
+        "op:cn:92"
       ],
       "metres": 55,
       "sharedCodes": [
@@ -18232,7 +18297,6 @@
       "cx": "cx:cn:7255",
       "operators": [
         "op:cn:89",
-        "op:cn:107",
         "op:cn:108"
       ],
       "metres": 10,
@@ -18244,7 +18308,6 @@
       "cx": "cx:cn:7274",
       "operators": [
         "op:cn:89",
-        "op:cn:107",
         "op:cn:108"
       ],
       "metres": 117,
@@ -18278,7 +18341,6 @@
       "cx": "cx:cn:7313",
       "operators": [
         "op:cn:89",
-        "op:cn:107",
         "op:cn:108"
       ],
       "metres": 9,
@@ -18324,10 +18386,9 @@
       "cx": "cx:cn:7363",
       "operators": [
         "op:cn:89",
-        "op:cn:107",
         "op:cn:108"
       ],
-      "metres": 7,
+      "metres": 12,
       "sharedCodes": [
         "CN-OSM-N5463450278"
       ]
@@ -18344,98 +18405,10 @@
       ]
     },
     {
-      "cx": "cx:cn:7398",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 66,
-      "sharedCodes": [
-        "CN-OSM-N5214588594"
-      ]
-    },
-    {
-      "cx": "cx:cn:7399",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 73,
-      "sharedCodes": [
-        "CN-OSM-N9061785129"
-      ]
-    },
-    {
-      "cx": "cx:cn:7406",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 12,
-      "sharedCodes": [
-        "CN-OSM-N5214901838"
-      ]
-    },
-    {
-      "cx": "cx:cn:7410",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 21,
-      "sharedCodes": [
-        "CN-OSM-N6715085264"
-      ]
-    },
-    {
-      "cx": "cx:cn:7414",
-      "operators": [
-        "op:cn:94",
-        "op:cn:189"
-      ],
-      "metres": 28,
-      "sharedCodes": [
-        "CN-OSM-N6745828848"
-      ]
-    },
-    {
-      "cx": "cx:cn:7417",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 32,
-      "sharedCodes": [
-        "CN-OSM-N6503565370"
-      ]
-    },
-    {
-      "cx": "cx:cn:7419",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 31,
-      "sharedCodes": [
-        "CN-OSM-N6753412231"
-      ]
-    },
-    {
-      "cx": "cx:cn:7432",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 44,
-      "sharedCodes": [
-        "CN-OSM-N7828966427"
-      ]
-    },
-    {
       "cx": "cx:cn:7546",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 31,
       "sharedCodes": [
@@ -18445,8 +18418,8 @@
     {
       "cx": "cx:cn:7552",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 6,
       "sharedCodes": [
@@ -18454,21 +18427,10 @@
       ]
     },
     {
-      "cx": "cx:cn:7555",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 158,
-      "sharedCodes": [
-        "CN-OSM-N7213434054"
-      ]
-    },
-    {
       "cx": "cx:cn:7556",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 35,
       "sharedCodes": [
@@ -18489,8 +18451,8 @@
     {
       "cx": "cx:cn:7566",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 100,
       "sharedCodes": [
@@ -18500,8 +18462,8 @@
     {
       "cx": "cx:cn:7570",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 7,
       "sharedCodes": [
@@ -18511,8 +18473,8 @@
     {
       "cx": "cx:cn:7573",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 21,
       "sharedCodes": [
@@ -18533,8 +18495,8 @@
     {
       "cx": "cx:cn:7577",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 67,
       "sharedCodes": [
@@ -18597,61 +18559,6 @@
       ]
     },
     {
-      "cx": "cx:cn:7627",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 47,
-      "sharedCodes": [
-        "CN-OSM-N1716044103"
-      ]
-    },
-    {
-      "cx": "cx:cn:7644",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 88,
-      "sharedCodes": [
-        "CN-OSM-N6836123690"
-      ]
-    },
-    {
-      "cx": "cx:cn:7649",
-      "operators": [
-        "op:cn:95",
-        "op:cn:189"
-      ],
-      "metres": 23,
-      "sharedCodes": [
-        "CN-OSM-N9327070288"
-      ]
-    },
-    {
-      "cx": "cx:cn:7698",
-      "operators": [
-        "op:cn:98",
-        "op:cn:99"
-      ],
-      "metres": 7,
-      "sharedCodes": [
-        "CN-OSM-N6632314160"
-      ]
-    },
-    {
-      "cx": "cx:cn:7719",
-      "operators": [
-        "op:cn:98",
-        "op:cn:99"
-      ],
-      "metres": 108,
-      "sharedCodes": [
-        "CN-OSM-N6514100407"
-      ]
-    },
-    {
       "cx": "cx:cn:7756",
       "operators": [
         "op:cn:100",
@@ -18696,17 +18603,6 @@
       ]
     },
     {
-      "cx": "cx:cn:7779",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N9003571312"
-      ]
-    },
-    {
       "cx": "cx:cn:7785",
       "operators": [
         "op:cn:101",
@@ -18748,248 +18644,6 @@
       "metres": 5,
       "sharedCodes": [
         "CN-OSM-N2845408107"
-      ]
-    },
-    {
-      "cx": "cx:cn:7936",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 33,
-      "sharedCodes": [
-        "CN-OSM-N7117305974"
-      ]
-    },
-    {
-      "cx": "cx:cn:7939",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 8,
-      "sharedCodes": [
-        "CN-OSM-N6930098570"
-      ]
-    },
-    {
-      "cx": "cx:cn:7940",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N6930098569"
-      ]
-    },
-    {
-      "cx": "cx:cn:7941",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 10,
-      "sharedCodes": [
-        "CN-OSM-N6930098568"
-      ]
-    },
-    {
-      "cx": "cx:cn:7942",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N6930098566"
-      ]
-    },
-    {
-      "cx": "cx:cn:7943",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 14,
-      "sharedCodes": [
-        "CN-OSM-N3369459843"
-      ]
-    },
-    {
-      "cx": "cx:cn:7944",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 20,
-      "sharedCodes": [
-        "CN-OSM-N3369459834"
-      ]
-    },
-    {
-      "cx": "cx:cn:7945",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N3369459835"
-      ]
-    },
-    {
-      "cx": "cx:cn:7946",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N3369459841"
-      ]
-    },
-    {
-      "cx": "cx:cn:7947",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 25,
-      "sharedCodes": [
-        "CN-OSM-N3369459832"
-      ]
-    },
-    {
-      "cx": "cx:cn:7948",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 12,
-      "sharedCodes": [
-        "CN-OSM-N3369459831"
-      ]
-    },
-    {
-      "cx": "cx:cn:7949",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N3369459845"
-      ]
-    },
-    {
-      "cx": "cx:cn:7950",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N3369459836"
-      ]
-    },
-    {
-      "cx": "cx:cn:7951",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 10,
-      "sharedCodes": [
-        "CN-OSM-N3369001428"
-      ]
-    },
-    {
-      "cx": "cx:cn:7952",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N3369459838"
-      ]
-    },
-    {
-      "cx": "cx:cn:7953",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N3369459840"
-      ]
-    },
-    {
-      "cx": "cx:cn:7954",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 161,
-      "sharedCodes": [
-        "CN-OSM-N3369459839"
-      ]
-    },
-    {
-      "cx": "cx:cn:7955",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N3369459848"
-      ]
-    },
-    {
-      "cx": "cx:cn:7956",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N3369459847"
-      ]
-    },
-    {
-      "cx": "cx:cn:7957",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 25,
-      "sharedCodes": [
-        "CN-OSM-N3369459837"
-      ]
-    },
-    {
-      "cx": "cx:cn:7958",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N3369459849"
-      ]
-    },
-    {
-      "cx": "cx:cn:7959",
-      "operators": [
-        "op:cn:107",
-        "op:cn:108"
-      ],
-      "metres": 7,
-      "sharedCodes": [
-        "CN-OSM-N6496364884"
       ]
     },
     {
@@ -19043,8 +18697,8 @@
       "cx": "cx:cn:8012",
       "operators": [
         "op:cn:109",
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 5,
       "sharedCodes": [
@@ -19055,7 +18709,7 @@
       "cx": "cx:cn:8016",
       "operators": [
         "op:cn:109",
-        "op:cn:145"
+        "op:cn:167"
       ],
       "metres": 19,
       "sharedCodes": [
@@ -19107,25 +18761,12 @@
       ]
     },
     {
-      "cx": "cx:cn:8088",
-      "operators": [
-        "op:cn:112",
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 17,
-      "sharedCodes": [
-        "CN-OSM-N9458109908"
-      ]
-    },
-    {
       "cx": "cx:cn:8093",
       "operators": [
-        "op:cn:112",
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
-      "metres": 18,
+      "metres": 28,
       "sharedCodes": [
         "CN-OSM-N9439620861"
       ]
@@ -19133,8 +18774,8 @@
     {
       "cx": "cx:cn:8100",
       "operators": [
-        "op:cn:112",
-        "op:cn:149"
+        "op:cn:149",
+        "op:cn:167"
       ],
       "metres": 399,
       "sharedCodes": [
@@ -19144,7 +18785,7 @@
     {
       "cx": "cx:cn:8102",
       "operators": [
-        "op:cn:112",
+        "op:cn:167",
         "op:cn:175"
       ],
       "metres": 123,
@@ -19153,53 +18794,9 @@
       ]
     },
     {
-      "cx": "cx:cn:8135",
-      "operators": [
-        "op:cn:113",
-        "op:cn:126"
-      ],
-      "metres": 22,
-      "sharedCodes": [
-        "CN-OSM-N6508614263"
-      ]
-    },
-    {
-      "cx": "cx:cn:8178",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N9164163258"
-      ]
-    },
-    {
-      "cx": "cx:cn:8184",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N9165008026"
-      ]
-    },
-    {
-      "cx": "cx:cn:8185",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N6469606313"
-      ]
-    },
-    {
       "cx": "cx:cn:8277",
       "operators": [
-        "op:cn:115",
+        "op:cn:135",
         "op:cn:207"
       ],
       "metres": 10,
@@ -19402,8 +18999,8 @@
     {
       "cx": "cx:cn:8945",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 83,
       "sharedCodes": [
@@ -19411,21 +19008,10 @@
       ]
     },
     {
-      "cx": "cx:cn:8951",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 77,
-      "sharedCodes": [
-        "CN-OSM-N8064721021"
-      ]
-    },
-    {
       "cx": "cx:cn:8954",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 192,
       "sharedCodes": [
@@ -19433,31 +19019,9 @@
       ]
     },
     {
-      "cx": "cx:cn:8983",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 21,
-      "sharedCodes": [
-        "CN-OSM-N9062301242"
-      ]
-    },
-    {
-      "cx": "cx:cn:8985",
-      "operators": [
-        "op:cn:95",
-        "op:cn:189"
-      ],
-      "metres": 10,
-      "sharedCodes": [
-        "CN-OSM-N6503565369"
-      ]
-    },
-    {
       "cx": "cx:cn:8989",
       "operators": [
-        "op:cn:95",
+        "op:cn:94",
         "op:cn:179"
       ],
       "metres": 37,
@@ -19466,22 +19030,10 @@
       ]
     },
     {
-      "cx": "cx:cn:8996",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95",
-        "op:cn:189"
-      ],
-      "metres": 17,
-      "sharedCodes": [
-        "CN-OSM-N6503565377"
-      ]
-    },
-    {
       "cx": "cx:cn:9026",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 102,
       "sharedCodes": [
@@ -19489,91 +19041,14 @@
       ]
     },
     {
-      "cx": "cx:cn:9028",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 159,
-      "sharedCodes": [
-        "CN-OSM-N6533307893"
-      ]
-    },
-    {
       "cx": "cx:cn:9035",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 47,
       "sharedCodes": [
         "CN-OSM-N5616916006"
-      ]
-    },
-    {
-      "cx": "cx:cn:9056",
-      "operators": [
-        "op:cn:113",
-        "op:cn:126"
-      ],
-      "metres": 131,
-      "sharedCodes": [
-        "CN-OSM-N9853645567"
-      ]
-    },
-    {
-      "cx": "cx:cn:9060",
-      "operators": [
-        "op:cn:113",
-        "op:cn:126"
-      ],
-      "metres": 12,
-      "sharedCodes": [
-        "CN-OSM-N7666452141"
-      ]
-    },
-    {
-      "cx": "cx:cn:9062",
-      "operators": [
-        "op:cn:113",
-        "op:cn:126"
-      ],
-      "metres": 31,
-      "sharedCodes": [
-        "CN-OSM-N6505689114"
-      ]
-    },
-    {
-      "cx": "cx:cn:9071",
-      "operators": [
-        "op:cn:127",
-        "op:cn:168"
-      ],
-      "metres": 57,
-      "sharedCodes": [
-        "CN-OSM-N5303810113"
-      ]
-    },
-    {
-      "cx": "cx:cn:9077",
-      "operators": [
-        "op:cn:127",
-        "op:cn:168"
-      ],
-      "metres": 65,
-      "sharedCodes": [
-        "CN-OSM-N5303810107"
-      ]
-    },
-    {
-      "cx": "cx:cn:9092",
-      "operators": [
-        "op:cn:127",
-        "op:cn:168"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N5303810100"
       ]
     },
     {
@@ -19596,17 +19071,6 @@
       "metres": 144,
       "sharedCodes": [
         "CN-OSM-N9090884269"
-      ]
-    },
-    {
-      "cx": "cx:cn:9202",
-      "operators": [
-        "op:cn:94",
-        "op:cn:95"
-      ],
-      "metres": 58,
-      "sharedCodes": [
-        "CN-OSM-N9062301474"
       ]
     },
     {
@@ -20097,146 +19561,14 @@
       ]
     },
     {
-      "cx": "cx:cn:9847",
-      "operators": [
-        "op:cn:88",
-        "op:cn:199"
-      ],
-      "metres": 39,
-      "sharedCodes": [
-        "CN-OSM-N11127329510"
-      ]
-    },
-    {
-      "cx": "cx:cn:9928",
-      "operators": [
-        "op:cn:115",
-        "op:cn:135"
-      ],
-      "metres": 32,
-      "sharedCodes": [
-        "CN-OSM-N2101685386"
-      ]
-    },
-    {
-      "cx": "cx:cn:9931",
-      "operators": [
-        "op:cn:115",
-        "op:cn:135"
-      ],
-      "metres": 10,
-      "sharedCodes": [
-        "CN-OSM-N12167817374"
-      ]
-    },
-    {
-      "cx": "cx:cn:9939",
-      "operators": [
-        "op:cn:115",
-        "op:cn:135"
-      ],
-      "metres": 14,
-      "sharedCodes": [
-        "CN-OSM-N5121205250"
-      ]
-    },
-    {
       "cx": "cx:cn:9966",
       "operators": [
-        "op:cn:115",
+        "op:cn:135",
         "op:cn:207"
       ],
       "metres": 0,
       "sharedCodes": [
         "CN-OSM-N4570243003"
-      ]
-    },
-    {
-      "cx": "cx:cn:9980",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 9,
-      "sharedCodes": [
-        "CN-OSM-N9006301317"
-      ]
-    },
-    {
-      "cx": "cx:cn:9981",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N10758028161"
-      ]
-    },
-    {
-      "cx": "cx:cn:9982",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N10757807733"
-      ]
-    },
-    {
-      "cx": "cx:cn:9983",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N10757807731"
-      ]
-    },
-    {
-      "cx": "cx:cn:9984",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N10740321255"
-      ]
-    },
-    {
-      "cx": "cx:cn:9985",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 3,
-      "sharedCodes": [
-        "CN-OSM-N10757807714"
-      ]
-    },
-    {
-      "cx": "cx:cn:9986",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N10757807710"
-      ]
-    },
-    {
-      "cx": "cx:cn:9987",
-      "operators": [
-        "op:cn:101",
-        "op:cn:136"
-      ],
-      "metres": 4,
-      "sharedCodes": [
-        "CN-OSM-N10757791701"
       ]
     },
     {
@@ -20253,8 +19585,8 @@
     {
       "cx": "cx:cn:10001",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 204,
       "sharedCodes": [
@@ -20275,8 +19607,8 @@
     {
       "cx": "cx:cn:10004",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 114,
       "sharedCodes": [
@@ -20286,8 +19618,8 @@
     {
       "cx": "cx:cn:10005",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 134,
       "sharedCodes": [
@@ -20297,8 +19629,8 @@
     {
       "cx": "cx:cn:10007",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 151,
       "sharedCodes": [
@@ -20308,8 +19640,8 @@
     {
       "cx": "cx:cn:10008",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 24,
       "sharedCodes": [
@@ -20330,8 +19662,8 @@
     {
       "cx": "cx:cn:10014",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 96,
       "sharedCodes": [
@@ -20341,8 +19673,8 @@
     {
       "cx": "cx:cn:10017",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 120,
       "sharedCodes": [
@@ -20352,23 +19684,12 @@
     {
       "cx": "cx:cn:10018",
       "operators": [
-        "op:cn:96",
-        "op:cn:97"
+        "op:cn:97",
+        "op:cn:144"
       ],
       "metres": 303,
       "sharedCodes": [
         "CN-OSM-N8256421498"
-      ]
-    },
-    {
-      "cx": "cx:cn:10127",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 132,
-      "sharedCodes": [
-        "CN-OSM-N7947192957"
       ]
     },
     {
@@ -20383,50 +19704,6 @@
       ]
     },
     {
-      "cx": "cx:cn:10158",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N6469532250"
-      ]
-    },
-    {
-      "cx": "cx:cn:10159",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N6469532251"
-      ]
-    },
-    {
-      "cx": "cx:cn:10160",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N6469532252"
-      ]
-    },
-    {
-      "cx": "cx:cn:10161",
-      "operators": [
-        "op:cn:90",
-        "op:cn:213"
-      ],
-      "metres": 0,
-      "sharedCodes": [
-        "CN-OSM-N6469532253"
-      ]
-    },
-    {
       "cx": "cx:cn:10269",
       "operators": [
         "op:cn:143",
@@ -20438,109 +19715,10 @@
       ]
     },
     {
-      "cx": "cx:cn:10373",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 116,
-      "sharedCodes": [
-        "CN-OSM-N8242639374"
-      ]
-    },
-    {
-      "cx": "cx:cn:10396",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 77,
-      "sharedCodes": [
-        "CN-OSM-N8242507062"
-      ]
-    },
-    {
-      "cx": "cx:cn:10399",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 5,
-      "sharedCodes": [
-        "CN-OSM-N6502286199"
-      ]
-    },
-    {
-      "cx": "cx:cn:10401",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 224,
-      "sharedCodes": [
-        "CN-OSM-N8242507070"
-      ]
-    },
-    {
-      "cx": "cx:cn:10404",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 166,
-      "sharedCodes": [
-        "CN-OSM-N8242639365"
-      ]
-    },
-    {
-      "cx": "cx:cn:10405",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 58,
-      "sharedCodes": [
-        "CN-OSM-N8242639366"
-      ]
-    },
-    {
-      "cx": "cx:cn:10407",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 56,
-      "sharedCodes": [
-        "CN-OSM-N8242639373"
-      ]
-    },
-    {
-      "cx": "cx:cn:10422",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 11,
-      "sharedCodes": [
-        "CN-OSM-N8242765693"
-      ]
-    },
-    {
-      "cx": "cx:cn:10427",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 149,
-      "sharedCodes": [
-        "CN-OSM-N7089244038"
-      ]
-    },
-    {
       "cx": "cx:cn:10483",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -20550,8 +19728,8 @@
     {
       "cx": "cx:cn:10484",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 19,
       "sharedCodes": [
@@ -20561,8 +19739,8 @@
     {
       "cx": "cx:cn:10485",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 2,
       "sharedCodes": [
@@ -20572,8 +19750,8 @@
     {
       "cx": "cx:cn:10486",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 19,
       "sharedCodes": [
@@ -20583,8 +19761,8 @@
     {
       "cx": "cx:cn:10487",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20594,8 +19772,8 @@
     {
       "cx": "cx:cn:10488",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 19,
       "sharedCodes": [
@@ -20605,8 +19783,8 @@
     {
       "cx": "cx:cn:10489",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20616,8 +19794,8 @@
     {
       "cx": "cx:cn:10490",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20627,8 +19805,8 @@
     {
       "cx": "cx:cn:10491",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20638,8 +19816,8 @@
     {
       "cx": "cx:cn:10492",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20649,8 +19827,8 @@
     {
       "cx": "cx:cn:10493",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20660,8 +19838,8 @@
     {
       "cx": "cx:cn:10494",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20671,8 +19849,8 @@
     {
       "cx": "cx:cn:10495",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20682,8 +19860,8 @@
     {
       "cx": "cx:cn:10496",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -20693,8 +19871,8 @@
     {
       "cx": "cx:cn:10497",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20704,8 +19882,8 @@
     {
       "cx": "cx:cn:10499",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20715,8 +19893,8 @@
     {
       "cx": "cx:cn:10500",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20726,8 +19904,8 @@
     {
       "cx": "cx:cn:10501",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20737,8 +19915,8 @@
     {
       "cx": "cx:cn:10502",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -20748,8 +19926,8 @@
     {
       "cx": "cx:cn:10503",
       "operators": [
-        "op:cn:145",
         "op:cn:156",
+        "op:cn:167",
         "op:cn:175",
         "op:cn:176"
       ],
@@ -20761,8 +19939,8 @@
     {
       "cx": "cx:cn:10504",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20772,8 +19950,8 @@
     {
       "cx": "cx:cn:10505",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20783,8 +19961,8 @@
     {
       "cx": "cx:cn:10506",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
@@ -20794,8 +19972,8 @@
     {
       "cx": "cx:cn:10507",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -20805,8 +19983,8 @@
     {
       "cx": "cx:cn:10508",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20816,8 +19994,8 @@
     {
       "cx": "cx:cn:10509",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 20,
       "sharedCodes": [
@@ -20827,8 +20005,8 @@
     {
       "cx": "cx:cn:10510",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -20838,8 +20016,8 @@
     {
       "cx": "cx:cn:10511",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 17,
       "sharedCodes": [
@@ -20849,34 +20027,12 @@
     {
       "cx": "cx:cn:10512",
       "operators": [
-        "op:cn:145",
-        "op:cn:156"
+        "op:cn:156",
+        "op:cn:167"
       ],
       "metres": 15,
       "sharedCodes": [
         "CN-OSM-N9428276494"
-      ]
-    },
-    {
-      "cx": "cx:cn:10577",
-      "operators": [
-        "op:cn:94",
-        "op:cn:189"
-      ],
-      "metres": 22,
-      "sharedCodes": [
-        "CN-OSM-N7051840957"
-      ]
-    },
-    {
-      "cx": "cx:cn:10699",
-      "operators": [
-        "op:cn:96",
-        "op:cn:144"
-      ],
-      "metres": 17,
-      "sharedCodes": [
-        "CN-OSM-N11942182951"
       ]
     },
     {
@@ -20903,17 +20059,6 @@
       ]
     },
     {
-      "cx": "cx:cn:11163",
-      "operators": [
-        "op:cn:94",
-        "op:cn:189"
-      ],
-      "metres": 19,
-      "sharedCodes": [
-        "CN-OSM-N9062166392"
-      ]
-    },
-    {
       "cx": "cx:cn:11481",
       "operators": [
         "op:cn:160",
@@ -20925,75 +20070,8 @@
       ]
     },
     {
-      "cx": "cx:cn:11491",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9868020925"
-      ]
-    },
-    {
-      "cx": "cx:cn:11492",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 14,
-      "sharedCodes": [
-        "CN-OSM-N9867985563"
-      ]
-    },
-    {
-      "cx": "cx:cn:11493",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 17,
-      "sharedCodes": [
-        "CN-OSM-N9867985553"
-      ]
-    },
-    {
-      "cx": "cx:cn:11494",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9867985457"
-      ]
-    },
-    {
-      "cx": "cx:cn:11495",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9867980805"
-      ]
-    },
-    {
-      "cx": "cx:cn:11496",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9867980804"
-      ]
-    },
-    {
       "cx": "cx:cn:11497",
       "operators": [
-        "op:cn:145",
         "op:cn:149",
         "op:cn:167"
       ],
@@ -21003,175 +20081,10 @@
       ]
     },
     {
-      "cx": "cx:cn:11499",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9869706039"
-      ]
-    },
-    {
-      "cx": "cx:cn:11500",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9863987445"
-      ]
-    },
-    {
-      "cx": "cx:cn:11501",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9859463007"
-      ]
-    },
-    {
-      "cx": "cx:cn:11502",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9860230677"
-      ]
-    },
-    {
-      "cx": "cx:cn:11503",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 13,
-      "sharedCodes": [
-        "CN-OSM-N9863202903"
-      ]
-    },
-    {
-      "cx": "cx:cn:11504",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 14,
-      "sharedCodes": [
-        "CN-OSM-N9863202916"
-      ]
-    },
-    {
-      "cx": "cx:cn:11505",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9863203368"
-      ]
-    },
-    {
-      "cx": "cx:cn:11506",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9863203416"
-      ]
-    },
-    {
-      "cx": "cx:cn:11507",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 16,
-      "sharedCodes": [
-        "CN-OSM-N9863212119"
-      ]
-    },
-    {
-      "cx": "cx:cn:11508",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 18,
-      "sharedCodes": [
-        "CN-OSM-N9449086506"
-      ]
-    },
-    {
-      "cx": "cx:cn:11509",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 17,
-      "sharedCodes": [
-        "CN-OSM-N9442277410"
-      ]
-    },
-    {
-      "cx": "cx:cn:11510",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 21,
-      "sharedCodes": [
-        "CN-OSM-N9687238335"
-      ]
-    },
-    {
-      "cx": "cx:cn:11511",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9630666811"
-      ]
-    },
-    {
-      "cx": "cx:cn:11512",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9687238247"
-      ]
-    },
-    {
-      "cx": "cx:cn:11513",
-      "operators": [
-        "op:cn:145",
-        "op:cn:167"
-      ],
-      "metres": 15,
-      "sharedCodes": [
-        "CN-OSM-N9630689508"
-      ]
-    },
-    {
       "cx": "cx:cn:11758",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -21181,8 +20094,8 @@
     {
       "cx": "cx:cn:11759",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -21192,8 +20105,8 @@
     {
       "cx": "cx:cn:11760",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -21203,8 +20116,8 @@
     {
       "cx": "cx:cn:11761",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 17,
       "sharedCodes": [
@@ -21214,8 +20127,8 @@
     {
       "cx": "cx:cn:11762",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -21225,8 +20138,8 @@
     {
       "cx": "cx:cn:11763",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 14,
       "sharedCodes": [
@@ -21236,8 +20149,8 @@
     {
       "cx": "cx:cn:11764",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 16,
       "sharedCodes": [
@@ -21247,8 +20160,8 @@
     {
       "cx": "cx:cn:11766",
       "operators": [
-        "op:cn:145",
-        "op:cn:166"
+        "op:cn:166",
+        "op:cn:167"
       ],
       "metres": 18,
       "sharedCodes": [
@@ -21258,8 +20171,8 @@
     {
       "cx": "cx:cn:11780",
       "operators": [
-        "op:cn:145",
-        "op:cn:149"
+        "op:cn:149",
+        "op:cn:167"
       ],
       "metres": 169,
       "sharedCodes": [
@@ -21577,8 +20490,8 @@
     {
       "cx": "cx:cn:12222",
       "operators": [
-        "op:cn:179",
-        "op:cn:189"
+        "op:cn:94",
+        "op:cn:179"
       ],
       "metres": 27,
       "sharedCodes": [
@@ -21588,8 +20501,8 @@
     {
       "cx": "cx:cn:12223",
       "operators": [
-        "op:cn:179",
-        "op:cn:189"
+        "op:cn:94",
+        "op:cn:179"
       ],
       "metres": 58,
       "sharedCodes": [
@@ -21610,8 +20523,8 @@
     {
       "cx": "cx:cn:12298",
       "operators": [
-        "op:cn:88",
-        "op:cn:182"
+        "op:cn:182",
+        "op:cn:199"
       ],
       "metres": 242,
       "sharedCodes": [
@@ -21993,28 +20906,6 @@
       ]
     },
     {
-      "cx": "cx:cn:12591",
-      "operators": [
-        "op:cn:188",
-        "op:cn:201"
-      ],
-      "metres": 78,
-      "sharedCodes": [
-        "CN-OSM-N4927734952"
-      ]
-    },
-    {
-      "cx": "cx:cn:12594",
-      "operators": [
-        "op:cn:188",
-        "op:cn:201"
-      ],
-      "metres": 73,
-      "sharedCodes": [
-        "CN-OSM-N4927734949"
-      ]
-    },
-    {
       "cx": "cx:cn:12614",
       "operators": [
         "op:cn:131",
@@ -22039,7 +20930,7 @@
     {
       "cx": "cx:cn:13333",
       "operators": [
-        "op:cn:115",
+        "op:cn:135",
         "op:cn:207"
       ],
       "metres": 10,
@@ -23110,7 +22001,6 @@
     {
       "value": "CN-12306-ADX",
       "candidates": [
-        "st:cn:1054",
         "st:cn:1055"
       ]
     },
@@ -23131,42 +22021,36 @@
     {
       "value": "CN-12306-BAB",
       "candidates": [
-        "st:cn:3053",
         "st:cn:3054"
       ]
     },
     {
       "value": "CN-12306-BCT",
       "candidates": [
-        "st:cn:1735",
         "st:cn:1736"
       ]
     },
     {
       "value": "CN-12306-BDC",
       "candidates": [
-        "st:cn:1197",
         "st:cn:1198"
       ]
     },
     {
       "value": "CN-12306-BJP",
       "candidates": [
-        "st:cn:238",
         "st:cn:239"
       ]
     },
     {
       "value": "CN-12306-BNE",
       "candidates": [
-        "st:cn:6705",
         "st:cn:6706"
       ]
     },
     {
       "value": "CN-12306-BOP",
       "candidates": [
-        "st:cn:805",
         "st:cn:806"
       ]
     },
@@ -23180,57 +22064,48 @@
     {
       "value": "CN-12306-BXT",
       "candidates": [
-        "st:cn:1007",
         "st:cn:1008"
       ]
     },
     {
       "value": "CN-12306-CDW",
       "candidates": [
-        "st:cn:1910",
         "st:cn:1911"
       ]
     },
     {
       "value": "CN-12306-COE",
       "candidates": [
-        "st:cn:5952",
         "st:cn:5953"
       ]
     },
     {
       "value": "CN-12306-COW",
       "candidates": [
-        "st:cn:4394",
         "st:cn:4395"
       ]
     },
     {
       "value": "CN-12306-CSQ",
       "candidates": [
-        "st:cn:705",
-        "st:cn:706",
-        "st:cn:707"
+        "st:cn:706"
       ]
     },
     {
       "value": "CN-12306-CUW",
       "candidates": [
-        "st:cn:2945",
         "st:cn:2946"
       ]
     },
     {
       "value": "CN-12306-CYE",
       "candidates": [
-        "st:cn:5797",
         "st:cn:5798"
       ]
     },
     {
       "value": "CN-12306-CYI",
       "candidates": [
-        "st:cn:6345",
         "st:cn:6346"
       ]
     },
@@ -23251,49 +22126,42 @@
     {
       "value": "CN-12306-DEE",
       "candidates": [
-        "st:cn:5789",
         "st:cn:5790"
       ]
     },
     {
       "value": "CN-12306-DKM",
       "candidates": [
-        "st:cn:5671",
         "st:cn:5672"
       ]
     },
     {
       "value": "CN-12306-DUT",
       "candidates": [
-        "st:cn:986",
         "st:cn:987"
       ]
     },
     {
       "value": "CN-12306-EAQ",
       "candidates": [
-        "st:cn:4420",
         "st:cn:4421"
       ]
     },
     {
       "value": "CN-12306-EDE",
       "candidates": [
-        "st:cn:5803",
         "st:cn:5804"
       ]
     },
     {
       "value": "CN-12306-EGF",
       "candidates": [
-        "st:cn:6217",
         "st:cn:6218"
       ]
     },
     {
       "value": "CN-12306-EGY",
       "candidates": [
-        "st:cn:2018",
         "st:cn:2019"
       ]
     },
@@ -23307,28 +22175,24 @@
     {
       "value": "CN-12306-FAW",
       "candidates": [
-        "st:cn:4392",
         "st:cn:4393"
       ]
     },
     {
       "value": "CN-12306-FBG",
       "candidates": [
-        "st:cn:3839",
         "st:cn:3840"
       ]
     },
     {
       "value": "CN-12306-FGP",
       "candidates": [
-        "st:cn:1443",
         "st:cn:1444"
       ]
     },
     {
       "value": "CN-12306-FHT",
       "candidates": [
-        "st:cn:993",
         "st:cn:994"
       ]
     },
@@ -23342,28 +22206,24 @@
     {
       "value": "CN-12306-FYS",
       "candidates": [
-        "st:cn:5849",
         "st:cn:5850"
       ]
     },
     {
       "value": "CN-12306-FZS",
       "candidates": [
-        "st:cn:3914",
         "st:cn:3915"
       ]
     },
     {
       "value": "CN-12306-GAE",
       "candidates": [
-        "st:cn:4685",
         "st:cn:4686"
       ]
     },
     {
       "value": "CN-12306-GAO",
       "candidates": [
-        "st:cn:14713",
         "st:cn:14714"
       ]
     },
@@ -23384,21 +22244,18 @@
     {
       "value": "CN-12306-GEZ",
       "candidates": [
-        "st:cn:593",
         "st:cn:594"
       ]
     },
     {
       "value": "CN-12306-GGO",
       "candidates": [
-        "st:cn:14768",
         "st:cn:14769"
       ]
     },
     {
       "value": "CN-12306-GKP",
       "candidates": [
-        "st:cn:1432",
         "st:cn:1433"
       ]
     },
@@ -23412,98 +22269,84 @@
     {
       "value": "CN-12306-GNJ",
       "candidates": [
-        "st:cn:1237",
         "st:cn:1238"
       ]
     },
     {
       "value": "CN-12306-GOS",
       "candidates": [
-        "st:cn:1655",
         "st:cn:1656"
       ]
     },
     {
       "value": "CN-12306-GPM",
       "candidates": [
-        "st:cn:5283",
         "st:cn:5284"
       ]
     },
     {
       "value": "CN-12306-HAN",
       "candidates": [
-        "st:cn:2412",
         "st:cn:2413"
       ]
     },
     {
       "value": "CN-12306-HBB",
       "candidates": [
-        "st:cn:848",
         "st:cn:849"
       ]
     },
     {
       "value": "CN-12306-HBP",
       "candidates": [
-        "st:cn:1441",
         "st:cn:1442"
       ]
     },
     {
       "value": "CN-12306-HHA",
       "candidates": [
-        "st:cn:6270",
         "st:cn:6271"
       ]
     },
     {
       "value": "CN-12306-HIK",
       "candidates": [
-        "st:cn:190",
-        "st:cn:191"
+        "st:cn:190"
       ]
     },
     {
       "value": "CN-12306-HIP",
       "candidates": [
-        "st:cn:6347",
         "st:cn:6348"
       ]
     },
     {
       "value": "CN-12306-HLL",
       "candidates": [
-        "st:cn:6155",
         "st:cn:6156"
       ]
     },
     {
       "value": "CN-12306-HMV",
       "candidates": [
-        "st:cn:4735",
         "st:cn:4736"
       ]
     },
     {
       "value": "CN-12306-HQK",
       "candidates": [
-        "st:cn:4639",
         "st:cn:4640"
       ]
     },
     {
       "value": "CN-12306-HRP",
       "candidates": [
-        "st:cn:1474",
         "st:cn:1475"
       ]
     },
     {
       "value": "CN-12306-HTB",
       "candidates": [
-        "st:cn:1043",
         "st:cn:1044"
       ]
     },
@@ -23517,14 +22360,12 @@
     {
       "value": "CN-12306-HVP",
       "candidates": [
-        "st:cn:1438",
         "st:cn:1439"
       ]
     },
     {
       "value": "CN-12306-ILP",
       "candidates": [
-        "st:cn:5888",
         "st:cn:5889"
       ]
     },
@@ -23538,7 +22379,6 @@
     {
       "value": "CN-12306-ITW",
       "candidates": [
-        "st:cn:4660",
         "st:cn:4661"
       ]
     },
@@ -23546,78 +22386,67 @@
       "value": "CN-12306-IZQ",
       "candidates": [
         "st:cn:1",
-        "st:cn:2",
         "st:cn:3"
       ]
     },
     {
       "value": "CN-12306-JAC",
       "candidates": [
-        "st:cn:1303",
         "st:cn:1304"
       ]
     },
     {
       "value": "CN-12306-JCS",
       "candidates": [
-        "st:cn:3926",
         "st:cn:3927"
       ]
     },
     {
       "value": "CN-12306-JGK",
       "candidates": [
-        "st:cn:960",
         "st:cn:961"
       ]
     },
     {
       "value": "CN-12306-JHR",
       "candidates": [
-        "st:cn:393",
         "st:cn:394"
       ]
     },
     {
       "value": "CN-12306-JIO",
       "candidates": [
-        "st:cn:14744",
         "st:cn:14745"
       ]
     },
     {
       "value": "CN-12306-JJZ",
       "candidates": [
-        "st:cn:4173",
         "st:cn:4174"
       ]
     },
     {
       "value": "CN-12306-JMB",
       "candidates": [
-        "st:cn:2480",
         "st:cn:2481"
       ]
     },
     {
       "value": "CN-12306-JXK",
       "candidates": [
-        "st:cn:2546",
         "st:cn:2547"
       ]
     },
     {
       "value": "CN-12306-JZK",
       "candidates": [
-        "st:cn:971",
         "st:cn:972"
       ]
     },
     {
       "value": "CN-12306-KAM",
       "candidates": [
-        "st:cn:4857",
-        "st:cn:4858"
+        "st:cn:4857"
       ]
     },
     {
@@ -23630,56 +22459,48 @@
     {
       "value": "CN-12306-KDK",
       "candidates": [
-        "st:cn:5183",
         "st:cn:5184"
       ]
     },
     {
       "value": "CN-12306-KEW",
       "candidates": [
-        "st:cn:4675",
         "st:cn:4676"
       ]
     },
     {
       "value": "CN-12306-KFW",
       "candidates": [
-        "st:cn:4678",
         "st:cn:4679"
       ]
     },
     {
       "value": "CN-12306-KIQ",
       "candidates": [
-        "st:cn:4489",
-        "st:cn:4490"
+        "st:cn:4489"
       ]
     },
     {
       "value": "CN-12306-KMM",
       "candidates": [
-        "st:cn:3126",
         "st:cn:3127"
       ]
     },
     {
       "value": "CN-12306-KOM",
       "candidates": [
-        "st:cn:5389",
         "st:cn:5390"
       ]
     },
     {
       "value": "CN-12306-KQW",
       "candidates": [
-        "st:cn:4704",
         "st:cn:4705"
       ]
     },
     {
       "value": "CN-12306-KSR",
       "candidates": [
-        "st:cn:509",
         "st:cn:510"
       ]
     },
@@ -23693,21 +22514,18 @@
     {
       "value": "CN-12306-KZK",
       "candidates": [
-        "st:cn:4121",
         "st:cn:4122"
       ]
     },
     {
       "value": "CN-12306-KZP",
       "candidates": [
-        "st:cn:5890",
         "st:cn:5891"
       ]
     },
     {
       "value": "CN-12306-LAP",
       "candidates": [
-        "st:cn:664",
         "st:cn:665"
       ]
     },
@@ -23721,7 +22539,6 @@
     {
       "value": "CN-12306-LFX",
       "candidates": [
-        "st:cn:1057",
         "st:cn:1058"
       ]
     },
@@ -23735,70 +22552,60 @@
     {
       "value": "CN-12306-LLG",
       "candidates": [
-        "st:cn:3846",
         "st:cn:3847"
       ]
     },
     {
       "value": "CN-12306-LSO",
       "candidates": [
-        "st:cn:11",
         "st:cn:12"
       ]
     },
     {
       "value": "CN-12306-LUF",
       "candidates": [
-        "st:cn:4473",
         "st:cn:4474"
       ]
     },
     {
       "value": "CN-12306-LZO",
       "candidates": [
-        "st:cn:14709",
         "st:cn:14710"
       ]
     },
     {
       "value": "CN-12306-LZZ",
       "candidates": [
-        "st:cn:614",
         "st:cn:615"
       ]
     },
     {
       "value": "CN-12306-MDB",
       "candidates": [
-        "st:cn:1760",
         "st:cn:1761"
       ]
     },
     {
       "value": "CN-12306-MDK",
       "candidates": [
-        "st:cn:4649",
         "st:cn:4650"
       ]
     },
     {
       "value": "CN-12306-MIO",
       "candidates": [
-        "st:cn:14717",
         "st:cn:14718"
       ]
     },
     {
       "value": "CN-12306-MSE",
       "candidates": [
-        "st:cn:5799",
         "st:cn:5800"
       ]
     },
     {
       "value": "CN-12306-MUP",
       "candidates": [
-        "st:cn:1471",
         "st:cn:1472"
       ]
     },
@@ -23814,7 +22621,6 @@
     {
       "value": "CN-12306-NGX",
       "candidates": [
-        "st:cn:3043",
         "st:cn:3044"
       ]
     },
@@ -23828,28 +22634,24 @@
     {
       "value": "CN-12306-NJW",
       "candidates": [
-        "st:cn:2382",
         "st:cn:2383"
       ]
     },
     {
       "value": "CN-12306-NKP",
       "candidates": [
-        "st:cn:5932",
         "st:cn:5933"
       ]
     },
     {
       "value": "CN-12306-NKW",
       "candidates": [
-        "st:cn:4074",
         "st:cn:4075"
       ]
     },
     {
       "value": "CN-12306-NLP",
       "candidates": [
-        "st:cn:1478",
         "st:cn:1479"
       ]
     },
@@ -23863,14 +22665,12 @@
     {
       "value": "CN-12306-NOE",
       "candidates": [
-        "st:cn:5805",
         "st:cn:5806"
       ]
     },
     {
       "value": "CN-12306-NUE",
       "candidates": [
-        "st:cn:6707",
         "st:cn:6708"
       ]
     },
@@ -23884,42 +22684,36 @@
     {
       "value": "CN-12306-NXA",
       "candidates": [
-        "st:cn:6266",
         "st:cn:6267"
       ]
     },
     {
       "value": "CN-12306-NXG",
       "candidates": [
-        "st:cn:3911",
         "st:cn:3912"
       ]
     },
     {
       "value": "CN-12306-OGQ",
       "candidates": [
-        "st:cn:6351",
         "st:cn:6352"
       ]
     },
     {
       "value": "CN-12306-OKP",
       "candidates": [
-        "st:cn:5281",
         "st:cn:5282"
       ]
     },
     {
       "value": "CN-12306-PEE",
       "candidates": [
-        "st:cn:6713",
         "st:cn:6714"
       ]
     },
     {
       "value": "CN-12306-PJE",
       "candidates": [
-        "st:cn:5795",
         "st:cn:5796"
       ]
     },
@@ -23933,14 +22727,12 @@
     {
       "value": "CN-12306-PTS",
       "candidates": [
-        "st:cn:5139",
         "st:cn:5140"
       ]
     },
     {
       "value": "CN-12306-PYW",
       "candidates": [
-        "st:cn:5064",
         "st:cn:5065"
       ]
     },
@@ -23954,14 +22746,12 @@
     {
       "value": "CN-12306-QFW",
       "candidates": [
-        "st:cn:2027",
         "st:cn:2028"
       ]
     },
     {
       "value": "CN-12306-QIP",
       "candidates": [
-        "st:cn:6074",
         "st:cn:6075"
       ]
     },
@@ -23975,56 +22765,48 @@
     {
       "value": "CN-12306-QNW",
       "candidates": [
-        "st:cn:2918",
         "st:cn:2919"
       ]
     },
     {
       "value": "CN-12306-QSL",
       "candidates": [
-        "st:cn:2444",
         "st:cn:2445"
       ]
     },
     {
       "value": "CN-12306-RHX",
       "candidates": [
-        "st:cn:1060",
         "st:cn:1061"
       ]
     },
     {
       "value": "CN-12306-RNT",
       "candidates": [
-        "st:cn:3095",
         "st:cn:3096"
       ]
     },
     {
       "value": "CN-12306-RXW",
       "candidates": [
-        "st:cn:2297",
         "st:cn:2298"
       ]
     },
     {
       "value": "CN-12306-SAO",
       "candidates": [
-        "st:cn:14758",
         "st:cn:14759"
       ]
     },
     {
       "value": "CN-12306-SCE",
       "candidates": [
-        "st:cn:5815",
         "st:cn:5816"
       ]
     },
     {
       "value": "CN-12306-SCP",
       "candidates": [
-        "st:cn:1300",
         "st:cn:1301",
         "st:cn:1302"
       ]
@@ -24032,35 +22814,30 @@
     {
       "value": "CN-12306-SDE",
       "candidates": [
-        "st:cn:5351",
         "st:cn:5352"
       ]
     },
     {
       "value": "CN-12306-SHS",
       "candidates": [
-        "st:cn:1689",
         "st:cn:1690"
       ]
     },
     {
       "value": "CN-12306-SOP",
       "candidates": [
-        "st:cn:1480",
         "st:cn:1481"
       ]
     },
     {
       "value": "CN-12306-SOT",
       "candidates": [
-        "st:cn:5137",
         "st:cn:5138"
       ]
     },
     {
       "value": "CN-12306-SRO",
       "candidates": [
-        "st:cn:14754",
         "st:cn:14755"
       ]
     },
@@ -24074,49 +22851,42 @@
     {
       "value": "CN-12306-SVE",
       "candidates": [
-        "st:cn:6709",
         "st:cn:6710"
       ]
     },
     {
       "value": "CN-12306-SYQ",
       "candidates": [
-        "st:cn:2259",
         "st:cn:2260"
       ]
     },
     {
       "value": "CN-12306-TAP",
       "candidates": [
-        "st:cn:1483",
         "st:cn:1484"
       ]
     },
     {
       "value": "CN-12306-TKX",
       "candidates": [
-        "st:cn:1065",
         "st:cn:1066"
       ]
     },
     {
       "value": "CN-12306-TLB",
       "candidates": [
-        "st:cn:3696",
         "st:cn:3697"
       ]
     },
     {
       "value": "CN-12306-TLD",
       "candidates": [
-        "st:cn:1451",
         "st:cn:1452"
       ]
     },
     {
       "value": "CN-12306-TML",
       "candidates": [
-        "st:cn:2446",
         "st:cn:2447",
         "st:cn:2448"
       ]
@@ -24124,119 +22894,102 @@
     {
       "value": "CN-12306-TMN",
       "candidates": [
-        "st:cn:3818",
         "st:cn:3819"
       ]
     },
     {
       "value": "CN-12306-TOP",
       "candidates": [
-        "st:cn:808",
         "st:cn:809"
       ]
     },
     {
       "value": "CN-12306-UBZ",
       "candidates": [
-        "st:cn:621",
         "st:cn:622"
       ]
     },
     {
       "value": "CN-12306-UMW",
       "candidates": [
-        "st:cn:3155",
         "st:cn:3156"
       ]
     },
     {
       "value": "CN-12306-UYK",
       "candidates": [
-        "st:cn:2526",
         "st:cn:2527"
       ]
     },
     {
       "value": "CN-12306-VAP",
       "candidates": [
-        "st:cn:6076",
         "st:cn:6077"
       ]
     },
     {
       "value": "CN-12306-VBP",
       "candidates": [
-        "st:cn:1449",
         "st:cn:1450"
       ]
     },
     {
       "value": "CN-12306-VFQ",
       "candidates": [
-        "st:cn:2070",
         "st:cn:2071"
       ]
     },
     {
       "value": "CN-12306-VGQ",
       "candidates": [
-        "st:cn:2608",
         "st:cn:2609"
       ]
     },
     {
       "value": "CN-12306-VTR",
       "candidates": [
-        "st:cn:5779",
         "st:cn:5780"
       ]
     },
     {
       "value": "CN-12306-VXK",
       "candidates": [
-        "st:cn:6021",
         "st:cn:6022"
       ]
     },
     {
       "value": "CN-12306-WGB",
       "candidates": [
-        "st:cn:851",
         "st:cn:852"
       ]
     },
     {
       "value": "CN-12306-WJE",
       "candidates": [
-        "st:cn:5784",
         "st:cn:5785"
       ]
     },
     {
       "value": "CN-12306-WKW",
       "candidates": [
-        "st:cn:5458",
         "st:cn:5459"
       ]
     },
     {
       "value": "CN-12306-WLE",
       "candidates": [
-        "st:cn:6711",
         "st:cn:6712"
       ]
     },
     {
       "value": "CN-12306-WWJ",
       "candidates": [
-        "st:cn:487",
         "st:cn:488"
       ]
     },
     {
       "value": "CN-12306-WYE",
       "candidates": [
-        "st:cn:5809",
         "st:cn:5810"
       ]
     },
@@ -24249,7 +23002,6 @@
     {
       "value": "CN-12306-XDY",
       "candidates": [
-        "st:cn:2275",
         "st:cn:2276"
       ]
     },
@@ -24263,63 +23015,54 @@
     {
       "value": "CN-12306-XKS",
       "candidates": [
-        "st:cn:5503",
         "st:cn:5504"
       ]
     },
     {
       "value": "CN-12306-XLE",
       "candidates": [
-        "st:cn:5793",
         "st:cn:5794"
       ]
     },
     {
       "value": "CN-12306-XPF",
       "candidates": [
-        "st:cn:4468",
         "st:cn:4469"
       ]
     },
     {
       "value": "CN-12306-XTQ",
       "candidates": [
-        "st:cn:1547",
         "st:cn:1548"
       ]
     },
     {
       "value": "CN-12306-XWQ",
       "candidates": [
-        "st:cn:6359",
         "st:cn:6360"
       ]
     },
     {
       "value": "CN-12306-XXM",
       "candidates": [
-        "st:cn:3131",
         "st:cn:3132"
       ]
     },
     {
       "value": "CN-12306-XYY",
       "candidates": [
-        "st:cn:2586",
         "st:cn:2587"
       ]
     },
     {
       "value": "CN-12306-YAA",
       "candidates": [
-        "st:cn:6268",
         "st:cn:6269"
       ]
     },
     {
       "value": "CN-12306-YAE",
       "candidates": [
-        "st:cn:5801",
         "st:cn:5802"
       ]
     },
@@ -24333,91 +23076,78 @@
     {
       "value": "CN-12306-YGR",
       "candidates": [
-        "st:cn:548",
         "st:cn:549"
       ]
     },
     {
       "value": "CN-12306-YGW",
       "candidates": [
-        "st:cn:5314",
         "st:cn:5315"
       ]
     },
     {
       "value": "CN-12306-YLZ",
       "candidates": [
-        "st:cn:2672",
         "st:cn:2673"
       ]
     },
     {
       "value": "CN-12306-YME",
       "candidates": [
-        "st:cn:5786",
         "st:cn:5787"
       ]
     },
     {
       "value": "CN-12306-YMI",
       "candidates": [
-        "st:cn:6349",
         "st:cn:6350"
       ]
     },
     {
       "value": "CN-12306-YTE",
       "candidates": [
-        "st:cn:5807",
         "st:cn:5808"
       ]
     },
     {
       "value": "CN-12306-YTS",
       "candidates": [
-        "st:cn:3918",
         "st:cn:3919"
       ]
     },
     {
       "value": "CN-12306-YXE",
       "candidates": [
-        "st:cn:4668",
         "st:cn:4669"
       ]
     },
     {
       "value": "CN-12306-ZAF",
       "candidates": [
-        "st:cn:4470",
         "st:cn:4471"
       ]
     },
     {
       "value": "CN-12306-ZDB",
       "candidates": [
-        "st:cn:1049",
         "st:cn:1050"
       ]
     },
     {
       "value": "CN-12306-ZFK",
       "candidates": [
-        "st:cn:339",
         "st:cn:340"
       ]
     },
     {
       "value": "CN-12306-ZGE",
       "candidates": [
-        "st:cn:4756",
         "st:cn:4757"
       ]
     },
     {
       "value": "CN-12306-ZIE",
       "candidates": [
-        "st:cn:5813",
         "st:cn:5814"
       ]
     },
@@ -24431,14 +23161,12 @@
     {
       "value": "CN-12306-ZJY",
       "candidates": [
-        "st:cn:2573",
         "st:cn:2574"
       ]
     },
     {
       "value": "CN-12306-ZNO",
       "candidates": [
-        "st:cn:14764",
         "st:cn:14765"
       ]
     },
@@ -24459,22 +23187,19 @@
     {
       "value": "CN-12306-ZWQ",
       "candidates": [
-        "st:cn:6487",
         "st:cn:6488"
       ]
     },
     {
       "value": "CN-12306-ZZE",
       "candidates": [
-        "st:cn:5811",
         "st:cn:5812"
       ]
     },
     {
       "value": "CN-12306-ZZQ",
       "candidates": [
-        "st:cn:726",
-        "st:cn:727"
+        "st:cn:14801"
       ]
     },
     {
@@ -24494,70 +23219,60 @@
     {
       "value": "CN-OSM-N10598617809",
       "candidates": [
-        "st:cn:5817",
         "st:cn:5818"
       ]
     },
     {
       "value": "CN-OSM-N10671369627",
       "candidates": [
-        "st:cn:14132",
-        "st:cn:14133"
+        "st:cn:14132"
       ]
     },
     {
       "value": "CN-OSM-N10740321255",
       "candidates": [
-        "st:cn:10518",
-        "st:cn:10519"
+        "st:cn:10518"
       ]
     },
     {
       "value": "CN-OSM-N10757791701",
       "candidates": [
-        "st:cn:10524",
-        "st:cn:10525"
+        "st:cn:10524"
       ]
     },
     {
       "value": "CN-OSM-N10757807710",
       "candidates": [
-        "st:cn:10522",
-        "st:cn:10523"
+        "st:cn:10522"
       ]
     },
     {
       "value": "CN-OSM-N10757807714",
       "candidates": [
-        "st:cn:10520",
-        "st:cn:10521"
+        "st:cn:10520"
       ]
     },
     {
       "value": "CN-OSM-N10757807731",
       "candidates": [
-        "st:cn:10516",
-        "st:cn:10517"
+        "st:cn:10516"
       ]
     },
     {
       "value": "CN-OSM-N10757807733",
       "candidates": [
-        "st:cn:10514",
-        "st:cn:10515"
+        "st:cn:10514"
       ]
     },
     {
       "value": "CN-OSM-N10758028161",
       "candidates": [
-        "st:cn:10512",
-        "st:cn:10513"
+        "st:cn:10512"
       ]
     },
     {
       "value": "CN-OSM-N10771129666",
       "candidates": [
-        "st:cn:10564",
         "st:cn:10565"
       ]
     },
@@ -24571,105 +23286,90 @@
     {
       "value": "CN-OSM-N10773561924",
       "candidates": [
-        "st:cn:10540",
         "st:cn:10541"
       ]
     },
     {
       "value": "CN-OSM-N11127329510",
       "candidates": [
-        "st:cn:10372",
         "st:cn:10373"
       ]
     },
     {
       "value": "CN-OSM-N11834861031",
       "candidates": [
-        "st:cn:14756",
         "st:cn:14757"
       ]
     },
     {
       "value": "CN-OSM-N11834913171",
       "candidates": [
-        "st:cn:14746",
         "st:cn:14747"
       ]
     },
     {
       "value": "CN-OSM-N11835182621",
       "candidates": [
-        "st:cn:14731",
         "st:cn:14732"
       ]
     },
     {
       "value": "CN-OSM-N11835182658",
       "candidates": [
-        "st:cn:14727",
         "st:cn:14728"
       ]
     },
     {
       "value": "CN-OSM-N11835192797",
       "candidates": [
-        "st:cn:14723",
         "st:cn:14724"
       ]
     },
     {
       "value": "CN-OSM-N11835192798",
       "candidates": [
-        "st:cn:14735",
         "st:cn:14736"
       ]
     },
     {
       "value": "CN-OSM-N11835192826",
       "candidates": [
-        "st:cn:14719",
         "st:cn:14720"
       ]
     },
     {
       "value": "CN-OSM-N11837753484",
       "candidates": [
-        "st:cn:14752",
         "st:cn:14753"
       ]
     },
     {
       "value": "CN-OSM-N11837753485",
       "candidates": [
-        "st:cn:14742",
         "st:cn:14743"
       ]
     },
     {
       "value": "CN-OSM-N11837753486",
       "candidates": [
-        "st:cn:14738",
         "st:cn:14739"
       ]
     },
     {
       "value": "CN-OSM-N11837799349",
       "candidates": [
-        "st:cn:14715",
         "st:cn:14716"
       ]
     },
     {
       "value": "CN-OSM-N11837829321",
       "candidates": [
-        "st:cn:14711",
         "st:cn:14712"
       ]
     },
     {
       "value": "CN-OSM-N11942182951",
       "candidates": [
-        "st:cn:11296",
         "st:cn:11297"
       ]
     },
@@ -24691,8 +23391,7 @@
       "value": "CN-OSM-N12056554194",
       "candidates": [
         "st:cn:8993",
-        "st:cn:8994",
-        "st:cn:8995"
+        "st:cn:8994"
       ]
     },
     {
@@ -24706,16 +23405,14 @@
       "value": "CN-OSM-N12056554196",
       "candidates": [
         "st:cn:8979",
-        "st:cn:8980",
-        "st:cn:8981"
+        "st:cn:8980"
       ]
     },
     {
       "value": "CN-OSM-N12056554197",
       "candidates": [
         "st:cn:9006",
-        "st:cn:9007",
-        "st:cn:9008"
+        "st:cn:9007"
       ]
     },
     {
@@ -24728,22 +23425,19 @@
     {
       "value": "CN-OSM-N12089221276",
       "candidates": [
-        "st:cn:7310",
         "st:cn:7311"
       ]
     },
     {
       "value": "CN-OSM-N12167817374",
       "candidates": [
-        "st:cn:10458",
         "st:cn:10459"
       ]
     },
     {
       "value": "CN-OSM-N12430713733",
       "candidates": [
-        "st:cn:7732",
-        "st:cn:7733"
+        "st:cn:7732"
       ]
     },
     {
@@ -24771,7 +23465,6 @@
       "value": "CN-OSM-N12471374044",
       "candidates": [
         "st:cn:9943",
-        "st:cn:9944",
         "st:cn:9945"
       ]
     },
@@ -24794,238 +23487,204 @@
     {
       "value": "CN-OSM-N12643489097",
       "candidates": [
-        "st:cn:4119",
         "st:cn:4120"
       ]
     },
     {
       "value": "CN-OSM-N12798456729",
       "candidates": [
-        "st:cn:13121",
-        "st:cn:13122"
+        "st:cn:13121"
       ]
     },
     {
       "value": "CN-OSM-N12798456730",
       "candidates": [
-        "st:cn:13087",
-        "st:cn:13088"
+        "st:cn:13087"
       ]
     },
     {
       "value": "CN-OSM-N12798456736",
       "candidates": [
-        "st:cn:13065",
-        "st:cn:13066"
+        "st:cn:13065"
       ]
     },
     {
       "value": "CN-OSM-N12798456740",
       "candidates": [
-        "st:cn:13067",
-        "st:cn:13068"
+        "st:cn:13067"
       ]
     },
     {
       "value": "CN-OSM-N12798456741",
       "candidates": [
-        "st:cn:13141",
-        "st:cn:13142"
+        "st:cn:13141"
       ]
     },
     {
       "value": "CN-OSM-N12798456744",
       "candidates": [
-        "st:cn:13069",
-        "st:cn:13070"
+        "st:cn:13069"
       ]
     },
     {
       "value": "CN-OSM-N12798456745",
       "candidates": [
-        "st:cn:13139",
-        "st:cn:13140"
+        "st:cn:13139"
       ]
     },
     {
       "value": "CN-OSM-N12798456748",
       "candidates": [
-        "st:cn:13071",
-        "st:cn:13072"
+        "st:cn:13071"
       ]
     },
     {
       "value": "CN-OSM-N12798456749",
       "candidates": [
-        "st:cn:13137",
-        "st:cn:13138"
+        "st:cn:13137"
       ]
     },
     {
       "value": "CN-OSM-N12798456752",
       "candidates": [
-        "st:cn:13073",
-        "st:cn:13074"
+        "st:cn:13073"
       ]
     },
     {
       "value": "CN-OSM-N12798456753",
       "candidates": [
-        "st:cn:13135",
-        "st:cn:13136"
+        "st:cn:13135"
       ]
     },
     {
       "value": "CN-OSM-N12798456754",
       "candidates": [
-        "st:cn:13075",
-        "st:cn:13076"
+        "st:cn:13075"
       ]
     },
     {
       "value": "CN-OSM-N12798456755",
       "candidates": [
-        "st:cn:13131",
-        "st:cn:13132"
+        "st:cn:13131"
       ]
     },
     {
       "value": "CN-OSM-N12798456756",
       "candidates": [
-        "st:cn:13133",
-        "st:cn:13134"
+        "st:cn:13133"
       ]
     },
     {
       "value": "CN-OSM-N12798456757",
       "candidates": [
-        "st:cn:13077",
-        "st:cn:13078"
+        "st:cn:13077"
       ]
     },
     {
       "value": "CN-OSM-N12798456758",
       "candidates": [
-        "st:cn:13129",
-        "st:cn:13130"
+        "st:cn:13129"
       ]
     },
     {
       "value": "CN-OSM-N12798456759",
       "candidates": [
-        "st:cn:13127",
-        "st:cn:13128"
+        "st:cn:13127"
       ]
     },
     {
       "value": "CN-OSM-N12798456760",
       "candidates": [
-        "st:cn:13081",
-        "st:cn:13082"
+        "st:cn:13081"
       ]
     },
     {
       "value": "CN-OSM-N12798456761",
       "candidates": [
-        "st:cn:13079",
-        "st:cn:13080"
+        "st:cn:13079"
       ]
     },
     {
       "value": "CN-OSM-N12798456764",
       "candidates": [
-        "st:cn:13125",
-        "st:cn:13126"
+        "st:cn:13125"
       ]
     },
     {
       "value": "CN-OSM-N12798456765",
       "candidates": [
-        "st:cn:13083",
-        "st:cn:13084"
+        "st:cn:13083"
       ]
     },
     {
       "value": "CN-OSM-N12798456768",
       "candidates": [
-        "st:cn:13123",
-        "st:cn:13124"
+        "st:cn:13123"
       ]
     },
     {
       "value": "CN-OSM-N12798456769",
       "candidates": [
-        "st:cn:13085",
-        "st:cn:13086"
+        "st:cn:13085"
       ]
     },
     {
       "value": "CN-OSM-N12798456772",
       "candidates": [
-        "st:cn:13119",
-        "st:cn:13120"
+        "st:cn:13119"
       ]
     },
     {
       "value": "CN-OSM-N12798456773",
       "candidates": [
-        "st:cn:13089",
-        "st:cn:13090"
+        "st:cn:13089"
       ]
     },
     {
       "value": "CN-OSM-N12798456774",
       "candidates": [
-        "st:cn:13117",
-        "st:cn:13118"
+        "st:cn:13117"
       ]
     },
     {
       "value": "CN-OSM-N12798456776",
       "candidates": [
-        "st:cn:13091",
-        "st:cn:13092"
+        "st:cn:13091"
       ]
     },
     {
       "value": "CN-OSM-N12798456780",
       "candidates": [
-        "st:cn:13115",
-        "st:cn:13116"
+        "st:cn:13115"
       ]
     },
     {
       "value": "CN-OSM-N12798456781",
       "candidates": [
-        "st:cn:13093",
-        "st:cn:13094"
+        "st:cn:13093"
       ]
     },
     {
       "value": "CN-OSM-N12798456785",
       "candidates": [
-        "st:cn:13113",
-        "st:cn:13114"
+        "st:cn:13113"
       ]
     },
     {
       "value": "CN-OSM-N12798456786",
       "candidates": [
-        "st:cn:13095",
-        "st:cn:13096"
+        "st:cn:13095"
       ]
     },
     {
       "value": "CN-OSM-N12798456789",
       "candidates": [
-        "st:cn:13111",
-        "st:cn:13112"
+        "st:cn:13111"
       ]
     },
     {
       "value": "CN-OSM-N12961510597",
       "candidates": [
-        "st:cn:10688",
         "st:cn:10689"
       ]
     },
@@ -25039,134 +23698,115 @@
     {
       "value": "CN-OSM-N13431725611",
       "candidates": [
-        "st:cn:9902",
-        "st:cn:9903"
+        "st:cn:9902"
       ]
     },
     {
       "value": "CN-OSM-N13462507405",
       "candidates": [
-        "st:cn:9954",
-        "st:cn:9955"
+        "st:cn:9954"
       ]
     },
     {
       "value": "CN-OSM-N13462507406",
       "candidates": [
-        "st:cn:9909",
-        "st:cn:9910"
+        "st:cn:9909"
       ]
     },
     {
       "value": "CN-OSM-N13462507410",
       "candidates": [
-        "st:cn:9906",
-        "st:cn:9907"
+        "st:cn:9906"
       ]
     },
     {
       "value": "CN-OSM-N13462507411",
       "candidates": [
-        "st:cn:9904",
-        "st:cn:9905"
+        "st:cn:9904"
       ]
     },
     {
       "value": "CN-OSM-N13481429188",
       "candidates": [
-        "st:cn:9927",
-        "st:cn:9928"
+        "st:cn:9927"
       ]
     },
     {
       "value": "CN-OSM-N13481429190",
       "candidates": [
-        "st:cn:9923",
-        "st:cn:9924"
+        "st:cn:9923"
       ]
     },
     {
       "value": "CN-OSM-N13481429191",
       "candidates": [
-        "st:cn:9911",
-        "st:cn:9912"
+        "st:cn:9911"
       ]
     },
     {
       "value": "CN-OSM-N13481429193",
       "candidates": [
-        "st:cn:9931",
-        "st:cn:9932"
+        "st:cn:9931"
       ]
     },
     {
       "value": "CN-OSM-N13481429194",
       "candidates": [
-        "st:cn:9935",
-        "st:cn:9936"
+        "st:cn:9935"
       ]
     },
     {
       "value": "CN-OSM-N13481429195",
       "candidates": [
-        "st:cn:9952",
-        "st:cn:9953"
+        "st:cn:9952"
       ]
     },
     {
       "value": "CN-OSM-N13481429200",
       "candidates": [
-        "st:cn:9946",
-        "st:cn:9947"
+        "st:cn:9946"
       ]
     },
     {
       "value": "CN-OSM-N13481461001",
       "candidates": [
-        "st:cn:9939",
-        "st:cn:9940"
+        "st:cn:9939"
       ]
     },
     {
       "value": "CN-OSM-N13481461003",
       "candidates": [
-        "st:cn:9941",
-        "st:cn:9942"
+        "st:cn:9941"
       ]
     },
     {
       "value": "CN-OSM-N13516289568",
       "candidates": [
-        "st:cn:9929",
-        "st:cn:9930"
+        "st:cn:9929"
       ]
     },
     {
       "value": "CN-OSM-N13516967331",
       "candidates": [
-        "st:cn:9913",
-        "st:cn:9914"
+        "st:cn:9913"
       ]
     },
     {
       "value": "CN-OSM-N13575336785",
       "candidates": [
-        "st:cn:9915",
-        "st:cn:9916"
+        "st:cn:9915"
       ]
     },
     {
       "value": "CN-OSM-N13575336787",
       "candidates": [
-        "st:cn:9917",
-        "st:cn:9918"
+        "st:cn:9917"
       ]
     },
     {
       "value": "CN-OSM-N13575336788",
       "candidates": [
-        "st:cn:9933",
-        "st:cn:9934"
+        "st:cn:9933"
       ]
     },
     {
@@ -25179,35 +23819,30 @@
     {
       "value": "CN-OSM-N1565858570",
       "candidates": [
-        "st:cn:3168",
         "st:cn:3169"
       ]
     },
     {
       "value": "CN-OSM-N1586077454",
       "candidates": [
-        "st:cn:2301",
         "st:cn:2302"
       ]
     },
     {
       "value": "CN-OSM-N1587088565",
       "candidates": [
-        "st:cn:2350",
         "st:cn:2351"
       ]
     },
     {
       "value": "CN-OSM-N1587112384",
       "candidates": [
-        "st:cn:2387",
         "st:cn:2388"
       ]
     },
     {
       "value": "CN-OSM-N1590460680",
       "candidates": [
-        "st:cn:2438",
         "st:cn:2439"
       ]
     },
@@ -25242,7 +23877,6 @@
     {
       "value": "CN-OSM-N1681825115",
       "candidates": [
-        "st:cn:2940",
         "st:cn:2941"
       ]
     },
@@ -25256,42 +23890,36 @@
     {
       "value": "CN-OSM-N1716044103",
       "candidates": [
-        "st:cn:8002",
-        "st:cn:8003"
+        "st:cn:8002"
       ]
     },
     {
       "value": "CN-OSM-N1796732962",
       "candidates": [
-        "st:cn:1916",
         "st:cn:1917"
       ]
     },
     {
       "value": "CN-OSM-N1964642703",
       "candidates": [
-        "st:cn:3151",
         "st:cn:3152"
       ]
     },
     {
       "value": "CN-OSM-N1964861297",
       "candidates": [
-        "st:cn:3153",
         "st:cn:3154"
       ]
     },
     {
       "value": "CN-OSM-N1964861301",
       "candidates": [
-        "st:cn:3158",
         "st:cn:3159"
       ]
     },
     {
       "value": "CN-OSM-N2101685386",
       "candidates": [
-        "st:cn:10454",
         "st:cn:10455"
       ]
     },
@@ -25333,43 +23961,37 @@
     {
       "value": "CN-OSM-N2450072204",
       "candidates": [
-        "st:cn:151",
         "st:cn:152"
       ]
     },
     {
       "value": "CN-OSM-N2451329911",
       "candidates": [
-        "st:cn:3916",
         "st:cn:3917"
       ]
     },
     {
       "value": "CN-OSM-N2616210383",
       "candidates": [
-        "st:cn:2313",
         "st:cn:2314"
       ]
     },
     {
       "value": "CN-OSM-N2726644060",
       "candidates": [
-        "st:cn:6928",
         "st:cn:6929"
       ]
     },
     {
       "value": "CN-OSM-N2726647402",
       "candidates": [
-        "st:cn:2278",
         "st:cn:2279"
       ]
     },
     {
       "value": "CN-OSM-N2726964537",
       "candidates": [
-        "st:cn:7923",
-        "st:cn:7924"
+        "st:cn:7923"
       ]
     },
     {
@@ -25389,7 +24011,6 @@
     {
       "value": "CN-OSM-N2805869476",
       "candidates": [
-        "st:cn:5000",
         "st:cn:5001",
         "st:cn:5002"
       ]
@@ -25404,35 +24025,30 @@
     {
       "value": "CN-OSM-N2847500922",
       "candidates": [
-        "st:cn:4031",
         "st:cn:4032"
       ]
     },
     {
       "value": "CN-OSM-N2876178097",
       "candidates": [
-        "st:cn:2280",
         "st:cn:2281"
       ]
     },
     {
       "value": "CN-OSM-N2876178098",
       "candidates": [
-        "st:cn:5039",
         "st:cn:5040"
       ]
     },
     {
       "value": "CN-OSM-N2894949391",
       "candidates": [
-        "st:cn:4081",
         "st:cn:4082"
       ]
     },
     {
       "value": "CN-OSM-N2913728104",
       "candidates": [
-        "st:cn:4133",
         "st:cn:4134"
       ]
     },
@@ -25446,56 +24062,48 @@
     {
       "value": "CN-OSM-N2999349326",
       "candidates": [
-        "st:cn:5043",
         "st:cn:5044"
       ]
     },
     {
       "value": "CN-OSM-N3024721311",
       "candidates": [
-        "st:cn:2265",
         "st:cn:2266"
       ]
     },
     {
       "value": "CN-OSM-N3073344826",
       "candidates": [
-        "st:cn:2178",
         "st:cn:2179"
       ]
     },
     {
       "value": "CN-OSM-N3259307096",
       "candidates": [
-        "st:cn:4123",
-        "st:cn:4124"
+        "st:cn:4123"
       ]
     },
     {
       "value": "CN-OSM-N3363289706",
       "candidates": [
-        "st:cn:708",
         "st:cn:709"
       ]
     },
     {
       "value": "CN-OSM-N3369001428",
       "candidates": [
-        "st:cn:8353",
         "st:cn:8354"
       ]
     },
     {
       "value": "CN-OSM-N3369459831",
       "candidates": [
-        "st:cn:8347",
         "st:cn:8348"
       ]
     },
     {
       "value": "CN-OSM-N3369459832",
       "candidates": [
-        "st:cn:8345",
         "st:cn:8346"
       ]
     },
@@ -25503,77 +24111,66 @@
       "value": "CN-OSM-N3369459833",
       "candidates": [
         "st:cn:7656",
-        "st:cn:7657",
         "st:cn:7658"
       ]
     },
     {
       "value": "CN-OSM-N3369459834",
       "candidates": [
-        "st:cn:8339",
         "st:cn:8340"
       ]
     },
     {
       "value": "CN-OSM-N3369459835",
       "candidates": [
-        "st:cn:8341",
         "st:cn:8342"
       ]
     },
     {
       "value": "CN-OSM-N3369459836",
       "candidates": [
-        "st:cn:8351",
         "st:cn:8352"
       ]
     },
     {
       "value": "CN-OSM-N3369459837",
       "candidates": [
-        "st:cn:8365",
         "st:cn:8366"
       ]
     },
     {
       "value": "CN-OSM-N3369459838",
       "candidates": [
-        "st:cn:8355",
         "st:cn:8356"
       ]
     },
     {
       "value": "CN-OSM-N3369459839",
       "candidates": [
-        "st:cn:8359",
         "st:cn:8360"
       ]
     },
     {
       "value": "CN-OSM-N3369459840",
       "candidates": [
-        "st:cn:8357",
         "st:cn:8358"
       ]
     },
     {
       "value": "CN-OSM-N3369459841",
       "candidates": [
-        "st:cn:8343",
         "st:cn:8344"
       ]
     },
     {
       "value": "CN-OSM-N3369459843",
       "candidates": [
-        "st:cn:8337",
         "st:cn:8338"
       ]
     },
     {
       "value": "CN-OSM-N3369459845",
       "candidates": [
-        "st:cn:8349",
         "st:cn:8350"
       ]
     },
@@ -25581,49 +24178,42 @@
       "value": "CN-OSM-N3369459846",
       "candidates": [
         "st:cn:7592",
-        "st:cn:7593",
         "st:cn:7594"
       ]
     },
     {
       "value": "CN-OSM-N3369459847",
       "candidates": [
-        "st:cn:8363",
         "st:cn:8364"
       ]
     },
     {
       "value": "CN-OSM-N3369459848",
       "candidates": [
-        "st:cn:8361",
         "st:cn:8362"
       ]
     },
     {
       "value": "CN-OSM-N3369459849",
       "candidates": [
-        "st:cn:8367",
         "st:cn:8368"
       ]
     },
     {
       "value": "CN-OSM-N3499334914",
       "candidates": [
-        "st:cn:5467",
         "st:cn:5468"
       ]
     },
     {
       "value": "CN-OSM-N3500252727",
       "candidates": [
-        "st:cn:2947",
         "st:cn:2948"
       ]
     },
     {
       "value": "CN-OSM-N3500253632",
       "candidates": [
-        "st:cn:2310",
         "st:cn:2311"
       ]
     },
@@ -25651,14 +24241,12 @@
     {
       "value": "CN-OSM-N3629303026",
       "candidates": [
-        "st:cn:4523",
-        "st:cn:4524"
+        "st:cn:4523"
       ]
     },
     {
       "value": "CN-OSM-N3677193823",
       "candidates": [
-        "st:cn:617",
         "st:cn:618"
       ]
     },
@@ -25672,64 +24260,57 @@
     {
       "value": "CN-OSM-N3688793561",
       "candidates": [
-        "st:cn:92",
         "st:cn:93"
       ]
     },
     {
       "value": "CN-OSM-N3733842642",
       "candidates": [
-        "st:cn:2580",
         "st:cn:2581"
       ]
     },
     {
       "value": "CN-OSM-N3931849630",
       "candidates": [
-        "st:cn:1914",
         "st:cn:1915"
       ]
     },
     {
       "value": "CN-OSM-N4076206413",
       "candidates": [
-        "st:cn:4222",
         "st:cn:4223"
       ]
     },
     {
       "value": "CN-OSM-N4079187136",
       "candidates": [
-        "st:cn:10550",
         "st:cn:10551"
       ]
     },
     {
       "value": "CN-OSM-N4079187142",
       "candidates": [
-        "st:cn:10552",
         "st:cn:10553"
       ]
     },
     {
       "value": "CN-OSM-N4472531698",
       "candidates": [
-        "st:cn:82",
         "st:cn:83"
       ]
     },
     {
       "value": "CN-OSM-N4559363782",
       "candidates": [
-        "st:cn:8712",
-        "st:cn:8713"
+        "st:cn:8713",
+        "st:cn:15113"
       ]
     },
     {
       "value": "CN-OSM-N4570243003",
       "candidates": [
-        "st:cn:10495",
-        "st:cn:10496"
+        "st:cn:10496",
+        "st:cn:15391"
       ]
     },
     {
@@ -25742,105 +24323,90 @@
     {
       "value": "CN-OSM-N4585529796",
       "candidates": [
-        "st:cn:9919",
-        "st:cn:9920"
+        "st:cn:9919"
       ]
     },
     {
       "value": "CN-OSM-N4927734949",
       "candidates": [
-        "st:cn:13296",
         "st:cn:13297"
       ]
     },
     {
       "value": "CN-OSM-N4927734952",
       "candidates": [
-        "st:cn:13292",
         "st:cn:13293"
       ]
     },
     {
       "value": "CN-OSM-N4982401686",
       "candidates": [
-        "st:cn:1550",
         "st:cn:1551"
       ]
     },
     {
       "value": "CN-OSM-N4999063668",
       "candidates": [
-        "st:cn:2299",
         "st:cn:2300"
       ]
     },
     {
       "value": "CN-OSM-N5026288730",
       "candidates": [
-        "st:cn:11095",
         "st:cn:11096"
       ]
     },
     {
       "value": "CN-OSM-N5026288787",
       "candidates": [
-        "st:cn:11081",
         "st:cn:11082"
       ]
     },
     {
       "value": "CN-OSM-N5026288800",
       "candidates": [
-        "st:cn:11079",
         "st:cn:11080"
       ]
     },
     {
       "value": "CN-OSM-N5121205250",
       "candidates": [
-        "st:cn:10467",
         "st:cn:10468"
       ]
     },
     {
       "value": "CN-OSM-N5214588594",
       "candidates": [
-        "st:cn:7750",
-        "st:cn:7751"
+        "st:cn:7750"
       ]
     },
     {
       "value": "CN-OSM-N5214901838",
       "candidates": [
-        "st:cn:7760",
-        "st:cn:7761"
+        "st:cn:7760"
       ]
     },
     {
       "value": "CN-OSM-N5232371904",
       "candidates": [
-        "st:cn:5333",
         "st:cn:5334"
       ]
     },
     {
       "value": "CN-OSM-N5303810100",
       "candidates": [
-        "st:cn:9566",
         "st:cn:9567"
       ]
     },
     {
       "value": "CN-OSM-N5303810107",
       "candidates": [
-        "st:cn:9550",
         "st:cn:9551"
       ]
     },
     {
       "value": "CN-OSM-N5303810113",
       "candidates": [
-        "st:cn:9543",
         "st:cn:9544"
       ]
     },
@@ -25854,56 +24420,52 @@
     {
       "value": "CN-OSM-N5305505996",
       "candidates": [
-        "st:cn:7622",
-        "st:cn:7623"
+        "st:cn:7622"
       ]
     },
     {
       "value": "CN-OSM-N5305506006",
       "candidates": [
-        "st:cn:7633",
-        "st:cn:7634"
+        "st:cn:7633"
       ]
     },
     {
       "value": "CN-OSM-N5430395013",
       "candidates": [
         "st:cn:7525",
-        "st:cn:7526"
+        "st:cn:14913"
       ]
     },
     {
       "value": "CN-OSM-N5430417411",
       "candidates": [
         "st:cn:7529",
-        "st:cn:7530"
+        "st:cn:14916"
       ]
     },
     {
       "value": "CN-OSM-N5430421400",
       "candidates": [
         "st:cn:7531",
-        "st:cn:7532"
+        "st:cn:14917"
       ]
     },
     {
       "value": "CN-OSM-N5430429324",
       "candidates": [
         "st:cn:7518",
-        "st:cn:7519"
+        "st:cn:14908"
       ]
     },
     {
       "value": "CN-OSM-N5430491074",
       "candidates": [
-        "st:cn:7508",
         "st:cn:7509"
       ]
     },
     {
       "value": "CN-OSM-N5430493577",
       "candidates": [
-        "st:cn:7510",
         "st:cn:7511"
       ]
     },
@@ -25911,77 +24473,68 @@
       "value": "CN-OSM-N5430497283",
       "candidates": [
         "st:cn:7516",
-        "st:cn:7517"
+        "st:cn:14907"
       ]
     },
     {
       "value": "CN-OSM-N5430522453",
       "candidates": [
         "st:cn:7513",
-        "st:cn:7514"
+        "st:cn:14905"
       ]
     },
     {
       "value": "CN-OSM-N5441521553",
       "candidates": [
         "st:cn:7665",
-        "st:cn:7666",
-        "st:cn:7667"
+        "st:cn:7666"
       ]
     },
     {
       "value": "CN-OSM-N5441536712",
       "candidates": [
-        "st:cn:7500",
         "st:cn:7501"
       ]
     },
     {
       "value": "CN-OSM-N5441725490",
       "candidates": [
-        "st:cn:7292",
         "st:cn:7293"
       ]
     },
     {
       "value": "CN-OSM-N5442190079",
       "candidates": [
-        "st:cn:7498",
         "st:cn:7499"
       ]
     },
     {
       "value": "CN-OSM-N5444434450",
       "candidates": [
-        "st:cn:7678",
-        "st:cn:7679"
+        "st:cn:7678"
       ]
     },
     {
       "value": "CN-OSM-N5444674048",
       "candidates": [
-        "st:cn:7496",
         "st:cn:7497"
       ]
     },
     {
       "value": "CN-OSM-N5444677242",
       "candidates": [
-        "st:cn:7502",
         "st:cn:7503"
       ]
     },
     {
       "value": "CN-OSM-N5444680534",
       "candidates": [
-        "st:cn:7504",
         "st:cn:7505"
       ]
     },
     {
       "value": "CN-OSM-N5448561568",
       "candidates": [
-        "st:cn:7661",
         "st:cn:7662"
       ]
     },
@@ -25996,189 +24549,162 @@
       "value": "CN-OSM-N5463450278",
       "candidates": [
         "st:cn:7712",
-        "st:cn:7713",
         "st:cn:7714"
       ]
     },
     {
       "value": "CN-OSM-N5502588220",
       "candidates": [
-        "st:cn:10009",
         "st:cn:10010"
       ]
     },
     {
       "value": "CN-OSM-N5503063618",
       "candidates": [
-        "st:cn:14725",
         "st:cn:14726"
       ]
     },
     {
       "value": "CN-OSM-N5503181180",
       "candidates": [
-        "st:cn:14748",
         "st:cn:14749"
       ]
     },
     {
       "value": "CN-OSM-N553661156",
       "candidates": [
-        "st:cn:3124",
         "st:cn:3125"
       ]
     },
     {
       "value": "CN-OSM-N5575964088",
       "candidates": [
-        "st:cn:7971",
         "st:cn:7972"
       ]
     },
     {
       "value": "CN-OSM-N5585712104",
       "candidates": [
-        "st:cn:10038",
         "st:cn:10039"
       ]
     },
     {
       "value": "CN-OSM-N5594170155",
       "candidates": [
-        "st:cn:7305",
         "st:cn:7306"
       ]
     },
     {
       "value": "CN-OSM-N5594210092",
       "candidates": [
-        "st:cn:7303",
         "st:cn:7304"
       ]
     },
     {
       "value": "CN-OSM-N5594400860",
       "candidates": [
-        "st:cn:7295",
         "st:cn:7296"
       ]
     },
     {
       "value": "CN-OSM-N5594558281",
       "candidates": [
-        "st:cn:9992",
         "st:cn:9993"
       ]
     },
     {
       "value": "CN-OSM-N5596459255",
       "candidates": [
-        "st:cn:8497",
         "st:cn:8498"
       ]
     },
     {
       "value": "CN-OSM-N5596469009",
       "candidates": [
-        "st:cn:8499",
         "st:cn:8500"
       ]
     },
     {
       "value": "CN-OSM-N5596537027",
       "candidates": [
-        "st:cn:8501",
         "st:cn:8502"
       ]
     },
     {
       "value": "CN-OSM-N5597964732",
       "candidates": [
-        "st:cn:10163",
         "st:cn:10164"
       ]
     },
     {
       "value": "CN-OSM-N5598402252",
       "candidates": [
-        "st:cn:10058",
         "st:cn:10059"
       ]
     },
     {
       "value": "CN-OSM-N5598548552",
       "candidates": [
-        "st:cn:9998",
         "st:cn:9999"
       ]
     },
     {
       "value": "CN-OSM-N5598840721",
       "candidates": [
-        "st:cn:10158",
         "st:cn:10159"
       ]
     },
     {
       "value": "CN-OSM-N5598942382",
       "candidates": [
-        "st:cn:10172",
         "st:cn:10173"
       ]
     },
     {
       "value": "CN-OSM-N5600229129",
       "candidates": [
-        "st:cn:10178",
         "st:cn:10179"
       ]
     },
     {
       "value": "CN-OSM-N5616916004",
       "candidates": [
-        "st:cn:9403",
         "st:cn:9404"
       ]
     },
     {
       "value": "CN-OSM-N5616916006",
       "candidates": [
-        "st:cn:9503",
         "st:cn:9504"
       ]
     },
     {
       "value": "CN-OSM-N5616916020",
       "candidates": [
-        "st:cn:9492",
         "st:cn:9493"
       ]
     },
     {
       "value": "CN-OSM-N5617074686",
       "candidates": [
-        "st:cn:7940",
         "st:cn:7941"
       ]
     },
     {
       "value": "CN-OSM-N5617807167",
       "candidates": [
-        "st:cn:7936",
         "st:cn:7937"
       ]
     },
     {
       "value": "CN-OSM-N5621991563",
       "candidates": [
-        "st:cn:9414",
         "st:cn:9415"
       ]
     },
     {
       "value": "CN-OSM-N5652914672",
       "candidates": [
-        "st:cn:2702",
         "st:cn:2703"
       ]
     },
@@ -26192,28 +24718,24 @@
     {
       "value": "CN-OSM-N5798527765",
       "candidates": [
-        "st:cn:9950",
-        "st:cn:9951"
+        "st:cn:9950"
       ]
     },
     {
       "value": "CN-OSM-N582370787",
       "candidates": [
-        "st:cn:2621",
         "st:cn:2622"
       ]
     },
     {
       "value": "CN-OSM-N5864609665",
       "candidates": [
-        "st:cn:2654",
         "st:cn:2655"
       ]
     },
     {
       "value": "CN-OSM-N5888657545",
       "candidates": [
-        "st:cn:14750",
         "st:cn:14751"
       ]
     },
@@ -26235,15 +24757,13 @@
       "value": "CN-OSM-N6172173698",
       "candidates": [
         "st:cn:7613",
-        "st:cn:7614",
         "st:cn:7615"
       ]
     },
     {
       "value": "CN-OSM-N6254324863",
       "candidates": [
-        "st:cn:4505",
-        "st:cn:4506"
+        "st:cn:4505"
       ]
     },
     {
@@ -26263,162 +24783,138 @@
     {
       "value": "CN-OSM-N6385614439",
       "candidates": [
-        "st:cn:4157",
         "st:cn:4158"
       ]
     },
     {
       "value": "CN-OSM-N6469532250",
       "candidates": [
-        "st:cn:10709",
-        "st:cn:10710"
+        "st:cn:10709"
       ]
     },
     {
       "value": "CN-OSM-N6469532251",
       "candidates": [
-        "st:cn:10711",
-        "st:cn:10712"
+        "st:cn:10711"
       ]
     },
     {
       "value": "CN-OSM-N6469532252",
       "candidates": [
-        "st:cn:10713",
-        "st:cn:10714"
+        "st:cn:10713"
       ]
     },
     {
       "value": "CN-OSM-N6469532253",
       "candidates": [
-        "st:cn:10715",
-        "st:cn:10716"
+        "st:cn:10715"
       ]
     },
     {
       "value": "CN-OSM-N6469606313",
       "candidates": [
-        "st:cn:8619",
-        "st:cn:8620"
+        "st:cn:8619"
       ]
     },
     {
       "value": "CN-OSM-N6487873946",
       "candidates": [
-        "st:cn:8495",
         "st:cn:8496"
       ]
     },
     {
       "value": "CN-OSM-N6491001177",
       "candidates": [
-        "st:cn:7966",
         "st:cn:7967"
       ]
     },
     {
       "value": "CN-OSM-N6491001178",
       "candidates": [
-        "st:cn:7968",
         "st:cn:7969"
       ]
     },
     {
       "value": "CN-OSM-N6491001289",
       "candidates": [
-        "st:cn:7964",
         "st:cn:7965"
       ]
     },
     {
       "value": "CN-OSM-N6491001293",
       "candidates": [
-        "st:cn:7961",
         "st:cn:7962"
       ]
     },
     {
       "value": "CN-OSM-N6496364884",
       "candidates": [
-        "st:cn:8369",
         "st:cn:8370"
       ]
     },
     {
       "value": "CN-OSM-N6497754454",
       "candidates": [
-        "st:cn:7549",
         "st:cn:7550"
       ]
     },
     {
       "value": "CN-OSM-N6502286199",
       "candidates": [
-        "st:cn:10957",
         "st:cn:10958"
       ]
     },
     {
       "value": "CN-OSM-N6503565369",
       "candidates": [
-        "st:cn:9447",
-        "st:cn:9448"
+        "st:cn:15224"
       ]
     },
     {
       "value": "CN-OSM-N6503565370",
       "candidates": [
-        "st:cn:7774",
-        "st:cn:7775"
+        "st:cn:7774"
       ]
     },
     {
       "value": "CN-OSM-N6503565377",
       "candidates": [
-        "st:cn:9460",
-        "st:cn:9461",
-        "st:cn:9462"
+        "st:cn:9460"
       ]
     },
     {
       "value": "CN-OSM-N6505689114",
       "candidates": [
-        "st:cn:9533",
-        "st:cn:9534"
+        "st:cn:9533"
       ]
     },
     {
       "value": "CN-OSM-N6508614263",
       "candidates": [
-        "st:cn:8566",
-        "st:cn:8567"
+        "st:cn:8566"
       ]
     },
     {
       "value": "CN-OSM-N6514100407",
       "candidates": [
-        "st:cn:8098",
-        "st:cn:8099"
+        "st:cn:8098"
       ]
     },
     {
       "value": "CN-OSM-N6533307893",
       "candidates": [
-        "st:cn:9495",
         "st:cn:9496"
       ]
     },
     {
       "value": "CN-OSM-N6594652054",
       "candidates": [
-        "st:cn:10547",
         "st:cn:10548"
       ]
     },
     {
       "value": "CN-OSM-N6594652091",
       "candidates": [
-        "st:cn:7946",
         "st:cn:7947"
       ]
     },
@@ -26426,129 +24922,110 @@
       "value": "CN-OSM-N6617849503",
       "candidates": [
         "st:cn:7520",
-        "st:cn:7521"
+        "st:cn:14909"
       ]
     },
     {
       "value": "CN-OSM-N6632314160",
       "candidates": [
-        "st:cn:8076",
-        "st:cn:8077"
+        "st:cn:8076"
       ]
     },
     {
       "value": "CN-OSM-N6715085264",
       "candidates": [
-        "st:cn:7765",
-        "st:cn:7766"
+        "st:cn:7765"
       ]
     },
     {
       "value": "CN-OSM-N6716238810",
       "candidates": [
-        "st:cn:7485",
         "st:cn:7486"
       ]
     },
     {
       "value": "CN-OSM-N6745828848",
       "candidates": [
-        "st:cn:7770",
-        "st:cn:7771"
+        "st:cn:7770"
       ]
     },
     {
       "value": "CN-OSM-N6753412231",
       "candidates": [
-        "st:cn:7777",
-        "st:cn:7778"
+        "st:cn:7777"
       ]
     },
     {
       "value": "CN-OSM-N6836123690",
       "candidates": [
-        "st:cn:8020",
-        "st:cn:8021"
+        "st:cn:8020"
       ]
     },
     {
       "value": "CN-OSM-N6839413181",
       "candidates": [
-        "st:cn:7299",
         "st:cn:7300"
       ]
     },
     {
       "value": "CN-OSM-N6894218190",
       "candidates": [
-        "st:cn:5500",
         "st:cn:5501"
       ]
     },
     {
       "value": "CN-OSM-N6930098566",
       "candidates": [
-        "st:cn:8335",
         "st:cn:8336"
       ]
     },
     {
       "value": "CN-OSM-N6930098568",
       "candidates": [
-        "st:cn:8333",
         "st:cn:8334"
       ]
     },
     {
       "value": "CN-OSM-N6930098569",
       "candidates": [
-        "st:cn:8331",
         "st:cn:8332"
       ]
     },
     {
       "value": "CN-OSM-N6930098570",
       "candidates": [
-        "st:cn:8329",
         "st:cn:8330"
       ]
     },
     {
       "value": "CN-OSM-N6930098785",
       "candidates": [
-        "st:cn:7481",
         "st:cn:7482",
-        "st:cn:7483",
         "st:cn:7484"
       ]
     },
     {
       "value": "CN-OSM-N6930098800",
       "candidates": [
-        "st:cn:7477",
         "st:cn:7478",
-        "st:cn:7479",
         "st:cn:7480"
       ]
     },
     {
       "value": "CN-OSM-N7051840957",
       "candidates": [
-        "st:cn:11173",
-        "st:cn:11174"
+        "st:cn:11173"
       ]
     },
     {
       "value": "CN-OSM-N7071675992",
       "candidates": [
-        "st:cn:9982",
         "st:cn:9983"
       ]
     },
     {
       "value": "CN-OSM-N7071675998",
       "candidates": [
-        "st:cn:9621",
         "st:cn:9622"
       ]
     },
@@ -26562,35 +25039,31 @@
     {
       "value": "CN-OSM-N7089244011",
       "candidates": [
-        "st:cn:10560",
         "st:cn:10561"
       ]
     },
     {
       "value": "CN-OSM-N7089244022",
       "candidates": [
-        "st:cn:10545",
         "st:cn:10546"
       ]
     },
     {
       "value": "CN-OSM-N7089244038",
       "candidates": [
-        "st:cn:10991",
         "st:cn:10992"
       ]
     },
     {
       "value": "CN-OSM-N7099206586",
       "candidates": [
-        "st:cn:14038",
-        "st:cn:14039"
+        "st:cn:14039",
+        "st:cn:15919"
       ]
     },
     {
       "value": "CN-OSM-N7117305974",
       "candidates": [
-        "st:cn:8325",
         "st:cn:8326"
       ]
     },
@@ -26625,35 +25098,30 @@
     {
       "value": "CN-OSM-N7202301456",
       "candidates": [
-        "st:cn:2185",
         "st:cn:2186"
       ]
     },
     {
       "value": "CN-OSM-N7212001155",
       "candidates": [
-        "st:cn:5456",
         "st:cn:5457"
       ]
     },
     {
       "value": "CN-OSM-N7213434053",
       "candidates": [
-        "st:cn:7919",
         "st:cn:7920"
       ]
     },
     {
       "value": "CN-OSM-N7213434054",
       "candidates": [
-        "st:cn:7917",
         "st:cn:7918"
       ]
     },
     {
       "value": "CN-OSM-N7213434057",
       "candidates": [
-        "st:cn:7906",
         "st:cn:7907"
       ]
     },
@@ -26667,7 +25135,6 @@
     {
       "value": "CN-OSM-N7315534542",
       "candidates": [
-        "st:cn:908",
         "st:cn:909"
       ]
     },
@@ -26681,14 +25148,12 @@
     {
       "value": "CN-OSM-N7329144911",
       "candidates": [
-        "st:cn:14740",
         "st:cn:14741"
       ]
     },
     {
       "value": "CN-OSM-N7329144920",
       "candidates": [
-        "st:cn:14762",
         "st:cn:14763"
       ]
     },
@@ -26716,7 +25181,6 @@
     {
       "value": "CN-OSM-N7368834476",
       "candidates": [
-        "st:cn:390",
         "st:cn:391"
       ]
     },
@@ -26744,7 +25208,6 @@
     {
       "value": "CN-OSM-N7417454927",
       "candidates": [
-        "st:cn:7913",
         "st:cn:7914"
       ]
     },
@@ -26765,8 +25228,7 @@
     {
       "value": "CN-OSM-N7666452141",
       "candidates": [
-        "st:cn:9530",
-        "st:cn:9531"
+        "st:cn:9530"
       ]
     },
     {
@@ -26779,21 +25241,18 @@
     {
       "value": "CN-OSM-N7705058635",
       "candidates": [
-        "st:cn:3140",
         "st:cn:3141"
       ]
     },
     {
       "value": "CN-OSM-N7707577737",
       "candidates": [
-        "st:cn:2632",
         "st:cn:2633"
       ]
     },
     {
       "value": "CN-OSM-N7715445610",
       "candidates": [
-        "st:cn:1919",
         "st:cn:1920"
       ]
     },
@@ -26814,8 +25273,7 @@
     {
       "value": "CN-OSM-N7828966427",
       "candidates": [
-        "st:cn:7791",
-        "st:cn:7792"
+        "st:cn:7791"
       ]
     },
     {
@@ -26835,7 +25293,6 @@
     {
       "value": "CN-OSM-N7947192957",
       "candidates": [
-        "st:cn:10676",
         "st:cn:10677"
       ]
     },
@@ -26849,14 +25306,12 @@
     {
       "value": "CN-OSM-N8061881520",
       "candidates": [
-        "st:cn:7931",
         "st:cn:7932"
       ]
     },
     {
       "value": "CN-OSM-N8064721021",
       "candidates": [
-        "st:cn:9410",
         "st:cn:9411"
       ]
     },
@@ -26864,7 +25319,6 @@
       "value": "CN-OSM-N8073325260",
       "candidates": [
         "st:cn:7487",
-        "st:cn:7488",
         "st:cn:7489"
       ]
     },
@@ -26872,14 +25326,12 @@
       "value": "CN-OSM-N8073325261",
       "candidates": [
         "st:cn:7491",
-        "st:cn:7492",
         "st:cn:7493"
       ]
     },
     {
       "value": "CN-OSM-N8073325262",
       "candidates": [
-        "st:cn:7494",
         "st:cn:7495"
       ]
     },
@@ -26907,105 +25359,90 @@
     {
       "value": "CN-OSM-N8242507062",
       "candidates": [
-        "st:cn:10953",
         "st:cn:10954"
       ]
     },
     {
       "value": "CN-OSM-N8242507064",
       "candidates": [
-        "st:cn:10557",
-        "st:cn:10558"
+        "st:cn:10557"
       ]
     },
     {
       "value": "CN-OSM-N8242507070",
       "candidates": [
-        "st:cn:10960",
         "st:cn:10961"
       ]
     },
     {
       "value": "CN-OSM-N8242639362",
       "candidates": [
-        "st:cn:7943",
-        "st:cn:7944"
+        "st:cn:7943"
       ]
     },
     {
       "value": "CN-OSM-N8242639365",
       "candidates": [
-        "st:cn:10964",
         "st:cn:10965"
       ]
     },
     {
       "value": "CN-OSM-N8242639366",
       "candidates": [
-        "st:cn:10966",
         "st:cn:10967"
       ]
     },
     {
       "value": "CN-OSM-N8242639370",
       "candidates": [
-        "st:cn:10542",
-        "st:cn:10543"
+        "st:cn:10542"
       ]
     },
     {
       "value": "CN-OSM-N8242639373",
       "candidates": [
-        "st:cn:10969",
         "st:cn:10970"
       ]
     },
     {
       "value": "CN-OSM-N8242639374",
       "candidates": [
-        "st:cn:10929",
         "st:cn:10930"
       ]
     },
     {
       "value": "CN-OSM-N8242765693",
       "candidates": [
-        "st:cn:10985",
         "st:cn:10986"
       ]
     },
     {
       "value": "CN-OSM-N8256421498",
       "candidates": [
-        "st:cn:10566",
         "st:cn:10567"
       ]
     },
     {
       "value": "CN-OSM-N8406197581",
       "candidates": [
-        "st:cn:2517",
         "st:cn:2518"
       ]
     },
     {
       "value": "CN-OSM-N8429540526",
       "candidates": [
-        "st:cn:4248",
-        "st:cn:4249"
+        "st:cn:4248"
       ]
     },
     {
       "value": "CN-OSM-N843202351",
       "candidates": [
-        "st:cn:1308",
         "st:cn:1309"
       ]
     },
     {
       "value": "CN-OSM-N8432585744",
       "candidates": [
-        "st:cn:4148",
         "st:cn:4149"
       ]
     },
@@ -27026,14 +25463,12 @@
     {
       "value": "CN-OSM-N8455171505",
       "candidates": [
-        "st:cn:351",
-        "st:cn:352"
+        "st:cn:351"
       ]
     },
     {
       "value": "CN-OSM-N8460009967",
       "candidates": [
-        "st:cn:5292",
         "st:cn:5293"
       ]
     },
@@ -27047,15 +25482,13 @@
     {
       "value": "CN-OSM-N8500082728",
       "candidates": [
-        "st:cn:2548",
         "st:cn:2549"
       ]
     },
     {
       "value": "CN-OSM-N8913314748",
       "candidates": [
-        "st:cn:9921",
-        "st:cn:9922"
+        "st:cn:9921"
       ]
     },
     {
@@ -27063,7 +25496,6 @@
       "candidates": [
         "st:cn:8951",
         "st:cn:8952",
-        "st:cn:8953",
         "st:cn:8954"
       ]
     },
@@ -27077,7 +25509,6 @@
     {
       "value": "CN-OSM-N8978629464",
       "candidates": [
-        "st:cn:7506",
         "st:cn:7507"
       ]
     },
@@ -27091,15 +25522,13 @@
     {
       "value": "CN-OSM-N9003571312",
       "candidates": [
-        "st:cn:8163",
-        "st:cn:8164"
+        "st:cn:8163"
       ]
     },
     {
       "value": "CN-OSM-N9006301317",
       "candidates": [
-        "st:cn:10510",
-        "st:cn:10511"
+        "st:cn:10510"
       ]
     },
     {
@@ -27112,29 +25541,25 @@
     {
       "value": "CN-OSM-N9061785129",
       "candidates": [
-        "st:cn:7752",
-        "st:cn:7753"
+        "st:cn:7752"
       ]
     },
     {
       "value": "CN-OSM-N9062166392",
       "candidates": [
-        "st:cn:11764",
-        "st:cn:11765"
+        "st:cn:11764"
       ]
     },
     {
       "value": "CN-OSM-N9062301242",
       "candidates": [
-        "st:cn:9444",
-        "st:cn:9445"
+        "st:cn:9444"
       ]
     },
     {
       "value": "CN-OSM-N9062301474",
       "candidates": [
-        "st:cn:9679",
-        "st:cn:9680"
+        "st:cn:9679"
       ]
     },
     {
@@ -27147,28 +25572,24 @@
     {
       "value": "CN-OSM-N9087403300",
       "candidates": [
-        "st:cn:14729",
         "st:cn:14730"
       ]
     },
     {
       "value": "CN-OSM-N9087403301",
       "candidates": [
-        "st:cn:14721",
         "st:cn:14722"
       ]
     },
     {
       "value": "CN-OSM-N9087403302",
       "candidates": [
-        "st:cn:14733",
         "st:cn:14734"
       ]
     },
     {
       "value": "CN-OSM-N9090884269",
       "candidates": [
-        "st:cn:9626",
         "st:cn:9627"
       ]
     },
@@ -27196,28 +25617,24 @@
     {
       "value": "CN-OSM-N9099659614",
       "candidates": [
-        "st:cn:10206",
         "st:cn:10207"
       ]
     },
     {
       "value": "CN-OSM-N9164163258",
       "candidates": [
-        "st:cn:8610",
-        "st:cn:8611"
+        "st:cn:8610"
       ]
     },
     {
       "value": "CN-OSM-N9165008026",
       "candidates": [
-        "st:cn:8617",
-        "st:cn:8618"
+        "st:cn:8617"
       ]
     },
     {
       "value": "CN-OSM-N9220578094",
       "candidates": [
-        "st:cn:10029",
         "st:cn:10030"
       ]
     },
@@ -27238,8 +25655,7 @@
     {
       "value": "CN-OSM-N9327070288",
       "candidates": [
-        "st:cn:8026",
-        "st:cn:8027"
+        "st:cn:15014"
       ]
     },
     {
@@ -27273,29 +25689,26 @@
     {
       "value": "CN-OSM-N9392555711",
       "candidates": [
-        "st:cn:9452",
         "st:cn:9453"
       ]
     },
     {
       "value": "CN-OSM-N9392555714",
       "candidates": [
-        "st:cn:12885",
-        "st:cn:12886"
+        "st:cn:12885"
       ]
     },
     {
       "value": "CN-OSM-N9392555715",
       "candidates": [
-        "st:cn:12887",
-        "st:cn:12888"
+        "st:cn:12887"
       ]
     },
     {
       "value": "CN-OSM-N9401734869",
       "candidates": [
-        "st:cn:12964",
-        "st:cn:12965"
+        "st:cn:12965",
+        "st:cn:15713"
       ]
     },
     {
@@ -27322,63 +25735,54 @@
     {
       "value": "CN-OSM-N9428276494",
       "candidates": [
-        "st:cn:11107",
         "st:cn:11108"
       ]
     },
     {
       "value": "CN-OSM-N9428276541",
       "candidates": [
-        "st:cn:11105",
         "st:cn:11106"
       ]
     },
     {
       "value": "CN-OSM-N9431255160",
       "candidates": [
-        "st:cn:11097",
         "st:cn:11098"
       ]
     },
     {
       "value": "CN-OSM-N9431255162",
       "candidates": [
-        "st:cn:11099",
         "st:cn:11100"
       ]
     },
     {
       "value": "CN-OSM-N9433784274",
       "candidates": [
-        "st:cn:11091",
         "st:cn:11092"
       ]
     },
     {
       "value": "CN-OSM-N9433784302",
       "candidates": [
-        "st:cn:11093",
         "st:cn:11094"
       ]
     },
     {
       "value": "CN-OSM-N9433784354",
       "candidates": [
-        "st:cn:11085",
         "st:cn:11086"
       ]
     },
     {
       "value": "CN-OSM-N9433784358",
       "candidates": [
-        "st:cn:11103",
         "st:cn:11104"
       ]
     },
     {
       "value": "CN-OSM-N9435671935",
       "candidates": [
-        "st:cn:11083",
         "st:cn:11084"
       ]
     },
@@ -27386,7 +25790,6 @@
       "value": "CN-OSM-N9435814563",
       "candidates": [
         "st:cn:8430",
-        "st:cn:8431",
         "st:cn:8432"
       ]
     },
@@ -27400,29 +25803,24 @@
     {
       "value": "CN-OSM-N9439620746",
       "candidates": [
-        "st:cn:11076",
         "st:cn:11077"
       ]
     },
     {
       "value": "CN-OSM-N9439620769",
       "candidates": [
-        "st:cn:11074",
         "st:cn:11075"
       ]
     },
     {
       "value": "CN-OSM-N9439620836",
       "candidates": [
-        "st:cn:11072",
         "st:cn:11073"
       ]
     },
     {
       "value": "CN-OSM-N9439620861",
       "candidates": [
-        "st:cn:8520",
-        "st:cn:8521",
         "st:cn:8522"
       ]
     },
@@ -27439,48 +25837,42 @@
       "value": "CN-OSM-N9442044074",
       "candidates": [
         "st:cn:8436",
-        "st:cn:8437"
+        "st:cn:15057"
       ]
     },
     {
       "value": "CN-OSM-N9442045309",
       "candidates": [
-        "st:cn:12399",
         "st:cn:12400"
       ]
     },
     {
       "value": "CN-OSM-N9442277373",
       "candidates": [
-        "st:cn:11070",
         "st:cn:11071"
       ]
     },
     {
       "value": "CN-OSM-N9442277410",
       "candidates": [
-        "st:cn:12130",
         "st:cn:12131"
       ]
     },
     {
       "value": "CN-OSM-N9442277414",
       "candidates": [
-        "st:cn:11068",
         "st:cn:11069"
       ]
     },
     {
       "value": "CN-OSM-N9442277445",
       "candidates": [
-        "st:cn:11066",
         "st:cn:11067"
       ]
     },
     {
       "value": "CN-OSM-N9442277467",
       "candidates": [
-        "st:cn:11064",
         "st:cn:11065"
       ]
     },
@@ -27501,28 +25893,24 @@
     {
       "value": "CN-OSM-N9446899123",
       "candidates": [
-        "st:cn:11062",
         "st:cn:11063"
       ]
     },
     {
       "value": "CN-OSM-N9446899241",
       "candidates": [
-        "st:cn:11060",
         "st:cn:11061"
       ]
     },
     {
       "value": "CN-OSM-N9449086506",
       "candidates": [
-        "st:cn:12128",
         "st:cn:12129"
       ]
     },
     {
       "value": "CN-OSM-N9451837619",
       "candidates": [
-        "st:cn:11052",
         "st:cn:11053"
       ]
     },
@@ -27543,43 +25931,36 @@
     {
       "value": "CN-OSM-N9458109908",
       "candidates": [
-        "st:cn:8513",
-        "st:cn:8514",
         "st:cn:8515"
       ]
     },
     {
       "value": "CN-OSM-N9459566285",
       "candidates": [
-        "st:cn:11058",
         "st:cn:11059"
       ]
     },
     {
       "value": "CN-OSM-N9459580720",
       "candidates": [
-        "st:cn:11056",
         "st:cn:11057"
       ]
     },
     {
       "value": "CN-OSM-N9459580735",
       "candidates": [
-        "st:cn:11054",
         "st:cn:11055"
       ]
     },
     {
       "value": "CN-OSM-N9459580791",
       "candidates": [
-        "st:cn:11050",
         "st:cn:11051"
       ]
     },
     {
       "value": "CN-OSM-N9459580796",
       "candidates": [
-        "st:cn:11048",
         "st:cn:11049"
       ]
     },
@@ -27600,42 +25981,36 @@
     {
       "value": "CN-OSM-N9497781979",
       "candidates": [
-        "st:cn:8532",
         "st:cn:8533"
       ]
     },
     {
       "value": "CN-OSM-N9513113917",
       "candidates": [
-        "st:cn:4712",
         "st:cn:4713"
       ]
     },
     {
       "value": "CN-OSM-N9630666811",
       "candidates": [
-        "st:cn:12134",
         "st:cn:12135"
       ]
     },
     {
       "value": "CN-OSM-N9630689508",
       "candidates": [
-        "st:cn:12138",
         "st:cn:12139"
       ]
     },
     {
       "value": "CN-OSM-N9687238247",
       "candidates": [
-        "st:cn:12136",
         "st:cn:12137"
       ]
     },
     {
       "value": "CN-OSM-N9687238335",
       "candidates": [
-        "st:cn:12132",
         "st:cn:12133"
       ]
     },
@@ -27656,8 +26031,8 @@
     {
       "value": "CN-OSM-N9712077861",
       "candidates": [
-        "st:cn:8529",
-        "st:cn:8530"
+        "st:cn:8530",
+        "st:cn:15075"
       ]
     },
     {
@@ -27756,14 +26131,13 @@
     {
       "value": "CN-OSM-N9843155436",
       "candidates": [
-        "st:cn:12414",
-        "st:cn:12415"
+        "st:cn:12415",
+        "st:cn:15669"
       ]
     },
     {
       "value": "CN-OSM-N9844430689",
       "candidates": [
-        "st:cn:11101",
         "st:cn:11102"
       ]
     },
@@ -27777,17 +26151,16 @@
     {
       "value": "CN-OSM-N9853645567",
       "candidates": [
-        "st:cn:9525",
-        "st:cn:9526"
+        "st:cn:9525"
       ]
     },
     {
       "value": "CN-OSM-N9857059306",
       "candidates": [
-        "st:cn:11087",
         "st:cn:11088",
         "st:cn:11089",
-        "st:cn:11090"
+        "st:cn:11090",
+        "st:cn:15491"
       ]
     },
     {
@@ -27807,14 +26180,12 @@
     {
       "value": "CN-OSM-N9859463007",
       "candidates": [
-        "st:cn:12114",
         "st:cn:12115"
       ]
     },
     {
       "value": "CN-OSM-N9860230677",
       "candidates": [
-        "st:cn:12116",
         "st:cn:12117"
       ]
     },
@@ -27877,49 +26248,42 @@
     {
       "value": "CN-OSM-N9863202903",
       "candidates": [
-        "st:cn:12118",
         "st:cn:12119"
       ]
     },
     {
       "value": "CN-OSM-N9863202916",
       "candidates": [
-        "st:cn:12120",
         "st:cn:12121"
       ]
     },
     {
       "value": "CN-OSM-N9863203368",
       "candidates": [
-        "st:cn:12122",
         "st:cn:12123"
       ]
     },
     {
       "value": "CN-OSM-N9863203416",
       "candidates": [
-        "st:cn:12124",
         "st:cn:12125"
       ]
     },
     {
       "value": "CN-OSM-N9863212119",
       "candidates": [
-        "st:cn:12126",
         "st:cn:12127"
       ]
     },
     {
       "value": "CN-OSM-N9863987445",
       "candidates": [
-        "st:cn:12112",
         "st:cn:12113"
       ]
     },
     {
       "value": "CN-OSM-N9865970130",
       "candidates": [
-        "st:cn:12106",
         "st:cn:12107",
         "st:cn:12108"
       ]
@@ -27941,98 +26305,84 @@
     {
       "value": "CN-OSM-N9867980804",
       "candidates": [
-        "st:cn:12104",
         "st:cn:12105"
       ]
     },
     {
       "value": "CN-OSM-N9867980805",
       "candidates": [
-        "st:cn:12102",
         "st:cn:12103"
       ]
     },
     {
       "value": "CN-OSM-N9867985457",
       "candidates": [
-        "st:cn:12100",
         "st:cn:12101"
       ]
     },
     {
       "value": "CN-OSM-N9867985553",
       "candidates": [
-        "st:cn:12098",
         "st:cn:12099"
       ]
     },
     {
       "value": "CN-OSM-N9867985554",
       "candidates": [
-        "st:cn:12390",
         "st:cn:12391"
       ]
     },
     {
       "value": "CN-OSM-N9867985563",
       "candidates": [
-        "st:cn:12096",
         "st:cn:12097"
       ]
     },
     {
       "value": "CN-OSM-N9868020925",
       "candidates": [
-        "st:cn:12094",
         "st:cn:12095"
       ]
     },
     {
       "value": "CN-OSM-N9869706039",
       "candidates": [
-        "st:cn:12110",
         "st:cn:12111"
       ]
     },
     {
       "value": "CN-OSM-N9869948420",
       "candidates": [
-        "st:cn:12384",
         "st:cn:12385"
       ]
     },
     {
       "value": "CN-OSM-N9869948458",
       "candidates": [
-        "st:cn:12386",
         "st:cn:12387"
       ]
     },
     {
       "value": "CN-OSM-N9869948502",
       "candidates": [
-        "st:cn:12388",
         "st:cn:12389"
       ]
     },
     {
       "value": "CN-OSM-N9869948557",
       "candidates": [
-        "st:cn:12392",
         "st:cn:12393"
       ]
     },
     {
       "value": "CN-OSM-N9869948584",
       "candidates": [
-        "st:cn:12394",
         "st:cn:12395"
       ]
     },
     {
       "value": "CN-OSM-N9869948709",
       "candidates": [
-        "st:cn:12396",
         "st:cn:12397"
       ]
     }

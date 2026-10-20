@@ -1863,3 +1863,479 @@ test("--freeze --no-base does not throw when the ledger root is missing", () => 
   assert.equal(result.stderr.includes("ledger.runs"), false);
   assert.equal((result.stdout + result.stderr).includes("Cannot read properties of undefined"), false);
 });
+
+function addKeioLine(db, { stationId, stationCode, code, sourceCode }) {
+  db.prepare("INSERT INTO line (id, country_code, operator_id, name, line_code, railway_identity, interval_count) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    .run("jp-keio-line", "JP", 2, "京王線", "KO", null, 1);
+  if (stationId === 3) {
+    db.prepare("INSERT INTO station (id, country_code, code, name, name_norm, lon, lat) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .run(3, "JP", stationCode, "渋谷", "渋谷", 139.7, 35.659);
+  }
+  db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, ?, ?, ?, ?, ?)")
+    .run("jp-keio-line", 0, stationId, "駅", 139.7, 35.689);
+  db.prepare(`INSERT INTO source_station
+    (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 9, sourceCode, code, stationId, "駅", "京王線", "京王電鉄", 139.7, 35.689);
+}
+
+function mintCli(fixture, extra = []) {
+  return runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT, ...extra]);
+}
+
+function writeReviewed(fixture, name, doc) {
+  fs.mkdirSync(path.join(fixture.root, "jp"), { recursive: true });
+  fs.writeFileSync(path.join(fixture.root, "jp", name), `${JSON.stringify(doc)}\n`);
+}
+
+function assertAppendOnly(before, after) {
+  for (const [key, bytes] of before) {
+    assert.ok(after.get(key).subarray(0, bytes.length).equals(bytes), `${key} not a prefix`);
+  }
+}
+
+test("operator merge resolves a shared station code onto the existing merged station", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    addKeioLine(fixture.db, { stationId: 2, code: "200", sourceCode: "SH" });
+    fixture.db.prepare(`INSERT INTO source_station
+      (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 10, "SH", "200", 2, "新宿", "山手線", "JR東日本", 139.7, 35.689);
+    const first = mintCli(fixture);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    assert.match(first.stdout, /station-code-conflict 1/);
+    const before = readLedger(fixture.root);
+    const jr = refId(before, "package-operator", "JR東日本");
+    const keio = refId(before, "package-operator", "京王電鉄");
+    const jrSt = refId(before, "derivation", `cx:jp:2|${jr}`);
+    const keioSt = refId(before, "derivation", `cx:jp:2|${keio}`);
+    const keioLs = refId(before, "derivation", `${refId(before, "package-line", "jp-keio-line")}|${keioSt}`);
+    assert.equal(refId(before, "station-code", "SH"), null);
+    const snap = snapshot(fixture.root);
+    writeReviewed(fixture, "operator-merges.json", {
+      schema: "jtm-operator-merges/1",
+      merges: [{ into: jr, from: [keio], sources: ["test"], note: "same entity", reviewedBy: "test" }],
+    });
+    const refused = mintCli(fixture);
+    assert.equal(refused.status, 1);
+    assert.match(refused.stdout, /retire refused/);
+    assertAppendOnly(snap, snapshot(fixture.root));
+    const merged = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(merged.status, 0, merged.stdout + merged.stderr);
+    assert.match(merged.stdout, /retire planned/);
+    assert.doesNotMatch(merged.stdout, /station-code-conflict/);
+    assertAppendOnly(snap, snapshot(fixture.root));
+    const ledger = readLedger(fixture.root);
+    const retired = new Map(ledger.events.filter((e) => e.event === "retire").map((e) => [e.id, e]));
+    assert.equal(retired.get(keio).why, `merged into ${jr}`);
+    assert.ok(retired.has(keioSt));
+    assert.ok(retired.has(keioLs));
+    assert.equal(retired.has(jrSt), false);
+    const aliasOf = (old) => ledger.aliases.find((a) => a.old === old);
+    assert.deepEqual([aliasOf(keio).scheme, aliasOf(keio).id], ["operator-merge", jr]);
+    assert.equal(aliasOf(keioSt).id, jrSt);
+    const newLs = refId(ledger, "derivation", `${refId(ledger, "package-line", "jp-keio-line")}|${jrSt}`);
+    assert.equal(aliasOf(keioLs).id, newLs);
+    assert.equal(ledger.refs.filter((r) => r.scheme === "station-code" && r.value === "SH").at(-1).id, jrSt);
+    assert.equal(ledger.entities.has(`cx:jp:2|${jr}`), false);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const again = mintCli(fixture, ["--allow-retire"]);
+    assert.match(again.stdout, /no changes/);
+    const out = path.join(fixture.dir, "bundle");
+    const exported = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(exported.status, 0, exported.stdout + exported.stderr);
+    const bundle = JSON.parse(fs.readFileSync(path.join(out, "jp.json"), "utf8"));
+    assert.equal(bundle.operators[keio], undefined);
+    assert.ok(bundle.operators[jr].names.includes("京王電鉄"));
+    assert.equal(bundle.stationCodes.SH, jrSt);
+    assert.equal(bundle.lineParts[refId(ledger, "package-line", "jp-keio-line")].op, jr);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("operator merge mints a new merged station when the into operator has none there", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    addKeioLine(fixture.db, { stationId: 3, stationCode: "300", code: "300", sourceCode: "K300" });
+    assert.equal(mintCli(fixture).status, 0);
+    const before = readLedger(fixture.root);
+    const jr = refId(before, "package-operator", "JR東日本");
+    const keio = refId(before, "package-operator", "京王電鉄");
+    const oldSt = refId(before, "derivation", `cx:jp:3|${keio}`);
+    assert.equal(refId(before, "station-code", "K300"), oldSt);
+    const snap = snapshot(fixture.root);
+    writeReviewed(fixture, "operator-merges.json", {
+      schema: "jtm-operator-merges/1",
+      merges: [{ into: jr, from: [keio], sources: [], note: "", reviewedBy: "test" }],
+    });
+    const merged = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(merged.status, 0, merged.stdout + merged.stderr);
+    assertAppendOnly(snap, snapshot(fixture.root));
+    const ledger = readLedger(fixture.root);
+    const newSt = refId(ledger, "derivation", `cx:jp:3|${jr}`);
+    assert.ok(newSt && newSt !== oldSt);
+    assert.equal(ledger.aliases.find((a) => a.old === oldSt).id, newSt);
+    assert.equal(ledger.refs.filter((r) => r.scheme === "station-code" && r.value === "K300").at(-1).id, newSt);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    assert.match(mintCli(fixture, ["--allow-retire"]).stdout, /no changes/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("line operator override moves a line's stations to the override operator", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture).status, 0);
+    const before = readLedger(fixture.root);
+    const jr = refId(before, "package-operator", "JR東日本");
+    const keio = refId(before, "package-operator", "京王電鉄");
+    const chuo = refId(before, "package-line", "jp-jr-chuo");
+    const oldLs = refId(before, "derivation", `${chuo}|${refId(before, "derivation", `cx:jp:2|${jr}`)}`);
+    const snap = snapshot(fixture.root);
+    writeReviewed(fixture, "line-operators.json", {
+      schema: "jtm-line-operators/1",
+      lines: [{ lp: chuo, op: keio, sources: [], note: "", reviewedBy: "test" }],
+    });
+    const done = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(done.status, 0, done.stdout + done.stderr);
+    assert.match(done.stdout, /retire planned/);
+    assertAppendOnly(snap, snapshot(fixture.root));
+    const ledger = readLedger(fixture.root);
+    const newSt = refId(ledger, "derivation", `cx:jp:2|${keio}`);
+    assert.ok(newSt);
+    const newLs = refId(ledger, "derivation", `${chuo}|${newSt}`);
+    assert.ok(newLs);
+    const alias = ledger.aliases.find((a) => a.old === oldLs);
+    assert.deepEqual([alias.scheme, alias.id], ["line-operator", newLs]);
+    const retired = new Set(ledger.events.filter((e) => e.event === "retire").map((e) => e.id));
+    assert.ok(retired.has(oldLs));
+    assert.equal(retired.has(refId(ledger, "derivation", `cx:jp:2|${jr}`)), false);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const out = path.join(fixture.dir, "bundle");
+    assert.equal(runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]).status, 0);
+    const bundle = JSON.parse(fs.readFileSync(path.join(out, "jp.json"), "utf8"));
+    assert.equal(bundle.lineParts[chuo].op, keio);
+    assert.match(mintCli(fixture, ["--allow-retire"]).stdout, /no changes/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("invalid operator merges and line overrides are rejected by mint and validator", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture).status, 0);
+    const base = fs.readFileSync(path.join(fixture.root, "jp", "op.jsonl"));
+    writeReviewed(fixture, "operator-merges.json", {
+      schema: "jtm-operator-merges/1",
+      merges: [
+        { into: "op:jp:1", from: ["op:jp:2"] },
+        { into: "op:jp:2", from: ["op:jp:99"] },
+      ],
+    });
+    const bad = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(bad.status, 1);
+    assert.match(bad.stdout, /operator-merge-invalid 2/);
+    assert.ok(fs.readFileSync(path.join(fixture.root, "jp", "op.jsonl")).equals(base));
+    const validated = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(validated.status, 1);
+    assert.match(validated.stdout, /merge op both into and from/);
+    assert.match(validated.stdout, /merge from not live op:jp:99/);
+    writeReviewed(fixture, "operator-merges.json", { schema: "jtm-operator-merges/1", merges: [] });
+    writeReviewed(fixture, "line-operators.json", {
+      schema: "jtm-line-operators/1",
+      lines: [{ lp: "lp:jp:99", op: "op:jp:2" }],
+    });
+    const badLine = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(badLine.status, 1);
+    assert.match(badLine.stdout, /line-operator-invalid 1/);
+    assert.match(runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]).stdout, /line operator lp not live lp:jp:99/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("operation history is stable on re-mint after operation, withdrawn, operation", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture).status, 0);
+    const write = (from) => {
+      fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify({
+        schema: "jtm-history-crosswalk/1",
+        entries: [{
+          history_id: "hist",
+          kind: "identity_period",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          valid_from: from,
+          valid_to: "2005-01-01",
+          lp: ["lp:jp:1"],
+          op: "op:jp:1",
+          status: "unique",
+        }],
+      }, null, 2)}\n`);
+    };
+    const kinds = () => readLedger(fixture.root).events
+      .filter((event) => event.why === "hist" && event.on === "2001-01-01")
+      .map((event) => event.event);
+    write("2001-01-01");
+    assert.equal(mintCli(fixture).status, 0);
+    write("2002-01-01");
+    assert.equal(mintCli(fixture).status, 0);
+    write("2001-01-01");
+    assert.equal(mintCli(fixture).status, 0);
+    assert.deepEqual(kinds(), ["operation", "operation-withdrawn", "operation"]);
+    let before = snapshot(fixture.root);
+    assert.match(mintCli(fixture).stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+    write("2002-01-01");
+    assert.equal(mintCli(fixture).status, 0);
+    before = snapshot(fixture.root);
+    assert.match(mintCli(fixture).stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+    assert.deepEqual(kinds(), ["operation", "operation-withdrawn", "operation", "operation-withdrawn"]);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+function genericFixture({ keio, odakyu }) {
+  const fixture = openFixture();
+  fixture.db.prepare("INSERT INTO operator (id, country_code, name, short_name, display_label) VALUES (?, ?, ?, ?, ?)")
+    .run(3, "JP", "小田急電鉄", "小田急", "小田急電鉄");
+  const specific = (lineId, operatorId, operatorName, lineName) => {
+    fixture.db.prepare("INSERT INTO line (id, country_code, operator_id, name, line_code, railway_identity, interval_count) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .run(lineId, "JP", operatorId, lineName, lineId, null, 1);
+    fixture.db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, ?, ?, ?, ?, ?)")
+      .run(lineId, 0, 2, "新宿", 139.7, 35.689);
+    fixture.db.prepare(`INSERT INTO source_station
+      (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 20 + operatorId, `S${operatorId}`, "200", 2, "新宿", lineName, operatorName, 139.7, 35.689);
+  };
+  if (keio) specific("jp-keio-line", 2, "京王電鉄", "京王線");
+  if (odakyu) specific("jp-odakyu-line", 3, "小田急電鉄", "小田急線");
+  return fixture;
+}
+
+function writeGeneric(fixture, ledger, specificNames) {
+  const jr = refId(ledger, "package-operator", "JR東日本");
+  writeReviewed(fixture, "generic-operators.json", {
+    schema: "jtm-generic-operators/1",
+    generics: [{
+      generic: jr,
+      specifics: specificNames.map((name) => refId(ledger, "package-operator", name)),
+      sources: [], rule: "test", reviewedBy: "test",
+    }],
+  });
+}
+
+test("generic operator stops attach to the single specific operator in the complex", () => {
+  const fixture = genericFixture({ keio: true, odakyu: false });
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture).status, 0);
+    const before = readLedger(fixture.root);
+    const jr = refId(before, "package-operator", "JR東日本");
+    const keio = refId(before, "package-operator", "京王電鉄");
+    const chuo = refId(before, "package-line", "jp-jr-chuo");
+    const oldSt = refId(before, "derivation", `cx:jp:2|${jr}`);
+    const oldLs = refId(before, "derivation", `${chuo}|${oldSt}`);
+    const snap = snapshot(fixture.root);
+    writeGeneric(fixture, before, ["京王電鉄"]);
+    const done = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(done.status, 0, done.stdout + done.stderr);
+    assertAppendOnly(snap, snapshot(fixture.root));
+    const ledger = readLedger(fixture.root);
+    const keioSt = refId(ledger, "derivation", `cx:jp:2|${keio}`);
+    assert.ok(keioSt);
+    const newLs = refId(ledger, "derivation", `${chuo}|${keioSt}`);
+    assert.ok(newLs);
+    assert.equal(ledger.aliases.find((a) => a.old === oldLs).id, newLs);
+    assert.equal(ledger.aliases.find((a) => a.old === oldSt).id, keioSt);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const out = path.join(fixture.dir, "bundle");
+    assert.equal(runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]).status, 0);
+    const bundle = JSON.parse(fs.readFileSync(path.join(out, "jp.json"), "utf8"));
+    assert.equal(bundle.stationOperator[keioSt], keio);
+    assert.match(mintCli(fixture, ["--allow-retire"]).stdout, /no changes/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+for (const [label, present] of [["no", { keio: false, odakyu: false }], ["two", { keio: true, odakyu: true }]]) {
+  test(`generic operator stops stay when ${label} specific operators are in the complex`, () => {
+    const fixture = genericFixture(present);
+    try {
+      freeze(fixture.root);
+      assert.equal(mintCli(fixture).status, 0);
+      const before = readLedger(fixture.root);
+      writeGeneric(fixture, before, present.odakyu ? ["京王電鉄", "小田急電鉄"] : ["京王電鉄"]);
+      const snap = snapshot(fixture.root);
+      const done = mintCli(fixture, ["--allow-retire"]);
+      assert.equal(done.status, 0, done.stdout + done.stderr);
+      assert.match(done.stdout, /no changes/);
+      sameSnapshot(snap, snapshot(fixture.root));
+      const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+      assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    } finally {
+      fixture.db.close();
+      fs.rmSync(fixture.dir, { recursive: true, force: true });
+    }
+  });
+}
+
+test("invalid generic operators are rejected by mint and validator", () => {
+  const fixture = genericFixture({ keio: true, odakyu: false });
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture).status, 0);
+    const jr = refId(readLedger(fixture.root), "package-operator", "JR東日本");
+    writeReviewed(fixture, "generic-operators.json", {
+      schema: "jtm-generic-operators/1",
+      generics: [{ generic: jr, specifics: [jr, "op:jp:99"] }],
+    });
+    const bad = mintCli(fixture, ["--allow-retire"]);
+    assert.equal(bad.status, 1);
+    assert.match(bad.stdout, /generic-operator-invalid 1/);
+    const validated = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]).stdout;
+    assert.match(validated, /generic operator in own specifics/);
+    assert.match(validated, /specific operator not live op:jp:99/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+function officialFixture(spec) {
+  const fixture = openFixture();
+  let ord = 100;
+  for (const item of spec) {
+    fixture.db.prepare("INSERT INTO station (id, country_code, code, name, name_norm, lon, lat) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .run(item.id, "JP", item.group, `駅${item.id}`, `駅${item.id}`, 135 + item.id / 100, 35);
+    for (const [index, stop] of item.stops.entries()) {
+      const lineId = `jp-official-${item.id}-${index}`;
+      fixture.db.prepare("INSERT INTO line (id, country_code, operator_id, name, line_code, railway_identity, interval_count) VALUES (?, ?, ?, ?, ?, ?, ?)")
+        .run(lineId, "JP", stop.opId, lineId, lineId, null, 1);
+      fixture.db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, ?, ?, ?, ?, ?)")
+        .run(lineId, 0, item.id, `駅${item.id}`, 135, 35);
+      for (const code of stop.codes) {
+        ord += 1;
+        fixture.db.prepare(`INSERT INTO source_station
+          (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", ord, code, item.group, item.id, `駅${item.id}`, lineId, stop.opName, 135, 35);
+      }
+    }
+  }
+  return fixture;
+}
+
+// The scheme arrives after the first mint, as in production: the complexes already exist when they are joined.
+function mintThenJoin(fixture) {
+  freeze(fixture.root);
+  assert.equal(mintCli(fixture).status, 0);
+  writeReviewed(fixture, "official-code-schemes.json", {
+    schema: "jtm-official-codes/1",
+    schemes: [{ prefix: "OFF-", source: "test", note: "one code = one station" }],
+  });
+  const done = mintCli(fixture, ["--allow-retire"]);
+  assert.equal(done.status, 0, done.stdout + done.stderr);
+}
+
+const JR = { opId: 1, opName: "JR東日本" };
+const KEIO = { opId: 2, opName: "京王電鉄" };
+
+test("official codes collapse a chain of complexes and same-operator stations", () => {
+  const fixture = officialFixture([
+    { id: 3, group: "300", stops: [{ ...JR, codes: ["OFF-A", "X3"] }] },
+    { id: 4, group: "400", stops: [{ ...JR, codes: ["OFF-A", "OFF-B"] }] },
+    { id: 5, group: "500", stops: [{ ...JR, codes: ["OFF-B"] }] },
+  ]);
+  try {
+    mintThenJoin(fixture);
+    const ledger = readLedger(fixture.root);
+    const cx = (g) => refId(ledger, "group-code", g);
+    const retired = new Set(ledger.events.filter((e) => e.event === "retire").map((e) => e.id));
+    assert.ok(!retired.has(cx("300")));
+    for (const g of ["400", "500"]) {
+      assert.ok(retired.has(cx(g)), g);
+      assert.ok(ledger.aliases.some((a) => a.old === cx(g) && a.scheme === "complex-merge" && a.id === cx("300")));
+    }
+    assert.match(ledger.events.find((e) => e.id === cx("400") && e.event === "retire").why, /^merged by official code OFF-A/);
+    const jr = refId(ledger, "package-operator", "JR東日本");
+    const st = refId(ledger, "derivation", `${cx("300")}|${jr}`);
+    assert.ok(st && !retired.has(st));
+    for (const g of ["400", "500"]) {
+      const old = refId(ledger, "derivation", `${cx(g)}|${jr}`);
+      assert.ok(retired.has(old));
+      assert.ok(ledger.aliases.some((a) => a.old === old && a.scheme === "station-merge" && a.id === st));
+    }
+    const codes = ledger.refs.filter((r) => r.scheme === "station-code" && r.id === st).map((r) => r.value).sort();
+    assert.deepEqual(codes, ["OFF-A", "OFF-B", "X3"]);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const snap = snapshot(fixture.root);
+    assert.match(mintCli(fixture, ["--allow-retire"]).stdout, /no changes/);
+    sameSnapshot(snap, snapshot(fixture.root));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("official codes keep different-operator stations separate inside one complex", () => {
+  const fixture = officialFixture([
+    { id: 3, group: "300", stops: [{ ...JR, codes: ["OFF-A"] }] },
+    { id: 4, group: "400", stops: [{ ...JR, codes: ["OFF-A"] }, { ...KEIO, codes: ["K4"] }] },
+  ]);
+  try {
+    mintThenJoin(fixture);
+    const ledger = readLedger(fixture.root);
+    const cx3 = refId(ledger, "group-code", "300");
+    const jr = refId(ledger, "package-operator", "JR東日本");
+    const keio = refId(ledger, "package-operator", "京王電鉄");
+    const retired = new Set(ledger.events.filter((e) => e.event === "retire").map((e) => e.id));
+    const jrSt = refId(ledger, "derivation", `${cx3}|${jr}`);
+    const keioSt = refId(ledger, "derivation", `${cx3}|${keio}`);
+    assert.ok(jrSt && keioSt && jrSt !== keioSt);
+    assert.ok(!retired.has(jrSt) && !retired.has(keioSt));
+    assert.equal(ledger.entities.get(keioSt).parent, cx3);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("official codes do nothing without a scheme file", () => {
+  const fixture = officialFixture([
+    { id: 3, group: "300", stops: [{ ...JR, codes: ["OFF-A"] }] },
+    { id: 4, group: "400", stops: [{ ...JR, codes: ["OFF-A"] }] },
+  ]);
+  try {
+    freeze(fixture.root);
+    assert.equal(mintCli(fixture, ["--allow-retire"]).status, 0);
+    const ledger = readLedger(fixture.root);
+    assert.ok(!ledger.events.some((e) => e.event === "retire"));
+    assert.ok(!ledger.aliases.some((a) => a.scheme === "complex-merge"));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
