@@ -1350,19 +1350,35 @@ public enum TrainValidation {
                     reason: "operator_ids must be an array of operator ids.")
             }
             let trainRegion = (json["region"] ?? .null).stringOrNilIfNotString
+            var normalized: [String] = []
+            var seen = Set<String>()
             for (offset, item) in items.enumerated() {
                 let field = "operator_ids[\(offset)]"
-                guard item.isString else {
+                guard let text = item.stringOrNilIfNotString else {
                     return Diagnostic(
                         path: field,
                         reason: "\(field) must match \(operatorIDPatternSource).")
                 }
+                let trimmed = jsTrim(text)
+                if trimmed.isEmpty { continue }
                 if let issue = registryIdentityDiagnostic(
-                    item.stringOrNilIfNotString, field: field, kind: "op",
+                    trimmed, field: field, kind: "op",
                     path: field, location: "", trainRegion: trainRegion
                 ) {
                     return issue
                 }
+                if !seen.insert(trimmed).inserted {
+                    return Diagnostic(
+                        path: "operator_ids",
+                        reason: "operator_ids contains a duplicate.")
+                }
+                normalized.append(trimmed)
+            }
+            let operatorText = jsTrim((json["operator_id"] ?? .null).stringOrNilIfNotString ?? "")
+            if !operatorText.isEmpty && !normalized.isEmpty {
+                return Diagnostic(
+                    path: "operator_ids",
+                    reason: "operator_id and operator_ids cannot both be set.")
             }
         }
         return nil
@@ -2042,15 +2058,16 @@ public enum TrainValidation {
     /// state, and it is what `port-fixtures/validation.json` was generated
     /// in, which is what makes the export path a pure function of the store.
     public struct StationTable: Sendable {
-        /// What `resolveStationForTrain` answered.
+        /// Whether export resolved a stop to a station feature.
         ///
-        /// Two levels of "no", because the JavaScript distinguishes them:
-        /// `from ? stationCode(from) : fromStop.n02_station_code || null`
+        /// The JavaScript export calls `resolveStationForTrain`. This app
+        /// injects the answer. Two levels of "no", because the JavaScript
+        /// distinguishes them: `from ? stationCode(from) : fromStop.n02_station_code || null`
         /// falls back to the stop's own code only when NO station resolved.
         /// A station that resolved but carries no code of its own yields
         /// null, and the stop's code is not consulted.
         public enum Resolution: Sendable, Equatable {
-            /// `resolveStationForTrain` returned null.
+            /// Nothing resolved. The JavaScript twin's null.
             case unresolved
             /// A station feature, whose own `stationCode` may still be nil.
             case resolved(code: String?)
@@ -2058,7 +2075,7 @@ public enum TrainValidation {
 
         /// `stationNameForCode` — `""` when the code is unknown, never nil.
         public var nameForCode: @Sendable (String?) -> String
-        /// `resolveStationForTrain(stop, train)`, reduced to its code.
+        /// Injected stop resolution, reduced to its code.
         public var resolveStop: @Sendable (Stop, Train) -> Resolution
 
         public init(

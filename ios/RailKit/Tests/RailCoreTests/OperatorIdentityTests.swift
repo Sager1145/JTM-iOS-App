@@ -16,28 +16,21 @@ struct OperatorIdentityTests {
         for (code, names) in cases {
             for name in names { #expect(OperatorIdentity.code(for: name) == code, "\(name)") }
         }
-        #expect(!OperatorIdentity.sameCompany("西日本鉄道", "JR西日本"))
-        #expect(!OperatorIdentity.sameCompany("東京急行電鉄", "東京地下鉄"))
-        #expect(OperatorIdentity.sameCompany("JR West / JR東日本", "西日本旅客鉄道"))
-        #expect(OperatorIdentity.sameCompany("Unknown", "Unknown"))
+        #expect(OperatorIdentity.code(for: "西日本鉄道") == "jp.nishitetsu")
+        #expect(OperatorIdentity.code(for: "JR西日本") == "jp.jr-west")
+        #expect(OperatorIdentity.code(for: "西日本鉄道") != OperatorIdentity.code(for: "JR西日本"))
+        #expect(OperatorIdentity.codes(forJoined: "JR West / JR東日本") == ["jp.jr-west", "jp.jr-east"])
+        #expect(OperatorIdentity.code(for: "Unknown") == nil)
     }
 
-    @Test func inclusiveFamiliesAndRanking() {
-        for query in ["东京地铁", "東京地下鉄", "東京の地下鉄", "도쿄 지하철", "Tokyo subway", "Tokyo 地铁"] {
-            let codes = Set(OperatorIdentity.matchingCodes(query: query))
-            #expect(Set(["jp.tokyo-metro", "jp.toei"]).isSubset(of: codes), "\(query)")
-        }
-        #expect(OperatorIdentity.matchingCodes(query: "Tokyo Metro").first == "jp.tokyo-metro")
-        #expect(OperatorIdentity.matches(operatorName: "JR西日本", query: "JR西日本 West"))
-        #expect(OperatorIdentity.matches(operatorName: "東京メトロ", query: "东京メトロ"))
-        #expect(OperatorIdentity.matches(operatorName: "서울교통공사", query: "首尔 지하철"))
+    @Test func displayNameFallsBackToTheStoredLabel() {
         #expect(OperatorIdentity.displayName(code: "jp.jr-west", language: "missing") == "JR西日本")
     }
 
     @Test func catalogAndTimetableUseOperatorAliases() throws {
         let patterns = TrainServicePatterns.search("JR West")
         #expect(!patterns.isEmpty)
-        let pattern = try #require(patterns.first { OperatorIdentity.sameCompany($0.company, "JR West") })
+        let pattern = try #require(patterns.first { OperatorIdentity.code(for: $0.company) == "jp.jr-west" })
         #expect(TimetableSearch("西日本旅客鐵道").matches(pattern))
         #expect(TrainServicePatterns.search("", filter: .init(company: "jp.jr-west"))
             .contains { $0.id == pattern.id })

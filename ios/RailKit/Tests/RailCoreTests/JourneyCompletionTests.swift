@@ -591,7 +591,7 @@ struct JourneyCompletionTests {
             ])
         ])
         let prompt = try JourneyCompletion.prompt(trains: [timed]) { train in
-            JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": catalog]).isEligible
+            CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": catalog]).isEligible
         }
         #expect(prompt.isEmpty == false)
         #expect(prompt.contains("Alpha"))
@@ -608,20 +608,20 @@ struct JourneyCompletionTests {
         train.stops[1].name = "新大阪"
         train.destination = "新大阪"
 
-        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
+        #expect(CatalogRegistryFixture.isRequestEligible(train, catalog: catalog))
 
         train.stops[0].n02StationCode = "NOT-IN-CATALOG"
-        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog) == false)
+        #expect(CatalogRegistryFixture.isRequestEligible(train, catalog: catalog) == false)
 
         train.stops[0].departure = nil
         train.stops[1].arrival = "not a time"
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == .invalidTime)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: catalog) == .invalidTime)
 
         train.stops[0].n02StationCode = "TOK"
         train.stops[0].departure = nil
         train.stops[1].n02StationCode = "NOT-IN-CATALOG"
         train.stops[1].arrival = "10:00"
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: catalog) == .timeNotOnThatStation)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: catalog) == .timeNotOnThatStation)
     }
 
     @Test("pass-through arrival is not an AI anchor; its explicit departure is")
@@ -629,13 +629,13 @@ struct JourneyCompletionTests {
         var train = Self.train(date: nil, number: "")
         train.stops = [Stop(name: "東京", n02StationCode: "TOK", arrival: "09:30", stopType: "pass_through"),
                        Stop(name: "新大阪", n02StationCode: "OSA")]
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: Self.catalog()) == .noExplicitTime)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: Self.catalog()) == .noExplicitTime)
         train.stops[0].arrival = "not a time"
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: Self.catalog()) == .noExplicitTime)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: Self.catalog()) == .noExplicitTime)
         train.stops[0].departure = "25:10"
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: Self.catalog()) == nil)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: Self.catalog()) == nil)
         train.stops[0].departure = "9:99"
-        #expect(JourneyCompletion.requestDenial(train: train, catalog: Self.catalog()) == .invalidTime)
+        #expect(CatalogRegistryFixture.requestDenial(train: train, catalog: Self.catalog()) == .invalidTime)
     }
 
     @Test("the catalog request interface resolves typed names and keeps the input unchanged")
@@ -648,7 +648,7 @@ struct JourneyCompletionTests {
         train.origin = "Tokyo"
         train.destination = "Shin-Osaka"
 
-        let result = JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": Self.catalog()])
+        let result = CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": Self.catalog()])
 
         #expect(result.denial == nil)
         #expect(result.isEligible)
@@ -659,7 +659,7 @@ struct JourneyCompletionTests {
         #expect(prompt.contains("Tokyo"))
         var unnamed = result.train
         unnamed.destination = ""
-        #expect(JourneyCompletion.requestEligibility(train: unnamed, catalogs: ["jp": Self.catalog()]).isEligible == false)
+        #expect(CatalogRegistryFixture.requestEligibility(train: unnamed, catalogs: ["jp": Self.catalog()]).isEligible == false)
     }
 
     @Test("catalog ownership rejects foreign and ambiguous codes without rescuing an explicit code")
@@ -674,19 +674,19 @@ struct JourneyCompletionTests {
         train.stops[0].name = "東京"
         train.stops[0].n02StationCode = "TOK"
         train.stops[1].n02StationCode = nil
-        let wrongScope = JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": foreign])
+        let wrongScope = CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": foreign])
         #expect(wrongScope.denial == .noResolvedStation)
-        let ambiguous = JourneyCompletion.requestEligibility(
+        let ambiguous = CatalogRegistryFixture.requestEligibility(
             train: train, catalogs: ["jp": Self.catalog(), "hk": foreign])
         #expect(ambiguous.denial == .noResolvedStation)
 
         train.stops[0].n02StationCode = "hk-official-central"
-        let crossRegion = JourneyCompletion.requestEligibility(
+        let crossRegion = CatalogRegistryFixture.requestEligibility(
             train: train, catalogs: ["jp": Self.catalog(), "hk": foreign])
         #expect(crossRegion.isEligible)
 
         train.stops[0].n02StationCode = "UNKNOWN"
-        let conflicting = JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": Self.catalog()])
+        let conflicting = CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": Self.catalog()])
         #expect(conflicting.denial == .noResolvedStation)
         #expect(conflicting.train.stops[0].n02StationCode == "UNKNOWN")
     }
@@ -699,18 +699,18 @@ struct JourneyCompletionTests {
         train.stops[1].n02StationCode = "UNKNOWN"
         train.stops[1].arrival = "10:00"
         let catalogs = ["jp": Self.catalog()]
-        #expect(JourneyCompletion.requestEligibility(train: train, catalogs: catalogs).denial == .timeNotOnThatStation)
-        #expect(JourneyCompletion.requestEligibility(
+        #expect(CatalogRegistryFixture.requestEligibility(train: train, catalogs: catalogs).denial == .timeNotOnThatStation)
+        #expect(CatalogRegistryFixture.requestEligibility(
             train: train, catalogs: catalogs, providerAvailable: false).denial == .providerUnavailable)
-        #expect(JourneyCompletion.requestEligibility(
+        #expect(CatalogRegistryFixture.requestEligibility(
             train: train, catalogs: catalogs, providerAvailable: false, requestInFlight: true).denial == .requestInFlight)
 
         train.stops[1].arrival = nil
-        #expect(JourneyCompletion.requestEligibility(train: train, catalogs: catalogs).denial == .noExplicitTime)
+        #expect(CatalogRegistryFixture.requestEligibility(train: train, catalogs: catalogs).denial == .noExplicitTime)
         train.stops[0].departure = "9:99"
-        #expect(JourneyCompletion.requestEligibility(train: train, catalogs: catalogs).denial == .invalidTime)
+        #expect(CatalogRegistryFixture.requestEligibility(train: train, catalogs: catalogs).denial == .invalidTime)
         train.stops[0].departure = "25:10"
-        #expect(JourneyCompletion.requestEligibility(train: train, catalogs: catalogs).isEligible)
+        #expect(CatalogRegistryFixture.requestEligibility(train: train, catalogs: catalogs).isEligible)
     }
 
     @Test("pasted text is locally extracted and only catalog-confirmed stations build a train")
@@ -723,7 +723,7 @@ struct JourneyCompletionTests {
                 Stop(name: "", stopType: "destination", rideSegment: true),
             ],
             region: "jp")
-        let draft = JourneyCompletion.rawDraft(
+        let draft = CatalogRegistryFixture.rawDraft(
             text: """
             2026-09-24
             列車: ひかり501号
@@ -753,19 +753,19 @@ struct JourneyCompletionTests {
         #expect(train.stops.map(\.n02StationCode) == ["TOK", "OSA"])
         #expect(train.routePolicy == nil)
         #expect(train.routeSections == nil)
-        #expect(JourneyCompletion.isRequestEligible(train, catalog: catalog))
+        #expect(CatalogRegistryFixture.isRequestEligible(train, catalog: catalog))
     }
 
     @Test("a standalone pasted clock belongs to one station only")
     func standaloneClockHasOneOwner() {
         let seed = Self.train()
-        let draft = JourneyCompletion.rawDraft(text: "東京\n09:03 発\n新大阪", catalog: Self.catalog(), regionCode: "jp", seed: seed)
+        let draft = CatalogRegistryFixture.rawDraft(text: "東京\n09:03 発\n新大阪", catalog: Self.catalog(), regionCode: "jp", seed: seed)
         #expect(draft.stops.map(\.departure) == ["9:03", nil])
         #expect(draft.stops.map(\.arrival) == [nil, nil])
-        let complete = JourneyCompletion.rawDraft(text: "東京\n09:03 発\n新大阪\n11:57 着", catalog: Self.catalog(), regionCode: "jp", seed: seed)
+        let complete = CatalogRegistryFixture.rawDraft(text: "東京\n09:03 発\n新大阪\n11:57 着", catalog: Self.catalog(), regionCode: "jp", seed: seed)
         #expect(complete.stops.map(\.departure) == ["9:03", nil])
         #expect(complete.stops.map(\.arrival) == [nil, "11:57"])
-        let explicit = JourneyCompletion.rawDraft(text: "東京\n新大阪 11:57 発", catalog: Self.catalog(), regionCode: "jp", seed: seed)
+        let explicit = CatalogRegistryFixture.rawDraft(text: "東京\n新大阪 11:57 発", catalog: Self.catalog(), regionCode: "jp", seed: seed)
         #expect(explicit.stops.last?.arrival == nil)
         #expect(explicit.stops.last?.departure == "11:57")
     }
@@ -787,7 +787,7 @@ struct JourneyCompletionTests {
                 ]),
         ])
         let seed = Self.train(id: "draft", date: nil, number: "")
-        let draft = JourneyCompletion.rawDraft(
+        let draft = CatalogRegistryFixture.rawDraft(
             text: "中央 9:00 発\n西 10:00 着",
             catalog: catalog,
             regionCode: "jp",
@@ -816,14 +816,32 @@ struct JourneyCompletionTests {
                 ]),
         ])
         let seed = Self.train(id: "draft", date: nil, number: "")
-        let draft = JourneyCompletion.rawDraft(
+        let draft = CatalogRegistryFixture.rawDraft(
             text: "神代", catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         let stop = try #require(draft.stops.first)
-        #expect(stop.candidates.count == 1)
-        #expect(stop.ambiguous == true)
-        #expect(stop.automaticSelection == nil)
-        #expect(stop.confirmsSingleCandidate == false)
-        #expect(stop.selectableCandidates.map(\.key.sourceCode) == ["N"])
+        // The registry base list contains only the station this catalog carries.
+        #expect(stop.candidates.map(\.key.sourceCode) == ["N"])
+        #expect(stop.ambiguous == false)
+        #expect(stop.automaticSelection?.sourceCode == "N")
+        let both = EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "north", name: "北線", operatorName: "北鉄道",
+                stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "N", name: "神代（北）", longitude: 139, latitude: 35),
+                ]),
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "south", name: "南線", operatorName: "南鉄道",
+                stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "S", name: "神代（南）", longitude: 139.1, latitude: 35.1),
+                ]),
+        ])
+        let shared = CatalogRegistryFixture.rawDraft(
+            text: "神代", catalog: both, regionCode: "jp", seed: seed, directory: directory)
+        #expect(shared.stops.first?.ambiguous == true)
+        #expect(shared.stops.first?.automaticSelection == nil)
+        #expect(Set(shared.stops.first?.candidates.map(\.key.sourceCode) ?? []) == ["N", "S"])
     }
 
     @Test("AI sheet resolves unique typed station names but preserves ambiguity")
@@ -847,21 +865,21 @@ struct JourneyCompletionTests {
         train.stops[1].name = "中央"
         train.stops[1].n02StationCode = nil
 
-        let result = JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": catalog])
+        let result = CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": catalog])
         #expect(result.train.stops[0].n02StationCode == "TOK")
         #expect(result.train.stops[1].n02StationCode == nil)
         #expect(train.stops[0].n02StationCode == nil)
         #expect(result.isEligible)
-        let pasted = JourneyCompletion.rawDraft(
+        let pasted = CatalogRegistryFixture.rawDraft(
             text: "09:00 東京発", catalog: catalog, regionCode: "jp", seed: Self.train())
         #expect(pasted.stops.first?.automaticSelection?.sourceCode == "TOK")
-        let both = JourneyCompletion.rawDraft(
+        let both = CatalogRegistryFixture.rawDraft(
             text: "東京 新大阪", catalog: Self.catalog(), regionCode: "jp", seed: Self.train())
         #expect(both.stops.first?.automaticSelection == nil)
         #expect(both.stops.first?.ambiguous == true)
         train.stops[0].departure = nil
         train.stops[1].arrival = "10:00"
-        #expect(JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": catalog]).denial == .timeNotOnThatStation)
+        #expect(CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": catalog]).denial == .timeNotOnThatStation)
     }
 
     @Test("a registry station id is written and an ambiguous name is not picked")
@@ -881,14 +899,14 @@ struct JourneyCompletionTests {
             train.stops[0].n02StationCode = nil
             train.stops[1].name = "中央"
             train.stops[1].n02StationCode = nil
-            let resolved = JourneyCompletion.resolvingUniqueStationNames(
+            let resolved = CatalogRegistryFixture.resolvingUniqueStationNames(
                 in: train, catalogs: ["jp": Self.catalog()])
             #expect(resolved.stops[0].stationID == "st:jp:1")
             #expect(resolved.stops[0].n02StationCode == "TOK")
             #expect(resolved.stops[0].name == "東京")
             #expect(resolved.stops[1].stationID == nil)
             #expect(resolved.stops[1].n02StationCode == nil)
-            let draft = JourneyCompletion.rawDraft(
+            let draft = CatalogRegistryFixture.rawDraft(
                 text: "東京 09:03\n新大阪 11:27", catalog: Self.catalog(), regionCode: "jp", seed: train)
             let selections = Dictionary(uniqueKeysWithValues: draft.stops.compactMap { stop in
                 stop.automaticSelection.map { (stop.id, $0) }
@@ -914,12 +932,12 @@ struct JourneyCompletionTests {
         train.stops[1].n02StationCode = nil
         train.stops[1].arrival = "11:27"
 
-        let result = JourneyCompletion.requestEligibility(train: train, catalogs: ["jp": catalog])
+        let result = CatalogRegistryFixture.requestEligibility(train: train, catalogs: ["jp": catalog])
         #expect(result.train.stops.map(\.n02StationCode) == ["TOK", "OSA"])
         #expect(result.isEligible)
         let prompt = try JourneyCompletion.prompt(
             trains: [train], context: "Limited express service name: example",
-            eligible: { JourneyCompletion.requestEligibility(train: $0, catalogs: ["jp": catalog]).isEligible })
+            eligible: { CatalogRegistryFixture.requestEligibility(train: $0, catalogs: ["jp": catalog]).isEligible })
         #expect(prompt.contains("N700S"))
         #expect(prompt.contains("Limited express service name: example"))
     }

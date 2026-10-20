@@ -181,11 +181,30 @@ function validateTrain(train, index, ids) {
     if (!Array.isArray(train.operator_ids)) {
       throw new Error(`${prefix}: operator_ids must be an array of operator ids.`);
     }
-    train.operator_ids.forEach((identifier, offset) => {
+    const normalized = [];
+    const seen = new Set();
+    for (let offset = 0; offset < train.operator_ids.length; offset += 1) {
+      const identifier = train.operator_ids[offset];
+      if (typeof identifier !== "string") {
+        const error = registryIDError(
+          identifier, REGISTRY_OPERATOR_ID, `operator_ids[${offset}]`, train.region);
+        throw new Error(`${prefix}: ${error}`);
+      }
+      const trimmed = identifier.trim();
+      if (!trimmed) continue;
       const error = registryIDError(
-        identifier, REGISTRY_OPERATOR_ID, `operator_ids[${offset}]`, train.region);
+        trimmed, REGISTRY_OPERATOR_ID, `operator_ids[${offset}]`, train.region);
       if (error) throw new Error(`${prefix}: ${error}`);
-    });
+      if (seen.has(trimmed)) {
+        throw new Error(`${prefix}: operator_ids contains a duplicate.`);
+      }
+      seen.add(trimmed);
+      normalized.push(trimmed);
+    }
+    const operatorText = typeof train.operator_id === "string" ? train.operator_id.trim() : "";
+    if (operatorText && normalized.length) {
+      throw new Error(`${prefix}: operator_id and operator_ids cannot both be set.`);
+    }
   }
   // §3.2: ids feed route_id / cache keys / DOM ids, so keep them to the
   // documented charset instead of accepting arbitrary text.

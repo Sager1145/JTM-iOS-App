@@ -85,6 +85,10 @@ struct RailHistoryPackageTests {
             trainType: "", company: "", preferredLineNames: [], preferredOperatorNames: [],
             allowedInstitutionTypeCodes: nil, institutionFilterMode: "soft"), country: "jp")
         func endpoints(_ name: String?, _ code: String?) -> [Int] {
+            // These fixtures were recorded without station ids. Name and
+            // group expansion is the browser audit's own evidence. A ready
+            // registry would refuse that expansion, so this suite stays on
+            // the no-lookup path and matches the recorded web solve.
             RouteSolver.filterStationCandidatesByRideDate(
                 RouteSolver.resolveRouteEndpointStationCandidates(
                     .stop(.init(name: name, n02StationCode: code)), in: env.stations,

@@ -240,13 +240,17 @@ final class RailValidityTests: XCTestCase {
 
     private func cacheKey(rideDate: String?, historyRevision: String?,
                           cacheVersion: String = RouteGraph.routeSolverCacheVersion) -> String? {
-        RouteGraph.solveContext(
-            train: RouteGraph.CacheKeyTrain(),
-            routeSections: [RouteGraph.RouteSection(from: "東京", to: "大阪")],
-            country: "jp",
-            cacheVersion: cacheVersion,
-            rideDate: rideDate,
-            historyRevision: historyRevision)?.cacheKey
+        RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1)) : nil
+        }) {
+            RouteGraph.solveContext(
+                train: RouteGraph.CacheKeyTrain(),
+                routeSections: [RouteGraph.RouteSection(from: "東京", to: "大阪")],
+                country: "jp",
+                cacheVersion: cacheVersion,
+                rideDate: rideDate,
+                historyRevision: historyRevision)?.cacheKey
+        }
     }
 
     func testCacheKeyCarriesDateHistoryAndVersion() throws {

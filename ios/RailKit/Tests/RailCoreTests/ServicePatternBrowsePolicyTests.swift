@@ -200,8 +200,8 @@ struct ServicePatternBrowsePolicyTests {
         }
         let rows = [row("国鉄"), row("日本国有鉄道"), row("架空鉄道")]
         let bare = ServicePatternBrowsePolicy.makeSearchSnapshot(input(patterns: rows))
-        #expect(!bare.unknownPatterns.contains { $0.company == "国鉄" })
-        #expect(!bare.unknownPatterns.contains { $0.company == "日本国有鉄道" })
+        #expect(bare.unknownPatterns.contains { $0.company == "国鉄" })
+        #expect(bare.unknownPatterns.contains { $0.company == "日本国有鉄道" })
         #expect(bare.unknownPatterns.contains { $0.company == "架空鉄道" })
         let converted = RegistryIdentityTestGate.withProvider(Self.national) {
             ServicePatternBrowsePolicy.makeSearchSnapshot(input(patterns: rows))

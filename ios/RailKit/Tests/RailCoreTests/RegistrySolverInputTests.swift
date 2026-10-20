@@ -131,7 +131,9 @@ struct RegistrySolverInputTests {
         }
 
         #expect(SolverRegistryInput.solveInputCodes(
-            stops: [stop("東京", code: "111111")], region: "jp") == ["111111"])
+            stops: [stop("東京", code: "111111")], region: "jp") == [])
+        #expect(SolverRegistryInput.solvableEndpointCount(
+            stops: [stop("東京", code: "111111")], region: "jp") == 0)
         #expect(SolverRegistryInput.hintedGraphStationCode(
             stationID: nil, rawCode: "111111", region: "jp", eligibility: nil) == "111111")
     }
@@ -274,9 +276,10 @@ struct RegistrySolverInputTests {
 
     @Test func tokyoNarrowsOnlyAStationThatOwnsTheCodeAndAnchorsWriteIds() {
         let open = RouteSection(from: "東京", to: "品川")
-        let legacy = TokyoConventionalRouteInference.section(open, in: tokyoTrain())
-        #expect(legacy.fromN02StationCode == "003766")
-        #expect(legacy.toN02StationCode == "004095")
+        let absent = TokyoConventionalRouteInference.section(open, in: tokyoTrain())
+        #expect(absent.fromN02StationCode == nil)
+        #expect(absent.toN02StationCode == nil)
+        #expect(absent.sectionCodes == nil)
 
         withIdentity {
             let blocked = TokyoConventionalRouteInference.section(open, in: tokyoTrain())
@@ -338,7 +341,7 @@ struct RegistrySolverInputTests {
         final class Gate: @unchecked Sendable { var ready = false }
         let gate = Gate()
         await RegistryIdentityTestGate.withPhase({ region in
-            guard region == "jp" else { return .absent }
+            guard region == "jp" else { return .unavailable }
             return gate.ready ? .ready(readyIdentity) : .pending
         }) {
             let train = RouteGraph.CacheKeyTrain(trainType: "ソニック", operatorID: "op:jp:1")

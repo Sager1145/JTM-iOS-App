@@ -3,6 +3,13 @@ import Testing
 @testable import RailCore
 
 struct TokyoConventionalRouteInferenceTests {
+    /// Ready, with no station id, still returns an explicit stored code.
+    private func ready<T>(_ body: () throws -> T) rethrows -> T {
+        try RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1)) : nil
+        }, body)
+    }
+
     private func sparse(reverse: Bool = false) -> Train {
         var visits = [Stop(name: "東京", n02StationCode: "003766", departure: "10:00"),
                       Stop(name: "品川", n02StationCode: "004095", arrival: "10:15")]
@@ -17,6 +24,7 @@ struct TokyoConventionalRouteInferenceTests {
 
     @Test("Sparse Tokyo corridor uses the requested tunnel default in both directions", arguments: [false, true])
     func sparseDefault(reverse: Bool) throws {
+        try ready {
         let train = sparse(reverse: reverse)
         let result = TokyoConventionalRouteInference.applying(to: train)
         let section = try #require(result.routeSections?.first)
@@ -27,11 +35,20 @@ struct TokyoConventionalRouteInferenceTests {
         #expect(section.number == "1234M")
         #expect(result.stops == train.stops)
         #expect(TokyoConventionalRouteInference.applying(to: result) == result)
+        }
+    }
+
+    @Test("No registry leaves an explicit Tokyo code unresolved")
+    func absentRegistryDoesNotInfer() {
+        let train = sparse()
+        #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+        #expect(train.routeSections?.first?.sectionCodes == nil)
+        #expect(train.routeSections?.first?.lineIDs == nil)
     }
 
     @Test("Tokyo preference keeps its inference origin through canonical import and export")
     func preferenceRoundTrip() throws {
-        let inferred = TokyoConventionalRouteInference.applying(to: sparse())
+        let inferred = try ready { TokyoConventionalRouteInference.applying(to: sparse()) }
         let exported = TrainValidation.normalizeExportTrain(inferred)
         let data = try JSONEncoder().encode(exported)
         let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
@@ -48,24 +65,28 @@ struct TokyoConventionalRouteInferenceTests {
 
     @Test("An authored Yurakucho or other surface-only visit prevents tunnel inference")
     func surfaceEvidence() {
-        for (code, name) in [("003795", "有楽町"), ("003949", "浜松町"), ("004000", "田町")] {
-            var train = sparse()
-            train.stops.insert(Stop(name: name, n02StationCode: code), at: 1)
-            #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+        ready {
+            for (code, name) in [("003795", "有楽町"), ("003949", "浜松町"), ("004000", "田町")] {
+                var train = sparse()
+                train.stops.insert(Stop(name: name, n02StationCode: code), at: 1)
+                #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+            }
         }
     }
 
     @Test("Manual physical selections and explicit surface hints remain unchanged")
     func selectedRoute() {
-        var train = sparse()
-        train.routeSections?[0].sectionCodes = ["manual@a:b"]
-        #expect(TokyoConventionalRouteInference.applying(to: train) == train)
-        train = sparse()
-        train.routeSections?[0].lineIDs = [TokyoConventionalRouteInference.surfaceLineID]
-        #expect(TokyoConventionalRouteInference.applying(to: train) == train)
-        train = sparse()
-        train.routeSections?[0].lineNames = ["東海道線"]
-        #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+        ready {
+            var train = sparse()
+            train.routeSections?[0].sectionCodes = ["manual@a:b"]
+            #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+            train = sparse()
+            train.routeSections?[0].lineIDs = [TokyoConventionalRouteInference.surfaceLineID]
+            #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+            train = sparse()
+            train.routeSections?[0].lineNames = ["東海道線"]
+            #expect(TokyoConventionalRouteInference.applying(to: train) == train)
+        }
     }
 
     @Test("The default does not affect Shinkansen, other countries or non-JR services")
@@ -84,8 +105,8 @@ struct TokyoConventionalRouteInferenceTests {
     @Test("Editor fills Shimbashi and its physical codes without changing endpoint times")
     func editorDefault() throws {
         let train = RailwayRouteEditing.preparing(sparse())
-        let choice = try #require(TokyoConventionalRouteInference.choice(
-            in: train, package: try PortFixtures.package(country: "jp")))
+        let choice = try ready { try #require(TokyoConventionalRouteInference.choice(
+            in: train, package: try PortFixtures.package(country: "jp"))) }
         #expect(choice.stations.map(\.name) == ["東京", "新橋", "品川"])
         let plan = try #require(RailwayRouteEditing.plan(train: train, choice: choice,
             fromVisitID: train.stops.first?.routeEditing?.visitID,
@@ -97,8 +118,8 @@ struct TokyoConventionalRouteInferenceTests {
         let saved = TrainValidation.normalizeExportTrain(plan.updatedTrain)
         let reopened = try JSONDecoder().decode(Train.self, from: JSONEncoder().encode(saved))
         #expect(reopened.routeSections?.flatMap { $0.sectionCodes ?? [] } == choice.sectionCodes)
-        #expect(TokyoConventionalRouteInference.choice(in: reopened,
-            package: try PortFixtures.package(country: "jp")) == nil)
+        #expect(try ready { TokyoConventionalRouteInference.choice(in: reopened,
+            package: try PortFixtures.package(country: "jp")) } == nil)
     }
 
     @Test("Repeated authored visits cannot disappear into a simple default path")
@@ -106,7 +127,7 @@ struct TokyoConventionalRouteInferenceTests {
         var train = sparse()
         train.stops = [train.stops[0], Stop(name: "新橋", n02StationCode: "003872"),
             Stop(name: "東京", n02StationCode: "003766"), train.stops[1]]
-        #expect(TokyoConventionalRouteInference.choice(in: train,
-            package: try PortFixtures.package(country: "jp")) == nil)
+        #expect(try ready { TokyoConventionalRouteInference.choice(in: train,
+            package: try PortFixtures.package(country: "jp")) } == nil)
     }
 }

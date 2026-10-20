@@ -15,6 +15,11 @@ import RailCore
 /// Application Support rather than Documents because this is app state the
 /// reader did not create as a document, and it is excluded from iCloud backup
 /// only where it is a cache — this is not, so it is backed up.
+private final class StorageBox {
+    weak var storage: RideStorage?
+    init(_ storage: RideStorage) { self.storage = storage }
+}
+
 actor RideStorage {
 
     static let shared = RideStorage()
@@ -92,13 +97,63 @@ actor RideStorage {
         return upgraded(store)
     }
 
-    /// Fills `station_id` / `operator_id` when the bundled registry can do so
-    /// uniquely. A missing `registry-<cc>.json` leaves the train unchanged.
+    /// Fills `station_id` / `operator_id` when that region's registry is already
+    /// ready. A pending or unavailable region keeps the stored fields and is
+    /// upgraded again when the preload settles.
     private func upgraded(_ store: TrainStore) -> TrainStore {
         var store = store
         BundledRegistry.preload(regions: MergedStore.regions(of: store.trains).map(\.code))
-        store.trains = store.trains.map(BundledRegistry.upgrade)
+        Self.installSettleUpgrade()
+        rememberForSettle()
+        store.trains = store.trains.map(BundledRegistry.upgradeIfReady)
         return store
+    }
+
+    private static let settleLock = NSLock()
+    nonisolated(unsafe) private static var settleStorages: [StorageBox] = []
+    private static let settleUpgrade: Void = {
+        BundledRegistry.addSettledHandler {
+            let storages: [RideStorage]
+            settleLock.lock()
+            settleStorages = settleStorages.filter { $0.storage != nil }
+            storages = settleStorages.compactMap(\.storage)
+            settleLock.unlock()
+            for storage in storages {
+                Task { await storage.upgradeSettledFile() }
+            }
+        }
+    }()
+
+    private static func installSettleUpgrade() {
+        _ = settleUpgrade
+        // The caller is this actor. The handler list only needs the instance.
+    }
+
+    private func rememberForSettle() {
+        Self.settleLock.lock()
+        if !Self.settleStorages.contains(where: { $0.storage === self }) {
+            Self.settleStorages.append(StorageBox(self))
+        }
+        Self.settleLock.unlock()
+    }
+
+    /// Rewrites the saved store once a pending region can fill registry ids.
+    func upgradeSettledFile() {
+        guard FileManager.default.fileExists(atPath: storeURL().path),
+              let data = try? Data(contentsOf: storeURL()),
+              let store = try? JSONDecoder().decode(TrainStore.self, from: data)
+        else { return }
+        let trains = store.trains.map(BundledRegistry.upgradeIfReady)
+        guard zip(store.trains, trains).contains(where: identityFieldsChanged) else { return }
+        try? writeStore(TrainStore(schemaVersion: store.schemaVersion, trains: trains))
+    }
+
+    private func identityFieldsChanged(_ before: Train, _ after: Train) -> Bool {
+        if before.operatorID != after.operatorID || before.operatorIDs != after.operatorIDs { return true }
+        guard before.stops.count == after.stops.count else { return true }
+        return zip(before.stops, after.stops).contains { lhs, rhs in
+            lhs.stationID != rhs.stationID || lhs.name != rhs.name || lhs.n02StationCode != rhs.n02StationCode
+        }
     }
 
     // MARK: - writing

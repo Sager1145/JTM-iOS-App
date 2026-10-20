@@ -167,16 +167,10 @@ struct TrainServicePatternRouteTests {
         let fixed = station(code: "001632", institution: "5", lon: 138.242, lat: 37.115)
         let distant = station(code: "007802", institution: "2", lon: 135.745, lat: 34.516)
         let nearby = station(code: "nearby-platform", institution: "2", lon: 138.243, lat: 37.115)
-        let endpoint = Stations.Query.stop(Stations.Stop(name: "高田", n02StationCode: "001632"))
         let withoutNearby = Stations.Index([fixed, distant])
-        #expect(RouteSolver.resolveRouteEndpointStationCandidates(
-            endpoint, in: withoutNearby, allowedCodes: ["2"], sectionLineNames: []) == [0])
+        #expect(RouteSolver.exactSourceCodeIndices("001632", in: withoutNearby) == [0])
         let withNearby = Stations.Index([fixed, distant, nearby])
-        let candidates = RouteSolver.resolveRouteEndpointStationCandidates(
-            endpoint, in: withNearby, allowedCodes: ["2"], sectionLineNames: [])
-        #expect(candidates.contains(0))
-        #expect(candidates.contains(2))
-        #expect(!candidates.contains(1))
+        #expect(RouteSolver.exactSourceCodeIndices("001632", in: withNearby) == [0])
     }
 
     @Test func fixedCodeRecognizesOnlyExplicitOrExactHistoricalStationIdentity() {

@@ -810,25 +810,31 @@ public enum RouteGraph {
     ) -> SolveContext? {
         guard !routeSections.isEmpty else { return nil }
         let availability = SolverRegistryInput.availability(region: country)
-        if case .pending = availability { return nil }
-        let templateKey = templateKey(sections: routeSections)
-        let allowedCodes = allowedInstitutionTypeCodes(train, country: country)
-        var policyParts = train.preferredLineNames.map { "line:\($0)" }
+        // Pending, and unavailable while a lookup is installed, contribute no
+        // key. With no lookup installed, the package alias table still names
+        // the company so RailKit tests keep the shipped cache-key bytes.
+        let operatorPolicy: [String]
         switch availability {
+        case .pending:
+            return nil
+        case .unavailable where RegistryIdentityLookup.lookupInstalled:
+            return nil
         case .ready(let identity):
-            policyParts += SolverRegistryInput.packageOperatorNames(
+            operatorPolicy = SolverRegistryInput.packageOperatorNames(
                 operatorIDs: SolverRegistryInput.recordedOperatorIDs(
                     operatorID: train.operatorID, operatorIDs: train.operatorIDs),
                 storedNames: train.preferredOperatorNames, identity: identity
             ).map { "operator:\($0)" }
-        case .absent:
-            policyParts += train.preferredOperatorNames.map { "operator:\($0)" }
-            policyParts += derivedPreferredOperatorNames(
-                company: train.company, country: country
-            ).map { "operator:\($0)" }
-        case .pending:
-            return nil
+        case .unavailable:
+            operatorPolicy = train.preferredOperatorNames.map { "operator:\($0)" }
+                + derivedPreferredOperatorNames(
+                    company: train.company, country: country
+                ).map { "operator:\($0)" }
         }
+        let templateKey = templateKey(sections: routeSections)
+        let allowedCodes = allowedInstitutionTypeCodes(train, country: country)
+        var policyParts = train.preferredLineNames.map { "line:\($0)" }
+        policyParts += operatorPolicy
         // Duplicates are NOT removed — a preferred operator that is also
         // derived from the company field appears twice, and does so in the
         // shipped Taiwanese store.
@@ -869,8 +875,8 @@ public enum RouteGraph {
             policyKey: policyKey, cacheKey: cacheKey)
     }
 
-    /// Waits until this region's registry is ready or absent, then builds the key.
-    /// A pending bundle never contributes a legacy company spelling to the key.
+    /// Waits until this region's registry settles, then builds the key.
+    /// Pending and unavailable both return nil: no company spelling enters the key.
     public static func solveContextAwaitingRegistry(
         train: CacheKeyTrain,
         routeSections: [RouteSection],

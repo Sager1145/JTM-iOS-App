@@ -221,17 +221,40 @@ extension TransferGuide {
 
     /// Registry station records answer the names. The package index is only
     /// asked for a place by code, so shared lines can still be drawn.
-    /// With no station records, the legacy Viterbi chain stays.
+    /// With no station records every call stays unresolved.
     private static func resolveCalls(
         names: [String], qualifiers: [String?], rawNames: [String], hints: [[String]],
         stations: StationIndex, region: String
     ) -> (calls: [ResolvedCall], ambiguous: [String: [String]]) {
-        guard let identity = RegistryIdentityCache.identity(forRegion: region),
-              !identity.bundle.stations.isEmpty else {
-            var places = StationIndex.resolve(names: names, hints: hints, index: stations)
-            StationIndex.fill(names: names, places: &places, index: stations)
-            return (places.map { ResolvedCall(place: $0, stationID: nil, officialName: nil, code: nil) }, [:])
+        switch RegistryIdentityLookup.phase(forRegion: region) {
+        case .pending:
+            var pendingNames: [String: [String]] = [:]
+            for name in names where !name.isEmpty && pendingNames[name] == nil {
+                pendingNames[name] = []
+            }
+            return (names.map { _ in
+                ResolvedCall(place: nil, stationID: nil, officialName: nil, code: nil)
+            }, pendingNames)
+        case .unavailable:
+            return (names.map { _ in
+                ResolvedCall(place: nil, stationID: nil, officialName: nil, code: nil)
+            }, [:])
+        case .ready(let identity):
+            guard !identity.bundle.stations.isEmpty else {
+                return (names.map { _ in
+                    ResolvedCall(place: nil, stationID: nil, officialName: nil, code: nil)
+                }, [:])
+            }
+            return resolveReadyCalls(
+                names: names, qualifiers: qualifiers, rawNames: rawNames,
+                identity: identity, stations: stations)
         }
+    }
+
+    private static func resolveReadyCalls(
+        names: [String], qualifiers: [String?], rawNames: [String],
+        identity: RegistryIdentity, stations: StationIndex
+    ) -> (calls: [ResolvedCall], ambiguous: [String: [String]]) {
         let directory = StationNameDirectory(bundle: identity.bundle)
         var calls: [ResolvedCall] = []
         var ambiguous: [String: [String]] = [:]
@@ -337,9 +360,12 @@ extension TransferGuide {
             let isFirst = index == 0
             let isLast = index == leg.calls.count - 1
             let resolved = calls.indices.contains(index) ? calls[index] : nil
+            let registryCode = resolved?.code
+            let writtenCode = liveCode(resolved?.place)
+                ?? (RailHistoryStations.isHistoryCode(registryCode) ? nil : registryCode)
             let stop = Stop(
                 name: resolved?.officialName ?? call.name,
-                n02StationCode: liveCode(resolved?.place) ?? resolved?.code,
+                n02StationCode: writtenCode,
                 platformNumber: isFirst
                     ? leg.departurePlatform : (isLast ? leg.arrivalPlatform : nil),
                 arrival: call.arrival,
@@ -353,23 +379,23 @@ extension TransferGuide {
         return stops
     }
 
-    /// Exact operator text becomes operator ids. A registry with station
-    /// records does not fold names through the legacy company label.
+    /// Exact operator text becomes operator ids. No registry leaves the
+    /// company and the operator ids empty.
     private static func operatorIdentity(
         operatorsSeen: [String], service: String, region: String
     ) -> (company: String, operatorID: String?, operatorIDs: [String]?, preferred: [String]) {
-        let registry = RegistryIdentityCache.identity(forRegion: region)
-        if let registry, !registry.bundle.stations.isEmpty {
-            let joined = operatorsSeen.joined(separator: "/")
-            let choice = registry.operatorCommit(forExactText: joined)
-            if let choice {
-                let single = choice.ids.count == 1 ? choice.ids[0] : nil
-                let many = choice.ids.count > 1 ? choice.ids : nil
-                return (choice.company, single, many, choice.preferredNames)
-            }
+        guard let registry = RegistryIdentityCache.identity(forRegion: region),
+              !registry.bundle.stations.isEmpty else {
             return ("", nil, nil, [])
         }
-        return (company(from: operatorsSeen, service: service), nil, nil, operatorsSeen)
+        let joined = operatorsSeen.joined(separator: "/")
+        let choice = registry.operatorCommit(forExactText: joined)
+        if let choice {
+            let single = choice.ids.count == 1 ? choice.ids[0] : nil
+            let many = choice.ids.count > 1 ? choice.ids : nil
+            return (choice.company, single, many, choice.preferredNames)
+        }
+        return ("", nil, nil, [])
     }
 
     private static func appendTrainSections(
@@ -457,15 +483,6 @@ extension TransferGuide {
         if let equipment = leg.equipment { inside.append(equipment) }
         guard !inside.isEmpty else { return service }
         return "\(service)（\(inside.joined(separator: "・"))）"
-    }
-
-    /// `東日本旅客鉄道` as `JR東日本` — the spelling the committed store uses.
-    static func company(from operators: [String], service: String) -> String {
-        let labels = operators.map { OperatorBranding.companyLabel($0) }.filter { !$0.isEmpty }
-        var unique: [String] = []
-        for label in labels where !unique.contains(label) { unique.append(label) }
-        if !unique.isEmpty { return unique.joined(separator: "/") }
-        return service.hasPrefix("JR") ? "JR" : ""
     }
 
     /// The calendar day `8月28日` means, given when the reader is importing.

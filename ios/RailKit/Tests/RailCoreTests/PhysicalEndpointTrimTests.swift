@@ -307,17 +307,25 @@ struct PhysicalEndpointTrimTests {
     ) throws -> GapCounts {
         let part = try JSONDecoder().decode(PhysicalEndpointTrimPart.self, from: Data(contentsOf:
             root.appending(path: "app/data/sample-data/\(fixture).json")))
-        let train = TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
-            TrainValidation.restoringRouteSectionEndpointNames(part.train), country: "jp",
-            stations: TrainValidation.StationTable.empty))
+        let train = RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1)) : nil
+        }) {
+            TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
+                TrainValidation.restoringRouteSectionEndpointNames(part.train), country: "jp",
+                stations: TrainValidation.StationTable.empty))
+        }
         try #require(train.id == expectedID)
         return try gapCounts(train: train, branch: branch, data: data)
     }
 
     func normalizedSampleTrain(_ train: Train) -> Train {
-        TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
-            TrainValidation.restoringRouteSectionEndpointNames(train), country: "jp",
-            stations: TrainValidation.StationTable.empty))
+        RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1)) : nil
+        }) {
+            TokyoConventionalRouteInference.applying(to: TrainValidation.normalizeExportTrain(
+                TrainValidation.restoringRouteSectionEndpointNames(train), country: "jp",
+                stations: TrainValidation.StationTable.empty))
+        }
     }
 
     func gapCounts(

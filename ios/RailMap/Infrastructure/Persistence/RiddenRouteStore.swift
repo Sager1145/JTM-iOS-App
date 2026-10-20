@@ -279,6 +279,7 @@ final class RiddenRouteStore {
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
     func load(trains: [Train], preferredTrainID: String? = nil) {
+        Self.attachPendingReplay(self)
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -926,10 +927,10 @@ final class RiddenRouteStore {
             if trainCanonical.routeSections?.contains(where: { $0.sectionCodes?.isEmpty == false }) == true {
                 continue
             }
-            let trainDigest = routeCacheDigest(trainCanonical, raw: train, country: country)
-            guard trainDigest == routeCacheDigest(
-                normalizedTrain(part.train, country: country), raw: part.train, country: country
-            ) else { continue }
+            let trainDigest = await routeCacheDigest(trainCanonical, raw: train, country: country)
+            let partDigest = await routeCacheDigest(
+                normalizedTrain(part.train, country: country), raw: part.train, country: country)
+            guard trainDigest == partDigest else { continue }
             guard let expectedDigest = trainDigest,
                   let revisions = historyRevisionSet(for: train) else { continue }
             guard RailPrecomputedRouteGate.accepts(
@@ -1226,12 +1227,13 @@ final class RiddenRouteStore {
         if let providedInputs { inputs = providedInputs }
         else { inputs = try await SolverInputCache.shared.inputs(scope: scope) }
         let graphStoreBox = graphStore.map(UncheckedGraphStoreBox.init)
+        await awaitScopeRegistry(scope, trains: trains)
         var results: [DrawnRide] = []
         for train in trains where !train.requiresRouteConfirmation {
             try Task.checkCancellation()
             let routeInput = try await canonicalRouteInput(train, country: scope.code)
             let canonical = routeInput.train
-            let digest = routeCacheDigest(canonical, raw: train, country: scope.code)
+            let digest = await routeCacheDigest(canonical, raw: train, country: scope.code)
             // Joining happens before admission. Only the producer acquires the
             // sole permit, so a subscriber never holds it while awaiting work.
             let operation: @Sendable () async throws -> [DrawnRide] = {
@@ -1637,7 +1639,7 @@ final class RiddenRouteStore {
                         let train = trains[nextIndex]
                         let canonical = try await canonicalRouteInput(train, country: scope.code).train
                         if !ride.segments.isEmpty,
-                           let digest = routeCacheDigest(canonical, raw: train, country: scope.code) {
+                           let digest = await routeCacheDigest(canonical, raw: train, country: scope.code) {
                             try? saveCache(
                                 ride, digest: digest, country: scope.code, resourceScope: scope.key)
                         }
@@ -1679,6 +1681,7 @@ final class RiddenRouteStore {
             preparedNetwork = await SolverInputCache.shared.networkIndexes(
                 scope: scope, network: displayNetwork, inputs: inputs)
         } else { preparedNetwork = nil }
+        await awaitScopeRegistry(scope, trains: trains)
         let officialIntervals = await SolverInputCache.shared.officialIntervals(scope: scope, inputs: inputs)
         var resolver = RideRouteResolution(inputs: inputs, country: country, network: preparedNetwork,
             officialIntervals: officialIntervals, graphStore: graphStore)
@@ -1723,7 +1726,7 @@ final class RiddenRouteStore {
                 physicalGaps: result.physicalGaps, timetableFailure: routeInput.timetableFailure)
             rides.append(ride)
             if saveRoutes, !segments.isEmpty,
-               let digest = routeCacheDigest(canonical, raw: train, country: country) {
+               let digest = await routeCacheDigest(canonical, raw: train, country: country) {
                 try? saveCache(ride, digest: digest, country: country, resourceScope: scope.key)
             }
             try Task.checkCancellation()
@@ -1897,9 +1900,70 @@ final class RiddenRouteStore {
         return RouteGraph.keyDigest(RouteGraph.templateKey(sections: sections))
     }
 
+    private nonisolated static let pendingSolveLock = NSLock()
+    nonisolated(unsafe) private static weak var pendingSolveStore: RiddenRouteStore?
+    nonisolated(unsafe) private static var pendingSolveIDs = Set<String>()
+    private nonisolated static let installPendingReplay: Void = {
+        BundledRegistry.addSettledHandler {
+            pendingSolveLock.lock()
+            let ids = pendingSolveIDs
+            pendingSolveIDs.removeAll()
+            let store = pendingSolveStore
+            pendingSolveLock.unlock()
+            guard let store, !ids.isEmpty else { return }
+            Task { @MainActor in
+                for id in ids where store.requestedOrder.contains(id) {
+                    if let train = store.completedInputs[id] ?? store.loadingInputs?[id] {
+                        store.resolve(train)
+                    }
+                }
+            }
+        }
+    }()
+
+    private nonisolated static func attachPendingReplay(_ store: RiddenRouteStore) {
+        _ = installPendingReplay
+        pendingSolveLock.lock()
+        pendingSolveStore = store
+        pendingSolveLock.unlock()
+    }
+
+    private nonisolated static func notePendingSolve(_ id: String) {
+        guard !id.isEmpty else { return }
+        _ = installPendingReplay
+        pendingSolveLock.lock()
+        pendingSolveIDs.insert(id)
+        pendingSolveLock.unlock()
+    }
+
+    private nonisolated static func clearPendingSolve(_ id: String) {
+        pendingSolveLock.lock()
+        pendingSolveIDs.remove(id)
+        pendingSolveLock.unlock()
+    }
+
+    /// Waits out a pending registry before a production solve. Rides noted while
+    /// pending are solved again when that region settles.
+    private nonisolated static func awaitScopeRegistry(_ scope: RouteScope, trains: [Train]) async {
+        for train in trains where !train.requiresRouteConfirmation {
+            let waiting = RouteScope(train).graphRegions.contains { region in
+                if case .pending = RegistryIdentityLookup.phase(forRegion: region.code) { return true }
+                return false
+            }
+            if waiting { notePendingSolve(train.id) }
+        }
+        for region in scope.graphRegions {
+            let identity = await SolverRegistryInput.awaitReady(region: region.code)
+            guard identity != nil else { continue }
+            for train in trains where RouteScope(train).graphRegions.contains(where: { $0.code == region.code }) {
+                clearPendingSolve(train.id)
+            }
+        }
+    }
+
     private nonisolated static func routeCacheDigest(
         _ canonical: Train, raw: Train, country: String
-    ) -> String? {
+    ) async -> String? {
         let canonicalSections = canonical.routeSections ?? []
         let sections = canonicalSections.map(RouteGraph.RouteSection.init)
         let policy = canonical.routePolicy
@@ -1919,7 +1983,7 @@ final class RiddenRouteStore {
             institutionFilterMode: policy?.institutionFilterMode,
             operatorID: raw.operatorID ?? canonical.operatorID,
             operatorIDs: raw.operatorIDs ?? canonical.operatorIDs ?? [])
-        guard let context = RouteGraph.solveContext(
+        guard let context = await RouteGraph.solveContextAwaitingRegistry(
             train: cacheTrain, routeSections: sections, country: country,
             rideDate: Dates.normalizeDateString(canonical.date),
             historyRevision: history.canonical) else { return nil }
@@ -2042,7 +2106,7 @@ final class RiddenRouteStore {
         let routeInput = try await canonicalRouteInput(train, country: country)
         let canonical = routeInput.train
         guard let revision = runtimeResourceRevision(scope: Region.scopeKey(Region.regionsTouched(train))),
-              let digest = routeCacheDigest(canonical, raw: train, country: country),
+              let digest = await routeCacheDigest(canonical, raw: train, country: country),
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
               cache.version == RouteGraph.routeDrawnCacheVersion,

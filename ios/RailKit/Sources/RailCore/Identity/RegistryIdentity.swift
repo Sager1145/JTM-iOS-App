@@ -29,9 +29,11 @@ public struct RegistryIdentity: Equatable, Sendable {
     private var operatorByIdentityCode: [String: String]
     /// Line-part name → how many parts in this bundle use that exact name.
     private var lineNameCounts: [String: Int]
-    /// Folded name, label, alias, or identity display name, paired with its operator.
-    /// The raw identity code is not a query key.
-    private var queryHaystacks: [(haystack: String, identifier: String)]
+    /// Folded name, label, alias, or identity display name → operator ids.
+    /// The raw identity code is not a query key. Built once with the identity.
+    private var operatorsByHaystack: [String: Set<String>]
+    /// Repeat queries reuse the substring scan. Copies share the cache.
+    private let queryMatchCache = QueryMatchCache()
     /// Bracket-folded official name → station ids. An exact name wins over a base.
     private var stationIDsByOfficialName: [String: [String]]
     /// Bracket-folded base → station ids whose stored parts use that base.
@@ -45,7 +47,11 @@ public struct RegistryIdentity: Equatable, Sendable {
         self.exactOperatorByName = maps.exact
         self.operatorByIdentityCode = maps.byCode
         self.lineNameCounts = maps.lineNames
-        self.queryHaystacks = maps.haystacks
+        var byHaystack: [String: Set<String>] = [:]
+        for (haystack, identifier) in maps.haystacks {
+            byHaystack[haystack, default: []].insert(identifier)
+        }
+        self.operatorsByHaystack = byHaystack
         let names = Self.stationNameMaps(bundle)
         self.stationIDsByOfficialName = names.official
         self.stationIDsByBase = names.base
@@ -69,11 +75,13 @@ public struct RegistryIdentity: Equatable, Sendable {
     public func operatorIDs(matchingQuery query: String) -> Set<String> {
         let folded = SearchFold.fold(JSString.trim(query))
         guard !folded.isEmpty else { return [] }
-        var matched: Set<String> = []
-        for entry in queryHaystacks where entry.haystack.contains(folded) {
-            matched.insert(entry.identifier)
+        return queryMatchCache.matches(folded) {
+            var matched: Set<String> = []
+            for (haystack, identifiers) in operatorsByHaystack where haystack.contains(folded) {
+                matched.formUnion(identifiers)
+            }
+            return matched
         }
-        return matched
     }
 
     /// Catalog company text → operator ids. A slash-joined string that is itself a
@@ -416,6 +424,14 @@ public struct RegistryIdentity: Equatable, Sendable {
                     needleSet[baseName] = max(needleSet[baseName] ?? 0, key.count)
                 }
             }
+            for alias in record.aka ?? [] {
+                let key = stationNameKey(alias)
+                guard !key.isEmpty, key != nameKey else { continue }
+                var list = official[key] ?? []
+                if !list.contains(identifier) { list.append(identifier) }
+                official[key] = list
+                needleSet[alias] = max(needleSet[alias] ?? 0, key.count)
+            }
         }
         for key in official.keys { official[key]?.sort() }
         for key in base.keys { base[key]?.sort() }
@@ -633,7 +649,31 @@ public enum RegistryPhase: Sendable {
     /// A bundle exists and a background decode is still running.
     case pending
     /// This region has no bundle, or the file failed to decode.
-    case absent
+    case unavailable
+}
+
+/// Per-query results for ``RegistryIdentity/operatorIDs(matchingQuery:)``.
+private final class QueryMatchCache: @unchecked Sendable {
+    private let lock = NSLock()
+    private var stored: [String: Set<String>] = [:]
+
+    func matches(_ query: String, compute: () -> Set<String>) -> Set<String> {
+        lock.lock()
+        if let hit = stored[query] {
+            lock.unlock()
+            return hit
+        }
+        lock.unlock()
+        let built = compute()
+        lock.lock()
+        if let hit = stored[query] {
+            lock.unlock()
+            return hit
+        }
+        stored[query] = built
+        lock.unlock()
+        return built
+    }
 }
 
 /// The app installs a per-region lookup. Tests leave it nil.
@@ -663,7 +703,7 @@ public enum RegistryIdentityLookup {
         return generation
     }
 
-    /// A synchronous provider. A nil result is absent, never pending.
+    /// A synchronous provider. A nil result is unavailable, never pending.
     /// Installing one clears a phase provider.
     public static func install(_ provider: Provider?) {
         lock.lock()
@@ -700,7 +740,7 @@ public enum RegistryIdentityLookup {
         try await $testOverride.withValue(.phase(provider), operation: operation)
     }
 
-    /// The app's background-preload provider. A nil provider is absent for every region.
+    /// The app's background-preload provider. A nil provider is unavailable for every region.
     public static func installPhase(_ provider: PhaseProvider?) {
         lock.lock()
         self.provider = nil
@@ -716,14 +756,14 @@ public enum RegistryIdentityLookup {
 
     public static func phase(forRegion region: String) -> RegistryPhase {
         let cc = region.lowercased()
-        guard !cc.isEmpty else { return .absent }
+        guard !cc.isEmpty else { return .unavailable }
         if let testOverride {
             switch testOverride {
             case .sync(let provider):
                 if let identity = provider?(cc) { return .ready(identity) }
-                return .absent
+                return .unavailable
             case .phase(let provider):
-                return provider?(cc) ?? .absent
+                return provider?(cc) ?? .unavailable
             }
         }
         lock.lock()
@@ -733,9 +773,9 @@ public enum RegistryIdentityLookup {
         if let phased { return phased(cc) }
         if let sync {
             if let identity = sync(cc) { return .ready(identity) }
-            return .absent
+            return .unavailable
         }
-        return .absent
+        return .unavailable
     }
 
     public static func identity(forRegion region: String) -> RegistryIdentity? {
@@ -755,7 +795,15 @@ public enum RegistryIdentityLookup {
         for waiter in resumed { waiter.resume() }
     }
 
-    /// Waits until the region is ready or absent. A region that is already settled returns immediately.
+    /// True when this task or the process has a lookup or phase provider installed.
+    public static var lookupInstalled: Bool {
+        if testOverride != nil { return true }
+        lock.lock()
+        defer { lock.unlock() }
+        return provider != nil || phaseProvider != nil
+    }
+
+    /// Waits until the region is ready or unavailable. A region that is already settled returns immediately.
     /// A notify for a provider this task does not see is ignored and the wait continues.
     public static func waitUntilSettled(region: String) async {
         let cc = region.lowercased()
@@ -825,7 +873,7 @@ public enum RegistryIdentityCache {
         switch RegistryIdentityLookup.phase(forRegion: cc) {
         case .pending:
             return nil
-        case .absent:
+        case .unavailable:
             lock.lock()
             if generation == current { misses.insert(cc) }
             lock.unlock()
@@ -876,7 +924,7 @@ public struct RegistryStationDisplay: Equatable, Sendable {
         switch RegistryIdentityLookup.phase(forRegion: resolvedRegion) {
         case .pending:
             return pending()
-        case .absent:
+        case .unavailable:
             return unresolved()
         case .ready(let identity):
             guard let label = identity.label(for: stationID, line: lineID, country: resolvedRegion) else {

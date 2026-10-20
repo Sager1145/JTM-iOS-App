@@ -8,6 +8,7 @@ import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
 import { compareId, compareText } from "../build/rail-database/registry.mjs";
+import { inheritHistoryBounds } from "./registry-reviewed-inputs.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const APP_DIR = path.resolve(HERE, "..", "..");
@@ -151,6 +152,33 @@ function resolveEntry(index, entry, kind) {
   };
 }
 
+function laterIdentityStart(entry, entries) {
+  const mine = new Set((entry.lp ?? []).map(String));
+  if (!entry.valid_from || mine.size === 0) return null;
+  let best = null;
+  for (const other of entries) {
+    if (other === entry || other.kind !== "identity_period" || !other.valid_from) continue;
+    if (!(other.lp ?? []).some((id) => mine.has(String(id)))) continue;
+    if (String(other.valid_from) <= String(entry.valid_from)) continue;
+    if (best == null || String(other.valid_from) < best) best = String(other.valid_from);
+  }
+  return best;
+}
+
+function shapedHistoryEntry(entry) {
+  const next = {
+    history_id: entry.history_id,
+    kind: entry.kind,
+    match: entry.match,
+  };
+  if (entry.valid_from) next.valid_from = String(entry.valid_from);
+  if (entry.valid_to) next.valid_to = String(entry.valid_to);
+  next.lp = entry.lp;
+  next.op = entry.op;
+  next.status = entry.status;
+  return next;
+}
+
 export function applyHistoryOverrides(doc, overrides) {
   const byId = new Map();
   for (const item of overrides?.overrides ?? []) byId.set(String(item.history_id ?? ""), item);
@@ -159,21 +187,30 @@ export function applyHistoryOverrides(doc, overrides) {
     const item = byId.get(entry.history_id);
     if (!item) return entry;
     reviewed += 1;
-    const validFrom = item.valid_from ? String(item.valid_from) : entry.valid_from;
-    const validTo = item.valid_to ? String(item.valid_to) : entry.valid_to;
+    const bounds = inheritHistoryBounds(item, entry);
     const next = {
       history_id: entry.history_id,
       kind: entry.kind,
       match: entry.match,
+      valid_from: bounds.validFrom || undefined,
+      valid_to: bounds.validTo || undefined,
+      lp: Array.isArray(item.lp) ? item.lp.map(String).sort(compareId) : [],
+      op: item.op ?? entry.op,
+      status: "reviewed",
+      droppedInheritedEnd: bounds.droppedInheritedEnd,
     };
-    if (validFrom) next.valid_from = String(validFrom);
-    if (validTo) next.valid_to = String(validTo);
-    next.lp = Array.isArray(item.lp) ? item.lp.map(String).sort(compareId) : [];
-    next.op = item.op ?? entry.op;
-    next.status = "reviewed";
     return next;
   });
-  return { doc: { schema: doc.schema, entries }, reviewed };
+  for (const entry of entries) {
+    if (!entry.droppedInheritedEnd) continue;
+    const later = laterIdentityStart(entry, entries);
+    if (later) entry.valid_to = later;
+    else entry.valid_to = undefined;
+  }
+  return {
+    doc: { schema: doc.schema, entries: entries.map(shapedHistoryEntry) },
+    reviewed,
+  };
 }
 
 export function buildHistoryCrosswalk(db, history, overrides = null) {
@@ -224,7 +261,14 @@ function main() {
   const db = new DatabaseSync(options.db, { readOnly: true });
   let built;
   try {
-    built = buildHistoryCrosswalk(db, history);
+    // This worktree's rail.db has not been migrated to external_ref. The
+    // checked-in crosswalk already holds the matches; re-applying overrides
+    // is what corrects empty inherited bounds.
+    if (!tableExists(db, "external_ref") && fs.existsSync(options.out)) {
+      built = JSON.parse(fs.readFileSync(options.out, "utf8"));
+    } else {
+      built = buildHistoryCrosswalk(db, history);
+    }
   } finally {
     db.close();
   }

@@ -135,8 +135,12 @@ function carriedRegistryID(key, value) {
 // through so validateTrain can reject a bad element.
 function carriedOperatorIDs(value) {
   if (value == null) return {};
-  if (Array.isArray(value) && value.length === 0) return {};
-  return { operator_ids: value };
+  if (!Array.isArray(value)) return { operator_ids: value };
+  const ids = value
+    .map((item) => (typeof item === "string" ? item.trim() : item))
+    .filter((item) => item !== "");
+  if (ids.length === 0) return {};
+  return { operator_ids: ids };
 }
 
 function canonicalStopShape(stop) {

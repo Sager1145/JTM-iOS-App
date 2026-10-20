@@ -87,8 +87,11 @@ struct NExRegisteredSourceProofTests {
             trainType: "express", origin: "東京", destination: "品川",
             routeSections: [RouteSection(from: "東京", to: "品川",
                 fromN02StationCode: "003766", toN02StationCode: "004095")], stops: visits, region: "jp")
-        let actualSection = try #require(TokyoConventionalRouteInference.applying(
-            to: sparse, package: package).routeSections?.first)
+        let actualSection = try #require(RegistryIdentityTestGate.withProvider({ region in
+            region == "jp" ? RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1)) : nil
+        }) {
+            TokyoConventionalRouteInference.applying(to: sparse, package: package).routeSections?.first
+        })
         #expect(actualSection.lineNames == ["総武線"])
         #expect(actualSection.lineIDs == [line.id])
         #expect(actualSection.sectionCodes == ["\(line.id)@003766:003872", "\(line.id)@003872:004095"])

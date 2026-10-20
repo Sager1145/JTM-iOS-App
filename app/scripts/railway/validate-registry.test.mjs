@@ -1843,7 +1843,9 @@ test("reviewed history periods mint one operation per line and a changed start i
     const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
     assert.deepEqual(report["history-unresolved"].map((row) => [row.history_id, row.status]), [["still-multi", "multiple"]]);
     const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
-    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    assert.equal(passed.status, 1, passed.stdout + passed.stderr);
+    assert.match(passed.stdout, /operation empty lp:jp:1/);
+    assert.match(passed.stdout, /operation empty lp:jp:2/);
   } finally {
     fixture.db.close();
     fs.rmSync(fixture.dir, { recursive: true, force: true });

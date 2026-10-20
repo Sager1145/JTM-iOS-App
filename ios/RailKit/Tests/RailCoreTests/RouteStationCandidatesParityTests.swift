@@ -194,26 +194,35 @@ struct RecordedStationSourceAnchorTests {
             station(), station(line: "Branch", code: "sibling-code"),
             station(line: "Metro", code: "metro-code", group: "metro-group"),
         ])
-        let candidates = RouteSolver.resolveRouteEndpointStationCandidates(
-            .stop(.init(name: "Shared", n02StationCode: "CN-12306-KMM")),
-            in: index, allowedCodes: ["4"], sectionLineNames: [])
-        #expect(candidates == [0, 1])
+        #expect(RouteSolver.exactSourceCodeIndices("CN-12306-KMM", in: index) == [0])
     }
 
     @Test("Only CN solve contexts change for the recorded source anchor policy")
     func sourceAnchorCacheRevisionIsLimitedToCN() throws {
         let sections = [RouteGraph.RouteSection(from: "Start", to: "End")]
-        let unchanged = try #require(RouteGraph.solveContext(train: .init(), routeSections: sections, country: "jp"))
+        let unchanged = try #require(RegistryIdentityTestGate.withProvider({ region in
+            RegistryIdentity(bundle: RegistryBundle(region: region, run: 1))
+        }) {
+            RouteGraph.solveContext(train: .init(), routeSections: sections, country: "jp")
+        })
         let oldCNKey = unchanged.cacheKey + "|source-anchor:1"
         for country in ["cn", "CN"] {
-            let cn = try #require(RouteGraph.solveContext(train: .init(), routeSections: sections, country: country))
+            let cn = try #require(RegistryIdentityTestGate.withProvider({ region in
+                RegistryIdentity(bundle: RegistryBundle(region: region, run: 1))
+            }) {
+                RouteGraph.solveContext(train: .init(), routeSections: sections, country: country)
+            })
             #expect(cn.cacheKey.hasSuffix("|source-anchor:1"))
             #expect(cn.cacheKey.contains("|source-display-identity:1"))
             #expect(cn.cacheKey != oldCNKey)
             #expect(cn.cacheKey.replacingOccurrences(of: "|source-display-identity:1", with: "") == oldCNKey)
         }
         for country in ["jp", "tw", "kr", "hk", "mo"] {
-            let context = try #require(RouteGraph.solveContext(train: .init(), routeSections: sections, country: country))
+            let context = try #require(RegistryIdentityTestGate.withProvider({ region in
+                RegistryIdentity(bundle: RegistryBundle(region: region, run: 1))
+            }) {
+                RouteGraph.solveContext(train: .init(), routeSections: sections, country: country)
+            })
             #expect(!context.cacheKey.contains("|source-anchor:"))
             #expect(!context.cacheKey.contains("|source-display-identity:"))
             #expect(context.cacheKey == unchanged.cacheKey)

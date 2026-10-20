@@ -9,14 +9,6 @@ public enum ServicePatternBrowsePolicy {
         "jp.jnr",
     ]
 
-    /// Legal names and the short 国鉄 spelling. Used when the registry is missing
-    /// or that part does not convert to an operator id.
-    private static let jrAndNationalOperatorNames: Set<String> = [
-        "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
-        "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
-        "日本国有鉄道", "国鉄",
-    ]
-
     /// A row carries the object the editor will select. Occurrences never
     /// acquire route-pattern identity or a reverse-direction action.
     public enum Row: Identifiable, Sendable {
@@ -272,18 +264,14 @@ public enum ServicePatternBrowsePolicy {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
         guard !parts.isEmpty else { return false }
-        let identity = RegistryIdentityCache.identity(forRegion: region)
+        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return false }
         return parts.contains { part in
-            if let identity {
-                let identifiers = identity.operatorIDs(forCatalogName: part)
-                if !identifiers.isEmpty {
-                    return identifiers.contains { identifier in
-                        guard let code = identity.operator(for: identifier)?.identity else { return false }
-                        return jrIdentityCodes.contains(code)
-                    }
-                }
+            let identifiers = identity.operatorIDs(forCatalogName: part)
+            guard !identifiers.isEmpty else { return false }
+            return identifiers.contains { identifier in
+                guard let code = identity.operator(for: identifier)?.identity else { return false }
+                return jrIdentityCodes.contains(code)
             }
-            return jrAndNationalOperatorNames.contains(part)
         }
     }
 

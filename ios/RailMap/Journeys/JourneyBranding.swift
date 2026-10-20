@@ -134,14 +134,10 @@ enum JourneyBranding {
     ) -> String? {
         if let logo = JourneyRouteIdentity.operatorLogo(of: train, detected: detected) { return logo }
         let identity = train.region.flatMap { RegistryIdentityCache.identity(forRegion: $0) }
+        guard let identity else { return nil }
         for operatorName in operatorLogoCandidates(of: train, detected: detected) {
-            if let identity,
-               let identifier = identity.operatorID(forExactName: operatorName),
+            if let identifier = identity.operatorID(forExactName: operatorName),
                let logo = identity.operatorLogo(identifier) {
-                return logo
-            }
-            if identity == nil || identity?.operatorID(forExactName: operatorName) == nil,
-               let logo = OperatorBranding.operatorLogoForAnySpelling(operatorName) {
                 return logo
             }
         }

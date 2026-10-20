@@ -129,7 +129,10 @@ enum TokyoConventionalRouteInference {
     ) -> String? {
         let explicit = code.flatMap { $0.isEmpty ? nil : $0 }
         switch SolverRegistryInput.availability(region: "jp") {
-        case .pending:
+        case .pending, .unavailable:
+            // Corridor codes are a ready-registry preference. Pending and
+            // unavailable leave the stored section alone, including an
+            // explicit source code.
             return nil
         case .ready(let identity):
             guard let stationID, !stationID.isEmpty else { return explicit }
@@ -141,9 +144,6 @@ enum TokyoConventionalRouteInference {
             guard let narrowed = narrowedStationCode(name, corridor: corridor),
                   owned.contains(StationCodeAliases.canonical(narrowed)) else { return nil }
             return narrowed
-        case .absent:
-            if let explicit { return explicit }
-            return narrowedStationCode(name, corridor: corridor)
         }
     }
 

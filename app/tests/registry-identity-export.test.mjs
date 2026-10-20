@@ -141,12 +141,15 @@ test("null registry ids are omitted and non-strings are rejected like Swift", ()
     assert.deepEqual(copy.operator_ids, ["op:jp:1", "op:jp:2"]);
     assert.equal(Object.hasOwn(copy, "operator_id"), false);
   }
-  const both = roundTrip(context, ride({ operator_id: "op:jp:4", operator_ids: ["op:jp:1"] }));
-  for (const copy of [both.imported, both.exported]) {
-    const keys = Object.keys(copy);
-    assert.equal(keys[keys.indexOf("operator_id") + 1], "operator_ids");
-    assert.equal(keys[keys.indexOf("operator_ids") + 1], "origin");
-  }
+  assert.equal(
+    rejection(context, ride({ operator_id: "op:jp:4", operator_ids: ["op:jp:1"] })),
+    "Train 1: operator_id and operator_ids cannot both be set.",
+  );
+  assert.equal(
+    rejection(context, ride({ operator_ids: ["op:jp:1", " op:jp:1 "] })),
+    "Train 1: operator_ids contains a duplicate.",
+  );
+  assert.equal(rejection(context, ride({ operator_id: "op:jp:1", operator_ids: ["  "] })), null);
   assert.equal(rejection(context, joint), null);
   const omitted = roundTrip(context, ride({ operator_ids: [] }));
   assert.equal(Object.hasOwn(omitted.exported, "operator_ids"), false);

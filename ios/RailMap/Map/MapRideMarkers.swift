@@ -15,9 +15,9 @@ import RailCore
 ///
 /// ## Where a stop's position comes from
 ///
-/// `deckMarkerRecord` is fed a STOP FEATURE: one entry of `train.stops`
-/// resolved against the national station table by `resolveStationForTrain`.
-/// This app resolves it against the ride's own drawn geometry instead, which
+/// `deckMarkerRecord` is fed a STOP FEATURE: one entry of `train.stops`.
+/// The web app resolves that feature with `resolveStationForTrain`. This app
+/// resolves it against the ride's own drawn geometry instead, which
 /// avoids placing a recorded call on unrelated track. Physical route sections
 /// may have source-only boundaries, so the ride's recorded-route mapping
 /// identifies only the physical endpoints that really are recorded visits.

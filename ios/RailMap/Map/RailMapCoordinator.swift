@@ -718,7 +718,8 @@ extension RailMapView.Surface {
                                 display.primary, code: readingCode, region: namingRegion, allowNameFallback: false))
                     }
                 }
-                if !lookupByName {
+                // A code is a package id, not a name. Name lookup is not an identity.
+                if !lookupByName || code?.isEmpty != false {
                     let word = localization.text(RegistryStationDisplay.unresolvedKey)
                     return Named(display: name + "\n" + word, readings: [
                         .init(kind: .zh, text: word)
@@ -727,9 +728,9 @@ extension RailMapView.Surface {
                 return MainActor.assumeIsolated {
                     Named(
                         display: localization.stationName(
-                            name, code: code, region: region),
+                            name, code: code, region: region, allowNameFallback: false),
                         readings: localization.nameReadingsTyped(
-                            name, code: code, region: region))
+                            name, code: code, region: region, allowNameFallback: false))
                 }
             }
 
@@ -2571,12 +2572,8 @@ extension RailMapView.Surface {
                         guard buildRect.contains(point) else { return nil }
                         guard drawnLineIDs.contains(station.lineID) else { return nil }
                         guard !isSuppressedTenantBead(station) else { return nil }
-                        // `buildStationPopupModel` keys its readings on the
-                        // platform's OWN id (`lineId:stationId`), which the
-                        // four localised-name tables carry alongside the
-                        // official code; Japan's table has neither, and falls
-                        // through to the by-name lookup exactly as it does in
-                        // the web app.
+                        // Readings key on the platform id. A miss keeps the stored
+                        // name; it does not borrow another station's name.
                         let named = self.localized(station.name, code: station.id)
                         let referenceDay = era == .rideDate && Dates.isValidDateString(rideDate)
                             ? (rideDate ?? today) : today

@@ -262,7 +262,7 @@ struct RegistryIdentityTests {
         final class Gate: @unchecked Sendable { var ready = false }
         let gate = Gate()
         RegistryIdentityTestGate.withPhase({ region in
-            guard region == "jp" else { return .absent }
+            guard region == "jp" else { return .unavailable }
             return gate.ready ? .ready(built) : .pending
         }) {
             let pending = RegistryStationDisplay.resolve(

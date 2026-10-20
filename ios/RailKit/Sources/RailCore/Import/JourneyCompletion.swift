@@ -167,8 +167,8 @@ public enum JourneyCompletion {
         requestEligibility(train: train, catalogs: regionalCatalogs(catalog)).isEligible
     }
 
-    /// Resolve an exact station name or alias only when the loaded regional catalogs
-    /// identify one station. Ambiguous names and source codes remain for the station picker.
+    /// Resolve an exact station name only from the installed registry.
+    /// No registry leaves every stop unchanged. Ambiguous names stay for the picker.
     ///
     /// `names` is the stored bracket split for a region. A passed directory wins over the
     /// installed bundle. A bracket that belongs to an official name is not a qualifier.
@@ -184,52 +184,9 @@ public enum JourneyCompletion {
             let stop = resolved.stops[index]
             guard nonempty(stop.n02StationCode) == nil,
                   let name = nonempty(stop.name) else { continue }
-            if let identity {
-                applyRegistryStation(
-                    name, identity: identity, directory: directory, to: &resolved.stops[index])
-                continue
-            }
-            // An exact catalog name wins, even when that spelling is also the base of a
-            // bracketed station. One exact station is selected. Several exact stations
-            // stay unresolved. Base-only matching runs only when nothing is named the input.
-            let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-            if catalogContains(trimmedName, catalogs: catalogs) {
-                if let code = uniqueSourceCode(named: trimmedName, catalogs: catalogs) {
-                    resolved.stops[index].n02StationCode = code
-                }
-                continue
-            }
-            if let directory, let leading = directory.leadingOfficialName(in: name) {
-                if let code = storedOfficialCode(
-                    official: leading.official, remainder: leading.remainder,
-                    text: name, directory: directory, catalogs: catalogs)
-                {
-                    resolved.stops[index].n02StationCode = code
-                }
-                continue
-            }
-            if let directory {
-                switch baseCode(named: name, directory: directory, catalogs: catalogs) {
-                case .skip:
-                    break
-                case .refuse:
-                    continue
-                case .code(let code):
-                    resolved.stops[index].n02StationCode = code
-                    continue
-                }
-            }
-            if let reference = StationReference.parse(name),
-               StationReferenceResolution.recognizedQualifier(reference, in: catalogs),
-               catalogContains(reference.name, catalogs: catalogs)
-            {
-                let matches = StationReferenceResolution.resolve(reference, in: catalogs)
-                if matches.count == 1,
-                   stationKeys(sourceCode: matches[0].station.key.sourceCode, catalogs: catalogs).count == 1
-                {
-                    resolved.stops[index].n02StationCode = matches[0].station.key.sourceCode
-                }
-            }
+            guard let identity else { continue }
+            applyRegistryStation(
+                name, identity: identity, directory: directory, to: &resolved.stops[index])
         }
         return resolved
     }
@@ -263,12 +220,6 @@ public enum JourneyCompletion {
         return nil
     }
 
-    private enum BaseCode {
-        case skip
-        case refuse
-        case code(String)
-    }
-
     private static func nameDirectory(
         train: Train, catalogs: [String: EditorCatalog], names: [String: StationNameDirectory]
     ) -> StationNameDirectory? {
@@ -290,90 +241,8 @@ public enum JourneyCompletion {
         return nil
     }
 
-    /// A following qualifier may select the station. The official name's own brackets do not.
-    private static func storedOfficialCode(
-        official: String, remainder: String, text: String,
-        directory: StationNameDirectory, catalogs: [String: EditorCatalog]
-    ) -> String? {
-        if remainder.isEmpty {
-            return uniqueSourceCode(named: official, catalogs: catalogs)
-        }
-        guard let parsed = StationReference.parse(text, names: directory),
-              parsed.name == official,
-              StationReferenceResolution.recognizedQualifier(parsed, in: catalogs)
-        else { return nil }
-        let matches = StationReferenceResolution.resolve(parsed, in: catalogs)
-        guard matches.count == 1,
-              stationKeys(sourceCode: matches[0].station.key.sourceCode, catalogs: catalogs).count == 1
-        else { return nil }
-        return matches[0].station.key.sourceCode
-    }
-
-    /// A bare base matches one bracketed station only when the bundle says it is unique
-    /// and no catalog station is named exactly that base. Anything else is refused.
-    private static func baseCode(
-        named name: String, directory: StationNameDirectory, catalogs: [String: EditorCatalog]
-    ) -> BaseCode {
-        guard let parsed = StationReference.parse(name) else { return .skip }
-        let base = parsed.name
-        guard directory.baseNameCounts[base] != nil,
-              directory.parts(forOfficialName: base) == nil else { return .skip }
-        let officials = directory.officialNames(withBase: base)
-        var stations: [CatalogStation] = []
-        var exact: [CatalogStation] = []
-        for (region, catalog) in catalogs {
-            for official in officials {
-                for station in catalog.candidates(named: official, regionCode: region)
-                where !stations.contains(where: { $0.key == station.key }) {
-                    stations.append(station)
-                }
-            }
-            for station in catalog.candidates(named: base, regionCode: region) {
-                if !exact.contains(where: { $0.key == station.key }) { exact.append(station) }
-                if !stations.contains(where: { $0.key == station.key }) { stations.append(station) }
-            }
-        }
-        let unique = directory.baseNameCounts[base] == 1 && exact.isEmpty && officials.count == 1
-            && stations.count == 1
-        guard unique, let official = officials.first, let only = stations.first else { return .refuse }
-        if parsed.country != nil || parsed.line != nil {
-            let reference = StationReference(
-                name: official, country: parsed.country, line: parsed.line,
-                unsupportedCountry: parsed.unsupportedCountry)
-            guard StationReferenceResolution.recognizedQualifier(reference, in: catalogs) else {
-                return .refuse
-            }
-            let matches = StationReferenceResolution.resolve(reference, in: catalogs)
-            guard matches.count == 1,
-                  stationKeys(sourceCode: matches[0].station.key.sourceCode, catalogs: catalogs).count == 1
-            else { return .refuse }
-            return .code(matches[0].station.key.sourceCode)
-        }
-        guard stationKeys(sourceCode: only.key.sourceCode, catalogs: catalogs).count == 1 else {
-            return .refuse
-        }
-        return .code(only.key.sourceCode)
-    }
-
-    private static func uniqueSourceCode(
-        named name: String, catalogs: [String: EditorCatalog]
-    ) -> String? {
-        let keys = Set(catalogs.flatMap { region, catalog in
-            catalog.candidates(named: name, regionCode: region).map(\.key)
-        })
-        guard keys.count == 1, let key = keys.first,
-              stationKeys(sourceCode: key.sourceCode, catalogs: catalogs).count == 1 else { return nil }
-        return key.sourceCode
-    }
-
-    private static func catalogContains(
-        _ name: String, catalogs: [String: EditorCatalog]
-    ) -> Bool {
-        catalogs.contains { region, catalog in
-            !catalog.candidates(named: name, regionCode: region).isEmpty
-        }
-    }
-
+    /// A stored source code is in the catalog when exactly one regional row carries it.
+    /// This is membership of a code, not a name lookup.
     private static func stationKeys(
         sourceCode: String, catalogs: [String: EditorCatalog]
     ) -> Set<StationKey> {

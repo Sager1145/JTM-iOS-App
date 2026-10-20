@@ -1,28 +1,5 @@
 import Foundation
 
-/// The route-specific preferences `configureStationRouteResolver` injects into
-/// `app-stations.js`.
-///
-/// The three functions behind this seam live in the route modules, not here.
-/// This port owns only *when* each is consulted and what wins when one comes
-/// back empty — which is why the seam stays a seam instead of becoming three
-/// more ported functions.
-public protocol StationRouteResolver {
-    /// nil is the JavaScript's `null`; an EMPTY ARRAY is not the same thing.
-    /// `null` skips the preference filter entirely, while `[]` is truthy and
-    /// does call it — with no codes to prefer, so it keeps everything. The two
-    /// reach the same pool by different routes, and only one of them consults
-    /// the filter.
-    func allowedInstitutionCodes(_ train: Stations.Train) -> [String]?
-
-    /// The positions of the candidates worth preferring, within the array
-    /// given. The JavaScript returns the feature objects; a Swift struct has no
-    /// identity, so positions carry the same information.
-    func filterPreferredStations(_ candidates: [Stations.Feature], allowedCodes: [String]) -> [Int]
-
-    func distanceMeters(_ a: [Double], _ b: [Double]) -> Double
-}
-
 /// Station resolution — ported from `app-stations.js`, with
 /// `normalizeStationName` from `shared/app-core.js`.
 ///
@@ -349,11 +326,9 @@ public enum Stations {
 
     /// One stop of a train.
     ///
-    /// A **class**, because `trainAnchorCoordinates` excludes the stop being
-    /// resolved with `stop === excludeStop` — JavaScript object identity, not
-    /// equality. A train may legitimately call at the same station twice
-    /// (a loop service, a reversal), and with a value type the second visit
-    /// would exclude the first as well.
+    /// A **class**, so two calls at the same station stay distinct objects.
+    /// A train may legitimately call at the same station twice (a loop
+    /// service, a reversal), and a value type would collapse those visits.
     public final class Stop: Sendable, Hashable {
         /// nil where the JavaScript field is absent, `null`, or `""` — the
         /// three cases its `||` chains cannot tell apart.
@@ -1067,83 +1042,6 @@ public enum Stations {
             return indices.filter {
                 seen.insert(CodeUnits(dedupeSignature(features[$0]))).inserted
             }
-        }
-
-        // MARK: Train-aware resolution
-
-        /// Display coordinates of a train's UNAMBIGUOUS stops — the ones with a
-        /// single candidate, or carrying a station code.
-        ///
-        /// These anchor the geographic disambiguation of any same-name stop, so
-        /// 池田 on a Hokkaido train resolves to 根室線 池田 rather than 阪急 池田
-        /// in Osaka. `excludeStop` skips the stop currently being resolved, and
-        /// it is compared by IDENTITY: a train that calls at one station twice
-        /// must not lose both visits.
-        public func trainAnchorCoordinates(_ train: Train?, excluding excludeStop: Stop?)
-            -> [[Double]]
-        {
-            var coordinates: [[Double]] = []
-            for stop in train?.stops ?? [] {
-                if stop === excludeStop { continue }
-                let candidates = candidateIndices(for: .stop(stop))
-                guard !candidates.isEmpty else { continue }
-                guard candidates.count == 1 || stopStationCode(stop) != nil else { continue }
-                if let coordinate = displayCoordinate(features[candidates[0]]) {
-                    coordinates.append(coordinate)
-                }
-            }
-            return coordinates
-        }
-
-        /// Train-aware single-station resolution, as a position in `features`.
-        ///
-        /// Prefers candidates in the train's allowed institution class and,
-        /// when a name is still ambiguous, picks the one nearest the train's
-        /// anchor stops. With no train context it returns the first by-name
-        /// candidate.
-        public func resolveStationForTrain(
-            _ query: Query?, train: Train?, resolver: StationRouteResolver?
-        ) -> Int? {
-            let candidates = candidateIndices(for: query)
-            if candidates.count <= 1 { return candidates.first }
-
-            // `train && resolver` on one side, `allowedCodes && resolver` on
-            // the other: an empty array of codes is TRUTHY, so it still calls
-            // the filter, while a null does not.
-            let allowedCodes: [String]? =
-                (train != nil && resolver != nil)
-                ? resolver!.allowedInstitutionCodes(train!) : nil
-            var preferred: [Int] = []
-            if let allowedCodes, let resolver {
-                preferred = resolver.filterPreferredStations(
-                    candidates.map { features[$0] }, allowedCodes: allowedCodes
-                ).map { candidates[$0] }
-            }
-            let pool = preferred.isEmpty ? candidates : preferred
-            if pool.count == 1 { return pool[0] }
-
-            let excludeStop: Stop?
-            if case .stop(let stop)? = query { excludeStop = stop } else { excludeStop = nil }
-            let anchors = train != nil ? trainAnchorCoordinates(train, excluding: excludeStop) : []
-            guard !anchors.isEmpty, let resolver else { return pool[0] }
-
-            // Strictly `<` on both comparisons, so a tie keeps whichever
-            // candidate the index listed first.
-            var best = pool[0]
-            var bestDistance = Double.infinity
-            for index in pool {
-                guard let coordinate = displayCoordinate(features[index]) else { continue }
-                var nearest = Double.infinity
-                for anchor in anchors {
-                    let distance = resolver.distanceMeters(coordinate, anchor)
-                    if distance < nearest { nearest = distance }
-                }
-                if nearest < bestDistance {
-                    bestDistance = nearest
-                    best = index
-                }
-            }
-            return best
         }
     }
 

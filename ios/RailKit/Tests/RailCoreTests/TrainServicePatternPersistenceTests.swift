@@ -153,12 +153,12 @@ struct TrainServicePatternPersistenceTests {
             }
         }
         #expect(pinOffenders.isEmpty, "\(pinOffenders)")
-        #expect(JourneyCompletion.requestDenial(train: applied, catalog: catalog) == .noExplicitTime)
-        #expect(JourneyCompletion.isRequestEligible(applied, catalog: catalog) == false)
+        #expect(CatalogRegistryFixture.requestDenial(train: applied, catalog: catalog) == .noExplicitTime)
+        #expect(CatalogRegistryFixture.isRequestEligible(applied, catalog: catalog) == false)
 
         applied.stops[0].departure = "07:15"
-        #expect(JourneyCompletion.requestDenial(train: applied, catalog: catalog) == nil)
-        #expect(JourneyCompletion.isRequestEligible(applied, catalog: catalog))
+        #expect(CatalogRegistryFixture.requestDenial(train: applied, catalog: catalog) == nil)
+        #expect(CatalogRegistryFixture.isRequestEligible(applied, catalog: catalog))
     }
 
     private static func stopSnapshot(_ train: Train) -> [StopSnapshot] {

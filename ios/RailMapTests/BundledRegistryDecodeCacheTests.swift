@@ -43,6 +43,22 @@ struct BundledRegistryDecodeCacheTests {
         #expect(cache.logCount == 0)
     }
 
+    @Test func unreadableExistingFileIsACachedFailure() {
+        var cache = BundledRegistry.DecodeCache()
+        var loads = 0
+        #expect(cache.lookup(region: "jp", fileExists: true) {
+            loads += 1
+            return nil
+        } == nil)
+        #expect(cache.lookup(region: "jp", fileExists: true) {
+            loads += 1
+            return nil
+        } == nil)
+        #expect(loads == 1)
+        #expect(cache.logCount == 1)
+        #expect(cache.hasFailed("jp"))
+    }
+
     @Test func regionMismatchIsACachedDecodeFailure() {
         var cache = BundledRegistry.DecodeCache()
         var loads = 0

@@ -347,6 +347,28 @@ history coverage/boundary checks. They are removed pending the scoped proposals.
 | `app/scripts/railway/tests/test_na_station_ids.py:76` | Retired test_audit_preserves_reviewed_local_complex for the removed standalone audit; other production/builder regression cases remain. |
 | `app/scripts/railway/tests/test_na_osm_tile_completion.py:113` | Retired OsmTileSelectionTests for the removed standalone audit; other production/builder regression cases remain. |
 
+## Registry identity (M5)
+
+Every shipped region (`jp`, `tw`, `hk`, `mo`, `kr`, `cn`) has a bundle. Feature code treats a missing or still-loading registry as identity-unavailable: stored text stays, names are not resolved, and the solver reports that identity is unavailable. The same outcome is used for a pending preload. Legacy name, alias, and corridor rules are not a fallback.
+
+These functions remain because a one-time upgrade or the solver's code graph still calls them:
+
+| Function | File | Why it remains |
+|---|---|---|
+| `RegistryIdentityUpgrade` | `ios/RailKit/Sources/RailCore/Identity/RegistryBundle.swift` | One-time load/import upgrade from stored text and codes onto registry ids |
+| `OperatorIdentity.searchNames`, `displayName`, `code`, `codes` | `ios/RailKit/Sources/RailCore/Identity/OperatorIdentity.swift` | Upgrade and display of an operator id. `exactCodes`, `sameCompany`, `matchingCodes`, and `matches` are deleted |
+| `RouteGraph.companyParts`, `derivedInstitutionTypeCodes`, `hardExcludedInstitutionTypeCodes`, `derivedPreferredOperatorNames` | `ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift` | Code-graph policy. `derivedPreferredOperatorNames` and its company alias table run only when no lookup is installed, including inside `solveContext`'s cache key, so package tests still pin a service spelling (ソニック → 九州旅客鉄道). An installed lookup that is pending or unavailable returns no cache key and does not use those names. The JavaScript cache-key twin stays a web-app concern |
+| `SolverRegistryInput.featureIndices`, `graphStationCode`, `hintedGraphStationCode` | `ios/RailKit/Sources/RailCore/Routing/SolverRegistryInput.swift` | Graph walk of codes that already belong to a station id. Phase is ready, pending, or unavailable. Pending awaits or stays unresolved. Unavailable with a lookup installed returns nil. With no lookup installed, `hintedGraphStationCode` still returns a stored code so the code graph can run in tests. `solveInputCodes` is `[]` and `solvableEndpointCount` is 0 unless the registry is ready |
+| `RouteSolver.exactSourceCodeIndices`, `resolveRouteEndpointStationCandidates` | `ios/RailKit/Sources/RailCore/Routing/RouteSolver.swift` | Own-code feature index. Name expansion and group siblings in `resolveRouteEndpointStationCandidates`, and name+code `candidateIndices` inside `solveOfficialInterval`, run only when no lookup is installed. An installed lookup that is pending or unavailable returns no endpoints. A ready registry uses station ids, then exact source codes |
+| `Stations.Index.candidateIndices`, `name(forCode:)`, `exactNameCandidateIndices` | `ios/RailKit/Sources/RailCore/Stations/Stations.swift` | Code-identity index, display fill, and the exact written-name check used by the no-lookup endpoint resolver. `resolveStationForTrain`, `trainAnchorCoordinates`, and `StationRouteResolver` are deleted. `StationsParityTests` keeps `candidateIndices`. The JavaScript twin of the deleted train resolver remains the web app's concern |
+| `TokyoConventionalRouteInference.narrowedStationCode` | `ios/RailKit/Sources/RailCore/Routing/TokyoConventionalRouteInference.swift` | With no lookup installed, an explicit code is kept and a bare Tokyo-corridor name still narrows, so package tests reproduce the stored cache key. Pending, and unavailable with a lookup installed, return nil. A ready registry returns a code only when the station id owns it |
+| `StationIndex.place`, `places(named:)`, `sharedLines`, `matches` | `ios/RailKit/Sources/RailCore/Stations/StationIndex.swift` | Package place by code, after a registry code is chosen. Viterbi `resolve` / `fill` are deleted |
+| `JourneyCompletion.stationKeys` | `ios/RailKit/Sources/RailCore/Import/JourneyCompletion.swift` | Catalog membership of a stored source code, not a name lookup |
+| `OperatorBranding.companyLabel`, `operatorLogo` | `ios/RailKit/Sources/RailCore/Identity/OperatorBranding.swift` | Short label and logo for a legal name already chosen. Spelling search is deleted |
+| `RouteSolver.routeSectionBoundarySharesExplicitStop` | `ios/RailKit/Sources/RailCore/Routing/RouteSolver.swift` | Raw code equality on a section boundary |
+
+`RailMapCoordinator.localized` (`ios/RailMap/Map/RailMapCoordinator.swift`) and `JourneyBranding.operatorLogoPath` (`ios/RailMap/Journeys/JourneyBranding.swift`) have no RailKit test harness. A missing registry stamps an unresolved marker or omits the logo. The RailMap build compiles those files.
+
 Planner regression tests remain; their retired coverage-audit cases checked
 rectangle holes, continuous line coverage and city-scoped supplement resolution.
 

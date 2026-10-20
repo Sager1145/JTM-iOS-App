@@ -289,6 +289,22 @@ function dateField(value) {
   return typeof value === "string" && ISO_DATE.test(value) ? value : null;
 }
 
+/// An override that sets `valid_from` and not `valid_to` does not keep an
+/// inherited end that would make `[from, to)` empty or inverted. The caller
+/// may close that open end at a later period's start. No other date is invented.
+export function inheritHistoryBounds(override, inherited) {
+  const fromOverride = dateField(override?.valid_from);
+  const toOverride = dateField(override?.valid_to);
+  const validFrom = fromOverride || dateField(inherited?.valid_from) || null;
+  let validTo = toOverride || dateField(inherited?.valid_to) || null;
+  let droppedInheritedEnd = false;
+  if (fromOverride && !toOverride && validFrom && validTo && validTo <= validFrom) {
+    validTo = null;
+    droppedInheritedEnd = true;
+  }
+  return { validFrom, validTo, droppedInheritedEnd };
+}
+
 export function buildOperatorAliases(doc) {
   const aliases = [];
   const multiple = [];

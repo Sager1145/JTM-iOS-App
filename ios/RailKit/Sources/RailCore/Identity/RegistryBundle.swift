@@ -31,10 +31,13 @@ public struct RegistryStationRecord: Equatable, Sendable, Decodable {
     public var parts: StationNameRecord?
     public var lines: [String]
     public var ln: [String]?
+    /// Editor romanizations and other spellings of `name`. Absent in shipped bundles.
+    public var aka: [String]?
 
     public init(
         cx: String, group: String, codes: [String], op: String, name: String,
-        parts: StationNameRecord? = nil, lines: [String], ln: [String]? = nil
+        parts: StationNameRecord? = nil, lines: [String], ln: [String]? = nil,
+        aka: [String]? = nil
     ) {
         self.cx = cx
         self.group = group
@@ -44,6 +47,7 @@ public struct RegistryStationRecord: Equatable, Sendable, Decodable {
         self.parts = parts
         self.lines = lines
         self.ln = ln
+        self.aka = aka
     }
 }
 

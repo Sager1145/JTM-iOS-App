@@ -553,8 +553,6 @@ struct RouteGraphParityTests {
                     rideDate: item.train.date, historyRevision: item.historyRevision))
             #expect(context.templateKey == item.templateKey, "template key — \(where_)")
             #expect(context.allowedCodes == item.allowedCodes, "allowed codes — \(where_)")
-            // The one that is a persisted format: a route cache written by
-            // the web app is only readable here if these bytes agree.
             #expect(context.cacheKey == item.cacheKey, "cache key — \(where_)")
             #expect(
                 RouteGraph.keyDigest(context.templateKey) == item.templateKeyDigest,
@@ -588,19 +586,45 @@ struct RouteGraphParityTests {
         #expect(sonicContext?.cacheKey != notSonicContext?.cacheKey)
         #expect(sonicContext?.cacheKey.contains("infer:0:line:日豊線:operator:九州旅客鉄道") == true)
         #expect(notSonicContext?.cacheKey.contains("infer:") == false)
-
-        // A section whose endpoints never trigger any inference rule keeps a
-        // cache key that does not move when only the number changes —
-        // `inferSectionRouteConstraints` finds nothing to add for either.
         let plainSection = [
             RouteGraph.RouteSection(from: "東京", to: "品川")
         ]
         let plainA = RouteGraph.CacheKeyTrain(number: "1号")
         let plainB = RouteGraph.CacheKeyTrain(number: "2号")
-        let plainContextA = RouteGraph.solveContext(
-            train: plainA, routeSections: plainSection, country: "jp")
-        let plainContextB = RouteGraph.solveContext(
-            train: plainB, routeSections: plainSection, country: "jp")
-        #expect(plainContextA?.cacheKey == plainContextB?.cacheKey)
+        #expect(RouteGraph.solveContext(
+            train: plainA, routeSections: plainSection, country: "jp")?.cacheKey
+            == RouteGraph.solveContext(
+                train: plainB, routeSections: plainSection, country: "jp")?.cacheKey)
+        RegistryIdentityLookup.withTestPhase({ _ in .unavailable }) {
+            #expect(RouteGraph.solveContext(
+                train: sonic, routeSections: sonicSection, country: "jp") == nil)
+        }
+        let kyushu = RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            operatorRecords: [
+                "op:jp:kyushu": RegistryOperatorRecord(names: ["九州旅客鉄道"], label: "JR九州"),
+            ]))
+        RegistryIdentityTestGate.withProvider({ region in region == "jp" ? kyushu : nil }) {
+            let sonic = RouteGraph.CacheKeyTrain(number: "ソニック1号", operatorID: "op:jp:kyushu")
+            let notSonic = RouteGraph.CacheKeyTrain(number: "1号", operatorID: "op:jp:kyushu")
+            let sonicContext = RouteGraph.solveContext(
+                train: sonic, routeSections: sonicSection, country: "jp")
+            let notSonicContext = RouteGraph.solveContext(
+                train: notSonic, routeSections: sonicSection, country: "jp")
+            #expect(sonicContext?.cacheKey != notSonicContext?.cacheKey)
+            #expect(sonicContext?.cacheKey.contains("infer:0:line:日豊線:operator:九州旅客鉄道") == true)
+            #expect(notSonicContext?.cacheKey.contains("infer:") == false)
+
+            let plainSection = [
+                RouteGraph.RouteSection(from: "東京", to: "品川")
+            ]
+            let plainA = RouteGraph.CacheKeyTrain(number: "1号", operatorID: "op:jp:kyushu")
+            let plainB = RouteGraph.CacheKeyTrain(number: "2号", operatorID: "op:jp:kyushu")
+            let plainContextA = RouteGraph.solveContext(
+                train: plainA, routeSections: plainSection, country: "jp")
+            let plainContextB = RouteGraph.solveContext(
+                train: plainB, routeSections: plainSection, country: "jp")
+            #expect(plainContextA?.cacheKey == plainContextB?.cacheKey)
+        }
     }
 }

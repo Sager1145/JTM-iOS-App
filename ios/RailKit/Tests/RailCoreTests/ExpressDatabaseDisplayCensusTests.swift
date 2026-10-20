@@ -373,11 +373,9 @@ struct ExpressDatabaseDisplayCensusTests {
     private func unsolvedReason(_ section: RouteSection, context: RouteSolver.TrainContext,
                                 allowedCodes: [String], data: PhysicalEndpointTrimTests.RealData) -> String {
         func candidates(_ name: String?, _ code: String?) -> [Int] {
-            RouteSolver.filterStationCandidatesByRideDate(
-                RouteSolver.resolveRouteEndpointStationCandidates(
-                    .stop(.init(name: name, n02StationCode: code)), in: data.stations,
-                    allowedCodes: allowedCodes, sectionLineNames: section.lineNames ?? [],
-                    sectionOperatorNames: section.operatorNames ?? [], rideDate: context.rideDate),
+            _ = (name, allowedCodes, section)
+            return RouteSolver.filterStationCandidatesByRideDate(
+                RouteSolver.exactSourceCodeIndices(code, in: data.stations),
                 in: data.stations, rideDate: context.rideDate)
         }
         let from = candidates(section.from, section.fromN02StationCode)

@@ -155,6 +155,12 @@ function operationViolations(ledger, retired) {
     byLp.get(event.id).push(interval);
   }
   for (const [lp, intervals] of byLp) {
+    for (const interval of intervals) {
+      if (interval.from && interval.to && String(interval.from) >= String(interval.to)) {
+        violations.push(`operation empty ${lp}`);
+        break;
+      }
+    }
     let overlapped = false;
     for (let i = 0; i < intervals.length && !overlapped; i += 1) {
       for (let j = i + 1; j < intervals.length; j += 1) {
@@ -253,6 +259,12 @@ function lineOperationViolations(db) {
     byLine.get(row.line_id).push({ from: row.valid_from ?? null, to: row.valid_to ?? null });
   }
   for (const [lineId, intervals] of byLine) {
+    for (const interval of intervals) {
+      if (interval.from && interval.to && String(interval.from) >= String(interval.to)) {
+        violations.push(`line_operation empty ${lineId}`);
+        break;
+      }
+    }
     let overlapped = false;
     for (let i = 0; i < intervals.length && !overlapped; i += 1) {
       for (let j = i + 1; j < intervals.length; j += 1) {

@@ -4,8 +4,10 @@ import Foundation
 ///
 /// The physical graph still walks source codes. These helpers only decide
 /// which codes and package operator names are handed to that walk. A missing
-/// lookup leaves the caller on its existing code path. An installed lookup
-/// never falls back to a name or to another company in the same complex.
+/// lookup is the same outcome as a preload still in flight: editor features
+/// report identity unavailable. Section-walk helpers may still translate a
+/// stored source code. An installed lookup never falls back to a name or to
+/// another company in the same complex.
 public enum SolverRegistryInput {
     public static func regionCode(_ identifier: String?) -> String? {
         guard let identifier else { return nil }
@@ -18,14 +20,14 @@ public enum SolverRegistryInput {
     public enum Availability: Sendable {
         case ready(RegistryIdentity)
         case pending
-        case absent
+        case unavailable
     }
 
     public static func availability(region: String) -> Availability {
         switch RegistryIdentityLookup.phase(forRegion: region) {
         case .ready(let identity): return .ready(identity)
         case .pending: return .pending
-        case .absent: return .absent
+        case .unavailable: return .unavailable
         }
     }
 
@@ -119,13 +121,8 @@ public enum SolverRegistryInput {
 
     public static func solveInputCodes(stops: [Stop], region: String) -> [String] {
         switch availability(region: region) {
-        case .pending:
+        case .pending, .unavailable:
             return []
-        case .absent:
-            return stops.compactMap { stop in
-                guard let code = stop.n02StationCode, !code.isEmpty else { return nil }
-                return code
-            }
         case .ready(let identity):
             return solveInputCodes(stops, identity: identity)
         }
@@ -145,12 +142,8 @@ public enum SolverRegistryInput {
 
     public static func solvableEndpointCount(stops: [Stop], region: String) -> Int {
         switch availability(region: region) {
-        case .pending:
+        case .pending, .unavailable:
             return 0
-        case .absent:
-            return stops.reduce(into: 0) { count, stop in
-                if let code = stop.n02StationCode, !code.isEmpty { count += 1 }
-            }
         case .ready(let identity):
             return solvableEndpointCount(stops, identity: identity)
         }
@@ -171,8 +164,11 @@ public enum SolverRegistryInput {
         switch availability(region: region) {
         case .pending:
             return nil
-        case .absent:
-            return eligibility?.stationCode(rawCode)
+        case .unavailable:
+            guard RegistryIdentityLookup.lookupInstalled else {
+                return eligibility?.stationCode(rawCode)
+            }
+            return nil
         case .ready(let identity):
             return graphStationCode(
                 stationID: stationID, rawCode: rawCode, identity: identity, eligibility: eligibility)
@@ -207,9 +203,12 @@ public enum SolverRegistryInput {
         switch availability(region: region) {
         case .pending:
             return nil
-        case .absent:
-            guard let eligibility else { return rawCode }
-            return eligibility.stationCode(rawCode) ?? rawCode
+        case .unavailable:
+            guard RegistryIdentityLookup.lookupInstalled else {
+                guard let eligibility else { return rawCode }
+                return eligibility.stationCode(rawCode) ?? rawCode
+            }
+            return nil
         case .ready:
             break
         }

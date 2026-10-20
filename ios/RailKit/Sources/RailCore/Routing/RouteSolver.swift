@@ -79,7 +79,7 @@ public enum RouteSolver {
         /// ADR 0011: the ride's ISO day, used to keep retired railway out of
         /// the graph for rides after its abolition. `nil` = undated ride.
         var rideDate: String?
-        /// Registry operator. Nil keeps the legacy company-alias hints.
+        /// Registry operator id. Nil when the ride has not recorded one.
         var operatorID: String?
         /// Joint operators, in company-field order. Empty when the ride has one operator.
         var operatorIDs: [String]
@@ -302,6 +302,20 @@ public enum RouteSolver {
         }
     }
 
+    /// ADR 0011: drop endpoint station candidates not valid on the ride date,
+    /// with the same half-open rule as rail edges (`app-route-graph.js`'s
+    /// `filterStationCandidatesByRideDate`). Order is preserved.
+    static func filterStationCandidatesByRideDate(
+        _ candidates: [Int], in index: Stations.Index, rideDate: String?
+    ) -> [Int] {
+        candidates.filter { i in
+            let feature = index.features[i]
+            return RouteGraph.RailValidity.isValid(
+                validFrom: Stations.stationValidFrom(feature),
+                validTo: Stations.stationValidTo(feature), on: rideDate)
+        }
+    }
+
     static func filterStationCandidatesNear(
         _ indices: [Int], referenceIndices: [Int], in index: Stations.Index,
         maxDistanceMeters: Double = 1_800
@@ -324,17 +338,6 @@ public enum RouteSolver {
     /// the exact-code station remains the fallback.
     /// ADR 0011: drop endpoint station candidates not valid on the ride date,
     /// with the same half-open rule as rail edges (`app-route-graph.js`'s
-    /// `filterStationCandidatesByRideDate`). Order is preserved.
-    static func filterStationCandidatesByRideDate(
-        _ candidates: [Int], in index: Stations.Index, rideDate: String?
-    ) -> [Int] {
-        candidates.filter { i in
-            let feature = index.features[i]
-            return RouteGraph.RailValidity.isValid(
-                validFrom: Stations.stationValidFrom(feature),
-                validTo: Stations.stationValidTo(feature), on: rideDate)
-        }
-    }
 
     static func resolveRouteEndpointStationCandidates(
         _ endpoint: Stations.Query,
@@ -516,6 +519,19 @@ public enum RouteSolver {
             }
         }
         return false
+    }
+
+    /// Every graph-node candidate for one physical station record, scored by
+    /// the exact station/line/operator/institution preference formula used by
+
+    /// Exact own-code membership. A group-key hit for another company's code
+    /// is not a sibling. An empty or missing code is identity-unavailable.
+    static func exactSourceCodeIndices(_ code: String?, in stations: Stations.Index) -> [Int] {
+        let trimmed = code?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !trimmed.isEmpty else { return [] }
+        return stations.featureIndices(matchingTrimmedCodeOrGroup: trimmed).filter {
+            Stations.stationCode(stations.features[$0]) == trimmed
+        }
     }
 
     /// Every graph-node candidate for one physical station record, scored by
@@ -1032,9 +1048,9 @@ public enum RouteSolver {
     }
 
     /// Package names of the ride's operator ids when the registry is ready.
-    /// Nil means the region has no bundle, so the caller keeps its legacy spelling.
-    /// An empty array means the registry is pending or the ride has no convertible id,
-    /// and the caller must not substitute a hardcoded company.
+    /// Pending, and unavailable while a lookup is installed, return an empty
+    /// list so a caller cannot substitute a company spelling. Nil means no
+    /// lookup is installed, and the caller keeps the service's package name.
     private static func registryServiceOperators(train: TrainContext, country: String) -> [String]? {
         let region = train.region.isEmpty ? country : train.region
         switch SolverRegistryInput.availability(region: region) {
@@ -1044,8 +1060,8 @@ public enum RouteSolver {
             return ids.flatMap { identity.operator(for: $0)?.names ?? [] }
         case .pending:
             return []
-        case .absent:
-            return nil
+        case .unavailable:
+            return RegistryIdentityLookup.lookupInstalled ? [] : nil
         }
     }
 
@@ -1080,11 +1096,16 @@ public enum RouteSolver {
         case .pending:
             preferredOperators = []
             explicitOperators = []
-        case .absent:
-            preferredOperators = Set(train.preferredOperatorNames.filter { !$0.isEmpty })
-            preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(
-                company: train.company, country: country))
-            explicitOperators = Set((section.operatorNames ?? []).filter { !$0.isEmpty })
+        case .unavailable:
+            if RegistryIdentityLookup.lookupInstalled {
+                preferredOperators = []
+                explicitOperators = []
+            } else {
+                preferredOperators = Set(train.preferredOperatorNames.filter { !$0.isEmpty })
+                preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(
+                    company: train.company, country: country))
+                explicitOperators = Set((section.operatorNames ?? []).filter { !$0.isEmpty })
+            }
         }
 
         let inferred = inferSectionRouteConstraints(section: section, train: train, country: country)
@@ -2806,14 +2827,36 @@ public enum RouteSolver {
         if section.to?.isEmpty != false {
             section.to = stations.name(forCode: section.toN02StationCode)
         }
-        let fromStations = filterStationCandidatesByRideDate(
-            stations.candidateIndices(for: .stop(.init(
-                name: section.from, n02StationCode: section.fromN02StationCode))),
-            in: stations, rideDate: train.rideDate)
-        let toStations = filterStationCandidatesByRideDate(
-            stations.candidateIndices(for: .stop(.init(
-                name: section.to, n02StationCode: section.toN02StationCode))),
-            in: stations, rideDate: train.rideDate)
+        let fromStations: [Int]
+        let toStations: [Int]
+        switch SolverRegistryInput.availability(region: country) {
+        case .pending:
+            return nil
+        case .ready:
+            if let ends = registryEndpointIndices(
+                section: section, country: country, stations: stations, rideDate: train.rideDate)
+            {
+                fromStations = ends.from
+                toStations = ends.to
+            } else {
+                fromStations = filterStationCandidatesByRideDate(
+                    exactSourceCodeIndices(section.fromN02StationCode, in: stations),
+                    in: stations, rideDate: train.rideDate)
+                toStations = filterStationCandidatesByRideDate(
+                    exactSourceCodeIndices(section.toN02StationCode, in: stations),
+                    in: stations, rideDate: train.rideDate)
+            }
+        case .unavailable:
+            guard !RegistryIdentityLookup.lookupInstalled else { return nil }
+            fromStations = filterStationCandidatesByRideDate(
+                stations.candidateIndices(for: .stop(.init(
+                    name: section.from, n02StationCode: section.fromN02StationCode))),
+                in: stations, rideDate: train.rideDate)
+            toStations = filterStationCandidatesByRideDate(
+                stations.candidateIndices(for: .stop(.init(
+                    name: section.to, n02StationCode: section.toN02StationCode))),
+                in: stations, rideDate: train.rideDate)
+        }
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
 
         let matches = officialIntervalMatches(
@@ -2924,14 +2967,8 @@ public enum RouteSolver {
                         operatorID: train.operatorID, operatorIDs: train.operatorIDs),
                     storedNames: train.preferredOperatorNames, identity: identity)
                     + [match.operatorName]))
-        case .pending:
+        case .pending, .unavailable:
             preferredOperators = Set(normalizedHintValues([match.operatorName]))
-        case .absent:
-            preferredOperators = Set(normalizedHintValues(
-                train.preferredOperatorNames
-                    + RouteGraph.derivedPreferredOperatorNames(
-                        company: train.company, country: country)
-                    + [match.operatorName]))
         }
         preferredOperators.formUnion(requiredOperators)
         let hints = SegmentHints(
@@ -3180,8 +3217,8 @@ public enum RouteSolver {
         let toStations: [Int]
     }
 
-    /// Company-station codes only. Nil when either endpoint cannot be solved.
-    /// A nil lookup is the caller's signal to keep the source-code expansion.
+    /// Company-station codes only. Nil when no lookup is installed or either
+    /// endpoint cannot be solved from its station id.
     static func registryEndpointIndices(
         section: RouteSection, country: String, stations: Stations.Index, rideDate: String? = nil
     ) -> (from: [Int], to: [Int])? {
@@ -3235,7 +3272,8 @@ public enum RouteSolver {
             else { return nil }
             fromStations = ends.from
             toStations = ends.to
-        case .absent:
+        case .unavailable:
+            guard !RegistryIdentityLookup.lookupInstalled else { return nil }
             let lineNames = (section.lineNames ?? []).filter { !$0.isEmpty }
             let fromStop = Stations.Stop(
                 name: section.from, n02StationCode: section.fromN02StationCode)

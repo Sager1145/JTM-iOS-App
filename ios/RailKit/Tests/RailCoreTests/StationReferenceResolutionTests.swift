@@ -60,7 +60,7 @@ struct StationReferenceResolutionTests {
     func importRecognizesTheQualifier() {
         let catalog = Self.japan()
         let seed = Self.seed()
-        let draft = JourneyCompletion.rawDraft(
+        let draft = CatalogRegistryFixture.rawDraft(
             text: "府中 (JP, 京王線)\n新宿",
             catalog: catalog, regionCode: "jp", seed: seed)
         #expect(draft.unmatchedLines.isEmpty)
@@ -69,34 +69,34 @@ struct StationReferenceResolutionTests {
         #expect(draft.stops[0].candidateLabels == ["府中 (JP, 京王線)"])
         #expect(draft.stops[0].automaticSelection == StationKey(regionCode: "jp", sourceCode: "F1"))
 
-        let timed = JourneyCompletion.rawDraft(
+        let timed = CatalogRegistryFixture.rawDraft(
             text: "府中 (JP, 京王線) 09:03 発",
             catalog: catalog, regionCode: "jp", seed: seed)
         #expect(timed.unmatchedLines.isEmpty)
         #expect(timed.stops.first?.departure == "9:03")
         #expect(timed.stops.first?.candidates.map(\.key.sourceCode) == ["F1"])
 
-        let missed = JourneyCompletion.rawDraft(
+        let missed = CatalogRegistryFixture.rawDraft(
             text: "府中 (JP, 存在しない線)",
             catalog: catalog, regionCode: "jp", seed: seed)
-        #expect(missed.unmatchedLines.isEmpty)
-        #expect(missed.stops.first?.candidates.map(\.key.sourceCode) == ["F1", "F2", "F3", "F4"])
+        #expect(missed.stops.isEmpty)
+        #expect(missed.unmatchedLines == ["府中 (JP, 存在しない線)"])
 
         var train = seed
         train.stops[0].name = "府中 (JP, 京王線)"
         train.stops[0].n02StationCode = nil
         train.stops[1].name = "府中"
         train.stops[1].n02StationCode = nil
-        let resolved = JourneyCompletion.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
+        let resolved = CatalogRegistryFixture.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
         #expect(resolved.stops[0].n02StationCode == "F1")
         #expect(resolved.stops[1].n02StationCode == nil)
 
         train.stops[0].name = "新宿"
-        let unique = JourneyCompletion.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
+        let unique = CatalogRegistryFixture.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
         #expect(unique.stops[0].n02StationCode == "SHINJUKU")
 
         train.stops[0].name = "Boston (US, Acela)"
-        let blocked = JourneyCompletion.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
+        let blocked = CatalogRegistryFixture.resolvingUniqueStationNames(in: train, catalogs: ["jp": catalog])
         #expect(blocked.stops[0].n02StationCode == nil)
     }
 
@@ -104,17 +104,17 @@ struct StationReferenceResolutionTests {
     func bracketedOfficialNames() {
         let catalog = Self.bracketed()
         let seed = Self.seed()
-        let nishitetsu = JourneyCompletion.rawDraft(
+        let nishitetsu = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡（天神）", catalog: catalog, regionCode: "jp", seed: seed)
         #expect(nishitetsu.stops.first?.candidates.map(\.key.sourceCode) == ["NFT"])
-        let hiroshima = JourneyCompletion.rawDraft(
+        let hiroshima = CatalogRegistryFixture.rawDraft(
             text: "広島港（宇品）", catalog: catalog, regionCode: "jp", seed: seed)
         #expect(hiroshima.stops.first?.candidates.map(\.key.sourceCode) == ["HIRO"])
-        let platform = JourneyCompletion.rawDraft(
+        let platform = CatalogRegistryFixture.rawDraft(
             text: "東京 (3番線) 09:00", catalog: catalog, regionCode: "jp", seed: seed)
         #expect(platform.stops.first?.candidates.map(\.key.sourceCode) == ["TYO"])
         #expect(platform.stops.first?.arrival == "9:00")
-        let marked = JourneyCompletion.rawDraft(
+        let marked = CatalogRegistryFixture.rawDraft(
             text: "09:00 (発) 東京", catalog: catalog, regionCode: "jp", seed: seed)
         #expect(marked.stops.first?.candidates.map(\.key.sourceCode) == ["TYO"])
         #expect(marked.stops.first?.departure == "9:00")
@@ -124,11 +124,11 @@ struct StationReferenceResolutionTests {
         train.stops[0].n02StationCode = nil
         train.stops[1].name = "府中 (JP, 京王線)"
         train.stops[1].n02StationCode = nil
-        let resolved = JourneyCompletion.resolvingUniqueStationNames(
+        let resolved = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": catalog])
         #expect(resolved.stops[0].n02StationCode == "NFT")
         #expect(resolved.stops[1].n02StationCode == nil)
-        let qualified = JourneyCompletion.resolvingUniqueStationNames(
+        let qualified = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": Self.japan()])
         #expect(qualified.stops[1].n02StationCode == "F1")
     }
@@ -197,32 +197,32 @@ struct StationReferenceResolutionTests {
             baseNameCounts: ["西鉄福岡": 1])
         let seed = Self.seed()
 
-        let full = JourneyCompletion.rawDraft(
+        let full = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡（天神）", catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(full.stops.first?.automaticSelection == StationKey(regionCode: "jp", sourceCode: "NFT"))
 
-        let qualified = JourneyCompletion.rawDraft(
+        let qualified = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡（天神） (JP, 天神大牟田線)",
             catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(qualified.stops.first?.candidates.map(\.key.sourceCode) == ["NFT"])
         #expect(qualified.stops.first?.automaticSelection?.sourceCode == "NFT")
 
-        let half = JourneyCompletion.rawDraft(
+        let half = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡(天神) (JP, 天神大牟田線)",
             catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(half.stops.first?.automaticSelection?.sourceCode == "NFT")
 
-        let base = JourneyCompletion.rawDraft(
+        let base = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡", catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(base.stops.first?.ambiguous == false)
         #expect(base.stops.first?.automaticSelection?.sourceCode == "NFT")
 
-        let baseLine = JourneyCompletion.rawDraft(
+        let baseLine = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡 (JP, 天神大牟田線)",
             catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(baseLine.stops.first?.automaticSelection?.sourceCode == "NFT")
 
-        let wrong = JourneyCompletion.rawDraft(
+        let wrong = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡（天神） (JP, 山手線)",
             catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
         #expect(wrong.stops.first?.automaticSelection == nil)
@@ -233,7 +233,7 @@ struct StationReferenceResolutionTests {
                 ("PLAIN", "西鉄福岡", 130.41, 33.60),
             ]),
         ])
-        let ambiguous = JourneyCompletion.rawDraft(
+        let ambiguous = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡", catalog: crowded, regionCode: "jp", seed: seed, directory: directory)
         #expect(ambiguous.stops.first?.ambiguous == false)
         #expect(ambiguous.stops.first?.automaticSelection?.sourceCode == "PLAIN")
@@ -253,7 +253,7 @@ struct StationReferenceResolutionTests {
                 ("NFT2", "西鉄福岡（天神口）", 130.42, 33.61),
             ]),
         ])
-        let sharedStop = JourneyCompletion.rawDraft(
+        let sharedStop = CatalogRegistryFixture.rawDraft(
             text: "西鉄福岡", catalog: both, regionCode: "jp", seed: seed, directory: shared)
         #expect(sharedStop.stops.first?.ambiguous == true)
         #expect(sharedStop.stops.first?.automaticSelection == nil)
@@ -264,17 +264,17 @@ struct StationReferenceResolutionTests {
         train.stops[0].n02StationCode = nil
         train.stops[1].name = "西鉄福岡"
         train.stops[1].n02StationCode = nil
-        let resolved = JourneyCompletion.resolvingUniqueStationNames(
+        let resolved = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": catalog], names: ["jp": directory])
         #expect(resolved.stops[0].n02StationCode == "NFT")
         #expect(resolved.stops[1].n02StationCode == "NFT")
 
         train.stops[0].name = "西鉄福岡(天神)"
         train.stops[1].name = "西鉄福岡"
-        let halfResolved = JourneyCompletion.resolvingUniqueStationNames(
+        let halfResolved = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": catalog], names: ["jp": directory])
         #expect(halfResolved.stops[0].n02StationCode == "NFT")
-        let refused = JourneyCompletion.resolvingUniqueStationNames(
+        let refused = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": crowded], names: ["jp": directory])
         #expect(refused.stops[1].n02StationCode == "PLAIN")
 
@@ -307,12 +307,12 @@ struct StationReferenceResolutionTests {
             ]),
         ])
         let seed = Self.seed()
-        let pasted = JourneyCompletion.rawDraft(
+        let pasted = CatalogRegistryFixture.rawDraft(
             text: "諫早", catalog: both, regionCode: "jp", seed: seed, directory: directory)
         #expect(pasted.stops.first?.automaticSelection?.sourceCode == "JR-ISA")
         #expect(pasted.stops.first?.candidates.map(\.key.sourceCode) == ["JR-ISA"])
 
-        let official = JourneyCompletion.rawDraft(
+        let official = CatalogRegistryFixture.rawDraft(
             text: "諫早（雲仙・島原口）", catalog: both, regionCode: "jp", seed: seed, directory: directory)
         #expect(official.stops.first?.automaticSelection?.sourceCode == "SHIMA")
 
@@ -321,7 +321,7 @@ struct StationReferenceResolutionTests {
         train.stops[0].n02StationCode = nil
         train.stops[1].name = "諫早（雲仙・島原口）"
         train.stops[1].n02StationCode = nil
-        let stored = JourneyCompletion.resolvingUniqueStationNames(
+        let stored = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": both], names: ["jp": directory])
         #expect(stored.stops[0].n02StationCode == "JR-ISA")
         #expect(stored.stops[1].n02StationCode == "SHIMA")
@@ -331,11 +331,11 @@ struct StationReferenceResolutionTests {
                 ("SHIMA", "諫早（雲仙・島原口）", 130.05, 32.86),
             ]),
         ])
-        let base = JourneyCompletion.rawDraft(
+        let base = CatalogRegistryFixture.rawDraft(
             text: "諫早", catalog: bracketOnly, regionCode: "jp", seed: seed, directory: directory)
         #expect(base.stops.first?.automaticSelection?.sourceCode == "SHIMA")
         train.stops[1].name = "東京"
-        let baseStored = JourneyCompletion.resolvingUniqueStationNames(
+        let baseStored = CatalogRegistryFixture.resolvingUniqueStationNames(
             in: train, catalogs: ["jp": bracketOnly], names: ["jp": directory])
         #expect(baseStored.stops[0].n02StationCode == "SHIMA")
 
@@ -352,7 +352,7 @@ struct StationReferenceResolutionTests {
                 ("EAST", "諫早（東）", 130.06, 32.87),
             ]),
         ])
-        let ambiguous = JourneyCompletion.rawDraft(
+        let ambiguous = CatalogRegistryFixture.rawDraft(
             text: "諫早", catalog: two, regionCode: "jp", seed: seed, directory: shared)
         #expect(ambiguous.stops.first?.ambiguous == true)
         #expect(ambiguous.stops.first?.automaticSelection == nil)
@@ -371,7 +371,7 @@ struct StationReferenceResolutionTests {
                 ("HAKATA", "博多", 130.42, 33.59),
             ]),
         ])
-        let draft = JourneyCompletion.rawDraft(
+        let draft = CatalogRegistryFixture.rawDraft(
             text: "特異（前） 博多", catalog: catalog, regionCode: "jp", seed: Self.seed(),
             directory: directory)
         #expect(draft.stops.first?.automaticSelection?.sourceCode == "HAKATA")
@@ -381,7 +381,7 @@ struct StationReferenceResolutionTests {
                 ("TOK", "東京", 139.7, 35.6),
             ]),
         ])
-        let two = JourneyCompletion.rawDraft(
+        let two = CatalogRegistryFixture.rawDraft(
             text: "博多 東京", catalog: both, regionCode: "jp", seed: Self.seed(),
             directory: directory)
         #expect(two.stops.first?.automaticSelection == nil)

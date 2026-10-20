@@ -171,6 +171,7 @@ extension RecordedRouteAdmissionTests {
             guard region == "jp" else { return nil }
             return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
                 "op:jp:1": RegistryOperatorRecord(names: ["Operator"], label: "Operator"),
+                "op:jp:2": RegistryOperatorRecord(names: ["Other"], label: "Other"),
             ]))
         }) {
             try relaxedLineLabelsBody()
@@ -190,7 +191,22 @@ extension RecordedRouteAdmissionTests {
         #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
         #expect(RecordedRouteAdmission.admission(in: draft, package: package).automaticChoice == nil)
         draft.routeSections?[0].operatorNames = ["Other"]
-        #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.first?.lineIDs == ["Branch"])
+        #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.first == nil)
+    }
+
+    @Test("Pending registry leaves an operator mismatch unresolved")
+    func pendingOperatorDoesNotReject() throws {
+        try RegistryIdentityLookup.withTestPhase({ region in
+            region == "jp" ? .pending : .unavailable
+        }) {
+            let package = try fixture([line("Branch", ["A", "B"], [1])])
+            var draft = train(["A", "B"])
+            draft.routeSections = [RouteSection(
+                fromN02StationCode: "A", toN02StationCode: "B",
+                lineNames: ["Legal"], operatorNames: ["Other"], lineIDs: ["legal-id"],
+                sectionCodes: ["legal-section"])]
+            #expect(RecordedRouteAdmission.search(in: draft, package: package).choices.first?.lineIDs == ["Branch"])
+        }
     }
 
     @Test("A ride whose company does not convert still admits lines")
@@ -343,16 +359,35 @@ extension RecordedRouteAdmissionTests {
         let part = try JSONDecoder().decode(SamplePart.self, from: Data(contentsOf:
             root.appending(path: "app/data/sample-data/part-171.json")))
         #expect(part.train.id == "20260727_08_narita_express")
-        let choice = try #require(TokyoConventionalRouteInference.choice(in: part.train, package: package))
-        #expect(choice.lineIDs == [TokyoConventionalRouteInference.tunnelLineID])
-        #expect(choice.stations.last?.code == ids[2])
-        var unnamed = part.train
-        unnamed.stops[1].n02StationCode = nil
-        unnamed.routeSections = [RouteSection(from: "東京", to: "品川", fromN02StationCode: "003766")]
-        let applied = TokyoConventionalRouteInference.applying(to: unnamed, package: package)
-        let section = try #require(applied.routeSections?.first)
-        #expect(section.toN02StationCode == ids[2])
-        #expect(section.sectionCodes?.last?.hasSuffix(":" + ids[2]) == true)
+        let tokyoID = "st:jp:tokyo-corridor"
+        let shinagawaID = "st:jp:shinagawa-corridor"
+        let identity = RegistryIdentity(bundle: RegistryBundle(
+            region: "jp", run: 1,
+            stationCodes: ["003766": tokyoID, ids[2]: shinagawaID],
+            stations: [
+                tokyoID: RegistryStationRecord(
+                    cx: "cx:1", group: "tokyo", codes: ["003766"], op: "op:jp:1",
+                    name: "東京", lines: []),
+                shinagawaID: RegistryStationRecord(
+                    cx: "cx:2", group: "shinagawa", codes: [ids[2]], op: "op:jp:1",
+                    name: "品川", lines: []),
+            ]))
+        try RegistryIdentityTestGate.withProvider({ region in region == "jp" ? identity : nil }) {
+            let choice = try #require(TokyoConventionalRouteInference.choice(in: part.train, package: package))
+            #expect(choice.lineIDs == [TokyoConventionalRouteInference.tunnelLineID])
+            #expect(choice.stations.last?.code == ids[2])
+            var unnamed = part.train
+            unnamed.stops[0].stationID = tokyoID
+            unnamed.stops[1].n02StationCode = nil
+            unnamed.stops[1].stationID = shinagawaID
+            unnamed.routeSections = [RouteSection(
+                from: "東京", to: "品川", fromN02StationCode: "003766",
+                fromStationID: tokyoID, toStationID: shinagawaID)]
+            let applied = TokyoConventionalRouteInference.applying(to: unnamed, package: package)
+            let section = try #require(applied.routeSections?.first)
+            #expect(section.toN02StationCode == ids[2])
+            #expect(section.sectionCodes?.last?.hasSuffix(":" + ids[2]) == true)
+        }
     }
 
     @Test("Section endpoints canonicalize non-call junction and restored visit aliases")

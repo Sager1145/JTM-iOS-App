@@ -33,7 +33,6 @@ struct SearchFoldTests {
         for query in ["株式会社", "有限公司", "co", "limited", "!!!"] {
             #expect(!SearchFold.matches(query: query, fields: ["Tokyo Metro"]))
         }
-        #expect(OperatorIdentity.matchingCodes(query: "!!!").isEmpty)
         #expect(!SearchFold.matches(query: "501", fields: ["2024-05-01"]))
         #expect(!SearchFold.matches(query: "405", fields: ["10:05", "2024-05-01"]))
         #expect(SearchFold.matches(query: "501", fields: ["のぞみ501号"]))

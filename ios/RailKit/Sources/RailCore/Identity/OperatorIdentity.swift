@@ -57,17 +57,6 @@ public enum OperatorIdentity {
         return result
     }
 
-    /// Whole-query operator or family identity; nil permits broader discovery.
-    public static func exactCodes(query: String) -> Set<String>? {
-        let folded = SearchFold.fold(query)
-        guard !folded.isEmpty else { return nil }
-        let families = registry.families.filter {
-            SearchFold.fold($0.code) == folded || $0.searchNames.contains { SearchFold.fold($0) == folded }
-        }
-        if !families.isEmpty { return Set(families.flatMap(\.members)) }
-        return code(for: query).map { [$0] }
-    }
-
     public static func code(for name: String) -> String? {
         if byCode[name] != nil { return name }
         for candidate in [name] {
@@ -82,49 +71,6 @@ public enum OperatorIdentity {
             guard let code = code(for: $0.trimmingCharacters(in: .whitespacesAndNewlines)), seen.insert(code).inserted else { return nil }
             return code
         }
-    }
-
-    public static func sameCompany(_ a: String, _ b: String) -> Bool {
-        let left = Set(codes(forJoined: a)), right = Set(codes(forJoined: b))
-        if left.isEmpty || right.isEmpty { return OperatorBranding.companyLabel(a) == OperatorBranding.companyLabel(b) }
-        return !left.isDisjoint(with: right)
-    }
-
-    private final class MatchCache: @unchecked Sendable {
-        let lock = NSLock()
-        var values: [String: [String]] = [:]
-    }
-    private static let matchCache = MatchCache()
-
-    public static func matchingCodes(query: String) -> [String] {
-        matchCache.lock.lock()
-        let cached = matchCache.values[query]
-        matchCache.lock.unlock()
-        if let cached { return cached }
-        if query.isEmpty { return registry.operators.map(\.code) }
-        let prepared = SearchFold.PreparedQuery(query)
-        guard !prepared.whole.isEmpty else { return [] }
-        if let exact = exactCodes(query: query) { return exact.sorted() }
-        var result: [String] = [], seen: Set<String> = []
-        func add(_ code: String) { if seen.insert(code).inserted { result.append(code) } }
-        if let code = code(for: query) { add(code) }
-        for op in registry.operators where prepared.matches(fields: op.searchNames) { add(op.code) }
-        for family in registry.families where prepared.matches(fields: family.searchNames) {
-            for member in family.members { add(member) }
-        }
-        matchCache.lock.lock()
-        if matchCache.values.count >= 20_000 { matchCache.values.removeAll(keepingCapacity: true) }
-        matchCache.values[query] = result
-        matchCache.lock.unlock()
-        return result
-    }
-
-    public static func matches(operatorName: String, query: String) -> Bool {
-        if let exact = exactCodes(query: query) {
-            return !Set(codes(forJoined: operatorName)).isDisjoint(with: exact)
-        }
-        return !Set(codes(forJoined: operatorName)).isDisjoint(with: matchingCodes(query: query))
-            || SearchFold.matches(query: query, fields: [operatorName])
     }
 
     public static func searchNames(for operatorName: String) -> [String] {

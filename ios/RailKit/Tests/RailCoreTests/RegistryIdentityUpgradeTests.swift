@@ -520,4 +520,31 @@ struct RegistryIdentityUpgradeTests {
         #expect(train.routeSections?.first?.fromStationID == nil)
         #expect(train.routeSections?.first?.toStationID == nil)
     }
+
+    @Test func operatorFieldsRejectBothAndDuplicates() throws {
+        let stops = """
+        "stops":[{"name":"A","departure":"06:00","stop_type":"origin","ride_segment":true},\
+        {"name":"B","arrival":"07:00","stop_type":"destination","ride_segment":true}]
+        """
+        func message(_ extra: String) -> String? {
+            let raw = try? TrainValidation.JSON.parse("""
+            {"id":"ride1","number":"1","origin":"A","destination":"B","region":"jp",\(extra),\(stops)}
+            """)
+            guard let raw else { return "parse" }
+            var ids: Set<String> = []
+            do {
+                try TrainValidation.validateTrain(raw, index: 0, ids: &ids)
+                return nil
+            } catch let error as TrainValidation.ValidationError {
+                return error.message
+            } catch {
+                return "other"
+            }
+        }
+        #expect(message(#""operator_id":"op:jp:1","operator_ids":["op:jp:2"]"#)
+            == "Train 1: operator_id and operator_ids cannot both be set.")
+        #expect(message(#""operator_ids":["op:jp:1"," op:jp:1 "]"#)
+            == "Train 1: operator_ids contains a duplicate.")
+        #expect(message(#""operator_id":"op:jp:1","operator_ids":["  "]"#) == nil)
+    }
 }

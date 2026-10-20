@@ -551,32 +551,93 @@ function operationPairPrefix(event) {
   return [event.id, event.value ?? "", event.why ?? ""].join("\0");
 }
 
-/** operation-withdrawn matches the operation's `on` (the interval from). */
+/**
+ * A withdrawal cancels the operation object that is live at that point in the
+ * ledger. A later operation with the same id, operator, why, and `on` is a new
+ * interval and stays live. An operation-end is withdrawn only when its prefix
+ * has no live start at the moment the withdrawal is applied.
+ */
 export function withdrawnOperationPairs(events) {
+  const withdrawnEvents = new Set();
+  const liveByPrefix = new Map();
+  const endsByPrefix = new Map();
   const starts = new Set();
   const prefixes = new Set();
   for (const event of events) {
-    if (event.event !== "operation-withdrawn") continue;
+    if (event.event !== "operation" && event.event !== "operation-end" && event.event !== "operation-withdrawn") continue;
     const prefix = operationPairPrefix(event);
-    prefixes.add(prefix);
-    starts.add(`${prefix}\0${event.on ?? ""}`);
+    const on = event.on ?? "";
+    if (event.event === "operation") {
+      let byOn = liveByPrefix.get(prefix);
+      if (!byOn) {
+        byOn = new Map();
+        liveByPrefix.set(prefix, byOn);
+      }
+      byOn.set(on, event);
+    } else if (event.event === "operation-end") {
+      const list = endsByPrefix.get(prefix);
+      if (list) list.push(event);
+      else endsByPrefix.set(prefix, [event]);
+    } else {
+      prefixes.add(prefix);
+      starts.add(`${prefix}\0${on}`);
+      const byOn = liveByPrefix.get(prefix);
+      const live = byOn?.get(on);
+      if (live) {
+        withdrawnEvents.add(live);
+        byOn.delete(on);
+        if (byOn.size === 0) liveByPrefix.delete(prefix);
+      }
+      if (!liveByPrefix.has(prefix)) {
+        for (const end of endsByPrefix.get(prefix) ?? []) withdrawnEvents.add(end);
+        endsByPrefix.delete(prefix);
+      }
+    }
   }
-  const surviving = new Set();
-  for (const event of events) {
-    if (event.event !== "operation") continue;
-    const prefix = operationPairPrefix(event);
-    if (!starts.has(`${prefix}\0${event.on ?? ""}`)) surviving.add(prefix);
-  }
-  return { starts, prefixes, surviving };
+  return { starts, prefixes, surviving: new Set(liveByPrefix.keys()), events: withdrawnEvents };
 }
 
 export function operationEventWithdrawn(event, withdrawn) {
   if (event.event !== "operation" && event.event !== "operation-end") return false;
+  if (withdrawn.events) return withdrawn.events.has(event);
   const prefix = operationPairPrefix(event);
   if (event.event === "operation") return withdrawn.starts.has(`${prefix}\0${event.on ?? ""}`);
-  // A replaced start keeps the same why. The end stays while any start of that pair survives.
   if (withdrawn.surviving?.has(prefix)) return false;
   return withdrawn.prefixes.has(prefix);
+}
+
+function operationEndEvent(events, operation) {
+  const prefix = operationPairPrefix(operation);
+  let end = null;
+  for (const event of events) {
+    if (event.event !== "operation-end" || operationPairPrefix(event) !== prefix) continue;
+    end = event;
+  }
+  return end;
+}
+
+function operationIntervalEmpty(operation, end) {
+  if (!end) return false;
+  const from = String(operation.on ?? "");
+  const to = String(end.on ?? "");
+  return from !== "" && to !== "" && to <= from;
+}
+
+function queueOperationWithdrawal(queued, seenOperation, event, runId) {
+  const withdrawn = {
+    id: event.id, event: "operation-withdrawn", value: event.value, why: event.why, run: runId,
+  };
+  if (event.on != null && event.on !== "") withdrawn.on = event.on;
+  if (seenOperation.has(operationEventKey(withdrawn))) return;
+  seenOperation.add(operationEventKey(withdrawn));
+  queued.push(withdrawn);
+}
+
+function operationQueueRank(name) {
+  if (name === "operation-withdrawn") return 0;
+  if (name === "operation") return 1;
+  if (name === "operation-end") return 2;
+  return 3;
 }
 
 function historyCrosswalkEntries(root, region) {
@@ -1108,12 +1169,13 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const newOn = validFrom ?? "";
     for (const event of ledger.events) {
       if (event.event !== "operation" || event.id !== lp || (event.value ?? "") !== op || (event.why ?? "") !== why) continue;
-      if ((event.on ?? "") === newOn) continue;
-      const withdrawn = { id: lp, event: "operation-withdrawn", value: op, why, run: runId };
-      if (event.on != null && event.on !== "") withdrawn.on = event.on;
-      if (seenOperation.has(operationEventKey(withdrawn))) continue;
-      seenOperation.add(operationEventKey(withdrawn));
-      queued.push(withdrawn);
+      const sameOn = (event.on ?? "") === newOn;
+      const end = operationEndEvent(ledger.events, event);
+      const empty = operationIntervalEmpty(event, end);
+      if (sameOn && !empty) continue;
+      queueOperationWithdrawal(queued, seenOperation, { id: lp, value: op, why, on: event.on }, runId);
+      if (sameOn) seenOperation.delete(operationEventKey(event));
+      if (validTo && end) seenOperation.delete(operationEventKey(end));
     }
     const start = { id: lp, event: "operation", value: op, why, run: runId };
     if (validFrom) start.on = validFrom;
@@ -1129,17 +1191,11 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const why = String(planned.entry.history_id ?? "");
     const prior = ledger.events.filter((event) => event.event === "operation"
       && event.id === planned.lp && (event.value ?? "") === planned.op && (event.why ?? "") === why);
-    for (const event of prior) {
-      const withdrawn = {
-        id: event.id, event: "operation-withdrawn", value: event.value, why, run: runId,
-      };
-      if (event.on != null && event.on !== "") withdrawn.on = event.on;
-      if (seenOperation.has(operationEventKey(withdrawn))) continue;
-      seenOperation.add(operationEventKey(withdrawn));
-      queued.push(withdrawn);
-    }
+    for (const event of prior) queueOperationWithdrawal(queued, seenOperation, event, runId);
   }
-  queued.sort((a, b) => compareText(a.why ?? "", b.why ?? "") || compareText(a.event, b.event) || compareId(a.id, b.id));
+  queued.sort((a, b) => compareText(a.why ?? "", b.why ?? "")
+    || (operationQueueRank(a.event) - operationQueueRank(b.event))
+    || compareId(a.id, b.id));
   for (const rec of queued) additions.events.push({ region, rec });
   return additions;
 }

@@ -240,12 +240,41 @@ test("history overrides keep only dated strings from a fix", () => {
   assert.equal(applied.reviewed, 1);
   assert.equal(applied.doc.entries[0].status, "reviewed");
   assert.equal(applied.doc.entries[0].valid_from, "2015-03-14");
-  assert.equal(applied.doc.entries[0].valid_to, "2015-03-14");
+  assert.equal("valid_to" in applied.doc.entries[0], false);
   assert.equal(applied.doc.entries[0].op, "op:jp:6");
   assert.deepEqual(applied.doc.entries[0].lp, ["lp:jp:8", "lp:jp:9"]);
   assert.deepEqual(applied.doc.entries[0].match.bbox, [1, 2, 3, 4]);
   assert.equal(applied.doc.entries[1].status, "unmatched");
   assert.deepEqual(Object.keys(applied.doc.entries[0]), [
-    "history_id", "kind", "match", "valid_from", "valid_to", "lp", "op", "status",
+    "history_id", "kind", "match", "valid_from", "lp", "op", "status",
   ]);
+});
+
+test("a valid_from-only override closes an opened period at the next period for that lp", () => {
+  const applied = applyHistoryOverrides({
+    schema: "jtm-history-crosswalk/1",
+    entries: [{
+      history_id: "fix",
+      kind: "identity_period",
+      match: { line_name: "線", operator: "社", bbox: [] },
+      valid_to: "2015-03-14",
+      lp: ["lp:jp:8"],
+      op: "op:jp:1",
+      status: "multiple",
+    }, {
+      history_id: "later",
+      kind: "identity_period",
+      match: { line_name: "線", operator: "後", bbox: [] },
+      valid_from: "2020-04-01",
+      lp: ["lp:jp:8"],
+      op: "op:jp:7",
+      status: "unique",
+    }],
+  }, {
+    overrides: [{ history_id: "fix", lp: ["lp:jp:8"], op: "op:jp:6", valid_from: "2015-03-14" }],
+  });
+  assert.equal(applied.doc.entries[0].valid_from, "2015-03-14");
+  assert.equal(applied.doc.entries[0].valid_to, "2020-04-01");
+  assert.equal(applied.doc.entries[1].valid_from, "2020-04-01");
+  assert.equal("valid_to" in applied.doc.entries[1], false);
 });

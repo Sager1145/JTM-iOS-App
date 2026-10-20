@@ -18,12 +18,15 @@ enum BundledRegistry {
         private var failed: Set<String> = []
         private(set) var logCount = 0
 
-        mutating func lookup(region: String, load: () -> Data?) -> RegistryBundle? {
+        mutating func lookup(region: String, fileExists: Bool = false, load: () -> Data?) -> RegistryBundle? {
             let cc = region.lowercased()
             guard !cc.isEmpty else { return nil }
             if let cached = bundles[cc] { return cached }
             if failed.contains(cc) { return nil }
-            guard let data = load() else { return nil }
+            guard let data = load() else {
+                if fileExists { noteFailure(cc) }
+                return nil
+            }
             guard let decoded = try? JSONDecoder().decode(RegistryBundle.self, from: data),
                   decoded.region.lowercased() == cc
             else {
@@ -56,12 +59,39 @@ enum BundledRegistry {
         func hasFailed(_ region: String) -> Bool {
             failed.contains(region)
         }
+
+        mutating func noteFailure(_ region: String) {
+            let cc = region.lowercased()
+            guard !cc.isEmpty, !failed.contains(cc) else { return }
+            failed.insert(cc)
+            logCount += 1
+        }
+
+        mutating func store(_ bundle: RegistryBundle, _ identity: RegistryIdentity) {
+            let cc = bundle.region.lowercased()
+            guard !cc.isEmpty, !failed.contains(cc), identities[cc] == nil else { return }
+            bundles[cc] = bundle
+            identities[cc] = identity
+        }
     }
 
-    /// Fired after a background decode settles. The app bumps its label generation here.
-    /// `install()` does not clear it: AppLocalization sets the hook from its own init.
-    nonisolated(unsafe) static var onSettled: (@Sendable () -> Void)?
+    /// Handlers run after a background decode settles, outside the decode lock.
+    private static let handlerLock = NSLock()
+    nonisolated(unsafe) private static var settledHandlers: [@Sendable () -> Void] = []
     nonisolated(unsafe) private static var decoding = Set<String>()
+
+    static func addSettledHandler(_ handler: @escaping @Sendable () -> Void) {
+        handlerLock.lock()
+        settledHandlers.append(handler)
+        handlerLock.unlock()
+    }
+
+    private static func notifySettledHandlers() {
+        handlerLock.lock()
+        let handlers = settledHandlers
+        handlerLock.unlock()
+        for handler in handlers { handler() }
+    }
 
     static func install() {
         RegistryIdentityUpgrade.installBundleProvider { region in
@@ -84,11 +114,11 @@ enum BundledRegistry {
         }
     }
 
-    /// Ready when decoded, absent when there is no file or the decode failed,
+    /// Ready when decoded, unavailable when there is no file or the decode failed,
     /// pending while a background decode is in flight. Never decodes on the caller.
     private static func phase(for region: String) -> RegistryPhase {
         let cc = region.lowercased()
-        guard !cc.isEmpty else { return .absent }
+        guard !cc.isEmpty else { return .unavailable }
         lock.lock()
         if let identity = decodeCache.cachedIdentity(cc) {
             lock.unlock()
@@ -96,8 +126,8 @@ enum BundledRegistry {
         }
         let failed = decodeCache.hasFailed(cc)
         lock.unlock()
-        if failed { return .absent }
-        guard fileExists(cc) else { return .absent }
+        if failed { return .unavailable }
+        guard fileExists(cc) else { return .unavailable }
         startDecode(cc)
         return .pending
     }
@@ -127,7 +157,7 @@ enum BundledRegistry {
             _ = identity(for: cc)
             finishDecode(cc)
             RegistryIdentityLookup.notifySettled(region: cc)
-            onSettled?()
+            notifySettledHandlers()
         }
     }
 
@@ -142,17 +172,41 @@ enum BundledRegistry {
         Bundle.main.url(forResource: "registry-\(cc)", withExtension: "json") != nil
     }
 
-    /// Registry identity for one region. The decoded bundle and its maps are cached together.
+    /// Registry identity for one region. Decode and map build stay outside the lock.
     static func identity(for region: String) -> RegistryIdentity? {
         let cc = region.lowercased()
         guard !cc.isEmpty else { return nil }
         lock.lock()
-        defer { lock.unlock() }
-        let before = decodeCache.logCount
-        let built = decodeCache.identity(region: cc) { loadData(region: cc) }
-        if decodeCache.logCount > before {
-            log.error("registry-\(cc, privacy: .public).json failed to decode")
+        if let cached = decodeCache.cachedIdentity(cc) {
+            lock.unlock()
+            return cached
         }
+        let failed = decodeCache.hasFailed(cc)
+        lock.unlock()
+        if failed { return nil }
+        let exists = fileExists(cc)
+        guard let data = loadData(region: cc) else {
+            if exists { recordFailure(cc) }
+            return nil
+        }
+        guard let bundle = try? JSONDecoder().decode(RegistryBundle.self, from: data),
+              bundle.region.lowercased() == cc
+        else {
+            recordFailure(cc)
+            return nil
+        }
+        let built = RegistryIdentity(bundle: bundle)
+        lock.lock()
+        if let cached = decodeCache.cachedIdentity(cc) {
+            lock.unlock()
+            return cached
+        }
+        if decodeCache.hasFailed(cc) {
+            lock.unlock()
+            return nil
+        }
+        decodeCache.store(bundle, built)
+        lock.unlock()
         return built
     }
 
@@ -161,17 +215,31 @@ enum BundledRegistry {
         RegistryIdentityUpgrade.applyLoaded(train, regionFallback: nil)
     }
 
+    /// Leaves stored fields in place until this train's region is ready.
+    static func upgradeIfReady(_ train: Train) -> Train {
+        let region = train.region?.lowercased() ?? ""
+        guard !region.isEmpty, case .ready = phase(for: region) else { return train }
+        return upgrade(train)
+    }
+
+    private static func recordFailure(_ cc: String) {
+        lock.lock()
+        let before = decodeCache.logCount
+        decodeCache.noteFailure(cc)
+        let shouldLog = decodeCache.logCount > before
+        lock.unlock()
+        if shouldLog {
+            log.error("registry-\(cc, privacy: .public).json failed to decode")
+        }
+    }
+
     private static func bundle(for region: String) -> RegistryBundle? {
         let cc = region.lowercased()
         guard !cc.isEmpty else { return nil }
+        _ = identity(for: cc)
         lock.lock()
         defer { lock.unlock() }
-        let before = decodeCache.logCount
-        let decoded = decodeCache.lookup(region: cc) { loadData(region: cc) }
-        if decodeCache.logCount > before {
-            log.error("registry-\(cc, privacy: .public).json failed to decode")
-        }
-        return decoded
+        return decodeCache.cachedBundle(cc)
     }
 
     private static func loadData(region: String) -> Data? {

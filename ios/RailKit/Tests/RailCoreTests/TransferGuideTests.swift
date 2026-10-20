@@ -581,23 +581,9 @@ private func uenoToTakasaki() -> TransferGuide.Route {
 
 struct TransferGuideTrainTests {
 
-    @Test("the chain picks the station the journey could actually reach")
-    func resolvesByChain() {
-        let index = testIndex()
-        #expect(index.places(named: "大宮").count == 2)
-
-        let picked = StationIndex.resolve(
-            names: ["上野", "尾久", "大宮", "高崎"],
-            hints: [[], [], [], []],
-            index: index)
-        #expect(picked.map { $0?.code } == ["100004", "100005", "100006", "100007"])
-    }
-
-    @Test("a name the package does not carry leaves a hole, not a wrong answer")
-    func unresolvedLeavesAHole() {
-        let picked = StationIndex.resolve(
-            names: ["上野", "存在しない駅", "高崎"], hints: [[], [], []], index: testIndex())
-        #expect(picked.map { $0?.code } == ["100004", nil, "100007"])
+    @Test("the package index still lists both 大宮 complexes")
+    func indexKeepsBothOmiyaComplexes() {
+        #expect(testIndex().places(named: "大宮").count == 2)
     }
 
     @Test("a section may only be on a line both ends carry, of the right kind")
@@ -620,7 +606,7 @@ struct TransferGuideTrainTests {
         #expect(hinted.map(\.name) == ["山手線"])
     }
 
-    @Test("one leg becomes one canonical journey")
+    @Test("one leg becomes one canonical journey, with names unresolved")
     func buildsOneTrainPerLeg() throws {
         let route = uenoToTakasaki()
         let result = TransferGuide.build(
@@ -630,8 +616,9 @@ struct TransferGuideTrainTests {
             stations: testIndex())
 
         #expect(result.trains.count == 1)
-        #expect(result.unresolved.isEmpty)
-        #expect(result.resolvedCalls == result.totalCalls)
+        #expect(result.unresolved == ["上野", "尾久", "大宮", "高崎"])
+        #expect(result.resolvedCalls == 0)
+        #expect(result.totalCalls == 4)
 
         let train = try #require(result.trains.first)
         #expect(train.id == "yahoo_20260830_01")
@@ -640,7 +627,9 @@ struct TransferGuideTrainTests {
         #expect(train.destination == "高崎")
         #expect(train.direction == "熱海")
         #expect(train.trainType == "普通")
-        #expect(train.company == "JR東日本")
+        #expect(train.company == "")
+        #expect(train.operatorID == nil)
+        #expect(train.operatorIDs == nil)
         #expect(train.region == "jp")
         // The 直通 line change survives in the one free-text field there is.
         #expect(train.number == "JR上野東京ライン（07:20 熱海行・JR高崎線直通）")
@@ -655,7 +644,8 @@ struct TransferGuideTrainTests {
         let train = try #require(result.trains.first)
 
         #expect(train.stops.map(\.name) == ["上野", "尾久", "大宮", "高崎"])
-        #expect(train.stops.map(\.n02StationCode) == ["100004", "100005", "100006", "100007"])
+        #expect(train.stops.map(\.n02StationCode) == [nil, nil, nil, nil])
+        #expect(train.stops.map(\.stationID) == [nil, nil, nil, nil])
         #expect(train.stops.map(\.stopType) == [
             "origin", "passenger_stop", "passenger_stop", "destination",
         ])
@@ -680,10 +670,9 @@ struct TransferGuideTrainTests {
 
         #expect(sections.count == 3)
         #expect(sections.map(\.from) == ["上野", "尾久", "大宮"])
-        #expect(sections.map(\.fromN02StationCode) == ["100004", "100005", "100006"])
-        // 上野東京ライン is not a package line; 高崎線 is, and both ends carry it.
-        #expect(sections[0].lineNames == ["高崎線"])
-        #expect(sections[0].operatorNames == ["東日本旅客鉄道"])
+        #expect(sections.map(\.fromN02StationCode) == [nil, nil, nil])
+        #expect(sections.map(\.toN02StationCode) == [nil, nil, nil])
+        #expect(sections.allSatisfy { $0.lineNames == nil && $0.operatorNames == nil })
 
         let policy = try #require(train.routePolicy)
         #expect(policy.mode == "single_primary_route")
@@ -691,7 +680,8 @@ struct TransferGuideTrainTests {
         #expect(policy.allowAlternatives == false)
         #expect(policy.allowBrowserStraightLineFallback == false)
         #expect(policy.allowedInstitutionTypeCodes == ["2"])
-        #expect(policy.preferredLineNames == ["高崎線"])
+        #expect(policy.preferredLineNames == nil)
+        #expect(policy.preferredOperatorNames == nil)
         #expect(policy.institutionFilterMode == "soft")
     }
 
@@ -711,8 +701,10 @@ struct TransferGuideTrainTests {
         let train = try #require(result.trains.first)
 
         #expect(train.trainType == "新幹線")
-        #expect(train.company == "JR東海")
-        #expect(try #require(train.routeSections)[0].lineNames == ["東海道新幹線"])
+        #expect(train.company == "")
+        #expect(result.resolvedCalls == 0)
+        #expect(result.unresolved == ["東京", "品川", "新横浜"])
+        #expect(try #require(train.routeSections).allSatisfy { $0.lineNames == nil })
         #expect(try #require(train.routePolicy).allowedInstitutionTypeCodes == ["1"])
     }
 
@@ -741,32 +733,6 @@ struct TransferGuideTrainTests {
             stations: testIndex())
         #expect(first.trains.map(\.id) == ["yahoo_20260830_01"])
         #expect(second.trains.map(\.id) == ["yahoo_20260830_01-2"])
-    }
-
-    @Test("a name the recogniser damaged is recovered from where it must be")
-    func fillsFromTheCorridor() {
-        let index = testIndex()
-        var places = StationIndex.resolve(
-            names: ["桶川", "北", "鴻巣"], hints: [[], [], []], index: index)
-        #expect(places[1] == nil)
-
-        StationIndex.fill(names: ["桶川", "北", "鴻巣"], places: &places, index: index)
-        // 北本 is between them. 北上尾 is behind 桶川 and 北鴻巣 is past 鴻巣,
-        // and both share the same stem — projecting onto the segment is what
-        // rules them out.
-        #expect(places.map { $0?.name } == ["桶川", "北本", "鴻巣"])
-    }
-
-    @Test("a name that shares nothing with the truth is left unresolved")
-    func doesNotInventAStation() {
-        let index = testIndex()
-        // 浦和, read as 申木. Nothing in the corridor is spelled anything like
-        // it, and guessing would put the journey through a station it never
-        // called at.
-        var places = StationIndex.resolve(
-            names: ["桶川", "申木", "鴻巣"], hints: [[], [], []], index: index)
-        StationIndex.fill(names: ["桶川", "申木", "鴻巣"], places: &places, index: index)
-        #expect(places[1] == nil)
     }
 
     @Test("two spellings of one kanji are one station")

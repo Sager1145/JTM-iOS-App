@@ -4,12 +4,11 @@ import Testing
 
 /// `Stations` against the JavaScript that generated `port-fixtures/stations.json`.
 ///
-/// Resolution is the step that decides which feature a written name means, so
-/// a disagreement here is not a rendering difference — it is a train calling at
-/// a different station. The fixture therefore carries every station name in all
-/// five shipped packages, every stop name in the five established train stores,
-/// and every station code, each resolved against the country index that has to
-/// answer it.
+/// Name and code buckets in `candidateIndices` stay, because code identity
+/// (`hasSameStationIdentity`, `isCertifiedHistoricalNameAlias`) still reads them.
+/// `resolveStationForTrain` and `trainAnchorCoordinates` were removed: the iOS
+/// app injects registry station ids, and the JavaScript twin remains the web
+/// app's concern. This file no longer compares that train-aware resolution.
 ///
 /// **Every comparison in this file is by UTF-16 code unit.** Swift's `==` on
 /// `String` is canonical equivalence, and this data contains a name where that
@@ -635,130 +634,6 @@ struct StationsParityTests {
         let input = fixture.synthetic + mo + mo + fixture.dedupe.tail
         #expect(input.count == fixture.dedupe.inputCount)
         #expect(Stations.dedupeStationFeatureIndices(input) == fixture.dedupe.keptIndices)
-    }
-
-    // MARK: - Train-aware resolution
-
-    /// `resolveStationForTrain`, in both configurations.
-    ///
-    /// With no resolver the function is pure by-name resolution — the state the
-    /// app is in before the route service loads. With one, the orchestration is
-    /// what this port owns: consult the allowed codes, prefer the resolver's
-    /// subset, fall back to the whole pool when it is empty, and break a
-    /// remaining tie by distance to the train's anchor stops.
-    ///
-    /// The resolver here is a DOUBLE replaying what the fixture recorded, not a
-    /// second port of the route modules' classifier. What is checked is
-    /// therefore exactly what this file is responsible for: which resolver call
-    /// happens, when, and what the answer does to the result. Distance is the
-    /// real `Geometry.distanceMeters`, whose parity is already established by
-    /// `distance.json`.
-    final class Double_: StationRouteResolver {
-        let allowed: [String]?
-        let preferred: [Int]?
-        var allowedRequested = false
-        var filterCalled = false
-
-        init(allowed: [String]?, preferred: [Int]?) {
-            self.allowed = allowed
-            self.preferred = preferred
-        }
-
-        func allowedInstitutionCodes(_ train: Stations.Train) -> [String]? {
-            allowedRequested = true
-            return allowed
-        }
-
-        func filterPreferredStations(_ candidates: [Stations.Feature], allowedCodes: [String])
-            -> [Int]
-        {
-            filterCalled = true
-            return preferred ?? []
-        }
-
-        func distanceMeters(_ a: [Double], _ b: [Double]) -> Double {
-            guard let from = Coordinate(pair: a), let to = Coordinate(pair: b) else {
-                return .nan
-            }
-            return Geometry.distanceMeters(from, to)
-        }
-    }
-
-    @Test("a train's context picks the same station the JavaScript picks")
-    func trainAwareResolution() throws {
-        let fixture = try Self.fixture()
-        let jp = try Self.index("jp")
-        #expect(fixture.trains.count > 15)
-
-        for item in fixture.trains {
-            let stops = (item.train.stops ?? []).map(Self.stop)
-            let train = Stations.Train(stops: stops)
-            let label = "train[\(item.index)]"
-
-            let anchors = jp.trainAnchorCoordinates(train, excluding: nil)
-            #expect(
-                anchors.count == item.anchors.count
-                    && zip(anchors, item.anchors).allSatisfy { made, expected in
-                        made.count == expected.count
-                            && zip(made, expected).allSatisfy { $0.bitPattern == $1.bitPattern }
-                    },
-                "\(label) anchors: \(anchors.count) vs \(item.anchors.count)")
-
-            for probe in item.queries {
-                let query: Stations.Query =
-                    probe.kind == "stop" ? .stop(stops[probe.stopIndex!]) : .name(probe.name ?? "")
-                let name = probe.name ?? "stop[\(probe.stopIndex ?? -1)]"
-                let where_ = "\(label) \(probe.kind) \(name)"
-
-                let candidates = jp.candidates(for: query).map(Self.key)
-                #expect(
-                    candidates.count == probe.candidates.count
-                        && zip(candidates, probe.candidates).allSatisfy(Self.matches),
-                    "\(where_) candidates")
-
-                // A stop resolved as an OBJECT is excluded from its own anchor
-                // set; the same stop resolved by NAME is not. The exclusion is
-                // by identity, so a train calling twice at one station keeps
-                // the other visit.
-                if let expectedAnchors = probe.anchors {
-                    let made = jp.trainAnchorCoordinates(
-                        train, excluding: stops[probe.stopIndex!])
-                    #expect(
-                        made.count == expectedAnchors.count
-                            && zip(made, expectedAnchors).allSatisfy { a, b in
-                                a.count == b.count
-                                    && zip(a, b).allSatisfy { $0.bitPattern == $1.bitPattern }
-                            },
-                        "\(where_) anchors excluding the stop itself")
-                }
-
-                #expect(
-                    Self.matches(
-                        jp.resolveStationForTrain(query, train: train, resolver: nil)
-                            .map { jp.features[$0] }.map(Self.key),
-                        probe.withoutResolver),
-                    "\(where_) with no resolver installed")
-
-                for run in probe.withResolver {
-                    let resolver = Double_(allowed: run.allowed, preferred: run.preferredIndices)
-                    let made = jp.resolveStationForTrain(
-                        query, train: train, resolver: resolver)
-                    #expect(
-                        Self.matches(made.map { jp.features[$0] }.map(Self.key), run.resolved),
-                        "\(where_) with allowed \(run.allowed.map(String.init(describing:)) ?? "null")"
-                    )
-                    #expect(
-                        resolver.allowedRequested == run.allowedWasRequested,
-                        "\(where_) asked for the allowed codes")
-                    // An empty allowed-code ARRAY is truthy, so it still calls
-                    // the filter; a null does not. Both end up with the whole
-                    // pool, by different routes.
-                    #expect(
-                        resolver.filterCalled == (run.preferredIndices != nil),
-                        "\(where_) consulted the preference filter")
-                }
-            }
-        }
     }
 
     // MARK: - Station readings
