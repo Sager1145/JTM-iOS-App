@@ -463,6 +463,41 @@ struct RegistryIdentityUpgradeTests {
         #expect(section?.toN02StationCode == "222222")
     }
 
+    @Test func retiredIdsResolveAndUpgradeToTheLiveId() throws {
+        var tables = bundle(
+            groupCodes: ["222222": ["st:jp:2", "st:jp:3"]],
+            operators: ["op:jp:1": ["JR東日本"]],
+            stationOperator: ["st:jp:2": "op:jp:1", "st:jp:3": "op:jp:1"])
+        tables.aliases = ["st:jp:9": "st:jp:2", "op:jp:7": "op:jp:1"]
+        tables.stations["st:jp:2"] = RegistryStationRecord(
+            cx: "cx:jp:1", group: "222222", codes: ["222222"], op: "op:jp:1", name: "B", lines: [])
+        let identity = RegistryIdentity(bundle: tables)
+        #expect(identity.station("st:jp:9")?.name == "B")
+        #expect(identity.codes(of: "st:jp:9") == ["222222"])
+        #expect(tables.canonicalID("st:jp:2") == "st:jp:2")
+        let source = ride(
+            operatorID: "op:jp:7",
+            stops: pair("222222", stationID: "st:jp:9"),
+            sections: [RouteSection(
+                from: "A", to: "B", fromN02StationCode: "222222", toN02StationCode: "222222",
+                fromStationID: "st:jp:9", toStationID: "st:jp:3")])
+        let upgraded = RegistryIdentityUpgrade.apply(source, bundle: tables)
+        #expect(upgraded.operatorID == nil || upgraded.operatorID == "op:jp:1")
+        #expect(upgraded.stops[0].stationID == "st:jp:2")
+        #expect(upgraded.routeSections?.first?.fromStationID == "st:jp:2")
+        #expect(upgraded.routeSections?.first?.toStationID == "st:jp:3")
+    }
+
+    @Test func missingAliasesKeyStillDecodes() throws {
+        let json = """
+        {"schema":"jtm-registry-bundle/2","region":"jp","run":3,"stationCodes":{},\
+        "groupCodes":{},"operators":{},"stationOperator":{},"lines":{}}
+        """
+        let decoded = try JSONDecoder().decode(RegistryBundle.self, from: Data(json.utf8))
+        #expect(decoded.aliases.isEmpty)
+        #expect(decoded.canonicalID("st:jp:1") == "st:jp:1")
+    }
+
     @Test func slashJoinedCompaniesBecomeOperatorIds() throws {
         let tables = bundle(operators: [
             "op:jp:1": ["JR東日本"],

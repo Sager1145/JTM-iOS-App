@@ -234,3 +234,4 @@
 {"id":"op:cn:168","scheme":"package-operator","value":"Qingdao Metro Corporation","run":8}
 {"id":"op:cn:199","scheme":"package-operator","value":"武汉地铁","run":8}
 {"id":"op:cn:201","scheme":"package-operator","value":"Nantong Rail Transit","run":8}
+{"id":"op:cn:199","scheme":"package-operator","value":"武漢地鐵","run":10}

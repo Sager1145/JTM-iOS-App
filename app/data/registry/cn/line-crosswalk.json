@@ -1,1 +1,7144 @@
-{"schema":"jtm-line-crosswalk/1","groups":[]}
+{
+ "schema": "jtm-line-crosswalk/1",
+ "groups": [
+  {
+   "slug": "osm-route-master-207417",
+   "name": "上海地铁2号线",
+   "lp": [
+    "lp:cn:2638",
+    "lp:cn:2639"
+   ],
+   "why": "OSM route_master '上海地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/207417",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-228608",
+   "name": "上海地铁7号线",
+   "lp": [
+    "lp:cn:2693",
+    "lp:cn:2694"
+   ],
+   "why": "OSM route_master '上海地铁7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/228608",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-396879",
+   "name": "上海地铁11号线",
+   "lp": [
+    "lp:cn:2634",
+    "lp:cn:2635",
+    "lp:cn:2636",
+    "lp:cn:2637"
+   ],
+   "why": "OSM route_master '上海地铁11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/396879",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-414866",
+   "name": "Subway Line 2",
+   "lp": [
+    "lp:cn:2484",
+    "lp:cn:2485"
+   ],
+   "why": "OSM route_master 'Subway Line 2' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/414866",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-415571",
+   "name": "Subway Line 1",
+   "lp": [
+    "lp:cn:2447",
+    "lp:cn:2448",
+    "lp:cn:2449",
+    "lp:cn:2450",
+    "lp:cn:2451",
+    "lp:cn:2452",
+    "lp:cn:2453",
+    "lp:cn:2454",
+    "lp:cn:2455",
+    "lp:cn:2456",
+    "lp:cn:2457",
+    "lp:cn:2458",
+    "lp:cn:2459",
+    "lp:cn:2460",
+    "lp:cn:2461",
+    "lp:cn:2462",
+    "lp:cn:2463",
+    "lp:cn:2464",
+    "lp:cn:2465",
+    "lp:cn:2466",
+    "lp:cn:2467",
+    "lp:cn:2468",
+    "lp:cn:2469",
+    "lp:cn:2470",
+    "lp:cn:2471",
+    "lp:cn:2472",
+    "lp:cn:2473",
+    "lp:cn:2474",
+    "lp:cn:2475",
+    "lp:cn:2476",
+    "lp:cn:2477",
+    "lp:cn:2478",
+    "lp:cn:2479",
+    "lp:cn:2480",
+    "lp:cn:2481",
+    "lp:cn:2482",
+    "lp:cn:2483"
+   ],
+   "why": "OSM route_master 'Subway Line 1' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/415571",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-417951",
+   "name": "Subway Line 13",
+   "lp": [
+    "lp:cn:2488",
+    "lp:cn:2489"
+   ],
+   "why": "OSM route_master 'Subway Line 13' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/417951",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-420835",
+   "name": "Subway Line 10",
+   "lp": [
+    "lp:cn:2494",
+    "lp:cn:2495"
+   ],
+   "why": "OSM route_master 'Subway Line 10' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/420835",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-420836",
+   "name": "Subway Line 5",
+   "lp": [
+    "lp:cn:2490",
+    "lp:cn:2491"
+   ],
+   "why": "OSM route_master 'Subway Line 5' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/420836",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-420837",
+   "name": "Subway Line 8",
+   "lp": [
+    "lp:cn:2492",
+    "lp:cn:2493"
+   ],
+   "why": "OSM route_master 'Subway Line 8' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/420837",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-443998",
+   "name": "地铁 8号线",
+   "lp": [
+    "lp:cn:2733",
+    "lp:cn:2734"
+   ],
+   "why": "OSM route_master '地铁 8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/443998",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-1350576",
+   "name": "Subway Yizhuang Line",
+   "lp": [
+    "lp:cn:2505",
+    "lp:cn:2506",
+    "lp:cn:2507",
+    "lp:cn:2508",
+    "lp:cn:2509",
+    "lp:cn:2510",
+    "lp:cn:2511",
+    "lp:cn:2512",
+    "lp:cn:2513",
+    "lp:cn:2514",
+    "lp:cn:2515",
+    "lp:cn:2516",
+    "lp:cn:2517"
+   ],
+   "why": "OSM route_master 'Subway Yizhuang Line' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/1350576",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-1350622",
+   "name": "Subway Changping Line",
+   "lp": [
+    "lp:cn:2503",
+    "lp:cn:2504"
+   ],
+   "why": "OSM route_master 'Subway Changping Line' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/1350622",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-1350671",
+   "name": "Subway Fangshan Line",
+   "lp": [
+    "lp:cn:2496",
+    "lp:cn:2497"
+   ],
+   "why": "OSM route_master 'Subway Fangshan Line' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/1350671",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-1354082",
+   "name": "北京地铁首都机场线",
+   "lp": [
+    "lp:cn:2498",
+    "lp:cn:2499",
+    "lp:cn:2500",
+    "lp:cn:2501"
+   ],
+   "why": "OSM route_master '北京地铁首都机场线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/1354082",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2336458",
+   "name": "重庆轨道交通1号线",
+   "lp": [
+    "lp:cn:2520",
+    "lp:cn:2521"
+   ],
+   "why": "OSM route_master '重庆轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2336458",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2341151",
+   "name": "重庆轨道交通3号线",
+   "lp": [
+    "lp:cn:2522",
+    "lp:cn:2985"
+   ],
+   "why": "OSM route_master '重庆轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2341151",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2353579",
+   "name": "重庆轨道交通2号线",
+   "lp": [
+    "lp:cn:2441",
+    "lp:cn:3113"
+   ],
+   "why": "OSM route_master '重庆轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2353579",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2381769",
+   "name": "成都地铁1号线",
+   "lp": [
+    "lp:cn:2523",
+    "lp:cn:2843",
+    "lp:cn:2885",
+    "lp:cn:2891"
+   ],
+   "why": "OSM route_master '成都地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2381769",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2653338",
+   "name": "昆明地铁6号线",
+   "lp": [
+    "lp:cn:2598"
+   ],
+   "why": "OSM route_master '昆明地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2653338",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2674584",
+   "name": "Subway Line 9",
+   "lp": [
+    "lp:cn:2502"
+   ],
+   "why": "OSM route_master 'Subway Line 9' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2674584",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2684711",
+   "name": "Subway Daxing Line",
+   "lp": [
+    "lp:cn:2444"
+   ],
+   "why": "OSM route_master 'Subway Daxing Line' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2684711",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2688949",
+   "name": "Subway Line 15",
+   "lp": [
+    "lp:cn:2443"
+   ],
+   "why": "OSM route_master 'Subway Line 15' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2688949",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2768662",
+   "name": "重庆轨道交通6号线",
+   "lp": [
+    "lp:cn:2528",
+    "lp:cn:2548",
+    "lp:cn:3717"
+   ],
+   "why": "OSM route_master '重庆轨道交通6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2768662",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-2843401",
+   "name": "南昌地铁1号线",
+   "lp": [
+    "lp:cn:3157",
+    "lp:cn:3158",
+    "lp:cn:3159",
+    "lp:cn:3160",
+    "lp:cn:3161",
+    "lp:cn:3162",
+    "lp:cn:3163",
+    "lp:cn:3164",
+    "lp:cn:3165",
+    "lp:cn:3166",
+    "lp:cn:3167",
+    "lp:cn:3168",
+    "lp:cn:3169",
+    "lp:cn:3170",
+    "lp:cn:3171",
+    "lp:cn:3172",
+    "lp:cn:3173",
+    "lp:cn:3174",
+    "lp:cn:3175",
+    "lp:cn:3176",
+    "lp:cn:3177",
+    "lp:cn:3178",
+    "lp:cn:3179",
+    "lp:cn:3180",
+    "lp:cn:3181",
+    "lp:cn:3182",
+    "lp:cn:3183",
+    "lp:cn:3184",
+    "lp:cn:3185",
+    "lp:cn:3186",
+    "lp:cn:3187",
+    "lp:cn:3188",
+    "lp:cn:3189"
+   ],
+   "why": "OSM route_master '南昌地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/2843401",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-3244073",
+   "name": "地铁 2号线",
+   "lp": [
+    "lp:cn:2724"
+   ],
+   "why": "OSM route_master '地铁 2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/3244073",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-3400216",
+   "name": "南京地铁10号线",
+   "lp": [
+    "lp:cn:2547"
+   ],
+   "why": "OSM route_master '南京地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/3400216",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-3400217",
+   "name": "南京地铁1号线",
+   "lp": [
+    "lp:cn:2446"
+   ],
+   "why": "OSM route_master '南京地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/3400217",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-3936877",
+   "name": "地铁 1号线",
+   "lp": [
+    "lp:cn:2743",
+    "lp:cn:2744",
+    "lp:cn:2745",
+    "lp:cn:2746",
+    "lp:cn:2747",
+    "lp:cn:2748",
+    "lp:cn:2749",
+    "lp:cn:2750",
+    "lp:cn:2751",
+    "lp:cn:2752",
+    "lp:cn:2753",
+    "lp:cn:2754",
+    "lp:cn:2755",
+    "lp:cn:2756",
+    "lp:cn:2757"
+   ],
+   "why": "OSM route_master '地铁 1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/3936877",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-3967180",
+   "name": "地铁 5号线",
+   "lp": [
+    "lp:cn:2758"
+   ],
+   "why": "OSM route_master '地铁 5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/3967180",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-4624900",
+   "name": "Subway Line 7",
+   "lp": [
+    "lp:cn:2559",
+    "lp:cn:2560"
+   ],
+   "why": "OSM route_master 'Subway Line 7' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/4624900",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-4625142",
+   "name": "Subway Line 6",
+   "lp": [
+    "lp:cn:2561",
+    "lp:cn:2562"
+   ],
+   "why": "OSM route_master 'Subway Line 6' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/4625142",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-5490398",
+   "name": "沈阳有轨电车1号线",
+   "lp": [
+    "lp:cn:3655",
+    "lp:cn:3656"
+   ],
+   "why": "OSM route_master '沈阳有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/5490398",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-5490400",
+   "name": "沈阳有轨电车3号线",
+   "lp": [
+    "lp:cn:3653",
+    "lp:cn:3654"
+   ],
+   "why": "OSM route_master '沈阳有轨电车3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/5490400",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-5971692",
+   "name": "地铁 7号线",
+   "lp": [
+    "lp:cn:2759",
+    "lp:cn:2760"
+   ],
+   "why": "OSM route_master '地铁 7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/5971692",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-6728233",
+   "name": "地铁 14号线",
+   "lp": [
+    "lp:cn:2674",
+    "lp:cn:2892",
+    "lp:cn:2893",
+    "lp:cn:2894",
+    "lp:cn:2895",
+    "lp:cn:2896",
+    "lp:cn:2897",
+    "lp:cn:2898",
+    "lp:cn:2899",
+    "lp:cn:2900",
+    "lp:cn:2901",
+    "lp:cn:2902",
+    "lp:cn:2903",
+    "lp:cn:2904",
+    "lp:cn:2905",
+    "lp:cn:2906",
+    "lp:cn:2907",
+    "lp:cn:2908",
+    "lp:cn:2909",
+    "lp:cn:2910",
+    "lp:cn:2911",
+    "lp:cn:2912",
+    "lp:cn:2913"
+   ],
+   "why": "OSM route_master '地铁 14号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/6728233",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-6803864",
+   "name": "上海地铁16号线",
+   "lp": [
+    "lp:cn:2566",
+    "lp:cn:2567",
+    "lp:cn:2568",
+    "lp:cn:2569",
+    "lp:cn:2570",
+    "lp:cn:2571",
+    "lp:cn:2572",
+    "lp:cn:2573",
+    "lp:cn:2574",
+    "lp:cn:2575",
+    "lp:cn:2681",
+    "lp:cn:2682",
+    "lp:cn:2683",
+    "lp:cn:2684",
+    "lp:cn:2685",
+    "lp:cn:2686",
+    "lp:cn:2687",
+    "lp:cn:2688",
+    "lp:cn:2689",
+    "lp:cn:2690",
+    "lp:cn:3023",
+    "lp:cn:3024",
+    "lp:cn:3025",
+    "lp:cn:3306",
+    "lp:cn:3307"
+   ],
+   "why": "OSM route_master '上海地铁16号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/6803864",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-6806165",
+   "name": "上海地铁5号线",
+   "lp": [
+    "lp:cn:2436",
+    "lp:cn:2691",
+    "lp:cn:2945",
+    "lp:cn:2946"
+   ],
+   "why": "OSM route_master '上海地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/6806165",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-6817204",
+   "name": "上海地铁3号线",
+   "lp": [
+    "lp:cn:2429",
+    "lp:cn:2692"
+   ],
+   "why": "OSM route_master '上海地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/6817204",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-6840940",
+   "name": "上海地铁6号线",
+   "lp": [
+    "lp:cn:2435",
+    "lp:cn:2695"
+   ],
+   "why": "OSM route_master '上海地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/6840940",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7322006",
+   "name": "地铁 6号线",
+   "lp": [
+    "lp:cn:2722",
+    "lp:cn:2723"
+   ],
+   "why": "OSM route_master '地铁 6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7322006",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7448424",
+   "name": "上海地铁4号线",
+   "lp": [
+    "lp:cn:2430",
+    "lp:cn:2735"
+   ],
+   "why": "OSM route_master '上海地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7448424",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7451833",
+   "name": "上海地铁8号线",
+   "lp": [
+    "lp:cn:2428",
+    "lp:cn:2736"
+   ],
+   "why": "OSM route_master '上海地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7451833",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7451835",
+   "name": "上海地铁9号线",
+   "lp": [
+    "lp:cn:2433",
+    "lp:cn:2737"
+   ],
+   "why": "OSM route_master '上海地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7451835",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7451887",
+   "name": "上海地铁12号线",
+   "lp": [
+    "lp:cn:2632",
+    "lp:cn:2738"
+   ],
+   "why": "OSM route_master '上海地铁12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7451887",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7451890",
+   "name": "上海地铁13号线",
+   "lp": [
+    "lp:cn:2434",
+    "lp:cn:2739"
+   ],
+   "why": "OSM route_master '上海地铁13号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7451890",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7452119",
+   "name": "上海地铁10号线",
+   "lp": [
+    "lp:cn:2431",
+    "lp:cn:2740",
+    "lp:cn:2741",
+    "lp:cn:2742"
+   ],
+   "why": "OSM route_master '上海地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7452119",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7708095",
+   "name": "海珠有轨1号线",
+   "lp": [
+    "lp:cn:2725",
+    "lp:cn:2726",
+    "lp:cn:2727",
+    "lp:cn:2728",
+    "lp:cn:2729",
+    "lp:cn:2730",
+    "lp:cn:2731",
+    "lp:cn:2732"
+   ],
+   "why": "OSM route_master '海珠有轨1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7708095",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7841834",
+   "name": "无锡地铁1号线",
+   "lp": [
+    "lp:cn:2588",
+    "lp:cn:2830"
+   ],
+   "why": "OSM route_master '无锡地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7841834",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7841837",
+   "name": "无锡地铁2号线",
+   "lp": [
+    "lp:cn:2589"
+   ],
+   "why": "OSM route_master '无锡地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7841837",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7841839",
+   "name": "石家庄地铁1号线",
+   "lp": [
+    "lp:cn:2698"
+   ],
+   "why": "OSM route_master '石家庄地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7841839",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7841854",
+   "name": "石家庄地铁3号线",
+   "lp": [
+    "lp:cn:2696"
+   ],
+   "why": "OSM route_master '石家庄地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7841854",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7841881",
+   "name": "南宁轨道交通1号线",
+   "lp": [
+    "lp:cn:2672"
+   ],
+   "why": "OSM route_master '南宁轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7841881",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7845847",
+   "name": "上海地铁17号线",
+   "lp": [
+    "lp:cn:2664",
+    "lp:cn:2831"
+   ],
+   "why": "OSM route_master '上海地铁17号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7845847",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7869228",
+   "name": "西安地铁2号线",
+   "lp": [
+    "lp:cn:2592"
+   ],
+   "why": "OSM route_master '西安地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7869228",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7869253",
+   "name": "西安地铁1号线",
+   "lp": [
+    "lp:cn:2591"
+   ],
+   "why": "OSM route_master '西安地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7869253",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7869255",
+   "name": "西安地铁3号线",
+   "lp": [
+    "lp:cn:2828"
+   ],
+   "why": "OSM route_master '西安地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7869255",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7871046",
+   "name": "郑州地铁1号线",
+   "lp": [
+    "lp:cn:2593"
+   ],
+   "why": "OSM route_master '郑州地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7871046",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7875250",
+   "name": "长沙地铁二号线",
+   "lp": [
+    "lp:cn:2578"
+   ],
+   "why": "OSM route_master '长沙地铁二号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7875250",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7875257",
+   "name": "长沙地铁1号线",
+   "lp": [
+    "lp:cn:2670"
+   ],
+   "why": "OSM route_master '长沙地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7875257",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7875301",
+   "name": "长春轨道交通4号线",
+   "lp": [
+    "lp:cn:2530",
+    "lp:cn:2832"
+   ],
+   "why": "OSM route_master '长春轨道交通4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7875301",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7875360",
+   "name": "长春轨道交通3号线",
+   "lp": [
+    "lp:cn:2529",
+    "lp:cn:2833"
+   ],
+   "why": "OSM route_master '长春轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7875360",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7883242",
+   "name": "青岛地铁3号线",
+   "lp": [
+    "lp:cn:2671"
+   ],
+   "why": "OSM route_master '青岛地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7883242",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7883944",
+   "name": "宁波轨道交通2号线",
+   "lp": [
+    "lp:cn:2633"
+   ],
+   "why": "OSM route_master '宁波轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7883944",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7885547",
+   "name": "南京地铁3号线",
+   "lp": [
+    "lp:cn:2579"
+   ],
+   "why": "OSM route_master '南京地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7885547",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7889178",
+   "name": "苏州轨道交通1号线",
+   "lp": [
+    "lp:cn:2835"
+   ],
+   "why": "OSM route_master '苏州轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7889178",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7890240",
+   "name": "大连地铁2号线",
+   "lp": [
+    "lp:cn:2630"
+   ],
+   "why": "OSM route_master '大连地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7890240",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7894481",
+   "name": "沈阳地铁1号线",
+   "lp": [
+    "lp:cn:2629"
+   ],
+   "why": "OSM route_master '沈阳地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7894481",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7895357",
+   "name": "地铁 13号线",
+   "lp": [
+    "lp:cn:2675"
+   ],
+   "why": "OSM route_master '地铁 13号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7895357",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7908058",
+   "name": "大连地铁3号线",
+   "lp": [
+    "lp:cn:2532",
+    "lp:cn:2837",
+    "lp:cn:3441"
+   ],
+   "why": "OSM route_master '大连地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7908058",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7909740",
+   "name": "昆明地铁2号线",
+   "lp": [
+    "lp:cn:2557"
+   ],
+   "why": "OSM route_master '昆明地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7909740",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7909748",
+   "name": "昆明地铁1号线",
+   "lp": [
+    "lp:cn:2596",
+    "lp:cn:2838",
+    "lp:cn:2839"
+   ],
+   "why": "OSM route_master '昆明地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7909748",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7913272",
+   "name": "南京地铁S1号线",
+   "lp": [
+    "lp:cn:2580",
+    "lp:cn:2581",
+    "lp:cn:2582",
+    "lp:cn:2583",
+    "lp:cn:2584",
+    "lp:cn:2585",
+    "lp:cn:2586",
+    "lp:cn:2840"
+   ],
+   "why": "OSM route_master '南京地铁S1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7913272",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7913936",
+   "name": "地铁 1号线",
+   "lp": [
+    "lp:cn:2518"
+   ],
+   "why": "OSM route_master '地铁 1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7913936",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7949047",
+   "name": "合肥轨道交通1号线",
+   "lp": [
+    "lp:cn:2641"
+   ],
+   "why": "OSM route_master '合肥轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7949047",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7949335",
+   "name": "合肥轨道交通2号线",
+   "lp": [
+    "lp:cn:2640"
+   ],
+   "why": "OSM route_master '合肥轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7949335",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7949339",
+   "name": "长春轨道交通1号线",
+   "lp": [
+    "lp:cn:2834"
+   ],
+   "why": "OSM route_master '长春轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7949339",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7951024",
+   "name": "大连地铁1号线",
+   "lp": [
+    "lp:cn:2663"
+   ],
+   "why": "OSM route_master '大连地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7951024",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7957874",
+   "name": "大连地铁12号线",
+   "lp": [
+    "lp:cn:2631"
+   ],
+   "why": "OSM route_master '大连地铁12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7957874",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7964884",
+   "name": "武汉地铁8号线",
+   "lp": [
+    "lp:cn:2676"
+   ],
+   "why": "OSM route_master '武汉地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7964884",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7986215",
+   "name": "东莞轨道交通2号线",
+   "lp": [
+    "lp:cn:2668"
+   ],
+   "why": "OSM route_master '东莞轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7986215",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-7992938",
+   "name": "杭州地铁1号线",
+   "lp": [
+    "lp:cn:2563",
+    "lp:cn:2564"
+   ],
+   "why": "OSM route_master '杭州地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/7992938",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8008813",
+   "name": "北京地铁S1线",
+   "lp": [
+    "lp:cn:2873"
+   ],
+   "why": "OSM route_master '北京地铁S1线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8008813",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8019734",
+   "name": "金山铁路",
+   "lp": [
+    "lp:cn:2875",
+    "lp:cn:2876",
+    "lp:cn:2877",
+    "lp:cn:2878",
+    "lp:cn:2879",
+    "lp:cn:2880",
+    "lp:cn:2881"
+   ],
+   "why": "OSM route_master '金山铁路' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8019734",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8040132",
+   "name": "南宁轨道交通2号线",
+   "lp": [
+    "lp:cn:2829"
+   ],
+   "why": "OSM route_master '南宁轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8040132",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8040148",
+   "name": "昆明地铁3号线",
+   "lp": [
+    "lp:cn:2597"
+   ],
+   "why": "OSM route_master '昆明地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8040148",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8110609",
+   "name": "广州地铁11号线",
+   "lp": [
+    "lp:cn:3695",
+    "lp:cn:3696"
+   ],
+   "why": "OSM route_master '广州地铁11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8110609",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8167022",
+   "name": "上海地铁浦江线",
+   "lp": [
+    "lp:cn:2882",
+    "lp:cn:2883"
+   ],
+   "why": "OSM route_master '上海地铁浦江线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8167022",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8297146",
+   "name": "成都地铁7号线",
+   "lp": [
+    "lp:cn:2841",
+    "lp:cn:2884"
+   ],
+   "why": "OSM route_master '成都地铁7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8297146",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8297273",
+   "name": "成都地铁3号线",
+   "lp": [
+    "lp:cn:2669"
+   ],
+   "why": "OSM route_master '成都地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8297273",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8298113",
+   "name": "成都地铁2号线",
+   "lp": [
+    "lp:cn:2524",
+    "lp:cn:2886"
+   ],
+   "why": "OSM route_master '成都地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8298113",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8298132",
+   "name": "成都地铁4号线",
+   "lp": [
+    "lp:cn:2665",
+    "lp:cn:2887"
+   ],
+   "why": "OSM route_master '成都地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8298132",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8298254",
+   "name": "成都地铁10号线",
+   "lp": [
+    "lp:cn:2842",
+    "lp:cn:2888"
+   ],
+   "why": "OSM route_master '成都地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8298254",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8300611",
+   "name": "重庆轨道交通环线",
+   "lp": [
+    "lp:cn:2763",
+    "lp:cn:2795"
+   ],
+   "why": "OSM route_master '重庆轨道交通环线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8300611",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8300867",
+   "name": "重庆轨道交通5号线",
+   "lp": [
+    "lp:cn:2764",
+    "lp:cn:2765",
+    "lp:cn:2766",
+    "lp:cn:2767",
+    "lp:cn:2768",
+    "lp:cn:2769",
+    "lp:cn:2770",
+    "lp:cn:2771",
+    "lp:cn:2772",
+    "lp:cn:2773",
+    "lp:cn:2774",
+    "lp:cn:2775",
+    "lp:cn:2776",
+    "lp:cn:2777",
+    "lp:cn:2778",
+    "lp:cn:2779",
+    "lp:cn:2780",
+    "lp:cn:2781",
+    "lp:cn:2782",
+    "lp:cn:2783",
+    "lp:cn:2784",
+    "lp:cn:2785",
+    "lp:cn:2786",
+    "lp:cn:2787",
+    "lp:cn:2788",
+    "lp:cn:2789",
+    "lp:cn:2790",
+    "lp:cn:2791",
+    "lp:cn:2792",
+    "lp:cn:2793",
+    "lp:cn:2794",
+    "lp:cn:2870"
+   ],
+   "why": "OSM route_master '重庆轨道交通5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8300867",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8300873",
+   "name": "重庆轨道交通10号线",
+   "lp": [
+    "lp:cn:2844",
+    "lp:cn:2845",
+    "lp:cn:2846",
+    "lp:cn:2847",
+    "lp:cn:2848",
+    "lp:cn:2849",
+    "lp:cn:2850",
+    "lp:cn:2851",
+    "lp:cn:2852",
+    "lp:cn:2853",
+    "lp:cn:2854",
+    "lp:cn:2855",
+    "lp:cn:2856",
+    "lp:cn:2857",
+    "lp:cn:2858",
+    "lp:cn:2859",
+    "lp:cn:2860",
+    "lp:cn:2861",
+    "lp:cn:2862",
+    "lp:cn:2863",
+    "lp:cn:2864",
+    "lp:cn:2865",
+    "lp:cn:2866",
+    "lp:cn:2867",
+    "lp:cn:2868",
+    "lp:cn:2869",
+    "lp:cn:2889",
+    "lp:cn:2890",
+    "lp:cn:3114"
+   ],
+   "why": "OSM route_master '重庆轨道交通10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8300873",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8303696",
+   "name": "北京地铁西郊线",
+   "lp": [
+    "lp:cn:2874"
+   ],
+   "why": "OSM route_master '北京地铁西郊线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8303696",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8306848",
+   "name": "济南轨道交通2号线",
+   "lp": [
+    "lp:cn:3138",
+    "lp:cn:3139"
+   ],
+   "why": "OSM route_master '济南轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8306848",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8309087",
+   "name": "武汉地铁1号线",
+   "lp": [
+    "lp:cn:2442"
+   ],
+   "why": "OSM route_master '武汉地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8309087",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8323745",
+   "name": "杭州地铁2号线",
+   "lp": [
+    "lp:cn:2577"
+   ],
+   "why": "OSM route_master '杭州地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8323745",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8324096",
+   "name": "宁波轨道交通1号线",
+   "lp": [
+    "lp:cn:2558"
+   ],
+   "why": "OSM route_master '宁波轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8324096",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8439223",
+   "name": "苏州地铁4号线",
+   "lp": [
+    "lp:cn:2836",
+    "lp:cn:2915",
+    "lp:cn:2916",
+    "lp:cn:2917",
+    "lp:cn:2918",
+    "lp:cn:2919",
+    "lp:cn:2920",
+    "lp:cn:2921",
+    "lp:cn:2922",
+    "lp:cn:2923",
+    "lp:cn:2924",
+    "lp:cn:2925",
+    "lp:cn:2926",
+    "lp:cn:2927",
+    "lp:cn:2928",
+    "lp:cn:2929",
+    "lp:cn:2930",
+    "lp:cn:2931",
+    "lp:cn:2932",
+    "lp:cn:2933",
+    "lp:cn:2934",
+    "lp:cn:2935",
+    "lp:cn:2936",
+    "lp:cn:2937"
+   ],
+   "why": "OSM route_master '苏州地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8439223",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8439253",
+   "name": "苏州地铁2号线",
+   "lp": [
+    "lp:cn:2590"
+   ],
+   "why": "OSM route_master '苏州地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8439253",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8469061",
+   "name": "Subway Yanfang Line",
+   "lp": [
+    "lp:cn:2940"
+   ],
+   "why": "OSM route_master 'Subway Yanfang Line' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8469061",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8478970",
+   "name": "天津地铁9号线",
+   "lp": [
+    "lp:cn:2439",
+    "lp:cn:2440"
+   ],
+   "why": "OSM route_master '天津地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8478970",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8489969",
+   "name": "天津地铁3号线",
+   "lp": [
+    "lp:cn:2628",
+    "lp:cn:2943"
+   ],
+   "why": "OSM route_master '天津地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8489969",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8489970",
+   "name": "天津地铁2号线",
+   "lp": [
+    "lp:cn:2627",
+    "lp:cn:2941"
+   ],
+   "why": "OSM route_master '天津地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8489970",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8489971",
+   "name": "天津地铁1号线",
+   "lp": [
+    "lp:cn:2599",
+    "lp:cn:2600",
+    "lp:cn:2601",
+    "lp:cn:2602",
+    "lp:cn:2603",
+    "lp:cn:2604",
+    "lp:cn:2605",
+    "lp:cn:2606",
+    "lp:cn:2607",
+    "lp:cn:2608",
+    "lp:cn:2609",
+    "lp:cn:2610",
+    "lp:cn:2611",
+    "lp:cn:2612",
+    "lp:cn:2613",
+    "lp:cn:2614",
+    "lp:cn:2615",
+    "lp:cn:2616",
+    "lp:cn:2617",
+    "lp:cn:2618",
+    "lp:cn:2619",
+    "lp:cn:2620",
+    "lp:cn:2621",
+    "lp:cn:2622",
+    "lp:cn:2623",
+    "lp:cn:2624",
+    "lp:cn:2625",
+    "lp:cn:2626",
+    "lp:cn:2942"
+   ],
+   "why": "OSM route_master '天津地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8489971",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-8490135",
+   "name": "天津地铁6号线",
+   "lp": [
+    "lp:cn:2700",
+    "lp:cn:2944"
+   ],
+   "why": "OSM route_master '天津地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/8490135",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9318442",
+   "name": "地铁 11号线",
+   "lp": [
+    "lp:cn:2667"
+   ],
+   "why": "OSM route_master '地铁 11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9318442",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9515444",
+   "name": "松江有轨电车2号线",
+   "lp": [
+    "lp:cn:3502",
+    "lp:cn:3503",
+    "lp:cn:3504",
+    "lp:cn:3505",
+    "lp:cn:3506",
+    "lp:cn:3507",
+    "lp:cn:3508",
+    "lp:cn:3509",
+    "lp:cn:3510",
+    "lp:cn:3511",
+    "lp:cn:3512",
+    "lp:cn:3513",
+    "lp:cn:3514",
+    "lp:cn:3515",
+    "lp:cn:3516",
+    "lp:cn:3517",
+    "lp:cn:3518",
+    "lp:cn:3519",
+    "lp:cn:3520",
+    "lp:cn:3521",
+    "lp:cn:3522",
+    "lp:cn:3523",
+    "lp:cn:3524",
+    "lp:cn:3525",
+    "lp:cn:3526",
+    "lp:cn:3527",
+    "lp:cn:3528",
+    "lp:cn:3529",
+    "lp:cn:3530",
+    "lp:cn:3531",
+    "lp:cn:3532",
+    "lp:cn:3533",
+    "lp:cn:3534",
+    "lp:cn:3535",
+    "lp:cn:3536",
+    "lp:cn:3537",
+    "lp:cn:3538",
+    "lp:cn:3539",
+    "lp:cn:3540",
+    "lp:cn:3541",
+    "lp:cn:3542",
+    "lp:cn:3543",
+    "lp:cn:3544",
+    "lp:cn:3545",
+    "lp:cn:3546",
+    "lp:cn:3547",
+    "lp:cn:3548",
+    "lp:cn:3549",
+    "lp:cn:3550",
+    "lp:cn:3551",
+    "lp:cn:3552",
+    "lp:cn:3553",
+    "lp:cn:3554",
+    "lp:cn:3555",
+    "lp:cn:3556",
+    "lp:cn:3557",
+    "lp:cn:3558",
+    "lp:cn:3559",
+    "lp:cn:3560",
+    "lp:cn:3561",
+    "lp:cn:3562",
+    "lp:cn:3563",
+    "lp:cn:3564",
+    "lp:cn:3565",
+    "lp:cn:3566",
+    "lp:cn:3567",
+    "lp:cn:3568",
+    "lp:cn:3569",
+    "lp:cn:3570",
+    "lp:cn:3571",
+    "lp:cn:3572",
+    "lp:cn:3573",
+    "lp:cn:3574",
+    "lp:cn:3575"
+   ],
+   "why": "OSM route_master '松江有轨电车2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9515444",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9584586",
+   "name": "南京地铁S7号线",
+   "lp": [
+    "lp:cn:2914",
+    "lp:cn:2976",
+    "lp:cn:2977",
+    "lp:cn:2978",
+    "lp:cn:2979",
+    "lp:cn:2980",
+    "lp:cn:2981",
+    "lp:cn:2982"
+   ],
+   "why": "OSM route_master '南京地铁S7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9584586",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9584587",
+   "name": "南京地铁S9号线",
+   "lp": [
+    "lp:cn:2975"
+   ],
+   "why": "OSM route_master '南京地铁S9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9584587",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9588181",
+   "name": "南京地铁S8号线",
+   "lp": [
+    "lp:cn:2587"
+   ],
+   "why": "OSM route_master '南京地铁S8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9588181",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9588283",
+   "name": "南京地铁4号线",
+   "lp": [
+    "lp:cn:2983"
+   ],
+   "why": "OSM route_master '南京地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9588283",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9592190",
+   "name": "武汉地铁2号线",
+   "lp": [
+    "lp:cn:2594",
+    "lp:cn:2984"
+   ],
+   "why": "OSM route_master '武汉地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9592190",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9604983",
+   "name": "天津地铁5号线",
+   "lp": [
+    "lp:cn:2699",
+    "lp:cn:2986"
+   ],
+   "why": "OSM route_master '天津地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9604983",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9607978",
+   "name": "地铁 4号线",
+   "lp": [
+    "lp:cn:2576"
+   ],
+   "why": "OSM route_master '地铁 4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9607978",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9609521",
+   "name": "重庆轨道交通4号线",
+   "lp": [
+    "lp:cn:2796",
+    "lp:cn:2797",
+    "lp:cn:2798",
+    "lp:cn:2799",
+    "lp:cn:2800",
+    "lp:cn:2801",
+    "lp:cn:2802",
+    "lp:cn:2803",
+    "lp:cn:2804",
+    "lp:cn:2805",
+    "lp:cn:2806",
+    "lp:cn:2807",
+    "lp:cn:2808",
+    "lp:cn:2809",
+    "lp:cn:2810",
+    "lp:cn:2811",
+    "lp:cn:2812",
+    "lp:cn:2813",
+    "lp:cn:2814",
+    "lp:cn:2815",
+    "lp:cn:2816",
+    "lp:cn:2817",
+    "lp:cn:2818",
+    "lp:cn:2819",
+    "lp:cn:2820",
+    "lp:cn:2821",
+    "lp:cn:2822",
+    "lp:cn:2823",
+    "lp:cn:2824",
+    "lp:cn:2825",
+    "lp:cn:2826"
+   ],
+   "why": "OSM route_master '重庆轨道交通4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9609521",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9611409",
+   "name": "地铁 APM线",
+   "lp": [
+    "lp:cn:2445",
+    "lp:cn:2987"
+   ],
+   "why": "OSM route_master '地铁 APM线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9611409",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9611531",
+   "name": "地铁 21号线",
+   "lp": [
+    "lp:cn:2947",
+    "lp:cn:2948",
+    "lp:cn:2949",
+    "lp:cn:2950",
+    "lp:cn:2951",
+    "lp:cn:2952",
+    "lp:cn:2953",
+    "lp:cn:2954",
+    "lp:cn:2955",
+    "lp:cn:2956",
+    "lp:cn:2957",
+    "lp:cn:2958",
+    "lp:cn:2959",
+    "lp:cn:2960",
+    "lp:cn:2961",
+    "lp:cn:2962",
+    "lp:cn:2963",
+    "lp:cn:2964",
+    "lp:cn:2965",
+    "lp:cn:2968",
+    "lp:cn:2969",
+    "lp:cn:2970",
+    "lp:cn:2971",
+    "lp:cn:2972"
+   ],
+   "why": "OSM route_master '地铁 21号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9611531",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9612493",
+   "name": "地铁 广佛线",
+   "lp": [
+    "lp:cn:2525"
+   ],
+   "why": "OSM route_master '地铁 广佛线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9612493",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9629866",
+   "name": "地铁 7号线",
+   "lp": [
+    "lp:cn:2677"
+   ],
+   "why": "OSM route_master '地铁 7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9629866",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9629887",
+   "name": "地铁 3号线",
+   "lp": [
+    "lp:cn:2519"
+   ],
+   "why": "OSM route_master '地铁 3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9629887",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9632502",
+   "name": "长沙地铁四号线",
+   "lp": [
+    "lp:cn:2991"
+   ],
+   "why": "OSM route_master '长沙地铁四号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9632502",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9633082",
+   "name": "武汉地铁4号线",
+   "lp": [
+    "lp:cn:2595"
+   ],
+   "why": "OSM route_master '武汉地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9633082",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9633134",
+   "name": "武汉地铁11号线",
+   "lp": [
+    "lp:cn:2827"
+   ],
+   "why": "OSM route_master '武汉地铁11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9633134",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9642906",
+   "name": "长春轨道交通2号线",
+   "lp": [
+    "lp:cn:2994"
+   ],
+   "why": "OSM route_master '长春轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9642906",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9642908",
+   "name": "长春轨道交通8号线",
+   "lp": [
+    "lp:cn:2993",
+    "lp:cn:2995"
+   ],
+   "why": "OSM route_master '长春轨道交通8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9642908",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9645952",
+   "name": "地铁 5号线",
+   "lp": [
+    "lp:cn:2527"
+   ],
+   "why": "OSM route_master '地铁 5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9645952",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9656354",
+   "name": "南宁轨道交通3号线",
+   "lp": [
+    "lp:cn:2996"
+   ],
+   "why": "OSM route_master '南宁轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9656354",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9699772",
+   "name": "地铁 9号线",
+   "lp": [
+    "lp:cn:2997"
+   ],
+   "why": "OSM route_master '地铁 9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9699772",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9765661",
+   "name": "武汉轨道交通阳逻线",
+   "lp": [
+    "lp:cn:2999"
+   ],
+   "why": "OSM route_master '武汉轨道交通阳逻线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9765661",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9786759",
+   "name": "上海磁浮示范运营线",
+   "lp": [
+    "lp:cn:2437",
+    "lp:cn:3000"
+   ],
+   "why": "OSM route_master '上海磁浮示范运营线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9786759",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9807766",
+   "name": "西安地铁4号线",
+   "lp": [
+    "lp:cn:3001"
+   ],
+   "why": "OSM route_master '西安地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9807766",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9841063",
+   "name": "地铁 3号线",
+   "lp": [
+    "lp:cn:2438",
+    "lp:cn:3002"
+   ],
+   "why": "OSM route_master '地铁 3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9841063",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9893306",
+   "name": "沈阳地铁9号线",
+   "lp": [
+    "lp:cn:3016"
+   ],
+   "why": "OSM route_master '沈阳地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9893306",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-9924027",
+   "name": "地铁 9号线",
+   "lp": [
+    "lp:cn:2871"
+   ],
+   "why": "OSM route_master '地铁 9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/9924027",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10095918",
+   "name": "上海地铁18号线",
+   "lp": [
+    "lp:cn:3017",
+    "lp:cn:3018"
+   ],
+   "why": "OSM route_master '上海地铁18号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10095918",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10131355",
+   "name": "郑州地铁14号线",
+   "lp": [
+    "lp:cn:3019",
+    "lp:cn:3020"
+   ],
+   "why": "OSM route_master '郑州地铁14号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10131355",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10136967",
+   "name": "北京地铁大兴机场线",
+   "lp": [
+    "lp:cn:3021"
+   ],
+   "why": "OSM route_master '北京地铁大兴机场线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10136967",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10149342",
+   "name": "济南轨道交通1号线",
+   "lp": [
+    "lp:cn:2973",
+    "lp:cn:2974"
+   ],
+   "why": "OSM route_master '济南轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10149342",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10379854",
+   "name": "徐州地铁1号线",
+   "lp": [
+    "lp:cn:2673"
+   ],
+   "why": "OSM route_master '徐州地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10379854",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10381397",
+   "name": "西安地铁14号线",
+   "lp": [
+    "lp:cn:3026"
+   ],
+   "why": "OSM route_master '西安地铁14号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10381397",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10383244",
+   "name": "宁波轨道交通3号线",
+   "lp": [
+    "lp:cn:3027"
+   ],
+   "why": "OSM route_master '宁波轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10383244",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10386968",
+   "name": "杭州地铁5号线",
+   "lp": [
+    "lp:cn:3028"
+   ],
+   "why": "OSM route_master '杭州地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10386968",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10387105",
+   "name": "郑州地铁5号线",
+   "lp": [
+    "lp:cn:2761"
+   ],
+   "why": "OSM route_master '郑州地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10387105",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10458608",
+   "name": "福州轨道交通二号线",
+   "lp": [
+    "lp:cn:2666",
+    "lp:cn:3030"
+   ],
+   "why": "OSM route_master '福州轨道交通二号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10458608",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10467728",
+   "name": "西海岸快线",
+   "lp": [
+    "lp:cn:2966"
+   ],
+   "why": "OSM route_master '西海岸快线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10467728",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10488912",
+   "name": "苏州轨道交通3号线",
+   "lp": [
+    "lp:cn:3031"
+   ],
+   "why": "OSM route_master '苏州轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10488912",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10488951",
+   "name": "合肥轨道交通3号线",
+   "lp": [
+    "lp:cn:2642"
+   ],
+   "why": "OSM route_master '合肥轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10488951",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10490757",
+   "name": "成都有轨电车蓉2号线（主线）",
+   "lp": [
+    "lp:cn:2967",
+    "lp:cn:3032"
+   ],
+   "why": "OSM route_master '成都有轨电车蓉2号线（主线）' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10490757",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10506169",
+   "name": "成都有轨电车蓉2号线（支线）",
+   "lp": [
+    "lp:cn:3033",
+    "lp:cn:3034",
+    "lp:cn:3035",
+    "lp:cn:3036",
+    "lp:cn:3037",
+    "lp:cn:3038",
+    "lp:cn:3039",
+    "lp:cn:3040"
+   ],
+   "why": "OSM route_master '成都有轨电车蓉2号线（支线）' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10506169",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10507454",
+   "name": "呼和浩特地铁1号线",
+   "lp": [
+    "lp:cn:3029"
+   ],
+   "why": "OSM route_master '呼和浩特地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10507454",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10513363",
+   "name": "济南轨道交通3号线",
+   "lp": [
+    "lp:cn:2939",
+    "lp:cn:3041"
+   ],
+   "why": "OSM route_master '济南轨道交通3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10513363",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10526316",
+   "name": "成都地铁5号线",
+   "lp": [
+    "lp:cn:2990"
+   ],
+   "why": "OSM route_master '成都地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10526316",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10557252",
+   "name": "上海地铁14号线",
+   "lp": [
+    "lp:cn:3051",
+    "lp:cn:3052"
+   ],
+   "why": "OSM route_master '上海地铁14号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10557252",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-10829086",
+   "name": "天水有轨电车1号线",
+   "lp": [
+    "lp:cn:3067",
+    "lp:cn:3068"
+   ],
+   "why": "OSM route_master '天水有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/10829086",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11076299",
+   "name": "杭州地铁16号线",
+   "lp": [
+    "lp:cn:3069"
+   ],
+   "why": "OSM route_master '杭州地铁16号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11076299",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11257190",
+   "name": "长沙地铁3号线",
+   "lp": [
+    "lp:cn:3070"
+   ],
+   "why": "OSM route_master '长沙地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11257190",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11257230",
+   "name": "长沙地铁五号线",
+   "lp": [
+    "lp:cn:3071"
+   ],
+   "why": "OSM route_master '长沙地铁五号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11257230",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11482970",
+   "name": "城市副中心线",
+   "lp": [
+    "lp:cn:3053",
+    "lp:cn:3054",
+    "lp:cn:3055",
+    "lp:cn:3056",
+    "lp:cn:3057",
+    "lp:cn:3058"
+   ],
+   "why": "OSM route_master '城市副中心线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11482970",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11494225",
+   "name": "北京市郊铁路S2线",
+   "lp": [
+    "lp:cn:3060",
+    "lp:cn:3061",
+    "lp:cn:3098",
+    "lp:cn:3099",
+    "lp:cn:3100",
+    "lp:cn:3101"
+   ],
+   "why": "OSM route_master '北京市郊铁路S2线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11494225",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11494329",
+   "name": "北京市郊铁路怀柔－密云线",
+   "lp": [
+    "lp:cn:3062",
+    "lp:cn:3063",
+    "lp:cn:3064",
+    "lp:cn:3065",
+    "lp:cn:3066",
+    "lp:cn:3102",
+    "lp:cn:3103",
+    "lp:cn:3104"
+   ],
+   "why": "OSM route_master '北京市郊铁路怀柔－密云线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11494329",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11494397",
+   "name": "北京市郊铁路通密线",
+   "lp": [
+    "lp:cn:3072",
+    "lp:cn:3105",
+    "lp:cn:3106",
+    "lp:cn:3107"
+   ],
+   "why": "OSM route_master '北京市郊铁路通密线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11494397",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11582700",
+   "name": "石家庄地铁2号线",
+   "lp": [
+    "lp:cn:2697"
+   ],
+   "why": "OSM route_master '石家庄地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11582700",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11583149",
+   "name": "地铁 6号线",
+   "lp": [
+    "lp:cn:3110"
+   ],
+   "why": "OSM route_master '地铁 6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11583149",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11583622",
+   "name": "地铁 10号线",
+   "lp": [
+    "lp:cn:3111"
+   ],
+   "why": "OSM route_master '地铁 10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11583622",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11643429",
+   "name": "昆明地铁4号线",
+   "lp": [
+    "lp:cn:2872",
+    "lp:cn:3112"
+   ],
+   "why": "OSM route_master '昆明地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11643429",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11659649",
+   "name": "长株潭城际铁路",
+   "lp": [
+    "lp:cn:1519",
+    "lp:cn:1701",
+    "lp:cn:2327"
+   ],
+   "why": "OSM route_master '长株潭城际铁路' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11659649",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11665748",
+   "name": "重庆轨道交通4–环–5直通快速",
+   "lp": [
+    "lp:cn:3090",
+    "lp:cn:3091",
+    "lp:cn:3092",
+    "lp:cn:3093",
+    "lp:cn:3094",
+    "lp:cn:3095",
+    "lp:cn:3096",
+    "lp:cn:3097"
+   ],
+   "why": "OSM route_master '重庆轨道交通4–环–5直通快速' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11665748",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11697795",
+   "name": "成都地铁18号线",
+   "lp": [
+    "lp:cn:3004",
+    "lp:cn:3005",
+    "lp:cn:3006",
+    "lp:cn:3007",
+    "lp:cn:3008",
+    "lp:cn:3009",
+    "lp:cn:3010",
+    "lp:cn:3011",
+    "lp:cn:3012",
+    "lp:cn:3013",
+    "lp:cn:3014",
+    "lp:cn:3015",
+    "lp:cn:3115",
+    "lp:cn:3116",
+    "lp:cn:3268",
+    "lp:cn:3269"
+   ],
+   "why": "OSM route_master '成都地铁18号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11697795",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11697809",
+   "name": "呼和浩特地铁2号线",
+   "lp": [
+    "lp:cn:3117"
+   ],
+   "why": "OSM route_master '呼和浩特地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11697809",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11798336",
+   "name": "无锡地铁3号线",
+   "lp": [
+    "lp:cn:3122"
+   ],
+   "why": "OSM route_master '无锡地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11798336",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11803245",
+   "name": "合肥轨道交通8号线",
+   "lp": [
+    "lp:cn:3120"
+   ],
+   "why": "OSM route_master '合肥轨道交通8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11803245",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11803246",
+   "name": "合肥轨道交通7",
+   "lp": [
+    "lp:cn:3119",
+    "lp:cn:3121"
+   ],
+   "why": "OSM route_master '合肥轨道交通7' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11803246",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11803249",
+   "name": "合肥轨道交通6",
+   "lp": [
+    "lp:cn:3118"
+   ],
+   "why": "OSM route_master '合肥轨道交通6' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11803249",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-11923211",
+   "name": "南宁轨道交通4号线",
+   "lp": [
+    "lp:cn:3123"
+   ],
+   "why": "OSM route_master '南宁轨道交通4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/11923211",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12039115",
+   "name": "成都地铁6号线",
+   "lp": [
+    "lp:cn:2989"
+   ],
+   "why": "OSM route_master '成都地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12039115",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12086373",
+   "name": "成都地铁8号线",
+   "lp": [
+    "lp:cn:2998"
+   ],
+   "why": "OSM route_master '成都地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12086373",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12095438",
+   "name": "成都地铁17号线",
+   "lp": [
+    "lp:cn:3003"
+   ],
+   "why": "OSM route_master '成都地铁17号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12095438",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12231218",
+   "name": "上海地铁15号线",
+   "lp": [
+    "lp:cn:3129",
+    "lp:cn:3130"
+   ],
+   "why": "OSM route_master '上海地铁15号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12231218",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12385671",
+   "name": "合肥轨道交通5号线",
+   "lp": [
+    "lp:cn:3131"
+   ],
+   "why": "OSM route_master '合肥轨道交通5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12385671",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12567203",
+   "name": "亦庄新城现代有轨电车T1线",
+   "lp": [
+    "lp:cn:3134",
+    "lp:cn:3135"
+   ],
+   "why": "OSM route_master '亦庄新城现代有轨电车T1线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12567203",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12603876",
+   "name": "淮安有轨电车1号线",
+   "lp": [
+    "lp:cn:3136",
+    "lp:cn:3137"
+   ],
+   "why": "OSM route_master '淮安有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12603876",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12884475",
+   "name": "太原地铁1号线",
+   "lp": [
+    "lp:cn:3691",
+    "lp:cn:3692"
+   ],
+   "why": "OSM route_master '太原地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12884475",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12914035",
+   "name": "常州地铁2号线",
+   "lp": [
+    "lp:cn:3141",
+    "lp:cn:3144"
+   ],
+   "why": "OSM route_master '常州地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12914035",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12920991",
+   "name": "绍兴轨道交通1号线",
+   "lp": [
+    "lp:cn:3142",
+    "lp:cn:3145",
+    "lp:cn:3646"
+   ],
+   "why": "OSM route_master '绍兴轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12920991",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12925442",
+   "name": "西安地铁5号线",
+   "lp": [
+    "lp:cn:3147"
+   ],
+   "why": "OSM route_master '西安地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12925442",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-12942003",
+   "name": "洛阳轨道交通1️⃣号线",
+   "lp": [
+    "lp:cn:3132"
+   ],
+   "why": "OSM route_master '洛阳轨道交通1️⃣号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/12942003",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13040751",
+   "name": "西安地铁6号线",
+   "lp": [
+    "lp:cn:3148"
+   ],
+   "why": "OSM route_master '西安地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13040751",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13042254",
+   "name": "西安地铁9号线",
+   "lp": [
+    "lp:cn:3059",
+    "lp:cn:3149"
+   ],
+   "why": "OSM route_master '西安地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13042254",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13042427",
+   "name": "杭州地铁8号线",
+   "lp": [
+    "lp:cn:3150",
+    "lp:cn:3151"
+   ],
+   "why": "OSM route_master '杭州地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13042427",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13060970",
+   "name": "杭州地铁9号线",
+   "lp": [
+    "lp:cn:3152"
+   ],
+   "why": "OSM route_master '杭州地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13060970",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13067815",
+   "name": "青岛地铁1号线",
+   "lp": [
+    "lp:cn:3154"
+   ],
+   "why": "OSM route_master '青岛地铁1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13067815",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13068450",
+   "name": "青岛地铁8号线",
+   "lp": [
+    "lp:cn:3155",
+    "lp:cn:3156"
+   ],
+   "why": "OSM route_master '青岛地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13068450",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13077350",
+   "name": "杭州地铁6号线",
+   "lp": [
+    "lp:cn:3190",
+    "lp:cn:3191",
+    "lp:cn:3192",
+    "lp:cn:3193",
+    "lp:cn:3194",
+    "lp:cn:3195",
+    "lp:cn:3196",
+    "lp:cn:3197",
+    "lp:cn:3198",
+    "lp:cn:3199",
+    "lp:cn:3200",
+    "lp:cn:3201",
+    "lp:cn:3202",
+    "lp:cn:3203",
+    "lp:cn:3204",
+    "lp:cn:3205",
+    "lp:cn:3206",
+    "lp:cn:3207",
+    "lp:cn:3208",
+    "lp:cn:3209",
+    "lp:cn:3210",
+    "lp:cn:3211",
+    "lp:cn:3212",
+    "lp:cn:3213",
+    "lp:cn:3214",
+    "lp:cn:3215",
+    "lp:cn:3216",
+    "lp:cn:3217",
+    "lp:cn:3218",
+    "lp:cn:3219",
+    "lp:cn:3220",
+    "lp:cn:3221",
+    "lp:cn:3222",
+    "lp:cn:3223",
+    "lp:cn:3224",
+    "lp:cn:3225"
+   ],
+   "why": "OSM route_master '杭州地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13077350",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13077360",
+   "name": "杭州地铁4号线",
+   "lp": [
+    "lp:cn:2992",
+    "lp:cn:3226"
+   ],
+   "why": "OSM route_master '杭州地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13077360",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13078550",
+   "name": "杭海城际铁路",
+   "lp": [
+    "lp:cn:3227",
+    "lp:cn:3228",
+    "lp:cn:3229",
+    "lp:cn:3230",
+    "lp:cn:3231",
+    "lp:cn:3232",
+    "lp:cn:3233",
+    "lp:cn:3234",
+    "lp:cn:3235",
+    "lp:cn:3236",
+    "lp:cn:3237",
+    "lp:cn:3238",
+    "lp:cn:3239",
+    "lp:cn:3240",
+    "lp:cn:3241",
+    "lp:cn:3242",
+    "lp:cn:3243",
+    "lp:cn:3244",
+    "lp:cn:3245",
+    "lp:cn:3246",
+    "lp:cn:3247",
+    "lp:cn:3248",
+    "lp:cn:3263",
+    "lp:cn:3264"
+   ],
+   "why": "OSM route_master '杭海城际铁路' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13078550",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13084233",
+   "name": "温州轨道交通S1线",
+   "lp": [
+    "lp:cn:3249",
+    "lp:cn:3250"
+   ],
+   "why": "OSM route_master '温州轨道交通S1线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13084233",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13088859",
+   "name": "成都地铁9号线",
+   "lp": [
+    "lp:cn:2988"
+   ],
+   "why": "OSM route_master '成都地铁9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13088859",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13091428",
+   "name": "苏州轨道交通5号线",
+   "lp": [
+    "lp:cn:3143"
+   ],
+   "why": "OSM route_master '苏州轨道交通5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13091428",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13124236",
+   "name": "轻轨 南海有轨电车1号线",
+   "lp": [
+    "lp:cn:3251"
+   ],
+   "why": "OSM route_master '轻轨 南海有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13124236",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13140107",
+   "name": "黄埔有轨电车1号线",
+   "lp": [
+    "lp:cn:3073",
+    "lp:cn:3074",
+    "lp:cn:3075",
+    "lp:cn:3076",
+    "lp:cn:3077",
+    "lp:cn:3078",
+    "lp:cn:3079",
+    "lp:cn:3080",
+    "lp:cn:3081",
+    "lp:cn:3082",
+    "lp:cn:3083",
+    "lp:cn:3084",
+    "lp:cn:3085",
+    "lp:cn:3086",
+    "lp:cn:3087",
+    "lp:cn:3088",
+    "lp:cn:3089"
+   ],
+   "why": "OSM route_master '黄埔有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13140107",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13156413",
+   "name": "有轨 高明区现代有轨电车示范线",
+   "lp": [
+    "lp:cn:3042",
+    "lp:cn:3043",
+    "lp:cn:3044",
+    "lp:cn:3045",
+    "lp:cn:3046",
+    "lp:cn:3047",
+    "lp:cn:3048",
+    "lp:cn:3049",
+    "lp:cn:3050"
+   ],
+   "why": "OSM route_master '有轨 高明区现代有轨电车示范线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13156413",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13176924",
+   "name": "地铁 2号线（8号线）",
+   "lp": [
+    "lp:cn:2526",
+    "lp:cn:3252"
+   ],
+   "why": "OSM route_master '地铁 2号线（8号线）' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13176924",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13200482",
+   "name": "南京地铁S6号线",
+   "lp": [
+    "lp:cn:3253"
+   ],
+   "why": "OSM route_master '南京地铁S6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13200482",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13246294",
+   "name": "地铁 18号线",
+   "lp": [
+    "lp:cn:3254",
+    "lp:cn:3255",
+    "lp:cn:3256",
+    "lp:cn:3257",
+    "lp:cn:3258",
+    "lp:cn:3259",
+    "lp:cn:3260",
+    "lp:cn:3261"
+   ],
+   "why": "OSM route_master '地铁 18号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13246294",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13250192",
+   "name": "哈尔滨地铁2号线",
+   "lp": [
+    "lp:cn:3262"
+   ],
+   "why": "OSM route_master '哈尔滨地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13250192",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13298577",
+   "name": "北京地铁八通线",
+   "lp": [
+    "lp:cn:2486",
+    "lp:cn:2487"
+   ],
+   "why": "OSM route_master '北京地铁八通线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13298577",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13305525",
+   "name": "璧山云巴1号线",
+   "lp": [
+    "lp:cn:3140",
+    "lp:cn:3266"
+   ],
+   "why": "OSM route_master '璧山云巴1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13305525",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13317505",
+   "name": "郑州地铁4号线",
+   "lp": [
+    "lp:cn:2762"
+   ],
+   "why": "OSM route_master '郑州地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13317505",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13317992",
+   "name": "郑州地铁3号线",
+   "lp": [
+    "lp:cn:3146"
+   ],
+   "why": "OSM route_master '郑州地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13317992",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13367011",
+   "name": "成都地铁30号线",
+   "lp": [
+    "lp:cn:3773"
+   ],
+   "why": "OSM route_master '成都地铁30号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13367011",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13502832",
+   "name": "南昌地铁2号线",
+   "lp": [
+    "lp:cn:2531"
+   ],
+   "why": "OSM route_master '南昌地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13502832",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13507037",
+   "name": "南昌地铁3号线",
+   "lp": [
+    "lp:cn:2555"
+   ],
+   "why": "OSM route_master '南昌地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13507037",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13528567",
+   "name": "杭州地铁7号线",
+   "lp": [
+    "lp:cn:3133",
+    "lp:cn:3153"
+   ],
+   "why": "OSM route_master '杭州地铁7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13528567",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13535688",
+   "name": "杭州地铁10号线",
+   "lp": [
+    "lp:cn:3270"
+   ],
+   "why": "OSM route_master '杭州地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13535688",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13536846",
+   "name": "合肥轨道交通4号线",
+   "lp": [
+    "lp:cn:3271",
+    "lp:cn:3272",
+    "lp:cn:3273",
+    "lp:cn:3274",
+    "lp:cn:3275",
+    "lp:cn:3276",
+    "lp:cn:3277",
+    "lp:cn:3278",
+    "lp:cn:3279",
+    "lp:cn:3280",
+    "lp:cn:3281",
+    "lp:cn:3282",
+    "lp:cn:3283",
+    "lp:cn:3284",
+    "lp:cn:3285",
+    "lp:cn:3286",
+    "lp:cn:3287",
+    "lp:cn:3288",
+    "lp:cn:3289",
+    "lp:cn:3290",
+    "lp:cn:3291",
+    "lp:cn:3292",
+    "lp:cn:3293",
+    "lp:cn:3294",
+    "lp:cn:3295",
+    "lp:cn:3296",
+    "lp:cn:3297",
+    "lp:cn:3298",
+    "lp:cn:3299",
+    "lp:cn:3648"
+   ],
+   "why": "OSM route_master '合肥轨道交通4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13536846",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13538221",
+   "name": "杭州地铁3号线",
+   "lp": [
+    "lp:cn:3300",
+    "lp:cn:3388",
+    "lp:cn:3389",
+    "lp:cn:3390",
+    "lp:cn:3391",
+    "lp:cn:3392",
+    "lp:cn:3393",
+    "lp:cn:3394",
+    "lp:cn:3395",
+    "lp:cn:3396",
+    "lp:cn:3397",
+    "lp:cn:3398",
+    "lp:cn:3399",
+    "lp:cn:3400",
+    "lp:cn:3401",
+    "lp:cn:3402",
+    "lp:cn:3403",
+    "lp:cn:3404",
+    "lp:cn:3405",
+    "lp:cn:3406",
+    "lp:cn:3407",
+    "lp:cn:3408",
+    "lp:cn:3409",
+    "lp:cn:3410",
+    "lp:cn:3411",
+    "lp:cn:3412",
+    "lp:cn:3413"
+   ],
+   "why": "OSM route_master '杭州地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13538221",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13540934",
+   "name": "无锡地铁四号线",
+   "lp": [
+    "lp:cn:3301"
+   ],
+   "why": "OSM route_master '无锡地铁四号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13540934",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13557463",
+   "name": "南宁轨道交通5号线",
+   "lp": [
+    "lp:cn:3302"
+   ],
+   "why": "OSM route_master '南宁轨道交通5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13557463",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13592842",
+   "name": "洛阳轨道交通2号线",
+   "lp": [
+    "lp:cn:3303"
+   ],
+   "why": "OSM route_master '洛阳轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13592842",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13604445",
+   "name": "地铁 2号线",
+   "lp": [
+    "lp:cn:3304"
+   ],
+   "why": "OSM route_master '地铁 2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13604445",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13620411",
+   "name": "地铁 20号线",
+   "lp": [
+    "lp:cn:3308"
+   ],
+   "why": "OSM route_master '地铁 20号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13620411",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13623628",
+   "name": "北京地铁11号线",
+   "lp": [
+    "lp:cn:3309"
+   ],
+   "why": "OSM route_master '北京地铁11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13623628",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13625329",
+   "name": "北京地铁19号线",
+   "lp": [
+    "lp:cn:3310",
+    "lp:cn:3311"
+   ],
+   "why": "OSM route_master '北京地铁19号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13625329",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13626146",
+   "name": "宁波轨道交通5号线",
+   "lp": [
+    "lp:cn:3305"
+   ],
+   "why": "OSM route_master '宁波轨道交通5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13626146",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13633615",
+   "name": "大连地铁13号线",
+   "lp": [
+    "lp:cn:3312",
+    "lp:cn:3313"
+   ],
+   "why": "OSM route_master '大连地铁13号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13633615",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13647962",
+   "name": "武汉地铁5号线",
+   "lp": [
+    "lp:cn:3314"
+   ],
+   "why": "OSM route_master '武汉地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13647962",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13648363",
+   "name": "武汉地铁16号线",
+   "lp": [
+    "lp:cn:3315"
+   ],
+   "why": "OSM route_master '武汉地铁16号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13648363",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13652091",
+   "name": "天津地铁4号线",
+   "lp": [
+    "lp:cn:3316",
+    "lp:cn:3317",
+    "lp:cn:3719",
+    "lp:cn:3720"
+   ],
+   "why": "OSM route_master '天津地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13652091",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13681035",
+   "name": "南昌地铁4号线",
+   "lp": [
+    "lp:cn:2556"
+   ],
+   "why": "OSM route_master '南昌地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13681035",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13711701",
+   "name": "天津地铁8号线",
+   "lp": [
+    "lp:cn:3332",
+    "lp:cn:3333"
+   ],
+   "why": "OSM route_master '天津地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13711701",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-13988001",
+   "name": "地铁 22号线",
+   "lp": [
+    "lp:cn:3334",
+    "lp:cn:3335",
+    "lp:cn:3336",
+    "lp:cn:3337",
+    "lp:cn:3338",
+    "lp:cn:3339",
+    "lp:cn:3340"
+   ],
+   "why": "OSM route_master '地铁 22号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/13988001",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14004564",
+   "name": "重庆轨道交通9号线",
+   "lp": [
+    "lp:cn:3341",
+    "lp:cn:3342"
+   ],
+   "why": "OSM route_master '重庆轨道交通9号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14004564",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14085418",
+   "name": "福州地铁5号线",
+   "lp": [
+    "lp:cn:3343",
+    "lp:cn:3344"
+   ],
+   "why": "OSM route_master '福州地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14085418",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14215022",
+   "name": "太原地铁2号线",
+   "lp": [
+    "lp:cn:3125",
+    "lp:cn:3345"
+   ],
+   "why": "OSM route_master '太原地铁2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14215022",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14251885",
+   "name": "松江有轨电车1号线",
+   "lp": [
+    "lp:cn:3346",
+    "lp:cn:3347",
+    "lp:cn:3348",
+    "lp:cn:3349",
+    "lp:cn:3350",
+    "lp:cn:3351",
+    "lp:cn:3352",
+    "lp:cn:3353",
+    "lp:cn:3354",
+    "lp:cn:3355",
+    "lp:cn:3356",
+    "lp:cn:3357",
+    "lp:cn:3358",
+    "lp:cn:3359",
+    "lp:cn:3360",
+    "lp:cn:3361",
+    "lp:cn:3362",
+    "lp:cn:3363",
+    "lp:cn:3364",
+    "lp:cn:3365",
+    "lp:cn:3366",
+    "lp:cn:3367",
+    "lp:cn:3368",
+    "lp:cn:3369",
+    "lp:cn:3370",
+    "lp:cn:3371",
+    "lp:cn:3372",
+    "lp:cn:3373",
+    "lp:cn:3374",
+    "lp:cn:3375",
+    "lp:cn:3376",
+    "lp:cn:3377",
+    "lp:cn:3378",
+    "lp:cn:3379",
+    "lp:cn:3380",
+    "lp:cn:3381",
+    "lp:cn:3382",
+    "lp:cn:3383",
+    "lp:cn:3384",
+    "lp:cn:3385",
+    "lp:cn:3386",
+    "lp:cn:3387"
+   ],
+   "why": "OSM route_master '松江有轨电车1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14251885",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14303415",
+   "name": "长沙地铁6号线",
+   "lp": [
+    "lp:cn:3414"
+   ],
+   "why": "OSM route_master '长沙地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14303415",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14317129",
+   "name": "昆明地铁5号线",
+   "lp": [
+    "lp:cn:3415"
+   ],
+   "why": "OSM route_master '昆明地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14317129",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14434654",
+   "name": "重庆轨道交通江跳线",
+   "lp": [
+    "lp:cn:3022",
+    "lp:cn:3416"
+   ],
+   "why": "OSM route_master '重庆轨道交通江跳线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14434654",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14489040",
+   "name": "金华轨道交通金义东线 金义段",
+   "lp": [
+    "lp:cn:3318",
+    "lp:cn:3319",
+    "lp:cn:3320",
+    "lp:cn:3321",
+    "lp:cn:3322",
+    "lp:cn:3323",
+    "lp:cn:3324",
+    "lp:cn:3325",
+    "lp:cn:3326",
+    "lp:cn:3327",
+    "lp:cn:3328",
+    "lp:cn:3329",
+    "lp:cn:3330",
+    "lp:cn:3331"
+   ],
+   "why": "OSM route_master '金华轨道交通金义东线 金义段' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14489040",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14509136",
+   "name": "福州地铁6号线",
+   "lp": [
+    "lp:cn:3417"
+   ],
+   "why": "OSM route_master '福州地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14509136",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14594833",
+   "name": "深圳有轨电车",
+   "lp": [
+    "lp:cn:3418",
+    "lp:cn:3419",
+    "lp:cn:3420"
+   ],
+   "why": "OSM route_master '深圳有轨电车' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14594833",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14613133",
+   "name": "杭州地铁19号线",
+   "lp": [
+    "lp:cn:3421",
+    "lp:cn:3422"
+   ],
+   "why": "OSM route_master '杭州地铁19号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14613133",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14642983",
+   "name": "郑州地铁6号线",
+   "lp": [
+    "lp:cn:3423"
+   ],
+   "why": "OSM route_master '郑州地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14642983",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14660495",
+   "name": "上海浦东机场旅客捷运系统西线",
+   "lp": [
+    "lp:cn:3424"
+   ],
+   "why": "OSM route_master '上海浦东机场旅客捷运系统西线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14660495",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14660496",
+   "name": "上海浦东机场旅客捷运系统东线",
+   "lp": [
+    "lp:cn:3425"
+   ],
+   "why": "OSM route_master '上海浦东机场旅客捷运系统东线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14660496",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14764338",
+   "name": "地铁 14号线",
+   "lp": [
+    "lp:cn:3426"
+   ],
+   "why": "OSM route_master '地铁 14号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14764338",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14870574",
+   "name": "南通轨道交通1号线",
+   "lp": [
+    "lp:cn:3427"
+   ],
+   "why": "OSM route_master '南通轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14870574",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14903908",
+   "name": "天津地铁10号线",
+   "lp": [
+    "lp:cn:3428",
+    "lp:cn:3429"
+   ],
+   "why": "OSM route_master '天津地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14903908",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14944729",
+   "name": "地铁 12号线",
+   "lp": [
+    "lp:cn:3430"
+   ],
+   "why": "OSM route_master '地铁 12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14944729",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-14953717",
+   "name": "地铁 6号线支线",
+   "lp": [
+    "lp:cn:3431"
+   ],
+   "why": "OSM route_master '地铁 6号线支线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/14953717",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15054273",
+   "name": "地铁 3号线",
+   "lp": [
+    "lp:cn:3435",
+    "lp:cn:3800"
+   ],
+   "why": "OSM route_master '地铁 3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15054273",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15058106",
+   "name": "台州市域铁路S1线",
+   "lp": [
+    "lp:cn:3124"
+   ],
+   "why": "OSM route_master '台州市域铁路S1线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15058106",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15059918",
+   "name": "地铁 16号线",
+   "lp": [
+    "lp:cn:3436"
+   ],
+   "why": "OSM route_master '地铁 16号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15059918",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15061613",
+   "name": "坪山云巴 1号线",
+   "lp": [
+    "lp:cn:3437"
+   ],
+   "why": "OSM route_master '坪山云巴 1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15061613",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15336346",
+   "name": "南京地铁7号线",
+   "lp": [
+    "lp:cn:3438"
+   ],
+   "why": "OSM route_master '南京地铁7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15336346",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15611913",
+   "name": "大连地铁5号线",
+   "lp": [
+    "lp:cn:3440"
+   ],
+   "why": "OSM route_master '大连地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15611913",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15749314",
+   "name": "重庆轨道交通18号线",
+   "lp": [
+    "lp:cn:3443",
+    "lp:cn:3444"
+   ],
+   "why": "OSM route_master '重庆轨道交通18号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15749314",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15804062",
+   "name": "宁滁线",
+   "lp": [
+    "lp:cn:3445"
+   ],
+   "why": "OSM route_master '宁滁线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15804062",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-15850104",
+   "name": "大王山云巴",
+   "lp": [
+    "lp:cn:3446"
+   ],
+   "why": "OSM route_master '大王山云巴' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/15850104",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16097173",
+   "name": "苏州轨道交通11号线",
+   "lp": [
+    "lp:cn:3447",
+    "lp:cn:3448",
+    "lp:cn:3449",
+    "lp:cn:3450",
+    "lp:cn:3451",
+    "lp:cn:3452",
+    "lp:cn:3453",
+    "lp:cn:3454",
+    "lp:cn:3455",
+    "lp:cn:3456",
+    "lp:cn:3457",
+    "lp:cn:3458",
+    "lp:cn:3459",
+    "lp:cn:3460",
+    "lp:cn:3461",
+    "lp:cn:3462",
+    "lp:cn:3463",
+    "lp:cn:3464",
+    "lp:cn:3465",
+    "lp:cn:3466",
+    "lp:cn:3467",
+    "lp:cn:3468",
+    "lp:cn:3469",
+    "lp:cn:3470",
+    "lp:cn:3471",
+    "lp:cn:3472",
+    "lp:cn:3473",
+    "lp:cn:3474",
+    "lp:cn:3475",
+    "lp:cn:3476",
+    "lp:cn:3477",
+    "lp:cn:3478",
+    "lp:cn:3479",
+    "lp:cn:3480",
+    "lp:cn:3481",
+    "lp:cn:3482",
+    "lp:cn:3483",
+    "lp:cn:3484",
+    "lp:cn:3485",
+    "lp:cn:3486",
+    "lp:cn:3487",
+    "lp:cn:3488",
+    "lp:cn:3489",
+    "lp:cn:3490",
+    "lp:cn:3491",
+    "lp:cn:3492",
+    "lp:cn:3493",
+    "lp:cn:3494",
+    "lp:cn:3495",
+    "lp:cn:3496",
+    "lp:cn:3623",
+    "lp:cn:3624",
+    "lp:cn:3625",
+    "lp:cn:3626",
+    "lp:cn:3627"
+   ],
+   "why": "OSM route_master '苏州轨道交通11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16097173",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16103884",
+   "name": "长沙地铁3号线南延（原西环线）",
+   "lp": [
+    "lp:cn:3497"
+   ],
+   "why": "OSM route_master '长沙地铁3号线南延（原西环线）' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16103884",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16104056",
+   "name": "西安地铁16号线",
+   "lp": [
+    "lp:cn:3498"
+   ],
+   "why": "OSM route_master '西安地铁16号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16104056",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16136208",
+   "name": "绍兴轨道交通2号线",
+   "lp": [
+    "lp:cn:3499"
+   ],
+   "why": "OSM route_master '绍兴轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16136208",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16159340",
+   "name": "南京河西有轨电车",
+   "lp": [
+    "lp:cn:3500"
+   ],
+   "why": "OSM route_master '南京河西有轨电车' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16159340",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16159341",
+   "name": "南京麒麟有轨电车",
+   "lp": [
+    "lp:cn:3501"
+   ],
+   "why": "OSM route_master '南京麒麟有轨电车' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16159341",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16244469",
+   "name": "温州轨道交通S2线",
+   "lp": [
+    "lp:cn:3265",
+    "lp:cn:3576",
+    "lp:cn:3577",
+    "lp:cn:3578"
+   ],
+   "why": "OSM route_master '温州轨道交通S2线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16244469",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16253271",
+   "name": "福州地铁4号线",
+   "lp": [
+    "lp:cn:3579",
+    "lp:cn:3580"
+   ],
+   "why": "OSM route_master '福州地铁4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16253271",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16257558",
+   "name": "有轨电车 T1线",
+   "lp": [
+    "lp:cn:2938",
+    "lp:cn:3581"
+   ],
+   "why": "OSM route_master '有轨电车 T1线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16257558",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16494769",
+   "name": "19",
+   "lp": [
+    "lp:cn:3586",
+    "lp:cn:3587",
+    "lp:cn:3588",
+    "lp:cn:3589",
+    "lp:cn:3590",
+    "lp:cn:3591",
+    "lp:cn:3592",
+    "lp:cn:3593",
+    "lp:cn:3594",
+    "lp:cn:3595",
+    "lp:cn:3596",
+    "lp:cn:3597",
+    "lp:cn:3598",
+    "lp:cn:3599",
+    "lp:cn:3600",
+    "lp:cn:3601",
+    "lp:cn:3602",
+    "lp:cn:3603",
+    "lp:cn:3604",
+    "lp:cn:3605",
+    "lp:cn:3606",
+    "lp:cn:3607",
+    "lp:cn:3608",
+    "lp:cn:3609",
+    "lp:cn:3610",
+    "lp:cn:3611",
+    "lp:cn:3612",
+    "lp:cn:3613",
+    "lp:cn:3614",
+    "lp:cn:3615",
+    "lp:cn:3616",
+    "lp:cn:3617",
+    "lp:cn:3618",
+    "lp:cn:3619",
+    "lp:cn:3620",
+    "lp:cn:3621"
+   ],
+   "why": "OSM route_master '19' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16494769",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16848925",
+   "name": "郑州地铁12号线",
+   "lp": [
+    "lp:cn:3622"
+   ],
+   "why": "OSM route_master '郑州地铁12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16848925",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16890961",
+   "name": "武汉地铁19号线",
+   "lp": [
+    "lp:cn:3628"
+   ],
+   "why": "OSM route_master '武汉地铁19号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16890961",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-16918818",
+   "name": "南通轨道交通2号线",
+   "lp": [
+    "lp:cn:3631"
+   ],
+   "why": "OSM route_master '南通轨道交通2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/16918818",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17126909",
+   "name": "无锡地铁S1号线",
+   "lp": [
+    "lp:cn:3632",
+    "lp:cn:3633",
+    "lp:cn:3634",
+    "lp:cn:3635",
+    "lp:cn:3636",
+    "lp:cn:3637",
+    "lp:cn:3638",
+    "lp:cn:3639"
+   ],
+   "why": "OSM route_master '无锡地铁S1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17126909",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17136842",
+   "name": "重庆市郊铁路璧铜线",
+   "lp": [
+    "lp:cn:3640",
+    "lp:cn:3641"
+   ],
+   "why": "OSM route_master '重庆市郊铁路璧铜线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17136842",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17399102",
+   "name": "长春轨道交通6号线",
+   "lp": [
+    "lp:cn:3644"
+   ],
+   "why": "OSM route_master '长春轨道交通6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17399102",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17417178",
+   "name": "南京地铁5号线",
+   "lp": [
+    "lp:cn:3645"
+   ],
+   "why": "OSM route_master '南京地铁5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17417178",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17518162",
+   "name": "青岛地铁6号线",
+   "lp": [
+    "lp:cn:3647"
+   ],
+   "why": "OSM route_master '青岛地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17518162",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17703079",
+   "name": "沈阳有轨电车5号线",
+   "lp": [
+    "lp:cn:2643",
+    "lp:cn:2644",
+    "lp:cn:2645",
+    "lp:cn:2646",
+    "lp:cn:2647",
+    "lp:cn:2648",
+    "lp:cn:2649",
+    "lp:cn:2650",
+    "lp:cn:2651",
+    "lp:cn:2652",
+    "lp:cn:2653",
+    "lp:cn:2654",
+    "lp:cn:2655",
+    "lp:cn:2656",
+    "lp:cn:2657",
+    "lp:cn:2658",
+    "lp:cn:2659",
+    "lp:cn:2660",
+    "lp:cn:2661",
+    "lp:cn:2662",
+    "lp:cn:2701",
+    "lp:cn:2702",
+    "lp:cn:2703",
+    "lp:cn:2704",
+    "lp:cn:2705",
+    "lp:cn:2706",
+    "lp:cn:2707",
+    "lp:cn:2708",
+    "lp:cn:2709",
+    "lp:cn:2710",
+    "lp:cn:2711",
+    "lp:cn:2712",
+    "lp:cn:2713",
+    "lp:cn:2714",
+    "lp:cn:2715",
+    "lp:cn:2716",
+    "lp:cn:2717",
+    "lp:cn:2718",
+    "lp:cn:2719",
+    "lp:cn:2720",
+    "lp:cn:2721"
+   ],
+   "why": "OSM route_master '沈阳有轨电车5号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17703079",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17703082",
+   "name": "沈阳有轨电车6号线",
+   "lp": [
+    "lp:cn:3649",
+    "lp:cn:3650"
+   ],
+   "why": "OSM route_master '沈阳有轨电车6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17703082",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17703083",
+   "name": "沈阳有轨电车4号线",
+   "lp": [
+    "lp:cn:3651",
+    "lp:cn:3652"
+   ],
+   "why": "OSM route_master '沈阳有轨电车4号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17703083",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17818481",
+   "name": "市域机场线",
+   "lp": [
+    "lp:cn:3582",
+    "lp:cn:3583",
+    "lp:cn:3584",
+    "lp:cn:3585",
+    "lp:cn:3704",
+    "lp:cn:3705",
+    "lp:cn:3706",
+    "lp:cn:3707",
+    "lp:cn:3708",
+    "lp:cn:3709"
+   ],
+   "why": "OSM route_master '市域机场线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17818481",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17876064",
+   "name": "苏州轨道交通6号线",
+   "lp": [
+    "lp:cn:3661",
+    "lp:cn:3662",
+    "lp:cn:3663",
+    "lp:cn:3664",
+    "lp:cn:3665",
+    "lp:cn:3666",
+    "lp:cn:3667",
+    "lp:cn:3668",
+    "lp:cn:3669",
+    "lp:cn:3670",
+    "lp:cn:3671",
+    "lp:cn:3672",
+    "lp:cn:3673",
+    "lp:cn:3674",
+    "lp:cn:3675",
+    "lp:cn:3676",
+    "lp:cn:3677",
+    "lp:cn:3678",
+    "lp:cn:3679",
+    "lp:cn:3680",
+    "lp:cn:3681",
+    "lp:cn:3682",
+    "lp:cn:3683",
+    "lp:cn:3684",
+    "lp:cn:3685",
+    "lp:cn:3686",
+    "lp:cn:3687",
+    "lp:cn:3698"
+   ],
+   "why": "OSM route_master '苏州轨道交通6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17876064",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-17925374",
+   "name": "西安高新云巴线",
+   "lp": [
+    "lp:cn:3688"
+   ],
+   "why": "OSM route_master '西安高新云巴线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/17925374",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18026577",
+   "name": "苏州轨道交通8号线",
+   "lp": [
+    "lp:cn:3690"
+   ],
+   "why": "OSM route_master '苏州轨道交通8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18026577",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18089015",
+   "name": "西安地铁10号线",
+   "lp": [
+    "lp:cn:3693"
+   ],
+   "why": "OSM route_master '西安地铁10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18089015",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18099359",
+   "name": "天津地铁津静线",
+   "lp": [
+    "lp:cn:3660",
+    "lp:cn:3694"
+   ],
+   "why": "OSM route_master '天津地铁津静线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18099359",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18140009",
+   "name": "昆明池旅游观光智轨线",
+   "lp": [
+    "lp:cn:3697"
+   ],
+   "why": "OSM route_master '昆明池旅游观光智轨线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18140009",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18168636",
+   "name": "成都市域铁路S3资阳线",
+   "lp": [
+    "lp:cn:3108"
+   ],
+   "why": "OSM route_master '成都市域铁路S3资阳线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18168636",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18356559",
+   "name": "苏州轨道交通7号线",
+   "lp": [
+    "lp:cn:3699"
+   ],
+   "why": "OSM route_master '苏州轨道交通7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18356559",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18420551",
+   "name": "北京地铁3号线",
+   "lp": [
+    "lp:cn:3700"
+   ],
+   "why": "OSM route_master '北京地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18420551",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18436265",
+   "name": "成都地铁27号线",
+   "lp": [
+    "lp:cn:3128"
+   ],
+   "why": "OSM route_master '成都地铁27号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18436265",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18444658",
+   "name": "北京地铁12号线",
+   "lp": [
+    "lp:cn:3701"
+   ],
+   "why": "OSM route_master '北京地铁12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18444658",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18463045",
+   "name": "西安地铁8号线",
+   "lp": [
+    "lp:cn:3702",
+    "lp:cn:3703"
+   ],
+   "why": "OSM route_master '西安地铁8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18463045",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18482206",
+   "name": "沈阳地铁3号线",
+   "lp": [
+    "lp:cn:3710"
+   ],
+   "why": "OSM route_master '沈阳地铁3号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18482206",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18497640",
+   "name": "天津地铁11号线",
+   "lp": [
+    "lp:cn:3629",
+    "lp:cn:3630"
+   ],
+   "why": "OSM route_master '天津地铁11号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18497640",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18610085",
+   "name": "清远长隆磁浮旅游专线",
+   "lp": [
+    "lp:cn:3711"
+   ],
+   "why": "OSM route_master '清远长隆磁浮旅游专线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18610085",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-18957313",
+   "name": "滨海快线",
+   "lp": [
+    "lp:cn:3442",
+    "lp:cn:3712",
+    "lp:cn:3733",
+    "lp:cn:3734",
+    "lp:cn:3735",
+    "lp:cn:3736",
+    "lp:cn:3737",
+    "lp:cn:3738",
+    "lp:cn:3739",
+    "lp:cn:3740",
+    "lp:cn:3741",
+    "lp:cn:3742",
+    "lp:cn:3743",
+    "lp:cn:3744",
+    "lp:cn:3745",
+    "lp:cn:3746"
+   ],
+   "why": "OSM route_master '滨海快线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/18957313",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19283543",
+   "name": "地铁 10号线",
+   "lp": [
+    "lp:cn:3713"
+   ],
+   "why": "OSM route_master '地铁 10号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19283543",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19283550",
+   "name": "地铁 12号线",
+   "lp": [
+    "lp:cn:3714",
+    "lp:cn:3715",
+    "lp:cn:3716"
+   ],
+   "why": "OSM route_master '地铁 12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19283550",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19321000",
+   "name": "宁波轨道交通8号线",
+   "lp": [
+    "lp:cn:3718"
+   ],
+   "why": "OSM route_master '宁波轨道交通8号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19321000",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19382703",
+   "name": "黄埔有轨电车2号线",
+   "lp": [
+    "lp:cn:3721",
+    "lp:cn:3722",
+    "lp:cn:3723",
+    "lp:cn:3724",
+    "lp:cn:3725",
+    "lp:cn:3726",
+    "lp:cn:3727"
+   ],
+   "why": "OSM route_master '黄埔有轨电车2号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19382703",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19383296",
+   "name": "凤凰磁浮观光快线",
+   "lp": [
+    "lp:cn:3434"
+   ],
+   "why": "OSM route_master '凤凰磁浮观光快线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19383296",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19442546",
+   "name": "天津地铁7号线",
+   "lp": [
+    "lp:cn:3728",
+    "lp:cn:3729"
+   ],
+   "why": "OSM route_master '天津地铁7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19442546",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19533621",
+   "name": "宁波轨道交通7号线",
+   "lp": [
+    "lp:cn:3730"
+   ],
+   "why": "OSM route_master '宁波轨道交通7号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19533621",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19572432",
+   "name": "南京地铁S1-S7贯通特快",
+   "lp": [
+    "lp:cn:3731"
+   ],
+   "why": "OSM route_master '南京地铁S1-S7贯通特快' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19572432",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19656187",
+   "name": "徐州地铁6号线",
+   "lp": [
+    "lp:cn:3127",
+    "lp:cn:3732"
+   ],
+   "why": "OSM route_master '徐州地铁6号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19656187",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19893576",
+   "name": "东莞轨道交通1号线",
+   "lp": [
+    "lp:cn:3747",
+    "lp:cn:3748",
+    "lp:cn:3749",
+    "lp:cn:3750",
+    "lp:cn:3751",
+    "lp:cn:3752",
+    "lp:cn:3753",
+    "lp:cn:3754",
+    "lp:cn:3755",
+    "lp:cn:3756",
+    "lp:cn:3757",
+    "lp:cn:3758",
+    "lp:cn:3759",
+    "lp:cn:3760",
+    "lp:cn:3761",
+    "lp:cn:3762",
+    "lp:cn:3763",
+    "lp:cn:3764",
+    "lp:cn:3765",
+    "lp:cn:3766",
+    "lp:cn:3767",
+    "lp:cn:3768",
+    "lp:cn:3769",
+    "lp:cn:3770"
+   ],
+   "why": "OSM route_master '东莞轨道交通1号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19893576",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19966316",
+   "name": "天津地铁Z4线",
+   "lp": [
+    "lp:cn:3771",
+    "lp:cn:3772"
+   ],
+   "why": "OSM route_master '天津地铁Z4线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19966316",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19975040",
+   "name": "成都地铁13号线",
+   "lp": [
+    "lp:cn:3109"
+   ],
+   "why": "OSM route_master '成都地铁13号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19975040",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-19979192",
+   "name": "南京地铁S2号线/宁马线",
+   "lp": [
+    "lp:cn:3774"
+   ],
+   "why": "OSM route_master '南京地铁S2号线/宁马线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/19979192",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-20010806",
+   "name": "北京地铁18号线",
+   "lp": [
+    "lp:cn:3775",
+    "lp:cn:3776",
+    "lp:cn:3777",
+    "lp:cn:3778",
+    "lp:cn:3779",
+    "lp:cn:3780",
+    "lp:cn:3781",
+    "lp:cn:3782",
+    "lp:cn:3783",
+    "lp:cn:3784"
+   ],
+   "why": "OSM route_master '北京地铁18号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/20010806",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-20015197",
+   "name": "西安地铁15号线",
+   "lp": [
+    "lp:cn:3785"
+   ],
+   "why": "OSM route_master '西安地铁15号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/20015197",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-20370834",
+   "name": "长寿缆车",
+   "lp": [
+    "lp:cn:3788"
+   ],
+   "why": "OSM route_master '长寿缆车' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/20370834",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-20622654",
+   "name": "武汉地铁12号线",
+   "lp": [
+    "lp:cn:3789"
+   ],
+   "why": "OSM route_master '武汉地铁12号线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/20622654",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-20736175",
+   "name": "青岛有轨电车示范线",
+   "lp": [
+    "lp:cn:3126",
+    "lp:cn:3790",
+    "lp:cn:3791",
+    "lp:cn:3792",
+    "lp:cn:3793",
+    "lp:cn:3794",
+    "lp:cn:3795",
+    "lp:cn:3796",
+    "lp:cn:3797",
+    "lp:cn:3798",
+    "lp:cn:3799"
+   ],
+   "why": "OSM route_master '青岛有轨电车示范线' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/20736175",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-route-master-21084986",
+   "name": "6",
+   "lp": [
+    "lp:cn:3786",
+    "lp:cn:3787"
+   ],
+   "why": "OSM route_master '6' groups these route relations as one line",
+   "source": "https://www.openstreetmap.org/relation/21084986",
+   "reviewedBy": "osm-route-master 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-162982",
+   "lp": [
+    "lp:cn:3",
+    "lp:cn:4",
+    "lp:cn:5",
+    "lp:cn:6",
+    "lp:cn:7",
+    "lp:cn:8",
+    "lp:cn:9",
+    "lp:cn:10",
+    "lp:cn:11",
+    "lp:cn:12",
+    "lp:cn:13",
+    "lp:cn:14"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/162982",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-163022",
+   "lp": [
+    "lp:cn:15",
+    "lp:cn:16",
+    "lp:cn:17",
+    "lp:cn:18",
+    "lp:cn:19",
+    "lp:cn:20",
+    "lp:cn:21",
+    "lp:cn:22",
+    "lp:cn:23",
+    "lp:cn:24",
+    "lp:cn:25",
+    "lp:cn:26",
+    "lp:cn:27",
+    "lp:cn:28",
+    "lp:cn:29",
+    "lp:cn:30",
+    "lp:cn:31",
+    "lp:cn:32",
+    "lp:cn:33",
+    "lp:cn:34",
+    "lp:cn:35",
+    "lp:cn:36",
+    "lp:cn:37",
+    "lp:cn:38",
+    "lp:cn:39",
+    "lp:cn:40",
+    "lp:cn:41",
+    "lp:cn:42",
+    "lp:cn:43",
+    "lp:cn:44",
+    "lp:cn:45",
+    "lp:cn:46",
+    "lp:cn:47",
+    "lp:cn:48"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/163022",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-163418",
+   "lp": [
+    "lp:cn:50",
+    "lp:cn:51",
+    "lp:cn:52",
+    "lp:cn:53",
+    "lp:cn:54",
+    "lp:cn:55",
+    "lp:cn:56",
+    "lp:cn:57",
+    "lp:cn:58",
+    "lp:cn:59",
+    "lp:cn:60",
+    "lp:cn:61",
+    "lp:cn:62",
+    "lp:cn:63",
+    "lp:cn:64",
+    "lp:cn:65",
+    "lp:cn:66",
+    "lp:cn:67",
+    "lp:cn:68",
+    "lp:cn:69",
+    "lp:cn:70",
+    "lp:cn:71",
+    "lp:cn:72",
+    "lp:cn:73",
+    "lp:cn:74",
+    "lp:cn:75",
+    "lp:cn:76",
+    "lp:cn:77",
+    "lp:cn:78",
+    "lp:cn:79",
+    "lp:cn:80",
+    "lp:cn:81",
+    "lp:cn:82",
+    "lp:cn:83",
+    "lp:cn:84",
+    "lp:cn:85",
+    "lp:cn:86",
+    "lp:cn:87",
+    "lp:cn:88",
+    "lp:cn:89",
+    "lp:cn:90",
+    "lp:cn:91",
+    "lp:cn:92",
+    "lp:cn:93",
+    "lp:cn:94",
+    "lp:cn:95",
+    "lp:cn:96",
+    "lp:cn:97",
+    "lp:cn:98",
+    "lp:cn:99",
+    "lp:cn:100",
+    "lp:cn:101",
+    "lp:cn:102",
+    "lp:cn:103",
+    "lp:cn:104",
+    "lp:cn:105",
+    "lp:cn:106",
+    "lp:cn:107",
+    "lp:cn:108",
+    "lp:cn:109",
+    "lp:cn:110",
+    "lp:cn:111",
+    "lp:cn:112",
+    "lp:cn:113",
+    "lp:cn:114",
+    "lp:cn:115",
+    "lp:cn:116",
+    "lp:cn:117",
+    "lp:cn:118",
+    "lp:cn:119",
+    "lp:cn:120",
+    "lp:cn:121",
+    "lp:cn:122",
+    "lp:cn:123",
+    "lp:cn:124",
+    "lp:cn:125",
+    "lp:cn:126",
+    "lp:cn:127",
+    "lp:cn:128",
+    "lp:cn:129",
+    "lp:cn:130",
+    "lp:cn:131",
+    "lp:cn:132",
+    "lp:cn:133",
+    "lp:cn:134",
+    "lp:cn:135",
+    "lp:cn:136",
+    "lp:cn:137",
+    "lp:cn:138",
+    "lp:cn:139",
+    "lp:cn:140",
+    "lp:cn:141",
+    "lp:cn:142",
+    "lp:cn:143",
+    "lp:cn:144",
+    "lp:cn:145",
+    "lp:cn:146",
+    "lp:cn:147",
+    "lp:cn:148",
+    "lp:cn:149",
+    "lp:cn:150",
+    "lp:cn:151",
+    "lp:cn:152",
+    "lp:cn:153",
+    "lp:cn:154",
+    "lp:cn:155",
+    "lp:cn:156",
+    "lp:cn:157",
+    "lp:cn:158",
+    "lp:cn:159"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/163418",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-163712",
+   "lp": [
+    "lp:cn:160",
+    "lp:cn:161",
+    "lp:cn:162",
+    "lp:cn:163",
+    "lp:cn:164",
+    "lp:cn:165",
+    "lp:cn:166",
+    "lp:cn:167",
+    "lp:cn:168",
+    "lp:cn:169",
+    "lp:cn:170",
+    "lp:cn:171",
+    "lp:cn:172",
+    "lp:cn:173",
+    "lp:cn:174",
+    "lp:cn:175",
+    "lp:cn:176",
+    "lp:cn:177",
+    "lp:cn:178",
+    "lp:cn:179",
+    "lp:cn:180",
+    "lp:cn:181",
+    "lp:cn:182",
+    "lp:cn:183",
+    "lp:cn:184",
+    "lp:cn:185",
+    "lp:cn:186",
+    "lp:cn:187",
+    "lp:cn:188",
+    "lp:cn:189",
+    "lp:cn:190",
+    "lp:cn:191",
+    "lp:cn:192",
+    "lp:cn:193",
+    "lp:cn:194"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/163712",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-192894",
+   "lp": [
+    "lp:cn:195",
+    "lp:cn:196",
+    "lp:cn:197",
+    "lp:cn:198",
+    "lp:cn:199",
+    "lp:cn:200",
+    "lp:cn:201",
+    "lp:cn:202",
+    "lp:cn:203",
+    "lp:cn:204",
+    "lp:cn:205",
+    "lp:cn:206",
+    "lp:cn:207",
+    "lp:cn:208",
+    "lp:cn:209",
+    "lp:cn:210",
+    "lp:cn:211",
+    "lp:cn:212",
+    "lp:cn:213",
+    "lp:cn:214",
+    "lp:cn:215",
+    "lp:cn:216",
+    "lp:cn:217",
+    "lp:cn:218",
+    "lp:cn:219",
+    "lp:cn:220",
+    "lp:cn:221",
+    "lp:cn:222",
+    "lp:cn:223",
+    "lp:cn:224",
+    "lp:cn:225",
+    "lp:cn:226",
+    "lp:cn:227",
+    "lp:cn:228",
+    "lp:cn:229",
+    "lp:cn:230",
+    "lp:cn:231",
+    "lp:cn:232",
+    "lp:cn:233",
+    "lp:cn:234",
+    "lp:cn:235",
+    "lp:cn:236",
+    "lp:cn:237",
+    "lp:cn:238",
+    "lp:cn:239",
+    "lp:cn:240",
+    "lp:cn:241",
+    "lp:cn:242",
+    "lp:cn:243",
+    "lp:cn:244",
+    "lp:cn:245",
+    "lp:cn:246",
+    "lp:cn:247",
+    "lp:cn:248",
+    "lp:cn:249",
+    "lp:cn:250",
+    "lp:cn:251"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/192894",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-193064",
+   "lp": [
+    "lp:cn:252",
+    "lp:cn:253",
+    "lp:cn:254",
+    "lp:cn:255",
+    "lp:cn:256",
+    "lp:cn:257",
+    "lp:cn:258",
+    "lp:cn:259",
+    "lp:cn:260",
+    "lp:cn:261",
+    "lp:cn:262",
+    "lp:cn:263",
+    "lp:cn:264",
+    "lp:cn:265",
+    "lp:cn:266",
+    "lp:cn:267",
+    "lp:cn:268",
+    "lp:cn:269",
+    "lp:cn:270",
+    "lp:cn:271",
+    "lp:cn:272",
+    "lp:cn:273",
+    "lp:cn:274",
+    "lp:cn:275",
+    "lp:cn:276",
+    "lp:cn:277",
+    "lp:cn:278",
+    "lp:cn:279",
+    "lp:cn:280",
+    "lp:cn:281",
+    "lp:cn:282",
+    "lp:cn:283",
+    "lp:cn:284",
+    "lp:cn:285",
+    "lp:cn:286",
+    "lp:cn:287",
+    "lp:cn:288",
+    "lp:cn:289",
+    "lp:cn:290",
+    "lp:cn:291",
+    "lp:cn:292",
+    "lp:cn:293",
+    "lp:cn:294",
+    "lp:cn:295",
+    "lp:cn:296",
+    "lp:cn:297",
+    "lp:cn:298",
+    "lp:cn:299",
+    "lp:cn:300",
+    "lp:cn:301",
+    "lp:cn:302",
+    "lp:cn:303",
+    "lp:cn:304",
+    "lp:cn:305",
+    "lp:cn:306",
+    "lp:cn:307",
+    "lp:cn:308",
+    "lp:cn:309",
+    "lp:cn:310",
+    "lp:cn:311",
+    "lp:cn:312",
+    "lp:cn:313",
+    "lp:cn:314",
+    "lp:cn:315",
+    "lp:cn:316",
+    "lp:cn:317",
+    "lp:cn:318",
+    "lp:cn:319",
+    "lp:cn:320",
+    "lp:cn:321",
+    "lp:cn:322",
+    "lp:cn:323",
+    "lp:cn:324",
+    "lp:cn:325",
+    "lp:cn:326",
+    "lp:cn:327",
+    "lp:cn:328",
+    "lp:cn:329",
+    "lp:cn:330",
+    "lp:cn:331",
+    "lp:cn:332",
+    "lp:cn:333",
+    "lp:cn:334",
+    "lp:cn:335",
+    "lp:cn:336",
+    "lp:cn:337"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/193064",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-198494",
+   "lp": [
+    "lp:cn:338",
+    "lp:cn:339",
+    "lp:cn:340",
+    "lp:cn:341",
+    "lp:cn:342",
+    "lp:cn:343",
+    "lp:cn:344",
+    "lp:cn:345",
+    "lp:cn:346",
+    "lp:cn:347",
+    "lp:cn:348",
+    "lp:cn:349",
+    "lp:cn:350",
+    "lp:cn:351",
+    "lp:cn:352",
+    "lp:cn:353",
+    "lp:cn:354",
+    "lp:cn:355",
+    "lp:cn:356",
+    "lp:cn:357",
+    "lp:cn:358",
+    "lp:cn:359",
+    "lp:cn:360",
+    "lp:cn:361"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/198494",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-285111",
+   "lp": [
+    "lp:cn:362",
+    "lp:cn:363",
+    "lp:cn:364",
+    "lp:cn:365",
+    "lp:cn:366",
+    "lp:cn:367",
+    "lp:cn:368",
+    "lp:cn:369",
+    "lp:cn:370",
+    "lp:cn:371",
+    "lp:cn:372",
+    "lp:cn:373",
+    "lp:cn:374",
+    "lp:cn:375",
+    "lp:cn:376"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/285111",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-300666",
+   "lp": [
+    "lp:cn:377",
+    "lp:cn:378"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/300666",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-305475",
+   "lp": [
+    "lp:cn:379",
+    "lp:cn:380"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/305475",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-357739",
+   "lp": [
+    "lp:cn:383",
+    "lp:cn:384",
+    "lp:cn:385",
+    "lp:cn:386",
+    "lp:cn:387",
+    "lp:cn:388",
+    "lp:cn:389",
+    "lp:cn:390",
+    "lp:cn:391",
+    "lp:cn:392",
+    "lp:cn:393",
+    "lp:cn:394",
+    "lp:cn:395",
+    "lp:cn:396",
+    "lp:cn:397",
+    "lp:cn:398",
+    "lp:cn:399",
+    "lp:cn:400",
+    "lp:cn:401",
+    "lp:cn:402",
+    "lp:cn:403",
+    "lp:cn:404",
+    "lp:cn:405",
+    "lp:cn:406",
+    "lp:cn:407",
+    "lp:cn:408",
+    "lp:cn:409"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/357739",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1043244",
+   "lp": [
+    "lp:cn:416",
+    "lp:cn:417",
+    "lp:cn:418",
+    "lp:cn:419",
+    "lp:cn:420",
+    "lp:cn:421",
+    "lp:cn:422",
+    "lp:cn:423",
+    "lp:cn:424",
+    "lp:cn:425",
+    "lp:cn:426",
+    "lp:cn:427",
+    "lp:cn:428",
+    "lp:cn:429",
+    "lp:cn:430",
+    "lp:cn:431",
+    "lp:cn:432",
+    "lp:cn:433",
+    "lp:cn:434",
+    "lp:cn:435",
+    "lp:cn:436",
+    "lp:cn:437",
+    "lp:cn:438",
+    "lp:cn:439",
+    "lp:cn:440",
+    "lp:cn:441",
+    "lp:cn:442",
+    "lp:cn:443",
+    "lp:cn:444",
+    "lp:cn:445",
+    "lp:cn:446",
+    "lp:cn:447",
+    "lp:cn:448",
+    "lp:cn:449",
+    "lp:cn:450",
+    "lp:cn:451",
+    "lp:cn:452",
+    "lp:cn:453",
+    "lp:cn:454"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1043244",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1050474",
+   "lp": [
+    "lp:cn:455",
+    "lp:cn:456",
+    "lp:cn:457",
+    "lp:cn:458",
+    "lp:cn:459",
+    "lp:cn:460",
+    "lp:cn:461",
+    "lp:cn:462",
+    "lp:cn:463",
+    "lp:cn:464",
+    "lp:cn:465",
+    "lp:cn:466",
+    "lp:cn:467",
+    "lp:cn:468",
+    "lp:cn:469",
+    "lp:cn:470",
+    "lp:cn:471",
+    "lp:cn:472"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1050474",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1106681",
+   "lp": [
+    "lp:cn:473",
+    "lp:cn:474",
+    "lp:cn:475",
+    "lp:cn:476",
+    "lp:cn:477",
+    "lp:cn:478",
+    "lp:cn:479",
+    "lp:cn:480",
+    "lp:cn:481",
+    "lp:cn:482",
+    "lp:cn:483",
+    "lp:cn:484",
+    "lp:cn:485",
+    "lp:cn:486",
+    "lp:cn:487",
+    "lp:cn:488",
+    "lp:cn:489",
+    "lp:cn:490",
+    "lp:cn:491",
+    "lp:cn:492",
+    "lp:cn:493",
+    "lp:cn:494",
+    "lp:cn:495",
+    "lp:cn:496",
+    "lp:cn:497",
+    "lp:cn:498",
+    "lp:cn:499",
+    "lp:cn:500",
+    "lp:cn:501",
+    "lp:cn:502",
+    "lp:cn:503",
+    "lp:cn:504",
+    "lp:cn:505",
+    "lp:cn:506",
+    "lp:cn:507",
+    "lp:cn:508",
+    "lp:cn:509",
+    "lp:cn:510"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1106681",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1108658",
+   "lp": [
+    "lp:cn:511",
+    "lp:cn:512",
+    "lp:cn:513",
+    "lp:cn:514"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1108658",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1108853",
+   "lp": [
+    "lp:cn:516",
+    "lp:cn:517",
+    "lp:cn:518",
+    "lp:cn:519",
+    "lp:cn:520",
+    "lp:cn:521",
+    "lp:cn:522",
+    "lp:cn:523",
+    "lp:cn:524",
+    "lp:cn:525",
+    "lp:cn:526",
+    "lp:cn:527",
+    "lp:cn:528",
+    "lp:cn:529",
+    "lp:cn:530",
+    "lp:cn:531",
+    "lp:cn:532",
+    "lp:cn:533",
+    "lp:cn:534",
+    "lp:cn:535",
+    "lp:cn:536",
+    "lp:cn:537",
+    "lp:cn:538",
+    "lp:cn:539",
+    "lp:cn:540",
+    "lp:cn:541",
+    "lp:cn:542",
+    "lp:cn:543",
+    "lp:cn:544",
+    "lp:cn:545",
+    "lp:cn:546",
+    "lp:cn:547",
+    "lp:cn:548",
+    "lp:cn:549"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1108853",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1109833",
+   "lp": [
+    "lp:cn:550",
+    "lp:cn:551"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1109833",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1138440",
+   "lp": [
+    "lp:cn:553",
+    "lp:cn:554",
+    "lp:cn:555",
+    "lp:cn:556",
+    "lp:cn:557",
+    "lp:cn:558",
+    "lp:cn:559",
+    "lp:cn:560",
+    "lp:cn:561",
+    "lp:cn:562",
+    "lp:cn:563",
+    "lp:cn:564",
+    "lp:cn:565",
+    "lp:cn:566",
+    "lp:cn:567",
+    "lp:cn:568",
+    "lp:cn:569",
+    "lp:cn:570",
+    "lp:cn:571",
+    "lp:cn:572",
+    "lp:cn:573",
+    "lp:cn:574",
+    "lp:cn:575",
+    "lp:cn:576",
+    "lp:cn:577",
+    "lp:cn:578",
+    "lp:cn:579",
+    "lp:cn:580",
+    "lp:cn:581",
+    "lp:cn:582",
+    "lp:cn:583",
+    "lp:cn:584",
+    "lp:cn:585",
+    "lp:cn:586",
+    "lp:cn:587",
+    "lp:cn:588",
+    "lp:cn:589",
+    "lp:cn:590",
+    "lp:cn:591",
+    "lp:cn:592",
+    "lp:cn:593",
+    "lp:cn:594",
+    "lp:cn:595",
+    "lp:cn:596",
+    "lp:cn:597",
+    "lp:cn:598",
+    "lp:cn:599",
+    "lp:cn:600"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1138440",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1420352",
+   "lp": [
+    "lp:cn:601",
+    "lp:cn:602"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1420352",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1474854",
+   "lp": [
+    "lp:cn:603",
+    "lp:cn:604"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1474854",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1531653",
+   "lp": [
+    "lp:cn:605",
+    "lp:cn:606",
+    "lp:cn:607",
+    "lp:cn:608",
+    "lp:cn:609",
+    "lp:cn:610",
+    "lp:cn:611",
+    "lp:cn:612",
+    "lp:cn:613",
+    "lp:cn:614",
+    "lp:cn:615",
+    "lp:cn:616",
+    "lp:cn:617",
+    "lp:cn:618",
+    "lp:cn:619",
+    "lp:cn:620",
+    "lp:cn:621",
+    "lp:cn:622",
+    "lp:cn:623",
+    "lp:cn:624",
+    "lp:cn:625",
+    "lp:cn:626",
+    "lp:cn:627",
+    "lp:cn:628",
+    "lp:cn:629",
+    "lp:cn:630",
+    "lp:cn:631",
+    "lp:cn:632",
+    "lp:cn:633",
+    "lp:cn:634",
+    "lp:cn:635",
+    "lp:cn:636",
+    "lp:cn:637",
+    "lp:cn:638",
+    "lp:cn:639",
+    "lp:cn:640",
+    "lp:cn:641",
+    "lp:cn:642",
+    "lp:cn:643",
+    "lp:cn:644",
+    "lp:cn:645",
+    "lp:cn:646",
+    "lp:cn:647",
+    "lp:cn:648",
+    "lp:cn:649",
+    "lp:cn:650",
+    "lp:cn:651",
+    "lp:cn:652",
+    "lp:cn:653",
+    "lp:cn:654",
+    "lp:cn:655",
+    "lp:cn:656",
+    "lp:cn:657",
+    "lp:cn:658",
+    "lp:cn:659",
+    "lp:cn:660",
+    "lp:cn:661",
+    "lp:cn:662",
+    "lp:cn:663",
+    "lp:cn:664",
+    "lp:cn:665",
+    "lp:cn:666",
+    "lp:cn:667",
+    "lp:cn:668",
+    "lp:cn:669",
+    "lp:cn:670",
+    "lp:cn:671",
+    "lp:cn:672",
+    "lp:cn:673",
+    "lp:cn:674",
+    "lp:cn:675",
+    "lp:cn:676",
+    "lp:cn:677",
+    "lp:cn:678",
+    "lp:cn:679",
+    "lp:cn:680",
+    "lp:cn:681",
+    "lp:cn:682",
+    "lp:cn:683",
+    "lp:cn:684",
+    "lp:cn:685",
+    "lp:cn:686",
+    "lp:cn:687",
+    "lp:cn:688"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1531653",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1656856",
+   "lp": [
+    "lp:cn:690",
+    "lp:cn:691",
+    "lp:cn:692",
+    "lp:cn:693",
+    "lp:cn:694",
+    "lp:cn:695",
+    "lp:cn:696",
+    "lp:cn:697",
+    "lp:cn:698",
+    "lp:cn:699",
+    "lp:cn:700",
+    "lp:cn:701",
+    "lp:cn:702",
+    "lp:cn:703",
+    "lp:cn:704",
+    "lp:cn:705",
+    "lp:cn:706",
+    "lp:cn:707",
+    "lp:cn:708",
+    "lp:cn:709",
+    "lp:cn:710",
+    "lp:cn:711",
+    "lp:cn:712",
+    "lp:cn:713",
+    "lp:cn:714",
+    "lp:cn:715",
+    "lp:cn:716",
+    "lp:cn:717",
+    "lp:cn:718",
+    "lp:cn:719",
+    "lp:cn:720"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1656856",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1724457",
+   "lp": [
+    "lp:cn:721",
+    "lp:cn:722",
+    "lp:cn:723",
+    "lp:cn:724",
+    "lp:cn:725",
+    "lp:cn:726",
+    "lp:cn:727",
+    "lp:cn:728",
+    "lp:cn:729",
+    "lp:cn:730",
+    "lp:cn:731",
+    "lp:cn:732"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1724457",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1799881",
+   "lp": [
+    "lp:cn:733",
+    "lp:cn:734",
+    "lp:cn:735",
+    "lp:cn:736"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1799881",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1912130",
+   "lp": [
+    "lp:cn:740",
+    "lp:cn:741",
+    "lp:cn:742",
+    "lp:cn:743",
+    "lp:cn:744",
+    "lp:cn:745",
+    "lp:cn:746",
+    "lp:cn:747",
+    "lp:cn:748",
+    "lp:cn:749",
+    "lp:cn:750",
+    "lp:cn:751",
+    "lp:cn:752",
+    "lp:cn:753",
+    "lp:cn:754",
+    "lp:cn:755",
+    "lp:cn:756",
+    "lp:cn:757",
+    "lp:cn:758",
+    "lp:cn:759",
+    "lp:cn:760",
+    "lp:cn:761",
+    "lp:cn:762",
+    "lp:cn:763",
+    "lp:cn:764",
+    "lp:cn:765",
+    "lp:cn:766",
+    "lp:cn:767",
+    "lp:cn:768",
+    "lp:cn:769",
+    "lp:cn:770",
+    "lp:cn:771",
+    "lp:cn:772",
+    "lp:cn:773",
+    "lp:cn:774",
+    "lp:cn:775",
+    "lp:cn:776",
+    "lp:cn:777",
+    "lp:cn:778",
+    "lp:cn:779",
+    "lp:cn:780",
+    "lp:cn:781",
+    "lp:cn:782",
+    "lp:cn:783",
+    "lp:cn:784",
+    "lp:cn:785",
+    "lp:cn:786",
+    "lp:cn:787",
+    "lp:cn:788",
+    "lp:cn:789",
+    "lp:cn:790",
+    "lp:cn:791",
+    "lp:cn:792",
+    "lp:cn:793",
+    "lp:cn:794",
+    "lp:cn:795",
+    "lp:cn:796"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1912130",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1916885",
+   "lp": [
+    "lp:cn:797",
+    "lp:cn:798",
+    "lp:cn:799",
+    "lp:cn:800",
+    "lp:cn:801",
+    "lp:cn:802",
+    "lp:cn:803",
+    "lp:cn:804",
+    "lp:cn:805",
+    "lp:cn:806",
+    "lp:cn:807",
+    "lp:cn:808",
+    "lp:cn:809",
+    "lp:cn:810",
+    "lp:cn:811",
+    "lp:cn:812",
+    "lp:cn:813",
+    "lp:cn:814",
+    "lp:cn:815",
+    "lp:cn:816",
+    "lp:cn:817",
+    "lp:cn:818",
+    "lp:cn:819",
+    "lp:cn:820",
+    "lp:cn:821",
+    "lp:cn:822",
+    "lp:cn:823",
+    "lp:cn:824",
+    "lp:cn:825",
+    "lp:cn:826",
+    "lp:cn:827",
+    "lp:cn:828",
+    "lp:cn:829",
+    "lp:cn:830",
+    "lp:cn:831",
+    "lp:cn:832",
+    "lp:cn:833",
+    "lp:cn:834",
+    "lp:cn:835",
+    "lp:cn:836"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1916885",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1925853",
+   "lp": [
+    "lp:cn:838",
+    "lp:cn:839",
+    "lp:cn:840",
+    "lp:cn:841",
+    "lp:cn:842",
+    "lp:cn:843",
+    "lp:cn:844"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1925853",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1953373",
+   "lp": [
+    "lp:cn:845",
+    "lp:cn:846",
+    "lp:cn:847",
+    "lp:cn:848",
+    "lp:cn:849",
+    "lp:cn:850",
+    "lp:cn:851",
+    "lp:cn:852",
+    "lp:cn:853",
+    "lp:cn:854",
+    "lp:cn:855",
+    "lp:cn:856",
+    "lp:cn:857",
+    "lp:cn:858",
+    "lp:cn:859",
+    "lp:cn:860",
+    "lp:cn:861",
+    "lp:cn:862",
+    "lp:cn:863",
+    "lp:cn:864",
+    "lp:cn:865",
+    "lp:cn:866",
+    "lp:cn:867",
+    "lp:cn:868",
+    "lp:cn:869",
+    "lp:cn:870",
+    "lp:cn:871",
+    "lp:cn:872",
+    "lp:cn:873",
+    "lp:cn:874",
+    "lp:cn:875",
+    "lp:cn:876",
+    "lp:cn:877",
+    "lp:cn:878",
+    "lp:cn:879",
+    "lp:cn:880",
+    "lp:cn:881",
+    "lp:cn:882",
+    "lp:cn:883",
+    "lp:cn:884",
+    "lp:cn:885",
+    "lp:cn:886",
+    "lp:cn:887",
+    "lp:cn:888",
+    "lp:cn:889",
+    "lp:cn:890",
+    "lp:cn:891",
+    "lp:cn:892",
+    "lp:cn:893",
+    "lp:cn:894",
+    "lp:cn:895",
+    "lp:cn:896",
+    "lp:cn:897",
+    "lp:cn:898",
+    "lp:cn:899",
+    "lp:cn:900",
+    "lp:cn:901",
+    "lp:cn:902",
+    "lp:cn:903",
+    "lp:cn:904",
+    "lp:cn:905",
+    "lp:cn:906",
+    "lp:cn:907"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1953373",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1953505",
+   "lp": [
+    "lp:cn:908",
+    "lp:cn:909",
+    "lp:cn:910",
+    "lp:cn:911",
+    "lp:cn:912",
+    "lp:cn:913",
+    "lp:cn:914",
+    "lp:cn:915",
+    "lp:cn:916",
+    "lp:cn:917",
+    "lp:cn:918",
+    "lp:cn:919",
+    "lp:cn:920",
+    "lp:cn:921",
+    "lp:cn:922",
+    "lp:cn:923",
+    "lp:cn:924",
+    "lp:cn:925",
+    "lp:cn:926",
+    "lp:cn:927",
+    "lp:cn:928",
+    "lp:cn:929",
+    "lp:cn:930",
+    "lp:cn:931",
+    "lp:cn:932",
+    "lp:cn:933"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1953505",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1953506",
+   "lp": [
+    "lp:cn:934",
+    "lp:cn:935",
+    "lp:cn:936",
+    "lp:cn:937",
+    "lp:cn:938",
+    "lp:cn:939",
+    "lp:cn:940",
+    "lp:cn:941",
+    "lp:cn:942",
+    "lp:cn:943",
+    "lp:cn:944",
+    "lp:cn:945",
+    "lp:cn:946",
+    "lp:cn:947",
+    "lp:cn:948",
+    "lp:cn:949",
+    "lp:cn:950",
+    "lp:cn:951",
+    "lp:cn:952",
+    "lp:cn:953",
+    "lp:cn:954",
+    "lp:cn:955"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1953506",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1955107",
+   "lp": [
+    "lp:cn:956",
+    "lp:cn:957"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1955107",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1965081",
+   "lp": [
+    "lp:cn:959",
+    "lp:cn:960",
+    "lp:cn:961",
+    "lp:cn:962",
+    "lp:cn:963",
+    "lp:cn:964",
+    "lp:cn:965"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1965081",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1965907",
+   "lp": [
+    "lp:cn:966",
+    "lp:cn:967",
+    "lp:cn:968",
+    "lp:cn:969",
+    "lp:cn:970",
+    "lp:cn:971",
+    "lp:cn:972",
+    "lp:cn:973",
+    "lp:cn:974",
+    "lp:cn:975",
+    "lp:cn:976",
+    "lp:cn:977"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1965907",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1969911",
+   "lp": [
+    "lp:cn:979",
+    "lp:cn:980",
+    "lp:cn:981",
+    "lp:cn:982",
+    "lp:cn:983",
+    "lp:cn:984",
+    "lp:cn:985",
+    "lp:cn:986",
+    "lp:cn:987",
+    "lp:cn:988",
+    "lp:cn:989",
+    "lp:cn:990",
+    "lp:cn:991",
+    "lp:cn:992"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1969911",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1988906",
+   "lp": [
+    "lp:cn:993",
+    "lp:cn:994",
+    "lp:cn:995",
+    "lp:cn:996",
+    "lp:cn:997",
+    "lp:cn:998",
+    "lp:cn:999",
+    "lp:cn:1000",
+    "lp:cn:1001",
+    "lp:cn:1002"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1988906",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1989405",
+   "lp": [
+    "lp:cn:1003",
+    "lp:cn:1004"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1989405",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-1992417",
+   "lp": [
+    "lp:cn:1006",
+    "lp:cn:1007",
+    "lp:cn:1008",
+    "lp:cn:1009",
+    "lp:cn:1010",
+    "lp:cn:1011",
+    "lp:cn:1012",
+    "lp:cn:1013",
+    "lp:cn:1014",
+    "lp:cn:1015",
+    "lp:cn:1016"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/1992417",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2067465",
+   "lp": [
+    "lp:cn:1029",
+    "lp:cn:1030",
+    "lp:cn:1031",
+    "lp:cn:1032",
+    "lp:cn:1033",
+    "lp:cn:1034",
+    "lp:cn:1035",
+    "lp:cn:1036",
+    "lp:cn:1037",
+    "lp:cn:1038",
+    "lp:cn:1039",
+    "lp:cn:1040",
+    "lp:cn:1041",
+    "lp:cn:1042",
+    "lp:cn:1043",
+    "lp:cn:1044",
+    "lp:cn:1045",
+    "lp:cn:1046",
+    "lp:cn:1047",
+    "lp:cn:1048",
+    "lp:cn:1049",
+    "lp:cn:1050",
+    "lp:cn:1051",
+    "lp:cn:1052",
+    "lp:cn:1053",
+    "lp:cn:1054",
+    "lp:cn:1055",
+    "lp:cn:1056",
+    "lp:cn:1057"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2067465",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2073769",
+   "lp": [
+    "lp:cn:1059",
+    "lp:cn:1060",
+    "lp:cn:1061"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2073769",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2090630",
+   "lp": [
+    "lp:cn:1063",
+    "lp:cn:1064",
+    "lp:cn:1065",
+    "lp:cn:1066",
+    "lp:cn:1067",
+    "lp:cn:1068",
+    "lp:cn:1069"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2090630",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2105195",
+   "lp": [
+    "lp:cn:1071",
+    "lp:cn:1072",
+    "lp:cn:1073",
+    "lp:cn:1074",
+    "lp:cn:1075"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2105195",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2141134",
+   "lp": [
+    "lp:cn:1077",
+    "lp:cn:1078",
+    "lp:cn:1079",
+    "lp:cn:1080",
+    "lp:cn:1081",
+    "lp:cn:1082",
+    "lp:cn:1083",
+    "lp:cn:1084",
+    "lp:cn:1085",
+    "lp:cn:1086",
+    "lp:cn:1087",
+    "lp:cn:1088",
+    "lp:cn:1089",
+    "lp:cn:1090"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2141134",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2143432",
+   "lp": [
+    "lp:cn:1091",
+    "lp:cn:1092"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2143432",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2150263",
+   "lp": [
+    "lp:cn:1096",
+    "lp:cn:1097"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2150263",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2155196",
+   "lp": [
+    "lp:cn:1099",
+    "lp:cn:1100",
+    "lp:cn:1101",
+    "lp:cn:1102"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2155196",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2191340",
+   "lp": [
+    "lp:cn:1104",
+    "lp:cn:1105",
+    "lp:cn:1106",
+    "lp:cn:1107",
+    "lp:cn:1108",
+    "lp:cn:1109",
+    "lp:cn:1110",
+    "lp:cn:1111",
+    "lp:cn:1112",
+    "lp:cn:1113",
+    "lp:cn:1114",
+    "lp:cn:1115",
+    "lp:cn:1116",
+    "lp:cn:1117",
+    "lp:cn:1118",
+    "lp:cn:1119",
+    "lp:cn:1120",
+    "lp:cn:1121",
+    "lp:cn:1122",
+    "lp:cn:1123",
+    "lp:cn:1124",
+    "lp:cn:1125",
+    "lp:cn:1126",
+    "lp:cn:1127",
+    "lp:cn:1128",
+    "lp:cn:1129",
+    "lp:cn:1130",
+    "lp:cn:1131",
+    "lp:cn:1132",
+    "lp:cn:1133",
+    "lp:cn:1134",
+    "lp:cn:1135",
+    "lp:cn:1136",
+    "lp:cn:1137",
+    "lp:cn:1138",
+    "lp:cn:1139",
+    "lp:cn:1140",
+    "lp:cn:1141",
+    "lp:cn:1142",
+    "lp:cn:1143",
+    "lp:cn:1144",
+    "lp:cn:1145"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2191340",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2201129",
+   "lp": [
+    "lp:cn:1147",
+    "lp:cn:1148",
+    "lp:cn:1149",
+    "lp:cn:1150",
+    "lp:cn:1151",
+    "lp:cn:1152",
+    "lp:cn:1153",
+    "lp:cn:1154",
+    "lp:cn:1155",
+    "lp:cn:1156",
+    "lp:cn:1157",
+    "lp:cn:1158",
+    "lp:cn:1159",
+    "lp:cn:1160",
+    "lp:cn:1161",
+    "lp:cn:1162",
+    "lp:cn:1163",
+    "lp:cn:1164"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2201129",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2237862",
+   "lp": [
+    "lp:cn:1167",
+    "lp:cn:1168",
+    "lp:cn:1169",
+    "lp:cn:1170"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2237862",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2401714",
+   "lp": [
+    "lp:cn:1171",
+    "lp:cn:1172",
+    "lp:cn:1173",
+    "lp:cn:1174",
+    "lp:cn:1175",
+    "lp:cn:1176",
+    "lp:cn:1177",
+    "lp:cn:1178",
+    "lp:cn:1179",
+    "lp:cn:1180",
+    "lp:cn:1181",
+    "lp:cn:1182",
+    "lp:cn:1183",
+    "lp:cn:1184",
+    "lp:cn:1185",
+    "lp:cn:1186",
+    "lp:cn:1187",
+    "lp:cn:1188",
+    "lp:cn:1189",
+    "lp:cn:1190",
+    "lp:cn:1191",
+    "lp:cn:1192",
+    "lp:cn:1193",
+    "lp:cn:1194",
+    "lp:cn:1195",
+    "lp:cn:1196",
+    "lp:cn:1197",
+    "lp:cn:1198",
+    "lp:cn:1199",
+    "lp:cn:1200",
+    "lp:cn:1201",
+    "lp:cn:1202",
+    "lp:cn:1203",
+    "lp:cn:1204",
+    "lp:cn:1205",
+    "lp:cn:1206",
+    "lp:cn:1207",
+    "lp:cn:1208",
+    "lp:cn:1209",
+    "lp:cn:1210",
+    "lp:cn:1211"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2401714",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2554149",
+   "lp": [
+    "lp:cn:1213",
+    "lp:cn:1214",
+    "lp:cn:1215"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2554149",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2965395",
+   "lp": [
+    "lp:cn:1219",
+    "lp:cn:1220",
+    "lp:cn:1221",
+    "lp:cn:1222"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2965395",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2969345",
+   "lp": [
+    "lp:cn:1224",
+    "lp:cn:1225",
+    "lp:cn:1226",
+    "lp:cn:1227",
+    "lp:cn:1228",
+    "lp:cn:1229",
+    "lp:cn:1230",
+    "lp:cn:1231",
+    "lp:cn:1232",
+    "lp:cn:1233"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2969345",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2973916",
+   "lp": [
+    "lp:cn:1236",
+    "lp:cn:1237"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2973916",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2981307",
+   "lp": [
+    "lp:cn:1241",
+    "lp:cn:1242"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2981307",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2982545",
+   "lp": [
+    "lp:cn:1244",
+    "lp:cn:1245",
+    "lp:cn:1246",
+    "lp:cn:1247"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2982545",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-2986496",
+   "lp": [
+    "lp:cn:1249",
+    "lp:cn:1250",
+    "lp:cn:1251",
+    "lp:cn:1252",
+    "lp:cn:1253",
+    "lp:cn:1254",
+    "lp:cn:1255",
+    "lp:cn:1256",
+    "lp:cn:1257",
+    "lp:cn:1258",
+    "lp:cn:1259",
+    "lp:cn:1260",
+    "lp:cn:1261",
+    "lp:cn:1262",
+    "lp:cn:1263",
+    "lp:cn:1264",
+    "lp:cn:1265",
+    "lp:cn:1266",
+    "lp:cn:1267",
+    "lp:cn:1268",
+    "lp:cn:1269",
+    "lp:cn:1270",
+    "lp:cn:1271",
+    "lp:cn:1272",
+    "lp:cn:1273",
+    "lp:cn:1274",
+    "lp:cn:1275",
+    "lp:cn:1276",
+    "lp:cn:1277",
+    "lp:cn:1278",
+    "lp:cn:1279",
+    "lp:cn:1280"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/2986496",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3006125",
+   "lp": [
+    "lp:cn:1285",
+    "lp:cn:1286",
+    "lp:cn:1287"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3006125",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3066901",
+   "lp": [
+    "lp:cn:1295",
+    "lp:cn:1296"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3066901",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3183115",
+   "lp": [
+    "lp:cn:1304",
+    "lp:cn:1305",
+    "lp:cn:1306",
+    "lp:cn:1307",
+    "lp:cn:1308",
+    "lp:cn:1309",
+    "lp:cn:1310",
+    "lp:cn:1311",
+    "lp:cn:1312",
+    "lp:cn:1313",
+    "lp:cn:1314",
+    "lp:cn:1315",
+    "lp:cn:1316",
+    "lp:cn:1317",
+    "lp:cn:1318",
+    "lp:cn:1319",
+    "lp:cn:1320",
+    "lp:cn:1321",
+    "lp:cn:1322",
+    "lp:cn:1323",
+    "lp:cn:1324",
+    "lp:cn:1325",
+    "lp:cn:1326",
+    "lp:cn:1327",
+    "lp:cn:1328",
+    "lp:cn:1329",
+    "lp:cn:1330",
+    "lp:cn:1331",
+    "lp:cn:1332",
+    "lp:cn:1333",
+    "lp:cn:1334",
+    "lp:cn:1335",
+    "lp:cn:1336",
+    "lp:cn:1337",
+    "lp:cn:1338",
+    "lp:cn:1339",
+    "lp:cn:1340",
+    "lp:cn:1341",
+    "lp:cn:1342",
+    "lp:cn:1343",
+    "lp:cn:1344",
+    "lp:cn:1345",
+    "lp:cn:1346",
+    "lp:cn:1347",
+    "lp:cn:1348",
+    "lp:cn:1349",
+    "lp:cn:1350",
+    "lp:cn:1351",
+    "lp:cn:1352",
+    "lp:cn:1353",
+    "lp:cn:1354",
+    "lp:cn:1355",
+    "lp:cn:1356",
+    "lp:cn:1357",
+    "lp:cn:1358",
+    "lp:cn:1359",
+    "lp:cn:1360",
+    "lp:cn:1361",
+    "lp:cn:1362",
+    "lp:cn:1363",
+    "lp:cn:1364",
+    "lp:cn:1365",
+    "lp:cn:1366",
+    "lp:cn:1367",
+    "lp:cn:1368",
+    "lp:cn:1369",
+    "lp:cn:1370",
+    "lp:cn:1371",
+    "lp:cn:1372",
+    "lp:cn:1373"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3183115",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3200434",
+   "lp": [
+    "lp:cn:1379",
+    "lp:cn:1380",
+    "lp:cn:1381",
+    "lp:cn:1382",
+    "lp:cn:1383",
+    "lp:cn:1384",
+    "lp:cn:1385",
+    "lp:cn:1386",
+    "lp:cn:1387",
+    "lp:cn:1388",
+    "lp:cn:1389",
+    "lp:cn:1390",
+    "lp:cn:1391",
+    "lp:cn:1392",
+    "lp:cn:1393",
+    "lp:cn:1394",
+    "lp:cn:1395",
+    "lp:cn:1396",
+    "lp:cn:1397",
+    "lp:cn:1398",
+    "lp:cn:1399",
+    "lp:cn:1400",
+    "lp:cn:1401"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3200434",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3206377",
+   "lp": [
+    "lp:cn:1404",
+    "lp:cn:1405"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3206377",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3234921",
+   "lp": [
+    "lp:cn:1407",
+    "lp:cn:1408",
+    "lp:cn:1409",
+    "lp:cn:1410",
+    "lp:cn:1411",
+    "lp:cn:1412",
+    "lp:cn:1413",
+    "lp:cn:1414",
+    "lp:cn:1415"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3234921",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3453564",
+   "lp": [
+    "lp:cn:1426",
+    "lp:cn:1427"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3453564",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3498767",
+   "lp": [
+    "lp:cn:1430",
+    "lp:cn:1431"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3498767",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4004782",
+   "lp": [
+    "lp:cn:1437",
+    "lp:cn:1438",
+    "lp:cn:1439"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4004782",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4207852",
+   "lp": [
+    "lp:cn:1440",
+    "lp:cn:1441",
+    "lp:cn:1442",
+    "lp:cn:1443",
+    "lp:cn:1444",
+    "lp:cn:1445",
+    "lp:cn:1446",
+    "lp:cn:1447",
+    "lp:cn:1448",
+    "lp:cn:1449",
+    "lp:cn:1450",
+    "lp:cn:1451",
+    "lp:cn:1452",
+    "lp:cn:1453",
+    "lp:cn:1454",
+    "lp:cn:1455",
+    "lp:cn:1456",
+    "lp:cn:1457",
+    "lp:cn:1458",
+    "lp:cn:1459",
+    "lp:cn:1460",
+    "lp:cn:1461",
+    "lp:cn:1462",
+    "lp:cn:1463",
+    "lp:cn:1464",
+    "lp:cn:1465",
+    "lp:cn:1466",
+    "lp:cn:1467",
+    "lp:cn:1468"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4207852",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4264534",
+   "lp": [
+    "lp:cn:1469",
+    "lp:cn:1470",
+    "lp:cn:1471",
+    "lp:cn:1472"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4264534",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4287575",
+   "lp": [
+    "lp:cn:1474",
+    "lp:cn:1475"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4287575",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4520971",
+   "lp": [
+    "lp:cn:1476",
+    "lp:cn:1477",
+    "lp:cn:1478",
+    "lp:cn:1479"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4520971",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-4520976",
+   "lp": [
+    "lp:cn:1480",
+    "lp:cn:1481",
+    "lp:cn:1482",
+    "lp:cn:1483",
+    "lp:cn:1484",
+    "lp:cn:1485",
+    "lp:cn:1486",
+    "lp:cn:1487",
+    "lp:cn:1488",
+    "lp:cn:1489",
+    "lp:cn:1490",
+    "lp:cn:1491",
+    "lp:cn:1492"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/4520976",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-5496304",
+   "lp": [
+    "lp:cn:1504",
+    "lp:cn:1505",
+    "lp:cn:1506",
+    "lp:cn:1507",
+    "lp:cn:1508",
+    "lp:cn:1509",
+    "lp:cn:1510"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/5496304",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-6651966",
+   "lp": [
+    "lp:cn:1514",
+    "lp:cn:1515",
+    "lp:cn:1516",
+    "lp:cn:1517"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/6651966",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-6825295",
+   "lp": [
+    "lp:cn:1520",
+    "lp:cn:1521",
+    "lp:cn:1522",
+    "lp:cn:1523",
+    "lp:cn:1524",
+    "lp:cn:1525",
+    "lp:cn:1526",
+    "lp:cn:1527",
+    "lp:cn:1528",
+    "lp:cn:1529",
+    "lp:cn:1530",
+    "lp:cn:1531",
+    "lp:cn:1532",
+    "lp:cn:1533",
+    "lp:cn:1534",
+    "lp:cn:1535",
+    "lp:cn:1536",
+    "lp:cn:1537",
+    "lp:cn:1538",
+    "lp:cn:1539",
+    "lp:cn:1540",
+    "lp:cn:1541",
+    "lp:cn:1542",
+    "lp:cn:1543",
+    "lp:cn:1544",
+    "lp:cn:1545",
+    "lp:cn:1546",
+    "lp:cn:1547",
+    "lp:cn:1548",
+    "lp:cn:1549",
+    "lp:cn:1550",
+    "lp:cn:1551",
+    "lp:cn:1552",
+    "lp:cn:1553"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/6825295",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-7047175",
+   "lp": [
+    "lp:cn:1558",
+    "lp:cn:1559"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/7047175",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-7754722",
+   "lp": [
+    "lp:cn:1564",
+    "lp:cn:1565",
+    "lp:cn:1566",
+    "lp:cn:1567",
+    "lp:cn:1568",
+    "lp:cn:1569",
+    "lp:cn:1570",
+    "lp:cn:1571",
+    "lp:cn:1572",
+    "lp:cn:1573",
+    "lp:cn:1574",
+    "lp:cn:1575"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/7754722",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-7953019",
+   "lp": [
+    "lp:cn:1580",
+    "lp:cn:1581",
+    "lp:cn:1582",
+    "lp:cn:1583",
+    "lp:cn:1584",
+    "lp:cn:1585",
+    "lp:cn:1586",
+    "lp:cn:1587",
+    "lp:cn:1588",
+    "lp:cn:1589",
+    "lp:cn:1590",
+    "lp:cn:1591",
+    "lp:cn:1592",
+    "lp:cn:1593",
+    "lp:cn:1594",
+    "lp:cn:1595",
+    "lp:cn:1596",
+    "lp:cn:1597",
+    "lp:cn:1598",
+    "lp:cn:1599",
+    "lp:cn:1600",
+    "lp:cn:1601",
+    "lp:cn:1602",
+    "lp:cn:1603",
+    "lp:cn:1604",
+    "lp:cn:1605"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/7953019",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-8351933",
+   "lp": [
+    "lp:cn:1620",
+    "lp:cn:1621"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/8351933",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-8352011",
+   "lp": [
+    "lp:cn:1622",
+    "lp:cn:1623"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/8352011",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-8352155",
+   "lp": [
+    "lp:cn:1624",
+    "lp:cn:1625",
+    "lp:cn:1626",
+    "lp:cn:1627",
+    "lp:cn:1628",
+    "lp:cn:1629",
+    "lp:cn:1630",
+    "lp:cn:1631",
+    "lp:cn:1632",
+    "lp:cn:1633",
+    "lp:cn:1634",
+    "lp:cn:1635",
+    "lp:cn:1636",
+    "lp:cn:1637",
+    "lp:cn:1638",
+    "lp:cn:1639",
+    "lp:cn:1640",
+    "lp:cn:1641",
+    "lp:cn:1642",
+    "lp:cn:1643",
+    "lp:cn:1644",
+    "lp:cn:1645",
+    "lp:cn:1646",
+    "lp:cn:1647",
+    "lp:cn:1648",
+    "lp:cn:1649",
+    "lp:cn:1650",
+    "lp:cn:1651",
+    "lp:cn:1652",
+    "lp:cn:1653",
+    "lp:cn:1654",
+    "lp:cn:1655",
+    "lp:cn:1656"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/8352155",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-8379107",
+   "lp": [
+    "lp:cn:1668",
+    "lp:cn:1669",
+    "lp:cn:1670",
+    "lp:cn:1671",
+    "lp:cn:1672",
+    "lp:cn:1673",
+    "lp:cn:1674",
+    "lp:cn:1675",
+    "lp:cn:1676",
+    "lp:cn:1677",
+    "lp:cn:1678",
+    "lp:cn:1679",
+    "lp:cn:1680"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/8379107",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-8396750",
+   "lp": [
+    "lp:cn:1695",
+    "lp:cn:1696"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/8396750",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-9197919",
+   "lp": [
+    "lp:cn:1717",
+    "lp:cn:1718",
+    "lp:cn:1719",
+    "lp:cn:1720"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/9197919",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-9240184",
+   "lp": [
+    "lp:cn:1722",
+    "lp:cn:1723",
+    "lp:cn:1724",
+    "lp:cn:1725",
+    "lp:cn:1726",
+    "lp:cn:1727",
+    "lp:cn:1728",
+    "lp:cn:1729",
+    "lp:cn:1730",
+    "lp:cn:1731",
+    "lp:cn:1732",
+    "lp:cn:1733",
+    "lp:cn:1734",
+    "lp:cn:1735",
+    "lp:cn:1736",
+    "lp:cn:1737",
+    "lp:cn:1738",
+    "lp:cn:1739",
+    "lp:cn:1740",
+    "lp:cn:1741"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/9240184",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-9610910",
+   "lp": [
+    "lp:cn:1745",
+    "lp:cn:1746",
+    "lp:cn:1747",
+    "lp:cn:1748"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/9610910",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10259709",
+   "lp": [
+    "lp:cn:1757",
+    "lp:cn:1758",
+    "lp:cn:1759",
+    "lp:cn:1760",
+    "lp:cn:1761",
+    "lp:cn:1762",
+    "lp:cn:1763",
+    "lp:cn:1764",
+    "lp:cn:1765",
+    "lp:cn:1766",
+    "lp:cn:1767",
+    "lp:cn:1768",
+    "lp:cn:1769",
+    "lp:cn:1770",
+    "lp:cn:1771",
+    "lp:cn:1772",
+    "lp:cn:1773",
+    "lp:cn:1774",
+    "lp:cn:1775",
+    "lp:cn:1776",
+    "lp:cn:1777",
+    "lp:cn:1778",
+    "lp:cn:1779",
+    "lp:cn:1780",
+    "lp:cn:1781",
+    "lp:cn:1782",
+    "lp:cn:1783",
+    "lp:cn:1784",
+    "lp:cn:1785"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10259709",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10476277",
+   "lp": [
+    "lp:cn:1789",
+    "lp:cn:1790",
+    "lp:cn:1791",
+    "lp:cn:1792",
+    "lp:cn:1793",
+    "lp:cn:1794",
+    "lp:cn:1795",
+    "lp:cn:1796",
+    "lp:cn:1797"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10476277",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10627959",
+   "lp": [
+    "lp:cn:1798",
+    "lp:cn:1799"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10627959",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10694395",
+   "lp": [
+    "lp:cn:1811",
+    "lp:cn:1812",
+    "lp:cn:1813",
+    "lp:cn:1814",
+    "lp:cn:1815",
+    "lp:cn:1816",
+    "lp:cn:1817",
+    "lp:cn:1818",
+    "lp:cn:1819",
+    "lp:cn:1820",
+    "lp:cn:1821",
+    "lp:cn:1822",
+    "lp:cn:1823",
+    "lp:cn:1824",
+    "lp:cn:1825",
+    "lp:cn:1826",
+    "lp:cn:1827",
+    "lp:cn:1828",
+    "lp:cn:1829",
+    "lp:cn:1830",
+    "lp:cn:1831",
+    "lp:cn:1832",
+    "lp:cn:1833",
+    "lp:cn:1834",
+    "lp:cn:1835",
+    "lp:cn:1836",
+    "lp:cn:1837",
+    "lp:cn:1838",
+    "lp:cn:1839",
+    "lp:cn:1840",
+    "lp:cn:1841",
+    "lp:cn:1842",
+    "lp:cn:1843",
+    "lp:cn:1844",
+    "lp:cn:1845",
+    "lp:cn:1846",
+    "lp:cn:1847",
+    "lp:cn:1848",
+    "lp:cn:1849",
+    "lp:cn:1850",
+    "lp:cn:1851",
+    "lp:cn:1852",
+    "lp:cn:1853",
+    "lp:cn:1854",
+    "lp:cn:1855",
+    "lp:cn:1856",
+    "lp:cn:1857",
+    "lp:cn:1858",
+    "lp:cn:1859",
+    "lp:cn:1860",
+    "lp:cn:1861",
+    "lp:cn:1862",
+    "lp:cn:1863",
+    "lp:cn:1864",
+    "lp:cn:1865",
+    "lp:cn:1866",
+    "lp:cn:1867",
+    "lp:cn:1868",
+    "lp:cn:1869",
+    "lp:cn:1870",
+    "lp:cn:1871",
+    "lp:cn:1872",
+    "lp:cn:1873",
+    "lp:cn:1874"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10694395",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10884548",
+   "lp": [
+    "lp:cn:1906",
+    "lp:cn:1907",
+    "lp:cn:1908",
+    "lp:cn:1909"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10884548",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10960561",
+   "lp": [
+    "lp:cn:1916",
+    "lp:cn:1917",
+    "lp:cn:1918",
+    "lp:cn:1919",
+    "lp:cn:1920"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10960561",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-10972962",
+   "lp": [
+    "lp:cn:1927",
+    "lp:cn:1928",
+    "lp:cn:1929",
+    "lp:cn:1930"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/10972962",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11377383",
+   "lp": [
+    "lp:cn:1955",
+    "lp:cn:1956",
+    "lp:cn:1957"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11377383",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11493507",
+   "lp": [
+    "lp:cn:1960",
+    "lp:cn:1961",
+    "lp:cn:1962",
+    "lp:cn:1963",
+    "lp:cn:1964",
+    "lp:cn:1965"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11493507",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11543742",
+   "lp": [
+    "lp:cn:1970",
+    "lp:cn:1971",
+    "lp:cn:1972",
+    "lp:cn:1973",
+    "lp:cn:1974",
+    "lp:cn:1975",
+    "lp:cn:1976"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11543742",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11543971",
+   "lp": [
+    "lp:cn:1977",
+    "lp:cn:1978",
+    "lp:cn:1979",
+    "lp:cn:1980",
+    "lp:cn:1981",
+    "lp:cn:1982",
+    "lp:cn:1983",
+    "lp:cn:1984",
+    "lp:cn:1985",
+    "lp:cn:1986",
+    "lp:cn:1987",
+    "lp:cn:1988",
+    "lp:cn:1989",
+    "lp:cn:1990",
+    "lp:cn:1991",
+    "lp:cn:1992",
+    "lp:cn:1993",
+    "lp:cn:1994",
+    "lp:cn:1995",
+    "lp:cn:1996",
+    "lp:cn:1997",
+    "lp:cn:1998",
+    "lp:cn:1999",
+    "lp:cn:2000",
+    "lp:cn:2001",
+    "lp:cn:2002",
+    "lp:cn:2003",
+    "lp:cn:2004"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11543971",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11589056",
+   "lp": [
+    "lp:cn:2013",
+    "lp:cn:2014",
+    "lp:cn:2015",
+    "lp:cn:2016",
+    "lp:cn:2017",
+    "lp:cn:2018",
+    "lp:cn:2019",
+    "lp:cn:2020",
+    "lp:cn:2021",
+    "lp:cn:2022",
+    "lp:cn:2023",
+    "lp:cn:2024",
+    "lp:cn:2025",
+    "lp:cn:2026",
+    "lp:cn:2027",
+    "lp:cn:2028",
+    "lp:cn:2029",
+    "lp:cn:2030",
+    "lp:cn:2031"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11589056",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11898032",
+   "lp": [
+    "lp:cn:2057",
+    "lp:cn:2058",
+    "lp:cn:2059",
+    "lp:cn:2060",
+    "lp:cn:2061"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11898032",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-11948859",
+   "lp": [
+    "lp:cn:2066",
+    "lp:cn:2067"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/11948859",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-12939686",
+   "lp": [
+    "lp:cn:2088",
+    "lp:cn:2089",
+    "lp:cn:2090",
+    "lp:cn:2091",
+    "lp:cn:2092",
+    "lp:cn:2093",
+    "lp:cn:2094",
+    "lp:cn:2095",
+    "lp:cn:2096",
+    "lp:cn:2097",
+    "lp:cn:2098",
+    "lp:cn:2099"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/12939686",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-12939687",
+   "lp": [
+    "lp:cn:2100",
+    "lp:cn:2101",
+    "lp:cn:2102",
+    "lp:cn:2103",
+    "lp:cn:2104",
+    "lp:cn:2105",
+    "lp:cn:2106",
+    "lp:cn:2107",
+    "lp:cn:2108",
+    "lp:cn:2109",
+    "lp:cn:2110",
+    "lp:cn:2111"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/12939687",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-13345565",
+   "lp": [
+    "lp:cn:2130",
+    "lp:cn:2131"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/13345565",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-13471016",
+   "lp": [
+    "lp:cn:2152",
+    "lp:cn:2153",
+    "lp:cn:2154"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/13471016",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-13484904",
+   "lp": [
+    "lp:cn:2161",
+    "lp:cn:2162",
+    "lp:cn:2163",
+    "lp:cn:2164",
+    "lp:cn:2165",
+    "lp:cn:2166",
+    "lp:cn:2167",
+    "lp:cn:2168",
+    "lp:cn:2169",
+    "lp:cn:2170",
+    "lp:cn:2171",
+    "lp:cn:2172",
+    "lp:cn:2173",
+    "lp:cn:2174",
+    "lp:cn:2175",
+    "lp:cn:2176",
+    "lp:cn:2177",
+    "lp:cn:2178",
+    "lp:cn:2179",
+    "lp:cn:2180",
+    "lp:cn:2181",
+    "lp:cn:2182",
+    "lp:cn:2183",
+    "lp:cn:2184",
+    "lp:cn:2185",
+    "lp:cn:2186",
+    "lp:cn:2187",
+    "lp:cn:2188",
+    "lp:cn:2189",
+    "lp:cn:2190",
+    "lp:cn:2191",
+    "lp:cn:2192",
+    "lp:cn:2193",
+    "lp:cn:2194"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/13484904",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-13548565",
+   "lp": [
+    "lp:cn:2201",
+    "lp:cn:2202"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/13548565",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-14322015",
+   "lp": [
+    "lp:cn:2221",
+    "lp:cn:2222",
+    "lp:cn:2223",
+    "lp:cn:2224",
+    "lp:cn:2225",
+    "lp:cn:2226",
+    "lp:cn:2227"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/14322015",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-14411184",
+   "lp": [
+    "lp:cn:2232",
+    "lp:cn:2233"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/14411184",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-15484624",
+   "lp": [
+    "lp:cn:2259",
+    "lp:cn:2260",
+    "lp:cn:2261",
+    "lp:cn:2262",
+    "lp:cn:2263",
+    "lp:cn:2264",
+    "lp:cn:2265",
+    "lp:cn:2266",
+    "lp:cn:2267"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/15484624",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-17925541",
+   "lp": [
+    "lp:cn:2294",
+    "lp:cn:2295"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/17925541",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-19717624",
+   "lp": [
+    "lp:cn:2373",
+    "lp:cn:2374",
+    "lp:cn:2375",
+    "lp:cn:2376"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/19717624",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3164763",
+   "lp": [
+    "lp:cn:2533",
+    "lp:cn:2534",
+    "lp:cn:2535",
+    "lp:cn:2536",
+    "lp:cn:2537",
+    "lp:cn:2538",
+    "lp:cn:2539",
+    "lp:cn:2540",
+    "lp:cn:2541",
+    "lp:cn:2542",
+    "lp:cn:2543",
+    "lp:cn:2544",
+    "lp:cn:2545",
+    "lp:cn:2546"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3164763",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-3952529",
+   "lp": [
+    "lp:cn:2549",
+    "lp:cn:2550",
+    "lp:cn:2551",
+    "lp:cn:2552",
+    "lp:cn:2553",
+    "lp:cn:2554"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/3952529",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-6800211",
+   "lp": [
+    "lp:cn:2679",
+    "lp:cn:2680"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/6800211",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-284857",
+   "lp": [
+    "lp:cn:3836",
+    "lp:cn:3837",
+    "lp:cn:3838",
+    "lp:cn:3839",
+    "lp:cn:3840",
+    "lp:cn:3841",
+    "lp:cn:3842",
+    "lp:cn:3843",
+    "lp:cn:3844",
+    "lp:cn:3845",
+    "lp:cn:3846",
+    "lp:cn:3847",
+    "lp:cn:3848",
+    "lp:cn:3849",
+    "lp:cn:3850",
+    "lp:cn:3851",
+    "lp:cn:3852",
+    "lp:cn:3853",
+    "lp:cn:3854",
+    "lp:cn:3855",
+    "lp:cn:3856",
+    "lp:cn:3857",
+    "lp:cn:3858",
+    "lp:cn:3859",
+    "lp:cn:3860",
+    "lp:cn:3861",
+    "lp:cn:3862",
+    "lp:cn:3863",
+    "lp:cn:3864",
+    "lp:cn:3865",
+    "lp:cn:3866",
+    "lp:cn:3867",
+    "lp:cn:3868",
+    "lp:cn:3869",
+    "lp:cn:3870",
+    "lp:cn:3871",
+    "lp:cn:3872",
+    "lp:cn:3873",
+    "lp:cn:3874",
+    "lp:cn:3875",
+    "lp:cn:3876",
+    "lp:cn:3877",
+    "lp:cn:3878",
+    "lp:cn:3879",
+    "lp:cn:3880",
+    "lp:cn:3881",
+    "lp:cn:3882",
+    "lp:cn:3883",
+    "lp:cn:3884",
+    "lp:cn:3885",
+    "lp:cn:3886",
+    "lp:cn:3887",
+    "lp:cn:3888",
+    "lp:cn:3889",
+    "lp:cn:3890",
+    "lp:cn:3891",
+    "lp:cn:3892",
+    "lp:cn:3893",
+    "lp:cn:3894",
+    "lp:cn:3895",
+    "lp:cn:3896",
+    "lp:cn:3897",
+    "lp:cn:3898",
+    "lp:cn:3899",
+    "lp:cn:3900",
+    "lp:cn:3901",
+    "lp:cn:3902",
+    "lp:cn:3903",
+    "lp:cn:3904",
+    "lp:cn:3905",
+    "lp:cn:3906",
+    "lp:cn:3907",
+    "lp:cn:3908",
+    "lp:cn:3909",
+    "lp:cn:3910",
+    "lp:cn:3911",
+    "lp:cn:3912",
+    "lp:cn:3913",
+    "lp:cn:3914",
+    "lp:cn:3915",
+    "lp:cn:3916",
+    "lp:cn:3917",
+    "lp:cn:3918",
+    "lp:cn:3919",
+    "lp:cn:3920",
+    "lp:cn:3921",
+    "lp:cn:3922",
+    "lp:cn:3923",
+    "lp:cn:3924",
+    "lp:cn:3925",
+    "lp:cn:3926",
+    "lp:cn:3927",
+    "lp:cn:3928",
+    "lp:cn:3929",
+    "lp:cn:3930",
+    "lp:cn:3931",
+    "lp:cn:3932",
+    "lp:cn:3933",
+    "lp:cn:3934",
+    "lp:cn:3935",
+    "lp:cn:3936",
+    "lp:cn:3937",
+    "lp:cn:3938",
+    "lp:cn:3939",
+    "lp:cn:3940",
+    "lp:cn:3941",
+    "lp:cn:3942",
+    "lp:cn:3943",
+    "lp:cn:3944",
+    "lp:cn:3945",
+    "lp:cn:3946",
+    "lp:cn:3947"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/284857",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-12149467",
+   "lp": [
+    "lp:cn:3951",
+    "lp:cn:3952"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/12149467",
+   "reviewedBy": "osm-relation 2026-10-20"
+  },
+  {
+   "slug": "osm-relation-12265072",
+   "lp": [
+    "lp:cn:3953",
+    "lp:cn:3954",
+    "lp:cn:3955",
+    "lp:cn:3956",
+    "lp:cn:3957",
+    "lp:cn:3958",
+    "lp:cn:3959",
+    "lp:cn:3960",
+    "lp:cn:3961",
+    "lp:cn:3962",
+    "lp:cn:3963",
+    "lp:cn:3964",
+    "lp:cn:3965",
+    "lp:cn:3966",
+    "lp:cn:3967",
+    "lp:cn:3968",
+    "lp:cn:3969",
+    "lp:cn:3970",
+    "lp:cn:3971",
+    "lp:cn:3972",
+    "lp:cn:3973",
+    "lp:cn:3974",
+    "lp:cn:3975",
+    "lp:cn:3976",
+    "lp:cn:3977",
+    "lp:cn:3978",
+    "lp:cn:3979",
+    "lp:cn:3980",
+    "lp:cn:3981",
+    "lp:cn:3982",
+    "lp:cn:3983",
+    "lp:cn:3984",
+    "lp:cn:3985",
+    "lp:cn:3986",
+    "lp:cn:3987",
+    "lp:cn:3988",
+    "lp:cn:3989",
+    "lp:cn:3990",
+    "lp:cn:3991"
+   ],
+   "why": "branches of one OSM route relation",
+   "source": "https://www.openstreetmap.org/relation/12265072",
+   "reviewedBy": "osm-relation 2026-10-20"
+  }
+ ]
+}

@@ -2,6 +2,2606 @@
   "version": 1,
   "operators": [
     {
+      "code": "cn.op1",
+      "region": "cn",
+      "legal": "中国铁路／港铁",
+      "label": "中国铁路／港铁",
+      "names": {
+        "zhHans": [
+          "中国铁路／港铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op10",
+      "region": "cn",
+      "legal": "中国铁路西安局",
+      "label": "中国铁路西安局",
+      "names": {
+        "zhHans": [
+          "中国铁路西安局"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op100",
+      "region": "cn",
+      "legal": "南昌轨道交通地铁运营有限公司",
+      "label": "南昌轨道交通地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "南昌轨道交通地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op101",
+      "region": "cn",
+      "legal": "大连交通集团",
+      "label": "大连交通集团",
+      "names": {
+        "zhHans": [
+          "大连交通集团"
+        ]
+      },
+      "aliases": [
+        "Dalian Public Transportation Group"
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op102",
+      "region": "cn",
+      "legal": "长春公交集团电车公司",
+      "label": "长春公交集团电车公司",
+      "names": {
+        "zhHans": [
+          "长春公交集团电车公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op103",
+      "region": "cn",
+      "legal": "南昌中铁穗城轨道交通建设运营有限公司",
+      "label": "南昌中铁穗城轨道交通建设运营有限公司",
+      "names": {
+        "zhHans": [
+          "南昌中铁穗城轨道交通建设运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op104",
+      "region": "cn",
+      "legal": "南昌地铁",
+      "label": "南昌地铁",
+      "names": {
+        "zhHans": [
+          "南昌地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op105",
+      "region": "cn",
+      "legal": "昆明地铁运营有限公司",
+      "label": "昆明地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "昆明地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op106",
+      "region": "cn",
+      "legal": "宁波市轨道交通集团有限公司",
+      "label": "宁波市轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "宁波市轨道交通集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op108",
+      "region": "cn",
+      "legal": "北京市地铁运营一分有限公司",
+      "label": "北京市地铁运营一分有限公司",
+      "names": {
+        "zhHans": [
+          "北京市地铁运营一分有限公司",
+          "北京地铁运营一分有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op109",
+      "region": "cn",
+      "legal": "杭州杭港地铁有限公司",
+      "label": "杭州杭港地铁有限公司",
+      "names": {
+        "zhHans": [
+          "杭州杭港地铁有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op11",
+      "region": "cn",
+      "legal": "中国铁路武汉局集团有限公司",
+      "label": "中国铁路武汉局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路武汉局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op110",
+      "region": "cn",
+      "legal": "苏州高新有轨电车",
+      "label": "苏州高新有轨电车",
+      "names": {
+        "zhHans": [
+          "苏州高新有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op111",
+      "region": "cn",
+      "legal": "上海磁浮交通发展有限公司",
+      "label": "上海磁浮交通发展有限公司",
+      "names": {
+        "zhHans": [
+          "上海磁浮交通发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op113",
+      "region": "cn",
+      "legal": "长沙轨道交通集团有限公司",
+      "label": "长沙轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "长沙轨道交通集团有限公司",
+          "长沙地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op114",
+      "region": "cn",
+      "legal": "无锡地铁",
+      "label": "无锡地铁",
+      "names": {
+        "zhHans": [
+          "无锡地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op116",
+      "region": "cn",
+      "legal": "西安市轨道交通集团有限公司",
+      "label": "西安市轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "西安市轨道交通集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op117",
+      "region": "cn",
+      "legal": "郑州地铁",
+      "label": "郑州地铁",
+      "names": {
+        "zhHans": [
+          "郑州地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op118",
+      "region": "cn",
+      "legal": "天津一号线轨道交通运营有限公司",
+      "label": "天津一号线轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "天津一号线轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op119",
+      "region": "cn",
+      "legal": "神铁二号线（天津）轨道交通运营有限公司",
+      "label": "神铁二号线（天津）轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "神铁二号线（天津）轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op12",
+      "region": "cn",
+      "legal": "中国铁路济南局集团有限公司",
+      "label": "中国铁路济南局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路济南局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op120",
+      "region": "cn",
+      "legal": "天津三号线轨道交通运营有限公司",
+      "label": "天津三号线轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "天津三号线轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op121",
+      "region": "cn",
+      "legal": "沈阳地铁",
+      "label": "沈阳地铁",
+      "names": {
+        "zhHans": [
+          "沈阳地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op122",
+      "region": "cn",
+      "legal": "合肥轨道交通集团有限公司",
+      "label": "合肥轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "合肥轨道交通集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op123",
+      "region": "cn",
+      "legal": "沈阳浑南现代交通运营有限公司",
+      "label": "沈阳浑南现代交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "沈阳浑南现代交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op124",
+      "region": "cn",
+      "legal": "福州地铁",
+      "label": "福州地铁",
+      "names": {
+        "zhHans": [
+          "福州地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op125",
+      "region": "cn",
+      "legal": "东莞市轨道交通有限公司",
+      "label": "东莞市轨道交通有限公司",
+      "names": {
+        "zhHans": [
+          "东莞市轨道交通有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op128",
+      "region": "cn",
+      "legal": "南宁轨道交通",
+      "label": "南宁轨道交通",
+      "names": {
+        "zhHans": [
+          "南宁轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op129",
+      "region": "cn",
+      "legal": "徐州地铁",
+      "label": "徐州地铁",
+      "names": {
+        "zhHans": [
+          "徐州地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op13",
+      "region": "cn",
+      "legal": "中国铁路西安局集团有限公司",
+      "label": "中国铁路西安局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路西安局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op130",
+      "region": "cn",
+      "legal": "石家庄市轨道交通集团有限责任公司",
+      "label": "石家庄市轨道交通集团有限责任公司",
+      "names": {
+        "zhHans": [
+          "石家庄市轨道交通集团有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op131",
+      "region": "cn",
+      "legal": "天津致诚轨道交通运营有限公司",
+      "label": "天津致诚轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "天津致诚轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op132",
+      "region": "cn",
+      "legal": "广州地铁运营集团有限公司",
+      "label": "广州地铁运营集团有限公司",
+      "names": {
+        "zhHans": [
+          "广州地铁运营集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op133",
+      "region": "cn",
+      "legal": "广州有轨电车有限责任公司",
+      "label": "广州有轨电车有限责任公司",
+      "names": {
+        "zhHans": [
+          "广州有轨电车有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op134",
+      "region": "cn",
+      "legal": "重庆轨道四号线建设运营",
+      "label": "重庆轨道四号线建设运营",
+      "names": {
+        "zhHans": [
+          "重庆轨道四号线建设运营"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op135",
+      "region": "cn",
+      "legal": "苏州轨道交通公司",
+      "label": "苏州轨道交通公司",
+      "names": {
+        "zhHans": [
+          "苏州轨道交通公司",
+          "苏州轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op137",
+      "region": "cn",
+      "legal": "云南京建轨道交通投资建设有限公司",
+      "label": "云南京建轨道交通投资建设有限公司",
+      "names": {
+        "zhHans": [
+          "云南京建轨道交通投资建设有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op138",
+      "region": "cn",
+      "legal": "上海金山铁路发展有限公司",
+      "label": "上海金山铁路发展有限公司",
+      "names": {
+        "zhHans": [
+          "上海金山铁路发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op139",
+      "region": "cn",
+      "legal": "上海申凯公共交通运营管理有限公司",
+      "label": "上海申凯公共交通运营管理有限公司",
+      "names": {
+        "zhHans": [
+          "上海申凯公共交通运营管理有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op14",
+      "region": "cn",
+      "legal": "CN-narrow-gauge",
+      "label": "CN-narrow-gauge",
+      "names": {
+        "zhHans": []
+      },
+      "aliases": [
+        "CN-narrow-gauge"
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op140",
+      "region": "cn",
+      "legal": "三亚市轨道交通有限公司",
+      "label": "三亚市轨道交通有限公司",
+      "names": {
+        "zhHans": [
+          "三亚市轨道交通有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op141",
+      "region": "cn",
+      "legal": "济南轨道交通集团有限公司",
+      "label": "济南轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "济南轨道交通集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op142",
+      "region": "cn",
+      "legal": "天津轨道交通集团有限公司",
+      "label": "天津轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "天津轨道交通集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op143",
+      "region": "cn",
+      "legal": "青岛地铁运营有限公司",
+      "label": "青岛地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "青岛地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op144",
+      "region": "cn",
+      "legal": "成都轨道交通集团有限公司",
+      "label": "成都轨道交通集团有限公司",
+      "names": {
+        "zhHans": [
+          "成都轨道交通集团有限公司",
+          "成都地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op146",
+      "region": "cn",
+      "legal": "上海磁悬浮交通发展有限公司",
+      "label": "上海磁悬浮交通发展有限公司",
+      "names": {
+        "zhHans": [
+          "上海磁悬浮交通发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op147",
+      "region": "cn",
+      "legal": "Beijing Metro Operation Administration (BJMOA) Corp., Ltd.",
+      "label": "Beijing Metro Operation Administration (BJMOA) Corp., Ltd.",
+      "names": {
+        "zhHans": []
+      },
+      "aliases": [
+        "Beijing Metro Operation Administration (BJMOA) Corp., Ltd."
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op148",
+      "region": "cn",
+      "legal": "重庆江跳线轨道交通运营管理",
+      "label": "重庆江跳线轨道交通运营管理",
+      "names": {
+        "zhHans": [
+          "重庆江跳线轨道交通运营管理"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op149",
+      "region": "cn",
+      "legal": "杭州杭港地铁五号线有限公司",
+      "label": "杭州杭港地铁五号线有限公司",
+      "names": {
+        "zhHans": [
+          "杭州杭港地铁五号线有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op15",
+      "region": "cn",
+      "legal": "中国铁路南宁局集团有限公司",
+      "label": "中国铁路南宁局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路南宁局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op150",
+      "region": "cn",
+      "legal": "呼和浩特市城市轨道交通建设管理有限责任公司",
+      "label": "呼和浩特市城市轨道交通建设管理有限责任公司",
+      "names": {
+        "zhHans": [
+          "呼和浩特市城市轨道交通建设管理有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op151",
+      "region": "cn",
+      "legal": "成都有轨电车",
+      "label": "成都有轨电车",
+      "names": {
+        "zhHans": [
+          "成都有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op152",
+      "region": "cn",
+      "legal": "佛山市轨道交通发展有限公司运营事业总部",
+      "label": "佛山市轨道交通发展有限公司运营事业总部",
+      "names": {
+        "zhHans": [
+          "佛山市轨道交通发展有限公司运营事业总部"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op153",
+      "region": "cn",
+      "legal": "上海地铁",
+      "label": "上海地铁",
+      "names": {
+        "zhHans": [
+          "上海地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op154",
+      "region": "cn",
+      "legal": "西安中铁轨道交通有限公司",
+      "label": "西安中铁轨道交通有限公司",
+      "names": {
+        "zhHans": [
+          "西安中铁轨道交通有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op155",
+      "region": "cn",
+      "legal": "天水有轨电车",
+      "label": "天水有轨电车",
+      "names": {
+        "zhHans": [
+          "天水有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op156",
+      "region": "cn",
+      "legal": "杭州地铁集团运营分公司",
+      "label": "杭州地铁集团运营分公司",
+      "names": {
+        "zhHans": [
+          "杭州地铁集团运营分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op157",
+      "region": "cn",
+      "legal": "台州轨道交通",
+      "label": "台州轨道交通",
+      "names": {
+        "zhHans": [
+          "台州轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op158",
+      "region": "cn",
+      "legal": "太原市轨道交通发展有限公司",
+      "label": "太原市轨道交通发展有限公司",
+      "names": {
+        "zhHans": [
+          "太原市轨道交通发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op159",
+      "region": "cn",
+      "legal": "青岛公交集团轨道巴士有限公司",
+      "label": "青岛公交集团轨道巴士有限公司",
+      "names": {
+        "zhHans": [
+          "青岛公交集团轨道巴士有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op16",
+      "region": "cn",
+      "legal": "中国铁路沈阳局",
+      "label": "中国铁路沈阳局",
+      "names": {
+        "zhHans": [
+          "中国铁路沈阳局"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op160",
+      "region": "cn",
+      "legal": "洛阳市轨道交通",
+      "label": "洛阳市轨道交通",
+      "names": {
+        "zhHans": [
+          "洛阳市轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op161",
+      "region": "cn",
+      "legal": "北京亦庄公交有轨电车有限责任公司",
+      "label": "北京亦庄公交有轨电车有限责任公司",
+      "names": {
+        "zhHans": [
+          "北京亦庄公交有轨电车有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op162",
+      "region": "cn",
+      "legal": "淮安轨道交通",
+      "label": "淮安轨道交通",
+      "names": {
+        "zhHans": [
+          "淮安轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op163",
+      "region": "cn",
+      "legal": "重庆云巴轨道交通运营管理",
+      "label": "重庆云巴轨道交通运营管理",
+      "names": {
+        "zhHans": [
+          "重庆云巴轨道交通运营管理"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op164",
+      "region": "cn",
+      "legal": "常州地铁",
+      "label": "常州地铁",
+      "names": {
+        "zhHans": [
+          "常州地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op165",
+      "region": "cn",
+      "legal": "绍兴京越地铁有限公司",
+      "label": "绍兴京越地铁有限公司",
+      "names": {
+        "zhHans": [
+          "绍兴京越地铁有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op166",
+      "region": "cn",
+      "legal": "杭州地铁运营有限公司客运三公司",
+      "label": "杭州地铁运营有限公司客运三公司",
+      "names": {
+        "zhHans": [
+          "杭州地铁运营有限公司客运三公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op167",
+      "region": "cn",
+      "legal": "杭州市地铁集团有限责任公司",
+      "label": "杭州市地铁集团有限责任公司",
+      "names": {
+        "zhHans": [
+          "杭州市地铁集团有限责任公司",
+          "杭州地铁集团责任有限公司",
+          "杭州地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op168",
+      "region": "cn",
+      "legal": "青岛地铁",
+      "label": "青岛地铁",
+      "names": {
+        "zhHans": [
+          "青岛地铁"
+        ]
+      },
+      "aliases": [
+        "Qingdao Metro Corporation"
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op169",
+      "region": "cn",
+      "legal": "南昌轨道交通集团有限公司运营分公司",
+      "label": "南昌轨道交通集团有限公司运营分公司",
+      "names": {
+        "zhHans": [
+          "南昌轨道交通集团有限公司运营分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op17",
+      "region": "cn",
+      "legal": "国能新朔铁路有限责任公司大准铁路分公司",
+      "label": "国能新朔铁路有限责任公司大准铁路分公司",
+      "names": {
+        "zhHans": [
+          "国能新朔铁路有限责任公司大准铁路分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op170",
+      "region": "cn",
+      "legal": "浙江轨道交通运营集团海宁分公司",
+      "label": "浙江轨道交通运营集团海宁分公司",
+      "names": {
+        "zhHans": [
+          "浙江轨道交通运营集团海宁分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op171",
+      "region": "cn",
+      "legal": "浙江幸福轨道交通运营管理有限公司",
+      "label": "浙江幸福轨道交通运营管理有限公司",
+      "names": {
+        "zhHans": [
+          "浙江幸福轨道交通运营管理有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op172",
+      "region": "cn",
+      "legal": "佛山市轨道交通发展有限公司",
+      "label": "佛山市轨道交通发展有限公司",
+      "names": {
+        "zhHans": [
+          "佛山市轨道交通发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op173",
+      "region": "cn",
+      "legal": "哈尔滨地铁集团",
+      "label": "哈尔滨地铁集团",
+      "names": {
+        "zhHans": [
+          "哈尔滨地铁集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op174",
+      "region": "cn",
+      "legal": "温州市铁路与轨道交通投资集团有限公司",
+      "label": "温州市铁路与轨道交通投资集团有限公司",
+      "names": {
+        "zhHans": [
+          "温州市铁路与轨道交通投资集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op175",
+      "region": "cn",
+      "legal": "杭州地铁运营有限公司客运三分公司",
+      "label": "杭州地铁运营有限公司客运三分公司",
+      "names": {
+        "zhHans": [
+          "杭州地铁运营有限公司客运三分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op176",
+      "region": "cn",
+      "legal": "杭州地铁集团运营第二分公司",
+      "label": "杭州地铁集团运营第二分公司",
+      "names": {
+        "zhHans": [
+          "杭州地铁集团运营第二分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op177",
+      "region": "cn",
+      "legal": "洛阳轨道交通有限公司",
+      "label": "洛阳轨道交通有限公司",
+      "names": {
+        "zhHans": [
+          "洛阳轨道交通有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op178",
+      "region": "cn",
+      "legal": "佛山市地铁运营有限公司",
+      "label": "佛山市地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "佛山市地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op179",
+      "region": "cn",
+      "legal": "深圳地铁集团有限公司运营分公司",
+      "label": "深圳地铁集团有限公司运营分公司",
+      "names": {
+        "zhHans": [
+          "深圳地铁集团有限公司运营分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op18",
+      "region": "cn",
+      "legal": "中国铁路沈阳局集团有限公司",
+      "label": "中国铁路沈阳局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路沈阳局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op180",
+      "region": "cn",
+      "legal": "北京市轨道交通运营管理有限公司",
+      "label": "北京市轨道交通运营管理有限公司",
+      "names": {
+        "zhHans": [
+          "北京市轨道交通运营管理有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op181",
+      "region": "cn",
+      "legal": "大连地铁",
+      "label": "大连地铁",
+      "names": {
+        "zhHans": [
+          "大连地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op183",
+      "region": "cn",
+      "legal": "天津致新轨道交通运营有限公司",
+      "label": "天津致新轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "天津致新轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op184",
+      "region": "cn",
+      "legal": "浙中都市圈城际轨道交通",
+      "label": "浙中都市圈城际轨道交通",
+      "names": {
+        "zhHans": [
+          "浙中都市圈城际轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op185",
+      "region": "cn",
+      "legal": "中铁建（天津）轨道交通投资发展有限公司",
+      "label": "中铁建（天津）轨道交通投资发展有限公司",
+      "names": {
+        "zhHans": [
+          "中铁建（天津）轨道交通投资发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op186",
+      "region": "cn",
+      "legal": "深圳市现代有轨电车有限公司",
+      "label": "深圳市现代有轨电车有限公司",
+      "names": {
+        "zhHans": [
+          "深圳市现代有轨电车有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op187",
+      "region": "cn",
+      "legal": "上海机场集团",
+      "label": "上海机场集团",
+      "names": {
+        "zhHans": [
+          "上海机场集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op19",
+      "region": "cn",
+      "legal": "奎北铁路有限责任公司",
+      "label": "奎北铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "奎北铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op190",
+      "region": "cn",
+      "legal": "凤凰磁浮文化旅游有限责任公司",
+      "label": "凤凰磁浮文化旅游有限责任公司",
+      "names": {
+        "zhHans": [
+          "凤凰磁浮文化旅游有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op191",
+      "region": "cn",
+      "legal": "深圳市东部城市轨道交通投资建设有限公司",
+      "label": "深圳市东部城市轨道交通投资建设有限公司",
+      "names": {
+        "zhHans": [
+          "深圳市东部城市轨道交通投资建设有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op192",
+      "region": "cn",
+      "legal": "黄石市城市轨道交通运营责任有限公司",
+      "label": "黄石市城市轨道交通运营责任有限公司",
+      "names": {
+        "zhHans": [
+          "黄石市城市轨道交通运营责任有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op193",
+      "region": "cn",
+      "legal": "重庆轨道十八号线建设运营",
+      "label": "重庆轨道十八号线建设运营",
+      "names": {
+        "zhHans": [
+          "重庆轨道十八号线建设运营"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op194",
+      "region": "cn",
+      "legal": "滁州轨道交通",
+      "label": "滁州轨道交通",
+      "names": {
+        "zhHans": [
+          "滁州轨道交通"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op195",
+      "region": "cn",
+      "legal": "大王山欢乐云巴",
+      "label": "大王山欢乐云巴",
+      "names": {
+        "zhHans": [
+          "大王山欢乐云巴"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op196",
+      "region": "cn",
+      "legal": "南京有轨电车",
+      "label": "南京有轨电车",
+      "names": {
+        "zhHans": [
+          "南京有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op197",
+      "region": "cn",
+      "legal": "松江有轨电车",
+      "label": "松江有轨电车",
+      "names": {
+        "zhHans": [
+          "松江有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op198",
+      "region": "cn",
+      "legal": "上海市域铁路运营有限公司",
+      "label": "上海市域铁路运营有限公司",
+      "names": {
+        "zhHans": [
+          "上海市域铁路运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op199",
+      "region": "cn",
+      "legal": "武汉地铁集团",
+      "label": "武汉地铁集团",
+      "names": {
+        "zhHans": [
+          "武汉地铁集团",
+          "武汉地铁"
+        ],
+        "zhHant": [
+          "武漢地鐵"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op2",
+      "region": "cn",
+      "legal": "中国铁路",
+      "label": "中国铁路",
+      "names": {
+        "zhHans": [
+          "中国铁路",
+          "中国铁路总公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op20",
+      "region": "cn",
+      "legal": "中国铁路兰州局集团有限公司",
+      "label": "中国铁路兰州局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路兰州局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op200",
+      "region": "cn",
+      "legal": "中交（天津）轨道交通运营管理有限公司十一号线分公司",
+      "label": "中交（天津）轨道交通运营管理有限公司十一号线分公司",
+      "names": {
+        "zhHans": [
+          "中交（天津）轨道交通运营管理有限公司十一号线分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op201",
+      "region": "cn",
+      "legal": "南通城市轨道交通有限公司",
+      "label": "南通城市轨道交通有限公司",
+      "names": {
+        "zhHans": [
+          "南通城市轨道交通有限公司"
+        ]
+      },
+      "aliases": [
+        "Nantong Rail Transit"
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op202",
+      "region": "cn",
+      "legal": "重庆璧铜线轨道交通运营管理",
+      "label": "重庆璧铜线轨道交通运营管理",
+      "names": {
+        "zhHans": [
+          "重庆璧铜线轨道交通运营管理"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op203",
+      "region": "cn",
+      "legal": "北京八达岭畅安地面缆车运营有限公司",
+      "label": "北京八达岭畅安地面缆车运营有限公司",
+      "names": {
+        "zhHans": [
+          "北京八达岭畅安地面缆车运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op204",
+      "region": "cn",
+      "legal": "沈阳有轨电车",
+      "label": "沈阳有轨电车",
+      "names": {
+        "zhHans": [
+          "沈阳有轨电车"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op205",
+      "region": "cn",
+      "legal": "西安云巴交通运营有限公司",
+      "label": "西安云巴交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "西安云巴交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op206",
+      "region": "cn",
+      "legal": "西安昆明池景区运营管理有限公司",
+      "label": "西安昆明池景区运营管理有限公司",
+      "names": {
+        "zhHans": [
+          "西安昆明池景区运营管理有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op207",
+      "region": "cn",
+      "legal": "苏州市轨道交通集团有限公司运营二分公司",
+      "label": "苏州市轨道交通集团有限公司运营二分公司",
+      "names": {
+        "zhHans": [
+          "苏州市轨道交通集团有限公司运营二分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op208",
+      "region": "cn",
+      "legal": "北京市地铁运营有限公司运营四分公司",
+      "label": "北京市地铁运营有限公司运营四分公司",
+      "names": {
+        "zhHans": [
+          "北京市地铁运营有限公司运营四分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op209",
+      "region": "cn",
+      "legal": "北京地铁",
+      "label": "北京地铁",
+      "names": {
+        "zhHans": [
+          "北京地铁"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op21",
+      "region": "cn",
+      "legal": "中国能源集团",
+      "label": "中国能源集团",
+      "names": {
+        "zhHans": [
+          "中国能源集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op210",
+      "region": "cn",
+      "legal": "清远磁浮交通有限公司",
+      "label": "清远磁浮交通有限公司",
+      "names": {
+        "zhHans": [
+          "清远磁浮交通有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op211",
+      "region": "cn",
+      "legal": "中铁（天津）轨道交通投资建设有限公司",
+      "label": "中铁（天津）轨道交通投资建设有限公司",
+      "names": {
+        "zhHans": [
+          "中铁（天津）轨道交通投资建设有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op212",
+      "region": "cn",
+      "legal": "中建（天津）轨道交通投资发展有限公司",
+      "label": "中建（天津）轨道交通投资发展有限公司",
+      "names": {
+        "zhHans": [
+          "中建（天津）轨道交通投资发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op214",
+      "region": "cn",
+      "legal": "天津滨海快速交通发展有限公司",
+      "label": "天津滨海快速交通发展有限公司",
+      "names": {
+        "zhHans": [
+          "天津滨海快速交通发展有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op215",
+      "region": "cn",
+      "legal": "长寿永恒缆车有限公司",
+      "label": "长寿永恒缆车有限公司",
+      "names": {
+        "zhHans": [
+          "长寿永恒缆车有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op216",
+      "region": "cn",
+      "legal": "辽源市交投运营发展集团有限公司",
+      "label": "辽源市交投运营发展集团有限公司",
+      "names": {
+        "zhHans": [
+          "辽源市交投运营发展集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op217",
+      "region": "cn",
+      "legal": "吉林市文化旅游集团有限公司",
+      "label": "吉林市文化旅游集团有限公司",
+      "names": {
+        "zhHans": [
+          "吉林市文化旅游集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op22",
+      "region": "cn",
+      "legal": "中国铁路南昌局集团有限公司",
+      "label": "中国铁路南昌局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路南昌局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op23",
+      "region": "cn",
+      "legal": "中国铁路青藏集团有限公司",
+      "label": "中国铁路青藏集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路青藏集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op24",
+      "region": "cn",
+      "legal": "山东高速轨道交通集团有限公司岚山管理处",
+      "label": "山东高速轨道交通集团有限公司岚山管理处",
+      "names": {
+        "zhHans": [
+          "山东高速轨道交通集团有限公司岚山管理处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op25",
+      "region": "cn",
+      "legal": "中国铁路成都局集团宜宾车务段",
+      "label": "中国铁路成都局集团宜宾车务段",
+      "names": {
+        "zhHans": [
+          "中国铁路成都局集团宜宾车务段"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op27",
+      "region": "cn",
+      "legal": "清绿铁路",
+      "label": "清绿铁路",
+      "names": {
+        "zhHans": [
+          "清绿铁路"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op28",
+      "region": "cn",
+      "legal": "内蒙古东乌铁路有限责任公司",
+      "label": "内蒙古东乌铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "内蒙古东乌铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op29",
+      "region": "cn",
+      "legal": "川铁（宜宾）铁路有限责任公司",
+      "label": "川铁（宜宾）铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "川铁（宜宾）铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op3",
+      "region": "cn",
+      "legal": "中国铁路乌鲁木齐局集团有限公司",
+      "label": "中国铁路乌鲁木齐局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路乌鲁木齐局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op30",
+      "region": "cn",
+      "legal": "河北易县地方铁路管理局",
+      "label": "河北易县地方铁路管理局",
+      "names": {
+        "zhHans": [
+          "河北易县地方铁路管理局"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op32",
+      "region": "cn",
+      "legal": "广东城际铁路运营有限公司",
+      "label": "广东城际铁路运营有限公司",
+      "names": {
+        "zhHans": [
+          "广东城际铁路运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op33",
+      "region": "cn",
+      "legal": "广东地方铁路有限责任公司",
+      "label": "广东地方铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "广东地方铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op34",
+      "region": "cn",
+      "legal": "鄂尔多斯南部铁路有限责任公司",
+      "label": "鄂尔多斯南部铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "鄂尔多斯南部铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op35",
+      "region": "cn",
+      "legal": "库俄铁路有限责任公司",
+      "label": "库俄铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "库俄铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op36",
+      "region": "cn",
+      "legal": "新疆红淖三铁路有限公司",
+      "label": "新疆红淖三铁路有限公司",
+      "names": {
+        "zhHans": [
+          "新疆红淖三铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op37",
+      "region": "cn",
+      "legal": "哈罗铁路有限责任公司",
+      "label": "哈罗铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "哈罗铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op38",
+      "region": "cn",
+      "legal": "山东高速轨道交通集团有限公司益羊铁路管理处",
+      "label": "山东高速轨道交通集团有限公司益羊铁路管理处",
+      "names": {
+        "zhHans": [
+          "山东高速轨道交通集团有限公司益羊铁路管理处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op39",
+      "region": "cn",
+      "legal": "内蒙古三新铁路有限责任公司",
+      "label": "内蒙古三新铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "内蒙古三新铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op4",
+      "region": "cn",
+      "legal": "中国铁路广州局集团有限公司",
+      "label": "中国铁路广州局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路广州局集团有限公司",
+          "中国铁路广州局集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op40",
+      "region": "cn",
+      "legal": "四川归连铁路有限公司",
+      "label": "四川归连铁路有限公司",
+      "names": {
+        "zhHans": [
+          "四川归连铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op41",
+      "region": "cn",
+      "legal": "永煤集团股份有限公司铁路运输处",
+      "label": "永煤集团股份有限公司铁路运输处",
+      "names": {
+        "zhHans": [
+          "永煤集团股份有限公司铁路运输处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op42",
+      "region": "cn",
+      "legal": "乌准铁路有限责任公司",
+      "label": "乌准铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "乌准铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op43",
+      "region": "cn",
+      "legal": "深圳平盐海铁联运有限公司",
+      "label": "深圳平盐海铁联运有限公司",
+      "names": {
+        "zhHans": [
+          "深圳平盐海铁联运有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op44",
+      "region": "cn",
+      "legal": "包满铁路有限责任公司",
+      "label": "包满铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "包满铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op45",
+      "region": "cn",
+      "legal": "中国平煤神马能源化工集团有限责任公司铁路运输处",
+      "label": "中国平煤神马能源化工集团有限责任公司铁路运输处",
+      "names": {
+        "zhHans": [
+          "中国平煤神马能源化工集团有限责任公司铁路运输处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op46",
+      "region": "cn",
+      "legal": "西甘铁路有限责任公司",
+      "label": "西甘铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "西甘铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op47",
+      "region": "cn",
+      "legal": "宁夏宁东铁路有限公司",
+      "label": "宁夏宁东铁路有限公司",
+      "names": {
+        "zhHans": [
+          "宁夏宁东铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op48",
+      "region": "cn",
+      "legal": "哈木铁路有限公司",
+      "label": "哈木铁路有限公司",
+      "names": {
+        "zhHans": [
+          "哈木铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op49",
+      "region": "cn",
+      "legal": "漯阜铁路",
+      "label": "漯阜铁路",
+      "names": {
+        "zhHans": [
+          "漯阜铁路"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op5",
+      "region": "cn",
+      "legal": "中国铁路哈尔滨局集团有限公司",
+      "label": "中国铁路哈尔滨局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路哈尔滨局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op50",
+      "region": "cn",
+      "legal": "内蒙古海公铁路有限责任公司",
+      "label": "内蒙古海公铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "内蒙古海公铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op51",
+      "region": "cn",
+      "legal": "中国铁路北京局集团有限公司",
+      "label": "中国铁路北京局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路北京局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op52",
+      "region": "cn",
+      "legal": "中国铁路郑州局集团有限公司",
+      "label": "中国铁路郑州局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路郑州局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op53",
+      "region": "cn",
+      "legal": "中铁十六局铁运公司",
+      "label": "中铁十六局铁运公司",
+      "names": {
+        "zhHans": [
+          "中铁十六局铁运公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op54",
+      "region": "cn",
+      "legal": "图木舒克城投集团铁路建设经营管理有限公司",
+      "label": "图木舒克城投集团铁路建设经营管理有限公司",
+      "names": {
+        "zhHans": [
+          "图木舒克城投集团铁路建设经营管理有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op55",
+      "region": "cn",
+      "legal": "新疆天山铁道有限责任公司",
+      "label": "新疆天山铁道有限责任公司",
+      "names": {
+        "zhHans": [
+          "新疆天山铁道有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op56",
+      "region": "cn",
+      "legal": "新疆北阿铁路有限责任公司",
+      "label": "新疆北阿铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "新疆北阿铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op57",
+      "region": "cn",
+      "legal": "临哈铁路有限责任公司",
+      "label": "临哈铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "临哈铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op58",
+      "region": "cn",
+      "legal": "中国铁路南昌局",
+      "label": "中国铁路南昌局",
+      "names": {
+        "zhHans": [
+          "中国铁路南昌局"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op59",
+      "region": "cn",
+      "legal": "贵州瓮马铁路有限责任公司",
+      "label": "贵州瓮马铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "贵州瓮马铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op6",
+      "region": "cn",
+      "legal": "中国铁路呼和浩特局集团有限公司",
+      "label": "中国铁路呼和浩特局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路呼和浩特局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op60",
+      "region": "cn",
+      "legal": "山西阳大铁路有限责任公司",
+      "label": "山西阳大铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "山西阳大铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op61",
+      "region": "cn",
+      "legal": "中铁十六局集团铁运工程有限公司",
+      "label": "中铁十六局集团铁运工程有限公司",
+      "names": {
+        "zhHans": [
+          "中铁十六局集团铁运工程有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op62",
+      "region": "cn",
+      "legal": "吉林省宇辉地方铁路有限公司",
+      "label": "吉林省宇辉地方铁路有限公司",
+      "names": {
+        "zhHans": [
+          "吉林省宇辉地方铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op63",
+      "region": "cn",
+      "legal": "哈尔滨宾西铁路有限公司",
+      "label": "哈尔滨宾西铁路有限公司",
+      "names": {
+        "zhHans": [
+          "哈尔滨宾西铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op64",
+      "region": "cn",
+      "legal": "郑州煤炭工业（集团）有限责任公司铁路运输处",
+      "label": "郑州煤炭工业（集团）有限责任公司铁路运输处",
+      "names": {
+        "zhHans": [
+          "郑州煤炭工业（集团）有限责任公司铁路运输处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op65",
+      "region": "cn",
+      "legal": "南涪铁路有限责任公司",
+      "label": "南涪铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "南涪铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op66",
+      "region": "cn",
+      "legal": "中国铁路郑州局集团有限公司；中国铁路济南局集团有限公司",
+      "label": "中国铁路郑州局集团有限公司；中国铁路济南局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路郑州局集团有限公司；中国铁路济南局集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op67",
+      "region": "cn",
+      "legal": "吉林省东北亚铁路集团股份有限公司",
+      "label": "吉林省东北亚铁路集团股份有限公司",
+      "names": {
+        "zhHans": [
+          "吉林省东北亚铁路集团股份有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op68",
+      "region": "cn",
+      "legal": "四川连乐铁路有限责任公司",
+      "label": "四川连乐铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "四川连乐铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op69",
+      "region": "cn",
+      "legal": "南京地方铁路有限公司",
+      "label": "南京地方铁路有限公司",
+      "names": {
+        "zhHans": [
+          "南京地方铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op7",
+      "region": "cn",
+      "legal": "中国铁路成都局集团",
+      "label": "中国铁路成都局集团",
+      "names": {
+        "zhHans": [
+          "中国铁路成都局集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op70",
+      "region": "cn",
+      "legal": "四川叙大铁路有限责任公司",
+      "label": "四川叙大铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "四川叙大铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op72",
+      "region": "cn",
+      "legal": "庄河地方铁路",
+      "label": "庄河地方铁路",
+      "names": {
+        "zhHans": [
+          "庄河地方铁路"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op73",
+      "region": "cn",
+      "legal": "天津南环铁路有限公司",
+      "label": "天津南环铁路有限公司",
+      "names": {
+        "zhHans": [
+          "天津南环铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op74",
+      "region": "cn",
+      "legal": "中铁三局集团有限公司运输工程分公司",
+      "label": "中铁三局集团有限公司运输工程分公司",
+      "names": {
+        "zhHans": [
+          "中铁三局集团有限公司运输工程分公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op75",
+      "region": "cn",
+      "legal": "甘肃朱中铁路有限责任公司",
+      "label": "甘肃朱中铁路有限责任公司",
+      "names": {
+        "zhHans": [
+          "甘肃朱中铁路有限责任公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op76",
+      "region": "cn",
+      "legal": "兖矿集团铁路运输处",
+      "label": "兖矿集团铁路运输处",
+      "names": {
+        "zhHans": [
+          "兖矿集团铁路运输处"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op77",
+      "region": "cn",
+      "legal": "上海申通地铁集团有限公司",
+      "label": "上海申通地铁集团有限公司",
+      "names": {
+        "zhHans": [
+          "上海申通地铁集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op78",
+      "region": "cn",
+      "legal": "四川隆叙宜铁路有限公司",
+      "label": "四川隆叙宜铁路有限公司",
+      "names": {
+        "zhHans": [
+          "四川隆叙宜铁路有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op79",
+      "region": "cn",
+      "legal": "湖南省永耒铁路运输服务有限公司",
+      "label": "湖南省永耒铁路运输服务有限公司",
+      "names": {
+        "zhHans": [
+          "湖南省永耒铁路运输服务有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op8",
+      "region": "cn",
+      "legal": "中国铁路昆明局集团有限公司",
+      "label": "中国铁路昆明局集团有限公司",
+      "names": {
+        "zhHans": [
+          "中国铁路昆明局集团有限公司",
+          "中国铁路昆明局"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op80",
+      "region": "cn",
+      "legal": "上海地铁第四运营有限公司",
+      "label": "上海地铁第四运营有限公司",
+      "names": {
+        "zhHans": [
+          "上海地铁第四运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op81",
+      "region": "cn",
+      "legal": "上海地铁第三运营有限公司",
+      "label": "上海地铁第三运营有限公司",
+      "names": {
+        "zhHans": [
+          "上海地铁第三运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op82",
+      "region": "cn",
+      "legal": "上海地铁第一运营有限公司",
+      "label": "上海地铁第一运营有限公司",
+      "names": {
+        "zhHans": [
+          "上海地铁第一运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op83",
+      "region": "cn",
+      "legal": "上海地铁第二运营有限公司",
+      "label": "上海地铁第二运营有限公司",
+      "names": {
+        "zhHans": [
+          "上海地铁第二运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op84",
+      "region": "cn",
+      "legal": "Shanghai Maglev Transportation Co., Ltd.",
+      "label": "Shanghai Maglev Transportation Co., Ltd.",
+      "names": {
+        "zhHans": []
+      },
+      "aliases": [
+        "Shanghai Maglev Transportation Co., Ltd."
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op85",
+      "region": "cn",
+      "legal": "广州地铁集团有限公司",
+      "label": "广州地铁集团有限公司",
+      "names": {
+        "zhHans": [
+          "广州地铁集团有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op86",
+      "region": "cn",
+      "legal": "天津致远轨道交通运营有限公司",
+      "label": "天津致远轨道交通运营有限公司",
+      "names": {
+        "zhHans": [
+          "天津致远轨道交通运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op87",
+      "region": "cn",
+      "legal": "重庆轨道交通运营",
+      "label": "重庆轨道交通运营",
+      "names": {
+        "zhHans": [
+          "重庆轨道交通运营"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op89",
+      "region": "cn",
+      "legal": "北京市地铁运营有限公司",
+      "label": "北京市地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "北京市地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op9",
+      "region": "cn",
+      "legal": "广西沿海铁路股份有限公司",
+      "label": "广西沿海铁路股份有限公司",
+      "names": {
+        "zhHans": [
+          "广西沿海铁路股份有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op90",
+      "region": "cn",
+      "legal": "南京地铁",
+      "label": "南京地铁",
+      "names": {
+        "zhHans": [
+          "南京地铁"
+        ]
+      },
+      "aliases": [
+        "Nanjing Metro Group"
+      ],
+      "families": []
+    },
+    {
+      "code": "cn.op92",
+      "region": "cn",
+      "legal": "北京市地铁运营二分有限公司",
+      "label": "北京市地铁运营二分有限公司",
+      "names": {
+        "zhHans": [
+          "北京市地铁运营二分有限公司",
+          "北京地铁运营二分有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op93",
+      "region": "cn",
+      "legal": "北京京城地铁有限公司",
+      "label": "北京京城地铁有限公司",
+      "names": {
+        "zhHans": [
+          "北京京城地铁有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op94",
+      "region": "cn",
+      "legal": "深圳市地铁集团有限公司",
+      "label": "深圳市地铁集团有限公司",
+      "names": {
+        "zhHans": [
+          "深圳市地铁集团有限公司",
+          "深圳地铁集团有限公司",
+          "深圳市地铁集团"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op97",
+      "region": "cn",
+      "legal": "成都地铁运营有限公司",
+      "label": "成都地铁运营有限公司",
+      "names": {
+        "zhHans": [
+          "成都地铁运营有限公司"
+        ]
+      },
+      "aliases": [],
+      "families": []
+    },
+    {
+      "code": "cn.op98",
+      "region": "cn",
+      "legal": "长春市轨道交通集团",
+      "label": "长春市轨道交通集团",
+      "names": {
+        "zhHans": [
+          "长春市轨道交通集团"
+        ]
+      },
+      "aliases": [
+        "Changchun Rail Transit Corporation"
+      ],
+      "families": []
+    },
+    {
       "code": "hk.mtr",
       "region": "hk",
       "legal": "香港鐵路有限公司",

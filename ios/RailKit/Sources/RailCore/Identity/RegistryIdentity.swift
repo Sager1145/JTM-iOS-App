@@ -118,14 +118,14 @@ public struct RegistryIdentity: Equatable, Sendable {
 
     /// Passenger label. The stored short label wins; a schema-1 record falls back to its first name.
     public func operatorLabel(_ identifier: String) -> String? {
-        guard let record = bundle.operatorRecords[identifier] else { return nil }
+        guard let record = bundle.operatorRecords[bundle.canonicalID(identifier)] else { return nil }
         if !record.label.isEmpty { return record.label }
         return record.names.first
     }
 
     /// Logo path stored on the operator. Empty and missing logos are nil.
     public func operatorLogo(_ identifier: String) -> String? {
-        guard let logo = bundle.operatorRecords[identifier]?.logo, !logo.isEmpty else { return nil }
+        guard let logo = bundle.operatorRecords[bundle.canonicalID(identifier)]?.logo, !logo.isEmpty else { return nil }
         return logo
     }
 
@@ -325,24 +325,24 @@ public struct RegistryIdentity: Equatable, Sendable {
     }
 
     public func station(_ identifier: String) -> RegistryStationRecord? {
-        bundle.stations[identifier]
+        bundle.stations[bundle.canonicalID(identifier)]
     }
 
     public func codes(of stationID: String) -> [String] {
-        bundle.stations[stationID]?.codes ?? []
+        bundle.stations[bundle.canonicalID(stationID)]?.codes ?? []
     }
 
     public func complex(of stationID: String) -> RegistryComplexRecord? {
-        guard let complexID = bundle.stations[stationID]?.cx else { return nil }
-        return bundle.complexes[complexID]
+        guard let complexID = bundle.stations[bundle.canonicalID(stationID)]?.cx else { return nil }
+        return bundle.complexes[bundle.canonicalID(complexID)]
     }
 
     public func stations(in complexID: String) -> [String] {
-        bundle.complexes[complexID]?.stations ?? []
+        bundle.complexes[bundle.canonicalID(complexID)]?.stations ?? []
     }
 
     public func `operator`(for identifier: String) -> RegistryOperatorRecord? {
-        bundle.operatorRecords[identifier]
+        bundle.operatorRecords[bundle.canonicalID(identifier)]
     }
 
     /// The operator whose stored identity code equals `code`. Nil unless exactly one does.
@@ -376,7 +376,7 @@ public struct RegistryIdentity: Equatable, Sendable {
     /// by rank, then name, then id. A line name that appears once in the country
     /// is shown bare; a repeated name is qualified with the operator's short label.
     public func label(for stationID: String, line requested: String? = nil, country: String) -> RegistryStationLabel? {
-        guard let station = bundle.stations[stationID] else { return nil }
+        guard let station = bundle.stations[bundle.canonicalID(stationID)] else { return nil }
         let countryCode = country.uppercased()
         let lineID = chosenLineID(station: station, requested: requested)
         let detail = lineID.flatMap { lineLabel(for: $0) }

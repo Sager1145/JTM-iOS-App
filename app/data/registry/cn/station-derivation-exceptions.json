@@ -20521,17 +20521,6 @@
       ]
     },
     {
-      "cx": "cx:cn:12298",
-      "operators": [
-        "op:cn:182",
-        "op:cn:199"
-      ],
-      "metres": 242,
-      "sharedCodes": [
-        "CN-OSM-N9401734869"
-      ]
-    },
-    {
       "cx": "cx:cn:12304",
       "operators": [
         "op:cn:131",
@@ -21999,12 +21988,6 @@
   "line-alias-is-country-code": [],
   "station-code-conflict": [
     {
-      "value": "CN-12306-ADX",
-      "candidates": [
-        "st:cn:1055"
-      ]
-    },
-    {
       "value": "CN-12306-AUR",
       "candidates": [
         "st:cn:5608",
@@ -22019,94 +22002,10 @@
       ]
     },
     {
-      "value": "CN-12306-BAB",
-      "candidates": [
-        "st:cn:3054"
-      ]
-    },
-    {
-      "value": "CN-12306-BCT",
-      "candidates": [
-        "st:cn:1736"
-      ]
-    },
-    {
-      "value": "CN-12306-BDC",
-      "candidates": [
-        "st:cn:1198"
-      ]
-    },
-    {
-      "value": "CN-12306-BJP",
-      "candidates": [
-        "st:cn:239"
-      ]
-    },
-    {
-      "value": "CN-12306-BNE",
-      "candidates": [
-        "st:cn:6706"
-      ]
-    },
-    {
-      "value": "CN-12306-BOP",
-      "candidates": [
-        "st:cn:806"
-      ]
-    },
-    {
       "value": "CN-12306-BXR",
       "candidates": [
         "st:cn:3383",
         "st:cn:3384"
-      ]
-    },
-    {
-      "value": "CN-12306-BXT",
-      "candidates": [
-        "st:cn:1008"
-      ]
-    },
-    {
-      "value": "CN-12306-CDW",
-      "candidates": [
-        "st:cn:1911"
-      ]
-    },
-    {
-      "value": "CN-12306-COE",
-      "candidates": [
-        "st:cn:5953"
-      ]
-    },
-    {
-      "value": "CN-12306-COW",
-      "candidates": [
-        "st:cn:4395"
-      ]
-    },
-    {
-      "value": "CN-12306-CSQ",
-      "candidates": [
-        "st:cn:706"
-      ]
-    },
-    {
-      "value": "CN-12306-CUW",
-      "candidates": [
-        "st:cn:2946"
-      ]
-    },
-    {
-      "value": "CN-12306-CYE",
-      "candidates": [
-        "st:cn:5798"
-      ]
-    },
-    {
-      "value": "CN-12306-CYI",
-      "candidates": [
-        "st:cn:6346"
       ]
     },
     {
@@ -22124,48 +22023,6 @@
       ]
     },
     {
-      "value": "CN-12306-DEE",
-      "candidates": [
-        "st:cn:5790"
-      ]
-    },
-    {
-      "value": "CN-12306-DKM",
-      "candidates": [
-        "st:cn:5672"
-      ]
-    },
-    {
-      "value": "CN-12306-DUT",
-      "candidates": [
-        "st:cn:987"
-      ]
-    },
-    {
-      "value": "CN-12306-EAQ",
-      "candidates": [
-        "st:cn:4421"
-      ]
-    },
-    {
-      "value": "CN-12306-EDE",
-      "candidates": [
-        "st:cn:5804"
-      ]
-    },
-    {
-      "value": "CN-12306-EGF",
-      "candidates": [
-        "st:cn:6218"
-      ]
-    },
-    {
-      "value": "CN-12306-EGY",
-      "candidates": [
-        "st:cn:2019"
-      ]
-    },
-    {
       "value": "CN-12306-EUG",
       "candidates": [
         "st:cn:133",
@@ -22173,58 +22030,10 @@
       ]
     },
     {
-      "value": "CN-12306-FAW",
-      "candidates": [
-        "st:cn:4393"
-      ]
-    },
-    {
-      "value": "CN-12306-FBG",
-      "candidates": [
-        "st:cn:3840"
-      ]
-    },
-    {
-      "value": "CN-12306-FGP",
-      "candidates": [
-        "st:cn:1444"
-      ]
-    },
-    {
-      "value": "CN-12306-FHT",
-      "candidates": [
-        "st:cn:994"
-      ]
-    },
-    {
       "value": "CN-12306-FLW",
       "candidates": [
         "st:cn:2933",
         "st:cn:2934"
-      ]
-    },
-    {
-      "value": "CN-12306-FYS",
-      "candidates": [
-        "st:cn:5850"
-      ]
-    },
-    {
-      "value": "CN-12306-FZS",
-      "candidates": [
-        "st:cn:3915"
-      ]
-    },
-    {
-      "value": "CN-12306-GAE",
-      "candidates": [
-        "st:cn:4686"
-      ]
-    },
-    {
-      "value": "CN-12306-GAO",
-      "candidates": [
-        "st:cn:14714"
       ]
     },
     {
@@ -22242,112 +22051,10 @@
       ]
     },
     {
-      "value": "CN-12306-GEZ",
-      "candidates": [
-        "st:cn:594"
-      ]
-    },
-    {
-      "value": "CN-12306-GGO",
-      "candidates": [
-        "st:cn:14769"
-      ]
-    },
-    {
-      "value": "CN-12306-GKP",
-      "candidates": [
-        "st:cn:1433"
-      ]
-    },
-    {
       "value": "CN-12306-GMC",
       "candidates": [
         "st:cn:1204",
         "st:cn:1205"
-      ]
-    },
-    {
-      "value": "CN-12306-GNJ",
-      "candidates": [
-        "st:cn:1238"
-      ]
-    },
-    {
-      "value": "CN-12306-GOS",
-      "candidates": [
-        "st:cn:1656"
-      ]
-    },
-    {
-      "value": "CN-12306-GPM",
-      "candidates": [
-        "st:cn:5284"
-      ]
-    },
-    {
-      "value": "CN-12306-HAN",
-      "candidates": [
-        "st:cn:2413"
-      ]
-    },
-    {
-      "value": "CN-12306-HBB",
-      "candidates": [
-        "st:cn:849"
-      ]
-    },
-    {
-      "value": "CN-12306-HBP",
-      "candidates": [
-        "st:cn:1442"
-      ]
-    },
-    {
-      "value": "CN-12306-HHA",
-      "candidates": [
-        "st:cn:6271"
-      ]
-    },
-    {
-      "value": "CN-12306-HIK",
-      "candidates": [
-        "st:cn:190"
-      ]
-    },
-    {
-      "value": "CN-12306-HIP",
-      "candidates": [
-        "st:cn:6348"
-      ]
-    },
-    {
-      "value": "CN-12306-HLL",
-      "candidates": [
-        "st:cn:6156"
-      ]
-    },
-    {
-      "value": "CN-12306-HMV",
-      "candidates": [
-        "st:cn:4736"
-      ]
-    },
-    {
-      "value": "CN-12306-HQK",
-      "candidates": [
-        "st:cn:4640"
-      ]
-    },
-    {
-      "value": "CN-12306-HRP",
-      "candidates": [
-        "st:cn:1475"
-      ]
-    },
-    {
-      "value": "CN-12306-HTB",
-      "candidates": [
-        "st:cn:1044"
       ]
     },
     {
@@ -22358,28 +22065,10 @@
       ]
     },
     {
-      "value": "CN-12306-HVP",
-      "candidates": [
-        "st:cn:1439"
-      ]
-    },
-    {
-      "value": "CN-12306-ILP",
-      "candidates": [
-        "st:cn:5889"
-      ]
-    },
-    {
       "value": "CN-12306-IMQ",
       "candidates": [
         "st:cn:6",
         "st:cn:7"
-      ]
-    },
-    {
-      "value": "CN-12306-ITW",
-      "candidates": [
-        "st:cn:4661"
       ]
     },
     {
@@ -22390,118 +22079,10 @@
       ]
     },
     {
-      "value": "CN-12306-JAC",
-      "candidates": [
-        "st:cn:1304"
-      ]
-    },
-    {
-      "value": "CN-12306-JCS",
-      "candidates": [
-        "st:cn:3927"
-      ]
-    },
-    {
-      "value": "CN-12306-JGK",
-      "candidates": [
-        "st:cn:961"
-      ]
-    },
-    {
-      "value": "CN-12306-JHR",
-      "candidates": [
-        "st:cn:394"
-      ]
-    },
-    {
-      "value": "CN-12306-JIO",
-      "candidates": [
-        "st:cn:14745"
-      ]
-    },
-    {
-      "value": "CN-12306-JJZ",
-      "candidates": [
-        "st:cn:4174"
-      ]
-    },
-    {
-      "value": "CN-12306-JMB",
-      "candidates": [
-        "st:cn:2481"
-      ]
-    },
-    {
-      "value": "CN-12306-JXK",
-      "candidates": [
-        "st:cn:2547"
-      ]
-    },
-    {
-      "value": "CN-12306-JZK",
-      "candidates": [
-        "st:cn:972"
-      ]
-    },
-    {
-      "value": "CN-12306-KAM",
-      "candidates": [
-        "st:cn:4857"
-      ]
-    },
-    {
       "value": "CN-12306-KDC",
       "candidates": [
         "st:cn:5330",
         "st:cn:5331"
-      ]
-    },
-    {
-      "value": "CN-12306-KDK",
-      "candidates": [
-        "st:cn:5184"
-      ]
-    },
-    {
-      "value": "CN-12306-KEW",
-      "candidates": [
-        "st:cn:4676"
-      ]
-    },
-    {
-      "value": "CN-12306-KFW",
-      "candidates": [
-        "st:cn:4679"
-      ]
-    },
-    {
-      "value": "CN-12306-KIQ",
-      "candidates": [
-        "st:cn:4489"
-      ]
-    },
-    {
-      "value": "CN-12306-KMM",
-      "candidates": [
-        "st:cn:3127"
-      ]
-    },
-    {
-      "value": "CN-12306-KOM",
-      "candidates": [
-        "st:cn:5390"
-      ]
-    },
-    {
-      "value": "CN-12306-KQW",
-      "candidates": [
-        "st:cn:4705"
-      ]
-    },
-    {
-      "value": "CN-12306-KSR",
-      "candidates": [
-        "st:cn:510"
       ]
     },
     {
@@ -22512,24 +22093,6 @@
       ]
     },
     {
-      "value": "CN-12306-KZK",
-      "candidates": [
-        "st:cn:4122"
-      ]
-    },
-    {
-      "value": "CN-12306-KZP",
-      "candidates": [
-        "st:cn:5891"
-      ]
-    },
-    {
-      "value": "CN-12306-LAP",
-      "candidates": [
-        "st:cn:665"
-      ]
-    },
-    {
       "value": "CN-12306-LCW",
       "candidates": [
         "st:cn:2376",
@@ -22537,76 +22100,10 @@
       ]
     },
     {
-      "value": "CN-12306-LFX",
-      "candidates": [
-        "st:cn:1058"
-      ]
-    },
-    {
       "value": "CN-12306-LHC",
       "candidates": [
         "st:cn:1211",
         "st:cn:1212"
-      ]
-    },
-    {
-      "value": "CN-12306-LLG",
-      "candidates": [
-        "st:cn:3847"
-      ]
-    },
-    {
-      "value": "CN-12306-LSO",
-      "candidates": [
-        "st:cn:12"
-      ]
-    },
-    {
-      "value": "CN-12306-LUF",
-      "candidates": [
-        "st:cn:4474"
-      ]
-    },
-    {
-      "value": "CN-12306-LZO",
-      "candidates": [
-        "st:cn:14710"
-      ]
-    },
-    {
-      "value": "CN-12306-LZZ",
-      "candidates": [
-        "st:cn:615"
-      ]
-    },
-    {
-      "value": "CN-12306-MDB",
-      "candidates": [
-        "st:cn:1761"
-      ]
-    },
-    {
-      "value": "CN-12306-MDK",
-      "candidates": [
-        "st:cn:4650"
-      ]
-    },
-    {
-      "value": "CN-12306-MIO",
-      "candidates": [
-        "st:cn:14718"
-      ]
-    },
-    {
-      "value": "CN-12306-MSE",
-      "candidates": [
-        "st:cn:5800"
-      ]
-    },
-    {
-      "value": "CN-12306-MUP",
-      "candidates": [
-        "st:cn:1472"
       ]
     },
     {
@@ -22619,40 +22116,10 @@
       ]
     },
     {
-      "value": "CN-12306-NGX",
-      "candidates": [
-        "st:cn:3044"
-      ]
-    },
-    {
       "value": "CN-12306-NHS",
       "candidates": [
         "st:cn:5826",
         "st:cn:5827"
-      ]
-    },
-    {
-      "value": "CN-12306-NJW",
-      "candidates": [
-        "st:cn:2383"
-      ]
-    },
-    {
-      "value": "CN-12306-NKP",
-      "candidates": [
-        "st:cn:5933"
-      ]
-    },
-    {
-      "value": "CN-12306-NKW",
-      "candidates": [
-        "st:cn:4075"
-      ]
-    },
-    {
-      "value": "CN-12306-NLP",
-      "candidates": [
-        "st:cn:1479"
       ]
     },
     {
@@ -22663,58 +22130,10 @@
       ]
     },
     {
-      "value": "CN-12306-NOE",
-      "candidates": [
-        "st:cn:5806"
-      ]
-    },
-    {
-      "value": "CN-12306-NUE",
-      "candidates": [
-        "st:cn:6708"
-      ]
-    },
-    {
       "value": "CN-12306-NUQ",
       "candidates": [
         "st:cn:4556",
         "st:cn:4557"
-      ]
-    },
-    {
-      "value": "CN-12306-NXA",
-      "candidates": [
-        "st:cn:6267"
-      ]
-    },
-    {
-      "value": "CN-12306-NXG",
-      "candidates": [
-        "st:cn:3912"
-      ]
-    },
-    {
-      "value": "CN-12306-OGQ",
-      "candidates": [
-        "st:cn:6352"
-      ]
-    },
-    {
-      "value": "CN-12306-OKP",
-      "candidates": [
-        "st:cn:5282"
-      ]
-    },
-    {
-      "value": "CN-12306-PEE",
-      "candidates": [
-        "st:cn:6714"
-      ]
-    },
-    {
-      "value": "CN-12306-PJE",
-      "candidates": [
-        "st:cn:5796"
       ]
     },
     {
@@ -22725,34 +22144,10 @@
       ]
     },
     {
-      "value": "CN-12306-PTS",
-      "candidates": [
-        "st:cn:5140"
-      ]
-    },
-    {
-      "value": "CN-12306-PYW",
-      "candidates": [
-        "st:cn:5065"
-      ]
-    },
-    {
       "value": "CN-12306-QDZ",
       "candidates": [
         "st:cn:1831",
         "st:cn:1832"
-      ]
-    },
-    {
-      "value": "CN-12306-QFW",
-      "candidates": [
-        "st:cn:2028"
-      ]
-    },
-    {
-      "value": "CN-12306-QIP",
-      "candidates": [
-        "st:cn:6075"
       ]
     },
     {
@@ -22763,82 +22158,10 @@
       ]
     },
     {
-      "value": "CN-12306-QNW",
-      "candidates": [
-        "st:cn:2919"
-      ]
-    },
-    {
-      "value": "CN-12306-QSL",
-      "candidates": [
-        "st:cn:2445"
-      ]
-    },
-    {
-      "value": "CN-12306-RHX",
-      "candidates": [
-        "st:cn:1061"
-      ]
-    },
-    {
-      "value": "CN-12306-RNT",
-      "candidates": [
-        "st:cn:3096"
-      ]
-    },
-    {
-      "value": "CN-12306-RXW",
-      "candidates": [
-        "st:cn:2298"
-      ]
-    },
-    {
-      "value": "CN-12306-SAO",
-      "candidates": [
-        "st:cn:14759"
-      ]
-    },
-    {
-      "value": "CN-12306-SCE",
-      "candidates": [
-        "st:cn:5816"
-      ]
-    },
-    {
       "value": "CN-12306-SCP",
       "candidates": [
         "st:cn:1301",
         "st:cn:1302"
-      ]
-    },
-    {
-      "value": "CN-12306-SDE",
-      "candidates": [
-        "st:cn:5352"
-      ]
-    },
-    {
-      "value": "CN-12306-SHS",
-      "candidates": [
-        "st:cn:1690"
-      ]
-    },
-    {
-      "value": "CN-12306-SOP",
-      "candidates": [
-        "st:cn:1481"
-      ]
-    },
-    {
-      "value": "CN-12306-SOT",
-      "candidates": [
-        "st:cn:5138"
-      ]
-    },
-    {
-      "value": "CN-12306-SRO",
-      "candidates": [
-        "st:cn:14755"
       ]
     },
     {
@@ -22849,42 +22172,6 @@
       ]
     },
     {
-      "value": "CN-12306-SVE",
-      "candidates": [
-        "st:cn:6710"
-      ]
-    },
-    {
-      "value": "CN-12306-SYQ",
-      "candidates": [
-        "st:cn:2260"
-      ]
-    },
-    {
-      "value": "CN-12306-TAP",
-      "candidates": [
-        "st:cn:1484"
-      ]
-    },
-    {
-      "value": "CN-12306-TKX",
-      "candidates": [
-        "st:cn:1066"
-      ]
-    },
-    {
-      "value": "CN-12306-TLB",
-      "candidates": [
-        "st:cn:3697"
-      ]
-    },
-    {
-      "value": "CN-12306-TLD",
-      "candidates": [
-        "st:cn:1452"
-      ]
-    },
-    {
       "value": "CN-12306-TML",
       "candidates": [
         "st:cn:2447",
@@ -22892,117 +22179,9 @@
       ]
     },
     {
-      "value": "CN-12306-TMN",
-      "candidates": [
-        "st:cn:3819"
-      ]
-    },
-    {
-      "value": "CN-12306-TOP",
-      "candidates": [
-        "st:cn:809"
-      ]
-    },
-    {
-      "value": "CN-12306-UBZ",
-      "candidates": [
-        "st:cn:622"
-      ]
-    },
-    {
-      "value": "CN-12306-UMW",
-      "candidates": [
-        "st:cn:3156"
-      ]
-    },
-    {
-      "value": "CN-12306-UYK",
-      "candidates": [
-        "st:cn:2527"
-      ]
-    },
-    {
-      "value": "CN-12306-VAP",
-      "candidates": [
-        "st:cn:6077"
-      ]
-    },
-    {
-      "value": "CN-12306-VBP",
-      "candidates": [
-        "st:cn:1450"
-      ]
-    },
-    {
-      "value": "CN-12306-VFQ",
-      "candidates": [
-        "st:cn:2071"
-      ]
-    },
-    {
-      "value": "CN-12306-VGQ",
-      "candidates": [
-        "st:cn:2609"
-      ]
-    },
-    {
-      "value": "CN-12306-VTR",
-      "candidates": [
-        "st:cn:5780"
-      ]
-    },
-    {
-      "value": "CN-12306-VXK",
-      "candidates": [
-        "st:cn:6022"
-      ]
-    },
-    {
-      "value": "CN-12306-WGB",
-      "candidates": [
-        "st:cn:852"
-      ]
-    },
-    {
-      "value": "CN-12306-WJE",
-      "candidates": [
-        "st:cn:5785"
-      ]
-    },
-    {
-      "value": "CN-12306-WKW",
-      "candidates": [
-        "st:cn:5459"
-      ]
-    },
-    {
-      "value": "CN-12306-WLE",
-      "candidates": [
-        "st:cn:6712"
-      ]
-    },
-    {
-      "value": "CN-12306-WWJ",
-      "candidates": [
-        "st:cn:488"
-      ]
-    },
-    {
-      "value": "CN-12306-WYE",
-      "candidates": [
-        "st:cn:5810"
-      ]
-    },
-    {
       "value": "CN-12306-XCE",
       "candidates": [
         "st:cn:5301"
-      ]
-    },
-    {
-      "value": "CN-12306-XDY",
-      "candidates": [
-        "st:cn:2276"
       ]
     },
     {
@@ -23013,60 +22192,6 @@
       ]
     },
     {
-      "value": "CN-12306-XKS",
-      "candidates": [
-        "st:cn:5504"
-      ]
-    },
-    {
-      "value": "CN-12306-XLE",
-      "candidates": [
-        "st:cn:5794"
-      ]
-    },
-    {
-      "value": "CN-12306-XPF",
-      "candidates": [
-        "st:cn:4469"
-      ]
-    },
-    {
-      "value": "CN-12306-XTQ",
-      "candidates": [
-        "st:cn:1548"
-      ]
-    },
-    {
-      "value": "CN-12306-XWQ",
-      "candidates": [
-        "st:cn:6360"
-      ]
-    },
-    {
-      "value": "CN-12306-XXM",
-      "candidates": [
-        "st:cn:3132"
-      ]
-    },
-    {
-      "value": "CN-12306-XYY",
-      "candidates": [
-        "st:cn:2587"
-      ]
-    },
-    {
-      "value": "CN-12306-YAA",
-      "candidates": [
-        "st:cn:6269"
-      ]
-    },
-    {
-      "value": "CN-12306-YAE",
-      "candidates": [
-        "st:cn:5802"
-      ]
-    },
-    {
       "value": "CN-12306-YBW",
       "candidates": [
         "st:cn:3293",
@@ -23074,100 +22199,10 @@
       ]
     },
     {
-      "value": "CN-12306-YGR",
-      "candidates": [
-        "st:cn:549"
-      ]
-    },
-    {
-      "value": "CN-12306-YGW",
-      "candidates": [
-        "st:cn:5315"
-      ]
-    },
-    {
-      "value": "CN-12306-YLZ",
-      "candidates": [
-        "st:cn:2673"
-      ]
-    },
-    {
-      "value": "CN-12306-YME",
-      "candidates": [
-        "st:cn:5787"
-      ]
-    },
-    {
-      "value": "CN-12306-YMI",
-      "candidates": [
-        "st:cn:6350"
-      ]
-    },
-    {
-      "value": "CN-12306-YTE",
-      "candidates": [
-        "st:cn:5808"
-      ]
-    },
-    {
-      "value": "CN-12306-YTS",
-      "candidates": [
-        "st:cn:3919"
-      ]
-    },
-    {
-      "value": "CN-12306-YXE",
-      "candidates": [
-        "st:cn:4669"
-      ]
-    },
-    {
-      "value": "CN-12306-ZAF",
-      "candidates": [
-        "st:cn:4471"
-      ]
-    },
-    {
-      "value": "CN-12306-ZDB",
-      "candidates": [
-        "st:cn:1050"
-      ]
-    },
-    {
-      "value": "CN-12306-ZFK",
-      "candidates": [
-        "st:cn:340"
-      ]
-    },
-    {
-      "value": "CN-12306-ZGE",
-      "candidates": [
-        "st:cn:4757"
-      ]
-    },
-    {
-      "value": "CN-12306-ZIE",
-      "candidates": [
-        "st:cn:5814"
-      ]
-    },
-    {
       "value": "CN-12306-ZIK",
       "candidates": [
         "st:cn:347",
         "st:cn:348"
-      ]
-    },
-    {
-      "value": "CN-12306-ZJY",
-      "candidates": [
-        "st:cn:2574"
-      ]
-    },
-    {
-      "value": "CN-12306-ZNO",
-      "candidates": [
-        "st:cn:14765"
       ]
     },
     {
@@ -23185,24 +22220,6 @@
       ]
     },
     {
-      "value": "CN-12306-ZWQ",
-      "candidates": [
-        "st:cn:6488"
-      ]
-    },
-    {
-      "value": "CN-12306-ZZE",
-      "candidates": [
-        "st:cn:5812"
-      ]
-    },
-    {
-      "value": "CN-12306-ZZQ",
-      "candidates": [
-        "st:cn:14801"
-      ]
-    },
-    {
       "value": "CN-OSM-N10156531046",
       "candidates": [
         "st:cn:13317",
@@ -23217,160 +22234,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N10598617809",
-      "candidates": [
-        "st:cn:5818"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10671369627",
-      "candidates": [
-        "st:cn:14132"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10740321255",
-      "candidates": [
-        "st:cn:10518"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10757791701",
-      "candidates": [
-        "st:cn:10524"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10757807710",
-      "candidates": [
-        "st:cn:10522"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10757807714",
-      "candidates": [
-        "st:cn:10520"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10757807731",
-      "candidates": [
-        "st:cn:10516"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10757807733",
-      "candidates": [
-        "st:cn:10514"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10758028161",
-      "candidates": [
-        "st:cn:10512"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10771129666",
-      "candidates": [
-        "st:cn:10565"
-      ]
-    },
-    {
       "value": "CN-OSM-N10772026198",
       "candidates": [
         "st:cn:8170",
         "st:cn:8171"
-      ]
-    },
-    {
-      "value": "CN-OSM-N10773561924",
-      "candidates": [
-        "st:cn:10541"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11127329510",
-      "candidates": [
-        "st:cn:10373"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11834861031",
-      "candidates": [
-        "st:cn:14757"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11834913171",
-      "candidates": [
-        "st:cn:14747"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11835182621",
-      "candidates": [
-        "st:cn:14732"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11835182658",
-      "candidates": [
-        "st:cn:14728"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11835192797",
-      "candidates": [
-        "st:cn:14724"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11835192798",
-      "candidates": [
-        "st:cn:14736"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11835192826",
-      "candidates": [
-        "st:cn:14720"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11837753484",
-      "candidates": [
-        "st:cn:14753"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11837753485",
-      "candidates": [
-        "st:cn:14743"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11837753486",
-      "candidates": [
-        "st:cn:14739"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11837799349",
-      "candidates": [
-        "st:cn:14716"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11837829321",
-      "candidates": [
-        "st:cn:14712"
-      ]
-    },
-    {
-      "value": "CN-OSM-N11942182951",
-      "candidates": [
-        "st:cn:11297"
       ]
     },
     {
@@ -23423,24 +22290,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N12089221276",
-      "candidates": [
-        "st:cn:7311"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12167817374",
-      "candidates": [
-        "st:cn:10459"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12430713733",
-      "candidates": [
-        "st:cn:7732"
-      ]
-    },
-    {
       "value": "CN-OSM-N12454472126",
       "candidates": [
         "st:cn:6851",
@@ -23485,210 +22334,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N12643489097",
-      "candidates": [
-        "st:cn:4120"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456729",
-      "candidates": [
-        "st:cn:13121"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456730",
-      "candidates": [
-        "st:cn:13087"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456736",
-      "candidates": [
-        "st:cn:13065"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456740",
-      "candidates": [
-        "st:cn:13067"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456741",
-      "candidates": [
-        "st:cn:13141"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456744",
-      "candidates": [
-        "st:cn:13069"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456745",
-      "candidates": [
-        "st:cn:13139"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456748",
-      "candidates": [
-        "st:cn:13071"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456749",
-      "candidates": [
-        "st:cn:13137"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456752",
-      "candidates": [
-        "st:cn:13073"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456753",
-      "candidates": [
-        "st:cn:13135"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456754",
-      "candidates": [
-        "st:cn:13075"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456755",
-      "candidates": [
-        "st:cn:13131"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456756",
-      "candidates": [
-        "st:cn:13133"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456757",
-      "candidates": [
-        "st:cn:13077"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456758",
-      "candidates": [
-        "st:cn:13129"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456759",
-      "candidates": [
-        "st:cn:13127"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456760",
-      "candidates": [
-        "st:cn:13081"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456761",
-      "candidates": [
-        "st:cn:13079"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456764",
-      "candidates": [
-        "st:cn:13125"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456765",
-      "candidates": [
-        "st:cn:13083"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456768",
-      "candidates": [
-        "st:cn:13123"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456769",
-      "candidates": [
-        "st:cn:13085"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456772",
-      "candidates": [
-        "st:cn:13119"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456773",
-      "candidates": [
-        "st:cn:13089"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456774",
-      "candidates": [
-        "st:cn:13117"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456776",
-      "candidates": [
-        "st:cn:13091"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456780",
-      "candidates": [
-        "st:cn:13115"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456781",
-      "candidates": [
-        "st:cn:13093"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456785",
-      "candidates": [
-        "st:cn:13113"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456786",
-      "candidates": [
-        "st:cn:13095"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12798456789",
-      "candidates": [
-        "st:cn:13111"
-      ]
-    },
-    {
-      "value": "CN-OSM-N12961510597",
-      "candidates": [
-        "st:cn:10689"
-      ]
-    },
-    {
       "value": "CN-OSM-N1304785289",
       "candidates": [
         "st:cn:7541",
@@ -23696,154 +22341,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N13431725611",
-      "candidates": [
-        "st:cn:9902"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13462507405",
-      "candidates": [
-        "st:cn:9954"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13462507406",
-      "candidates": [
-        "st:cn:9909"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13462507410",
-      "candidates": [
-        "st:cn:9906"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13462507411",
-      "candidates": [
-        "st:cn:9904"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429188",
-      "candidates": [
-        "st:cn:9927"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429190",
-      "candidates": [
-        "st:cn:9923"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429191",
-      "candidates": [
-        "st:cn:9911"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429193",
-      "candidates": [
-        "st:cn:9931"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429194",
-      "candidates": [
-        "st:cn:9935"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429195",
-      "candidates": [
-        "st:cn:9952"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481429200",
-      "candidates": [
-        "st:cn:9946"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481461001",
-      "candidates": [
-        "st:cn:9939"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13481461003",
-      "candidates": [
-        "st:cn:9941"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13516289568",
-      "candidates": [
-        "st:cn:9929"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13516967331",
-      "candidates": [
-        "st:cn:9913"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13575336785",
-      "candidates": [
-        "st:cn:9915"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13575336787",
-      "candidates": [
-        "st:cn:9917"
-      ]
-    },
-    {
-      "value": "CN-OSM-N13575336788",
-      "candidates": [
-        "st:cn:9933"
-      ]
-    },
-    {
       "value": "CN-OSM-N13766737112",
       "candidates": [
         "st:cn:12577",
         "st:cn:12578"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1565858570",
-      "candidates": [
-        "st:cn:3169"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1586077454",
-      "candidates": [
-        "st:cn:2302"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1587088565",
-      "candidates": [
-        "st:cn:2351"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1587112384",
-      "candidates": [
-        "st:cn:2388"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1590460680",
-      "candidates": [
-        "st:cn:2439"
       ]
     },
     {
@@ -23875,52 +22376,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N1681825115",
-      "candidates": [
-        "st:cn:2941"
-      ]
-    },
-    {
       "value": "CN-OSM-N1709793868",
       "candidates": [
         "st:cn:296",
         "st:cn:297"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1716044103",
-      "candidates": [
-        "st:cn:8002"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1796732962",
-      "candidates": [
-        "st:cn:1917"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1964642703",
-      "candidates": [
-        "st:cn:3152"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1964861297",
-      "candidates": [
-        "st:cn:3154"
-      ]
-    },
-    {
-      "value": "CN-OSM-N1964861301",
-      "candidates": [
-        "st:cn:3159"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2101685386",
-      "candidates": [
-        "st:cn:10455"
       ]
     },
     {
@@ -23959,42 +22418,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N2450072204",
-      "candidates": [
-        "st:cn:152"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2451329911",
-      "candidates": [
-        "st:cn:3917"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2616210383",
-      "candidates": [
-        "st:cn:2314"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2726644060",
-      "candidates": [
-        "st:cn:6929"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2726647402",
-      "candidates": [
-        "st:cn:2279"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2726964537",
-      "candidates": [
-        "st:cn:7923"
-      ]
-    },
-    {
       "value": "CN-OSM-N2788302371",
       "candidates": [
         "st:cn:8890",
@@ -24023,88 +22446,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N2847500922",
-      "candidates": [
-        "st:cn:4032"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2876178097",
-      "candidates": [
-        "st:cn:2281"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2876178098",
-      "candidates": [
-        "st:cn:5040"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2894949391",
-      "candidates": [
-        "st:cn:4082"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2913728104",
-      "candidates": [
-        "st:cn:4134"
-      ]
-    },
-    {
       "value": "CN-OSM-N2997907075",
       "candidates": [
         "st:cn:8238",
         "st:cn:8239"
-      ]
-    },
-    {
-      "value": "CN-OSM-N2999349326",
-      "candidates": [
-        "st:cn:5044"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3024721311",
-      "candidates": [
-        "st:cn:2266"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3073344826",
-      "candidates": [
-        "st:cn:2179"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3259307096",
-      "candidates": [
-        "st:cn:4123"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3363289706",
-      "candidates": [
-        "st:cn:709"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369001428",
-      "candidates": [
-        "st:cn:8354"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459831",
-      "candidates": [
-        "st:cn:8348"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459832",
-      "candidates": [
-        "st:cn:8346"
       ]
     },
     {
@@ -24115,106 +22460,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N3369459834",
-      "candidates": [
-        "st:cn:8340"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459835",
-      "candidates": [
-        "st:cn:8342"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459836",
-      "candidates": [
-        "st:cn:8352"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459837",
-      "candidates": [
-        "st:cn:8366"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459838",
-      "candidates": [
-        "st:cn:8356"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459839",
-      "candidates": [
-        "st:cn:8360"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459840",
-      "candidates": [
-        "st:cn:8358"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459841",
-      "candidates": [
-        "st:cn:8344"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459843",
-      "candidates": [
-        "st:cn:8338"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459845",
-      "candidates": [
-        "st:cn:8350"
-      ]
-    },
-    {
       "value": "CN-OSM-N3369459846",
       "candidates": [
         "st:cn:7592",
         "st:cn:7594"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459847",
-      "candidates": [
-        "st:cn:8364"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459848",
-      "candidates": [
-        "st:cn:8362"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3369459849",
-      "candidates": [
-        "st:cn:8368"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3499334914",
-      "candidates": [
-        "st:cn:5468"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3500252727",
-      "candidates": [
-        "st:cn:2948"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3500253632",
-      "candidates": [
-        "st:cn:2311"
       ]
     },
     {
@@ -24239,64 +22488,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N3629303026",
-      "candidates": [
-        "st:cn:4523"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3677193823",
-      "candidates": [
-        "st:cn:618"
-      ]
-    },
-    {
       "value": "CN-OSM-N3685511919",
       "candidates": [
         "st:cn:3767",
         "st:cn:3768"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3688793561",
-      "candidates": [
-        "st:cn:93"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3733842642",
-      "candidates": [
-        "st:cn:2581"
-      ]
-    },
-    {
-      "value": "CN-OSM-N3931849630",
-      "candidates": [
-        "st:cn:1915"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4076206413",
-      "candidates": [
-        "st:cn:4223"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4079187136",
-      "candidates": [
-        "st:cn:10551"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4079187142",
-      "candidates": [
-        "st:cn:10553"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4472531698",
-      "candidates": [
-        "st:cn:83"
       ]
     },
     {
@@ -24321,112 +22516,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N4585529796",
-      "candidates": [
-        "st:cn:9919"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4927734949",
-      "candidates": [
-        "st:cn:13297"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4927734952",
-      "candidates": [
-        "st:cn:13293"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4982401686",
-      "candidates": [
-        "st:cn:1551"
-      ]
-    },
-    {
-      "value": "CN-OSM-N4999063668",
-      "candidates": [
-        "st:cn:2300"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5026288730",
-      "candidates": [
-        "st:cn:11096"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5026288787",
-      "candidates": [
-        "st:cn:11082"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5026288800",
-      "candidates": [
-        "st:cn:11080"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5121205250",
-      "candidates": [
-        "st:cn:10468"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5214588594",
-      "candidates": [
-        "st:cn:7750"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5214901838",
-      "candidates": [
-        "st:cn:7760"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5232371904",
-      "candidates": [
-        "st:cn:5334"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5303810100",
-      "candidates": [
-        "st:cn:9567"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5303810107",
-      "candidates": [
-        "st:cn:9551"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5303810113",
-      "candidates": [
-        "st:cn:9544"
-      ]
-    },
-    {
       "value": "CN-OSM-N5305408862",
       "candidates": [
         "st:cn:8144",
         "st:cn:8145"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5305505996",
-      "candidates": [
-        "st:cn:7622"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5305506006",
-      "candidates": [
-        "st:cn:7633"
       ]
     },
     {
@@ -24458,18 +22551,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N5430491074",
-      "candidates": [
-        "st:cn:7509"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5430493577",
-      "candidates": [
-        "st:cn:7511"
-      ]
-    },
-    {
       "value": "CN-OSM-N5430497283",
       "candidates": [
         "st:cn:7516",
@@ -24491,54 +22572,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N5441536712",
-      "candidates": [
-        "st:cn:7501"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5441725490",
-      "candidates": [
-        "st:cn:7293"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5442190079",
-      "candidates": [
-        "st:cn:7499"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5444434450",
-      "candidates": [
-        "st:cn:7678"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5444674048",
-      "candidates": [
-        "st:cn:7497"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5444677242",
-      "candidates": [
-        "st:cn:7503"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5444680534",
-      "candidates": [
-        "st:cn:7505"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5448561568",
-      "candidates": [
-        "st:cn:7662"
-      ]
-    },
-    {
       "value": "CN-OSM-N5457244728",
       "candidates": [
         "st:cn:4823",
@@ -24553,190 +22586,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N5502588220",
-      "candidates": [
-        "st:cn:10010"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5503063618",
-      "candidates": [
-        "st:cn:14726"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5503181180",
-      "candidates": [
-        "st:cn:14749"
-      ]
-    },
-    {
-      "value": "CN-OSM-N553661156",
-      "candidates": [
-        "st:cn:3125"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5575964088",
-      "candidates": [
-        "st:cn:7972"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5585712104",
-      "candidates": [
-        "st:cn:10039"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5594170155",
-      "candidates": [
-        "st:cn:7306"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5594210092",
-      "candidates": [
-        "st:cn:7304"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5594400860",
-      "candidates": [
-        "st:cn:7296"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5594558281",
-      "candidates": [
-        "st:cn:9993"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5596459255",
-      "candidates": [
-        "st:cn:8498"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5596469009",
-      "candidates": [
-        "st:cn:8500"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5596537027",
-      "candidates": [
-        "st:cn:8502"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5597964732",
-      "candidates": [
-        "st:cn:10164"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5598402252",
-      "candidates": [
-        "st:cn:10059"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5598548552",
-      "candidates": [
-        "st:cn:9999"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5598840721",
-      "candidates": [
-        "st:cn:10159"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5598942382",
-      "candidates": [
-        "st:cn:10173"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5600229129",
-      "candidates": [
-        "st:cn:10179"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5616916004",
-      "candidates": [
-        "st:cn:9404"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5616916006",
-      "candidates": [
-        "st:cn:9504"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5616916020",
-      "candidates": [
-        "st:cn:9493"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5617074686",
-      "candidates": [
-        "st:cn:7941"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5617807167",
-      "candidates": [
-        "st:cn:7937"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5621991563",
-      "candidates": [
-        "st:cn:9415"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5652914672",
-      "candidates": [
-        "st:cn:2703"
-      ]
-    },
-    {
       "value": "CN-OSM-N5697139239",
       "candidates": [
         "st:cn:6163",
         "st:cn:6164"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5798527765",
-      "candidates": [
-        "st:cn:9950"
-      ]
-    },
-    {
-      "value": "CN-OSM-N582370787",
-      "candidates": [
-        "st:cn:2622"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5864609665",
-      "candidates": [
-        "st:cn:2655"
-      ]
-    },
-    {
-      "value": "CN-OSM-N5888657545",
-      "candidates": [
-        "st:cn:14751"
       ]
     },
     {
@@ -24761,12 +22614,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N6254324863",
-      "candidates": [
-        "st:cn:4505"
-      ]
-    },
-    {
       "value": "CN-OSM-N6308157535",
       "candidates": [
         "st:cn:5015",
@@ -24781,220 +22628,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N6385614439",
-      "candidates": [
-        "st:cn:4158"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6469532250",
-      "candidates": [
-        "st:cn:10709"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6469532251",
-      "candidates": [
-        "st:cn:10711"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6469532252",
-      "candidates": [
-        "st:cn:10713"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6469532253",
-      "candidates": [
-        "st:cn:10715"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6469606313",
-      "candidates": [
-        "st:cn:8619"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6487873946",
-      "candidates": [
-        "st:cn:8496"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6491001177",
-      "candidates": [
-        "st:cn:7967"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6491001178",
-      "candidates": [
-        "st:cn:7969"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6491001289",
-      "candidates": [
-        "st:cn:7965"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6491001293",
-      "candidates": [
-        "st:cn:7962"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6496364884",
-      "candidates": [
-        "st:cn:8370"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6497754454",
-      "candidates": [
-        "st:cn:7550"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6502286199",
-      "candidates": [
-        "st:cn:10958"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6503565369",
-      "candidates": [
-        "st:cn:15224"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6503565370",
-      "candidates": [
-        "st:cn:7774"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6503565377",
-      "candidates": [
-        "st:cn:9460"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6505689114",
-      "candidates": [
-        "st:cn:9533"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6508614263",
-      "candidates": [
-        "st:cn:8566"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6514100407",
-      "candidates": [
-        "st:cn:8098"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6533307893",
-      "candidates": [
-        "st:cn:9496"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6594652054",
-      "candidates": [
-        "st:cn:10548"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6594652091",
-      "candidates": [
-        "st:cn:7947"
-      ]
-    },
-    {
       "value": "CN-OSM-N6617849503",
       "candidates": [
         "st:cn:7520",
         "st:cn:14909"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6632314160",
-      "candidates": [
-        "st:cn:8076"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6715085264",
-      "candidates": [
-        "st:cn:7765"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6716238810",
-      "candidates": [
-        "st:cn:7486"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6745828848",
-      "candidates": [
-        "st:cn:7770"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6753412231",
-      "candidates": [
-        "st:cn:7777"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6836123690",
-      "candidates": [
-        "st:cn:8020"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6839413181",
-      "candidates": [
-        "st:cn:7300"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6894218190",
-      "candidates": [
-        "st:cn:5501"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6930098566",
-      "candidates": [
-        "st:cn:8336"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6930098568",
-      "candidates": [
-        "st:cn:8334"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6930098569",
-      "candidates": [
-        "st:cn:8332"
-      ]
-    },
-    {
-      "value": "CN-OSM-N6930098570",
-      "candidates": [
-        "st:cn:8330"
       ]
     },
     {
@@ -25012,24 +22649,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N7051840957",
-      "candidates": [
-        "st:cn:11173"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7071675992",
-      "candidates": [
-        "st:cn:9983"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7071675998",
-      "candidates": [
-        "st:cn:9622"
-      ]
-    },
-    {
       "value": "CN-OSM-N7080840603",
       "candidates": [
         "st:cn:10824",
@@ -25037,34 +22656,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N7089244011",
-      "candidates": [
-        "st:cn:10561"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7089244022",
-      "candidates": [
-        "st:cn:10546"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7089244038",
-      "candidates": [
-        "st:cn:10992"
-      ]
-    },
-    {
       "value": "CN-OSM-N7099206586",
       "candidates": [
         "st:cn:14039",
         "st:cn:15919"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7117305974",
-      "candidates": [
-        "st:cn:8326"
       ]
     },
     {
@@ -25096,36 +22691,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N7202301456",
-      "candidates": [
-        "st:cn:2186"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7212001155",
-      "candidates": [
-        "st:cn:5457"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7213434053",
-      "candidates": [
-        "st:cn:7920"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7213434054",
-      "candidates": [
-        "st:cn:7918"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7213434057",
-      "candidates": [
-        "st:cn:7907"
-      ]
-    },
-    {
       "value": "CN-OSM-N7221052172",
       "candidates": [
         "st:cn:10335",
@@ -25133,28 +22698,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N7315534542",
-      "candidates": [
-        "st:cn:909"
-      ]
-    },
-    {
       "value": "CN-OSM-N7322084532",
       "candidates": [
         "st:cn:1601",
         "st:cn:1602"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7329144911",
-      "candidates": [
-        "st:cn:14741"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7329144920",
-      "candidates": [
-        "st:cn:14763"
       ]
     },
     {
@@ -25179,12 +22726,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N7368834476",
-      "candidates": [
-        "st:cn:391"
-      ]
-    },
-    {
       "value": "CN-OSM-N7369008128",
       "candidates": [
         "st:cn:435",
@@ -25206,12 +22747,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N7417454927",
-      "candidates": [
-        "st:cn:7914"
-      ]
-    },
-    {
       "value": "CN-OSM-N7473325535",
       "candidates": [
         "st:cn:5686",
@@ -25226,34 +22761,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N7666452141",
-      "candidates": [
-        "st:cn:9530"
-      ]
-    },
-    {
       "value": "CN-OSM-N7703982669",
       "candidates": [
         "st:cn:4539",
         "st:cn:4540"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7705058635",
-      "candidates": [
-        "st:cn:3141"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7707577737",
-      "candidates": [
-        "st:cn:2633"
-      ]
-    },
-    {
-      "value": "CN-OSM-N7715445610",
-      "candidates": [
-        "st:cn:1920"
       ]
     },
     {
@@ -25271,12 +22782,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N7828966427",
-      "candidates": [
-        "st:cn:7791"
-      ]
-    },
-    {
       "value": "CN-OSM-N7921798132",
       "candidates": [
         "st:cn:8922",
@@ -25291,28 +22796,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N7947192957",
-      "candidates": [
-        "st:cn:10677"
-      ]
-    },
-    {
       "value": "CN-OSM-N8043424413",
       "candidates": [
         "st:cn:5056",
         "st:cn:5057"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8061881520",
-      "candidates": [
-        "st:cn:7932"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8064721021",
-      "candidates": [
-        "st:cn:9411"
       ]
     },
     {
@@ -25327,12 +22814,6 @@
       "candidates": [
         "st:cn:7491",
         "st:cn:7493"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8073325262",
-      "candidates": [
-        "st:cn:7495"
       ]
     },
     {
@@ -25357,96 +22838,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N8242507062",
-      "candidates": [
-        "st:cn:10954"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242507064",
-      "candidates": [
-        "st:cn:10557"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242507070",
-      "candidates": [
-        "st:cn:10961"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639362",
-      "candidates": [
-        "st:cn:7943"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639365",
-      "candidates": [
-        "st:cn:10965"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639366",
-      "candidates": [
-        "st:cn:10967"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639370",
-      "candidates": [
-        "st:cn:10542"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639373",
-      "candidates": [
-        "st:cn:10970"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242639374",
-      "candidates": [
-        "st:cn:10930"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8242765693",
-      "candidates": [
-        "st:cn:10986"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8256421498",
-      "candidates": [
-        "st:cn:10567"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8406197581",
-      "candidates": [
-        "st:cn:2518"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8429540526",
-      "candidates": [
-        "st:cn:4248"
-      ]
-    },
-    {
-      "value": "CN-OSM-N843202351",
-      "candidates": [
-        "st:cn:1309"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8432585744",
-      "candidates": [
-        "st:cn:4149"
-      ]
-    },
-    {
       "value": "CN-OSM-N8447564477",
       "candidates": [
         "st:cn:4144",
@@ -25461,34 +22852,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N8455171505",
-      "candidates": [
-        "st:cn:351"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8460009967",
-      "candidates": [
-        "st:cn:5293"
-      ]
-    },
-    {
       "value": "CN-OSM-N8495516700",
       "candidates": [
         "st:cn:1525",
         "st:cn:1526"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8500082728",
-      "candidates": [
-        "st:cn:2549"
-      ]
-    },
-    {
-      "value": "CN-OSM-N8913314748",
-      "candidates": [
-        "st:cn:9921"
       ]
     },
     {
@@ -25507,28 +22874,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N8978629464",
-      "candidates": [
-        "st:cn:7507"
-      ]
-    },
-    {
       "value": "CN-OSM-N8985401533",
       "candidates": [
         "st:cn:12083",
         "st:cn:12084"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9003571312",
-      "candidates": [
-        "st:cn:8163"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9006301317",
-      "candidates": [
-        "st:cn:10510"
       ]
     },
     {
@@ -25539,58 +22888,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N9061785129",
-      "candidates": [
-        "st:cn:7752"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9062166392",
-      "candidates": [
-        "st:cn:11764"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9062301242",
-      "candidates": [
-        "st:cn:9444"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9062301474",
-      "candidates": [
-        "st:cn:9679"
-      ]
-    },
-    {
       "value": "CN-OSM-N9081732789",
       "candidates": [
         "st:cn:2972",
         "st:cn:2973"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9087403300",
-      "candidates": [
-        "st:cn:14730"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9087403301",
-      "candidates": [
-        "st:cn:14722"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9087403302",
-      "candidates": [
-        "st:cn:14734"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9090884269",
-      "candidates": [
-        "st:cn:9627"
       ]
     },
     {
@@ -25615,30 +22916,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9099659614",
-      "candidates": [
-        "st:cn:10207"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9164163258",
-      "candidates": [
-        "st:cn:8610"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9165008026",
-      "candidates": [
-        "st:cn:8617"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9220578094",
-      "candidates": [
-        "st:cn:10030"
-      ]
-    },
-    {
       "value": "CN-OSM-N9221463283",
       "candidates": [
         "st:cn:8752",
@@ -25650,12 +22927,6 @@
       "candidates": [
         "st:cn:9221",
         "st:cn:9222"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9327070288",
-      "candidates": [
-        "st:cn:15014"
       ]
     },
     {
@@ -25687,31 +22958,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9392555711",
-      "candidates": [
-        "st:cn:9453"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9392555714",
-      "candidates": [
-        "st:cn:12885"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9392555715",
-      "candidates": [
-        "st:cn:12887"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9401734869",
-      "candidates": [
-        "st:cn:12965",
-        "st:cn:15713"
-      ]
-    },
-    {
       "value": "CN-OSM-N9404097353",
       "candidates": [
         "st:cn:8974",
@@ -25733,60 +22979,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9428276494",
-      "candidates": [
-        "st:cn:11108"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9428276541",
-      "candidates": [
-        "st:cn:11106"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9431255160",
-      "candidates": [
-        "st:cn:11098"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9431255162",
-      "candidates": [
-        "st:cn:11100"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9433784274",
-      "candidates": [
-        "st:cn:11092"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9433784302",
-      "candidates": [
-        "st:cn:11094"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9433784354",
-      "candidates": [
-        "st:cn:11086"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9433784358",
-      "candidates": [
-        "st:cn:11104"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9435671935",
-      "candidates": [
-        "st:cn:11084"
-      ]
-    },
-    {
       "value": "CN-OSM-N9435814563",
       "candidates": [
         "st:cn:8430",
@@ -25798,30 +22990,6 @@
       "candidates": [
         "st:cn:13033",
         "st:cn:13034"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9439620746",
-      "candidates": [
-        "st:cn:11077"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9439620769",
-      "candidates": [
-        "st:cn:11075"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9439620836",
-      "candidates": [
-        "st:cn:11073"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9439620861",
-      "candidates": [
-        "st:cn:8522"
       ]
     },
     {
@@ -25841,42 +23009,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9442045309",
-      "candidates": [
-        "st:cn:12400"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9442277373",
-      "candidates": [
-        "st:cn:11071"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9442277410",
-      "candidates": [
-        "st:cn:12131"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9442277414",
-      "candidates": [
-        "st:cn:11069"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9442277445",
-      "candidates": [
-        "st:cn:11067"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9442277467",
-      "candidates": [
-        "st:cn:11065"
-      ]
-    },
-    {
       "value": "CN-OSM-N9444815144",
       "candidates": [
         "st:cn:8415",
@@ -25888,30 +23020,6 @@
       "candidates": [
         "st:cn:8411",
         "st:cn:8412"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9446899123",
-      "candidates": [
-        "st:cn:11063"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9446899241",
-      "candidates": [
-        "st:cn:11061"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9449086506",
-      "candidates": [
-        "st:cn:12129"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9451837619",
-      "candidates": [
-        "st:cn:11053"
       ]
     },
     {
@@ -25929,42 +23037,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9458109908",
-      "candidates": [
-        "st:cn:8515"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9459566285",
-      "candidates": [
-        "st:cn:11059"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9459580720",
-      "candidates": [
-        "st:cn:11057"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9459580735",
-      "candidates": [
-        "st:cn:11055"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9459580791",
-      "candidates": [
-        "st:cn:11051"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9459580796",
-      "candidates": [
-        "st:cn:11049"
-      ]
-    },
-    {
       "value": "CN-OSM-N9471678351",
       "candidates": [
         "st:cn:11465",
@@ -25976,42 +23048,6 @@
       "candidates": [
         "st:cn:12535",
         "st:cn:12536"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9497781979",
-      "candidates": [
-        "st:cn:8533"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9513113917",
-      "candidates": [
-        "st:cn:4713"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9630666811",
-      "candidates": [
-        "st:cn:12135"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9630689508",
-      "candidates": [
-        "st:cn:12139"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9687238247",
-      "candidates": [
-        "st:cn:12137"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9687238335",
-      "candidates": [
-        "st:cn:12133"
       ]
     },
     {
@@ -26136,22 +23172,10 @@
       ]
     },
     {
-      "value": "CN-OSM-N9844430689",
-      "candidates": [
-        "st:cn:11102"
-      ]
-    },
-    {
       "value": "CN-OSM-N9852194949",
       "candidates": [
         "st:cn:12770",
         "st:cn:12771"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9853645567",
-      "candidates": [
-        "st:cn:9525"
       ]
     },
     {
@@ -26175,18 +23199,6 @@
       "candidates": [
         "st:cn:12774",
         "st:cn:12775"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9859463007",
-      "candidates": [
-        "st:cn:12115"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9860230677",
-      "candidates": [
-        "st:cn:12117"
       ]
     },
     {
@@ -26246,42 +23258,6 @@
       ]
     },
     {
-      "value": "CN-OSM-N9863202903",
-      "candidates": [
-        "st:cn:12119"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9863202916",
-      "candidates": [
-        "st:cn:12121"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9863203368",
-      "candidates": [
-        "st:cn:12123"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9863203416",
-      "candidates": [
-        "st:cn:12125"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9863212119",
-      "candidates": [
-        "st:cn:12127"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9863987445",
-      "candidates": [
-        "st:cn:12113"
-      ]
-    },
-    {
       "value": "CN-OSM-N9865970130",
       "candidates": [
         "st:cn:12107",
@@ -26300,90 +23276,6 @@
       "candidates": [
         "st:cn:12729",
         "st:cn:12730"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867980804",
-      "candidates": [
-        "st:cn:12105"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867980805",
-      "candidates": [
-        "st:cn:12103"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867985457",
-      "candidates": [
-        "st:cn:12101"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867985553",
-      "candidates": [
-        "st:cn:12099"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867985554",
-      "candidates": [
-        "st:cn:12391"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9867985563",
-      "candidates": [
-        "st:cn:12097"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9868020925",
-      "candidates": [
-        "st:cn:12095"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869706039",
-      "candidates": [
-        "st:cn:12111"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948420",
-      "candidates": [
-        "st:cn:12385"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948458",
-      "candidates": [
-        "st:cn:12387"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948502",
-      "candidates": [
-        "st:cn:12389"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948557",
-      "candidates": [
-        "st:cn:12393"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948584",
-      "candidates": [
-        "st:cn:12395"
-      ]
-    },
-    {
-      "value": "CN-OSM-N9869948709",
-      "candidates": [
-        "st:cn:12397"
       ]
     }
   ],

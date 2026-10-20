@@ -119,6 +119,14 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
     /// Distinct complexes whose official name or base equals the key.
     /// Only bases that appear in ``bracketedNames``.
     public var baseNameCounts: [String: Int]
+    /// Retired id (`st`, `op`, `cx`, `lp`, `ls`) → the live id it merged into.
+    /// Chains are already followed. Absent in a bundle written before the field existed.
+    public var aliases: [String: String]
+
+    /// The live id for `identifier`, or `identifier` itself when it is not retired.
+    public func canonicalID(_ identifier: String) -> String {
+        aliases[identifier] ?? identifier
+    }
 
     public init(
         schema: String = RegistryBundle.currentSchema,
@@ -134,7 +142,8 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         complexes: [String: RegistryComplexRecord] = [:],
         lineParts: [String: RegistryLinePartRecord] = [:],
         bracketedNames: [String: StationNameRecord] = [:],
-        baseNameCounts: [String: Int] = [:]
+        baseNameCounts: [String: Int] = [:],
+        aliases: [String: String] = [:]
     ) {
         self.schema = schema
         self.region = region
@@ -154,6 +163,7 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         self.lineParts = lineParts
         self.bracketedNames = bracketedNames
         self.baseNameCounts = baseNameCounts
+        self.aliases = aliases
     }
 
     public init(from decoder: Decoder) throws {
@@ -192,11 +202,12 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         }
         bracketedNames = try container.decodeIfPresent([String: StationNameRecord].self, forKey: .bracketedNames) ?? [:]
         baseNameCounts = try container.decodeIfPresent([String: Int].self, forKey: .baseNameCounts) ?? [:]
+        aliases = try container.decodeIfPresent([String: String].self, forKey: .aliases) ?? [:]
     }
 
     private enum CodingKeys: String, CodingKey {
         case schema, region, run, stationCodes, groupCodes, operators, stationOperator, lines
-        case stations, complexes, lineParts, bracketedNames, baseNameCounts
+        case stations, complexes, lineParts, bracketedNames, baseNameCounts, aliases
     }
 
     private enum OperatorField: Decodable {
@@ -261,6 +272,7 @@ public enum RegistryIdentityUpgrade {
     /// ``applyLoaded(_:regionFallback:)`` returns the train unchanged.
     public static func apply(_ train: Train, bundle: RegistryBundle) -> Train {
         var train = train
+        canonicalizeOperators(&train, bundle: bundle)
         recomputeOperator(&train, bundle: bundle)
         let operatorID = train.operatorID
         train.stops = train.stops.map { upgradedStop($0, operatorID: operatorID, bundle: bundle) }
@@ -323,6 +335,13 @@ public enum RegistryIdentityUpgrade {
             .filter { !$0.isEmpty }
     }
 
+    /// A stored operator id that was retired into another reads as the live id.
+    private static func canonicalizeOperators(_ train: inout Train, bundle: RegistryBundle) {
+        guard !bundle.aliases.isEmpty else { return }
+        train.operatorID = train.operatorID.map(bundle.canonicalID)
+        train.operatorIDs = train.operatorIDs?.map(bundle.canonicalID)
+    }
+
     private static func recomputeOperator(_ train: inout Train, bundle: RegistryBundle) {
         let company = train.company ?? ""
         let parts = companyParts(company)
@@ -340,7 +359,8 @@ public enum RegistryIdentityUpgrade {
             train.operatorID = matches[0]
             return
         }
-        guard let existing = train.operatorID else { return }
+        guard let existing = train.operatorID.map(bundle.canonicalID) else { return }
+        train.operatorID = existing
         guard let names = bundle.operators[existing] else {
             train.operatorID = nil
             return
@@ -400,7 +420,7 @@ public enum RegistryIdentityUpgrade {
     private static func keepOrClearStationID(
         _ existing: String?, code: String?, bundle: RegistryBundle
     ) -> String? {
-        guard let existing else { return nil }
+        guard let existing = existing.map(bundle.canonicalID) else { return nil }
         let listed = bundleContainsStation(existing, bundle: bundle)
         let onCode = code.map { codeContainsStation(existing, code: $0, bundle: bundle) } ?? false
         return listed && onCode ? existing : nil

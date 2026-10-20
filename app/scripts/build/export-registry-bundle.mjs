@@ -228,6 +228,28 @@ function bundleFacilities(ledger, region, live) {
   return { facilities, links };
 }
 
+// Retired id → live id, chains followed. Ids whose chain does not end live are omitted.
+function bundleAliases(ledger, region, live) {
+  const next = new Map();
+  for (const alias of ledger.aliases ?? []) {
+    const old = String(alias.old);
+    if (!/^(st|op|cx|lp|ls):/.test(old) || old.split(":")[1] !== region) continue;
+    if (!next.has(old)) next.set(old, String(alias.id));
+  }
+  const out = {};
+  for (const old of [...next.keys()].sort(compareId)) {
+    if (live(old)) continue;
+    const seen = new Set([old]);
+    let id = next.get(old);
+    while (next.has(id) && !live(id) && !seen.has(id)) {
+      seen.add(id);
+      id = next.get(id);
+    }
+    if (live(id) && !seen.has(id)) out[old] = id;
+  }
+  return out;
+}
+
 export function bundleDocument(db, ledger, region, root = null) {
   const retired = new Set(ledger.events.filter((event) => event.event === "retire").map((event) => event.id));
   const live = (id) => ledger.entities.has(id) && !retired.has(id) && String(id).split(":")[1] === region;
@@ -363,6 +385,7 @@ export function bundleDocument(db, ledger, region, root = null) {
     links: places.links,
     bracketedNames: brackets.bracketedNames,
     baseNameCounts: brackets.baseNameCounts,
+    aliases: bundleAliases(ledger, region, live),
   };
 }
 

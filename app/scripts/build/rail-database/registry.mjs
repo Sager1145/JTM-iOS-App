@@ -1150,7 +1150,7 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     const lineOp = lpOverride.get(lpByLineId.get(row.line_id)) ?? baseOp;
     const op = cx && lineOp ? genericResolved(cx, lineOp) : lineOp;
     if (!cx || !op) continue;
-    if (op !== baseOp && baseOp) moveCandidates.push({ cx, baseOp, op });
+    if (op !== baseOp && baseOp) moveCandidates.push({ cx, baseOp, op, generic: op !== lineOp });
     const dedupe = `${cx}|${op}`;
     if (stRowSeen.has(dedupe)) continue;
     stRowSeen.add(dedupe);
@@ -1181,19 +1181,29 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     pendingRetire.add(id);
     const [cx, op] = value.split("|");
     if (complexMerge.has(cx)) {
-      const target = stByCxOp.get(`${complexMerge.get(cx)}|${mergeOf.get(op) ?? op}`);
+      const target = stByCxOp.get(`${complexMerge.get(cx)}|${genericResolved(complexMerge.get(cx), mergeOf.get(op) ?? op)}`);
       if (target) retireWhy.set(id, `merged into ${target}`);
       noteMove(target, id, "station-merge");
     } else if (mergeOf.has(op)) {
-      retireWhy.set(id, `merged into ${mergeOf.get(op)}`);
-      noteMove(stByCxOp.get(`${cx}|${mergeOf.get(op)}`), id, "operator-merge");
+      const mergedOp = genericResolved(cx, mergeOf.get(op));
+      retireWhy.set(id, `merged into ${mergedOp}`);
+      noteMove(stByCxOp.get(`${cx}|${mergedOp}`), id, "operator-merge");
     }
+  }
+  // Stations retired by an earlier run without an alias get one once the replacement resolves.
+  const aliasedOld = new Set(ledger.aliases.map((alias) => alias.old));
+  for (const [id] of entities) {
+    if (!id.startsWith(`st:${region}:`) || !retired.has(id) || aliasedOld.has(id)) continue;
+    const [cx, op] = (derivByEntity.get(id) ?? "").split("|");
+    if (!cx || !mergeOf.has(op)) continue;
+    const target = stByCxOp.get(`${cx}|${genericResolved(cx, mergeOf.get(op))}`);
+    if (liveSt(target)) pushAlias(id, "operator-merge", target);
   }
   for (const item of moveCandidates) {
     const oldSt = refIndex.get(`derivation\0${item.cx}|${item.baseOp}`);
     if (!liveSt(oldSt)) continue;
-    if (pendingRetire.has(oldSt)) retireWhy.set(oldSt, "line operator override");
-    noteMove(stByCxOp.get(`${item.cx}|${item.op}`), oldSt, "line-operator");
+    if (pendingRetire.has(oldSt)) retireWhy.set(oldSt, item.generic ? "generic parent attached to specific" : "line operator override");
+    noteMove(stByCxOp.get(`${item.cx}|${item.op}`), oldSt, item.generic ? "generic-operator" : "line-operator");
   }
   for (const [newSt, olds] of oldStFor) {
     // A station still used by other lines stays live and unaliased; only its stops move.
@@ -1243,7 +1253,7 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     for (const [oldSt, scheme] of oldStFor.get(stId) ?? []) {
       const oldLs = refIndex.get(`derivation\0${lp}|${oldSt}`);
       if (!lsId || !oldLs || oldLs === lsId || !entities.has(oldLs) || retired.has(oldLs)) continue;
-      retireWhy.set(oldLs, scheme === "operator-merge" || scheme === "station-merge" ? `merged into ${stId}` : "line operator override");
+      retireWhy.set(oldLs, scheme === "operator-merge" || scheme === "station-merge" ? `merged into ${stId}` : scheme === "generic-operator" ? "generic parent attached to specific" : "line operator override");
       pushAlias(oldLs, scheme, lsId);
     }
   }
@@ -1584,7 +1594,7 @@ function lineLabel(line, nameCounts) {
   return line.name;
 }
 
-export function reports(db, ledger, region, root) {
+export function reports(db, ledger, region, root, resolvedConflicts = null) {
   const facts = loadFacts(db, region);
   const index = ledgerIndex(ledger, region);
   const opById = new Map(facts.operators.map((row) => [row.id, row]));
@@ -1785,7 +1795,10 @@ export function reports(db, ledger, region, root) {
       stId: st && !index.retired.has(st) ? st : null,
     };
   });
-  out["station-code-conflict"] = planStationCodes(stationCodeRows).conflicts;
+  // Minted conflicts already reflect merges, line overrides, generic attachment and complex resolution.
+  out["station-code-conflict"] = resolvedConflicts
+    ? resolvedConflicts.map(({ value, candidates }) => ({ value, candidates }))
+    : planStationCodes(stationCodeRows).conflicts;
 
   const assignedLn = new Map();
   for (const event of ledger.events) {

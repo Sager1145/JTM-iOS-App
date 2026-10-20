@@ -91,6 +91,11 @@ function referenceViolations(ledger) {
   for (const [id, count] of retired) {
     if (count > 1) violations.push(`multiple retire ${id}`);
   }
+  const aliased = new Set(ledger.aliases.map((alias) => alias.old));
+  for (const event of ledger.events) {
+    if (event.event !== "retire" || aliased.has(event.id)) continue;
+    if (!String(event.why ?? "").startsWith("absent from inputs")) violations.push(`retire without alias ${event.id}`);
+  }
   violations.push(...operationViolations(ledger, retired));
   for (const event of ledger.events) {
     if (event.event !== "member") continue;

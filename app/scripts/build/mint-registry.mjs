@@ -179,7 +179,7 @@ function main() {
       if (!options.dryRun) {
         const minted = readLedger(options.root);
         for (const region of regions) {
-          writeJson(path.join(options.root, region, "station-derivation-exceptions.json"), reports(db, minted, region, options.root));
+          writeJson(path.join(options.root, region, "station-derivation-exceptions.json"), reports(db, minted, region, options.root, merged.conflicts.filter((item) => item.region === region)));
           writeJson(path.join(options.root, region, "homonyms.json"), homonyms(db, minted, region));
           writeJson(path.join(options.root, region, "index-space-map.json"), indexSpaceMap(db, minted, region));
         }

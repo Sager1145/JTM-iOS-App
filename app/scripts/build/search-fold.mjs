@@ -3,7 +3,7 @@
 // is not available in Node; characters outside this table stay as written.
 // Identity matching is exact folded equality, so an unconverted pair fails closed.
 
-const VARIANTS = {
+export const VARIANTS = {
   鉄: "铁", 鐵: "铁", 営: "营", 広: "广", 浜: "滨", 沢: "泽",
   関: "关", 県: "县", 気: "气", 発: "发", 図: "图", 線: "线",
   東: "东", 電: "电", 車: "车", 臺: "台", 桜: "樱", 竜: "龙",

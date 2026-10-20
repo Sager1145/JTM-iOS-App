@@ -486,6 +486,22 @@ test("crash after ref rename resumes without duplicate ids", () => {
   }
 });
 
+test("a retire event that is not absence needs an alias", () => {
+  const fixture = mintBase();
+  try {
+    const eventFile = path.join(fixture.root, "jp", "events.jsonl");
+    if (!fs.existsSync(eventFile) || !fs.readFileSync(eventFile, "utf8").trim()) {
+      fs.writeFileSync(eventFile, '{"schema":"jtm-registry/1","region":"jp","kind":"events"}\n');
+    }
+    fs.appendFileSync(eventFile, `${canonical({ id: "op:jp:1", event: "retire", on: AT, why: "merged into op:jp:2", run: 1 }, KEY_ORDERS.event)}\n`);
+    const bad = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(bad.status, 1);
+    assert.match(bad.stdout, /retire without alias op:jp:1/);
+  } finally {
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
 test("entities without key refs fail validation", () => {
   const fixture = mintBase();
   try {

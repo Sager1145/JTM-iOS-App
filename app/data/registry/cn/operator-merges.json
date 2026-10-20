@@ -188,15 +188,17 @@
    "into": "op:cn:199",
    "intoName": "武汉地铁集团",
    "from": [
+    "op:cn:182",
     "op:cn:88"
    ],
    "fromNames": [
-    "武汉地铁"
+    "武汉地铁",
+    "武漢地鐵"
    ],
    "sources": [
     "https://zh.wikipedia.org/wiki/武汉地铁"
    ],
-   "note": "武汉地铁 is the system name; 集团有限公司 is builder/operator; weak",
+   "note": "武汉地铁 is the system name; 集团有限公司 is builder/operator; weak; 武漢地鐵 is the traditional-script spelling of 武汉地铁 (zh.wikipedia caption 武漢地鐵發展示意圖), owner 武汉地铁集团有限公司",
    "reviewedBy": "web-research 2026-10-20"
   },
   {
