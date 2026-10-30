@@ -1,5 +1,6 @@
 import RailApplication
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// Endpoint form for a new trip. Replaces the ride-editor wizard only when
@@ -11,6 +12,7 @@ struct NewTripView: View {
     let train: Train
     let title: String
     let onCancel: () -> Void
+    let onDraftMap: (DraftMapSnapshot) -> Void
     let onSave: (Train) -> Void
 
     private static let serviceTypes = JourneyDraftWork.serviceTypeIDs
@@ -44,6 +46,7 @@ struct NewTripView: View {
     @State private var departure: Date
     @State private var arrival: Date
     @State private var previousDeparture: Date
+    @State private var draftMapRevision = 0
     /// Date prefill remains live until the reader makes an explicit choice.
     @State private var riddenOverride: Bool?
     @State private var picking: StationField?
@@ -77,11 +80,13 @@ struct NewTripView: View {
         train: Train,
         title: String,
         onCancel: @escaping () -> Void,
+        onDraftMap: @escaping (DraftMapSnapshot) -> Void = { _ in },
         onSave: @escaping (Train) -> Void
     ) {
         self.train = train
         self.title = title
         self.onCancel = onCancel
+        self.onDraftMap = onDraftMap
         self.onSave = onSave
         _region = State(initialValue: Region(rawValue: train.region ?? "") ?? .jp)
         let type = train.trainType ?? ""
@@ -122,7 +127,7 @@ struct NewTripView: View {
                 if !saveIssues.isEmpty {
                     Section {
                         ForEach(saveIssues) { issue in
-                            Text(validationMessage(issue))
+                            Text(localization.text(for: issue))
                                 .font(.footnote)
                                 .foregroundStyle(.red)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -181,6 +186,11 @@ struct NewTripView: View {
             arrival = max(shiftedArrival, newValue)
             previousDeparture = newValue
             saveIssues = []
+        }
+        .onChange(of: dayString(departure), initial: true) { _, day in
+            draftMapRevision += 1
+            onDraftMap(DraftMapSnapshot(
+                revision: draftMapRevision, pins: [], networkRideDate: day))
         }
         .onChange(of: arrival) { _, _ in
             saveIssues = []
@@ -1173,7 +1183,9 @@ struct NewTripView: View {
                 originLineID: originLineID,
                 destinationLineID: destinationLineID,
                 allowUnverifiedConnections: allowUnverifiedConnections)
-            return try TripRoutePlanner.plan(package: package, request: request, rideDate: rideDate)
+            let context = try loadJourneyAdmissionContext(rideDate: rideDate, package: package)
+            return try TripRoutePlanner.plan(package: package, request: request, rideDate: rideDate,
+                admissionContext: context)
         }
         let result: TripRoutePlanner.Outcome
         do {
@@ -1340,11 +1352,6 @@ struct NewTripView: View {
         draft.origin = origin.name
         draft.destination = destination.name
         return draft
-    }
-
-    private func validationMessage(_ issue: RideDraftIssue) -> String {
-        if let literal = issue.literal { return literal }
-        return localization.text(issue.key, params: issue.params)
     }
 
     private func stationCountText(_ corridor: TripRoutePlanner.Corridor) -> String {

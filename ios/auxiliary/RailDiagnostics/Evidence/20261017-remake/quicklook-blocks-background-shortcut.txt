@@ -1,2 +1,0 @@
-There has been no change in the accessibility tree for Window: "".
-The focused UI element is 95 window Quick Look, Secondary Actions: Raise

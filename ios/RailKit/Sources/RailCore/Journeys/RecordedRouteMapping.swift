@@ -10,14 +10,23 @@ public struct RecordedRouteMapping: Equatable, Sendable {
     /// Accepts one continuous explicit chain through every recorded visit.
     /// Conflicting codes cannot match by name; repeated visits consume distinct
     /// ordered boundaries, using the canonical archive's occurrence contract.
+    /// One recorded station reference against another: codes decide when both
+    /// sides have one, otherwise names, compared by UTF-16 code unit as the
+    /// archive does.
+    public static func sameStation(
+        code: String?, name: String?, otherCode: String?, otherName: String?
+    ) -> Bool {
+        if let code, !code.isEmpty, let otherCode, !otherCode.isEmpty {
+            return sameCodeUnits(StationCodeAliases.canonical(code), StationCodeAliases.canonical(otherCode))
+        }
+        guard let name, !name.isEmpty, let otherName, !otherName.isEmpty else { return false }
+        return sameCodeUnits(name, otherName)
+    }
+
     public init?(stops: [Stop], sections: [RouteSection]) {
         guard stops.count >= 2, let first = sections.first, let last = sections.last else { return nil }
         func matches(_ code: String?, _ name: String?, _ otherCode: String?, _ otherName: String?) -> Bool {
-            if let code, !code.isEmpty, let otherCode, !otherCode.isEmpty {
-                return sameCodeUnits(StationCodeAliases.canonical(code), StationCodeAliases.canonical(otherCode))
-            }
-            guard let name, !name.isEmpty, let otherName, !otherName.isEmpty else { return false }
-            return sameCodeUnits(name, otherName)
+            Self.sameStation(code: code, name: name, otherCode: otherCode, otherName: otherName)
         }
         guard matches(first.fromN02StationCode, first.from, stops[0].n02StationCode, stops[0].name),
               matches(last.toN02StationCode, last.to, stops[stops.count - 1].n02StationCode, stops[stops.count - 1].name)

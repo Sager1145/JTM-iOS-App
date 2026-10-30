@@ -14,6 +14,15 @@ struct EditorTimeTests {
         #expect(EditorTime.parseDate(" \t") == .unset)
     }
 
+    @Test func editorInputTrimsTheJavaScriptWhitespaceSet() {
+        let nineThirty = ServiceClockTime(dayOffset: 0, hour: 9, minute: 30)
+        // U+FEFF is ECMAScript whitespace (Foundation's set omits it); U+0085 is not.
+        #expect(EditorTime.parseTime("\u{FEFF}9:30") == .valid(raw: "\u{FEFF}9:30", time: nineThirty))
+        #expect(EditorTime.parseTime("\u{0085}9:30") == .invalid(raw: "\u{0085}9:30"))
+        #expect(EditorTime.parseTime("23:50 \u{FEFF}+1")
+            == .valid(raw: "23:50 \u{FEFF}+1", time: ServiceClockTime(dayOffset: 1, hour: 23, minute: 50)))
+    }
+
     @Test func serviceHourTwentyFiveTenFoldsAndStaysCanonical() {
         let time = ServiceClockTime(dayOffset: 1, hour: 1, minute: 10)
         #expect(EditorTime.parseTime("25:10") == .valid(raw: "25:10", time: time))

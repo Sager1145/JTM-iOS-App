@@ -289,6 +289,13 @@ struct TrainTimetableDatabaseTests {
         nameOnly.number = ""
         #expect(TimetableTripMatch.candidates(
             for: nameOnly, serviceName: "しなの", among: trips).map(\.id) == [trip.id])
+        // The same labels the physical-route matcher accepts.
+        for label in ["しなの 1001M", "しなの1001M号", "しなの 1001M号"] {
+            var labelled = exactInput
+            labelled.number = label
+            #expect(TimetableTripMatch.candidates(for: labelled, among: trips).map(\.id) == [trip.id],
+                    "\(label)")
+        }
         var wrongTime = exactInput
         wrongTime.stops[1].arrival = "25:04"
         #expect(TimetableTripMatch.candidates(for: wrongTime, among: trips).isEmpty)

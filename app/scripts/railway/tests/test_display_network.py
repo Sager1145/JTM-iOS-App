@@ -1,3 +1,5 @@
+import copy
+import hashlib
 import contextlib
 import importlib.util
 import io
@@ -15,6 +17,209 @@ SPEC.loader.exec_module(display_network)
 
 
 class DisplayNetworkTests(unittest.TestCase):
+    def literal_span_fixture(self, declaration=True, lanes=None, points=None, history=None, split_at=None,
+                             owned_explicit=True):
+        points = points or [[139.0, 35.0], [139.001000041, 35.0001],
+                            [139.002000042, 35.0002], [139.032000043, 35.0003],
+                            [139.033000044, 35.0005], [139.034, 35.0009]]
+        line = self.line("literal", "commuter", ["start", *points[0]], points)
+        line["displayIntervalCoordinates"] = {"0": points}
+        if split_at is not None:
+            line["stations"].insert(1, ["middle", "Middle", *points[split_at], "Middle"])
+            line["segments"] = [[1, 0, points[:split_at + 1]], [1, 0, points[split_at:]]]
+            line["displayIntervalCoordinates"] = {
+                "0": points[:split_at + 1], "1": points[split_at:]}
+        if declaration is True:
+            declaration = {"contract": "display-literal-spans-v1", "spans": [
+                {"intervalIndex": 0 if split_at is None else 1, "sourceEdgeIndex": 2,
+                 "endpoints": points[2:4] if split_at is None else points[split_at + 2:split_at + 4]}]}
+        if declaration is not False:
+            line["displayInterpolation"] = declaration
+        if not owned_explicit:
+            line.pop("displayIntervalCoordinates", None)
+        package = {"format": "compact-v1", "version": "test", "country": "JP", "lines": [line]}
+        lane_doc = {"format": display_network.DISPLAY_LANES_FORMAT,
+                    "byRegion": {"jp": []},
+                    "partsByRegion": self.whole_line_parts_by_region("jp", line)}
+        lane_doc.update(lanes or {})
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = Path(root) / "rail", Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "jp").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lane_doc))
+            history_dir = None
+            if history:
+                history_dir = Path(root) / "history"
+                history_dir.mkdir()
+                (history_dir / "rail-history.json").write_text(json.dumps(history))
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                display_network.build(rail, out, history_dir=history_dir)
+            return self.load_region_payload(out, "jp")["lines"][0]
+
+    def test_literal_span_packed_roundtrip_uses_written_witnesses(self):
+        fragment = self.literal_span_fixture()
+        self.assertEqual(fragment["literalDisplaySpansV1"], [[2, [
+            [139.001, 35.0001], [139.002, 35.0002],
+            [139.032, 35.0003], [139.033, 35.0005]]]])
+
+    def test_literal_span_absent_and_malformed_keep_ordinary_serialized_shape(self):
+        ordinary = self.literal_span_fixture(False)
+        hinted = self.literal_span_fixture()
+        hinted.pop("literalDisplaySpansV1")
+        self.assertEqual(ordinary, hinted)
+        for declaration in [None, [], "v1", {}, {"contract": "unknown", "spans": []},
+                            {"contract": "display-literal-spans-v1", "spans": "wrong"}]:
+            with self.subTest(declaration=declaration):
+                self.assertEqual(self.literal_span_fixture(declaration), ordinary)
+
+    def test_literal_span_raw_positions_and_conflicts_cannot_manufacture_adjacency(self):
+        points = [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]
+        declaration = {"contract": "display-literal-spans-v1", "spans": [
+            {"intervalIndex": 0, "sourceEdgeIndex": 2, "endpoints": points[2:4]}]}
+        line = self.line("raw", "commuter", ["a", *points[0]], points)
+        line["displayInterpolation"] = declaration
+        line["displayIntervalCoordinates"] = {"0": points}
+        self.assertEqual(display_network.admitted_literal_display_spans(line), [points[1:5]])
+        for bad in [[9], [9, 9, 9], [float("nan"), 9], [True, 9]]:
+            with self.subTest(bad=bad):
+                line["displayIntervalCoordinates"] = {"0": points[:3] + [bad] + points[3:]}
+                self.assertEqual(display_network.admitted_literal_display_spans(line), [])
+        line["displayIntervalCoordinates"] = {"0": points}
+        line["displayStationCoordinates"] = {"a": points[2]}
+        self.assertEqual(display_network.admitted_literal_display_spans(line), [])
+        wrong = json.loads(json.dumps(declaration))
+        wrong["spans"][0]["endpoints"] = [[139.032000043, 35.0003], [139.002000042, 35.0002]]
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(wrong))
+        valid = self.literal_span_fixture()
+        exact = valid["literalDisplaySpansV1"][0][1][1:3]
+        rounded_only = {"contract": "display-literal-spans-v1", "spans": [
+            {"intervalIndex": 0, "sourceEdgeIndex": 2, "endpoints": exact}]}
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(rounded_only))
+
+    def test_literal_span_duplicate_declarations_and_overlapping_footprints_drop(self):
+        points = [[139 + i / 1000, 35 + i * i / 100000] for i in range(10)]
+        span = {"intervalIndex": 0, "sourceEdgeIndex": 2, "endpoints": points[2:4]}
+        for other_edge in [2, 3, 5]:
+            declaration = {"contract": "display-literal-spans-v1", "spans": [span,
+                {"intervalIndex": 0, "sourceEdgeIndex": other_edge,
+                 "endpoints": points[other_edge:other_edge + 2]}]}
+            with self.subTest(other_edge=other_edge):
+                self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(declaration, points=points))
+
+    def test_literal_span_whole_graph_follows_and_nonzero_rows_reject(self):
+        for rows in [
+            {"followsByRegion": {"jp": [["literal", 0, 0, 0, "literal", 0, 0, 0]]}},
+            {"followsByRegion": {"jp": [["unloaded-tenant", 9, 0, 0, "literal", 0, 0, 0]]}},
+            {"byRegion": {"jp": [["literal", 0, 0, 0, 1]]}},
+            {"familyWindowsByRegion": {"jp": [["literal", 0, 0, 0, "tenant", "remote-family"]]}},
+        ]:
+            with self.subTest(rows=rows):
+                self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(lanes=rows))
+        self.assertIn("literalDisplaySpansV1", self.literal_span_fixture(
+            lanes={"byRegion": {"jp": [["literal", 0, 0, 1000, 0]]}}))
+
+    def test_literal_span_physical_only_source_cannot_opt_in(self):
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(owned_explicit=False))
+
+    def test_literal_span_nonzero_lane_on_another_own_chain_rejects(self):
+        lanes = {"partsByRegion": {"jp": [
+            ["literal", 0, 0, 0, 2, 0],
+            ["literal", 1, -1, -1, 0, 0, "branch", [[140, 36], [140.01, 36.01]]]]},
+            "byRegion": {"jp": [["literal", 1, 0, 100, 1]]}}
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(lanes=lanes))
+        lanes["byRegion"]["jp"][0][4] = 0
+        self.assertIn("literalDisplaySpansV1", self.literal_span_fixture(lanes=lanes))
+
+    def test_literal_span_overview_always_drops_full_detail_rows(self):
+        fragment = self.literal_span_fixture()
+        overview, _ = display_network.build_overview_fragment(fragment)
+        self.assertNotIn("literalDisplaySpansV1", overview)
+
+    def test_literal_span_joined_edge_index_drops_repeated_part_seam(self):
+        points = [[139 + i / 1000, 35 + i * i / 100000] for i in range(8)]
+        fragment = self.literal_span_fixture(points=points, split_at=1)
+        self.assertEqual(sum(map(len, fragment["parts"])), 9)
+        self.assertEqual(fragment["literalDisplaySpansV1"], [[3, points[2:6]]])
+
+    def test_literal_span_history_context_drops_even_when_geometry_is_unchanged(self):
+        history = {"schema_version": "1", "revision": "test", "sections": [], "stations": [],
+                   "retirements": [{"history_id": "literal.dated", "valid_from": "2000-01-01",
+                       "match": {"line_name": "literal", "operator": "Test Rail",
+                                 "bbox": [138, 34, 140, 36]}}]}
+        ordinary = self.literal_span_fixture(False, history=history)
+        hinted = self.literal_span_fixture(history=history)
+        self.assertEqual(hinted, ordinary)
+        self.assertNotIn("literalDisplaySpansV1", hinted)
+
+    def test_literal_span_constructor_change_and_packing_collapse_drop(self):
+        points = [[139, 35], [139.001, 35.0001], [139.002, 35.0002],
+                  [139.032, 35.0003], [139.033, 35.0005], [139.034, 35.0009]]
+        altered = [p[:] for p in points]
+        altered[2][0] += 0.000000001
+        embedded = {"partsByRegion": {"jp": [["literal", 0, -1, -1, 2, 0, "branch", altered]]}}
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(points=points, lanes=embedded))
+        collapsed = [p[:] for p in points]
+        collapsed[3] = [collapsed[2][0] + 0.000000001, collapsed[2][1]]
+        self.assertNotIn("literalDisplaySpansV1", self.literal_span_fixture(points=collapsed))
+
+    def test_literal_span_exact_seams_and_unique_constructed_witnesses_required(self):
+        points = [[139 + i / 1000, 35 + i * i / 100000] for i in range(8)]
+        declaration = [points[2:6]]
+        parts = [points[:2], points[1:]]
+        chain = {"parts": parts, "partIndex": 0}
+        fragment = {"parts": [display_network.rounded(p) for p in parts]}
+        args = (declaration, [chain], 0, fragment, [], {}, [], "literal", "jp")
+        self.assertEqual(display_network.compiled_literal_display_spans(*args), [[3, points[2:6]]])
+        parts[1] = [[139.00100000001, 35.00001]] + points[2:]
+        self.assertEqual(display_network.compiled_literal_display_spans(*args), [])
+        parts[:] = [points + [points[3]]]
+        fragment["parts"] = [display_network.rounded(parts[0])]
+        self.assertEqual(display_network.compiled_literal_display_spans(*args), [])
+
+
+
+    def test_source_corner_mode_binds_and_survives_written_witnesses(self):
+        points = [[139 + i / 1000 + 0.000000041, 35 + i * i / 100000] for i in range(8)]
+        line = self.line("corners", "commuter", ["a", *points[0]], points)
+        line["displayIntervalCoordinates"] = {"0": points}
+        line["displayInterpolation"] = {"contract": "display-source-corners-v1", "spans": [
+            {"intervalIndex": 0, "sourceEdgeIndex": 3, "endpoints": points[3:5]}]}
+        admitted = display_network.admitted_literal_display_spans(line)
+        self.assertEqual(admitted, [{"witnesses": points[2:6], "mode": "source-corners-v1"}])
+        chains = [{"parts": [points], "partIndex": 0}]
+        fragment = {"parts": [display_network.rounded(points)]}
+        args = (admitted, chains, 0, fragment, [], {}, [], "corners", "jp")
+        rows = display_network.compiled_literal_display_spans(*args)
+        self.assertEqual(rows, [[3, fragment["parts"][0][2:6], "source-corners-v1"]])
+        # Only written coordinates may reach the decoder, never full precision
+        # source witnesses applied approximately to a differently packed chain.
+        self.assertNotEqual(rows[0][1], points[2:6])
+        for lane, follows, family in [([["corners", 0, 0, 1000, 1]], {}, []),
+                                      ([], {"other": [["other", 0, 0, 1, "corners", 0, 0, 1]]}, []),
+                                      ([], {}, [["corners", 0, 0, 1000]])]:
+            self.assertEqual(display_network.compiled_literal_display_spans(
+                admitted, chains, 0, fragment, lane, follows, family, "corners", "jp"), [])
+        self.assertEqual(display_network.compiled_literal_display_spans(
+            admitted + admitted, chains, 0, fragment, [], {}, [], "corners", "jp"), [])
+
+    def test_source_corner_declared_branch_endpoints_do_not_depend_on_residency(self):
+        points = [[139 + i / 1000, 35 + i * i / 100000] for i in range(8)]
+        line = self.line("corners", "commuter", ["a", *points[0]], points)
+        line["displayIntervalCoordinates"] = {"0": points}
+        declaration = {"contract": "display-source-corners-v1", "spans": [
+            {"intervalIndex": 0, "sourceEdgeIndex": 3, "endpoints": points[3:5]}]}
+        line["displayInterpolation"] = declaration
+        for key in ["displayBranchLeadIns", "displayReversalBranches"]:
+            for witness in points[2:6]:
+                for branch in [[witness, [140, 36]], [[140, 36], witness]]:
+                    line[key] = [branch]
+                    declaration["contract"] = "display-source-corners-v1"
+                    self.assertEqual(display_network.admitted_literal_display_spans(line), [])
+                    declaration["contract"] = "display-literal-spans-v1"
+                    self.assertEqual(display_network.admitted_literal_display_spans(line), [points[2:6]])
+            line.pop(key)
+
     @staticmethod
     def line(line_id, kind, station, coordinates):
         return {
@@ -2896,6 +3101,157 @@ class DisplayNetworkTests(unittest.TestCase):
 class DisplayNetworkHistoryTests(unittest.TestCase):
     """Phase 3 side file. A build with no overlay leaves the bins untouched.
     A continuous chain whose parts do not share one stamp is split."""
+
+    def _temporal_artifact_fixture(self, mutate=None, with_bank=True):
+        line = self._line('managed', 'Managed', [[139, 35], [139.01, 35.01]],
+                          second=[[139.01, 35.01], [139.02, 35.02]])
+        line.update(serviceStatus='substitute_bus', serviceSpans=[[0, 2, 2]])
+        other = self._line('other', 'Other', [[139, 35], [139.001, 35]])
+        other['operator'] = 'Other Rail'
+        lanes = {'format': display_network.DISPLAY_LANES_FORMAT, 'byRegion': {'jp': []},
+                 'partsByRegion': {'jp': self._rows([other])},
+                 'strokeExcludedByRegion': {'jp': [['managed', 'substitute_bus']]}}
+        period = {'history_id': 'fixture.bus', 'lineID': 'managed', 'scope': 'whole_line',
+                  'station_membership_ids': ['raw-a', 'raw-b', 'raw-c'],
+                  'valid_from': '2024-10-05', 'valid_to': None,
+                  'serviceStatus': 'substitute_bus', 'source': ['official']}
+        match = {'line_name': 'Managed', 'operator': 'Test Rail',
+                 'bbox': [138.9, 34.9, 139.1, 35.1]}
+        overlay = {'schema_version': '2', 'revision': 'history-fixture',
+                   'features': ['identity_periods', 'service_status_periods'],
+                   'sections': [], 'stations': [], 'identity_periods': [],
+                   'service_status_periods': [period], 'retirements': [
+                       {'history_id': 'opening', 'match': {**match,
+                        'bbox': [139.0099, 35.0099, 139.0101, 35.0101], 'targets': ['stations']},
+                        'valid_from': '2008-08-09'},
+                       {'history_id': 'suspension.sections', 'match': {**match, 'targets': ['sections']},
+                        'valid_to': '2024-10-05', 'suspension_period_id': 'fixture.bus'},
+                       {'history_id': 'suspension.stations', 'match': {**match, 'targets': ['stations']},
+                        'valid_to': '2024-10-05', 'suspension_period_id': 'fixture.bus'}]}
+        bank = {'format': 'jtm-temporal-parts-v1', 'historyRevision': 'history-fixture',
+                'bankRevision': 'opaque-node-producer-hash',
+                'temporalPartsByRegion': {'jp': self._rows([line])}}
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); rail = root / 'rail'; history = root / 'history'; out = root / 'out'
+            rail.mkdir(); history.mkdir()
+            self._write_packages(rail, {'jp': [line, other], 'tw': [other]})
+            bank['sourcePackageSHA256'] = hashlib.sha256((rail / 'jp-2025.json').read_bytes()).hexdigest()
+            if mutate:
+                mutate(bank, overlay, lanes)
+            (rail / 'display-lanes.json').write_text(json.dumps(lanes))
+            (history / 'rail-history.json').write_text(json.dumps(overlay))
+            with contextlib.redirect_stderr(io.StringIO()):
+                manifest = display_network.build(rail, out, history_dir=history,
+                                                temporal_bank=bank if with_bank else None)
+            record = next(r for r in manifest['regions'] if r['region'] == 'jp')
+            side = json.loads((out / record['historyFile']).read_bytes())
+            entry = manifest['lines']['jp|managed']['chunk']
+            blob = (out / record['file']).read_bytes()
+            chunk = json.loads(blob[entry['offset']:entry['offset'] + entry['length']])
+            chunks = []
+            for key, line_entry in manifest['lines'].items():
+                region = line_entry['region']
+                region_record = next(r for r in manifest['regions'] if r['region'] == region)
+                region_blob = (out / region_record['file']).read_bytes()
+                offset, length = line_entry['chunk']['offset'], line_entry['chunk']['length']
+                chunks.append(json.loads(region_blob[offset:offset + length]))
+            return manifest, record, side, chunk, chunks
+
+    def test_temporal_bank_replaces_excluded_admission_and_preserves_opening_link(self):
+        manifest, record, side, chunk, chunks = self._temporal_artifact_fixture()
+        self.assertEqual(manifest['format'], 'jtm-display-network-v3')
+        self.assertEqual(chunk['format'], 'jtm-display-network-v3')
+        self.assertEqual({c['format'] for c in chunks}, {'jtm-display-network-v3'})
+        self.assertIn('tw', {c['region'] for c in chunks})
+        self.assertEqual(manifest['requiredFeatures'], ['dated_service_bank_v1'])
+        self.assertEqual(record['temporalBank']['managedLineIDs'], ['managed'])
+        self.assertEqual(side['temporalBank'], record['temporalBank'])
+        self.assertEqual(side['revision'], 'history-fixture')
+        self.assertEqual(record['historyBytes'], len(json.dumps(side, ensure_ascii=False, separators=(',', ':')).encode()))
+        self.assertEqual(len(chunk['lines']), 1)
+        self.assertTrue(chunk['lines'][0]['continuous'])
+        self.assertEqual(len(chunk['lines'][0]['parts']), 2)
+        self.assertEqual(side['lines'], [])
+        self.assertEqual(side['stations'], [])
+        self.assertTrue(all(p['suspensionPeriodID'] == 'fixture.bus' for p in side['parts']))
+        stamps = {r['id']: r for r in side['stationStamps']}
+        self.assertEqual(stamps['managed:b']['historyId'], 'opening')
+        self.assertEqual(stamps['managed:b']['validFrom'], '2008-08-09')
+        self.assertEqual(stamps['managed:b']['validTo'], '2024-10-05')
+        self.assertEqual(stamps['managed:b']['suspensionPeriodID'], 'fixture.bus')
+        self.assertNotIn('other:a', stamps)
+
+    def test_temporal_bank_rejects_stale_partial_allocated_or_unlinked_input(self):
+        mutations = [
+            lambda b, h, l: b.update(sourcePackageSHA256='0' * 64),
+            lambda b, h, l: b.update(historyRevision='stale'),
+            lambda b, h, l: b.update(bankRevision=''),
+            lambda b, h, l: b.update(temporalPartsByRegion={}),
+            lambda b, h, l: b['temporalPartsByRegion']['jp'][0].__setitem__(3, 0),
+            lambda b, h, l: h['features'].append('unknown'),
+            lambda b, h, l: h['service_status_periods'][0].update(valid_from='2024-02-30'),
+            lambda b, h, l: h['service_status_periods'][0].update(scope='partial_line'),
+            lambda b, h, l: h['service_status_periods'][0].update(source=[]),
+            lambda b, h, l: h['service_status_periods'][0].update(serviceStatus='unknown'),
+            lambda b, h, l: h['service_status_periods'][0].update(valid_to='2024-10-04'),
+            lambda b, h, l: h['service_status_periods'][0].update(station_membership_ids=['raw-a', 'raw-a']),
+            lambda b, h, l: h['service_status_periods'].append(copy.deepcopy(h['service_status_periods'][0])),
+            lambda b, h, l: h['service_status_periods'].append({**h['service_status_periods'][0], 'history_id': 'overlap'}),
+            lambda b, h, l: h['retirements'][-1]['match'].update(operator='Other Rail'),
+            lambda b, h, l: h['retirements'].pop(),
+            lambda b, h, l: h['retirements'][-1]['match'].update(bbox=[138.9, 34.9, 139.005, 35.005]),
+            lambda b, h, l: h['service_status_periods'][0].update(operator='Other Rail'),
+            lambda b, h, l: h['retirements'][-1].update(suspension_period_id='unknown'),
+            lambda b, h, l: h['retirements'][-1].update(valid_to='2024-10-06'),
+            lambda b, h, l: l.update(byRegion={'jp': [['managed', 0, 0, 10, 1]]}),
+            lambda b, h, l: l.update(followsByRegion={'jp': [['other', 0, 0, 10, 'managed', 0, 0, 10]]}),
+            lambda b, h, l: l.update(familyWindowsByRegion={'jp': [['managed', 0, 0, 10, 0, 'family']]}),
+            lambda b, h, l: l.update(renderGroupByRegion={'jp': {'managed': 'family'}}),
+        ]
+        for index, mutate in enumerate(mutations):
+            with self.subTest(case=index):
+                with self.assertRaises(RuntimeError):
+                    self._temporal_artifact_fixture(mutate)
+        with self.assertRaises(RuntimeError):
+            self._temporal_artifact_fixture(with_bank=False)
+
+    def test_temporal_bank_rejects_finite_end_and_multiple_service_periods(self):
+        def finite(bank, history, lanes):
+            history['service_status_periods'][0]['valid_to'] = '2025-01-01'
+
+        def reopening(bank, history, lanes):
+            finite(bank, history, lanes)
+            second = {**history['service_status_periods'][0], 'history_id': 'fixture.bus.again',
+                      'valid_from': '2025-01-01', 'valid_to': None}
+            history['service_status_periods'].append(second)
+            for original in history['retirements'][-2:]:
+                stamp = copy.deepcopy(original)
+                stamp.update(history_id=original['history_id'] + '.again',
+                             suspension_period_id=second['history_id'], valid_to='2025-01-01')
+                history['retirements'].append(stamp)
+        for mutate in (finite, reopening):
+            with self.subTest(case=mutate.__name__):
+                with self.assertRaisesRegex(RuntimeError, 'single unknown-end'):
+                    self._temporal_artifact_fixture(mutate)
+
+    def test_temporal_bank_accepts_explicit_zero_lane_rows(self):
+        self._temporal_artifact_fixture(lambda b, h, l: l.update(
+            byRegion={'jp': [['managed', 0, 0, 10, 0]]}))
+
+    def test_temporal_stamp_identity_survives_key_run_split_and_serialization(self):
+        fragments = [{'lineKey': 'jp|managed', 'continuous': True, 'chain': 0,
+                      'parts': [[[139, 35], [139.01, 35]], [[139.01, 35], [139.02, 35]]],
+                      'totalMetres': 2000, 'laneRows': [], 'follows': []}]
+        first = {**display_network._blank_stamp(), 'validTo': '2024-10-05',
+                 'suspensionPeriodID': 'period.first'}
+        second = {**first, 'suspensionPeriodID': 'period.second'}
+        stamps = [[first, second]]
+        display_network._split_mixed_continuous_chains(fragments, [], stamps)
+        self.assertEqual(len(fragments), 2)
+        self.assertEqual([display_network._dated_fields(rows[0])['suspensionPeriodID']
+                          for rows in stamps], ['period.first', 'period.second'])
+        self.assertFalse(display_network._is_unbounded_current(
+            {**display_network._blank_stamp(), 'suspensionPeriodID': 'period.only'}))
 
     def test_history_shapes_partial_bbox_and_default_build_is_unchanged(self):
         jp_lines = [

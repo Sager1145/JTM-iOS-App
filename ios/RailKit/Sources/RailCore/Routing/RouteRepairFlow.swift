@@ -45,7 +45,8 @@ public enum RouteRepairFlow {
     }
 
     public static func advance(
-        train: Train, package: CompactPackage, aliases: [String: String], steps: [Step]
+        train: Train, package: CompactPackage, aliases: [String: String], steps: [Step],
+        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
     ) -> Advance {
         var train = RailwayRouteEditing.preparing(train)
         var repaired = 0
@@ -62,7 +63,7 @@ public enum RouteRepairFlow {
             }
             let span = RouteRepair.Span(
                 fromVisitIndex: fromIndex, toVisitIndex: toIndex, reason: step.reason)
-            switch RouteRepair.attempt(span: span, train: train, package: package, stationAliases: aliases) {
+            switch RouteRepair.attempt(span: span, train: train, package: package, stationAliases: aliases, admissionContext: admissionContext) {
             case .unique(let choice):
                 guard let plan = RailwayRouteEditing.plan(
                     train: train, choice: choice, fromVisitID: step.fromVisitID, toVisitID: step.toVisitID

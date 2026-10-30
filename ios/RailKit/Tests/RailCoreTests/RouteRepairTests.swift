@@ -153,3 +153,24 @@ struct RouteRepairTests {
         ]))
     }
 }
+
+extension RouteRepairTests {
+    @Test("Repair flow forwards the same dated admission through span inference")
+    func datedServiceContext() throws {
+        let package = try DatedServiceRouteFixture.package()
+        let history = try DatedServiceRouteFixture.overlay()
+        let train = DatedServiceRouteFixture.train(on: "2024-10-04")
+        let before = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-04")
+        let after = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-05")
+        let span = RouteRepair.Span(fromVisitIndex: 0, toVisitIndex: 1, reason: .section)
+        guard case .unique = RouteRepair.attempt(span: span, train: train, package: package,
+            admissionContext: before) else { Issue.record("Expected preboundary repair proposal"); return }
+        #expect(RouteRepair.attempt(span: span, train: train, package: package, admissionContext: after) == .none)
+        let stepped = RouteRepairFlow.steps([span], in: train)
+        let result = RouteRepairFlow.advance(train: stepped.train, package: package, aliases: [:],
+            steps: stepped.steps, admissionContext: before)
+        #expect(result.repaired == 1)
+        #expect(result.train.date == train.date)
+        #expect(result.train.stops.map(\.n02StationCode) == DatedServiceRouteFixture.codes.map(Optional.some))
+    }
+}

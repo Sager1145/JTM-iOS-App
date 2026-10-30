@@ -104,4 +104,94 @@ struct DisplayNetworkEraTests {
         #expect(DisplayNetworkStrokeStyle.historical != .crossDayDash)
         #expect(DisplayNetworkStrokeStyle.crossDayDash != DisplayNetworkEra.strokeStyle(for: .historical))
     }
+
+    @Test("Suspension uses one in-place bank with dated overlay styling")
+    func suspensionBoundaryControlsPartsStationsAndStyle() {
+        let suspended = DisplayTemporalDecoration(
+            historyId: "isumi.opening", validFrom: "2008-08-09", validTo: "2024-10-05",
+            suspensionPeriodID: "isumi.suspension")
+        for station in [false, true] {
+            #expect(DisplayNetworkEra.current.shows(
+                suspended, today: "2024-10-04", rideDate: nil, isStation: station))
+            #expect(!DisplayNetworkEra.current.shows(
+                suspended, today: "2024-10-05", rideDate: nil, isStation: station))
+            #expect(DisplayNetworkEra.rideDate.shows(
+                suspended, today: "2026-10-26", rideDate: "2024-10-04", isStation: station))
+            #expect(!DisplayNetworkEra.rideDate.shows(
+                suspended, today: "2026-10-26", rideDate: "2024-10-05", isStation: station))
+            #expect(!DisplayNetworkEra.rideDate.shows(
+                suspended, today: "2026-10-26", rideDate: "2008-08-08", isStation: station))
+            #expect(DisplayNetworkEra.rideDate.shows(
+                suspended, today: "2026-10-26", rideDate: "2008-08-09", isStation: station))
+            #expect(DisplayNetworkEra.historicalOverlay.shows(
+                suspended, today: "2024-10-05", rideDate: nil, isStation: station))
+            #expect(!DisplayNetworkEra.historicalOverlay.shows(
+                suspended, today: "2008-08-08", rideDate: nil, isStation: station))
+        }
+        #expect(DisplayNetworkEra.historicalOverlay.strokeStyle(
+            for: suspended, today: "2024-10-04", rideDate: nil) == .solid)
+        #expect(DisplayNetworkEra.historicalOverlay.strokeStyle(
+            for: suspended, today: "2024-10-05", rideDate: nil) == .historical)
+        #expect(DisplayNetworkEra.rideDate.strokeStyle(
+            for: suspended, today: "2026-10-26", rideDate: "2024-10-04") == .solid)
+        #expect(suspended.historyId == "isumi.opening")
+    }
+
+    @Test("A suspension identity is decorated even without an opening history id")
+    func suspensionIdentityIsNotUndecorated() {
+        #expect(!DisplayTemporalDecoration(suspensionPeriodID: "isumi.suspension").isUndecorated)
+    }
+
+
+    @Test("Temporal frames retain unchanged line builds while input epochs reject stale work")
+    func temporalContextSeparatesFrameIdentityFromInputGeneration() {
+        let base = DisplayNetworkTemporalContext(
+            era: .current, rideDate: nil,
+            todayByRegion: ["jp": "2024-10-04", "hk": "2024-10-04"], generation: 7)
+        let reordered = DisplayNetworkTemporalContext(
+            era: .current, rideDate: nil,
+            todayByRegion: ["hk": "2024-10-04", "jp": "2024-10-04"], generation: 7)
+        #expect(base.cacheKey == reordered.cacheKey)
+        let newInputEpoch = DisplayNetworkTemporalContext(
+            era: .current, rideDate: nil, todayByRegion: base.todayByRegion, generation: 8)
+        // Unrelated residency changes retain the same temporal frame; captured
+        // worker identity still differs so an old completion cannot publish.
+        #expect(base.cacheKey == newInputEpoch.cacheKey)
+        #expect(base != newInputEpoch)
+        for changed in [
+            DisplayNetworkTemporalContext(era: .current, rideDate: nil,
+                todayByRegion: ["jp": "2024-10-05", "hk": "2024-10-04"], generation: 7),
+            DisplayNetworkTemporalContext(era: .current, rideDate: nil,
+                todayByRegion: ["jp": "2024-10-04", "hk": "2024-10-05"], generation: 7),
+            DisplayNetworkTemporalContext(era: .historicalOverlay, rideDate: nil,
+                todayByRegion: base.todayByRegion, generation: 7),
+            DisplayNetworkTemporalContext(era: .rideDate, rideDate: "2024-10-04",
+                todayByRegion: base.todayByRegion, generation: 7),
+        ] {
+            #expect(base.cacheKey != changed.cacheKey)
+        }
+        let nextRideDay = DisplayNetworkTemporalContext(
+            era: .rideDate, rideDate: "2024-10-05", todayByRegion: base.todayByRegion, generation: 7)
+        let previousRideDay = DisplayNetworkTemporalContext(
+            era: .rideDate, rideDate: "2024-10-04", todayByRegion: base.todayByRegion, generation: 7)
+        #expect(previousRideDay.cacheKey != nextRideDay.cacheKey)
+    }
+
+    @Test("One immutable snapshot supplies both the frame key and its visibility day")
+    func temporalContextRetainsCapturedDayAcrossCallerRefresh() {
+        var regionalDays = ["jp": "2024-10-04"]
+        let captured = DisplayNetworkTemporalContext(
+            era: .current, rideDate: nil, todayByRegion: regionalDays, generation: 1)
+        regionalDays["jp"] = "2024-10-05"
+        let refreshed = DisplayNetworkTemporalContext(
+            era: .current, rideDate: nil, todayByRegion: regionalDays, generation: 1)
+        let suspended = DisplayTemporalDecoration(
+            validTo: "2024-10-05", suspensionPeriodID: "isumi.suspension")
+        #expect(captured.cacheKey != refreshed.cacheKey)
+        #expect(captured.era.shows(suspended,
+            today: captured.todayByRegion["jp"] ?? "", rideDate: captured.rideDate))
+        #expect(!refreshed.era.shows(suspended,
+            today: refreshed.todayByRegion["jp"] ?? "", rideDate: refreshed.rideDate))
+    }
+
 }

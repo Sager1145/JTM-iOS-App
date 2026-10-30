@@ -33,6 +33,25 @@ import SwiftUI
 /// Mercator something fell in.
 struct RailDisplayNetworkManifest: Decodable, Sendable {
     static let format = "jtm-display-network-v2"
+    static let temporalFormat = "jtm-display-network-v3"
+    static let datedServiceFeature = "dated_service_bank_v1"
+
+    struct TemporalBank: Decodable, Sendable, Equatable {
+        var historyRevision: String
+        var bankRevision: String
+        var sourcePackageSHA256: String
+        var managedLineIDs: [String]
+
+        var isValid: Bool {
+            !historyRevision.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                && !bankRevision.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                && sourcePackageSHA256.count == 64
+                && sourcePackageSHA256.allSatisfy(\.isHexDigit)
+                && !managedLineIDs.isEmpty
+                && managedLineIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
+                && Set(managedLineIDs).count == managedLineIDs.count
+        }
+    }
 
     /// A line's extent in the manifest, `nil` when the line has no
     /// drawable geometry at all — see `RegionRecord`'s bounds fields for the
@@ -158,13 +177,20 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         /// `fullBytes` in the same blob. Absent when `loadStrategy` is
         /// absent, or zero for a `"lines"` region with no overview lines.
         var overviewBytes: Int?
-        /// Optional history side file (`{region}.display-history.json`).
-        /// Absent when the region has no overlay. ``validated()`` does not
-        /// require these; a manifest built without `--history-dir` decodes
-        /// exactly as before.
+        /// History side file (`{region}.display-history.json`). Legacy v2 keeps
+        /// these fields optional; v3 `temporalBank` validation requires the
+        /// exact file name, positive byte count, and SHA-256 before geometry.
         var historyFile: String?
         var historyBytes: Int?
         var historySHA256: String?
+        var temporalBank: TemporalBank? = nil
+
+        var hasRequiredHistoryMetadata: Bool {
+            historyFile == "\(region).display-history.json"
+                && (historyBytes ?? 0) > 0
+                && historySHA256?.count == 64
+                && historySHA256?.allSatisfy(\.isHexDigit) == true
+        }
 
         /// The same threshold in **this app's** zoom, which is what the camera
         /// callback carries.
@@ -230,12 +256,29 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
     var lines: [String: Line]
     var regions: [RegionRecord]
     var displayJoins: [DisplayJoin]? = nil
+    var requiredFeatures: [String]? = nil
 
     static let shippedRegions: Set<String> = ["jp", "tw", "hk", "mo", "kr", "cn"]
 
     func validated() throws -> Self {
-        guard format == Self.format else {
+        guard format == Self.format || format == Self.temporalFormat else {
             throw RailDisplayNetworkError.unsupportedFormat(format)
+        }
+        if format == Self.temporalFormat {
+            guard requiredFeatures == [Self.datedServiceFeature],
+                  regions.contains(where: { $0.temporalBank != nil }) else {
+                throw RailDisplayNetworkError.invalidRegionIndex
+            }
+        } else if regions.contains(where: { $0.temporalBank != nil }) || !(requiredFeatures?.isEmpty ?? true) {
+            throw RailDisplayNetworkError.invalidRegionIndex
+        }
+        for record in regions {
+            guard let bank = record.temporalBank else { continue }
+            guard record.region == "jp", bank.isValid, record.hasRequiredHistoryMetadata,
+                  bank.sourcePackageSHA256 == packageSHA256[record.region],
+                  bank.managedLineIDs.allSatisfy({ id in
+                      lines.values.contains { $0.id == id && $0.region == record.region }
+                  }) else { throw RailDisplayNetworkError.invalidRegionIndex }
         }
         guard Set(regions.map(\.region)) == Self.shippedRegions,
               regions.count == Self.shippedRegions.count else {
@@ -308,6 +351,45 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
         /// network overlay draws there changes. Absent or empty for a chain
         /// with no family collapse.
         var familyWindows: [FamilyWindowRow]?
+        /// Exact P,A,B,Q witnesses compiled from the full written joined chain.
+        /// Optional drawing metadata must never invalidate required geometry.
+        var literalDisplaySpansV1: [DisplayLiteralSpans.Span]?
+
+        private enum CodingKeys: String, CodingKey {
+            case lineKey, lane, parts, continuous, chain, joinPrevious, laneRows
+            case totalMetres, follows, withheld, familyWindows, literalDisplaySpansV1
+        }
+
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            lineKey = try container.decode(String.self, forKey: .lineKey)
+            lane = try container.decodeIfPresent(Double.self, forKey: .lane)
+            parts = try container.decode([[[Double]]].self, forKey: .parts)
+            continuous = try container.decodeIfPresent(Bool.self, forKey: .continuous)
+            chain = try container.decodeIfPresent(Int.self, forKey: .chain)
+            joinPrevious = try container.decodeIfPresent(Bool.self, forKey: .joinPrevious)
+            laneRows = try container.decodeIfPresent([[Double]].self, forKey: .laneRows)
+            totalMetres = try container.decodeIfPresent(Double.self, forKey: .totalMetres)
+            follows = try container.decodeIfPresent([FollowRow].self, forKey: .follows)
+            withheld = try container.decodeIfPresent([[Double]].self, forKey: .withheld)
+            familyWindows = try container.decodeIfPresent([FamilyWindowRow].self, forKey: .familyWindows)
+            literalDisplaySpansV1 = (try? container.decodeIfPresent(
+                LiteralSpanRows.self, forKey: .literalDisplaySpansV1))?.spans
+        }
+
+        private struct LiteralSpanRows: Decodable {
+            var spans: [DisplayLiteralSpans.Span] = []
+
+            init(from decoder: any Decoder) throws {
+                var rows = try decoder.unkeyedContainer()
+                while !rows.isAtEnd {
+                    let child = try rows.superDecoder()
+                    if let span = try? DisplayLiteralSpans.Span(from: child) {
+                        spans.append(span)
+                    }
+                }
+            }
+        }
     }
 
     /// A family window row decodes from a mixed JSON array, the same way a
@@ -431,9 +513,12 @@ struct RailDisplayNetworkFile: Decodable, Sendable {
         region expected: String, lineId expectedLineId: String?,
         catalog: [String: RailDisplayNetworkManifest.Line],
         families: [String: FamilyColor],
-        detail expectedDetail: DisplayDetail? = nil
+        detail expectedDetail: DisplayDetail? = nil,
+        expectedFormat: String = RailDisplayNetworkManifest.format
     ) throws -> Self {
-        guard format == RailDisplayNetworkManifest.format else {
+        guard (expectedFormat == RailDisplayNetworkManifest.format
+                || expectedFormat == RailDisplayNetworkManifest.temporalFormat),
+              format == expectedFormat else {
             throw RailDisplayNetworkError.unsupportedFormat(format)
         }
         guard region == expected else {
@@ -566,6 +651,8 @@ struct RailDisplayNetworkIndex: Sendable {
         /// built before this field existed.
         var overview: RailDisplayNetworkManifest.Chunk?
         var dependsOn: [String]
+        var format: String = RailDisplayNetworkManifest.format
+        var temporalBank: RailDisplayNetworkManifest.TemporalBank? = nil
     }
 
     /// Each region's entries in blob order — ascending `chunk.offset`,
@@ -598,7 +685,8 @@ struct RailDisplayNetworkIndex: Sendable {
                     id: line.id, region: line.region, mapRect: line.mapRect,
                     minimumCameraZoom: line.minimumCameraZoom, chunk: chunk,
                     overview: line.overview,
-                    dependsOn: line.dependsOn ?? []))
+                    dependsOn: line.dependsOn ?? [], format: manifest.format,
+                    temporalBank: manifest.regions.first(where: { $0.region == line.region })?.temporalBank))
         }
         for region in entriesByRegion.keys {
             entriesByRegion[region]?.sort { $0.chunk.offset < $1.chunk.offset }
@@ -691,6 +779,7 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
         var validFrom: String?
         var validTo: String?
         var historyId: String?
+        var suspensionPeriodID: String? = nil
     }
 
     struct LinePart: Decodable, Sendable {
@@ -735,6 +824,7 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
         var validFrom: String?
         var validTo: String?
         var historyId: String?
+        var suspensionPeriodID: String? = nil
     }
 
     var format: String
@@ -743,6 +833,77 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
     var lines: [Line]
     var stations: [Station]
     var stationStamps: [StationStamp]
+    var revision: String? = nil
+    var temporalBank: RailDisplayNetworkManifest.TemporalBank? = nil
+
+    /// A required v3 temporal side file must stamp every managed line and
+    /// station with its separate suspension-period id before geometry use.
+    func validateTemporalStamps(managedLineIDs: Set<String>) throws {
+        func validDay(_ value: String) -> Bool {
+            guard Dates.isValidDateString(value), let year = Int(value.prefix(4)), year > 0,
+                  let month = Int(value.dropFirst(5).prefix(2)), let day = Int(value.suffix(2)) else { return false }
+            let leap = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+            let monthDays = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+            return day <= monthDays[month - 1]
+        }
+        func validStamp(id: String?, from: String?, to: String?) -> Bool {
+            guard let id, !id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                  let to, validDay(to) else { return false }
+            return from.map { validDay($0) && $0 < to } ?? true
+        }
+        var partKeys = Set<String>()
+        var stationKeys = Set<String>()
+        var stampedLines = Set<String>()
+        var stampedStationLines = Set<String>()
+        for part in parts {
+            guard part.index >= 0, partKeys.insert("\(part.id)\u{1f}\(part.index)").inserted else {
+                throw RailDisplayNetworkError.invalidRegionPayload(region)
+            }
+            let lineID = Self.bareLineID(fromDrawID: part.id)
+            if managedLineIDs.contains(lineID) {
+                guard validStamp(id: part.suspensionPeriodID, from: part.validFrom, to: part.validTo),
+                      RouteGraph.TemporalKind(rawValue: part.kind) != nil else {
+                    throw RailDisplayNetworkError.invalidRegionPayload(region)
+                }
+                stampedLines.insert(lineID)
+            }
+        }
+        for station in stationStamps {
+            guard stationKeys.insert(station.id).inserted else {
+                throw RailDisplayNetworkError.invalidRegionPayload(region)
+            }
+            let lineID = String(station.id.prefix { $0 != ":" })
+            if managedLineIDs.contains(lineID) {
+                guard validStamp(id: station.suspensionPeriodID, from: station.validFrom, to: station.validTo),
+                      RouteGraph.TemporalKind(rawValue: station.kind) != nil else {
+                    throw RailDisplayNetworkError.invalidRegionPayload(region)
+                }
+                stampedStationLines.insert(lineID)
+            }
+        }
+        guard stampedLines == managedLineIDs, stampedStationLines == managedLineIDs else {
+            throw RailDisplayNetworkError.invalidRegionPayload(region)
+        }
+    }
+
+    /// Full managed chunks (including preview requests promoted from overview)
+    /// require complete suspension stamps; partial banks cannot appear current.
+    func validateTemporalGeometry(_ file: RailDisplayNetworkFile) throws {
+        guard !file.lines.isEmpty else { throw RailDisplayNetworkError.invalidRegionPayload(region) }
+        let rows = partRows
+        let stamps = stationStampRows
+        for fragment in file.lines {
+            let drawID = fragment.continuous == true
+                ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
+                : "\(fragment.lineKey)@\(fragment.lane ?? 0)"
+            guard fragment.parts.indices.allSatisfy({
+                !(rows[drawID]?[$0]?.suspensionPeriodID?.isEmpty ?? true)
+            }) else { throw RailDisplayNetworkError.invalidRegionPayload(region) }
+        }
+        guard file.stations.allSatisfy({ !(stamps[$0.id]?.suspensionPeriodID?.isEmpty ?? true) }) else {
+            throw RailDisplayNetworkError.invalidRegionPayload(region)
+        }
+    }
 
     /// Draw id (`lineKey#chain` or `lineKey@lane`) → part index → decoration.
     var partRows: [String: [Int: DisplayTemporalDecoration]] {
@@ -750,7 +911,8 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
         for part in parts {
             rows[part.id, default: [:]][part.index] = DisplayTemporalDecoration(
                 historyId: part.historyId, validFrom: part.validFrom, validTo: part.validTo,
-                kind: RouteGraph.TemporalKind(rawValue: part.kind) ?? .current)
+                kind: RouteGraph.TemporalKind(rawValue: part.kind) ?? .current,
+                suspensionPeriodID: part.suspensionPeriodID)
         }
         return rows
     }
@@ -759,7 +921,8 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
         Dictionary(uniqueKeysWithValues: stationStamps.map { stamp in
             (stamp.id, DisplayTemporalDecoration(
                 historyId: stamp.historyId, validFrom: stamp.validFrom, validTo: stamp.validTo,
-                kind: RouteGraph.TemporalKind(rawValue: stamp.kind) ?? .current))
+                kind: RouteGraph.TemporalKind(rawValue: stamp.kind) ?? .current,
+                suspensionPeriodID: stamp.suspensionPeriodID))
         })
     }
 

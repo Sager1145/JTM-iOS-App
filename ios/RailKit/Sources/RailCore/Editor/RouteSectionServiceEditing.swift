@@ -50,7 +50,7 @@ public enum RouteSectionServiceEditing {
     ) -> Train {
         guard fromStopIndex >= 0, toStopIndex < train.stops.count,
               fromStopIndex < toStopIndex else { return train }
-        let sections = sections(for: train)
+        let sections = RecordedRouteMapping.editableRouteSections(for: train)
         guard let mapping = RecordedRouteMapping(stops: train.stops, sections: sections),
               let sectionRange = mapping.sectionRange(fromStopIndex: fromStopIndex, toStopIndex: toStopIndex)
         else { return train }
@@ -64,16 +64,10 @@ public enum RouteSectionServiceEditing {
         _ info: RouteSectionServiceInfo, to train: Train,
         fromSectionIndex: Int, toSectionIndex: Int
     ) -> Train {
-        let sections = sections(for: train)
+        let sections = RecordedRouteMapping.editableRouteSections(for: train)
         guard fromSectionIndex >= 0, fromSectionIndex < toSectionIndex,
               toSectionIndex <= sections.count else { return train }
         return updating(info, train: train, sections: sections, sectionRange: fromSectionIndex..<toSectionIndex)
-    }
-
-    private static func sections(for train: Train) -> [RouteSection] {
-        let source = train.routeSections ?? []
-        return RecordedRouteMapping(stops: train.stops, sections: source) != nil
-            ? source : StoreOperations.rideRouteSections(for: train)
     }
 
     private static func updating(

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Scoped repair: restore N02's own eastern arc; do not round a false crossing turn.
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -169,7 +170,7 @@ function main(args) {
   assert(apply || (args.length === 2 && args[0] === '--candidate-root'),
     'Usage: node repair-hokuriku-p1-loop-display.mjs (--candidate-root /private/tmp/<directory> | --apply)');
   const out = apply ? null : path.resolve(args[1]);
-  if (out) assert(out.startsWith('/private/tmp/'), 'Candidate output must be under /private/tmp');
+  if (out) assertAllowedCandidateDirectory(out);
   const paths = { package: 'public/rail/jp-2025.json', sections: 'data/rail-sections.json',
     lanes: 'public/rail/display-lanes.json', directions: 'scripts/railway/jp-directional-alignment-overrides.json',
     ...DEPENDENCY_PATHS };

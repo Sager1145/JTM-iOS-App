@@ -239,7 +239,7 @@ struct DiagnosticTaskComposer: View {
     }
 
     private static func newDirectory() -> String {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.temporaryDirectory
-        return base.appendingPathComponent("RailDiagnostics/Sessions/" + UUID().uuidString.lowercased()).path
+        let base = RailwayEvidenceRoot.diagnosticSessions()
+        return base.appendingPathComponent(UUID().uuidString.lowercased(), isDirectory: true).path
     }
 }

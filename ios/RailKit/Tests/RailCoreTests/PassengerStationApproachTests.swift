@@ -3,6 +3,52 @@ import Testing
 @testable import RailCore
 
 struct PassengerStationApproachTests {
+    @Test func reviewedSourceCurveKeepsItsOwnStationApproach() throws {
+        let line = try sourceApproachFixture()
+        let expected = [[135.0, 35.0], [135.001, 35.0], [135.002, 35.0],
+                        [135.003, 35.001], [135.004, 35.0], [135.005, 35.0],
+                        [135.006, 35.0]].map { Coordinate(lon: $0[0], lat: $0[1]) }
+        // The source curve reaches the station. A chord across that curve
+        // must not be mistaken for a displaced station and rebuilt.
+        #expect(DisplayParts.parts(for: line) == [expected])
+    }
+
+    @Test(arguments: ["absent", "empty", "unknown", "terminal", "missingAlias", "missingSide", "mismatchedEnd"])
+    func incompleteSourceAuthorityKeepsOrdinaryAnchoring(caseName: String) throws {
+        let line = try sourceApproachFixture(invalid: caseName)
+        let beforeCurve = Coordinate(lon: 135.002, lat: 35)
+        #expect(!DisplayParts.parts(for: line).flatMap { $0 }.contains(beforeCurve))
+    }
+
+    private func sourceApproachFixture(invalid: String? = nil) throws -> CompactPackage.Line {
+        let incoming = [[135.0, 35.0], [135.001, 35.0], [135.002, 35.0], [135.003, 35.001]]
+        let outgoing = [[135.003, 35.001], [135.004, 35.0], [135.005, 35.0], [135.006, 35.0]]
+        var row: [String: Any] = [
+            "id": "source-defined-approach", "name": "Source curve", "rank": 3,
+            "stations": [["A", "A", 135.0, 35.0], ["S", "S", 135.003, 35.001],
+                         ["B", "B", 135.006, 35.0]],
+            "segments": [[1, 1, Array(incoming.dropFirst())], [1, 1, Array(outgoing.dropFirst())]],
+            "displayIntervalCoordinates": ["0": incoming, "1": outgoing],
+            "displayStationCoordinates": ["S": [135.003, 35.001]],
+            "displaySourceAnchoredStationCodes": ["S"]
+        ]
+        switch invalid {
+        case "absent": row.removeValue(forKey: "displaySourceAnchoredStationCodes")
+        case "empty": row["displaySourceAnchoredStationCodes"] = [String]()
+        case "unknown": row["displaySourceAnchoredStationCodes"] = ["unknown"]
+        case "terminal": row["displaySourceAnchoredStationCodes"] = ["A"]
+        case "missingAlias": row.removeValue(forKey: "displayStationCoordinates")
+        case "missingSide": row["displayIntervalCoordinates"] = ["0": incoming]
+        case "mismatchedEnd":
+            var changed = incoming
+            changed[changed.count - 1] = [135.003, 35.0011]
+            row["displayIntervalCoordinates"] = ["0": changed, "1": outgoing]
+        default: break
+        }
+        return try JSONDecoder().decode(CompactPackage.Line.self,
+                                        from: JSONSerialization.data(withJSONObject: row))
+    }
+
     @Test("Hakone tunnel display follows the reviewed Apple cartographic arc without changing physical geometry")
     func hakoneTunnelCartographicArcKeepsFrozenSourceBounds() throws {
         let root = try PortFixtures.repositoryRoot()

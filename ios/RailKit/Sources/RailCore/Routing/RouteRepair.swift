@@ -90,10 +90,12 @@ public enum RouteRepair {
     /// several are `.ambiguous`. A path found only by the final package
     /// search, without those line labels, is `.ambiguous` even when alone.
     public static func attempt(
-        span: Span, train: Train, package: CompactPackage, stationAliases: [String: String] = [:]
+        span: Span, train: Train, package: CompactPackage, stationAliases: [String: String] = [:],
+        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
     ) -> Attempt {
-        guard let slice = slice(span, from: train) else { return .none }
-        let inferred = classify(slice, package: package, stationAliases: stationAliases)
+        guard admissionContext?.matches(Dates.normalizeDateString(train.date)) != false,
+              let slice = slice(span, from: train) else { return .none }
+        let inferred = classify(slice, package: package, stationAliases: stationAliases, admissionContext: admissionContext)
         if inferred != .none { return inferred }
         let coded = slice.stops.filter { ($0.n02StationCode?.isEmpty == false) }
         if coded.count >= 2, coded.count != slice.stops.count {
@@ -102,7 +104,7 @@ public enum RouteRepair {
             reduced.origin = coded[0].name
             reduced.destination = coded[coded.count - 1].name
             reduced.routeSections = nil
-            let retry = classify(reduced, package: package, stationAliases: stationAliases)
+            let retry = classify(reduced, package: package, stationAliases: stationAliases, admissionContext: admissionContext)
             if retry != .none { return retry }
         }
         let codes = slice.stops.compactMap(\.n02StationCode).filter { !$0.isEmpty }
@@ -110,7 +112,7 @@ public enum RouteRepair {
         let searched = LocalJourneySearch.search(
             package: package, originCode: origin, destinationCode: destination,
             trainType: slice.trainType, requiredStationCodes: codes,
-            stationAliases: stationAliases, maximumExpansions: 200_000)
+            stationAliases: stationAliases, maximumExpansions: 200_000, admissionContext: admissionContext)
         if searched.choices.isEmpty { return .none }
         // No line labels survived to this search. One result still goes to
         // the guide; it is not an automatic `.unique` apply. A raw search has
@@ -135,10 +137,11 @@ public enum RouteRepair {
     }
 
     private static func classify(
-        _ train: Train, package: CompactPackage, stationAliases: [String: String]
+        _ train: Train, package: CompactPackage, stationAliases: [String: String],
+        admissionContext: RailwayRouteChoices.AdmissionContext?
     ) -> Attempt {
         let outcome = RecordedRouteAdmission.admission(
-            in: train, package: package, stationAliases: stationAliases, maximumExpansions: 200_000)
+            in: train, package: package, stationAliases: stationAliases, maximumExpansions: 200_000, admissionContext: admissionContext)
         switch outcome {
         case .apply, .corridorPreference:
             guard let choice = outcome.automaticChoice else { return .none }

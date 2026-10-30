@@ -976,7 +976,7 @@ public enum RouteSolver {
         edgeKeys: inout Set<PlatformConnectorKey>, railReachability: inout [String: Set<String>]
     ) {
         if a.key == b.key { return }
-        let pairKey = jsSorted([a.key, b.key]).joined(separator: "|")
+        let pairKey = RouteGraph.jsSorted([a.key, b.key]).joined(separator: "|")
         guard let aCoordinate = graph.nodes[a.key],
               let bCoordinate = graph.nodes[b.key] else { return }
         let gap = Geometry.distanceMeters(aCoordinate, bCoordinate)
@@ -1273,8 +1273,8 @@ public enum RouteSolver {
         attempt.solveMode = mode
         let key = [
             mode, home ? "home" : "soft",
-            jsSorted(attempt.requiredLines).joined(separator: ","),
-            jsSorted(attempt.requiredOperators).joined(separator: ","),
+            RouteGraph.jsSorted(attempt.requiredLines).joined(separator: ","),
+            RouteGraph.jsSorted(attempt.requiredOperators).joined(separator: ","),
         ].joined(separator: "|")
         if keys.insert(key).inserted { attempts.append(attempt) }
     }
@@ -1718,13 +1718,9 @@ public enum RouteSolver {
         from previousKey: String, to firstKey: String, graph: RouteGraph.Graph,
         date: String?, maxMeters: Double
     ) -> [String]? {
-        func identity(_ key: String) -> Substring {
-            guard let separator = key.lastIndex(of: "@") else { return key[...] }
-            return key[..<separator]
-        }
-        let requiredIdentity = identity(previousKey)
+        let requiredIdentity = physicalIdentity(previousKey)
         guard graph.nodes[previousKey] != nil, graph.nodes[firstKey] != nil,
-              requiredIdentity == identity(firstKey) else { return nil }
+              requiredIdentity == physicalIdentity(firstKey) else { return nil }
         var pending: [(key: String, length: Double, path: [String])] = [(previousKey, 0, [previousKey])]
         var best = [previousKey: 0.0]
         var index = 0
@@ -1736,7 +1732,7 @@ public enum RouteSolver {
             for edge in graph.adjacency[current.key] ?? [] {
                 let total = current.length + edge.length
                 guard edge.connector == nil, edge.physicalJunction == nil,
-                      graph.nodes[edge.to] != nil, identity(edge.to) == requiredIdentity,
+                      graph.nodes[edge.to] != nil, physicalIdentity(edge.to) == requiredIdentity,
                       total <= maxMeters,
                       RouteGraph.RailValidity.isValid(validFrom: edge.validFrom, validTo: edge.validTo, on: date),
                       total < best[edge.to, default: .infinity] else { continue }
@@ -4264,12 +4260,7 @@ public enum RouteSolver {
 
     /// ECMAScript `String(value || "").trim()` for route hint fields.
     private static func normalizeRouteHintText(_ text: String) -> String {
-        let units = Array(text.utf16)
-        var start = 0
-        var end = units.count
-        while start < end, isJSTrimUnit(units[start]) { start += 1 }
-        while end > start, isJSTrimUnit(units[end - 1]) { end -= 1 }
-        return String(decoding: units[start..<end], as: UTF16.self)
+        JSString.trimCodeUnits(text)
     }
 
     private static func normalizedHintValues(_ values: [String]) -> [String] {
@@ -4293,21 +4284,6 @@ public enum RouteSolver {
             String(format: "%.6f,%.6f", locale: locale, coordinate.lon, coordinate.lat)
         }
         return "\(line)\u{001F}\(operatorName)\u{001F}\(fixed(from))\u{001F}\(fixed(to))"
-    }
-
-    private static func isJSTrimUnit(_ value: UInt16) -> Bool {
-        switch value {
-        case 0x0009...0x000D, 0x0020, 0x00A0, 0x1680, 0x2000...0x200A,
-             0x2028, 0x2029, 0x202F, 0x205F, 0x3000, 0xFEFF:
-            return true
-        default:
-            return false
-        }
-    }
-
-    private static func jsSorted<S: Sequence>(_ values: S) -> [String]
-    where S.Element == String {
-        values.sorted { Array($0.utf16).lexicographicallyPrecedes(Array($1.utf16)) }
     }
 
     private static func dedupeStationIndices(

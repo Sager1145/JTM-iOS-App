@@ -97,6 +97,44 @@ struct RouteSectionServiceEditingTests {
         #expect(sections[3].number == "303C")
     }
 
+    @Test func repeatedPairsDoNotCopyServiceNumberOntoTheOtherTrip() throws {
+        let stops = ["a", "b", "a", "b"].map { Stop(name: $0.uppercased(), n02StationCode: $0) }
+        var first = RouteSection(from: "A", to: "B", fromN02StationCode: "a", toN02StationCode: "b")
+        first.number = "1"
+        var second = first
+        second.number = "2"
+        let original = Train(id: "repeat", number: "", origin: "A", destination: "B",
+            routeSections: [
+                RouteSection(from: "X", to: "A", fromN02StationCode: "x", toN02StationCode: "a"),
+                first,
+                RouteSection(from: "B", to: "A", fromN02StationCode: "b", toN02StationCode: "a"),
+                second],
+            stops: stops)
+        #expect(RecordedRouteMapping(stops: stops, sections: original.routeSections ?? []) == nil)
+        let updated = RouteSectionServiceEditing.applying(
+            .init(number: "9"), to: original, fromStopIndex: 1, toStopIndex: 2)
+        let sections = try #require(updated.routeSections)
+        #expect(sections.count == 3)
+        #expect(sections[0].number == nil)
+        #expect(sections[2].number == nil)
+        #expect(sections[1].number == "9")
+        let expected = RecordedRouteMapping.editableRouteSections(for: original)
+        #expect(sections[0] == expected[0] && sections[2] == expected[2])
+    }
+
+    @Test func rebuiltSectionsCarryStationIDsFromStops() {
+        let stops = ["a", "b", "c"].enumerated().map { index, code in
+            Stop(name: code.uppercased(), n02StationCode: code, stationID: "st:jp:\(index + 1)")
+        }
+        let original = Train(id: "ids", number: "", origin: "A", destination: "C",
+            routeSections: [RouteSection(from: "A", to: "C", fromN02StationCode: "a", toN02StationCode: "c")],
+            stops: stops)
+        let rebuilt = RecordedRouteMapping.editableRouteSections(for: original)
+        #expect(rebuilt.count == 2)
+        #expect(rebuilt.map(\.fromStationID) == ["st:jp:1", "st:jp:2"])
+        #expect(rebuilt.map(\.toStationID) == ["st:jp:2", "st:jp:3"])
+    }
+
     @Test func invalidRangesLeaveDraftUntouched() {
         for range in [(-1, 2), (0, 4), (2, 2), (3, 1)] {
             #expect(RouteSectionServiceEditing.applying(

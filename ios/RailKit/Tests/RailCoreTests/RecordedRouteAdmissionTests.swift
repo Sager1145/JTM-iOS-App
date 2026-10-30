@@ -531,3 +531,69 @@ extension RecordedRouteAdmissionTests {
 private struct SamplePart: Decodable {
     let train: Train
 }
+
+/// Bounded route fixture: compact groups deliberately differ from own raw memberships.
+enum DatedServiceRouteFixture {
+    static let lineID = "jp-いすみ鉄道-いすみ線"
+    static let codes = ["005229", "005136", "005238"]
+    static func package() throws -> CompactPackage {
+        let row: [String: Any] = ["id": lineID, "name": "Isumi", "operator": "Isumi Railway",
+            "rank": 3, "kind": "private", "serviceStatus": "substitute_bus",
+            "stations": codes.enumerated().map { [$0.element, $0.element, 140.0 + Double($0.offset) * 0.01, 35.0] as [Any] },
+            "segments": (0..<2).map { [1, 0, [[140.0 + Double($0) * 0.01, 35.0], [140.01 + Double($0) * 0.01, 35.0]]] as [Any] }]
+        return try JSONDecoder().decode(CompactPackage.self, from: JSONSerialization.data(withJSONObject:
+            ["format": "compact-v1", "version": "test", "country": "jp", "lines": [row]]))
+    }
+    static func overlay() throws -> RailHistoryOverlay {
+        try RailHistoryOverlay.decode(Data("""
+        {"schema_version":"2","revision":"route-candidate","features":["service_status_periods"],
+         "sections":[],"stations":[],"retirements":[
+          {"history_id":"isumi.suspension","match":{"line_name":"Isumi","operator":"Isumi Railway","bbox":[139.9,34.9,140.1,35.1]},"valid_to":"2024-10-05"},
+          {"history_id":"isumi.opening","match":{"line_name":"Isumi","operator":"Isumi Railway","bbox":[140.009,34.999,140.011,35.001],"targets":["stations"]},"valid_from":"2008-08-09"}
+         ],"service_status_periods":[{"history_id":"isumi.suspension","lineID":"\(lineID)","scope":"whole_line",
+          "station_membership_ids":["005230","005136","005239"],"valid_from":"2024-10-05","valid_to":null,
+          "serviceStatus":"substitute_bus","source":["fixture-official-source"]}]}
+        """.utf8))
+    }
+    static func train(on date: String?) -> Train {
+        var train = Train(id: "dated-isumi", number: "Local", origin: codes[0], destination: codes[2],
+            stops: [Stop(name: codes[0], n02StationCode: codes[0]), Stop(name: codes[2], n02StationCode: codes[2])], region: "jp")
+        train.date = date
+        return train
+    }
+}
+
+extension RecordedRouteAdmissionTests {
+    @Test("Dated proposals restore only managed normal service and preserve explicit request dates")
+    func datedServiceContext() throws {
+        let package = try DatedServiceRouteFixture.package()
+        let history = try DatedServiceRouteFixture.overlay()
+        let before = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-04")
+        let after = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-05")
+        let origin = DatedServiceRouteFixture.codes[0], destination = DatedServiceRouteFixture.codes[2]
+        #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination).isEmpty)
+        #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination,
+            admissionContext: before).count == 1)
+        #expect(LocalJourneySearch.choices(package: package, originCode: origin, destinationCode: destination,
+            admissionContext: before).count == 1)
+        #expect(LocalJourneySearch.search(package: package, originCode: origin, destinationCode: destination,
+            admissionContext: after).choices.isEmpty)
+        #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination,
+            trainType: "shinkansen", admissionContext: before).isEmpty)
+        let dated = DatedServiceRouteFixture.train(on: "2024-10-04")
+        #expect(RecordedRouteAdmission.admission(in: dated, package: package, admissionContext: before).automaticChoice != nil)
+        #expect(RecordedRouteAdmission.search(in: dated, package: package, admissionContext: after).choices.isEmpty)
+        #expect(RecordedRouteAdmission.search(in: DatedServiceRouteFixture.train(on: nil), package: package,
+            admissionContext: before).choices.isEmpty)
+        #expect(RecordedRouteAdmission.search(in: DatedServiceRouteFixture.train(on: "2024-10-05"), package: package,
+            admissionContext: after).choices.isEmpty)
+        #expect(RecordedRouteAdmission.search(in: dated, package: package).choices.isEmpty)
+        let legacy = try RailHistoryOverlay.decode(Data(#"{"schema_version":"1","revision":"legacy","sections":[],"stations":[],"retirements":[]}"#.utf8))
+        let unmanaged = try RailwayRouteChoices.AdmissionContext(history: legacy, civilDay: "2024-10-04")
+        #expect(LocalJourneySearch.search(package: package, originCode: origin, destinationCode: destination,
+            admissionContext: unmanaged).choices.isEmpty)
+        for invalid in ["2024-02-30", "2024-2-03", "2024/10/04", ""] {
+            #expect(throws: (any Error).self) { try RailwayRouteChoices.AdmissionContext(history: legacy, civilDay: invalid) }
+        }
+    }
+}

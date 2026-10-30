@@ -28,6 +28,10 @@ does not restore the retired pipeline. Run it with `bash ios/verify.sh`.
 
 Every module supports `--dry-run`. Build and Swift modules accept `--jobs` and explicit build/scratch locations. The diagnostic module accepts `--app`; the unified app must already be built. Use a new session directory when task scope/settings change; resume the same immutable request to retain valid evidence. The app captures one requested line automatically at its requested zoom/viewport/appearance. Partial and failed evidence stays explicit; launch/capture completion is not an alignment verdict. The old standalone RouteWorkbench, ThroughWorkbench and RailAlignmentInspector app targets are retired; their implementations remain internal modules of RailDiagnostics.
 
+Agents drive the unified app with `python3 -I ios/tools/verification/diagnostic-run.py` (capture/send/status/views; see `.claude/skills/rail-diagnostics/SKILL.md`).
+
+The Main cold ON/OFF final check is `bash ios/tools/verification/main-cold-pair.sh OUTDIR STATIONID LAT LON SPAN STORAGEID [APP]`.
+
 ```sh
 bash ios/verify.sh swift --filter TimetablePhysicalRouteMatchTests
 bash ios/verify.sh build --target diagnostics

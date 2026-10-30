@@ -53,18 +53,21 @@ public enum TripRoutePlanner {
         case truncated
     }
 
-    public static func plan(package: CompactPackage, request: Request, rideDate: String? = nil) throws -> Outcome {
+    public static func plan(package: CompactPackage, request: Request, rideDate: String? = nil,
+                            admissionContext: RailwayRouteChoices.AdmissionContext? = nil) throws -> Outcome {
         guard package.country.lowercased() == "jp" else {
-            return plan(package: package, request: request, rideDate: rideDate, patterns: [], connectors: [])
+            return plan(package: package, request: request, rideDate: rideDate, patterns: [], connectors: [], admissionContext: admissionContext)
         }
         let catalog = try JapanThroughServices.loadBundled()
         return plan(package: package, request: request, rideDate: rideDate,
-                    patterns: catalog.patterns, connectors: catalog.connectors)
+                    patterns: catalog.patterns, connectors: catalog.connectors, admissionContext: admissionContext)
     }
 
     static func plan(package: CompactPackage, request: Request, rideDate: String?,
                      patterns: [JapanThroughServices.Pattern],
-                     connectors: [JapanThroughServices.Connector]) -> Outcome {
+                     connectors: [JapanThroughServices.Connector],
+                     admissionContext: RailwayRouteChoices.AdmissionContext? = nil) -> Outcome {
+        guard admissionContext?.matches(rideDate) != false else { return .noRoute }
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
         // Match LocalJourneySearch: package IDs take precedence over aliases.
         func stationKey(_ code: String) -> String {
@@ -131,7 +134,13 @@ public enum TripRoutePlanner {
             $0.choices(package: package, originCode: request.originCode,
                        destinationCode: request.destinationCode, on: rideDate,
                        connectors: connectors)
-        }.filter(matchesHints)
+        }.filter(matchesHints).filter { choice in
+            choice.lineIDs.allSatisfy { id in
+                package.lines.first(where: { $0.id == id }).map {
+                    RailwayRouteChoices.permits($0, trainType: request.trainType, admissionContext: admissionContext)
+                } ?? false
+            }
+        }
         let originLineIDs = request.originLineID.map { Set([$0]) }
         let destinationLineIDs = request.destinationLineID.map { Set([$0]) }
         var constrainedTruncated = false
@@ -142,7 +151,7 @@ public enum TripRoutePlanner {
                 destinationCode: request.destinationCode, trainType: request.trainType,
                 stationAliases: request.stationAliases, maximumChoices: 3,
                 continuation: allows,
-                originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs)
+                originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs, admissionContext: admissionContext)
             constrainedTruncated = constrained.isTruncated
             var choices = constrained.choices + throughChoices
             let names: Set<String>
@@ -163,7 +172,7 @@ public enum TripRoutePlanner {
                     destinationCode: request.destinationCode, trainType: request.trainType,
                     stationAliases: request.stationAliases, maximumChoices: 1,
                     continuation: allows,
-                    originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs)
+                    originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs, admissionContext: admissionContext)
                 choices += direct.choices
                 directIDs.formUnion(direct.choices.map(\.id))
             }
@@ -256,7 +265,7 @@ public enum TripRoutePlanner {
             // Any shared station counts here: this pass only explains where a
             // passenger would have to change trains.
             continuation: { _, _, _ in true },
-            originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs)
+            originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs, admissionContext: admissionContext)
         if let choice = unconstrained.choices.first(where: matchesHints) ?? unconstrained.choices.first {
             let all = junctions(for: choice, package: package, rideDate: rideDate,
                                 patterns: patterns, connectors: connectors)

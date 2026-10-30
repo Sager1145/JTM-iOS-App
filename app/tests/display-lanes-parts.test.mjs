@@ -267,3 +267,120 @@ test('an east-west member crossing a north-south trunk at the hub centre is excl
   assert.equal(hubRowsByPart.has('cross#0'), false);
   assert.ok(hubRowsByPart.has('same#0'));
 });
+
+// Dated display is opt-in: the same physical package remains usable by legacy
+// clients while an explicit context selects its ordinary geometry bank.
+const temporalNet = (await import('node:module')).createRequire(import.meta.url)('../public/rail-network.js');
+const temporalLine = { ...line, country: 'jp', name: 'Fixture', operator: 'Fixture Rail',
+  serviceStatus: 'substitute_bus', serviceSpans: [[0, 2, 2]] };
+const temporalPackage = { format: 'compact-v1', country: 'jp', version: 1, lines: [temporalLine] };
+const temporalHistory = { schema_version: '2', revision: 'fixture-history-1', features: ['service_status_periods'],
+  service_status_periods: [{ history_id: 'fixture.suspension', lineID: line.id, scope: 'whole_line',
+    station_membership_ids: ['a','b','c'], valid_from: '2024-10-05', valid_to: null,
+    serviceStatus: 'substitute_bus', source: ['https://example.com/official'] }] };
+const temporalContext = (day, era = 'rideDate') => ({ era, today: day, rideDate: era === 'rideDate' ? day : null,
+  history: temporalHistory });
+
+test('explicit managed normal bypasses static bus while omitted context preserves legacy', () => {
+  const before = structuredClone(temporalPackage);
+  const legacy = temporalNet.buildNetworkFromCompactPackage(temporalPackage);
+  assert.equal(legacy.strokeModel, null);
+  assert.equal(legacy.segments.features[0].properties.suspended, 1);
+  const normal = temporalNet.buildNetworkFromCompactPackage(temporalPackage, null, null, temporalContext('2024-10-04'));
+  assert.equal(normal.strokeModel?.lines.length, 1);
+  assert.equal(normal.segments.features.length, 1);
+  assert.equal(normal.segments.features[0].properties.suspended, undefined);
+  assert.deepEqual(normal.lineById.get(line.id).parts, legacy.lineById.get(line.id).parts);
+  assert.deepEqual(temporalPackage, before);
+});
+
+test('cutoff removes every active managed display collection and keeps one suspended historical copy', () => {
+  const neighbor = { ...line, id: 'other', name: 'Other', operator: 'Other Rail', country: 'jp' };
+  const pkg = { ...temporalPackage, lines: [temporalLine, neighbor] };
+  const active = temporalNet.buildNetworkFromCompactPackage(pkg, null, null, temporalContext('2024-10-05', 'current'));
+  for (const key of ['segments','segmentsWithheld','stations','stationLanes','stationLabels']) {
+    assert.equal(active[key].features.filter(f => f.properties.lineId === line.id).length, 0, key);
+  }
+  assert.deepEqual(active.strokeModel.lines.map(l => l.lineId), ['other']);
+  assert.equal(active.stations.features.length, 3, 'other company membership stays visible');
+  assert.equal(active.stationLabels.features.length, 3, 'visible company retains shared-group labels');
+  assert.equal(active.lineById.get(line.id).km, 0.2, 'physical index retains suspended railway');
+  const overlay = temporalNet.buildNetworkFromCompactPackage(pkg, null, null, temporalContext('2024-10-05', 'historicalOverlay'));
+  const copies = overlay.segments.features.filter(f => f.properties.lineId === line.id);
+  assert.equal(copies.length, 1);
+  assert.equal(copies[0].properties.suspended, 1);
+  assert.equal(copies[0].properties.suspensionPeriodID, 'fixture.suspension');
+  assert.equal(overlay.strokeModel.lines.filter(l => l.lineId === line.id).length, 1);
+  const future = temporalNet.buildNetworkFromCompactPackage(pkg, null, null, temporalContext('2024-10-04', 'historicalOverlay'));
+  assert.equal(future.segments.features.filter(f => f.properties.lineId === line.id).length, 1,
+    'historicalOverlay includes the still-current ordinary railway before suspension');
+  assert.equal(future.segments.features.find(f => f.properties.lineId === line.id).properties.suspended, undefined,
+    'future suspension does not decorate the ordinary current railway');
+});
+
+test('normal temporal bank is pure and replaces managed legacy exclusion without a second bank', async () => {
+  const builder = await import('../scripts/railway/build-display-lanes.mjs');
+  assert.equal(typeof builder.buildTemporalPartsBank, 'function');
+  const lanes = { format: 'jtm-display-lanes-v1', partsByRegion: { jp: [] },
+    strokeExcludedByRegion: { jp: [[line.id, 'substitute_bus']] } };
+  const original = structuredClone({ pkg: temporalPackage, lanes, history: temporalHistory });
+  const bank = builder.buildTemporalPartsBank(temporalPackage, null, lanes, temporalHistory);
+  assert.equal(bank.historyRevision, temporalHistory.revision);
+  assert.equal(bank.temporalPartsByRegion.jp.length, 1);
+  assert.deepEqual(bank.temporalPartsByRegion.jp[0].slice(0, 4), [line.id, 0, 0, 1]);
+  assert.deepEqual(builder.buildTemporalPartsBank(temporalPackage, null, lanes, temporalHistory), bank);
+  assert.deepEqual({ pkg: temporalPackage, lanes, history: temporalHistory }, original);
+});
+
+test('service split respects the managed bit and a dated full-line bus period without static spans', () => {
+  const physical = temporalNet.buildNetworkFromCompactPackage(temporalPackage).lineById.get(line.id);
+  assert.equal(temporalNet.serviceSplitForLine(physical, temporalLine,
+    { managed: true, serviceStatus: null, historyID: null }), null);
+  assert(temporalNet.serviceSplitForLine(physical, temporalLine,
+    { managed: false, serviceStatus: null, historyID: null }));
+  const ordinary = { ...temporalLine }; delete ordinary.serviceSpans; delete ordinary.serviceStatus;
+  const bus = temporalNet.serviceSplitForLine(physical, ordinary,
+    { managed: true, serviceStatus: 'substitute_bus', historyID: 'fixture.suspension' });
+  assert.equal(bus?.inService.length, 0);
+  assert.equal(bus?.suspended.length, 1);
+});
+
+test('temporal display rejects allocation it cannot represent and validates explicit context', async () => {
+  const { buildTemporalPartsBank } = await import('../scripts/railway/build-display-lanes.mjs');
+  const cases = [
+    { byRegion: { jp: [[line.id, 0, 0, 100, 1]] } },
+    { followsByRegion: { jp: [[line.id, 0, 0, 100, 'other', 0, 0, 100]] } },
+    { followsByRegion: { jp: [['other', 0, 0, 100, line.id, 0, 0, 100]] } },
+    { familyWindowsByRegion: { jp: [[line.id, 0, 0, 100, 0, 'family']] } },
+    { renderGroupByRegion: { jp: { [line.id]: 'family' } } },
+  ];
+  for (const extra of cases) {
+    const lanes = { format: 'jtm-display-lanes-v1', ...extra };
+    assert.throws(() => buildTemporalPartsBank(temporalPackage, null, lanes, temporalHistory), /unsupported temporal geometry/);
+    assert.throws(() => temporalNet.buildNetworkFromCompactPackage(temporalPackage, null, lanes,
+      temporalContext('2024-10-04')), /unsupported temporal geometry/);
+  }
+  const nonzero = { ...temporalPackage, lanes: [[line.id, 0, 0, 100, -1]] };
+  assert.throws(() => buildTemporalPartsBank(nonzero, null, null, temporalHistory), /nonzero lane/);
+  const partial = structuredClone(temporalHistory); partial.service_status_periods[0].scope = 'partial_line';
+  assert.throws(() => buildTemporalPartsBank(temporalPackage, null, null, partial), /whole_line/);
+  assert.throws(() => temporalNet.buildNetworkFromCompactPackage(temporalPackage, null, null,
+    { ...temporalContext('2024-10-04'), today: '2024-02-30' }), /Gregorian date/);
+  assert.throws(() => temporalNet.buildNetworkFromCompactPackage(temporalPackage, null, null,
+    { ...temporalContext('2024-10-04'), rideDate: null }), /requires rideDate/);
+  const history = { schema_version: '1', revision: 'unmanaged' };
+  assert.deepEqual(temporalNet.buildNetworkFromCompactPackage(temporalPackage, null, null,
+    { ...temporalContext('2024-10-04'), history }), temporalNet.buildNetworkFromCompactPackage(temporalPackage),
+    'unmanaged explicit context retains static bus behavior');
+});
+
+test('temporal geometry refuses implicit family siblings as well as explicit shared ownership', async () => {
+  const { buildTemporalPartsBank } = await import('../scripts/railway/build-display-lanes.mjs');
+  const sibling = { ...temporalLine, id: 'fixture-sibling' };
+  assert.throws(() => buildTemporalPartsBank({ ...temporalPackage, lines: [temporalLine, sibling] },
+    null, null, temporalHistory), /family membership/);
+  const owner = { ...line, id: 'circle-tenant', name: 'Other', operator: 'Other Rail',
+    stationCircleOwnerByCode: { a: line.id } };
+  assert.throws(() => buildTemporalPartsBank({ ...temporalPackage, lines: [temporalLine, owner] },
+    null, null, temporalHistory), /shared station circle/);
+});

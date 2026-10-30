@@ -7,3 +7,15 @@ nonisolated func loadJourneyStationAliases(for codes: [String], package: Compact
     let groups = try Stations.bundledIdentityIndex(country: package.country.lowercased()).groups
     return LocalJourneySearch.stationAliases(for: codes, package: package) { groups[$0] }
 }
+
+/// Uses the request's selected day. Missing history/date preserves conservative
+/// compact admission; a present malformed history must reach the worker error UI.
+nonisolated func loadJourneyAdmissionContext(
+    rideDate: String?, package: CompactPackage
+) throws -> RailwayRouteChoices.AdmissionContext? {
+    guard let rideDate else { return nil }
+    guard let url = Bundle.main.url(
+        forResource: Region.countrySuffixed("rail-history", country: package.country.lowercased()),
+        withExtension: "json") else { return nil }
+    return try RailwayRouteChoices.AdmissionContext(history: RailHistoryOverlay.load(from: url), civilDay: rideDate)
+}

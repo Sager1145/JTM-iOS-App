@@ -354,6 +354,7 @@ NORMALIZERS=[
     'normalize-reviewed-east-azusa8-12-21-29-20260930.py',
     'normalize-reviewed-west-yakumo9-12-20260930.py',
     'normalize-reviewed-west-yakumo13-16-20260930.py',
+    'normalize-reviewed-west-yakumo17-18-20260930.py',
     'normalize-reviewed-shikoku-ishizuchi1-29-30-20260930.py',
     'normalize-reviewed-shikoku-ishizuchi3-5-7-9-20260930.py',
     'normalize-reviewed-kyushu-hyuga13-14-16-20260930.py',

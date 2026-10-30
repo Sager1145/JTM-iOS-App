@@ -289,6 +289,15 @@ struct EditorCatalogTests {
         #expect(Set(result.lines.flatMap(\.hits).map(\.currentCode)) == ["S1", "S2"])
     }
 
+    @Test func candidateNamesFoldFullwidthCompatibilityForms() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "山手線", operatorName: "JR East", stations: [
+                station("S1", name: "Shinjuku", longitude: 139.7, latitude: 35.7),
+            ]),
+        ])
+        #expect(catalog.candidates(named: "ｓｈｉｎｊｕｋｕ", regionCode: "jp").map(\.key.sourceCode) == ["S1"])
+    }
+
     @Test func oneStationOnTwoLinesIsOneSuggestion() {
         let shared = station("S1", name: "中央", longitude: 139.7, latitude: 35.7)
         let catalog = EditorCatalogBuilder.build([

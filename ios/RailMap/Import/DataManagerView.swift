@@ -772,7 +772,7 @@ struct DataManagerView: View {
     private var trainCount: Int { itineraries.loaded?.trains.count ?? 0 }
 
     private func regionName(_ region: Region) -> String {
-        localization.text(region.localizationKey, fallback: region.fallbackName)
+        StatisticsFormat.regionName(region, localization: localization)
     }
 
     /// Which regions the working set actually holds — the sentence that used

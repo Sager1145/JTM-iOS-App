@@ -3,6 +3,7 @@
 Geometry here is synthetic. Shipped features still come only from an N02
 release plus an explicit date on jp-rail-history-events.json.
 """
+import copy
 import importlib.util
 import json
 import os
@@ -30,6 +31,57 @@ def station(line, operator, name, coordinates):
         'properties': {'line_name': line, 'operator': operator, 'station_name': name},
         'geometry': {'type': 'Point', 'coordinates': coordinates},
     }
+
+
+class ServiceStatusEmissionTests(unittest.TestCase):
+    def test_empty_optional_collection_preserves_legacy_overlay_shape(self):
+        overlay = {'schema_version': '1', 'features': ['identity_periods'], 'revision': 'test'}
+        result = mod.with_service_status_periods(overlay, [], [], [], [])
+        self.assertEqual(result, {'schema_version': '1', 'features': ['identity_periods'], 'revision': 'test'})
+        self.assertNotIn('service_status_periods', result)
+
+    def test_populated_collection_declares_schema_and_capability_only_after_validation(self):
+        overlay = {'schema_version': '1', 'features': ['identity_periods'], 'revision': 'test'}
+        record = {'history_id': 'jp.fixture.bus', 'lineID': 'jp-O-L', 'scope': 'whole_line',
+                  'station_membership_ids': ['own'], 'valid_from': '2000-01-01',
+                  'serviceStatus': 'substitute_bus', 'source': ['reference']}
+        sections = [{'properties': {'N02_003': 'L', 'N02_004': 'O'}}]
+        stations = [{'properties': {'line_name': 'L', 'operator': 'O',
+                                   'n02_station_code': 'own', 'n02_group_code': 'group'}}]
+        lines = [{'id': 'jp-O-L', 'name': 'L', 'operator': 'O', 'stations': [['group']]}]
+        result = mod.with_service_status_periods(overlay, [record], sections, stations, lines)
+        self.assertEqual(result['schema_version'], '2')
+        self.assertEqual(result['features'], ['identity_periods', 'service_status_periods'])
+        self.assertEqual(result['service_status_periods'][0]['station_membership_ids'], ['own'])
+        self.assertIsNone(result['service_status_periods'][0]['valid_to'])
+        self.assertEqual(overlay, {'schema_version': '1', 'features': ['identity_periods'], 'revision': 'test'})
+        record['station_membership_ids'] = ['group']
+        with self.assertRaises(ValueError):
+            mod.with_service_status_periods(overlay, [record], sections, stations, lines)
+
+
+    def test_explicit_suspension_stamp_link_requires_matching_status_identity_and_day(self):
+        record = {'history_id': 'jp.fixture.bus', 'lineID': 'jp-O-L', 'scope': 'whole_line',
+                  'station_membership_ids': ['own'], 'valid_from': '2000-01-01',
+                  'serviceStatus': 'substitute_bus', 'source': ['reference']}
+        sections = [{'properties': {'N02_003': 'L', 'N02_004': 'O'}}]
+        stations = [{'properties': {'line_name': 'L', 'operator': 'O',
+                                   'n02_station_code': 'own', 'n02_group_code': 'group'}}]
+        lines = [{'id': 'jp-O-L', 'name': 'L', 'operator': 'O', 'stations': [['group']]}]
+        stamp = {'history_id': 'jp.fixture.suspension', 'suspension_period_id': 'jp.fixture.bus',
+                 'match': {'line_name': 'L', 'operator': 'O'}, 'valid_to': '2000-01-01'}
+        overlay = {'schema_version': '1', 'features': ['identity_periods'], 'retirements': [stamp]}
+        for key, value in [('suspension_period_id', 'unknown'), ('valid_to', '2000-01-02'),
+                           ('match', {'line_name': 'L', 'operator': 'Other'})]:
+            with self.subTest(key=key):
+                invalid = copy.deepcopy(overlay)
+                invalid['retirements'][0][key] = value
+                with self.assertRaises(ValueError):
+                    mod.with_service_status_periods(invalid, [record], sections, stations, lines)
+        result = mod.with_service_status_periods(overlay, [record], sections, stations, lines)
+        self.assertEqual(result['retirements'][0]['suspension_period_id'], 'jp.fixture.bus')
+        with self.assertRaises(ValueError):
+            mod.with_service_status_periods(overlay, [], sections, stations, lines)
 
 
 class RailHistoryEventTests(unittest.TestCase):

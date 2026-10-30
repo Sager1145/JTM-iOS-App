@@ -87,7 +87,10 @@ final class InspectorModel {
             let scale = RailStyle.scale(atZoom: zoom)
             return [Double(scale), Double(RailStyle.minimumCornerRadius(atScale: scale))]
         }
-        return "\(InspectorStrokeGeometry.revision);\(InspectorStrokeGeometry.joinContract);\(RailStyle.railWidth);\(RailStyle.strokeCornerRadius);\(RailStyle.strokeMinRamp);\(RailStyle.parallelLaneCentreDistance);\(values)"
+        let literalIdentity = line.map { DisplayLiteralSpans.resolve($0, parts: display).map { spans in
+            spans.map { "\($0.mode ?? "literal-v1"):\($0.edgeIndex):\($0.witnesses.map { [$0.lon, $0.lat] })" }.joined(separator: ",")
+        }.joined(separator: ";") } ?? ""
+        return "\(InspectorStrokeGeometry.revision);\(InspectorStrokeGeometry.joinContract);\(RailStyle.railWidth);\(RailStyle.strokeCornerRadius);\(RailStyle.strokeMinRamp);\(RailStyle.parallelLaneCentreDistance);\(values);literal=\(literalIdentity)"
     }
     private var renderedInput: [[InspectionPoint]] {
         display.map { $0.map { InspectionPoint(longitude: $0.lon, latitude: $0.lat) } }
@@ -155,7 +158,12 @@ final class InspectorModel {
             // Legacy evidence keeps the full sorted-ID directory mapping.
             let scopedLineID = diagnosticRequest?.alignmentEvidenceDirectory == nil ? diagnosticRequest?.lineID : nil
             let result = try await Task.detached(priority: .userInitiated) {
-                let loaded = try DisplayParts.LoadedPackage.load(contentsOf: url)
+                let loaded: DisplayParts.LoadedPackage
+                do {
+                    loaded = try DisplayParts.LoadedPackage.load(contentsOf: url)
+                } catch {
+                    throw DiagnosticInputReadError(requestedURL: url, underlying: error)
+                }
                 guard loaded.package.country.lowercased() == "jp" else {
                     throw DiagnosticError.invalidRequest("Alignment requires a Japan (jp) compact package.")
                 }
@@ -484,9 +492,7 @@ final class InspectorModel {
         if let outputURL = reviewOutputURL {
             return outputURL.appendingPathComponent("reviews.json")
         }
-        let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return root.appendingPathComponent("RailAlignmentInspector", isDirectory: true)
-            .appendingPathComponent("reviews.json")
+        return RailwayEvidenceRoot.alignmentInspector().appendingPathComponent("reviews.json")
     }
 
     private func loadReviews() {
@@ -506,7 +512,8 @@ final class InspectorModel {
     }
 
     private func persistReviews(_ updated: [String: InspectionReview]) throws {
-        try FileManager.default.createDirectory(at: reviewsURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let destination = try RailwayEvidenceRoot.validatedWriteURL(reviewsURL)
+        try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
         var history = observations
         for (id, review) in updated {
             var rows = history[id] ?? []
@@ -517,7 +524,7 @@ final class InspectorModel {
             else { rows.append(review) }
             history[id] = rows.sorted { $0.reviewedAt < $1.reviewedAt }
         }
-        try Self.recordEncoder().encode(history).write(to: reviewsURL, options: .atomic)
+        try Self.recordEncoder().encode(history).write(to: destination, options: .atomic)
         observations = history
     }
 

@@ -505,10 +505,9 @@ enum StationQualifierCopy {
         return String(full.dropFirst(prefix.count))
     }
 
+    /// The catalog's copy rule, so a fallback copy never drops the station name.
     static func full(name: String, qualifier: String) -> String {
-        if qualifier.isEmpty { return name }
-        if qualifier.hasPrefix("(") { return name + " " + qualifier }
-        return qualifier
+        StationLabel.copyText(officialName: name, qualifier: qualifier)
     }
 
     static func countryName(_ code: String, localization: AppLocalization) -> String? {

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Retire the reviewed non-exact Suzumeda branch follow. Package geometry and native parts stay unchanged.
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -103,7 +104,7 @@ function main(args = process.argv.slice(2)) {
   const after = `${JSON.stringify(lanes)}\n`;
   if (candidate) {
     const target = path.resolve(args[1]);
-    assert(target.startsWith('/private/tmp/'), 'Candidate root must be under /private/tmp');
+    assertAllowedCandidateDirectory(target);
     fs.mkdirSync(target, { recursive: true });
     fs.writeFileSync(path.join(target, 'display-lanes.json'), after);
     fs.writeFileSync(path.join(target, 'onoda-suzumeda-follow-candidate.json'), `${JSON.stringify({

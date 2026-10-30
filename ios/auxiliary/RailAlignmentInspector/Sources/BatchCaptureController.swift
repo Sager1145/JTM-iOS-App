@@ -10,7 +10,7 @@ import UIKit
 /// deliberately separate from the inspector's human review verdicts.
 @MainActor @Observable
 final class BatchCaptureController {
-    let outputURL: URL
+    private(set) var outputURL: URL
     let captureAdmission: InspectionCaptureAdmission
     private(set) var plan: BatchInspectionPlan?
     private(set) var checkpoint: BatchInspectionCheckpoint?
@@ -96,8 +96,7 @@ final class BatchCaptureController {
 
     init(outputURL: URL? = nil, captureAdmission: InspectionCaptureAdmission = InspectionCaptureAdmission()) {
         self.captureAdmission = captureAdmission
-        self.outputURL = outputURL ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("RailAlignmentInspector/BatchEvidence", isDirectory: true)
+        self.outputURL = outputURL ?? RailwayEvidenceRoot.batchEvidence()
     }
 
     func configure(inputs: [InspectionInput], linesByID: [String: CompactPackage.Line],
@@ -106,6 +105,7 @@ final class BatchCaptureController {
                    settings: DiagnosticCaptureSettings = .init()) throws {
         guard !isRunning else { return }
         lastError = nil
+        outputURL = try RailwayEvidenceRoot.validatedWriteURL(outputURL)
         guard Set(inputs.map(\.id)).count == inputs.count else { throw CaptureError.duplicateIDs }
         try settings.validate()
         var newPlan = try BatchInspectionPlan.build(inputs: inputs, packageVersion: packageVersion, settings: settings)
@@ -192,9 +192,9 @@ final class BatchCaptureController {
         // Retain prior immutable identity files: existing evidence may still
         // refer to them. No per-view copy of the complete plan is written.
         if (try? Self.fileDigest(identityPlanURL(digest))) != digest {
-            try planData.write(to: identityPlanURL(digest), options: .atomic)
+            try planData.write(to: RailwayEvidenceRoot.validatedWriteURL(identityPlanURL(digest)), options: .atomic)
         }
-        if !retainsExistingPlan { try planData.write(to: existingPlanURL, options: .atomic) }
+        if !retainsExistingPlan { try planData.write(to: RailwayEvidenceRoot.validatedWriteURL(existingPlanURL), options: .atomic) }
         try persist(writeReport: true)
         evidenceRevision &+= 1
         status = "全量视点 \(totalCount) · 已采集 \(completedCount) · 不可用区间 \(unavailableCount)"
@@ -255,13 +255,15 @@ final class BatchCaptureController {
 
     func retryFailed(scope: Set<String>? = nil, limit: Int? = nil, viewpointIDs: Set<String>? = nil) {
         guard !isRunning, let rows = checkpoint?.progress else { return }
+        do { outputURL = try RailwayEvidenceRoot.validatedWriteURL(outputURL) }
+        catch { lastError = error.localizedDescription; return }
         let failures = rows.filter { $0.status == .failed && (scope == nil || scope!.contains($0.itemID)) && (viewpointIDs == nil || viewpointIDs!.contains($0.viewpointID)) }
         let selected = limit.map { Array(failures.prefix(max(0, $0))) } ?? failures
         for row in selected {
             let original = outputURL.appendingPathComponent(captureDirectory(inputID: row.itemID, pointOrdinal: row.viewpoint.pointOrdinal), isDirectory: true)
             if FileManager.default.fileExists(atPath: original.path) {
                 do {
-                    let history = outputURL.appendingPathComponent("retry-history", isDirectory: true)
+                    let history = try RailwayEvidenceRoot.validatedWriteURL(outputURL.appendingPathComponent("retry-history", isDirectory: true))
                     try FileManager.default.createDirectory(at: history, withIntermediateDirectories: true)
                     try FileManager.default.copyItem(at: original, to: history.appendingPathComponent(UUID().uuidString, isDirectory: true))
                 } catch { lastError = "保留失败证据失败：\(error.localizedDescription)"; return }
@@ -390,6 +392,12 @@ final class BatchCaptureController {
             "camera": camera, "mode": "compare", "opacity": 1, "timestamp": ISO8601DateFormatter().string(from: Date()),
             "result": "pending", "reviewFresh": false, "reviewTitle": "待复核",
             "renderContract": BatchCaptureGeometry.styleContract(settings: captureSettings),
+            "literalDisplaySpanContract": "display-literal-spans-v1",
+            "literalDisplaySpanResolvedEdges": renderedLine.literalSpans.map { $0.filter { $0.mode == nil }.map(\.edgeIndex) },
+            "literalDisplaySpanAppliedEdges": renderedLine.appliedLiteralSpanEdges,
+            "sourceCornerContract": "display-source-corners-v1",
+            "sourceCornerResolvedEdges": renderedLine.literalSpans.map { $0.filter { $0.mode == "source-corners-v1" }.map(\.edgeIndex) },
+            "sourceCornerAppliedEdges": renderedLine.appliedSourceCornerEdges,
             "captureSettings": try JSONSerialization.jsonObject(with: Self.encoder.encode(captureSettings)),
             "coverageSpacingMetres": plan?.spacingMetres ?? 0,
             "wholeLineRenderDependency": lineDependencies[input.lineID] ?? "",
@@ -446,12 +454,12 @@ final class BatchCaptureController {
             bundle.files["display-stage-distance-samples.json"] = try Self.encoder.encode(displayStageDistances)
         }
         let directory = captureDirectory(inputID: input.id, pointOrdinal: viewpoint.pointOrdinal)
-        let targetURL = outputURL.appendingPathComponent(directory, isDirectory: true)
+        let targetURL = try RailwayEvidenceRoot.validatedWriteURL(outputURL.appendingPathComponent(directory, isDirectory: true))
         try FileManager.default.createDirectory(at: targetURL, withIntermediateDirectories: true)
         var files: [FileReceipt] = []
         for name in bundle.files.keys.sorted() {
             guard Self.allowedFiles.contains(name), let data = bundle.files[name] else { throw CaptureError.unsafeEvidenceName }
-            try data.write(to: targetURL.appendingPathComponent(name), options: .atomic)
+            try data.write(to: RailwayEvidenceRoot.validatedWriteURL(targetURL.appendingPathComponent(name)), options: .atomic)
             files.append(.init(name: name, byteCount: data.count, sha256: Self.digest(data)))
         }
         for optionalName in ["basemap.png", "display.png", "smooth.png", "reference.png", "distance-samples.json", "display-stage-distance-samples.json"] where bundle.files[optionalName] == nil {
@@ -471,14 +479,15 @@ final class BatchCaptureController {
 
     private func persist(viewpoint: BatchInspectionViewpoint? = nil, writeReport: Bool = false) throws {
         guard let checkpoint else { return }
+        outputURL = try RailwayEvidenceRoot.validatedWriteURL(outputURL)
         var changedViewState = false
         if let viewpoint, let row = checkpoint.progress.first(where: { $0.viewpointID == viewpoint.id }), let input = inputs[row.itemID] {
             let state = SavedCapture(planDigest: planDigest, progress: row, intervalDependency: intervalDependencies[input.id] ?? "",
                 lineDependency: lineDependencies[input.lineID] ?? "", referenceDependency: referenceDependencies[input.id] ?? "Apple-only",
                 receipt: receipts[row.viewpointID], candidate: candidates[row.viewpointID])
-            let directory = outputURL.appendingPathComponent(captureDirectory(inputID: input.id, pointOrdinal: viewpoint.pointOrdinal), isDirectory: true)
+            let directory = try RailwayEvidenceRoot.validatedWriteURL(outputURL.appendingPathComponent(captureDirectory(inputID: input.id, pointOrdinal: viewpoint.pointOrdinal), isDirectory: true))
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-            let stateURL = directory.appendingPathComponent("capture-state.json")
+            let stateURL = try RailwayEvidenceRoot.validatedWriteURL(directory.appendingPathComponent("capture-state.json"))
             let stateData = try Self.encoder.encode(state)
             if (try? Data(contentsOf: stateURL)) != stateData {
                 try stateData.write(to: stateURL, options: .atomic)
@@ -489,9 +498,9 @@ final class BatchCaptureController {
         let saved = SavedCheckpoint(planDigest: planDigest, capturedCount: completedCount, failedCount: failedCount,
             pendingCount: pendingCount, unavailableIntervalCount: unavailableCount)
         let scopeSuffix = preservesBroaderPlan ? "-\(planDigest)" : ""
-        try Self.encoder.encode(saved).write(to: outputURL.appendingPathComponent("checkpoint\(scopeSuffix).json"), options: .atomic)
+        try Self.encoder.encode(saved).write(to: RailwayEvidenceRoot.validatedWriteURL(outputURL.appendingPathComponent("checkpoint\(scopeSuffix).json")), options: .atomic)
         if writeReport || capturesSinceReport >= 100 {
-            try reportData().write(to: outputURL.appendingPathComponent("report\(scopeSuffix).json"), options: .atomic)
+            try reportData().write(to: RailwayEvidenceRoot.validatedWriteURL(outputURL.appendingPathComponent("report\(scopeSuffix).json")), options: .atomic)
             capturesSinceReport = 0
         }
         if changedViewState { evidenceRevision &+= 1 }
@@ -520,6 +529,7 @@ final class BatchCaptureController {
         for file in receipt.files {
             guard Self.allowedFiles.contains(file.name), file.byteCount > 0, Self.validDigest(file.sha256) else { return false }
             let url = outputURL.appendingPathComponent(receipt.directory).appendingPathComponent(file.name)
+                .resolvingSymlinksInPath()
             guard let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
                   attributes[.type] as? FileAttributeType == .typeRegular,
                   attributes[.size] as? Int == file.byteCount, let digest = try? Self.fileDigest(url), digest == file.sha256 else { return false }

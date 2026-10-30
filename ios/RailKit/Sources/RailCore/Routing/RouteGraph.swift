@@ -607,15 +607,17 @@ public enum RouteGraph {
     /// Version 29 recomputes endpoint and same-identity boundary gap proofs.
     public static let legacyCoordinateDrawnCacheVersion = "26"
     // Version 31 retires display paths with duplicated branch lead-ins and old junction offsets.
-    public static let routeDrawnCacheVersion = "31"
+    // Version 32 retires rides that fell back to physical geometry over reviewed display intervals.
+    public static let routeDrawnCacheVersion = "32"
 
-    /// The operators a `company` field names, split on `/`.
+    /// The operators a `company` field names, split on `/` or full-width `／`.
     ///
-    /// Several operators separated by `/` marks a 直通 through-running
-    /// service. Taiwan's names go through the branding table first, because
-    /// the store spells the same company several ways.
+    /// Several operators separated by a slash marks a 直通 through-running
+    /// service; the registry splits on the same two characters. Taiwan's names
+    /// go through the branding table first, because the store spells the same
+    /// company several ways.
     public static func companyParts(company: String, country: String) -> [String] {
-        company.components(separatedBy: "/")
+        company.components(separatedBy: CharacterSet(charactersIn: "/／"))
             .map { part -> String in
                 let name = JSString.trim(part)
                 return country == "tw"

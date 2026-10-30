@@ -341,11 +341,6 @@ public enum JapanThroughServices {
                 sectionCodes: ["connector:\(connector.id)"]))
         }
 
-        private func unique(_ values: [String]) -> [String] {
-            var valuesSeen: Set<String> = []
-            return values.filter { valuesSeen.insert($0).inserted }
-        }
-
         private func makeChoice(
             _ ordered: [Step], reverse: Bool
         ) -> RailwayRouteChoices.Choice? {
@@ -367,8 +362,8 @@ public enum JapanThroughServices {
             }
             guard valid, !sections.isEmpty else { return nil }
             let choice = RailwayRouteChoices.Choice(lineIDs: ids,
-                lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
-                operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
+                lineNames: RouteGraph.orderedUnique(sections.flatMap { $0.lineNames ?? [] }),
+                operatorNames: RouteGraph.orderedUnique(sections.flatMap { $0.operatorNames ?? [] }),
                 stations: visits, sectionCodes: sections.flatMap { $0.sectionCodes ?? [] },
                 routeSections: sections)
             return choice

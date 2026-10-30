@@ -175,10 +175,35 @@
   //   station row: [stationGroupId, name, lon, lat, (nameRoma, romaSourceCode)]
   //   segment row: [km, sharedFirstPoint, coordinates, (arcDirection)]
   //   segment i joins station i to station (i+1) % n (loop lines close the ring)
-  function loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl) {
+  const networkInputsByURL = new Map();
+  let networkInputGeneration = 0;
+  const historyIdentities = new WeakMap();
+  let nextHistoryIdentity = 0;
+  function packageInputKey(packageUrl) {
+    return JSON.stringify((Array.isArray(packageUrl) ? packageUrl : [packageUrl])
+      .map((url) => new URL(url, global.location.href).href));
+  }
+  function networkContextKey(packageUrl, context) {
+    const inputKey = packageInputKey(packageUrl);
+    if (context == null) return JSON.stringify([inputKey, "legacy"]);
+    global.RailNetwork.validateRailDateContext(context);
+    let historyGeneration = context.historyGeneration;
+    if (historyGeneration == null) {
+      if (!historyIdentities.has(context.history)) historyIdentities.set(context.history, ++nextHistoryIdentity);
+      historyGeneration = historyIdentities.get(context.history);
+    }
+    let input = networkInputsByURL.get(inputKey);
+    if (!input) networkInputsByURL.set(inputKey, input = { generation: ++networkInputGeneration, inputs: null });
+    const bank = input?.inputs?.lanes?.temporalBank;
+    return JSON.stringify([inputKey, context.era, context.today, context.rideDate || null,
+      context.history.revision, historyGeneration, context.stationMemberships || [],
+      input?.generation || null, bank?.bankRevision || null]);
+  }
+
+  function loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl, dateContext, inputs) {
     return new Promise((resolve, reject) => {
       const workerUrl = new URL(
-        "./rail-network-worker.js?v=20261017-owner1",
+        "./rail-network-worker.js?v=20261026-dated1",
         global.location.href,
       );
       const worker = new Worker(workerUrl);
@@ -188,18 +213,21 @@
       };
       worker.onmessage = (event) => {
         const message = event.data || {};
-        if (message.ok) finish(resolve, message.network);
+        if (message.ok) finish(resolve, message);
         else finish(reject, new Error(message.error || "rail network worker failed"));
       };
       worker.onerror = (event) => {
         finish(reject, new Error(event.message || "rail network worker failed"));
       };
-      worker.postMessage({ packageUrls, reviewedUrl, lanesUrl });
+      worker.postMessage({ packageUrls, reviewedUrl, lanesUrl, dateContext, inputs });
     });
   }
 
-  async function loadNetwork(packageUrl) {
+  async function loadNetwork(packageUrl, dateContext = null) {
     try {
+      if (dateContext != null) global.RailNetwork.validateRailDateContext(dateContext);
+      // Snapshot the exact same regional day used by the visibility key.
+      const context = dateContext == null ? null : JSON.parse(JSON.stringify(dateContext));
       if (!packageUrl) throw new Error("A rail package URL is required.");
       // Resolve URLs before crossing the worker boundary. This keeps the same
       // resource names on a root deploy and on a sub-path static deploy.
@@ -208,6 +236,9 @@
       );
       const reviewedUrl = new URL("shared-corridors.json", packageUrls[0]).href;
       const lanesUrl = new URL("display-lanes.json", packageUrls[0]).href;
+      const key = packageInputKey(packageUrl);
+      let source = networkInputsByURL.get(key);
+      if (!source) networkInputsByURL.set(key, source = { generation: ++networkInputGeneration, inputs: null });
 
       // JSON.parse plus compact-v1 display derivation takes about one second
       // for Japan on the shipped package. Doing both on the window event loop
@@ -217,12 +248,15 @@
       // path after this hand-off.
       if (typeof Worker === "function") {
         try {
-          return await loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl);
+          const result = await loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl, context, source.inputs);
+          if (!source.inputs && result.inputs) source.inputs = result.inputs;
+          return result.network;
         } catch (workerError) {
           console.warn("[railmap] background network load unavailable:", workerError);
         }
       }
-      return await global.RailNetwork.loadNetwork({ packageUrls, reviewedUrl, lanesUrl });
+      if (!source.inputs) source.inputs = await global.RailNetwork.loadNetworkInputs({ packageUrls, reviewedUrl, lanesUrl });
+      return await global.RailNetwork.loadNetwork({ inputs: source.inputs, dateContext: context });
     } catch (e) {
       console.warn("[railmap] rail package unavailable:", e);
       return null;
@@ -276,12 +310,20 @@
   // object itself (`part._strokeLRU`) rather than in a shared Map so a
   // part's cache dies with the part (network reload / country switch), not
   // with a rebuild pass.
+  // Only normalized constraint content participates: optional declarations
+  // are already resolved by the full network model before map residency.
+  function literalSpanIdentity(part) {
+    return part.literalSpans?.length ? JSON.stringify(part.literalSpans.map(span =>
+      [span.edgeIndex, span.witnesses, span.mode ?? null]).sort((a,b) => a[0]-b[0])) : "";
+  }
+
   function strokeCacheGet(part, zoomBucket, laneLodBucket) {
     const cache = part._strokeLRU;
     if (!cache) return null;
     for (let i = 0; i < cache.length; i++) {
       const entry = cache[i];
-      if (entry.zoomBucket === zoomBucket && entry.laneLodBucket === laneLodBucket) {
+      if (entry.zoomBucket === zoomBucket && entry.laneLodBucket === laneLodBucket &&
+          (entry.literalSpanIdentity || "") === literalSpanIdentity(part)) {
         if (i !== cache.length - 1) {
           cache.splice(i, 1);
           cache.push(entry);
@@ -311,7 +353,8 @@
     _map: null,
     _network: null,
     _networkPromise: null, // dedups concurrent network loads/retries
-    _networkGeneration: 0, // invalidates a load started for the prior country
+    _networkGeneration: 0, // invalidates prior country/date/history derivations
+    _networkContextKey: null,
     _networkVisibleWanted: false,
     _networkStationsVisibleWanted: false,
     _handlers: {},
@@ -1438,6 +1481,7 @@
           const t =
             force ||
             part.builtZoom == null ||
+            (part.builtLiteralSpanIdentity || "") !== literalSpanIdentity(part) ||
             // Zooming OUT is not gated on `near`. Everything else in this
             // test may wait for a part to come into view, because a stale
             // FINER-zoom geometry is only ever too detailed for the camera —
@@ -1499,7 +1543,8 @@
         const atTarget = (part) =>
           part.builtZoom != null &&
           part.builtZoomBucket === zoomBucket &&
-          part.builtLaneLodBucket === laneLod.bucket;
+          part.builtLaneLodBucket === laneLod.bucket &&
+          (part.builtLiteralSpanIdentity || "") === literalSpanIdentity(part);
         const queue = [];
         for (let i = 0; i < n; i++) if (trigger[i]) queue.push(i);
         while (queue.length) {
@@ -1654,7 +1699,15 @@
                   : null;
               })
               .filter(Boolean);
+            const literalSpans = (part.literalSpans || []).filter(span =>
+              Number.isInteger(span.edgeIndex) && span.edgeIndex >= 1 && span.edgeIndex + 2 < px.length &&
+              span.witnesses?.length === 4 && span.witnesses.every((point, index) => {
+                const actual = part.coordinates[span.edgeIndex - 1 + index];
+                return point[0] === actual[0] && point[1] === actual[1];
+              })).map(span => ({edgeIndex:span.edgeIndex, witnesses:px.slice(span.edgeIndex-1, span.edgeIndex+3),
+                ...(span.mode !== undefined ? {mode:span.mode} : {})}));
             const stroke = RailStroke.buildStroke(px, {
+              ...(literalSpans.length ? {literalSpans} : {}),
               measures: part.measures,
               rows: part.rows,
               totalMetres: part.totalMetres,
@@ -1682,7 +1735,8 @@
                   }
                 : branchJointAt(i, true)),
             });
-            entry = { zoomBucket, laneLodBucket: laneLod.bucket, stroke };
+            entry = { zoomBucket, laneLodBucket: laneLod.bucket, stroke,
+              literalSpanIdentity: literalSpanIdentity(part) };
             strokeCachePut(part, entry);
             verticesBuilt += px.length;
           }
@@ -1702,6 +1756,7 @@
           // whichever member's stroke draws it, so playback slices from this
           // regardless of what the BASE feature below draws.
           part.strokePx = { points: stroke.points, measures: stroke.measures, zoom: nominalZoom };
+          part.builtLiteralSpanIdentity = literalSpanIdentity(part);
           part.builtZoom = nominalZoom;
           part.builtZoomBucket = zoomBucket;
           part.builtLaneLodBucket = laneLod.bucket;
@@ -2109,12 +2164,23 @@
     // Fetch + build + upload the active country's network package when it was
     // not supplied at attach time, or retry after a failed boot/country load.
     // Deduped so concurrent recovery/toggle requests parse once.
-    ensureNetwork(packageUrl) {
+    ensureNetwork(packageUrl, dateContext = null) {
+      const key = networkContextKey(packageUrl, dateContext);
+      if (dateContext != null) {
+        const originalHistory = dateContext.history;
+        dateContext = JSON.parse(JSON.stringify(dateContext));
+        if (dateContext.historyGeneration == null)
+          dateContext.historyGeneration = historyIdentities.get(originalHistory);
+      }
+      if ((this._network && this._networkContextKey == null && dateContext != null) ||
+          (this._networkContextKey != null && this._networkContextKey !== key))
+        return this.switchNetworkCountry(null, packageUrl, dateContext);
+      this._networkContextKey = key;
       if (this._network) return Promise.resolve(this._network);
       if (this._networkPromise) return this._networkPromise;
       const m = this._map;
       const generation = this._networkGeneration;
-      const request = loadNetwork(packageUrl)
+      const request = loadNetwork(packageUrl, dateContext)
         .then((network) => {
           if (generation !== this._networkGeneration) return null;
           if (!network) {
@@ -2122,6 +2188,7 @@
             return null;
           }
           this._network = network;
+          this._networkContextKey = networkContextKey(packageUrl, dateContext);
           if (m) {
             // Upload into the pre-created (still-hidden) EMPTY_FC sources.
             // Returns false if the style isn't ready yet (getSource undefined) —
@@ -2210,7 +2277,7 @@
       if (!options) return;
       options.tolerance = source._pixelsToTileUnits(strokeSourceTolerancePx(country));
     },
-    switchNetworkCountry(country, packageUrl) {
+    switchNetworkCountry(country, packageUrl, dateContext = null) {
       const shouldReload = Boolean(
         this._networkVisibleWanted ||
           this._networkStationsVisibleWanted ||
@@ -2225,6 +2292,7 @@
       this._strokeRebuildTimer = null;
       this._network = null;
       this._networkPromise = null;
+      this._networkContextKey = null;
       // The old country's strokeModel is gone, so any record still sliced
       // onto it (record.canonicalPath set by _applyRideStrokes) can no
       // longer be kept in sync — undo the substitution and go back to the
@@ -2267,7 +2335,9 @@
       // of it — the network, its withheld dashes, the ridden lines, their two
       // touch targets, the tap fan and the playback trail — which is the same
       // list railmap-style.js gives `strokeTolerance` to at build.
-      [
+      // A null country refreshes date/history within the installed country.
+      // Keep its source policy until an actual country switch supplies one.
+      if (country) [
         seg,
         withheld,
         this._src(TRAIN_ROUTES_SOURCE),
@@ -2285,7 +2355,7 @@
       if (staLanes) staLanes.setData(EMPTY_FC);
       if (staLabels) staLabels.setData(EMPTY_FC);
       if (!shouldReload) return Promise.resolve(null);
-      return this.ensureNetwork(packageUrl).then((network) => {
+      return this.ensureNetwork(packageUrl, dateContext).then((network) => {
         // Country switching does not recreate the layer control. Re-apply its
         // current intent after the new sources are populated so a checked
         // "All Railway Lines" box can never leave an invisible Taiwan layer.

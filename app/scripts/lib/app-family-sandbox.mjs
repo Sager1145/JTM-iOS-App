@@ -36,6 +36,7 @@ export const SHARED_DIR = path.join(PUBLIC_DIR, "..", "shared");
 // globals off `window` and touch no browser API at evaluation time, so the
 // sandbox loads the real files, in the browser's own order, before the family.
 const RAILMAP_MODULES = [
+  "rail-history-service.js",
   "rail-network.js",
   "railmap-basemap.js",
   "railmap-style.js",

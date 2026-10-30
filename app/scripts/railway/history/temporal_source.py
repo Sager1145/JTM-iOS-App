@@ -1,4 +1,4 @@
-"""Compile reviewed rich source timelines into the unchanged runtime v1.
+"""Compile reviewed source timelines and optional dated service-status records.
 
 Selectors deliberately require complete current features inside a bbox. They
 cannot invent a station-to-station slice of a national shapefile. If a selector
@@ -40,6 +40,94 @@ def periods(value, label):
         if result and (result[-1][1] is None or a is None or a < result[-1][1]):
             raise ValueError(f'{label}: periods must be ordered and disjoint')
         result.append([a, b])
+    return result
+
+
+def compile_service_status_periods(records, current_sections, current_stations, compact_lines):
+    """Compile whole-line service status with raw membership ownership proof.
+
+    Runtime records keep raw membership ids. Compact group ids only verify the
+    explicit source mapping; they cannot prove membership or select raw rows.
+    """
+    if not isinstance(records, list):
+        raise ValueError('service_status_periods must be a list')
+    result, ids, by_line = [], set(), {}
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError('service status period must be an object')
+        label = record.get('history_id')
+        if not isinstance(label, str) or not label.strip() or label.strip() in ids:
+            raise ValueError('service status period requires unique nonempty history_id')
+        ids.add(label.strip())
+        line_id = record.get('lineID')
+        if not isinstance(line_id, str) or not line_id.strip():
+            raise ValueError(label + ': lineID required')
+        if record.get('scope') != 'whole_line' or record.get('serviceStatus') != 'substitute_bus':
+            raise ValueError(label + ': only whole_line substitute_bus is supported')
+        start, end = day(record.get('valid_from')), day(record.get('valid_to'))
+        if start is None or end is not None and start >= end:
+            raise ValueError(label + ': nonempty interval with valid_from required')
+        references = record.get('source')
+        if (not isinstance(references, list) or not references
+                or any(not isinstance(ref, str) or not ref.strip() for ref in references)):
+            raise ValueError(label + ': nonempty source-reference array required')
+        members = record.get('station_membership_ids')
+        if (not isinstance(members, list) or not members
+                or any(not isinstance(member, str) or not member.strip() for member in members)
+                or len(set(members)) != len(members)):
+            raise ValueError(label + ': unique nonempty raw station membership ids required')
+        matches = [line for line in compact_lines if line.get('id') == line_id]
+        if len(matches) != 1:
+            raise ValueError(label + ': lineID must select exactly one compact line')
+        line = matches[0]
+        name, operator = line.get('name'), line.get('operator')
+        if not isinstance(name, str) or not name or not isinstance(operator, str) or not operator:
+            raise ValueError(label + ': compact line needs name and operator')
+        if any(key in record and record[key] != value
+               for key, value in [('line_name', name), ('operator', operator)]):
+            raise ValueError(label + ': source identity differs from compact line')
+        own_sections = [f for f in current_sections
+                        if (f['properties'].get('N02_003') or f['properties'].get('line_name')) == name
+                        and (f['properties'].get('N02_004') or f['properties'].get('operator')) == operator]
+        own_stations = [f for f in current_stations
+                        if (f['properties'].get('line_name') or f['properties'].get('N02_003')) == name
+                        and (f['properties'].get('operator') or f['properties'].get('N02_004')) == operator]
+        if not own_sections or not own_stations:
+            raise ValueError(label + ': whole source line requires sections and stations')
+        raw_ids, groups, group_by_raw = set(), set(), {}
+        for station in own_stations:
+            p = station['properties']
+            raw = p.get('n02_station_code') or p.get('N02_005c')
+            group = p.get('n02_group_code') or p.get('N02_005g')
+            if not isinstance(raw, str) or not raw or not isinstance(group, str) or not group:
+                raise ValueError(label + ': explicit raw membership and group mapping required')
+            if raw in group_by_raw and group_by_raw[raw] != group:
+                raise ValueError(label + ': ambiguous raw membership group mapping')
+            group_by_raw[raw] = group
+            raw_ids.add(raw)
+            groups.add(group)
+        for station in current_stations:
+            p = station['properties']
+            raw = p.get('n02_station_code') or p.get('N02_005c')
+            if raw in raw_ids and (
+                    (p.get('line_name') or p.get('N02_003')) != name
+                    or (p.get('operator') or p.get('N02_004')) != operator):
+                raise ValueError(label + ': raw membership belongs to another line/operator')
+        if set(members) != raw_ids:
+            raise ValueError(label + ': membership ids must equal the complete raw source line')
+        compact_stations = line.get('stations')
+        if (not isinstance(compact_stations, list) or not compact_stations
+                or any(not isinstance(row, list) or not row
+                       or not isinstance(row[0], str) or not row[0] for row in compact_stations)
+                or {row[0] for row in compact_stations} != groups):
+            raise ValueError(label + ': source groups must map exactly to compact line stations')
+        for previous_start, previous_end in by_line.setdefault(line_id, []):
+            if (previous_end is None or start < previous_end) and (end is None or previous_start < end):
+                raise ValueError(label + ': overlapping service status periods for line')
+        by_line[line_id].append((start, end))
+        compiled = copy.deepcopy(record)
+        compiled['valid_to'] = end
+        result.append(compiled)
     return result
 
 
@@ -348,6 +436,11 @@ def stamp(event, chosen, universe, identity, pair, target, suffix):
            'match': {'line_name': identity['line'], 'operator': identity['operator'],
                      'bbox': bbox, 'targets': [target]},
            'source': '; '.join(e['reference'] for e in event['evidence'])}
+    if event.get('kind') == 'suspension' and 'suspension_period_id' in event:
+        period_id = event['suspension_period_id']
+        if not isinstance(period_id, str) or not period_id.strip():
+            raise ValueError(event['id'] + ': nonempty suspension_period_id required')
+        out['suspension_period_id'] = period_id
     if pair[0]:
         out['valid_from'] = pair[0]
     if pair[1]:

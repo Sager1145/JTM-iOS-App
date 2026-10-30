@@ -115,4 +115,81 @@ struct PrecomputedRouteDisplayTests {
             }
         }
     }
+
+    // MARK: ridden routes draw on the repaired display interval
+
+    /// Rides the given consecutive intervals (package order) of `line`,
+    /// optionally reversed, exactly as a cached route carries them.
+    static func ride(_ line: CompactPackage.Line, intervals range: ClosedRange<Int>, reverse: Bool)
+        throws -> (display: [Coordinate], part: RouteNetwork.PrecomputedDisplayPart, expected: [[Coordinate]]) {
+        let physical = RailIntervalCodes.intervals(for: line)
+        let ordered = reverse ? Array(range.reversed()) : Array(range)
+        var source: [Coordinate] = []
+        for index in ordered {
+            let path = reverse ? Array(physical[index].coordinates.reversed()) : physical[index].coordinates
+            source += source.isEmpty ? path : Array(path.dropFirst())
+        }
+        let first = physical[ordered.first!], last = physical[ordered.last!]
+        let hints = RouteHints(
+            requiredLineIDs: [line.id], sectionCodes: ordered.map { physical[$0].code },
+            fromStationCode: reverse ? first.toStationCode : first.fromStationCode,
+            toStationCode: reverse ? last.fromStationCode : last.toStationCode)
+        var cache = RouteProjectionCache()
+        let part = try #require(network([line]).precomputedDisplayParts(
+            source: source, hints: hints, cache: &cache).first)
+        let reviewed = CompactPackage.decodeDisplayIntervals(line)
+        let expected = ordered.map { reverse ? Array(reviewed[$0].reversed()) : reviewed[$0] }
+        return (source, part, expected)
+    }
+
+    static func expectDrawsReviewed(
+        _ line: CompactPackage.Line, intervals range: ClosedRange<Int>, reverse: Bool,
+        from: String, to: String
+    ) throws {
+        let (source, part, expected) = try ride(line, intervals: range, reverse: reverse)
+        #expect(part.sourceCoordinates == source)
+        #expect(part.coordinates != source)
+        let startAlias = try #require(line.displayStationCoordinates[from])
+        let endAlias = try #require(line.displayStationCoordinates[to])
+        #expect(Geometry.distanceMeters(part.coordinates.first!, startAlias) <= 0.5)
+        #expect(Geometry.distanceMeters(part.coordinates.last!, endAlias) <= 0.5)
+        for vertex in expected.flatMap({ $0 }) {
+            let nearest = part.coordinates.map { Geometry.distanceMeters($0, vertex) }.min() ?? .infinity
+            #expect(nearest <= 0.5)
+        }
+    }
+
+    @Test("Iyotetsu Yokogawara rides draw the repaired display intervals")
+    func iyotetsuRidesUseDisplayIntervals() throws {
+        let line = try #require(try PortFixtures.package(country: "jp").lines
+            .first { $0.id == "jp-伊予鉄道-横河原線" })
+        // 北久米 -> 福音寺 -> いよ立花 -> 石手川公園 (intervals 10...12)
+        try Self.expectDrawsReviewed(line, intervals: 10...12, reverse: false, from: "008795", to: "008780")
+        try Self.expectDrawsReviewed(line, intervals: 11...12, reverse: true, from: "008780", to: "008791")
+        try Self.expectDrawsReviewed(line, intervals: 11...11, reverse: false, from: "008791", to: "008784")
+        try Self.expectDrawsReviewed(line, intervals: 11...11, reverse: true, from: "008784", to: "008791")
+    }
+
+    @Test("a display interval far from its physical interval is used, not the physical fallback")
+    func offsetDisplayIntervalIsNotDropped() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let data = try Data(contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
+        let package = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
+        var row = try #require((package["lines"] as? [[String: Any]])?
+            .first { $0["id"] as? String == "jp-伊予鉄道-横河原線" })
+        // Push every reviewed display coordinate ~100 m north of the physical track.
+        func shifted(_ pair: [Double]) -> [Double] { [pair[0], pair[1] + 0.0009] }
+        let stations = try #require(row["displayStationCoordinates"] as? [String: [Double]])
+        row["displayStationCoordinates"] = stations.mapValues(shifted)
+        let intervals = try #require(row["displayIntervalCoordinates"] as? [String: [[Double]]])
+        row["displayIntervalCoordinates"] = intervals.mapValues { $0.map(shifted) }
+        let line = try JSONDecoder().decode(
+            CompactPackage.Line.self, from: JSONSerialization.data(withJSONObject: row))
+        let physical = RailIntervalCodes.intervals(for: line)
+        let offset = Geometry.distanceMeters(
+            CompactPackage.decodeDisplayIntervals(line)[11][1], physical[11].coordinates[1])
+        #expect(offset > 60)
+        try Self.expectDrawsReviewed(line, intervals: 10...12, reverse: false, from: "008795", to: "008780")
+        try Self.expectDrawsReviewed(line, intervals: 11...11, reverse: true, from: "008784", to: "008791")
+    }
 }

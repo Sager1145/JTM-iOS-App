@@ -37,7 +37,7 @@ from collections import defaultdict
 import shapefile
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'history'))
 from temporal_source import (IDENTITY_KINDS, compile_event as compile_temporal_event,
-                             normalize_stamps, normalize_identity_periods,
+                             normalize_stamps, normalize_identity_periods, compile_service_status_periods,
                              expand_legacy_periods, constrain_opening_predecessors,
                              select as select_temporal)
 
@@ -54,6 +54,7 @@ EVENTS = os.path.join(ROOT, 'app/scripts/railway/jp-rail-history-events.json')
 SECTIONS = os.path.join(ROOT, 'app/data/rail-sections.json')
 STATIONS = os.path.join(ROOT, 'app/data/stations.json')
 OUT = os.path.join(ROOT, 'app/data/rail-history.json')
+COMPACT = os.path.join(ROOT, 'app/public/rail/jp-2025.json')
 DEFAULT_SRC = os.path.join(ROOT, 'railway-sources/local/raw/n02/history')
 
 COVER_M = 40.0          # sample within this of existing track = still there
@@ -972,6 +973,31 @@ def preexisting_opening_violations(retirements, spec, cur_sections, cur_stations
     return violations
 
 
+def with_service_status_periods(overlay, records, current_sections, current_stations, compact_lines):
+    """Opt into schema 2 only after a nonempty collection passes source proof."""
+    compiled = compile_service_status_periods(records, current_sections, current_stations, compact_lines)
+    periods_by_id = {period['history_id']: period for period in compiled}
+    lines_by_id = {line['id']: line for line in compact_lines}
+    for stamp in overlay.get('retirements', []):
+        if 'suspension_period_id' not in stamp:
+            continue
+        period = periods_by_id.get(stamp['suspension_period_id'])
+        if period is None:
+            raise ValueError('suspension_period_id must link to a known service status period')
+        line = lines_by_id[period['lineID']]
+        match = stamp.get('match', {})
+        if (match.get('line_name') != line['name'] or match.get('operator') != line['operator']
+                or stamp.get('valid_to') != period['valid_from']):
+            raise ValueError('suspension_period_id requires matching line/operator and cutoff day')
+    if not compiled:
+        return overlay
+    result = copy.deepcopy(overlay)
+    result['schema_version'] = '2'
+    result['features'] = list(dict.fromkeys(result.get('features', []) + ['service_status_periods']))
+    result['service_status_periods'] = compiled
+    return result
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--source-dir', default=DEFAULT_SRC)
@@ -981,6 +1007,8 @@ def main():
     ap.add_argument('--events', default=EVENTS)
     ap.add_argument('--sections', default=SECTIONS)
     ap.add_argument('--stations', default=STATIONS)
+    ap.add_argument('--compact-lines', default=COMPACT,
+                    help='Compact package used only for populated service_status_periods')
     args = ap.parse_args()
 
     spec = json.load(open(args.events))
@@ -1258,6 +1286,12 @@ def main():
            'source': '国土数値情報（鉄道データ N02）2005〜2025年度版（国土交通省）を加工して作成; 正確な運行日は各 source を参照',
            'sections': sections, 'stations': stations, 'retirements': retirements,
            'identity_periods': identity_periods}
+    try:
+        records = spec.get('service_status_periods', [])
+        compact_lines = json.load(open(args.compact_lines))['lines'] if records else []
+        out = with_service_status_periods(out, records, cur_sections, cur_stations, compact_lines)
+    except ValueError as error:
+        sys.exit(str(error))
     with open(args.output, 'w') as fh:
         json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))
         fh.write('\n')

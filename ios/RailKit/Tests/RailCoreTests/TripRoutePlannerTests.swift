@@ -419,3 +419,46 @@ extension TripRoutePlannerTests {
             && $0.choice.routeSections.last?.lineIDs == ["A2"] })
     }
 }
+
+extension TripRoutePlannerTests {
+    @Test("Planner dated context reaches compact search and cannot be reused for another request day")
+    func datedServiceContext() throws {
+        let package = try DatedServiceRouteFixture.package()
+        let history = try DatedServiceRouteFixture.overlay()
+        let before = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-04")
+        let after = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-05")
+        let request = TripRoutePlanner.Request(originCode: DatedServiceRouteFixture.codes[0],
+            destinationCode: DatedServiceRouteFixture.codes[2])
+        func found(_ day: String?, _ context: RailwayRouteChoices.AdmissionContext?) -> Bool {
+            if case .corridors(let values) = TripRoutePlanner.plan(package: package, request: request,
+                rideDate: day, patterns: [], connectors: [], admissionContext: context) { return !values.isEmpty }
+            return false
+        }
+        #expect(found("2024-10-04", before))
+        #expect(!found("2024-10-05", after))
+        #expect(!found("2024-10-05", before))
+        #expect(!found(nil, before))
+        #expect(!found("2024-10-04", nil))
+
+        // The passenger-service branch also proposes rows directly; every constituent
+        // line must pass admission, including a managed row after an ordinary feeder.
+        let feeder = try fixture([line("feeder", ["F", DatedServiceRouteFixture.codes[0]])]).lines[0]
+        let throughPackage = CompactPackage(format: package.format, version: package.version,
+            country: package.country, lines: [feeder] + package.lines)
+        let pattern = try JSONDecoder().decode(JapanThroughServices.Pattern.self, from: Data("""
+        {"id":"isumi-through","serviceCode":"IT","name":"Fixture","aliases":[],"kind":"throughRunning",
+         "legs":[{"lineID":"feeder","fromStationCode":"F","toStationCode":"005229"},
+          {"lineID":"\(DatedServiceRouteFixture.lineID)","fromStationCode":"005229","toStationCode":"005238"}],
+         "sourceURLs":["https://example.test/isumi"],"notes":""}
+        """.utf8))
+        func throughFound(_ day: String, _ context: RailwayRouteChoices.AdmissionContext?) -> Bool {
+            let request = TripRoutePlanner.Request(originCode: "F", destinationCode: "005238")
+            if case .corridors(let values) = TripRoutePlanner.plan(package: throughPackage, request: request,
+                rideDate: day, patterns: [pattern], connectors: [], admissionContext: context) { return !values.isEmpty }
+            return false
+        }
+        #expect(throughFound("2024-10-04", before))
+        #expect(!throughFound("2024-10-05", after))
+        #expect(!throughFound("2024-10-04", nil))
+    }
+}

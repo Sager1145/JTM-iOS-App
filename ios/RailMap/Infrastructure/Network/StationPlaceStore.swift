@@ -282,7 +282,7 @@ final class StationPlaceStore {
     /// Measuring a GCJ-02 result against a WGS84 platform would put every
     /// Taiwanese, Hong Kong, Macanese and Korean station 500 m from itself and
     /// outside `StationPlaceLink.maxMetres`.
-    private static func coordinate(of item: MKMapItem) -> CLLocationCoordinate2D {
+    static func coordinate(of item: MKMapItem) -> CLLocationCoordinate2D {
         if #available(iOS 26.0, *) { return item.location.coordinate }
         return legacyCoordinate(of: item)
     }
@@ -296,7 +296,7 @@ final class StationPlaceStore {
         item.placemark.coordinate
     }
 
-    private static func metres(from: Coordinate, to: CLLocationCoordinate2D) -> Double {
+    static func metres(from: Coordinate, to: CLLocationCoordinate2D) -> Double {
         CLLocation(latitude: from.lat, longitude: from.lon)
             .distance(from: CLLocation(latitude: to.latitude, longitude: to.longitude))
     }

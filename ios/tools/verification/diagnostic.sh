@@ -1,7 +1,7 @@
 #!/bin/bash
 source "$(dirname "$0")/common.sh"
 request=''
-app=/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app
+app=$HOME/Library/Caches/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --request) value "$@"; request=$2; shift 2 ;;

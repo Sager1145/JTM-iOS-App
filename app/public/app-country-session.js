@@ -139,6 +139,7 @@ async function switchCountrySession(next) {
       networkCountryReady,
       loadActiveCountryStationReadings(),
     ]);
+    await refreshDatedRailNetwork();
     await loadActiveCountryStore({
       persistEachStep: false,
       finalPersist: false,

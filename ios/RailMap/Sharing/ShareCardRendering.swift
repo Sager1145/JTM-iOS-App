@@ -7,38 +7,9 @@ import UIKit
 
 enum ShareCanvasGeometry {
     @MainActor
+    /// The rendered card frames: the same layout the drag planner scores against.
     static func frames(model: ShareComposerModel, canvasSize: CGSize) -> [UUID: CGRect] {
-        let result = model.layout
-        guard let occupied = result.occupied else { return [:] }
-        let short = min(canvasSize.width, canvasSize.height)
-        let outer = short * 0.04
-        let gap = short * 0.015
-        let grid = model.grid
-        let availableWidth = canvasSize.width - outer * 2 - gap * CGFloat(grid.columns - 1)
-        let availableHeight = canvasSize.height - outer * 2 - gap * CGFloat(grid.rows - 1)
-        let cell = min(availableWidth / CGFloat(grid.columns),
-                       availableHeight / CGFloat(grid.rows))
-        let blockWidth = CGFloat(occupied.columns) * cell + CGFloat(occupied.columns - 1) * gap
-        let blockHeight = CGFloat(occupied.rows) * cell + CGFloat(occupied.rows - 1) * gap
-        let originX = (canvasSize.width - blockWidth) / 2
-        let originY = (canvasSize.height - blockHeight) / 2
-        let cardsByID = Dictionary(uniqueKeysWithValues: model.cards.map { ($0.id, $0) })
-        return result.placements.reduce(into: [:]) { frames, entry in
-            let (id, placement) = entry
-            let column = placement.column - occupied.column
-            let row = placement.row - occupied.row
-            var frame = CGRect(
-                x: originX + CGFloat(column) * (cell + gap),
-                y: originY + CGFloat(row) * (cell + gap),
-                width: CGFloat(placement.columns) * cell + CGFloat(placement.columns - 1) * gap,
-                height: CGFloat(placement.rows) * cell + CGFloat(placement.rows - 1) * gap)
-            if let card = cardsByID[id], case .ticket = card.kind {
-                let exactHeight = frame.width / TicketFace.aspect
-                frame = CGRect(x: frame.minX, y: frame.midY - exactHeight / 2,
-                               width: frame.width, height: exactHeight)
-            }
-            frames[id] = frame
-        }
+        frames(cards: model.cards, grid: model.grid, canvasSize: canvasSize)
     }
 }
 

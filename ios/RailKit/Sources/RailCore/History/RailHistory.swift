@@ -93,6 +93,20 @@ public enum RailServiceValidity {
     }
 }
 
+/// A dated annotation is distinct from an omitted legacy service context.
+/// Managed normal (`serviceStatus == nil`) must bypass static status fallback.
+public struct RailServiceStatusResolution: Sendable, Equatable {
+    public let managed: Bool
+    public let serviceStatus: String?
+    public let historyID: String?
+
+    public init(managed: Bool, serviceStatus: String?, historyID: String?) {
+        self.managed = managed
+        self.serviceStatus = serviceStatus
+        self.historyID = historyID
+    }
+}
+
 /// A per-region history overlay (`rail-history[-<cc>].json`), per ADR 0011.
 ///
 /// The overlay carries retired sections and stations — features absent from
@@ -101,6 +115,7 @@ public enum RailServiceValidity {
 /// unchanged current geometry. Nothing is dropped from the solver graph.
 public struct RailHistoryOverlay: Decodable, Sendable {
     public static let supportedSchemaVersion = "1"
+    public static let datedServiceSchemaVersion = "2"
     public static let kinds: Set<String> = [
         "opening", "closure", "relocation", "station_opening", "station_closure",
         "suspension", "resumption", "operator_transfer",
@@ -115,6 +130,29 @@ public struct RailHistoryOverlay: Decodable, Sendable {
     public var stations: [Stations.Feature]
     public var retirements: [Retirement]
     public var identityPeriods: [IdentityPeriod]
+    public let serviceStatusPeriods: [ServiceStatusPeriod]
+
+    /// Source membership identifiers remain raw memberships, not compact groups.
+    /// Whole-line ownership/completeness is established by the compiler.
+    public struct ServiceStatusPeriod: Decodable, Sendable {
+        public let historyID: String
+        public let lineID: String
+        public let scope: String
+        public let stationMembershipIDs: [String]
+        public let validFrom: String
+        public let validTo: String?
+        public let serviceStatus: String
+        public let source: [String]
+
+        private enum CodingKeys: String, CodingKey {
+            case historyID = "history_id"
+            case lineID, scope
+            case stationMembershipIDs = "station_membership_ids"
+            case validFrom = "valid_from"
+            case validTo = "valid_to"
+            case serviceStatus, source
+        }
+    }
 
     public struct Retirement: Decodable, Sendable {
         public var historyId: String
@@ -204,6 +242,19 @@ public struct RailHistoryOverlay: Decodable, Sendable {
         case stations
         case retirements
         case identityPeriods = "identity_periods"
+        case features
+        case serviceStatusPeriods = "service_status_periods"
+    }
+
+    /// Schema-1 metadata was ignored. Probe only top-level string elements;
+    /// arbitrary objects/nested values must not hide a reserved capability.
+    private struct LegacyFeatureProbe: Decodable {
+        let name: String?
+
+        init(from decoder: Decoder) throws {
+            let value = try decoder.singleValueContainer()
+            name = try? value.decode(String.self)
+        }
     }
 
     public init(from decoder: Decoder) throws {
@@ -218,6 +269,80 @@ public struct RailHistoryOverlay: Decodable, Sendable {
         stations = try c.decodeIfPresent([Stations.Feature].self, forKey: .stations) ?? []
         retirements = try c.decodeIfPresent([Retirement].self, forKey: .retirements) ?? []
         identityPeriods = try c.decodeIfPresent([IdentityPeriod].self, forKey: .identityPeriods) ?? []
+        if schemaVersion == Self.datedServiceSchemaVersion {
+            let features = try c.decode([String].self, forKey: .features)
+            let knownFeatures: Set<String> = ["identity_periods", "service_status_periods"]
+            guard features.allSatisfy({ knownFeatures.contains($0) }),
+                  Set(features).count == features.count else {
+                throw ValidationError.invalid("features")
+            }
+            guard features.contains("service_status_periods") else {
+                throw ValidationError.invalid("missing service_status_periods capability")
+            }
+            serviceStatusPeriods = try c.decode([ServiceStatusPeriod].self, forKey: .serviceStatusPeriods)
+            try Self.validateServiceStatusPeriods(serviceStatusPeriods)
+        } else {
+            // Schema 1 historically ignored optional feature metadata, including
+            // unknown names and malformed shapes. Only the reserved new status
+            // capability/collection requires an explicit schema upgrade.
+            let legacyFeatures = try? c.decode([LegacyFeatureProbe].self, forKey: .features)
+            guard !c.contains(.serviceStatusPeriods),
+                  legacyFeatures?.contains(where: { $0.name == "service_status_periods" }) != true else {
+                throw ValidationError.invalid("service_status_periods requires schema_version 2")
+            }
+            serviceStatusPeriods = []
+        }
+    }
+
+    /// Resolve an explicit Gregorian civil day. This core API never reads a
+    /// clock or converts time zones. Intervals are start inclusive, end exclusive.
+    public func serviceStatus(lineID: String, on civilDay: String) throws -> RailServiceStatusResolution {
+        guard Self.isRealISODay(civilDay) else {
+            throw ValidationError.invalid("civilDay")
+        }
+        var managed = false
+        for period in serviceStatusPeriods where period.lineID == lineID {
+            managed = true
+            if civilDay >= period.validFrom && (period.validTo == nil || civilDay < period.validTo!) {
+                return RailServiceStatusResolution(
+                    managed: true, serviceStatus: period.serviceStatus, historyID: period.historyID)
+            }
+        }
+        return RailServiceStatusResolution(managed: managed, serviceStatus: nil, historyID: nil)
+    }
+
+    private static func validateServiceStatusPeriods(_ periods: [ServiceStatusPeriod]) throws {
+        guard !periods.isEmpty else {
+            throw ValidationError.invalid("service_status_periods")
+        }
+        func canonical(_ value: String) -> String {
+            value.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        var ids = Set<String>()
+        var byLine: [String: [ServiceStatusPeriod]] = [:]
+        for period in periods {
+            guard !canonical(period.historyID).isEmpty,
+                  ids.insert(canonical(period.historyID)).inserted,
+                  !canonical(period.lineID).isEmpty,
+                  period.scope == "whole_line", period.serviceStatus == "substitute_bus",
+                  !period.stationMembershipIDs.isEmpty,
+                  period.stationMembershipIDs.allSatisfy({ !canonical($0).isEmpty }),
+                  Set(period.stationMembershipIDs.map(canonical)).count == period.stationMembershipIDs.count,
+                  !period.source.isEmpty, period.source.allSatisfy({ !canonical($0).isEmpty }) else {
+                throw ValidationError.invalid("service_status_periods.record")
+            }
+            guard isRealISODay(period.validFrom),
+                  period.validTo.map({ isRealISODay($0) && period.validFrom < $0 }) ?? true else {
+                throw ValidationError.invalid("service_status_periods.interval")
+            }
+            for other in byLine[period.lineID, default: []] {
+                if (period.validTo == nil || period.validTo! > other.validFrom)
+                    && (other.validTo == nil || other.validTo! > period.validFrom) {
+                    throw ValidationError.invalid("service_status_periods.overlap")
+                }
+            }
+            byLine[period.lineID, default: []].append(period)
+        }
     }
 
     public static func load(from url: URL) throws -> RailHistoryOverlay {
@@ -237,7 +362,8 @@ public struct RailHistoryOverlay: Decodable, Sendable {
         guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw ValidationError.invalid("root")
         }
-        guard root["schema_version"] as? String == supportedSchemaVersion else {
+        guard let schema = root["schema_version"] as? String,
+              schema == supportedSchemaVersion || schema == datedServiceSchemaVersion else {
             throw ValidationError.invalid("schema_version")
         }
         guard let revision = root["revision"] as? String,

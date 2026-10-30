@@ -50,6 +50,8 @@ import na_geo  # noqa: E402
 
 
 FORMAT = "jtm-display-network-v2"
+TEMPORAL_FORMAT = "jtm-display-network-v3"
+TEMPORAL_FEATURE = "dated_service_bank_v1"
 HISTORY_FORMAT = "jtm-display-history-v1"
 
 # Overview chunks (spec: size-aware loading) trade precision for bytes at app
@@ -104,6 +106,7 @@ def build_overview_fragment(
     overview.pop("laneRows", None)
     overview.pop("follows", None)
     overview.pop("lane", None)
+    overview.pop("literalDisplaySpansV1", None)
     if "totalMetres" in fragment:
         old_total = fragment["totalMetres"]
         new_total = round(sum(na_geo.line_length(part) for part in new_parts), 1)
@@ -1724,6 +1727,133 @@ def rounded(part: list[list[float]]) -> list[list[float]]:
     return [[round(point[0], 7), round(point[1], 7)] for point in part]
 
 
+def admitted_literal_display_spans(line: dict) -> list[list]:
+    """Read original explicit positions, never a compacted/rounded interval.
+
+    Optional malformed declarations are inert. Source indices are used only
+    here; constructed and written-chain indices are resolved independently.
+    """
+    declaration = line.get("displayInterpolation")
+    if not isinstance(declaration, dict) or declaration.get("contract") not in ("display-literal-spans-v1", "display-source-corners-v1"):
+        return []
+    source_corners = declaration["contract"] == "display-source-corners-v1"
+    spans = declaration.get("spans")
+    if not isinstance(spans, list):
+        return []
+    def point(value):
+        return (isinstance(value, list) and len(value) == 2
+                and all(type(v) in (int, float) and math.isfinite(v) for v in value)
+                and (not source_corners or (abs(value[0]) <= 180 and abs(value[1]) <= 90)))
+    explicit = line.get("displayIntervalCoordinates") or {}
+    raw = [explicit.get(str(index)) for index in range(len(line.get("segments") or []))]
+    aliases = line.get("displayStationCoordinates") or {}
+    stations = [aliases.get(row[0], row[2:4]) for row in line.get("stations") or []]
+    if source_corners:
+        stations += [row[2:4] for row in line.get("stations") or []]
+        for key in ("displayBranchLeadIns", "displayReversalBranches"):
+            branches = line.get(key)
+            if isinstance(branches, list):
+                for branch in branches:
+                    if isinstance(branch, list):
+                        valid = [p for p in branch if point(p)]
+                        stations += valid[:1] + valid[-1:]
+    admitted = []
+    for span in spans:
+        if not isinstance(span, dict):
+            continue
+        interval, edge = span.get("intervalIndex"), span.get("sourceEdgeIndex")
+        if type(interval) is not int or type(edge) is not int or not 0 <= interval < len(raw):
+            continue
+        points = raw[interval]
+        endpoints = span.get("endpoints")
+        if (not isinstance(points, list) or edge < 1 or edge + 2 >= len(points)
+                or not isinstance(endpoints, list) or len(endpoints) != 2
+                or not all(point(p) for p in endpoints)):
+            continue
+        witnesses = points[edge - 1:edge + 3]
+        if (not all(point(p) for p in witnesses)
+                or len({tuple(p) for p in witnesses}) != 4
+                or witnesses[1:3] != endpoints
+                or any(p in stations for p in witnesses)):
+            continue
+        pair_count = sum(
+            [a, b] == endpoints or [b, a] == endpoints
+            for interval_points in raw if isinstance(interval_points, list)
+            for a, b in zip(interval_points, interval_points[1:]))
+        if pair_count == 1:
+            footprint = [list(p) for p in witnesses]
+            admitted.append({"witnesses": footprint, "mode": "source-corners-v1"}
+                            if source_corners else footprint)
+    return admitted
+
+
+def _literal_joined_parts(parts: list) -> list | None:
+    """Mirror Main's dropFirst join, requiring every seam to be exact."""
+    if not parts or any(not part for part in parts):
+        return None
+    if any(a[-1] != b[0] for a, b in zip(parts, parts[1:])):
+        return None
+    return [p for index, part in enumerate(parts) for p in (part if index == 0 else part[1:])]
+
+
+def compiled_literal_display_spans(
+    admitted: list[list], chains: list[dict], chain_index: int,
+    fragment: dict, lane_rows: list, follow_rows_by_line: dict,
+    family_rows: list, line_id: str, region: str,
+) -> list:
+    """Bind full precision lineage to ordinary written witnesses, fail closed.
+
+    V1 has no lane/follow/family/history remapping capability. Check whole
+    producer references (including incoming follows), before row clipping.
+    """
+    if region != "jp" or not admitted:
+        return []
+    part_index = chains[chain_index].get("partIndex", chain_index)
+    if (fragment.get("withheld") or fragment.get("familyWindows")
+            # Adjacent/fork terminals can inherit another own chain's lane.
+            # V1 deliberately declines all such own-line contexts.
+            or any(float(r[4]) != 0 for r in lane_rows)
+            or any(int(r[1]) == part_index for r in family_rows)
+            or any((owner == line_id and int(r[1]) == part_index)
+                   or (str(r[4]) == line_id and int(r[5]) == part_index)
+                   for owner, rows in follow_rows_by_line.items() for r in rows)):
+        return []
+    joined = [_literal_joined_parts(chain["parts"]) for chain in chains]
+    written = _literal_joined_parts(fragment["parts"])
+    source = joined[chain_index]
+    if any(points is None for points in joined) or written is None or len(source) != len(written):
+        return []
+    candidates = []
+    for admitted_span in admitted:
+        mode = admitted_span.get("mode") if isinstance(admitted_span, dict) else None
+        if mode not in (None, "source-corners-v1"):
+            continue
+        witnesses = admitted_span["witnesses"] if isinstance(admitted_span, dict) else admitted_span
+        matches = [(part, start + 1) for part, points in enumerate(joined) if points is not None
+                   for start in range(len(points) - 3) if points[start:start + 4] == witnesses]
+        if (len(matches) != 1 or matches[0][0] != chain_index
+                or any(sum(points.count(p) for points in joined if points is not None) != 1
+                       for p in witnesses)):
+            continue
+        edge = matches[0][1]
+        packed_witnesses = written[edge - 1:edge + 3]
+        # Ordinary packing can collapse distinct controls: never emit a hint
+        # that could not bind uniquely to the chain the consumer actually sees.
+        if (len({tuple(p) for p in packed_witnesses}) != 4
+                or any(written.count(p) != 1 for p in packed_witnesses)):
+            continue
+        candidates.append([edge, packed_witnesses] + ([mode] if mode else []))
+    return [row for row in candidates if not any(
+        other is not row and abs(row[0] - other[0]) <= 3 for other in candidates)]
+
+
+def _finalize_literal_display_spans(fragments: list[dict]) -> None:
+    for fragment in fragments:
+        pending = fragment.pop("_literalDisplaySpans", None)
+        if pending is not None and fragment["parts"] == pending[0]:
+            fragment["literalDisplaySpansV1"] = pending[1]
+
+
 def history_overlay_path(history_dir: Path, region: str) -> Path:
     """`app/data/rail-history.json` for Japan, `rail-history-<cc>.json` elsewhere."""
     if region == "jp":
@@ -1751,7 +1881,7 @@ def _blank_stamp() -> dict:
 
 
 def _stamp_key(stamp: dict) -> tuple:
-    return (stamp["kind"], stamp["validFrom"], stamp["validTo"], stamp["historyId"])
+    return (stamp["kind"], stamp["validFrom"], stamp["validTo"], stamp["historyId"], stamp.get("suspensionPeriodID"))
 
 
 def _part_inside_bbox(part: list[list[float]], bbox: list[float]) -> bool:
@@ -1778,6 +1908,8 @@ def _apply_retirement_dates(stamp: dict, retirement: dict) -> None:
             stamp["historyId"] = retirement["history_id"]
     if valid_to:
         stamp["validTo"] = valid_to
+    if retirement.get("suspension_period_id"):
+        stamp["suspensionPeriodID"] = retirement["suspension_period_id"]
 
 
 def _overlay_section_kind(history_id: str, retirement_ids: set[str]) -> str:
@@ -1841,6 +1973,8 @@ def _dated_fields(stamp: dict) -> dict:
         row["validTo"] = stamp["validTo"]
     if stamp.get("historyId"):
         row["historyId"] = stamp["historyId"]
+    if stamp.get("suspensionPeriodID"):
+        row["suspensionPeriodID"] = stamp["suspensionPeriodID"]
     return row
 
 
@@ -1850,6 +1984,7 @@ def _is_unbounded_current(stamp: dict) -> bool:
         and not stamp.get("validFrom")
         and not stamp.get("validTo")
         and not stamp.get("historyId")
+        and not stamp.get("suspensionPeriodID")
     )
 
 
@@ -2641,6 +2776,162 @@ def _solver_geometry_fallbacks(
     return fallback_sections, fallback_stations
 
 
+def _civil_day(value, label):
+    if not isinstance(value, str) or len(value) != 10:
+        raise RuntimeError(f"{label}: YYYY-MM-DD required")
+    try:
+        if dt.date.fromisoformat(value).isoformat() != value:
+            raise ValueError(value)
+    except ValueError as error:
+        raise RuntimeError(f"{label}: invalid civil day") from error
+    return value
+
+
+def _validate_service_history(overlay: dict, lines: dict[str, dict]) -> list[dict]:
+    """Structural contract only: raw membership ownership is compiler evidence."""
+    schema = overlay.get("schema_version")
+    features = overlay.get("features")
+    if schema == "1":
+        if "service_status_periods" in overlay or (
+                isinstance(features, list) and "service_status_periods" in features):
+            raise RuntimeError("service_status_periods requires schema2")
+        return []
+    if schema != "2":
+        raise RuntimeError("unsupported history schema_version")
+    if (not isinstance(features, list) or any(not isinstance(f, str) for f in features)
+            or len(set(features)) != len(features)
+            or set(features) - {"identity_periods", "service_status_periods"}
+            or "service_status_periods" not in features):
+        raise RuntimeError("schema2 requires supported features")
+    records = overlay.get("service_status_periods")
+    if not isinstance(records, list) or not records:
+        raise RuntimeError("schema2 requires nonempty service_status_periods")
+    by_id, seen_ids, by_line = {}, set(), defaultdict(list)
+    for period in records:
+        if not isinstance(period, dict):
+            raise RuntimeError("service period object required")
+        hid = period.get("history_id")
+        if not isinstance(hid, str) or not hid.strip() or hid.strip() in seen_ids:
+            raise RuntimeError("unique nonempty service period history_id required")
+        seen_ids.add(hid.strip())
+        by_id[hid] = period
+        line_id = period.get("lineID")
+        if not isinstance(line_id, str) or line_id not in lines:
+            raise RuntimeError("service period lineID must name one package line")
+        line = lines[line_id]
+        if any(key in period and period[key] != value for key, value in
+               (("line_name", line.get("name")), ("operator", line.get("operator")))):
+            raise RuntimeError("service period identity metadata differs from package line")
+        if period.get("scope") != "whole_line" or period.get("serviceStatus") != "substitute_bus":
+            raise RuntimeError("only whole_line substitute_bus supported")
+        for field in ("station_membership_ids", "source"):
+            values = period.get(field)
+            if (not isinstance(values, list) or not values
+                    or any(not isinstance(v, str) or not v.strip() for v in values)):
+                raise RuntimeError(f"{field}: nonempty string array required")
+            if field == "station_membership_ids" and len({v.strip() for v in values}) != len(values):
+                raise RuntimeError("duplicate raw station membership ID")
+        start = _civil_day(period.get("valid_from"), hid)
+        end = period.get("valid_to")
+        if end is not None:
+            end = _civil_day(end, hid)
+            if end <= start:
+                raise RuntimeError("empty service period")
+        for previous in by_line[line_id]:
+            if (end is None or previous[0] < end) and (previous[1] is None or start < previous[1]):
+                raise RuntimeError("overlapping service periods")
+        by_line[line_id].append((start, end))
+    linked_targets = defaultdict(set)
+    for retirement in overlay.get("retirements") or []:
+        if "suspension_period_id" not in retirement:
+            continue
+        link = retirement["suspension_period_id"]
+        if not isinstance(link, str) or link not in by_id:
+            raise RuntimeError("unknown explicit suspension_period_id")
+        period = by_id[link]
+        line = lines[period["lineID"]]
+        match = retirement.get("match") or {}
+        if (match.get("line_name") != line.get("name")
+                or match.get("operator") != line.get("operator")
+                or retirement.get("valid_to") != period["valid_from"]):
+            raise RuntimeError("suspension link line/operator/cutoff mismatch")
+        linked_targets[link].update(_retirement_targets(match))
+    for link in by_id:
+        if not {"sections", "stations"} <= linked_targets[link]:
+            raise RuntimeError("whole-line service period requires explicit section and station stamps")
+    return records
+
+
+def _prepare_temporal_bank(bank, rail_dir, history_dir, lanes, corridors):
+    if bank is None:
+        return None
+    if not isinstance(bank, dict) or bank.get("format") != "jtm-temporal-parts-v1":
+        raise RuntimeError("unsupported temporal bank format")
+    for key in ("historyRevision", "bankRevision", "sourcePackageSHA256"):
+        if not isinstance(bank.get(key), str) or not bank[key].strip():
+            raise RuntimeError(f"temporal bank requires {key}")
+    rows_by_region = bank.get("temporalPartsByRegion")
+    if (not isinstance(rows_by_region, dict) or set(rows_by_region) != {"jp"}
+            or not isinstance(rows_by_region["jp"], list) or not rows_by_region["jp"]):
+        raise RuntimeError("first temporal bank requires nonempty JP rows")
+    package_bytes = (rail_dir / "jp-2025.json").read_bytes()
+    if bank["sourcePackageSHA256"] != hashlib.sha256(package_bytes).hexdigest():
+        raise RuntimeError("temporal bank sourcePackageSHA256 mismatch")
+    if history_dir is None or not history_overlay_path(history_dir, "jp").exists():
+        raise RuntimeError("temporal bank requires actual history input")
+    overlay = json.loads(history_overlay_path(history_dir, "jp").read_bytes())
+    if overlay.get("revision") != bank["historyRevision"]:
+        raise RuntimeError("temporal bank historyRevision mismatch")
+    package = json.loads(package_bytes)
+    lines = {line["id"]: line for line in package["lines"]}
+    periods = _validate_service_history(overlay, lines)
+    managed = {period["lineID"] for period in periods}
+    if len(periods) != len(managed) or any(period.get("valid_to") is not None for period in periods):
+        raise RuntimeError("first temporal bank supports a single unknown-end service period per line")
+    rows = rows_by_region["jp"]
+    if any(not isinstance(row, list) or len(row) < 6 for row in rows):
+        raise RuntimeError("invalid temporal part row")
+    if {row[0] for row in rows} != managed or len(rows) != len(managed):
+        raise RuntimeError("temporal rows require exactly one complete bank per managed line")
+    if "managedLineIDs" in bank and bank["managedLineIDs"] != sorted(managed):
+        raise RuntimeError("temporal bank managedLineIDs mismatch")
+    def names_managed(value):
+        if isinstance(value, str):
+            return value in managed
+        if isinstance(value, list):
+            return any(names_managed(v) for v in value)
+        if isinstance(value, dict):
+            return any(names_managed(v) for v in value.values())
+        return False
+    if names_managed(corridors):
+        raise RuntimeError("managed temporal shared corridors unsupported")
+    for row in [*(package.get("lanes") or []), *((lanes.get("byRegion") or {}).get("jp", []))]:
+        if row[0] in managed and float(row[4]) != 0:
+            raise RuntimeError("managed temporal nonzero lane unsupported")
+    for key in ("followsByRegion", "familyWindowsByRegion"):
+        for row in (lanes.get(key) or {}).get("jp", []):
+            if names_managed(row):
+                raise RuntimeError("managed temporal follow/family allocation unsupported")
+    render_groups = (lanes.get("renderGroupByRegion") or {}).get("jp", {})
+    if any(render_groups.get(line_id) for line_id in managed):
+        raise RuntimeError("managed temporal family membership unsupported")
+    for line in package["lines"]:
+        owners = (line.get("stationCircleOwnerByCode") or {}).values()
+        if ((line["id"] in managed and any(owner != line["id"] for owner in owners))
+                or (line["id"] not in managed and any(owner in managed for owner in owners))):
+            raise RuntimeError("managed temporal shared circle ownership unsupported")
+    for row in rows:
+        line = lines[row[0]]
+        if row[1] != 0 or len(line.get("segments") or []) != len(line.get("stations") or []) - 1:
+            raise RuntimeError("temporal bank requires one whole non-loop chain")
+        # Plain interval ranges must cover the whole line. Embedded rows are
+        # checked against every exact station anchor after chain construction.
+        if row[2] >= 0 and (row[2] != 0 or row[3] != len(line["segments"]) - 1):
+            raise RuntimeError("partial temporal interval bank")
+    return {"historyRevision": bank["historyRevision"], "bankRevision": bank["bankRevision"],
+            "sourcePackageSHA256": bank["sourcePackageSHA256"], "managedLineIDs": sorted(managed)}
+
+
 def build_region_history(
     region: str,
     history_dir: Path | None,
@@ -2648,6 +2939,7 @@ def build_region_history(
     stations: list[dict],
     metadata: dict[str, dict],
     exclusions: dict[str, str] | None = None,
+    temporal_binding: dict | None = None,
 ) -> dict | None:
     """Side file for one region, or None when that region has no overlay.
 
@@ -2663,8 +2955,10 @@ def build_region_history(
     if not path.exists():
         return None
     overlay = json.loads(path.read_bytes())
-    if overlay.get("schema_version") != "1":
-        raise RuntimeError(f"{path}: expected schema_version '1'")
+    service_periods = _validate_service_history(overlay, {
+        entry["id"]: entry for entry in metadata.values() if entry.get("region") == region})
+    if service_periods and temporal_binding is None:
+        raise RuntimeError("dated service history requires an explicit temporal bank")
     retirements = overlay.get("retirements") or []
     retirement_ids = {
         retirement["history_id"] for retirement in retirements if retirement.get("history_id")
@@ -2673,6 +2967,26 @@ def build_region_history(
     stamps, station_stamps_by_id, match_report = _stamp_overlay_parts(
         region, overlay, fragments, stations, metadata, exclusions,
         log_reports=False)
+    if temporal_binding:
+        linked_ids = {r["history_id"] for r in retirements if r.get("suspension_period_id")}
+        if any(report.get("reviewStatus") != "matched" for report in match_report
+               if report.get("historyId") in linked_ids):
+            raise RuntimeError("managed temporal suspension must fully match its bank")
+    if temporal_binding:
+        period_ids_by_line = defaultdict(set)
+        for period in service_periods:
+            period_ids_by_line[period["lineID"]].add(period["history_id"])
+        for fragment, part_stamps in zip(fragments, stamps):
+            line_id = metadata[fragment["lineKey"]]["id"]
+            if line_id in period_ids_by_line and any(
+                    stamp.get("suspensionPeriodID") not in period_ids_by_line[line_id]
+                    for stamp in part_stamps):
+                raise RuntimeError("whole-line temporal suspension leaves an unstamped part")
+        for station in stations:
+            line_id = metadata[station["lineKey"]]["id"]
+            if line_id in period_ids_by_line and (station_stamps_by_id.get(station["id"]) or {}).get(
+                    "suspensionPeriodID") not in period_ids_by_line[line_id]:
+                raise RuntimeError("whole-line temporal suspension leaves an unstamped station")
     fallback_sections, fallback_stations = _solver_geometry_fallbacks(
         region, history_dir, overlay, metadata, match_report)
     for report in match_report:
@@ -2695,6 +3009,9 @@ def build_region_history(
     part_rows = []
     for fragment, part_stamps in zip(fragments, stamps):
         draw_id = display_draw_id(fragment)
+        if any(not _is_unbounded_current(stamp) for stamp in part_stamps):
+            fragment.pop("_literalDisplaySpans", None)
+            fragment.pop("literalDisplaySpansV1", None)
         for part_index, stamp in enumerate(part_stamps):
             if _is_unbounded_current(stamp):
                 continue
@@ -2788,7 +3105,7 @@ def build_region_history(
     lines = [group for group in grouped.values() if group["parts"]]
     # Swift's synthesized RailDisplayHistoryFile decode ignores unknown keys,
     # so this diagnostic list can ride in the side file. It is not geometry.
-    return {
+    result = {
         "format": HISTORY_FORMAT,
         "region": region,
         "parts": part_rows,
@@ -2797,6 +3114,10 @@ def build_region_history(
         "stationStamps": station_stamps,
         "matchReport": match_report,
     }
+    if temporal_binding:
+        result["revision"] = overlay["revision"]
+        result["temporalBank"] = temporal_binding
+    return result
 
 
 def _history_line_style(
@@ -2858,6 +3179,7 @@ def build(
     rail_dir: Path, output: Path,
     small_region_max_bytes: int = DEFAULT_SMALL_REGION_MAX_BYTES,
     history_dir: Path | None = None,
+    temporal_bank: dict | None = None,
 ) -> dict:
     if output.exists():
         shutil.rmtree(output)
@@ -2904,6 +3226,7 @@ def build(
     # build-display-lanes.mjs must agree on the same list without either
     # naming the other.
     stroke_excluded_by_region: dict[str, set[str]] = {}
+    lanes = {}
     if lane_path.exists():
         lanes = json.loads(lane_path.read_bytes())
         if lanes.get("format") != DISPLAY_LANES_FORMAT:
@@ -2959,6 +3282,9 @@ def build(
     family_windows_by_region: dict[str, list[list]] = lanes.get(
         "familyWindowsByRegion") if lane_path.exists() else {}
     family_windows_by_region = family_windows_by_region or {}
+
+    temporal_binding = _prepare_temporal_bank(temporal_bank, rail_dir, history_dir, lanes, corridors)
+    output_format = TEMPORAL_FORMAT if temporal_binding else FORMAT
 
     # The family colours those windows resolve against, one dict per region.
     # Each reviewed render-group policy file (`RENDER_GROUP_POLICY_FILENAMES`)
@@ -3069,6 +3395,10 @@ def build(
                        .get("officialGeometryComparison") or {})
                       .get("byLine") or {})
 
+        literal_spans_by_line = {
+            line["id"]: admitted_literal_display_spans(line) for line in package["lines"]
+        }
+
         source_intervals_by_line = {
             line["id"]: decoded_intervals(line) for line in package["lines"]
         }
@@ -3152,14 +3482,25 @@ def build(
                 # (the bug this replaced: a branch, a retrace or a reversal
                 # the web splits on `continuous_chains` never saw, silently
                 # collapsing several web parts into one chain here).
-                rows_for_parts = sorted(
-                    parts_rows_by_line.get(line_id, []), key=lambda row: int(row[1]))
+                managed_temporal = region == "jp" and temporal_binding is not None and line_id in temporal_binding["managedLineIDs"]
+                selected_rows = ([row for row in temporal_bank["temporalPartsByRegion"][region]
+                                  if row[0] == line_id] if managed_temporal
+                                 else parts_rows_by_line.get(line_id, []))
+                rows_for_parts = sorted(selected_rows, key=lambda row: int(row[1]))
                 expected = list(range(len(rows_for_parts)))
                 actual = [int(row[1]) for row in rows_for_parts]
                 if rows_for_parts and actual == expected:
                     chains_by_line[line_id] = chains_from_parts_rows(
                         rows_for_parts, intervals_by_line[line_id],
                         line.get("stations") or [], line_withheld, line_id, region)
+                    if managed_temporal:
+                        chain = chains_by_line[line_id][0]
+                        anchors = chain["anchorIndexByStation"]
+                        expected_stations = list(range(len(line["stations"])))
+                        if (sorted(anchors) != expected_stations
+                                or [anchors[i] for i in expected_stations] != sorted(set(anchors.values()))
+                                or anchors[0] != 0 or anchors[expected_stations[-1]] != len(chain["polyline"]) - 1):
+                            raise RuntimeError("temporal bank must cover every owning station and interval")
                     continue
                 # No usable partsByRegion rows. Expected — and handled by
                 # drawing through the non-continuous lane path below —
@@ -3375,6 +3716,13 @@ def build(
                             non_joining_previous_by_region.get(region) or set()):
                         fragment["joinPrevious"] = False
                     _attach_fragment_provenance(fragment, _chain_provenance_rows(chain))
+                    literal_rows = compiled_literal_display_spans(
+                        literal_spans_by_line[line["id"]], continuous_chains_for_line,
+                        chain_index, fragment, rows_for_line, follow_rows_by_line,
+                        family_rows_for_line, line["id"], region)
+                    if literal_rows:
+                        fragment["_literalDisplaySpans"] = (
+                            [[list(p) for p in part] for part in fragment["parts"]], literal_rows)
                     region_fragments.append(fragment)
                     built_fragments += 1
                     built_parts += len(chain["parts"])
@@ -3513,7 +3861,9 @@ def build(
         # not part of the display package.
         fragments_before_history = len(region_fragments)
         region_history = build_region_history(
-            region, history_dir, region_fragments, region_stations, metadata)
+            region, history_dir, region_fragments, region_stations, metadata,
+            temporal_binding=temporal_binding if region == "jp" else None)
+        _finalize_literal_display_spans(region_fragments)
         _drop_memory_only_fragment_fields(region_fragments)
         built_fragments += len(region_fragments) - fragments_before_history
 
@@ -3563,7 +3913,7 @@ def build(
             line_fragments = fragments_by_key.get(key, [])
             line_stations = stations_by_key.get(key, [])
             chunk_doc = {
-                "format": FORMAT, "region": region, "lineId": line_id,
+                "format": output_format, "region": region, "lineId": line_id,
                 "detail": "full",
                 "families": {}, "lines": line_fragments, "stations": line_stations,
             }
@@ -3686,7 +4036,7 @@ def build(
                                    if candidate == point]
                         station["slot"] = [slot[0], indices[occurrence]]
                 overview_doc = {
-                    "format": FORMAT, "region": region, "lineId": line_id,
+                    "format": output_format, "region": region, "lineId": line_id,
                     "detail": "overview",
                     "families": {}, "lines": overview_fragments,
                     "stations": overview_stations,
@@ -3754,6 +4104,8 @@ def build(
             record["historyFile"] = history_name
             record["historyBytes"] = len(history_bytes)
             record["historySHA256"] = hashlib.sha256(history_bytes).hexdigest()
+            if temporal_binding and region == "jp":
+                record["temporalBank"] = temporal_binding
         region_records.append(record)
 
         timings_seconds[region] = round(time.monotonic() - region_start_time, 3)
@@ -3786,7 +4138,7 @@ def build(
 
     generated_at = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     manifest = {
-        "format": FORMAT,
+        "format": output_format,
         "generatedAt": generated_at,
         "packageSHA256": package_digests,
         "inputSHA256": input_sha256,
@@ -3806,6 +4158,8 @@ def build(
         "regions": region_records,
         "displayJoins": display_joins,
     }
+    if temporal_binding:
+        manifest["requiredFeatures"] = [TEMPORAL_FEATURE]
     manifest_bytes = compact_json(manifest)
     (output / "manifest.json").write_bytes(manifest_bytes)
     for region in report_regions:
@@ -3942,10 +4296,13 @@ def main() -> None:
         "--history-dir", type=Path, default=None,
         help="Directory of optional rail-history[-cc].json overlays. "
              "Omit to leave the display network unchanged.")
+    parser.add_argument("--temporal-bank", type=Path, default=None,
+                        help="Explicit external jtm-temporal-parts-v1 bank; no autodiscovery")
     args = parser.parse_args()
     manifest = build(
         args.rail_dir, args.output, args.small_region_max_bytes,
-        history_dir=args.history_dir)
+        history_dir=args.history_dir,
+        temporal_bank=json.loads(args.temporal_bank.read_bytes()) if args.temporal_bank else None)
     print(json.dumps({
         "format": manifest["format"], **manifest["source"], **manifest["built"],
         "bytes": {

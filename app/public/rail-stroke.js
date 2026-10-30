@@ -1794,6 +1794,9 @@
    *                cleanup, and enforce minCornerRadiusPx on emitted arcs.
    *                false preserves the historical fixture geometry.
    *   anchors      indices of station-platform vertices
+   *   literalSpans reviewed `{edgeIndex, witnesses: [P,A,B,Q]}` footprints;
+   *                unsupported or downstream-altered footprints stay ordinary.
+   *                Successful constraints report `appliedLiteralSpanEdges`.
    *   follows      corridor follows, see substituteFollows()
    *   joinStart / joinEnd  the joint with the neighbouring part of the same
    *                line at this part's first / last vertex, when the two
@@ -1907,12 +1910,66 @@
     }
     return result;
   }
+  // A literal footprint is drawing provenance, independent of platforms and
+  // surveyed hard corners. Unsupported declarations leave the ordinary path.
+  function resolveLiteralSpans(points, measures, spans) {
+    if (!Array.isArray(spans) || !spans.length) return [];
+    const same = (a, b) => Array.isArray(a) && Array.isArray(b)
+      && a.length === 2 && b.length === 2 && a.every(Number.isFinite)
+      && a[0] === b[0] && a[1] === b[1];
+    const resolved = [];
+    for (const span of spans) {
+      const edge = span?.edgeIndex, w = span?.witnesses;
+      if (span?.mode !== undefined && span.mode !== "source-corners-v1") return [];
+      if (!Number.isInteger(edge) || edge < 2 || edge + 3 >= points.length
+          || !Array.isArray(w) || w.length !== 4
+          || !w.every((p, i) => same(p, points[edge - 1 + i]))) return [];
+      let occurrences = 0;
+      for (let i = 0; i + 3 < points.length; i++)
+        if (w.every((p, j) => same(p, points[i + j]))) occurrences++;
+      if (occurrences !== 1) return [];
+      for (let i = edge - 1; i <= edge + 1; i++)
+        if (!(Number.isFinite(measures[i]) && Number.isFinite(measures[i + 1])
+            && measures[i + 1] > measures[i]
+            && Math.hypot(points[i + 1][0] - points[i][0], points[i + 1][1] - points[i][1]) > DEGENERATE_EDGE_PX)) return [];
+      if (resolved.some(other => Math.abs(other.edgeIndex - edge) <= 3)) return [];
+      resolved.push(span);
+    }
+    return resolved;
+  }
+  function literalFootprints(curve, spans, sourceMeasures) {
+    return spans.map(span => {
+      const start = curve.measures.indexOf(sourceMeasures[span.edgeIndex - 1]);
+      const end = curve.measures.indexOf(sourceMeasures[span.edgeIndex + 2]);
+      return { points: curve.points.slice(start, end + 1), measures: curve.measures.slice(start, end + 1) };
+    });
+  }
+  function preservesLiteralFootprints(curve, footprints) {
+    return footprints.every(footprint => {
+      if (footprint.points.length < 4) return false;
+      const start = curve.measures.indexOf(footprint.measures[0]);
+      const end = curve.measures.indexOf(footprint.measures.at(-1));
+      return start >= 0 && end - start + 1 === footprint.points.length
+        && footprint.points.every((p, j) => curve.measures[start + j] === footprint.measures[j]
+          && curve.points[start + j][0] === p[0] && curve.points[start + j][1] === p[1]);
+    });
+  }
   // Rendering-only centripetal (alpha=0.5) centreline, paired with RailCore.
-  function smoothCentreline(points, measures, anchorMeasures = [], hardMeasures = []) {
+  function smoothCentreline(points, measures, anchorMeasures = [], hardMeasures = [], literalSpans = []) {
     if (points.length < 4 || measures.length !== points.length) return { points, measures };
     const length = cumulativeLengths(points).at(-1) || 0;
     const metres = measures.at(-1) - measures[0];
     const metresPerPx = length > 0 && metres > 0 ? metres / length : 1;
+    const reviewed = resolveLiteralSpans(points, measures, literalSpans);
+    const sourceCorners = reviewed.filter(s => s.mode === "source-corners-v1");
+    const literals = reviewed.filter(s => s.mode === undefined);
+    if (sourceCorners.some(s => [s.edgeIndex-1,s.edgeIndex,s.edgeIndex+1,s.edgeIndex+2].some(i =>
+        [...anchorMeasures,...hardMeasures].some(m => Math.abs(m-measures[i]) < 1e-9))))
+      return smoothCentreline(points, measures, anchorMeasures, hardMeasures);
+    const sourceHardMeasures = sourceCorners.flatMap(s => [measures[s.edgeIndex], measures[s.edgeIndex+1]]);
+    const allHardMeasures = [...hardMeasures,...sourceHardMeasures];
+    const protectedSupports = new Set(reviewed.flatMap(s => [s.edgeIndex-1,s.edgeIndex,s.edgeIndex+1,s.edgeIndex+2]));
+    const ordinary = () => smoothCentreline(points, measures, anchorMeasures, hardMeasures);
     const kept = [0];
     const corners = surveyedCornerIndices(points);
     for (let i = 1; i + 1 < points.length; i++) {
@@ -1926,8 +1983,8 @@
       let nearHard = false;
       for (let j = Math.max(1, i - 2); j <= Math.min(points.length - 2, i + 2); j++)
         if (corners.has(j)) nearHard = true;
-      const isAnchor = [...anchorMeasures, ...hardMeasures].some(a => Math.abs(a - measures[i]) < 1e-9);
-      if (collinear && !nearHard && !isAnchor) continue;
+      const isAnchor = [...anchorMeasures, ...allHardMeasures].some(a => Math.abs(a - measures[i]) < 1e-9);
+      if (collinear && !nearHard && !isAnchor && !protectedSupports.has(i)) continue;
       kept.push(i);
     }
     kept.push(points.length - 1);
@@ -1935,7 +1992,15 @@
     if (p.length < 4) return { points, measures };
     const retainedCorners = surveyedCornerIndices(p);
     const hard = p.map((_, i) => i === 0 || i === p.length - 1 || retainedCorners.has(i) ||
-      hardMeasures.some(boundary => Math.abs(boundary - m[i]) < 1e-9));
+      allHardMeasures.some(boundary => Math.abs(boundary - m[i]) < 1e-9));
+    const constrained = new Map();
+    for (const span of literals) {
+      const edge = kept.indexOf(span.edgeIndex);
+      if (edge < 1 || kept[edge-1] !== span.edgeIndex-1 || kept[edge+1] !== span.edgeIndex+1
+          || kept[edge+2] !== span.edgeIndex+2
+          || [edge-1,edge,edge+1,edge+2].some(i => hard[i])) return ordinary();
+      for (let i=edge-1; i<=edge+1; i++) constrained.set(i,{edge,span});
+    }
     const out = [p[0]], outMeasures = [m[0]];
     let runStart = 0;
     while (runStart + 1 < p.length) {
@@ -1943,28 +2008,39 @@
       while (runEnd + 1 < p.length && !hard[runEnd]) runEnd++;
       for (let i = runStart; i < runEnd; i++) {
         const a = p[i], b = p[i + 1];
-        if (runEnd - runStart < 3 || (runStart > 0 && i === runStart) || (runEnd + 1 < p.length && i + 1 === runEnd)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        const literal = constrained.get(i);
+        if (runEnd - runStart < 3 || (runStart > 0 && i === runStart) || (runEnd + 1 < p.length && i + 1 === runEnd)) { if (literal) return ordinary(); out.push(b); outMeasures.push(m[i + 1]); continue; }
         const before = i > runStart ? p[i - 1] : [2 * a[0] - b[0], 2 * a[1] - b[1]];
         const after = i + 1 < runEnd ? p[i + 2] : [2 * b[0] - a[0], 2 * b[1] - a[1]];
         const d0 = Math.sqrt(Math.hypot(a[0] - before[0], a[1] - before[1]));
         const d1 = Math.sqrt(Math.hypot(b[0] - a[0], b[1] - a[1]));
         const d2 = Math.sqrt(Math.hypot(after[0] - b[0], after[1] - b[1]));
-        if (!(Math.min(d0, d1, d2) > DEGENERATE_EDGE_PX)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        if (!(Math.min(d0, d1, d2) > DEGENERATE_EDGE_PX)) { if (literal) return ordinary(); out.push(b); outMeasures.push(m[i + 1]); continue; }
         const tangent = (v0, v1, v2, left, right) => (v1 - v0) / left - (v2 - v0) / (left + right) + (v2 - v1) / right;
         const t0 = [d1 * tangent(before[0], a[0], b[0], d0, d1), d1 * tangent(before[1], a[1], b[1], d0, d1)];
         const t1 = [d1 * tangent(a[0], b[0], after[0], d1, d2), d1 * tangent(a[1], b[1], after[1], d1, d2)];
+        if (literal) {
+          const e = literal.edge;
+          if (i === e) { out.push(b); outMeasures.push(m[i+1]); continue; }
+          const delta = m[i+1]-m[i], bodyDelta = m[e+1]-m[e];
+          const inner = [(p[e+1][0]-p[e][0])/bodyDelta*delta, (p[e+1][1]-p[e][1])/bodyDelta*delta];
+          const target = i < e ? t1 : t0;
+          target[0]=inner[0]; target[1]=inner[1];
+        }
         const edge = Math.hypot(b[0] - a[0], b[1] - a[1]);
         const curve = sampleCubic(a, b, t0, t1);
         const allowance = Math.max(CURVE_MAX_DEVIATION_PX, CURVE_MAX_DEVIATION_METRES / metresPerPx);
         const survey = points.slice(kept[i], kept[i + 1] + 1);
-        if (curve.some(p => distanceToPolyline(p, survey) > allowance)) { out.push(b); outMeasures.push(m[i + 1]); continue; }
+        if (curve.some(p => distanceToPolyline(p, survey) > allowance)) { if (literal) return ordinary(); out.push(b); outMeasures.push(m[i + 1]); continue; }
         for (let j = 1; j < curve.length; j++) {
           out.push(curve[j]); outMeasures.push(m[i] + (m[i + 1] - m[i]) * j / (curve.length - 1));
         }
       }
       runStart = runEnd;
     }
-    return { points: out, measures: outMeasures };
+    return {points:out, measures:outMeasures,
+      ...(literals.length ? {appliedLiteralSpanEdges:literals.map(s => s.edgeIndex)} : {}),
+      ...(sourceCorners.length ? {appliedSourceCornerEdges:sourceCorners.map(s => s.edgeIndex)} : {})};
   }
   function cubicPoint(a, b, ta, tb, u) {
     const u2 = u * u, u3 = u2 * u;
@@ -2069,6 +2145,7 @@
     const fallbackScale =
       rawTotalPx > 0 && opts.totalMetres > 0 ? opts.totalMetres / rawTotalPx : 0;
     const inputMeasures = givenMeasures || rawCumulative.map((px) => px * fallbackScale);
+    const requestedLiterals = resolveLiteralSpans(points, inputMeasures, opts.literalSpans);
     const { points: clean, measures: cleanMeasures, anchorMap, anchorSet } = dedupe(
       points,
       inputMeasures,
@@ -2153,6 +2230,15 @@
       };
     }
     const curveEnabled = opts.curveCentreline !== false && Number(opts.cornerRadiusPx) > 0;
+    const literalSpans = curveEnabled && !(opts.follows || []).length
+      && requestedLiterals.every(s => s.witnesses.every((_, j) => {
+        const i = s.edgeIndex - 1 + j;
+        return cleanMeasures[anchorMap[i]] === inputMeasures[i];
+      }))
+      && !(rows.some(row => row.lane) || opts.joinStart?.lane || opts.joinEnd?.lane || opts.joinStart?.targetLane || opts.joinEnd?.targetLane)
+      ? resolveLiteralSpans(clean, cleanMeasures, requestedLiterals.map(s => ({...s, edgeIndex:anchorMap[s.edgeIndex]}))) : [];
+    let appliedLiterals = [], appliedSourceCorners = [], protectedFootprints = [];
+    const ordinaryStroke = () => buildStroke(points, {...opts, literalSpans: []});
     const cornerMeasures = [
       ...(curveEnabled ? [...surveyedCornerIndices(followed.points)].map(i => followed.measures[i]) : []),
       ...shapeBoundaryMeasures,
@@ -2160,7 +2246,13 @@
     if (curveEnabled) {
       // Interpolate surveyed supports; pixel decimation can erase a real
       // small curve before interpolation gets a chance to round its facets.
-      let curved = smoothCentreline(followed.points, followed.measures, anchorMeasures, shapeBoundaryMeasures);
+      let curved = smoothCentreline(followed.points, followed.measures, anchorMeasures, shapeBoundaryMeasures, literalSpans);
+      appliedLiterals = curved.appliedLiteralSpanEdges || [];
+      appliedSourceCorners = curved.appliedSourceCornerEdges || [];
+      if (appliedSourceCorners.length) cornerMeasures.push(...literalSpans
+        .filter(s => s.mode === "source-corners-v1")
+        .flatMap(s => [cleanMeasures[s.edgeIndex],cleanMeasures[s.edgeIndex+1]]));
+      if (appliedLiterals.length) protectedFootprints = literalFootprints(curved, literalSpans.filter(s => s.mode === undefined), followed.measures);
       const boundaries = [...anchorMeasures, ...cornerMeasures];
       const startCandidates = boundaries.filter(m => m > cleanMeasures[0]);
       const endCandidates = boundaries.filter(m => m < cleanMeasures.at(-1));
@@ -2254,6 +2346,7 @@
           anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i =>
             anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
       : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
+    if (protectedFootprints.length && !preservesLiteralFootprints(drawn, protectedFootprints)) return ordinaryStroke();
     const filleted = filletPolyline(
       drawn.points,
       Number(opts.cornerRadiusPx) || 0,
@@ -2317,7 +2410,20 @@
     const finalMeasures = filleted.measures.slice();
     for (let index = 1; index < finalMeasures.length; index += 1)
       if (finalMeasures[index] < finalMeasures[index - 1]) finalMeasures[index] = finalMeasures[index - 1];
-    return { points: filleted.points, anchors, measures: finalMeasures, anchorMeasures };
+    if (protectedFootprints.length && !preservesLiteralFootprints({points:filleted.points,measures:finalMeasures}, protectedFootprints)) return ordinaryStroke();
+    const result = { points: filleted.points, anchors, measures: finalMeasures, anchorMeasures };
+    if (appliedLiterals.length) result.appliedLiteralSpanEdges = requestedLiterals.filter(s => s.mode === undefined).map(s => s.edgeIndex);
+    if (appliedSourceCorners.length) {
+      const corners = requestedLiterals.filter(s => s.mode === "source-corners-v1");
+      // Applied means both source corners survived the complete kernel with
+      // their own ruler and coordinates, not merely that admission succeeded.
+      if (!corners.every(s => [s.edgeIndex,s.edgeIndex+1].every(i => {
+        const at = finalMeasures.indexOf(inputMeasures[i]);
+        return at >= 0 && filleted.points[at][0] === points[i][0] && filleted.points[at][1] === points[i][1];
+      }))) return ordinaryStroke();
+      result.appliedSourceCornerEdges = corners.map(s => s.edgeIndex);
+    }
+    return result;
   }
 
   // Partition a part's measure range at its family-collapse windows: BASE

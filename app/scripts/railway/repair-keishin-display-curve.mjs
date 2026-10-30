@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateFile} from './local-evidence-path.mjs';
 // Default is a scratch display candidate; --apply checks exact input snapshots
 // before scoped publication. Physical N02 topology and mileage remain intact.
 import assert from 'node:assert/strict';
@@ -132,7 +133,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   assert(apply || dryRun || (args.length === 2 && args[0] === '--output'),
     'Usage: node repair-keishin-display-curve.mjs [--dry-run | --output /private/tmp/candidate.json | --apply]');
   const output = path.resolve(args[1] || '/private/tmp/jtm-keishin-display-candidate.json');
-  assert(output.startsWith('/private/tmp/') || output.startsWith('/tmp/'), 'Keishin output must be scratch-only');
+  assertAllowedCandidateFile(output);
   const paths = { package: 'public/rail/jp-2025.json', lanes: 'public/rail/display-lanes.json',
     sections: 'data/rail-sections.json', evidence: 'scripts/railway/keishin-display-curve-evidence.json',
     shared: 'public/rail/shared-corridors.json', network: 'public/rail-network.js',

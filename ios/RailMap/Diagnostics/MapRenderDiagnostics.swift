@@ -136,12 +136,14 @@ final class MapRenderDiagnostics {
             "viewportWidth", "viewportHeight", "panCallbacks", "panMaxGapMs",
             "gestureFrames", "gestureMaxFrameGapMs", "covered", "labelPassMs",
             "labelPassMaxMs", "gestureLabelPassMaxMs", "regionTickMaxMs",
-            "stackingMaxMs", "annotationViews",
+            "stackingMaxMs", "annotationViews", "mountedProbe",
         ]
-        let fields = (status.text ?? "").split(separator: ";").filter { field in
+        var fields = (status.text ?? "").split(separator: ";").filter { field in
             let key = field.prefix { $0 != ":" }
             return !liveKeys.contains(String(key))
         }
+        let mounted = mountedNetworkProbe(on: mapView)
+        if !mounted.isEmpty { fields.insert(Substring(mounted.dropFirst()), at: min(3, fields.count)) }
         status.text =
             fields.joined(separator: ";")
             + String(
@@ -172,6 +174,45 @@ final class MapRenderDiagnostics {
             + ";basemapMuted:\((mapView.preferredConfiguration as? MKStandardMapConfiguration)?.emphasisStyle == .muted ? 1 : 0)"
     }
 
+    /// For a requested inspection camera, distinguish submitted geometry from
+    /// mounted geometry and renderer state. This is not a visible-pixel verdict.
+    private func mountedNetworkProbe(on mapView: MKMapView) -> String {
+        guard UITestLaunchConfiguration.current[.camera] != nil else { return "" }
+        let overlays = mapView.overlays(in: .aboveLabels).compactMap { $0 as? MKMultiPolyline }
+            .filter {
+                let title = $0.title ?? ""
+                return title.hasPrefix("network|") || title.hasPrefix("network-hist|")
+            }
+        let stations = mapView.annotations.compactMap { $0 as? StationAnnotation }
+            .map { MKMapPoint($0.coordinate) }.filter { mapView.visibleMapRect.contains($0) }
+        let details = overlays.prefix(3).map { overlay in
+            let renderer = mapView.renderer(for: overlay) as? MKMultiPolylineRenderer
+            var inside = 0
+            var nearest = Double.infinity
+            for polyline in overlay.polylines {
+                let points = polyline.points()
+                for index in 0..<polyline.pointCount {
+                    if mapView.visibleMapRect.contains(points[index]) { inside += 1 }
+                    guard index > 0 else { continue }
+                    let a = points[index - 1], b = points[index]
+                    let dx = b.x - a.x, dy = b.y - a.y
+                    for station in stations {
+                        let denominator = dx * dx + dy * dy
+                        let t = denominator > 0 ? min(1, max(0,
+                            ((station.x - a.x) * dx + (station.y - a.y) * dy) / denominator)) : 0
+                        let projected = MKMapPoint(x: a.x + t * dx, y: a.y + t * dy)
+                        nearest = min(nearest, projected.distance(to: station))
+                    }
+                }
+            }
+            return String(format: "%d/%d/r%d/a%.2f/c%.2f/w%.2f/d%.1f",
+                overlay.polylines.count, inside, renderer == nil ? 0 : 1,
+                Double(renderer?.alpha ?? -1), Double(renderer?.strokeColor?.cgColor.alpha ?? -1),
+                Double(renderer?.lineWidth ?? -1), nearest.isFinite ? nearest : -1)
+        }
+        return ";mountedProbe:\(overlays.count)[\(details.joined(separator: ","))]"
+    }
+
     func publish(_ snapshot: Snapshot, on mapView: MKMapView) {
         // Synchronous console output stays in DEBUG; release builds publish
         // RenderStats to the in-app panel through the coordinator's callback.
@@ -198,6 +239,7 @@ final class MapRenderDiagnostics {
         }
         status?.text =
             "network:\(networkState);lines:\(snapshot.visibleLines);overlays:\(snapshot.networkOverlays)"
+            + mountedNetworkProbe(on: mapView)
             + ";rides:\(snapshot.rides)"
             + ";budgetDrops:\(snapshot.budgetDrops);vertices:\(snapshot.vertices)"
             + String(format: ";camera:%.2f;lod:%.2f", snapshot.zoom, snapshot.visibilityZoom)

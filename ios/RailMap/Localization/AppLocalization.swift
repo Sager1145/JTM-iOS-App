@@ -315,24 +315,11 @@ final class AppLocalization {
         return text(key, params: params, fallback: fallback)
     }
 
+    /// The engine's single-pass fill, so a value containing `{name}` is never filled again.
     private static func fill(
         _ template: String, params: [String: Localization.Param]?
     ) -> String {
-        guard let params else { return template }
-        var result = template
-        for (key, value) in params {
-            let replacement: String?
-            switch value {
-            case .string(let string): replacement = string
-            case .number(let number): replacement = JSNumber.string(number)
-            case .bool(let bool): replacement = bool ? "true" : "false"
-            case .null: replacement = nil
-            }
-            if let replacement {
-                result = result.replacingOccurrences(of: "{\(key)}", with: replacement)
-            }
-        }
-        return result
+        Localization.fill(template, params)
     }
 
     private static var systemLanguage: Localization.Language {

@@ -104,6 +104,89 @@ Rules:
 - Sources: N02 releases as permitted by their licence, and official abolition
   notices. N05 derivatives need a separate licence check before shipping.
 
+
+## Optional dated whole-line service status (schema 2)
+
+The compiler accepts an optional source `service_status_periods` array. An absent
+or empty array preserves the schema 1 output shape and behavior. Only a populated,
+validated array emits `schema_version: "2"` and adds `service_status_periods` to
+`features`; `identity_periods` remains a known capability. Consumers of schema 2
+must reject unknown capabilities and require the declared service-status capability
+and nonempty records. This contract provides code support; adding a source period
+and applying a dated display bank are separate reviewed integration steps.
+
+Each record contains a unique nonempty `history_id`, exact compact `lineID`,
+`scope: "whole_line"`, a nonempty unique `station_membership_ids` string array,
+`valid_from`, optional/null `valid_to`, `serviceStatus: "substitute_bus"`, and a
+nonempty `source` array of reference strings. Other scopes and statuses are not
+supported in the first capability. Dates are strict ISO civil days (`YYYY-MM-DD`):
+start inclusive, end exclusive, null/absent end unknown/open. Start is required;
+empty/reversed intervals and overlapping periods for the same line are rejected.
+Adjacent periods are allowed. `line_name`, `operator`, `date_basis`, and
+`event_at_local` metadata may be retained; supplied line/operator must match the
+compact identity. Effective full-day status does not establish the first bus date.
+
+`compile_service_status_periods(records, current_sections, current_stations,
+compact_lines)` proves whole-line source membership before emission. It selects
+one compact line by exact ID, requires current sections and stations of that exact
+line/operator, and compares the supplied memberships to the complete raw station
+membership set. Foreign owners and conflicting raw-to-group mappings fail. It
+then checks the raw rows' explicit `n02_group_code`/`N02_005g` mappings against the
+compact line's station group set. No nearest-station match, numeric-ID edit, or
+compact-group substitution establishes ownership. Repeated raw geometry rows may
+share one membership only when their group mapping agrees. Missing explicit
+mappings fail compilation. Output keeps the raw membership IDs, including where
+an interchange uses a different compact group ID. Runtime consumers validate the
+record structure and uniqueness; compact groups cannot prove raw ownership.
+
+The pure builder helper `with_service_status_periods` adds schema/capability fields
+only after that validation. The builder's `--compact-lines` package is read only
+when source records are populated. Candidate work should use explicit external
+`--events`, `--sections`, `--stations`, `--compact-lines`, and `--output` paths;
+no production source records or generated overlay are added by this code support.
+
+Dated consumers resolve the full object `{managed, serviceStatus, historyID}`.
+A listed line outside its periods is managed normal (`true`, null, null), which
+must bypass its static legacy bus status. Within a period it is managed with the
+record status and ID. An unlisted line is unmanaged (`false`, null, null), and the
+caller preserves legacy behavior. Resolution requires an explicit regional civil
+day, without an implicit clock or timezone conversion. Geometry, station opening
+constraints, and route/display admission still require their own integration.
+
+### First native temporal display bank
+
+Schema 2 structurally supports finite and adjacent whole-line periods. The first
+native bank is deliberately narrower: one managed line with one unknown-end
+whole-line suspension, lane-0 geometry, and no `follows`, shared ownership, or
+family windows. It restores a status-neutral full geometry bank; it does not add
+incoming/outgoing continuations or a duplicate legacy lane. The builder accepts
+this bank only through explicit `--temporal-bank` external JSON
+(`format: "jtm-temporal-parts-v1"`); it is never autodiscovered.
+
+Temporal output uses `jtm-display-network-v3` and manifest
+`requiredFeatures: ["dated_service_bank_v1"]`. The JP region record binds
+`historyRevision`, `bankRevision`, `sourcePackageSHA256`, and `managedLineIDs`
+under `temporalBank`, plus the exact `historyFile`, `historyBytes`, and
+`historySHA256`. The history side file repeats the bank binding and its revision.
+Those metadata, file, byte, digest, revision, bank, and complete stamp checks run
+before managed geometry is decoded or shown; managed lines use full chunks, not
+unstamped overview previews. Legacy `jtm-display-network-v2` keeps history optional
+and a missing history file still resolves to nil.
+
+Source `suspension_period_id` becomes native `suspensionPeriodID`. It is separate
+from `history_id`: a station opening can retain its opening identity while the
+same station and line carry the suspension-period link. Every managed part and
+station must have that explicit link; no relationship is inferred.
+
+Web network work captures one explicit regional civil day per worker request and
+derives date-only cache identity from it. Managed normal (`null` status) bypasses
+static fallback, while an unmanaged line preserves it. The route
+`AdmissionContext` affects proposal/search admission only: the physical solver's
+ride date remains authoritative, and undated requests conservatively receive no
+dated restoration. These contracts are code support, not claims of a complete
+Main build, native runtime or pixel validation, reopening support, or production
+resource delivery.
+
 ## Building the jp overlay
 
 `app/data/rail-history.json` is generated; do not hand-edit it. Edit

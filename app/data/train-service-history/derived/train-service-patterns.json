@@ -53458,6 +53458,76 @@
     "_derivation": {
       "status": "canonical_trip_projection",
       "tripIds": [
+        "jr-west.yakumo.18.2026-09-30"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "岡山",
+    "label": "出雲市〜岡山",
+    "lines": [],
+    "name": "やくも",
+    "optionalStops": [],
+    "origin": "出雲市",
+    "patternId": "tt-yakumo-3c86d4a6af87",
+    "serviceId": "yakumo",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "出雲市",
+        "sourceCode": "004943"
+      },
+      {
+        "name": "玉造温泉",
+        "sourceCode": "004736"
+      },
+      {
+        "name": "松江",
+        "sourceCode": "004638"
+      },
+      {
+        "name": "安来",
+        "sourceCode": "004748"
+      },
+      {
+        "name": "米子",
+        "sourceCode": "004758"
+      },
+      {
+        "name": "生山",
+        "sourceCode": "005452"
+      },
+      {
+        "name": "新見",
+        "sourceCode": "006070"
+      },
+      {
+        "name": "備中高梁",
+        "sourceCode": "006686"
+      },
+      {
+        "name": "倉敷",
+        "sourceCode": "007598"
+      },
+      {
+        "name": "岡山",
+        "sourceCode": "007310"
+      }
+    ],
+    "validFrom": "2026-09-30",
+    "validUntil": "2026-10-01",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
         "jr-west.yakumo.3.2026-09-30"
       ],
       "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
@@ -53898,6 +53968,84 @@
       {
         "name": "岡山",
         "sourceCode": "007310"
+      }
+    ],
+    "validFrom": "2026-09-30",
+    "validUntil": "2026-10-01",
+    "via": []
+  },
+  {
+    "_derivation": {
+      "status": "canonical_trip_projection",
+      "tripIds": [
+        "jr-west.yakumo.17.2026-09-30"
+      ],
+      "warning": "Legacy Pattern cannot express operating calendars or exact service dates; query the timetable database for date-correct trips."
+    },
+    "company": "未解決",
+    "completeness": {
+      "lines": "missing",
+      "stops": "complete",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "出雲市",
+    "label": "岡山〜出雲市",
+    "lines": [],
+    "name": "やくも",
+    "optionalStops": [],
+    "origin": "岡山",
+    "patternId": "tt-yakumo-acd19a6c46c6",
+    "serviceId": "yakumo",
+    "source": "generated:train-service-history",
+    "stops": [
+      {
+        "name": "岡山",
+        "sourceCode": "007310"
+      },
+      {
+        "name": "倉敷",
+        "sourceCode": "007598"
+      },
+      {
+        "name": "備中高梁",
+        "sourceCode": "006686"
+      },
+      {
+        "name": "新見",
+        "sourceCode": "006070"
+      },
+      {
+        "name": "生山",
+        "sourceCode": "005452"
+      },
+      {
+        "name": "伯耆大山",
+        "sourceCode": "004738"
+      },
+      {
+        "name": "米子",
+        "sourceCode": "004758"
+      },
+      {
+        "name": "安来",
+        "sourceCode": "004748"
+      },
+      {
+        "name": "松江",
+        "sourceCode": "004638"
+      },
+      {
+        "name": "玉造温泉",
+        "sourceCode": "004736"
+      },
+      {
+        "name": "宍道",
+        "sourceCode": "004793"
+      },
+      {
+        "name": "出雲市",
+        "sourceCode": "004943"
       }
     ],
     "validFrom": "2026-09-30",

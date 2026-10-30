@@ -170,11 +170,8 @@ struct ServiceRangeEditorView: View {
 
     private static func stopRange(for section: RouteSection, in train: Train) -> (from: Int, to: Int)? {
         func matches(_ stop: Stop, code: String?, name: String?) -> Bool {
-            if let code, !code.isEmpty, let stopCode = stop.n02StationCode, !stopCode.isEmpty {
-                return StationCodeAliases.canonical(code) == StationCodeAliases.canonical(stopCode)
-            }
-            guard let name, !name.isEmpty else { return false }
-            return stop.name == name
+            RecordedRouteMapping.sameStation(
+                code: code, name: name, otherCode: stop.n02StationCode, otherName: stop.name)
         }
         for from in train.stops.indices where matches(
             train.stops[from], code: section.fromN02StationCode, name: section.from

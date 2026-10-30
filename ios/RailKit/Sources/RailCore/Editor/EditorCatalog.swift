@@ -472,8 +472,10 @@ private struct EditorCatalogLineKey: Hashable {
 }
 
 private enum EditorCatalogMatch {
+    /// NFKC first, as the import matchers do, so full-width input finds its station.
     static func fold(_ value: String) -> String {
         value.trimmingCharacters(in: .whitespacesAndNewlines)
+            .precomposedStringWithCompatibilityMapping
             .folding(options: .caseInsensitive, locale: Locale(identifier: "en_US_POSIX"))
     }
 }

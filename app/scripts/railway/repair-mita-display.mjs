@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Candidate-only owner for the Toei Mita representative display centreline.
 // It never writes production resources; the CLI is restricted to /private/tmp.
 import assert from 'node:assert/strict';
@@ -315,7 +316,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   assert(args.length === 2 && args[0] === '--candidate-dir',
     'Usage: node repair-mita-display.mjs --candidate-dir /private/tmp/<directory>');
   const output = path.resolve(args[1]);
-  assert(output.startsWith('/private/tmp/'), 'Mita candidate output must be under /private/tmp');
+  assertAllowedCandidateDirectory(output);
   const evidencePath = path.resolve(APP, 'scripts/railway/mita-display-evidence.json');
   const evidence = JSON.parse(fs.readFileSync(evidencePath));
   const rawPath = path.resolve(REPO, evidence.source.rawPath), candidatePath = path.resolve(REPO, evidence.source.candidatePath);

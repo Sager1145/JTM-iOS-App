@@ -100,6 +100,9 @@ final class RailNetworkStore {
         /// Family-collapse windows along this chain (see `FamilyWindow`).
         /// Always empty for a non-continuous line.
         let familyWindows: [FamilyWindow]
+        /// Producer-admitted full Japan identity-datum constraints. Exact joined
+        /// witnesses are rebound to this immutable geometry before rendering.
+        let literalDisplaySpansV1: [DisplayLiteralSpans.Span]
         /// Bounding box in projected map space, computed once at decode time
         /// so the per-rebuild off-screen test is a rectangle intersection
         /// rather than a walk over 394,285 coordinates.
@@ -142,7 +145,8 @@ final class RailNetworkStore {
             follows: [StrokeFollow] = [],
             withheld: [WithheldSpan] = [],
             familyWindows: [FamilyWindow] = [],
-            partSpans: [DisplayTemporalDecoration?] = []
+            partSpans: [DisplayTemporalDecoration?] = [],
+            literalDisplaySpansV1: [DisplayLiteralSpans.Span] = []
         ) {
             self.id = id
             self.lineID = lineID
@@ -167,6 +171,7 @@ final class RailNetworkStore {
             self.withheld = withheld
             self.familyWindows = familyWindows
             self.partSpans = partSpans
+            self.literalDisplaySpansV1 = literalDisplaySpansV1
             self.intervals = intervals
             let rects = intervals.map(Self.boundingRect(of:))
             self.intervalRects = rects
@@ -232,6 +237,7 @@ final class RailNetworkStore {
         /// Retirement or overlay dates. Nil bounds and `.current` with no
         /// history id draw in every era.
         var historyId: String? = nil
+        var suspensionPeriodID: String? = nil
         var validFrom: String? = nil
         var validTo: String? = nil
         var temporalKind: RouteGraph.TemporalKind = .current
@@ -242,7 +248,8 @@ final class RailNetworkStore {
         var temporalDecoration: DisplayTemporalDecoration {
             DisplayTemporalDecoration(
                 historyId: historyId, validFrom: validFrom, validTo: validTo,
-                kind: temporalKind, isOverlayStation: isOverlay)
+                kind: temporalKind, isOverlayStation: isOverlay,
+                suspensionPeriodID: suspensionPeriodID)
         }
     }
 
@@ -635,7 +642,7 @@ final class RailNetworkStore {
             let files = try entries.map {
                 try RailDisplayNetwork.chunk(
                     $0, blob: blob, detail: .full, catalog: manifest.lines,
-                    families: record.families ?? [:])
+                    families: record.families ?? [:], history: history)
             }
             return RailwayLinePreview(
                 metadata: metadata, files: files, history: history, region: region, era: era)
@@ -1422,13 +1429,14 @@ final class RailNetworkStore {
                 throw RailDisplayNetworkError.missingRegion(entry.region)
             }
             let file = try RailDisplayNetwork.chunk(
-                entry, blob: blob, detail: detail, catalog: catalog, families: families)
+                entry, blob: blob, detail: detail, catalog: catalog, families: families, history: history)
             try Task.checkCancellation()
             // The detail actually sliced, not necessarily the one requested
             // — `chunk(...)` falls back to full when an overview was asked
             // for but the line has none — so bytes and the resident detail
             // stay in step with what was really loaded.
             let usedDetail: DisplayDetail = detail == .overview && entry.overview != nil
+                && entry.temporalBank?.managedLineIDs.contains(entry.id) != true
                 ? .overview : .full
             let usedBytes = usedDetail == .overview
                 ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length
@@ -1523,7 +1531,17 @@ final class RailNetworkStore {
                         colorHex: group.color.lowercased(),
                         colorDarkHex: group.colorDark.lowercased())
                 },
-                partSpans: stamped ? spans : [])
+                partSpans: stamped ? spans : [],
+                // Complete incoming-follow eligibility belongs to the coherent
+                // producer, not this partially resident runtime line catalog.
+                literalDisplaySpansV1: detail == .full && region == .jp
+                    && fragment.continuous == true && !stamped
+                    && (fragment.lane ?? 0) == 0
+                    && (fragment.laneRows ?? []).allSatisfy({ $0[2] == 0 })
+                    && (fragment.follows ?? []).isEmpty
+                    && (fragment.familyWindows ?? []).isEmpty
+                    && (fragment.withheld ?? []).isEmpty
+                    ? fragment.literalDisplaySpansV1 ?? [] : [])
         }
         let stations = file.stations.compactMap { station -> DrawnStation? in
             guard let metadata = catalog[station.lineKey],
@@ -1543,6 +1561,7 @@ final class RailNetworkStore {
                 lane: station.lane ?? 0, laneBearing: station.bearing,
                 slot: station.slot.map { StrokeSlot(chain: $0[0], anchor: $0[1]) },
                 historyId: stationStamps?[station.id]?.historyId,
+                suspensionPeriodID: stationStamps?[station.id]?.suspensionPeriodID,
                 validFrom: stationStamps?[station.id]?.validFrom,
                 validTo: stationStamps?[station.id]?.validTo,
                 // A failed history load never reaches this batch. A missing

@@ -160,6 +160,7 @@ function renderProgressiveCounts() {
 // the "map follows date" toggle is on, which trains draw).
 function setSelectedDate(date) {
   selectedDate = date;
+  refreshDatedRailNetwork();
   persistUiDateState();
   renderDateButtons();
   renderTrainList();
@@ -584,6 +585,7 @@ function selectTrain(id, { fit = false } = {}) {
   const trainDate = train ? getTrainDate(train) : null;
   if (trainDate && trainDate !== selectedDate) {
     selectedDate = trainDate;
+    refreshDatedRailNetwork();
     persistUiDateState();
     renderDateButtons();
     renderTrainList();

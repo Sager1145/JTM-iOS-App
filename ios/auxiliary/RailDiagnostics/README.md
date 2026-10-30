@@ -8,10 +8,14 @@ Open `ios/JTM.xcworkspace`, scheme **RailDiagnostics**, destination **My Mac (Ma
 xcodebuild -project ios/auxiliary/RailDiagnostics/RailDiagnostics.xcodeproj \
   -scheme RailDiagnostics -configuration Debug \
   -destination 'platform=macOS,variant=Mac Catalyst,arch=arm64' \
-  -derivedDataPath /private/tmp/jtm-rail-diagnostics -jobs 2 CODE_SIGN_IDENTITY=- build
+  -derivedDataPath ~/Library/Caches/jtm-rail-diagnostics -jobs 2 CODE_SIGN_IDENTITY=- build
 ```
 
 `project.yml` defines the source list and generates this target's own `Info.plist`, including alternate JSON viewer registration; regenerate with `xcodegen generate --spec ios/auxiliary/RailDiagnostics/project.yml` after changing membership or plist properties. The target has its own app entry point and reuses the internal workspace source files. Standalone Through and Inspector entry points are retired; the production app entry point is excluded by the diagnostic compilation condition. The production entry file and topology are unchanged. All typography is clamped to xSmall…xLarge; iPhone is portrait.
+
+## Evidence location
+
+New sessions default to the checkout’s Git-ignored `railway-evidence/local/diagnostics/sessions/`. Inspector batch evidence/reviews use `railway-evidence/local/alignment-inspector/`. `RAILWAY_EVIDENCE_ROOT` can override the common local root; explicit request/output paths stay unchanged. Historical Application Support and private-scratch locations have compatibility links into the repository. This checkout already lives in iCloud Documents: macOS automatically syncs evidence after normal file writes close. A local receipt does not establish remote upload completion. See [storage and migration details](../../../railway-evidence/README.md).
 
 ## Agent requests
 
@@ -23,7 +27,7 @@ Prepare a UTF-8 JSON request and send the file to the app using the `open -a APP
   "requestID": "sotetsu-interval-0-review",
   "workspace": "alignment",
   "action": "prepare",
-  "sessionDirectory": "/private/tmp/sotetsu-diagnostic-session",
+  "sessionDirectory": "/path/to/JTM-iOS-App/railway-evidence/local/diagnostics/sessions/sotetsu",
   "lineID": "jp-相模鉄道-相鉄本線",
   "intervalIndices": [0],
   "evidencePaths": ["/absolute/path/to/retained/observations.md"]
@@ -37,12 +41,16 @@ Prepare a UTF-8 JSON request and send the file to the app using the `open -a APP
 Send one request to the single app, whether it is already running or needs launching:
 
 ```sh
-open -a /private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app /absolute/request.json
+open -a ~/Library/Caches/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app /absolute/request.json
 ```
 
 File opens and **Open task ⇧⌘O** use the same strict `DiagnosticRequest` decoder/validator and start the explicit action through `start`/`DiagnosticSession`. A second Run step is unnecessary. Only local `.json` files are accepted. Busy operations or an open dialog reject the incoming request without replacing the current task or cancelling work. The existing notice appears across workspaces; a system sheet may cover it until dismissed. Close the dialog or wait for the operation to finish, then open the file again. Rail Diagnostics registers as an alternate JSON viewer for explicit **Open With** use, without requesting default JSON ownership. Verify request ID, process identity and actual result counts; open success is not capture success. Native direct dispatch is verified in `Evidence/20261018-direct-dispatch`: the latest Debug app ran the Miyazu request without another Run action and completed 28/28 views, 0 failed. Saved result/run status identify PID 52148 and invocation `A0B99B1B-9B1E-4639-B349-CC356793051A`; the parent inspected the completed UI. Earlier hot-open evidence records the previous preview step.
 
 The workspace switcher is disabled while native work is active; Pause requests cancellation and waits for the active capture lease to settle.
+
+## Claude / agent CLI
+
+`python3 -I ios/tools/verification/diagnostic-run.py capture --line ID [--intervals 10,11] [--name slug]` builds a schemaVersion-1 alignment request under `railway-evidence/local/requests/`, opens it in this app and waits for the requestID-matched `run-status.json`/`result.json`; `send /abs/request.json`, `status` and `views` cover existing requests and sessions. Exit 0 ok, 2 rejected, 3 timeout, 4 failed. Requests refused before admission (busy/dialog, non-JSON, decode or validation errors, a changed request for an existing session, launch errors) are appended to `railway-evidence/local/diagnostics/inbox/rejections.jsonl` and, when the session directory is known, written to `<session>/last-rejection.json`; neither touches `request.json` or other evidence. Skill: `.claude/skills/rail-diagnostics/SKILL.md`.
 
 ## Shared evidence and recovery
 
@@ -63,6 +71,8 @@ See [the final remake evidence](Evidence/20261017-remake/README.md), `DESIGN.md`
 The task dashboard now creates the same immutable request used by agents. **New task ⌃⌘N** offers alignment capture, physical route solve and through-history inspection. For alignment, optionally enter an absolute candidate compact JSON path or choose its JSON file, then search/select the exact owning railway from that package, choose complete-line coverage or an interval/station intersection, set zoom/viewport/appearance and image modes, then **Start task ⌘↩**. The app plans and captures all pending views in that scope automatically; no per-frame controls are required. A capture limit is optional and leaves an explicit partial result.
 
 Picker-selected package/journey bytes are retained under app-owned input storage with their original filename while security scope is active. Workspace/action switching and Start are disabled during the copy; a copy failure blocks submission until an explicit edit or new choice. The task card shows the package path or bundled source. Capture from the alignment workspace preserves the active candidate input path. Candidate changes affecting full-own-line dependencies cannot reuse incompatible evidence in the old session. See [the bounded input-interface evidence](Evidence/20261017-remake/candidate-package-input-20261018/README.md); prepare results do not establish geometry repair.
+
+Observed external-file limitation (2026-10-20): a cold agent request may fail to read its literal `inputPath` before dependency verification. Selecting that exact package with the ordinary New task file picker, cancelling the composer, then resuming the unchanged request recovered the current sessions. Preserve failed attempts and immutable requests; do not substitute another package or treat this as a general cold-start fix. The present error text does not distinguish sandbox access from iCloud materialization. Prefer retaining a picker-selected package path for newly composed tasks.
 
 **Open task ⇧⌘O** starts the action in a validated request JSON. **Run / resume ⌘↩** resumes the current task or runs a selected recent task; recent tasks retain their original output directories. **Pause Esc** cancels supported capture/route/extraction work and waits for the active capture lease to settle. For an operation without a cancellation interface, the control says it is finishing and does not advertise an active Escape action. **⌃⌘1…4** switch Tasks, Alignment, Physical routes and Through history when idle. Existing workspace shortcuts remain labelled beside controls and in their persistent workspace reference.
 
@@ -96,3 +106,7 @@ Technical task inputs and reviewer evidence paths disable automatic spelling cor
 Exact-viewpoint native request, labelled composer, keyboard capture and human button resume proof: `Evidence/20261018-exact-viewpoints/README.md` (2 exact views out of a13-view plan; unselected views not captured).
 
 The Catalyst app declares `LSMultipleInstancesProhibited` to keep Launch Services opens in one process ([Apple launch-services contract](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html)). `run-status.json` and `result.json` export `processID`, `executablePath` and `invocationID` to identify the actual invocation; process command-line arguments may describe an older request after hot-open. Native observation is saved in `Evidence/20261018-direct-dispatch`: one authorized `open -n` returned 0 and subsequent `pgrep` showed only the existing Debug PID 52148 for the same executable, with no second instance. This was single-process retention, not a rejected-launch error. An earlier sandboxed open error -10827 was a restricted attempt and does not establish the native single-instance outcome. Existing active status from an interrupted process is retained evidence, not proof that it is still executing.
+
+### Background snapshot continuation observed — 2026-10-20
+
+The existing normal JSON file-open entry completed scoped requests while the desktop was locked: Kanamachi station plan prepared16views then captured exactly3selected station views, and Kurihama missing interval7 captured4/4views, both zero failures with returned projection witnesses. App PID81425 and separate invocation IDs are in the session results under `railway-evidence/local/diagnostics/sessions/`. No lock/security control was changed. For these requests the selected own bundled compact and returned source/display intervals were checked exactly against current production/preparedJSinput before reuse; `packageInputSource=bundle` is recorded. Omitting `inputPath` is appropriate only after proving the selected own inputs match, never to hide stale candidate/package input. Actual Main screen/cold-render evidence still requires an unlocked desktop. Check `run-status.json` active/state and real `result.json`, retain one native task at a time and do not equate `open` success with capture success.

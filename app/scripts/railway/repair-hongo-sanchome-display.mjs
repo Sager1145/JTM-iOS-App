@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -264,7 +265,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   assert(args.length === 0 || (args.length === 2 && args[0] === '--candidate-dir'),
     'Usage: node repair-hongo-sanchome-display.mjs [--candidate-dir /private/tmp/path]');
   const candidateDirectory = path.resolve(args[1] || '/private/tmp/jtm-hongo-sanchome-display-candidate');
-  assert(candidateDirectory.startsWith('/private/tmp/'), 'Candidate output must stay under /private/tmp');
+  assertAllowedCandidateDirectory(candidateDirectory);
   const { pkg, lanes, summary } = buildCandidate(read('public/rail/jp-2025.json'), read('public/rail/display-lanes.json'));
   fs.mkdirSync(candidateDirectory, { recursive: true });
   const packagePath = path.join(candidateDirectory, 'jp-2025.json');

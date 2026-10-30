@@ -12,7 +12,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 case "$target" in
-  diagnostics) scheme=RailDiagnostics; derived=${derived:-/private/tmp/jtm-rail-diagnostics} ;;
+  diagnostics) scheme=RailDiagnostics; derived=${derived:-$HOME/Library/Caches/jtm-rail-diagnostics} ;;
   *) fail 'Build requires --target diagnostics' ;;
 esac
 check_jobs

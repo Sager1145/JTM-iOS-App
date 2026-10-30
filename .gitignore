@@ -190,3 +190,10 @@ backups/north-america/2026-10-03/**
 
 # Apple Maps-derived display evidence stays local (user decision 2026-10-19); repair scripts read it when present.
 /app/scripts/railway/*-apple-*evidence.json
+
+# Native railway diagnostic evidence, candidates and local migration receipts.
+/railway-evidence/local
+
+# Local repair evidence compatibility links; payloads live in railway-evidence/local.
+/app/scripts/railway/joshin-own-display-evidence.json
+/app/scripts/railway/kyudai-kurume-display-evidence.json

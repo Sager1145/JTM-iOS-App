@@ -25,6 +25,9 @@ struct BatchCaptureGeometry {
         let display: [[Coordinate]]
         let smooth: [[Coordinate]]
         let decodedDisplay: [[Coordinate]]
+        let literalSpans: [[DisplayLiteralSpans.Span]]
+        let appliedLiteralSpanEdges: [[Int]]
+        let appliedSourceCornerEdges: [[Int]]
     }
     struct Clipped {
         var paths: [[Coordinate]] = []
@@ -60,9 +63,13 @@ struct BatchCaptureGeometry {
     }
 
     static func render(line: CompactPackage.Line, display: [[Coordinate]], settings: DiagnosticCaptureSettings = .init()) -> RenderedLine {
-        let smooth = InspectorStrokeGeometry.build(display: display, stations: line.displayStations.map(\.coordinate),
-            mapPointsPerPoint: mapPointsPerPoint(settings: settings), zoom: settings.zoom)
-        return .init(lineID: line.id, display: display, smooth: smooth, decodedDisplay: CompactPackage.decodeDisplayIntervals(line))
+        let spans = DisplayLiteralSpans.resolve(line, parts: display)
+        let result = InspectorStrokeGeometry.render(display: display, stations: line.displayStations.map(\.coordinate),
+            mapPointsPerPoint: mapPointsPerPoint(settings: settings), zoom: settings.zoom, literalSpans: spans)
+        return .init(lineID: line.id, display: display, smooth: result.paths,
+                     decodedDisplay: CompactPackage.decodeDisplayIntervals(line), literalSpans: spans,
+                     appliedLiteralSpanEdges: result.appliedLiteralSpanEdges,
+                     appliedSourceCornerEdges: result.appliedSourceCornerEdges)
     }
 
     static func rect(center: Coordinate, settings: DiagnosticCaptureSettings = .init()) -> MKMapRect {
@@ -177,6 +184,12 @@ struct BatchCaptureGeometry {
             append(station.coordinate, to: &digest)
         }
         append(display, to: &digest)
+        for (part, spans) in DisplayLiteralSpans.resolve(line, parts: display).enumerated() {
+            for span in spans {
+                digest.update(data: Data("literal:\(span.mode ?? "literal-v1"):\(part):\(span.edgeIndex);".utf8))
+                for witness in span.witnesses { append(witness, to: &digest) }
+            }
+        }
         // The independent DisplayParts→decoded-display metric depends on
         // neighboring raw intervals even when final DisplayParts is unchanged.
         append(CompactPackage.decodeDisplayIntervals(line), to: &digest)

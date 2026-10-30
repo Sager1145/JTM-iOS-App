@@ -49,7 +49,125 @@ def historical_transfer_event():
     return e
 
 
+class ServiceStatusPeriodTests(unittest.TestCase):
+    def setUp(self):
+        self.sections, self.stations = fixtures()
+        self.stations[0]['properties'].update(n02_station_code='own-a', n02_group_code='group-a')
+        second = copy.deepcopy(self.stations[0])
+        second['properties'].update(n02_station_code='own-b', n02_group_code='group-b', station_name='T')
+        self.stations.append(second)
+        # Other operator owns the interchange group, not either raw membership.
+        other = copy.deepcopy(second)
+        other['properties'].update(operator='Other', n02_station_code='other-b')
+        self.stations.append(other)
+        self.lines = [{'id': 'jp-O-L', 'name': 'L', 'operator': 'O',
+                       'stations': [['group-a', 'S'], ['group-b', 'T']]}]
+        self.record = {'history_id': 'jp.test.bus', 'lineID': 'jp-O-L',
+                       'scope': 'whole_line', 'station_membership_ids': ['own-a', 'own-b'],
+                       'valid_from': '2020-02-29', 'valid_to': None,
+                       'serviceStatus': 'substitute_bus', 'source': ['official reference']}
+
+    def compile(self, records=None):
+        return source.compile_service_status_periods(
+            [self.record] if records is None else records,
+            self.sections, self.stations, self.lines)
+
+    def test_exact_raw_memberships_compile_without_replacing_them_with_groups(self):
+        result = self.compile()
+        self.assertEqual(result[0]['station_membership_ids'], ['own-a', 'own-b'])
+        self.assertEqual(result[0]['valid_from'], '2020-02-29')
+        self.assertIsNone(result[0]['valid_to'])
+        result[0]['station_membership_ids'].append('changed')
+        self.assertEqual(self.record['station_membership_ids'], ['own-a', 'own-b'])
+
+    def test_partial_foreign_duplicate_and_compact_group_memberships_fail(self):
+        for members in (['own-a'], ['own-a', 'other-b'], ['group-a', 'group-b'],
+                        ['own-a', 'own-a', 'own-b']):
+            with self.subTest(members=members):
+                self.record['station_membership_ids'] = members
+                with self.assertRaises(ValueError):
+                    self.compile()
+
+    def test_missing_or_wrong_source_group_mapping_fails(self):
+        for group in (None, 'wrong-group'):
+            with self.subTest(group=group):
+                self.stations[0]['properties']['n02_group_code'] = group
+                with self.assertRaises(ValueError):
+                    self.compile()
+
+    def test_conflicting_raw_group_mapping_and_foreign_raw_owner_fail(self):
+        duplicate = copy.deepcopy(self.stations[0])
+        duplicate['properties']['n02_group_code'] = 'group-b'
+        self.stations.append(duplicate)
+        with self.assertRaises(ValueError):
+            self.compile()
+        self.stations.pop()
+        self.stations[-1]['properties']['n02_station_code'] = 'own-b'
+        with self.assertRaises(ValueError):
+            self.compile()
+
+    def test_nonexistent_identity_sections_and_ambiguous_line_id_fail(self):
+        self.sections[0]['properties']['N02_004'] = 'Other'
+        with self.assertRaises(ValueError):
+            self.compile()
+        self.sections[0]['properties']['N02_004'] = 'O'
+        self.lines.append(copy.deepcopy(self.lines[0]))
+        with self.assertRaises(ValueError):
+            self.compile()
+
+    def test_rejects_malformed_period_contract(self):
+        changes = [('history_id', ''), ('lineID', ''), ('scope', 'partial_line'),
+                   ('serviceStatus', 'suspended'), ('valid_from', None),
+                   ('valid_from', '2021-02-29'), ('valid_from', '2020-2-29'),
+                   ('valid_to', '2020-02-29'), ('valid_to', '2020-02-28'),
+                   ('source', []), ('source', [' ']), ('source', 'reference'),
+                   ('station_membership_ids', []), ('line_name', 'Wrong'), ('operator', 'Other')]
+        for field, value in changes:
+            with self.subTest(field=field, value=value):
+                record = copy.deepcopy(self.record)
+                record[field] = value
+                with self.assertRaises(ValueError):
+                    self.compile([record])
+
+    def test_adjacent_periods_allowed_but_overlaps_and_duplicate_ids_fail(self):
+        first = copy.deepcopy(self.record)
+        first['valid_to'] = '2020-03-01'
+        second = copy.deepcopy(self.record)
+        second.update(history_id='jp.test.bus.again', valid_from='2020-03-01')
+        self.assertEqual(len(self.compile([second, first])), 2)
+        second['valid_from'] = '2020-02-29'
+        with self.assertRaises(ValueError):
+            self.compile([first, second])
+        second.update(valid_from='2020-03-01', history_id=first['history_id'])
+        with self.assertRaises(ValueError):
+            self.compile([first, second])
+        second['history_id'] = ' ' + first['history_id'] + ' '
+        with self.assertRaises(ValueError):
+            self.compile([first, second])
+
+    def test_empty_collection_needs_no_source_or_compact_mapping(self):
+        self.assertEqual(source.compile_service_status_periods([], [], [], []), [])
+
+
 class SourceTests(unittest.TestCase):
+    def test_explicit_suspension_identity_survives_opening_intersection(self):
+        e = event()
+        e['service_periods'] = [[None, '2024-10-05']]
+        e.pop('infrastructure_periods')
+        e['suspension_period_id'] = 'jp.test.bus'
+        sections, stations = fixtures()
+        compiled = source.compile_event(e, sections, stations)
+        opening = {'history_id': 'jp.test.opening', 'match': {
+            'line_name': 'L', 'operator': 'O', 'bbox': [138, 34, 140, 36],
+            'targets': ['stations']}, 'valid_from': '2008-08-09', 'source': 'opening'}
+        stamps = source.normalize_stamps(compiled['retirements'] + [opening], sections, stations)
+        end_stamps = [stamp for stamp in stamps if stamp.get('valid_to') == '2024-10-05']
+        self.assertEqual(len(end_stamps), 2)
+        self.assertEqual({stamp.get('suspension_period_id') for stamp in end_stamps}, {'jp.test.bus'})
+        self.assertEqual(stamps[0]['history_id'], 'jp.test.opening')
+        self.assertEqual(stamps[0]['valid_from'], '2008-08-09')
+        self.assertNotIn('suspension_period_id', stamps[0])
+
     def test_surveyed_predecessor_periods_cover_relocation_then_transfer(self):
         e = historical_transfer_event()
         old_section = {'type': 'Feature', 'properties': {'N02_003': 'Old L', 'N02_004': 'JR'},

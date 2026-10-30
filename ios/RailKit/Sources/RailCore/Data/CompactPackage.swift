@@ -89,6 +89,11 @@ public struct CompactPackage: Sendable {
         /// A requested map schematic, separate from canonical physical track.
         public let displayStationCoordinates: [String: Coordinate]
         public let displayIntervalCoordinates: [Int: [Coordinate]]
+        /// Reviewed source-defined station approaches. A declaration alone
+        /// is insufficient: rendering also requires both explicit display
+        /// intervals to meet the explicit station alias exactly.
+        public let displaySourceAnchoredStationCodes: Set<String>
+        public let displayLiteralSpans: [DisplayLiteralSpans.SourceSpan]
         /// Surveyed non-station lead-ins retained only in the displayed network.
         public let displayBranchLeadIns: [[Coordinate]]
         /// Exact fork-to-terminal stems whose out-and-back traversal is drawn once.
@@ -145,22 +150,8 @@ extension CompactPackage.Line: Decodable {
         case rank, color, colorDark, logo, isLoop, lineCode
         case nameNorm, alignmentDirection, alignmentOf, stationOrderDirection, permittedTraversal, alignmentPairs
         case stations, segments, displayStationCoordinates, displayIntervalCoordinates, displayBranchLeadIns, displayReversalBranches, stationCircleOwnerByCode
-    }
-
-    /// JavaScript's truthiness, for the flags the packages store as `1`.
-    ///
-    /// `logo` and `isLoop` are written by the builders as the number `1`, and
-    /// JSON `1` is not a JSON boolean — a synthesised `Bool` decode throws on
-    /// every line that carries one. The web app asks `compactLine.isLoop ? …`,
-    /// which is true of the number and of the boolean alike, and the port
-    /// fixtures exercise BOTH spellings: the shipped packages use `1` and the
-    /// synthetic station-display cases use `true`. Accepting only one of them
-    /// is how this decoder first went in and how it failed.
-    private static func truthy(
-        _ row: KeyedDecodingContainer<CodingKeys>, _ key: CodingKeys
-    ) throws -> Bool {
-        if let flag = try? row.decodeIfPresent(Bool.self, forKey: key) { return flag }
-        return (try row.decodeIfPresent(Int.self, forKey: key) ?? 0) != 0
+        case displaySourceAnchoredStationCodes
+        case displayInterpolation
     }
 
     /// Written out rather than synthesised, for the two flags above.
@@ -177,8 +168,8 @@ extension CompactPackage.Line: Decodable {
         rank = try row.decode(Int.self, forKey: .rank)
         color = try row.decodeIfPresent(String.self, forKey: .color)
         colorDark = try row.decodeIfPresent(String.self, forKey: .colorDark)
-        hasLogo = try Self.truthy(row, .logo)
-        isLoop = try Self.truthy(row, .isLoop)
+        hasLogo = try decodeTruthyFlag(row, .logo)
+        isLoop = try decodeTruthyFlag(row, .isLoop)
         lineCode = try row.decodeIfPresent(String.self, forKey: .lineCode)
         nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
         alignmentDirection = try row.decodeIfPresent(String.self, forKey: .alignmentDirection)
@@ -195,6 +186,8 @@ extension CompactPackage.Line: Decodable {
             .map { $0.compactMap(Coordinate.init(pair:)) }.filter { $0.count >= 2 }
         displayStationCoordinates = (try row.decodeIfPresent([String: [Double]].self,
             forKey: .displayStationCoordinates) ?? [:]).compactMapValues(Coordinate.init(pair:))
+        displaySourceAnchoredStationCodes = Set(try row.decodeIfPresent([String].self,
+            forKey: .displaySourceAnchoredStationCodes) ?? [])
         let displayIntervals = try row.decodeIfPresent([String: [[Double]]].self,
             forKey: .displayIntervalCoordinates) ?? [:]
         let segmentCount = segments.count
@@ -202,6 +195,14 @@ extension CompactPackage.Line: Decodable {
             guard let index = Int(key), index >= 0, index < segmentCount else { return nil }
             return (index, points.compactMap(Coordinate.init(pair:)))
         })
+        let interpolation = try? row.decodeIfPresent(DisplayLiteralSpans.RawDeclaration.self,
+                                                     forKey: .displayInterpolation)
+        let endpoints = (displayBranchLeadIns + displayReversalBranches).flatMap { points in
+            [points.first, points.last].compactMap { $0 }
+        }
+        displayLiteralSpans = DisplayLiteralSpans.admit(
+            interpolation, rawIntervals: displayIntervals, segmentCount: segmentCount,
+            stations: stations, aliases: displayStationCoordinates, branchEndpoints: endpoints)
     }
 }
 
@@ -413,22 +414,26 @@ extension CompactPackage.Headers {
     enum CodingKeys: String, CodingKey { case lines }
 }
 
+/// JavaScript's truthiness, for the flags the packages store as `1`.
+///
+/// `logo` and `isLoop` are written by the builders as the number `1`, and
+/// JSON `1` is not a JSON boolean — a synthesised `Bool` decode throws on
+/// every line that carries one. The web app asks `compactLine.isLoop ? …`,
+/// which is true of the number and of the boolean alike, and the port
+/// fixtures exercise BOTH spellings: the shipped packages use `1` and the
+/// synthetic station-display cases use `true`. Accepting only one of them
+/// is how this decoder first went in and how it failed.
+fileprivate func decodeTruthyFlag<Key: CodingKey>(
+    _ row: KeyedDecodingContainer<Key>, _ key: Key
+) throws -> Bool {
+    if let flag = try? row.decodeIfPresent(Bool.self, forKey: key) { return flag }
+    return (try row.decodeIfPresent(Int.self, forKey: key) ?? 0) != 0
+}
+
 extension CompactPackage.Headers.Line: Decodable {
     enum CodingKeys: String, CodingKey {
         case id, name, nameRoma, `operator`, operatorShort, operatorLogo, kind
         case rank, color, colorDark, logo, isLoop, lineCode, nameNorm
-    }
-
-    /// `logo` and `isLoop` are written as the number `1`. The rule is
-    /// ``CompactPackage/Line/truthy(_:_:)``'s and is restated rather than
-    /// shared because the two decoders key on different `CodingKeys` types;
-    /// `CompactPackageHeadersTests` holds the two to the same answer over the
-    /// shipped packages.
-    private static func truthy(
-        _ row: KeyedDecodingContainer<CodingKeys>, _ key: CodingKeys
-    ) throws -> Bool {
-        if let flag = try? row.decodeIfPresent(Bool.self, forKey: key) { return flag }
-        return (try row.decodeIfPresent(Int.self, forKey: key) ?? 0) != 0
     }
 
     public init(from decoder: Decoder) throws {
@@ -443,8 +448,8 @@ extension CompactPackage.Headers.Line: Decodable {
         rank = try row.decode(Int.self, forKey: .rank)
         color = try row.decodeIfPresent(String.self, forKey: .color)
         colorDark = try row.decodeIfPresent(String.self, forKey: .colorDark)
-        hasLogo = try Self.truthy(row, .logo)
-        isLoop = try Self.truthy(row, .isLoop)
+        hasLogo = try decodeTruthyFlag(row, .logo)
+        isLoop = try decodeTruthyFlag(row, .isLoop)
         lineCode = try row.decodeIfPresent(String.self, forKey: .lineCode)
         nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
     }

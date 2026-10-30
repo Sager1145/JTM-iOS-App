@@ -49,6 +49,14 @@ final class MapOverlayStyles {
     /// a style after the fact would never be drawn.
     private var renderers: [String: MKOverlayRenderer] = [:]
 
+    /// Opacity can change while every path style token stays the same.
+    /// Invalidate cached tiles as well, including tiles first drawn transparent.
+    private func applyAlpha(_ alpha: CGFloat, to renderer: MKOverlayRenderer?) {
+        guard let renderer, renderer.alpha != alpha else { return }
+        renderer.alpha = alpha
+        renderer.setNeedsDisplay()
+    }
+
     private struct OpacityTransition {
         var start: CGFloat
         var target: CGFloat
@@ -94,7 +102,8 @@ final class MapOverlayStyles {
     /// never stranded by a renderer MapKit decided not to build.
     private static let pendingTimeout: CFTimeInterval = 0.5
 
-    private func advanceOpacity(at time: CFTimeInterval) {
+    // Internal so native tests can advance the real clock deterministically.
+    func advanceOpacity(at time: CFTimeInterval) {
         var completions: [() -> Void] = []
         for key in opacityTransitions.keys {
             guard var transition = opacityTransitions[key] else { continue }
@@ -104,7 +113,7 @@ final class MapOverlayStyles {
                     // clock here rather than at `animateOpacity`'s call site,
                     // and hold at `start` for this tick.
                     transition.startedAt = time
-                    renderers[key]?.alpha = transition.start
+                    applyAlpha(transition.start, to: renderers[key])
                     opacityTransitions[key] = transition
                 } else if time - transition.queuedAt > Self.pendingTimeout {
                     opacityTransitions.removeValue(forKey: key)
@@ -113,7 +122,7 @@ final class MapOverlayStyles {
                 continue
             }
             let finished = time - transition.startedAt! >= transition.duration
-            renderers[key]?.alpha = finished ? transition.target : transition.alpha(at: time)
+            applyAlpha(finished ? transition.target : transition.alpha(at: time), to: renderers[key])
             if finished {
                 opacityTransitions.removeValue(forKey: key)
                 if let completion = transition.completion { completions.append(completion) }
@@ -136,12 +145,12 @@ final class MapOverlayStyles {
             ?? opacityTransitions[key]?.alpha(at: now) ?? fromAlpha ?? style.alpha
         opacityTransitions.removeValue(forKey: key)
         guard duration > 0, start != style.alpha else {
-            renderers[key]?.alpha = style.alpha
+            applyAlpha(style.alpha, to: renderers[key])
             stopClockIfIdle()
             completion?()
             return
         }
-        renderers[key]?.alpha = start
+        applyAlpha(start, to: renderers[key])
         opacityTransitions[key] = OpacityTransition(
             start: start, target: style.alpha, startedAt: renderers[key] != nil ? now : nil, queuedAt: now,
             duration: duration, completion: completion)
@@ -224,10 +233,10 @@ final class MapOverlayStyles {
         }
         if let style = styles[key] {
             // Keep style opacity separate from colour so a fade changes only
-            // compositor alpha, never stroke geometry or per-frame paint.
+            // renderer alpha, with cached-tile invalidation on changed values.
             if let polyline = renderer as? MKPolylineRenderer { polyline.strokeColor = style.color }
             if let multi = renderer as? MKMultiPolylineRenderer { multi.strokeColor = style.color }
-            renderer.alpha = opacityTransitions[key]?.alpha(at: CACurrentMediaTime()) ?? style.alpha
+            applyAlpha(opacityTransitions[key]?.alpha(at: CACurrentMediaTime()) ?? style.alpha, to: renderer)
         }
     }
 
@@ -265,10 +274,10 @@ final class MapOverlayStyles {
                 if transition.target != targetAlpha {
                     // A new nonanimated write cancels any old destination.
                     opacityTransitions.removeValue(forKey: key)
-                    renderer.alpha = targetAlpha
+                    applyAlpha(targetAlpha, to: renderer)
                 }
             } else {
-                renderer.alpha = targetAlpha
+                applyAlpha(targetAlpha, to: renderer)
             }
             if let polyline = renderer as? MKPolylineRenderer {
                 guard polyline.strokeColor != color || polyline.lineWidth != width

@@ -1,0 +1,9 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import test from 'node:test';
+import {sha} from '../lib/display-candidate-repair.mjs';
+import {SPEC,AUTHORITY_PATH,repairPackage,repairParts,validateCandidateReview} from '../repair-ohmi-main-ext4-body.mjs';
+const a=JSON.parse(fs.readFileSync(AUTHORITY_PATH)),L=SPEC.lineID,own=p=>p.lines.find(x=>x.id===L);
+const pkg=l=>({lines:[{id:'other',operator:'x'},l],geometrySource:{}}),lanes=(n,b)=>({partsByRegion:{jp:[['other'],...structuredClone(n)]},byRegion:{jp:[['other'],...structuredClone(b)]}});
+test('bounded body repair is scoped and idempotent',()=>{const o=repairPackage(pkg(a.baselineLine));assert.equal(sha(own(o)),SPEC.candidateSha);assert.equal(own(o).displayIntervalCoordinates[11],undefined);assert.equal(own(o).displayIntervalCoordinates[12],undefined);assert.equal(own(o).displayIntervalCoordinates[23],undefined);assert.deepEqual(repairPackage(o),o)});
+test('tampering and stale baseline are rejected',()=>{const b=structuredClone(a);b.candidateLine.displayStationCoordinates['005075'][0]+=1e-6;assert.throws(()=>repairPackage(pkg(a.baselineLine),b));const s=structuredClone(a.baselineLine);s.stations[0][2]+=1e-6;assert.throws(()=>repairPackage(pkg(s)),/stale|physical/)});
+test('native rows change without foreign rows',()=>{const p=repairPackage(pkg(a.baselineLine)),o=repairParts(p,lanes(a.baselineNativeRows,a.baselineLaneRows));assert.deepEqual(o.partsByRegion.jp.filter(x=>x[0]===L).map(x=>x[4]),a.candidatePartLengths);assert.deepEqual(repairParts(p,o),o)});
+test('receipt binds reviewed candidate',()=>{const r={format:SPEC.receiptFormat,status:'bounded-candidate-reviewed',lineID:L,stationIDs:SPEC.stationIDs,intervalIndices:SPEC.intervalIndices,reviewedOwnLineSha256:SPEC.candidateSha,MainCertified:false,wholeLineAccepted:false};validateCandidateReview(r,a.candidateLine);assert.throws(()=>validateCandidateReview({...r,reviewedOwnLineSha256:SPEC.baselineSha},a.candidateLine))});

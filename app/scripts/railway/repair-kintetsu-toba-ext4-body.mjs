@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+import {fileURLToPath} from 'node:url';import path from 'node:path';import {displayCandidateRepair,REPO} from './lib/display-candidate-repair.mjs';
+export const SPEC={lineID:'jp-近畿日本鉄道-鳥羽線',key:'kintetsu-toba-ext4-body',authorityPath:path.join(REPO,'railway-evidence/local/proposals/ext4-20261022/authority-ext4-toba-body.json'),format:'jtm-ext4-toba-body-authority-v1',receiptFormat:'jtm-ext4-toba-body-candidate-review-v1',stationIDs:['007892','007891','007888','007872'],intervalIndices:[1,2,3],baselineSha:'116313f80da757dfdbeb2efd54f728c150cc27406dad7fd6deb016c1568b6e5f',candidateSha:'e8fdc0f677c9e40e0024caf22a2c6771a5fb7f0ff08fcd9df9f044a86ee81626'};
+export const {AUTHORITY_PATH,repairPackage,repairParts,validateCandidateReview,main}=displayCandidateRepair(SPEC);if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main(process.argv.slice(2),fileURLToPath(import.meta.url));

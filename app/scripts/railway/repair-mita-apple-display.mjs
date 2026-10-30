@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Candidate-only reconstruction of the Toei Mita display stroke from the
 // labelled Apple Maps railway glyph. Production resources are never written.
 import assert from 'node:assert/strict';
@@ -403,7 +404,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const args = process.argv.slice(2);
   assert(args.length === 2 && args[0] === '--candidate-dir', 'Usage: node repair-mita-apple-display.mjs --candidate-dir /private/tmp/<directory>');
   const output = path.resolve(args[1]);
-  assert(output.startsWith('/private/tmp/'), 'Mita Apple candidate output must be under /private/tmp');
+  assertAllowedCandidateDirectory(output);
   const evidence = evidenceDefault();
   const coverage = fs.readFileSync(path.resolve(REPO, evidence.apple.coveragePath));
   const extractor = fs.readFileSync(path.resolve(REPO, evidence.apple.extractorPath));

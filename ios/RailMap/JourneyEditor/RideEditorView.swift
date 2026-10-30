@@ -748,8 +748,11 @@ struct RideEditorView: View {
         routeInferenceTask = Task {
             let worker = Task.detached(priority: .userInitiated) {
                 let aliases = try loadJourneyStationAliases(for: prepared.stops.compactMap(\.n02StationCode), package: package)
+                let context = try loadJourneyAdmissionContext(
+                    rideDate: Dates.normalizeDateString(prepared.date), package: package)
                 return RecordedRouteAdmission.admission(
-                    in: prepared, package: package, stationAliases: aliases, maximumExpansions: 200_000)
+                    in: prepared, package: package, stationAliases: aliases, maximumExpansions: 200_000,
+                    admissionContext: context)
             }
             let result: RecordedRouteAdmission.Outcome
             do {
@@ -929,7 +932,7 @@ struct RideEditorView: View {
     private func problemSummary(_ proxy: ScrollViewProxy) -> some View {
         Section {
             ForEach(blocking) { issue in
-                Label(message(issue), systemImage: "exclamationmark.circle")
+                Label(localization.text(for: issue), systemImage: "exclamationmark.circle")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -1721,7 +1724,7 @@ struct RideEditorView: View {
     @ViewBuilder
     private func fieldIssues(_ field: RideDraftIssue.Field) -> some View {
         ForEach(issues.all(for: field)) { issue in
-            Label(message(issue), systemImage: symbol(issue))
+            Label(localization.text(for: issue), systemImage: symbol(issue))
                 .font(.footnote)
                 .foregroundStyle(issue.severity == .error ? Color.red : Color.orange)
                 .fixedSize(horizontal: false, vertical: true)
@@ -1733,11 +1736,6 @@ struct RideEditorView: View {
 
     private func symbol(_ issue: RideDraftIssue) -> String {
         issue.severity == .error ? "exclamationmark.circle.fill" : "exclamationmark.triangle"
-    }
-
-    private func message(_ issue: RideDraftIssue) -> String {
-        if let literal = issue.literal { return literal }
-        return localization.text(issue.key, params: issue.params)
     }
 
     // MARK: - Validation
@@ -1993,7 +1991,9 @@ struct RideEditorView: View {
             do {
                 result = try await RouteRepairSession.search(
                     train: stepped.train, baseline: snapshot, package: package, steps: stepped.steps,
-                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) })
+                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
+                    loadAdmissionContext: { try loadJourneyAdmissionContext(
+                        rideDate: Dates.normalizeDateString($0.date), package: $1) })
             } catch {
                 isRepairingRoute = false
                 guard !Task.isCancelled, draft == snapshot else { return }
@@ -2028,7 +2028,9 @@ struct RideEditorView: View {
                 result = try await RouteRepairSession.search(
                     train: prepared, baseline: snapshot, package: package, steps: steps,
                     repaired: repairedBase, gaps: priorGaps,
-                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) })
+                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
+                    loadAdmissionContext: { try loadJourneyAdmissionContext(
+                        rideDate: Dates.normalizeDateString($0.date), package: $1) })
             } catch {
                 isRepairingRoute = false
                 guard !Task.isCancelled, draft == snapshot else { return }
@@ -2096,3 +2098,11 @@ struct RideEditorView: View {
     }
 }
 
+
+extension AppLocalization {
+    /// An issue's literal text when it carries one, else its localized key.
+    func text(for issue: RideDraftIssue) -> String {
+        if let literal = issue.literal { return literal }
+        return text(issue.key, params: issue.params)
+    }
+}

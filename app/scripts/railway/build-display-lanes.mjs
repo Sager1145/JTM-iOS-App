@@ -66,6 +66,7 @@
 "use strict";
 
 import fs from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
@@ -727,6 +728,30 @@ function validateReviewedLoops(region, pkg, loops) {
     throw new Error(
       `display-loops.json disagrees with ${region}-2025.json:\n  ${problems.join("\n  ")}`,
     );
+}
+
+// Candidate-only pure seam. Importing this module never runs the CLI and
+// this function neither reads inputs nor writes the production lane file.
+// Legacy rows/exclusions remain in the caller's original lane document; a
+// temporal-aware consumer chooses this bank before legacy exclusion fallback.
+export function buildTemporalPartsBank(pkg, reviewedSharedCorridors, displayLanes, history) {
+  const normal = RailNetwork.normalRailServicePackage(pkg, reviewedSharedCorridors, displayLanes, history);
+  const managed = new Set((history.service_status_periods || []).map((period) => period.lineID));
+  const temporalPartsByRegion = {};
+  for (const line of normal.lines) {
+    if (!managed.has(line.id)) continue;
+    const region = String(line.country || normal.country || "").split("+")[0].toLowerCase();
+    const selected = { ...normal, lines: [line] };
+    const network = RailNetwork.buildNetworkFromCompactPackage(selected, null, displayLanes);
+    const { rows, excluded } = computePartsByRegionRows(selected, network, null, { reversed: [] });
+    if (excluded.length || !rows.length || network.strokeModel?.lines.length !== 1)
+      throw new Error(`${line.id}: temporal geometry requires exactly one normal chain bank`);
+    (temporalPartsByRegion[region] ||= []).push(...rows);
+  }
+  for (const rows of Object.values(temporalPartsByRegion))
+    rows.sort((a, b) => a[0].localeCompare(b[0]) || a[1] - b[1]);
+  const bankRevision = createHash("sha256").update(JSON.stringify(temporalPartsByRegion)).digest("hex");
+  return { format: "jtm-temporal-parts-v1", historyRevision: history.revision, bankRevision, temporalPartsByRegion };
 }
 
 function computePartsByRegionRows(pkg, network, reviewedSharedCorridors, loopWinding) {

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Scoped display-only owner. Frozen review inputs are explicit; no default evidence or acceptance.
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -401,7 +402,7 @@ export function prepare(args) {
 function main(args = process.argv.slice(2)) {
   const p = prepare(args);
   if (p.candidateRoot) {
-    assert(p.candidateRoot.startsWith('/private/tmp/'), 'Candidate root must be under /private/tmp');
+    assertAllowedCandidateDirectory(p.candidateRoot);
     fs.mkdirSync(p.candidateRoot, { recursive: true });
     for (const [key, contents] of Object.entries(p.outputs)) fs.writeFileSync(path.join(p.candidateRoot, path.basename(p.snapshots[key].path)), contents);
     fs.writeFileSync(path.join(p.candidateRoot, 'yodo-shared-stations-display.geojson'), JSON.stringify(candidateGeoJSON(p.pkg, p.e), null, 2) + '\n');

@@ -677,9 +677,15 @@ public struct RouteNetwork: Sendable {
             if coordinates.isEmpty, let rawStart = feature.geometry?.lines.first?.first,
                Geometry.distanceMeters(rawStart, sourceStart) > Geometry.distanceMeters(rawStart, sourceEnd) + 50 { return nil }
             var slice: [Coordinate]
-            if let compact = lines[lineIndex].compactLine, !compact.displayReversalBranches.isEmpty,
-               let reviewed = compact.displayIntervalCoordinates[record.intervalIndex] {
+            // A reviewed display interval is the drawn track for this hop, however far
+            // the repair moved it from the physical interval; projection cannot find it.
+            // Its ends are pinned to the station display positions, as decodeDisplayIntervals does,
+            // so the ride meets the dots and neighbouring hops without a split.
+            if let compact = lines[lineIndex].compactLine,
+               let reviewed = compact.displayIntervalCoordinates[record.intervalIndex], reviewed.count >= 2 {
                 slice = forward ? reviewed : Array(reviewed.reversed())
+                slice[0] = start
+                slice[slice.count - 1] = end
             } else {
                 guard let best = bestFit(over: [lineIndex], rawStart: start, rawEnd: end,
                                          continueFrom: coordinates.last, cache: &cache),

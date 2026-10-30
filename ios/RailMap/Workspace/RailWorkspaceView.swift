@@ -902,6 +902,10 @@ struct RailWorkspaceView: View {
                         guard journeySaveAttemptID == nil else { return }
                         closeJourneyEditor()
                     },
+                    onDraftMap: { snapshot in
+                        guard controller.acceptsDraftMap else { return }
+                        controller.draftMap = snapshot
+                    },
                     onSave: { commitJourneyEditor($0, launch: launch) })
             } else {
                 RideEditorView(
@@ -2780,7 +2784,9 @@ struct RailWorkspaceView: View {
         do {
             let result = try await RouteRepairSession.search(
                 train: stepped.train, baseline: train, package: package, steps: stepped.steps,
-                loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) })
+                loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
+                loadAdmissionContext: { try loadJourneyAdmissionContext(
+                    rideDate: Dates.normalizeDateString($0.date), package: $1) })
             guard result.accepts(storedTrain(id: train.id)) else {
                 noteRepairInterrupted()
                 return
@@ -2830,7 +2836,9 @@ struct RailWorkspaceView: View {
                 let result = try await RouteRepairSession.search(
                     train: train, baseline: started, package: package, steps: remaining,
                     repaired: repaired, gaps: gaps,
-                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) })
+                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
+                    loadAdmissionContext: { try loadJourneyAdmissionContext(
+                        rideDate: Dates.normalizeDateString($0.date), package: $1) })
                 guard result.accepts(storedTrain(id: started.id)) else {
                     noteRepairInterrupted()
                     return

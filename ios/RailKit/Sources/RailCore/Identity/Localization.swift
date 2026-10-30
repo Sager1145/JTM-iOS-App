@@ -412,7 +412,7 @@ public struct Localization: Sendable {
     /// A parameter that is missing, `null` or `undefined` leaves the whole
     /// placeholder standing — the UI shows `全部列車（{count}）` rather than an
     /// empty pair of brackets, which is how these bugs get spotted.
-    static func fill(_ template: String, _ params: [String: Param]?) -> String {
+    public static func fill(_ template: String, _ params: [String: Param]?) -> String {
         guard let params else { return template }
         let scalars = Array(template.unicodeScalars)
         var out = String.UnicodeScalarView()
@@ -669,30 +669,13 @@ public struct Localization: Sendable {
         // U+FEFF, which Foundation's does not, and it excludes U+0085, which
         // Foundation's does.
         result = String(
-            String.UnicodeScalarView(result.unicodeScalars.filter { !isJSWhitespace($0) }))
+            String.UnicodeScalarView(result.unicodeScalars.filter { !JSString.whitespace.contains($0) }))
         // `.literal` so these are code-unit substitutions, matching a
         // JavaScript regex replace rather than a canonical-equivalence search.
         for (from, to) in [("ヶ", "ケ"), ("ヵ", "カ"), ("ゖ", "け"), ("ゕ", "か")] {
             result = result.replacingOccurrences(of: from, with: to, options: .literal)
         }
         return result
-    }
-
-    /// ECMAScript's `\s`: WhiteSpace ∪ LineTerminator.
-    private static func isJSWhitespace(_ scalar: Unicode.Scalar) -> Bool {
-        switch scalar.value {
-        case 0x09, 0x0A, 0x0B, 0x0C, 0x0D,  // tab, LF, VT, FF, CR
-            0x20,  // space
-            0x00A0,  // no-break space
-            0x1680,  // ogham space mark
-            0x2000...0x200A,  // en quad … hair space
-            0x2028, 0x2029,  // line / paragraph separator
-            0x202F, 0x205F, 0x3000,  // narrow nbsp, medium math, ideographic
-            0xFEFF:  // zero width no-break space
-            return true
-        default:
-            return false
-        }
     }
 
     private func nonEmpty(_ value: String?) -> String? {

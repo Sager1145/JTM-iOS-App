@@ -13,6 +13,22 @@ import UIKit
 /// dependency anyone can see. Here they are one name.
 enum MapProjection {
 
+    /// A region as the rect the padded framing call needs.
+    static func mapRect(of region: MKCoordinateRegion) -> MKMapRect {
+        let north = region.center.latitude + region.span.latitudeDelta / 2
+        let south = region.center.latitude - region.span.latitudeDelta / 2
+        let west = region.center.longitude - region.span.longitudeDelta / 2
+        let east = region.center.longitude + region.span.longitudeDelta / 2
+        let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: north, longitude: west))
+        let bottomRight = MKMapPoint(
+            CLLocationCoordinate2D(latitude: south, longitude: east))
+        return MKMapRect(
+            x: min(topLeft.x, bottomRight.x),
+            y: min(topLeft.y, bottomRight.y),
+            width: abs(bottomRight.x - topLeft.x),
+            height: abs(bottomRight.y - topLeft.y))
+    }
+
     /// Web-Mercator zoom for the map view's current span, in the
     /// Google/Leaflet convention: 256-point tiles, so the world is
     /// `256 × 2^zoom` points wide.
@@ -93,26 +109,7 @@ enum MapProjection {
     /// The box that holds every stroke of these lines, with the margin the
     /// framing convention wants.
     static func region(covering lines: [RailNetworkStore.DrawnLine]) -> MKCoordinateRegion? {
-        var minLat = Double.infinity, maxLat = -Double.infinity
-        var minLon = Double.infinity, maxLon = -Double.infinity
-        for line in lines {
-            for interval in line.intervals {
-                for point in interval {
-                    minLat = min(minLat, point.lat)
-                    maxLat = max(maxLat, point.lat)
-                    minLon = min(minLon, point.lon)
-                    maxLon = max(maxLon, point.lon)
-                }
-            }
-        }
-        guard minLat <= maxLat, minLon <= maxLon else { return nil }
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(
-                latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2),
-            span: MKCoordinateSpan(
-                latitudeDelta: max((maxLat - minLat) * 1.25, 0.01),
-                longitudeDelta: max((maxLon - minLon) * 1.25, 0.01))
-        )
+        RailMapController.region(covering: lines.flatMap(\.intervals))
     }
 
     /// The box that holds these strokes — ``RailMapController/region(covering:)``.

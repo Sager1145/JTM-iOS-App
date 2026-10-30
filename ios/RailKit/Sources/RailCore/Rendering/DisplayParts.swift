@@ -906,6 +906,21 @@ public enum DisplayParts {
         let outgoingWindow: Double
     }
 
+    /// An explicitly reviewed straight spur needs only its two endpoints.
+    /// A lone repeated neighbour without that authority remains an artifact.
+    static func reviewedReversalRoot(
+        _ incoming: [Coordinate]?, _ outgoing: [Coordinate]?, stems: [[Coordinate]]
+    ) -> Coordinate? {
+        guard let incoming, let outgoing, incoming.count >= 2, outgoing.count >= 2 else { return nil }
+        return stems.first { stem in
+            stem.count == 2 && !Grooming.sameCoordinate(stem[0], stem[1])
+                && Grooming.sameCoordinate(incoming.last, stem[1])
+                && Grooming.sameCoordinate(incoming[incoming.count - 2], stem[0])
+                && Grooming.sameCoordinate(outgoing[0], stem[1])
+                && Grooming.sameCoordinate(outgoing[1], stem[0])
+        }?.first
+    }
+
     /// Rebuild the drawn approach on both sides of ONE platform.
     ///
     /// `incoming` arrives at the station and `outgoing` leaves it; either is
@@ -995,12 +1010,31 @@ public enum DisplayParts {
         return result
     }
 
+    /// Source authority requires an explicit declaration and both raw display
+    /// sides, not endpoints welded by decodeDisplayIntervals. Unknown codes
+    /// and open terminals cannot satisfy this interior-boundary contract.
+    static func sourceAnchoredStationCodes(_ line: CompactPackage.Line) -> Set<String> {
+        var codes = Set<String>()
+        for index in line.stations.indices where index > 0 && index < line.segments.count {
+            let code = line.stations[index].id
+            guard line.displaySourceAnchoredStationCodes.contains(code),
+                let anchor = line.displayStationCoordinates[code],
+                let incoming = line.displayIntervalCoordinates[index - 1], incoming.count >= 2,
+                let outgoing = line.displayIntervalCoordinates[index], outgoing.count >= 2,
+                incoming.last == anchor, outgoing.first == anchor
+            else { continue }
+            codes.insert(code)
+        }
+        return codes
+    }
+
     /// Every interval runs platform to platform, so every station is an
     /// approach from one or both sides. Reach and window are capped at a share
     /// of each interval, so one station's rebuild can never run into its
     /// neighbour's.
     static func anchorIntervalsToStations(
-        _ intervals: inout [[Coordinate]], stations: [CompactPackage.Station]
+        _ intervals: inout [[Coordinate]], stations: [CompactPackage.Station],
+        reviewedStems: [[Coordinate]] = [], skippedStationCodes: Set<String> = []
     ) {
         let stationCount = stations.count
         if intervals.isEmpty { return }
@@ -1019,6 +1053,8 @@ public enum DisplayParts {
             if incoming == nil && outgoing == nil { continue }
             if let incoming, incoming.count < 2 { continue }
             if let outgoing, outgoing.count < 2 { continue }
+            if reviewedReversalRoot(incoming, outgoing, stems: reviewedStems) != nil { continue }
+            if skippedStationCodes.contains(stations[station].id) { continue }
             let anchor = stations[station].coordinate
             let budgets = ApproachBudgets(
                 incomingReach: Swift.min(
@@ -1280,16 +1316,20 @@ public enum DisplayParts {
                 && Grooming.sameCoordinate(previous[previous.count - 1 - shared], interval[shared]) {
                 shared += 1
             }
-            return shared >= 3 && shared < previous.count && shared < interval.count
+            let reviewedRoot = reviewedReversalRoot(previous, interval, stems: line.displayReversalBranches)
+            return (shared >= 3 || (shared == 2 && reviewedRoot != nil))
+                && shared < previous.count && shared < interval.count
                 ? interval[shared - 1] : nil
         }
-        anchorIntervalsToStations(&intervals, stations: line.displayStations)
+        anchorIntervalsToStations(&intervals, stations: line.displayStations,
+                                  reviewedStems: line.displayReversalBranches,
+                                  skippedStationCodes: sourceAnchoredStationCodes(line))
 
         for (index, interval) in intervals.enumerated() {
             var decoded = interval
             appendDisplayInterval(&decoded, current: &current, laid: &laid, parts: &parts,
                                   stationPoints: stationPoints, anchorKeys: anchorKeys,
-                                  surveyedSwitch: exactSwitches[index])
+                                  surveyedSwitch: exactSwitches[index], reviewedStems: line.displayReversalBranches)
         }
         flushDisplayPart(current: &current, parts: &parts)
 
@@ -1327,9 +1367,10 @@ public enum DisplayParts {
     private static func appendDisplayInterval(
         _ decoded: inout [Coordinate], current: inout [Coordinate], laid: inout TrackIndex,
         parts: inout [[Coordinate]], stationPoints: [Coordinate], anchorKeys: Set<String>,
-        surveyedSwitch: Coordinate?
+        surveyedSwitch: Coordinate?, reviewedStems: [[Coordinate]]
     ) {
-        if !current.isEmpty { dropStationRepeat(&current, &decoded) }
+        let reviewedRoot = reviewedReversalRoot(current, decoded, stems: reviewedStems)
+        if !current.isEmpty && reviewedRoot == nil { dropStationRepeat(&current, &decoded) }
         var coordinates = decoded
         var exactShared = 0
         while exactShared < current.count && exactShared < decoded.count
@@ -1340,7 +1381,8 @@ public enum DisplayParts {
         // Exact retraces draw the station spur once at its physical
         // switch. Only a shallow through-main continuation is welded; a
         // real main reversal stays separate. Source routing is unchanged.
-        let exactSpur = exactShared >= 3 && exactShared < current.count && exactShared < decoded.count
+        let exactSpur = (exactShared >= 3 || (exactShared == 2 && reviewedRoot != nil))
+            && exactShared < current.count && exactShared < decoded.count
             && surveyedSwitch.map { Grooming.sameCoordinate($0, decoded[exactHead]) } == true
             && !stationPoints.contains(where: { Grooming.sameCoordinate($0, decoded[exactHead]) })
             && pathLength(Array(decoded[exactHead...])) >= retraceMinTailMeters

@@ -675,7 +675,7 @@ extension ChatGPTSubscriptionAuth {
     }
 }
 
-private final class ChatGPTSubscriptionNoRedirectDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
+final class ChatGPTSubscriptionNoRedirectDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
     func urlSession(
         _ session: URLSession,
         task: URLSessionTask,

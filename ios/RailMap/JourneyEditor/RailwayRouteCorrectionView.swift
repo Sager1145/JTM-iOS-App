@@ -165,6 +165,7 @@ struct RailwayRouteCorrectionView: View {
             .filter { !excluded.contains($0) }
         // Shared station groups yield reviewable candidates, not certified junctions.
         let worker = Task.detached(priority: .userInitiated) {
+            let context = try loadJourneyAdmissionContext(rideDate: serviceDate, package: package)
             let aliases = try loadJourneyStationAliases(
                 for: required + Array(excluded) + [search.origin, search.destination], package: package)
             let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
@@ -186,13 +187,13 @@ struct RailwayRouteCorrectionView: View {
             let preferred = LocalJourneySearch.search(
                 package: package, originCode: search.origin, destinationCode: search.destination,
                 trainType: trainType, excludingStationCodes: canonicalExcluded,
-                requiredStationCodes: required, stationAliases: aliases, continuation: allows)
+                requiredStationCodes: required, stationAliases: aliases, continuation: allows, admissionContext: context)
             var choices = preferred.choices
             if choices.isEmpty {
                 choices = LocalJourneySearch.search(
                     package: package, originCode: search.origin, destinationCode: search.destination,
                     trainType: trainType, excludingStationCodes: canonicalExcluded,
-                    requiredStationCodes: required, stationAliases: aliases).choices
+                    requiredStationCodes: required, stationAliases: aliases, admissionContext: context).choices
             }
             let originKey = canonical(search.origin)
             let destinationKey = canonical(search.destination)
@@ -218,7 +219,7 @@ struct RailwayRouteCorrectionView: View {
                     maximumChoices: 1,
                     continuation: { from, to, code in
                         namedIDs.contains(from.id) && namedIDs.contains(to.id) && allows(from, to, code)
-                    }, originLineIDs: namedIDs, destinationLineIDs: namedIDs)
+                    }, originLineIDs: namedIDs, destinationLineIDs: namedIDs, admissionContext: context)
                 if let choice = direct.choices.first, seen.insert(choice.id).inserted {
                     namedChoices.append(choice)
                 }

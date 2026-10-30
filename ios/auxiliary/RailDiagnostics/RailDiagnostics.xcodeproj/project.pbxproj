@@ -95,6 +95,7 @@
 		5AB65AB0215555CAC84F27A3 /* PanelMorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A566E44F9A8692C586D9E /* PanelMorph.swift */; };
 		5C2739755648283E6D6D8DAC /* InspectionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6F01AA56FB0D35D2593982 /* InspectionPlanView.swift */; };
 		5D6416E72BC819AA0B3BE76F /* LongJourneyDetailTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A587DEB3B20815EF89798 /* LongJourneyDetailTestView.swift */; };
+		5E06FE8478AAA64F376BCC0A /* BundledRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7986EFE0FBDB60FE2A3930 /* BundledRegistry.swift */; };
 		5EAAB25FC510A68947A629B3 /* RideLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86354E99E74D8D60783B878 /* RideLibrary.swift */; };
 		5F96686402CB20252F6E3A71 /* WorkbenchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1C621A1A2AD6320A020584 /* WorkbenchStore.swift */; };
 		60E1F9CE35BAEF3AEA59540D /* MapNetworkRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F096D22CFA63D4532171178 /* MapNetworkRendering.swift */; };
@@ -216,6 +217,7 @@
 		DC8BC14C6872195CBFA7BAF8 /* EditorBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BF34EA7764989ACDAEB702 /* EditorBindings.swift */; };
 		DD5B44CAB658A8EB1356B310 /* RailMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */; };
 		DDA46A3C37CC9998FBF5A2FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB49CBB52FC45184A8CF048 /* Assets.xcassets */; };
+		E28638CCB0E4D37D08B9A9A9 /* BracketedStationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C63B707E649C55C2C3066 /* BracketedStationText.swift */; };
 		E329D694B29EEED46C3ADE67 /* EditorDateTimeFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAA3C1C7799928A9481E1C /* EditorDateTimeFields.swift */; };
 		E330DDFB20F1F19290E5352B /* TraversedLineDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6300B33476369A4FD0D8BE /* TraversedLineDetector.swift */; };
 		E36D2DDB56807DE021979E45 /* InspectionEvidence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A6E14921BFEE389A363AB2 /* InspectionEvidence.swift */; };
@@ -374,6 +376,7 @@
 		7D1437DC0B31F270C702918F /* WorkspaceUtilityMenuItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceUtilityMenuItems.swift; sourceTree = "<group>"; };
 		7D381153823961DCA716334A /* ServicePatternPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePatternPickerView.swift; sourceTree = "<group>"; };
 		7DA3B2CC20B360287B026FB2 /* MapInteractionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionCoordinator.swift; sourceTree = "<group>"; };
+		7E1C63B707E649C55C2C3066 /* BracketedStationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BracketedStationText.swift; sourceTree = "<group>"; };
 		80D84A9559257D935A0EAE75 /* StatisticsStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsStrings.swift; sourceTree = "<group>"; };
 		81762E089BB66C9D4D68BA53 /* MapControlBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapControlBar.swift; sourceTree = "<group>"; };
 		8219453F539E9F11A3EB6070 /* EditorValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorValidation.swift; sourceTree = "<group>"; };
@@ -401,6 +404,7 @@
 		9869CCBC56819C446D6DFC32 /* ShareComposerCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareComposerCanvas.swift; sourceTree = "<group>"; };
 		98E92AA03203E46984391D85 /* MapLayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLayersView.swift; sourceTree = "<group>"; };
 		9BE68E0947AD261729EDC07C /* MileageStatisticsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageStatisticsStore.swift; sourceTree = "<group>"; };
+		9E7986EFE0FBDB60FE2A3930 /* BundledRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledRegistry.swift; sourceTree = "<group>"; };
 		A0480CC5AB53874842E7F666 /* InspectionViewpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectionViewpoints.swift; sourceTree = "<group>"; };
 		A0C9357088E6AA1A9E8D09E2 /* RailwayRouteCorrectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayRouteCorrectionView.swift; sourceTree = "<group>"; };
 		A15A566E44F9A8692C586D9E /* PanelMorph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelMorph.swift; sourceTree = "<group>"; };
@@ -732,6 +736,7 @@
 			children = (
 				4834D7FF5E50EB012674A42D /* AppLocalization.swift */,
 				76D16F9E74CE4A266B504BEF /* AppStrings.swift */,
+				7E1C63B707E649C55C2C3066 /* BracketedStationText.swift */,
 				65D3961A4DC61FA3CCC5DF8E /* ClockStrings.swift */,
 				628DBA7D128F32B95C9901ED /* DataStrings.swift */,
 				7519A24B5ED7E48957B2E05E /* EditorStrings.swift */,
@@ -873,6 +878,7 @@
 		DC1524EA1E2F7C7FD3450AEF /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				9E7986EFE0FBDB60FE2A3930 /* BundledRegistry.swift */,
 				DE1BAED36F2B151418B13211 /* MergedStore.swift */,
 				07810C9A038F83787D707F6E /* RiddenRouteStore.swift */,
 				D86354E99E74D8D60783B878 /* RideLibrary.swift */,
@@ -1094,6 +1100,8 @@
 				18420F0D71EDA564510F04E0 /* BatchCaptureController.swift in Sources */,
 				76D869CFC44C5EEBAFF27E65 /* BatchCaptureGeometry.swift in Sources */,
 				A57C15CC9E1DA45B5A2E38FF /* BottomChrome.swift in Sources */,
+				E28638CCB0E4D37D08B9A9A9 /* BracketedStationText.swift in Sources */,
+				5E06FE8478AAA64F376BCC0A /* BundledRegistry.swift in Sources */,
 				E6C4BAEB804BCBC8A1299D37 /* CategoryIndexes.swift in Sources */,
 				4F744450DC0714F182D9A2EE /* ChatGPTSubscriptionAuth.swift in Sources */,
 				889B090409BD1BB6AD355B57 /* ChatGPTSubscriptionService.swift in Sources */,

@@ -303,7 +303,7 @@ private extension JourneyCompletion {
         directory: StationNameDirectory? = nil
     ) -> StationMatch? {
         let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
-        let foldedLine = fold(trimmed)
+        let foldedLine = StationReferenceResolution.fold(trimmed)
         guard !foldedLine.isEmpty else { return nil }
         switch RegistryIdentityLookup.phase(forRegion: regionCode) {
         case .pending:
@@ -338,7 +338,8 @@ private extension JourneyCompletion {
             // A country, including a wrong line, stays unresolved.
             if countryBound { return nil }
         }
-        let exactText = fold(parsed.name) == fold(trimmed)
+        let exactText = StationReferenceResolution.fold(parsed.name)
+            == StationReferenceResolution.fold(trimmed)
         if parsed.line == nil, exactText, !whole.isEmpty {
             return registryMatch(whole, catalog: catalog, regionCode: regionCode)
         }
@@ -394,12 +395,6 @@ private extension JourneyCompletion {
         return catalog.stations(in: regionCode).first { station in
             station.name == hit.name && hit.codes.contains(station.key.sourceCode)
         }
-    }
-
-    private static func fold(_ value: String) -> String {
-        value.trimmingCharacters(in: .whitespacesAndNewlines)
-            .precomposedStringWithCompatibilityMapping
-            .lowercased()
     }
 
     static func times(in line: String) -> [String] {

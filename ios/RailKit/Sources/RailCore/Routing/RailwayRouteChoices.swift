@@ -3,6 +3,35 @@ import Foundation
 /// Endpoint choices use the package's physical station order. Passenger
 /// service names and timetables cannot add a station to a different alignment.
 public enum RailwayRouteChoices {
+    /// Validated service admission for one explicit day. This only admits compact
+    /// proposals; the dated physical solver still owns station and rail validity.
+    public struct AdmissionContext: Sendable {
+        public let civilDay: String
+        private let resolutions: [String: RailServiceStatusResolution]
+
+        public init(history: RailHistoryOverlay, civilDay: String) throws {
+            // Validate even a legacy overlay with no managed lines, using the same
+            // real-calendar rule as every T1 resolution (no hidden clock).
+            _ = try history.serviceStatus(lineID: "", on: civilDay)
+            self.civilDay = civilDay
+            var resolutions: [String: RailServiceStatusResolution] = [:]
+            for id in Set(history.serviceStatusPeriods.map(\.lineID)) {
+                resolutions[id] = try history.serviceStatus(lineID: id, on: civilDay)
+            }
+            self.resolutions = resolutions
+        }
+
+        func matches(_ rideDate: String?) -> Bool { rideDate == civilDay }
+
+        func permits(_ line: CompactPackage.Line) -> Bool {
+            guard let resolution = resolutions[line.id], resolution.managed else {
+                return line.isTraversableForSearch
+            }
+            // Managed normal is deliberately nil, distinct from static fallback.
+            return resolution.serviceStatus != "substitute_bus"
+        }
+    }
+
     public struct Visit: Hashable, Sendable {
         public var code: String
         public var name: String
@@ -20,12 +49,13 @@ public enum RailwayRouteChoices {
 
     public static func choices(
         package: CompactPackage, originCode: String, destinationCode: String,
-        trainType: String? = nil, excludingStationCodes: Set<String> = []
+        trainType: String? = nil, excludingStationCodes: Set<String> = [],
+        admissionContext: AdmissionContext? = nil
     ) -> [Choice] {
         guard originCode != destinationCode,
               !excludingStationCodes.contains(originCode),
               !excludingStationCodes.contains(destinationCode) else { return [] }
-        let lines = package.lines.filter { permits($0, trainType: trainType) }
+        let lines = package.lines.filter { permits($0, trainType: trainType, admissionContext: admissionContext) }
         var found: [Choice] = []
         for line in lines {
             found += slices(line: line, from: originCode, to: destinationCode,
@@ -43,12 +73,13 @@ public enum RailwayRouteChoices {
         }
     }
 
-    static func permits(_ line: CompactPackage.Line, trainType: String?) -> Bool {
+    static func permits(_ line: CompactPackage.Line, trainType: String?,
+                        admissionContext: AdmissionContext? = nil) -> Bool {
         let type = (trainType ?? "local").lowercased()
         let highSpeed = ["highspeed", "high speed", "high-speed", "shinkansen", "新幹線", "新干线", "高速"]
             .contains { type.contains($0) }
         let highSpeedLine = line.name.contains("新幹線") || ["high_speed", "shinkansen"].contains(line.kind ?? "")
-        return line.isTraversableForSearch && (highSpeed ? highSpeedLine : !highSpeedLine)
+        return (admissionContext?.permits(line) ?? line.isTraversableForSearch) && (highSpeed ? highSpeedLine : !highSpeedLine)
     }
 
     private static func slices(
@@ -98,10 +129,5 @@ public enum RailwayRouteChoices {
             }
         }
         return result
-    }
-
-    private static func unique(_ values: [String]) -> [String] {
-        var seen: Set<String> = []
-        return values.filter { seen.insert($0).inserted }
     }
 }

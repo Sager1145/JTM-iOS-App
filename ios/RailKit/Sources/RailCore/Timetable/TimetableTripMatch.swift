@@ -33,12 +33,13 @@ public enum TimetableTripMatch {
         }
     }
 
+    /// The physical matcher's labels, plus a name followed by any trailing text.
     private static func matchesService(_ input: String, trip: TrainTimetableDatabase.Trip) -> Bool {
+        if TimetablePhysicalRouteMatch.matchesService(input, trip: trip) { return true }
         let names = [trip.service.canonicalName, trip.service.englishName,
                      trip.trainNumber, trip.publicNumber]
             .compactMap { $0?.lowercased() }
         let query = input.lowercased()
-        return names.contains { $0 == query }
-            || names.contains { query.hasPrefix($0 + " ") }
+        return names.contains { query.hasPrefix($0 + " ") }
     }
 }

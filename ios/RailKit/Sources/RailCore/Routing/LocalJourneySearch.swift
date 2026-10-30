@@ -44,14 +44,16 @@ public enum LocalJourneySearch {
         maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
         continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
         originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil,
-        operatorID: String? = nil
+        operatorID: String? = nil,
+        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
     ) -> [RailwayRouteChoices.Choice] {
         search(package: package, originCode: originCode, destinationCode: destinationCode,
                trainType: trainType, excludingStationCodes: excludingStationCodes,
                requiredStationCodes: requiredStationCodes, stationAliases: stationAliases,
                maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
                continuation: continuation, originLineIDs: originLineIDs,
-               destinationLineIDs: destinationLineIDs, operatorID: operatorID).choices
+               destinationLineIDs: destinationLineIDs, operatorID: operatorID,
+               admissionContext: admissionContext).choices
     }
 
     /// Keeps at most `maximumChoices` settled labels per station occurrence and anchor progress, and
@@ -66,7 +68,8 @@ public enum LocalJourneySearch {
         maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
         continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
         originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil,
-        operatorID: String? = nil
+        operatorID: String? = nil,
+        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
     ) -> Result {
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
         func canonical(_ code: String) -> String {
@@ -92,7 +95,7 @@ public enum LocalJourneySearch {
               anchors.allSatisfy({ !excludingStationCodes.contains($0) }) else { return result() }
         let limit = min(maximumChoices, 3)
         let budget = min(maximumExpansions, 200_000)
-        let lines = package.lines.filter { RailwayRouteChoices.permits($0, trainType: trainType) }
+        let lines = package.lines.filter { RailwayRouteChoices.permits($0, trainType: trainType, admissionContext: admissionContext) }
             .sorted { $0.id < $1.id }
         var nodes: [Node] = []
         var edges: [Edge] = []
@@ -440,12 +443,8 @@ public enum LocalJourneySearch {
                 lineNames: [line.name], operatorNames: line.operator.map { [$0] },
                 lineIDs: [line.id], sectionCodes: [edge.code]))
         }
-        func unique(_ values: [String]) -> [String] {
-            var seen: Set<String> = []
-            return values.filter { seen.insert($0).inserted }
-        }
-        return .init(lineIDs: lineIDs, lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
-                     operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
+        return .init(lineIDs: lineIDs, lineNames: RouteGraph.orderedUnique(sections.flatMap { $0.lineNames ?? [] }),
+                     operatorNames: RouteGraph.orderedUnique(sections.flatMap { $0.operatorNames ?? [] }),
                      stations: visits, sectionCodes: path.map(\.code), routeSections: sections)
     }
 }

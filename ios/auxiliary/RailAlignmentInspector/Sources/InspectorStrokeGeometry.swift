@@ -6,14 +6,30 @@ import RailCore
 /// Exact shared survey vertices permit tangent inheritance; proximity alone
 /// never creates a join or changes railway connectivity.
 enum InspectorStrokeGeometry {
-    static let revision = "inspector-centreline-v5-preserve-small-survey-curves"
+    static let revision = "inspector-centreline-v7-display-source-corners"
     static var joinContract: String {
         "exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=\(ContinuousStroke.joinMaxTangentDegrees);blend=\(ContinuousStroke.joinBlendMetres);fraction=\(ContinuousStroke.joinBlendIntervalFraction);deviationPx=\(ContinuousStroke.joinBlendDeviationPx);deviationMetres=\(ContinuousStroke.joinBlendDeviationMetres)"
     }
 
+    struct Result {
+        var paths: [[Coordinate]]
+        var appliedLiteralSpanEdges: [[Int]]
+        var appliedSourceCornerEdges: [[Int]]
+    }
+
     static func build(display: [[Coordinate]], stations: [Coordinate],
-                      mapPointsPerPoint scale: Double, zoom: Double) -> [[Coordinate]] {
-        guard scale.isFinite, scale > 0 else { return display }
+                      mapPointsPerPoint scale: Double, zoom: Double,
+                      literalSpans: [[DisplayLiteralSpans.Span]] = []) -> [[Coordinate]] {
+        render(display: display, stations: stations, mapPointsPerPoint: scale,
+               zoom: zoom, literalSpans: literalSpans).paths
+    }
+
+    static func render(display: [[Coordinate]], stations: [Coordinate],
+                       mapPointsPerPoint scale: Double, zoom: Double,
+                       literalSpans: [[DisplayLiteralSpans.Span]] = []) -> Result {
+        guard scale.isFinite, scale > 0 else {
+            return Result(paths: display, appliedLiteralSpanEdges: display.map { _ in [] }, appliedSourceCornerEdges: display.map { _ in [] })
+        }
         let weight = RailStyle.scale(atZoom: zoom)
         let stationKeys = Set(stations.map(stationKey))
         // Project all unmodified chains first. Join discovery must not depend
@@ -58,7 +74,9 @@ enum InspectorStrokeGeometry {
             }
             return nil
         }
-        return display.indices.map { partIndex -> [Coordinate] in
+        var applied = display.map { _ in [Int]() }
+        var appliedCorners = display.map { _ in [Int]() }
+        let paths = display.indices.map { partIndex -> [Coordinate] in
             let part = display[partIndex]
             guard part.count > 1 else { return part }
             var measures = [Double](repeating: 0, count: part.count)
@@ -68,6 +86,12 @@ enum InspectorStrokeGeometry {
             let anchors = part.indices.filter {
                 $0 == 0 || $0 == part.count - 1 || stationKeys.contains(stationKey(part[$0]))
             }
+            let literals = DisplayLiteralSpans.projected(
+                literalSpans.indices.contains(partIndex) ? literalSpans[partIndex] : [],
+                coordinates: part) { coordinate in
+                    let p = MKMapPoint(coordinate.native)
+                    return .init(x: p.x / scale, y: p.y / scale)
+                }
             let stroke = ContinuousStroke.buildStroke(chains[partIndex], options: .init(
                 measures: measures, rows: [], totalMetres: measures.last ?? 0,
                 laneGapPx: Double(RailStyle.parallelLaneCentreDistance * weight),
@@ -75,12 +99,16 @@ enum InspectorStrokeGeometry {
                 cornerRadiusPx: Double(RailStyle.strokeCornerRadius * weight),
                 minCornerRadiusPx: Double(RailStyle.minimumCornerRadius(atScale: weight)),
                 anchors: anchors, joinStart: join(partIndex: partIndex, atEnd: false),
-                joinEnd: join(partIndex: partIndex, atEnd: true), enforceMinimumCornerRadius: true))
+                joinEnd: join(partIndex: partIndex, atEnd: true), enforceMinimumCornerRadius: true,
+                literalSpans: literals))
+            applied[partIndex] = stroke.appliedLiteralSpanEdges
+            appliedCorners[partIndex] = stroke.appliedSourceCornerEdges
             return stroke.points.map {
                 let coordinate = MKMapPoint(x: $0.x * scale, y: $0.y * scale).coordinate
                 return Coordinate(lon: coordinate.longitude, lat: coordinate.latitude)
             }
         }
+        return Result(paths: paths, appliedLiteralSpanEdges: applied, appliedSourceCornerEdges: appliedCorners)
     }
 
     // Preserve the inspector's existing station-anchor contract. These rounded

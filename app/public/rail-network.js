@@ -1,13 +1,13 @@
 (function (root, factory) {
   "use strict";
 
-  const api = factory();
+  const api = factory(root);
   if (typeof module === "object" && module.exports) {
     module.exports = api;
   } else {
     root.RailNetwork = api;
   }
-})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (root) {
   "use strict";
 
   const DEFAULT_LINE_COLOR = "#7C8A82";
@@ -15,7 +15,15 @@
   // The window and classic worker execute the same read/decode/merge/build
   // implementation. Hosts only choose the execution surface and transfer the
   // completed network; optional review/lane files keep package-local fallback.
-  async function loadNetwork({ packageUrls, reviewedUrl, lanesUrl } = {}) {
+  async function loadNetwork({ inputs = null, dateContext = null, ...urls } = {}) {
+    const source = inputs || await loadNetworkInputs(urls);
+    return buildNetworkFromCompactPackage(source.pkg, source.reviewed, source.lanes, dateContext);
+  }
+
+  // Immutable inputs are keyed by resource URLs by the host, independently of
+  // the selected date. A context replacement can derive without fetching or
+  // parsing national resources again.
+  async function loadNetworkInputs({ packageUrls, reviewedUrl, lanesUrl } = {}) {
     if (!Array.isArray(packageUrls) || !packageUrls.length)
       throw new Error("A rail package URL is required.");
     const responses = await Promise.all(
@@ -40,7 +48,7 @@
     }
     const reviewed = await optionalJson(reviewedUrl, "shared-corridor review");
     const lanes = await optionalJson(lanesUrl, "display lanes");
-    return buildNetworkFromCompactPackage(merged, reviewed, lanes);
+    return { pkg: merged, reviewed, lanes };
   }
   const RANK_MINZOOM = [3, 4, 5, 6, 7];
   const STATION_DOT_GAP_PX = 22;
@@ -715,6 +723,18 @@
   // `incoming` arrives at the station and `outgoing` leaves it; either is null
   // at the two ends of an open line, where the platform is a terminal and the
   // stroke simply stops on it.
+  // Explicit source authority distinguishes a two-endpoint straight spur
+  // from the ordinary duplicated station-neighbour artifact.
+  function reviewedReversalRoot(incoming, outgoing, stems) {
+    if (!incoming || !outgoing || incoming.length < 2 || outgoing.length < 2) return null;
+    const stem = (stems || []).find(points => points.length === 2 &&
+      !sameCoordinate(points[0], points[1]) &&
+      sameCoordinate(incoming[incoming.length - 1], points[1]) &&
+      sameCoordinate(incoming[incoming.length - 2], points[0]) &&
+      sameCoordinate(outgoing[0], points[1]) && sameCoordinate(outgoing[1], points[0]));
+    return stem ? stem[0] : null;
+  }
+
   function anchorStationApproach(incoming, outgoing, anchor, budgets) {
     // Two exact shared survey edges prove a real platform retrace. A
     // station-approach warp must not replace that spur with a through curve.
@@ -823,6 +843,7 @@
       if (!incoming && !outgoing) continue;
       if ((incoming && incoming.length < 2) || (outgoing && outgoing.length < 2))
         continue;
+      if (reviewedReversalRoot(incoming, outgoing, compactLine.displayReversalBranches)) continue;
       const row = compactLine.stations[station];
       if (skippedStationCodes.has(row[0])) continue;
       const rebuilt = anchorStationApproach(
@@ -886,6 +907,27 @@
       present.add(key);
     }
     return parts;
+  }
+
+  // Reviewed source authority is explicit per station. Endpoint equality
+  // after decode is insufficient: physical endpoints are always welded.
+  // Only a declared interior boundary with both raw display sides and its
+  // explicit alias can opt out of station-approach reconstruction.
+  function sourceAnchoredStationCodes(line) {
+    const declared = new Set(Array.isArray(line.displaySourceAnchoredStationCodes)
+      ? line.displaySourceAnchoredStationCodes : []);
+    const codes = new Set();
+    for (let index = 1; index < line.stations.length && index < line.segments.length; index += 1) {
+      const code = line.stations[index][0];
+      if (!declared.has(code)) continue;
+      const anchor = line.displayStationCoordinates?.[code];
+      const incoming = line.displayIntervalCoordinates?.[index - 1];
+      const outgoing = line.displayIntervalCoordinates?.[index];
+      if (anchor && incoming?.length >= 2 && outgoing?.length >= 2 &&
+          sameCoordinate(incoming.at(-1), anchor) && sameCoordinate(outgoing[0], anchor))
+        codes.add(code);
+    }
+    return codes;
   }
 
   // Decode every interval and weld both of its ends to the authoritative
@@ -1376,6 +1418,70 @@
   // station: the rail between platform and switch is shared and must be drawn
   // twice rather than turned into one connected line. The map reads continuous;
   // the topology stays separate, so nothing can slice through a junction.
+  const replacedDisplayParts = new WeakSet();
+
+  // Companion to coordinate-only construction. Admit against the ORIGINAL
+  // explicit interval, then bind all four witnesses to one unchanged part.
+  function displayLiteralSpansForLine(compactLine, parts) {
+    const result = parts.map(() => []);
+    if (replacedDisplayParts.has(parts)) return result;
+    const declaration = compactLine.displayInterpolation;
+    if (!declaration || !["display-literal-spans-v1","display-source-corners-v1"].includes(declaration.contract) ||
+        !Array.isArray(declaration.spans)) return result;
+    const point = value => Array.isArray(value) && value.length === 2 && value.every(Number.isFinite)
+      && (declaration.contract !== "display-source-corners-v1" ||
+          (Math.abs(value[0]) <= 180 && Math.abs(value[1]) <= 90));
+    const equal = (a, b) => point(a) && point(b) && a[0] === b[0] && a[1] === b[1];
+    const rawIntervals = compactLine.segments.map((row, index) =>
+      compactLine.displayIntervalCoordinates?.[index] || (!row[1] ? row[2] : null));
+    const stations = compactLine.stations.flatMap(row => [
+      [row[2], row[3]], compactLine.displayStationCoordinates?.[row[0]],
+    ]).filter(point);
+    // A declared branch endpoint is a topology boundary even if its branch
+    // is withheld or absent from these constructed parts. Swift admits
+    // against both raw branch declarations before any rendering residency.
+    if (declaration.contract === "display-source-corners-v1")
+      for (const key of ["displayBranchLeadIns", "displayReversalBranches"])
+        for (const branch of Array.isArray(compactLine[key]) ? compactLine[key] : [])
+          if (Array.isArray(branch)) {
+            const valid = branch.filter(point);
+            if (valid.length) stations.push(valid[0], valid.at(-1));
+          }
+    const candidates = [];
+    for (const span of declaration.spans) {
+      if (!span || !Number.isInteger(span.intervalIndex) || !Number.isInteger(span.sourceEdgeIndex)) continue;
+      const raw = rawIntervals[span.intervalIndex], edge = span.sourceEdgeIndex;
+      if (!Array.isArray(raw) || edge < 1 || edge + 2 >= raw.length ||
+          !Array.isArray(span.endpoints) || span.endpoints.length !== 2 ||
+          !span.endpoints.every(point)) continue;
+      const witnesses = raw.slice(edge - 1, edge + 3);
+      if (!witnesses.every(point) || new Set(witnesses.map(p => JSON.stringify(p))).size !== 4 ||
+          !equal(witnesses[1], span.endpoints[0]) || !equal(witnesses[2], span.endpoints[1]) ||
+          stations.some(station => witnesses.some(p => equal(station, p)))) continue;
+      let pairs = 0;
+      for (const interval of rawIntervals) if (Array.isArray(interval))
+        for (let i = 0; i + 1 < interval.length; i++)
+          if ((equal(interval[i], witnesses[1]) && equal(interval[i+1], witnesses[2])) ||
+              (equal(interval[i], witnesses[2]) && equal(interval[i+1], witnesses[1]))) pairs++;
+      if (pairs !== 1) continue;
+      const matches = [];
+      parts.forEach((part, partIndex) => {
+        for (let i = 1; i + 2 < part.length; i++)
+          if (witnesses.every((p, j) => equal(p, part[i - 1 + j]))) matches.push({partIndex, edgeIndex:i});
+      });
+      if (matches.length !== 1 || witnesses.some(witness =>
+          parts.reduce((count, part) => count + part.filter(p => equal(p, witness)).length, 0) !== 1)) continue;
+      candidates.push({...matches[0], witnesses: witnesses.map(p => p.slice())});
+    }
+    for (const candidate of candidates) {
+      if (candidates.some(other => other !== candidate && other.partIndex === candidate.partIndex &&
+          Math.abs(other.edgeIndex - candidate.edgeIndex) <= 3)) continue;
+      result[candidate.partIndex].push({edgeIndex:candidate.edgeIndex, witnesses:candidate.witnesses,
+        ...(declaration.contract === "display-source-corners-v1" ? {mode:"source-corners-v1"} : {})});
+    }
+    return result;
+  }
+
   function displayPartsForLine(
     compactLine,
     decodedOverride = null,
@@ -1393,6 +1499,11 @@
   ) {
     // Explicit schematic coordinates affect drawing only. Physical interval
     // identities still decode the original compact stations and segments.
+    // A decoded/shared-corridor override may replace the declared source
+    // geometry; it retains the caller's existing skip policy only.
+    if (!decodedOverride) skippedStationCodes = new Set([
+      ...skippedStationCodes, ...sourceAnchoredStationCodes(compactLine),
+    ]);
     compactLine = displayLineForCoordinates(compactLine);
     const stationPoints = compactLine.stations.map((station) => [
       station[2],
@@ -1436,7 +1547,9 @@
       let shared = 0;
       while (shared < previous.length && shared < interval.length &&
         sameCoordinate(previous[previous.length - 1 - shared], interval[shared])) shared++;
-      return shared >= 3 && shared < previous.length && shared < interval.length
+      const reviewedRoot = reviewedReversalRoot(previous, interval, compactLine.displayReversalBranches);
+      return (shared >= 3 || (shared === 2 && reviewedRoot)) &&
+        shared < previous.length && shared < interval.length
         ? interval[shared - 1] : null;
     });
     const intervals = anchorIntervalsToStations(
@@ -1451,7 +1564,8 @@
         flush();
         return;
       }
-      if (current.length) dropStationRepeat(current, decoded);
+      const reviewedRoot = reviewedReversalRoot(current, decoded, compactLine.displayReversalBranches);
+      if (current.length && !reviewedRoot) dropStationRepeat(current, decoded);
 
       let coordinates = decoded;
       // A station spur must be exact retraced survey geometry,
@@ -1462,7 +1576,8 @@
       while (exactShared < current.length && exactShared < decoded.length &&
              sameCoordinate(current[current.length - 1 - exactShared], decoded[exactShared])) exactShared++;
       const exactHead = exactShared - 1;
-      const exactSpur = exactShared >= 3 && exactShared < current.length && exactShared < decoded.length &&
+      const exactSpur = (exactShared >= 3 || (exactShared === 2 && reviewedRoot)) &&
+        exactShared < current.length && exactShared < decoded.length &&
         exactSwitches[intervalIndex] && sameCoordinate(exactSwitches[intervalIndex], decoded[exactHead]) &&
         !stationPoints.some(point => sameCoordinate(point, decoded[exactHead])) &&
         pathLength(decoded.slice(exactHead)) >= RETRACE_MIN_TAIL_METERS;
@@ -1622,9 +1737,11 @@
         const spans = withheldSpansForPart(coordinates, keys);
         if (spans) coordinates.withheld = spans;
       });
-    return chain.concat(extraSegmentParts(compactLine, stationPoints, limits),
+    const constructed = chain.concat(extraSegmentParts(compactLine, stationPoints, limits),
       (compactLine.displayBranchLeadIns || []).filter(points => Array.isArray(points) && points.length >= 2)
         .map(points => points.map(point => point.slice())));
+    if (decodedOverride) replacedDisplayParts.add(constructed);
+    return constructed;
   }
 
   // Turns the vertices a part inherited from a bridged blocked interval (see
@@ -2271,8 +2388,12 @@
   // the part that is not. Returns null when the line has no drawable suspended
   // span, so a package without `serviceSpans` — every package but jp, and jp
   // before this field existed — produces byte-identical output to before.
-  function serviceSplitForLine(line, compactLine) {
-    const spans = compactLine.serviceSpans;
+  function serviceSplitForLine(line, compactLine, resolvedStatus = null) {
+    if (resolvedStatus?.managed && resolvedStatus.serviceStatus == null) return null;
+    if (resolvedStatus?.managed && resolvedStatus.serviceStatus !== "substitute_bus")
+      throw new Error("unsupported dated rail service status");
+    const spans = resolvedStatus?.managed
+      ? [[0, compactLine.stations.length - 1, 2]] : compactLine.serviceSpans;
     if (!Array.isArray(spans) || !spans.length) return null;
     const stations = compactLine.stations;
     const metrics = lineMetrics(line);
@@ -2812,8 +2933,14 @@
           lineId: section.lineId,
           reviewedCoordinates: (() => {
             const line = network.lineById.get(section.lineId);
-            const points = line?.displayReversalBranches?.length && line.displayIntervalCoordinates?.[section.intervalIndex];
-            return points ? (forward ? points : points.slice().reverse()) : null;
+            const points = line?.displayIntervalCoordinates?.[section.intervalIndex];
+            if (!points || points.length < 2) return null;
+            // Ends pinned to the station display positions, matching decodeDisplayIntervals.
+            const anchors = line.displayStationCoordinates || {};
+            const slice = forward ? points.slice() : points.slice().reverse();
+            slice[0] = anchors[forward ? section.fromCode : section.toCode] || (forward ? section.from : section.to);
+            slice[slice.length - 1] = anchors[forward ? section.toCode : section.fromCode] || (forward ? section.to : section.from);
+            return slice;
           })(),
           sourceCoordinates: forward ? [section.from, section.to] : [section.to, section.from],
           coordinates: (() => {
@@ -3799,13 +3926,81 @@
     };
   }
 
+  function railServiceAPI() {
+    const api = typeof module === "object" && module.exports
+      ? require("./rail-history-service.js") : root.RailHistoryService;
+    if (!api) throw new Error("dated rail display requires RailHistoryService");
+    return api;
+  }
+
+  function validateRailDateContext(context) {
+    if (!context || typeof context !== "object" || Array.isArray(context))
+      throw new Error("dated rail display requires a date context");
+    if (!["current", "rideDate", "historicalOverlay"].includes(context.era))
+      throw new Error("dated rail display: unsupported era");
+    const api = railServiceAPI();
+    api.validateRailCivilDay(context.today, "today");
+    if (context.rideDate != null) api.validateRailCivilDay(context.rideDate, "rideDate");
+    if (context.era === "rideDate" && context.rideDate == null)
+      throw new Error("dated rail display requires rideDate");
+    api.validateRailServiceStatusOverlay(context.history);
+    if (context.stationMemberships != null && (!Array.isArray(context.stationMemberships) ||
+        context.stationMemberships.some((row) => !row ||
+          ![row.lineID, row.lineName, row.operator, row.stationGroupID].every((value) => typeof value === "string" && value) ||
+          typeof row.visible !== "boolean")))
+      throw new Error("dated rail display: invalid station memberships");
+    return context;
+  }
+
+  // This first capability restores ordinary geometry only for independent,
+  // whole-line zero-lane identities. Neither display follows nor family
+  // allocation can safely be recomputed from one identity in isolation.
+  function normalRailServicePackage(pkg, reviewed, lanes, history) {
+    railServiceAPI().validateRailServiceStatusOverlay(history);
+    const managed = new Set((history.service_status_periods || []).map((p) => p.lineID));
+    const overrides = reviewedSharedCorridorOverrides(pkg, reviewed);
+    const identities = renderGroupIdentityByLine(lanes);
+    const rows = (key) => Object.values(lanes?.[key] || {}).flat();
+    for (const line of pkg.lines) {
+      if (!managed.has(line.id)) continue;
+      const unsupported = (reason) => { throw new Error(`${line.id}: unsupported temporal geometry (${reason})`); };
+      if (!drawsContinuousStroke(line, pkg)) unsupported("non-continuous region");
+      if (overrides.has(line.id)) unsupported("shared corridor");
+      if ([...(pkg.lanes || []), ...rows("byRegion")].some((r) => r[0] === line.id && Number(r[4]) !== 0))
+        unsupported("nonzero lane");
+      if (rows("followsByRegion").some((r) => r[0] === line.id || r[4] === line.id))
+        unsupported("incoming or outgoing follow");
+      if (rows("familyWindowsByRegion").some((r) => r[0] === line.id) ||
+          Object.values(lanes?.renderGroupByRegion || {}).some((groups) => groups?.[line.id]) ||
+          pkg.lines.some((other) => other.id !== line.id &&
+            railwayIdentityFor(other.id, other, identities) === railwayIdentityFor(line.id, line, identities)))
+        unsupported("family membership");
+      if (line.stationCircleOwnerByCode && Object.values(line.stationCircleOwnerByCode).some((id) => id !== line.id) ||
+          pkg.lines.some((other) => other.id !== line.id && Object.values(other.stationCircleOwnerByCode || {}).includes(line.id)))
+        unsupported("shared station circle ownership");
+    }
+    return { ...pkg, lines: pkg.lines.map((line) => {
+      if (!managed.has(line.id)) return line;
+      const normal = { ...line };
+      delete normal.serviceStatus;
+      delete normal.serviceSpans;
+      return normal;
+    }) };
+  }
+
   function buildNetworkFromCompactPackage(
     pkg,
     reviewedSharedCorridors = null,
     displayLanes = null,
+    dateContext = null,
   ) {
     if (!pkg || pkg.format !== "compact-v1" || !Array.isArray(pkg.lines))
       return null;
+
+    if (dateContext != null) {
+      validateRailDateContext(dateContext);
+      pkg = normalRailServicePackage(pkg, reviewedSharedCorridors, displayLanes, dateContext.history);
+    }
 
     const displayOverrides = reviewedSharedCorridorOverrides(
       pkg,
@@ -3840,6 +4035,9 @@
     // platforms. Features of these lines are placeholders until the renderer
     // builds them at a zoom; `lineById.geometry` stays canonical throughout.
     const strokeModel = { lines: [], stations: [] };
+    const literalCandidates = new Map();
+    const hiddenTemporalLines = new Set();
+    const hiddenTemporalStations = new Set();
     // How many station features the family-bead suppression pass below
     // dropped — a tenant's own bead at a platform its family's landlord
     // also calls at, or a duplicate tenant bead at a platform with no
@@ -3882,6 +4080,15 @@
 
     for (const compactLine of pkg.lines) {
       const lineId = compactLine.id;
+      const resolution = dateContext == null ? null : railServiceAPI().resolveRailServiceStatus(
+        dateContext.history, lineId,
+        dateContext.era === "rideDate" ? dateContext.rideDate : dateContext.today,
+      );
+      const managed = resolution?.managed === true;
+      const suspendedOverlay = managed && resolution.serviceStatus != null && dateContext.era === "historicalOverlay";
+      const displayVisible = !managed || resolution.serviceStatus == null || suspendedOverlay;
+      if (!displayVisible) hiddenTemporalLines.add(lineId);
+      const firstLineFeature = lineFeatures.length;
       const stationCount = compactLine.stations.length;
       // A render-group colour override (see colorOverrideByLine above) wins
       // over the package's own colour before anything else derives from it —
@@ -4056,8 +4263,10 @@
         partCount: displayParts.length,
         strokeCount: displayParts.length,
         visibilityKm,
+        ...(suspendedOverlay ? { suspended: 1, serviceCode: 2,
+          serviceStatus: resolution.serviceStatus, suspensionPeriodID: resolution.historyID } : {}),
       };
-      const continuous = !serviceSplit && displayContinuousStroke;
+      const continuous = displayVisible && !serviceSplit && displayContinuousStroke;
       let strokeLine = null;
       if (continuous) {
         strokeLine = {
@@ -4111,6 +4320,8 @@
             };
           }),
         };
+        if (!displayOverride && compactLine.displayInterpolation)
+          literalCandidates.set(lineId, displayLiteralSpansForLine(compactLine, displayParts));
         strokeModel.lines.push(strokeLine);
         lineFeatures.push({
           type: "Feature",
@@ -4225,6 +4436,9 @@
           },
         });
       }
+      // Hidden dated membership retains physical indexes, but contributes no
+      // source fallback or labels/dots. Do this before the station election.
+      if (!displayVisible) lineFeatures.length = firstLineFeature;
       addIndexValue(linesByName, compactLine.name, lineById.get(lineId));
       addIndexValue(
         linesByOperator,
@@ -4376,7 +4590,13 @@
           }
         }
 
+        const membership = managed ? dateContext.stationMemberships?.filter((member) =>
+          member.lineID === lineId && member.lineName === compactLine.name &&
+          member.operator === compactLine.operator && member.stationGroupID === row[0]) : null;
+        const stationVisible = !membership?.length || membership.some((member) => member.visible);
+        if (!stationVisible) hiddenTemporalStations.add(station.stationId);
         const pushStationFeature = () => {
+          if (!displayVisible || !stationVisible) return;
           stationFeatures.push({
             type: "Feature",
             geometry: {
@@ -4386,6 +4606,7 @@
             properties: {
               stationId: station.stationId,
               lineId,
+              ...(suspendedOverlay ? { suspended: 1, suspensionPeriodID: resolution.historyID } : {}),
               name: station.name,
               nameRoma: station.nameRoma || "",
               stationGroupId: station.stationGroupId || "",
@@ -4507,6 +4728,7 @@
     for (const [groupKey, members] of groupMembers) {
       const railways = new Set();
       for (const member of members) {
+        if (hiddenTemporalLines.has(member.lineId) || hiddenTemporalStations.has(member.stationId)) continue;
         const line = lineById.get(member.lineId);
         if (line) railways.add(line.railwayId);
       }
@@ -4604,6 +4826,33 @@
       acceptedByCell.get(key).push(feature);
     }
 
+    // This pass sees the complete graph, including incoming references from
+    // followers that have no currently resident/rendered stroke of their own.
+    // v1 mirrors Core capability: even inactive follow objects/nonzero
+    // lane rows stay unsupported; existing row semantics are unchanged.
+    const incoming = new Set();
+    for (const rows of followRows.values()) for (const row of rows)
+      incoming.add(`${row.canonLineId}#${row.canonPartIndex}`);
+    for (const line of strokeModel.lines) line.parts.forEach((part, partIndex) => {
+      const candidates = literalCandidates.get(line.lineId)?.[partIndex] || [];
+      if (!candidates.length || incoming.has(`${line.lineId}#${partIndex}`) ||
+          part.follows.length || part.rows.some(row => row.lane !== 0)) return;
+      // Adjacent lane inheritance is active even when the current row is 0.
+      const before = line.parts[partIndex-1], after = line.parts[partIndex+1];
+      if ((before && part.joinPrevious !== false &&
+          sameCoordinate(before.coordinates.at(-1), part.coordinates[0]) &&
+          (lanePlateaus(before.rows, before.totalMetres).at(-1)?.lane || 0) !== 0) ||
+          (after && after.joinPrevious !== false &&
+          sameCoordinate(part.coordinates.at(-1), after.coordinates[0]) &&
+          (lanePlateaus(after.rows, after.totalMetres)[0]?.lane || 0) !== 0)) return;
+      const accepted = candidates.filter(span => {
+        const from = part.measures[span.edgeIndex-1], to = part.measures[span.edgeIndex+2];
+        return ![...part.familyWindows, ...part.tenantWindows, ...part.withheld.map(([from,to]) => ({from,to}))]
+          .some(window => window.to >= from && window.from <= to);
+      });
+      if (accepted.length) part.literalSpans = accepted;
+    });
+
     for (const line of strokeModel.lines)
       for (const part of line.parts) delete part.vertexByKey;
 
@@ -4683,8 +4932,11 @@
   return Object.freeze({
     DEFAULT_LINE_COLOR,
     loadNetwork,
+    loadNetworkInputs,
     mergeCompactPackages,
     buildNetworkFromCompactPackage,
+    validateRailDateContext,
+    normalRailServicePackage,
     reviewedSharedCorridorOverrides,
     // Exported so build-display-lanes.mjs's computePartsByRegionRows can
     // replicate the exact `continuous = !serviceSplit && displayContinuousStroke`
@@ -4704,6 +4956,7 @@
     viewportZoomAdjustment,
     continuousCoordinatesForLine,
     displayPartsForLine,
+    displayLiteralSpansForLine,
     canonicalizeRouteFeature,
     sourceGeometryForIntervals,
     matchRouteAcrossLineRows,

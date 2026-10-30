@@ -750,3 +750,77 @@ test("station dedupe preserves disjoint historical service periods", () => {
     [["2015-01-27", "2015-03-01"]],
   );
 });
+
+test('suspension stamps intersect opening bounds and preserve their separate identities', () => {
+  const {run} = load();
+  const apply = run('applyRailHistoryRetirements');
+  const station = {properties:{line_name:'L',operator:'O',station_name:'S',n02_station_code:'raw',n02_group_code:'group',
+    valid_from:'2008-08-09',history_id:'opening'},geometry:{type:'Point',coordinates:[139,35]}};
+  const overlay = {retirements:[{history_id:'suspension',kind:'suspension',valid_to:'2024-10-05',
+    service_validity:[null,'2024-10-05'],suspension_period_id:'dated.status',
+    match:{line_name:'L',operator:'O',bbox:[138,34,140,36],targets:['stations']}}]};
+  apply(overlay,[],[station]);
+  assert.equal(station.properties.history_id,'opening');
+  assert.equal(station.properties.suspension_period_id,'dated.status');
+  assert.equal(station.properties.valid_from,'2008-08-09');
+  assert.deepEqual(Array.from(station.properties.service_validity),['2008-08-09','2024-10-05']);
+});
+
+test('dated network context uses source group proof per owning membership and preserves station opening', () => {
+  const context = makeSandbox(); evaluateAppScripts(context);
+  const run = expr => vm.runInContext(expr,context);
+  const overlay = {schema_version:'2',revision:'context-fixture',features:['service_status_periods'],
+    sections:[],stations:[],retirements:[],service_status_periods:[{history_id:'dated.status',lineID:'dated',
+      scope:'whole_line',line_name:'L',operator:'O',station_membership_ids:['raw-open','raw-end'],
+      valid_from:'2024-10-05',valid_to:null,serviceStatus:'substitute_bus',source:['https://example.test/official']}]};
+  const member = (code,group,name,properties={}) => ({properties:{n02_station_code:code,n02_group_code:group,
+    station_name:name,line_name:'L',operator:'O',...properties},geometry:{type:'Point',coordinates:[139,35]}});
+  const own = member('raw-open','group-open','Open',{valid_from:'2008-08-09',valid_to:'2024-10-05',
+    service_validity:['2008-08-09','2024-10-05'],history_id:'opening',suspension_period_id:'dated.status'});
+  const end = member('raw-end','group-end','End',{valid_to:'2024-10-05',suspension_period_id:'dated.status'});
+  const other = member('group-end','group-end','End',{line_name:'Other',operator:'Other'});
+  run('loadRailHistoryOverlay')(overlay,'jp');
+  run('AppDatasets.installStations')({features:[own,end,other]});
+  const make = run('buildRailNetworkDateContext');
+  const before = make('jp',{era:'rideDate',today:'2026-10-26',rideDate:'2008-08-08'});
+  assert.equal(before.stationMemberships.length,2);
+  assert.equal(before.stationMemberships.find(row=>row.stationGroupID==='group-open').visible,false);
+  const onOpening = make('jp',{era:'rideDate',today:'2026-10-26',rideDate:'2008-08-09'});
+  assert.equal(onOpening.stationMemberships.find(row=>row.stationGroupID==='group-open').visible,true);
+  const historical = make('jp',{era:'historicalOverlay',today:'2024-10-05',rideDate:null});
+  assert.equal(historical.stationMemberships.find(row=>row.stationGroupID==='group-open').visible,true,
+    'suspended overlay retains independent opening while contextual suspension end is lifted');
+  assert.equal(historical.stationMemberships.some(row=>row.operator==='Other'),false);
+  assert.equal(historical.historyGeneration,before.historyGeneration);
+  run('loadRailHistoryOverlay')(structuredClone(overlay),'jp');
+  assert.notEqual(make('jp',{era:'current',today:'2024-10-05'}).historyGeneration,before.historyGeneration);
+});
+
+test('real map context captures one regional day and refreshes an already loaded history generation', async () => {
+  const context = makeSandbox(); evaluateAppScripts(context);
+  const run = expr => vm.runInContext(expr,context);
+  const overlay = {schema_version:'2',revision:'map-context',features:['service_status_periods'],
+    sections:[],stations:[],retirements:[],service_status_periods:[{history_id:'dated.status',lineID:'dated',
+      scope:'whole_line',station_membership_ids:['raw'],valid_from:'2024-10-05',valid_to:null,
+      serviceStatus:'substitute_bus',source:['https://example.test/official']}]};
+  run('AppDatasets.installStations')({features:[]});
+  let dayReads = 0, last;
+  context.__day = () => {dayReads++;return '2024-10-05';};
+  run("statsRegionCivilToday=__day; selectedDate=ALL_DATES");
+  run('loadRailHistoryOverlay')(overlay,'jp');
+  context.RailMap._network = {present:true};
+  context.RailMap.ensureNetwork = async (url,dateContext) => {last = dateContext;return {dateContext};};
+  await run('refreshDatedRailNetwork')();
+  assert.equal(dayReads,1);
+  assert.equal(last.today,'2024-10-05');
+  assert.equal(last.era,'current');
+  const oldGeneration = last.historyGeneration;
+  run('loadRailHistoryOverlay')(structuredClone(overlay),'jp');
+  assert.equal(dayReads,2,'history replacement captures a new single day snapshot');
+  assert.notEqual(last.historyGeneration,oldGeneration);
+  run("selectedDate='2024-10-04'");
+  await run('refreshDatedRailNetwork')();
+  assert.equal(last.era,'rideDate');
+  assert.equal(last.rideDate,'2024-10-04');
+  assert.equal(last.today,'2024-10-05');
+});

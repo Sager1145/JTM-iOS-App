@@ -48,7 +48,8 @@ enum RailDisplayNetwork {
         _ entry: RailDisplayNetworkIndex.Entry, blob: Data,
         detail: DisplayDetail = .full,
         catalog: [String: RailDisplayNetworkManifest.Line],
-        families: [String: RailDisplayNetworkFile.FamilyColor]
+        families: [String: RailDisplayNetworkFile.FamilyColor],
+        history: RailDisplayHistoryFile? = nil
     ) throws -> RailDisplayNetworkFile {
         // The overview chunk when one was requested AND the manifest has
         // one; otherwise (including a whole-region or overview-less line)
@@ -56,7 +57,13 @@ enum RailDisplayNetwork {
         // detail validated below is the one actually sliced, not the one
         // asked for, so a request for an absent overview quietly loads
         // full rather than failing its own detail check.
-        let usesOverview = detail == .overview && entry.overview != nil
+        let managed = entry.temporalBank?.managedLineIDs.contains(entry.id) == true
+        if let requiredBank = entry.temporalBank {
+            guard history?.temporalBank == requiredBank else {
+                throw RailDisplayNetworkError.invalidRegionPayload(entry.region)
+            }
+        }
+        let usesOverview = detail == .overview && entry.overview != nil && !managed
         let sliced = usesOverview ? entry.overview! : entry.chunk
         let effectiveDetail: DisplayDetail = usesOverview ? .overview : .full
         let data: Data
@@ -71,22 +78,31 @@ enum RailDisplayNetwork {
             throw RailDisplayNetworkError.corruptChunk(entry.id)
         }
         #endif
-        return try JSONDecoder().decode(RailDisplayNetworkFile.self, from: data)
+        let file = try JSONDecoder().decode(RailDisplayNetworkFile.self, from: data)
             .validated(
                 region: entry.region, lineId: entry.id, catalog: catalog, families: families,
-                detail: effectiveDetail)
+                detail: effectiveDetail, expectedFormat: entry.format)
+        if managed { try history?.validateTemporalGeometry(file) }
+        return file
     }
 
-    /// The history side file, when the manifest names one and the bundle has
-    /// it. A missing file is not a failed region — the current network still
-    /// draws. A named file whose bytes or digest disagree is.
+    /// The history side file named by the manifest. Legacy v2 history remains
+    /// optional and can return `nil`; a v3 temporal bank requires its exact
+    /// metadata, bytes, digest, revision, and bank binding before geometry use.
     static func history(
         _ record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
     ) throws -> RailDisplayHistoryFile? {
+        let required = record.temporalBank != nil
+        if required && (!record.hasRequiredHistoryMetadata || record.temporalBank?.isValid != true) {
+            throw RailDisplayNetworkError.invalidRegionIndex
+        }
         guard let name = record.historyFile else { return nil }
         guard let url = bundle.url(
             forResource: name, withExtension: nil, subdirectory: subdirectory)
-        else { return nil }
+        else {
+            if required { throw RailDisplayNetworkError.missingRegion(record.region) }
+            return nil
+        }
         let data = try Data(contentsOf: url)
         if let historyBytes = record.historyBytes, data.count != historyBytes {
             throw RailDisplayNetworkError.corruptRegion(record.region)
@@ -98,6 +114,13 @@ enum RailDisplayNetwork {
         let file = try JSONDecoder().decode(RailDisplayHistoryFile.self, from: data)
         guard file.format == RailDisplayHistoryFile.format, file.region == record.region else {
             throw RailDisplayNetworkError.unsupportedFormat(file.format)
+        }
+        if let expectedBank = record.temporalBank {
+            guard file.temporalBank == expectedBank,
+                  file.revision == expectedBank.historyRevision else {
+                throw RailDisplayNetworkError.invalidRegionPayload(record.region)
+            }
+            try file.validateTemporalStamps(managedLineIDs: Set(expectedBank.managedLineIDs))
         }
         return file
     }
@@ -242,6 +265,7 @@ enum RailDisplayNetwork {
     }
 }
 
-private extension SHA256.Digest {
+extension SHA256.Digest {
+    /// Lowercase two-digit hex; stored digests and content hashes depend on this exact form.
     var hex: String { map { String(format: "%02x", $0) }.joined() }
 }

@@ -68,7 +68,7 @@ enum StatisticsMapSnapshot {
             userInterfaceStyle: colorScheme == .dark ? .dark : .light)
         let baseRect: MKMapRect
         if let fallback {
-            baseRect = mapRect(for: fallback)
+            baseRect = MapProjection.mapRect(of: fallback)
         } else if !bounds.isNull {
             baseRect = bounds
         } else {
@@ -175,18 +175,6 @@ enum StatisticsMapSnapshot {
                             y: (size.height - measured.height) / 2),
                 withAttributes: attributes)
         }
-    }
-
-    private static func mapRect(for region: MKCoordinateRegion) -> MKMapRect {
-        let northWest = MKMapPoint(CLLocationCoordinate2D(
-            latitude: region.center.latitude + region.span.latitudeDelta / 2,
-            longitude: region.center.longitude - region.span.longitudeDelta / 2))
-        let southEast = MKMapPoint(CLLocationCoordinate2D(
-            latitude: region.center.latitude - region.span.latitudeDelta / 2,
-            longitude: region.center.longitude + region.span.longitudeDelta / 2))
-        return MKMapRect(x: min(northWest.x, southEast.x), y: min(northWest.y, southEast.y),
-                         width: abs(southEast.x - northWest.x),
-                         height: abs(southEast.y - northWest.y))
     }
 
     private static func fitted(_ rect: MKMapRect, aspect: CGFloat, zoom: Double) -> MKMapRect {

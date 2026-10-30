@@ -232,8 +232,9 @@ public enum EditorTime {
         return folded
     }
 
+    /// ECMAScript's trim set, like `Dates`: U+FEFF is trimmed, U+0085 is not.
     private static func trim(_ text: String) -> String {
-        text.trimmingCharacters(in: .whitespacesAndNewlines)
+        JSString.trim(text)
     }
 
     private static func isDigit(_ scalar: Unicode.Scalar) -> Bool {
@@ -241,7 +242,7 @@ public enum EditorTime {
     }
 
     private static func isSpace(_ scalar: Unicode.Scalar) -> Bool {
-        Character(scalar).isWhitespace
+        JSString.whitespace.contains(scalar)
     }
 
     private static func decimal(_ digits: some Sequence<Unicode.Scalar>) -> Int {

@@ -61,6 +61,23 @@ function notifyNetworkOverlayChange() {
   }
 }
 
+// Capture one regional civil day for both the resolver and derived visibility
+// identity. The existing date bucket scopes the railway display with the rides;
+// schema-1 regions retain their undated legacy network.
+function currentRailNetworkDateContext() {
+  if (railHistoryOverlays.get(String(activeCountry))?.schema_version !== "2") return null;
+  const today = statsRegionCivilToday(activeCountry);
+  const rideDate = selectedDate && selectedDate !== ALL_DATES ? selectedDate : null;
+  return buildRailNetworkDateContext(activeCountry, { era: rideDate ? "rideDate" : "current", today, rideDate });
+}
+
+function refreshDatedRailNetwork() {
+  const context = currentRailNetworkDateContext();
+  if (typeof RailMap === "undefined" ||
+      (context == null && !RailMap._network && !RailMap._networkPromise)) return Promise.resolve(null);
+  return RailMap.ensureNetwork(activeRailPackageUrl(), context);
+}
+
 function setNetworkOverlayVisible(visible) {
   const wanted = Boolean(visible);
   networkOverlayWanted = wanted;
@@ -78,7 +95,7 @@ function setNetworkOverlayVisible(visible) {
   }
   networkOverlayStatus = RailMap._network ? "ready" : "loading";
   notifyNetworkOverlayChange();
-  RailMap.ensureNetwork(activeRailPackageUrl()).then((network) => {
+  RailMap.ensureNetwork(activeRailPackageUrl(), currentRailNetworkDateContext()).then((network) => {
     if (!networkOverlayWanted) return; // toggled back off during the load
     // §8.8 / §13.3: a package that did not arrive is reported, not mimed. The
     // recorded journeys are unaffected and keep drawing either way.
@@ -553,7 +570,12 @@ async function initMap(mapAssetsReady) {
     ]),
     alternate: RailMap.loadBasemap(alternateTheme).catch(() => null),
   };
-  const [basemap, network] = await assets.primary;
+  const [basemap, preloadedNetwork] = await assets.primary;
+  // Boot prefetch began before history/stations and the restored date were
+  // ready. Reuse its immutable inputs, deriving only the now-known context.
+  const dateContext = currentRailNetworkDateContext();
+  const network = dateContext == null ? preloadedNetwork
+    : await RailMap.ensureNetwork(activeRailPackageUrl(), dateContext);
   const style = RailMap.buildBaseStyle({
     basemap,
     network,

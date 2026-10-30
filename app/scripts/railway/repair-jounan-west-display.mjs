@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Display-only owner for the six reviewed Matsuyama tram records in the Jounan group.
 // Candidate generation stays fail-closed until the frozen evidence manifest is installed.
 import assert from 'node:assert/strict';
@@ -537,7 +538,7 @@ function main(args = process.argv.slice(2)) {
     ...Object.fromEntries(Object.keys(DEPENDENCY_PATHS).map(key =>
       [key, JSON.stringify(prepared.dependencies[key], null, 2) + '\n'])) };
   if (prepared.candidate) {
-    assert(prepared.candidate.startsWith('/private/tmp/'), 'Candidate root must be under /private/tmp');
+    assertAllowedCandidateDirectory(prepared.candidate);
     fs.mkdirSync(prepared.candidate, { recursive: true });
     for (const [key, contents] of Object.entries(outputs))
       fs.writeFileSync(path.join(prepared.candidate,

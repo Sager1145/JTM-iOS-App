@@ -34,7 +34,8 @@ struct InspectorMap: UIViewRepresentable {
             map.setVisibleMapRect(MKMapRect(x: center.x - width / 2, y: center.y - height / 2,
                                            width: width, height: height), animated: false)
         }
-        let key = "\(model.lineID ?? "")-\(model.stationIndex)-\(model.mode)-\(model.opacity)-\(model.peek)-\(model.captureRequest?.uuidString ?? "")-\(model.analysisRequest?.uuidString ?? "")-\(model.referenceRevision)"
+        let literals = model.line.map { DisplayLiteralSpans.resolve($0, parts: model.display).map { $0.map { "\($0.mode ?? "literal-v1"):\($0.edgeIndex):\($0.witnesses)" } } } ?? []
+        let key = "\(model.lineID ?? "")-\(model.stationIndex)-\(model.mode)-\(model.opacity)-\(model.peek)-\(model.captureRequest?.uuidString ?? "")-\(model.analysisRequest?.uuidString ?? "")-\(model.referenceRevision)-\(literals)"
         if coordinator.lastKey != key {
             coordinator.lastKey = key
             coordinator.redraw(map)
@@ -79,7 +80,8 @@ struct InspectorMap: UIViewRepresentable {
             if mode == .display || mode == .compare { add(model.display, kind: "display", map: map) }
             let smoothed = InspectorStrokeGeometry.build(display: model.display,
                 stations: (model.line?.displayStations ?? []).map(\.coordinate),
-                mapPointsPerPoint: scale, zoom: zoom)
+                mapPointsPerPoint: scale, zoom: zoom,
+                literalSpans: model.line.map { DisplayLiteralSpans.resolve($0, parts: model.display) } ?? [])
             let smoothCount = smoothed.filter { $0.count > 1 }.reduce(0) { $0 + $1.count }
             if mode == .smooth || mode == .compare { add(smoothed, kind: "smooth", map: map) }
             if mode != .basemap, let line = model.line,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // Bounded own-direction display proposal; retain the real compound turn and physical data.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -105,8 +106,8 @@ export function repairParts(pkg, input, e = read(EVIDENCE)) {
 
 function main(args = process.argv.slice(2)) {
   const candidate = args.length === 2 && args[0] === '--candidate-root' ? path.resolve(args[1]) : null;
-  assert(candidate || equal(args, ['--apply']), 'Use --candidate-root /private/tmp/<dir> or --apply');
-  if (candidate) assert(candidate.startsWith('/private/tmp/'), 'Candidate root must be under /private/tmp');
+  assert(candidate || equal(args, ['--apply']), 'Use --candidate-root <repo>/railway-evidence/local/candidates/<dir> or --apply');
+  if (candidate) assertAllowedCandidateDirectory(candidate);
   const paths = { package: 'public/rail/jp-2025.json', lanes: 'public/rail/display-lanes.json', evidence: EVIDENCE, ...DEPENDENCY_PATHS };
   const snapshots = Object.fromEntries(Object.entries(paths).map(([key, relative]) => {
     const file = path.join(ROOT, relative); return [key, { path: file, before: fs.readFileSync(file, 'utf8') }];

@@ -639,45 +639,10 @@ public enum Stations {
     /// expression is `[0-9]` and nothing wider — so a full-width spelling of a
     /// six-digit code is NOT an N02 code, and a port whose digit test accepts
     /// U+FF10…U+FF19 labels a Taiwanese code as a Japanese one.
+    ///
+    /// Delegates to the jsonspec validator so the patterns live in one place.
     public static func stationCodeSystem(_ code: String?) -> String? {
-        let value = jsTrim(code ?? "")
-        let units = Array(value.utf16)
-
-        // /^\d{6}$/
-        if units.count == 6, units.allSatisfy({ (0x30...0x39).contains($0) }) { return "N02" }
-
-        // Station identities sourced from an OSM marker, including local rail.
-        if value.hasPrefix("CN-OSM-N"), units.count > 8,
-           units.dropFirst(8).allSatisfy({ (48...57).contains($0) }) { return "CN-OSM" }
-
-        // China's official three-letter 12306 station telegraph code.
-        if value.hasPrefix("CN-12306-"), units.count == 12,
-           units.suffix(3).allSatisfy({ (65...90).contains($0) }) { return "CN-12306" }
-
-        // /^[A-Z][A-Z0-9]*-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/
-        //
-        // Scanned rather than backtracked: neither character class contains a
-        // hyphen, so each `-` deterministically ends the run before it and the
-        // greedy quantifiers never have to give anything back.
-        func isUpper(_ unit: UInt16) -> Bool { (0x41...0x5A).contains(unit) }
-        func isUpperOrDigit(_ unit: UInt16) -> Bool { isUpper(unit) || (0x30...0x39).contains(unit) }
-        func isAlnum(_ unit: UInt16) -> Bool {
-            isUpperOrDigit(unit) || (0x61...0x7A).contains(unit)
-        }
-        var index = 0
-        guard index < units.count, isUpper(units[index]) else { return nil }
-        index += 1
-        while index < units.count, isUpperOrDigit(units[index]) { index += 1 }
-        guard index < units.count, units[index] == 0x2D else { return nil }  // "-"
-        index += 1
-        guard index < units.count, isAlnum(units[index]) else { return nil }
-        while index < units.count, isAlnum(units[index]) { index += 1 }
-        while index < units.count, units[index] == 0x2D {
-            index += 1
-            guard index < units.count, isAlnum(units[index]) else { return nil }
-            while index < units.count, isAlnum(units[index]) { index += 1 }
-        }
-        return index == units.count ? "TDX" : nil
+        TrainValidation.stationCodeSystem(code)
     }
 
     /// A stop need not carry a source code at all, so absent is valid — but the

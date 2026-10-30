@@ -109,6 +109,9 @@ extension RailMapView.Surface {
             /// exactly as long as this number does not move, regardless of
             /// what else changes on a given rebuild.
             private var linesGeneration = 0
+            /// Captured at update/rebuild boundaries, shared by frame keys,
+            /// geometry workers and station visibility for that derivation.
+            private var networkTodayByRegion: [String: String] = [:]
             private var annotationsNeedRefresh = false
             /// The geometry phase's outputs the marker phase reads. Kept from the last
             /// completed `rebuild` so the markers can be rebuilt on their own — a
@@ -177,6 +180,10 @@ extension RailMapView.Surface {
             /// essential: using `styledScale` as the only throttle froze every
             /// station name at the zoom on which it was first configured.
             private var styledMarkZoom = Double.nan
+            /// The scale the mounted network renderers were last rescaled to.
+            /// Separate from `styledScale` because a stroke-bucket settle
+            /// restyles the marks without touching overlays it will replace.
+            private var styledOverlayScale: CGFloat = .nan
 #if DEBUG
             private let diagnostics = MapRenderDiagnostics()
             private var independentRailPrototype: MapIndependentRailPrototype?
@@ -264,6 +271,7 @@ extension RailMapView.Surface {
                 }
                 // A newer normal update supersedes any queued gesture update.
                 pendingViewUpdate = nil
+                let regionalDayChanged = refreshNetworkToday()
                 // A sheet drag and a menu presentation can call
                 // `updateUIView` every frame while these arrays still share
                 // their exact backing buffers with the coordinator. Take that
@@ -271,7 +279,7 @@ extension RailMapView.Surface {
                 let linesChanged = Self.changed(lines, from: self.lines, id: \.contentID)
                 let stationsChanged = Self.changed(stations, from: self.stations, id: \.contentID)
                 let ridesChanged = rides.count != self.rides.count
-                    || (!Self.sharesStorage(rides, self.rides)
+                    || (!ArrayGeneration.same(rides, self.rides)
                         && !zip(rides, self.rides).allSatisfy {
                             Self.rideSignature($0) == Self.rideSignature($1)
                         })
@@ -308,7 +316,7 @@ extension RailMapView.Surface {
                 // one is dashed. Both are properties of things already built,
                 // so a scope change is a rebuild like the others.
                 let dateChanged = selectedDate != self.selectedDate
-                let networkFilterChanged = rideDateChanged || eraChanged
+                let networkFilterChanged = rideDateChanged || eraChanged || regionalDayChanged
                 let namingChanged = naming != self.naming
                 // `networkExtent` follows the camera's countries, not residency
                 // (see `RailNetworkStore.networkExtent`), so a batch that merely
@@ -392,6 +400,10 @@ extension RailMapView.Surface {
                     self.minZoomByLineId = Dictionary(
                         lines.map { ($0.lineID, $0.minZoom) },
                         uniquingKeysWith: { first, _ in first })
+                }
+
+                if linesChanged || stationsChanged {
+                    invalidateNetworkTemporalGeometry()
                 }
 
                 if linesChanged || extentChanged {
@@ -593,24 +605,6 @@ extension RailMapView.Surface {
                     + ":\(ride.trainType ?? ""):\(stopsDigest(ride.stops)):\(ride.daySpan.sig)"
             }
 
-            /// Whether two arrays are the same immutable generation.
-            /// `Array` is copy-on-write, so a store mutation moves to another
-            /// buffer while an unchanged value handed through SwiftUI keeps
-            /// this address. Empty arrays are the same generation for render
-            /// purposes regardless of their sentinel pointer.
-            private static func sharesStorage<Element>(
-                _ left: [Element], _ right: [Element]
-            ) -> Bool {
-                guard left.count == right.count else { return false }
-                guard !left.isEmpty else { return true }
-                return left.withUnsafeBufferPointer { leftBuffer in
-                    right.withUnsafeBufferPointer { rightBuffer in
-                        UnsafeRawPointer(leftBuffer.baseAddress!)
-                            == UnsafeRawPointer(rightBuffer.baseAddress!)
-                    }
-                }
-            }
-
             /// Compare collection generations without allocating parallel id
             /// arrays. A count change is already a complete answer, which is
             /// the common case while regional packages stream in at launch.
@@ -619,7 +613,7 @@ extension RailMapView.Surface {
                 id: KeyPath<Element, Identity>
             ) -> Bool {
                 guard next.count == current.count else { return true }
-                guard !sharesStorage(next, current) else { return false }
+                guard !ArrayGeneration.same(next, current) else { return false }
                 return !zip(next, current).allSatisfy {
                     $0[keyPath: id] == $1[keyPath: id]
                 }
@@ -813,7 +807,10 @@ extension RailMapView.Surface {
                         return
                     }
                     self.rebuildDeferredByGesture = false
-                    self.restyle(on: mapView)
+                    // Overlays about to be replaced keep their width; the
+                    // rebuild's install rescales the new ones once.
+                    let zoom = MapProjection.zoomLevel(of: mapView)
+                    self.restyle(on: mapView, overlays: !self.strokeBucketPending(at: zoom))
                     self.rebuild(on: mapView)
                 }
             }
@@ -910,11 +907,13 @@ extension RailMapView.Surface {
                             return
                         }
                     }
-                    // A stroke-bucket change replaces every network overlay.
-                    // Skip this pass so those tiles are not drawn twice; the
-                    // rebuild that follows applies the settled styles.
-                    if MapRebuildPolicy.strokeBucket(zoom: zoom) != self.currentGeometryFrame?.bucket,
-                       self.lines.contains(where: { $0.lane != 0 || $0.continuous }) {
+                    // A stroke-bucket change replaces every network overlay, so
+                    // leave their widths to the rebuild (no tile drawn twice).
+                    // Marks and names do not wait for that geometry: settle
+                    // them now, on the moving pass's anchors.
+                    if self.strokeBucketPending(at: zoom) {
+                        self.restyle(on: mapView, overlays: false)
+                        self.runLabelPass(on: mapView, moving: true)
                         return
                     }
                     self.restyle(on: mapView)
@@ -997,10 +996,33 @@ extension RailMapView.Surface {
             private var geometryPreparationID = UUID()
             private var geometryPreparationKey: String?
 
-            /// Era and ride date are part of the geometry cache key. One
-            /// spelling so preparation, installation and cancellation agree.
-            private var geometryEraKey: String {
-                "\(display.networkEra.rawValue)|\(networkRideDate ?? "")"
+            private var networkTemporalContext: DisplayNetworkTemporalContext {
+                DisplayNetworkTemporalContext(
+                    era: display.networkEra, rideDate: networkRideDate,
+                    todayByRegion: networkTodayByRegion, generation: linesGeneration)
+            }
+
+            /// Preparation, installation and cancellation share one identity
+            /// for the captured temporal view. Per-line content retention owns
+            /// input invalidation; the complete context guards worker publication.
+            private var geometryEraKey: String { networkTemporalContext.cacheKey }
+
+            private func invalidateNetworkTemporalGeometry() {
+                cancelGeometryPreparation()
+                networkBuildState.invalidateGeometry()
+                annotationsNeedRefresh = true
+                markerBuildContext = nil
+            }
+
+            @discardableResult
+            private func refreshNetworkToday() -> Bool {
+                let snapshot = MainActor.assumeIsolated {
+                    Dictionary(uniqueKeysWithValues: RegionToday.byRegion().map { ($0.key.rawValue, $0.value) })
+                }
+                guard snapshot != networkTodayByRegion else { return false }
+                networkTodayByRegion = snapshot
+                invalidateNetworkTemporalGeometry()
+                return true
             }
 
             private func cancelGeometryPreparation() {
@@ -1019,8 +1041,9 @@ extension RailMapView.Surface {
                 // Preparation can be cancelled. Only installed geometry may
                 // advance the hysteresis bucket used by shouldRebuild.
                 let laneLOD = networkBuildState.previewLaneLOD(at: zoom)
+                let temporalContext = networkTemporalContext
                 let frame = MapGeometryFrame(
-                    zoom: zoom, laneLOD: laneLOD, eraKey: geometryEraKey, on: mapView)
+                    zoom: zoom, laneLOD: laneLOD, eraKey: temporalContext.cacheKey, on: mapView)
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
@@ -1070,12 +1093,9 @@ extension RailMapView.Surface {
                 let requestID = UUID()
                 geometryPreparationID = requestID
                 geometryPreparationKey = key
-                let era = display.networkEra
-                let rideDate = networkRideDate
-                let todayByRegion = MainActor.assumeIsolated {
-                    Dictionary(
-                        uniqueKeysWithValues: RegionToday.byRegion().map { ($0.key.rawValue, $0.value) })
-                }
+                let era = temporalContext.era
+                let rideDate = temporalContext.rideDate
+                let todayByRegion = temporalContext.todayByRegion
                 let limiter = renderWorkLimiter
                 let joinedChains = networkGeometry.joinedChains
                 let chainPixels = networkGeometry.chainPixels
@@ -1120,6 +1140,7 @@ extension RailMapView.Surface {
                     RailSignpost.map.end("map.materialize", materializeInterval)
                     guard !Task.isCancelled,
                           self.geometryPreparationID == requestID,
+                          self.networkTemporalContext == temporalContext,
                           let prepared else {
                         clearPreparationIfCurrent()
                         return
@@ -1155,6 +1176,9 @@ extension RailMapView.Surface {
                     scheduleCameraRebuild(on: mapView)
                     return
                 }
+                // Observe a regional midnight before the camera/zoom build
+                // guard can reuse a previous day's derived visibility.
+                refreshNetworkToday()
                 // Keep the route mapping and its installed pixels in one
                 // generation, including when a worker finishes during playback.
                 if playback?.isActive != true, let pending = pendingStrokeRefs {
@@ -1519,6 +1543,7 @@ extension RailMapView.Surface {
                 // apart.
                 let scale = buildScale
                 styledScale = scale
+                styledOverlayScale = scale
                 styledMarkZoom = (zoom * 16).rounded() / 16
 
                 // The transport owns its overlays separately from the base
@@ -2556,12 +2581,12 @@ extension RailMapView.Surface {
                     }
                     let era = display.networkEra
                     let rideDate = networkRideDate
-                    let todayByRegion = MainActor.assumeIsolated { RegionToday.byRegion() }
+                    let todayByRegion = networkTodayByRegion
                     let visibleStations = stations.compactMap { station -> (
                         key: String, station: RailNetworkStore.DrawnStation,
                         displayName: String, readings: [String]?, alpha: CGFloat
                     )? in
-                        let today = todayByRegion[station.region] ?? ""
+                        let today = todayByRegion[station.region.rawValue] ?? ""
                         guard era.shows(
                             station.temporalDecoration, today: today, rideDate: rideDate,
                             isStation: true)
@@ -2724,6 +2749,7 @@ extension RailMapView.Surface {
                 if !isLabelPass {
                     // Retained views need the final zoom's sizing after a pinch.
                     styledScale = .nan
+                    styledOverlayScale = .nan
                     styledMarkZoom = .nan
 #if DEBUG
                     restyledAnnotationViewCount = restyle(on: mapView)
@@ -3882,8 +3908,18 @@ extension RailMapView.Surface {
                         : (playback?.isActive == true ? 0 : nil))
             }
 
+            /// Whether the settled zoom sits in a stroke bucket the installed
+            /// geometry was not built for — the next rebuild replaces every
+            /// laned network overlay, so restyling them first is wasted tiles.
+            private func strokeBucketPending(at zoom: Double) -> Bool {
+                MapRebuildPolicy.strokeBucket(zoom: zoom) != currentGeometryFrame?.bucket
+                    && lines.contains(where: { $0.lane != 0 || $0.continuous })
+            }
+
+            /// `overlays: false` restyles marks and names only, leaving the
+            /// network renderers for the rebuild that will replace them.
             @discardableResult
-            private func restyle(on mapView: MKMapView) -> Int {
+            private func restyle(on mapView: MKMapView, overlays: Bool = true) -> Int {
                 // Keep MapKit's mounted paths and annotation layouts stable
                 // under the fingers. Mutating every renderer's width/font
                 // during a pinch triggers tessellation and collision work.
@@ -3924,10 +3960,15 @@ extension RailMapView.Surface {
                 // ``displayedAnnotationViews``.
                 let scaleChanged = !styledScale.isFinite || scale != styledScale
                 let markZoomChanged = !styledMarkZoom.isFinite || markZoom != styledMarkZoom
-                guard scaleChanged || markZoomChanged else { return 0 }
+                let overlayScaleChanged = overlays
+                    && (!styledOverlayScale.isFinite || scale != styledOverlayScale)
+                guard scaleChanged || markZoomChanged || overlayScaleChanged else { return 0 }
                 styledScale = scale
                 styledMarkZoom = markZoom
-                if scaleChanged { overlayStyles.rescale(to: scale) }
+                if overlayScaleChanged {
+                    overlayStyles.rescale(to: scale)
+                    styledOverlayScale = scale
+                }
                 for renderer in stationOverlayRenderers.allObjects {
                     renderer.applyScale(scale, zoom: markZoom)
                 }

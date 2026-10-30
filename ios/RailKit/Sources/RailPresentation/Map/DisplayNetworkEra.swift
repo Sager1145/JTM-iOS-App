@@ -44,6 +44,9 @@ public enum DisplayNetworkEra: String, Codable, Sendable, CaseIterable, Identifi
                 validFrom: decoration.validFrom, validTo: decoration.validTo, on: rideDate)
         case .historicalOverlay:
             if Self.showsCurrent(decoration, today: today) { return true }
+            if !(decoration.suspensionPeriodID?.isEmpty ?? true) {
+                return Self.isSuspended(decoration, on: today)
+            }
             if decoration.kind == .historical || decoration.kind == .relocatedOld { return true }
             guard isStation else { return false }
             let closed = !(decoration.validTo?.isEmpty ?? true)
@@ -62,6 +65,25 @@ public enum DisplayNetworkEra: String, Codable, Sendable, CaseIterable, Identifi
         }
     }
 
+    /// The suspended in-place bank takes a historical mark only in the
+    /// post-cutoff overlay. A dated ride before suspension stays solid.
+    public func strokeStyle(
+        for decoration: DisplayTemporalDecoration?, today: String, rideDate: String?
+    ) -> DisplayNetworkStrokeStyle {
+        if self == .historicalOverlay, let decoration,
+           Self.isSuspended(decoration, on: today) {
+            return .historical
+        }
+        return Self.strokeStyle(for: decoration?.kind ?? .current)
+    }
+
+    private static func isSuspended(_ decoration: DisplayTemporalDecoration, on day: String) -> Bool {
+        guard !(decoration.suspensionPeriodID?.isEmpty ?? true),
+              let cutoff = decoration.validTo,
+              Dates.isValidDateString(cutoff), Dates.isValidDateString(day) else { return false }
+        return day >= cutoff
+    }
+
     private static func showsCurrent(_ decoration: DisplayTemporalDecoration, today: String) -> Bool {
         guard decoration.kind == .current || decoration.kind == .relocatedNew else { return false }
         guard Dates.isValidDateString(today) else { return false }
@@ -70,11 +92,40 @@ public enum DisplayNetworkEra: String, Codable, Sendable, CaseIterable, Identifi
     }
 }
 
+/// One captured temporal input for derived map visibility. The frame key
+/// and worker/station predicates must use this same regional-day snapshot.
+/// Raw package and canonical geometry identities remain date independent.
+public struct DisplayNetworkTemporalContext: Sendable, Equatable {
+    public let era: DisplayNetworkEra
+    public let rideDate: String?
+    public let todayByRegion: [String: String]
+    /// Worker input epoch, including lazy residency changes. Per-line content
+    /// retention owns geometry invalidation; this epoch guards publication only.
+    public let generation: Int
+
+    public init(
+        era: DisplayNetworkEra, rideDate: String?,
+        todayByRegion: [String: String], generation: Int
+    ) {
+        self.era = era
+        self.rideDate = rideDate
+        self.todayByRegion = todayByRegion
+        self.generation = generation
+    }
+
+    public var cacheKey: String {
+        let days = todayByRegion.keys.sorted().map { "\($0)=\(todayByRegion[$0]!)" }
+            .joined(separator: ",")
+        return "\(era.rawValue)|\(rideDate ?? "")|days:\(days)"
+    }
+}
+
 /// Dates and kind hung on one display part or station. Absent bounds and a
 /// nil history id with `.current` are undecorated — the map draws them in
 /// every era.
 public struct DisplayTemporalDecoration: Sendable, Equatable {
     public var historyId: String?
+    public var suspensionPeriodID: String?
     public var validFrom: String?
     public var validTo: String?
     public var kind: RouteGraph.TemporalKind
@@ -87,9 +138,11 @@ public struct DisplayTemporalDecoration: Sendable, Equatable {
         validFrom: String? = nil,
         validTo: String? = nil,
         kind: RouteGraph.TemporalKind = .current,
-        isOverlayStation: Bool = false
+        isOverlayStation: Bool = false,
+        suspensionPeriodID: String? = nil
     ) {
         self.historyId = historyId
+        self.suspensionPeriodID = suspensionPeriodID
         self.validFrom = validFrom
         self.validTo = validTo
         self.kind = kind
@@ -98,6 +151,7 @@ public struct DisplayTemporalDecoration: Sendable, Equatable {
 
     public var isUndecorated: Bool {
         (historyId?.isEmpty ?? true)
+            && (suspensionPeriodID?.isEmpty ?? true)
             && (validFrom?.isEmpty ?? true)
             && (validTo?.isEmpty ?? true)
             && kind == .current

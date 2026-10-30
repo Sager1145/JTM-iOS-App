@@ -40,7 +40,7 @@ public enum RailwayRouteEditing {
                 fromVisitID: after[0].routeEditing?.visitID,
                 toVisitID: after[after.count - 1].routeEditing?.visitID),
                 Array(train.stops[range]) == after else { return nil }
-            var sections = RailwayRouteEditing.sections(for: train)
+            var sections = RecordedRouteMapping.editableRouteSections(for: train)
             guard let mapping = RecordedRouteMapping(stops: train.stops, sections: sections),
                   let sectionRange = mapping.sectionRange(fromStopIndex: range.lowerBound, toStopIndex: range.upperBound),
                   Array(sections[sectionRange]) == afterSections else { return nil }
@@ -136,7 +136,7 @@ public enum RailwayRouteEditing {
             occupiedVisitIDs: &occupiedVisitIDs, occurrences: &occurrences,
             inserted: &inserted, replacement: &replacement)
         replacement.append(oldStops.last!)
-        let existingSections = sections(for: train)
+        let existingSections = RecordedRouteMapping.editableRouteSections(for: train)
         guard let mapping = RecordedRouteMapping(stops: train.stops, sections: existingSections),
               let sectionRange = mapping.sectionRange(fromStopIndex: range.lowerBound, toStopIndex: range.upperBound)
         else { return nil }
@@ -285,48 +285,12 @@ public enum RailwayRouteEditing {
         let sections = Array(choice.routeSections[start..<end])
         var lineIDs: [String] = []
         for id in sections.flatMap({ $0.lineIDs ?? [] }) where lineIDs.last != id { lineIDs.append(id) }
-        func unique(_ values: [String]) -> [String] {
-            var seen: Set<String> = []
-            return values.filter { seen.insert($0).inserted }
-        }
         return RailwayRouteChoices.Choice(
-            lineIDs: lineIDs, lineNames: unique(sections.flatMap { $0.lineNames ?? [] }),
-            operatorNames: unique(sections.flatMap { $0.operatorNames ?? [] }),
+            lineIDs: lineIDs,
+            lineNames: RouteGraph.orderedUnique(sections.flatMap { $0.lineNames ?? [] }),
+            operatorNames: RouteGraph.orderedUnique(sections.flatMap { $0.operatorNames ?? [] }),
             stations: Array(choice.stations[start...end]),
             sectionCodes: sections.flatMap { $0.sectionCodes ?? [] }, routeSections: sections)
-    }
-
-    /// Preserve aligned sections and uniquely identified shifted pairs without
-    /// export normalization or station-name matching. Repeated endpoint pairs
-    /// need a fully aligned list to retain their occurrence-specific labels.
-    private static func sections(for train: Train) -> [RouteSection] {
-        let source = train.routeSections ?? []
-        // Keep a complete authored physical chain exactly, including source-only
-        // boundaries outside the chosen visit range. The fallback below still
-        // handles manual insertion/deletion that made the old chain incomplete.
-        if RecordedRouteMapping(stops: train.stops, sections: source) != nil { return source }
-        let indices = 0..<max(0, train.stops.count - 1)
-        func matches(_ section: RouteSection, _ index: Int) -> Bool {
-            section.fromN02StationCode == train.stops[index].n02StationCode
-                && section.toN02StationCode == train.stops[index + 1].n02StationCode
-        }
-        let aligned = source.count == indices.count
-            && indices.allSatisfy { matches(source[$0], $0) }
-        return indices.map { index in
-            let from = train.stops[index], to = train.stops[index + 1]
-            if aligned { return source[index] }
-            if let fromCode = from.n02StationCode, let toCode = to.n02StationCode {
-                let existing = source.filter { matches($0, index) }
-                let occurrences = indices.filter {
-                    train.stops[$0].n02StationCode == fromCode
-                        && train.stops[$0 + 1].n02StationCode == toCode
-                }
-                if existing.count == 1 && occurrences.count == 1 { return existing[0] }
-            }
-            return RouteSection(from: from.name, to: to.name,
-                                fromN02StationCode: from.n02StationCode,
-                                toN02StationCode: to.n02StationCode)
-        }
     }
 
     private static func uniform(_ values: [String?]) -> String? {

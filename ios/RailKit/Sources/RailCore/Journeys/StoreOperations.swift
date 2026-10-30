@@ -320,10 +320,11 @@ public enum StoreOperations {
         return String(out)
     }
 
-    /// Membership in ECMAScript's `\s`, asked of ``TrainValidation``'s own
-    /// definition rather than restated. See ``uniqueID(_:in:)``.
+    /// Membership in ECMAScript's `\s`, asked of ``JSString/whitespace`` (the
+    /// set ``TrainValidation``'s trim uses) rather than restated. See
+    /// ``uniqueID(_:in:)``.
     private static func isJSWhitespace(_ scalar: Unicode.Scalar) -> Bool {
-        TrainValidation.jsTrim(String(scalar)).isEmpty
+        JSString.whitespace.contains(scalar)
     }
 
     // MARK: - §18: the canonical export as bytes

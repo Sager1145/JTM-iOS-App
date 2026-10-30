@@ -750,3 +750,54 @@ final class RailHistoryTests: XCTestCase {
         XCTAssertFalse(RouteGraph.TemporalKind.shouldCanonicalizeDisplayNetwork(.relocatedNew))
     }
 }
+
+extension RailHistoryTests {
+    func testDatedServiceContextPhysicalValidity() throws {
+        let package = try DatedServiceRouteFixture.package()
+        let history = try DatedServiceRouteFixture.overlay()
+        let context = try RailwayRouteChoices.AdmissionContext(history: history, civilDay: "2024-10-04")
+        let proposal = try XCTUnwrap(RecordedRouteAdmission.admission(
+            in: DatedServiceRouteFixture.train(on: "2024-10-04"), package: package,
+            admissionContext: context).automaticChoice)
+        let points = (0..<3).map { Coordinate(lon: 140.0 + Double($0) * 0.01, lat: 35.0) }
+        var sections = (0..<2).map { i in RouteGraph.SectionFeature(properties: .init(
+            lineName: "Isumi", operator: "Isumi Railway"), lines: [[points[i], points[i + 1]]]) }
+        func station(_ code: String, group: String?, line: String, op: String, point: Coordinate) -> Stations.Feature {
+            var properties: [String: Stations.Value] = ["station_name": .string(code),
+                "n02_station_code": .string(code), "line_name": .string(line), "operator": .string(op)]
+            if let group { properties["n02_group_code"] = .string(group) }
+            return .init(properties: properties, geometry: .init(type: "Point",
+                coordinates: .array([.number(point.lon), .number(point.lat)])))
+        }
+        var stations = [
+            station("005230", group: "005229", line: "Isumi", op: "Isumi Railway", point: points[0]),
+            station("005136", group: nil, line: "Isumi", op: "Isumi Railway", point: points[1]),
+            station("005239", group: "005238", line: "Isumi", op: "Isumi Railway", point: points[2]),
+            station("JR-other", group: "005229", line: "JR", op: "JR Railway", point: points[0]),
+            station("Kominato-other", group: "005238", line: "Kominato", op: "Kominato Railway", point: points[2]),
+        ]
+        _ = RailHistory.apply(history, sections: &sections, stations: &stations)
+        XCTAssertTrue(sections.allSatisfy { $0.properties.validTo == "2024-10-05" })
+        XCTAssertEqual(Stations.stationValidFrom(stations[1]), "2008-08-09")
+        XCTAssertEqual(Stations.stationValidTo(stations[1]), "2024-10-05")
+        XCTAssertNil(Stations.stationValidTo(stations[3]))
+        XCTAssertNil(Stations.stationValidTo(stations[4]))
+        let index = Stations.Index(.init(features: stations))
+        XCTAssertEqual(RouteSolver.filterStationCandidatesByRideDate([1], in: index, rideDate: "2008-08-08"), [])
+        XCTAssertEqual(RouteSolver.filterStationCandidatesByRideDate([1], in: index, rideDate: "2008-08-09"), [1])
+        XCTAssertEqual(RouteSolver.filterStationCandidatesByRideDate([0, 2, 3, 4], in: index, rideDate: "2024-10-05"), [3, 4])
+        let graph = RouteGraph.build(from: sections)
+        // Use the actual dated physical solver, not status resolution, to establish rail availability.
+        func solve(_ day: String?) -> RouteSolver.SolvedSection? {
+            RouteSolver.solveSection(RouteSection(from: "005230", to: "005239", lineNames: proposal.lineNames,
+                operatorNames: proposal.operatorNames), segmentIndex: 0,
+                train: .init(id: "dated-isumi", number: "", trainType: "", company: "", origin: "005230",
+                    destination: "005239", preferredLineNames: [], preferredOperatorNames: [],
+                    allowedInstitutionTypeCodes: nil, institutionFilterMode: "soft", rideDate: day),
+                country: "jp", graph: graph, stations: index)
+        }
+        XCTAssertNotNil(solve("2024-10-04"))
+        XCTAssertNil(solve("2024-10-05"))
+        XCTAssertNil(solve(nil))
+    }
+}

@@ -241,6 +241,19 @@ public enum ContinuousStroke {
         }
     }
 
+    /// Reviewed literal middle edge with exact P,A,B,Q input witnesses.
+    public struct LiteralSpan: Equatable, Sendable {
+        public var edgeIndex: Int
+        public var witnesses: [Point]
+        /// Nil is literal-v1; source-corners-v1 binds A/B hard boundaries only.
+        public var mode: String?
+        public init(edgeIndex: Int, witnesses: [Point], mode: String? = nil) {
+            self.edgeIndex = edgeIndex
+            self.witnesses = witnesses
+            self.mode = mode
+        }
+    }
+
     public struct Options: Sendable {
         /// Cumulative metres along the part at every vertex — the ruler the
         /// rows are measured with. Empty means "scale the pixel length by
@@ -277,13 +290,14 @@ public enum ContinuousStroke {
         /// an already curved continuous stroke uses this so the curve is
         /// not sampled twice.
         public var curveCentreline: Bool
+        public var literalSpans: [LiteralSpan]
         public init(
             measures: [Double] = [], rows: [LaneRow], totalMetres: Double, laneGapPx: Double,
             minRampPx: Double, cornerRadiusPx: Double, minCornerRadiusPx: Double = 0,
             anchors: [Int], follows: [Follow] = [], shapeBoundaryMeasures: [Double] = [],
             joinStart: Join? = nil, joinEnd: Join? = nil,
             enforceMinimumCornerRadius: Bool = false,
-            curveCentreline: Bool = true
+            curveCentreline: Bool = true, literalSpans: [LiteralSpan] = []
         ) {
             self.measures = measures
             self.rows = rows
@@ -299,6 +313,7 @@ public enum ContinuousStroke {
             self.joinStart = joinStart
             self.joinEnd = joinEnd
             self.curveCentreline = curveCentreline
+            self.literalSpans = literalSpans
         }
     }
 
@@ -311,6 +326,10 @@ public enum ContinuousStroke {
         /// `anchorMeasures[i]` is the (post-dedupe input) measure of the
         /// vertex `options.anchors[i]` was read from.
         public var anchorMeasures: [Double]
+        /// Successfully preserved literal edges, in the original caller input.
+        public var appliedLiteralSpanEdges: [Int] = []
+        /// Successfully preserved A/B source corners, in the original caller input.
+        public var appliedSourceCornerEdges: [Int] = []
     }
 
     // MARK: - projection (web mercator, 512-px tiles, y grows south)
@@ -672,28 +691,114 @@ public enum ContinuousStroke {
     /// A merge must also stay sub-visible on screen, whatever the zoom.
     public static let curveMergeLateralPx: Double = 0.1
 
-    /// Rendering-only centreline interpolation; the input metre ruler remains
-    /// unchanged, including across adaptive samples and ride slices.
+    /// Constraints require unique adjacent witnesses and real outer controls.
+    private static func resolveLiteralSpans(
+        _ points: [Point], measures: [Double], spans: [LiteralSpan]
+    ) -> [LiteralSpan] {
+        guard !spans.isEmpty, measures.count == points.count else { return [] }
+        var resolved: [LiteralSpan] = []
+        for span in spans {
+            let edge = span.edgeIndex
+            guard (span.mode == nil || span.mode == "source-corners-v1"),
+                  edge >= 2, edge < points.count - 3, span.witnesses.count == 4,
+                  span.witnesses.allSatisfy({ $0.x.isFinite && $0.y.isFinite }),
+                  Array(points[(edge - 1)...(edge + 2)]) == span.witnesses else { return [] }
+            let occurrences = (0..<(points.count - 3)).filter {
+                Array(points[$0...($0 + 3)]) == span.witnesses
+            }.count
+            guard occurrences == 1, !resolved.contains(where: { abs($0.edgeIndex - edge) <= 3 }) else { return [] }
+            for i in (edge - 1)...(edge + 1) {
+                guard measures[i].isFinite, measures[i + 1].isFinite, measures[i + 1] > measures[i],
+                      hypot(points[i + 1].x - points[i].x, points[i + 1].y - points[i].y) > degenerateEdge else { return [] }
+            }
+            resolved.append(span)
+        }
+        return resolved
+    }
+
+    private struct LiteralFootprint {
+        var points: [Point]
+        var measures: [Double]
+    }
+
+    private static func literalFootprints(
+        points: [Point], measures: [Double], spans: [LiteralSpan], sourceMeasures: [Double]
+    ) -> [LiteralFootprint] {
+        spans.map { span in
+            guard let start = measures.firstIndex(of: sourceMeasures[span.edgeIndex - 1]),
+                  let end = measures.firstIndex(of: sourceMeasures[span.edgeIndex + 2]), end >= start else {
+                return LiteralFootprint(points: [], measures: [])
+            }
+            return LiteralFootprint(points: Array(points[start...end]), measures: Array(measures[start...end]))
+        }
+    }
+
+    private static func preservesLiteralFootprints(
+        points: [Point], measures: [Double], footprints: [LiteralFootprint]
+    ) -> Bool {
+        footprints.allSatisfy { footprint in
+            guard footprint.points.count >= 4,
+                  let first = footprint.measures.first, let last = footprint.measures.last,
+                  let start = measures.firstIndex(of: first), let end = measures.firstIndex(of: last),
+                  end - start + 1 == footprint.points.count else { return false }
+            return Array(points[start...end]) == footprint.points && Array(measures[start...end]) == footprint.measures
+        }
+    }
+
+    /// Rendering-only interpolation retaining the caller's metre ruler.
     public static func smoothCentreline(
         _ points: [Point], measures: [Double], anchorMeasures: [Double] = [],
-        hardMeasures: [Double] = []
+        hardMeasures: [Double] = [], literalSpans: [LiteralSpan] = []
     ) -> (points: [Point], measures: [Double]) {
-        guard points.count >= 4, measures.count == points.count else { return (points, measures) }
+        let result = smoothCentrelineResult(
+            points, measures: measures, anchorMeasures: anchorMeasures,
+            hardMeasures: hardMeasures, literalSpans: literalSpans)
+        return (result.points, result.measures)
+    }
+
+    private static func smoothCentrelineResult(
+        _ points: [Point], measures: [Double], anchorMeasures: [Double] = [],
+        hardMeasures: [Double] = [], literalSpans: [LiteralSpan] = []
+    ) -> (points: [Point], measures: [Double], appliedEdges: [Int], appliedSourceEdges: [Int]) {
+        guard points.count >= 4, measures.count == points.count else { return (points, measures, [], []) }
         let length = cumulativeLengths(points).last ?? 0
         let metres = (measures.last ?? 0) - measures[0]
         let metresPerPx = length > 0 && metres > 0 ? metres / length : 1
+        let admitted = resolveLiteralSpans(points, measures: measures, spans: literalSpans)
+        let sourceCorners = admitted.filter { $0.mode == "source-corners-v1" }
+        guard !sourceCorners.contains(where: { span in
+            ((span.edgeIndex - 1)...(span.edgeIndex + 2)).contains { index in
+                (anchorMeasures + hardMeasures).contains { abs($0 - measures[index]) < 1e-9 }
+            }
+        }) else {
+            return smoothCentrelineResult(points, measures: measures, anchorMeasures: anchorMeasures, hardMeasures: hardMeasures)
+        }
+        let allHardMeasures = hardMeasures + sourceCorners.flatMap { [measures[$0.edgeIndex], measures[$0.edgeIndex + 1]] }
+        let literals = admitted.filter { $0.mode == nil }
+        let protectedSupports = Set(admitted.flatMap { Array(($0.edgeIndex - 1)...($0.edgeIndex + 2)) })
+        func ordinary() -> (points: [Point], measures: [Double], appliedEdges: [Int], appliedSourceEdges: [Int]) {
+            smoothCentrelineResult(points, measures: measures, anchorMeasures: anchorMeasures, hardMeasures: hardMeasures)
+        }
         var kept = [0]
         retainCentrelineSupports(
-            points: points, measures: measures, anchorMeasures: anchorMeasures + hardMeasures,
-            metresPerPx: metresPerPx, kept: &kept)
+            points: points, measures: measures, anchorMeasures: anchorMeasures + allHardMeasures,
+            metresPerPx: metresPerPx, protectedSupports: protectedSupports, kept: &kept)
         kept.append(points.count - 1)
         let p = kept.map { points[$0] }, m = kept.map { measures[$0] }
-        guard p.count >= 4 else { return (points, measures) }
+        guard p.count >= 4 else { return (points, measures, [], []) }
         var hard = [Bool](repeating: false, count: p.count)
         hard[0] = true; hard[p.count - 1] = true
         for i in surveyedCornerIndices(p) { hard[i] = true }
-        for i in m.indices where hardMeasures.contains(where: { abs($0 - m[i]) < 1e-9 }) {
+        for i in m.indices where allHardMeasures.contains(where: { abs($0 - m[i]) < 1e-9 }) {
             hard[i] = true
+        }
+        var constrained = [Int: Int]()
+        for literal in literals {
+            guard let edge = kept.firstIndex(of: literal.edgeIndex), edge >= 1, edge + 2 < kept.count,
+                  kept[edge - 1] == literal.edgeIndex - 1,
+                  kept[edge + 1] == literal.edgeIndex + 1, kept[edge + 2] == literal.edgeIndex + 2,
+                  !((edge - 1)...(edge + 2)).contains(where: { hard[$0] }) else { return ordinary() }
+            for i in (edge - 1)...(edge + 1) { constrained[i] = edge }
         }
         var out = [p[0]], outMeasures = [m[0]]
         var runStart = 0
@@ -701,18 +806,19 @@ public enum ContinuousStroke {
             var runEnd = runStart + 1
             while runEnd + 1 < p.count && !hard[runEnd] { runEnd += 1 }
             for i in runStart..<runEnd {
-                appendSmoothCentrelineSpan(
+                let accepted = appendSmoothCentrelineSpan(
                     i: i, runStart: runStart, runEnd: runEnd, p: p, m: m, points: points,
-                    kept: kept, metresPerPx: metresPerPx, out: &out, outMeasures: &outMeasures)
+                    kept: kept, metresPerPx: metresPerPx, literalEdge: constrained[i], out: &out, outMeasures: &outMeasures)
+                if !accepted { return ordinary() }
             }
             runStart = runEnd
         }
-        return (out, outMeasures)
+        return (out, outMeasures, literals.map(\.edgeIndex), sourceCorners.map(\.edgeIndex))
     }
 
     private static func retainCentrelineSupports(
         points: [Point], measures: [Double], anchorMeasures: [Double], metresPerPx: Double,
-        kept: inout [Int]
+        protectedSupports: Set<Int> = [], kept: inout [Int]
     ) {
         let corners = surveyedCornerIndices(points)
         for i in 1..<(points.count - 1) {
@@ -726,7 +832,7 @@ public enum ContinuousStroke {
                 corners.contains($0)
             }
             let isAnchor = anchorMeasures.contains { abs($0 - measures[i]) < 1e-9 }
-            if collinear && !nearHard && !isAnchor { continue }
+            if collinear && !nearHard && !isAnchor && !protectedSupports.contains(i) { continue }
             kept.append(i)
         }
     }
@@ -734,11 +840,11 @@ public enum ContinuousStroke {
     private static func appendSmoothCentrelineSpan(
         i: Int, runStart: Int, runEnd: Int, p: [Point], m: [Double],
         points: [Point], kept: [Int], metresPerPx: Double,
-        out: inout [Point], outMeasures: inout [Double]
-    ) {
+        literalEdge: Int? = nil, out: inout [Point], outMeasures: inout [Double]
+    ) -> Bool {
         let a = p[i], b = p[i + 1]
         if runEnd - runStart < 3 || (runStart > 0 && i == runStart) || (runEnd + 1 < p.count && i + 1 == runEnd) {
-            out.append(b); outMeasures.append(m[i + 1]); return
+            out.append(b); outMeasures.append(m[i + 1]); return literalEdge == nil
         }
         let before = i > runStart ? p[i - 1] : Point(x: 2 * a.x - b.x, y: 2 * a.y - b.y)
         let after = i + 1 < runEnd ? p[i + 2] : Point(x: 2 * b.x - a.x, y: 2 * b.y - a.y)
@@ -746,26 +852,36 @@ public enum ContinuousStroke {
         let d1 = sqrt(hypot(b.x - a.x, b.y - a.y))
         let d2 = sqrt(hypot(after.x - b.x, after.y - b.y))
         guard min(d0, d1, d2) > degenerateEdge else {
-            out.append(b); outMeasures.append(m[i + 1]); return
+            out.append(b); outMeasures.append(m[i + 1]); return literalEdge == nil
         }
         // Non-uniform Catmull-Rom expressed as a cubic Hermite;
         // knot spacing sqrt(chord length) is alpha=0.5.
-        let t0 = Point(x: d1 * centripetalTangent(before.x, a.x, b.x, d0, d1),
+        var t0 = Point(x: d1 * centripetalTangent(before.x, a.x, b.x, d0, d1),
                        y: d1 * centripetalTangent(before.y, a.y, b.y, d0, d1))
-        let t1 = Point(x: d1 * centripetalTangent(a.x, b.x, after.x, d1, d2),
+        var t1 = Point(x: d1 * centripetalTangent(a.x, b.x, after.x, d1, d2),
                        y: d1 * centripetalTangent(a.y, b.y, after.y, d1, d2))
+        if let edge = literalEdge {
+            if i == edge {
+                out.append(b); outMeasures.append(m[i + 1]); return true
+            }
+            let scale = (m[i + 1] - m[i]) / (m[edge + 1] - m[edge])
+            let inner = Point(x: (p[edge + 1].x - p[edge].x) * scale,
+                              y: (p[edge + 1].y - p[edge].y) * scale)
+            if i < edge { t1 = inner } else { t0 = inner }
+        }
         let curve = sampleCubic(a, b, t0, t1)
         let allowance = max(curveMaxDeviationPx, curveMaxDeviationMetres / metresPerPx)
         // Check against the original surveyed span, including tiny
         // edges merged above, rather than just the surviving chord.
         let survey = Array(points[kept[i]...kept[i + 1]])
         if curve.contains(where: { distanceToPolyline($0, survey) > allowance }) {
-            out.append(b); outMeasures.append(m[i + 1]); return
+            out.append(b); outMeasures.append(m[i + 1]); return literalEdge == nil
         }
         for j in 1..<curve.count {
             out.append(curve[j])
             outMeasures.append(m[i] + (m[i + 1] - m[i]) * Double(j) / Double(curve.count - 1))
         }
+        return true
     }
 
     private static func centripetalTangent(_ v0: Double, _ v1: Double, _ v2: Double, _ left: Double, _ right: Double) -> Double {
@@ -903,9 +1019,29 @@ public enum ContinuousStroke {
                 points: [only, only], anchors: options.anchors.map { _ in only },
                 measures: [m, m], anchorMeasures: anchorMeasures)
         }
-        return buildCleanStroke(
+        let requested = resolveLiteralSpans(points, measures: inputMeasures, spans: options.literalSpans)
+        var resolvedOptions = options
+        let rulerSurvives = requested.allSatisfy { span in
+            ((span.edgeIndex - 1)...(span.edgeIndex + 2)).allSatisfy { i in
+                let mapped = anchorMap[i]
+                return mapped >= 0 && mapped < clean.count && clean[mapped] == points[i]
+                    && cleanMeasures[mapped] == inputMeasures[i]
+            }
+        }
+        resolvedOptions.literalSpans = rulerSurvives ? resolveLiteralSpans(
+            clean, measures: cleanMeasures, spans: requested.map {
+                LiteralSpan(edgeIndex: anchorMap[$0.edgeIndex], witnesses: $0.witnesses, mode: $0.mode)
+            }) : []
+        var result = buildCleanStroke(
             clean: clean, cleanMeasures: cleanMeasures, anchorMap: anchorMap, anchorSet: anchorSet,
-            anchorMeasures: anchorMeasures, options: options)
+            anchorMeasures: anchorMeasures, options: resolvedOptions)
+        if !result.appliedLiteralSpanEdges.isEmpty {
+            result.appliedLiteralSpanEdges = requested.filter { $0.mode == nil }.map(\.edgeIndex)
+        }
+        if !result.appliedSourceCornerEdges.isEmpty {
+            result.appliedSourceCornerEdges = requested.filter { $0.mode == "source-corners-v1" }.map(\.edgeIndex)
+        }
+        return result
     }
 
     private static func strokeInputMeasures(_ points: [Point], options: Options) -> [Double] {
@@ -929,6 +1065,14 @@ public enum ContinuousStroke {
         let totalMetres = cleanMeasures[cleanMeasures.count - 1] - cleanMeasures[0]
         let metresPerPx = cleanTotalPx > 0 && totalMetres > 0 ? totalMetres / cleanTotalPx : 0
         let curvedFollows = curvedStrokeFollows(options, points: clean, measures: cleanMeasures)
+        let activeOffset = options.rows.contains { $0.lane != 0 }
+            || (options.joinStart?.lane ?? 0) != 0 || (options.joinEnd?.lane ?? 0) != 0
+            || (options.joinStart?.targetLane ?? 0) != 0 || (options.joinEnd?.targetLane ?? 0) != 0
+        let sourceCorners = options.curveCentreline && options.cornerRadiusPx > 0
+            && options.follows.isEmpty && !activeOffset ? options.literalSpans.filter { span in
+                span.mode == "source-corners-v1"
+            } : []
+        let sourceCornerMeasures = sourceCorners.flatMap { [cleanMeasures[$0.edgeIndex], cleanMeasures[$0.edgeIndex + 1]] }
         let shapeBoundaryMeasures = options.shapeBoundaryMeasures
             + curvedFollows.filter(\.exactShared).flatMap { [$0.from, $0.to] }
         var protectedAnchorSet = anchorSet
@@ -944,19 +1088,50 @@ public enum ContinuousStroke {
         var followed = substituted
         removeSubstitutionFolds(substituted: substituted, clean: clean, anchorSet: protectedAnchorSet, followed: &followed)
         let curveEnabled = options.curveCentreline && options.cornerRadiusPx > 0
-        let cornerMeasures = (curveEnabled
+        var cornerMeasures = (curveEnabled
             ? surveyedCornerIndices(followed.points).map { followed.measures[$0] } : [])
             + shapeBoundaryMeasures
+        // Pixel LOD may hide an offset; it cannot admit a semantic lane.
+        let literals = curveEnabled && options.follows.isEmpty && !activeOffset
+            ? options.literalSpans.filter { $0.mode == nil } + sourceCorners : []
+        var protection: (footprints: [LiteralFootprint], appliedEdges: [Int], appliedSourceEdges: [Int]) = ([], [], [])
         if curveEnabled {
-            curveFollowedStroke(
+            protection = curveFollowedStroke(
                 followed: &followed, options: options, anchorSet: protectedAnchorSet, anchorMeasures: anchorMeasures,
                 shapeBoundaryMeasures: shapeBoundaryMeasures, cleanMeasures: cleanMeasures,
-                totalMetres: totalMetres, gap: gap, cleanCount: clean.count)
+                totalMetres: totalMetres, gap: gap, cleanCount: clean.count, literalSpans: literals)
         }
+        if !protection.appliedSourceEdges.isEmpty { cornerMeasures += sourceCornerMeasures }
         var tapered = taperFollowedStroke(followed: followed, anchorSet: protectedAnchorSet, metresPerPx: metresPerPx, cornerMeasures: cornerMeasures)
-        return finishTaperedStroke(
+        var result = finishTaperedStroke(
             tapered: &tapered, options: options, totalMetres: totalMetres, metresPerPx: metresPerPx,
             gap: gap, anchorSet: protectedAnchorSet, curveEnabled: curveEnabled, cornerMeasures: cornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures)
+        if !protection.appliedEdges.isEmpty {
+            guard preservesLiteralFootprints(points: result.points, measures: result.measures, footprints: protection.footprints) else {
+                var ordinary = options
+                ordinary.literalSpans = []
+                return buildCleanStroke(
+                    clean: clean, cleanMeasures: cleanMeasures, anchorMap: anchorMap, anchorSet: anchorSet,
+                    anchorMeasures: anchorMeasures, options: ordinary)
+            }
+            result.appliedLiteralSpanEdges = protection.appliedEdges
+        }
+        if !protection.appliedSourceEdges.isEmpty {
+            let preserved = sourceCorners.allSatisfy { span in
+                [span.edgeIndex, span.edgeIndex + 1].allSatisfy { index in
+                    guard let at = result.measures.firstIndex(of: cleanMeasures[index]) else { return false }
+                    return result.points[at] == clean[index]
+                }
+            }
+            guard preserved else {
+                var ordinary = options
+                ordinary.literalSpans = []
+                return buildCleanStroke(clean: clean, cleanMeasures: cleanMeasures, anchorMap: anchorMap,
+                    anchorSet: anchorSet, anchorMeasures: anchorMeasures, options: ordinary)
+            }
+            result.appliedSourceCornerEdges = sourceCorners.map(\.edgeIndex)
+        }
+        return result
     }
 
     private static func curvedStrokeFollows(
@@ -1053,16 +1228,21 @@ public enum ContinuousStroke {
     private static func curveFollowedStroke(
         followed: inout (points: [Point], measures: [Double], map: [Int]), options: Options,
         anchorSet: Set<Int>, anchorMeasures: [Double], shapeBoundaryMeasures: [Double], cleanMeasures: [Double],
-        totalMetres: Double, gap: Double, cleanCount: Int
-    ) {
+        totalMetres: Double, gap: Double, cleanCount: Int, literalSpans: [LiteralSpan] = []
+    ) -> (footprints: [LiteralFootprint], appliedEdges: [Int], appliedSourceEdges: [Int]) {
         // `anchorSet` indexes `clean`; the curve pass works on
         // `followed.points`, so carry each anchor across by its map.
         // Preserve real surveyed supports before rounding their facets.
-        var curved = smoothCentreline(
+        let generated = smoothCentrelineResult(
             followed.points, measures: followed.measures, anchorMeasures: anchorMeasures,
-            hardMeasures: shapeBoundaryMeasures)
+            hardMeasures: shapeBoundaryMeasures, literalSpans: literalSpans)
+        let footprints = generated.appliedEdges.isEmpty ? [] : literalFootprints(
+            points: generated.points, measures: generated.measures, spans: literalSpans.filter { $0.mode == nil }, sourceMeasures: followed.measures)
+        var curved = (points: generated.points, measures: generated.measures)
         let boundaries = anchorMeasures + surveyedCornerIndices(followed.points).map { followed.measures[$0] }
-            + shapeBoundaryMeasures
+            + shapeBoundaryMeasures + literalSpans.filter { generated.appliedSourceEdges.contains($0.edgeIndex) }.flatMap {
+                [followed.measures[$0.edgeIndex], followed.measures[$0.edgeIndex + 1]]
+            }
         let startInterval = boundaries.filter { $0 > cleanMeasures[0] }.min().map { $0 - cleanMeasures[0] } ?? totalMetres
         let endInterval = boundaries.filter { $0 < cleanMeasures.last! }.max().map { cleanMeasures.last! - $0 } ?? totalMetres
         curved = blendJunction(curved.points, measures: curved.measures, join: options.joinStart,
@@ -1072,6 +1252,7 @@ public enum ContinuousStroke {
         // Stations are read by measure from final ink below; they are
         // deliberately not hard vertices of the spline or jog passes.
         followed = (curved.points, curved.measures, Array(repeating: -1, count: cleanCount))
+        return (footprints, generated.appliedEdges, generated.appliedSourceEdges)
     }
 
     private static func taperFollowedStroke(

@@ -21,7 +21,7 @@ final class ChatGPTSubscriptionService {
         configuration.urlCache = nil
         configuration.timeoutIntervalForRequest = 90
         configuration.timeoutIntervalForResource = 600
-        self.session = URLSession(configuration: configuration, delegate: SubscriptionRedirectPolicy(), delegateQueue: nil)
+        self.session = URLSession(configuration: configuration, delegate: ChatGPTSubscriptionNoRedirectDelegate(), delegateQueue: nil)
     }
 
     deinit { session.invalidateAndCancel() }
@@ -161,14 +161,5 @@ final class ChatGPTSubscriptionService {
                 }
             }
         }
-    }
-}
-
-private final class SubscriptionRedirectPolicy: NSObject, URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask,
-                    willPerformHTTPRedirection response: HTTPURLResponse,
-                    newRequest request: URLRequest,
-                    completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
-        completionHandler(nil)
     }
 }

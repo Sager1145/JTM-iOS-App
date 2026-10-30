@@ -3,6 +3,26 @@ import Testing
 @testable import RailCore
 
 struct StationReversalTests {
+    @Test func reviewedTwoPointStemIsDrawnOnceFromItsExactRoot() throws {
+        // A reviewed straight station spur needs only its root and platform.
+        // Treating the root as a duplicate neighbour removes one side of it.
+        let json = #"""
+        {"id":"reviewed-straight-spur","name":"Reviewed spur","rank":3,
+         "stations":[["A","A",135.0,34.995],["S","S",135.0,35.003],
+                     ["B","B",135.005,35.0]],
+         "segments":[[1,1,[[135.0,35.0],[135.0,35.003]]],
+                     [1,1,[[135.0,35.0],[135.005,35.0]]]],
+         "displayReversalBranches":[[[135.0,35.0],[135.0,35.003]]]}
+        """#
+        let line = try JSONDecoder().decode(CompactPackage.Line.self, from: Data(json.utf8))
+        let root = Coordinate(lon: 135, lat: 35)
+        let station = Coordinate(lon: 135, lat: 35.003)
+        let parts = DisplayParts.parts(for: line)
+        #expect(parts.filter { $0 == [root, station] }.count == 1)
+        #expect(parts.filter { $0.first == root || $0.last == root }.count == 3)
+        #expect(parts.flatMap { $0 }.filter { $0 == station }.count == 1)
+    }
+
     @Test func surveyedReturnKeepsBothApproachTangents() {
         // Pacific Surfliner's actual Union Station platform and shared tail.
         let station = Coordinate(lon: -118.234202, lat: 34.055782)

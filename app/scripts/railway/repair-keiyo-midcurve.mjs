@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {isAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // One display window continuing the already selected passenger tail track.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -324,7 +325,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const flags = args.filter((_, index) => candidateIndex < 0 || (index !== candidateIndex && index !== candidateIndex + 1));
   const apply = flags.includes('--apply'), west = flags.includes('--west');
   assert(flags.every(arg => ['--apply', '--west'].includes(arg)) && new Set(flags).size === flags.length &&
-    (!candidateRoot || (!apply && candidateRoot.startsWith('/private/tmp/'))),
+    (!candidateRoot || (!apply && isAllowedCandidateDirectory(candidateRoot))),
     'Usage: node repair-keiyo-midcurve.mjs [--west] [--apply | --candidate-root /private/tmp/<dir>]');
   const paths = { package: 'public/rail/jp-2025.json', lanes: 'public/rail/display-lanes.json',
     evidence: 'scripts/railway/keiyo-midcurve-evidence.json', ...DEPENDENCY_PATHS };

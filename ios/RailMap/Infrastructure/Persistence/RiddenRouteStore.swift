@@ -1802,7 +1802,7 @@ final class RiddenRouteStore {
             do {
                 let data = try Data(contentsOf: url)
                 let overlay = try RailHistoryOverlay.decode(data)
-                let hash = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+                let hash = SHA256.hash(data: data).hex
                 state = .loaded(overlay, contentHash: hash)
             }
             catch { state = .invalid(String(describing: error)) }
@@ -2032,7 +2032,7 @@ final class RiddenRouteStore {
         // then an id-derived service constraint must not alias another record.
         if canonicalSections.contains(where: { $0.from?.isEmpty != false || $0.to?.isEmpty != false }),
            let bytes = try? JSONEncoder().encode([digest, raw.id]) {
-            return SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
+            return SHA256.hash(data: bytes).hex
         }
         return digest
     }

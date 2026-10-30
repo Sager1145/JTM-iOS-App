@@ -1,6 +1,9 @@
 import CryptoKit
 import Foundation
 import WorkbenchCore
+#if RAIL_DIAGNOSTICS
+import enum RailInspection.RailwayEvidenceRoot
+#endif
 
 enum ImportKind: String, CaseIterable, Identifiable, Sendable {
     case workdoc = "Working document"
@@ -37,9 +40,15 @@ actor WorkbenchSession {
     private var document: WorkbenchDocument?
     private var retainedInspectionPlan: InspectionPlan?
     private let saveURL: URL
+    #if RAIL_DIAGNOSTICS
+    private let diagnosticEvidence: Bool
+    #endif
 
     init(saveURL: URL? = nil) {
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        #if RAIL_DIAGNOSTICS
+        diagnosticEvidence = saveURL != nil
+        #endif
         self.saveURL = saveURL ?? support.appendingPathComponent("ThroughWorkbench", isDirectory: true)
             .appendingPathComponent("working-document.json")
     }
@@ -177,7 +186,12 @@ actor WorkbenchSession {
     }
 
     private func persist(_ candidate: WorkbenchDocument) throws {
-        try FileManager.default.createDirectory(at: saveURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try encode(candidate).write(to: saveURL, options: .atomic)
+        #if RAIL_DIAGNOSTICS
+        let destination = try diagnosticEvidence ? RailwayEvidenceRoot.validatedWriteURL(saveURL) : saveURL
+        #else
+        let destination = saveURL
+        #endif
+        try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try encode(candidate).write(to: destination, options: .atomic)
     }
 }

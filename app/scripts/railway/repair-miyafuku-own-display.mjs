@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -93,7 +94,7 @@ export function repairParts(pkg,input,e=read(path.join(ROOT,EVIDENCE))){
 }
 function main(args){
   const candidate=args.length===2&&args[0]==='--candidate-root'?path.resolve(args[1]):null;
-  assert(candidate||equal(args,['--apply']),'Use --candidate-root /private/tmp/<dir> or --apply');if(candidate)assert(candidate.startsWith('/private/tmp/'));
+  assert(candidate||equal(args,['--apply']),'Use --candidate-root <repo>/railway-evidence/local/candidates/<dir> or --apply');if(candidate)assertAllowedCandidateDirectory(candidate);
   const paths={package:'public/rail/jp-2025.json',lanes:'public/rail/display-lanes.json',...DEPENDENCY_PATHS};
   const snapshots=Object.fromEntries(Object.entries(paths).map(([k,p])=>[k,{path:path.join(ROOT,p),before:fs.readFileSync(path.join(ROOT,p),'utf8')}]));
   const e=read(path.join(ROOT,EVIDENCE));

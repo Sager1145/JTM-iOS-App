@@ -248,6 +248,7 @@ struct LocalJourneyFillView: View {
         // Service labels are display metadata, never additional graph edges.
         let worker = Task.detached(priority: .userInitiated) {
             let aliases = try loadJourneyStationAliases(for: required, package: package)
+            let context = try loadJourneyAdmissionContext(rideDate: serviceDate, package: package)
             // Physical fill never retries with passenger-transfer permissions.
             var memo: [String: Bool] = [:]
             func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
@@ -259,7 +260,7 @@ struct LocalJourneyFillView: View {
             }
             return LocalJourneySearch.search(package: package, originCode: originCode,
                 destinationCode: destinationCode, trainType: type, requiredStationCodes: required,
-                stationAliases: aliases, continuation: allows, operatorID: operatorID)
+                stationAliases: aliases, continuation: allows, operatorID: operatorID, admissionContext: context)
         }
         let result: LocalJourneySearch.Result
         do {

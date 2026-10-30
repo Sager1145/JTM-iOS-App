@@ -13,6 +13,64 @@ if (evidence.originalReversalTails.length) line.reversalTails = evidence.origina
 else delete line.reversalTails;
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
+test('a reviewed two-point spur keeps its root without accepting unrelated reversal metadata', () => {
+  const root = [135, 35], station = [135, 35.003];
+  const original = {
+    id: 'reviewed-straight-spur', name: 'Reviewed spur', rank: 3,
+    stations: [['A', 'A', 135, 34.995], ['S', 'S', ...station], ['B', 'B', 135.005, 35]],
+    segments: [[1, 1, [root, station]], [1, 1, [root, [135.005, 35]]]],
+  };
+  const before = structuredClone(original);
+  const reviewed = { ...original, displayReversalBranches: [[root, station]] };
+  const parts = network.displayPartsForLine(reviewed);
+  assert.equal(parts.filter(part => same(part, [root, station])).length, 1);
+  assert.equal(parts.filter(part => same(part[0], root) || same(part.at(-1), root)).length, 3);
+  assert.equal(parts.flat().filter(point => same(point, station)).length, 1);
+  for (const stems of [[], [[root]], [[root, root]], [[[135.0001, 35], station]]]) {
+    const unrelated = network.displayPartsForLine({ ...original, displayReversalBranches: stems });
+    assert.equal(unrelated.filter(part => same(part, [root, station])).length, 0);
+  }
+  assert.deepEqual(original, before, 'display construction must not mutate physical source');
+});
+
+test('reviewed source approaches require both raw display sides and never leak into overrides', () => {
+  const incoming = [[135, 35], [135.001, 35], [135.002, 35], [135.003, 35.001]];
+  const outgoing = [[135.003, 35.001], [135.004, 35], [135.005, 35], [135.006, 35]];
+  const original = {
+    id: 'source-defined-approach', name: 'Source curve', rank: 3,
+    stations: [['A', 'A', 135, 35], ['S', 'S', 135.003, 35.001], ['B', 'B', 135.006, 35]],
+    segments: [[1, 1, incoming.slice(1)], [1, 1, outgoing.slice(1)]],
+    displayIntervalCoordinates: { 0: incoming, 1: outgoing },
+    displayStationCoordinates: { S: [135.003, 35.001] },
+    displaySourceAnchoredStationCodes: ['S'],
+  };
+  const before = structuredClone(original);
+  assert.deepEqual(network.displayPartsForLine(original), [[...incoming, ...outgoing.slice(1)]]);
+  const ordinary = row => {
+    const copy = structuredClone(row);
+    delete copy.displaySourceAnchoredStationCodes;
+    return copy;
+  };
+  const changes = [
+    row => { delete row.displaySourceAnchoredStationCodes; },
+    row => { row.displaySourceAnchoredStationCodes = []; },
+    row => { row.displaySourceAnchoredStationCodes = ['unknown']; },
+    row => { row.displaySourceAnchoredStationCodes = ['A']; },
+    row => { delete row.displayStationCoordinates; },
+    row => { delete row.displayIntervalCoordinates[1]; },
+    row => { row.displayIntervalCoordinates[0].at(-1)[1] += 0.0001; },
+  ];
+  for (const change of changes) {
+    const row = structuredClone(original);
+    change(row);
+    assert.deepEqual(network.displayPartsForLine(row), network.displayPartsForLine(ordinary(row)));
+  }
+  const override = structuredClone([incoming, outgoing]);
+  assert.deepEqual(network.displayPartsForLine(original, override),
+    network.displayPartsForLine(ordinary(original), override));
+  assert.deepEqual(original, before, 'display authority must not mutate the physical source');
+});
+
 test('Hakone outgoing passenger reversal survives complete display grooming without changing physical source', () => {
   const before = network.displayPartsForLine(line);
   assert(!before.flat().some(point => same(point, evidence.protectedExtent)), 'baseline must reproduce the lost tip');

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {assertAllowedCandidateDirectory} from './local-evidence-path.mjs';
 // One Apple-own-corridor display step; canonical geometry and stations stay exact.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -53,7 +54,7 @@ export function repairParts(pkg,input,e=read(path.join(ROOT,EVIDENCE))){
   const result=structuredClone(input);result.partsByRegion.jp=result.partsByRegion.jp.map(r=>r[0]===LINE?rows[0]:r);result.byRegion.jp=result.byRegion.jp.map(r=>r[0]===LINE?lane[0]:r);return result;
 }
 function main(args){
-  const candidate=args.length===2&&args[0]==='--candidate-root'?path.resolve(args[1]):null;assert(candidate||equal(args,['--apply']),'Use --candidate-root /private/tmp/<dir> or --apply');if(candidate)assert(candidate.startsWith('/private/tmp/'));
+  const candidate=args.length===2&&args[0]==='--candidate-root'?path.resolve(args[1]):null;assert(candidate||equal(args,['--apply']),'Use --candidate-root <repo>/railway-evidence/local/candidates/<dir> or --apply');if(candidate)assertAllowedCandidateDirectory(candidate);
   const paths={package:'public/rail/jp-2025.json',lanes:'public/rail/display-lanes.json',...DEPENDENCY_PATHS};
   const snapshots=Object.fromEntries(Object.entries(paths).map(([k,p])=>[k,{path:path.join(ROOT,p),before:fs.readFileSync(path.join(ROOT,p),'utf8')}]));
   const e=read(path.join(ROOT,EVIDENCE)),inputPaths=[path.join(ROOT,EVIDENCE),...e.appleSources.map(s=>path.resolve(REPO,e.sourceRoot,s.file)),path.join(ROOT,'data/rail-sections.json'),...e.externalPaths.map(p=>path.join(ROOT,p))];

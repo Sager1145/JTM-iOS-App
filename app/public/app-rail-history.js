@@ -9,6 +9,8 @@
 // =========================================================================
 
 const railHistoryOverlays = new Map();
+const railHistoryGenerations = new Map();
+let railHistoryGeneration = 0;
 
 const RAIL_HISTORY_SCHEMA_VERSION = "1";
 
@@ -128,10 +130,19 @@ function validateRailHistoryOverlay(json) {
   if (!json || typeof json !== "object") {
     throw new Error("rail history overlay: not an object");
   }
-  if (json.schema_version !== RAIL_HISTORY_SCHEMA_VERSION) {
+  if (json.schema_version !== RAIL_HISTORY_SCHEMA_VERSION && json.schema_version !== "2") {
     throw new Error(
       `rail history overlay: unsupported schema_version ${json.schema_version}`,
     );
+  }
+  // The shared helper is explicitly loaded by index.html/worker/Node hosts.
+  // Old schema-1-only app harnesses may still evaluate this lexical file alone.
+  if (typeof RailHistoryService !== "undefined") {
+    RailHistoryService.validateRailServiceStatusOverlay(json);
+  } else if (json.schema_version === "2" ||
+      Object.prototype.hasOwnProperty.call(json, "service_status_periods") ||
+      (Array.isArray(json.features) && json.features.includes("service_status_periods"))) {
+    throw new Error("rail history overlay: RailHistoryService must be loaded");
   }
   if (typeof json.revision !== "string" || !json.revision.trim()) {
     throw new Error("rail history overlay: missing revision");
@@ -249,7 +260,46 @@ function validateRailHistoryOverlay(json) {
 function loadRailHistoryOverlay(json, country = activeCountry) {
   validateRailHistoryOverlay(json);
   railHistoryOverlays.set(String(country), json);
+  railHistoryGenerations.set(String(country), ++railHistoryGeneration);
+  // A replacement in an already displayed scope retires the prior derived
+  // network through the same generation guard as an explicit date change.
+  if (String(country) === String(activeCountry) && typeof refreshDatedRailNetwork === "function" &&
+      typeof RailMap !== "undefined" && (RailMap._network || RailMap._networkPromise))
+    refreshDatedRailNetwork();
   return json;
+}
+
+// Snapshot only cloneable display membership facts. The raw station code
+// selects the compiler-proved owner; its explicit group field binds that
+// occurrence to compact geometry. Never derive grouped endpoint IDs.
+function buildRailNetworkDateContext(country, { era = "current", today, rideDate = null } = {}) {
+  const history = railHistoryOverlays.get(String(country));
+  if (history?.schema_version !== "2") return null;
+  const day = era === "rideDate" ? rideDate : today;
+  RailHistoryService.validateRailCivilDay(today, "today");
+  RailHistoryService.validateRailCivilDay(day, "display day");
+  const stationMemberships = [];
+  for (const feature of stationsGeoJson?.features || []) {
+    const p = feature.properties || {};
+    const period = history.service_status_periods.find((record) =>
+      record.station_membership_ids.includes(stationCode(feature)) &&
+      (record.line_name == null || record.line_name === stationLineName(feature)) &&
+      (record.operator == null || record.operator === stationOperator(feature)));
+    if (!period) continue;
+    const group = stationGroupCode(feature);
+    if (!group) throw new Error("dated network membership requires an explicit source station group");
+    const bounds = railServiceBounds(p);
+    const resolution = RailHistoryService.resolveRailServiceStatus(history, period.lineID, day);
+    const suspensionEnd = era === "historicalOverlay" && resolution.serviceStatus != null &&
+      resolution.historyID === p.suspension_period_id && bounds.valid_to === period.valid_from;
+    stationMemberships.push({ lineID: period.lineID, lineName: stationLineName(feature),
+      operator: stationOperator(feature), stationGroupID: String(group),
+      validFrom: bounds.valid_from, validTo: bounds.valid_to,
+      historyID: p.history_id || null, suspensionPeriodID: p.suspension_period_id || null,
+      visible: isRailValid(bounds.valid_from, suspensionEnd ? null : bounds.valid_to, day) });
+  }
+  return { era, today, rideDate, history,
+    historyGeneration: railHistoryGenerations.get(String(country)), stationMemberships };
 }
 
 function getRailHistoryRevision(country = activeCountry) {
@@ -465,7 +515,14 @@ function applyRailHistoryRetirements(
 
   planned.forEach(({ feature, retirement }) => {
     feature.properties = feature.properties || {};
-    const bounds = railServiceBounds(retirement);
+    const incoming = railServiceBounds(retirement);
+    const existing = railServiceBounds(feature.properties);
+    const bounds = {
+      valid_from: existing.valid_from == null ? incoming.valid_from : incoming.valid_from == null
+        ? existing.valid_from : (existing.valid_from > incoming.valid_from ? existing.valid_from : incoming.valid_from),
+      valid_to: existing.valid_to == null ? incoming.valid_to : incoming.valid_to == null
+        ? existing.valid_to : (existing.valid_to < incoming.valid_to ? existing.valid_to : incoming.valid_to),
+    };
     if (bounds.valid_from != null) {
       feature.properties.valid_from = bounds.valid_from;
       // A valid_from stamp is the current alignment that replaced a retired
@@ -481,8 +538,10 @@ function applyRailHistoryRetirements(
     }
     if (bounds.valid_to != null)
       feature.properties.valid_to = bounds.valid_to;
-    if (retirement.service_validity != null)
-      feature.properties.service_validity = retirement.service_validity;
+    if (retirement.service_validity != null || feature.properties.service_validity != null)
+      feature.properties.service_validity = [bounds.valid_from, bounds.valid_to];
+    if (retirement.suspension_period_id != null)
+      feature.properties.suspension_period_id = retirement.suspension_period_id;
     if (retirement.infrastructure_validity != null)
       feature.properties.infrastructure_validity =
         retirement.infrastructure_validity;

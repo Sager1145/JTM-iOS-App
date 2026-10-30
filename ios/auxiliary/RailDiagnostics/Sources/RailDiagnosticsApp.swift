@@ -6,6 +6,10 @@ import UniformTypeIdentifiers
 
 @main
 struct RailDiagnosticsApp: App {
+    init() {
+        BundledRegistry.install()
+    }
+
     var body: some Scene {
         WindowGroup {
             DiagnosticWorkspaceView()
@@ -362,6 +366,7 @@ struct DiagnosticWorkspaceView: View {
         installCommands()
     }
     private func loadRequest(_ url: URL) {
+        var requestData: Data?
         do {
             guard !busy, presentation == nil else {
                 throw DiagnosticError.invalidRequest("Finish the current operation and close any open dialog before opening another task. The current task is unchanged.")
@@ -371,11 +376,13 @@ struct DiagnosticWorkspaceView: View {
             }
             let access = url.startAccessingSecurityScopedResource()
             defer { if access { url.stopAccessingSecurityScopedResource() } }
-            let request = try JSONDecoder().decode(DiagnosticRequest.self, from: Data(contentsOf: url))
+            requestData = try Data(contentsOf: url)
+            let request = try JSONDecoder().decode(DiagnosticRequest.self, from: requestData!)
             try request.validate()
             start(request)
         } catch {
             notice = DiagnosticSession.explain(error)
+            DiagnosticRejectionLog.record(requestPath: url.path, requestData: requestData, reason: notice ?? "")
         }
     }
     private func run() {
@@ -399,9 +406,9 @@ struct DiagnosticWorkspaceView: View {
             else { settings = .init(zoom: session.alignment.cameraRecord["zoom256"] ?? 17) }
             try settings.validate()
             let id = "capture-" + String(UUID().uuidString.prefix(8)).lowercased()
-            let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.temporaryDirectory
+            let base = RailwayEvidenceRoot.diagnosticSessions()
             let request = DiagnosticRequest(requestID: id, workspace: .alignment, action: .capture,
-                sessionDirectory: base.appendingPathComponent("RailDiagnostics/Sessions/" + id).path,
+                sessionDirectory: base.appendingPathComponent(id, isDirectory: true).path,
                 lineID: lineID, intervalIndices: intervalIndex.map { [$0] },
                 inputPath: session.request?.workspace == .alignment ? session.request?.inputPath : nil,
                 captureSettings: settings)
@@ -419,9 +426,9 @@ struct DiagnosticWorkspaceView: View {
         session.route.solveTaskRequested = { input in
             guard !busy, presentation == nil else { return }
             let id = "route-" + String(UUID().uuidString.prefix(8)).lowercased()
-            let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            let base = RailwayEvidenceRoot.diagnosticSessions()
             start(DiagnosticRequest(requestID: id, workspace: .route, action: .solve,
-                sessionDirectory: base.appendingPathComponent("RailDiagnostics/Sessions/" + id).path,
+                sessionDirectory: base.appendingPathComponent(id, isDirectory: true).path,
                 inputPath: input.path))
         }
         commands.newTask = { composing = true }

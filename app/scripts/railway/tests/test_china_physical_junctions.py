@@ -206,6 +206,43 @@ class ChinaPhysicalJunctionTests(unittest.TestCase):
             with self.subTest(missing=field),self.assertRaisesRegex(ValueError,'source relation.*drift'):
                 BUILDER.compile_reviewed_physical_sections(self.db,self.package,changed)
 
+    def test_direct_way_passenger_corridor_requires_matching_original_name_and_ref(self):
+        manifest=self.direct_way_section_fixture()
+        original={'name':'Source connector','ref':'0084','operator':'Context operator'}
+        for field,value in [('name','Unrelated corridor'),('ref','9999'),('ref',None)]:
+            context={**original,field:value}
+            changed=copy.deepcopy(manifest)
+            row=changed['sections'][0]
+            row['sourceRelations']=[{'id':30,'version':4,**context}]
+            row['passengerEvidence']['sourceNames']=[context['name']]
+            self.db.execute('UPDATE relations SET tags=? WHERE id=30',(json.dumps(context),))
+            with self.subTest(field=field,value=value),self.assertRaisesRegex(ValueError,'passenger corridor identity'):
+                BUILDER.compile_reviewed_physical_sections(self.db,self.package,changed)
+        self.db.execute('UPDATE relations SET tags=? WHERE id=30',(json.dumps(original),))
+
+    def test_direct_way_passenger_corridor_rejects_empty_unknown_and_unrelated_contexts(self):
+        manifest=self.direct_way_section_fixture()
+        unrelated={'name':'Unrelated corridor','ref':'9999','operator':'Other operator'}
+        self.db.execute('INSERT INTO relations VALUES(40,?,?,4)',('[]',json.dumps(unrelated)))
+        for refs in ([],[99],[30,40]):
+            changed=copy.deepcopy(manifest);row=changed['sections'][0]
+            row['sourceRelations'].append({'id':40,'version':4,**unrelated})
+            row['passengerEvidence']['sourceRelationIds']=refs
+            row['passengerEvidence']['sourceNames'].append('Unrelated corridor')
+            with self.subTest(refs=refs),self.assertRaisesRegex(ValueError,'passenger corridor'):
+                BUILDER.compile_reviewed_physical_sections(self.db,self.package,changed)
+
+    def test_direct_way_ownership_does_not_supply_missing_passenger_evidence(self):
+        manifest=self.direct_way_section_fixture()
+        for kind,error in [('source-way-passenger-tags','passenger way tags'),
+                           ('original-passenger-relation','passenger source member coverage')]:
+            changed=copy.deepcopy(manifest);changed['sections'][0]['passengerEvidence']['kind']=kind
+            self.db.execute('UPDATE relations SET tags=? WHERE id=30',
+                (json.dumps({'name':'Source connector','ref':'0084','operator':'Context operator',
+                             'route':'train'}),))
+            with self.subTest(kind=kind),self.assertRaisesRegex(ValueError,error):
+                BUILDER.compile_reviewed_physical_sections(self.db,self.package,changed)
+
     def physical_station_fixture(self):
         manifest=self.physical_section_fixture()
         self.node(99,self.coordinates[3])

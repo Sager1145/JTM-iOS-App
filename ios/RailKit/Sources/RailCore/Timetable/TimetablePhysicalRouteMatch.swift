@@ -208,7 +208,7 @@ public enum TimetablePhysicalRouteMatch {
                             output.append(Section(originalIndex: sectionIndex, originalSection: routeSections[sectionIndex],
                                 fromPassengerCallIndex: a, toPassengerCallIndex: b,
                                 sectionCodes: physical.flatMap { $0.sectionCodes ?? [] },
-                                lineIDs: orderedUnique(physical.flatMap { $0.lineIDs ?? [] })))
+                                lineIDs: RouteGraph.orderedUnique(physical.flatMap { $0.lineIDs ?? [] })))
                         }
                         matches.append(Match(provenance: Provenance(tripID: trip.id, serviceDate: trip.serviceDate,
                             timetableVersionID: trip.timetableVersionID, calendarID: trip.calendarID),
@@ -323,7 +323,8 @@ public enum TimetablePhysicalRouteMatch {
         return Set(actual).isSubset(of: Set(allowed)) ? .yes : .no
     }
 
-    private static func matchesService(_ input: String, trip: TrainTimetableDatabase.Trip) -> Bool {
+    /// The service labels a typed train name may use; ``TimetableTripMatch`` accepts the same set.
+    static func matchesService(_ input: String, trip: TrainTimetableDatabase.Trip) -> Bool {
         let names = [trip.service.canonicalName, trip.service.englishName, trip.service.matchingName]
             .compactMap { nonempty($0) }
         let numbers = [trip.trainNumber, trip.publicNumber].compactMap { nonempty($0) }
@@ -407,11 +408,6 @@ public enum TimetablePhysicalRouteMatch {
 
     private static func folded(_ value: String) -> String {
         value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-    }
-
-    private static func orderedUnique(_ values: [String]) -> [String] {
-        var seen: Set<String> = []
-        return values.filter { seen.insert($0).inserted }
     }
 
     /// Exactly the train and section fields `resolve` reads. Record identity,

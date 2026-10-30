@@ -79,14 +79,16 @@ final class DiagnosticSession {
         opened = true
         if let launchError {
             state = "failed"; message = launchError
+            DiagnosticRejectionLog.record(requestPath: ProcessInfo.processInfo.arguments.drop(while: { $0 != "--diagnostic-request" }).dropFirst().first,
+                                          sessionDirectory: launchErrorDirectory, reason: launchError)
             if let launchErrorDirectory {
-                let root = URL(fileURLWithPath: launchErrorDirectory, isDirectory: true)
                 do {
+                    let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: launchErrorDirectory, isDirectory: true))
                     try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
                     let failure: [String: Any] = ["state": "failed", "message": launchError,
                         "dependenciesVerified": false, "updatedAt": ISO8601DateFormatter().string(from: Date())]
                     try JSONSerialization.data(withJSONObject: failure, options: [.prettyPrinted, .sortedKeys])
-                        .write(to: root.appendingPathComponent("last-error.json"), options: .atomic)
+                        .write(to: RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("last-error.json")), options: .atomic)
                 } catch { message += " Error report could not be saved: " + error.localizedDescription }
             }
             return
@@ -95,7 +97,10 @@ final class DiagnosticSession {
         running = true
         defer { running = false }
         do {
-            let root = URL(fileURLWithPath: request.sessionDirectory, isDirectory: true)
+            let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory, isDirectory: true))
+            if let path = request.alignmentEvidenceDirectory {
+                _ = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: path, isDirectory: true))
+            }
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
             let retained = root.appendingPathComponent("request.json")
             if FileManager.default.fileExists(atPath: retained.path) {
@@ -123,10 +128,13 @@ final class DiagnosticSession {
             try persist()
         } catch {
             state = "failed"; message = error.localizedDescription
+            if !admitted, case DiagnosticError.changedRequest = error {
+                DiagnosticRejectionLog.record(requestPath: nil, requestID: request.requestID, sessionDirectory: request.sessionDirectory, reason: Self.explain(error))
+            }
             try? persistRunStatus()
             if admitted {
                 if retainedResult != nil && !dependenciesVerified {
-                    let errorURL = URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("last-error.json")
+                    guard let errorURL = try? RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("last-error.json")) else { return }
                     try? JSONSerialization.data(withJSONObject: ["state": state, "message": message], options: [.sortedKeys]).write(to: errorURL, options: .atomic)
                 } else { try? persist() }
             }
@@ -186,7 +194,7 @@ final class DiagnosticSession {
         dependencies["packageVersion"] = alignment.version
         try verifyDependencies()
         evidence.append(alignment.batch.outputURL.path)
-        let geometryURL = URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("alignment-geometry.json")
+        let geometryURL = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("alignment-geometry.json"))
         let selectedData = try Self.encoder.encode(selected)
         let object: [String: Any] = [
             "lineID": request.lineID!, "dependency": dependencies["lineRender"] ?? "",
@@ -194,6 +202,17 @@ final class DiagnosticSession {
             "packageInputSource": request.inputPath == nil ? "bundle" : "request",
             "selectedIntervals": try JSONSerialization.jsonObject(with: selectedData),
             "completeLineDisplayParts": alignment.display.map { $0.map { [$0.lon, $0.lat] } },
+            "literalDisplaySpanContract": "display-literal-spans-v1",
+            "literalDisplaySpans": alignment.line.map { DisplayLiteralSpans.resolve($0, parts: alignment.display).map { spans in
+                spans.filter { $0.mode == nil }.map { ["edgeIndex": $0.edgeIndex, "witnesses": $0.witnesses.map { [$0.lon, $0.lat] }] as [String: Any] }
+            } } ?? [],
+            "sourceCornerContract": "display-source-corners-v1",
+            "sourceCornerSpans": alignment.line.map { DisplayLiteralSpans.resolve($0, parts: alignment.display).map { spans in
+                spans.filter { $0.mode == "source-corners-v1" }.map {
+                    ["edgeIndex": $0.edgeIndex, "mode": $0.mode!,
+                     "witnesses": $0.witnesses.map { [$0.lon, $0.lat] }] as [String: Any]
+                }
+            } } ?? [],
             "scope": "DisplayParts geometry, before smoothing and viewport clipping; source/display endpoints and parts support breakpoint review but do not establish physical topology."
         ]
         try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]).write(to: geometryURL, options: .atomic)
@@ -223,7 +242,7 @@ final class DiagnosticSession {
         dependencies["fallbackGraphCacheMaximumNodes"] = graphCache.maximumNodesDescription
         #endif
         let input = URL(fileURLWithPath: request.inputPath!)
-        let report = URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("route-report.json")
+        let report = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("route-report.json"))
         try RouteWorkbenchModel.validateReportDestination(report, input: input)
         dependencies["journeyInputSHA256"] = try Self.digest(input)
         await route.read(input)
@@ -263,8 +282,8 @@ final class DiagnosticSession {
         }
         through.selectedID = pattern.id
         selectedItemIDs = [pattern.id]
-        let root = URL(fileURLWithPath: request.sessionDirectory)
-        let patternFile = root.appendingPathComponent("through-pattern.json")
+        let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory))
+        let patternFile = try RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("through-pattern.json"))
         let patternData = try Self.encoder.encode(pattern.raw)
         dependencies["patternSHA256"] = Self.digest(patternData)
         dependencies["reviewDay"] = request.reviewDay!
@@ -300,7 +319,7 @@ final class DiagnosticSession {
             var updated = reviewNotes
             updated[candidateID] = .init(id: candidateID, conclusion: conclusion, note: note, evidenceSHA256: hashes)
             let ledger = DiagnosticReviewLedger(requestID: request.requestID, dependencies: dependencies, notes: updated.values.sorted { $0.id < $1.id })
-            let ledgerURL = URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("review-notes.json")
+            let ledgerURL = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("review-notes.json"))
             if FileManager.default.fileExists(atPath: ledgerURL.path) {
                 let archive = ledgerURL.deletingLastPathComponent().appendingPathComponent("review-note-history", isDirectory: true)
                 try FileManager.default.createDirectory(at: archive, withIntermediateDirectories: true)
@@ -338,7 +357,7 @@ final class DiagnosticSession {
         }
         if let request, retainedResult != nil {
             // Retain a prior partial/failed report before the resumed attempt updates it.
-            let root = URL(fileURLWithPath: request.sessionDirectory)
+            let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory))
             let archive = root.appendingPathComponent("attempts/" + UUID().uuidString, isDirectory: true)
             try FileManager.default.createDirectory(at: archive, withIntermediateDirectories: true)
             for name in ["result.json", "candidate-tasks.json", "route-report.json", "through-report.json", "capture-index.json"] {
@@ -359,20 +378,20 @@ final class DiagnosticSession {
             "active": ["preparing", "running"].contains(state), "dependenciesVerified": dependenciesVerified,
             "updatedAt": ISO8601DateFormatter().string(from: Date()), "resultPath": outputPath]
         try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]).write(
-            to: URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("run-status.json"), options: .atomic)
+            to: RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("run-status.json")), options: .atomic)
     }
 
     private func persist() throws {
         try persistRunStatus()
         guard admitted, let request else { return }
-        let root = URL(fileURLWithPath: request.sessionDirectory)
+        let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory))
         if request.workspace == .alignment && !captureScope.isEmpty,
            publishedCaptureRevision != alignment.batch.evidenceRevision {
-            try alignment.batch.scopedEvidenceIndex(scope: captureScope, viewpointIDs: captureViewpointIDs).write(to: root.appendingPathComponent("capture-index.json"), options: .atomic)
+            try alignment.batch.scopedEvidenceIndex(scope: captureScope, viewpointIDs: captureViewpointIDs).write(to: RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("capture-index.json")), options: .atomic)
             publishedCaptureRevision = alignment.batch.evidenceRevision
             evidenceRevision &+= 1
         }
-        let candidatesURL = root.appendingPathComponent("candidate-tasks.json")
+        let candidatesURL = try RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("candidate-tasks.json"))
         if !publishedCandidates {
             try Self.encoder.encode(candidates).write(to: candidatesURL, options: .atomic)
             publishedCandidates = true
@@ -400,7 +419,7 @@ final class DiagnosticSession {
             "mainFinalCheck": "pending — separate production composition evidence required",
             "verdict": "pendingReview"
         ]
-        try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]).write(to: root.appendingPathComponent("result.json"), options: .atomic)
+        try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]).write(to: RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("result.json")), options: .atomic)
     }
 
     static func explain(_ error: Error) -> String {

@@ -21,12 +21,14 @@ public enum RouteRepairSession {
         train: Train, baseline: Train, package: CompactPackage,
         steps: [RouteRepairFlow.Step], repaired: Int = 0,
         gaps: [RouteRepairFlow.GapName] = [],
-        loadAliases: @escaping @Sendable ([String], CompactPackage) throws -> [String: String]
+        loadAliases: @escaping @Sendable ([String], CompactPackage) throws -> [String: String],
+        loadAdmissionContext: @escaping @Sendable (Train, CompactPackage) throws -> RailwayRouteChoices.AdmissionContext? = { _, _ in nil }
     ) async throws -> Result {
         let advance = try await Task.detached(priority: .userInitiated) {
+            let admissionContext = try loadAdmissionContext(train, package)
             let aliases = try loadAliases(train.stops.compactMap(\.n02StationCode), package)
             var advance = RouteRepairFlow.advance(
-                train: train, package: package, aliases: aliases, steps: steps)
+                train: train, package: package, aliases: aliases, steps: steps, admissionContext: admissionContext)
             advance.repaired += repaired
             advance.gaps = gaps + advance.gaps
             return advance

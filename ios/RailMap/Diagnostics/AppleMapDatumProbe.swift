@@ -101,28 +101,14 @@ enum AppleMapDatumProbe {
             search.cancel()
         }
         guard let item = response?.mapItems.first else { return nil }
-        let found = coordinate(of: item)
-        let wgs84 = metres(found, reference.anchor)
+        let found = StationPlaceStore.coordinate(of: item)
+        let wgs84 = StationPlaceStore.metres(from: reference.anchor, to: found)
         // Measure MapKit against the production transform itself. `display`
         // follows the saved verdict, so using it here would make the vote circular.
-        let gcj02 = metres(found, AppleMapDatum.gcj02(fromWGS84: reference.anchor))
+        let gcj02 = StationPlaceStore.metres(
+            from: AppleMapDatum.gcj02(fromWGS84: reference.anchor), to: found)
         if wgs84 <= acceptMetres, gcj02 - wgs84 >= marginMetres { return .wgs84 }
         if gcj02 <= acceptMetres, wgs84 - gcj02 >= marginMetres { return .gcj02 }
         return nil
-    }
-
-    private static func coordinate(of item: MKMapItem) -> CLLocationCoordinate2D {
-        if #available(iOS 26.0, *) { return item.location.coordinate }
-        return legacyCoordinate(of: item)
-    }
-
-    @available(iOS, deprecated: 26.0)
-    private static func legacyCoordinate(of item: MKMapItem) -> CLLocationCoordinate2D {
-        item.placemark.coordinate
-    }
-
-    private static func metres(_ found: CLLocationCoordinate2D, _ anchor: Coordinate) -> Double {
-        CLLocation(latitude: found.latitude, longitude: found.longitude)
-            .distance(from: CLLocation(latitude: anchor.lat, longitude: anchor.lon))
     }
 }

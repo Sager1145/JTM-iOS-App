@@ -194,10 +194,18 @@ def compile_reviewed_physical_sections(connection, package, manifest):
                 eligible.update(ref for kind,ref,role in rel['members'] if kind=='w')
             if not set(ways).issubset(eligible): raise ValueError('passenger source member coverage incomplete')
         elif passenger['kind']=='reviewed-official-corridor':
-            if not passenger.get('sourceNames') or not set(passenger['sourceRelationIds']).issubset(relations):
+            refs=passenger['sourceRelationIds']
+            if not passenger.get('sourceNames') or not refs or not set(refs).issubset(relations):
                 raise ValueError('reviewed named passenger corridor required')
-            if not all(relations[ref]['tags'].get('name') in passenger['sourceNames'] for ref in passenger['sourceRelationIds']):
+            if not all(relations[ref]['tags'].get('name') in passenger['sourceNames'] for ref in refs):
                 raise ValueError('official/source passenger corridor identity drift')
+            # A context relation need not contain every direct-owned way, but
+            # its passenger review must cover that same named/ref corridor.
+            # Context and way operators remain independently attributed.
+            if ownership_mode=='original-way-identity' and any(
+                    relations[ref]['tags'].get('name')!=identity['lineName']
+                    or relations[ref]['tags'].get('ref')!=ownership['ref'] for ref in refs):
+                raise ValueError('official/direct-way passenger corridor identity drift')
         else: raise ValueError('unsupported physical passenger evidence')
         if passenger['kind']!='original-passenger-relation' and any(
                 t.get('service')=='crossover' and not (t.get('railway:traffic_mode')=='passenger'

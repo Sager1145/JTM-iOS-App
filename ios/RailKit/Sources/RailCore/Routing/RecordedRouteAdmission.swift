@@ -67,12 +67,15 @@ public enum RecordedRouteAdmission {
 
     public static func admission(in train: Train, package: CompactPackage,
                                  stationAliases: [String: String] = [:],
-                                 maximumChoices: Int = 3, maximumExpansions: Int = 50_000) -> Outcome {
+                                 maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+                                 admissionContext: RailwayRouteChoices.AdmissionContext? = nil) -> Outcome {
+        guard admissionContext?.matches(Dates.normalizeDateString(train.date)) != false else { return .none }
         if let choice = TokyoConventionalRouteInference.choice(in: train, package: package) {
             return .corridorPreference(choice)
         }
         return outcome(for: search(in: train, package: package, stationAliases: stationAliases,
-                                   maximumChoices: maximumChoices, maximumExpansions: maximumExpansions))
+                                   maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
+                                   admissionContext: admissionContext))
     }
 
     enum MaterializedOrigin {
@@ -97,10 +100,12 @@ public enum RecordedRouteAdmission {
 
     public static func search(
         in train: Train, package: CompactPackage, stationAliases: [String: String] = [:],
-        maximumChoices: Int = 3, maximumExpansions: Int = 50_000
+        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
+        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
     ) -> LocalJourneySearch.Result {
         let codes = train.stops.compactMap(\.n02StationCode)
-        guard train.stops.count >= 2, codes.count == train.stops.count,
+        guard admissionContext?.matches(Dates.normalizeDateString(train.date)) != false,
+              train.stops.count >= 2, codes.count == train.stops.count,
               codes.allSatisfy({ !$0.isEmpty }), let first = codes.first, let last = codes.last else {
             return .init(choices: [], isTruncated: false, topologyIsComplete: false, directionIsKnown: false)
         }
@@ -124,7 +129,7 @@ public enum RecordedRouteAdmission {
                 package: constrained, originCode: first, destinationCode: last,
                 trainType: train.trainType, requiredStationCodes: codes, stationAliases: stationAliases,
                 maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
-                operatorID: train.operatorID)
+                operatorID: train.operatorID, admissionContext: admissionContext)
             let choices = result.choices.filter {
                 respectsSections($0, train: train, package: package, stationAliases: stationAliases,
                                  relaxLineConstraints: relaxLineConstraints)

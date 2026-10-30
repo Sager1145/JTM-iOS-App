@@ -601,6 +601,27 @@ func continuousStrokeBuild(
             points: canonChain.points, measures: canonChain.measures,
             shapeBoundaryMeasures: canon.familyWindows.flatMap { [$0.from, $0.to] })
     }
+    var literalSpans: [ContinuousStroke.LiteralSpan] = []
+    if !line.literalDisplaySpansV1.isEmpty, line.region == .jp, line.continuous,
+       line.lane == 0, line.laneRows.allSatisfy({ $0.lane == 0 }),
+       line.follows.isEmpty, line.familyWindows.isEmpty, line.withheld.isEmpty,
+       line.partSpans.isEmpty,
+       chains.projection.mapPointsPerScreenPoint == mapPointsPerScreenPoint {
+        let display = chains.displayChain(of: line)
+        if display.points.count == pixels.count {
+            // Bind against the very same joined coordinates and cached pixel
+            // array used below. No new ruler, rounded key or index remapping.
+            var projected: [Coordinate: ContinuousStroke.Point] = [:]
+            for (coordinate, pixel) in zip(display.points, pixels) {
+                projected[coordinate] = pixel
+            }
+            literalSpans = DisplayLiteralSpans.projected(
+                line.literalDisplaySpansV1, coordinates: display.points,
+                // The resolver projects only exact current-chain coordinates;
+                // every such coordinate was inserted above from this pixel array.
+                project: { projected[$0]! })
+        }
+    }
     let stroke = ContinuousStroke.buildStroke(
         pixels,
         options: .init(
@@ -620,7 +641,8 @@ func continuousStrokeBuild(
                 of: line, at: false, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
             joinEnd: continuousJoin(
                 of: line, at: true, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
-            enforceMinimumCornerRadius: true))
+            enforceMinimumCornerRadius: true,
+            literalSpans: literalSpans))
     func mapPoint(_ point: ContinuousStroke.Point) -> MKMapPoint {
         MKMapPoint(x: point.x * mapPointsPerScreenPoint, y: point.y * mapPointsPerScreenPoint)
     }
@@ -864,7 +886,7 @@ enum MapLineGeometry {
                 if !shown {
                     solidRuns = []
                     historicalRuns = []
-                } else if DisplayNetworkEra.strokeStyle(for: span?.kind ?? .current) == .historical {
+                } else if era.strokeStyle(for: span, today: today, rideDate: rideDate) == .historical {
                     solidRuns = []
                     historicalRuns = stroke?.runs ?? line.intervals
                 } else {
@@ -880,7 +902,7 @@ enum MapLineGeometry {
                         ? nil
                         : (line.partSpans.indices.contains(index) ? line.partSpans[index] : nil)
                     guard era.shows(span, today: today, rideDate: rideDate) else { continue }
-                    if DisplayNetworkEra.strokeStyle(for: span?.kind ?? .current) == .historical {
+                    if era.strokeStyle(for: span, today: today, rideDate: rideDate) == .historical {
                         historical.append(interval)
                     } else {
                         solid.append(interval)

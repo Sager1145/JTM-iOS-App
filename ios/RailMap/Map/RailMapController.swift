@@ -285,7 +285,7 @@ final class RailMapController {
     /// Frame the drawn railway — the native reading of the web app's 定位.
     func fitToNetwork() {
         guard let region = fitRegion else { return }
-        fit(Self.mapRect(of: region))
+        fit(MapProjection.mapRect(of: region))
     }
 
     /// Frame the selected ridden route, falling back to the complete network
@@ -301,7 +301,7 @@ final class RailMapController {
     /// it computes from a ride's own strokes — so the conversion belongs here,
     /// with the padding rule it feeds, rather than at every caller.
     func fit(_ region: MKCoordinateRegion, animated: Bool? = nil) {
-        fit(Self.mapRect(of: region), animated: animated)
+        fit(MapProjection.mapRect(of: region), animated: animated)
     }
 
     /// Frame an extent, clear of the resident sheet.
@@ -339,7 +339,7 @@ final class RailMapController {
     /// alone. Explicit locate commands continue to frame its complete extent.
     func fitIfNeeded(_ region: MKCoordinateRegion) {
         guard let mapView else { return }
-        let rect = Self.mapRect(of: region)
+        let rect = MapProjection.mapRect(of: region)
         let available = mapView.bounds.inset(by: framingInsets)
         let corners = [
             MKMapPoint(x: rect.minX, y: rect.minY),
@@ -389,7 +389,7 @@ final class RailMapController {
     @discardableResult
     func frameAtLaunch(_ region: MKCoordinateRegion) -> Bool {
         guard let mapView else { return false }
-        let rect = Self.mapRect(of: region)
+        let rect = MapProjection.mapRect(of: region)
         guard !rect.isNull, cameraPolicy.openAtLaunch() else { return false }
         mapView.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
         return true
@@ -474,22 +474,6 @@ final class RailMapController {
         margins.trailing = trailing
         margins.bottom = bottom
         mapView.directionalLayoutMargins = margins
-    }
-
-    /// A region as the rect the padded framing call needs.
-    private static func mapRect(of region: MKCoordinateRegion) -> MKMapRect {
-        let north = region.center.latitude + region.span.latitudeDelta / 2
-        let south = region.center.latitude - region.span.latitudeDelta / 2
-        let west = region.center.longitude - region.span.longitudeDelta / 2
-        let east = region.center.longitude + region.span.longitudeDelta / 2
-        let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: north, longitude: west))
-        let bottomRight = MKMapPoint(
-            CLLocationCoordinate2D(latitude: south, longitude: east))
-        return MKMapRect(
-            x: min(topLeft.x, bottomRight.x),
-            y: min(topLeft.y, bottomRight.y),
-            width: abs(bottomRight.x - topLeft.x),
-            height: abs(bottomRight.y - topLeft.y))
     }
 
     /// The box that holds every one of these strokes, with the margin a framed
