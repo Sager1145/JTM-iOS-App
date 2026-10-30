@@ -177,6 +177,10 @@ extension RailMapView.Surface {
             /// essential: using `styledScale` as the only throttle froze every
             /// station name at the zoom on which it was first configured.
             private var styledMarkZoom = Double.nan
+            /// The scale the mounted network renderers were last rescaled to.
+            /// Separate from `styledScale` because a stroke-bucket settle
+            /// restyles the marks without touching overlays it will replace.
+            private var styledOverlayScale: CGFloat = .nan
 #if DEBUG
             private let diagnostics = MapRenderDiagnostics()
             private var independentRailPrototype: MapIndependentRailPrototype?
@@ -813,7 +817,10 @@ extension RailMapView.Surface {
                         return
                     }
                     self.rebuildDeferredByGesture = false
-                    self.restyle(on: mapView)
+                    // Overlays about to be replaced keep their width; the
+                    // rebuild's install rescales the new ones once.
+                    let zoom = MapProjection.zoomLevel(of: mapView)
+                    self.restyle(on: mapView, overlays: !self.strokeBucketPending(at: zoom))
                     self.rebuild(on: mapView)
                 }
             }
@@ -910,11 +917,13 @@ extension RailMapView.Surface {
                             return
                         }
                     }
-                    // A stroke-bucket change replaces every network overlay.
-                    // Skip this pass so those tiles are not drawn twice; the
-                    // rebuild that follows applies the settled styles.
-                    if MapRebuildPolicy.strokeBucket(zoom: zoom) != self.currentGeometryFrame?.bucket,
-                       self.lines.contains(where: { $0.lane != 0 || $0.continuous }) {
+                    // A stroke-bucket change replaces every network overlay, so
+                    // leave their widths to the rebuild (no tile drawn twice).
+                    // Marks and names do not wait for that geometry: settle
+                    // them now, on the moving pass's anchors.
+                    if self.strokeBucketPending(at: zoom) {
+                        self.restyle(on: mapView, overlays: false)
+                        self.runLabelPass(on: mapView, moving: true)
                         return
                     }
                     self.restyle(on: mapView)
@@ -1519,6 +1528,7 @@ extension RailMapView.Surface {
                 // apart.
                 let scale = buildScale
                 styledScale = scale
+                styledOverlayScale = scale
                 styledMarkZoom = (zoom * 16).rounded() / 16
 
                 // The transport owns its overlays separately from the base
@@ -2724,6 +2734,7 @@ extension RailMapView.Surface {
                 if !isLabelPass {
                     // Retained views need the final zoom's sizing after a pinch.
                     styledScale = .nan
+                    styledOverlayScale = .nan
                     styledMarkZoom = .nan
 #if DEBUG
                     restyledAnnotationViewCount = restyle(on: mapView)
@@ -3882,8 +3893,18 @@ extension RailMapView.Surface {
                         : (playback?.isActive == true ? 0 : nil))
             }
 
+            /// Whether the settled zoom sits in a stroke bucket the installed
+            /// geometry was not built for — the next rebuild replaces every
+            /// laned network overlay, so restyling them first is wasted tiles.
+            private func strokeBucketPending(at zoom: Double) -> Bool {
+                MapRebuildPolicy.strokeBucket(zoom: zoom) != currentGeometryFrame?.bucket
+                    && lines.contains(where: { $0.lane != 0 || $0.continuous })
+            }
+
+            /// `overlays: false` restyles marks and names only, leaving the
+            /// network renderers for the rebuild that will replace them.
             @discardableResult
-            private func restyle(on mapView: MKMapView) -> Int {
+            private func restyle(on mapView: MKMapView, overlays: Bool = true) -> Int {
                 // Keep MapKit's mounted paths and annotation layouts stable
                 // under the fingers. Mutating every renderer's width/font
                 // during a pinch triggers tessellation and collision work.
@@ -3924,10 +3945,15 @@ extension RailMapView.Surface {
                 // ``displayedAnnotationViews``.
                 let scaleChanged = !styledScale.isFinite || scale != styledScale
                 let markZoomChanged = !styledMarkZoom.isFinite || markZoom != styledMarkZoom
-                guard scaleChanged || markZoomChanged else { return 0 }
+                let overlayScaleChanged = overlays
+                    && (!styledOverlayScale.isFinite || scale != styledOverlayScale)
+                guard scaleChanged || markZoomChanged || overlayScaleChanged else { return 0 }
                 styledScale = scale
                 styledMarkZoom = markZoom
-                if scaleChanged { overlayStyles.rescale(to: scale) }
+                if overlayScaleChanged {
+                    overlayStyles.rescale(to: scale)
+                    styledOverlayScale = scale
+                }
                 for renderer in stationOverlayRenderers.allObjects {
                     renderer.applyScale(scale, zoom: markZoom)
                 }
