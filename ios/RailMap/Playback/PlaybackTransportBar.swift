@@ -100,7 +100,7 @@ struct PlaybackTransportBar: View {
             Group {
                 switch videoExporter.state {
                 case .finishing:
-                    Text(localization.journeyText("video.finishing", fallback: "Finishing video"))
+                    Text(localization.countryText("video.finishing", fallback: "Finishing video"))
                 case .finished:
                     Text(localization.countryText("video.export", fallback: "Playback video"))
                 case .failed(let message):
@@ -185,7 +185,7 @@ struct PlaybackTransportBar: View {
             .disabled(!playback.canGoPrevious)
             .accessibilityIdentifier("playbackPrevious")
             .accessibilityLabel(
-                Text(localization.journeyText("play.prev", fallback: "Previous train")))
+                Text(localization.countryText("play.prev", fallback: "Previous train")))
 
             Button { playback.togglePause() } label: {
                 Image(systemName: playback.isPlaying ? "pause.fill" : "play.fill")
@@ -213,7 +213,7 @@ struct PlaybackTransportBar: View {
             }
             .accessibilityIdentifier("playbackPauseResume")
             .accessibilityLabel(
-                Text(localization.journeyText(
+                Text(localization.countryText(
                     playback.isPlaying ? "play.pause" : "play.resume",
                     fallback: playback.isPlaying ? "Pause" : "Resume")))
 
@@ -225,7 +225,7 @@ struct PlaybackTransportBar: View {
             .disabled(!playback.canGoNext)
             .accessibilityIdentifier("playbackNext")
             .accessibilityLabel(
-                Text(localization.journeyText("play.next", fallback: "Next train")))
+                Text(localization.countryText("play.next", fallback: "Next train")))
         }
     }
 
@@ -297,7 +297,7 @@ struct PlaybackTransportBar: View {
         .contentTransition(.numericText())
         .animation(RailMotion.replace, value: playback.queueIndex)
         .accessibilityLabel(
-            localization.journeyText("ios.journey.playbackQueue", fallback: "Journey"))
+            localization.countryText("ios.journey.playbackQueue", fallback: "Journey"))
         .accessibilityValue(
             Text("\(playback.queueIndex + 1)/\(max(playback.queueCount, 1))"))
     }
@@ -366,7 +366,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .accessibilityLabel(
-                localization.journeyText("video.cancel", fallback: "Cancel video export"))
+                localization.countryText("video.cancel", fallback: "Cancel video export"))
         case .finishing:
             // The same 44-point box as the other three branches, and here it
             // is a LAYOUT contract rather than a hit target: a bare
@@ -377,7 +377,7 @@ struct PlaybackTransportBar: View {
             ProgressView().controlSize(.small)
                 .frame(width: 44, height: 44)
                 .accessibilityLabel(
-                    localization.journeyText("video.finishing", fallback: "Finishing video"))
+                    localization.countryText("video.finishing", fallback: "Finishing video"))
         case .finished(let url, let partial):
             ShareLink(item: url) {
                 Image(systemName: "square.and.arrow.up.fill")
@@ -388,7 +388,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .accessibilityLabel(
-                localization.journeyText(
+                localization.countryText(
                     partial ? "video.readyPartial" : "video.share",
                     fallback: partial ? "Share partial video" : "Share video"))
         case .idle, .failed:

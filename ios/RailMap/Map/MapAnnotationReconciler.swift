@@ -21,7 +21,6 @@ final class MapAnnotationReconciler {
     private var arrivals: [ObjectIdentifier: Arrival] = [:]
     private var departures: [ObjectIdentifier: Departure] = [:]
 
-#if DEBUG
     struct Plan {
         fileprivate enum Resolution {
             case retained(MKAnnotation, candidate: MKAnnotation)
@@ -35,18 +34,21 @@ final class MapAnnotationReconciler {
         let removedCount: Int
         let retainedCount: Int
         let retainedOldCount: Int
-        let coordinateChangedCount: Int
+        /// Counted in DEBUG builds only; always 0 in Release.
+        fileprivate(set) var coordinateChangedCount = 0
     }
 
     /// Computes annotation identity reuse without touching MapKit or transition state.
     func plan(_ desired: [MKAnnotation], replacing old: [MKAnnotation]) -> Plan {
         var available = Dictionary(grouping: old, by: Self.key)
+#if DEBUG
         let oldByCoordinateIdentity = Dictionary(grouping: old, by: Self.keyIgnoringCoordinate)
+        var coordinateChangedCount = 0
+#endif
         var exiting = Dictionary(grouping: departures.values, by: { Self.key($0.annotation) })
         var addedCount = 0
         var retainedCount = 0
         var retainedOldCount = 0
-        var coordinateChangedCount = 0
         let resolutions = desired.map { candidate -> Plan.Resolution in
             let id = Self.key(candidate)
             if let index = available[id]?.firstIndex(where: { Self.sameContent($0, candidate) }),
@@ -55,11 +57,13 @@ final class MapAnnotationReconciler {
                 retainedOldCount += 1
                 return .retained(retained, candidate: candidate)
             }
+#if DEBUG
             if oldByCoordinateIdentity[Self.keyIgnoringCoordinate(candidate)]?.contains(where: {
                 !Self.sameCoordinate($0, candidate) && Self.samePresentation($0, candidate)
             }) == true {
                 coordinateChangedCount += 1
             }
+#endif
             // A zoom reversal may ask for a label whose departure has not
             // finished. Reuse that annotation and continue from its visible
             // opacity instead of mounting a second copy at zero.
@@ -75,11 +79,14 @@ final class MapAnnotationReconciler {
             return .added(candidate)
         }
         let removals = available.values.flatMap { $0 }
-        return Plan(
+        var plan = Plan(
             resolutions: resolutions, removals: removals,
             addedCount: addedCount, removedCount: removals.count,
-            retainedCount: retainedCount, retainedOldCount: retainedOldCount,
-            coordinateChangedCount: coordinateChangedCount)
+            retainedCount: retainedCount, retainedOldCount: retainedOldCount)
+#if DEBUG
+        plan.coordinateChangedCount = coordinateChangedCount
+#endif
+        return plan
     }
 
     func apply(_ plan: Plan, on mapView: MKMapView,
@@ -119,54 +126,11 @@ final class MapAnnotationReconciler {
         if !added.isEmpty { mapView.addAnnotations(added) }
         return installed
     }
-#endif
 
     func reconcile(_ desired: [MKAnnotation], replacing old: [MKAnnotation],
-                          on mapView: MKMapView,
-                          duration: TimeInterval? = nil) -> [MKAnnotation] {
-        let duration = max(0, duration ?? 0)
-        var available = Dictionary(grouping: old, by: Self.key)
-        var exiting = Dictionary(grouping: departures.values, by: { Self.key($0.annotation) })
-        var added: [MKAnnotation] = []
-        let installed = desired.map { candidate -> MKAnnotation in
-            let id = Self.key(candidate)
-            if let index = available[id]?.firstIndex(where: { Self.sameContent($0, candidate) }),
-               let retained = available[id]?.remove(at: index) {
-                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
-                return retained
-            }
-            // A zoom reversal may ask for a label whose departure has not
-            // finished. Reuse that annotation and continue from its visible
-            // opacity instead of mounting a second copy at zero.
-            if let index = exiting[id]?.firstIndex(where: {
-                Self.sameContent($0.annotation, candidate)
-            }), let departure = exiting[id]?.remove(at: index) {
-                let retained = departure.annotation
-                departures.removeValue(forKey: ObjectIdentifier(retained))
-                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
-                if let view = mapView.view(for: retained) {
-                    view.isUserInteractionEnabled = departure.interactionEnabled
-                    fade(view, to: Self.targetAlpha(retained), duration: duration)
-                }
-                return retained
-            }
-            if duration > 0, !(candidate is DraftStopAnnotation) {
-                arrivals[ObjectIdentifier(candidate)] = Arrival(
-                    duration: duration, startedAt: ProcessInfo.processInfo.systemUptime)
-            }
-            added.append(candidate)
-            return candidate
-        }
-        // One MapKit update for every annotation that is not riding out a fade.
-        var immediateRemovals: [MKAnnotation] = []
-        for removed in available.values.flatMap({ $0 }) {
-            if !retire(removed, on: mapView, duration: duration) {
-                immediateRemovals.append(removed)
-            }
-        }
-        if !immediateRemovals.isEmpty { mapView.removeAnnotations(immediateRemovals) }
-        if !added.isEmpty { mapView.addAnnotations(added) }
-        return installed
+                   on mapView: MKMapView,
+                   duration: TimeInterval? = nil) -> [MKAnnotation] {
+        apply(plan(desired, replacing: old), on: mapView, duration: duration)
     }
 
     /// Call after configuring a dequeued view, before returning it to MapKit.

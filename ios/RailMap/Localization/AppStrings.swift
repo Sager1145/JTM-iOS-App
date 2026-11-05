@@ -24,8 +24,7 @@ import RailPresentation
 /// duplicated is the *mechanism*. Call sites use
 /// ``AppLocalization/text(_:params:fallback:)``. ``journeyText`` and
 /// ``statsCategoryText`` remain because they select a country variant before
-/// that lookup. ``editorText`` remains while `ServicePatternPickerView`
-/// still calls it.
+/// that lookup.
 ///
 /// ## The invariant this rests on
 ///
@@ -52,6 +51,7 @@ enum AppStrings {
         ("ClockStrings", ClockStrings.table),
         ("JourneyCompletionStrings", JourneyCompletionStrings.table),
         ("StationCardStrings", StationCardStrings.table),
+        ("LocalJourneyStrings", LocalJourneyStrings.table),
     ]
 
     typealias Table = [String: [Localization.Language: String]]
@@ -94,16 +94,11 @@ enum AppStrings {
 
 extension AppLocalization {
 
-    /// The ride editor's own sentences. Same lookup as
-    /// ``text(_:params:fallback:)``. Kept while `ServicePatternPickerView`
-    /// still calls this spelling.
-    func editorText(_ key: String, _ params: [String: Localization.Param]? = nil) -> String {
-        text(key, params: params)
-    }
-
-    /// The journey surfaces' own sentences.
+    /// Deprecated alias for ``countryText(_:params:fallback:)``. New code calls
+    /// `countryText` directly; the remaining callers live in files owned by
+    /// in-flight branches. Remove this once those land.
     ///
-    /// `countryText` rather than `text` so that a key which grows a country
+    /// It resolves through `countryText` rather than `text` so that a key which grows a country
     /// variant (`key.tw`, `key.hk`, …) starts resolving to it without this
     /// call site changing — the rule ``countryText(_:params:fallback:)``
     /// documents. A key with no variant costs one dictionary miss and resolves
@@ -127,9 +122,9 @@ extension AppLocalization {
     /// a record ends up renamed by its own interface.
     func journeyText(_ text: PresentationText) -> String {
         guard let key = text.key else { return text.fallback }
-        return journeyText(
+        return countryText(
             key,
-            text.params.isEmpty ? nil : text.params,
+            params: text.params.isEmpty ? nil : text.params,
             fallback: text.fallback)
     }
 

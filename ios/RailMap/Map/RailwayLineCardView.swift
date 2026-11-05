@@ -124,7 +124,7 @@ struct RailwayLineCardView: View {
                     Button {
                         onLocate(preview.bounds)
                     } label: {
-                        Label(localization.journeyText("ios.journey.locateRoute"), systemImage: "viewfinder")
+                        Label(localization.countryText("ios.journey.locateRoute"), systemImage: "viewfinder")
                     }
                     .disabled(preview.bounds.isNull)
                     .accessibilityIdentifier("railwayLineLocate")
@@ -144,7 +144,7 @@ struct RailwayLineCardView: View {
             } else if let failure {
                 Section {
                     Text(failure).foregroundStyle(.secondary)
-                    Button(localization.journeyText("ios.journey.retry")) { reload += 1 }
+                    Button(localization.countryText("ios.journey.retry")) { reload += 1 }
                 }
             } else {
                 ProgressView().frame(maxWidth: .infinity)

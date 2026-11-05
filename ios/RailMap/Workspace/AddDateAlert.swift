@@ -27,12 +27,12 @@ struct AddDateAlert: ViewModifier {
     func body(content: Content) -> some View {
         content
             .alert(
-                localization.journeyText("ios.journey.addDateTitle", fallback: "Add a date"),
+                localization.countryText("ios.journey.addDateTitle", fallback: "Add a date"),
                 isPresented: $isPresented
             ) {
                 TextField("YYYY-MM-DD", text: $draft)
                 Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {}
-                Button(localization.journeyText("btn.add", fallback: "Add")) { add(draft) }
+                Button(localization.countryText("btn.add", fallback: "Add")) { add(draft) }
                     // The same test `ManualDates.add` applies, asked early so
                     // the button is dim rather than silent. Duplicated on
                     // purpose: a disabled control and a refused action are two
@@ -40,7 +40,7 @@ struct AddDateAlert: ViewModifier {
                     .disabled(Dates.normalizeDateString(draft) == nil)
             } message: {
                 Text(
-                    localization.journeyText(
+                    localization.countryText(
                         "ios.journey.addDateDetail",
                         fallback: "Create an empty date to add journeys to later."))
             }
