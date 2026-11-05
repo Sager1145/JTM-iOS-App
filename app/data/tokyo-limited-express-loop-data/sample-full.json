@@ -9,7 +9,7 @@
       "company": "JR東日本",
       "origin": "千葉",
       "destination": "成東",
-      "direction": "成東",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#0067c0"
@@ -32,7 +32,8 @@
           "arrival": null,
           "departure": "08:10",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "佐倉",
@@ -40,7 +41,8 @@
           "arrival": null,
           "departure": "08:23",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "八街",
@@ -48,7 +50,8 @@
           "arrival": null,
           "departure": "08:38",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "成東",
@@ -56,11 +59,13 @@
           "arrival": "08:48",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Shiosai 1"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_02",
@@ -70,7 +75,7 @@
       "company": "JR東日本",
       "origin": "成東",
       "destination": "大網",
-      "direction": "大網",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e9a900"
@@ -148,7 +153,8 @@
           "arrival": null,
           "departure": "09:02",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "求名",
@@ -156,7 +162,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "東金",
@@ -164,7 +171,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "福俵",
@@ -172,7 +180,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "大網",
@@ -180,10 +189,12 @@
           "arrival": "09:19",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_03",
@@ -193,7 +204,7 @@
       "company": "JR東日本",
       "origin": "大網",
       "destination": "東京",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#00b2e5"
@@ -216,7 +227,8 @@
           "arrival": null,
           "departure": "09:47",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "土気",
@@ -224,7 +236,8 @@
           "arrival": "09:50",
           "departure": "09:51",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "蘇我",
@@ -232,7 +245,8 @@
           "arrival": "10:00",
           "departure": "10:02",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "東京",
@@ -240,11 +254,13 @@
           "arrival": "10:37",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Wakashio 10"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_04",
@@ -254,7 +270,7 @@
       "company": "JR東日本",
       "origin": "東京",
       "destination": "品川",
-      "direction": "品川",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e60012"
@@ -277,7 +293,8 @@
           "arrival": null,
           "departure": "11:43",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "品川",
@@ -285,11 +302,13 @@
           "arrival": "11:51",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Hitachi 8"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_05",
@@ -299,7 +318,7 @@
       "company": "JR東日本",
       "origin": "品川",
       "destination": "大船",
-      "direction": "大船",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f68b1e"
@@ -322,7 +341,8 @@
           "arrival": null,
           "departure": "12:08",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "川崎",
@@ -330,7 +350,8 @@
           "arrival": "12:16",
           "departure": "12:16",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "横浜",
@@ -338,7 +359,8 @@
           "arrival": "12:23",
           "departure": "12:24",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "大船",
@@ -346,11 +368,13 @@
           "arrival": "12:36",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Odoriko 9"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_06",
@@ -360,7 +384,7 @@
       "company": "JR東日本",
       "origin": "大船",
       "destination": "茅ヶ崎",
-      "direction": "茅ヶ崎",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f68b1e"
@@ -426,7 +450,8 @@
           "arrival": null,
           "departure": "12:41",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "藤沢",
@@ -434,7 +459,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "辻堂",
@@ -442,7 +468,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "茅ヶ崎",
@@ -450,10 +477,12 @@
           "arrival": "12:52",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_07",
@@ -463,7 +492,7 @@
       "company": "JR東日本",
       "origin": "茅ヶ崎",
       "destination": "橋本",
-      "direction": "橋本",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#009793"
@@ -697,7 +726,8 @@
           "arrival": null,
           "departure": "12:59",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "北茅ヶ崎",
@@ -705,7 +735,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "香川",
@@ -713,7 +744,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "寒川",
@@ -721,7 +753,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "宮山",
@@ -729,7 +762,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "倉見",
@@ -737,7 +771,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "門沢橋",
@@ -745,7 +780,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "社家",
@@ -753,7 +789,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "厚木",
@@ -761,7 +798,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "海老名",
@@ -769,7 +807,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "入谷",
@@ -777,7 +816,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "相武台下",
@@ -785,7 +825,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "下溝",
@@ -793,7 +834,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "原当麻",
@@ -801,7 +843,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "番田",
@@ -809,7 +852,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "上溝",
@@ -817,7 +861,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "南橋本",
@@ -825,7 +870,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "橋本",
@@ -833,10 +879,12 @@
           "arrival": "14:20",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_08",
@@ -846,7 +894,7 @@
       "company": "JR東日本",
       "origin": "橋本",
       "destination": "八王子",
-      "direction": "八王子",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#9acd32"
@@ -924,7 +972,8 @@
           "arrival": null,
           "departure": "14:25",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "相原",
@@ -932,7 +981,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "八王子みなみ野",
@@ -940,7 +990,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "片倉",
@@ -948,7 +999,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "八王子",
@@ -956,10 +1008,12 @@
           "arrival": "14:36",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Rapid"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_09",
@@ -969,7 +1023,7 @@
       "company": "JR東日本",
       "origin": "八王子",
       "destination": "立川",
-      "direction": "立川",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#f15a22"
@@ -992,7 +1046,8 @@
           "arrival": null,
           "departure": "15:34",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "立川",
@@ -1000,11 +1055,13 @@
           "arrival": "15:42",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Kaiji 32"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_10",
@@ -1014,7 +1071,7 @@
       "company": "JR東日本",
       "origin": "立川",
       "destination": "西国分寺",
-      "direction": "西国分寺",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#f15a22"
@@ -1068,7 +1125,8 @@
           "arrival": null,
           "departure": "15:46",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "国立",
@@ -1076,7 +1134,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "西国分寺",
@@ -1084,10 +1143,12 @@
           "arrival": "15:51",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Chūō Rapid"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_11",
@@ -1097,7 +1158,7 @@
       "company": "JR東日本",
       "origin": "西国分寺",
       "destination": "武蔵浦和",
-      "direction": "武蔵浦和",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#f15a22"
@@ -1211,7 +1272,8 @@
           "arrival": null,
           "departure": "15:59",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "新小平",
@@ -1219,7 +1281,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "新秋津",
@@ -1227,7 +1290,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "東所沢",
@@ -1235,7 +1299,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "新座",
@@ -1243,7 +1308,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "北朝霞",
@@ -1251,7 +1317,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "西浦和",
@@ -1259,7 +1326,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "武蔵浦和",
@@ -1267,10 +1335,12 @@
           "arrival": "16:25",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_12",
@@ -1280,7 +1350,7 @@
       "company": "JR東日本",
       "origin": "武蔵浦和",
       "destination": "大宮",
-      "direction": "大宮",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#00ac9a"
@@ -1370,7 +1440,8 @@
           "arrival": null,
           "departure": "16:28",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "中浦和",
@@ -1378,7 +1449,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "南与野",
@@ -1386,7 +1458,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "与野本町",
@@ -1394,7 +1467,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "北与野",
@@ -1402,7 +1476,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "大宮",
@@ -1410,10 +1485,12 @@
           "arrival": "16:40",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_13",
@@ -1423,7 +1500,7 @@
       "company": "JR東日本",
       "origin": "大宮",
       "destination": "浦和",
-      "direction": "浦和",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e60012"
@@ -1446,7 +1523,8 @@
           "arrival": null,
           "departure": "17:44",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "浦和",
@@ -1454,11 +1532,13 @@
           "arrival": "17:50",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Kusatsu Shima 4"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_14",
@@ -1468,7 +1548,6 @@
       "company": "JR東日本/東武鉄道",
       "origin": "浦和",
       "destination": "新宿",
-      "direction": "新宿",
       "visible": true,
       "style": {
         "color": "#e60012"
@@ -1491,7 +1570,8 @@
           "arrival": null,
           "departure": "18:11",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "池袋",
@@ -1499,7 +1579,8 @@
           "arrival": "18:29",
           "departure": "18:30",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "新宿",
@@ -1507,11 +1588,13 @@
           "arrival": "18:35",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Spacia Nikkō 4"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_15",
@@ -1521,7 +1604,7 @@
       "company": "JR東日本",
       "origin": "新宿",
       "destination": "船橋",
-      "direction": "船橋",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f15a22"
@@ -1544,7 +1627,8 @@
           "arrival": null,
           "departure": "20:11",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "錦糸町",
@@ -1552,7 +1636,8 @@
           "arrival": "20:27",
           "departure": "20:27",
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "船橋",
@@ -1560,11 +1645,13 @@
           "arrival": "20:38",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Azusa 50"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_16",
@@ -1574,7 +1661,7 @@
       "company": "JR東日本",
       "origin": "船橋",
       "destination": "西千葉",
-      "direction": "西千葉",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#ffd400"
@@ -1688,7 +1775,8 @@
           "arrival": null,
           "departure": "20:41",
           "stop_type": "origin",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "東船橋",
@@ -1696,7 +1784,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "津田沼",
@@ -1704,7 +1793,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "幕張本郷",
@@ -1712,7 +1802,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "幕張",
@@ -1720,7 +1811,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "新検見川",
@@ -1728,7 +1820,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "稲毛",
@@ -1736,7 +1829,8 @@
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         },
         {
           "name": "西千葉",
@@ -1744,10 +1838,12 @@
           "arrival": "21:00",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true
+          "ride_segment": true,
+          "platform_number": null
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Chūō-Sōbu Line Local"
     }
   ]
 }

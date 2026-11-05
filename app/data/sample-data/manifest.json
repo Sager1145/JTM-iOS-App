@@ -6,19 +6,20 @@
   "unsolvable": 0,
   "no_route": 0,
   "solver_context": {
-    "solver_version": "25",
+    "solver_version": "28",
     "history_revisions": {
-      "jp": "2026-10-10.2"
+      "jp": "2026-10-11.1"
     },
     "history_hashes": {
-      "jp": "ba5d92d03f90e28ae8680b0498e607b0ec9ca36953c37c0958b7389f2ed6e619"
+      "jp": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc"
     }
   },
   "source_hashes": {
-    "jp-2025.json": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda",
+    "jp-2025.json": "622a230af78a387ed58d788c2c261c66d3ceab45d70d71a0022bafb69a442b3e",
     "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
     "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
-    "rail-history.json": "ba5d92d03f90e28ae8680b0498e607b0ec9ca36953c37c0958b7389f2ed6e619",
+    "physical-rail-junctions.json": "8d06d65c54c68800fc8995743a88aa46b3a205b54f468fcae49452a1c322f99e",
+    "rail-history.json": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc",
     "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
     "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
   },
