@@ -22,6 +22,7 @@ struct RailMapApp: App {
 #if ROUTE_WORKBENCH
             RouteWorkbenchView()
                 .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
+                .background { AppTypographyWindowCap().allowsHitTesting(false) }
 #else
             testableContent
                 .overlay(alignment: .topLeading) {
@@ -32,6 +33,7 @@ struct RailMapApp: App {
 #endif
                 }
                 .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
+                .background { AppTypographyWindowCap().allowsHitTesting(false) }
                 .preferredColorScheme(preferredColorScheme)
 #endif
         }
@@ -309,8 +311,21 @@ private struct RailMapCommands: Commands {
 }
 
 #if DEBUG
+/// Reads back the hosting window's UIKit cap for the typography test.
+private struct WindowCapProbe: UIViewRepresentable {
+    @Binding var report: String
+    func makeUIView(context: Context) -> UIView { UIView() }
+    func updateUIView(_ view: UIView, context: Context) {
+        DispatchQueue.main.async {
+            let value = view.window?.maximumContentSizeCategory?.rawValue ?? "none"
+            if report != value { report = value }
+        }
+    }
+}
+
 private struct AppTypographyUITestProbe: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @State private var windowCap = "none"
 
     var body: some View {
         let item = DraftStopAnnotation(
@@ -327,7 +342,8 @@ private struct AppTypographyUITestProbe: View {
             .allowsHitTesting(false)
             .accessibilityIdentifier("appTypographySize")
             .accessibilityLabel("App text size")
-            .accessibilityValue(Text(verbatim: "size:\(dynamicTypeSize);subtitleRow:\(BottomChromeMetrics.subtitleRow);draftFont:\(draftFont);draftHeight:\(pin.bounds.height)"))
+            .accessibilityValue(Text(verbatim: "size:\(dynamicTypeSize);subtitleRow:\(BottomChromeMetrics.subtitleRow);draftFont:\(draftFont);draftHeight:\(pin.bounds.height);windowCap:\(windowCap)"))
+            .background { WindowCapProbe(report: $windowCap) }
     }
 }
 #endif

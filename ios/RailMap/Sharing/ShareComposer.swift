@@ -56,27 +56,24 @@ struct ShareVideoInputs {
     let film: ([Train]) -> Void
 }
 
-/// Sharing, as one feature (UI reorganization pass 3).
+/// Sharing, as one feature (UI reorganization pass 3, share page redesigned).
 ///
-/// Before this there were three share surfaces with three renderers and three
-/// file writers: a journey poster sheet on the card, the statistics composer
-/// in the Stats header, and a video options sheet in the playback bar. Each
-/// context still has exactly one Share entry, and every entry opens this:
+/// Every Share entry opens this. Three decisions — scope (this journey · the
+/// journey list · statistics), format (image · video), and for an image its
+/// shape and look — over a live preview that IS the card: ``ShareCardView``,
+/// the same view the export renders. See docs/ui-reorganization.md.
 ///
-/// - **scope** — this journey · the filtered journey list · statistics;
-/// - **format** — image or video (video only for journeys: a film is a
-///   recording of a playback run).
-///
-/// Journey and list images come from the one poster renderer
-/// (``JourneyPoster``), statistics from the card renderer; every file goes
-/// through ``ShareArtifactWriter``.
+/// Phone budget: the card content is plain strings built from values the
+/// statistics store already computed; the route map is one `MKMapSnapshotter`
+/// image made off the main thread at the preview's own scale; the full-size
+/// bitmap exists only between Share and its PNG landing on disk.
 struct ShareComposer: View {
     let request: ShareRequest
     @Bindable var itineraries: ItineraryStore
     @Bindable var riddenRoutes: RiddenRouteStore
     let statistics: MileageStatisticsStore
-    let region: Region?
-    let area: StatisticsArea?
+    /// The statistics scope in words (region · period), the card's title.
+    let statisticsTitle: String
     let colorScheme: ColorScheme
     /// The Journeys list as currently filtered, and the words for that filter.
     let listTrains: [Train]
@@ -85,29 +82,43 @@ struct ShareComposer: View {
 
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.displayScale) private var displayScale
     @State private var scope: ShareScope
     @State private var format: ShareFormat
+    @State private var aspect: ShareCardAspect = .story
+    @State private var look: ColorScheme
+    @State private var stopsMode: ShareStopsMode = .key
     @State private var videoSeconds = 0.0
+    /// The map at preview scale for the current scope, shape and look.
+    @State private var mapImage: UIImage?
+    @State private var exporting = false
+    @State private var exportFailed = false
+    @State private var sharedFile: SharedFile?
+
+    struct SharedFile: Identifiable {
+        let url: URL
+        let text: String
+        var id: URL { url }
+    }
 
     init(
         request: ShareRequest,
         itineraries: ItineraryStore, riddenRoutes: RiddenRouteStore,
-        statistics: MileageStatisticsStore,
-        region: Region?, area: StatisticsArea?, colorScheme: ColorScheme,
+        statistics: MileageStatisticsStore, statisticsTitle: String, colorScheme: ColorScheme,
         listTrains: [Train], listTitle: String, video: ShareVideoInputs
     ) {
         self.request = request
         self.itineraries = itineraries
         self.riddenRoutes = riddenRoutes
         self.statistics = statistics
-        self.region = region
-        self.area = area
+        self.statisticsTitle = statisticsTitle
         self.colorScheme = colorScheme
         self.listTrains = listTrains
         self.listTitle = listTitle
         self.video = video
         _scope = State(initialValue: request.scope)
         _format = State(initialValue: request.scope.offersVideo ? request.format : .image)
+        _look = State(initialValue: colorScheme)
     }
 
     /// The scopes this opening can offer: the journey only when there is one.
@@ -122,18 +133,83 @@ struct ShareComposer: View {
         return trains.filter { scope == .journey || ($0.visible != false && $0.stops.count > 1) }
     }
 
+    private var builder: ShareCardBuilder {
+        ShareCardBuilder(
+            localization: localization,
+            passport: statistics.passport.flatMap { $0.isEmpty ? nil : $0 },
+            drawnKm: drawnKm)
+    }
+
+    private var content: ShareCardContent? {
+        switch scope {
+        case .journey: request.journey.map { builder.journey($0, stops: stopsMode) }
+        case .list: builder.list(listTrains, title: listTitle)
+        case .statistics: builder.statistics(store: statistics, scopeTitle: statisticsTitle)
+        }
+    }
+
+    /// Route geometry for the card's map; statistics cards carry none.
+    private var mapRides: [RiddenRouteStore.DrawnRide] {
+        let ids: Set<String>
+        switch scope {
+        case .journey: ids = Set(request.journey.map { [$0.id] } ?? [])
+        case .list: ids = Set(listTrains.map(\.id))
+        case .statistics: return []
+        }
+        return riddenRoutes.rides.filter { ids.contains($0.id) }
+    }
+
+    private var showsMap: Bool { scope != .statistics }
+
+    /// The drawn route's length per journey, for cards opened before the
+    /// statistics have matched a journey's mileage. Only the scope's rides.
+    private var drawnKm: [String: Double] {
+        Dictionary(mapRides.map { ride in
+            (ride.id, ride.segments.reduce(0) { total, segment in
+                zip(segment.coordinates, segment.coordinates.dropFirst()).reduce(total) {
+                    $0 + Self.kilometres($1.0, $1.1)
+                }
+            })
+        }, uniquingKeysWith: { first, _ in first })
+    }
+
+    private static func kilometres(_ a: Coordinate, _ b: Coordinate) -> Double {
+        let r = 6_371.0, d = Double.pi / 180
+        let dLat = (b.lat - a.lat) * d, dLon = (b.lon - a.lon) * d
+        let h = sin(dLat / 2) * sin(dLat / 2)
+            + cos(a.lat * d) * cos(b.lat * d) * sin(dLon / 2) * sin(dLon / 2)
+        return 2 * r * asin(min(1, sqrt(h)))
+    }
+
+    private var footer: String {
+        StatisticsFormat.ticketIssued(localization: localization)
+    }
+
     var body: some View {
         NavigationStack {
-            content
-                .safeAreaInset(edge: .top, spacing: 0) { pickers }
-                .navigationTitle(localization.text("ios.share.title", fallback: "Share"))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                            .accessibilityIdentifier("shareCloseButton")
+            Group {
+                if format == .video {
+                    VideoExportOptionsView(
+                        settings: video.settings, sourceRect: video.sourceRect,
+                        displayScale: video.displayScale, seconds: videoSeconds
+                    ) {
+                        let trains = filmedTrains
+                        dismiss()
+                        video.film(trains)
                     }
+                } else {
+                    imageComposer
                 }
+            }
+            .safeAreaInset(edge: .top, spacing: 0) { pickers }
+            .navigationTitle(localization.text("ios.share.title", fallback: "Share"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
+                        .accessibilityIdentifier("shareCloseButton")
+                }
+            }
         }
         .accessibilityIdentifier("shareComposerRoot")
         .onChange(of: scope) { _, scope in
@@ -143,33 +219,158 @@ struct ShareComposer: View {
             guard format == .video else { return }
             videoSeconds = video.estimateSeconds(filmedTrains)
         }
+        .task(id: mapKey) {
+            mapImage = nil
+            guard format == .image, showsMap else { return }
+            mapImage = await renderMap(scale: displayScale)
+        }
+        .sheet(item: $sharedFile) { file in
+            ActivitySheet(items: [file.url, file.text])
+        }
     }
 
-    @ViewBuilder
-    private var content: some View {
-        switch (scope, format) {
-        case (.statistics, _):
-            ShareComposerView(
-                itineraries: itineraries, riddenRoutes: riddenRoutes, statistics: statistics,
-                region: region, area: area, colorScheme: colorScheme)
-        case (.journey, .image):
-            if let journey = request.journey {
-                JourneyShareContent(subject: .journey(journey))
-                    .id("journey:\(journey.id)")
+    private var mapKey: String {
+        "\(scope.rawValue)|\(format.rawValue)|\(aspect.rawValue)|\(look == .dark)|\(mapRides.count)|\(riddenRoutes.ridesKeyGeneration)"
+    }
+
+    // MARK: image
+
+    private var imageComposer: some View {
+        ScrollView {
+            VStack(spacing: 18) {
+                if let content {
+                    preview(content)
+                } else {
+                    ProgressView(localization.text("ios.stats.calculating"))
+                        .frame(maxWidth: .infinity, minHeight: 240)
+                }
+                options
             }
-        case (.list, .image):
-            JourneyShareContent(subject: .list(listTrains, title: listTitle))
-                .id("list")
-        case (_, .video):
-            VideoExportOptionsView(
-                settings: video.settings, sourceRect: video.sourceRect,
-                displayScale: video.displayScale, seconds: videoSeconds
-            ) {
-                let trains = filmedTrains
-                dismiss()
-                video.film(trains)
+            .padding(16)
+        }
+        .background(Color(.systemGroupedBackground))
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 6) {
+                if exportFailed {
+                    Text(localization.text("ios.journeyShare.failed"))
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                Button {
+                    Task { await export() }
+                } label: {
+                    Label(localization.text("ios.share.shareImage", fallback: "Share image"),
+                          systemImage: "square.and.arrow.up")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .disabled(content == nil || exporting)
+                .accessibilityIdentifier("shareImageButton")
+            }
+            .padding(16)
+            .background(.bar)
+        }
+    }
+
+    /// The card itself, scaled to the width. Not an image of it: what the
+    /// reader sees is the view the export will render.
+    private func preview(_ content: ShareCardContent) -> some View {
+        let size = aspect.size
+        return Color.clear
+            .aspectRatio(size.width / size.height, contentMode: .fit)
+            .frame(maxWidth: 400)
+            .overlay(alignment: .topLeading) {
+                GeometryReader { proxy in
+                    card(content, map: mapImage)
+                        .scaleEffect(proxy.size.width / size.width, anchor: .topLeading)
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .shadow(color: .black.opacity(0.14), radius: 14, y: 6)
+            .animation(.smooth(duration: 0.25), value: aspect)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(localization.text("ios.journeyShare.preview"))
+            .accessibilityValue(content.spokenText)
+            .accessibilityIdentifier("sharePreview")
+    }
+
+    private func card(_ content: ShareCardContent, map: UIImage?) -> some View {
+        ShareCardView(content: content, aspect: aspect, mapImage: map,
+                      footer: footer, showsMap: showsMap)
+            .environment(\.colorScheme, look)
+    }
+
+    private var options: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            optionRow(localization.text("ios.share.shape", fallback: "Shape")) {
+                Picker(localization.text("ios.share.shape", fallback: "Shape"), selection: $aspect) {
+                    ForEach(ShareCardAspect.allCases) { aspect in
+                        Text(localization.text(aspect.localizationKey)).tag(aspect)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .accessibilityIdentifier("shareAspectPicker")
+            }
+            optionRow(localization.text("ios.share.look", fallback: "Look")) {
+                Picker(localization.text("ios.share.look", fallback: "Look"), selection: $look) {
+                    Text(localization.text("ios.share.look.light", fallback: "Light")).tag(ColorScheme.light)
+                    Text(localization.text("ios.share.look.dark", fallback: "Dark")).tag(ColorScheme.dark)
+                }
+                .pickerStyle(.segmented)
+                .accessibilityIdentifier("shareLookPicker")
+            }
+            if scope == .journey {
+                optionRow(localization.text("ios.share.stops", fallback: "Stops")) {
+                    Picker(localization.text("ios.share.stops", fallback: "Stops"), selection: $stopsMode) {
+                        ForEach(ShareStopsMode.allCases) { mode in
+                            Text(localization.text(mode.localizationKey)).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .accessibilityIdentifier("shareStopsPicker")
+                }
             }
         }
+        .frame(maxWidth: 400)
+    }
+
+    private func optionRow<Control: View>(_ title: String, @ViewBuilder control: () -> Control) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title).font(.footnote.weight(.semibold)).foregroundStyle(.secondary)
+            control()
+        }
+    }
+
+    // MARK: export
+
+    private func renderMap(scale: CGFloat) async -> UIImage? {
+        let rides = mapRides
+        guard !rides.isEmpty else { return nil }
+        let width = aspect.size.width - 44
+        return await StatisticsMapSnapshot.render(
+            rides: rides, fallback: nil, colorScheme: look,
+            size: CGSize(width: width * scale, height: aspect.mapHeight * scale),
+            minimumSpan: 30_000)
+    }
+
+    /// Render once at export scale, write, release. The full-size map and
+    /// bitmap live only for the length of this function.
+    private func export() async {
+        guard let content, !exporting else { return }
+        exporting = true
+        exportFailed = false
+        defer { exporting = false }
+        let map = showsMap ? await renderMap(scale: ShareCardAspect.exportScale) : nil
+        let renderer = ImageRenderer(content: card(content, map: map ?? mapImage))
+        renderer.scale = ShareCardAspect.exportScale
+        renderer.isOpaque = true
+        guard let image = renderer.uiImage,
+              let url = await ShareArtifactWriter.writePNG(image, kind: scope == .statistics ? .statistics : .journey)
+        else {
+            exportFailed = true
+            return
+        }
+        sharedFile = SharedFile(url: url, text: content.spokenText)
     }
 
     private var pickers: some View {

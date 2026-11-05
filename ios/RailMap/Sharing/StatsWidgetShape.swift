@@ -71,3 +71,9 @@ extension StatisticsCardKind {
         }
     }
 }
+
+/// How many cells of the widget grid a card spans.
+struct GridSpan: Hashable {
+    var columns: Int
+    var rows: Int
+}

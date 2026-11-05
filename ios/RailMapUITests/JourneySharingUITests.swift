@@ -9,7 +9,7 @@ final class JourneySharingUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
-    func testLongJourneyCardPreviewsOneImageForBothKindsAndReturnsToSameJourney() {
+    func testLongJourneyCardPreviewsOneImageForBothStopModesAndReturnsToSameJourney() {
         // A clearly synthetic pending record exercises a 217-row tall image.
         // It is neither production sample data nor railway/timetable evidence.
         let id = "20260729_05_sunrise_izumo"
@@ -25,7 +25,7 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertTrue(share.waitForExistence(timeout: 10))
         XCTAssertTrue(share.isHittable, "An opened journey card must expose its share button.")
         share.tap()
-        exerciseBothKinds(in: app, attachmentPrefix: "sunrise-217-stops", validatesSunrise: true)
+        exerciseBothStopModes(in: app, attachmentPrefix: "sunrise-217-stops", validatesSunrise: true)
         closeShare(in: app)
 
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
@@ -36,7 +36,7 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertEqual(app.textFields["journeySearchField"].value as? String, id)
     }
 
-    func testJourneyMenuPreviewsBothKindsAndReturnsToSameJourney() {
+    func testJourneyMenuPreviewsBothStopModesAndReturnsToSameJourney() {
         let id = "20260703_01_haruka"
         let app = launch(journeyID: id)
         let row = element("journeyRow-\(id)", in: app)
@@ -52,7 +52,7 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertTrue(share.waitForExistence(timeout: 5))
         XCTAssertTrue(share.isHittable)
         share.tap()
-        exerciseBothKinds(in: app, attachmentPrefix: "journey-menu")
+        exerciseBothStopModes(in: app, attachmentPrefix: "journey-menu")
         closeShare(in: app)
 
         XCTAssertTrue(selected.waitForExistence(timeout: 10))
@@ -60,65 +60,47 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertEqual(selected.label, originalTitle)
     }
 
-    private func exerciseBothKinds(
+    private func exerciseBothStopModes(
         in app: XCUIApplication, attachmentPrefix: String, validatesSunrise: Bool = false
     ) {
-        XCTAssertTrue(element("journeyShareSheet", in: app).waitForExistence(timeout: 10))
-        let picker = app.segmentedControls["journeyShareKindPicker"]
-        XCTAssertTrue(picker.waitForExistence(timeout: 10))
-        for (index, kind) in ["Full journey", "Train information", "Full journey"].enumerated() {
-            let choice = picker.buttons[kind]
+        XCTAssertTrue(element("shareComposerRoot", in: app).waitForExistence(timeout: 10))
+        let picker = app.segmentedControls["shareStopsPicker"]
+        XCTAssertTrue(picker.waitForExistence(timeout: 10), app.debugDescription)
+        for (index, mode) in ["Key stops", "All stops"].enumerated() {
+            let choice = picker.buttons[mode]
             XCTAssertTrue(choice.exists)
             if !choice.isSelected { choice.tap() }
             XCTAssertTrue(choice.isSelected)
-            waitForReadyPreview(in: app)
-            let previews = app.descendants(matching: .any).matching(NSPredicate(
-                format: "identifier BEGINSWITH %@", "journeySharePreview-"))
-            XCTAssertEqual(previews.count, 1, "Each export kind must generate exactly one image.")
-            XCTAssertTrue(element("journeySharePreview-0", in: app).exists)
-            XCTAssertFalse(element("journeySharePreview-1", in: app).exists)
+            let preview = element("sharePreview", in: app)
+            XCTAssertTrue(preview.waitForExistence(timeout: 30), app.debugDescription)
+            let text = preview.value as? String ?? ""
+            XCTAssertFalse(text.isEmpty, "The preview must expose the card's text.")
             if validatesSunrise {
-                validateSunriseContent(
-                    element("journeySharePreview-0", in: app).value as? String ?? "", full: kind == "Full journey")
+                validateSunriseContent(text, allStops: mode == "All stops")
             }
             let screenshot = XCTAttachment(screenshot: app.screenshot())
-            screenshot.name = "\(attachmentPrefix)-\(index)-\(kind)"
+            screenshot.name = "\(attachmentPrefix)-\(index)-\(mode)"
             screenshot.lifetime = .keepAlways
             add(screenshot)
         }
+        XCTAssertTrue(exportAndExpectShareSheet(in: app), app.debugDescription)
+        dismissShareSheet(in: app)
     }
 
-    private func validateSunriseContent(_ text: String, full: Bool) {
+    private func validateSunriseContent(_ text: String, allStops: Bool) {
         // These passenger-call labels are deliberately retained in the synthetic
         // fixture; its passing rows test rendering, not inferred rail topology.
         let stoppingStations = ["沼津", "富士", "静岡", "浜松", "姫路", "岡山", "倉敷",
                                 "備中高梁", "新見", "米子", "安来", "松江", "宍道", "出雲市"]
         for station in stoppingStations {
-            XCTAssertTrue(text.contains(station), "The image content must retain stopping station \(station).")
+            XCTAssertTrue(text.contains(station), "The card must retain stopping station \(station).")
         }
-        XCTAssertTrue(text.contains("34:00 (2026-07-30)"),
-                      "The last stop must preserve the extended service time and its next-day date.")
-        if full {
-            XCTAssertTrue(text.contains("岡山まで5031M"), "Full sharing must include the journey's notes.")
-            XCTAssertTrue(text.contains("片浜"), "Full sharing must retain recorded pass-through stations.")
-            XCTAssertTrue(text.contains("20260729_05_sunrise_izumo"),
-                          "Full sharing must include the advanced record identifier.")
+        XCTAssertTrue(text.contains("34:00"), "The last stop must preserve the extended service time.")
+        if allStops {
+            XCTAssertTrue(text.contains("片浜"), "All stops must retain recorded pass-through stations.")
         } else {
-            XCTAssertFalse(text.contains("岡山まで5031M"), "Train information must omit private notes.")
-            XCTAssertFalse(text.contains("片浜"), "Train information must omit pass-through stations.")
-            XCTAssertFalse(text.contains("20260729_05_sunrise_izumo"),
-                           "Train information must omit advanced record identifiers.")
+            XCTAssertFalse(text.contains("片浜"), "Key stops must omit pass-through stations.")
         }
-    }
-
-    private func waitForReadyPreview(in app: XCUIApplication) {
-        let send = element("journeyShareSendButton", in: app)
-        let preview = element("journeySharePreview-0", in: app)
-        let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-            send.exists && send.isEnabled && preview.exists && !preview.frame.isEmpty
-        }, object: nil)
-        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 90), .completed,
-                       "Sharing must finish rendering before enabling Send.\n" + app.debugDescription)
     }
 
     private func closeShare(in app: XCUIApplication) {
@@ -126,6 +108,38 @@ final class JourneySharingUITests: XCTestCase {
         XCTAssertTrue(close.waitForExistence(timeout: 5))
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 10))
+    }
+
+
+    /// Taps the composer's export button and waits for the system share sheet
+    /// (UIActivityViewController), tolerating the several shapes it takes
+    /// across iOS versions. Returns true once it is on screen.
+    private func exportAndExpectShareSheet(in app: XCUIApplication) -> Bool {
+        let export = element("shareImageButton", in: app)
+        XCTAssertTrue(export.waitForExistence(timeout: 30))
+        let enabled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in export.isEnabled }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 60), .completed)
+        export.tap()
+        let sheet = NSPredicate { _, _ in
+            app.otherElements["ActivityListView"].exists
+                || app.buttons["Copy"].exists
+                || app.buttons["Save Image"].exists
+                || app.sheets.firstMatch.exists
+                || app.collectionViews.matching(identifier: "ActivityListView").firstMatch.exists
+        }
+        let shown = XCTNSPredicateExpectation(predicate: sheet, object: nil)
+        return XCTWaiter.wait(for: [shown], timeout: 90) == .completed
+    }
+
+    private func dismissShareSheet(in app: XCUIApplication) {
+        let close = app.buttons["Close"]
+        if close.waitForExistence(timeout: 3) {
+            close.tap()
+        } else {
+            app.swipeDown(velocity: .fast)
+        }
+        XCTAssertTrue(element("shareComposerRoot", in: app).waitForExistence(timeout: 10),
+                      "Dismissing the share sheet must return to the composer.")
     }
 
     private func launch(journeyID: String, syntheticLongRecord: Bool = false) -> XCUIApplication {

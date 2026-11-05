@@ -115,6 +115,12 @@ struct PassportStatistics: Sendable {
     let operators: [Tally]
     let routes: [Tally]
     let regions: [RegionTally]
+    /// Each journey's own ridden distance, by train id, where it is known —
+    /// what a share card prints beside a trip. Built in the same pass as the
+    /// tallies above, so a card never walks journeys itself.
+    var journeyKm: [String: Double] = [:]
+    /// Each journey's time on board, by train id, where it is timed.
+    var journeyMinutes: [String: Double] = [:]
 
     /// A partial or pending route cannot supply a complete journey distance.
     var averageKm: Double { measuredJourneys > 0 ? completedDistanceKm / Double(measuredJourneys) : 0 }
@@ -299,7 +305,13 @@ struct PassportStatistics: Sendable {
                 guard let share = regions[region], share.count > 0 else { return nil }
                 return RegionTally(region: region, count: share.count, km: share.km)
             }
-            .sorted { $0.count == $1.count ? $0.km > $1.km : $0.count > $1.count })
+            .sorted { $0.count == $1.count ? $0.km > $1.km : $0.count > $1.count },
+            journeyKm: Dictionary(
+                journeys.filter(\.distanceIsKnown).map { ($0.id, $0.km) },
+                uniquingKeysWith: { first, _ in first }),
+            journeyMinutes: Dictionary(
+                journeys.filter { $0.minutes > 0 }.map { ($0.id, $0.minutes) },
+                uniquingKeysWith: { first, _ in first }))
     }
 
     // MARK: - the counting

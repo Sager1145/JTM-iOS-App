@@ -802,7 +802,7 @@ struct RailWorkspaceView: View {
         ShareComposer(
             request: request,
             itineraries: itineraries, riddenRoutes: riddenRoutes, statistics: statistics,
-            region: regionScope, area: statisticsArea, colorScheme: colorScheme,
+            statisticsTitle: "\(regionScopeName) · \(statisticsScopeLabel)", colorScheme: colorScheme,
             listTrains: shareListTrains, listTitle: shareListTitle,
             video: ShareVideoInputs(
                 settings: videoExport.settings, sourceRect: playbackFilmedRect,
@@ -1261,7 +1261,9 @@ struct RailWorkspaceView: View {
             scopedTrains: statisticsScope.trains,
             derived: derived,
             journeyPresentation: { presentation(for: $0) },
-            openJourney: { sheet = .detail($0.id) })
+            openJourney: { sheet = .detail($0.id) },
+            openData: openData,
+            openSettings: openSettings)
     }
 
     // MARK: - the panel header (§9.5.6: 左上大标题, 右上功能按钮)
@@ -2231,9 +2233,8 @@ struct RailWorkspaceView: View {
             ) {
                 settleDock(at: next, metrics: metrics)
             }
-            // Match the phone header's chrome glyph ceiling; reading text still
-            // follows the full accessibility size range.
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+            // The app's one text-size cap (AppTypographyPolicy).
+            .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
             .railGlass(in: Circle(), interactive: true)
             .help(label)
             .accessibilityIdentifier("dockPanelToggle")

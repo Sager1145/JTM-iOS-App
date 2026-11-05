@@ -69,18 +69,6 @@ enum ShareArtifactWriter {
         return url
     }
 
-    /// A downsampled copy for an on-screen confirmation, so a sheet that
-    /// only shows the image never holds the full-size bitmap.
-    @MainActor
-    static func thumbnail(of image: UIImage, maxPixelWidth: CGFloat = 1_200) -> UIImage {
-        let pixelWidth = image.size.width * image.scale
-        guard pixelWidth > maxPixelWidth else { return image }
-        let ratio = maxPixelWidth / pixelWidth
-        let size = CGSize(width: image.size.width * image.scale * ratio,
-                          height: image.size.height * image.scale * ratio)
-        return image.preparingThumbnail(of: size) ?? image
-    }
-
     private static func retireEarlierSessions(of kind: Kind) {
         let cutoff = sessionStarted
         let manager = FileManager.default

@@ -5,15 +5,6 @@ import RailPresentation
 import SwiftUI
 import UIKit
 
-/// A rendered share image kept in memory for preview and on disk for ShareLink.
-struct StatisticsShareFile: Identifiable, Equatable {
-    var url: URL
-    var image: UIImage
-    var accessibilityLabelKey: String = "ios.stats.shareImageLabel"
-    var titleKey: String = "ios.stats.shareTitle"
-    var id: String { url.absoluteString }
-}
-
 /// A fresh map for the passport's selected date and region. The caller passes
 /// exactly the rides counted by that scope, so the image never inherits the
 /// reader's unrelated pan or zoom on the live workspace map.
@@ -58,7 +49,8 @@ enum StatisticsMapSnapshot {
         colorScheme: ColorScheme,
         size: CGSize = CGSize(width: 736, height: 736),
         zoom: Double = 1,
-        name: String? = nil
+        name: String? = nil,
+        minimumSpan: Double = 1_000_000
     ) async -> UIImage? {
         let segments = rides.flatMap(\.segments).filter { !$0.boundingRect.isNull }
         let bounds = segments.reduce(MKMapRect.null) { $0.union($1.boundingRect) }
@@ -74,7 +66,8 @@ enum StatisticsMapSnapshot {
         } else {
             return placeholder(size: size, colorScheme: colorScheme, name: name)
         }
-        options.mapRect = fitted(baseRect, aspect: size.width / max(size.height, 1), zoom: zoom)
+        options.mapRect = fitted(
+            baseRect, aspect: size.width / max(size.height, 1), zoom: zoom, minimumSpan: minimumSpan)
 
         let snapshotSize = options.size
         let snapshotter = MKMapSnapshotter(options: options)
@@ -177,73 +170,18 @@ enum StatisticsMapSnapshot {
         }
     }
 
-    private static func fitted(_ rect: MKMapRect, aspect: CGFloat, zoom: Double) -> MKMapRect {
-        var width = max(rect.width, 1_000_000)
-        var height = max(rect.height, 1_000_000)
+    /// `minimumSpan` keeps a region map from zooming into one station; a
+    /// share card passes a small one so a 40-minute ride fills its frame.
+    private static func fitted(
+        _ rect: MKMapRect, aspect: CGFloat, zoom: Double, minimumSpan: Double
+    ) -> MKMapRect {
+        let margin = minimumSpan < 1_000_000 ? 1.3 : 1
+        var width = max(rect.width * margin, minimumSpan)
+        var height = max(rect.height * margin, minimumSpan)
         let current = width / height
         if current < aspect { width = height * aspect } else { height = width / aspect }
         let scale = 1 / min(max(zoom, 0.75), 2)
         return MKMapRect(x: rect.midX - width * scale / 2, y: rect.midY - height * scale / 2,
                          width: width * scale, height: height * scale)
-    }
-}
-
-/// What the reader sees before anything is shared: the picture itself, and the
-/// system's own share button under it.
-///
-/// A preview rather than going straight to the share sheet, for the reason
-/// §5.6 gives the video export its options screen — sharing is the irreversible
-/// half, and the reader should have seen what they are about to send before
-/// they choose where it goes.
-struct StatisticsShareView: View {
-    @Environment(AppLocalization.self) private var localization
-
-    var file: StatisticsShareFile
-    var onClose: () -> Void
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                Image(uiImage: file.image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: RailStyle.cardCornerRadius, style: .continuous))
-                    .overlay {
-                        RoundedRectangle(
-                            cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
-                            .stroke(Color(.separator), lineWidth: 0.5)
-                    }
-                    .padding(16)
-                    .accessibilityLabel(
-                        Text(
-                            localization.text(file.accessibilityLabelKey)))
-            }
-            .navigationTitle(localization.text(file.titleKey))
-            .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) {
-                ShareLink(item: file.url) {
-                    Label(
-                        localization.text("ios.share", fallback: "Share"),
-                        systemImage: "square.and.arrow.up")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
-                .padding(16)
-                .background(.bar)
-            }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.done", fallback: "Done"), action: onClose)
-                        .accessibilityIdentifier("statisticsShareCloseButton")
-                }
-            }
-            // Identified rather than found by label: `ConsoleSweepTests` walks
-            // this surface, and the label is the reader's language.
-            .accessibilityIdentifier("statisticsShareSheet")
-        }
     }
 }

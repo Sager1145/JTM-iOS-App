@@ -406,6 +406,123 @@ test hook in this tree (0 rides), so the video probe used the Taiwan sample.
 The station card's share (a station name for the system share sheet) is not a journey or
 statistics share. It stays as it was.
 
+## The share page, redesigned from scratch
+
+The first composer reused the statistics canvas editor for statistics. That is a grid of share
+widgets the reader arranges by hand, and it rendered a Taiwan-only log as five empty Japanese
+maps. The user asked for a new share page. The design:
+
+**One screen, three decisions, live preview.**
+
+```
+┌ Cancel            Share                        ┐
+│ [ This journey | Journey list | Statistics ]   │  scope (only the ones this opening has)
+│ [ Image | Video ]                               │  format (video: journeys only)
+│ ┌───────────────────────────────┐              │
+│ │      live card preview        │  ← the real  │
+│ │   (the SwiftUI card itself,   │    card view │
+│ │    scaled to fit the width)   │    at 1:1    │
+│ └───────────────────────────────┘              │
+│ Shape   [ Story 9:16 | Portrait 4:5 | Square ]  │
+│ Look    [ Light | Dark ]                        │
+│ (Journey) Stops [ Key stops | All stops ]       │
+│ ─────────────────────────────────────────────  │
+│ [        Share image        ]                   │  renders full size once, writes, shares
+└────────────────────────────────────────────────┘
+```
+
+The preview *is* the card: one SwiftUI view, `ShareCardView`, laid out on a fixed 360 pt
+design canvas (Story 360 × 640, Portrait 360 × 450, Square 360 × 360). On screen it is
+drawn scaled to fit. On Share, `ImageRenderer` draws the same view at 3× (1080 px wide),
+`ShareArtifactWriter` writes it, and the bitmap is released. One renderer and one layout serve
+every scope, so the preview and the file can't disagree. Text inside the card uses fixed sizes:
+it is an image, not reading UI. The route map is an `MKMapSnapshotter` image made off the main
+thread. The preview gets one at screen scale, the export one at export scale, and only the
+current one is kept.
+
+**The cards: one key number each, then supporting detail.**
+
+*Journey card*:
+- Header band in the journey's line colour, with the operator and train type.
+- The train number as the title, and the date.
+- Origin → destination as the hero, each with its time.
+- A fact row: distance (km), time on board, number of stops.
+- The route map.
+- The stops: key stops (endpoints, passenger stops and service changes) or all stops. On a Story
+  card the stops fill whatever room the map leaves; any that don't fit end in "+N more".
+- A footer with the app mark.
+
+*Journey list card*:
+- The filter as the title (for example "History · Taiwan, All dates"), with the date span.
+- A totals row: journeys, km, time.
+- One map with every journey's route.
+- A dated list of journeys (date · number · A → B · km), as many as the shape fits, then
+  "+N more".
+
+*Statistics card*:
+- The scope (region, period) as the title.
+- The hero: distance ridden (the deduped total the Stats ticket prints) and the ride count.
+- A 2 × 2 grid: time on board, stations, operators, network coverage %.
+- A 12-month ride rhythm bar chart: one hue, each bar's value printed, the busiest month called
+  out.
+- The top three operators with bars.
+
+No map on the statistics card: on a Story card the numbers fill it. The list and journey cards
+carry the map.
+
+On every card, the detail section (stops, journeys, chart and operator bars) shows as much as
+fits *whole*. `ViewThatFits` picks the longest list that fits the shape, and the rest is counted
+in "+N". Nothing is cut at the card's edge.
+
+**Video** keeps the existing recorder settings (frame, quality, bitrate, length and size
+estimate). Start dismisses the composer and films the journey or the list.
+
+**Data.** Everything comes from values computed once:
+- statistics: `MileageStatisticsStore.view` and `.passport`;
+- per-journey distance: the new `PassportStatistics.journeyKm` map, built in the same pass as
+  the tallies;
+- route geometry: `RiddenRouteStore.rides`.
+
+The card model is built once per scope and option change, never per frame.
+
+**Stats tab.** On the user's instruction, the Stats page itself stays as it was before this
+overhaul (as at `10001a4be`), including the Replay and export card that pass 2 had removed.
+The one exception is the merged region and period filter in its header, which is the shared
+filter decision. data-perf's memoised `availableYears` is kept: it calls the same
+`StatisticsMembership.availableYears` with the same inputs, so nothing shown changes.
+
+**What it replaces.** `ShareComposerView`, `ShareComposerModel`, `ShareComposerCanvas`,
+`ShareComposerDrag` and `ShareCardRendering` (the hand-arranged widget canvas), and the
+CoreGraphics journey poster (`JourneyPoster`). The Stats tab's own cards (`StatsWidgetView`)
+stay as they were.
+
+## One text-size cap
+
+`AppTypographyPolicy.maximumSize = .xLarge` is the app's one hard-coded text-size ceiling. Every
+other limit derives from it:
+
+- the SwiftUI range applied once at the scene root;
+- `UIWindow.maximumContentSizeCategory`;
+- the window scene's `traitOverrides.preferredContentSizeCategory`. This is what reaches
+  presented sheets, popovers and full-screen covers: they take their text size from UIKit
+  traits, not from the root's SwiftUI environment. Before this, the resident sheet's journey
+  list grew to accessibility sizes while the root stopped at the cap;
+- the clamped `UIFont`s that the map's UIKit annotations and `BottomChromeMetrics` measure with.
+
+The cap is re-applied when the reader changes their setting, so every size at or below it still
+follows them. The header dock toggle's separate `.xxxLarge` ceiling now uses the policy too.
+
+Why `.xLarge`: it is the largest size at which the densest rows still lay out on a 402 pt
+iPhone:
+- the sheet header (title, subtitle, up to four 44 pt actions);
+- Upcoming and History rows (date, number and endpoints, one line each);
+- the Stats ticket artboard.
+
+From `.xxLarge` up, those rows wrap into the next row or truncate station names.
+
+Share cards are pictures with fixed type sizes, so they don't scale with the setting at all.
+`AppTypographyPolicyTests` now also asserts that the window carries the cap.
+
 ## One scope control on both tabs
 
 Stats had two header buttons for its scope: a globe for region and a calendar for period.

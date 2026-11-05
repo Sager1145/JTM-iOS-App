@@ -78,31 +78,27 @@ final class ConsoleSweepTests: XCTestCase {
                 return
             }
             share.tap()
-            let composer = element("shareComposer", in: app)
+            let composer = element("shareComposerRoot", in: app)
             XCTAssertTrue(composer.waitForExistence(timeout: 8), "the share composer did not appear")
-            let appearanceControl = element("shareComposerAppearance", in: app)
-            XCTAssertTrue(appearanceControl.waitForExistence(timeout: 4))
-            let expectedAppearance = "Share in \(appearance) mode"
-            if appearanceControl.value as? String != expectedAppearance { appearanceControl.tap() }
-            XCTAssertEqual(appearanceControl.value as? String, expectedAppearance)
-            let export = element("shareComposerExport", in: app)
-            let exportReady = XCTNSPredicateExpectation(
-                predicate: NSPredicate { _, _ in export.exists && export.isEnabled }, object: nil)
-            XCTAssertEqual(XCTWaiter.wait(for: [exportReady], timeout: 90), .completed)
-            export.tap()
-            let preview = element("statisticsShareSheet", in: app)
-            XCTAssertTrue(preview.waitForExistence(timeout: 90),
-                          "the \(appearance) statistics preview did not appear from the composer")
-            XCTAssertTrue(app.images.firstMatch.exists,
-                          "the \(appearance) statistics preview has no rendered image")
-            let close = element("statisticsShareCloseButton", in: app)
+            let look = app.segmentedControls["shareLookPicker"]
+            XCTAssertTrue(look.waitForExistence(timeout: 4))
+            let lookChoice = look.buttons[appearance == "dark" ? "Dark" : "Light"]
+            XCTAssertTrue(lookChoice.exists)
+            lookChoice.tap()
+            XCTAssertTrue(lookChoice.isSelected)
+            let aspect = app.segmentedControls["shareAspectPicker"]
+            XCTAssertTrue(aspect.waitForExistence(timeout: 4))
+            for name in ["Story", "Portrait", "Square"] {
+                let segment = aspect.buttons[name]
+                XCTAssertTrue(segment.exists, "missing aspect segment \(name)")
+                segment.tap()
+                XCTAssertTrue(segment.isSelected)
+            }
+            XCTAssertTrue(element("sharePreview", in: app).waitForExistence(timeout: 30),
+                          "the \(appearance) statistics preview did not appear in the composer")
+            let close = element("shareCloseButton", in: app)
             XCTAssertTrue(close.waitForExistence(timeout: 4))
             close.tap()
-            XCTAssertTrue(close.waitForNonExistence(timeout: 8))
-            XCTAssertTrue(preview.waitForNonExistence(timeout: 8))
-            let cancel = app.buttons["Cancel"]
-            XCTAssertTrue(cancel.waitForExistence(timeout: 4))
-            cancel.tap()
             XCTAssertTrue(composer.waitForNonExistence(timeout: 8), "the share composer did not close")
             settle()
         }

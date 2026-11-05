@@ -301,9 +301,9 @@ final class RailMapUITests: XCTestCase {
             predicate: NSPredicate(format: "enabled == true"), object: share)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 90), .completed,
                        "Statistics must publish before scrolling the completed dashboard.")
-        // The "Replay and export" card (`passportShareNote`) is gone, so the
-        // dashboard's final content is whatever static text sits lowest in the
-        // viewport once the scroll has run out.
+        // The dashboard's final content (the "Replay and export" card with its
+        // `passportShareNote` footnote) is whatever static text sits lowest in
+        // the viewport once the scroll has run out.
         func lowestText() -> XCUIElement? {
             let texts = viewport.descendants(matching: .staticText).allElementsBoundByIndex
                 .filter { $0.exists && !$0.frame.isEmpty && $0.frame.intersects(viewport.frame) }
