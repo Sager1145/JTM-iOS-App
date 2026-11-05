@@ -245,6 +245,78 @@ final class NewTripUITests: XCTestCase {
                       "Choosing a corridor must enable Save.")
     }
 
+    func testViaStopFromSearchNarrowsMultipleCorridors() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let loop = "jp-西日本旅客鉄道-大阪環状線"
+        pickStation(field: "newTripOrigin", query: "大阪", code: "007068", lineID: loop, in: app)
+        pickStation(field: "newTripDestination", query: "天王寺", code: "007439", lineID: loop, in: app)
+        XCTAssertTrue(reveal(app.buttons["newTripCorridor-1"], in: app, timeout: 40),
+                      "Both directions of the loop must be offered first.")
+        XCTAssertTrue(app.otherElements["newTripMap"].exists || app.maps["newTripMap"].exists,
+                      "The trip map must be on screen above the form.")
+        attachScreenshot("alternatives", app)
+
+        pickStation(field: "newTripAddVia", query: "鶴橋", code: "007330", lineID: loop,
+                    expectsLabelChange: false, in: app)
+        XCTAssertTrue(app.descendants(matching: .any)["newTripVia-0"].waitForExistence(timeout: 10),
+                      "The chosen stop must be listed between From and To.")
+        XCTAssertTrue(waitForEnabled(app.buttons["newTripSave"], timeout: 40),
+                      "A via on one side of the loop leaves one corridor, chosen automatically.")
+        XCTAssertFalse(app.buttons["newTripCorridor-1"].exists)
+        attachScreenshot("via-search", app)
+
+        let remove = app.buttons["newTripRemoveVia-0"]
+        XCTAssertTrue(reveal(remove, in: app, upward: true))
+        remove.tap()
+        XCTAssertTrue(reveal(app.buttons["newTripCorridor-1"], in: app, timeout: 40),
+                      "Removing the stop must bring both directions back.")
+    }
+
+    func testMapStationTapSetsEndpointsAndVia() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let loop = "jp-西日本旅客鉄道-大阪環状線"
+        pickStation(field: "newTripOrigin", query: "大阪", code: "007068", lineID: loop, in: app)
+        pickStation(field: "newTripDestination", query: "天王寺", code: "007439", lineID: loop, in: app)
+        XCTAssertTrue(reveal(app.buttons["newTripCorridor-1"], in: app, timeout: 40))
+
+        // The camera frames the loop, close enough for its stations to be dots.
+        let dot = app.descendants(matching: .any)["newTripMapStation-007285"]
+        XCTAssertTrue(dot.waitForExistence(timeout: 20), "弁天町 must be a tappable dot on the map.")
+        dot.tap()
+        let addVia = app.buttons["newTripMapAddVia"]
+        XCTAssertTrue(addVia.waitForExistence(timeout: 5), "Tapping a station must offer From / Via / To.")
+        attachScreenshot("station-card", app)
+        addVia.tap()
+        XCTAssertTrue(addVia.waitForNonExistence(timeout: 5))
+        // The form may be scrolled to the route rows; the stop is listed above them.
+        XCTAssertTrue(reveal(app.descendants(matching: .any)["newTripVia-0"], in: app, upward: true),
+                      "The tapped stop must be listed between From and To.")
+        XCTAssertTrue(waitForEnabled(app.buttons["newTripSave"], timeout: 40),
+                      "The west-side stop must leave exactly one corridor.")
+        attachScreenshot("via-map", app)
+
+        // Tapping the destination mark offers removal instead of a role.
+        let mark = app.descendants(matching: .any)["newTripMapMark-007439"]
+        XCTAssertTrue(mark.waitForExistence(timeout: 5))
+        mark.tap()
+        let removeButton = app.buttons["newTripMapRemove"]
+        XCTAssertTrue(removeButton.waitForExistence(timeout: 5))
+        removeButton.tap()
+        let disabled = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "enabled == false"), object: app.buttons["newTripSave"])
+        XCTAssertEqual(XCTWaiter.wait(for: [disabled], timeout: 10), .completed,
+                       "Removing the destination must leave nothing savable.")
+    }
+
+    private func attachScreenshot(_ name: String, _ app: XCUIApplication) {
+        let shot = XCTAttachment(screenshot: app.screenshot())
+        shot.name = name
+        shot.lifetime = .keepAlways
+        add(shot)
+    }
+
     func testSwapExchangesStationsAndReplans() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchNewTrip(app)
@@ -478,7 +550,8 @@ final class NewTripUITests: XCTestCase {
     }
 
     private func pickStation(
-        field: String, query: String, code: String, lineID: String? = nil, in app: XCUIApplication
+        field: String, query: String, code: String, lineID: String? = nil,
+        expectsLabelChange: Bool = true, in app: XCUIApplication
     ) {
         let button = app.buttons[field]
         XCTAssertTrue(reveal(button, in: app, upward: true), app.debugDescription)
@@ -521,6 +594,7 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(
             app.searchFields.firstMatch.waitForNonExistence(timeout: 5),
             "Choosing \(query) must close station search.")
+        guard expectsLabelChange else { return }
         let chosen = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "label != %@", previousLabel),
             object: button)

@@ -83,7 +83,10 @@ struct StationPickerView: View {
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
     @State private var subtitleByCode: [String: String] = [:]
-    @State private var copyByCode: [String: String] = [:]
+    /// Copy text per station, filled only for rows that are actually shown.
+    /// Each label scans every same-named station in the region, so computing
+    /// all of them up front was quadratic and held the picker on its spinner.
+    @State private var copyLabels = CopyLabelMemo()
     @State private var lineLabelByID: [String: String] = [:]
     @State private var didLoad = false
     @State private var loadError: String?
@@ -137,7 +140,7 @@ struct StationPickerView: View {
             return [CatalogStationRow(
                 station: station,
                 subtitle: hit.qualifier ?? subtitleByCode[key.sourceCode] ?? "",
-                copyText: copyByCode[key.sourceCode] ?? "",
+                copyText: copyLabels.label(for: station, catalog: catalog),
                 stationID: hit.stationID)]
         }
     }
@@ -157,7 +160,7 @@ struct StationPickerView: View {
                 rows.append(CatalogStationRow(
                     station: station,
                     subtitle: qualifier ?? subtitleByCode[key.sourceCode] ?? "",
-                    copyText: copyByCode[key.sourceCode] ?? "",
+                    copyText: copyLabels.label(for: station, catalog: catalog),
                     stationID: stationID))
             }
         }
@@ -301,7 +304,7 @@ struct StationPickerView: View {
         catalog = nil
         retiredByID = [:]
         subtitleByCode = [:]
-        copyByCode = [:]
+        copyLabels = CopyLabelMemo()
         lineLabelByID = [:]
         onLoad?(nil, [], [:])
         guard let region = Region(rawValue: regionCode) else {
@@ -324,15 +327,12 @@ struct StationPickerView: View {
                     eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs), retired: directory)
                 let labels = StationLabel.lineLabels(in: catalog, regionCode: regionCode)
                 var qualifiers: [String: String] = [:]
-                var copies: [String: String] = [:]
                 for station in catalog.stations(in: regionCode) {
                     qualifiers[station.key.sourceCode] = StationLabel.text(
                         for: station, catalog: catalog, labels: labels).qualifier
-                    copies[station.key.sourceCode] = StationReferenceResolution.copyLabel(
-                        for: station, catalog: catalog)
                 }
                 let openRetired = index.eligibleRetired(directory, rideDate: rideDate, lineIDs: lineIDs)
-                return (catalog, index, directory, output, qualifiers, openRetired, labels, copies)
+                return (catalog, index, directory, output, qualifiers, openRetired, labels)
             }.value
             guard !Task.isCancelled, search.acceptsLoad(loadID),
                   search.install(index: loaded.1, retired: loaded.2, request: request,
@@ -341,7 +341,6 @@ struct StationPickerView: View {
             retiredByID = Dictionary(loaded.2.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             subtitleByCode = loaded.4
             lineLabelByID = loaded.6
-            copyByCode = loaded.7
             onLoad?(loaded.0, loaded.5, loaded.4)
             didLoad = true
             if isSearching || onlyCompany { search.apply(query: searchText, companyName: companyName) }
@@ -543,3 +542,18 @@ struct StationQualifierCaption: View {
     }
 }
 
+
+/// Memoized `StationReferenceResolution.copyLabel` results for one loaded
+/// catalog. A reference type so filling it while rendering does not count as
+/// a state change.
+@MainActor
+final class CopyLabelMemo {
+    private var labels: [String: String] = [:]
+
+    func label(for station: CatalogStation, catalog: EditorCatalog) -> String {
+        if let known = labels[station.key.sourceCode] { return known }
+        let label = StationReferenceResolution.copyLabel(for: station, catalog: catalog)
+        labels[station.key.sourceCode] = label
+        return label
+    }
+}
