@@ -82,6 +82,10 @@ final class JourneySaveUITests: XCTestCase {
     func testNewJourneyGroupNameCanBeEditedAfterReturningFromConfirmation() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Group test"))
+        // The group is one of the details, collapsed until asked for.
+        let more = app.buttons["newTripMoreDetails"]
+        XCTAssertTrue(EditorUITestSupport.reveal(more, in: app, unmountedRowIsAbove: false), app.debugDescription)
+        more.tap()
         let create = app.buttons["createJourneyGroup"]
         XCTAssertTrue(EditorUITestSupport.reveal(create, in: app), app.debugDescription)
         XCTAssertTrue(create.waitForExistence(timeout: 8))
@@ -100,7 +104,8 @@ final class JourneySaveUITests: XCTestCase {
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         EditorUITestSupport.tap(origin, in: app)
         XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
-        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
+        // The stop screen's back button, whatever its title.
+        app.navigationBars.buttons.element(boundBy: 0).tap()
 
         XCTAssertTrue(EditorUITestSupport.reveal(name, in: app), app.debugDescription)
         XCTAssertTrue(name.waitForExistence(timeout: 5))
@@ -202,9 +207,13 @@ final class JourneySaveUITests: XCTestCase {
         let row = app.buttons["newTripStation-\(lineID)-\(code)"]
         // Name search lists one row per line. A shared name can still sit below
         // earlier sections, so scroll the lazy list until that line's row exists.
+        // Same scrolling as NewTripUITests: short drags through the lazy list,
+        // since a station deep in a long result list mounts only on screen.
         var swipes = 0
-        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.4), swipes < 12 {
-            app.swipeUp()
+        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 40 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+                .press(forDuration: 0.05,
+                       thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2)))
             swipes += 1
         }
         XCTAssertTrue(row.exists, "No newTripStation-\(lineID)-\(code) for \(query). \(app.debugDescription)")
@@ -230,7 +239,7 @@ final class JourneySaveUITests: XCTestCase {
         guard keyboard.exists else { return }
         for label in ["Search", "検索"] {
             let key = keyboard.buttons[label]
-            if key.exists {
+            if key.exists, key.isHittable {
                 key.tap()
                 break
             }
@@ -344,7 +353,7 @@ final class JourneySaveUITests: XCTestCase {
         guard keyboard.exists else { return }
         for label in ["Return", "Done", "Search", "検索"] {
             let key = keyboard.buttons[label]
-            if key.exists {
+            if key.exists, key.isHittable {
                 key.tap()
                 break
             }

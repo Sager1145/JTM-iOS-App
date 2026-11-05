@@ -155,6 +155,16 @@ struct JourneyEditorView: View {
     /// Header values before a timetable was applied, restored by Remove.
     @State private var headerBeforeTimetable: HeaderSnapshot?
     @State private var removal: RemovalRequest?
+    /// Passenger direction per line stretch of the route on screen. Read
+    /// from the route, never typed.
+    @State private var directionLegs: [TravelDirection.Leg] = []
+    @State private var showsBoundForEntry = false
+    @State private var showsVehiclePicker = false
+    /// Platforms typed before the route has stops of its own (a new trip);
+    /// written onto the ride's first and last stop when it is saved.
+    @State private var pendingDeparturePlatform: Int?
+    @State private var pendingArrivalPlatform: Int?
+    @State private var boundForDraft = ""
     @State private var detailsExpanded: Bool
     /// The draft's stops are the route: a saved journey, or a completion the
     /// reader applied. False only for a new trip still choosing its route.
@@ -180,7 +190,9 @@ struct JourneyEditorView: View {
         self.onSave = onSave
         _draft = State(initialValue: train)
         _hasRecordRoute = State(initialValue: !isNew)
-        _detailsExpanded = State(initialValue: !isNew)
+        // Collapsed until asked for: its lookups (the official English name
+        // reads the timetable database) are work a route edit does not need.
+        _detailsExpanded = State(initialValue: false)
         _region = State(initialValue: Region(rawValue: train.region ?? "") ?? Region.resolved(train))
         let seeded = EditorSeed(train: train, isNew: isNew)
         _seed = State(initialValue: seeded)
@@ -256,10 +268,16 @@ struct JourneyEditorView: View {
             if pause != nil { mapFitRevision += 1 }
         }
         .onChange(of: showsRecordRoute) { _, _ in refreshDrawnRoutes() }
+        .task(id: directionKey) { await loadDirections() }
         // Closing the editor stops a running repair search at once.
         .onDisappear { repair.cancel() }
         .sheet(isPresented: $showsFillDetails) {
             fillDetailsSheet
+        }
+        .sheet(isPresented: $showsVehiclePicker) {
+            VehiclePickerView(
+                vehicleType: $draft.vehicleType,
+                suggestions: vehicleSuggestions)
         }
         .sheet(item: $picking) { field in
             if let catalog {
@@ -462,7 +480,8 @@ struct JourneyEditorView: View {
 
     /// Leaving asks only when Save would write something.
     private var isDirty: Bool {
-        if draft != train || timetableTrain != nil || riddenOverride != nil { return true }
+        if draft != train || timetableTrain != nil || riddenOverride != nil
+            || pendingDeparturePlatform != nil || pendingArrivalPlatform != nil { return true }
         if trainType != seed.trainType || trainNumber != seed.number || companyName != seed.company
             || departure != seed.departure || arrival != seed.arrival { return true }
         if hasRecordRoute { return routeEdited }
@@ -880,7 +899,8 @@ struct JourneyEditorView: View {
             mark(via.station, role: .via(index), id: "via-\(via.id.uuidString)")
         }
         if let destination { mark(destination, role: .destination, id: "destination") }
-        return TripMapContent(routes: drawnRoutes, marks: marks, fitRevision: mapFitRevision)
+        return TripMapContent(
+            routes: drawnRoutes, marks: marks, arrows: directionArrows, fitRevision: mapFitRevision)
     }
 
     private func mapRoute(id: String, pieces: [TripRouteGeometry.Piece], selected: Bool) -> TripMapContent.Route {
@@ -1056,6 +1076,89 @@ struct JourneyEditorView: View {
     /// One entry for every source that can fill in this trip: timetable
     /// matches, the full timetable, the line's service types, and ChatGPT
     /// or pasted text. What was applied stays visible here.
+    /// The ride's first and last stop: the saved stops, or values held until
+    /// a new route has stops to put them on.
+    private var departurePlatform: Binding<Int?> {
+        showsRecordRoute && !draft.stops.isEmpty
+            ? Binding(get: { draft.stops.first?.platformNumber },
+                      set: { if !draft.stops.isEmpty { draft.stops[0].platformNumber = $0 } })
+            : $pendingDeparturePlatform
+    }
+
+    private var arrivalPlatform: Binding<Int?> {
+        showsRecordRoute && draft.stops.count >= 2
+            ? Binding(get: { draft.stops.last?.platformNumber },
+                      set: { if draft.stops.count >= 2 { draft.stops[draft.stops.count - 1].platformNumber = $0 } })
+            : $pendingArrivalPlatform
+    }
+
+    private var missingDetails: MissingTripDetails {
+        MissingTripDetails(
+            train: showsRecordRoute ? draft : { var t = draft; t.stops = []; return t }(),
+            departurePlatform: departurePlatform.wrappedValue,
+            arrivalPlatform: arrivalPlatform.wrappedValue)
+    }
+
+    private func missingText(_ missing: MissingTripDetails) -> String {
+        var parts: [String] = []
+        if missing.vehicleType { parts.append(localization.text("ios.editor.vehicleType")) }
+        if missing.platformCount > 0 {
+            parts.append(text("missingPlatforms", fallback: "{count} platforms",
+                              ["count": .string(String(missing.platformCount))]))
+        }
+        return text("needsDetails", fallback: "Still missing: {items}",
+                    ["items": .string(parts.joined(separator: " · "))])
+    }
+
+    /// Hand entry for what no source filled: vehicle type and the two
+    /// platforms that matter most. Other stops' platforms are on their rows.
+    @ViewBuilder private var manualEntryRows: some View {
+        let missing = missingDetails
+        if !missing.isEmpty {
+            Label(missingText(missing), systemImage: "square.and.pencil")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .accessibilityIdentifier("newTripNeedsDetails")
+        }
+        Button { showsVehiclePicker = true } label: {
+            LabeledContent(localization.text("ios.editor.vehicleType")) {
+                Text(draft.vehicleType.flatMap { $0.isEmpty ? nil : $0 }
+                     ?? text("vehicleAdd", fallback: "Add"))
+                    .foregroundStyle(missing.vehicleType ? Color.accentColor : Color.primary)
+            }
+            .frame(minHeight: 44)
+        }
+        .accessibilityIdentifier("newTripVehicleType")
+        HStack {
+            Text(text("platforms", fallback: "Platforms"))
+            Spacer()
+            Text(text("departureShort", fallback: "Dep.")).font(.caption).foregroundStyle(.secondary)
+            PlatformEntryBadge(platform: departurePlatform, identifier: "newTripDeparturePlatform")
+            Text(text("arrivalShort", fallback: "Arr.")).font(.caption).foregroundStyle(.secondary)
+            PlatformEntryBadge(platform: arrivalPlatform, identifier: "newTripArrivalPlatform")
+        }
+    }
+
+    /// The applied timetable's own vehicle first, then the reader's history.
+    private var vehicleSuggestions: [String] {
+        var base = draft
+        if let timetableTrain { base.routeSections = timetableTrain.routeSections }
+        else if routeEdited, let corridor = selectedCorridor { base.routeSections = corridor.choice.routeSections }
+        var values = VehiclePickerView.suggestions(for: base, among: suggestionTrains)
+        if let official = timetableTrain?.vehicleType, !official.isEmpty, !values.contains(official) {
+            values.insert(official, at: 0)
+        }
+        return values
+    }
+
+    /// Platforms typed before the route existed go onto the saved ride's ends.
+    private func applyPendingPlatforms(to result: inout Train, span: ClosedRange<Int>? = nil) {
+        guard result.stops.count >= 2 else { return }
+        let range = span ?? 0...(result.stops.count - 1)
+        if let pendingDeparturePlatform { result.stops[range.lowerBound].platformNumber = pendingDeparturePlatform }
+        if let pendingArrivalPlatform { result.stops[range.upperBound].platformNumber = pendingArrivalPlatform }
+    }
+
     private var tripDetailsSection: some View {
         Section {
             Button { showsFillDetails = true } label: {
@@ -1084,6 +1187,7 @@ struct JourneyEditorView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("newTripTimetableApplied")
             }
+            manualEntryRows
         } header: {
             Text(text("tripDetails", fallback: "Trip details"))
         } footer: {
@@ -1135,6 +1239,17 @@ struct JourneyEditorView: View {
                 } footer: {
                     Text(text("completeWithTextNote",
                               fallback: "Review every proposed change before it is applied."))
+                }
+                // Whatever no source filled is entered by hand in the editor.
+                let missing = missingDetails
+                if !missing.isEmpty {
+                    Section {
+                        Text(missingText(missing)).font(.footnote)
+                        Button(text("enterByHand", fallback: "Enter the rest by hand")) {
+                            showsFillDetails = false
+                        }
+                        .accessibilityIdentifier("newTripFillDetailsByHand")
+                    }
                 }
             }
             .navigationTitle(text("fillDetails", fallback: "Fill in trip details"))
@@ -1521,9 +1636,164 @@ struct JourneyEditorView: View {
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            directionRows
         } header: {
             Text(text("route", fallback: "Route"))
         }
+    }
+
+    // MARK: - direction
+
+    /// What decides the legs: the route on screen, not every render's draft.
+    private struct DirectionKey: Equatable {
+        var stops: [String?]
+        var sections: [RouteSection]
+        var loaded: Bool
+    }
+
+    /// The route the direction is read from: the saved route, the chosen
+    /// corridor, or the applied timetable. Built only when its key changes.
+    private var directionSource: Train? {
+        if let timetableTrain { return timetableResult(timetableTrain) }
+        if routeEdited { return selectedCorridor.flatMap(corridorDraft(for:)) }
+        return draft
+    }
+
+    private var directionKey: DirectionKey {
+        // Cheap inputs only; the source train itself is built in the task.
+        DirectionKey(
+            stops: (timetableTrain?.stops ?? (routeEdited ? [] : draft.stops)).map(\.n02StationCode)
+                + [selectedCorridorID, routeEdited ? "edited" : nil],
+            sections: timetableTrain?.routeSections ?? (routeEdited ? [] : draft.routeSections ?? []),
+            loaded: package != nil)
+    }
+
+    private func loadDirections() async {
+        guard let package, let source = directionSource, source.stops.count >= 2 else {
+            directionLegs = []
+            return
+        }
+        let legs = await Task.detached(priority: .utility) {
+            (try? TravelDirection.legs(train: source, package: package)) ?? []
+        }.value
+        guard !Task.isCancelled else { return }
+        directionLegs = legs
+    }
+
+    /// The reader's 方面, from the record's direction field. A stored
+    /// up/down word is a direction, not a 方面, and is not shown here.
+    private var boundFor: String? {
+        let value = draft.direction?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return value.isEmpty || ["up", "down", "unknown"].contains(value) ? nil : value
+    }
+
+    private func directionWord(_ direction: TravelDirection.Direction?) -> String {
+        switch direction {
+        case .up: localization.text("ios.direction.up")
+        case .down: localization.text("ios.direction.down")
+        case nil: text("directionUnknown", fallback: "Direction not known")
+        }
+    }
+
+    private func boundForText(_ name: String) -> String {
+        text("boundFor", fallback: "Toward {name}", ["name": .string(name)])
+    }
+
+    /// Suggestions only. Nothing is written until the reader picks one.
+    private var boundForSuggestions: [String] {
+        var names = directionLegs.reversed().compactMap(\.terminalName)
+        if let last = (directionSource ?? draft).stops.last?.name { names.insert(last, at: 0) }
+        var seen: Set<String> = []
+        return names.filter { !$0.isEmpty && seen.insert($0).inserted }
+    }
+
+    @ViewBuilder private var directionRows: some View {
+        ForEach(Array(directionLegs.enumerated()), id: \.offset) { index, leg in
+            HStack(spacing: 10) {
+                Image(systemName: leg.direction == .up ? "arrow.up.circle.fill"
+                      : leg.direction == .down ? "arrow.down.circle.fill" : "questionmark.circle")
+                    .foregroundStyle(leg.direction == nil ? Color.secondary : Color.accentColor)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(directionWord(leg.direction))
+                        .font(.subheadline.weight(.semibold))
+                    if let line = leg.lineID.flatMap(lineName(for:)) {
+                        Text(line).font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+                Spacer(minLength: 8)
+                if index == directionLegs.count - 1, let boundFor {
+                    Text(boundForText(boundFor)).font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("newTripDirection-\(index)")
+        }
+        if !directionLegs.isEmpty || boundFor != nil {
+            Menu {
+                ForEach(boundForSuggestions, id: \.self) { name in
+                    Button(boundForText(name)) { draft.direction = name }
+                }
+                Button(text("boundForOther", fallback: "Other…")) {
+                    boundForDraft = boundFor ?? ""
+                    showsBoundForEntry = true
+                }
+                if boundFor != nil {
+                    Button(text("boundForClear", fallback: "Clear"), role: .destructive) { draft.direction = nil }
+                }
+            } label: {
+                LabeledContent(text("boundForTitle", fallback: "方面")) {
+                    Text(boundFor.map(boundForText) ?? text("boundForChoose", fallback: "Choose"))
+                        .foregroundStyle(boundFor == nil ? .secondary : .primary)
+                }
+                .frame(minHeight: 44)
+            }
+            .accessibilityIdentifier("newTripBoundFor")
+            .alert(text("boundForTitle", fallback: "方面"), isPresented: $showsBoundForEntry) {
+                TextField(text("boundForTitle", fallback: "方面"), text: $boundForDraft)
+                Button(localization.text("ios.done", fallback: "Done")) {
+                    let value = boundForDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+                    draft.direction = value.isEmpty ? nil : value
+                }
+                Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {}
+            }
+        }
+    }
+
+    private func lineName(for id: String) -> String? {
+        lineLabelByID[id] ?? package?.lines.first(where: { $0.id == id })?.name
+    }
+
+    /// One arrow per leg, at the middle of that leg's line on the chosen
+    /// route, pointing the way the trip runs.
+    private var directionArrows: [TripMapContent.Arrow] {
+        guard !directionLegs.isEmpty,
+              let route = drawnRoutes.first(where: \.isSelected) else { return [] }
+        let pieces = route.pieces.filter { !$0.isConnector && $0.coordinates.count >= 2 }
+        var arrows: [TripMapContent.Arrow] = []
+        var used = 0
+        for (index, leg) in directionLegs.enumerated() where leg.direction != nil {
+            guard used < pieces.count else { break }
+            let piece = pieces[used]
+            used += 1
+            let coordinates = piece.coordinates
+            let middle = coordinates.count / 2
+            let a = coordinates[max(0, middle - 1)]
+            let b = coordinates[min(coordinates.count - 1, max(middle, 1))]
+            var label = directionWord(leg.direction)
+            if index == directionLegs.count - 1, let boundFor { label += " · " + boundForText(boundFor) }
+            arrows.append(.init(id: String(index), coordinate: a, bearing: bearing(a, b), label: label))
+        }
+        return arrows
+    }
+
+    private func bearing(_ a: CLLocationCoordinate2D, _ b: CLLocationCoordinate2D) -> Double {
+        let lat1 = a.latitude * .pi / 180
+        let lat2 = b.latitude * .pi / 180
+        let dLon = (b.longitude - a.longitude) * .pi / 180
+        let y = sin(dLon) * cos(lat2)
+        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
+        return atan2(y, x) * 180 / .pi
     }
 
     @ViewBuilder private func routeOutcome(_ outcome: TripRoutePlanner.Outcome) -> some View {
@@ -2052,7 +2322,9 @@ struct JourneyEditorView: View {
         let rideDate = dayString(departure)
         let viaCodes = vias.map(\.station.key.sourceCode)
         let trainType = trainType
-        let operatorName = companyName.isEmpty
+        // Only an operator the catalog names filters the search. A saved
+        // journey's company text ("A・B" for a through service) does not.
+        let operatorName = companyName.isEmpty || !companyOptions.contains(companyName)
             ? nil
             : (packageOperatorByDisplayName[companyName] ?? companyName)
         let worker = Task.detached(priority: .userInitiated) {
@@ -2175,6 +2447,7 @@ struct JourneyEditorView: View {
         var result: Train
         if let timetableTrain {
             result = timetableResult(timetableTrain)
+            applyPendingPlatforms(to: &result, span: timetableRideSpan)
         } else if routeEdited {
             guard let corridor = selectedCorridor, let drafted = corridorDraft(for: corridor) else {
                 autofillFailed = true
@@ -2186,13 +2459,13 @@ struct JourneyEditorView: View {
                 return
             }
             result = drafted
+            applyPendingPlatforms(to: &result)
         } else {
             result = draft
             // An untouched legacy record keeps having no region field.
             if train.region != nil || region != Region.resolved(train) { result.region = region.code }
             applyHeader(to: &result)
         }
-        inferDirection(&result)
         let blocking = RideDraftValidation.issues(
             for: result, originalID: train.id, existingIDs: itineraries?.trainIDs ?? []).blocking
         guard blocking.isEmpty else {
@@ -2293,15 +2566,6 @@ struct JourneyEditorView: View {
             [.day], from: calendar.startOfDay(for: seed.departure),
             to: calendar.startOfDay(for: departure)).day ?? 0
         return saved.flatMap { Dates.addDays($0, moved) } ?? dayString(departure)
-    }
-
-    /// Fills an empty direction from the route, the way the record was always saved.
-    private func inferDirection(_ result: inout Train) {
-        let current = result.direction?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        // A direction the reader cleared stays cleared.
-        guard current.isEmpty, draft.direction == train.direction, let package,
-              let inferred = try? TravelDirection.infer(train: result, package: package) else { return }
-        result.direction = inferred.direction.rawValue
     }
 
     /// Recorded stops of a saved journey that this corridor does not pass.

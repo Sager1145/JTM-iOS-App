@@ -251,5 +251,73 @@ enum NewTripStrings {
             .en: "Tap a station on the map, or search", .ja: "地図で駅をタップするか、検索します",
             .zhHant: "在地圖上點選車站，或搜尋", .zhHans: "在地图上点选车站，或搜索",
         ],
+        "ios.newTrip.directionUnknown": [
+            .en: "Direction not known", .ja: "方向不明",
+            .zhHant: "方向未知", .zhHans: "方向未知",
+        ],
+        "ios.newTrip.boundFor": [
+            .en: "Toward {name}", .ja: "{name}方面",
+            .zhHant: "{name}方向", .zhHans: "{name}方向",
+        ],
+        "ios.newTrip.boundForTitle": [
+            .en: "Bound for", .ja: "方面",
+            .zhHant: "方向", .zhHans: "方向",
+        ],
+        "ios.newTrip.boundForChoose": [
+            .en: "Choose", .ja: "選択",
+            .zhHant: "選擇", .zhHans: "选择",
+        ],
+        "ios.newTrip.boundForOther": [
+            .en: "Other…", .ja: "その他…",
+            .zhHant: "其他…", .zhHans: "其他…",
+        ],
+        "ios.newTrip.boundForClear": [
+            .en: "Clear", .ja: "クリア",
+            .zhHant: "清除", .zhHans: "清除",
+        ],
+        "ios.newTrip.platformAdd": [
+            .en: "+ Platform", .ja: "+ 番線",
+            .zhHant: "+ 月台", .zhHans: "+ 站台",
+        ],
+        "ios.newTrip.platformOther": [
+            .en: "Other", .ja: "その他",
+            .zhHant: "其他", .zhHans: "其他",
+        ],
+        "ios.newTrip.platformClear": [
+            .en: "Clear", .ja: "クリア",
+            .zhHant: "清除", .zhHans: "清除",
+        ],
+        "ios.newTrip.vehicleSuggestions": [
+            .en: "Suggestions", .ja: "候補",
+            .zhHant: "建議", .zhHans: "建议",
+        ],
+        "ios.newTrip.vehicleAdd": [
+            .en: "Add", .ja: "追加",
+            .zhHant: "新增", .zhHans: "添加",
+        ],
+        "ios.newTrip.missingPlatforms": [
+            .en: "{count} platforms", .ja: "番線 {count} 件",
+            .zhHant: "{count} 個月台", .zhHans: "{count} 个站台",
+        ],
+        "ios.newTrip.needsDetails": [
+            .en: "Still missing: {items}", .ja: "未入力：{items}",
+            .zhHant: "尚未填寫：{items}", .zhHans: "尚未填写：{items}",
+        ],
+        "ios.newTrip.platforms": [
+            .en: "Platforms", .ja: "番線",
+            .zhHant: "月台", .zhHans: "站台",
+        ],
+        "ios.newTrip.departureShort": [
+            .en: "Dep.", .ja: "発",
+            .zhHant: "發", .zhHans: "发",
+        ],
+        "ios.newTrip.arrivalShort": [
+            .en: "Arr.", .ja: "着",
+            .zhHant: "到", .zhHans: "到",
+        ],
+        "ios.newTrip.enterByHand": [
+            .en: "Enter the rest by hand", .ja: "残りを手入力する",
+            .zhHant: "其餘手動填寫", .zhHans: "其余手动填写",
+        ],
     ]
 }

@@ -79,6 +79,7 @@ struct JourneyEditorDetails: View {
                     .accessibilityIdentifier("rideEditorAutoFilledStationsNote")
             }
             ForEach(draft.stops.indices, id: \.self) { index in
+                HStack(spacing: 8) {
                 NavigationLink {
                     StopEditorView(
                         stop: editableStop(index), journeyDate: $draft.date,
@@ -93,6 +94,13 @@ struct JourneyEditorDetails: View {
                     }
                 }
                 .accessibilityIdentifier("rideEditorStop-\(index)")
+                // The platform is entered here, without opening the stop.
+                PlatformEntryBadge(
+                    platform: Binding(
+                        get: { draft.stops.indices.contains(index) ? draft.stops[index].platformNumber : nil },
+                        set: { if draft.stops.indices.contains(index) { draft.stops[index].platformNumber = $0 } }),
+                    identifier: "rideEditorStopPlatformBadge-\(index)")
+                }
                 issueRows(.stop(index))
             }
         } header: {
@@ -164,14 +172,6 @@ struct JourneyEditorDetails: View {
                 Text(localization.text("ios.editor.officialEnglishNameUnavailable"))
                     .font(.footnote).foregroundStyle(.secondary)
             }
-            EditorTextField(
-                title: localization.countryText("field.direction", fallback: "Direction"),
-                text: optionalText(\.direction))
-                .accessibilityIdentifier("rideEditorDirection")
-            EditorTextField(
-                title: localization.text("ios.editor.vehicleType"),
-                text: optionalText(\.vehicleType))
-                .accessibilityIdentifier("rideEditorVehicleType")
         } header: {
             Text(localization.text("ios.editor.serviceDetails"))
         }

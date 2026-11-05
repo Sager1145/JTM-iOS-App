@@ -96,6 +96,7 @@
         "ios/RailMap/JourneyEditor/JourneyCompletionView.swift",
         "ios/RailMap/JourneyEditor/JourneyEditing.swift",
         "ios/RailMap/JourneyEditor/JourneyEditorDetails.swift",
+        "ios/RailMap/JourneyEditor/JourneyEditorManualEntry.swift",
         "ios/RailMap/JourneyEditor/JourneyEditorSeed.swift",
         "ios/RailMap/JourneyEditor/JourneyEditorView.swift",
         "ios/RailMap/JourneyEditor/LocalLineServicesSection.swift",

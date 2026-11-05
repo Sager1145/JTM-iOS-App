@@ -14,7 +14,8 @@ final class RailwayRouteEntryUITests: XCTestCase {
     func testSavedJourneyOpensWithItsRouteAndSavesWithoutReplanning() {
         let app = launchSeededEditor()
         let savedRoute = app.descendants(matching: .any)["newTripSavedRoute"].firstMatch
-        XCTAssertTrue(savedRoute.waitForExistence(timeout: 30),
+        XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
+        XCTAssertTrue(EditorUITestSupport.reveal(savedRoute, in: app, unmountedRowIsAbove: false),
                       "A saved journey must open with its saved route. \(app.debugDescription)")
         XCTAssertFalse(app.buttons["newTripCorridor-0"].exists,
                        "An untouched saved route must not be replanned.")
@@ -36,9 +37,11 @@ final class RailwayRouteEntryUITests: XCTestCase {
 
     func testChangingTheDestinationReplansOnTheMapAndCancelKeepsTheSavedJourney() {
         let app = launchSeededEditor()
-        XCTAssertTrue(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch
-            .waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
+        XCTAssertTrue(EditorUITestSupport.reveal(
+            app.descendants(matching: .any)["newTripSavedRoute"].firstMatch, in: app, unmountedRowIsAbove: false))
         let destination = app.buttons["newTripDestination"]
+        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app, unmountedRowIsAbove: true))
         XCTAssertTrue(waitForEnabled(destination, timeout: 20))
         destination.tap()
         let search = app.searchFields.firstMatch

@@ -11,7 +11,6 @@
 		01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE68E0947AD261729EDC07C /* MileageStatisticsStore.swift */; };
 		047416FC378551E250D9AEF2 /* ControlSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120479A5E14CB2416DCCD6C /* ControlSizing.swift */; };
 		04E42FE7F85CC954178C489C /* RailNetworkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61912458F249FE1872C23B /* RailNetworkStore.swift */; };
-		078DF31E30FA6D3B6614BE6E /* RailwayRouteGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C58551D415ECDC942AB8121 /* RailwayRouteGuideView.swift */; };
 		08D6035E713410DAC2261D98 /* ShareCardRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF4807AD659ABAB52B5B650 /* ShareCardRendering.swift */; };
 		0B472D15EB446A3FFBB029BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1270C2F6F2C12D8A0CC57F /* Assets.xcassets */; };
 		0D308CD245C0D0F7D533B0E8 /* DiagnosticTaskCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409427DA6DEFF3A53ACF78 /* DiagnosticTaskCommands.swift */; };
@@ -73,7 +72,11 @@
 		41D9E5EE4DE93994693B2A5F /* WorkspaceDerived.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92C6BC62194DB632EC5684 /* WorkspaceDerived.swift */; };
 		44468BFC4E550089B66B9331 /* TransferGuideImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A70A704D1CA23E31C167E /* TransferGuideImport.swift */; };
 		447022439834CCC7557F0C5C /* StationNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60DEC98580B467940BB89A9 /* StationNaming.swift */; };
-		455F38409EF4DE83B2842005 /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D6797090996DD093DD0E4 /* NewTripView.swift */; };
+		455F38409EF4DE83B2842005 /* JourneyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D6797090996DD093DD0E4 /* JourneyEditorView.swift */; };
+		A1D7C0DE0000000000000001 /* JourneyEditorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001001 /* JourneyEditorDetails.swift */; };
+		A1D7C0DE0000000000000002 /* JourneyEditorSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */; };
+		A1D7C0DE0000000000000003 /* RouteRepairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001003 /* RouteRepairController.swift */; };
+		A1D7C0DE0000000000000004 /* JourneyEditorManualEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */; };
 		A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE00000000000000F1 /* TripMapView.swift */; };
 		4643E4B9E7B9636244738E6A /* TimetableRouteEvidence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8714C78DD769D4024644D6C0 /* TimetableRouteEvidence.swift */; };
 		49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397697865248E6D4DF39FDA /* InspectorMap.swift */; };
@@ -143,14 +146,12 @@
 		889B090409BD1BB6AD355B57 /* ChatGPTSubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BA3036E38A046B4C00C235 /* ChatGPTSubscriptionService.swift */; };
 		89ACB296A7F253927BF2DF2C /* TimetableQuickMatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333379484BA2846479A6D978 /* TimetableQuickMatchController.swift */; };
 		8B46548573B2E04B8390778B /* StatisticsFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD85C98C65724669DCE47BBB /* StatisticsFormatting.swift */; };
-		8BDF6CFE546BDF4B2E18AFBA /* RailwayRouteCorrectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9357088E6AA1A9E8D09E2 /* RailwayRouteCorrectionView.swift */; };
 		8CC67A2501557D2A80BD6A36 /* WorkspaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E89AF741F770E6C3A32E73 /* WorkspaceLayout.swift */; };
 		92E982B6F3BCB3B8764D5D94 /* DiagnosticSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769A5542DEAB647351054521 /* DiagnosticSession.swift */; };
 		96B02AF1CED445DD569CA0C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85BD81A553EA653F38A063D0 /* Assets.xcassets */; };
 		99862E43567EA9B5324BDF47 /* MapInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB60E315DE163EC7455D85 /* MapInfoView.swift */; };
 		99C77BBCBC0259CDC1B881BD /* StatisticsDashboardContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B07EAFAE11DB99ED91EAE5 /* StatisticsDashboardContent.swift */; };
 		9A027A093ED90E63D9E26999 /* StatsWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D20B61C1F8C92B5A85147 /* StatsWidgetView.swift */; };
-		9A5C579E5218BF4AE6ED5535 /* RideEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C47B257CBF87D3D1A833771 /* RideEditorView.swift */; };
 		9ABA5AC344FEF74B712AC61B /* MapRenderDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977AF579EE91719C9FA82AF /* MapRenderDiagnostics.swift */; };
 		9B45E9E201B42A66320986A2 /* JourneyStationAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBA700E3D01CB29BF4938C /* JourneyStationAliases.swift */; };
 		9C42E08A0B26477D5026F65E /* PassportTicketFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3ECF4DA4A81B2E9A0E3E75 /* PassportTicketFace.swift */; };
@@ -162,7 +163,6 @@
 		9E8CBF02DBAAB8740AE6A44B /* MapIndependentRailPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F7C8E7B785096CB27FB37 /* MapIndependentRailPrototype.swift */; };
 		9EF860A675AA803812B7E6BC /* InspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD7747676A0C4AE24982604 /* InspectorApp.swift */; };
 		A11D9B2EC3D9853CED65D22C /* ClockStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D3961A4DC61FA3CCC5DF8E /* ClockStrings.swift */; };
-		A1CEB91678EA52E3FD268E93 /* RouteRepairFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29004C6139A86259766332C /* RouteRepairFlow.swift */; };
 		A24D4DB88CFEDC7DEE536BCA /* StatisticsArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18900C74B31E7523C67E8045 /* StatisticsArea.swift */; };
 		A34EBCC575CE2968A253597C /* EdgeIndexCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412C3204B1B28C09165A353F /* EdgeIndexCache.swift */; };
 		A424C37D8D437FA3195AB48A /* tabata-reference.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 4CCEC62379C3256F4EA4E1E8 /* tabata-reference.geojson */; };
@@ -175,10 +175,8 @@
 		AD8BA2981C8C453DFB9094E2 /* DisplaySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781F968AF39E0D8BB80342E2 /* DisplaySettings.swift */; };
 		AEA2B92C108899B126E78897 /* StationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */; };
 		AFA70A0C969C96030FF55236 /* ServicePatternPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D381153823961DCA716334A /* ServicePatternPickerView.swift */; };
-		B01EB1445D718DD0F5B22F1E /* RoutePolicyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A53A2BB404434E4B09985CC /* RoutePolicyEditorView.swift */; };
 		B14D33C9F5A4B0C6011A7389 /* TransferGuideStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A30B8C7B8469A034DD5D639 /* TransferGuideStrings.swift */; };
 		B45BF0910337040B23481158 /* RouteGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC5BEE01933F2C513461D7 /* RouteGlyph.swift */; };
-		B4D50034CF1DEFE54F0B6032 /* RouteSectionEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C844EAA0933BDDAA0786A07 /* RouteSectionEditorView.swift */; };
 		B55EB01CE5A92E032F85F389 /* RailInspection in Frameworks */ = {isa = PBXBuildFile; productRef = 2E98BDEC4045553BA120B100 /* RailInspection */; };
 		B946F8A49F03FA17BFCA8FDE /* StationPlaceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8E69B0BAEAC80141948F06 /* StationPlaceStore.swift */; };
 		BC02E920F899C7C5F0C6969F /* RailPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 8408FFC851C4D081A3EF28C1 /* RailPresentation */; };
@@ -238,7 +236,6 @@
 		ED7EC81EA955E1FEC5638F81 /* RouteWorkbenchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC75263215445466B0701D /* RouteWorkbenchView.swift */; };
 		EDF1F11B956F8CC87FEB82DC /* TimetableQuickMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB534E1906F2103F8B9FE0 /* TimetableQuickMatchView.swift */; };
 		EEB18AAD3DE8CD8AF5BED875 /* WorkbenchCore in Frameworks */ = {isa = PBXBuildFile; productRef = BC11C4DB74BABA0100F3F0C7 /* WorkbenchCore */; };
-		EF9B25FDA125664C62DC31CE /* LocalJourneyFillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F0B87D2D94136030A90FA1 /* LocalJourneyFillView.swift */; };
 		F150C9C9B0C6F9C230154898 /* JourneyComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5C2CA552CEF1DBBDC2E1D7 /* JourneyComponents.swift */; };
 		F201B04DDDC70995BC1BC97E /* JourneyEditorLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1187976A533BD8F191EE8114 /* JourneyEditorLaunch.swift */; };
 		F3A9C32380D396BF26F9AEBB /* MapEndpointLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A379428107FF5C98EE5A5C42 /* MapEndpointLabels.swift */; };
@@ -303,10 +300,8 @@
 		393D82E85B02D210F9D17141 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		39DC9072A7D2FA25F72E5320 /* StatisticsScopePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScopePicker.swift; sourceTree = "<group>"; };
 		39E5F7D44D7570CEF8B1A442 /* Unifont.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Unifont.otf; sourceTree = "<group>"; };
-		3A53A2BB404434E4B09985CC /* RoutePolicyEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePolicyEditorView.swift; sourceTree = "<group>"; };
 		3A96E0A6DF1F0E5F67B275A7 /* WorkbenchCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WorkbenchCore; path = ../ThroughWorkbench/WorkbenchCore; sourceTree = SOURCE_ROOT; };
 		3B086C40A5B15D428874113E /* RidePersistenceQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RidePersistenceQueue.swift; sourceTree = "<group>"; };
-		3C47B257CBF87D3D1A833771 /* RideEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideEditorView.swift; sourceTree = "<group>"; };
 		3C5185DD10291284E08FF728 /* EditorLineSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineSearchView.swift; sourceTree = "<group>"; };
 		3CA4189CC9B7527A3B615B20 /* MapStationLabelCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationLabelCoordinator.swift; sourceTree = "<group>"; };
 		3DCBA700E3D01CB29BF4938C /* JourneyStationAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyStationAliases.swift; sourceTree = "<group>"; };
@@ -317,7 +312,6 @@
 		41BF34EA7764989ACDAEB702 /* EditorBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorBindings.swift; sourceTree = "<group>"; };
 		42A1BA5672DA3C9BD99C4E79 /* TransferGuideImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferGuideImportView.swift; sourceTree = "<group>"; };
 		444A70A704D1CA23E31C167E /* TransferGuideImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferGuideImport.swift; sourceTree = "<group>"; };
-		45F0B87D2D94136030A90FA1 /* LocalJourneyFillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJourneyFillView.swift; sourceTree = "<group>"; };
 		4610709E922C93AA4D822234 /* StationPickerSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPickerSearchController.swift; sourceTree = "<group>"; };
 		46B1C2FAC06ED5378A0EAE83 /* MapNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNaming.swift; sourceTree = "<group>"; };
 		473976D4A7CCB6AE0F1A4ACA /* RideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideStorage.swift; sourceTree = "<group>"; };
@@ -328,7 +322,6 @@
 		4A9D5244F001F5CCB511D102 /* ShareComposerDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareComposerDrag.swift; sourceTree = "<group>"; };
 		4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCardView.swift; sourceTree = "<group>"; };
 		4B8E69B0BAEAC80141948F06 /* StationPlaceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPlaceStore.swift; sourceTree = "<group>"; };
-		4C844EAA0933BDDAA0786A07 /* RouteSectionEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSectionEditorView.swift; sourceTree = "<group>"; };
 		4CCEC62379C3256F4EA4E1E8 /* tabata-reference.geojson */ = {isa = PBXFileReference; path = "tabata-reference.geojson"; sourceTree = "<group>"; };
 		4DD1280A19A0C20AA2DB5513 /* InspectorStrokeGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorStrokeGeometry.swift; sourceTree = "<group>"; };
 		4E1C621A1A2AD6320A020584 /* WorkbenchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchStore.swift; sourceTree = "<group>"; };
@@ -348,7 +341,11 @@
 		5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelPage.swift; sourceTree = "<group>"; };
 		5D41F5D2DFDF3D6B8AE17588 /* MapPlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPlaybackLayer.swift; sourceTree = "<group>"; };
 		61ECD23B5031CE21A760329D /* JourneyCompletionStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyCompletionStrings.swift; sourceTree = "<group>"; };
-		627D6797090996DD093DD0E4 /* NewTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
+		627D6797090996DD093DD0E4 /* JourneyEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorView.swift; sourceTree = "<group>"; };
+		A1D7C0DE0000000000001001 /* JourneyEditorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorDetails.swift; sourceTree = "<group>"; };
+		A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorSeed.swift; sourceTree = "<group>"; };
+		A1D7C0DE0000000000001003 /* RouteRepairController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRepairController.swift; sourceTree = "<group>"; };
+		A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorManualEntry.swift; sourceTree = "<group>"; };
 		A1D7C0DE00000000000000F1 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		628DBA7D128F32B95C9901ED /* DataStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStrings.swift; sourceTree = "<group>"; };
 		6397697865248E6D4DF39FDA /* InspectorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorMap.swift; sourceTree = "<group>"; };
@@ -356,7 +353,6 @@
 		6934218FDC0837E787D5F0B5 /* PrimaryTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTab.swift; sourceTree = "<group>"; };
 		6AA14AE98B914FEBA341FC83 /* AppShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShell.swift; sourceTree = "<group>"; };
 		6AF4807AD659ABAB52B5B650 /* ShareCardRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardRendering.swift; sourceTree = "<group>"; };
-		6C58551D415ECDC942AB8121 /* RailwayRouteGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayRouteGuideView.swift; sourceTree = "<group>"; };
 		6C8ED17385FD30F1E6443251 /* RailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapView.swift; sourceTree = "<group>"; };
 		6CC03421FDB472439D129682 /* RailwayLineCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayLineCardView.swift; sourceTree = "<group>"; };
 		6D2862DE30BDCCC737665317 /* MapLabelCollisionGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLabelCollisionGrid.swift; sourceTree = "<group>"; };
@@ -408,7 +404,6 @@
 		9BE68E0947AD261729EDC07C /* MileageStatisticsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageStatisticsStore.swift; sourceTree = "<group>"; };
 		9E7986EFE0FBDB60FE2A3930 /* BundledRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledRegistry.swift; sourceTree = "<group>"; };
 		A0480CC5AB53874842E7F666 /* InspectionViewpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectionViewpoints.swift; sourceTree = "<group>"; };
-		A0C9357088E6AA1A9E8D09E2 /* RailwayRouteCorrectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayRouteCorrectionView.swift; sourceTree = "<group>"; };
 		A15A566E44F9A8692C586D9E /* PanelMorph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelMorph.swift; sourceTree = "<group>"; };
 		A1FB60E315DE163EC7455D85 /* MapInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInfoView.swift; sourceTree = "<group>"; };
 		A2402F4249CACA47DF190D52 /* AppTypographyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypographyPolicy.swift; sourceTree = "<group>"; };
@@ -471,7 +466,6 @@
 		DFBFE5A60E3375647853C39B /* JourneyGroupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyGroupPicker.swift; sourceTree = "<group>"; };
 		E1D19FBA18ED13ED9FD95D53 /* PassportWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportWorkspaceView.swift; sourceTree = "<group>"; };
 		E1E1E3AC50FA3390D7F6E023 /* AddDateAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateAlert.swift; sourceTree = "<group>"; };
-		E29004C6139A86259766332C /* RouteRepairFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRepairFlow.swift; sourceTree = "<group>"; };
 		E37B9868719AE8EB0C42E3ED /* WorkbenchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchView.swift; sourceTree = "<group>"; };
 		E3E21D79AC9DC2D0C5461598 /* RailType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailType.swift; sourceTree = "<group>"; };
 		EB4288F2FCEED3BAC98807C2 /* ManualDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualDates.swift; sourceTree = "<group>"; };
@@ -769,20 +763,17 @@
 				F78AA3A5D156D8B0BF82C5FA /* JourneyCompletionRequest.swift */,
 				758DCD65965F7DDE78451DFB /* JourneyCompletionView.swift */,
 				01BA1698735BBD062668E90C /* JourneyEditing.swift */,
-				45F0B87D2D94136030A90FA1 /* LocalJourneyFillView.swift */,
 				2DFBF7127536FBF4B838CB54 /* LocalLineServicesSection.swift */,
 				2225A38D962DAE085A10AB7D /* NewTripStrings.swift */,
-				627D6797090996DD093DD0E4 /* NewTripView.swift */,
-				A0C9357088E6AA1A9E8D09E2 /* RailwayRouteCorrectionView.swift */,
-				6C58551D415ECDC942AB8121 /* RailwayRouteGuideView.swift */,
-				3C47B257CBF87D3D1A833771 /* RideEditorView.swift */,
-				3A53A2BB404434E4B09985CC /* RoutePolicyEditorView.swift */,
-				E29004C6139A86259766332C /* RouteRepairFlow.swift */,
-				4C844EAA0933BDDAA0786A07 /* RouteSectionEditorView.swift */,
+				627D6797090996DD093DD0E4 /* JourneyEditorView.swift */,
 				D9E434A8A1F82EB1EB86B297 /* ServiceRangeEditorView.swift */,
 				4610709E922C93AA4D822234 /* StationPickerSearchController.swift */,
 				22128C2633F9AAF26AD68536 /* StationPickerView.swift */,
 				F6A345007BC8F43C8B3CE0D7 /* StopEditorView.swift */,
+				A1D7C0DE0000000000001001 /* JourneyEditorDetails.swift */,
+				A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */,
+				A1D7C0DE0000000000001003 /* RouteRepairController.swift */,
+				A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */,
 				A1D7C0DE00000000000000F1 /* TripMapView.swift */,
 			);
 			path = JourneyEditor;
@@ -1165,7 +1156,6 @@
 				9B45E9E201B42A66320986A2 /* JourneyStationAliases.swift in Sources */,
 				2D4EF9EDFA11ECA2772BCCA7 /* JourneyStrings.swift in Sources */,
 				BF981EBFE93B9883C83B2F21 /* JourneyWorkspaceStates.swift in Sources */,
-				EF9B25FDA125664C62DC31CE /* LocalJourneyFillView.swift in Sources */,
 				E71B42CE98C3C8425C3A1491 /* LocalJourneyStrings.swift in Sources */,
 				6D1DB3C9226BB04654B47838 /* LocalLineServicesSection.swift in Sources */,
 				5D6416E72BC819AA0B3BE76F /* LongJourneyDetailTestView.swift in Sources */,
@@ -1198,7 +1188,7 @@
 				01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */,
 				2A0A2F0EEC114F8174A39F71 /* NetworkLOD.swift in Sources */,
 				9E0DC930029D061AE83EFBD0 /* NewTripStrings.swift in Sources */,
-				455F38409EF4DE83B2842005 /* NewTripView.swift in Sources */,
+				455F38409EF4DE83B2842005 /* JourneyEditorView.swift in Sources */,
 				3282975A55A1F7FB25CCF68F /* OperatorBadge.swift in Sources */,
 				5AB65AB0215555CAC84F27A3 /* PanelMorph.swift in Sources */,
 				51E7FF6601DA7B21FB1FFEB9 /* PassportCardStyle.swift in Sources */,
@@ -1227,8 +1217,6 @@
 				65F2290ADEDA69B7F5DD03EE /* RailType.swift in Sources */,
 				9DED5658A0938326D19B6FA8 /* RailWorkspaceView.swift in Sources */,
 				C6BE97EDE2F123C091139B49 /* RailwayLineCardView.swift in Sources */,
-				8BDF6CFE546BDF4B2E18AFBA /* RailwayRouteCorrectionView.swift in Sources */,
-				078DF31E30FA6D3B6614BE6E /* RailwayRouteGuideView.swift in Sources */,
 				642963AC6C7699EF6EDDE2C1 /* RecordDate.swift in Sources */,
 				174E5E15A9DAA64C7686C310 /* ReduceMotionUITestProbe.swift in Sources */,
 				76F09DF509711184BE87D191 /* RegionCatalog.swift in Sources */,
@@ -1238,7 +1226,6 @@
 				3B894BCBEC461413017F8998 /* RideCard.swift in Sources */,
 				CF3F75B1D64774512DAEEB7D /* RideChooserView.swift in Sources */,
 				13270A3521AEEA48B8F59E24 /* RideDetailView.swift in Sources */,
-				9A5C579E5218BF4AE6ED5535 /* RideEditorView.swift in Sources */,
 				5EAAB25FC510A68947A629B3 /* RideLibrary.swift in Sources */,
 				A8593FC7EA71B7DBA2CE59AD /* RidePersistenceQueue.swift in Sources */,
 				501678F4FD4E32283A56DEF8 /* RideSheet.swift in Sources */,
@@ -1249,9 +1236,6 @@
 				B45BF0910337040B23481158 /* RouteGlyph.swift in Sources */,
 				D0991E74351BB8FC2198EAC7 /* RouteGuideStrings.swift in Sources */,
 				9D279CC2B2FEE92D28389670 /* RouteLogoSquare.swift in Sources */,
-				B01EB1445D718DD0F5B22F1E /* RoutePolicyEditorView.swift in Sources */,
-				A1CEB91678EA52E3FD268E93 /* RouteRepairFlow.swift in Sources */,
-				B4D50034CF1DEFE54F0B6032 /* RouteSectionEditorView.swift in Sources */,
 				9E7AC0E67746157F21FB06C4 /* RouteStressHarness.swift in Sources */,
 				65FEE0B871EB7C993ABCE463 /* RouteWorkbenchModel.swift in Sources */,
 				ED7EC81EA955E1FEC5638F81 /* RouteWorkbenchView.swift in Sources */,
@@ -1273,6 +1257,10 @@
 				447022439834CCC7557F0C5C /* StationNaming.swift in Sources */,
 				F963AC0632028F00B6070447 /* StationPickerSearchController.swift in Sources */,
 				736D429998F31A98E2CC401B /* StationPickerView.swift in Sources */,
+				A1D7C0DE0000000000000001 /* JourneyEditorDetails.swift in Sources */,
+				A1D7C0DE0000000000000002 /* JourneyEditorSeed.swift in Sources */,
+				A1D7C0DE0000000000000003 /* RouteRepairController.swift in Sources */,
+				A1D7C0DE0000000000000004 /* JourneyEditorManualEntry.swift in Sources */,
 				A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */,
 				B946F8A49F03FA17BFCA8FDE /* StationPlaceStore.swift in Sources */,
 				7FD51A06743734AF948ACC3F /* StationReadingsStore.swift in Sources */,
