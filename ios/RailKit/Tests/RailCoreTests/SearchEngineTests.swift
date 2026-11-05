@@ -139,6 +139,8 @@ struct SearchEngineTests {
 
         let english = try top("JR East")
         #expect(english.parsed.applied.first?.title == "東日本旅客鉄道")
+        let bare = try top("railway")
+        #expect(bare.parsed.typeHint == nil && !bare.results.isEmpty)
         let metro = try top("tokyo metro")
         #expect(metro.parsed.applied.first?.title == "東京メトロ")
     }

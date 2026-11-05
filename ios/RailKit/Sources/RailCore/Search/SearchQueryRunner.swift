@@ -166,7 +166,12 @@ struct SearchQueryRunner {
     // MARK: Run
 
     func run() -> SearchResponse {
-        let parsed = parse()
+        var parsed = parse()
+        // A bare type word ("railway", "駅") names no filter: search it as text.
+        if parsed.residual.isEmpty, parsed.applied.isEmpty, parsed.typeHint != nil {
+            parsed.residual = Self.tokens(text)
+            parsed.typeHint = nil
+        }
         var effective = scope
         if let hint = parsed.typeHint, !scope.intersection(hint).isEmpty { effective = scope.intersection(hint) }
         let residualText = parsed.residual.joined(separator: " ")

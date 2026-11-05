@@ -20,6 +20,10 @@ final class JourneySearch {
 
     private(set) var completed: Request?
     private(set) var days: [ItineraryStore.Loaded.Day] = []
+    /// "Did you mean …?" when the completed query matched no journey: the
+    /// closest station/train/type spelling in the searched journeys (shared
+    /// search engine). Nil otherwise.
+    private(set) var didYouMean: SearchCorrection?
     @ObservationIgnored private var source: [ItineraryStore.Loaded.Day] = []
     @ObservationIgnored private var naming: StationNamingGeneration?
     @ObservationIgnored private var names: [String: [String]] = [:]
@@ -27,7 +31,7 @@ final class JourneySearch {
     func search(_ request: Request, alsoNamed: (Train) -> [String]) async {
         guard request != completed else { return }
         guard !request.query.isEmpty else {
-            days = []; completed = request
+            days = []; didYouMean = nil; completed = request
             return
         }
         do {
@@ -60,13 +64,19 @@ final class JourneySearch {
                     }
                     if !trains.isEmpty { result.append(.init(date: day.date, trains: trains)) }
                 }
-                return result
+                guard result.isEmpty else { return (result, nil as SearchCorrection?) }
+                // Nothing matched: offer the closest spelling (typos are not matched per journey).
+                let searched = source.filter { date == Dates.allDates || $0.date == date }.flatMap(\.trains)
+                try Task.checkCancellation()
+                let correction = JourneySearchMatcher.suggestion(
+                    for: query, in: searched, alsoNamed: { names[$0.id] ?? [] })
+                return (result, correction)
             }
             let result = try await withTaskCancellationHandler {
                 try await worker.value
             } onCancel: { worker.cancel() }
             try Task.checkCancellation()
-            days = result; completed = request
+            days = result.0; didYouMean = result.1; completed = request
         } catch { }
     }
 }
