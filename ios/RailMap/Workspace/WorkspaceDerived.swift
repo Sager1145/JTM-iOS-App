@@ -145,6 +145,55 @@ final class WorkspaceDerived {
         return (upcomingValue, upcomingIDs)
     }
 
+    // MARK: - the map's trip cap (MapTripCap)
+
+    private var idsKey: [Train]?
+    private var idsValue: Set<String> = []
+
+    /// The ids of these trains, once per array generation.
+    func ids(of trains: [Train]) -> Set<String> {
+        if let idsKey, ArrayGeneration.same(idsKey, trains) { return idsValue }
+        idsValue = Set(trains.map(\.id))
+        idsKey = trains
+        return idsValue
+    }
+
+    private var capKey: (rides: [RiddenRouteStore.DrawnRide], selected: String?)?
+    private var capValue: [RiddenRouteStore.DrawnRide] = []
+
+    /// At most ``MapTripCap/limit`` rides, the selected one first, then the
+    /// most recent. Recomputed only when the scoped rides or the selection
+    /// change; under the cap it is the input array itself.
+    func cappedRides(
+        _ rides: [RiddenRouteStore.DrawnRide], selectedID: String?, trains: [Train]
+    ) -> [RiddenRouteStore.DrawnRide] {
+        guard rides.count > MapTripCap.limit else { return rides }
+        if let capKey, ArrayGeneration.same(capKey.rides, rides) {
+            // A new selection that was already drawn changes nothing: keep the
+            // same array so the map stays on its identity fast path.
+            if capKey.selected == selectedID
+                || selectedID.map({ id in capValue.contains { $0.id == id } }) ?? true {
+                return capValue
+            }
+        }
+        let dates = MapTripCap.dates(trains)
+        capValue = MapTripCap.capped(rides, id: \.id, selectedID: selectedID, dates: dates)
+        capKey = (rides, selectedID)
+        return capValue
+    }
+
+    private var queueKey: [Train]?
+    private var queueValue: [Train] = []
+
+    /// Playback's queue through the same cap, once per queue generation.
+    func cappedQueue(_ queue: [Train]) -> [Train] {
+        guard queue.count > MapTripCap.limit else { return queue }
+        if let queueKey, ArrayGeneration.same(queueKey, queue) { return queueValue }
+        queueValue = MapTripCap.capped(queue, id: \.id, selectedID: nil, dates: MapTripCap.dates(queue))
+        queueKey = queue
+        return queueValue
+    }
+
     // MARK: - Upcoming / History partition (UI reorganization pass 3)
 
     private struct ListDaysKey {

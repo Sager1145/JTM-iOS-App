@@ -29,6 +29,13 @@ enum AppTypographyPolicy {
         UIContentSizeCategory(maximumSize)
     }
 
+    /// Every standard content size category, smallest first.
+    static let contentSizeOrder: [UIContentSizeCategory] = [
+        .extraSmall, .small, .medium, .large, .extraLarge, .extraExtraLarge, .extraExtraExtraLarge,
+        .accessibilityMedium, .accessibilityLarge, .accessibilityExtraLarge,
+        .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge,
+    ]
+
     static func preferredFont(forTextStyle style: UIFont.TextStyle) -> UIFont {
         let requested = UIFont.preferredFont(forTextStyle: style)
         let maximum = UIFont.preferredFont(forTextStyle: style,
@@ -72,8 +79,19 @@ struct AppTypographyWindowCap: UIViewRepresentable {
             let cap = AppTypographyPolicy.maximumContentSizeCategory
             if window.maximumContentSizeCategory != cap { window.maximumContentSizeCategory = cap }
             guard let scene = window.windowScene else { return }
+            // Compared by position in the standard order, not with `>`:
+            // UIKit asserts when asked to order a category it does not know
+            // (an unrecognised launch override, or `.unspecified`), and any
+            // such value is treated as "at or above the cap".
             let requested = UIApplication.shared.preferredContentSizeCategory
-            let capped = requested > cap ? cap : requested
+            let order = AppTypographyPolicy.contentSizeOrder
+            let capped: UIContentSizeCategory
+            if let index = order.firstIndex(of: requested), let capIndex = order.firstIndex(of: cap),
+               index <= capIndex {
+                capped = requested
+            } else {
+                capped = cap
+            }
             // Reading an override that was never set asserts in UIKit, so the
             // last value written is remembered rather than read back.
             guard applied != capped else { return }

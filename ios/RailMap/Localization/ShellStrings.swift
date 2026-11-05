@@ -41,6 +41,31 @@ enum ShellStrings {
         "ios.search.didYouMean": [
             .en: "Did you mean “{text}”?", .ja: "もしかして「{text}」？", .zhHans: "你是不是要找“{text}”？", .zhHant: "你是不是要找「{text}」？",
         ],
+        "ios.hide.title": [.en: "Hide trips", .ja: "旅程を非表示", .zhHans: "隐藏行程", .zhHant: "隱藏行程"],
+        "ios.hide.menu": [.en: "Hide trips…", .ja: "旅程を非表示…", .zhHans: "隐藏行程…", .zhHant: "隱藏行程…"],
+        "ios.hide.menuActive": [
+            .en: "Hide trips… ({n} hidden)", .ja: "旅程を非表示…（{n} 件）",
+            .zhHans: "隐藏行程…（已隐藏 {n} 项）", .zhHant: "隱藏行程…（已隱藏 {n} 項）",
+        ],
+        "ios.hide.regions": [.en: "Countries and regions", .ja: "国・地域", .zhHans: "国家和地区", .zhHant: "國家與地區"],
+        "ios.hide.months": [.en: "Months", .ja: "月", .zhHans: "月份", .zhHant: "月份"],
+        "ios.hide.allHidden": [
+            .en: "All trips are hidden by the filter.", .ja: "すべての旅程がフィルタで非表示になっています。",
+            .zhHans: "所有行程都已被筛选隐藏。", .zhHant: "所有行程都已被篩選隱藏。",
+        ],
+        "ios.hide.showAll": [.en: "Show all", .ja: "すべて表示", .zhHans: "全部显示", .zhHant: "全部顯示"],
+        "ios.hide.note": [
+            .en: "Hidden countries, years and months leave the map, the lists and Stats. A single trip's own Hide only takes that trip off the map.",
+            .ja: "非表示にした国・年・月は、地図・一覧・統計から外れます。旅程ごとの「非表示」は、その旅程を地図から外すだけです。",
+            .zhHans: "隐藏的国家、年份和月份会从地图、列表和统计中移除。单个行程的“隐藏”只会把该行程从地图上移除。",
+            .zhHant: "隱藏的國家、年份與月份會從地圖、列表和統計中移除。單一行程的「隱藏」只會把該行程從地圖上移除。",
+        ],
+        "ios.hide.capNotice": [
+            .en: "Showing {shown} of {total} trips. Narrow by country or month.",
+            .ja: "{total} 件中 {shown} 件を表示中。国や月で絞り込めます。",
+            .zhHans: "显示 {total} 段中的 {shown} 段。可按国家或月份缩小范围。",
+            .zhHant: "顯示 {total} 段中的 {shown} 段。可依國家或月份縮小範圍。",
+        ],
         "ios.search.noneHere": [
             .en: "No matches in this list. The other list has some:", .ja: "この一覧には該当がありません。もう一方の一覧にあります：",
             .zhHans: "此列表中没有匹配项，另一个列表中有：", .zhHant: "此列表中沒有符合項目，另一個列表中有：",

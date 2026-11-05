@@ -496,6 +496,52 @@ filter decision. data-perf's memoised `availableYears` is kept: it calls the sam
 CoreGraphics journey poster (`JourneyPoster`). The Stats tab's own cards (`StatsWidgetView`)
 stay as they were.
 
+## Map trip cap and hiding by country, year or month
+
+**Cap.** `MapTripCap.limit = 500` (`Workspace/TripHideFilter.swift`) is the one hard-coded limit.
+It is applied at the single point where the scoped trips feed the map:
+`RailWorkspaceView.mapRides` → `WorkspaceDerived.cappedRides`, memoised per scope and selection.
+That is upstream of data-perf's map update batching, and nothing is capped per layer.
+
+- **Which 500:** the selected trip first, then the most recent; drawing order among them is
+  kept.
+- **The notice:** when more trips match, a small capsule at the top of the map says "Showing
+  500 of 1,284 trips. Narrow by country or month." Tapping it opens the hide sheet.
+- **Lists** still scroll through every trip.
+- **Playback** takes its queue through the same cap.
+- **The share card's map** uses the same cap.
+
+**Hiding by country, year or month.** This is the second half of the one scope filter, not a
+new feature: every tab's filter menu gets **Hide trips…** and, while something is hidden,
+**Show all**. The filter button carries a badge with the hidden count. The sheet has:
+- multi-select toggles for the countries and regions present in the data;
+- a toggle per year, with that year's months under it. Turning one month back on inside a
+  hidden year hides that year's other months individually instead.
+
+Choices persist across launches (`UserDefaults`; UI tests are scoped by storage id).
+
+- **Where it applies:**
+  - the map;
+  - Upcoming, History and search;
+  - Stats (the statistics load is given the visible trips, and its load key includes the
+    choices);
+  - playback and share, which follow the lists.
+
+  One scope everywhere.
+- **The per-trip Hide** (`Train.visible`) stays a separate action. It takes one trip off the map
+  and keeps it in the lists. The two compose: a trip is drawn only when it is neither switched
+  off itself nor in a hidden region or month.
+- **Cost:** `TripHideFilter` builds a trip → (region, `YYYY-MM`) index once per store
+  generation. It derives the hidden set and the visible trips and days once per index or choice
+  change, and returns the same arrays until either changes, so every memoised derivation
+  downstream keeps its key.
+- **Tests:** `RailMapTests/TripScopeTests`:
+  - the cap's size, order and drawing order;
+  - hiding by region, year and month;
+  - one month inside a hidden year;
+  - persistence and per-storage isolation;
+  - stable answers.
+
 ## One text-size cap
 
 `AppTypographyPolicy.maximumSize = .xLarge` is the app's one hard-coded text-size ceiling. Every

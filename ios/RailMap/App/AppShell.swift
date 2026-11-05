@@ -20,6 +20,10 @@ struct AppShell: View {
     @State private var mapController = RailMapController()
     @State private var riddenRoutes = RiddenRouteStore()
     @State private var mileageStatistics = MileageStatisticsStore()
+    /// Hidden regions, years and months: one scope for the map, the lists
+    /// and Stats (see ``TripHideFilter``).
+    @State private var tripHide = TripHideFilter(
+        storageID: UITestLaunchConfiguration.current[.storageId])
     /// One transport for the whole app. See the type note above.
     @State private var playback = PlaybackController()
     /// Published into the environment rather than passed down: the two places
@@ -118,6 +122,7 @@ struct AppShell: View {
         .environment(itineraries)
         .environment(riddenRoutes)
         .environment(riddenRoutes.lineDetector)
+        .environment(tripHide)
         .task {
             Task.detached(priority: .utility) {
                 _ = TrainServicePatterns.patterns
@@ -193,9 +198,11 @@ struct AppShell: View {
         // and `EdgeIndexCache` holds the indexes for the life of the process.
         .task(id: StatisticsLoadTrigger(shows: selection == .stats, key: statisticsLoadKey)) {
             guard selection == .stats, let loaded = itineraries.loaded else { return }
+            // Stats follow the hidden regions and months, like the map and
+            // the lists: one scope everywhere.
             mileageStatistics.load(
                 scope: StatisticsScope(region: regionScope.wrappedValue, area: statisticsArea.wrappedValue),
-                trains: loaded.trains, rides: riddenRoutes.rides)
+                trains: tripHide.scoped(loaded).trains, rides: riddenRoutes.rides)
         }
 #if DEBUG
         // Which destination to open on, for the same reason
@@ -330,7 +337,8 @@ struct AppShell: View {
             region: regionScopeCode,
             area: statisticsAreaCode,
             trains: routeLoadKey,
-            ridesGeneration: riddenRoutes.ridesKeyGeneration)
+            ridesGeneration: riddenRoutes.ridesKeyGeneration,
+            hidden: "\(tripHide.hiddenRegions.sorted())|\(tripHide.hiddenYears.sorted())|\(tripHide.hiddenMonths.sorted())")
     }
 
     private struct StatisticsLoadKey: Equatable {
@@ -342,6 +350,7 @@ struct AppShell: View {
         var area: String
         var trains: [Train]?
         var ridesGeneration: Int
+        var hidden: String
     }
 
     /// The statistics load's key, with the one thing that decides whether it

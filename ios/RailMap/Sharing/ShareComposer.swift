@@ -156,7 +156,12 @@ struct ShareComposer: View {
         case .list: ids = Set(listTrains.map(\.id))
         case .statistics: return []
         }
-        return riddenRoutes.rides.filter { ids.contains($0.id) }
+        // The map's trip cap applies to a shared map too.
+        let rides = riddenRoutes.rides.filter { ids.contains($0.id) }
+        guard rides.count > MapTripCap.limit else { return rides }
+        return MapTripCap.capped(
+            rides, id: \.id, selectedID: nil,
+            dates: MapTripCap.dates(listTrains))
     }
 
     private var showsMap: Bool { scope != .statistics }
@@ -220,9 +225,13 @@ struct ShareComposer: View {
             videoSeconds = video.estimateSeconds(filmedTrains)
         }
         .task(id: mapKey) {
-            mapImage = nil
-            guard format == .image, showsMap else { return }
-            mapImage = await renderMap(scale: displayScale)
+            guard format == .image, showsMap else { mapImage = nil; return }
+            // Let a burst of route publishes settle; a newer key cancels this.
+            try? await Task.sleep(for: .milliseconds(300))
+            guard !Task.isCancelled else { return }
+            let image = await renderMap(scale: displayScale)
+            guard !Task.isCancelled else { return }
+            mapImage = image
         }
         .sheet(item: $sharedFile) { file in
             ActivitySheet(items: [file.url, file.text])
@@ -230,7 +239,12 @@ struct ShareComposer: View {
     }
 
     private var mapKey: String {
-        "\(scope.rawValue)|\(format.rawValue)|\(aspect.rawValue)|\(look == .dark)|\(mapRides.count)|\(riddenRoutes.ridesKeyGeneration)"
+        // Only the rides this card draws, not the store's generation: a bulk
+        // load publishes partial routes every ~750 ms, and a key on the whole
+        // store re-rendered the snapshot on each of them.
+        var hasher = Hasher()
+        for ride in mapRides { hasher.combine(ride.id); hasher.combine(ride.geometryDigest) }
+        return "\(scope.rawValue)|\(format.rawValue)|\(aspect.rawValue)|\(look == .dark)|\(hasher.finalize())"
     }
 
     // MARK: image

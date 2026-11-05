@@ -16,6 +16,7 @@ struct RailWorkspaceView: View {
     /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
+    @Environment(TripHideFilter.self) private var tripHide
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.colorScheme) private var colorScheme
 
@@ -841,6 +842,8 @@ struct RailWorkspaceView: View {
                 DataImportView(flow: importFlow, itineraries: itineraries, library: library)
             case .transferGuide:
                 TransferGuideImportView(itineraries: itineraries, library: library)
+            case .hideTrips:
+                TripHideSheet(filter: tripHide, trains: itineraries.loaded?.trains ?? [])
             case .mapInfo:
                 MapInfoView()
             case .mapLayers:
@@ -1144,7 +1147,7 @@ struct RailWorkspaceView: View {
     /// numbers counted, and only those", and a line under a percentage that
     /// does not include it is the map contradicting the figure above it.
     private var statisticsScope: (trains: [Train], ids: Set<String>) {
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         let date = statistics.selectedDate
         let region = regionScope
         let areaScope = StatisticsScope(region: region, area: statisticsArea)
@@ -1325,7 +1328,7 @@ struct RailWorkspaceView: View {
     /// and the three destinations that share this control each answer a
     /// different question about that record.
     private var scopableRegions: [Region] {
-        derived.regions(in: itineraries.loaded?.trains ?? [])
+        derived.regions(in: scopedTrains)
     }
 
     /// What the scope control reads, 全部 included.
@@ -1373,11 +1376,13 @@ struct RailWorkspaceView: View {
                 }
                 .accessibilityIdentifier("statisticsPeriodItem")
             }
+            hideTripsSection
         } label: {
             SheetIconLabel(
                 systemImage: "line.3.horizontal.decrease",
                 isActive: regionScope != nil || !statistics.dateSelection.isEmpty
-                    || statistics.selectedJourneyGroupID != nil)
+                    || statistics.selectedJourneyGroupID != nil || tripHide.isActive,
+                badge: tripHide.activeCount)
         }
         .popover(isPresented: $statisticsScopePresented) {
             StatisticsScopePicker(
@@ -1410,10 +1415,11 @@ struct RailWorkspaceView: View {
     private var statisticsDates: [String] {
         guard let loaded = itineraries.loaded else { return [] }
         let scope = StatisticsScope(region: regionScope, area: statisticsArea)
+        let visible = scopedLoaded(loaded)
         let members = derived.memberIDs(
-            scope: scope, trains: loaded.trains, rides: riddenRoutes.rides)
+            scope: scope, trains: visible.trains, rides: riddenRoutes.rides)
         return derived.scopedDates(
-            trains: loaded.trains, days: loaded.days, region: regionScope,
+            trains: visible.trains, days: visible.days, region: regionScope,
             year: statistics.selectedYear,
             scopeKey: "\(scope.key)|\(members.key)",
             memberIDs: members.ids)
@@ -1434,14 +1440,43 @@ struct RailWorkspaceView: View {
                     dateFilterMenuContent(loaded, dates: journeyDates(for: selection, in: loaded))
                 }
             }
+            hideTripsSection
         } label: {
             SheetIconLabel(
                 systemImage: "line.3.horizontal.decrease",
-                isActive: regionScope != nil || selectedDate != Dates.allDates)
+                isActive: regionScope != nil || selectedDate != Dates.allDates || tripHide.isActive,
+                badge: tripHide.activeCount)
         }
         .accessibilityLabel(Text(localization.text("ios.journey.filter", fallback: "Filter")))
         .accessibilityValue(Text("\(regionScopeName), \(dateBucketLabel(selectedDate))"))
         .accessibilityIdentifier("journeyFilterButton")
+    }
+
+    /// The filter's second half on every tab: hide whole regions, years or
+    /// months (``TripHideFilter``), and the one reset.
+    @ViewBuilder
+    private var hideTripsSection: some View {
+        Section {
+            Button {
+                presentationHost.afterTeardown { sheet = .hideTrips }
+            } label: {
+                Label(
+                    tripHide.isActive
+                        ? localization.text("ios.hide.menuActive", params: ["n": .number(Double(tripHide.activeCount))],
+                                            fallback: "Hide trips… (\(tripHide.activeCount) hidden)")
+                        : localization.text("ios.hide.menu", fallback: "Hide trips…"),
+                    systemImage: "eye.slash")
+            }
+            .accessibilityIdentifier("tripHideMenuItem")
+            if tripHide.isActive {
+                Button {
+                    tripHide.showAll()
+                } label: {
+                    Label(localization.text("ios.hide.showAll", fallback: "Show all"), systemImage: "eye")
+                }
+                .accessibilityIdentifier("tripHideShowAllMenuItem")
+            }
+        }
     }
 
     /// §5.3.1's region scope. It is the Region section of both destinations'
@@ -1631,7 +1666,7 @@ struct RailWorkspaceView: View {
     /// map must not be able to disagree about what is still ahead.
     private var upcomingScope: (trains: [Train], ids: Set<String>) {
         let today = todayByRegion()
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         let region = regionScope
         let scopedDate = selectedDate
         return derived.upcoming(
@@ -1962,6 +1997,21 @@ struct RailWorkspaceView: View {
         }
     }
 
+    /// The store's trips minus hidden regions, years and months. The SAME
+    /// arrays until the store or a choice changes (``TripHideFilter``).
+    private var scopedTrains: [Train] {
+        itineraries.loaded.map { tripHide.scoped($0).trains } ?? []
+    }
+
+    private func scopedLoaded(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
+        guard tripHide.isActive else { return loaded }
+        let scoped = tripHide.scoped(loaded)
+        var copy = loaded
+        copy.trains = scoped.trains
+        copy.days = scoped.days
+        return copy
+    }
+
     /// Every journey dated today or later on its own region's clock: the
     /// line between Upcoming and History, whatever the filter says.
     private var aheadIDs: Set<String> {
@@ -1992,9 +2042,9 @@ struct RailWorkspaceView: View {
     /// Whether the other list has a match for a query this list has none
     /// for. Only asked once this list's search came back empty.
     private func otherListMatches(_ query: String, in list: WorkspaceTab) -> Bool {
-        guard let loaded = itineraries.loaded else { return false }
+        guard itineraries.loaded != nil else { return false }
         let ahead = aheadIDs
-        return loaded.trains.contains { train in
+        return scopedTrains.contains { train in
             ahead.contains(train.id) == (list == .upcoming)
                 && JourneySearchMatcher.matches(
                     train, query: query, alsoNamed: localization.localizedStationNames(of:))
@@ -2299,7 +2349,7 @@ struct RailWorkspaceView: View {
         switch sheet {
         case .importData, .transferGuide:
             return true
-        case .detail, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
             return false
         }
     }
@@ -2633,6 +2683,18 @@ struct RailWorkspaceView: View {
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .failed(.load(message))),
                 systemImage: "exclamationmark.triangle")
+        case .loaded(let loaded) where !loaded.days.isEmpty && tripHide.isActive
+                && tripHide.scoped(loaded).days.isEmpty:
+            // Every trip is in a hidden region or month: say so, with the reset.
+            VStack(spacing: 10) {
+                Image(systemName: "eye.slash").font(.largeTitle).foregroundStyle(.tertiary)
+                Text(localization.text("ios.hide.allHidden", fallback: "All trips are hidden by the filter."))
+                    .font(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                Button(localization.text("ios.hide.showAll", fallback: "Show all")) { tripHide.showAll() }
+                    .buttonStyle(.bordered).railMinimumTouchTarget()
+                    .accessibilityIdentifier("tripHideEmptyShowAll")
+            }
+            .frame(maxWidth: .infinity).padding(.top, 24)
         case .loaded(let loaded) where loaded.days.isEmpty:
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .empty),
@@ -2949,6 +3011,8 @@ struct RailWorkspaceView: View {
         region: Region?,
         query searchQuery: String = ""
     ) -> [ItineraryStore.Loaded.Day] {
+        // Hidden regions and months are out of every list (TripHideFilter).
+        let loaded = scopedLoaded(loaded)
         if !searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             // `journeySearch.days` already holds exactly "the last completed
             // result": a cancelled search (superseded by a newer keystroke)
@@ -2986,7 +3050,7 @@ struct RailWorkspaceView: View {
     /// The search runs over the current LIST's journeys only, so its results
     /// and its "Did you mean" suggestion never name a trip from the other one.
     private var journeySearchRequest: JourneySearch.Request {
-        let all = itineraries.loaded?.days ?? []
+        let all = itineraries.loaded.map { tripHide.scoped($0).days } ?? []
         let list = listTab(for: selection)
         let days = list == .stats ? all
             : derived.listDays(all, ahead: aheadIDs, wantsAhead: list == .upcoming)
@@ -2999,7 +3063,7 @@ struct RailWorkspaceView: View {
         for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
     ) -> [String] {
         WorkspaceJourneyRules.journeyDates(
-            trains: loaded.trains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
+            trains: scopedTrains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
             todayByRegion: tab == .upcoming
                 ? Dictionary(uniqueKeysWithValues: todayByRegion().map { ($0.key.code, $0.value) }) : [:],
             manualDates: manualDates.dates, rule: Region.scopeRule)
@@ -3187,6 +3251,8 @@ struct RailWorkspaceView: View {
         .accessibilityIdentifier("railwayMap")
         .accessibilityValue(Text(mapRouteLoadStatus))
         .ignoresSafeArea()
+        // The trip cap, said once and quietly: tap to narrow the scope.
+        .overlay(alignment: .top) { mapCapNotice }
         // The one place the setting crosses from SwiftUI into the controller.
         //
         // `RailMapController` is not a `View`, so it cannot read
@@ -3361,7 +3427,45 @@ struct RailWorkspaceView: View {
     ///     invites the reader to read the percentage as covering all of them.
     ///   - **All journeys**, and Search — everything on record, which is what
     ///     those two destinations list.
+    /// What the map draws: the scoped rides, through the one trip cap.
+    ///
+    /// THE single point where trips feed the map (``MapTripCap``). Data-perf
+    /// note: map update batching sits downstream of this; the cap is applied
+    /// here and nowhere per layer.
     private var mapRides: [RiddenRouteStore.DrawnRide] {
+        derived.cappedRides(
+            scopedMapRides, selectedID: itineraries.selectedTrainID,
+            trains: itineraries.loaded?.trains ?? [])
+    }
+
+    /// How many trips the scope would draw without the cap.
+    private var mapTripTotal: Int { scopedMapRides.count }
+
+    @ViewBuilder
+    private var mapCapNotice: some View {
+        let total = mapTripTotal
+        if total > MapTripCap.limit {
+            Button {
+                presentationHost.afterTeardown { sheet = .hideTrips }
+            } label: {
+                Label(localization.text(
+                    "ios.hide.capNotice",
+                    params: ["shown": .number(Double(MapTripCap.limit)), "total": .number(Double(total))],
+                    fallback: "Showing \(MapTripCap.limit) of \(total) trips. Narrow by country or month."),
+                      systemImage: "line.3.horizontal.decrease")
+                    .font(.footnote.weight(.medium))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(.regularMaterial, in: Capsule())
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 54)
+            .padding(.horizontal, 16)
+            .accessibilityIdentifier("mapTripCapNotice")
+        }
+    }
+
+    private var scopedMapRides: [RiddenRouteStore.DrawnRide] {
         // Pre-filtered by the store so ordinary sheet-height updates keep the
         // same Array buffer all the way into `RailMapView.updateUIView`; the
         // narrowed answers below are held by `WorkspaceDerived` for the same
@@ -3375,15 +3479,18 @@ struct RailWorkspaceView: View {
         case .all, .search:
             break
         }
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         var ids: Set<String>?
+        // Hidden regions and months leave the map like they leave the list.
+        if tripHide.isActive { ids = derived.ids(of: trains) }
         // All Journeys carries the same globe button the other two do, so the
         // map under it draws that region and not the other four. Search does
         // not scope by region — see ``filteredDays(_:region:query:)`` — and a
         // map that narrowed while its list did not would be the second half of
         // the same lie.
         if selection == .all, let region = regionScope {
-            ids = derived.trainIDs(inRegion: region, in: trains)
+            let inRegion = derived.trainIDs(inRegion: region, in: trains)
+            ids = ids.map { $0.intersection(inRegion) } ?? inRegion
         }
         if mapFollowsSelectedDate, selectedDate != Dates.allDates {
             let dated = derived.trainIDs(spanning: selectedDate, in: trains)
@@ -3409,8 +3516,10 @@ struct RailWorkspaceView: View {
            let train = loaded.trains.first(where: { $0.id == selected }) {
             return [train]
         }
-        return shareListTrains
-            .filter { $0.visible != false && $0.stops.count > 1 }
+        // The same cap as the map, memoised: a run never draws more routes
+        // than the map can, and the body's `isEmpty` checks never re-sort.
+        return derived.cappedQueue(
+            shareListTrains.filter { $0.visible != false && $0.stops.count > 1 })
     }
 
     /// Start a run, remembering what was selected before it.

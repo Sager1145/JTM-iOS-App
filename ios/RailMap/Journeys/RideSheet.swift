@@ -279,6 +279,8 @@ struct SheetIconLabel: View {
     var systemImage: String
     /// Whether the control this labels is currently narrowing something.
     var isActive: Bool = false
+    /// How many hidden choices the control holds (the trip filter's badge).
+    var badge: Int = 0
 
     var body: some View {
         Image(systemName: systemImage)
@@ -293,6 +295,20 @@ struct SheetIconLabel: View {
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(Color(.systemBackground), Color.accentColor)
                         .offset(x: 3, y: 3)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+            }
+            .overlay(alignment: .topTrailing) {
+                if badge > 0 {
+                    Text(badge, format: .number)
+                        .font(.system(size: 11, weight: .bold))
+                        .monospacedDigit()
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 5)
+                        .frame(minWidth: 17, minHeight: 17)
+                        .background(Color.accentColor, in: Capsule())
+                        .offset(x: 4, y: -4)
                         .accessibilityHidden(true)
                         .allowsHitTesting(false)
                 }

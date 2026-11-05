@@ -122,8 +122,18 @@ struct PassportWorkspaceView: View {
         itineraries.orderedJourneyGroups
     }
 
+    @Environment(TripHideFilter.self) private var tripHide: TripHideFilter?
+
+    /// The visible trips: the store minus hidden regions and months — the
+    /// same array the workspace's statistics scope uses, so the one-slot
+    /// memos below are not thrashed by two identities.
+    private var visibleTrains: [Train] {
+        guard let loaded = itineraries.loaded else { return [] }
+        return tripHide?.scoped(loaded).trains ?? loaded.trains
+    }
+
     private var availableYears: [Int] {
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = visibleTrains
         return derived.availableYears(
             trains: trains, regionCode: region?.code,
             groupID: statistics.selectedJourneyGroupID, memberIDs: areaMembership?.ids,
@@ -134,7 +144,7 @@ struct PassportWorkspaceView: View {
     /// The same geometry-aware area membership used by the map and loader.
     private var areaMembership: (ids: Set<String>, key: Int)? {
         guard area != nil else { return nil }
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = visibleTrains
         return derived.memberIDs(
             scope: StatisticsScope(region: region, area: area),
             trains: trains, rides: riddenRoutes.rides)

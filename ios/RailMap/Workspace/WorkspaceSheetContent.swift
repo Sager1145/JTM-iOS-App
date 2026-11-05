@@ -8,6 +8,8 @@ enum WorkspaceSheet: Identifiable {
     case importData
     /// A transfer-guide screenshot, from the Add trip menu (pass 3).
     case transferGuide
+    /// Hide regions, years or months (the scope filter's second half).
+    case hideTrips
     case mapInfo
     case mapLayers
     case station(StationCard)
@@ -24,6 +26,7 @@ enum WorkspaceSheet: Identifiable {
         case .detail(let id): "detail:\(id)"
         case .importData: "import"
         case .transferGuide: "guide"
+        case .hideTrips: "hideTrips"
         case .mapInfo: "info"
         case .mapLayers: "layers"
         case .station(let card): "station:\(card.id)"
