@@ -1638,38 +1638,7 @@ public enum Statistics {
     /// Not the map era and not a ride date. Zone identifiers match the
     /// region clocks (Japan when the country is unknown).
     static func statisticsReferenceDate(country: String, now: Date = Date()) -> String {
-        let identifier: String
-        let fallbackSeconds: Int
-        switch country.lowercased() {
-        case "cn":
-            identifier = "Asia/Shanghai"
-            fallbackSeconds = 8 * 3600
-        case "tw":
-            identifier = "Asia/Taipei"
-            fallbackSeconds = 8 * 3600
-        case "hk":
-            identifier = "Asia/Hong_Kong"
-            fallbackSeconds = 8 * 3600
-        case "mo":
-            identifier = "Asia/Macau"
-            fallbackSeconds = 8 * 3600
-        case "kr":
-            identifier = "Asia/Seoul"
-            fallbackSeconds = 9 * 3600
-        default:
-            identifier = "Asia/Tokyo"
-            fallbackSeconds = 9 * 3600
-        }
-        let zone =
-            TimeZone(identifier: identifier)
-            ?? TimeZone(secondsFromGMT: fallbackSeconds)
-            ?? TimeZone(secondsFromGMT: 0)
-            ?? .gmt
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = zone
-        let parts = calendar.dateComponents([.year, .month, .day], from: now)
-        return String(
-            format: "%04d-%02d-%02d", parts.year ?? 2000, parts.month ?? 1, parts.day ?? 1)
+        RegionClock.forRegionCode(country).today(at: now)
     }
 
     /// ``aggregateMileageStats(index:entries:country:asOf:)`` dated on the
@@ -1869,18 +1838,32 @@ public enum Statistics {
         effectiveStopRide(stops, segmentIndex) && effectiveStopRide(stops, segmentIndex + 1)
     }
 
+    /// Indexes of the first and last effectively-ridden stopping stations, the
+    /// ride boundary pair shared by both `trainRideMinutes` forms.
+    private static func rideBoundaryIndexes(_ stops: [Stop]) -> (first: Int, last: Int)? {
+        let ridden = effectivelyRiddenStopIndexes(stops)
+        guard ridden.count >= 2 else { return nil }
+        return (ridden[0], ridden[ridden.count - 1])
+    }
+
     /// Ride TIME of one train: first effectively-ridden stopping station's
     /// departure → last one's arrival, falling back to the other field when one
     /// is missing. `nil` = no usable times.
     ///
     /// A plain end-before-start wraps overnight; the `"+1"` day offsets are
     /// already folded in by `parseTimeToMinutes`, so they do not wrap twice.
+    ///
+    /// A span that is still negative after that single wrap (for example
+    /// `23:50+1` → `00:20`) is a data error, not a duration, and answers `nil`.
+    /// This deliberately diverges from `app/public/app-stats.js`
+    /// `trainRideMinutes`, whose JS twin still returns the negative; mirroring
+    /// it is a website-repo follow-up. The port fixtures contain no negative
+    /// cases, so parity stays green.
     public static func trainRideMinutes(_ train: Train) -> Double? {
         let stops = train.stops
-        let ridden = effectivelyRiddenStopIndexes(stops)
-        guard ridden.count >= 2 else { return nil }
-        let first = stops[ridden[0]]
-        let last = stops[ridden[ridden.count - 1]]
+        guard let bounds = rideBoundaryIndexes(stops) else { return nil }
+        let first = stops[bounds.first]
+        let last = stops[bounds.last]
         guard
             let start = Dates.parseTimeToMinutes(first.departure)
                 ?? Dates.parseTimeToMinutes(first.arrival),
@@ -1888,7 +1871,21 @@ public enum Statistics {
                 ?? Dates.parseTimeToMinutes(last.departure)
         else { return nil }
         if end < start { end += 24 * 60 }
-        return end - start
+        let span = end - start
+        return span < 0 ? nil : span
+    }
+
+    /// The one zone-aware ride duration: ``trainRideMinutes(_:)`` corrected by
+    /// the UTC offset difference between the first and last effectively ridden
+    /// stops (not stop 0 and the last stop). With a clock that has no per-stop
+    /// table the result is identical to the one-argument form.
+    public static func trainRideMinutes(_ train: Train, clock: JourneyClock) -> Double? {
+        guard let minutes = trainRideMinutes(train) else { return nil }
+        guard clock.crossesTimeZones, let bounds = rideBoundaryIndexes(train.stops)
+        else { return minutes }
+        let shift = clock.offsetMinutes(
+            fromStopIndex: bounds.first, toStopIndex: bounds.last, on: train.date)
+        return minutes - Double(shift)
     }
 
     public static func sumRideMinutes(_ trains: [Train]) -> Double {
