@@ -103,9 +103,9 @@
         "ios/RailMap/JourneyEditor/NewTripStrings.swift",
         "ios/RailMap/JourneyEditor/RouteRepairController.swift",
         "ios/RailMap/JourneyEditor/ServiceRangeEditorView.swift",
+        "ios/RailMap/JourneyEditor/SharedSearchEngine.swift",
         "ios/RailMap/JourneyEditor/StationPickerSearchController.swift",
         "ios/RailMap/JourneyEditor/StationPickerView.swift",
-        "ios/RailMap/JourneyEditor/StationSearchHints.swift",
         "ios/RailMap/JourneyEditor/StopEditorView.swift",
         "ios/RailMap/JourneyEditor/TripMapView.swift"
       ]

@@ -23,6 +23,8 @@ struct EditorLineSearchView: View {
     @State private var userEdited = false
     @State private var loadError: String?
     @State private var snapshot = SearchSnapshot()
+    /// The shared engine's index for this region; nil until built.
+    @State private var searchIndex: SearchIndex?
 
     private struct OperatorLineGroup: Identifiable {
         var id: String
@@ -52,17 +54,18 @@ struct EditorLineSearchView: View {
         let candidates = resolvedStation
             ? regionLines.filter { stationLineIDs.contains($0.id) } : regionLines
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        let prepared = SearchFold.PreparedQuery(needle)
-        let identity = RegistryIdentityCache.identity(forRegion: region.code)
-        let operatorIDs = identity?.operatorIDs(matchingQuery: needle) ?? []
-        let matches = candidates.filter { line in
-            if !operatorIDs.isEmpty, let identity {
-                return line.operatorIDs.contains { packageOperator in
-                    let name = operatorNameByID[packageOperator] ?? ""
-                    return !Set(identity.operatorIDs(forCatalogName: name)).isDisjoint(with: operatorIDs)
-                }
-            }
-            return needle.isEmpty || prepared.matches(fields: [line.name] + line.aliases)
+        let matches: [CatalogLine]
+        if needle.isEmpty {
+            matches = candidates
+        } else if let searchIndex {
+            let response = searchIndex.query(
+                needle, scope: .lines,
+                context: SearchContext(
+                    regionCode: region.code, lineIDs: resolvedStation ? stationLineIDs : [], limit: 100_000))
+            let ids = Set(response.results.filter { $0.entity.kind == .line }.map(\.entity.id))
+            matches = candidates.filter { ids.contains($0.id) }
+        } else {
+            matches = []
         }
         let selected = regionLines.filter { selectedIDs.contains($0.id) }
         let conflicts = resolvedStation ? selected.filter { !stationLineIDs.contains($0.id) } : []
@@ -163,6 +166,8 @@ struct EditorLineSearchView: View {
                 regionLines = loaded.lines(in: region.code)
                 catalog = loaded
                 refreshSnapshot()
+                await loadSearchIndex()
+                refreshSnapshot()
             } catch {
                 guard !Task.isCancelled else { return }
                 loadError = error.localizedDescription
@@ -170,7 +175,13 @@ struct EditorLineSearchView: View {
         }
         .onChange(of: query) { _, _ in refreshSnapshot() }
         .onChange(of: stationCodes) { _, _ in refreshSnapshot() }
-        .onChange(of: localization.language) { _, _ in refreshSnapshot() }
+        .onChange(of: localization.language) { _, _ in
+            refreshSnapshot()
+            Task {
+                await loadSearchIndex()
+                refreshSnapshot()
+            }
+        }
         .onDisappear { commit() }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -181,6 +192,13 @@ struct EditorLineSearchView: View {
                 .accessibilityIdentifier("rideEditorLinesDone")
             }
         }
+    }
+
+    /// The region's shared index, rebuilt only when the language's readings changed.
+    private func loadSearchIndex() async {
+        SharedSearchEngine.shared.prepare(
+            regionCode: region.code, readings: localization.stationSearchNames(region: region))
+        searchIndex = try? await SharedSearchEngine.shared.engine.index(regionCode: region.code)
     }
 
     @ViewBuilder

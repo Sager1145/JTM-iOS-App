@@ -78,6 +78,8 @@ struct TripMapView: UIViewRepresentable {
     var onRoute: (String) -> Void
     var onBackground: () -> Void
     var onZoomChange: (Bool) -> Void
+    /// Called once the camera is idle (not per frame) with the visible area.
+    var onRegionChange: (SearchMapRect) -> Void = { _ in }
     /// A filtered, small station set (one company or line) is shown at any
     /// zoom, so it can be picked straight from the framed network.
     var showsAllStations = false
@@ -353,6 +355,11 @@ struct TripMapView: UIViewRepresentable {
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             refreshDots(on: mapView)
+            let region = mapView.region
+            guard region.span.latitudeDelta > 0, region.span.longitudeDelta > 0 else { return }
+            parent?.onRegionChange(SearchMapRect(
+                centerLatitude: region.center.latitude, centerLongitude: region.center.longitude,
+                latitudeDelta: region.span.latitudeDelta, longitudeDelta: region.span.longitudeDelta))
         }
 
         func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {

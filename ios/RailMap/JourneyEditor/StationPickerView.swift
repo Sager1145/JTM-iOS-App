@@ -57,6 +57,21 @@ private struct CatalogStationCompanyGroup: Identifiable {
     var lines: [CatalogStationLineGroup]
 }
 
+/// What the shared engine read from the picker's text, as the picker shows it.
+private struct PickerHints: Equatable {
+    struct Filter: Equatable, Identifiable {
+        enum Kind: Equatable { case company, line }
+        var kind: Kind
+        /// `CatalogOperator.id` or `CatalogLine.id`.
+        var id: String
+        var title: String
+    }
+
+    var suggested: [Filter] = []
+    var residualText: String?
+    var didYouMean: String?
+}
+
 /// Catalog stations for one region. Empty search is a company → line → station
 /// browser. Search results keep those categories instead of flattening stations
 /// with the same display name into one ambiguous list.
@@ -94,10 +109,12 @@ struct StationPickerView: View {
     @State private var mapStationsRevision = 0
     @State private var filterMapContent = TripMapContent()
     @State private var lineRows: [CatalogStationRow] = []
-    @State private var hints = StationSearchHints.none
+    @State private var hints = PickerHints()
     /// The text a reader typed before an applied filter took its keywords,
     /// restored when that chip is removed.
     @State private var textBeforeAppliedFilter: String?
+    /// Text whose filters the reader removed; it is not applied again.
+    @State private var declinedFilterText: String?
     @State private var search = StationPickerSearchController()
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
@@ -144,7 +161,8 @@ struct StationPickerView: View {
                 return CatalogStationRow(
                     station: station, subtitle: caption,
                     detail: StationCatalogText.detailBeyondQualifier(legacy, qualifier: caption),
-                    copyText: copy, stationID: hit.stationID)
+                    copyText: copy, stationID: hit.stationID,
+                    match: search.matches[station.key.sourceCode])
             }
             guard !rows.isEmpty,
                   let catalogLine = catalog.line(id: line.id, regionCode: regionCode) else { return nil }
@@ -164,7 +182,7 @@ struct StationPickerView: View {
                 station: station,
                 subtitle: hit.qualifier ?? subtitleByCode[key.sourceCode] ?? "",
                 copyText: copyLabels.label(for: station, catalog: catalog),
-                stationID: hit.stationID)]
+                stationID: hit.stationID, match: search.matches[key.sourceCode])]
         }
     }
 
@@ -184,7 +202,7 @@ struct StationPickerView: View {
                     station: station,
                     subtitle: qualifier ?? subtitleByCode[key.sourceCode] ?? "",
                     copyText: copyLabels.label(for: station, catalog: catalog),
-                    stationID: stationID))
+                    stationID: stationID, match: search.matches[key.sourceCode]))
             }
         }
         return rows
@@ -236,8 +254,9 @@ struct StationPickerView: View {
         .task(id: loadToken) { await load() }
         .onChange(of: searchText) { _, needle in
             search.apply(query: needle, companyName: nil)
-            readHints(needle)
+            if needle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { hints = PickerHints() }
         }
+        .onChange(of: search.output.response) { _, response in readHints(response) }
         .onChange(of: filterOperatorID) { _, _ in refreshFilterState() }
         .onChange(of: filterLineID) { _, _ in
             lineFitRevision += 1
@@ -268,6 +287,7 @@ struct StationPickerView: View {
             content: filterMapContent,
             reduceMotion: reduceMotion,
             onStation: { station in
+                recordPick(station)
                 if let onSelectWithLine { onSelectWithLine(station, nil, nil) }
                 else { onSelect?(station, nil) }
                 dismiss()
@@ -275,6 +295,7 @@ struct StationPickerView: View {
             onRoute: { _ in },
             onBackground: {},
             onZoomChange: { _ in },
+            onRegionChange: { rect in search.setSignals(visibleRegion: rect) },
             showsAllStations: filterOperatorID != nil,
             stationsRevision: mapStationsRevision)
             .overlay(alignment: .top) {
@@ -424,14 +445,45 @@ struct StationPickerView: View {
         return TripMapContent(routes: [route], marks: [], fitRevision: lineFitRevision)
     }
 
-    /// Filters and corrections the search engine read from the text.
-    private func readHints(_ query: String) {
-        guard let catalog else { hints = .none; return }
-        let next = StationSearchHintSource.hints(for: query, regionCode: regionCode, catalog: catalog)
-        hints = next
-        guard !next.applied.isEmpty else { return }
-        textBeforeAppliedFilter = query
-        for filter in next.applied {
+    /// Filters and corrections the shared engine read from the text. Only the
+    /// response for the text now in the field counts; it names ids that exist
+    /// in this picker's catalog.
+    private func readHints(_ response: SearchResponse?) {
+        let typed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let catalog, let response, !typed.isEmpty,
+              response.query.trimmingCharacters(in: .whitespacesAndNewlines) == typed else {
+            hints = PickerHints()
+            return
+        }
+        let operatorIDs = Set(catalog.operators(in: regionCode).map(\.id))
+        func known(_ filters: [SearchFilter]) -> [PickerHints.Filter] {
+            filters.compactMap { filter in
+                switch filter.entity.kind {
+                case .company:
+                    guard operatorIDs.contains(filter.entity.id) else { return nil }
+                    return PickerHints.Filter(kind: .company, id: filter.entity.id, title: filter.title)
+                case .line:
+                    guard catalog.line(id: filter.entity.id, regionCode: regionCode) != nil else { return nil }
+                    return PickerHints.Filter(kind: .line, id: filter.entity.id, title: filter.title)
+                default: return nil
+                }
+            }
+        }
+        var applied = known(response.parsed.applied)
+        var suggested = known(response.parsed.suggested)
+        if declinedFilterText == typed {
+            suggested = applied + suggested
+            applied = []
+        } else {
+            declinedFilterText = nil
+        }
+        hints = PickerHints(
+            suggested: suggested,
+            residualText: response.parsed.residualText,
+            didYouMean: response.didYouMean.map(\.text))
+        guard !applied.isEmpty else { return }
+        textBeforeAppliedFilter = searchText
+        for filter in applied {
             switch filter.kind {
             case .company: filterOperatorID = filter.id
             case .line:
@@ -441,10 +493,10 @@ struct StationPickerView: View {
                 filterLineID = filter.id
             }
         }
-        if let residual = next.residualText { queryBinding.wrappedValue = residual }
+        queryBinding.wrappedValue = response.parsed.residualText
     }
 
-    private func apply(_ filter: StationSearchHints.Filter) {
+    private func apply(_ filter: PickerHints.Filter) {
         switch filter.kind {
         case .company:
             filterOperatorID = filter.id
@@ -453,7 +505,10 @@ struct StationPickerView: View {
             filterOperatorID = catalog?.line(id: filter.id, regionCode: regionCode)?.operatorIDs.first
             filterLineID = filter.id
         }
-        if let residual = hints.residualText { queryBinding.wrappedValue = residual }
+        if let residual = hints.residualText {
+            textBeforeAppliedFilter = searchText
+            queryBinding.wrappedValue = residual
+        }
         hints.suggested = []
     }
 
@@ -519,6 +574,7 @@ struct StationPickerView: View {
                             // A filter the search applied gives its words back.
                             if let typed = textBeforeAppliedFilter {
                                 textBeforeAppliedFilter = nil
+                                declinedFilterText = typed.trimmingCharacters(in: .whitespacesAndNewlines)
                                 queryBinding.wrappedValue = typed
                             }
                         } label: {
@@ -608,12 +664,23 @@ struct StationPickerView: View {
             return
         }
         let readings = localization.stationSearchNames(region: region)
+        let recent = StationPickerRecents.load(regionCode: regionCode)
+        let rideCounts = StationPickerRecents.rideCounts(
+            trains: itineraries?.loaded?.trains ?? [], regionCode: regionCode)
+        search.setSignals(recentPicks: recent, rideCounts: rideCounts)
+        if sourceCatalog == nil {
+            SharedSearchEngine.shared.prepare(regionCode: regionCode, readings: readings)
+        }
         let request = StationPickerSearchController.Request(
             regionCode: regionCode, rideDate: rideDate, lineIDs: lineIDs, includesRetired: includesRetired)
         do {
             let loaded = try await Task.detached(priority: .userInitiated) {
                 let catalog = try sourceCatalog ?? loadCatalog(for: region)
-                let index = catalog.stationSearchIndex(regionCode: regionCode, extraNames: readings)
+                // One index per region, shared with the line search. An injected
+                // catalog is not the bundled one, so it gets its own index.
+                let index = sourceCatalog == nil
+                    ? try await SharedSearchEngine.shared.stationIndex(regionCode: regionCode, catalog: catalog)
+                    : catalog.stationSearchIndex(regionCode: regionCode, extraNames: readings)
                 let directory = includesRetired ? RiddenRouteStore.retiredStations(region: regionCode) : []
                 let output = index.search(StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
                     eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs), retired: directory)
@@ -663,7 +730,13 @@ struct StationPickerView: View {
             .buttonStyle(RailRowPressStyle(cornerRadius: 0))
             .accessibilityIdentifier("stationPickerRetired-\(station.id)")
     }
+    private func recordPick(_ station: CatalogStation) {
+        let recent = StationPickerRecents.record(
+            stationCode: station.key.sourceCode, regionCode: regionCode)
+        search.setSignals(recentPicks: recent)
+    }
     private func select(_ row: CatalogStationRow, line: CatalogLine? = nil) {
+        recordPick(row.station)
         if let onSelectWithLine { onSelectWithLine(row.station, line, row.stationID) }
         else { onSelect?(row.station, row.stationID) }
         if inlineQuery == nil { dismiss() }
@@ -712,10 +785,16 @@ private struct CatalogStationLabel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(visibleName)
+            Text(highlighted(visibleName, ranges: titleHighlights))
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
+            if let via = matchedVia {
+                Text(highlighted(via.text, ranges: via.ranges))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
             if !caption.isEmpty {
                 StationQualifierCaption(text: caption)
             }
@@ -750,6 +829,33 @@ private struct CatalogStationLabel: View {
                 row.station.name, code: row.station.key.sourceCode,
                 region: Region(rawValue: row.station.key.regionCode)),
             regionCode: row.station.key.regionCode, localization: localization)
+    }
+
+    /// Highlight ranges when the matched spelling is the title on screen.
+    private var titleHighlights: [Range<Int>] {
+        guard let match = row.match, match.highlightsTitle, match.matchedText == visibleName else { return [] }
+        return match.highlights
+    }
+
+    /// The spelling that matched when it is not the shown name (romaji, reading, alias, code).
+    private var matchedVia: (text: String, ranges: [Range<Int>])? {
+        guard let match = row.match, match.source != .name, !match.matchedText.isEmpty,
+              match.matchedText != visibleName,
+              match.kind != .browse, match.kind != .recent, match.kind != .frequent else { return nil }
+        return (match.matchedText, match.highlights)
+    }
+
+    /// Bold the matched UTF-16 ranges of `text`.
+    private func highlighted(_ text: String, ranges: [Range<Int>]) -> AttributedString {
+        var result = AttributedString(text)
+        let length = text.utf16.count
+        for range in ranges where range.lowerBound >= 0 && range.upperBound <= length && !range.isEmpty {
+            let nsRange = NSRange(location: range.lowerBound, length: range.count)
+            if let target = Range<AttributedString.Index>(nsRange, in: result) {
+                result[target].inlinePresentationIntent = .stronglyEmphasized
+            }
+        }
+        return result
     }
 
     private var caption: String {

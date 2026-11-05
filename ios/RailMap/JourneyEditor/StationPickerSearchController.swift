@@ -12,11 +12,14 @@ struct CatalogStationRow: Identifiable, Hashable, Sendable {
     /// Registry company station this row writes. Nil when the row is a complex
     /// with more than one station, or when no registry is installed.
     var stationID: String? = nil
+    /// How the shared engine matched this row, for highlights and the "matched via" line.
+    var match: SearchMatch? = nil
     var id: String { station.key.sourceCode }
 }
 
 /// Owns one station picker's search snapshots and request lifetime. Ranking
-/// stays in ``StationSearchIndex``; this controller only debounces and drops
+/// stays in the shared RailCore engine (via ``StationSearchIndex``, whose index
+/// comes from ``SharedSearchEngine``); this controller only debounces and drops
 /// a result whose load or query is no longer current.
 @MainActor
 @Observable
@@ -30,12 +33,17 @@ final class StationPickerSearchController {
     }
 
     private(set) var output = StationSearchResult()
+    /// Best engine match per station source code, from the same response as `output`.
+    private(set) var matches: [String: SearchMatch] = [:]
 
     @ObservationIgnored private var loadID: UUID?
     @ObservationIgnored private var requestID = UUID()
     @ObservationIgnored private var filterTask: Task<Void, Never>?
     @ObservationIgnored private var index: StationSearchIndex?
     @ObservationIgnored private var retired: [RetiredStation] = []
+    @ObservationIgnored private var recentPicks: [SearchEntityID] = []
+    @ObservationIgnored private var rideCounts: [SearchEntityID: Int] = [:]
+    @ObservationIgnored private var visibleRegion: SearchMapRect?
     @ObservationIgnored private var request = Request(
         regionCode: "", rideDate: nil, lineIDs: [], includesRetired: false)
     @ObservationIgnored private let debounce: @Sendable () async throws -> Void
@@ -53,6 +61,7 @@ final class StationPickerSearchController {
         index = nil
         retired = []
         output = StationSearchResult()
+        matches = [:]
         return id
     }
 
@@ -71,7 +80,28 @@ final class StationPickerSearchController {
         self.retired = retired
         self.request = request
         self.output = output
+        self.matches = Self.matches(of: output)
         return true
+    }
+
+    /// Ranking signals for the engine's `SearchContext`. The visible region
+    /// arrives on camera idle and is read by the next search.
+    func setSignals(
+        recentPicks: [SearchEntityID]? = nil, rideCounts: [SearchEntityID: Int]? = nil,
+        visibleRegion: SearchMapRect? = nil
+    ) {
+        if let recentPicks { self.recentPicks = recentPicks }
+        if let rideCounts { self.rideCounts = rideCounts }
+        if let visibleRegion { self.visibleRegion = visibleRegion }
+    }
+
+    nonisolated private static func matches(of output: StationSearchResult) -> [String: SearchMatch] {
+        var best: [String: SearchMatch] = [:]
+        for result in output.response?.results ?? [] where result.entity.kind == .station {
+            // Results are ranked best first: keep the first match per station.
+            if best[result.entity.id] == nil { best[result.entity.id] = result.match }
+        }
+        return best
     }
 
     func apply(query: String, companyName: String? = nil) {
@@ -89,11 +119,13 @@ final class StationPickerSearchController {
                 do { try await debounce() } catch { return }
             }
             guard !Task.isCancelled else { return }
-            let result = await Task.detached(priority: .userInitiated) {
-                index.search(query, retired: retired)
+            let (result, matches) = await Task.detached(priority: .userInitiated) {
+                let result = index.search(query, retired: retired)
+                return (result, Self.matches(of: result))
             }.value
             guard !Task.isCancelled, let self, self.requestID == id else { return }
             self.output = result
+            self.matches = matches
             self.filterTask = nil
         }
     }
@@ -106,11 +138,15 @@ final class StationPickerSearchController {
     }
 
     private func storedQuery(needle: String) -> StationSearchQuery {
-        StationSearchQuery(
+        var query = StationSearchQuery(
             regionCode: request.regionCode,
             needle: needle,
             rideDate: request.rideDate,
             eligibility: request.includesRetired ? [.current, .retired] : .current,
             lineIDs: request.lineIDs, companyName: request.companyName)
+        query.recentPicks = recentPicks
+        query.rideCounts = rideCounts
+        query.visibleRegion = visibleRegion
+        return query
     }
 }
