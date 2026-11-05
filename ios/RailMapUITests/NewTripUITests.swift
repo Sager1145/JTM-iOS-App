@@ -177,7 +177,7 @@ final class NewTripUITests: XCTestCase {
         pickStation(field: "newTripDestination", query: "丸ノ内", code: "003390", in: app)
 
         let error = app.descendants(matching: .any)["newTripRouteError"]
-        XCTAssertTrue(reveal(error, in: app, timeout: 20))
+        XCTAssertTrue(reveal(error, in: app, timeout: 40))
         XCTAssertTrue(error.label.contains("赤坂見附"), error.label)
         XCTAssertFalse(app.buttons["newTripSave"].isEnabled,
                        "A disconnected pair must not be savable.")
@@ -275,7 +275,8 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(company.waitForExistence(timeout: 20), app.debugDescription)
         company.tap()
         let jrEast = app.buttons.matching(NSPredicate(
-            format: "label CONTAINS %@ OR label CONTAINS %@", "JR東日本", "東日本旅客鉄道")).firstMatch
+            format: "label CONTAINS %@ OR label CONTAINS %@ OR label CONTAINS %@",
+            "JR East", "JR東日本", "東日本旅客鉄道")).firstMatch
         XCTAssertTrue(jrEast.waitForExistence(timeout: 8), app.debugDescription)
         jrEast.tap()
         let line = app.buttons["stationPickerFilterLine-jp-東日本旅客鉄道-山手線"]

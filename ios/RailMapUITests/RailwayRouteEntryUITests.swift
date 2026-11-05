@@ -63,6 +63,8 @@ final class RailwayRouteEntryUITests: XCTestCase {
         }
         XCTAssertTrue(row.exists, app.debugDescription)
         row.tap()
+        // A tap while the search keyboard is up may only resign the field.
+        if app.searchFields.firstMatch.exists, row.waitForExistence(timeout: 2) { row.tap() }
         XCTAssertTrue(app.searchFields.firstMatch.waitForNonExistence(timeout: 8))
         XCTAssertFalse(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch.exists,
                        "A new destination replaces the saved route.")

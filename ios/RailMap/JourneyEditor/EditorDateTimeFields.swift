@@ -386,6 +386,15 @@ struct TypedDateTimeField: View {
         .onAppear(perform: refresh)
         .onChange(of: value) { _, _ in if focused == nil { refresh() } }
         .onChange(of: focused) { old, part in if old != nil, part == nil { normalize() } }
+        // A complete form ("2027-09-30", "9:30") is applied as it is typed;
+        // a half-typed one ("11/1" on the way to "11/15") never is.
+        .onChange(of: dateText) { _, text in
+            if case .valid = EditorTime.parseDate(text) { apply() }
+        }
+        .onChange(of: timeText) { _, text in
+            if text.contains(":"), text.split(separator: ":").last?.count == 2,
+               case .valid = EditorTime.parseTime(text) { apply() }
+        }
     }
 
     private var parsedDate: ServiceDateParse {
