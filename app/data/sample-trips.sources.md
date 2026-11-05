@@ -55,6 +55,11 @@ The page cites JR時刻表 2026年07月号 or 08月号, and its operating calend
 | 20260724_03_tsurugisan6 | 剣山6号 4006D (was 56D) | 76271 | 2026-08 |
 | 20260730_03_yakumo22 | やくも22号 1022M | 941 | 2026-08 |
 
+The same pages supply `platform_number` from their のりば column (70 stops on 16 rides,
+parsed from the raw page for the ride's date; stops the page leaves blank stay `null`).
+剣山6号's page gives no platform for the ride's stops. Page 125431 lists しおかぜ9号 and
+いしづち9号 together; 高松 platform 7 is いしづち9号's, as しおかぜ9号 starts at 岡山.
+
 - 南海 ラピートα3号 (20260731_02): `https://www.nankai.co.jp/lib/traffic/express/rapit/pdf/rairt_down.pdf`. The weekday table is effective from 2024-12-21, and no later 南海線 revision was found up to the 2026-07-31 service date. The intermediate departures at 天下茶屋, 泉佐野 and りんくうタウン come from this table; the endpoint times already matched it.
 - MTR East Rail Line (HK sample): `https://www.mtr.com.hk/en/customer/services/train_service_index.html`. MTR publishes headways only, so no trip times are entered.
 - Macao LRT Taipa Line (MO sample): `https://www.mlm.com.mo/tc/route.html` (updated 2026-09). This gives operating hours and headways only, so no trip times are entered.

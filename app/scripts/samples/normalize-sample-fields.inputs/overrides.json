@@ -7,22 +7,32 @@
    },
    "豊橋": {
     "arrival": "13:36",
-    "departure": "13:41"
+    "departure": "13:41",
+    "platform_number": 12
    },
    "浜松": {
     "arrival": "13:53",
-    "departure": "13:58"
+    "departure": "13:58",
+    "platform_number": 5
    },
    "掛川": {
     "arrival": "14:08",
     "departure": "14:10"
    },
    "静岡": {
-    "arrival": "14:23"
+    "arrival": "14:23",
+    "platform_number": 5
    },
    "新富士": {
     "arrival": "14:36",
-    "departure": "14:41"
+    "departure": "14:41",
+    "platform_number": 1
+   },
+   "名古屋": {
+    "platform_number": 15
+   },
+   "三島": {
+    "platform_number": 6
    }
   },
   "number": "こだま824号（Kodama 824）（824A）",
@@ -32,11 +42,19 @@
   "stops": {
    "新横浜": {
     "arrival": "20:24",
-    "departure": "20:25"
+    "departure": "20:25",
+    "platform_number": 2
    },
    "品川": {
     "arrival": "20:35",
-    "departure": "20:36"
+    "departure": "20:36",
+    "platform_number": 21
+   },
+   "三島": {
+    "platform_number": 6
+   },
+   "東京": {
+    "platform_number": 18
    }
   },
   "number": "ひかり718号（Hikari 718）（718A）",
@@ -48,6 +66,12 @@
     "stop_type": "pass_through",
     "arrival": null,
     "departure": null
+   },
+   "新山口": {
+    "platform_number": 11
+   },
+   "広島": {
+    "platform_number": 14
    }
   },
   "vehicle_type": "N700系（8両）"
@@ -56,7 +80,14 @@
   "stops": {
    "相生": {
     "arrival": "22:34",
-    "departure": "22:35"
+    "departure": "22:35",
+    "platform_number": 12
+   },
+   "岡山": {
+    "platform_number": 24
+   },
+   "姫路": {
+    "platform_number": 11
    }
   },
   "number": "こだま970号（970A）",
@@ -66,21 +97,35 @@
   "stops": {
    "新神戸": {
     "arrival": "11:33",
-    "departure": "11:34"
+    "departure": "11:34",
+    "platform_number": 2
    },
    "新大阪": {
     "arrival": "11:46",
-    "departure": "11:48"
+    "departure": "11:48",
+    "platform_number": 25
    },
    "京都": {
     "arrival": "12:02",
-    "departure": "12:07"
+    "departure": "12:07",
+    "platform_number": 11
    },
    "名古屋": {
-    "arrival": "12:42"
+    "arrival": "12:42",
+    "platform_number": 15
    },
    "浜松": {
-    "arrival": "13:13"
+    "arrival": "13:13",
+    "platform_number": 5
+   },
+   "姫路": {
+    "platform_number": 11
+   },
+   "静岡": {
+    "platform_number": 5
+   },
+   "三島": {
+    "platform_number": 6
    }
   },
   "vehicle_type": "N700系"
@@ -89,11 +134,19 @@
   "stops": {
    "新横浜": {
     "arrival": "14:24",
-    "departure": "14:25"
+    "departure": "14:25",
+    "platform_number": 2
    },
    "品川": {
     "arrival": "14:35",
-    "departure": "14:36"
+    "departure": "14:36",
+    "platform_number": 21
+   },
+   "三島": {
+    "platform_number": 6
+   },
+   "東京": {
+    "platform_number": 15
    }
   },
   "vehicle_type": "N700系"
@@ -102,15 +155,24 @@
   "stops": {
    "品川": {
     "arrival": "16:33",
-    "departure": "16:34"
+    "departure": "16:34",
+    "platform_number": 24
    },
    "新横浜": {
     "arrival": "16:44",
-    "departure": "16:45"
+    "departure": "16:45",
+    "platform_number": 3
    },
    "小田原": {
     "arrival": "17:00",
-    "departure": "17:05"
+    "departure": "17:05",
+    "platform_number": 13
+   },
+   "東京": {
+    "platform_number": 18
+   },
+   "熱海": {
+    "platform_number": 6
    }
   },
   "number": "こだま841号（Kodama 841）（841A）",
@@ -120,11 +182,19 @@
   "stops": {
    "新横浜": {
     "arrival": "12:24",
-    "departure": "12:25"
+    "departure": "12:25",
+    "platform_number": 2
    },
    "品川": {
     "arrival": "12:35",
-    "departure": "12:36"
+    "departure": "12:36",
+    "platform_number": 21
+   },
+   "三島": {
+    "platform_number": 6
+   },
+   "東京": {
+    "platform_number": 16
    }
   },
   "number": "ひかり702号（Hikari 702）（702A）",
@@ -134,15 +204,24 @@
   "stops": {
    "新横浜": {
     "arrival": "15:44",
-    "departure": "15:45"
+    "departure": "15:45",
+    "platform_number": 3
    },
    "小田原": {
     "arrival": "16:00",
-    "departure": "16:02"
+    "departure": "16:02",
+    "platform_number": 13
    },
    "熱海": {
     "arrival": "16:10",
-    "departure": "16:10"
+    "departure": "16:10",
+    "platform_number": 6
+   },
+   "品川": {
+    "platform_number": 24
+   },
+   "三島": {
+    "platform_number": 5
    }
   },
   "number": "こだま837号（Kodama 837）（837A）",
@@ -152,15 +231,23 @@
   "stops": {
    "新富士": {
     "arrival": "14:31",
-    "departure": "14:37"
+    "departure": "14:37",
+    "platform_number": 2
    },
    "静岡": {
     "arrival": "14:47",
-    "departure": "14:52"
+    "departure": "14:52",
+    "platform_number": 6
    },
    "掛川": {
     "arrival": "15:06",
     "departure": "15:08"
+   },
+   "三島": {
+    "platform_number": 5
+   },
+   "浜松": {
+    "platform_number": 6
    }
   },
   "number": "こだま829号（Kodama 829）（829A）",
@@ -174,11 +261,19 @@
    },
    "静岡": {
     "arrival": "16:51",
-    "departure": "16:56"
+    "departure": "16:56",
+    "platform_number": 5
    },
    "新富士": {
     "arrival": "17:06",
-    "departure": "17:11"
+    "departure": "17:11",
+    "platform_number": 1
+   },
+   "浜松": {
+    "platform_number": 5
+   },
+   "三島": {
+    "platform_number": 6
    }
   },
   "number": "こだま834号（Kodama 834）（834A）",
@@ -188,19 +283,29 @@
   "stops": {
    "熱海": {
     "arrival": "19:01",
-    "departure": "19:02"
+    "departure": "19:02",
+    "platform_number": 7
    },
    "小田原": {
     "arrival": "19:09",
-    "departure": "19:14"
+    "departure": "19:14",
+    "platform_number": 14
    },
    "新横浜": {
     "arrival": "19:29",
-    "departure": "19:30"
+    "departure": "19:30",
+    "platform_number": 2
    },
    "品川": {
     "arrival": "19:40",
-    "departure": "19:41"
+    "departure": "19:41",
+    "platform_number": 21
+   },
+   "三島": {
+    "platform_number": 6
+   },
+   "東京": {
+    "platform_number": 18
    }
   },
   "number": "こだま840号（Kodama 840）（840A）",
@@ -210,32 +315,65 @@
   "stops": {
    "品川": {
     "arrival": "21:51",
-    "departure": "21:52"
+    "departure": "21:52",
+    "platform_number": 24
    },
    "新横浜": {
     "arrival": "22:02",
-    "departure": "22:03"
+    "departure": "22:03",
+    "platform_number": 3
    },
    "小田原": {
     "arrival": "22:18",
-    "departure": "22:19"
+    "departure": "22:19",
+    "platform_number": 13
    },
    "熱海": {
     "arrival": "22:26",
-    "departure": "22:27"
+    "departure": "22:27",
+    "platform_number": 6
+   },
+   "東京": {
+    "platform_number": 18
+   },
+   "三島": {
+    "platform_number": 5
    }
   },
   "number": "こだま911号（Kodama 911）（911A）",
   "vehicle_type": "N700系"
  },
  "20260703_02_tokaido_shinkansen_hikari_kodama": {
-  "notes": "名古屋—静岡間はJR西日本おでかけネットの846A時刻表（2026-07-03）で確認。846Aは名古屋始発のため、新大阪—名古屋間の記録は別列車の可能性があり未確認。"
+  "notes": "名古屋—静岡間はJR西日本おでかけネットの846A時刻表（2026-07-03）で確認。846Aは名古屋始発のため、新大阪—名古屋間の記録は別列車の可能性があり未確認。",
+  "stops": {
+   "名古屋": {
+    "platform_number": 15
+   },
+   "豊橋": {
+    "platform_number": 12
+   },
+   "浜松": {
+    "platform_number": 5
+   },
+   "静岡": {
+    "platform_number": 5
+   },
+   "新富士": {
+    "platform_number": 1
+   },
+   "三島": {
+    "platform_number": 6
+   }
+  }
  },
  "20260724_01_ishizuchi9": {
   "stops": {
    "坂出": {
     "arrival": "12:03",
     "departure": "12:04"
+   },
+   "高松": {
+    "platform_number": 7
    }
   },
   "number": "いしづち9号（Ishizuchi 9）（1009M）"
@@ -265,7 +403,8 @@
    },
    "米子": {
     "arrival": "15:34",
-    "departure": "15:36"
+    "departure": "15:36",
+    "platform_number": 1
    },
    "新見": {
     "arrival": "16:45",
@@ -278,6 +417,9 @@
    "倉敷": {
     "arrival": "17:35",
     "departure": "17:36"
+   },
+   "岡山": {
+    "platform_number": 3
    }
   },
   "number": "やくも22号（Yakumo 22）（1022M）"
