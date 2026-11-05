@@ -204,10 +204,7 @@ fi
 
 /usr/bin/ditto "$raster" "$target_dir/rail"
 
-# The legacy matched pair is still the instant route source for stores whose
-# ids it covers, and the progressive sample parts carry a precomputed route for
-# every bundled sample train. Keeping those parts lets the native app draw the
-# shipped journeys before it ever has to invoke the on-device solver.
+# The legacy matched pair is still listed in the resource revisions.
 for resource in matched-routes matched-stops; do
     file="$here/../app/data/$resource.json"
     if [ ! -f "$file" ]; then
@@ -217,17 +214,15 @@ for resource in matched-routes matched-stops; do
     cp -p "$file" "$target_dir/$resource.json"
 done
 
+# Bundled examples ship only as stores in the user schema (train-store*.json
+# and special-samples/*.json) and resolve like any journey the reader adds.
+# The web app's precomputed route parts are not bundled; remove copies an
+# older build left behind.
 for dataset in \
     sample-data sample-data-tw sample-data-hk sample-data-mo sample-data-kr \
     new-year-grand-loop-data tokyo-limited-express-loop-data
 do
-    source="$here/../app/data/$dataset"
-    if [ ! -d "$source" ]; then
-        echo "error: missing $source" >&2
-        exit 1
-    fi
     prune_owned_dir "$target_dir/$dataset"
-    /usr/bin/ditto "$source" "$target_dir/$dataset"
 done
 
 # The string catalog goes in as raw JSON, under a .json name, and it lives in
