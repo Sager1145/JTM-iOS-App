@@ -616,7 +616,7 @@ struct StationPickerView: View {
         if let identity {
             for op in operators {
                 if let id = identity.operatorIDs(forCatalogName: op.name).first,
-                   let label = identity.operatorLabel(id), !label.isEmpty {
+                   let label = identity.operatorLabel(id, language: localization.language.rawValue), !label.isEmpty {
                     labels[op.id] = label
                 }
             }
