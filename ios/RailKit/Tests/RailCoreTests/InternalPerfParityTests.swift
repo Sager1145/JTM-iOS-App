@@ -34,4 +34,39 @@ struct InternalPerfParityTests {
         let expected = trains.sorted { Dates.compareByDateAndDeparture($0, $1) < 0 }
         #expect(Dates.sortByDateAndDeparture(trains) == expected)
     }
+
+    @Test("graph edges keep rare fields out of line and still compare by value")
+    func compactEdge() {
+        print("PERF Edge stride", MemoryLayout<RouteGraph.Edge>.stride)
+        // The out-of-line box must stay small too: it is allocated for every
+        // edge with a validity bound, history id, track binding or connector.
+        print("PERF Rare box payload", RouteGraph.Edge.rarePayloadSize)
+        #expect(RouteGraph.Edge.rarePayloadSize <= 160)
+        #expect(MemoryLayout<RouteGraph.Edge>.stride <= 112)
+        let plain = RouteGraph.Edge(to: "a", length: 1, institutionTypeCode: "1",
+            railwayClassCode: "11", lineName: "L", operator: "O")
+        var withRare = plain
+        withRare.validFrom = "2020-01-01"
+        withRare.historyIDs = ["h"]
+        withRare.registeredTrackLineIDs = ["x"]
+        withRare.connector = .init(institutionTypeCodes: ["1"], stationName: "S", groupCode: "G")
+        #expect(withRare != plain)
+        #expect(withRare.validFrom == "2020-01-01" && withRare.historyIDs == ["h"])
+        #expect(withRare.registeredTrackLineIDs == ["x"] && withRare.connector?.groupCode == "G")
+        #expect(plain.validFrom == nil && plain.historyIDs.isEmpty && plain.connector == nil)
+        // Clearing every rare field returns to the inline-only value.
+        var cleared = withRare
+        cleared.validFrom = nil; cleared.historyIDs = []
+        cleared.registeredTrackLineIDs = []; cleared.connector = nil
+        #expect(cleared == plain)
+        // Separately built equal values are equal; copies stay independent.
+        let twin = RouteGraph.Edge(to: "a", length: 1, institutionTypeCode: "1",
+            railwayClassCode: "11", lineName: "L", operator: "O", validFrom: "2020-01-01")
+        var other = plain
+        other.validFrom = "2020-01-01"
+        #expect(twin == other)
+        var copy = twin
+        copy.validTo = "2021-01-01"
+        #expect(twin.validTo == nil && copy.validTo == "2021-01-01")
+    }
 }

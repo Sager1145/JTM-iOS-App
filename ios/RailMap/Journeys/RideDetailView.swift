@@ -901,7 +901,8 @@ struct RideDetailContent: View {
             }
             if let company = train.company, !company.isEmpty {
                 LabeledContent(
-                    localization.countryText("field.company", fallback: "Operator"), value: company)
+                    localization.countryText("field.company", fallback: "Operator"),
+                    value: JourneyBranding.companyText(company))
             }
             if let type = train.trainType, !type.isEmpty {
                 LabeledContent(

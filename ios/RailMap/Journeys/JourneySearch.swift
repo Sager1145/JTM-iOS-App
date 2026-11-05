@@ -39,6 +39,7 @@ final class JourneySearch {
             // Localization is UI-owned. Snapshot its inexpensive lookups
             // once per store/language generation, never once per keystroke.
             if naming != request.naming || !ArrayGeneration.same(source, request.days) {
+                RailSignpost.ui.mark("derived.journeySearch", request.days.count)
                 var snapshot: [String: [String]] = [:]
                 for day in request.days {
                     try Task.checkCancellation()

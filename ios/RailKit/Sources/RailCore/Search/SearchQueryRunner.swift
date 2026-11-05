@@ -196,34 +196,39 @@ struct SearchQueryRunner {
         return filters.filter { seen.insert($0.entity).inserted }
     }
 
+    /// Scope, the caller's hard constraints (context.lineIDs / operatorIDs) and the
+    /// query's parsed filters, all ANDed: typing another line's name never widens a
+    /// picker restricted to selected lines.
     private func computeAllowed(_ scratch: SearchScratch, scope: SearchScope, parsed: Parsed) {
-        var companies = Set(parsed.companyDocs.flatMap { operatorRefs(of: $0) })
-        var lines = Set(parsed.lineDocs.flatMap { lineRefs(of: $0) })
-        var missingConstraint = false
-        for id in context.operatorIDs {
-            if let ref = index.operatorTable.firstIndex(of: id) { companies.insert(UInt32(ref)) } else { missingConstraint = true }
-        }
-        for id in context.lineIDs {
-            if let ref = index.lineTable.firstIndex(of: id) { lines.insert(UInt32(ref)) } else { missingConstraint = true }
-        }
-        if missingConstraint && companies.isEmpty && lines.isEmpty {
+        let parsedCompanies = Set(parsed.companyDocs.flatMap { operatorRefs(of: $0) })
+        let parsedLines = Set(parsed.lineDocs.flatMap { lineRefs(of: $0) })
+        let contextCompanies = Set(context.operatorIDs.compactMap { id in
+            index.operatorTable.firstIndex(of: id).map { UInt32($0) } })
+        let contextLines = Set(context.lineIDs.compactMap { id in
+            index.lineTable.firstIndex(of: id).map { UInt32($0) } })
+        // A constraint none of whose ids this region knows allows nothing.
+        if (!context.operatorIDs.isEmpty && contextCompanies.isEmpty)
+            || (!context.lineIDs.isEmpty && contextLines.isEmpty) {
             for d in 0..<index.count { scratch.allowed[d] = false }
             return
         }
         for d in 0..<index.count {
-            var ok = scope.contains(kind: index.kinds[d])
-            if ok, !companies.isEmpty {
-                ok = false
-                for r in Int(index.operatorRefStart[d])..<Int(index.operatorRefStart[d + 1])
-                where companies.contains(index.operatorRefs[r]) { ok = true; break }
-            }
-            if ok, !lines.isEmpty {
-                ok = false
-                for r in Int(index.lineRefStart[d])..<Int(index.lineRefStart[d + 1])
-                where lines.contains(index.lineRefs[r]) { ok = true; break }
-            }
-            scratch.allowed[d] = ok
+            let operators = Int(index.operatorRefStart[d])..<Int(index.operatorRefStart[d + 1])
+            let lineRange = Int(index.lineRefStart[d])..<Int(index.lineRefStart[d + 1])
+            scratch.allowed[d] = scope.contains(kind: index.kinds[d])
+                && passes(contextCompanies, operators, index.operatorRefs)
+                && passes(contextLines, lineRange, index.lineRefs)
+                && passes(parsedCompanies, operators, index.operatorRefs)
+                && passes(parsedLines, lineRange, index.lineRefs)
         }
+    }
+
+    /// True when `required` is empty or one of the document's refs is in it.
+    @inline(__always)
+    private func passes(_ required: Set<UInt32>, _ range: Range<Int>, _ refs: [UInt32]) -> Bool {
+        if required.isEmpty { return true }
+        for r in range where required.contains(refs[r]) { return true }
+        return false
     }
 
     // MARK: Relevance

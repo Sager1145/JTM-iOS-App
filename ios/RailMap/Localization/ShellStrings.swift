@@ -447,6 +447,30 @@ enum ShellStrings {
             .zhHans: "{loaded}/{requested} · {kb} KB",
             .zhHant: "{loaded}/{requested} · {kb} KB",
         ],
+        "ios.reloadAll": [
+            .en: "Reload all trips", .ja: "すべての行程を再読み込み",
+            .zhHans: "重新载入所有行程", .zhHant: "重新載入所有行程",
+        ],
+        "ios.reloadAll.confirmTitle": [
+            .en: "Reload all trips?", .ja: "すべての行程を再読み込みしますか？",
+            .zhHans: "要重新载入所有行程吗？", .zhHant: "要重新載入所有行程嗎？",
+        ],
+        "ios.reloadAll.confirm": [
+            .en: "Reload all", .ja: "すべて再読み込み", .zhHans: "全部重新载入", .zhHant: "全部重新載入",
+        ],
+        "ios.reloadAll.stop": [
+            .en: "Stop reloading", .ja: "再読み込みを中止", .zhHans: "停止重新载入", .zhHant: "停止重新載入",
+        ],
+        "ios.reloadAll.progress": [
+            .en: "{done} of {total}", .ja: "{total}件中{done}件",
+            .zhHans: "{done} / {total}", .zhHant: "{done} / {total}",
+        ],
+        "ios.note.reloadAll": [
+            .en: "Clears every saved route and works out each trip's route again. You can keep using the app while it runs, and stop it at any time.",
+            .ja: "保存済みの経路をすべて消去し、各行程の経路をもう一度求めます。実行中もアプリを使えます。いつでも中止できます。",
+            .zhHans: "清除所有已保存的路线，并重新计算每个行程的路线。运行期间可以继续使用应用，也可以随时停止。",
+            .zhHant: "清除所有已儲存的路線，並重新計算每個行程的路線。執行期間可以繼續使用 App，也可以隨時停止。",
+        ],
         "ios.renderer": [.en: "Renderer", .ja: "描画エンジン", .zhHans: "绘制引擎", .zhHant: "繪製引擎"],
 
         // -- Settings: the opening view --------------------------------------

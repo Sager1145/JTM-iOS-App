@@ -407,11 +407,11 @@ private struct StationCardLineRow: View {
                     .font(.callout)
                     .fixedSize(horizontal: false, vertical: true)
                 if let operatorName = row.operatorName, !operatorName.isEmpty {
-                    Text(operatorName)
+                    Text(JourneyBranding.companyText(operatorName))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } else if !row.company.isEmpty {
-                    Text(row.company)
+                    Text(JourneyBranding.companyText(row.company))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

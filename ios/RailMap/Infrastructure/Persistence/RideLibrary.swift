@@ -405,27 +405,6 @@ final class RideLibrary {
         preferences.set(Array(loadedSamples).sorted(), forKey: Self.loadedSamplesKey)
     }
 
-    /// The precomputed route directories a region's rides may have been solved
-    /// into, most likely first.
-    ///
-    /// The web app knows which one to read because it has one store open at a
-    /// time and that store came from one place. A merged store has no such
-    /// provenance — a reader can hold the 201-journey Japanese sample, the
-    /// New Year loop and their own rides at once — so the route store searches
-    /// this list instead. That is safe rather than approximate: every part is
-    /// matched by the same route-cache digest the web app uses, so a part
-    /// belonging to another itinerary is rejected rather than drawn.
-    nonisolated static func routeDatasets(for region: Region) -> [String] {
-        switch region {
-        case .jp: ["sample-data", "new-year-grand-loop-data", "tokyo-limited-express-loop-data"]
-        case .tw: ["sample-data-tw"]
-        case .hk: ["sample-data-hk"]
-        case .mo: ["sample-data-mo"]
-        case .kr: ["sample-data-kr"]
-        case .cn: []
-        }
-    }
-
     /// Fold any per-region stores left by an earlier version into the merged
     /// one, once.
     ///

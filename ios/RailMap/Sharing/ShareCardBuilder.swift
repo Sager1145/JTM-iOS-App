@@ -34,7 +34,8 @@ struct ShareCardBuilder {
         let last = train.stops.last(where: { $0.stopType == "destination" }) ?? train.stops.last
         let origin = l.stationName(train.origin, in: train, code: train.originStationCode)
         let destination = l.stationName(train.destination, in: train, code: train.destinationStationCode)
-        let company = train.company
+        // main: operator names through companyText (English operator names).
+        let company = train.company.map(JourneyBranding.companyText)
             ?? JourneyBranding.operatorLabels(of: train).joined(separator: " / ")
         let eyebrow = [company, train.trainType].compactMap { $0 }.filter { !$0.isEmpty }
             .joined(separator: " · ")

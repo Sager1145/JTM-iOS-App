@@ -306,12 +306,8 @@ final class PlaybackController {
         // `uniquingKeysWith`, not `uniqueKeysWithValues`, and for the reason
         // `RiddenRouteStore.load` and `RailNetworkStore` both give at their own
         // id tables: a duplicate id is a data fault to draw, not a reason to
-        // trap. It is reachable — `DatasetPartIndex` maps one train id to a
-        // LIST of parts on purpose ("a dataset that ever carried two for the
-        // same id would have had both searched before"), and `datasetRides`
-        // builds a ride from each match without striking the train off
-        // `wanted`. Two matching parts therefore put two rides with one id in
-        // front of this line, and pressing 播放行程 was a crash.
+        // trap. A duplicate id has reached this line before (one train id
+        // answered twice by a lookup), and pressing 播放行程 was a crash.
         let ridesByID = Dictionary(
             rides.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         return trains.map { train in
