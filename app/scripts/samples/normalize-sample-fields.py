@@ -15,6 +15,8 @@ Field rules (see app/data/sample-data/SOURCES.md):
   (内回り/外回り) is retained. Otherwise the key is dropped,
   as the editor leaves it empty; `unknown` and terminus names are not kept.
 - Every stop carries `platform_number` (null when unknown), as the editor writes.
+- Every route section carries `from`/`to` station names beside its codes, as the
+  editor's section rows do; names are taken from the ride's own stops.
 - `--overrides` JSON {train_id: {train fields..., "stops": {name: {...}}}} applies
   source-reviewed values (see SOURCES.md); stop entries may set arrival,
   departure, platform_number or stop_type of an existing stop only.
@@ -89,6 +91,14 @@ def normalize(train, directions, english, override):
         train.pop('direction', None)
     for stop in train['stops']:
         stop.setdefault('platform_number', None)
+    name_of = {}
+    for stop in train['stops']:
+        name_of.setdefault(stop.get('n02_station_code'), stop['name'])
+    for index, section in enumerate(train.get('route_sections') or []):
+        names = {key: section.get(key) or name_of.get(section.get(f'{key}_n02_station_code')) for key in ('from', 'to')}
+        if all(names.values()) and (section.get('from'), section.get('to')) != (names['from'], names['to']):
+            rest = {k: v for k, v in section.items() if k not in ('from', 'to')}
+            train['route_sections'][index] = {**names, **rest}
     for stop in train['stops']:
         for key, value in stop_overrides.pop(stop['name'], {}).items():
             stop[key] = value
