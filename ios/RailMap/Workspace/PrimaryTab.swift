@@ -22,8 +22,7 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
 
     var headerActionCount: Int {
         switch self {
-        case .upcoming: 3
-        case .stats, .all: 4
+        case .upcoming, .stats, .all: 4
         case .search: 2
         }
     }

@@ -241,13 +241,24 @@ final class ConsoleSweepTests: XCTestCase {
             }
             entry.tap()
             settle(1.5)
-            // Settings is a Form with many sections; scrolling it mounts the
-            // rows below the fold, which is where the diagnostics live.
-            if app.tables.firstMatch.exists || app.collectionViews.firstMatch.exists {
-                app.swipeUp()
-                settle(0.5)
-                app.swipeUp()
-                settle(0.5)
+            // Settings keeps its sliders and diagnostics one level deeper
+            // (Map style, About & diagnostics). Open each page so its rows
+            // mount, then come back to the first screen before closing.
+            if destination == "utilitySettingsButton" {
+                for link in ["settingsMapStyleLink", "settingsDiagnosticsLink"] {
+                    let row = element(link, in: app)
+                    if !row.exists { app.swipeUp(); settle(0.5) }
+                    guard row.waitForExistence(timeout: 4) else {
+                        XCTFail("“\(link)” is not on the Settings screen")
+                        continue
+                    }
+                    row.tap()
+                    settle(1)
+                    app.swipeUp()
+                    settle(0.5)
+                    app.navigationBars.buttons.element(boundBy: 0).tap()
+                    settle(0.5)
+                }
             }
             dismissSheet(app)
         }

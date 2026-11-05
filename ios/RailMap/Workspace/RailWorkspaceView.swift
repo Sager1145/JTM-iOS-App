@@ -1274,9 +1274,9 @@ struct RailWorkspaceView: View {
             // Search — one filter must not have two entries in one state.
             if tab == .search, let loaded = itineraries.loaded, !loaded.days.isEmpty {
                 dateFilterSection(loaded)
+                Divider()
             }
             rideSourceSection
-            Divider()
         }
         WorkspaceUtilityMenuItems(
             onOpenData: openData,
@@ -3145,46 +3145,25 @@ struct RailWorkspaceView: View {
         return Dates.availableDates(trains, manualDates: manualDates.dates)
     }
 
-    /// The web app's 載入示例資料 / 保存為我的資料 / 恢復我的資料, as one menu.
+    /// The gear menu's view-state action.
     ///
-    /// One menu rather than eleven buttons because on a phone they are eleven
-    /// buttons the reader has to read every time; grouped, the destructive one
-    /// is also somewhere it cannot be hit by accident.
+    /// "Save as my rides" and "Restore my rides" used to sit here as well.
+    /// They change the working set, so they live in Data Library → My rides
+    /// only — the rule stated at the top of `SettingsView`: data-changing
+    /// operations are not mirrored into navigation menus. See
+    /// docs/ui-reorganization.md.
     @ViewBuilder
     private var rideSourceSection: some View {
-        Group {
-                if itineraries.selectedTrainID != nil {
-                    Button {
-                        itineraries.selectedTrainID = nil
-                    } label: {
-                        Label(
-                            localization.journeyText(
-                                "ios.journey.clearSelection", fallback: "Clear selection"),
-                            systemImage: "xmark.circle")
-                    }
-                    Divider()
-                }
-                // The samples are on the data screen, one section per region,
-                // because loading one is now an ordinary edit to the working
-                // set rather than a switch between two ways of using the app.
-                // This menu keeps the two actions that are about the reader's
-                // own rides.
-
-                Section(localization.text("ios.myRides", fallback: "My rides")) {
-                    Button {
-                        _ = itineraries.saveWorkingSet()
-                    } label: {
-                        Label(localization.countryText("btn.saveAsMine", fallback: "Save as my rides"), systemImage: "square.and.arrow.down")
-                    }
-                    .disabled(itineraries.store == nil)
-
-                    Button {
-                        itineraries.load(from: library)
-                    } label: {
-                        Label(localization.countryText("btn.restoreMine", fallback: "Restore my rides"), systemImage: "arrow.uturn.backward")
-                    }
-                    .disabled(!library.hasSavedStore)
-                }
+        if itineraries.selectedTrainID != nil {
+            Button {
+                itineraries.selectedTrainID = nil
+            } label: {
+                Label(
+                    localization.journeyText(
+                        "ios.journey.clearSelection", fallback: "Clear selection"),
+                    systemImage: "xmark.circle")
+            }
+            Divider()
         }
     }
 

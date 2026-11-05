@@ -280,7 +280,28 @@ enum ShellStrings {
         // -- Settings: section headers -------------------------------------
         "ios.regionLanguage": [.en: "Region & language", .ja: "地域と言語", .zhHans: "地区与语言", .zhHant: "地區與語言"],
         "ios.stationNames": [.en: "Station names", .ja: "駅名の表示", .zhHans: "站名显示", .zhHant: "站名顯示"],
-        "ios.mapContent": [.en: "Map content", .ja: "地図の内容", .zhHans: "地图内容", .zhHant: "地圖內容"],
+        "ios.mapContent": [.en: "Map", .ja: "地図", .zhHans: "地图", .zhHant: "地圖"],
+        "ios.general": [.en: "General", .ja: "一般", .zhHans: "通用", .zhHant: "一般"],
+        "ios.mapStyle": [.en: "Map style", .ja: "地図のスタイル", .zhHans: "地图样式", .zhHant: "地圖樣式"],
+        "ios.note.mapStyle": [
+            .en: "Line widths, station marker sizes and how the selected ride stands out.",
+            .ja: "路線の太さ、駅マーカーの大きさ、選択した乗車の強調表示。",
+            .zhHans: "线路粗细、站点标记大小，以及所选行程的突出显示方式。",
+            .zhHant: "路線粗細、站點標記大小，以及所選行程的突出顯示方式。",
+        ],
+        "ios.aboutDiagnostics": [
+            .en: "About & diagnostics", .ja: "情報と診断", .zhHans: "关于与诊断", .zhHant: "關於與診斷",
+        ],
+        "ios.note.mapSettingsElsewhere": [
+            .en: "Show or hide the rail network with the train button on the map. Layer switches are in the map's Layers panel.",
+            .ja: "路線網の表示・非表示は地図上の列車ボタンで切り替えます。レイヤーのスイッチは地図の「レイヤー」パネルにあります。",
+            .zhHans: "用地图上的列车按钮显示或隐藏铁路网。图层开关位于地图的“图层”面板中。",
+            .zhHant: "用地圖上的列車按鈕顯示或隱藏鐵路網。圖層開關位於地圖的「圖層」面板中。",
+        ],
+        "ios.layers.frameNetwork": [
+            .en: "Show the whole network", .ja: "路線網全体を表示", .zhHans: "显示整个铁路网",
+            .zhHant: "顯示整個鐵路網",
+        ],
         "ios.launchScope.header": [.en: "Opening view", .ja: "起動時の表示範囲", .zhHans: "启动地图范围", .zhHant: "啟動地圖範圍"],
         "ios.stationMarkers": [.en: "Station markers", .ja: "駅マーカー", .zhHans: "站点标记", .zhHant: "站點標記"],
         "ios.selectionFocus": [.en: "Selection & focus", .ja: "選択とフォーカス", .zhHans: "选择与聚焦", .zhHant: "選擇與聚焦"],

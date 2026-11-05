@@ -17,6 +17,10 @@ struct WorkspacePanelActions<Playback: View, JourneyDate: View, RegionMenu: View
     @Environment(AppLocalization.self) private var localization
 
     var body: some View {
+        // New journey leads on Upcoming — the default tab and where a
+        // planned trip appears once saved — and stays on Search. Same
+        // handler, so both open the one new-trip flow.
+        if tab == .upcoming { newJourneyButton }
         if tab == .all { playback() }
         if tab == .stats { statisticsShare() }
         // Keep date, region and utilities anchored at the trailing edge.
@@ -29,18 +33,21 @@ struct WorkspacePanelActions<Playback: View, JourneyDate: View, RegionMenu: View
             statisticsDate()
             region()
         }
-        if tab == .search {
-            SheetIconButton(
-                systemImage: "plus",
-                accessibilityLabel: Text(localization.text(
-                    "ios.newJourney", fallback: "New journey")),
-                action: newJourney)
-        }
+        if tab == .search { newJourneyButton }
         Menu(content: destinationMenu) {
             SheetIconLabel(systemImage: "gearshape")
         }
         .accessibilityLabel(Text(localization.text(
             "nav.utilities", fallback: "Data and settings")))
         .accessibilityIdentifier("utilityMenuButton")
+    }
+
+    private var newJourneyButton: some View {
+        SheetIconButton(
+            systemImage: "plus",
+            accessibilityLabel: Text(localization.text(
+                "ios.newJourney", fallback: "New journey")),
+            action: newJourney)
+        .accessibilityIdentifier("newJourneyButton.\(tab.rawValue)")
     }
 }

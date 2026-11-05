@@ -43,6 +43,18 @@ struct MapLayersView: View {
                             "ios.layers.networkStationNames", fallback: "Station names"),
                         isOn: $controller.layers.networkStationNames)
                     .accessibilityIdentifier("layerNetworkStationNames")
+                    // Moved here from Settings: this sheet sits at half height
+                    // over the map, so the reader sees the camera move. Behind
+                    // the full-height Settings sheet the move was invisible.
+                    Button {
+                        controller.fitToNetwork()
+                    } label: {
+                        Label(
+                            localization.text(
+                                "ios.layers.frameNetwork", fallback: "Show the whole network"),
+                            systemImage: "arrow.up.left.and.arrow.down.right")
+                    }
+                    .accessibilityIdentifier("layerFrameNetwork")
                 } header: {
                     Text(localization.text(
                         "ios.layers.networkGroup", fallback: "All railways"))
