@@ -29,6 +29,26 @@ extension TripRoutePlanner {
         }
     }
 
+    /// A section's candidates that do not run through another of the trip's
+    /// waypoints. Such a path would make the joined trip pass that stop twice,
+    /// so it is not a real choice; on a loop it is the "wrong way round". When
+    /// every candidate does, they are all kept and the join reports it.
+    public static func plausible(
+        _ corridors: [Corridor], waypoints: [String], stationAliases: [String: String] = [:]
+    ) -> [Corridor] {
+        func fold(_ code: String) -> String { stationAliases[code] ?? code }
+        let stops = Set(waypoints.map(fold))
+        let kept = corridors.filter { corridor in
+            let ends = Set([corridor.choice.stations.first?.code, corridor.choice.stations.last?.code]
+                .compactMap { $0 }.map(fold))
+            return !corridor.choice.stations.dropFirst().dropLast().contains {
+                let code = fold($0.code)
+                return stops.contains(code) && !ends.contains(code)
+            }
+        }
+        return kept.isEmpty ? corridors : kept
+    }
+
     /// The trip's route from one chosen corridor per section.
     ///
     /// `wholeTrip` is the whole-trip plan's corridors, when there are vias:

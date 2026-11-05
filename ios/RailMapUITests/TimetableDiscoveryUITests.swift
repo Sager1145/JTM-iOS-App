@@ -131,9 +131,10 @@ enum NewTripTimetableTestSupport {
         let text = app.textFields[identifier]
         reveal(text, in: app)
         XCTAssertTrue(text.waitForExistence(timeout: 8), app.debugDescription)
-        text.tap()
+        // The field is right-aligned: tap its trailing edge so the cursor is at the end.
+        text.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
         if let current = text.value as? String, !current.isEmpty, current != text.placeholderValue {
-            text.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
+            text.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }
         text.typeText(value + "\n")
         XCTAssertEqual(text.value as? String, value, app.debugDescription)

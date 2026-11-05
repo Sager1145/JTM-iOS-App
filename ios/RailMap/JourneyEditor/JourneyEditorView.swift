@@ -2539,7 +2539,16 @@ struct JourneyEditorView: View {
             if sectionCache.count > 64 { sectionCache = sectionCache.filter { keys.contains($0.key) } }
         }
         guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
-        sections = keys.compactMap { sectionCache[$0] }
+        // A path through another of the trip's stops is not a real choice.
+        let waypoints = [base.originCode] + viaCodes + [base.destinationCode]
+        sections = keys.compactMap { key -> PlannedSection? in
+            guard var section = sectionCache[key] else { return nil }
+            if case .corridors(let corridors) = section.outcome {
+                section.outcome = .corridors(TripRoutePlanner.plausible(
+                    corridors, waypoints: waypoints, stationAliases: sectionAliases))
+            }
+            return section
+        }
         wholeTrip = wholeKey.flatMap { wholeTripCache[$0] } ?? []
         for section in sections where section.candidates.count == 1 {
             sectionChoices[choiceKey(section)] = section.candidates[0].id

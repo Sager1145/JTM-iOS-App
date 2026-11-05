@@ -171,11 +171,14 @@ struct TripRouteSectionsTests {
         }
         let sections = try TripRoutePlanner.sectionRequests(request, viaCodes: [via.code])
             .map { try corridors(package, $0) }
-        // On a loop each section can still go either way round; the
-        // best-ranked choice of each is the side the via is on.
+        // Planned alone, a loop section can go either way round. The way that
+        // runs through the trip's other end is not a real choice.
         #expect(sections.allSatisfy { !$0.isEmpty })
+        let waypoints = [request.originCode, via.code, request.destinationCode]
+        let settled = sections.map { TripRoutePlanner.plausible($0, waypoints: waypoints) }
+        #expect(settled.allSatisfy { $0.count == 1 }, "A via on one side settles both sections")
         guard case .corridors(let narrowed) = TripRoutePlanner.joining(
-            sections.map { $0[0] }, wholeTrip: both, allowUnverifiedConnections: false, lineName: { $0 }) else {
+            settled.map { $0[0] }, wholeTrip: both, allowUnverifiedConnections: false, lineName: { $0 }) else {
             Issue.record("Expected a corridor through \(via.name)"); return
         }
         #expect(narrowed.count == 1)

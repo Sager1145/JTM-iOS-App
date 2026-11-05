@@ -20,6 +20,8 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCTAssertFalse(app.buttons["newTripCorridor-0"].exists,
                        "An untouched saved route must not be replanned.")
         let origin = app.buttons["newTripOrigin"]
+        // The stations are above the saved route.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: true))
         let found = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "label CONTAINS %@", "東京"), object: origin)
         XCTAssertEqual(XCTWaiter.wait(for: [found], timeout: 20), .completed,
@@ -51,9 +53,12 @@ final class RailwayRouteEntryUITests: XCTestCase {
         search.tap()
         search.typeText("大崎")
         let row = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004135"]
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'newTripStation-'"))
+            .firstMatch.waitForExistence(timeout: 20), "大崎 must list station rows.")
         var swipes = 0
-        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.4), swipes < 12 {
-            app.swipeUp()
+        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 40 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2)))
             swipes += 1
         }
         XCTAssertTrue(row.exists, app.debugDescription)

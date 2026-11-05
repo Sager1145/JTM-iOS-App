@@ -797,9 +797,9 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(reveal(arrival, in: app, timeout: 8))
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         let parts = Calendar.current.dateComponents([.year, .month, .day], from: yesterday)
-        arrival.tap()
+        arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
         if let current = arrival.value as? String, !current.isEmpty, current != arrival.placeholderValue {
-            arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
+            arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }
         arrival.typeText(String(format: "%04d-%02d-%02d\n", parts.year!, parts.month!, parts.day!))
     }
