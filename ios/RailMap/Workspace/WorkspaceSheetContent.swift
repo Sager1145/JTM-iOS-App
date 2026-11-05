@@ -6,7 +6,8 @@ import SwiftUI
 enum WorkspaceSheet: Identifiable {
     case detail(String)
     case importData
-    case videoOptions
+    /// A transfer-guide screenshot, from the Add trip menu (pass 3).
+    case transferGuide
     case mapInfo
     case mapLayers
     case station(StationCard)
@@ -22,7 +23,7 @@ enum WorkspaceSheet: Identifiable {
         switch self {
         case .detail(let id): "detail:\(id)"
         case .importData: "import"
-        case .videoOptions: "video"
+        case .transferGuide: "guide"
         case .mapInfo: "info"
         case .mapLayers: "layers"
         case .station(let card): "station:\(card.id)"

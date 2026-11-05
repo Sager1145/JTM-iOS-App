@@ -55,7 +55,6 @@ struct PassportWorkspaceView: View {
     /// workspace's to supply rather than the statistics screen's to reach for.
     var journeyPresentation: (Train) -> JourneyPresentation
     var openJourney: (Train) -> Void
-    var openSettings: () -> Void
 
     var body: some View {
         let membership = areaMembership

@@ -17,7 +17,8 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
     case upcoming
     /// What it adds up to — §5.3's Passport, by its plainer name.
     case stats
-    /// Everything on record, by date.
+    /// The History tab (pass 3): everything before today, and undated
+    /// records. The raw value stays `all` for the UI-test hook's old spelling.
     case all
     /// System Search, also the entry point for adding a journey.
     case search
@@ -26,9 +27,11 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
 
     var headerActionCount: Int {
         switch self {
-        // Journeys (any list mode): new, play, filter, utilities.
-        // Stats: share, date scope, region, utilities.
-        case .upcoming, .stats, .all, .search: 4
+        // Mirrors `WorkspacePanelActions` (pass 3). History: play, share,
+        // filter, utilities. Upcoming and Stats: share, filter, utilities.
+        // A search reserves History's width.
+        case .all, .search: 4
+        case .upcoming, .stats: 3
         }
     }
 
@@ -69,46 +72,56 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
 }
 
 
-/// The two destinations on the tab bar (UI reorganization pass 2).
+/// What the tab bar shows (UI reorganization pass 3).
 ///
-/// Upcoming, All and Search were three tabs over ONE journey list: Upcoming is
-/// a date rule, Search is a query. They are now one Journeys destination whose
-/// list mode (`PrimaryTab.upcoming` / `.all`) is a segmented control under the
-/// search field, and whose `.search` mode is simply "the field has text".
-/// `PrimaryTab` keeps those three values because the map scope, playback scope
-/// and filters already key off them; this enum is only what the tab bar shows.
+/// Three destinations — Upcoming (today and later), History (everything
+/// before today, and undated records) and Stats — plus ``add``, which is not
+/// a destination: it is the system's separate search-role button at the end
+/// of the bar, used as the one Add trip entry. Selecting it opens the add
+/// menu and leaves the current tab selected.
+///
+/// Each list has its own search field and the shared filter button. A query
+/// puts the page in `PrimaryTab.search`, scoped to that list.
 enum WorkspaceTab: String, CaseIterable, Identifiable {
-    case journeys
+    case upcoming
+    case history
     case stats
+    case add
 
     var id: String { rawValue }
 
+    /// The three tabs that show a page.
+    static let destinations: [WorkspaceTab] = [.upcoming, .history, .stats]
+
     var tabLocalizationKey: String {
         switch self {
-        case .journeys: "ios.tab.journeys"
+        case .upcoming: "ios.tab.upcoming"
+        case .history: "ios.tab.history"
         case .stats: "ios.tab.stats"
+        case .add: "ios.tab.addTrip"
         }
     }
 
     var tabFallbackName: String {
         switch self {
-        case .journeys: "Journeys"
+        case .upcoming: "Upcoming"
+        case .history: "History"
         case .stats: "Stats"
+        case .add: "Add trip"
         }
     }
 
     var systemImage: String {
         switch self {
-        case .journeys: "tram"
+        case .upcoming: "calendar"
+        case .history: "clock.arrow.circlepath"
         case .stats: "chart.bar.xaxis"
+        case .add: "plus"
         }
     }
 }
 
 extension PrimaryTab {
-    /// Which tab-bar destination shows this page.
-    var workspaceTab: WorkspaceTab { self == .stats ? .stats : .journeys }
-
-    /// Upcoming, All and Search are list modes of the one Journeys tab.
+    /// Upcoming, History (`.all`) and a search over either are journey lists.
     var isJourneyList: Bool { self != .stats }
 }

@@ -292,7 +292,10 @@ final class ShareCardRenderController {
             }
         }
         buffer.images.removeAll()
-        let file = await SharePNGWriter.write(image, to: destination)
+        // The confirm sheet shows a screen-width thumbnail; the full-size
+        // composite exists only until it is on disk.
+        let file = await ShareArtifactWriter.writePNG(image, kind: .statistics, to: destination)
+            .map { StatisticsShareFile(url: $0, image: ShareArtifactWriter.thumbnail(of: image)) }
         guard generation == request, !Task.isCancelled else { return nil }
         return file
     }
@@ -368,38 +371,4 @@ final class ShareCardRenderController {
         renderer.scale = scale
         return renderer.uiImage
     }
-}
-
-private enum SharePNGWriter {
-    private static let sessionStarted = Date()
-
-    static func write(_ image: UIImage, to destination: URL? = nil) async -> StatisticsShareFile? {
-        let url = destination ?? FileManager.default.temporaryDirectory
-            .appendingPathComponent("rail-statistics-\(UUID().uuidString).png")
-        guard let data = image.pngData() else { return nil }
-        let retirementDate = sessionStarted
-        let written = await Task.detached(priority: .userInitiated) {
-            let directory = FileManager.default.temporaryDirectory
-            if let files = try? FileManager.default.contentsOfDirectory(
-                at: directory, includingPropertiesForKeys: [.contentModificationDateKey]) {
-                for file in files where file.lastPathComponent.hasPrefix("rail-statistics")
-                    && file.pathExtension == "png" {
-                    guard let date = try? file.resourceValues(
-                        forKeys: [.contentModificationDateKey]).contentModificationDate,
-                          date < retirementDate else { continue }
-                    try? FileManager.default.removeItem(at: file)
-                }
-            }
-            do {
-                if destination != nil {
-                    try FileManager.default.createDirectory(
-                        at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-                }
-                try data.write(to: url, options: .atomic)
-                return true
-            } catch { return false }
-        }.value
-        return written ? StatisticsShareFile(url: url, image: image) : nil
-    }
-
 }

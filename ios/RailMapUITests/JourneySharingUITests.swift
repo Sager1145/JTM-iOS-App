@@ -122,7 +122,7 @@ final class JourneySharingUITests: XCTestCase {
     }
 
     private func closeShare(in app: XCUIApplication) {
-        let close = element("journeyShareCloseButton", in: app)
+        let close = element("shareCloseButton", in: app)
         XCTAssertTrue(close.waitForExistence(timeout: 5))
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 10))

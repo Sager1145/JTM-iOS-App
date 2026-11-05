@@ -4,7 +4,6 @@ import SwiftUI
 
 struct ShareComposerView: View {
     @Environment(AppLocalization.self) private var localization
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.displayScale) private var displayScale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
@@ -54,7 +53,8 @@ struct ShareComposerView: View {
         let loadKey = loadKey(work)
         let renderKey = renderKey(work, loadKey: loadKey)
         let statisticsReady = statisticsReadyForRender(work)
-        NavigationStack {
+        // Pass 3: hosted by ``ShareComposer``, which owns the navigation
+        // stack, the title and Cancel; this contributes its own toolbar items.
             ScrollView {
                 VStack(spacing: 14) {
                     canvas(renderKey: renderKey, statisticsReady: statisticsReady)
@@ -98,12 +98,7 @@ struct ShareComposerView: View {
             .accessibilityIdentifier("shareComposerScroll")
             .scrollDisabled(interaction != nil)
             .background(Color(.systemGroupedBackground))
-            .navigationTitle(localization.text("ios.stats.shareComposer"))
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     editButton
                     dateButton
@@ -121,7 +116,6 @@ struct ShareComposerView: View {
                         .accessibilityIdentifier("shareComposerExport")
                 }
             }
-        }
         .onPreferenceChange(ShareComposerFramePreferenceKey.self) { composerFrames = $0 }
         .onPreferenceChange(ShareComposerCardFramePreferenceKey.self) { frames in
             trayCardFrames = frames

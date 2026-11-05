@@ -19,7 +19,7 @@ final class IntegratedSharingUITests: XCTestCase {
         XCTAssertTrue(share.waitForExistence(timeout: 120))
         // Select the scope under test before waiting for its figures. The
         // initial all-region load is unrelated to these Japan/day posters.
-        let region = element("regionScopeButton", in: app)
+        let region = element("statisticsFilterButton", in: app)
         region.tap()
         let japan = app.buttons["Japan"]
         XCTAssertTrue(japan.waitForExistence(timeout: 5), app.debugDescription)
@@ -28,10 +28,14 @@ final class IntegratedSharingUITests: XCTestCase {
         let wholeJapan = app.buttons["Japan (all)"]
         XCTAssertTrue(wholeJapan.waitForExistence(timeout: 5), app.debugDescription)
         wholeJapan.tap()
-        XCTAssertEqual(region.value as? String, "Japan")
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("Japan"), region.value as? String ?? "nil")
         waitUntilEnabled(share)
-        let date = element("statisticsDateButton", in: app)
+        let date = element("statisticsFilterButton", in: app)
         date.tap()
+        // Pass 3: the period picker is the Period item of the Stats filter.
+        let periodItem = app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch
+        XCTAssertTrue(periodItem.waitForExistence(timeout: 5), app.debugDescription)
+        periodItem.tap()
         let day = app.buttons["statisticsCalendarDay-2026-07-03"]
         // The calendar opens on its own month, independently of sample import.
         // Reach the intended recorded day using the native calendar controls.

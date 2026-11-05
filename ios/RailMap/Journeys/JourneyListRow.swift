@@ -34,7 +34,6 @@ struct JourneyListRow: View {
     let editing: JourneyEditing
 
     let select: () -> Void
-    let play: () -> Void
     let showDetail: () -> Void
 
     /// Say whether this journey was ridden. The workspace owns it because it

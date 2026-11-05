@@ -269,3 +269,232 @@ and by the sweep below.
 - Not run: the other updated UI tests (tab indices and filter-button changes in
   `RailMapUITests`, `RefactorReleaseMemoryUITests`, `MenuStressUITests` and the Duo tests).
   They compile but have not been executed.
+
+# Pass 3: one composer, one filter, one home for the rest
+
+Branch `claude/ui-reorg-pass3`, from `main` at 11376411c. The goal is the same as pass 2:
+group features logically and never have two big features doing one job. Out of scope:
+`JourneyEditor/`, the route repair flow and trip auto-fill / timetable research, which the
+add-trip session is merging.
+
+## Tab model: Upcoming · History · Stats · Add trip
+
+Pass 2's single Journeys tab, with an Upcoming/All segmented control, has been reversed by the
+user's correction: Upcoming and History are different questions and get their own tabs.
+
+| Tab | Holds | Header |
+|---|---|---|
+| **Upcoming** | Trips dated today or later, on each trip's own region clock | share · filter · ⚙︎ |
+| **History** | Everything before today, plus undated records (replaces "All") | ▶ · share · filter · ⚙︎ |
+| **Stats** | Statistics | share · filter · ⚙︎ |
+| **Add trip** | Not a page: the system's separate search-role button at the end of the bar | — |
+
+- Each list has its own search field at the top. Typing searches **that list**: results are
+  partitioned by the same today line. The shared filter button sits in each header.
+- Playback (▶) is on History only. It plays what has been ridden; an upcoming trip has no run
+  yet.
+- The Upcoming/History line comes from one memoised set (`WorkspaceDerived.aheadIDs`, the
+  unfiltered `WorkspaceJourneyRules.upcomingScope`), so the two lists can't overlap or drop a
+  trip between them.
+- `RAILMAP_UI_TEST_TAB` accepts `upcoming`, `history` (or the old `all`/`journeys`), `stats` and
+  `search` (Upcoming's search state).
+
+### Add trip: the one home for adding trips
+
+The prominent search-role tab button is now **Add trip**. Selecting it opens a menu and leaves
+the current tab selected. The menu has four items:
+
+| Item | Why it is here |
+|---|---|
+| New trip | Opens the map-first editor (entry point only; the editor is the add-trip session's) |
+| Import from file | A JSON export, from this app or the web app |
+| Paste journey data | The same, from the clipboard |
+| Transfer guide screenshot | Reads a route planner screenshot into a trip (`TransferGuideImportView`) |
+
+This is the minimal set: each item is a different *source* a trip comes from, and dropping any of
+them would remove a feature. With the Add trip menu in place, the other homes were removed:
+
+- the `+` in the list header;
+- Data Library's Import section. Data Library now manages the data already in the app (export,
+  samples, package availability, recovery, deletion).
+
+The empty-state Import button and ⌘N remain, as shortcuts. The empty-state Import opens this
+menu, and ⌘N opens New trip directly.
+
+## Sharing is one feature
+
+Before this pass there were three share surfaces, each with its own renderer and file writer:
+
+| Before | Renderer | File |
+|---|---|---|
+| Journey card → poster sheet (`JourneyShareView`) | CoreGraphics poster | `rail-journey-<UUID>.png`, **never removed** (audit A19) |
+| Stats header → statistics composer | `ImageRenderer` cards | `SharePNGWriter`, retired earlier launches' files |
+| Playback bar → video options sheet (`WorkspaceSheet.videoOptions`) | `AVAssetWriter` | `RailMap-<UUID>.mp4`, earlier launches' files kept |
+
+Now there is one **Share composer** (`Sharing/ShareComposer.swift`). It is a full-screen cover
+owned by the workspace, with two segmented controls:
+
+- **Scope:** This journey · Journey list (the Journeys list as its search and filter show it) ·
+  Statistics. "This journey" appears only when the composer was opened from a journey.
+- **Format:** Image · Video. Video is offered for journeys only, because a film is a recording of
+  a playback run. Statistics is image-only.
+
+| Scope × format | What it shows |
+|---|---|
+| Journey · image | The journey poster with Full/Basic (`JourneyShareContent`) |
+| List · image | A list poster: one card per journey with date, service, endpoints, times and operator. Same renderer, different blocks (`JourneyPoster.listBlocks`) |
+| Journey/List · video | The frame, quality and bitrate form. Start dismisses the composer and films those journeys |
+| Statistics · image | The existing card composer, now hosted inside the shell |
+
+Each context has one entry, and every entry opens this composer:
+
+| Context | Entry | Opens on |
+|---|---|---|
+| Journey card | Share (`journeyShareButton`) | This journey · Image |
+| Upcoming and History headers | Share (`journeysShareButton`, new) | Journey list (that tab's list) · Image |
+| Stats header | Share (`statisticsShareButton`) | Statistics |
+| Playback bar while a run plays | Video (`playbackVideoButton`) | Video, scoped to the run's journey or the list |
+
+The playback bar's share of a *finished* film stays where it is. It hands over the file that
+was just made; it is not another way to compose one.
+
+**One writer.** `Sharing/ShareArtifactWriter.swift` names every share file (journey, statistics,
+video) and writes the PNGs off the main actor. On the next write of a kind it removes that kind's
+files from earlier launches, and when a newer image of the same kind lands it removes the one it
+replaces. This fixes the A19 leak: each kind switch, language change or retry on a journey poster
+used to leave another PNG in `tmp/`.
+
+**One renderer per medium.** Journey and list images share `JourneyPoster.render(blocks:)`.
+Statistics cards keep `ImageRenderer`, because they are SwiftUI layouts the reader arranges on a
+canvas. Porting them to CoreGraphics, or the poster's measured multi-column text to
+`ImageRenderer`, would be a rewrite with real regression risk (long journeys reach a 20,000 pt
+bitmap). Both now meet at the same writer.
+
+### Phone CPU and memory
+
+The composer is built for a phone's limited CPU and memory:
+
+- **Previews render at screen scale and off the main thread.** The journey and list poster
+  preview is rasterised in a detached task at about the width it is drawn at (420 pt × display
+  scale), not at the export's 3×.
+- **The full-size image is made only on Share (or zoom).** It is rendered off the main actor,
+  written straight to disk by `ShareArtifactWriter`, and the bitmap is released; only the URL
+  is kept. The zoom view decodes that file while it is open and drops it on close.
+- **The statistics confirm sheet keeps a thumbnail.** It shows a 1,200 px copy; the full-size
+  composite lives only until it has been written. The statistics cards still render on the main
+  actor, because SwiftUI's `ImageRenderer` requires it. Their map snapshots come from
+  `MKMapSnapshotter`, which works off the main thread.
+- **Video frames are streamed.** The exporter appends one frame at a time from the writer's
+  `CVPixelBuffer` pool and drops a frame rather than queueing it when the writer is busy. No
+  frames are buffered.
+- **Temporary files are retired** as described above (A19).
+
+Measured on the shared iPhone 17 simulator (iOS 27.2) by sampling the app process's resident
+memory every 0.25 s during a temporary probe test (not committed):
+
+| Share | Before opening | Peak while previewing | Peak overall |
+|---|---|---|---|
+| Image: the 217-row synthetic long journey, Full | 692 MB | 744 MB | **785 MB** (export written, share sheet up), +93 MB |
+| Video: Taiwan sample run, 540p, small bitrate | 617 MB | 743 MB (options open; includes the run-length estimate) | **813 MB** while recording, +196 MB |
+
+Over 240 s of recording, memory stayed between 743 and 813 MB with no upward trend, which is
+consistent with frames being streamed. The run had not finished by the end of the probe. These
+are simulator RSS figures on a Mac host. They show the relative cost and the absence of growth,
+not a device jetsam footprint. The Japanese `train-store` sample still does not load through the
+test hook in this tree (0 rides), so the video probe used the Taiwan sample.
+
+The station card's share (a station name for the system share sheet) is not a journey or
+statistics share. It stays as it was.
+
+## One scope control on both tabs
+
+Stats had two header buttons for its scope: a globe for region and a calendar for period.
+Journeys had one filter menu. Now both tabs have the same filter button
+(`line.3.horizontal.decrease`). It contains:
+
+- **Region:** the same `regionMenuItems` and the same shared region value on both tabs.
+- **Date / period:** each tab keeps its own value, as §5.3.1 requires; the statistics period
+  stays independent of the list filter. On Journeys this is the date list. On Stats it is a
+  **Period and groups…** item that opens the existing period/group picker.
+
+The Japan area choice (Hokkaidō, Honshū and its areas, Shikoku, Kyūshū, Okinawa) is in this
+shared control, but only on Stats. The list has no way to place a journey in an island until its
+route is solved. Offering Honshū on Journeys would be a choice that silently does nothing.
+
+The headers are now one shape, each in this order: the destination's own actions, then Share,
+then the filter, then the gear.
+
+| Tab | Before (pass 2) | After |
+|---|---|---|
+| Journeys → Upcoming | `+ ▶ filter ⚙︎` | `share filter ⚙︎` |
+| Journeys → History | `+ ▶ filter ⚙︎` | `▶ share filter ⚙︎` |
+| Stats | `share calendar globe ⚙︎` | `share filter ⚙︎` |
+
+`PrimaryTab.headerActionCount` is updated to match (3 / 4 / 3).
+
+## Sweep: other features with two homes
+
+I checked the audit's §1 and §2 tables (UI-level rows) and walked the app.
+
+| Feature | Before | After |
+|---|---|---|
+| Legend and sources | Map rail info button on most layouts; the gear menu on hinged/Duo layouts | Map chrome everywhere: the Duo map toolbar gets the same `mapInfoButton`, and the gear holds only Data Library and Settings |
+| Rail package status | Settings › About & diagnostics listed every package's lines and failures; Data Library's availability section listed the same, with Retry | Data Library only. Diagnostics keeps the decode time, which Data Library does not show |
+| Import | Data Library's Import section, plus the empty state's Import, which opened a paste-only import sheet | The tab bar's Add trip menu (file · paste · transfer guide, next to New trip). The empty state opens that menu |
+| Dead second homes | `WorkspaceRideDetailView` (no callers), `JourneyListRow.play` (unused since pass 2), `PassportWorkspaceView.openSettings` (unused) | Removed |
+
+Checked and kept:
+
+- **Playback.** Starts come only from the Journeys header play button (the list), the journey
+  card's Play (one journey) and Space. There is no third home.
+- **Map layers vs Settings.** No toggle is repeated; Settings › Map says so in its footer.
+- **Keyboard and menu commands** (⌘N, ⌘F, zoom, layers and so on). These are shortcuts, not
+  homes. The phone layout re-declares some of them in code; that is code duplication, not UI
+  (follow-up).
+- **Save failure messages** come in five styles (audit A16). Several live in the editor and
+  repair flows that this pass may not touch, so this is a follow-up.
+
+## Files changed in pass 3
+
+- New: `Sharing/ShareComposer.swift`, `Sharing/ShareArtifactWriter.swift`.
+- `Sharing/JourneyShareImage.swift`:
+  - `JourneyShareView` is now `JourneyShareContent`, a journey or list subject with no
+    navigation bar of its own.
+  - `JourneyPoster.render(blocks:)` replaces the per-journey render, and `listBlocks` is added.
+  - Files go through the writer.
+- `Sharing/ShareComposerView.swift`: hosted by the composer; it no longer owns a navigation
+  stack or Cancel.
+- `Sharing/ShareCardRendering.swift`: `SharePNGWriter` is removed in favour of the shared writer.
+- `Playback/VideoExportOptionsView.swift`: now the composer's Video format, with Start at the
+  bottom. `Playback/PlaybackVideoExporter.swift`: the film URL comes from the writer.
+- `Workspace/RailWorkspaceView.swift`:
+  - `shareRequest` and `openShare` are new, and the `\.openShare` environment value is provided.
+  - `shareListTrains` replaces the private list rule in `playbackScope`.
+  - `statisticsFilterMenu` replaces the calendar and globe buttons.
+  - Also: the Journeys Share button, empty-state Import → Data Library, and the Duo legend.
+- `Workspace/WorkspacePanelActions.swift`, `PrimaryTab.swift`, `WorkspaceSheetContent.swift`
+  (`.videoOptions` removed).
+- `Map/MapControlBar.swift` (Duo info button), `Journeys/RideCard.swift`, `Journeys/RideDetailView.swift`,
+  `Journeys/JourneyListRow.swift`, `Statistics/PassportWorkspaceView.swift`, `Settings/SettingsView.swift`.
+- Tab model:
+  - `Workspace/PrimaryTab.swift`: `WorkspaceTab` is now upcoming · history · stats · add.
+  - `Workspace/WorkspaceTabs.swift`: three tabs plus the search-role Add trip, in the modern,
+    legacy and Duo variants.
+  - `Workspace/WorkspaceDerived.swift`: the `aheadIDs` memo.
+  - `App/AppShell.swift`: the tab hook.
+  - `Import/DataManagerView.swift`: the Import section is removed.
+- Strings, in en/ja/zh-Hans/zh-Hant:
+  - `ios.share.*`, `ios.stats.filter`, `ios.stats.periodItem`;
+  - `ios.tab.history`, `ios.tab.addTrip`, `ios.addTrip.*`, `ios.journey.noHistory`,
+    `ios.search.noneHere`.
+- UI tests (tab model): tab indices and labels (Upcoming 0, History 1, Stats 2, Add trip 3) and
+  the removed `journeyListScope` segments. The transfer-guide test opens the Add trip menu.
+  Affected files: `ConsoleSweepTests`, `MenuStressUITests`, `RailMapUITests`,
+  `RefactorReleaseMemoryUITests`, `MapCameraIntentTests`, `PlaybackLayoutTests`, and comments in
+  three editor tests. The `search` tab hook now opens History's search, because that list holds
+  the past sample trips the tests look up.
+- UI tests (sharing and filter):
+  - `regionScopeButton` / `statisticsDateButton` → `statisticsFilterButton` (+ `statisticsPeriodItem`).
+  - `journeyShareCloseButton` → `shareCloseButton`.
+  - Affected files: `IntegratedSharingUITests`, `JourneyGroupUITests`, `StatisticsCalendarUITests`,
+    `RefactorReleaseMemoryUITests`, `JourneySharingUITests`.

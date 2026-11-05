@@ -11,6 +11,10 @@ import SwiftUI
 ///
 /// §5.6 asks for exactly this shape: exporting is a secondary flow, and the
 /// frame, quality and bitrate appear only once it is opened.
+///
+/// Pass 3: this is the Video format of ``ShareComposer`` rather than its own
+/// sheet, so it carries no navigation bar; the composer owns Cancel, and the
+/// Start button sits at the bottom where the image formats keep Share.
 struct VideoExportOptionsView: View {
     @Bindable var settings: VideoExportSettings
     /// The rectangle of the map the crop is taken from, in the map view's own
@@ -23,7 +27,6 @@ struct VideoExportOptionsView: View {
     let seconds: Double
     let onStart: () -> Void
 
-    @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
 
     private var plan: VideoExportSettings.Plan {
@@ -31,7 +34,6 @@ struct VideoExportOptionsView: View {
     }
 
     var body: some View {
-        NavigationStack {
             Form {
                 Section {
                     Picker(
@@ -97,22 +99,17 @@ struct VideoExportOptionsView: View {
                 }
                 .monospacedDigit()
             }
-            .navigationTitle(localization.countryText("video.export", fallback: "Export video"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.countryText("video.start", fallback: "Start recording")) {
-                        onStart()
-                    }
-                    .disabled(seconds <= 0)
-                    .accessibilityIdentifier("videoExportStart")
-                }
+            .safeAreaInset(edge: .bottom) {
+                Button(
+                    localization.countryText("video.start", fallback: "Start recording"),
+                    systemImage: "record.circle"
+                ) { onStart() }
+                .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity).railMinimumTouchTarget()
+                .disabled(seconds <= 0)
+                .accessibilityIdentifier("videoExportStart")
+                .padding(16).background(.bar)
             }
-        }
-        .railHalfSheetDetents()
     }
 
     // MARK: - labels

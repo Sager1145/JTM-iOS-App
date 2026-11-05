@@ -93,9 +93,13 @@ final class JourneyGroupUITests: XCTestCase {
         app.uiTestLaunch[.query] = ""
         app.uiTestLaunch[.tab] = "stats"
         UITestLaunchSupport.launch(app)
-        let calendar = app.buttons["statisticsDateButton"]
+        let calendar = app.buttons["statisticsFilterButton"]
         XCTAssertTrue(calendar.waitForExistence(timeout: 60))
         calendar.tap()
+        // Pass 3: the period picker is the Period item of the Stats filter.
+        let periodItem = app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch
+        XCTAssertTrue(periodItem.waitForExistence(timeout: 5), app.debugDescription)
+        periodItem.tap()
         let byGroup = app.buttons["statisticsClassification-journeyGroup"]
         XCTAssertTrue(byGroup.waitForExistence(timeout: 10))
         byGroup.tap()

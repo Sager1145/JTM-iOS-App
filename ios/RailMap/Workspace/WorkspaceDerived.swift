@@ -145,6 +145,30 @@ final class WorkspaceDerived {
         return (upcomingValue, upcomingIDs)
     }
 
+    // MARK: - Upcoming / History partition (UI reorganization pass 3)
+
+    private struct AheadKey {
+        let trains: [Train]
+        let today: [Region: String]
+    }
+    private var aheadKey: AheadKey?
+    private var aheadValue: Set<String> = []
+
+    /// The ids of every journey dated today or later on its own region's
+    /// clock, whatever the filter: the line between the Upcoming and History
+    /// tabs. Its own slot, so the filtered ``upcoming`` answer above is not
+    /// evicted by the unfiltered one on every body evaluation.
+    func aheadIDs(
+        trains: [Train], today: [Region: String], compute: () -> Set<String>
+    ) -> Set<String> {
+        if let aheadKey, aheadKey.today == today, ArrayGeneration.same(aheadKey.trains, trains) {
+            return aheadValue
+        }
+        aheadValue = compute()
+        aheadKey = AheadKey(trains: trains, today: today)
+        return aheadValue
+    }
+
     // MARK: - the statistics scope
 
     private struct ScopeKey {

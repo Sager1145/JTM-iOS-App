@@ -72,11 +72,11 @@ final class MapCameraIntentTests: XCTestCase {
 
         let tabs = app.tabBars.firstMatch
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
-        tabs.buttons.element(boundBy: 1).tap()
+        tabs.buttons.element(boundBy: 2).tap() // Stats
         // Wait through the old animated statistics fit as well as the new
         // statistics redraw, so a transient preserved frame cannot pass.
         assertCameraStays(status, equalTo: before, for: 2)
-        tabs.buttons.element(boundBy: 0).tap() // Journeys (was the All tab)
+        tabs.buttons.element(boundBy: 1).tap() // History (was the All tab)
         assertCameraStays(status, equalTo: before, for: 2)
         XCTAssertEqual(number("focusRevision", status.label), number("focusRevision", before))
     }

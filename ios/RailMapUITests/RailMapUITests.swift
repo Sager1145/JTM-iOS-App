@@ -79,8 +79,8 @@ final class RailMapUITests: XCTestCase {
         }
         // Duo exposes vertical native tabs as buttons in the shared bar
         // region, rather than as a horizontal XCUIElementTypeTabBar.
-        // Two tabs now: Journeys (hosts Search/Upcoming/All) above Stats.
-        let searchTab = destination("Journeys")
+        // Three destinations now: Upcoming (hosts search), History, Stats.
+        let searchTab = destination("Upcoming")
         XCTAssertTrue(searchTab.waitForExistence(timeout: 8))
         let upcomingTab = destination("Stats")
         try XCTSkipUnless(upcomingTab.exists && app.frame.width < 600
@@ -125,24 +125,16 @@ final class RailMapUITests: XCTestCase {
                 attach(app, named: "duo-folded-search-keyboard-map-menu")
                 destination("Map").tap()
             }
-            // Upcoming and All are segments of the Journeys tab.
-            let title = tab == "stats" ? "Stats" : "Journeys"
+            let title = tab == "stats" ? "Stats" : (tab == "all" ? "History" : "Upcoming")
             let target = destination(title)
             XCTAssertTrue(target.waitForExistence(timeout: 5))
             XCTAssertTrue(target.isHittable)
             attach(app, named: "duo-folded-search-keyboard-pages-\(tab)")
             target.tap()
-            if tab == "all" || tab == "upcoming" {
-                let segment = app.segmentedControls["journeyListScope"]
-                    .buttons[tab == "all" ? "All" : "Upcoming"]
-                XCTAssertTrue(segment.waitForExistence(timeout: 5))
-                segment.tap()
-            }
         }
         chooseFromKeyboard("all")
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(destination("Journeys").isSelected)
-        XCTAssertTrue(app.segmentedControls["journeyListScope"].buttons["All"].isSelected)
+        XCTAssertTrue(destination("History").isSelected)
         for identifier in ["mapNetworkToggle", "mapRoutesToggle", "mapLayersButton", "mapLocateToggle"] {
             let control = app.buttons[identifier]
             let restored = XCTNSPredicateExpectation(
@@ -165,8 +157,7 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
         chooseFromKeyboard("upcoming")
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(destination("Journeys").isSelected)
-        XCTAssertTrue(app.segmentedControls["journeyListScope"].buttons["Upcoming"].isSelected)
+        XCTAssertTrue(destination("Upcoming").isSelected)
         attach(app, named: "duo-folded-search-switched-page")
     }
 
@@ -174,8 +165,8 @@ final class RailMapUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         let app = launch(tab: "search", stage: "medium", sample: "train-store",
                          launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
-        // Two native tabs now: Journeys (hosts search) and Stats.
-        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Journeys")).firstMatch
+        // Native tabs: Upcoming (hosts search), History and Stats.
+        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
         let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Stats")).firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         try XCTSkipUnless(app.frame.width >= 600 && upcoming.exists
@@ -187,8 +178,7 @@ final class RailMapUITests: XCTestCase {
         let titleHeight = header.frame.height
         let searchTitle = header.label
         let actionSize = settings.frame.size
-        // Journeys' panel header is shared by Upcoming/All/Search modes.
-        for (tab, title) in [("Journeys", searchTitle), ("Stats", "Stats")] {
+        for (tab, title) in [("Upcoming", searchTitle), ("Stats", "Stats")] {
             app.buttons.matching(NSPredicate(format: "label == %@", tab)).firstMatch.tap()
             let visibleHeader = app.staticTexts.matching(identifier: "panelHeader")
                 .matching(NSPredicate(format: "label == %@", title)).firstMatch
@@ -434,8 +424,8 @@ final class RailMapUITests: XCTestCase {
                          launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
         let header = element("panelHeader", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        // Two native tabs now: Journeys above Stats.
-        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Journeys")).firstMatch
+        // Native tabs: Upcoming, History, Stats (Upcoming above Stats).
+        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
         let search = app.buttons.matching(NSPredicate(format: "label == %@", "Stats")).firstMatch
         try XCTSkipUnless(app.frame.width < 600 && upcoming.exists && search.exists
                           && abs(upcoming.frame.midX - search.frame.midX) < 4
@@ -582,10 +572,10 @@ final class RailMapUITests: XCTestCase {
 
         let tabs = app.tabBars.firstMatch
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
-        XCTAssertEqual(tabs.buttons.count, 2)
-        tabs.buttons.element(boundBy: 1).tap() // Stats
+        XCTAssertEqual(tabs.buttons.count, 4) // Upcoming, History, Stats, Add trip
+        tabs.buttons.element(boundBy: 2).tap() // Stats
         XCTAssertFalse(search.exists)
-        tabs.buttons.element(boundBy: 0).tap() // Journeys (hosts search)
+        tabs.buttons.element(boundBy: 0).tap() // Upcoming (hosts search)
         if !search.exists { dragHeader(header, by: -360) }
         XCTAssertTrue(search.waitForExistence(timeout: 8), "Tabs must still work after repeated drags.")
     }
@@ -905,9 +895,9 @@ final class RailMapUITests: XCTestCase {
         // capsule with no bar at all.
         let tabBar = app.tabBars.firstMatch
         XCTAssertTrue(tabBar.waitForExistence(timeout: 8))
-        XCTAssertEqual(tabBar.buttons.count, 2) // Journeys, Stats
+        XCTAssertEqual(tabBar.buttons.count, 4) // Upcoming, History, Stats, Add trip
 
-        tabBar.buttons.element(boundBy: 0).tap() // Journeys hosts the search field
+        tabBar.buttons.element(boundBy: 0).tap() // Upcoming hosts the search field
         XCTAssertTrue(
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "Tapping the docked card's own tab bar must update the shared map's content.")
@@ -1067,28 +1057,25 @@ final class TransferGuideImportUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testTheScreenshotImporterOpensFromTheDataWorkspace() {
+    func testTheScreenshotImporterOpensFromTheAddTripMenu() {
         let app = XCUIApplication()
         app.uiTestLaunch[.storageId] = UUID().uuidString
         app.uiTestLaunch[.tab] = "all"
         app.uiTestLaunch[.stage] = "expanded"
         UITestLaunchSupport.launch(app)
 
-        let gear = app.descendants(matching: .any)
-            .matching(identifier: "utilityMenuButton").firstMatch
-        XCTAssertTrue(gear.waitForExistence(timeout: 10), "the utility menu is not reachable")
-        gear.tap()
-
-        let data = app.descendants(matching: .any)
-            .matching(identifier: "utilityDataButton").firstMatch
-        XCTAssertTrue(data.waitForExistence(timeout: 8), "Data is not in the utility menu")
-        data.tap()
+        // The importer now lives in the Add trip menu (the tab bar's
+        // search-role button), not in the Data Library.
+        var addTrip = app.tabBars.buttons["Add trip"]
+        if !addTrip.waitForExistence(timeout: 10) { addTrip = app.buttons["Add trip"] }
+        XCTAssertTrue(addTrip.waitForExistence(timeout: 10), "the Add trip button is not reachable")
+        addTrip.tap()
 
         let entry = app.descendants(matching: .any)
-            .matching(identifier: "guideImportButton").firstMatch
+            .matching(identifier: "addTripGuide").firstMatch
         XCTAssertTrue(
             entry.waitForExistence(timeout: 8),
-            "the screenshot importer is not offered in the Import group")
+            "the screenshot importer is not offered in the Add trip menu")
         entry.tap()
 
         // Both doors, because they are the only two ways in and a reader who

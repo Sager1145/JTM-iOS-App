@@ -21,55 +21,6 @@ private struct DetailActionSizing: ViewModifier {
     }
 }
 
-/// Resolves the sheet's record from its owner on every update. The presentation
-/// identity stays stable even when the editor changes the record's identifier.
-struct WorkspaceRideDetailView: View {
-    @Bindable var itineraries: ItineraryStore
-    @State private var recordID: String
-    @Environment(\.dismiss) private var dismiss
-    let onSave: (Train, String) -> ItineraryStore.SaveOutcome
-    let onRebuild: (Train) -> Int?
-    var onEditJourney: ((Train) -> Void)? = nil
-
-    init(trainID: String, itineraries: ItineraryStore,
-         onSave: @escaping (Train, String) -> ItineraryStore.SaveOutcome,
-         onRebuild: @escaping (Train) -> Int?,
-         onEditJourney: ((Train) -> Void)? = nil) {
-        self.itineraries = itineraries
-        _recordID = State(initialValue: trainID)
-        self.onSave = onSave
-        self.onRebuild = onRebuild
-        self.onEditJourney = onEditJourney
-    }
-
-    private var train: Train? {
-        itineraries.store?.trains.first { $0.id == recordID }
-    }
-
-    var body: some View {
-        Group {
-            if let train {
-                RideDetailView(train: train, onSave: { edited in
-                    switch onSave(edited, recordID) {
-                    case .saved:
-                        recordID = edited.id
-                        return true
-                    case let .savedKeepingID(keptID, _):
-                        recordID = keptID
-                        return true
-                    case .refusedImportRunning, .notFound, .unsupportedRegion:
-                        return false
-                    }
-                }, onRebuild: { onRebuild(train) }, suggestionTrains: itineraries.loaded?.trains ?? [],
-                   onEditJourney: onEditJourney)
-            }
-        }
-        .onChange(of: train == nil, initial: true) { _, missing in
-            if missing { dismiss() }
-        }
-    }
-}
-
 /// A recorded journey expressed with Flighty's information hierarchy while
 /// remaining a railway screen: service identity first, station pair second,
 /// then the chronological stop timeline and lower-priority metadata.

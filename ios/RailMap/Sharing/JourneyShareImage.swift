@@ -12,17 +12,50 @@ enum JourneyShareKind: String, CaseIterable, Identifiable {
 /// fixed coordinate on a compressed route diagram, and no list is truncated.
 @MainActor
 enum JourneyPoster {
-    struct Block {
-        enum Style { case title, heading, body, stop, importantStop }
+    struct Block: Sendable {
+        enum Style: Sendable { case title, heading, body, stop, importantStop }
         var text: String
         var style: Style = .body
     }
 
-    struct File {
-        let url: URL
+    /// A screen-scale preview. The full-size bitmap is only made on Share
+    /// (or zoom), written straight to disk and not kept in memory.
+    struct Preview {
         let image: UIImage
         let text: String
-        let kind: JourneyShareKind
+        /// Which render this is (subject, kind, language), so a preview never
+        /// offers a file made for an earlier choice.
+        let key: String
+    }
+
+    /// The filtered Journeys list as one poster: a title, then one card per
+    /// journey with its date, service and endpoints. The same renderer and
+    /// writer as a single journey; only the blocks differ.
+    static func listBlocks(
+        trains: [Train], title: String, localization: AppLocalization
+    ) -> [Block] {
+        let l = localization
+        var result = [Block(text: title, style: .title)]
+        result.append(Block(text: l.text("ios.share.listCount", params: [
+            "count": .number(Double(trains.count))])))
+        for train in trains {
+            let origin = l.stationName(train.origin, in: train, code: train.originStationCode)
+            let destination = l.stationName(
+                train.destination, in: train, code: train.destinationStationCode)
+            let first = train.stops.first(where: { $0.stopType == "origin" }) ?? train.stops.first
+            let last = train.stops.last(where: { $0.stopType == "destination" }) ?? train.stops.last
+            var lines = [(train.date ?? l.text("ios.journeyShare.undated")) + " · " + train.number]
+            lines.append(origin + " → " + destination)
+            let times = [first?.departure ?? first?.arrival, last?.arrival ?? last?.departure]
+                .compactMap { $0 }.filter { !$0.isEmpty }
+            if times.count == 2 { lines.append(times.joined(separator: " – ")) }
+            let company = train.company
+                ?? JourneyBranding.operatorLabels(of: train).joined(separator: " / ")
+            if !company.isEmpty { lines.append(company) }
+            result.append(Block(text: lines.joined(separator: "\n"), style: .importantStop))
+        }
+        if trains.isEmpty { result.append(Block(text: l.text("ios.journeyShare.noStops"))) }
+        return result
     }
 
     static func blocks(
@@ -197,19 +230,43 @@ enum JourneyPoster {
         var height: CGFloat
     }
 
+    /// A preview sized to the screen it is shown on: `pixelWidth` device
+    /// pixels across, never more than the export would have.
+    static func preview(
+        _ blocks: [Block], accentHex: String?, key: String, pixelWidth: CGFloat
+    ) async throws -> Preview {
+        let bitmap = try await Task.detached(priority: .userInitiated) {
+            try rasterize(blocks, accentHex: accentHex, pixelWidth: pixelWidth)
+        }.value
+        try Task.checkCancellation()
+        return Preview(
+            image: UIImage(cgImage: bitmap.image, scale: bitmap.scale, orientation: .up),
+            text: blocks.map(\.text).joined(separator: "\n\n"), key: key)
+    }
+
+    /// The full-size file, rendered and encoded off the main actor. The bitmap
+    /// is released once written; only the URL is returned.
+    static func export(_ blocks: [Block], accentHex: String?) async throws -> URL {
+        let bitmap = try await Task.detached(priority: .userInitiated) {
+            try rasterize(blocks, accentHex: accentHex, pixelWidth: nil)
+        }.value
+        try Task.checkCancellation()
+        guard let url = await ShareArtifactWriter.writePNG(
+            UIImage(cgImage: bitmap.image), kind: .journey)
+        else { throw CocoaError(.fileWriteUnknown) }
+        return url
+    }
+
     /// A single tall bitmap, with a bounded raster size rather than clipping
-    /// the tail or splitting a long journey into separate files.
-    static func render(
-        train: Train, kind: JourneyShareKind, localization: AppLocalization,
-        routeText: String, routeStatus: RideRouteStatus
-    ) async throws -> File {
-        let blocks = blocks(
-            train: train, kind: kind, localization: localization,
-            routeText: routeText, routeStatus: routeStatus)
+    /// the tail or splitting a long journey into separate files. Bitmap-context
+    /// drawing, so it runs off the main actor.
+    nonisolated private static func rasterize(
+        _ blocks: [Block], accentHex: String?, pixelWidth: CGFloat?
+    ) throws -> (image: CGImage, scale: CGFloat) {
         let columnWidth: CGFloat = 440
         let textWidth: CGFloat = columnWidth - 80
         let ink = UIColor(red: 0.12, green: 0.17, blue: 0.22, alpha: 1)
-        let accent = UIColor(railHex: train.style?.color ?? "#d9364f") ?? .systemRed
+        let accent = UIColor(railHex: accentHex ?? "#d9364f") ?? .systemRed
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byWordWrapping
         paragraph.lineSpacing = 4
@@ -258,7 +315,8 @@ enum JourneyPoster {
         }
         let width = columnWidth * CGFloat(columns)
         let height = (placements.map { $0.y + $0.row.height }.max() ?? 56) + 40
-        let scale = min(3, sqrt(16_000_000 / (width * height)), 20_000 / height)
+        let exportScale = min(3, sqrt(16_000_000 / (width * height)), 20_000 / height)
+        let scale = pixelWidth.map { min(exportScale, max($0 / width, 0.25)) } ?? exportScale
         let pixelWidth = Int(ceil(width * scale))
         let pixelHeight = Int(ceil(height * scale))
         guard let context = CGContext(data: nil, width: pixelWidth, height: pixelHeight,
@@ -293,41 +351,66 @@ enum JourneyPoster {
                                     options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
         }
         UIGraphicsPopContext()
-        try Task.checkCancellation()
         guard let bitmap = context.makeImage() else { throw CocoaError(.fileWriteUnknown) }
-        let image = UIImage(cgImage: bitmap, scale: scale, orientation: .up)
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("rail-journey-\(UUID().uuidString).png")
-        // Encoding and file I/O do not block the preview's UI actor.
-        let written = await Task.detached(priority: .userInitiated) {
-            guard let data = UIImage(cgImage: bitmap).pngData() else { return false }
-            do { try data.write(to: url, options: .atomic); return true }
-            catch { return false }
-        }.value
-        try Task.checkCancellation()
-        guard written else { throw CocoaError(.fileWriteUnknown) }
-        return File(url: url, image: image, text: blocks.map(\.text).joined(separator: "\n\n"), kind: kind)
+        return (bitmap, scale)
     }
 }
 
-struct JourneyShareView: View {
-    let train: Train
+/// The image half of the share composer for one journey or the filtered list:
+/// a poster preview and its Share button. Hosted by ``ShareComposer``, which
+/// owns the navigation bar, the scope and the format.
+struct JourneyShareContent: View {
+    enum Subject {
+        case journey(Train)
+        case list([Train], title: String)
+
+        var key: String {
+            switch self {
+            case .journey(let train): "journey:\(train.id)"
+            case .list(let trains, let title):
+                "list:\(title):\(trains.map(\.id).joined(separator: ","))"
+            }
+        }
+    }
+
+    let subject: Subject
     @Environment(AppLocalization.self) private var localization
     @Environment(RailNetworkStore.self) private var network: RailNetworkStore?
     @Environment(ItineraryStore.self) private var itineraries: ItineraryStore?
     @Environment(RiddenRouteStore.self) private var riddenRoutes: RiddenRouteStore?
     @Environment(TraversedLineDetector.self) private var traversedLines: TraversedLineDetector?
-    @Environment(\.dismiss) private var dismiss
     @State private var kind: JourneyShareKind = .full
-    @State private var file: JourneyPoster.File?
+    @Environment(\.displayScale) private var displayScale
+    @State private var file: JourneyPoster.Preview?
+    /// The full-size PNG for `exportedKey`, made on first Share or zoom.
+    @State private var exportedURL: URL?
+    @State private var exportedKey: String?
+    @State private var exporting = false
+    /// Decoded from the exported file only while the zoom view is open.
+    @State private var zoomImage: UIImage?
     @State private var failed = false
     @State private var retry = 0
     @State private var showsActivity = false
     @State private var showsZoom = false
 
+    private var isJourney: Bool {
+        if case .journey = subject { return true }
+        return false
+    }
+
+    private var renderKey: String {
+        "\(subject.key)|\(isJourney ? kind.rawValue : "list")|\(retry)|\(localization.language.rawValue)"
+    }
+
+    private var current: JourneyPoster.Preview? {
+        guard let file, file.key == renderKey else { return nil }
+        return file
+    }
+
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 16) {
+        ScrollView {
+            VStack(spacing: 16) {
+                if isJourney {
                     Picker(localization.text("ios.journeyShare.title"), selection: $kind) {
                         ForEach(JourneyShareKind.allCases) { kind in
                             Text(localization.text("ios.journeyShare." + kind.rawValue)).tag(kind)
@@ -338,83 +421,118 @@ struct JourneyShareView: View {
                     Text(localization.text(kind == .full ? "ios.journeyShare.fullNote" : "ios.journeyShare.basicNote"))
                         .font(.footnote).foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    if let file, file.kind == kind {
-                        Image(uiImage: file.image)
-                            .resizable().scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .accessibilityLabel(localization.text("ios.journeyShare.preview"))
-                            .accessibilityValue(file.text)
-                            .accessibilityIdentifier("journeySharePreview-0")
-                            .onTapGesture { showsZoom = true }
-                    } else if failed {
-                        Text(localization.text("ios.journeyShare.failed"))
-                        Button(localization.text("ios.journeyShare.retry")) { retry += 1 }
-                    } else {
-                        ProgressView(localization.text("ios.journeyShare.preparing"))
-                            .padding(.vertical, 40)
-                    }
                 }
-                .padding(16)
-            }
-            .accessibilityIdentifier("journeyShareSheet")
-            .navigationTitle(localization.text("ios.journeyShare.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.done", fallback: "Done")) { dismiss() }
-                        .accessibilityIdentifier("journeyShareCloseButton")
-                }
-            }
-            .safeAreaInset(edge: .bottom) {
-                Button(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up") {
-                    showsActivity = true
-                }
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity).railMinimumTouchTarget()
-                .disabled(file == nil || file?.kind != kind)
-                .accessibilityIdentifier("journeyShareSendButton")
-                .padding(16).background(.bar)
-            }
-            .sheet(isPresented: $showsActivity) {
-                if let file, file.kind == kind { ActivitySheet(items: file.kind == .full ? [file.url, file.text] : [file.url]) }
-            }
-            .fullScreenCover(isPresented: $showsZoom) {
-                if let file {
-                    NavigationStack {
-                        JourneyImageZoom(image: file.image)
-                            .navigationTitle(localization.text("ios.journeyShare.preview"))
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .cancellationAction) {
-                                    Button(localization.text("ios.done", fallback: "Done")) { showsZoom = false }
-                                }
+                if let file = current {
+                    Image(uiImage: file.image)
+                        .resizable().scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .accessibilityLabel(localization.text("ios.journeyShare.preview"))
+                        .accessibilityValue(file.text)
+                        .accessibilityIdentifier("journeySharePreview-0")
+                        .onTapGesture {
+                            Task {
+                                guard let url = await ensureExport(),
+                                      let image = UIImage(contentsOfFile: url.path) else { return }
+                                zoomImage = image
+                                showsZoom = true
                             }
-                    }
+                        }
+                } else if failed {
+                    Text(localization.text("ios.journeyShare.failed"))
+                    Button(localization.text("ios.journeyShare.retry")) { retry += 1 }
+                } else {
+                    ProgressView(localization.text("ios.journeyShare.preparing"))
+                        .padding(.vertical, 40)
                 }
             }
-            .task(id: "\(kind.rawValue)-\(retry)-\(localization.language.rawValue)") {
-                file = nil
-                failed = false
-                let pending = itineraries?.pendingConfirmationIDs ?? []
-                let detected = traversedLines?.lines(
-                    forTrainID: train.id, pendingConfirmationIDs: pending) ?? []
-                let route = JourneyBranding.routeText(
-                    of: train, detected: detected, badges: network?.badges)
-                let status = riddenRoutes?.status(
-                    forTrainID: train.id, pendingConfirmationIDs: pending)
-                    ?? RouteStatusResolver.status(
-                        id: train.id, resolvingIDs: [], entries: [:], phase: .idle,
-                        pendingConfirmationIDs: pending)
-                do {
-                    let rendered = try await JourneyPoster.render(
-                        train: train, kind: kind, localization: localization,
-                        routeText: route, routeStatus: status)
-                    try Task.checkCancellation()
-                    file = rendered
-                } catch is CancellationError { }
-                catch { failed = true }
+            .padding(16)
+        }
+        .accessibilityIdentifier("journeyShareSheet")
+        .safeAreaInset(edge: .bottom) {
+            Button(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up") {
+                Task {
+                    if await ensureExport() != nil { showsActivity = true }
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .frame(maxWidth: .infinity).railMinimumTouchTarget()
+            .disabled(current == nil || exporting)
+            .accessibilityIdentifier("journeyShareSendButton")
+            .padding(16).background(.bar)
+        }
+        .sheet(isPresented: $showsActivity) {
+            if let file = current, let url = exportedURL, exportedKey == renderKey {
+                ActivitySheet(items: isJourney && kind == .full || !isJourney
+                    ? [url, file.text] : [url])
             }
         }
+        .fullScreenCover(isPresented: $showsZoom, onDismiss: { zoomImage = nil }) {
+            if let zoomImage {
+                NavigationStack {
+                    JourneyImageZoom(image: zoomImage)
+                        .navigationTitle(localization.text("ios.journeyShare.preview"))
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button(localization.text("ios.done", fallback: "Done")) { showsZoom = false }
+                            }
+                        }
+                }
+            }
+        }
+        .task(id: renderKey) {
+            failed = false
+            let key = renderKey
+            // About the width the preview is drawn at, in device pixels.
+            let pixelWidth = 420 * displayScale
+            do {
+                let (blocks, accent) = posterBlocks()
+                let rendered = try await JourneyPoster.preview(
+                    blocks, accentHex: accent, key: key, pixelWidth: pixelWidth)
+                try Task.checkCancellation()
+                file = rendered
+            } catch is CancellationError { }
+            catch { failed = true }
+        }
+    }
+
+    private func posterBlocks() -> ([JourneyPoster.Block], String?) {
+        switch subject {
+        case .journey(let train):
+            return (journeyBlocks(train), train.style?.color)
+        case .list(let trains, let title):
+            return (JourneyPoster.listBlocks(trains: trains, title: title, localization: localization), nil)
+        }
+    }
+
+    /// The full-size file for the current choice, rendered once.
+    private func ensureExport() async -> URL? {
+        let key = renderKey
+        if exportedKey == key, let exportedURL { return exportedURL }
+        exporting = true
+        defer { exporting = false }
+        let (blocks, accent) = posterBlocks()
+        guard let url = try? await JourneyPoster.export(blocks, accentHex: accent),
+              renderKey == key else { return nil }
+        exportedURL = url
+        exportedKey = key
+        return url
+    }
+
+    private func journeyBlocks(_ train: Train) -> [JourneyPoster.Block] {
+        let pending = itineraries?.pendingConfirmationIDs ?? []
+        let detected = traversedLines?.lines(
+            forTrainID: train.id, pendingConfirmationIDs: pending) ?? []
+        let route = JourneyBranding.routeText(
+            of: train, detected: detected, badges: network?.badges)
+        let status = riddenRoutes?.status(
+            forTrainID: train.id, pendingConfirmationIDs: pending)
+            ?? RouteStatusResolver.status(
+                id: train.id, resolvingIDs: [], entries: [:], phase: .idle,
+                pendingConfirmationIDs: pending)
+        return JourneyPoster.blocks(
+            train: train, kind: kind, localization: localization,
+            routeText: route, routeStatus: status)
     }
 }
 

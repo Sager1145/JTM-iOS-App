@@ -206,8 +206,11 @@ struct AppShell: View {
             switch UITestLaunchConfiguration.current[.tab] {
             case "upcoming": selection = .upcoming
             case "passport", "statistics", "stats": selection = .stats
-            case "all", "journeys": selection = .all
-            case "search", "add": selection = .search
+            // Pass 3: History is the `.all` page; "all"/"journeys" are the
+            // old spellings. "search" was the search over every journey; its
+            // nearest list is History (past and undated), so it opens there
+            // and a `RAILMAP_UI_TEST_QUERY` puts that list in search.
+            case "history", "all", "journeys", "search": selection = .all
             default: break
             }
         }

@@ -26,7 +26,7 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
                       "The status container must preserve the native map.")
         XCTAssertTrue(map.descendants(matching: .any)["AnnotationContainer"].exists,
                       "The status container must preserve native annotations: \(app.debugDescription)")
-        let journeys = app.tabBars.buttons["Journeys"]
+        let journeys = app.tabBars.buttons["History"]
         XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
         journeys.tap()
         for id in ["20260722_06_sonic44",
@@ -41,13 +41,13 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
             share.exists && share.isEnabled
         }, object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 180), .completed, app.debugDescription)
-        let region = app.descendants(matching: .any)["regionScopeButton"]
-        XCTAssertEqual(region.value as? String, "All regions")
+        let region = app.descendants(matching: .any)["statisticsFilterButton"]
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("All regions"), region.value as? String ?? "nil")
         // Keep the same fully loaded screen for the external footprint sampler.
         let settled = XCTNSPredicateExpectation(predicate: NSPredicate(value: false), object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 8), .timedOut)
         XCTAssertTrue(share.isEnabled)
-        XCTAssertEqual(region.value as? String, "All regions")
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("All regions"), region.value as? String ?? "nil")
     }
 
     func testFiveRealRegionsCompleteRoutesAndStatistics() {
@@ -72,7 +72,7 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
                       "The status container must preserve the native map.")
         XCTAssertTrue(map.descendants(matching: .any)["AnnotationContainer"].exists,
                       "The status container must preserve native annotations: \(app.debugDescription)")
-        let journeys = app.tabBars.buttons["Journeys"]
+        let journeys = app.tabBars.buttons["History"]
         XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
         journeys.tap()
         for id in ["20260722_06_sonic44",
@@ -88,13 +88,13 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
             share.exists && share.isEnabled
         }, object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 180), .completed, app.debugDescription)
-        let region = app.descendants(matching: .any)["regionScopeButton"]
-        XCTAssertEqual(region.value as? String, "All regions")
+        let region = app.descendants(matching: .any)["statisticsFilterButton"]
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("All regions"), region.value as? String ?? "nil")
         // Keep the same fully loaded screen for the external footprint sampler.
         let settled = XCTNSPredicateExpectation(predicate: NSPredicate(value: false), object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 8), .timedOut)
         XCTAssertTrue(share.isEnabled)
-        XCTAssertEqual(region.value as? String, "All regions")
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("All regions"), region.value as? String ?? "nil")
     }
 
     private func assertPhysicalRouteGenerated(_ id: String, in app: XCUIApplication) {
@@ -129,12 +129,9 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
     }
 
     private func revealRideRow(_ id: String, in app: XCUIApplication) -> XCUIElement {
-        let journeys = app.tabBars.buttons["Journeys"]
+        let journeys = app.tabBars.buttons["History"]
         XCTAssertTrue(journeys.waitForExistence(timeout: 15), app.debugDescription)
         journeys.tap()
-        let allScope = app.segmentedControls["journeyListScope"].buttons["All"]
-        XCTAssertTrue(allScope.waitForExistence(timeout: 15), app.debugDescription)
-        allScope.tap()
         let header = app.descendants(matching: .any)["panelHeader"].firstMatch
         let viewport = app.descendants(matching: .any)["workspaceMenuViewport"].firstMatch
         XCTAssertTrue(header.waitForExistence(timeout: 15), app.debugDescription)
@@ -204,8 +201,8 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
             share.exists && share.isEnabled
         }, object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 180), .completed, app.debugDescription)
-        let region = app.descendants(matching: .any)["regionScopeButton"]
-        XCTAssertEqual(region.value as? String, "All regions")
+        let region = app.descendants(matching: .any)["statisticsFilterButton"]
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("All regions"), region.value as? String ?? "nil")
         // Hold the same ready screen for external footprint sampling.
         let settled = XCTNSPredicateExpectation(predicate: NSPredicate(value: false), object: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 8), .timedOut)

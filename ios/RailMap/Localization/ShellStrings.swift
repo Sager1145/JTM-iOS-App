@@ -38,8 +38,66 @@ enum ShellStrings {
         "ios.tab.stats": [
             .en: "Stats", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
         ],
+        "ios.search.noneHere": [
+            .en: "No matches in this list. The other list has some:", .ja: "この一覧には該当がありません。もう一方の一覧にあります：",
+            .zhHans: "此列表中没有匹配项，另一个列表中有：", .zhHant: "此列表中沒有符合項目，另一個列表中有：",
+        ],
+        "ios.tab.history": [
+            .en: "History", .ja: "履歴", .zhHans: "历史", .zhHant: "歷史",
+        ],
+        "ios.tab.addTrip": [
+            .en: "Add trip", .ja: "旅程を追加", .zhHans: "添加行程", .zhHant: "新增行程",
+        ],
+        "ios.addTrip.new": [
+            .en: "New trip", .ja: "新しい旅程", .zhHans: "新建行程", .zhHant: "新增行程",
+        ],
+        "ios.addTrip.file": [
+            .en: "Import from file", .ja: "ファイルから読み込む", .zhHans: "从文件导入", .zhHant: "從檔案匯入",
+        ],
+        "ios.addTrip.paste": [
+            .en: "Paste journey data", .ja: "旅程データを貼り付け", .zhHans: "粘贴行程数据", .zhHant: "貼上行程資料",
+        ],
+        "ios.journey.noHistory": [
+            .en: "No past journeys.", .ja: "過去の旅程はありません。", .zhHans: "没有过去的行程。", .zhHant: "沒有過去的行程。",
+        ],
         "ios.tab.all": [
             .en: "All", .ja: "すべて", .zhHans: "全部", .zhHant: "全部",
+        ],
+        "ios.share.title": [
+            .en: "Share", .ja: "共有", .zhHans: "分享", .zhHant: "分享",
+        ],
+        "ios.share.scope": [
+            .en: "What to share", .ja: "共有する内容", .zhHans: "分享内容", .zhHant: "分享內容",
+        ],
+        "ios.share.scope.journey": [
+            .en: "This journey", .ja: "この旅程", .zhHans: "此行程", .zhHant: "此行程",
+        ],
+        "ios.share.scope.list": [
+            .en: "Journey list", .ja: "旅程一覧", .zhHans: "行程列表", .zhHant: "行程列表",
+        ],
+        "ios.share.scope.statistics": [
+            .en: "Statistics", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
+        ],
+        "ios.share.format": [
+            .en: "Format", .ja: "形式", .zhHans: "格式", .zhHant: "格式",
+        ],
+        "ios.share.format.image": [
+            .en: "Image", .ja: "画像", .zhHans: "图片", .zhHant: "圖片",
+        ],
+        "ios.share.format.video": [
+            .en: "Video", .ja: "動画", .zhHans: "视频", .zhHant: "影片",
+        ],
+        "ios.share.listCount": [
+            .en: "{count} journeys", .ja: "{count} 件の旅程", .zhHans: "{count} 段行程", .zhHant: "{count} 段行程",
+        ],
+        "ios.share.listButton": [
+            .en: "Share journeys", .ja: "旅程を共有", .zhHans: "分享行程", .zhHant: "分享行程",
+        ],
+        "ios.stats.filter": [
+            .en: "Statistics filter", .ja: "統計の絞り込み", .zhHans: "统计筛选", .zhHant: "統計篩選",
+        ],
+        "ios.stats.periodItem": [
+            .en: "Period and groups…", .ja: "期間とグループ…", .zhHans: "时段与分组…", .zhHant: "時段與分組…",
         ],
         "ios.tab.journeys": [
             .en: "Journeys", .ja: "旅程", .zhHans: "行程", .zhHant: "行程",

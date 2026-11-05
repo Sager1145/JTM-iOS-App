@@ -5,9 +5,10 @@ import XCTest
 /// Explicit stress coverage; ordinary test runs do not launch it.
 @MainActor
 final class MenuStressUITests: XCTestCase {
-    // Logical destinations. The tab bar has only two tabs now (Journeys,
-    // Stats); Upcoming, All and Search are modes of the Journeys tab.
-    private let tabs = ["Upcoming", "Stats", "All", "Search"]
+    // Tab-bar destinations: Upcoming (0), History (1), Stats (2). The search
+    // field lives at the top of Upcoming and History; the retained-query
+    // checks use Upcoming (the "search" launch state).
+    private let tabs = ["Upcoming", "History", "Stats"]
     private let stages = ["compact", "medium", "expanded"]
     private let query = "menu stress retained query"
     private var app: XCUIApplication?
@@ -27,8 +28,8 @@ final class MenuStressUITests: XCTestCase {
 
     func testEveryDirectedTabPairTwiceFromEachInitialStage() throws {
         try requireOptIn("MENU_STRESS_TEST")
-        // Euler walk over all 16 directed pairs, including all four self-pairs.
-        let walk = [0, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 3, 2, 2, 3, 3, 0]
+        // Euler walk over all 9 directed pairs, including all three self-pairs.
+        let walk = [0, 0, 1, 0, 2, 1, 1, 2, 2, 0]
         var restoredPairs = 0
         for stage in stages {
             let app = launch(stage: stage, tab: "upcoming")
@@ -39,12 +40,12 @@ final class MenuStressUITests: XCTestCase {
                     assertDestination(source, in: app)
                     if restoreDockStage(stage, in: app) { restoredPairs += 1 }
                     choose(target, in: app)
-                    if target == 3 { assertSearchQuery(in: app) }
+                    if target == 0 { assertSearchQuery(in: app) }
                 }
             }
             app.terminate()
         }
-        note("Completed 96 transitions: 3 launch stages × 16 directed pairs × 2 cycles. \(restoredPairs) pairs began at an asserted dock stage; \(96 - restoredPairs) have initial-stage scope only. Search opens when needed; Duo compact may intentionally promote to medium.")
+        note("Completed 54 transitions: 3 launch stages × 9 directed pairs × 2 cycles. \(restoredPairs) pairs began at an asserted dock stage; \(54 - restoredPairs) have initial-stage scope only. Search opens when needed; Duo compact may intentionally promote to medium.")
     }
 
     func testEveryDestinationWithEveryRotationRequestFromEachInitialStage() throws {
@@ -73,15 +74,15 @@ final class MenuStressUITests: XCTestCase {
                         }
                     }
                     assertDestination(destination, in: app)
-                    // Return through Search so every request checks retained query.
-                    choose(3, in: app)
+                    // Return through Upcoming so every request checks retained query.
+                    choose(0, in: app)
                     assertSearchQuery(in: app)
                     choose(destination, in: app)
                 }
             }
             app.terminate()
         }
-        note("Completed 48 orientation requests: 3 initial stages × 4 destinations × 4 requests; Search retained after each. Ordinary iPhone stays portrait; ordinary iPad window aspect matches requests. Aspect cannot distinguish left/right or portrait/upside-down. Duo requests do not establish posture changes.")
+        note("Completed 48 orientation requests: 3 initial stages × 3 destinations × 4 requests; Search retained after each. Ordinary iPhone stays portrait; ordinary iPad window aspect matches requests. Aspect cannot distinguish left/right or portrait/upside-down. Duo requests do not establish posture changes.")
         #endif
     }
 
@@ -89,7 +90,7 @@ final class MenuStressUITests: XCTestCase {
         try requireOptIn("MENU_STRESS_TEST")
         try requireOptIn("DUO_MENU_POSTURE_TEST")
         let app = launch(stage: "medium", tab: "search")
-        assertDestination(3, in: app)
+        assertDestination(0, in: app)
         try XCTSkipUnless(isDuo(in: app) && app.frame.width >= 600,
                           "Start on expanded Duo with a Device Hub posture operator.")
         assertSearchQuery(in: app)
@@ -109,7 +110,7 @@ final class MenuStressUITests: XCTestCase {
         wait(timeout: 180) { abs(app.windows.firstMatch.frame.width - expandedWidth) < 2 }
         for destination in tabs.indices { choose(destination, in: app) }
         assertSearchQuery(in: app, expected: retained)
-        note("Completed one operator-coordinated expanded→folded→expanded cycle; four destinations reachable and edited Search retained after each posture change.")
+        note("Completed one operator-coordinated expanded→folded→expanded cycle; three destinations reachable and edited Search retained after each posture change.")
     }
 
     private func launch(stage: String, tab: String) -> XCUIApplication {
@@ -131,16 +132,8 @@ final class MenuStressUITests: XCTestCase {
     }
 
     private func destination(_ index: Int, in app: XCUIApplication) -> XCUIElement {
-        let label = index == 1 ? "Stats" : "Journeys"
+        let label = tabs[index]
         return app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
-    }
-
-    private func scopeSegment(_ index: Int, in app: XCUIApplication) -> XCUIElement? {
-        switch index {
-        case 0: app.segmentedControls["journeyListScope"].buttons["Upcoming"]
-        case 2: app.segmentedControls["journeyListScope"].buttons["All"]
-        default: nil
-        }
     }
 
     private func choose(_ index: Int, in app: XCUIApplication) {
@@ -152,10 +145,6 @@ final class MenuStressUITests: XCTestCase {
         }
         wait { target.exists && target.isHittable }
         target.tap()
-        if let segment = scopeSegment(index, in: app) {
-            wait { segment.exists && segment.isHittable }
-            segment.tap()
-        }
         context += ", arrival=\(tabs[index]), actualStage=\(actualStage(in: app))"
         assertDestination(index, in: app)
     }
@@ -166,10 +155,7 @@ final class MenuStressUITests: XCTestCase {
         wait { tab.isSelected && header.exists && header.isHittable
             && !header.frame.isEmpty && app.frame.contains(header.frame) }
         XCTAssertTrue(tab.isSelected, "The requested native destination must be selected. \(context)")
-        if index == 1 { XCTAssertEqual(header.label, "Stats", context) }
-        if let segment = scopeSegment(index, in: app) {
-            wait { segment.exists && segment.isSelected }
-        }
+        XCTAssertEqual(header.label, tabs[index], context)
     }
 
     private func assertSearchQuery(in app: XCUIApplication, expected: String? = nil) {
@@ -212,7 +198,7 @@ final class MenuStressUITests: XCTestCase {
     }
 
     private func isDuo(in app: XCUIApplication) -> Bool {
-        let first = destination(0, in: app), last = destination(1, in: app)
+        let first = destination(0, in: app), last = destination(2, in: app)
         return first.exists && last.exists && abs(first.frame.midX - last.frame.midX) < 4
             && first.frame.maxY < last.frame.minY
     }
