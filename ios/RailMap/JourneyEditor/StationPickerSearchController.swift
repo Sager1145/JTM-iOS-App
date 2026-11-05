@@ -62,6 +62,7 @@ final class StationPickerSearchController {
         retired = []
         output = StationSearchResult()
         matches = [:]
+        visibleRegion = nil
         return id
     }
 

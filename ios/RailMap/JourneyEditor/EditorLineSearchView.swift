@@ -25,6 +25,9 @@ struct EditorLineSearchView: View {
     @State private var snapshot = SearchSnapshot()
     /// The shared engine's index for this region; nil until built.
     @State private var searchIndex: SearchIndex?
+    /// Set when the shared index failed to build; the simple name filter stays in use.
+    @State private var indexError: String?
+    @State private var languageTask: Task<Void, Never>?
 
     private struct OperatorLineGroup: Identifiable {
         var id: String
@@ -65,7 +68,12 @@ struct EditorLineSearchView: View {
             let ids = Set(response.results.filter { $0.entity.kind == .line }.map(\.entity.id))
             matches = candidates.filter { ids.contains($0.id) }
         } else {
-            matches = []
+            // The index is loading or failed to build: filter by name, alias and operator.
+            let prepared = SearchFold.PreparedQuery(needle)
+            matches = candidates.filter { line in
+                let operatorFields = line.operatorIDs.compactMap { operatorNameByID[$0] }
+                return prepared.matches(fields: [line.name] + line.aliases + operatorFields)
+            }
         }
         let selected = regionLines.filter { selectedIDs.contains($0.id) }
         let conflicts = resolvedStation ? selected.filter { !stationLineIDs.contains($0.id) } : []
@@ -130,6 +138,11 @@ struct EditorLineSearchView: View {
                             }
                         }
                     }
+                    if let indexError {
+                        Section {
+                            Text(indexError).font(.footnote).foregroundStyle(.secondary)
+                        }
+                    }
                     if !snapshot.hasMatches {
                         Section {
                             Text(localization.text("ios.editor.noLineMatches"))
@@ -177,11 +190,14 @@ struct EditorLineSearchView: View {
         .onChange(of: stationCodes) { _, _ in refreshSnapshot() }
         .onChange(of: localization.language) { _, _ in
             refreshSnapshot()
-            Task {
+            languageTask?.cancel()
+            languageTask = Task {
                 await loadSearchIndex()
+                guard !Task.isCancelled else { return }
                 refreshSnapshot()
             }
         }
+        .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -198,7 +214,16 @@ struct EditorLineSearchView: View {
     private func loadSearchIndex() async {
         SharedSearchEngine.shared.prepare(
             regionCode: region.code, readings: localization.stationSearchNames(region: region))
-        searchIndex = try? await SharedSearchEngine.shared.engine.index(regionCode: region.code)
+        do {
+            let index = try await SharedSearchEngine.shared.engine.index(regionCode: region.code)
+            guard !Task.isCancelled else { return }
+            searchIndex = index
+            indexError = nil
+        } catch {
+            guard !Task.isCancelled else { return }
+            searchIndex = nil
+            indexError = error.localizedDescription
+        }
     }
 
     @ViewBuilder

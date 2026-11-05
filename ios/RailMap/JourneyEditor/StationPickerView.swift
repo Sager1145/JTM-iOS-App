@@ -115,6 +115,12 @@ struct StationPickerView: View {
     @State private var textBeforeAppliedFilter: String?
     /// Text whose filters the reader removed; it is not applied again.
     @State private var declinedFilterText: String?
+    /// The residual text an applied filter wrote into the field. Clearing the
+    /// filter restores `textBeforeAppliedFilter` only while the field still
+    /// holds exactly this.
+    @State private var writtenResidual: String?
+    /// The latest engine response, re-read when search is submitted.
+    @State private var latestResponse: SearchResponse?
     @State private var search = StationPickerSearchController()
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
@@ -242,6 +248,7 @@ struct StationPickerView: View {
                     .navigationBarTitleDisplayMode(.inline)
                     .searchable(text: queryBinding, placement: .navigationBarDrawer(displayMode: .always),
                                 prompt: Text(localization.text("ios.editor.stationSearch")))
+                    .onSubmit(of: .search) { readHints(latestResponse ?? search.output.response, submitted: true) }
                     .toolbar {
                         if onSelectWithLine != nil {
                             ToolbarItem(placement: .cancellationAction) {
@@ -256,7 +263,10 @@ struct StationPickerView: View {
             search.apply(query: needle, companyName: nil)
             if needle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { hints = PickerHints() }
         }
-        .onChange(of: search.output.response) { _, response in readHints(response) }
+        .onChange(of: search.output.response) { _, response in
+            latestResponse = response
+            readHints(response)
+        }
         .onChange(of: filterOperatorID) { _, _ in refreshFilterState() }
         .onChange(of: filterLineID) { _, _ in
             lineFitRevision += 1
@@ -448,7 +458,13 @@ struct StationPickerView: View {
     /// Filters and corrections the shared engine read from the text. Only the
     /// response for the text now in the field counts; it names ids that exist
     /// in this picker's catalog.
-    private func readHints(_ response: SearchResponse?) {
+    private func readHints(_ response: SearchResponse?, submitted: Bool = false) {
+        // The inline field is the stop's saved name: search never rewrites it
+        // and never applies filters from it.
+        if inlineQuery != nil {
+            if hints != PickerHints() { hints = PickerHints() }
+            return
+        }
         let typed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let catalog, let response, !typed.isEmpty,
               response.query.trimmingCharacters(in: .whitespacesAndNewlines) == typed else {
@@ -471,6 +487,24 @@ struct StationPickerView: View {
         }
         var applied = known(response.parsed.applied)
         var suggested = known(response.parsed.suggested)
+        if !selectedLineIDs.isEmpty {
+            let selectedLines = catalog.lines(in: regionCode).filter { selectedLineIDs.contains($0.id) }
+            let allowedOperators = Set(selectedLines.flatMap(\.operatorIDs))
+            func allowed(_ filter: PickerHints.Filter) -> Bool {
+                switch filter.kind {
+                case .company: allowedOperators.contains(filter.id)
+                case .line: selectedLineIDs.contains(filter.id)
+                }
+            }
+            applied = applied.filter(allowed)
+            suggested = suggested.filter(allowed)
+        }
+        // Only a finished token (trailing space) or a submit applies filters.
+        let finishedToken = searchText.last?.isWhitespace == true
+        if !(finishedToken || submitted) {
+            suggested = applied + suggested
+            applied = []
+        }
         if declinedFilterText == typed {
             suggested = applied + suggested
             applied = []
@@ -483,6 +517,7 @@ struct StationPickerView: View {
             didYouMean: response.didYouMean.map(\.text))
         guard !applied.isEmpty else { return }
         textBeforeAppliedFilter = searchText
+        writtenResidual = response.parsed.residualText
         for filter in applied {
             switch filter.kind {
             case .company: filterOperatorID = filter.id
@@ -507,6 +542,7 @@ struct StationPickerView: View {
         }
         if let residual = hints.residualText {
             textBeforeAppliedFilter = searchText
+            writtenResidual = residual
             queryBinding.wrappedValue = residual
         }
         hints.suggested = []
@@ -574,8 +610,12 @@ struct StationPickerView: View {
                             // A filter the search applied gives its words back.
                             if let typed = textBeforeAppliedFilter {
                                 textBeforeAppliedFilter = nil
-                                declinedFilterText = typed.trimmingCharacters(in: .whitespacesAndNewlines)
-                                queryBinding.wrappedValue = typed
+                                // Restore only if the reader has not edited the residual since.
+                                if searchText == writtenResidual {
+                                    declinedFilterText = typed.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    queryBinding.wrappedValue = typed
+                                }
+                                writtenResidual = nil
                             }
                         } label: {
                             Label(localization.text("ios.newTrip.filterClear", fallback: "Clear filters"),
@@ -658,6 +698,11 @@ struct StationPickerView: View {
         subtitleByCode = [:]
         copyLabels = CopyLabelMemo()
         lineLabelByID = [:]
+        hints = PickerHints()
+        declinedFilterText = nil
+        textBeforeAppliedFilter = nil
+        writtenResidual = nil
+        latestResponse = nil
         onLoad?(nil, [], [:])
         guard let region = Region(rawValue: regionCode) else {
             loadError = EditorCatalogLoadError.missingResource(regionCode).localizedDescription

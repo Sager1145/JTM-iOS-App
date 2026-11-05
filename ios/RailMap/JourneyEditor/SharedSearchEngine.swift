@@ -13,7 +13,14 @@ final class SharedSearchEngine: @unchecked Sendable {
     private final class State: @unchecked Sendable {
         private let lock = NSLock()
         private var readings: [String: [String: [String]]] = [:]
-        private var stationIndexes: [String: (engine: SearchIndex, index: StationSearchIndex)] = [:]
+        private var stationIndexes: [String: CachedStationIndex] = [:]
+
+        struct CachedStationIndex {
+            var engine: SearchIndex
+            var index: StationSearchIndex
+            var generation: UInt64
+            var hadIdentity: Bool
+        }
 
         func readings(_ regionCode: String) -> [String: [String]] {
             lock.withLock { readings[regionCode] ?? [:] }
@@ -29,15 +36,12 @@ final class SharedSearchEngine: @unchecked Sendable {
             }
         }
 
-        func stationIndex(regionCode: String, engine: SearchIndex) -> StationSearchIndex? {
-            lock.withLock {
-                guard let cached = stationIndexes[regionCode], cached.engine === engine else { return nil }
-                return cached.index
-            }
+        func cached(regionCode: String) -> CachedStationIndex? {
+            lock.withLock { stationIndexes[regionCode] }
         }
 
-        func store(_ index: StationSearchIndex, engine: SearchIndex, regionCode: String) {
-            lock.withLock { stationIndexes[regionCode] = (engine, index) }
+        func store(_ entry: CachedStationIndex, regionCode: String) {
+            lock.withLock { stationIndexes[regionCode] = entry }
         }
     }
 
@@ -64,11 +68,29 @@ final class SharedSearchEngine: @unchecked Sendable {
 
     /// The picker's index for a region, over the shared engine index.
     func stationIndex(regionCode: String, catalog: EditorCatalog) async throws -> StationSearchIndex {
+        // The registry may become ready (or its provider change) after an index
+        // was built without identity: rebuild both layers then.
+        var generation = RegistryIdentityLookup.providerGeneration
+        var hasIdentity = Self.hasIdentity(regionCode)
+        if let cached = state.cached(regionCode: regionCode),
+           cached.generation != generation || (!cached.hadIdentity && hasIdentity) {
+            engine.invalidate(regionCode: regionCode)
+        }
         let shared = try await engine.index(regionCode: regionCode)
-        if let cached = state.stationIndex(regionCode: regionCode, engine: shared) { return cached }
+        generation = RegistryIdentityLookup.providerGeneration
+        hasIdentity = Self.hasIdentity(regionCode)
+        if let cached = state.cached(regionCode: regionCode), cached.engine === shared,
+           cached.generation == generation, cached.hadIdentity || !hasIdentity {
+            return cached.index
+        }
         let built = catalog.stationSearchIndex(regionCode: regionCode, engine: shared)
-        state.store(built, engine: shared, regionCode: regionCode)
+        state.store(.init(engine: shared, index: built, generation: generation, hadIdentity: hasIdentity),
+                    regionCode: regionCode)
         return built
+    }
+
+    private static func hasIdentity(_ regionCode: String) -> Bool {
+        RegistryIdentityCache.identity(forRegion: regionCode).map { !$0.bundle.stations.isEmpty } ?? false
     }
 }
 
