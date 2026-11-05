@@ -291,6 +291,47 @@ enum SearchNormalizer {
         return result
     }
 
+    // MARK: Pinyin
+
+    private final class PinyinBlocks: @unchecked Sendable {
+        let lock = NSLock()
+        var blocks = [[[UInt8]]?](repeating: nil, count: 256)
+    }
+    private static let pinyinBlocks = PinyinBlocks()
+
+    /// Toneless Mandarin pinyin of one ideograph (context-free reading), ASCII.
+    /// One ICU `Han-Latin` call per 256-character block; allocated only for
+    /// regions with the Chinese profile.
+    static func pinyin(_ unit: UInt16) -> [UInt8] {
+        let blockIndex = Int(unit >> 8)
+        pinyinBlocks.lock.lock()
+        if let block = pinyinBlocks.blocks[blockIndex] {
+            pinyinBlocks.lock.unlock()
+            return block[Int(unit & 0xFF)]
+        }
+        pinyinBlocks.lock.unlock()
+        var joined: [UInt16] = []
+        joined.reserveCapacity(512)
+        for offset in 0..<256 {
+            let u = UInt16(blockIndex << 8) &+ UInt16(offset)
+            joined.append((0xD800...0xDFFF).contains(u) ? 0x20 : u)
+            joined.append(0x0A)
+        }
+        let latin = String(decoding: joined, as: UTF16.self).applyingTransform(.mandarinToLatin, reverse: false) ?? ""
+        let lines = latin.split(separator: "\n", omittingEmptySubsequences: false)
+        var block = [[UInt8]](repeating: [], count: 256)
+        if lines.count >= 256 {
+            for offset in 0..<256 {
+                let key = canonical(String(lines[offset]))
+                block[offset] = key.allSatisfy(isLatinOrDigit) ? key.map { UInt8($0) } : []
+            }
+        }
+        pinyinBlocks.lock.lock()
+        pinyinBlocks.blocks[blockIndex] = block
+        pinyinBlocks.lock.unlock()
+        return block[Int(unit & 0xFF)]
+    }
+
     // MARK: Classification
 
     static func isLatinOrDigit(_ u: UInt16) -> Bool { (0x61...0x7A).contains(u) || (0x30...0x39).contains(u) }
@@ -299,6 +340,87 @@ enum SearchNormalizer {
     static func isJamo(_ u: UInt16) -> Bool { (0x1100...0x11FF).contains(u) }
 
     // MARK: Loose romaji
+
+    /// Which romanization family a region's loose keys collapse.
+    enum Profile: UInt8, Sendable {
+        /// Hepburn (traditional/modified), Kunrei/Nihon-shiki, wāpuro.
+        case japanese
+        /// Revised Romanization and McCune–Reischauer.
+        case korean
+        /// Hanyu Pinyin (with or without tones), Wade–Giles, HK government/Jyutping/Yale basics.
+        case chinese
+
+        init(regionCode: String) {
+            switch regionCode.lowercased() {
+            case "kr": self = .korean
+            case "cn", "tw", "hk", "mo": self = .chinese
+            default: self = .japanese
+            }
+        }
+    }
+
+    /// Loose key under a region's romanization profile.
+    /// - japanese: Latin, digits and kana (kana → Hepburn first).
+    /// - korean: Latin, digits and Hangul jamo (jamo → Revised Romanization first).
+    /// - chinese: Latin, digits and Han (Han → toneless pinyin first).
+    /// Nil when the key has another script or no letters.
+    static func loose(fromCanonical key: [UInt16], profile: Profile) -> [UInt16]? {
+        switch profile {
+        case .japanese: return loose(fromCanonical: key)
+        case .korean: return foreignLoose(key, profile: .korean)
+        case .chinese: return foreignLoose(key, profile: .chinese)
+        }
+    }
+
+    private static func foreignLoose(_ key: [UInt16], profile: Profile) -> [UInt16]? {
+        guard !key.isEmpty else { return nil }
+        var ascii: [UInt8] = []
+        ascii.reserveCapacity(key.count * 3)
+        var hasLetter = false
+        var index = 0
+        while index < key.count {
+            let unit = key[index]
+            if isLatinOrDigit(unit) {
+                // Tone numbers after a pinyin syllable ("tai2bei3") are dropped.
+                if profile == .chinese, (0x31...0x35).contains(unit), let last = ascii.last, last >= 0x61 {
+                    index += 1
+                    continue
+                }
+                if unit >= 0x61 { hasLetter = true }
+                ascii.append(UInt8(unit))
+            } else if profile == .korean, isJamo(unit) {
+                hasLetter = true
+                let next = index + 1 < key.count ? key[index + 1] : 0
+                ascii.append(contentsOf: jamoRoman(unit, beforeVowel: (0x1161...0x1175).contains(next)))
+            } else if profile == .chinese, isHan(unit) {
+                hasLetter = true
+                ascii.append(contentsOf: pinyin(unit))
+            } else {
+                return nil
+            }
+            index += 1
+        }
+        guard hasLetter else { return nil }
+        return applyRules(ascii, profile == .korean ? koreanRules : chineseRules).map { UInt16($0) }
+    }
+
+    /// Revised Romanization of one conjoining jamo. A consonant not followed by
+    /// a vowel is a final (ㅇ → ng, ㄱ → k, ㄹ → l).
+    private static func jamoRoman(_ unit: UInt16, beforeVowel: Bool) -> [UInt8] {
+        let initials = ["g", "kk", "n", "d", "tt", "r", "m", "b", "pp", "s", "ss", "", "j", "jj", "ch", "k", "t", "p", "h"]
+        let finals = ["k", "k", "n", "t", "t", "l", "m", "p", "p", "t", "t", "ng", "t", "t", "t", "k", "t", "p", "t"]
+        let vowels = ["a", "ae", "ya", "yae", "eo", "e", "yeo", "ye", "o", "wa", "wae", "oe", "yo", "u", "wo", "we",
+                      "wi", "yu", "eu", "ui", "i"]
+        switch unit {
+        case 0x1100...0x1112:
+            let i = Int(unit - 0x1100)
+            return Array((beforeVowel ? initials[i] : finals[i]).utf8)
+        case 0x1161...0x1175:
+            return Array(vowels[Int(unit - 0x1161)].utf8)
+        default:
+            return []
+        }
+    }
 
     /// Loose romaji key of a canonical key made only of Latin letters, digits
     /// and kana. Nil when the key has other scripts (kanji, Hangul) or no letters.
@@ -379,7 +501,40 @@ enum SearchNormalizer {
         return table
     }()
 
-    /// Spelling-variant collapse on lower-case ASCII.
+    private static func applyRules(_ input: [UInt8], _ table: [LooseRule]) -> [UInt8] {
+        var s = input
+        var scratch: [UInt8] = []
+        scratch.reserveCapacity(input.count * 2 + 4)
+        for rule in table {
+            replace(&s, rule.from, rule.to, scratch: &scratch)
+            if rule.collapseAfter { s = collapseRuns(s) }
+        }
+        return collapseRuns(s)
+    }
+
+    private static func rules(_ pairs: [(String, String)], collapseBefore: Set<String> = []) -> [LooseRule] {
+        pairs.map { pair in
+            LooseRule(from: Array(pair.0.utf8), to: Array(pair.1.utf8), collapseAfter: collapseBefore.contains(pair.0))
+        }
+    }
+
+    /// RR ↔ McCune–Reischauer: voicing (b/p, d/t, g/k, j/ch) is not written
+    /// consistently between them, ŏ/eo and ŭ/eu differ, shi/si.
+    private static let koreanRules = rules([
+        ("eo", "o"), ("eu", "u"), ("sh", "s"), ("tch", "c"), ("ch", "c"), ("j", "c"),
+        ("ng", "{"), ("b", "p"), ("d", "t"), ("g", "k"), ("{", "ng"), ("r", "l"),
+    ])
+
+    /// Pinyin ↔ Wade–Giles (hs/x, ch/zh/j/q, ts/z/c, voicing, -ih, -ung) and the
+    /// common HK government / Jyutping / Yale spellings (ts/z, eoi/eui/ui).
+    private static let chineseRules = rules([
+        ("hs", "s"), ("x", "s"), ("zh", "c"), ("ch", "c"), ("tsz", "c"), ("ts", "c"), ("tz", "c"),
+        ("j", "c"), ("q", "c"), ("z", "c"), ("sh", "s"), ("ng", "{"), ("b", "p"), ("d", "t"), ("g", "k"), ("{", "ng"),
+        ("ieh", "ie"), ("ih", "i"), ("ung", "ong"), ("eoi", "ui"), ("eui", "ui"), ("oe", "o"), ("eo", "o"),
+        ("v", "u"),
+    ])
+
+    /// Spelling-variant collapse on lower-case ASCII (Japanese).
     static func looseRules(_ input: [UInt8]) -> [UInt8] {
         var s = input
         var scratch: [UInt8] = []
@@ -415,14 +570,16 @@ enum SearchNormalizer {
 
     /// Applied in order. Collapsing doubled letters before `ou → o` makes
     /// "toukyou", "tookyoo" and "tōkyō" agree.
-    private static let looseRuleTable: [LooseRule] = [
-        ("tch", "ch"), ("sh", "sy"), ("ch", "ty"), ("ts", "t"), ("j", "zy"), ("dz", "z"),
-        ("f", "h"), ("v", "b"), ("l", "r"), ("c", "k"), ("q", "k"),
+    /// Hepburn (traditional/modified) ↔ Kunrei-shiki ↔ Nihon-shiki ↔ wāpuro:
+    /// sh/s, ch/t, ts/t, j/zy, dz/z, dy/zy, f/h, tch/cch → ch, m/n before b/m/p,
+    /// doubled letters and long vowels (ou/oo/oh/ō/ô/uu), particle を wo/o.
+    private static let looseRuleTable: [LooseRule] = rules([
+        ("tch", "ch"), ("cch", "ch"), ("sh", "sy"), ("ch", "ty"), ("ts", "t"), ("j", "zy"), ("dz", "z"),
+        ("dy", "zy"), ("f", "h"), ("v", "b"), ("l", "r"), ("c", "k"), ("q", "k"),
         ("zyy", "zy"), ("syy", "sy"), ("tyy", "ty"), ("syi", "si"), ("tyi", "ti"), ("zyi", "zi"),
-        ("di", "zi"), ("du", "zu"), ("mb", "nb"), ("mp", "np"),
-    ].enumerated().map { index, pair in
-        LooseRule(from: Array(pair.0.utf8), to: Array(pair.1.utf8), collapseAfter: index == 20)
-    } + [LooseRule(from: Array("ou".utf8), to: Array("o".utf8), collapseAfter: false)]
+        ("di", "zi"), ("du", "zu"), ("mb", "nb"), ("mp", "np"), ("mm", "nm"),
+        ("wo", "o"), ("ou", "o"),
+    ], collapseBefore: ["mm"])
 
     private static func replace(_ s: inout [UInt8], _ from: [UInt8], _ to: [UInt8], scratch: inout [UInt8]) {
         let n = from.count, count = s.count

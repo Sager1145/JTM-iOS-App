@@ -9,14 +9,20 @@ public enum SearchIndexBuilder {
     /// Importance: no ridership data ships, so a station's prior is the number of
     /// lines serving its registry complex (or the station itself), a line's is its
     /// package rank and length, and a company's is its line count.
+    ///
+    /// `aliases` (default: the bundled `search-aliases.json`) adds alternate
+    /// readings, former names and English names, marked with their kind.
     public static func catalog(
-        _ catalog: EditorCatalog, regionCode: String, extraNames: [String: [String]] = [:]
+        _ catalog: EditorCatalog, regionCode: String, extraNames: [String: [String]] = [:],
+        aliases: SearchAliasTable = .bundled
     ) -> SearchIndex {
-        SearchIndex(regionCode: regionCode, documents: documents(catalog, regionCode: regionCode, extraNames: extraNames))
+        SearchIndex(regionCode: regionCode, documents: documents(
+            catalog, regionCode: regionCode, extraNames: extraNames, aliases: aliases))
     }
 
     static func documents(
-        _ catalog: EditorCatalog, regionCode: String, extraNames: [String: [String]]
+        _ catalog: EditorCatalog, regionCode: String, extraNames: [String: [String]],
+        aliases: SearchAliasTable = .bundled
     ) -> [SearchDocument] {
         let identity = RegistryIdentityCache.identity(forRegion: regionCode)
         let registry = identity.flatMap { $0.bundle.stations.isEmpty ? nil : $0 }
@@ -64,6 +70,7 @@ public enum SearchIndexBuilder {
                 if let short = op.shortName, !short.isEmpty { names.append(.init(short, source: .alias)) }
             }
             if let code = line.lineCode, !code.isEmpty { names.append(.init(code, source: .code)) }
+            names.append(contentsOf: aliases.names(regionCode: regionCode, entity: .line(line.id)))
             let members = catalog.memberships(lineID: line.id, regionCode: regionCode)
             let lat = members.isEmpty ? nil : members.map(\.latitude).reduce(0, +) / Double(members.count)
             let lon = members.isEmpty ? nil : members.map(\.longitude).reduce(0, +) / Double(members.count)
@@ -104,6 +111,7 @@ public enum SearchIndexBuilder {
                 if let complex = registry.complex(of: entry.id) { names.append(.init(complex.name, source: .alias)) }
             }
             for name in extraNames[code] ?? [] { names.append(.init(name, source: .reading)) }
+            names.append(contentsOf: aliases.names(regionCode: regionCode, entity: .station(code)))
             let lineIDs = stationLines[code] ?? []
             var ops: [String] = []
             var seenOps: Set<String> = []
@@ -133,6 +141,74 @@ public enum SearchIndexBuilder {
                                   importance: weights[trimmed] ?? 0)
         }
         return SearchIndex(regionCode: regionCode, documents: documents)
+    }
+}
+
+/// Alternate readings, former names and English names, keyed by entity, with
+/// their kind and source. The bundled table is built by
+/// `ios/tools/build-search-aliases.py` into RailCore's `search-aliases.json`.
+public struct SearchAliasTable: Sendable {
+    public struct Entry: Hashable, Sendable {
+        public var alias: String
+        /// Nil for a plain reading.
+        public var kind: SearchAliasKind?
+        public var source: String
+
+        public init(alias: String, kind: SearchAliasKind?, source: String) {
+            self.alias = alias
+            self.kind = kind
+            self.source = source
+        }
+    }
+
+    private var byEntity: [String: [Entry]]
+
+    public init(entries: [(regionCode: String, entity: SearchEntityID, entry: Entry)] = []) {
+        var table: [String: [Entry]] = [:]
+        for row in entries { table[Self.key(row.regionCode, row.entity), default: []].append(row.entry) }
+        byEntity = table
+    }
+
+    private static func key(_ region: String, _ entity: SearchEntityID) -> String {
+        "\(region)|\(entity.kind.rawValue)|\(entity.id)"
+    }
+
+    public func entries(regionCode: String, entity: SearchEntityID) -> [Entry] {
+        byEntity[Self.key(regionCode, entity)] ?? []
+    }
+
+    func names(regionCode: String, entity: SearchEntityID) -> [SearchDocument.Name] {
+        entries(regionCode: regionCode, entity: entity).map {
+            SearchDocument.Name($0.alias, source: $0.kind == nil ? .reading : .alias, aliasKind: $0.kind)
+        }
+    }
+
+    public var count: Int { byEntity.values.reduce(0) { $0 + $1.count } }
+
+    /// The table shipped in RailCore's resources (empty if missing or unreadable).
+    public static let bundled: SearchAliasTable = {
+        guard let url = Bundle.module.url(forResource: "search-aliases", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else { return SearchAliasTable() }
+        return (try? decode(data)) ?? SearchAliasTable()
+    }()
+
+    static func decode(_ data: Data) throws -> SearchAliasTable {
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let sources = json["sources"] as? [String],
+              let rows = json["entries"] as? [[Any]] else { return SearchAliasTable() }
+        let kinds: [String: SearchAliasKind] = [
+            "alternateReading": .alternateReading, "formerName": .formerName,
+            "englishName": .englishName, "officialEnglish": .officialEnglish,
+        ]
+        var entries: [(regionCode: String, entity: SearchEntityID, entry: Entry)] = []
+        for row in rows {
+            guard row.count >= 6, let region = row[0] as? String, let entity = row[1] as? String,
+                  let key = row[2] as? String, let alias = row[3] as? String, let kind = row[4] as? String,
+                  let sourceIndex = row[5] as? Int, sources.indices.contains(sourceIndex) else { continue }
+            let id: SearchEntityID = entity == "line" ? .line(key) : .station(key)
+            entries.append((region, id, Entry(alias: alias, kind: kinds[kind], source: sources[sourceIndex])))
+        }
+        return SearchAliasTable(entries: entries)
     }
 }
 

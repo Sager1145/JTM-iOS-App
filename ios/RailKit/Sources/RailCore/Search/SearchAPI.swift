@@ -165,6 +165,20 @@ public enum SearchMatchSource: UInt8, Hashable, Sendable {
     case code
 }
 
+/// What kind of alias a matched spelling is, when it is not just another
+/// spelling of the same reading. Shown as the match reason, e.g.
+/// "Yamate → 山手線 (alternate reading)".
+public enum SearchAliasKind: UInt8, Hashable, Sendable, Codable {
+    /// The same characters read differently (山手 Yamate / Yamanote).
+    case alternateReading = 1
+    /// A name the station or line had before (梅田 → 大阪梅田).
+    case formerName = 2
+    /// A common English name or abbreviation.
+    case englishName = 3
+    /// The operator's official English name.
+    case officialEnglish = 4
+}
+
 /// Why and where a result matched, for highlighting and "matched romaji" hints.
 public struct SearchMatch: Hashable, Sendable {
     public var kind: SearchMatchKind
@@ -175,16 +189,20 @@ public struct SearchMatch: Hashable, Sendable {
     public var highlights: [Range<Int>]
     /// Edit distance for `.fuzzy`; 0 otherwise.
     public var editDistance: Int
+    /// Set when the matched spelling is an alias table entry (alternate reading,
+    /// former name, English name). Nil for the entity's own names and readings.
+    public var alias: SearchAliasKind?
 
     public init(
         kind: SearchMatchKind, source: SearchMatchSource, matchedText: String,
-        highlights: [Range<Int>] = [], editDistance: Int = 0
+        highlights: [Range<Int>] = [], editDistance: Int = 0, alias: SearchAliasKind? = nil
     ) {
         self.kind = kind
         self.source = source
         self.matchedText = matchedText
         self.highlights = highlights
         self.editDistance = editDistance
+        self.alias = alias
     }
 
     /// `true` when the title itself carries the highlights.
@@ -318,9 +336,12 @@ public struct SearchDocument: Sendable {
     public struct Name: Sendable, Hashable {
         public var text: String
         public var source: SearchMatchSource
-        public init(_ text: String, source: SearchMatchSource) {
+        /// Alias table kind, when this spelling came from one.
+        public var aliasKind: SearchAliasKind?
+        public init(_ text: String, source: SearchMatchSource, aliasKind: SearchAliasKind? = nil) {
             self.text = text
             self.source = source
+            self.aliasKind = aliasKind
         }
     }
 

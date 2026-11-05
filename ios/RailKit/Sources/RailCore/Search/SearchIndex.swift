@@ -10,6 +10,8 @@ import Foundation
 /// buffers are pooled and reused across keystrokes.
 public final class SearchIndex: Sendable {
     public let regionCode: String
+    /// Romanization family of this region's loose keys.
+    let profile: SearchNormalizer.Profile
 
     struct KeyRecord {
         var mask: UInt32
@@ -22,6 +24,8 @@ public final class SearchIndex: Sendable {
         var source: SearchMatchSource { SearchMatchSource(rawValue: flags & 7) ?? .name }
         var isLoose: Bool { flags & 8 != 0 }
         var noFuzzy: Bool { flags & 16 != 0 }
+        /// Bits 5–7: `SearchAliasKind` raw value (0 = none).
+        var aliasKind: SearchAliasKind? { SearchAliasKind(rawValue: flags >> 5) }
     }
 
     // Documents (parallel arrays).
@@ -59,6 +63,8 @@ public final class SearchIndex: Sendable {
 
     public init(regionCode: String, documents: [SearchDocument]) {
         self.regionCode = regionCode
+        let profile = SearchNormalizer.Profile(regionCode: regionCode)
+        self.profile = profile
         var kinds: [SearchEntityKind] = [], ids: [String] = [], titles: [String] = []
         var importance: [Float] = [], latitudes: [Float] = [], longitudes: [Float] = []
         var lineRefStart: [UInt32] = [0], lineRefs: [UInt32] = []
@@ -110,14 +116,15 @@ public final class SearchIndex: Sendable {
                 guard !text.isEmpty else { continue }
                 let canonical = SearchNormalizer.canonical(text)
                 guard !canonical.isEmpty, canonical.count < Int(UInt16.max) else { continue }
-                let loose = name.source == .code ? nil : SearchNormalizer.loose(fromCanonical: canonical)
+                let loose = name.source == .code
+                    ? nil : SearchNormalizer.loose(fromCanonical: canonical, profile: profile)
                 let newCanonical = seenCanonical.insert(canonical).inserted
                 let newLoose = loose.map { seenLoose.insert($0).inserted } ?? false
                 guard newCanonical || newLoose else { continue }
                 let nameRef = UInt32(nameStart.count)
                 nameStart.append(UInt32(nameBlob.count))
                 nameBlob.append(contentsOf: text.utf8)
-                let noFuzzy: UInt8 = name.source == .code ? 16 : 0
+                let noFuzzy: UInt8 = (name.source == .code ? 16 : 0) | ((name.aliasKind?.rawValue ?? 0) << 5)
                 if newCanonical {
                     keys.append(KeyRecord(
                         mask: SearchMatching.mask(canonical), start: UInt32(units.count), doc: UInt32(doc),
@@ -137,7 +144,7 @@ public final class SearchIndex: Sendable {
                     keys.append(KeyRecord(
                         mask: SearchMatching.mask(loose), start: UInt32(units.count), doc: UInt32(doc),
                         name: nameRef, length: UInt16(loose.count),
-                        flags: SearchMatchSource.romaji.rawValue | 8))
+                        flags: SearchMatchSource.romaji.rawValue | 8 | ((name.aliasKind?.rawValue ?? 0) << 5)))
                     units.append(contentsOf: loose)
                 }
             }

@@ -13,7 +13,7 @@ enum SearchKeywords {
         "新幹線", "新干线", "shinkansen", "신칸센", "号线", "號線", "호선", "線", "线", "綫", "선", "line",
     ])
     /// Station type: 駅/站/역/Station.
-    static let stationSuffixes = keys(["駅", "站", "車站", "车站", "역", "station", "eki"])
+    static let stationSuffixes = keys(["駅", "站", "車站", "车站", "역", "station", "sta", "stn", "eki"])
     /// Company type: 鉄道/铁路/鐵路/電鉄/Metro/Railway/公司/交通局/공사 …
     static let companySuffixes = keys([
         "電気鉄道", "旅客鉄道", "高速鉄道", "鉄道", "鐵道", "铁路", "鐵路", "電鉄", "电铁", "電鐵", "電気軌道",
@@ -22,7 +22,7 @@ enum SearchKeywords {
     ])
     /// Pure keywords that only say which kind of thing is wanted.
     static let lineWords = Set(keys(["線", "line", "lines", "路線", "线路", "線路", "노선", "新幹線", "shinkansen"]))
-    static let stationWords = Set(keys(["駅", "站", "車站", "车站", "역", "station", "stations", "eki"]))
+    static let stationWords = Set(keys(["駅", "站", "車站", "车站", "역", "station", "stations", "sta", "stn", "eki"]))
     static let companyWords = Set(keys(["鉄道", "铁路", "railway", "公司", "会社", "operator", "company", "회사", "운영사"]))
 
     static func stripLineSuffix(_ key: [UInt16]) -> [UInt16]? {

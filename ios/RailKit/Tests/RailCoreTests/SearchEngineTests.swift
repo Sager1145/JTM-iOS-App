@@ -30,6 +30,15 @@ enum SearchEngineFixture {
         return result
     }()
 
+    static func regionIndex(_ region: String) -> SearchIndex? {
+        let url = root.appendingPathComponent("app/public/rail/\(region)-2025.json")
+        guard let data = try? Data(contentsOf: url),
+              let directory = try? JSONDecoder().decode(CompactPackage.StationDirectory.self, from: data)
+        else { return nil }
+        let catalog = EditorCatalogBuilder.build(directory.lineSources(regionCode: region))
+        return SearchIndexBuilder.catalog(catalog, regionCode: region)
+    }
+
     static let index: SearchIndex? = catalog.map {
         SearchIndexBuilder.catalog($0, regionCode: "jp", extraNames: readings)
     }
@@ -72,6 +81,45 @@ struct SearchNormalizerTests {
         #expect(loose("東京") == nil)
     }
 
+    @Test func romanizationSystems() {
+        func same(_ spellings: [String], _ comment: Comment? = nil) {
+            let keys = Set(spellings.map { loose($0) ?? [] })
+            #expect(keys.count == 1, "\(spellings)")
+        }
+        same(["Shinjuku", "Sinzyuku", "shinjyuku", "しんじゅく"])            // Hepburn / Kunrei / wāpuro
+        same(["Chiba", "Tiba", "ちば"])
+        same(["Tsukiji", "Tukizi", "Tsukidzi"])
+        same(["Fujisawa", "Huzisawa"])
+        same(["Shimbashi", "Shinbashi", "sinbasi", "しんばし"])              // syllabic n before b
+        same(["Nihombashi", "Nihonbashi", "にほんばし"])
+        same(["Tōkyō", "Tôkyô", "Toukyou", "Tookyoo", "Tohkyoh", "tokyo", "とうきょう"])
+        same(["Shin'ōsaka", "Shin-Osaka", "shinosaka", "しんおおさか"])
+        same(["Kannai", "Kan-nai", "かんない"])
+        same(["Matcha", "maccha", "まっちゃ"])
+        same(["Ochanomizu", "Otyanomizu"])
+        #expect(loose("Nippombashi") != loose("Nihombashi"))
+    }
+
+    @Test func koreanAndChineseRomanization() {
+        func korean(_ text: String) -> [UInt16]? {
+            SearchNormalizer.loose(fromCanonical: key(text), profile: .korean)
+        }
+        func chinese(_ text: String) -> [UInt16]? {
+            SearchNormalizer.loose(fromCanonical: key(text), profile: .chinese)
+        }
+        #expect(korean("Busan") == korean("Pusan"))
+        #expect(korean("부산") == korean("Busan"))
+        #expect(korean("Seoul") == korean("Sŏul"))
+        #expect(korean("서울") == korean("Seoul"))
+        #expect(korean("Incheon") == korean("Inch'ŏn"))
+        #expect(korean("강남") == korean("Gangnam"))
+        #expect(chinese("Kaohsiung") == chinese("gaoxiong"))
+        #expect(chinese("高雄") == chinese("Gaoxiong"))
+        #expect(chinese("台北") == chinese("Taipei"))
+        #expect(chinese("tai2bei3") == chinese("Taibei"))
+        #expect(chinese("Tsim Sha Tsui") == chinese("zim saa zeoi"))
+    }
+
     @Test func boundedDistance() {
         let rows = UnsafeMutablePointer<Int32>.allocate(capacity: SearchMatching.rowCapacity)
         defer { rows.deallocate() }
@@ -110,6 +158,44 @@ struct SearchEngineTests {
         }
         let kanaTypo = try top("しんじゆく", scope: .stations)
         #expect(kanaTypo.results.first?.title == "新宿")
+    }
+
+    @Test func otherRomanizationsAndAliases() throws {
+        let yamate = try top("yamate", scope: .lines)
+        let jr = try #require(yamate.results.first { $0.entity == .line("jp-東日本旅客鉄道-山手線") })
+        #expect(jr.match.alias == .alternateReading)
+        #expect(yamate.results.prefix(2).allSatisfy { $0.title == "山手線" })
+
+        for spelling in ["shimbashi", "sinbasi", "Shinbashi"] {
+            #expect(try top(spelling, scope: .stations).results.first?.title == "新橋", "\(spelling)")
+        }
+        for spelling in ["tôkyô", "toukyou", "tokyo", "Tokyo Sta.", "東京駅"] {
+            #expect(try top(spelling, scope: .stations).results.first?.title == "東京", "\(spelling)")
+        }
+        #expect(try top("nipponbashi", scope: .stations).results.first?.entity == .station("007312"))
+        #expect(try top("Nihombashi", scope: .stations).results.first?.entity == .station("003756"))
+        #expect(try top("sinzyuku", scope: .stations).results.first?.title == "新宿")
+
+        let former = try top("業平橋", scope: .stations)
+        #expect(former.results.first?.title == "とうきょうスカイツリー")
+        #expect(former.results.first?.match.alias == .formerName)
+        #expect(SearchAliasTable.bundled.count > 200)
+    }
+
+    @Test func koreanAndTaiwanIndexes() throws {
+        let korea = try #require(SearchEngineFixture.regionIndex("kr"))
+        let pusan = korea.query("pusan", scope: .stations, context: SearchContext(regionCode: "kr"))
+        #expect(pusan.results.first?.title == "부산")
+        let seoul = korea.query("Sŏul", scope: .stations, context: SearchContext(regionCode: "kr"))
+        #expect(seoul.results.first.map { ["서울", "서울역"].contains($0.title) } == true)
+
+        let taiwan = try #require(SearchEngineFixture.regionIndex("tw"))
+        for spelling in ["Kaohsiung", "gaoxiong", "gao1xiong2"] {
+            let response = taiwan.query(spelling, scope: .stations, context: SearchContext(regionCode: "tw"))
+            #expect(response.results.first.map { ["高雄", "高雄車站"].contains($0.title) } == true, "\(spelling)")
+        }
+        let taibei = taiwan.query("taibei", scope: .stations, context: SearchContext(regionCode: "tw"))
+        #expect(taibei.results.first.map { ["台北", "臺北"].contains($0.title) } == true)
     }
 
     @Test func variantLineNameIsAmbiguousBetweenOperators() throws {

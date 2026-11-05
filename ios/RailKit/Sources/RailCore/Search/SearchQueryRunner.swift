@@ -292,10 +292,10 @@ struct SearchQueryRunner {
     ) -> SearchResponse {
         let residualText = residual.joined(separator: " ")
         let qc = SearchNormalizer.canonical(residualText)
-        let ql = SearchNormalizer.loose(fromCanonical: qc) ?? []
+        let ql = SearchNormalizer.loose(fromCanonical: qc, profile: index.profile) ?? []
         let tokenKeys: [[UInt16]] = residual.count > 1
             ? Array(residual.prefix(12).map { SearchNormalizer.canonical($0) }.filter { !$0.isEmpty }) : []
-        let tokenLoose: [[UInt16]] = tokenKeys.map { SearchNormalizer.loose(fromCanonical: $0) ?? [] }
+        let tokenLoose: [[UInt16]] = tokenKeys.map { SearchNormalizer.loose(fromCanonical: $0, profile: index.profile) ?? [] }
         let allTokens: UInt16 = tokenKeys.isEmpty ? 0 : UInt16((1 << tokenKeys.count) - 1)
         let qcMask = SearchMatching.mask(qc), qlMask = SearchMatching.mask(ql)
         var cancelled = false
@@ -410,8 +410,9 @@ struct SearchQueryRunner {
         let matched = index.nameText(record.name)
         let match = SearchMatch(
             kind: hit.kind, source: record.source, matchedText: matched,
-            highlights: Self.highlights(matched, record: record, hit: hit, queryLength: queryLength),
-            editDistance: hit.distance)
+            highlights: Self.highlights(matched, record: record, hit: hit, queryLength: queryLength,
+                                        profile: index.profile),
+            editDistance: hit.distance, alias: record.aliasKind)
         return makeResult(d, match: match, score: score)
     }
 
@@ -426,7 +427,8 @@ struct SearchQueryRunner {
 
     /// UTF-16 ranges of `text` covered by the match.
     static func highlights(
-        _ text: String, record: SearchIndex.KeyRecord, hit: SearchMatching.Hit, queryLength: Int
+        _ text: String, record: SearchIndex.KeyRecord, hit: SearchMatching.Hit, queryLength: Int,
+        profile: SearchNormalizer.Profile = .japanese
     ) -> [Range<Int>] {
         let length = Int(record.length)
         let whole = 0..<text.utf16.count
@@ -438,7 +440,8 @@ struct SearchQueryRunner {
                 var prefix = ""
                 for character in text {
                     prefix.append(character)
-                    let key = SearchNormalizer.loose(fromCanonical: SearchNormalizer.canonical(prefix)) ?? []
+                    let key = SearchNormalizer.loose(
+                        fromCanonical: SearchNormalizer.canonical(prefix), profile: profile) ?? []
                     if key.count >= queryLength { return [0..<prefix.utf16.count] }
                 }
                 return [whole]
