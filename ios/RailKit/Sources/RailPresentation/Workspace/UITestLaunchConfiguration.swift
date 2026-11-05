@@ -36,6 +36,10 @@ public struct UITestLaunchConfiguration: Sendable, Equatable {
         case statsRegion = "RAILMAP_UI_TEST_STATS_REGION"
         case storageId = "RAILMAP_UI_TEST_STORAGE_ID"
         case storeBase64 = "RAILMAP_UI_TEST_STORE_BASE64"
+        /// Run "reload all" this many times, back to back, once routes load.
+        case reloadAll = "RAILMAP_UI_TEST_RELOAD_ALL"
+        /// Stop the first reload this many milliseconds after it starts.
+        case reloadAllStopAfterMilliseconds = "RAILMAP_UI_TEST_RELOAD_ALL_STOP_MS"
         case stress = "RAILMAP_UI_TEST_STRESS"
         case tab = "RAILMAP_UI_TEST_TAB"
         case tabBarProbe = "RAILMAP_UI_TEST_TAB_BAR_PROBE"

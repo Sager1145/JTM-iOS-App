@@ -220,6 +220,14 @@ final class RiddenRouteStore {
     /// Full records remain the invalidation boundary. Reuse happens per
     /// journey, so a same-ID edit cannot leave stale route geometry behind.
     private var completedInputs: [String: Train] = [:]
+    /// The last full set `load` was asked for, so "reload all" re-resolves
+    /// exactly what the map was given — the same scoped, capped set.
+    private var lastRequestedInputs: [String: Train] = [:]
+    /// True from `reloadAll` until its load finishes, fails or is stopped.
+    private var reloadingAll = false
+    /// Set while `reloadAll` waits for the previous work to stop and the
+    /// cache to be discarded, so a second confirm cannot start it twice.
+    private var reloadStarting = false
     private var resolutionTickets: [String: UUID] = [:]
     /// Per-ride landing stamp. A resolution task stamps the ride it lands; a
     /// load publishes its older batch snapshot only for rides not stamped since
@@ -313,11 +321,15 @@ final class RiddenRouteStore {
     /// pipeline groups by it, and the per-region resources — the sections
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
-    func load(trains: [Train], preferredTrainID: String? = nil) {
+    func load(
+        trains: [Train], preferredTrainID: String? = nil,
+        priority: TaskPriority = .userInitiated
+    ) {
         bindPendingOwner()
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
+        lastRequestedInputs = wanted
         // View remounts and an order-only change share the batch already running.
         // Neither network rendering arrivals nor partial route publications are
         // solver inputs. Resource revisions are immutable for this app launch.
@@ -334,6 +346,7 @@ final class RiddenRouteStore {
         }
         loadTask?.cancel()
         cancelResolutions()
+        reloadingAll = false
         loadRevision += 1
         let revision = loadRevision
         let landingMark = landingCounter
@@ -366,7 +379,7 @@ final class RiddenRouteStore {
         let partials = PartialRidePublication()
         let inbox = PartialRideInbox()
         let owner = pendingSolveOwner
-        loadTask = Task(priority: .userInitiated) {
+        loadTask = Task(priority: priority) {
             await Self.$activePendingOwner.withValue(owner) {
             do {
                 let primed = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
@@ -394,7 +407,11 @@ final class RiddenRouteStore {
                                 let landed = self.landedSince(landingMark)
                                 for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
                                 self.noteRouteEntries(for: self.rides, wanted: [], keeping: landed)
-                                self.lineDetector.publishSelected(rides: self.rides)
+                                // Line rows are not republished per partial:
+                                // each pass walks every segment and re-renders
+                                // every row. The final `detectTraversedLines`
+                                // publishes once; recorded names cover until then.
+                                RailSignpost.data.mark("routes.partial.publish", partial.count)
                             }
                         }
                     }
@@ -411,6 +428,7 @@ final class RiddenRouteStore {
                 completedInputs = finalInputs
                 loadingInputs = nil
                 loadTask = nil
+                reloadingAll = false
                 state = .loaded(rides: rides)
                 noteRouteEntries(for: rides, wanted: wantedIDs, keeping: landed)
                 detectTraversedLines()
@@ -438,11 +456,101 @@ final class RiddenRouteStore {
                 guard loadRevision == revision else { return }
                 loadingInputs = nil
                 loadTask = nil
+                reloadingAll = false
                 state = .failed(error.localizedDescription)
                 noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
             }
             }
         }
+    }
+
+    // MARK: - Reload all
+
+    struct ReloadProgress: Equatable {
+        var done: Int
+        var total: Int
+    }
+
+    /// `n of N` while a reader-started reload runs; nil otherwise. Advances
+    /// as coalesced partial results land, never per journey.
+    var reloadProgress: ReloadProgress? {
+        guard reloadingAll, case .loading = state else { return nil }
+        let done = requestedOrder.reduce(0) { $0 + (completedInputs[$1] == nil ? 0 : 1) }
+        return ReloadProgress(done: done, total: requestedOrder.count)
+    }
+
+    /// True while a load is resolving. Derived products that summarise every
+    /// trip (statistics, passport) wait for this to clear instead of
+    /// recomputing on each partial publish.
+    var isLoading: Bool {
+        if case .loading = state { true } else { false }
+    }
+
+    /// Whether `load` has been handed any trips yet.
+    var requestedIsEmpty: Bool { requestedOrder.isEmpty }
+
+    /// Whether there is anything to reload.
+    var canReloadAll: Bool { !requestedOrder.isEmpty && !reloadingAll && !reloadStarting }
+
+    /// Forget every solved route and resolve the current set again.
+    ///
+    /// Runs through `load`, so it is the same path, the same single solve
+    /// permit and the same coalesced map updates as any load — at `.utility`
+    /// priority, so the reader can keep using the app while it runs. The disk
+    /// cache is removed first and each entry is rewritten atomically as its
+    /// journey lands, so stopping or restarting midway leaves only complete
+    /// entries; whatever was not reached is solved by the next load.
+    func reloadAll() async {
+        guard !reloadStarting, !reloadingAll, !requestedOrder.isEmpty else { return }
+        reloadStarting = true
+        defer { reloadStarting = false }
+        // Stop everything that could still publish or write a route, and wait
+        // for it: a cancelled solve that lands after the cache is gone would
+        // be replayed by the reload instead of being solved again.
+        let previousLoad = loadTask
+        let previousResolutions = Array(resolutionTasks.values)
+        loadRevision += 1
+        previousLoad?.cancel()
+        cancelResolutions()
+        loadTask = nil
+        loadingInputs = nil
+        await previousLoad?.value
+        for task in previousResolutions { await task.value }
+        completedInputs = [:]
+        await Self.discardSolvedRoutes()
+        completedInputs = [:]
+        // Read after the waits: a load that arrived meanwhile (an import, an
+        // edit) is the set to reload, not the one this call started with.
+        let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
+        guard !trains.isEmpty else { return }
+        load(trains: trains, priority: .utility)
+        if case .loading = state { reloadingAll = true }
+    }
+
+    /// Stop a forced reload. What it already solved stays; the rest of the
+    /// set goes back to an ordinary load — cached routes replay, missing ones
+    /// solve — so no trip is left without a route or a status.
+    func cancelReloadAll() {
+        guard reloadingAll else { return }
+        let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
+        // Not joined to the reload's batch: `load` would share a batch with
+        // the same inputs. The ordinary load below replaces it.
+        loadRevision += 1
+        loadTask?.cancel()
+        loadTask = nil
+        loadingInputs = nil
+        load(trains: trains, priority: .utility)
+        reloadingAll = false
+    }
+
+    /// The route cache on disk plus every in-memory memo of a solve, so a
+    /// reload solves rather than replays.
+    @concurrent private nonisolated static func discardSolvedRoutes() async {
+        let base = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        try? FileManager.default.removeItem(at: base)
+        await sharedJourneyWork.clear()
+        await releaseCachesForMemoryPressure()
     }
 
     private func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
@@ -460,6 +568,7 @@ final class RiddenRouteStore {
     }
 
     func clear() {
+        reloadingAll = false
         loadingInputs = nil
         requestedOrder = []
         loadRevision += 1
@@ -1126,6 +1235,16 @@ final class RiddenRouteStore {
         return results
     }
 
+    /// Between journeys of a long solve: let the rest of the app run, and
+    /// back off while the device is hot rather than holding a core flat out.
+    private nonisolated static func yieldForDevice() async {
+        switch ProcessInfo.processInfo.thermalState {
+        case .serious: try? await Task.sleep(for: .milliseconds(250))
+        case .critical: try? await Task.sleep(for: .seconds(1))
+        default: await Task.yield()
+        }
+    }
+
     private struct JourneyWorkKey: Hashable, Sendable {
         let snapshotID: UUID
         let scope: String
@@ -1529,6 +1648,7 @@ final class RiddenRouteStore {
         for (trainIndex, train) in trains.enumerated() {
             try Task.checkCancellation()
             guard !train.requiresRouteConfirmation, !skipped.contains(train.id) else { continue }
+            await yieldForDevice()
             let routeInput: CanonicalRouteInput
             if let prepared = providedCanonicalInputs {
                 routeInput = prepared[trainIndex]
