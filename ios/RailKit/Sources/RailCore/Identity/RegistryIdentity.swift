@@ -123,6 +123,19 @@ public struct RegistryIdentity: Equatable, Sendable {
         return record.names.first
     }
 
+    /// Passenger label in `language` — the one place an operator id becomes a
+    /// displayed name. English uses the identity's English label
+    /// (``OperatorIdentity/englishLabel(code:)``); every other language, and an
+    /// operator without English, keeps the native ``operatorLabel(_:)``.
+    public func operatorLabel(_ identifier: String, language: String) -> String? {
+        if language == "en",
+           let code = bundle.operatorRecords[bundle.canonicalID(identifier)]?.identity,
+           let english = OperatorIdentity.englishLabel(code: code) {
+            return english
+        }
+        return operatorLabel(identifier)
+    }
+
     /// Logo path stored on the operator. Empty and missing logos are nil.
     public func operatorLogo(_ identifier: String) -> String? {
         guard let logo = bundle.operatorRecords[bundle.canonicalID(identifier)]?.logo, !logo.isEmpty else { return nil }
