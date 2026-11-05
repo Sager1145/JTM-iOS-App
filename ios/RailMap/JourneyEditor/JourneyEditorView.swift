@@ -14,6 +14,7 @@ struct JourneyEditorView: View {
     @Environment(ItineraryStore.self) private var itineraries: ItineraryStore?
     @Environment(RiddenRouteStore.self) private var riddenRoutes: RiddenRouteStore?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let train: Train
     let isNew: Bool
@@ -677,7 +678,10 @@ struct JourneyEditorView: View {
                 }
             }
             .containerRelativeFrame(.vertical) { height, _ in
-                min(max(height * 0.42, 240), 460)
+                // Large text needs the room for the form below the map.
+                dynamicTypeSize.isAccessibilitySize
+                    ? min(max(height * 0.28, 180), 300)
+                    : min(max(height * 0.42, 240), 460)
             }
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .padding(.horizontal, 12)

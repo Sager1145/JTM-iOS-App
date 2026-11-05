@@ -328,8 +328,8 @@ enum NewTripStrings {
             .zhHant: "清除篩選", .zhHans: "清除筛选",
         ],
         "ios.newTrip.dateHint": [
-            .en: "2026-11-05", .ja: "2026-11-05",
-            .zhHant: "2026-11-05", .zhHans: "2026-11-05",
+            .en: "YYYY-MM-DD", .ja: "年-月-日",
+            .zhHant: "年-月-日", .zhHans: "年-月-日",
         ],
         "ios.newTrip.dateForms": [
             .en: "e.g. 2026-11-05, 11/05 or 1105", .ja: "例：2026-11-05、11/05、1105",

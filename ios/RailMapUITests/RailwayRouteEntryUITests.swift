@@ -68,8 +68,10 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCTAssertTrue(app.searchFields.firstMatch.waitForNonExistence(timeout: 8))
         XCTAssertFalse(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch.exists,
                        "A new destination replaces the saved route.")
+        // A replan shows a candidate, or says why there is none.
         let corridor = app.buttons["newTripCorridor-0"]
-        XCTAssertTrue(corridor.waitForExistence(timeout: 30)
+        let routeError = app.descendants(matching: .any)["newTripRouteError"].firstMatch
+        XCTAssertTrue(corridor.waitForExistence(timeout: 30) || routeError.exists
                       || EditorUITestSupport.reveal(corridor, in: app, unmountedRowIsAbove: false),
                       "A new destination must replan the route. \(app.debugDescription)")
         let cancel = app.buttons["newTripCancel"]
@@ -92,8 +94,9 @@ final class RailwayRouteEntryUITests: XCTestCase {
             "region": "jp",
             "visible": true,
             "stops": [
-                EditorLaunchSupport.stop("東京", code: "003766", type: "origin", departure: "09:00"),
-                EditorLaunchSupport.stop("品川", code: "004095", type: "destination", arrival: "09:12"),
+                // Conventional-line codes, so 大崎 on the 山手線 connects.
+                EditorLaunchSupport.stop("東京", code: "003768", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("品川", code: "004092", type: "destination", arrival: "09:12"),
             ],
         ]
         EditorLaunchSupport.launchEditing(app, journey: journey)

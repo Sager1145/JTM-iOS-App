@@ -51,7 +51,7 @@ struct EditorDateField: View {
     }
 
     private var baseTextField: some View {
-        TextField(title, text: text, prompt: Text(localization.text("ios.newTrip.dateHint", fallback: "2026-11-05")))
+        TextField(title, text: text, prompt: Text(localization.text("ios.newTrip.dateHint", fallback: "YYYY-MM-DD")))
             .keyboardType(.numbersAndPunctuation)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
@@ -335,7 +335,7 @@ struct TypedDateTimeField: View {
                     .lineLimit(1)
                     .layoutPriority(1)
                 Spacer(minLength: 4)
-                TextField(localization.text("ios.newTrip.dateHint", fallback: "2026-11-05"), text: $dateText)
+                TextField(localization.text("ios.newTrip.dateHint", fallback: "YYYY-MM-DD"), text: $dateText)
                     .keyboardType(.numbersAndPunctuation)
                     .multilineTextAlignment(.trailing)
                     .autocorrectionDisabled()

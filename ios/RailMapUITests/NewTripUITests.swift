@@ -277,7 +277,18 @@ final class NewTripUITests: XCTestCase {
         let jrEast = app.buttons.matching(NSPredicate(
             format: "label CONTAINS %@ OR label CONTAINS %@ OR label CONTAINS %@",
             "JR East", "JR東日本", "東日本旅客鉄道")).firstMatch
-        XCTAssertTrue(jrEast.waitForExistence(timeout: 8), app.debugDescription)
+        // The menu lists every company of the region; scroll it to JR East.
+        let firstItem = app.buttons.matching(NSPredicate(format: "label == %@", "Abukuma Express")).firstMatch
+        _ = firstItem.waitForExistence(timeout: 8)
+        let menuFrame = firstItem.exists ? firstItem.frame : app.frame
+        var menuSwipes = 0
+        while !jrEast.waitForExistence(timeout: 0.5), menuSwipes < 25 {
+            let x = (menuFrame.midX - app.frame.minX) / app.frame.width
+            app.coordinate(withNormalizedOffset: CGVector(dx: x, dy: 0.75))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: x, dy: 0.25)))
+            menuSwipes += 1
+        }
+        XCTAssertTrue(jrEast.exists, app.debugDescription)
         jrEast.tap()
         let line = app.buttons["stationPickerFilterLine-jp-東日本旅客鉄道-山手線"]
         var swipes = 0
@@ -799,7 +810,7 @@ final class NewTripUITests: XCTestCase {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         let parts = Calendar.current.dateComponents([.year, .month, .day], from: yesterday)
         arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
-        if let current = arrival.value as? String, !current.isEmpty, current != arrival.placeholderValue {
+        if let current = arrival.value as? String, !current.isEmpty {
             arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }
         arrival.typeText(String(format: "%04d-%02d-%02d\n", parts.year!, parts.month!, parts.day!))
