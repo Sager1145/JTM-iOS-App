@@ -43,8 +43,24 @@ struct TripMapContent: Equatable {
         }
     }
 
+    /// One travel-direction arrow per leg of the chosen route.
+    struct Arrow: Equatable, Identifiable {
+        var id: String
+        var coordinate: CLLocationCoordinate2D
+        /// Compass bearing of travel at `coordinate`, in degrees.
+        var bearing: Double
+        var label: String
+
+        static func == (lhs: Arrow, rhs: Arrow) -> Bool {
+            lhs.id == rhs.id && lhs.bearing == rhs.bearing && lhs.label == rhs.label
+                && lhs.coordinate.latitude == rhs.coordinate.latitude
+                && lhs.coordinate.longitude == rhs.coordinate.longitude
+        }
+    }
+
     var routes: [Route] = []
     var marks: [Mark] = []
+    var arrows: [Arrow] = []
     /// Bumped when the camera should frame the trip again.
     var fitRevision = 0
 }
@@ -107,6 +123,12 @@ struct TripMapView: UIViewRepresentable {
         coordinator.apply(content, on: mapView, reduceMotion: reduceMotion)
     }
 
+    /// The editor closed: let MapKit drop its tiles, overlays and dots now
+    /// rather than whenever the hosting view is finally released.
+    static func dismantleUIView(_ mapView: MKMapView, coordinator: Coordinator) {
+        coordinator.release(mapView)
+    }
+
     // MARK: - coordinator
 
     @MainActor
@@ -119,6 +141,7 @@ struct TripMapView: UIViewRepresentable {
         private var displayStations: [(station: CatalogStation, coordinate: CLLocationCoordinate2D)] = []
         private var shownDots: [StationKey: StationDotAnnotation] = [:]
         private var markAnnotations: [String: MarkAnnotation] = [:]
+        private var arrowAnnotations: [ArrowAnnotation] = []
         private var content = TripMapContent()
         private var appliedFit = -1
         private var zoomedIn: Bool?
@@ -130,6 +153,21 @@ struct TripMapView: UIViewRepresentable {
         private static func cell(_ coordinate: CLLocationCoordinate2D) -> Cell {
             Cell(x: Int((coordinate.longitude / cellSize).rounded(.down)),
                  y: Int((coordinate.latitude / cellSize).rounded(.down)))
+        }
+
+        func release(_ mapView: MKMapView) {
+            mapView.delegate = nil
+            mapView.gestureRecognizers?.forEach { mapView.removeGestureRecognizer($0) }
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.removeOverlays(mapView.overlays)
+            grid = [:]
+            displayStations = []
+            shownDots = [:]
+            markAnnotations = [:]
+            arrowAnnotations = []
+            content = TripMapContent()
+            parent = nil
+            self.mapView = nil
         }
 
         func setStations(_ stations: [CatalogStation], regionCode: String, on mapView: MKMapView) {
@@ -177,6 +215,11 @@ struct TripMapView: UIViewRepresentable {
             content = next
             if previous.routes != next.routes { applyRoutes(next.routes, on: mapView) }
             if previous.marks != next.marks { applyMarks(next.marks, on: mapView) }
+            if previous.arrows != next.arrows {
+                mapView.removeAnnotations(arrowAnnotations)
+                arrowAnnotations = next.arrows.map(ArrowAnnotation.init)
+                mapView.addAnnotations(arrowAnnotations)
+            }
             if next.fitRevision != appliedFit {
                 appliedFit = next.fitRevision
                 fit(on: mapView, animated: RailMotion.cameraAnimated(reduceMotion: reduceMotion))
@@ -315,6 +358,13 @@ struct TripMapView: UIViewRepresentable {
                 view?.configure(mark.mark)
                 return view
             }
+            if let arrow = annotation as? ArrowAnnotation {
+                let view = (mapView.dequeueReusableAnnotationView(withIdentifier: ArrowView.reuseID)
+                    as? ArrowView) ?? ArrowView(annotation: arrow, reuseIdentifier: ArrowView.reuseID)
+                view.annotation = arrow
+                view.configure(arrow.arrow, mapHeading: mapView.camera.heading)
+                return view
+            }
             return nil
         }
 
@@ -427,6 +477,56 @@ private final class StationDotAnnotation: NSObject, MKAnnotation {
     init(station: CatalogStation, coordinate: CLLocationCoordinate2D) {
         self.station = station
         self.coordinate = coordinate
+    }
+}
+
+private final class ArrowAnnotation: NSObject, MKAnnotation {
+    let arrow: TripMapContent.Arrow
+    var coordinate: CLLocationCoordinate2D { arrow.coordinate }
+    init(_ arrow: TripMapContent.Arrow) { self.arrow = arrow }
+}
+
+/// A chevron on the line pointing the way the trip runs, with its 上り/下り
+/// and 方面 caption. Not a target: taps fall through to the route below.
+private final class ArrowView: MKAnnotationView {
+    static let reuseID = "tripArrow"
+    private let chevron = UIImageView()
+    private let caption = UILabel()
+
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        isUserInteractionEnabled = false
+        displayPriority = .defaultHigh
+        collisionMode = .circle
+        chevron.image = UIImage(systemName: "arrowtriangle.up.circle.fill")?
+            .applyingSymbolConfiguration(.init(pointSize: 18, weight: .bold))
+        chevron.tintColor = .label
+        chevron.backgroundColor = .systemBackground
+        chevron.layer.cornerRadius = 11
+        chevron.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        caption.font = .preferredFont(forTextStyle: .caption2).withSize(11)
+        caption.textColor = .label
+        caption.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.85)
+        caption.layer.cornerRadius = 4
+        caption.layer.masksToBounds = true
+        caption.textAlignment = .center
+        addSubview(chevron)
+        addSubview(caption)
+    }
+
+    required init?(coder: NSCoder) { nil }
+
+    func configure(_ arrow: TripMapContent.Arrow, mapHeading: CLLocationDirection) {
+        chevron.transform = CGAffineTransform(rotationAngle: CGFloat((arrow.bearing - mapHeading) * .pi / 180))
+        caption.text = " \(arrow.label) "
+        caption.sizeToFit()
+        let width = max(22, caption.bounds.width)
+        frame.size = CGSize(width: width, height: 22 + 2 + caption.bounds.height)
+        chevron.center = CGPoint(x: width / 2, y: 11)
+        caption.frame.origin = CGPoint(x: (width - caption.bounds.width) / 2, y: 24)
+        centerOffset = CGPoint(x: 0, y: (caption.bounds.height + 2) / 2)
+        accessibilityLabel = arrow.label
+        accessibilityIdentifier = "newTripMapArrow-\(arrow.id)"
     }
 }
 

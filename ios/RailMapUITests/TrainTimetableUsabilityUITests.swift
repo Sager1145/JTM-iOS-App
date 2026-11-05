@@ -8,14 +8,14 @@ final class TrainTimetableUsabilityUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         EditorLaunchSupport.launchEditing(app, journey: hachiojiJourney(date: "2026-09-27"))
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
-        let picker = app.buttons["rideEditorServicePattern"]
-        XCTAssertTrue(EditorUITestSupport.reveal(picker, in: app), app.debugDescription)
-        XCTAssertTrue(picker.waitForExistence(timeout: 8))
+        XCTAssertTrue(app.descendants(matching: .any)["newTripForm"].firstMatch.waitForExistence(timeout: 30))
+        // Entry moved: fill sheet (newTripFillDetails) -> newTripTimetableBrowse; picking applies immediately.
+        let fill = app.buttons["newTripFillDetails"]
+        XCTAssertTrue(EditorUITestSupport.reveal(fill, in: app), app.debugDescription)
+        EditorUITestSupport.tap(fill, in: app)
+        let picker = app.buttons["newTripTimetableBrowse"]
+        XCTAssertTrue(picker.waitForExistence(timeout: 8), app.debugDescription)
         picker.tap()
-        let replace = app.buttons["rideEditorReplaceStops"].firstMatch
-        XCTAssertTrue(replace.waitForExistence(timeout: 8))
-        replace.tap()
         let datedSearch = app.searchFields.firstMatch
         XCTAssertTrue(datedSearch.waitForExistence(timeout: 8))
         datedSearch.tap()

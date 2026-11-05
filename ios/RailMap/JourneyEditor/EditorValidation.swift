@@ -113,3 +113,11 @@ extension Array where Element == RideDraftIssue {
         filter { $0.field == field }
     }
 }
+
+extension AppLocalization {
+    /// An issue's literal text when it carries one, else its localized key.
+    func text(for issue: RideDraftIssue) -> String {
+        if let literal = issue.literal { return literal }
+        return text(issue.key, params: issue.params)
+    }
+}

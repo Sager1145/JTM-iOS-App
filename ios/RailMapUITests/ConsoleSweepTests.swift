@@ -303,7 +303,7 @@ final class ConsoleSweepTests: XCTestCase {
         }
         // A save action opens an editor over the menu; return through both
         // presentations before the next destination uses the resident tabs.
-        let cancelEditor = element("rideEditorCancel", in: app)
+        let cancelEditor = element("newTripCancel", in: app)
         if cancelEditor.exists, cancelEditor.isHittable {
             cancelEditor.tap()
             settle()

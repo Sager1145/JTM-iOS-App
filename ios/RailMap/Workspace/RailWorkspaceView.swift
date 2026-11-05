@@ -86,12 +86,6 @@ struct RailWorkspaceView: View {
     @State private var journeyEditorRecordID: String?
     @State private var journeySaveAttemptID: UUID?
     @State private var journeySaveFailureDetail: String?
-    /// A draft-pin tap asks the editor to open that stop. Cleared after it is consumed.
-    @State private var highlightedStopID: UUID?
-    @State private var routeRepairInFlight = false
-    @State private var routeRepairSummary: String?
-    @State private var routeRepairUndo: Train?
-    @State private var routeRepairGuide: RouteRepairGuide?
     /// The composition that owns an active workspace sheet.
     ///
     /// Compact and docked layouts deliberately attach presentations to
@@ -589,7 +583,7 @@ struct RailWorkspaceView: View {
                let data = Data(base64Encoded: encoded),
                let incoming = try? JSONDecoder().decode(TrainStore.self, from: data) {
                 do { _ = try await itineraries.merge(incoming, into: library) }
-                catch { routeRepairSummary = error.localizedDescription }
+                catch { print("UI test store merge failed: \(error.localizedDescription)") }
                 return
             }
             guard let encodedSamples = UITestLaunchConfiguration.current[.sample] else { return }
@@ -600,7 +594,7 @@ struct RailWorkspaceView: View {
                     $0.resource == wanted
                 }), let incoming = try? await library.sample(sample.resource) else { continue }
                 do { _ = try await itineraries.merge(incoming, into: library) }
-                catch { routeRepairSummary = error.localizedDescription }
+                catch { print("UI test store merge failed: \(error.localizedDescription)") }
             }
         }
 #if DEBUG
@@ -696,42 +690,6 @@ struct RailWorkspaceView: View {
         // §13.2's harmony rule: the tap has to arrive with the change, so it is
         // driven by the same state the view is drawn from rather than by a
         // timer alongside it.
-        .sheet(item: $routeRepairGuide) { guide in
-            NavigationStack {
-                RailwayRouteGuideView(
-                    train: guide.train, package: guide.package, choices: guide.choices,
-                    embeddedInNavigationStack: true, isInferred: true,
-                    fromVisitID: guide.fromVisitID, toVisitID: guide.toVisitID
-                ) { choice in
-                    continueCardRepair(choice, guide: guide)
-                }
-                .safeAreaInset(edge: .bottom) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(guide.summary)
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                        Button(localization.text("ios.routeGuide.undo"), action: undoRouteRepair)
-                            .accessibilityIdentifier("routeRepairUndo")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .background(.bar)
-                }
-            }
-        }
-        .alert(
-            localization.text("ios.route.repairRoute"),
-            isPresented: Binding(
-                get: { routeRepairSummary != nil },
-                set: { if !$0 { routeRepairSummary = nil } })
-        ) {
-            if routeRepairUndo != nil {
-                Button(localization.text("ios.routeGuide.undo"), action: undoRouteRepair)
-            }
-            Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
-        } message: {
-            Text(routeRepairSummary ?? "")
-        }
         .sensoryFeedback(trigger: feedback) { _, value in
             switch value?.kind {
             case .saved: .success
@@ -907,37 +865,23 @@ struct RailWorkspaceView: View {
         let title = localization.text(
             launch.isNew ? "ios.editorTitleNew" : "ios.edit",
             fallback: launch.isNew ? "New" : "Edit")
-        return Group {
-            if launch.isNew {
-                NewTripView(
-                    train: launch.train,
-                    title: title,
-                    onCancel: {
-                        guard journeySaveAttemptID == nil else { return }
-                        closeJourneyEditor()
-                    },
-                    onDraftMap: { snapshot in
-                        guard controller.acceptsDraftMap else { return }
-                        controller.draftMap = snapshot
-                    },
-                    onSave: { commitJourneyEditor($0, launch: launch) })
-            } else {
-                RideEditorView(
-                    train: launch.train,
-                    title: title,
-                    suggestionTrains: itineraries.loaded?.trains ?? [],
-                    onCancel: {
-                        guard journeySaveAttemptID == nil else { return }
-                        closeJourneyEditor()
-                    },
-                    onDraftMap: { snapshot in
-                        guard controller.acceptsDraftMap else { return }
-                        controller.draftMap = snapshot
-                    },
-                    highlightedStopID: $highlightedStopID,
-                    onSave: { commitJourneyEditor($0, launch: launch) })
-            }
-        }
+        return JourneyEditorView(
+            train: launch.train,
+            isNew: launch.isNew,
+            title: title,
+            startsWithRouteRepair: launch.repairsRoute,
+            suggestionTrains: itineraries.loaded?.trains ?? [],
+            onCancel: {
+                guard journeySaveAttemptID == nil else { return }
+                closeJourneyEditor()
+            },
+            onDraftMap: { snapshot in
+                guard controller.acceptsDraftMap else { return }
+                controller.draftMap = snapshot
+            },
+            onSave: { commitJourneyEditor($0, launch: launch) })
+        // A new identity per launch: a second edit never reuses the first draft.
+        .id(launch.id)
         .disabled(journeySaveAttemptID != nil)
         .alert(
             localization.journeyText(
@@ -969,7 +913,6 @@ struct RailWorkspaceView: View {
         controller.acceptsDraftMap = true
         controller.draftMap = DraftMapSnapshot(
             revision: 0, pins: [], networkRideDate: launch.train.date)
-        controller.onDraftPin = { highlightedStopID = $0 }
         journeyEditor = launch
     }
 
@@ -977,7 +920,6 @@ struct RailWorkspaceView: View {
         controller.acceptsDraftMap = false
         controller.onDraftPin = nil
         controller.draftMap = DraftMapSnapshot(revision: 0, pins: [])
-        highlightedStopID = nil
         journeyEditorRecordID = nil
         journeySaveAttemptID = nil
         journeySaveFailureDetail = nil
@@ -2722,8 +2664,10 @@ struct RailWorkspaceView: View {
             guard let train else { return }
             _ = rebuildRoute(train)
         case .repairRoute:
+            // Repair is a route choice on the editor's map, saved like any edit.
             guard let train else { return }
-            repairReviewedRoute(train)
+            presentJourneyEditor(JourneyEditorLaunch(
+                train: train, isNew: false, originalID: train.id, repairsRoute: true))
         case .save:
             // §8.3: the draft and its atomic commit belong to the editor.
             if let train {
@@ -2782,216 +2726,6 @@ struct RailWorkspaceView: View {
     @discardableResult
     private func rebuildRoute(_ train: Train) -> Int? {
         itineraries.rebuildRoute(train.id, routes: riddenRoutes)?.sections
-    }
-
-    private func routeStatus(for id: String) -> RideRouteStatus {
-        riddenRoutes.status(
-            forTrainID: id, pendingConfirmationIDs: itineraries.pendingConfirmationIDs)
-    }
-
-    /// Rebuilds a needs-review ride, then repairs each failing span. A unique
-    /// surveyed path is applied. The first choice pauses the rest.
-    private func repairReviewedRoute(_ train: Train) {
-        guard !routeRepairInFlight else { return }
-        routeRepairInFlight = true
-        let snapshot = train
-        guard let outcome = itineraries.rebuildRoute(train.id, routes: riddenRoutes),
-              let persistence = outcome.save else {
-            routeRepairInFlight = false
-            return
-        }
-        Task {
-            defer { routeRepairInFlight = false }
-            let saved = await persistence.value
-            guard saved.saved else {
-                routeRepairUndo = snapshot
-                noteRepairSaveFailure(saved.error)
-                return
-            }
-            if outcome.solving {
-                await waitUntilRouteSettles(train.id)
-            }
-            let current = itineraries.store?.trains.first { $0.id == train.id } ?? snapshot
-            await applyAutomaticRepair(to: current, snapshot: snapshot)
-        }
-    }
-
-    private func waitUntilRouteSettles(_ id: String) async {
-        for _ in 0..<150 {
-            if case .resolving = routeStatus(for: id) {
-                try? await Task.sleep(for: .milliseconds(100))
-                continue
-            }
-            return
-        }
-    }
-
-    private func applyAutomaticRepair(to train: Train, snapshot: Train) async {
-        let region = Region.resolved(train)
-        let package: CompactPackage
-        do {
-            package = try await Task.detached {
-                try await DisplayNetworkCache.shared.package(country: region.code).package
-            }.value
-        } catch {
-            routeRepairUndo = snapshot
-            routeRepairSummary = localization.journeyText(
-                "ios.journey.routeUnavailable", fallback: "Route unavailable")
-            return
-        }
-        let marks = repairMarks(for: train.id)
-        let stepped = RouteRepairFlow.steps(
-            RouteRepair.failingSpans(train: train, gaps: marks), in: train)
-        do {
-            let result = try await RouteRepairSession.search(
-                train: stepped.train, baseline: train, package: package, steps: stepped.steps,
-                loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
-                loadAdmissionContext: { try loadJourneyAdmissionContext(
-                    rideDate: Dates.normalizeDateString($0.date), package: $1) })
-            guard result.accepts(storedTrain(id: train.id)) else {
-                noteRepairInterrupted()
-                return
-            }
-            let advance = result.advance
-            if advance.train != stepped.train {
-                guard await persistRepair(advance.train, replacing: train.id) else { return }
-                _ = riddenRoutes.resolveAgain(advance.train)
-            }
-            routeRepairUndo = snapshot
-            publishRepair(result, snapshot: snapshot, package: package)
-        } catch is CancellationError {
-            return
-        } catch {
-            routeRepairSummary = error.localizedDescription
-        }
-    }
-
-    private func continueCardRepair(_ choice: RailwayRouteChoices.Choice, guide: RouteRepairGuide) {
-        guard !routeRepairInFlight else { return }
-        routeRepairInFlight = true
-        routeRepairGuide = nil
-        let prepared = RailwayRouteEditing.preparing(guide.train)
-        let plan = RailwayRouteEditing.plan(
-            train: prepared, choice: choice,
-            fromVisitID: guide.fromVisitID, toVisitID: guide.toVisitID)
-        let train = plan?.updatedTrain ?? prepared
-        var gaps = guide.gaps
-        var repaired = guide.repaired
-        if plan != nil {
-            repaired += 1
-        } else {
-            gaps.append(RouteRepairFlow.GapName(
-                from: prepared.stops.first { $0.routeEditing?.visitID == guide.fromVisitID }?.name ?? "",
-                to: prepared.stops.first { $0.routeEditing?.visitID == guide.toVisitID }?.name ?? ""))
-        }
-        let package = guide.package
-        let remaining = guide.remaining
-        let snapshot = guide.snapshot
-        // `guide.train` is the in-memory ride the guide opened on. The stored
-        // copy at that moment is the Equatable baseline: visit ids on
-        // `guide.train` are not always written back.
-        let started = guide.storedAtOpen
-        Task {
-            defer { routeRepairInFlight = false }
-            do {
-                let result = try await RouteRepairSession.search(
-                    train: train, baseline: started, package: package, steps: remaining,
-                    repaired: repaired, gaps: gaps,
-                    loadAliases: { try loadJourneyStationAliases(for: $0, package: $1) },
-                    loadAdmissionContext: { try loadJourneyAdmissionContext(
-                        rideDate: Dates.normalizeDateString($0.date), package: $1) })
-                guard result.accepts(storedTrain(id: started.id)) else {
-                    noteRepairInterrupted()
-                    return
-                }
-                let advance = result.advance
-                guard await persistRepair(advance.train, replacing: snapshot.id) else { return }
-                _ = riddenRoutes.resolveAgain(advance.train)
-                routeRepairUndo = snapshot
-                publishRepair(result, snapshot: snapshot, package: package)
-            } catch is CancellationError {
-                return
-            } catch {
-                routeRepairSummary = error.localizedDescription
-            }
-        }
-    }
-
-    private func storedTrain(id: String) -> Train? {
-        itineraries.store?.trains.first { $0.id == id }
-    }
-
-    private func noteRepairInterrupted() {
-        routeRepairUndo = nil
-        routeRepairGuide = nil
-        routeRepairSummary = localization.journeyText(
-            "ios.journey.repairInterrupted",
-            fallback: "Ride changed while repairing; run Repair again")
-    }
-
-    private func repairMarks(for trainID: String) -> [RouteRepair.Gap] {
-        guard case .needsReview(_, _, let gaps) = routeStatus(for: trainID)
-        else { return [] }
-        return gaps.map {
-            RouteRepair.Gap(
-                segmentIndex: $0.segmentIndex, isBoundary: $0.isBoundary,
-                station: $0.isBoundary ? $0.from : nil)
-        }
-    }
-
-    private func publishRepair(
-        _ result: RouteRepairSession.Result, snapshot: Train, package: CompactPackage
-    ) {
-        let advance = result.advance
-        let summary = result.summary { key, params in
-            localization.text(key, params: params)
-        }
-        if let pause = advance.pause, !pause.choices.isEmpty {
-            let storedAtOpen = storedTrain(id: advance.train.id) ?? snapshot
-            routeRepairGuide = RouteRepairGuide(
-                train: advance.train, package: package,
-                fromVisitID: pause.fromVisitID, toVisitID: pause.toVisitID,
-                choices: pause.choices, remaining: pause.remaining,
-                repaired: advance.repaired, gaps: advance.gaps, snapshot: snapshot, summary: summary,
-                storedAtOpen: storedAtOpen)
-        } else {
-            routeRepairSummary = summary
-        }
-    }
-
-    private func persistRepair(_ train: Train, replacing originalID: String) async -> Bool {
-        let attempt = editing.replaceAndPersist(train, replacing: originalID)
-        guard let persistence = attempt.persistence else {
-            noteRepairInterrupted()
-            return false
-        }
-        let saved = await persistence.value
-        guard saved.saved else {
-            _ = attempt.rollback?()
-            noteRepairSaveFailure(saved.error)
-            return false
-        }
-        return true
-    }
-
-    private func noteRepairSaveFailure(_ error: String?) {
-        let title = localization.journeyText(
-            "ios.journey.saveFailedTitle", fallback: "Could not save this journey")
-        let detail = error ?? ""
-        routeRepairSummary = detail.isEmpty ? title : "\(title)\n\n\(detail)"
-    }
-
-    private func undoRouteRepair() {
-        guard let snapshot = routeRepairUndo, !routeRepairInFlight else { return }
-        routeRepairInFlight = true
-        Task {
-            defer { routeRepairInFlight = false }
-            guard await persistRepair(snapshot, replacing: snapshot.id) else { return }
-            _ = riddenRoutes.resolveAgain(snapshot)
-            routeRepairUndo = nil
-            routeRepairSummary = nil
-            routeRepairGuide = nil
-        }
     }
 
     /// The journeys the list shows, after every filter the header applies.

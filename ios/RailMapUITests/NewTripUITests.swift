@@ -219,6 +219,48 @@ final class NewTripUITests: XCTestCase {
                       "Saving a through-service corridor must insert a journey row.")
     }
 
+    /// A long through-service trip, saved and then reopened in the same
+    /// editor: its saved route and stops come back, and moving its end
+    /// replans on the map. Also the run used to read the app's peak memory.
+    func testLongSavedTripReopensWithRouteAndReplans() {
+        let number = "Long \(UUID().uuidString.prefix(8))"
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        pickStation(field: "newTripOrigin", query: "東横", code: "003922", in: app)
+        pickStation(field: "newTripDestination", query: "みなとみらい", code: "004704", in: app)
+        XCTAssertTrue(reveal(app.buttons["newTripCorridor-0"], in: app, timeout: 30), routeState(app))
+        typeNumber(number, in: app)
+        XCTAssertTrue(waitUntilSavable(app), routeState(app))
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
+        attachScreenshot("long-1-saved", app)
+
+        app.terminate()
+        app.uiTestLaunch[.tab] = "all"
+        app.uiTestLaunch[.sheet] = "edit"
+        UITestLaunchSupport.launch(app)
+        let savedRoute = app.descendants(matching: .any)["newTripSavedRoute"].firstMatch
+        XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
+        XCTAssertTrue(EditorUITestSupport.reveal(savedRoute, in: app, unmountedRowIsAbove: false),
+                      "The reopened long trip must show its saved route. \(app.debugDescription)")
+        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app, unmountedRowIsAbove: false),
+                      "The saved stops must be listed.")
+        attachScreenshot("long-2-reopened", app)
+
+        pickStation(field: "newTripDestination", query: "横浜", code: "004633",
+                    lineID: "jp-東急電鉄-東横線", in: app)
+        XCTAssertFalse(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch.exists)
+        XCTAssertTrue(reveal(app.buttons["newTripCorridor-0"], in: app, timeout: 30),
+                      "Moving the end of a saved trip must replan it. \(routeState(app))")
+        attachScreenshot("long-3-replanned", app)
+        app.buttons["newTripCancel"].tap()
+        let discard = app.buttons["Discard changes"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.tap()
+        XCTAssertTrue(app.buttons["newTripCancel"].waitForNonExistence(timeout: 8))
+    }
+
     func testMultipleCorridorsRequireChoice() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchNewTrip(app)
@@ -451,6 +493,11 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(cancel.isHittable)
         XCTAssertTrue(save.isHittable)
         cancel.tap()
+        // The draft has stations, so Cancel asks first. The destructive
+        // action is the dialog's first button.
+        let discard = app.sheets.firstMatch.buttons.element(boundBy: 0)
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.tap()
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8),
                       "The header Cancel button must stay tappable at accessibility XXXL.")
     }
@@ -471,12 +518,12 @@ final class NewTripUITests: XCTestCase {
         app.uiTestLaunch[.tab] = "all"
         app.uiTestLaunch[.sheet] = "edit"
         UITestLaunchSupport.launch(app)
-        let ridden = app.switches["Ridden"]
+        let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 30))
         XCTAssertEqual(ridden.value as? String, "0", "The saved future plan must reload unridden.")
         ridden.tap()
-        app.buttons["rideEditorSave"].tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForNonExistence(timeout: 20))
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
         assertSavedPassportCount(1, in: app)
     }
 
@@ -520,6 +567,10 @@ final class NewTripUITests: XCTestCase {
 
         let cancel = app.buttons["newTripCancel"]
         cancel.tap()
+        // A draft with stations asks before it is thrown away.
+        let discard = app.buttons["Discard changes"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.tap()
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8))
 
         app.terminate()

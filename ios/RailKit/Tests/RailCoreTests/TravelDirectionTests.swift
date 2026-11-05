@@ -261,6 +261,38 @@ struct TravelDirectionTests {
         }
     }
 
+    @Test("Each line of a trip gets its own direction and the terminal it runs toward")
+    func legsPerLine() throws {
+        // first: A→J increases (下り). second: J→C decreases its order (上り).
+        let package = try fixture([
+            line("first", ["A", "B", "J"], kilometers: 5, order: "down"),
+            line("second", ["C", "D", "J"], kilometers: 5, order: "down"),
+        ])
+        let sections = [
+            RouteSection(fromN02StationCode: "A", toN02StationCode: "B", lineIDs: ["first"]),
+            RouteSection(fromN02StationCode: "B", toN02StationCode: "J", lineIDs: ["first"]),
+            RouteSection(fromN02StationCode: "J", toN02StationCode: "D", lineIDs: ["second"]),
+            RouteSection(fromN02StationCode: "D", toN02StationCode: "C", lineIDs: ["second"]),
+        ]
+        let legs = try TravelDirection.legs(train: ride(["A", "B", "J", "D", "C"], sections: sections), package: package)
+        #expect(legs.map(\.lineID) == ["first", "second"])
+        #expect(legs.map(\.fromStopIndex) == [0, 2])
+        #expect(legs.map(\.toStopIndex) == [2, 4])
+        #expect(legs.map(\.direction) == [.down, .up])
+        #expect(legs.map(\.terminalName) == ["J", "C"])
+        // The whole trip is a tie, so the single answer abstains; legs do not.
+        #expect(try TravelDirection.infer(
+            train: ride(["A", "B", "J", "D", "C"], sections: sections), package: package) == nil)
+    }
+
+    @Test("A leg on an undirected line has no direction but keeps its terminal")
+    func undirectedLeg() throws {
+        let package = try fixture([line("plain", ["A", "B"], kilometers: 5)])
+        let legs = try TravelDirection.legs(train: ride(["B", "A"]), package: package)
+        #expect(legs.count == 1)
+        #expect(legs[0].direction == nil)
+    }
+
     private func ride(_ codes: [String], sections: [RouteSection]? = nil) -> Train {
         Train(
             id: "direction", number: "Test", origin: codes.first ?? "", destination: codes.last ?? "",
