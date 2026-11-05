@@ -253,7 +253,7 @@ actor EdgeIndexCache {
             withExtension: "json")
         {
             do {
-                overlay = try RailHistoryOverlay.load(from: historyURL)
+                overlay = try RiddenRouteStore.cachedHistoryOverlay(from: historyURL)
             } catch {
                 throw HistoryUnreadable(country: country)
             }

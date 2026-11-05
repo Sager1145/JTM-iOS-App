@@ -327,12 +327,7 @@ struct AppShell: View {
             region: regionScopeCode,
             area: statisticsAreaCode,
             trains: routeLoadKey,
-            rides: riddenRoutes.rides.map { RideKey(id: $0.id, geometry: $0.geometryDigest) })
-    }
-
-    private struct RideKey: Equatable {
-        var id: String
-        var geometry: Int
+            ridesGeneration: riddenRoutes.ridesKeyGeneration)
     }
 
     private struct StatisticsLoadKey: Equatable {
@@ -343,7 +338,7 @@ struct AppShell: View {
         var region: String
         var area: String
         var trains: [Train]?
-        var rides: [RideKey]
+        var ridesGeneration: Int
     }
 
     /// The statistics load's key, with the one thing that decides whether it
