@@ -735,7 +735,7 @@ struct QuietActionGroup: View {
         // controls are inconsistent.
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(
-            Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
+            Text(localization.countryText("ios.journey.moreActions", fallback: "More")))
     }
 
     /// Icon-only menu controls share the header's compact visual size. Accent-coloured glyphs match the quiet
@@ -767,7 +767,7 @@ struct QuietActionGroup: View {
         }
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(
-            Text(localization.journeyText("ios.journey.moreActions", fallback: "More")))
+            Text(localization.countryText("ios.journey.moreActions", fallback: "More")))
     }
 
     @ViewBuilder

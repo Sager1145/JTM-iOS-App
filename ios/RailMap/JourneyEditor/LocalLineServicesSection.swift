@@ -14,7 +14,7 @@ struct LineServiceCatalogView: View {
         return package.lines.filter { selected.contains($0.id) }
     }
     private func text(_ key: String) -> String {
-        LocalJourneyStrings.text(key, language: localization.language)
+        localization.text("ios.localFill." + key)
     }
     var body: some View {
         DisclosureGroup(text("types")) {
@@ -86,7 +86,7 @@ struct LocalLineServicesSection: View {
     @State private var failed = false
 
     private func text(_ key: String) -> String {
-        LocalJourneyStrings.text(key, language: localization.language)
+        localization.text("ios.localFill." + key)
     }
     private var kinds: [LineServiceCatalog.ServiceKind] {
         guard let catalog else { return [] }
@@ -162,7 +162,7 @@ private struct LocalLineServiceBrowser: View {
                     Text(line.lineName)
                     Text(line.operatorName).font(.caption).foregroundStyle(.secondary)
                     if line.kinds.isEmpty {
-                        Text(LocalJourneyStrings.text("unknown", language: localization.language))
+                        Text(localization.text("ios.localFill.unknown"))
                             .font(.caption).foregroundStyle(.secondary)
                     } else {
                         Text(Array(Set(line.kinds.map(\.displayName))).sorted().joined(separator: " · "))
@@ -171,7 +171,7 @@ private struct LocalLineServiceBrowser: View {
                 }
             }
         }
-        .navigationTitle(LocalJourneyStrings.text("types", language: localization.language))
+        .navigationTitle(localization.text("ios.localFill.types"))
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query)
     }

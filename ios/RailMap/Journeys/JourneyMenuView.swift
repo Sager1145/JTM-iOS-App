@@ -84,7 +84,7 @@ struct WorkspaceJourneyMenu: View {
                                 })
                                 .disabled(isSaving)
                                 .alert(
-                                    localization.journeyText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
+                                    localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
                                     isPresented: Binding(get: { saveFailureDetail != nil },
                                         set: { if !$0 { saveFailureDetail = nil } })
                                 ) {
