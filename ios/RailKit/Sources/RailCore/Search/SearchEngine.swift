@@ -13,7 +13,10 @@ public final class SearchEngine: @unchecked Sendable {
     private let loader: Loader
     private let lock = NSLock()
     private var built: [String: SearchIndex] = [:]
-    private var building: [String: Task<SearchIndex, Error>] = [:]
+    private var building: [String: (task: Task<SearchIndex, Error>, generation: UInt64)] = [:]
+    /// Bumped by `invalidate`; a build only caches its result if no invalidation
+    /// happened since it started (the loader itself can't be interrupted).
+    private var generation: [String: UInt64] = [:]
 
     public init(loader: @escaping Loader) {
         self.loader = loader
@@ -21,23 +24,33 @@ public final class SearchEngine: @unchecked Sendable {
 
     /// The region's index, building it on first use.
     public func index(regionCode: String) async throws -> SearchIndex {
-        let task: Task<SearchIndex, Error> = lock.withLock {
-            if let ready = built[regionCode] { return Task { ready } }
+        let (task, startedAt): (Task<SearchIndex, Error>, UInt64) = lock.withLock {
+            let current = generation[regionCode, default: 0]
+            if let ready = built[regionCode] { return (Task { ready }, current) }
             if let running = building[regionCode] { return running }
             let loader = loader
             let running = Task.detached(priority: .userInitiated) { try loader(regionCode) }
-            building[regionCode] = running
-            return running
+            building[regionCode] = (running, current)
+            return (running, current)
         }
         do {
             let index = try await task.value
-            lock.withLock {
+            let stale: Bool = lock.withLock {
+                guard generation[regionCode, default: 0] == startedAt else { return true }
                 built[regionCode] = index
-                building[regionCode] = nil
+                if building[regionCode]?.generation == startedAt { building[regionCode] = nil }
+                return false
             }
+            // Invalidated mid-build: the result may reflect old names; build afresh.
+            if stale { return try await self.index(regionCode: regionCode) }
             return index
         } catch {
-            lock.withLock { building[regionCode] = nil }
+            let stale: Bool = lock.withLock {
+                if building[regionCode]?.generation == startedAt { building[regionCode] = nil }
+                return generation[regionCode, default: 0] != startedAt
+            }
+            // A build cancelled or failed by `invalidate` is retried, like a stale success.
+            if stale, !Task.isCancelled { return try await self.index(regionCode: regionCode) }
             throw error
         }
     }
@@ -55,8 +68,9 @@ public final class SearchEngine: @unchecked Sendable {
     /// Drop a region's index (its catalog or readings changed). The next query rebuilds.
     public func invalidate(regionCode: String) {
         lock.withLock {
+            generation[regionCode, default: 0] &+= 1
             built[regionCode] = nil
-            building[regionCode]?.cancel()
+            building[regionCode]?.task.cancel()
             building[regionCode] = nil
         }
     }

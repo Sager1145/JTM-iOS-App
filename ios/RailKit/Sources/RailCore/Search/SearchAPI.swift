@@ -270,8 +270,10 @@ public struct SearchParsedQuery: Hashable, Sendable {
     /// Unambiguous filters, applied to the results.
     public var applied: [SearchFilter]
     /// Candidates for an ambiguous keyword ("山手線" → JR East or Kobe). Not applied;
-    /// the UI may offer them as chips. Selecting one = re-query with it in
-    /// `SearchContext.lineIDs` / `operatorIDs` and `residualText` as the text.
+    /// the UI may offer them as chips. Selecting one = re-query with `residualText`
+    /// and the chip's id as the context constraint. Context ids within one set
+    /// are alternatives (OR), so in an already restricted picker intersect with
+    /// the restriction rather than adding to it.
     public var suggested: [SearchFilter]
     /// Type keyword seen (駅/站/역/Station → `.stations`, 線/Line → `.lines`,
     /// 鉄道/Railway → `.companies`). Nil when none.
