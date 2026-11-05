@@ -9,7 +9,7 @@ import XCTest
 @MainActor
 enum EditorLaunchSupport {
     /// One seeded journey (Train JSON dictionary, keys as Train's Codable keys)
-    /// opened straight into RideEditorView edit mode.
+    /// opened straight into JourneyEditorView edit mode.
     static func launchEditing(
         _ app: XCUIApplication,
         journey: [String: Any],

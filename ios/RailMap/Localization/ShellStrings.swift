@@ -38,6 +38,9 @@ enum ShellStrings {
         "ios.tab.stats": [
             .en: "Stats", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
         ],
+        "ios.search.didYouMean": [
+            .en: "Did you mean “{text}”?", .ja: "もしかして「{text}」？", .zhHans: "你是不是要找“{text}”？", .zhHant: "你是不是要找「{text}」？",
+        ],
         "ios.search.noneHere": [
             .en: "No matches in this list. The other list has some:", .ja: "この一覧には該当がありません。もう一方の一覧にあります：",
             .zhHans: "此列表中没有匹配项，另一个列表中有：", .zhHant: "此列表中沒有符合項目，另一個列表中有：",

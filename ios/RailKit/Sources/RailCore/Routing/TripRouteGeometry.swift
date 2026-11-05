@@ -66,6 +66,11 @@ public enum TripRouteGeometry {
     /// merged into one piece. Sections whose interval cannot be found fall back
     /// to the straight station-to-station span, marked as a connector.
     public static func pieces(for choice: RailwayRouteChoices.Choice, cache: Cache) -> [Piece] {
+        pieces(for: choice.routeSections, cache: cache)
+    }
+
+    /// Pieces for saved route sections, such as a stored `Train.routeSections`.
+    public static func pieces(for sections: [RouteSection], cache: Cache) -> [Piece] {
         var result: [Piece] = []
         func append(_ coordinates: [Coordinate], lineID: String?, connector: Bool) {
             guard coordinates.count >= 2 else { return }
@@ -77,7 +82,7 @@ public enum TripRouteGeometry {
                 result.append(Piece(lineID: lineID, coordinates: coordinates, isConnector: connector))
             }
         }
-        for section in choice.routeSections {
+        for section in sections {
             let lineID = section.lineIDs?.first
             let fromCode = section.fromN02StationCode
             let toCode = section.toN02StationCode

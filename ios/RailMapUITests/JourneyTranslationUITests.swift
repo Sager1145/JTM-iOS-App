@@ -123,26 +123,22 @@ final class JourneyTranslationUITests: XCTestCase {
     func testOfficialNameCanBeAppliedAndEditedWithoutChangingOriginal() {
         let app = launchOfficialNameScenario()
         openOfficialNameEditor(in: app)
-        let original = app.otherElements["rideEditorNumber"].textFields.firstMatch
+        let original = app.textFields["newTripNumber"]
         XCTAssertTrue(original.waitForExistence(timeout: 45))
         replaceOfficialNameEditorField(original, with: "あずさ1号", in: app)
-        // Match a date inside the bundled official English name period.
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(date.waitForExistence(timeout: 8))
-        replaceOfficialNameEditorField(date, with: "2026-09-30", in: app)
+        // The free-text date field is gone (now a picker); the sample journey's own date is used.
         let official = app.buttons["rideEditorUseOfficialEnglishName"]
-        XCTAssertTrue(revealOfficialNameEditorElement(official, in: app.collectionViews["rideEditorForm"], app: app))
+        XCTAssertTrue(revealOfficialNameEditorElement(official, in: app.collectionViews["newTripForm"], app: app))
         let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: official)
         XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 15), .completed)
         official.tap()
         let english = app.otherElements["rideEditorNumberEn"].textFields.firstMatch
         XCTAssertEqual(english.value as? String, "Azusa 1")
         replaceOfficialNameEditorField(english, with: "My Azusa journey", in: app)
-        XCTAssertTrue(revealOfficialNameEditorElement(original, in: app.collectionViews["rideEditorForm"], app: app))
+        XCTAssertTrue(revealOfficialNameEditorElement(original, in: app.collectionViews["newTripForm"], app: app))
         XCTAssertEqual(original.value as? String, "あずさ1号")
-        XCTAssertEqual(date.value as? String, "2026-09-30")
-        app.buttons["rideEditorSave"].tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForNonExistence(timeout: 15))
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 15))
         // Saving the sheet editor returns to its parent RideCard. The X is
         // the only dismissal path back to the source list in this version.
         let close = app.buttons["journeyBackToList"]
@@ -155,7 +151,6 @@ final class JourneyTranslationUITests: XCTestCase {
         XCTAssertTrue(english.waitForExistence(timeout: 8))
         XCTAssertEqual(english.value as? String, "My Azusa journey")
         XCTAssertEqual(original.value as? String, "あずさ1号")
-        XCTAssertEqual(date.value as? String, "2026-09-30")
         captureOfficialNameScenario(app, name: "translation-official-name-final")
     }
 
@@ -185,22 +180,16 @@ final class JourneyTranslationUITests: XCTestCase {
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
         XCTAssertTrue(edit.isHittable)
         edit.tap()
-        XCTAssertTrue(app.collectionViews["rideEditorForm"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.collectionViews["newTripForm"].waitForExistence(timeout: 8))
     }
 
     private func replaceOfficialNameEditorField(_ field: XCUIElement, with text: String, in app: XCUIApplication) {
-        guard revealOfficialNameEditorElement(field, in: app.collectionViews["rideEditorForm"], app: app) else {
+        guard revealOfficialNameEditorElement(field, in: app.collectionViews["newTripForm"], app: app) else {
             captureOfficialNameScenario(app, name: "translation-field-not-reachable")
             XCTFail("The editor field must be visible and hittable before input.")
             return
         }
-        if field.identifier == "rideEditorDateInput" {
-            // The rendered date digits occupy the leading edge of this wide field,
-            // so tap that visible text to acquire native keyboard focus reliably.
-            field.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5)).tap()
-        } else {
-            field.tap()
-        }
+        field.tap()
         guard app.keyboards.firstMatch.waitForExistence(timeout: 8) else {
             captureOfficialNameScenario(app, name: "translation-field-keyboard-missing")
             XCTFail("The native field tap did not produce keyboard focus; no typing attempted.")
@@ -208,12 +197,7 @@ final class JourneyTranslationUITests: XCTestCase {
         }
         let current = field.value as? String ?? ""
         if !current.isEmpty && current != field.placeholderValue {
-            if field.identifier == "rideEditorDateInput" {
-                // The native center press landed beyond the rendered date digits.
-                field.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5)).press(forDuration: 1.1)
-            } else {
-                field.press(forDuration: 1.1)
-            }
+            field.press(forDuration: 1.1)
             let button = app.buttons["Select All"].firstMatch
             let menuItem = app.menuItems["Select All"].firstMatch
             if button.waitForExistence(timeout: 3) {

@@ -147,6 +147,34 @@ final class WorkspaceDerived {
 
     // MARK: - Upcoming / History partition (UI reorganization pass 3)
 
+    private struct ListDaysKey {
+        let days: [ItineraryStore.Loaded.Day]
+        let ahead: Set<String>
+        let wantsAhead: Bool
+    }
+    private var listDaysKey: ListDaysKey?
+    private var listDaysValue: [ItineraryStore.Loaded.Day] = []
+
+    /// One list's days (Upcoming or History), held so the SAME array comes
+    /// back until the store or the today line changes — the journey search
+    /// compares its request's days by identity, and a fresh array on every
+    /// body evaluation would restart the search on each one.
+    func listDays(
+        _ days: [ItineraryStore.Loaded.Day], ahead: Set<String>, wantsAhead: Bool
+    ) -> [ItineraryStore.Loaded.Day] {
+        if let listDaysKey, listDaysKey.wantsAhead == wantsAhead, listDaysKey.ahead == ahead,
+           ArrayGeneration.same(listDaysKey.days, days) {
+            return listDaysValue
+        }
+        listDaysValue = days.compactMap { day in
+            var day = day
+            day.trains = day.trains.filter { ahead.contains($0.id) == wantsAhead }
+            return day.trains.isEmpty ? nil : day
+        }
+        listDaysKey = ListDaysKey(days: days, ahead: ahead, wantsAhead: wantsAhead)
+        return listDaysValue
+    }
+
     private struct AheadKey {
         let trains: [Train]
         let today: [Region: String]

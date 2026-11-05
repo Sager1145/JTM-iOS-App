@@ -63,13 +63,13 @@ private struct CatalogStationCompanyGroup: Identifiable {
 struct StationPickerView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let regionCode: String
     var selectedLineIDs: Set<String> = []
     var onSelect: ((CatalogStation, String?) -> Void)? = nil
     var rideDate: String? = nil
     var onSelectRetired: ((RetiredStation) -> Void)? = nil
     var sourceCatalog: EditorCatalog? = nil
-    var sourcePackage: CompactPackage? = nil
     var companyFilter: String? = nil
     var onSelectWithLine: ((CatalogStation, CatalogLine?, String?) -> Void)? = nil
     /// A stop keeps free text; only its suggestions use the shared picker.
@@ -90,6 +90,8 @@ struct StationPickerView: View {
     @State private var lineLabelByID: [String: String] = [:]
     @State private var didLoad = false
     @State private var loadError: String?
+    /// Every station of the region, for tapping on the map above the list.
+    @State private var mapStations: [CatalogStation] = []
 
     private var queryBinding: Binding<String> { inlineQuery ?? $query }
     private var searchText: String { queryBinding.wrappedValue }
@@ -172,17 +174,6 @@ struct StationPickerView: View {
             return retiredByID[id]
         }
     }
-    private var packageRows: [CatalogStationRow] {
-        var seen = Set<StationKey>()
-        var rows = lineGroups.flatMap(\.rows).filter { seen.insert($0.station.key).inserted }
-        if !isSearching {
-            rows.sort {
-                if $0.station.name != $1.station.name { return $0.station.name < $1.station.name }
-                return $0.station.key.sourceCode < $1.station.key.sourceCode
-            }
-        }
-        return Array(rows.prefix(100))
-    }
     private var companyGroups: [CatalogStationCompanyGroup] {
         Dictionary(grouping: lineGroups, by: \.operatorID).map { operatorID, lines in
             CatalogStationCompanyGroup(id: operatorID,
@@ -233,6 +224,42 @@ struct StationPickerView: View {
         } else if !didLoad {
             ProgressView()
         } else {
+            VStack(spacing: 0) {
+                if !isSearching { mapHeader }
+                list
+            }
+        }
+    }
+
+    /// The same map the journey editor uses: zoom in and tap a station.
+    private var mapHeader: some View {
+        TripMapView(
+            regionCode: regionCode,
+            stations: mapStations,
+            content: TripMapContent(routes: [], marks: [], fitRevision: 0),
+            reduceMotion: reduceMotion,
+            onStation: { station in
+                if let onSelectWithLine { onSelectWithLine(station, nil, nil) }
+                else { onSelect?(station, nil) }
+                dismiss()
+            },
+            onRoute: { _ in },
+            onBackground: {},
+            onZoomChange: { _ in })
+            .overlay(alignment: .top) {
+                Text(localization.text("ios.newTrip.pickOnMap", fallback: "Tap a station on the map, or search"))
+                    .font(.footnote.weight(.medium))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(.regularMaterial, in: Capsule())
+                    .padding(.top, 8)
+                    .allowsHitTesting(false)
+            }
+            .frame(height: 220)
+            .accessibilityIdentifier("stationPickerMap")
+    }
+
+    private var list: some View {
             List {
                 if let companyFilter, !companyFilter.isEmpty {
                     Toggle(isOn: $onlyCompany) {
@@ -241,13 +268,7 @@ struct StationPickerView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                if sourcePackage != nil {
-                    let rows = packageRows
-                    ForEach(rows) { row in stationButton(row) }
-                    if rows.isEmpty {
-                        Text(localization.text("ios.editor.stationUnmatched")).foregroundStyle(.secondary)
-                    }
-                } else if isSearching {
+                if isSearching {
                     ForEach(lineGroups) { group in
                         Section {
                             ForEach(group.rows) { row in stationButton(row, line: group.line) }
@@ -288,7 +309,6 @@ struct StationPickerView: View {
                     }
                 }
             }
-        }
     }
 
     private func load() async {
@@ -297,7 +317,6 @@ struct StationPickerView: View {
         let rideDate = rideDate
         let includesRetired = onSelectRetired != nil && rideDate?.isEmpty == false
         let sourceCatalog = sourceCatalog
-        let sourcePackage = sourcePackage
         let loadID = search.beginLoad()
         didLoad = false
         loadError = nil
@@ -316,11 +335,7 @@ struct StationPickerView: View {
             regionCode: regionCode, rideDate: rideDate, lineIDs: lineIDs, includesRetired: includesRetired)
         do {
             let loaded = try await Task.detached(priority: .userInitiated) {
-                let catalog: EditorCatalog
-                if let sourceCatalog { catalog = sourceCatalog }
-                else if let sourcePackage {
-                    catalog = EditorCatalogBuilder.build(EditorCatalogBuilder.sources(regionCode: regionCode, package: sourcePackage))
-                } else { catalog = try loadCatalog(for: region) }
+                let catalog = try sourceCatalog ?? loadCatalog(for: region)
                 let index = catalog.stationSearchIndex(regionCode: regionCode, extraNames: readings)
                 let directory = includesRetired ? RiddenRouteStore.retiredStations(region: regionCode) : []
                 let output = index.search(StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
@@ -338,6 +353,7 @@ struct StationPickerView: View {
                   search.install(index: loaded.1, retired: loaded.2, request: request,
                                  output: loaded.3, loadID: loadID) else { return }
             catalog = loaded.0
+            mapStations = loaded.0.stations(in: regionCode)
             retiredByID = Dictionary(loaded.2.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             subtitleByCode = loaded.4
             lineLabelByID = loaded.6

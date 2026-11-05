@@ -52,6 +52,68 @@ public enum TravelDirection {
         return Result(direction: direction, lineID: lineID, kilometers: winner)
     }
 
+    /// One stretch of a ride on one line, with its own passenger direction.
+    /// A trip can run 上り on one line and 下り on the next.
+    public struct Leg: Sendable, Equatable {
+        /// Inclusive stop indices of the stretch.
+        public var fromStopIndex: Int
+        public var toStopIndex: Int
+        public var lineID: String?
+        /// Nil when the line casts no vote (a loop, an undirected line, a tie).
+        public var direction: Direction?
+        /// The line's end station in the travel direction, a natural 方面.
+        public var terminalName: String?
+    }
+
+    /// Directions per line stretch, in travel order. Consecutive stop pairs
+    /// on the same line form one leg; each leg is decided like ``infer``,
+    /// from its own distance-weighted votes. The package is indexed once.
+    public static func legs(
+        train: Train, package: CompactPackage, calibrationBundle: Bundle? = nil
+    ) throws -> [Leg] {
+        guard train.stops.count >= 2 else { return [] }
+        let calibration: [String: CalibrationEntry]
+        if let calibrationBundle { calibration = try loadCalibration(bundle: calibrationBundle) }
+        else { calibration = try calibrationByLine.get() }
+        let index = PackageIndex(package)
+        let pairs = endpointPairs(in: train)
+        let votes: [Vote?] = pairs.map { vote($0, train: train, index: index, calibration: calibration) }
+        var result: [Leg] = []
+        var start = 0
+        while start < pairs.count {
+            let key = pairs[start].lineIDs?.first ?? votes[start]?.lineID
+            var end = start
+            while end + 1 < pairs.count, (pairs[end + 1].lineIDs?.first ?? votes[end + 1]?.lineID) == key {
+                end += 1
+            }
+            var totals: [Direction: Double] = [.up: 0, .down: 0]
+            for vote in votes[start...end].compactMap({ $0 }) {
+                totals[vote.direction, default: 0] += vote.kilometers
+            }
+            let up = totals[.up] ?? 0
+            let down = totals[.down] ?? 0
+            var direction: Direction?
+            if up + down > 0, up != down, max(up, down) / (up + down) >= 0.6 {
+                direction = up > down ? .up : .down
+            }
+            result.append(Leg(
+                fromStopIndex: start, toStopIndex: end + 1, lineID: key, direction: direction,
+                terminalName: terminal(
+                    from: train.stops[start], to: train.stops[end + 1], lineID: key, index: index)))
+            start = end + 1
+        }
+        return result
+    }
+
+    /// The end of `lineID` that the stretch travels toward.
+    private static func terminal(from: Stop, to: Stop, lineID: String?, index: PackageIndex) -> String? {
+        guard let lineID, let line = index.lines.firstIndex(where: { $0.id == lineID }),
+              let a = index.stationIndex(of: from, on: line),
+              let b = index.stationIndex(of: to, on: line), a != b else { return nil }
+        let stations = index.lines[line].stations
+        return (a < b ? stations.last : stations.first)?.name
+    }
+
     private struct EndpointPair {
         var from: Stop
         var to: Stop

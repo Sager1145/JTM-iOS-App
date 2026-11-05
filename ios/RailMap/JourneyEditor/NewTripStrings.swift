@@ -195,5 +195,129 @@ enum NewTripStrings {
             .zhHans: "仅{company}", .zhHant: "僅{company}",
             .ja: "{company}のみ", .en: "Only {company}",
         ],
+        "ios.newTrip.fillDetails": [
+            .en: "Fill in trip details", .ja: "行程の詳細を入力",
+            .zhHant: "填入行程詳細", .zhHans: "填入行程详情",
+        ],
+        "ios.newTrip.tripDetails": [
+            .en: "Trip details", .ja: "行程の詳細",
+            .zhHant: "行程詳細", .zhHans: "行程详情",
+        ],
+        "ios.newTrip.fillDetailsNote": [
+            .en: "Timetables, the line's services, and ChatGPT or pasted text, in one list.", .ja: "時刻表、路線の列車種別、ChatGPT または貼り付けたテキストをひとつの一覧で。",
+            .zhHant: "時刻表、路線的列車種別，以及 ChatGPT 或貼上的文字，集中在一個清單。", .zhHans: "时刻表、线路的列车种别，以及 ChatGPT 或粘贴的文字，集中在一个列表。",
+        ],
+        "ios.newTrip.completeWithText": [
+            .en: "ChatGPT or pasted text", .ja: "ChatGPT または貼り付けたテキスト",
+            .zhHant: "ChatGPT 或貼上的文字", .zhHans: "ChatGPT 或粘贴的文字",
+        ],
+        "ios.newTrip.completeWithTextNote": [
+            .en: "Review every proposed change before it is applied.", .ja: "適用する前に、提案された変更をすべて確認します。",
+            .zhHant: "套用前會先檢視每一項建議的變更。", .zhHans: "应用前会先查看每一项建议的更改。",
+        ],
+        "ios.newTrip.savedRoute": [
+            .en: "Saved route", .ja: "保存済みの経路",
+            .zhHant: "已儲存的路線", .zhHans: "已保存的路线",
+        ],
+        "ios.newTrip.repairChoose": [
+            .en: "Choose the route between {from} and {to}", .ja: "{from}と{to}の間の経路を選んでください",
+            .zhHant: "請選擇{from}與{to}之間的路線", .zhHans: "请选择{from}与{to}之间的路线",
+        ],
+        "ios.newTrip.repairSkip": [
+            .en: "Leave this part as it is", .ja: "この区間はそのままにする",
+            .zhHant: "此區段保持不變", .zhHans: "此区段保持不变",
+        ],
+        "ios.newTrip.repairing": [
+            .en: "Repairing route", .ja: "経路を修復中",
+            .zhHant: "正在修復路線", .zhHans: "正在修复路线",
+        ],
+        "ios.newTrip.trainTypeNotSet": [
+            .en: "Not set", .ja: "未設定",
+            .zhHant: "未設定", .zhHans: "未设置",
+        ],
+        "ios.newTrip.moreDetails": [
+            .en: "More details", .ja: "その他の詳細",
+            .zhHant: "更多詳細資料", .zhHans: "更多详细信息",
+        ],
+        "ios.newTrip.fewerDetails": [
+            .en: "Fewer details", .ja: "詳細を隠す",
+            .zhHant: "收起詳細資料", .zhHans: "收起详细信息",
+        ],
+        "ios.newTrip.stopsNote": [
+            .en: "To change the route, pick other stations or add a stop on the map.", .ja: "経路を変えるには、地図で別の駅を選ぶか経由駅を追加します。",
+            .zhHant: "若要變更路線，請在地圖上選擇其他車站或新增途經站。", .zhHans: "若要更改路线，请在地图上选择其他车站或添加途经站。",
+        ],
+        "ios.newTrip.pickOnMap": [
+            .en: "Tap a station on the map, or search", .ja: "地図で駅をタップするか、検索します",
+            .zhHant: "在地圖上點選車站，或搜尋", .zhHans: "在地图上点选车站，或搜索",
+        ],
+        "ios.newTrip.directionUnknown": [
+            .en: "Direction not known", .ja: "方向不明",
+            .zhHant: "方向未知", .zhHans: "方向未知",
+        ],
+        "ios.newTrip.boundFor": [
+            .en: "Toward {name}", .ja: "{name}方面",
+            .zhHant: "{name}方向", .zhHans: "{name}方向",
+        ],
+        "ios.newTrip.boundForTitle": [
+            .en: "Bound for", .ja: "方面",
+            .zhHant: "方向", .zhHans: "方向",
+        ],
+        "ios.newTrip.boundForChoose": [
+            .en: "Choose", .ja: "選択",
+            .zhHant: "選擇", .zhHans: "选择",
+        ],
+        "ios.newTrip.boundForOther": [
+            .en: "Other…", .ja: "その他…",
+            .zhHant: "其他…", .zhHans: "其他…",
+        ],
+        "ios.newTrip.boundForClear": [
+            .en: "Clear", .ja: "クリア",
+            .zhHant: "清除", .zhHans: "清除",
+        ],
+        "ios.newTrip.platformAdd": [
+            .en: "+ Platform", .ja: "+ 番線",
+            .zhHant: "+ 月台", .zhHans: "+ 站台",
+        ],
+        "ios.newTrip.platformOther": [
+            .en: "Other", .ja: "その他",
+            .zhHant: "其他", .zhHans: "其他",
+        ],
+        "ios.newTrip.platformClear": [
+            .en: "Clear", .ja: "クリア",
+            .zhHant: "清除", .zhHans: "清除",
+        ],
+        "ios.newTrip.vehicleSuggestions": [
+            .en: "Suggestions", .ja: "候補",
+            .zhHant: "建議", .zhHans: "建议",
+        ],
+        "ios.newTrip.vehicleAdd": [
+            .en: "Add", .ja: "追加",
+            .zhHant: "新增", .zhHans: "添加",
+        ],
+        "ios.newTrip.missingPlatforms": [
+            .en: "{count} platforms", .ja: "番線 {count} 件",
+            .zhHant: "{count} 個月台", .zhHans: "{count} 个站台",
+        ],
+        "ios.newTrip.needsDetails": [
+            .en: "Still missing: {items}", .ja: "未入力：{items}",
+            .zhHant: "尚未填寫：{items}", .zhHans: "尚未填写：{items}",
+        ],
+        "ios.newTrip.platforms": [
+            .en: "Platforms", .ja: "番線",
+            .zhHant: "月台", .zhHans: "站台",
+        ],
+        "ios.newTrip.departureShort": [
+            .en: "Dep.", .ja: "発",
+            .zhHant: "發", .zhHans: "发",
+        ],
+        "ios.newTrip.arrivalShort": [
+            .en: "Arr.", .ja: "着",
+            .zhHant: "到", .zhHans: "到",
+        ],
+        "ios.newTrip.enterByHand": [
+            .en: "Enter the rest by hand", .ja: "残りを手入力する",
+            .zhHant: "其餘手動填寫", .zhHans: "其余手动填写",
+        ],
     ]
 }

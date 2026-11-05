@@ -65,7 +65,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Shiosai 1"
+      "number_en": "Shiosai 1",
+      "vehicle_type": "E259系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_02",
@@ -260,7 +261,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Wakashio 10"
+      "number_en": "Wakashio 10",
+      "vehicle_type": "E257系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_04",
@@ -308,7 +310,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Hitachi 8"
+      "number_en": "Hitachi 8",
+      "vehicle_type": "E657系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_05",
@@ -374,7 +377,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Odoriko 9"
+      "number_en": "Odoriko 9",
+      "vehicle_type": "E257系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_06",
@@ -884,7 +888,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E131系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_08",
@@ -1013,7 +1018,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Rapid"
+      "number_en": "Rapid",
+      "vehicle_type": "E233系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_09",
@@ -1061,7 +1067,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Kaiji 32"
+      "number_en": "Kaiji 32",
+      "vehicle_type": "E353系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_10",
@@ -1148,7 +1155,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Chūō Rapid"
+      "number_en": "Chūō Rapid",
+      "vehicle_type": "E233系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_11",
@@ -1651,7 +1659,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Azusa 50"
+      "number_en": "Azusa 50",
+      "vehicle_type": "E353系"
     },
     {
       "id": "tokyo_limited_express_loop_20260529_16",
@@ -1843,7 +1852,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Chūō-Sōbu Line Local"
+      "number_en": "Chūō-Sōbu Line Local",
+      "vehicle_type": "E231系"
     }
   ]
 }

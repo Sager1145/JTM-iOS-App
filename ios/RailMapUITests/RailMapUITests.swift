@@ -724,8 +724,8 @@ final class RailMapUITests: XCTestCase {
 
         // Editing can temporarily remove the presented menu from view.
         element("journeyMenuEdit", in: app).tap()
-        XCTAssertTrue(element("rideEditorForm", in: app).waitForExistence(timeout: 8))
-        element("rideEditorCancel", in: app).tap()
+        XCTAssertTrue(element("newTripForm", in: app).waitForExistence(timeout: 8))
+        element("newTripCancel", in: app).tap()
         XCTAssertTrue(title.waitForExistence(timeout: 8))
 
         let start = title.coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.5))
@@ -817,8 +817,8 @@ final class RailMapUITests: XCTestCase {
             XCTAssertTrue(element("journeyMenuEdit", in: app).isHittable)
             attach(app, named: "independent-menu-\(id)")
             element("journeyMenuEdit", in: app).tap()
-            XCTAssertTrue(element("rideEditorForm", in: app).waitForExistence(timeout: 8))
-            element("rideEditorCancel", in: app).tap()
+            XCTAssertTrue(element("newTripForm", in: app).waitForExistence(timeout: 8))
+            element("newTripCancel", in: app).tap()
             XCTAssertTrue(element("journeyBackToList", in: app).waitForExistence(timeout: 8))
             element("journeyBackToList", in: app).tap()
             XCTAssertTrue(row.waitForExistence(timeout: 8))
