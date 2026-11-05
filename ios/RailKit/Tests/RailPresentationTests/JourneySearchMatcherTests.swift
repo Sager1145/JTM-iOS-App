@@ -586,7 +586,8 @@ struct JourneySearchMatcherFastPathTests {
 }
 
 private func referenceMatch(_ train: Train, needle: String, aliases: [String] = []) -> Bool {
-    guard !SearchFold.fold(needle).isEmpty else { return false }
+    let query = SearchTextQuery(needle)
+    guard !query.isEmpty else { return false }
     if let region = train.region, !region.isEmpty,
        let identity = RegistryIdentityCache.identity(forRegion: region) {
         let operatorIDs = identity.operatorIDs(matchingQuery: needle)
@@ -601,7 +602,7 @@ private func referenceMatch(_ train: Train, needle: String, aliases: [String] = 
     let names = [train.number, train.numberEn, train.origin, train.destination,
                  train.direction, train.trainType].compactMap { $0 }
         + train.stops.map(\.name) + aliases
-    return names.contains { SearchFold.matches(query: needle, fields: [$0]) }
+    return names.contains { query.matchesAll(fields: [$0]) }
         || train.date?.localizedCaseInsensitiveContains(needle) == true
         || train.id.localizedCaseInsensitiveContains(needle)
 }

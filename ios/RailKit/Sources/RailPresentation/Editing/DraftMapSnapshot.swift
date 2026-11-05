@@ -33,6 +33,10 @@ public struct DraftStopPin: Hashable, Sendable, Identifiable {
 
 public struct DraftMapSnapshot: Hashable, Sendable {
     public var revision: Int
+    /// One pin per occurrence. Never collapse two visits that share a station code.
+    /// Missing coordinate stays on the pin with nil lat/lon (caller must not draw those).
+    /// timeText empty means the bubble should say the time is unfilled; no "00:00" is invented.
+    /// Order of pins is the stop order given.
     public var pins: [DraftStopPin]
     /// The draft's service day, independent of the journey-list date filter.
     /// Nil previews the current network, including when a date is removed.
@@ -46,16 +50,6 @@ public struct DraftMapSnapshot: Hashable, Sendable {
 }
 
 public enum DraftMapPins {
-    /// One pin per occurrence. Never collapse two visits that share a station code.
-    /// Missing coordinate stays on the pin with nil lat/lon (caller must not draw those).
-    /// timeText empty means the bubble should say the time is unfilled; this function does not invent "00:00".
-    /// Order of pins is the stop order given.
-    public static func snapshot(
-        revision: Int, pins: [DraftStopPin], networkRideDate: String? = nil
-    ) -> DraftMapSnapshot {
-        DraftMapSnapshot(revision: revision, pins: pins, networkRideDate: networkRideDate)
-    }
-
     /// Returns what changed, keyed by occurrenceID.
     public enum Change: Hashable, Sendable {
         case insert(DraftStopPin)

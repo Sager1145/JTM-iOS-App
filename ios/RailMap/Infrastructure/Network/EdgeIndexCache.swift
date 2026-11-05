@@ -25,6 +25,10 @@ actor EdgeIndexCache {
 
     private func releaseCompleted() { completed = nil }
 
+    /// Drops the one completed index. Builds in flight finish and are kept;
+    /// the next request after this rebuilds the same index on demand.
+    func releaseForMemoryPressure() { completed = nil }
+
     private func retain(_ value: BuiltIndex, key: CacheKey) {
         completed = (key, value)
     }
@@ -80,6 +84,7 @@ actor EdgeIndexCache {
         if let ready = cached(key) { return ready.index }
         var parts: [(country: String, index: Statistics.EdgeIndex)] = []
         for country in countries {
+            try Task.checkCancellation()
             parts.append((country, try await index(country: country)))
         }
         return try await mergedResult(parts, key: key)
@@ -91,6 +96,8 @@ actor EdgeIndexCache {
         try await buildLimiter.withPermit {
             if let ready = await self.cached(key) { return ready.index }
             await self.releaseCompleted()
+            let s = RailSignpost.data.begin("data.edgeIndex.merge")
+            defer { RailSignpost.data.end("data.edgeIndex.merge", s) }
             let result = Self.merge(parts)
             await self.retain((result, 0), key: key)
             return result
@@ -109,6 +116,7 @@ actor EdgeIndexCache {
         let japan = try await restrictedJapan(to: japanLeaves)
         var parts: [(country: String, index: Statistics.EdgeIndex)] = []
         for country in countries {
+            try Task.checkCancellation()
             parts.append((country, country == Region.jp.code ? japan : try await index(country: country)))
         }
         return try await mergedResult(parts, key: key)

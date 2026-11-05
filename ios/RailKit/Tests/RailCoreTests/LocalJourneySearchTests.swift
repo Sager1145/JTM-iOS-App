@@ -16,7 +16,7 @@ struct LocalJourneySearchTests {
         #expect(reviewed.choices.first?.lineIDs == ["first", "second"])
         #expect(!result.topologyIsComplete)
         #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D").isEmpty)
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D").choices.isEmpty)
     }
 
     @Test("Directed row continuations preserve repeated physical station occurrences", arguments: [false, true])
@@ -25,14 +25,14 @@ struct LocalJourneySearchTests {
         row["permittedTraversal"] = reverse ? "reverse" : "forward"
         let package = try fixture([row])
         let from = reverse ? "D" : "A", to = reverse ? "A" : "D"
-        let choices = LocalJourneySearch.choices(package: package, originCode: from, destinationCode: to)
+        let choices = LocalJourneySearch.search(package: package, originCode: from, destinationCode: to).choices
         let choice = try #require(choices.first)
         let codes = ["A", "B", "C", "B", "D"]
         #expect(choices.count == 1)
         #expect(choice.stations.map(\.code) == (reverse ? Array(codes.reversed()) : codes))
         #expect(Set(choice.sectionCodes).count == 4)
         #expect(choice.routeSections.count == 4)
-        #expect(LocalJourneySearch.choices(package: package, originCode: to, destinationCode: from).isEmpty)
+        #expect(LocalJourneySearch.search(package: package, originCode: to, destinationCode: from).choices.isEmpty)
     }
 
     @Test("A loop retains both directions and the physical closing interval")
@@ -40,7 +40,7 @@ struct LocalJourneySearchTests {
         var row = line("loop", ["A", "B", "C"])
         row["isLoop"] = true
         row["segments"] = (0..<3).map { [1, 0, [[Double($0), 0], [Double(($0 + 1) % 3), 0]]] as [Any] }
-        let choices = LocalJourneySearch.choices(package: try fixture([row]), originCode: "A", destinationCode: "C")
+        let choices = LocalJourneySearch.search(package: try fixture([row]), originCode: "A", destinationCode: "C").choices
         #expect(choices.map { $0.stations.map(\.code) } == [["A", "C"], ["A", "B", "C"]])
         #expect(choices.first?.sectionCodes == ["loop@A:C"])
     }
@@ -51,8 +51,8 @@ struct LocalJourneySearchTests {
                     line("first", ["A", "B"], distance: 1),
                     line("second", ["B", "D"], distance: 1),
                     line("equal", ["A", "C", "D"], distance: 1)]
-        let first = LocalJourneySearch.choices(package: try fixture(rows), originCode: "A", destinationCode: "D")
-        let reordered = LocalJourneySearch.choices(package: try fixture(Array(rows.reversed())), originCode: "A", destinationCode: "D")
+        let first = LocalJourneySearch.search(package: try fixture(rows), originCode: "A", destinationCode: "D").choices
+        let reordered = LocalJourneySearch.search(package: try fixture(Array(rows.reversed())), originCode: "A", destinationCode: "D").choices
         #expect(first == reordered)
         #expect(first.count == 2)
         #expect(first[0].lineIDs == ["equal"])
@@ -66,11 +66,11 @@ struct LocalJourneySearchTests {
         var broken = line("broken", ["A", "Z"])
         broken["segments"] = [[1, 0, [[0, 0]]] as [Any]]
         let package = try fixture([line("ordinary", ["A", "B", "D"]), fast, broken])
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D")
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D").choices
             .first?.lineIDs == ["ordinary"])
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D", trainType: "highSpeed")
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D", trainType: "highSpeed").choices
             .first?.lineIDs == ["fast"])
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "Z").isEmpty)
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "Z").choices.isEmpty)
     }
 
     @Test("Choice and expansion limits expose incomplete searches")
@@ -206,12 +206,12 @@ struct LocalJourneySearchTests {
         tram["kind"] = "tram"
         var railway = line("railway", ["B", "C"], operatorName: "広電")
         railway["kind"] = "private"
-        #expect(LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
+        #expect(LocalJourneySearch.search(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").choices.isEmpty)
         railway["operator"] = "西日本鉄道"
-        #expect(LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
+        #expect(LocalJourneySearch.search(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").choices.isEmpty)
         railway = line("railway", ["B-other", "C"], operatorName: "広電")
         railway["kind"] = "private"
-        #expect(LocalJourneySearch.choices(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").isEmpty)
+        #expect(LocalJourneySearch.search(package: try fixture([tram, railway]), originCode: "A", destinationCode: "C").choices.isEmpty)
     }
 
     private func line(_ id: String, _ codes: [String], distance: Double = 1,
@@ -254,11 +254,11 @@ extension LocalJourneySearchTests {
             maximumChoices: 1, continuation: reviewed, originLineIDs: ["start"], destinationLineIDs: ["finish"])
         #expect(hinted.choices.first?.lineIDs == ["start", "wrong-end", "beyond", "finish"])
         #expect(hinted.choices.first?.stations.map(\.code) == ["O", "J", "D", "K", "D"])
-        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            maximumChoices: 1, continuation: reviewed, originLineIDs: ["start"], destinationLineIDs: ["finish"]) == hinted.choices)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            continuation: reviewed, originLineIDs: []).isEmpty)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "O", destinationCode: "D",
-            continuation: reviewed, destinationLineIDs: []).isEmpty)
+        #expect(LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
+            maximumChoices: 1, continuation: reviewed, originLineIDs: ["start"], destinationLineIDs: ["finish"]).choices == hinted.choices)
+        #expect(LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
+            continuation: reviewed, originLineIDs: []).choices.isEmpty)
+        #expect(LocalJourneySearch.search(package: package, originCode: "O", destinationCode: "D",
+            continuation: reviewed, destinationLineIDs: []).choices.isEmpty)
     }
 }

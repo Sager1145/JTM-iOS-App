@@ -177,7 +177,7 @@ struct StationPickerView: View {
     private var companyGroups: [CatalogStationCompanyGroup] {
         Dictionary(grouping: lineGroups, by: \.operatorID).map { operatorID, lines in
             CatalogStationCompanyGroup(id: operatorID,
-                name: lines.first?.operatorName ?? localization.countryText("field.company", fallback: "Operator"),
+                name: lines.first.map { JourneyBranding.companyText($0.operatorName) } ?? localization.countryText("field.company", fallback: "Operator"),
                 lines: lines)
         }.sorted {
             if $0.name != $1.name { return $0.name.localizedStandardCompare($1.name) == .orderedAscending }

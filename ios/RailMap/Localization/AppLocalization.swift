@@ -28,6 +28,7 @@ final class AppLocalization {
     var language: Localization.Language {
         didSet {
             engine?.setLanguage(language.rawValue)
+            OperatorIdentity.displayLanguage = language.rawValue
             for region in Region.allCases {
                 namingEngines[region]?.setLanguage(language.rawValue)
             }
@@ -67,6 +68,7 @@ final class AppLocalization {
     init() {
         let saved = UserDefaults.standard.string(forKey: Self.preferenceKey)
         language = Localization.Language(rawValue: saved ?? "") ?? Self.systemLanguage
+        OperatorIdentity.displayLanguage = language.rawValue
         BundledRegistry.addSettledHandler { [weak self] _ in
             Task { @MainActor in
                 self?.registryGeneration += 1

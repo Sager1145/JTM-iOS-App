@@ -123,6 +123,19 @@ public struct RegistryIdentity: Equatable, Sendable {
         return record.names.first
     }
 
+    /// Passenger label in `language` — the one place an operator id becomes a
+    /// displayed name. English uses the identity's English label
+    /// (``OperatorIdentity/englishLabel(code:)``); every other language, and an
+    /// operator without English, keeps the native ``operatorLabel(_:)``.
+    public func operatorLabel(_ identifier: String, language: String) -> String? {
+        if language == "en",
+           let code = bundle.operatorRecords[bundle.canonicalID(identifier)]?.identity,
+           let english = OperatorIdentity.englishLabel(code: code) {
+            return english
+        }
+        return operatorLabel(identifier)
+    }
+
     /// Logo path stored on the operator. Empty and missing logos are nil.
     public func operatorLogo(_ identifier: String) -> String? {
         guard let logo = bundle.operatorRecords[bundle.canonicalID(identifier)]?.logo, !logo.isEmpty else { return nil }
@@ -356,6 +369,15 @@ public struct RegistryIdentity: Equatable, Sendable {
     /// code with one station is that station. Several stations narrow to one
     /// only when `operator` owns exactly one of them. Anything else is nil.
     public func stationID(forCode rawCode: String, operator operatorID: String?) -> String? {
+        Self.stationID(forCode: rawCode, operator: operatorID, in: bundle)
+    }
+
+    /// The same answer from the bundle's forward code tables alone. It needs
+    /// none of the name maps ``init(bundle:)`` builds, so the per-stop upgrade
+    /// path calls this instead of building a whole identity for each lookup.
+    static func stationID(
+        forCode rawCode: String, operator operatorID: String?, in bundle: RegistryBundle
+    ) -> String? {
         let code = StationCodeAliases.canonical(rawCode)
         if let direct = bundle.stationCodes[code] {
             return direct

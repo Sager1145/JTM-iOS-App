@@ -85,6 +85,14 @@ enum JourneyBranding {
         }
     }
 
+    /// A record's own `company` text as shown: unchanged, except in English,
+    /// where it becomes the operator's English label when every company in it
+    /// has one (東日本旅客鉄道 → JR East).
+    static func companyText(_ company: String) -> String {
+        guard OperatorIdentity.displayLanguage == "en" else { return company }
+        return OperatorIdentity.englishLabel(forCompanyText: company) ?? company
+    }
+
     /// 「東海道本線 · JR東海」 — the line, then who runs it.
     static func routeText(
         of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil

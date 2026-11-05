@@ -321,6 +321,7 @@ final class MileageStatisticsStore {
     /// the same no-work contract and lets an empty reload cancel an older
     /// calculation that may still be running.
     func load(scope: StatisticsScope, trains: [Train], rides: [RiddenRouteStore.DrawnRide]) {
+        RailSignpost.jobs.mark("stats.load.request", trains.count)
         let members = Set(scope.filter(trains, rides: rides).map(\.id))
         let selected = StatisticsMembership.slice(
             trains: trains, regionCode: nil, rule: Region.scopeRule,
