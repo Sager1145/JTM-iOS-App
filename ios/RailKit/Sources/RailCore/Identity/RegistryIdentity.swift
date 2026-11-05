@@ -356,6 +356,15 @@ public struct RegistryIdentity: Equatable, Sendable {
     /// code with one station is that station. Several stations narrow to one
     /// only when `operator` owns exactly one of them. Anything else is nil.
     public func stationID(forCode rawCode: String, operator operatorID: String?) -> String? {
+        Self.stationID(forCode: rawCode, operator: operatorID, in: bundle)
+    }
+
+    /// The same answer from the bundle's forward code tables alone. It needs
+    /// none of the name maps ``init(bundle:)`` builds, so the per-stop upgrade
+    /// path calls this instead of building a whole identity for each lookup.
+    static func stationID(
+        forCode rawCode: String, operator operatorID: String?, in bundle: RegistryBundle
+    ) -> String? {
         let code = StationCodeAliases.canonical(rawCode)
         if let direct = bundle.stationCodes[code] {
             return direct

@@ -413,7 +413,7 @@ public enum RegistryIdentityUpgrade {
     private static func uniqueStation(
         code: String, operatorID: String?, bundle: RegistryBundle
     ) -> String? {
-        RegistryIdentity(bundle: bundle).stationID(forCode: code, operator: operatorID)
+        RegistryIdentity.stationID(forCode: code, operator: operatorID, in: bundle)
     }
 
     /// Not unique. Keep an id only when the bundle still lists it for this code.

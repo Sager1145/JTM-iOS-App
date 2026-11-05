@@ -56,3 +56,69 @@ Ranked by expected impact.
   - `DisplayNetworkCache` shared decodes
   - bounded route-graph LRUs
   - `MapDrawChanges` paint-only paths
+
+## Sample load (follow-up, branch `claude/sample-load-perf`)
+
+### Root cause
+
+The suspicion that the precomputed parts were being rejected was not the
+cause. A Time Profiler run of the cold new-year sample put **97 % of samples
+in `RegistryIdentityUpgrade.uniqueStation`**. Every stop and section of every
+ride passes through `BundledRegistry.upgradeIfReady` (called by
+`canonicalRouteInput`, which `readCached` runs before it can even form the
+cache digest). `uniqueStation` built a whole `RegistryIdentity(bundle:)` for
+each lookup: every operator, station-name and needle map of the region's
+registry. It then asked a question that only reads the bundle's forward code
+tables (`stationCodes`, `groupCodes`, `stationOperator`).
+
+Fix: `RegistryIdentity.stationID(forCode:operator:in:)`, an internal static
+over the bundle alone. The instance method forwards to it, so every caller
+gets the same answer from the same code. The per-region identity in
+`BundledRegistry` is unchanged.
+
+### Measurements
+
+Shared iPhone 17 simulator, Debug build, bundle `com.JRM.RailMap.perf`, a
+fresh `RAILMAP_UI_TEST_STORAGE_ID` store per run, and this bundle's route
+cache emptied before each run. Recorded with xctrace Time Profiler plus
+os_signpost. Times are seconds from launch. RSS is sampled every 0.5 s from
+the host. Simulator CPU is the Mac's, so absolute times need a device check.
+The proportions are robust.
+
+| Sample | `route.cacheRead` before → after | Routes cached in the window, before → after | Peak RSS before → after |
+|---|---|---|---|
+| 日本 全部示例資料 (201 rides) | 116.5 s → **0.40 s** | 1 in 180 s → 71 in 120 s | 649 → 1382 MB |
+| 跨年大回行程 (39 rides) | 32.8 s → **0.19 s** | 5 in 120 s → **39** (all) by ~30 s | 645 → 1393 MB |
+| 東京特急大回行程 (16 rides) | 6.7 s → **0.19 s** | 16 by 69 s → 16 by ~25 s | 1224 → 1348 MB |
+
+Peak RSS goes **up** after the fix. This is not a regression in kind: the
+solver and the statistics edge index now actually run inside the window,
+where before the app never got past the cache read. Both peaks are far over a
+phone budget. That is the next section's work.
+
+The precompute gate is not what blocks reuse. On a cache miss the order is
+live physical solve first, then the bundled datasets only for rides the solver
+explicitly rejected (`decodeUncached`). The dataset path also skips any ride
+whose canonical sections carry physical `sectionCodes`, which timetable
+enrichment adds to most JP rides. Both are deliberate: "a legacy N02
+precompute can attest the journey, but cannot attest which of the closely
+parallel platform tracks it rode". So the bundled `sample-data*` parts are a
+last-resort fallback by design, and loosening the gate would trade correctness
+for speed.
+
+### What still costs time on the 201-ride sample (after the fix)
+
+About 61 % of samples are in `RouteGraphStore.build`. The bounded cache policy
+does not retain a country-sized full graph (`mayRetain`), so every ride whose
+regional subgraph proves insufficient rebuilds the whole JP graph
+(`fullGraph` 29 %, `addPhysicalJunctions` 30 %, `RailHistory.apply` 12 %).
+This is a deliberate memory bound.
+
+The right fix for sample loading is to bundle the samples' solved routes in
+the app's own `RuntimeCache` format. Today the bundle carries only the JS
+precompute, which the gate rightly distrusts. The seed would be keyed by the
+same digest and `resourceRevision`, so it is ignored as soon as any input
+changes and costs nothing in correctness. It needs a generator, either a
+`swift run` tool over RailKit or a harvest of a simulator run's
+`Caches/RailMap/Routes`, plus a copy step in `copy-rail-packages.sh`. Not done
+here.
