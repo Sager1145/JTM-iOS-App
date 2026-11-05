@@ -74,6 +74,7 @@
 		44468BFC4E550089B66B9331 /* TransferGuideImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A70A704D1CA23E31C167E /* TransferGuideImport.swift */; };
 		447022439834CCC7557F0C5C /* StationNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60DEC98580B467940BB89A9 /* StationNaming.swift */; };
 		455F38409EF4DE83B2842005 /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627D6797090996DD093DD0E4 /* NewTripView.swift */; };
+		A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE00000000000000F1 /* TripMapView.swift */; };
 		4643E4B9E7B9636244738E6A /* TimetableRouteEvidence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8714C78DD769D4024644D6C0 /* TimetableRouteEvidence.swift */; };
 		49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397697865248E6D4DF39FDA /* InspectorMap.swift */; };
 		49E5ED9C2688622F6C025DD4 /* MapDateScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CFF14C878A7B40D58A6A3E /* MapDateScope.swift */; };
@@ -348,6 +349,7 @@
 		5D41F5D2DFDF3D6B8AE17588 /* MapPlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPlaybackLayer.swift; sourceTree = "<group>"; };
 		61ECD23B5031CE21A760329D /* JourneyCompletionStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyCompletionStrings.swift; sourceTree = "<group>"; };
 		627D6797090996DD093DD0E4 /* NewTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
+		A1D7C0DE00000000000000F1 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		628DBA7D128F32B95C9901ED /* DataStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStrings.swift; sourceTree = "<group>"; };
 		6397697865248E6D4DF39FDA /* InspectorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorMap.swift; sourceTree = "<group>"; };
 		65D3961A4DC61FA3CCC5DF8E /* ClockStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockStrings.swift; sourceTree = "<group>"; };
@@ -781,6 +783,7 @@
 				4610709E922C93AA4D822234 /* StationPickerSearchController.swift */,
 				22128C2633F9AAF26AD68536 /* StationPickerView.swift */,
 				F6A345007BC8F43C8B3CE0D7 /* StopEditorView.swift */,
+				A1D7C0DE00000000000000F1 /* TripMapView.swift */,
 			);
 			path = JourneyEditor;
 			sourceTree = "<group>";
@@ -1270,6 +1273,7 @@
 				447022439834CCC7557F0C5C /* StationNaming.swift in Sources */,
 				F963AC0632028F00B6070447 /* StationPickerSearchController.swift in Sources */,
 				736D429998F31A98E2CC401B /* StationPickerView.swift in Sources */,
+				A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */,
 				B946F8A49F03FA17BFCA8FDE /* StationPlaceStore.swift in Sources */,
 				7FD51A06743734AF948ACC3F /* StationReadingsStore.swift in Sources */,
 				A24D4DB88CFEDC7DEE536BCA /* StatisticsArea.swift in Sources */,
