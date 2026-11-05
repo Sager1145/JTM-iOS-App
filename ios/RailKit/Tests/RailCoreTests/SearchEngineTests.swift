@@ -231,6 +231,18 @@ struct SearchEngineTests {
         #expect(metro.parsed.applied.first?.title == "東京メトロ")
     }
 
+    @Test func contextLinesAreAHardConstraint() throws {
+        let meguro = "jp-東急電鉄-目黒線"
+        let restricted = SearchContext(regionCode: "jp", lineIDs: [meguro])
+        for query in ["山手線", "新宿", "目黒", "shinjuku"] {
+            let response = try top(query, scope: .stations, context: restricted)
+            #expect(response.results.allSatisfy { $0.lineIDs.contains(meguro) }, "\(query)")
+        }
+        #expect(try top("目黒", scope: .stations, context: restricted).results.first?.title == "目黒")
+        let unknown = SearchContext(regionCode: "jp", lineIDs: ["jp-nowhere"])
+        #expect(try top("新宿", context: unknown).results.isEmpty)
+    }
+
     @Test func rankingTiers() throws {
         let tokyo = try top("東京", scope: .stations)
         #expect(tokyo.results.first?.title == "東京")
@@ -311,5 +323,37 @@ struct SearchEngineTests {
         #expect(built.count > 9_000)
         #expect(built.memoryFootprint < 8 * 1024 * 1024)
         #expect(average < .milliseconds(50))
+    }
+}
+
+@Suite struct SearchEngineCacheTests {
+    private final class Gate: @unchecked Sendable {
+        let lock = NSLock()
+        var builds = 0
+        var title = "old"
+        let firstStarted = DispatchSemaphore(value: 0)
+        let releaseFirst = DispatchSemaphore(value: 0)
+    }
+
+    @Test func invalidateDuringBuildDiscardsTheStaleIndex() async throws {
+        let gate = Gate()
+        let engine = SearchEngine { region in
+            let (n, title) = gate.lock.withLock { gate.builds += 1; return (gate.builds, gate.title) }
+            if n == 1 { gate.firstStarted.signal(); gate.releaseFirst.wait() }
+            return SearchIndex(regionCode: region, documents: [
+                SearchDocument(entity: .station("1"), title: title)])
+        }
+        let pending = Task { try await engine.index(regionCode: "jp") }
+        // Wait on a plain dispatch thread, not the cooperative pool.
+        await withCheckedContinuation { (done: CheckedContinuation<Void, Never>) in
+            DispatchQueue.global().async { gate.firstStarted.wait(); done.resume() }
+        }
+        gate.lock.withLock { gate.title = "new" }
+        engine.invalidate(regionCode: "jp")
+        gate.releaseFirst.signal()
+        let index = try await pending.value
+        #expect(index.query("new", context: SearchContext(regionCode: "jp")).results.first?.title == "new")
+        let cached = try #require(engine.cachedIndex(regionCode: "jp"))
+        #expect(cached.query("new", context: SearchContext(regionCode: "jp")).results.first?.title == "new")
     }
 }

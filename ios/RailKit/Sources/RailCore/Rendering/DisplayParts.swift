@@ -277,12 +277,6 @@ public enum DisplayParts {
             return out
         }
 
-        /// Reads the two fields straight out of a shipped package, keyed by
-        /// line id. Only non-empty entries are returned.
-        public static func byLineID(contentsOf url: URL) throws -> [String: LineTopology] {
-            byLineID(try JSONDecoder().decode(PackageShape.self, from: Data(contentsOf: url)))
-        }
-
         /// The same map off a decoder that is already standing on a package,
         /// which is how ``DisplayParts/LoadedPackage`` gets it without opening
         /// and scanning the file a second time.

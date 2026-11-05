@@ -74,7 +74,7 @@ enum JourneyBridge {
         case .needsReview(_, _, let gaps):
             return gapReason(gaps, localization)
         case .noRoute:
-            return localization.journeyText(
+            return localization.countryText(
                 "ios.journey.noRiddenSection",
                 fallback: "No stretch of this journey is marked as ridden yet.")
         case .unknown, .resolving, .resolved, .unavailable:
@@ -98,14 +98,14 @@ enum JourneyBridge {
             ? localization.text("ios.route.connectionUnverified", params: [
                 "station": .string(first.from ?? "?"),
             ])
-            : localization.journeyText(
+            : localization.countryText(
                 "ios.journey.endpoints",
-                ["from": .string(first.from ?? "?"), "to": .string(first.to ?? "?")],
+                params: ["from": .string(first.from ?? "?"), "to": .string(first.to ?? "?")],
                 fallback: "{from} → {to}")
         guard gaps.count > 1 else { return head }
-        return localization.journeyText(
+        return localization.countryText(
             "ios.journey.gapMore",
-            ["section": .string(head), "count": .number(Double(gaps.count - 1))],
+            params: ["section": .string(head), "count": .number(Double(gaps.count - 1))],
             fallback: "{section} and {count} more sections")
     }
 }
@@ -148,10 +148,10 @@ extension JourneyPresentation.PrimaryAction {
             .init(label: localization.text("ios.newJourney", fallback: "New journey"),
                   systemImage: "plus")
         case .importData:
-            .init(label: localization.journeyText("ios.journey.importJSON", fallback: "Import JSON"),
+            .init(label: localization.countryText("ios.journey.importJSON", fallback: "Import JSON"),
                   systemImage: "square.and.arrow.down")
         case .locate:
-            .init(label: localization.journeyText("ios.journey.locateRoute", fallback: "Locate route"),
+            .init(label: localization.countryText("ios.journey.locateRoute", fallback: "Locate route"),
                   systemImage: "scope",
                   short: localization.text("ios.journey.locateShort", fallback: "Focus"))
         case .showOnMap:
@@ -192,7 +192,7 @@ extension SecondaryAction {
         case .duplicate:
             .init(label: localization.journeyText(label), systemImage: "plus.square.on.square")
         case .hide:
-            .init(label: localization.journeyText("ios.journey.hideFromMap", fallback: "Hide from map"),
+            .init(label: localization.countryText("ios.journey.hideFromMap", fallback: "Hide from map"),
                   systemImage: "eye.slash")
         case .show:
             .init(label: localization.text("ios.showOnMap", fallback: "Show on map"),
@@ -206,7 +206,7 @@ extension SecondaryAction {
         case .cancel:
             .init(label: localization.journeyText(label), systemImage: "xmark")
         case .importData:
-            .init(label: localization.journeyText("ios.journey.importJSON", fallback: "Import JSON"),
+            .init(label: localization.countryText("ios.journey.importJSON", fallback: "Import JSON"),
                   systemImage: "square.and.arrow.down")
         case .add:
             .init(label: localization.text("ios.newJourney", fallback: "New journey"),

@@ -37,25 +37,6 @@ public enum LocalJourneySearch {
         }
     }
 
-    public static func choices(
-        package: CompactPackage, originCode: String, destinationCode: String,
-        trainType: String? = nil, excludingStationCodes: Set<String> = [],
-        requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
-        maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
-        continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
-        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil,
-        operatorID: String? = nil,
-        admissionContext: RailwayRouteChoices.AdmissionContext? = nil
-    ) -> [RailwayRouteChoices.Choice] {
-        search(package: package, originCode: originCode, destinationCode: destinationCode,
-               trainType: trainType, excludingStationCodes: excludingStationCodes,
-               requiredStationCodes: requiredStationCodes, stationAliases: stationAliases,
-               maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
-               continuation: continuation, originLineIDs: originLineIDs,
-               destinationLineIDs: destinationLineIDs, operatorID: operatorID,
-               admissionContext: admissionContext).choices
-    }
-
     /// Keeps at most `maximumChoices` settled labels per station occurrence and anchor progress, and
     /// never expands more than `maximumExpansions` labels. This bounded search
     /// returns useful short alternatives rather than enumerating every path.

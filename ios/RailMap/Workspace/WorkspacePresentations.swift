@@ -25,7 +25,7 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
         content
             .addDateAlert(isPresented: addDateIsPresented, add: onAddDate)
             .alert(
-                localization.journeyText(
+                localization.countryText(
                     "ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
                 isPresented: saveFailedIsPresented
             ) {
@@ -47,7 +47,7 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
                 }
             } message: {
                 if case .delete = dialog {
-                    Text(localization.journeyText(
+                    Text(localization.countryText(
                         "ios.journey.deleteDetail",
                         fallback: "The journey is removed from the data on this device."))
                 }
@@ -105,9 +105,9 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
     private var confirmationTitle: String {
         switch dialog {
         case .some(.delete(let train)):
-            localization.journeyText(
+            localization.countryText(
                 "ios.journey.deleteConfirm",
-                ["train": .string(train.number)],
+                params: ["train": .string(train.number)],
                 fallback: "Delete {train}?")
         case .some(.addDate), .some(.saveFailed), .none:
             ""

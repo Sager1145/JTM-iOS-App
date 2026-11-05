@@ -29,7 +29,7 @@ struct DraftMapSnapshotTests {
             pin(first, name: "Tokyo"),
             pin(second, name: "Tokyo"),
         ]
-        let snap = DraftMapPins.snapshot(revision: 1, pins: pins)
+        let snap = DraftMapSnapshot(revision: 1, pins: pins)
         #expect(snap.pins.map(\.occurrenceID) == [first, second])
         #expect(snap.pins[0].latitude == snap.pins[1].latitude)
         #expect(snap.pins[0].longitude == snap.pins[1].longitude)
@@ -38,9 +38,9 @@ struct DraftMapSnapshotTests {
     @Test("A time-text edit is an update, not a remove plus insert")
     func updateTimeTextEmitsUpdate() {
         let id = UUID()
-        let old = DraftMapPins.snapshot(revision: 1, pins: [pin(id, timeText: "")])
+        let old = DraftMapSnapshot(revision: 1, pins: [pin(id, timeText: "")])
         let edited = pin(id, timeText: "10:15")
-        let new = DraftMapPins.snapshot(revision: 2, pins: [edited])
+        let new = DraftMapSnapshot(revision: 2, pins: [edited])
         #expect(DraftMapPins.diff(from: old, to: new) == [.update(edited)])
     }
 
@@ -48,8 +48,8 @@ struct DraftMapSnapshotTests {
     func deleteEmitsRemove() {
         let kept = UUID()
         let dropped = UUID()
-        let old = DraftMapPins.snapshot(revision: 1, pins: [pin(kept), pin(dropped, name: "Shinagawa")])
-        let new = DraftMapPins.snapshot(revision: 2, pins: [pin(kept)])
+        let old = DraftMapSnapshot(revision: 1, pins: [pin(kept), pin(dropped, name: "Shinagawa")])
+        let new = DraftMapSnapshot(revision: 2, pins: [pin(kept)])
         #expect(DraftMapPins.diff(from: old, to: new) == [.remove(dropped)])
     }
 
@@ -59,8 +59,8 @@ struct DraftMapSnapshotTests {
         let second = UUID()
         let alpha = pin(first, name: "A")
         let beta = pin(second, name: "B")
-        let old = DraftMapPins.snapshot(revision: 1, pins: [alpha, beta])
-        let new = DraftMapPins.snapshot(revision: 2, pins: [beta, alpha])
+        let old = DraftMapSnapshot(revision: 1, pins: [alpha, beta])
+        let new = DraftMapSnapshot(revision: 2, pins: [beta, alpha])
         let changes = DraftMapPins.diff(from: old, to: new)
         #expect(changes.isEmpty)
         #expect(new.pins.map(\.occurrenceID) == [second, first])
@@ -70,7 +70,7 @@ struct DraftMapSnapshotTests {
     func nilCoordinatePinIsKept() {
         let id = UUID()
         let unplaced = pin(id, timeText: "", latitude: nil, longitude: nil)
-        let snap = DraftMapPins.snapshot(revision: 3, pins: [unplaced])
+        let snap = DraftMapSnapshot(revision: 3, pins: [unplaced])
         #expect(snap.pins == [unplaced])
         #expect(snap.pins[0].timeText.isEmpty)
     }
@@ -83,7 +83,7 @@ struct DraftMapSnapshotTests {
         let updatedEarlier = UUID()
         let inserted = UUID()
         let stable = pin(updatedEarlier, name: "B", timeText: "08:00")
-        let old = DraftMapPins.snapshot(
+        let old = DraftMapSnapshot(
             revision: 1,
             pins: [
                 pin(removedFirst, name: "A"),
@@ -94,7 +94,7 @@ struct DraftMapSnapshotTests {
         let updatedLaterPin = pin(updatedLater, name: "D", timeText: "11:30")
         let updatedEarlierPin = pin(updatedEarlier, name: "B", timeText: "08:05")
         let insertedPin = pin(inserted, name: "E", timeText: "")
-        let new = DraftMapPins.snapshot(
+        let new = DraftMapSnapshot(
             revision: 2,
             pins: [updatedLaterPin, insertedPin, updatedEarlierPin])
         #expect(DraftMapPins.diff(from: old, to: new) == [
