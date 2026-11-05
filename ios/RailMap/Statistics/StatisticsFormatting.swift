@@ -89,9 +89,10 @@ enum StatisticsFormat {
 
     /// `statsCompanyLabel` — the short operator label the per-line rows are
     /// grouped by (東日本旅客鉄道 → JR東日本), falling back to the raw N02 name.
+    /// In English it is the operator's English label where it has one (JR East).
     static func companyLabel(_ operatorName: String) -> String {
         guard !operatorName.isEmpty else { return "" }
-        return OperatorBranding.companyLabel(operatorName)
+        return OperatorIdentity.displayLabel(forCompanyText: operatorName)
     }
 
     /// `STATS_LINE_COLLATOR` — numeric, case/accent-insensitive, ja/en.

@@ -100,7 +100,7 @@ struct ServicePatternBrowsePolicyTests {
         #expect(selected.id == pattern.id)
         #expect(result.primaryRowsArePatterns)
         #expect(result.companyIDs.contains("op:jp:e"))
-        #expect(result.companyLabels.contains("East Japan Railway Company"))
+        #expect(result.companyLabels.contains("JR East"))
         #expect(!result.companyLabels.contains("TEST-EAST"))
         #expect(!result.companyLabels.contains("jp.jr-east"))
         let chinese = RegistryIdentityTestGate.withProvider(Self.passengerJR) {

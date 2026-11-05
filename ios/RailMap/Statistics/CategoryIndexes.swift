@@ -58,6 +58,7 @@ final class CategoryIndexes {
         failuresByCountry = failuresByCountry.filter { countries.contains($0.key) }
         let wanted = countries.filter { byCountry[$0] == nil }
         guard !wanted.isEmpty else { return }
+        RailSignpost.data.mark("derived.categoryIndexes.load", wanted.count)
         isBuilding = true
         defer { isBuilding = false }
         for country in wanted {

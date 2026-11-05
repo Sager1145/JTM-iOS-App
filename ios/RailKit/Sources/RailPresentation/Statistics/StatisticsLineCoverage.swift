@@ -41,7 +41,7 @@ public enum StatisticsLineCoverage {
             let operatorName = operators[item.name] ?? ""
             return Row(
                 name: item.name, operatorName: operatorName,
-                company: operatorName.isEmpty ? "" : OperatorBranding.companyLabel(operatorName),
+                company: operatorName.isEmpty ? "" : OperatorIdentity.displayLabel(forCompanyText: operatorName),
                 total: item.byMask[mask] ?? 0, ridden: ridden[item.name]?[mask] ?? 0)
         }
     }
@@ -63,7 +63,7 @@ public enum StatisticsLineCoverage {
             let operatorName = operators[item.name] ?? ""
             return Row(
                 name: item.name, operatorName: operatorName,
-                company: operatorName.isEmpty ? "" : OperatorBranding.companyLabel(operatorName),
+                company: operatorName.isEmpty ? "" : OperatorIdentity.displayLabel(forCompanyText: operatorName),
                 total: total, ridden: riddenKm)
         }.sorted { a, b in
             // Unknown operators sort last. Raw operator names, rather than

@@ -216,7 +216,7 @@ public enum ServicePatternBrowsePolicy {
         }
         let groups = order.map { name in
             SearchGroup(name: name,
-                        companyLabel: byName[name]?.first.map { brandedCompany($0, region: input.region) } ?? "",
+                        companyLabel: byName[name]?.first.map { brandedCompany($0, region: input.region, language: input.language) } ?? "",
                         rows: byName[name] ?? [])
         }
         return SearchSnapshot(
@@ -250,6 +250,9 @@ public enum ServicePatternBrowsePolicy {
     private static func companyDisplayName(
         _ identifier: String, language: String, identity: RegistryIdentity
     ) -> String {
+        // English goes through the one id → label resolver the cards use, so a
+        // chip and a card name the same company the same way (JR East).
+        if language == "en" { return identity.operatorLabel(identifier, language: language) ?? identifier }
         if let code = identity.operator(for: identifier)?.identity,
            let translated = OperatorIdentity.displayName(code: code, language: language) {
             return translated
@@ -276,28 +279,28 @@ public enum ServicePatternBrowsePolicy {
     }
 
     /// Facade label for each part that converts. A part that does not convert stays as written.
-    private static func catalogLabels(_ name: String, region: String) -> [String] {
+    private static func catalogLabels(_ name: String, region: String, language: String) -> [String] {
         let parts = name.components(separatedBy: "/").map {
             $0.trimmingCharacters(in: .whitespacesAndNewlines)
         }.filter { !$0.isEmpty }
         guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return parts }
         return parts.map { part in
             if let identifier = identity.operatorID(forExactName: part),
-               let label = identity.operatorLabel(identifier) {
+               let label = identity.operatorLabel(identifier, language: language) {
                 return label
             }
             return part
         }
     }
 
-    private static func brandedCompany(_ row: Row, region: String) -> String {
+    private static func brandedCompany(_ row: Row, region: String, language: String) -> String {
         switch row {
         case .occurrence(let trip):
             var seen: Set<String> = []
             let names = trip.operatorSegments.map(\.displayName).filter { seen.insert($0).inserted }
-            return names.flatMap { catalogLabels($0, region: region) }.joined(separator: " / ")
+            return names.flatMap { catalogLabels($0, region: region, language: language) }.joined(separator: " / ")
         case .pattern(let pattern):
-            let labels = catalogLabels(pattern.company, region: region)
+            let labels = catalogLabels(pattern.company, region: region, language: language)
             return labels.isEmpty ? pattern.company : labels.joined(separator: " / ")
         }
     }

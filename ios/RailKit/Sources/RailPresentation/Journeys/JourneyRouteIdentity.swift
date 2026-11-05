@@ -65,17 +65,22 @@ public enum JourneyRouteIdentity {
     }
 
     /// Facade label when the name converts. An unconverted name stays as stored text.
-    public static func operatorLabels(of train: Train, detected: [Statistics.TraversedLine] = []) -> [String] {
+    /// `language` is the interface language (``OperatorIdentity/displayLanguage``
+    /// by default): English shows each operator's English label where it has one.
+    public static func operatorLabels(
+        of train: Train, detected: [Statistics.TraversedLine] = [],
+        language: String = OperatorIdentity.displayLanguage
+    ) -> [String] {
         if let operatorIDs = train.operatorIDs, !operatorIDs.isEmpty,
            let identity = identity(for: train) {
-            return operatorIDs.map { identity.operatorLabel($0) ?? $0 }
+            return operatorIDs.map { identity.operatorLabel($0, language: language) ?? $0 }
         }
         let names = operatorNames(of: train, detected: detected)
         guard let identity = identity(for: train) else { return names }
         return unique(names.flatMap { name -> [String] in
             let ids = identity.operatorIDs(forCatalogName: name)
             if ids.isEmpty { return [name] }
-            return ids.map { identity.operatorLabel($0) ?? name }
+            return ids.map { identity.operatorLabel($0, language: language) ?? name }
         })
     }
 
