@@ -1,5 +1,5 @@
 {
- "20260710_02_kodama824": {
+ "journey_D04B2C63CEA86422F386166CABE2A3FB": {
   "stops": {
    "三河安城": {
     "arrival": "13:19",
@@ -38,7 +38,7 @@
   "number": "こだま824号（Kodama 824）（824A）",
   "vehicle_type": "N700系"
  },
- "20260710_05_hikari718": {
+ "journey_1CB70EB6BDEE3E624E5E990D2B1C00FB": {
   "stops": {
    "新横浜": {
     "arrival": "20:24",
@@ -60,7 +60,7 @@
   "number": "ひかり718号（Hikari 718）（718A）",
   "vehicle_type": "N700系"
  },
- "20260719_04_sakura770": {
+ "journey_CE6CDD905BB6708E69DD82011EB8182B": {
   "stops": {
    "徳山": {
     "stop_type": "pass_through",
@@ -76,7 +76,7 @@
   },
   "vehicle_type": "N700系（8両）"
  },
- "20260724_07_kodama970": {
+ "journey_FBC327CBC341BD103BEEAE00FD568C91": {
   "stops": {
    "相生": {
     "arrival": "22:34",
@@ -93,7 +93,7 @@
   "number": "こだま970号（970A）",
   "vehicle_type": "500系"
  },
- "20260725_05_hikari706": {
+ "journey_C163CF0702200718E5E57A2BE6C21885": {
   "stops": {
    "新神戸": {
     "arrival": "11:33",
@@ -130,7 +130,7 @@
   },
   "vehicle_type": "N700系"
  },
- "20260726_03_hikari706": {
+ "journey_CD24799CE25B1CF61107969F8A30406F": {
   "stops": {
    "新横浜": {
     "arrival": "14:24",
@@ -151,7 +151,7 @@
   },
   "vehicle_type": "N700系"
  },
- "20260726_06_kodama_atami": {
+ "journey_029F2E79178CF1AA008FB454C06992F7": {
   "stops": {
    "品川": {
     "arrival": "16:33",
@@ -178,7 +178,7 @@
   "number": "こだま841号（Kodama 841）（841A）",
   "vehicle_type": "N700系"
  },
- "20260727_03_hikari702": {
+ "journey_2634C4C2410DA151187D68ACC14F1201": {
   "stops": {
    "新横浜": {
     "arrival": "12:24",
@@ -200,7 +200,7 @@
   "number": "ひかり702号（Hikari 702）（702A）",
   "vehicle_type": "N700系"
  },
- "20260727_09_kodama837": {
+ "journey_21B9459DC7DFD29026EE0E54B15BF121": {
   "stops": {
    "新横浜": {
     "arrival": "15:44",
@@ -227,7 +227,7 @@
   "number": "こだま837号（Kodama 837）（837A）",
   "vehicle_type": "N700系"
  },
- "20260728_02_kodama829": {
+ "journey_A4B7BCFE572DCF976943553B301BBF51": {
   "stops": {
    "新富士": {
     "arrival": "14:31",
@@ -253,7 +253,7 @@
   "number": "こだま829号（Kodama 829）（829A）",
   "vehicle_type": "N700系"
  },
- "20260728_05_kodama834": {
+ "journey_D34CC990A1B67E5BE0BA9D9730CA6916": {
   "stops": {
    "掛川": {
     "arrival": "16:36",
@@ -279,7 +279,7 @@
   "number": "こだま834号（Kodama 834）（834A）",
   "vehicle_type": "N700系"
  },
- "20260729_02_kodama840": {
+ "journey_96B2EFFD4EC25479AFA91263963111A2": {
   "stops": {
    "熱海": {
     "arrival": "19:01",
@@ -311,7 +311,7 @@
   "number": "こだま840号（Kodama 840）（840A）",
   "vehicle_type": "N700系"
  },
- "20260729_03_kodama911": {
+ "journey_8C70A9CF2CB598C4C2ABDA2EAABCE0F5": {
   "stops": {
    "品川": {
     "arrival": "21:51",
@@ -343,7 +343,7 @@
   "number": "こだま911号（Kodama 911）（911A）",
   "vehicle_type": "N700系"
  },
- "20260703_02_tokaido_shinkansen_hikari_kodama": {
+ "journey_923A26BB27C37BDF1717F1E4F21D5AF2": {
   "notes": "名古屋—静岡間はJR西日本おでかけネットの846A時刻表（2026-07-03）で確認。846Aは名古屋始発のため、新大阪—名古屋間の記録は別列車の可能性があり未確認。",
   "stops": {
    "名古屋": {
@@ -367,7 +367,7 @@
   },
   "vehicle_type": null
  },
- "20260724_01_ishizuchi9": {
+ "journey_07E6AD25D8057D28D08088C1D40C2491": {
   "stops": {
    "坂出": {
     "arrival": "12:03",
@@ -379,7 +379,7 @@
   },
   "number": "いしづち9号（Ishizuchi 9）（1009M）"
  },
- "20260724_03_tsurugisan6": {
+ "journey_510175D3C325909EF4C88C3A42E1108B": {
   "stops": {
    "阿波加茂": {
     "arrival": "14:40",
@@ -393,7 +393,7 @@
   "number": "剣山6号（Tsurugisan 6）（4006D）",
   "vehicle_type": "キハ185系"
  },
- "20260730_03_yakumo22": {
+ "journey_BB3AD8FEF0D118561F7FC4FA6227A5A6": {
   "stops": {
    "松江": {
     "arrival": "15:08",
@@ -427,7 +427,7 @@
   "number": "やくも22号（Yakumo 22）（1022M）",
   "vehicle_type": "273系"
  },
- "20260731_02_rapit_alpha3": {
+ "journey_0DCC26B17610DE9969C200D26CBA75DE": {
   "stops": {
    "天下茶屋": {
     "departure": "06:34"
@@ -441,7 +441,7 @@
   },
   "vehicle_type": "50000系"
  },
- "20260703_01_haruka": {
+ "journey_A9554752F257CDA52831A6C0EED248AF": {
   "route_policy": {
    "mode": "single_primary_route",
    "jr_only": true,
@@ -450,6 +450,8 @@
    "allowed_institution_type_codes": [
     "2"
    ],
+   "preferred_line_names": [],
+   "preferred_operator_names": [],
    "institution_filter_mode": "hard"
   },
   "stops": {
@@ -464,7 +466,7 @@
    }
   }
  },
- "20260729_05_sunrise_izumo": {
+ "journey_F29762068C2DDB4CD79CF4AF30B29529": {
   "route_policy": {
    "mode": "single_primary_route",
    "jr_only": true,
@@ -473,6 +475,8 @@
    "allowed_institution_type_codes": [
     "2"
    ],
+   "preferred_line_names": [],
+   "preferred_operator_names": [],
    "institution_filter_mode": "hard"
   },
   "vehicle_type": "285系",
@@ -494,147 +498,147 @@
    }
   }
  },
- "HK-SAMPLE-EAL-LOW": {
+ "journey_E432976CF3960943D65E32F615830502": {
   "number": "東鐵綫",
   "number_en": "East Rail Line",
   "train_type": "港鐵",
   "notes": "港鐵只公佈班次相隔（金鐘—上水：平日非繁忙時段約4–8分鐘），沒有逐班時刻表，故不填寫時刻與車號。",
   "vehicle_type": "Hyundai Rotem R-train"
  },
- "MO-SAMPLE-MLM-TAIPA": {
+ "journey_E155548B9C8291DA928D5426A9D0134B": {
   "number": "氹仔線",
   "number_en": "Taipa Line",
   "train_type": "輕軌",
   "notes": "澳門輕軌只公佈營運時間（星期一至四06:30–23:15，星期五至日及公眾假期06:30–23:59）及班距，沒有逐班時刻表，故不填寫時刻。",
   "vehicle_type": "三菱重工 濱海巡航列車"
  },
- "KR-SAMPLE-GYEONGBUKSEON": {
+ "journey_B7F582C16E904392DA2C9CE339DF6780": {
   "number": "경북선 무궁화호",
   "number_en": "Gyeongbuk Line Mugunghwa",
   "train_type": "무궁화호",
   "notes": "경북선 여객열차는 무궁화호만 운행. 코레일 공식 시각표로 2026-08-11 해당 열차를 확인하지 못해 열차번호와 시각은 비워 둠. 상주역이 번들 역 데이터에 없어 정차역 목록에서 빠져 있음."
  },
- "new_year_grand_loop_20251231_03": {
+ "journey_1F114EC77ED45EB89D68F1C32934755E": {
   "vehicle_type": "E531系"
  },
- "new_year_grand_loop_20251231_08": {
+ "journey_B1081E3920E5817960D57445107E8518": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20251231_09": {
+ "journey_1C50841EDDE0B8259BF3CD6982B04968": {
   "vehicle_type": "E131系"
  },
- "new_year_grand_loop_20251231_11": {
+ "journey_4DCB77A37D44B9E2340421841026E845": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20251231_12": {
+ "journey_73881D4AC6CDEB95F29753E8F861455B": {
   "vehicle_type": "E131系"
  },
- "new_year_grand_loop_20251231_17": {
+ "journey_D9EE58DC654F79D6E5D9B5AD1EE9222F": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20251231_18": {
+ "journey_7E3B5F10D9F6347B6C726AEC1D57BA7A": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20251231_21": {
+ "journey_FD3D0B6540560EA9C1BD526322196797": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20260101_23": {
+ "journey_CBC698EF40ADC4349BF9FE4E96A022BA": {
   "vehicle_type": "E231系"
  },
- "new_year_grand_loop_20260101_33": {
+ "journey_07159EDCA041241C5F7038F2DF87F3F4": {
   "vehicle_type": "E235系"
  },
- "new_year_grand_loop_20260101_34": {
+ "journey_4D8504078E1EDCDDD6273B29F6C844F1": {
   "vehicle_type": "E231系"
  },
- "new_year_grand_loop_20260101_36": {
+ "journey_92A88D23E58F169A02F66FA4131F9CF4": {
   "vehicle_type": "E233系"
  },
- "new_year_grand_loop_20260101_37": {
+ "journey_5D0B999496F4E95DC91A57FB2FACD2BF": {
   "vehicle_type": "E235系"
  },
- "tokyo_limited_express_loop_20260529_01": {
+ "journey_FB378E723A1A1C6D845DDBF2F4EC7B80": {
   "vehicle_type": "E259系"
  },
- "tokyo_limited_express_loop_20260529_03": {
+ "journey_AE4B3D6ECECDF1F02B9D88E33DB71D35": {
   "vehicle_type": "E257系"
  },
- "tokyo_limited_express_loop_20260529_04": {
+ "journey_1367E2AD44FB1282A603082C6B023451": {
   "vehicle_type": "E657系"
  },
- "tokyo_limited_express_loop_20260529_05": {
+ "journey_B113D59026AE72C23BC7DCC1E062B3D9": {
   "vehicle_type": "E257系"
  },
- "tokyo_limited_express_loop_20260529_07": {
+ "journey_DBB4A436D118AFC963F3D76ACC6D7F5A": {
   "vehicle_type": "E131系"
  },
- "tokyo_limited_express_loop_20260529_08": {
+ "journey_A15A2CDA79EC2AB1DB648F12DECB9CFF": {
   "vehicle_type": "E233系"
  },
- "tokyo_limited_express_loop_20260529_09": {
+ "journey_3C1174A1740BAC769A067CDF20A0CF5F": {
   "vehicle_type": "E353系"
  },
- "tokyo_limited_express_loop_20260529_10": {
+ "journey_DA0120B61DAC677C7FE9EFB54CF8F052": {
   "vehicle_type": "E233系"
  },
- "tokyo_limited_express_loop_20260529_15": {
+ "journey_868731BF1A9520928B670EC3A3B8566D": {
   "vehicle_type": "E353系"
  },
- "tokyo_limited_express_loop_20260529_16": {
+ "journey_E4ED0EC66250F2E663AEB7ECE1FA8F5A": {
   "vehicle_type": "E231系"
  },
- "20260704_11_keihin_tohoku_line": {
+ "journey_595FE5006ED23F7B331795A1C3A877E9": {
   "vehicle_type": "E233系"
  },
- "20260704_12_yokohama_line": {
+ "journey_1BF192064CE880673A0BB314C77436DB": {
   "vehicle_type": "E233系"
  },
- "20260705_03_chuo_line": {
+ "journey_DAE47A568594FC62E600A5F695EB7365": {
   "vehicle_type": "E233系"
  },
- "20260705_07_yamanote_line": {
+ "journey_2421C1DE7244064D1E03E50A9E4A1707": {
   "vehicle_type": "E235系"
  },
- "20260706_02_super_tsugaru2": {
+ "journey_290DDF7BAF84271A16574A1D9669181F": {
   "vehicle_type": "E751系"
  },
- "20260706_03_inaho14": {
+ "journey_03F366E23A32B262DDDA6774510A20D4": {
   "vehicle_type": "E653系"
  },
- "20260707_01_toki308": {
+ "journey_F977C83D37F1F33106F63344B048477F": {
   "vehicle_type": "E7系"
  },
- "20260710_07_keihin_tohoku_local": {
+ "journey_6C38BB258FF7BBA93CB1A6C6284BC9C4": {
   "vehicle_type": "E233系"
  },
- "20260711_01_keihin_tohoku_negishi_local": {
+ "journey_5DD4E6CA03675E3FA6AC32063B33E078": {
   "vehicle_type": "E233系"
  },
- "20260713_01_keihin_tohoku_negishi_local": {
+ "journey_AEDF22100651041F822E1DFD54EC4653": {
   "vehicle_type": "E233系"
  },
- "20260726_04_chuo_rapid_shinjuku": {
+ "journey_C03AE74555ED48DBCCA3989A84157CB7": {
   "vehicle_type": "E233系"
  },
- "20260726_05_chuo_rapid_tokyo": {
+ "journey_10321A2FDEF5906E4DCE8DB6986E3C03": {
   "vehicle_type": "E233系"
  },
- "20260726_08_chuo_rapid_shinjuku2": {
+ "journey_1F9D3D61F6C18F4BC2B202DC16B92231": {
   "vehicle_type": "E233系"
  },
- "20260727_05_komachi": {
+ "journey_8468CDB2F92CD8F1CB56D7175B261C34": {
   "vehicle_type": "E6系"
  },
- "20260727_06_local_akihabara": {
+ "journey_5AB68AB4738C250255A82B17A485CD8E": {
   "vehicle_type": "E233系"
  },
- "20260727_07_local_tokyo": {
+ "journey_DD359818F2CA9B303F5EF5A05FCDA15D": {
   "vehicle_type": "E233系"
  },
- "20260727_08_narita_express": {
+ "journey_680A26B9C2D06FDE49DABFF6A02DF17C": {
   "vehicle_type": "E259系"
  },
- "20260704_02_kodama918": {
+ "journey_4CB9E326EEC18D85989CEF90ACF970A1": {
   "vehicle_type": "N700系",
   "stops": {
    "三島": {
@@ -654,7 +658,7 @@
    }
   }
  },
- "20260704_13_kodama915": {
+ "journey_5DDC220B564315ABDE363017D45930D6": {
   "vehicle_type": "N700系",
   "stops": {
    "新横浜": {
@@ -671,7 +675,7 @@
    }
   }
  },
- "20260705_02_kodama802": {
+ "journey_7ED510CE68E0BE81303D118A1B9E3575": {
   "vehicle_type": "N700系",
   "stops": {
    "三島": {
@@ -694,7 +698,7 @@
    }
   }
  },
- "20260708_01_tsurugi17": {
+ "journey_74236A39F500AA7027A8F519567B952B": {
   "stops": {
    "福井": {
     "platform_number": 12
@@ -704,7 +708,7 @@
    }
   }
  },
- "20260708_02_shirasagi2": {
+ "journey_65F43AE4739DB31208BF9295B6539472": {
   "stops": {
    "敦賀": {
     "platform_number": 34
@@ -714,7 +718,7 @@
    }
   }
  },
- "20260708_03_hikari648": {
+ "journey_F57EA63347F47F36D98DF654CBAFDA69": {
   "vehicle_type": "N700S",
   "stops": {
    "米原": {
@@ -728,7 +732,7 @@
    }
   }
  },
- "20260708_04_hikari706": {
+ "journey_FB79023EBDF3D810C09FBCE322F2B679": {
   "vehicle_type": "N700系",
   "stops": {
    "名古屋": {
@@ -745,7 +749,7 @@
    }
   }
  },
- "20260709_02_hikari713": {
+ "journey_E60A7D258F854777D4460EDFE961AE32": {
   "vehicle_type": "N700系",
   "stops": {
    "三島": {
@@ -765,21 +769,21 @@
    }
   }
  },
- "20260709_03_miyakoji_rapid": {
+ "journey_80163C1B9EDB32F4644B6CED30B291F5": {
   "stops": {
    "京都": {
     "platform_number": 10
    }
   }
  },
- "20260709_04_d_section_rapid": {
+ "journey_2C4B34CD53F9E78ECA8875BC1ABCD617": {
   "stops": {
    "京都": {
     "platform_number": 10
    }
   }
  },
- "20260710_01_nozomi252": {
+ "journey_0488BA679E26E3DF7B20C50B61F5242A": {
   "vehicle_type": "N700系",
   "stops": {
    "京都": {
@@ -790,7 +794,7 @@
    }
   }
  },
- "20260711_03_hakutaka560": {
+ "journey_7A3B8940A7731646F2E0DB38A8C89C21": {
   "stops": {
    "金沢": {
     "platform_number": 12
@@ -815,7 +819,7 @@
    }
   }
  },
- "20260713_02_kodama801": {
+ "journey_D67EA61A2C641A02967314209A67C0A5": {
   "vehicle_type": "N700系",
   "stops": {
    "東京": {
@@ -838,7 +842,7 @@
    }
   }
  },
- "20260713_05_kodama816": {
+ "journey_5515D04C2ECC7C28FC099F7E25093E2D": {
   "vehicle_type": "N700系",
   "stops": {
    "三島": {
@@ -861,7 +865,7 @@
    }
   }
  },
- "20260718_08_kodama839": {
+ "journey_969009740BE6241F5DEEE35BD8CAA7BA": {
   "vehicle_type": "N700系",
   "stops": {
    "東京": {
@@ -884,7 +888,7 @@
    }
   }
  },
- "20260718_11_hikari659": {
+ "journey_9409400F1A9EC5DA6CDB7FFBD64EBE2D": {
   "vehicle_type": "N700系",
   "stops": {
    "三島": {
@@ -901,7 +905,7 @@
    }
   }
  },
- "20260719_01_hikari703": {
+ "journey_C60F2E6092D87D9F5F85243B93428D5E": {
   "vehicle_type": "N700系",
   "stops": {
    "名古屋": {
@@ -930,7 +934,7 @@
    }
   }
  },
- "20260719_02_yakumo11": {
+ "journey_9B1957E8CA2CA62A34EEBFC519E64422": {
   "vehicle_type": "273系",
   "stops": {
    "岡山": {
@@ -941,7 +945,7 @@
    }
   }
  },
- "20260719_03_super_oki5": {
+ "journey_55E89F3BE5BD16BC06291B252CFFA81B": {
   "vehicle_type": "キハ187系",
   "stops": {
    "米子": {
@@ -958,14 +962,14 @@
    }
   }
  },
- "20260720_44_sanyo_local_shininokuchi_hiroshima": {
+ "journey_4B847D0A569A7FF0DFF0101FF69D5F0A": {
   "stops": {
    "広島": {
     "platform_number": 5
    }
   }
  },
- "20260720_45_sakura753_hiroshima_hakata": {
+ "journey_0D198248AFFDB230E7BBFF14146178C0": {
   "vehicle_type": "N700系",
   "stops": {
    "広島": {
@@ -982,7 +986,7 @@
    }
   }
  },
- "20260721_07_sakura749": {
+ "journey_151F1405ADA1BC7794EB8C44CD7709C2": {
   "vehicle_type": "N700系",
   "stops": {
    "久留米": {
@@ -993,7 +997,7 @@
    }
   }
  },
- "20260721_14_sakura767": {
+ "journey_5E47ABA2FB7E3A6CC5F14CBCC010472D": {
   "vehicle_type": "N700系",
   "stops": {
    "熊本": {
@@ -1004,14 +1008,14 @@
    }
   }
  },
- "20260723_02_shiokaze5": {
+ "journey_CECE2010BC0D2F1EB19C89BFD5900CAD": {
   "stops": {
    "岡山": {
     "platform_number": 6
    }
   }
  },
- "20260730_04_sakura762": {
+ "journey_20A4F24136AEE7B83D1AD4A267C4DE85": {
   "vehicle_type": "N700系",
   "stops": {
    "岡山": {
@@ -1022,136 +1026,136 @@
    }
   }
  },
- "20260713_07_hokuto21": {
+ "journey_7FDB2E2A33B27404C1C8198B3C2B29F8": {
   "vehicle_type": "キハ261系"
  },
- "20260714_01_ozora3": {
+ "journey_43D90DF84B5E40D6304EC290E8ED4E74": {
   "vehicle_type": "キハ261系"
  },
- "20260714_04_ozora12": {
+ "journey_F6F27BD3CBEFAA23FC0956F049DED550": {
   "vehicle_type": "キハ261系"
  },
- "20260715_01_soya": {
+ "journey_32E525B07148EE19DC4F3B99A36535ED": {
   "vehicle_type": "キハ261系"
  },
- "20260715_02_soya": {
+ "journey_10F4EC2286758F85D709118AAFA6260E": {
   "vehicle_type": "キハ261系"
  },
- "20260716_07_hokuto20": {
+ "journey_8BADA44ED18197CDFA42A2D89B3028F1": {
   "vehicle_type": "キハ261系"
  },
- "20260718_01_hakodate_liner": {
+ "journey_9D02C3A9C9EC22156727EE34EF3EECD9": {
   "vehicle_type": "733系"
  },
- "20260721_05_kamome22": {
+ "journey_33CBB95F33F145A44996E104C7110877": {
   "vehicle_type": "N700S"
  },
- "20260721_08_asoboy3": {
+ "journey_02C494EB5E72DE2FE0D3E5BC7D303309": {
   "vehicle_type": "キハ183系"
  },
- "20260721_09_asoboy4": {
+ "journey_71102CEF82BE99D98F5C7101CD080E07": {
   "vehicle_type": "キハ183系"
  },
- "20260722_04_kirishima8": {
+ "journey_45E72A351DEC6512AF96B89578A93E9A": {
   "vehicle_type": "787系"
  },
- "20260722_05_nichirin10": {
+ "journey_E9C359F48C7CC40ABC70DBD05B606CFA": {
   "vehicle_type": "787系"
  },
- "20260723_01_sakura740": {
+ "journey_BDD9F936F447CBF04C5075C26DA76C88": {
   "vehicle_type": "N700系"
  },
- "20260723_05_uzushio10": {
+ "journey_771C696806C4705B412A265B953BD9A7": {
   "vehicle_type": "2700系"
  },
- "20260724_02_nanpu9": {
+ "journey_2A4BA95A7B92CB19921B27A2D3279C34": {
   "vehicle_type": "2700系"
  },
- "20260724_05_nanpu17": {
+ "journey_D2D514AAEA06253635D51310E9C4C06B": {
   "vehicle_type": "2700系"
  },
- "20260724_06_nanpu28": {
+ "journey_6322F5578A2F139890D3B028ADDAF45A": {
   "vehicle_type": "2700系"
  },
- "20260802_01_taoyuan_airport_mrt_express_t2_taipei": {
+ "journey_5C3C741549CF09E20FE4CC4F7389B758": {
   "vehicle_type": "桃園機場捷運 直達車電聯車（201～217編組）"
  },
- "20260805_01_thsr_165_taipei_taichung": {
+ "journey_E2BA1597EB6DEA75FB126926E564D6CD": {
   "vehicle_type": "700T型"
  },
- "20260806_01_tra_tze_chiang_3000_137_taichung_changhua": {
+ "journey_0A8EC92F75B878119658D0752A71E41F": {
   "vehicle_type": "EMU3000型"
  },
- "20260808_01_tra_tze_chiang_3000_191_taichung_chiayi": {
+ "journey_D902105FFF79F2BC91DD69001C1D1752": {
   "vehicle_type": "EMU3000型"
  },
- "20260809_04_tra_tze_chiang_3000_125_chiayi_kaohsiung": {
+ "journey_CEB49C47CA401AD978BFE56F3D55F4C7": {
   "vehicle_type": "EMU3000型"
  },
- "20260810_01_krtc_red_kaohsiung_gangshan_station": {
+ "journey_2FDE3816A557FFFB50406D18A131A336": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260810_02_krtc_red_gangshan_station_siaogang": {
+ "journey_F889D3193B98C1B436F80571170668AA": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260810_03_krtc_red_siaogang_sanduo": {
+ "journey_927016E22113A45080FBC58092D28EB0": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260810_04_krtc_red_sanduo_kaisyuan": {
+ "journey_10253133B7525E17509D09650522E725": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260810_06_krtc_red_kaisyuan_kaohsiung": {
+ "journey_392AB4A925F885DE6CD17FA95C36040E": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260812_01_krtc_red_kaohsiung_zuoying": {
+ "journey_BCCC18D524113D54156C5874685CEE29": {
   "vehicle_type": "西門子高運量電聯車"
  },
- "20260812_02_thsr_826_zuoying_taipei": {
+ "journey_4D389948FB54DDE74017B2CCFC5B526D": {
   "vehicle_type": "700T型"
  },
- "20260812_05_thsr_161_nangang_taipei": {
+ "journey_5A3C1D43A8E70734A5D5DA40D6D39099": {
   "vehicle_type": "700T型"
  },
- "20260716_01_sapporo_subway_namboku_sapporo_susukino": {
+ "journey_8B59A27F6F916CAE6A525B4F32488204": {
   "vehicle_type": "5000形"
  },
- "20260716_02_sapporo_subway_namboku_odori_nakajimakoen": {
+ "journey_17CC2EDF6C8FBBE0584149B2BADE9D7B": {
   "vehicle_type": "5000形"
  },
- "20260716_05_sapporo_subway_tozai_nishi11_odori": {
+ "journey_97A52E47E661D43859B9236D25ECE603": {
   "vehicle_type": "8000形"
  },
- "20260716_06_sapporo_subway_namboku_odori_sapporo": {
+ "journey_B9B2EB9096BA7E1B096FCF563147469F": {
   "vehicle_type": "5000形"
  },
- "20260720_42_astram_hondori_johoku": {
+ "journey_AEF095A24CF065375213A5A9A0AC163A": {
   "vehicle_type": "7000系"
  },
- "20260722_12_monorail_kokura_kikugaoka": {
+ "journey_1B73B253ED48ADAE75E0A27CD5EDD87C": {
   "vehicle_type": "1000形"
  },
- "20260722_13_monorail_kikugaoka_kokura": {
+ "journey_FA664788B3F334B952706589201D498B": {
   "vehicle_type": "1000形"
  },
- "20260731_03_yui_naha_akamine": {
+ "journey_A04D207B2E4D8CA4B9088FA6DF5BDD29": {
   "vehicle_type": "1000形"
  },
- "20260731_04_yui_akamine_naha": {
+ "journey_959DFFAA45FED199E0FD06F93A12C93B": {
   "vehicle_type": "1000形"
  },
- "20260731_05_yui_tedako_shuri": {
+ "journey_EE957F00F2B8D8D291D4CD7EB1826810": {
   "vehicle_type": "1000形"
  },
- "20260731_06_yui_shuri_miebashi": {
+ "journey_3A264FF820AE17659ADDD22FDDADB270": {
   "vehicle_type": "1000形"
  },
- "20260731_07_yui_miebashi_naha": {
+ "journey_B29C2B434D4A5E393447665740312185": {
   "vehicle_type": "1000形"
  },
- "20260731_08_yui_naha_miebashi": {
+ "journey_311418DF2394CCFFF6AA3C0151F0CB10": {
   "vehicle_type": "1000形"
  },
- "20260801_01_yui_miebashi_naha": {
+ "journey_2DB618BA4041AF100A4FB6C47DA4B27C": {
   "vehicle_type": "1000形"
  }
 }

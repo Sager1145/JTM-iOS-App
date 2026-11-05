@@ -70,7 +70,7 @@ final class JourneyGroupUITests: XCTestCase {
         app.uiTestLaunch[.query] = "haruka"
         UITestLaunchSupport.launch(app)
 
-        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        let row = app.descendants(matching: .any)["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 60))
         row.press(forDuration: 1)
         app.buttons["Journey group"].tap()

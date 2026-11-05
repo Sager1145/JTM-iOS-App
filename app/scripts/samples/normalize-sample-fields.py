@@ -5,7 +5,7 @@ Inputs are the sample stores (train-store*.json, special-samples/*.json); the
 precomputed sample directories are derived and must be regenerated afterwards
 with scripts/build/precompute-train-parts.mjs.
 
-Field rules (see app/data/sample-data/SOURCES.md):
+Field rules (see app/data/sample-trips.sources.md):
 - `number` holds the local service name, plus the operating number in
   full-width brackets when known. A romanized gloss moves to `number_en`;
   provenance asides (時刻推定, 車号不明, 臨時と推定) move to `notes`.
@@ -26,6 +26,11 @@ Usage (the 2026-11-05 inputs are kept beside this script):
   python3 -I app/scripts/samples/normalize-sample-fields.py --directions $I/directions.json \
     --english $I/number-en.json --overrides $I/overrides.json [--check]
 directions.json was dumped from RailCore TravelDirection.infer against app/public/rail/<cc>-2025.json.
+Input files are keyed by the bundled ride ids (journey_ + 32 hex; old ids in
+app/data/sample-trips.sources.md). The stores are kept in the app's own ride-store
+bytes: after any change made here, rewrite them with
+  (cd ios/RailKit && SAMPLE_CANONICAL_WRITE=1 swift test --filter SampleStoreCanonicalFormTests)
+On canonical stores this script reports every store unchanged.
 """
 import argparse
 import json

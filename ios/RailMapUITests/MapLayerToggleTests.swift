@@ -487,7 +487,7 @@ final class MapLayerToggleTests: XCTestCase {
         app.uiTestLaunch[.stage] = "medium"
         app.uiTestLaunch[.camera] = camera ?? (selectingMetro
             ? Self.metroSelectionCamera : Self.tokyoCamera)
-        app.uiTestLaunch[.readyRide] = "20260704_06_marunouchi_line"
+        app.uiTestLaunch[.readyRide] = "journey_09AC64CFCEE12C93E83510873DD6FEC1"
         if let layers { app.uiTestLaunch[.layers] = layers }
         UITestLaunchSupport.launch(app)
         let status = app.staticTexts["railMapRenderStatus"]
@@ -567,7 +567,7 @@ final class MapLayerToggleTests: XCTestCase {
         // A visible route presents a separate menu immediately. A hidden
         // route must not become selectable through the base map.
         if requiringTarget {
-            return app.descendants(matching: .any)["selectedJourney-20260704_06_marunouchi_line"].firstMatch
+            return app.descendants(matching: .any)["selectedJourney-journey_09AC64CFCEE12C93E83510873DD6FEC1"].firstMatch
                 .waitForExistence(timeout: 8)
         }
         return app.descendants(matching: .any).matching(NSPredicate(

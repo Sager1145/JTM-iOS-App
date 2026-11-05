@@ -342,8 +342,8 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
   // stopless train sharing a real date, so both earlier branches tie and the
   // tiebreak is what answers.
   const idProbes = [
-    "20260703_01_haruka", // two real ids, as the control
-    "20260703_02_tokaido_shinkansen_hikari_kodama",
+    "journey_A9554752F257CDA52831A6C0EED248AF", // two real ids, as the control
+    "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
     "a_b",
     "a-b",
     "AB",

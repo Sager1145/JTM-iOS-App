@@ -2,11 +2,14 @@
   "schema_version": "1.3",
   "trains": [
     {
-      "id": "tokyo_limited_express_loop_20260529_01",
+      "id": "journey_FB378E723A1A1C6D845DDBF2F4EC7B80",
       "date": "2026-05-29",
       "number": "しおさい1号（4001M）",
+      "number_en": "Shiosai 1",
       "train_type": "特急",
+      "vehicle_type": "E259系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "千葉",
       "destination": "成東",
       "direction": "down",
@@ -19,61 +22,92 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "千葉",
+          "to": "佐倉",
+          "from_n02_station_code": "004165",
+          "to_n02_station_code": "003532",
+          "from_station_id": "st:jp:2340",
+          "to_station_id": "st:jp:5410"
+        },
+        {
+          "from": "佐倉",
+          "to": "八街",
+          "from_n02_station_code": "003532",
+          "to_n02_station_code": "003895",
+          "from_station_id": "st:jp:5410",
+          "to_station_id": "st:jp:5894"
+        },
+        {
+          "from": "八街",
+          "to": "成東",
+          "from_n02_station_code": "003895",
+          "to_n02_station_code": "004189",
+          "from_station_id": "st:jp:5894",
+          "to_station_id": "st:jp:5583"
+        }
+      ],
       "stops": [
         {
           "name": "千葉",
           "n02_station_code": "004165",
+          "station_id": "st:jp:2340",
+          "platform_number": null,
           "arrival": null,
           "departure": "08:10",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "佐倉",
           "n02_station_code": "003532",
+          "station_id": "st:jp:5410",
+          "platform_number": null,
           "arrival": null,
           "departure": "08:23",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "八街",
           "n02_station_code": "003895",
+          "station_id": "st:jp:5894",
+          "platform_number": null,
           "arrival": null,
           "departure": "08:38",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "成東",
           "n02_station_code": "004189",
+          "station_id": "st:jp:5583",
+          "platform_number": null,
           "arrival": "08:48",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Shiosai 1",
-      "vehicle_type": "E259系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_02",
+      "id": "journey_FCF5080D6BF57735BD6B550726AEBCC2",
       "date": "2026-05-29",
       "number": "普通 1634M",
+      "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "成東",
       "destination": "大網",
       "direction": "up",
@@ -86,16 +120,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "東金線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -103,6 +137,8 @@
           "to": "求名",
           "from_n02_station_code": "004190",
           "to_n02_station_code": "004289",
+          "from_station_id": "st:jp:5583",
+          "to_station_id": "st:jp:5582",
           "line_names": [
             "東金線"
           ],
@@ -115,6 +151,8 @@
           "to": "東金",
           "from_n02_station_code": "004289",
           "to_n02_station_code": "004339",
+          "from_station_id": "st:jp:5582",
+          "to_station_id": "st:jp:5581",
           "line_names": [
             "東金線"
           ],
@@ -127,6 +165,8 @@
           "to": "福俵",
           "from_n02_station_code": "004339",
           "to_n02_station_code": "004376",
+          "from_station_id": "st:jp:5581",
+          "to_station_id": "st:jp:5580",
           "line_names": [
             "東金線"
           ],
@@ -139,6 +179,8 @@
           "to": "大網",
           "from_n02_station_code": "004376",
           "to_n02_station_code": "004450",
+          "from_station_id": "st:jp:5580",
+          "to_station_id": "st:jp:5076",
           "line_names": [
             "東金線"
           ],
@@ -151,58 +193,65 @@
         {
           "name": "成東",
           "n02_station_code": "004190",
+          "station_id": "st:jp:5583",
+          "platform_number": null,
           "arrival": null,
           "departure": "09:02",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "求名",
           "n02_station_code": "004289",
+          "station_id": "st:jp:5582",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "東金",
           "n02_station_code": "004339",
+          "station_id": "st:jp:5581",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "福俵",
           "n02_station_code": "004376",
+          "station_id": "st:jp:5580",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "大網",
           "n02_station_code": "004450",
+          "station_id": "st:jp:5076",
+          "platform_number": null,
           "arrival": "09:19",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Local"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_03",
+      "id": "journey_AE4B3D6ECECDF1F02B9D88E33DB71D35",
       "date": "2026-05-29",
       "number": "わかしお10号（1060M）",
+      "number_en": "Wakashio 10",
       "train_type": "特急",
+      "vehicle_type": "E257系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "大網",
       "destination": "東京",
       "direction": "up",
@@ -215,61 +264,93 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "大網",
+          "to": "土気",
+          "from_n02_station_code": "004451",
+          "to_n02_station_code": "004436",
+          "from_station_id": "st:jp:5076",
+          "to_station_id": "st:jp:5077"
+        },
+        {
+          "from": "土気",
+          "to": "蘇我",
+          "from_n02_station_code": "004436",
+          "to_n02_station_code": "004281",
+          "from_station_id": "st:jp:5077",
+          "to_station_id": "st:jp:4772"
+        },
+        {
+          "from": "蘇我",
+          "to": "東京",
+          "from_n02_station_code": "004281",
+          "to_n02_station_code": "003785",
+          "from_station_id": "st:jp:4772",
+          "to_station_id": "st:jp:4786"
+        }
+      ],
       "stops": [
         {
           "name": "大網",
           "n02_station_code": "004451",
+          "station_id": "st:jp:5076",
+          "platform_number": null,
           "arrival": null,
           "departure": "09:47",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "土気",
           "n02_station_code": "004436",
+          "station_id": "st:jp:5077",
+          "platform_number": null,
           "arrival": "09:50",
           "departure": "09:51",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "蘇我",
           "n02_station_code": "004281",
+          "station_id": "st:jp:4772",
+          "platform_number": null,
           "arrival": "10:00",
           "departure": "10:02",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "東京",
           "n02_station_code": "003785",
+          "station_id": "st:jp:4786",
+          "platform_number": null,
           "arrival": "10:37",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Wakashio 10",
-      "vehicle_type": "E257系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_04",
+      "id": "journey_1367E2AD44FB1282A603082C6B023451",
       "date": "2026-05-29",
       "number": "ひたち8号（8M・予約区間）",
+      "number_en": "Hitachi 8",
       "train_type": "特急",
+      "vehicle_type": "E657系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "東京",
       "destination": "品川",
       "direction": "down",
@@ -282,43 +363,57 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "東京",
+          "to": "品川",
+          "from_n02_station_code": "003770",
+          "to_n02_station_code": "004095",
+          "from_station_id": "st:jp:4248",
+          "to_station_id": "st:jp:1443"
+        }
+      ],
       "stops": [
         {
           "name": "東京",
           "n02_station_code": "003770",
+          "station_id": "st:jp:4248",
+          "platform_number": null,
           "arrival": null,
           "departure": "11:43",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "品川",
           "n02_station_code": "004095",
+          "station_id": "st:jp:1443",
+          "platform_number": null,
           "arrival": "11:51",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Hitachi 8",
-      "vehicle_type": "E657系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_05",
+      "id": "journey_B113D59026AE72C23BC7DCC1E062B3D9",
       "date": "2026-05-29",
       "number": "踊り子9号（3029M）",
+      "number_en": "Odoriko 9",
       "train_type": "特急",
+      "vehicle_type": "E257系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "品川",
       "destination": "大船",
       "direction": "down",
@@ -331,61 +426,92 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "品川",
+          "to": "川崎",
+          "from_n02_station_code": "004095",
+          "to_n02_station_code": "004432",
+          "from_station_id": "st:jp:1443",
+          "to_station_id": "st:jp:4982"
+        },
+        {
+          "from": "川崎",
+          "to": "横浜",
+          "from_n02_station_code": "004432",
+          "to_n02_station_code": "004634",
+          "from_station_id": "st:jp:4982",
+          "to_station_id": "st:jp:1415"
+        },
+        {
+          "from": "横浜",
+          "to": "大船",
+          "from_n02_station_code": "004634",
+          "to_n02_station_code": "004959",
+          "from_station_id": "st:jp:1415",
+          "to_station_id": "st:jp:5563"
+        }
+      ],
       "stops": [
         {
           "name": "品川",
           "n02_station_code": "004095",
+          "station_id": "st:jp:1443",
+          "platform_number": null,
           "arrival": null,
           "departure": "12:08",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "川崎",
           "n02_station_code": "004432",
+          "station_id": "st:jp:4982",
+          "platform_number": null,
           "arrival": "12:16",
           "departure": "12:16",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "横浜",
           "n02_station_code": "004634",
+          "station_id": "st:jp:1415",
+          "platform_number": null,
           "arrival": "12:23",
           "departure": "12:24",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "大船",
           "n02_station_code": "004959",
+          "station_id": "st:jp:5563",
+          "platform_number": null,
           "arrival": "12:36",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Odoriko 9",
-      "vehicle_type": "E257系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_06",
+      "id": "journey_8473C35D9B0263A67C1AE3CF2EF35F88",
       "date": "2026-05-29",
       "number": "普通（12:41 熱海方面）",
+      "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "大船",
       "destination": "茅ヶ崎",
       "direction": "down",
@@ -398,16 +524,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "東海道線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -415,6 +541,8 @@
           "to": "藤沢",
           "from_n02_station_code": "004959",
           "to_n02_station_code": "004996",
+          "from_station_id": "st:jp:5563",
+          "to_station_id": "st:jp:3730",
           "line_names": [
             "東海道線"
           ],
@@ -427,6 +555,8 @@
           "to": "辻堂",
           "from_n02_station_code": "004996",
           "to_n02_station_code": "005004",
+          "from_station_id": "st:jp:3730",
+          "to_station_id": "st:jp:5565",
           "line_names": [
             "東海道線"
           ],
@@ -439,6 +569,8 @@
           "to": "茅ヶ崎",
           "from_n02_station_code": "005004",
           "to_n02_station_code": "005024",
+          "from_station_id": "st:jp:5565",
+          "to_station_id": "st:jp:5566",
           "line_names": [
             "東海道線"
           ],
@@ -451,49 +583,55 @@
         {
           "name": "大船",
           "n02_station_code": "004959",
+          "station_id": "st:jp:5563",
+          "platform_number": null,
           "arrival": null,
           "departure": "12:41",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "藤沢",
           "n02_station_code": "004996",
+          "station_id": "st:jp:3730",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "辻堂",
           "n02_station_code": "005004",
+          "station_id": "st:jp:5565",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "茅ヶ崎",
           "n02_station_code": "005024",
+          "station_id": "st:jp:5566",
+          "platform_number": null,
           "arrival": "12:52",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Local"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_07",
+      "id": "journey_DBB4A436D118AFC963F3D76ACC6D7F5A",
       "date": "2026-05-29",
       "number": "普通 1261F（橋本行）",
+      "number_en": "Local",
       "train_type": "普通",
+      "vehicle_type": "E131系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "茅ヶ崎",
       "destination": "橋本",
       "direction": "up",
@@ -506,16 +644,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "相模線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -523,6 +661,8 @@
           "to": "北茅ヶ崎",
           "from_n02_station_code": "005023",
           "to_n02_station_code": "004995",
+          "from_station_id": "st:jp:5566",
+          "to_station_id": "st:jp:5775",
           "line_names": [
             "相模線"
           ],
@@ -535,6 +675,8 @@
           "to": "香川",
           "from_n02_station_code": "004995",
           "to_n02_station_code": "004953",
+          "from_station_id": "st:jp:5775",
+          "to_station_id": "st:jp:5774",
           "line_names": [
             "相模線"
           ],
@@ -547,6 +689,8 @@
           "to": "寒川",
           "from_n02_station_code": "004953",
           "to_n02_station_code": "004920",
+          "from_station_id": "st:jp:5774",
+          "to_station_id": "st:jp:5773",
           "line_names": [
             "相模線"
           ],
@@ -559,6 +703,8 @@
           "to": "宮山",
           "from_n02_station_code": "004920",
           "to_n02_station_code": "004880",
+          "from_station_id": "st:jp:5773",
+          "to_station_id": "st:jp:5772",
           "line_names": [
             "相模線"
           ],
@@ -571,6 +717,8 @@
           "to": "倉見",
           "from_n02_station_code": "004880",
           "to_n02_station_code": "004850",
+          "from_station_id": "st:jp:5772",
+          "to_station_id": "st:jp:5771",
           "line_names": [
             "相模線"
           ],
@@ -583,6 +731,8 @@
           "to": "門沢橋",
           "from_n02_station_code": "004850",
           "to_n02_station_code": "004795",
+          "from_station_id": "st:jp:5771",
+          "to_station_id": "st:jp:5770",
           "line_names": [
             "相模線"
           ],
@@ -595,6 +745,8 @@
           "to": "社家",
           "from_n02_station_code": "004795",
           "to_n02_station_code": "004765",
+          "from_station_id": "st:jp:5770",
+          "to_station_id": "st:jp:5769",
           "line_names": [
             "相模線"
           ],
@@ -607,6 +759,8 @@
           "to": "厚木",
           "from_n02_station_code": "004765",
           "to_n02_station_code": "004701",
+          "from_station_id": "st:jp:5769",
+          "to_station_id": "st:jp:3699",
           "line_names": [
             "相模線"
           ],
@@ -619,6 +773,8 @@
           "to": "海老名",
           "from_n02_station_code": "004701",
           "to_n02_station_code": "004666",
+          "from_station_id": "st:jp:3699",
+          "to_station_id": "st:jp:3696",
           "line_names": [
             "相模線"
           ],
@@ -631,6 +787,8 @@
           "to": "入谷",
           "from_n02_station_code": "004666",
           "to_n02_station_code": "004593",
+          "from_station_id": "st:jp:3696",
+          "to_station_id": "st:jp:5768",
           "line_names": [
             "相模線"
           ],
@@ -643,6 +801,8 @@
           "to": "相武台下",
           "from_n02_station_code": "004593",
           "to_n02_station_code": "004544",
+          "from_station_id": "st:jp:5768",
+          "to_station_id": "st:jp:5767",
           "line_names": [
             "相模線"
           ],
@@ -655,6 +815,8 @@
           "to": "下溝",
           "from_n02_station_code": "004544",
           "to_n02_station_code": "004462",
+          "from_station_id": "st:jp:5767",
+          "to_station_id": "st:jp:5766",
           "line_names": [
             "相模線"
           ],
@@ -667,6 +829,8 @@
           "to": "原当麻",
           "from_n02_station_code": "004462",
           "to_n02_station_code": "004437",
+          "from_station_id": "st:jp:5766",
+          "to_station_id": "st:jp:5765",
           "line_names": [
             "相模線"
           ],
@@ -679,6 +843,8 @@
           "to": "番田",
           "from_n02_station_code": "004437",
           "to_n02_station_code": "004379",
+          "from_station_id": "st:jp:5765",
+          "to_station_id": "st:jp:5764",
           "line_names": [
             "相模線"
           ],
@@ -691,6 +857,8 @@
           "to": "上溝",
           "from_n02_station_code": "004379",
           "to_n02_station_code": "004342",
+          "from_station_id": "st:jp:5764",
+          "to_station_id": "st:jp:5763",
           "line_names": [
             "相模線"
           ],
@@ -703,6 +871,8 @@
           "to": "南橋本",
           "from_n02_station_code": "004342",
           "to_n02_station_code": "004288",
+          "from_station_id": "st:jp:5763",
+          "to_station_id": "st:jp:5762",
           "line_names": [
             "相模線"
           ],
@@ -715,6 +885,8 @@
           "to": "橋本",
           "from_n02_station_code": "004288",
           "to_n02_station_code": "004254",
+          "from_station_id": "st:jp:5762",
+          "to_station_id": "st:jp:1523",
           "line_names": [
             "相模線"
           ],
@@ -727,176 +899,195 @@
         {
           "name": "茅ヶ崎",
           "n02_station_code": "005023",
+          "station_id": "st:jp:5566",
+          "platform_number": null,
           "arrival": null,
           "departure": "12:59",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "北茅ヶ崎",
           "n02_station_code": "004995",
+          "station_id": "st:jp:5775",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "香川",
           "n02_station_code": "004953",
+          "station_id": "st:jp:5774",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "寒川",
           "n02_station_code": "004920",
+          "station_id": "st:jp:5773",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "宮山",
           "n02_station_code": "004880",
+          "station_id": "st:jp:5772",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "倉見",
           "n02_station_code": "004850",
+          "station_id": "st:jp:5771",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "門沢橋",
           "n02_station_code": "004795",
+          "station_id": "st:jp:5770",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "社家",
           "n02_station_code": "004765",
+          "station_id": "st:jp:5769",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "厚木",
           "n02_station_code": "004701",
+          "station_id": "st:jp:3699",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "海老名",
           "n02_station_code": "004666",
+          "station_id": "st:jp:3696",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "入谷",
           "n02_station_code": "004593",
+          "station_id": "st:jp:5768",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "相武台下",
           "n02_station_code": "004544",
+          "station_id": "st:jp:5767",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "下溝",
           "n02_station_code": "004462",
+          "station_id": "st:jp:5766",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "原当麻",
           "n02_station_code": "004437",
+          "station_id": "st:jp:5765",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "番田",
           "n02_station_code": "004379",
+          "station_id": "st:jp:5764",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "上溝",
           "n02_station_code": "004342",
+          "station_id": "st:jp:5763",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "南橋本",
           "n02_station_code": "004288",
+          "station_id": "st:jp:5762",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "橋本",
           "n02_station_code": "004254",
+          "station_id": "st:jp:1523",
+          "platform_number": null,
           "arrival": "14:20",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Local",
-      "vehicle_type": "E131系"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_08",
+      "id": "journey_A15A2CDA79EC2AB1DB648F12DECB9CFF",
       "date": "2026-05-29",
       "number": "快速（14:25 八王子行）",
+      "number_en": "Rapid",
       "train_type": "快速",
+      "vehicle_type": "E233系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "橋本",
       "destination": "八王子",
       "direction": "down",
@@ -909,16 +1100,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "横浜線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -926,6 +1117,8 @@
           "to": "相原",
           "from_n02_station_code": "004253",
           "to_n02_station_code": "004206",
+          "from_station_id": "st:jp:1523",
+          "to_station_id": "st:jp:5608",
           "line_names": [
             "横浜線"
           ],
@@ -938,6 +1131,8 @@
           "to": "八王子みなみ野",
           "from_n02_station_code": "004206",
           "to_n02_station_code": "004082",
+          "from_station_id": "st:jp:5608",
+          "to_station_id": "st:jp:5609",
           "line_names": [
             "横浜線"
           ],
@@ -950,6 +1145,8 @@
           "to": "片倉",
           "from_n02_station_code": "004082",
           "to_n02_station_code": "004038",
+          "from_station_id": "st:jp:5609",
+          "to_station_id": "st:jp:5610",
           "line_names": [
             "横浜線"
           ],
@@ -962,6 +1159,8 @@
           "to": "八王子",
           "from_n02_station_code": "004038",
           "to_n02_station_code": "003953",
+          "from_station_id": "st:jp:5610",
+          "to_station_id": "st:jp:4683",
           "line_names": [
             "横浜線"
           ],
@@ -974,59 +1173,65 @@
         {
           "name": "橋本",
           "n02_station_code": "004253",
+          "station_id": "st:jp:1523",
+          "platform_number": null,
           "arrival": null,
           "departure": "14:25",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "相原",
           "n02_station_code": "004206",
+          "station_id": "st:jp:5608",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "八王子みなみ野",
           "n02_station_code": "004082",
+          "station_id": "st:jp:5609",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "片倉",
           "n02_station_code": "004038",
+          "station_id": "st:jp:5610",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "八王子",
           "n02_station_code": "003953",
+          "station_id": "st:jp:4683",
+          "platform_number": null,
           "arrival": "14:36",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Rapid",
-      "vehicle_type": "E233系"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_09",
+      "id": "journey_3C1174A1740BAC769A067CDF20A0CF5F",
       "date": "2026-05-29",
       "number": "かいじ32号（3132M）",
+      "number_en": "Kaiji 32",
       "train_type": "特急",
+      "vehicle_type": "E353系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "八王子",
       "destination": "立川",
       "direction": "up",
@@ -1039,43 +1244,57 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "八王子",
+          "to": "立川",
+          "from_n02_station_code": "003947",
+          "to_n02_station_code": "003634",
+          "from_station_id": "st:jp:4683",
+          "to_station_id": "st:jp:4686"
+        }
+      ],
       "stops": [
         {
           "name": "八王子",
           "n02_station_code": "003947",
+          "station_id": "st:jp:4683",
+          "platform_number": null,
           "arrival": null,
           "departure": "15:34",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "立川",
           "n02_station_code": "003634",
+          "station_id": "st:jp:4686",
+          "platform_number": null,
           "arrival": "15:42",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Kaiji 32",
-      "vehicle_type": "E353系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_10",
+      "id": "journey_DA0120B61DAC677C7FE9EFB54CF8F052",
       "date": "2026-05-29",
       "number": "中央線快速（15:46 東京方面）",
+      "number_en": "Chūō Rapid",
       "train_type": "快速",
+      "vehicle_type": "E233系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "立川",
       "destination": "西国分寺",
       "direction": "up",
@@ -1088,16 +1307,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "中央線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -1105,6 +1324,8 @@
           "to": "国立",
           "from_n02_station_code": "003634",
           "to_n02_station_code": "003622",
+          "from_station_id": "st:jp:4686",
+          "to_station_id": "st:jp:4687",
           "line_names": [
             "中央線"
           ],
@@ -1117,6 +1338,8 @@
           "to": "西国分寺",
           "from_n02_station_code": "003622",
           "to_n02_station_code": "003614",
+          "from_station_id": "st:jp:4687",
+          "to_station_id": "st:jp:4688",
           "line_names": [
             "中央線"
           ],
@@ -1129,41 +1352,44 @@
         {
           "name": "立川",
           "n02_station_code": "003634",
+          "station_id": "st:jp:4686",
+          "platform_number": null,
           "arrival": null,
           "departure": "15:46",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "国立",
           "n02_station_code": "003622",
+          "station_id": "st:jp:4687",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "西国分寺",
           "n02_station_code": "003614",
+          "station_id": "st:jp:4688",
+          "platform_number": null,
           "arrival": "15:51",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Chūō Rapid",
-      "vehicle_type": "E233系"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_11",
+      "id": "journey_346B51D9286011FC76E1B3066295219B",
       "date": "2026-05-29",
       "number": "普通（15:59 東京方面）",
+      "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "西国分寺",
       "destination": "武蔵浦和",
       "direction": "up",
@@ -1176,16 +1402,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "武蔵野線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -1193,6 +1419,8 @@
           "to": "新小平",
           "from_n02_station_code": "003611",
           "to_n02_station_code": "003385",
+          "from_station_id": "st:jp:4688",
+          "to_station_id": "st:jp:5621",
           "line_names": [
             "武蔵野線"
           ],
@@ -1205,6 +1433,8 @@
           "to": "新秋津",
           "from_n02_station_code": "003385",
           "to_n02_station_code": "003152",
+          "from_station_id": "st:jp:5621",
+          "to_station_id": "st:jp:5622",
           "line_names": [
             "武蔵野線"
           ],
@@ -1217,6 +1447,8 @@
           "to": "東所沢",
           "from_n02_station_code": "003152",
           "to_n02_station_code": "003100",
+          "from_station_id": "st:jp:5622",
+          "to_station_id": "st:jp:5623",
           "line_names": [
             "武蔵野線"
           ],
@@ -1229,6 +1461,8 @@
           "to": "新座",
           "from_n02_station_code": "003100",
           "to_n02_station_code": "003081",
+          "from_station_id": "st:jp:5623",
+          "to_station_id": "st:jp:5624",
           "line_names": [
             "武蔵野線"
           ],
@@ -1241,6 +1475,8 @@
           "to": "北朝霞",
           "from_n02_station_code": "003081",
           "to_n02_station_code": "003056",
+          "from_station_id": "st:jp:5624",
+          "to_station_id": "st:jp:5625",
           "line_names": [
             "武蔵野線"
           ],
@@ -1253,6 +1489,8 @@
           "to": "西浦和",
           "from_n02_station_code": "003056",
           "to_n02_station_code": "003014",
+          "from_station_id": "st:jp:5625",
+          "to_station_id": "st:jp:5626",
           "line_names": [
             "武蔵野線"
           ],
@@ -1265,6 +1503,8 @@
           "to": "武蔵浦和",
           "from_n02_station_code": "003014",
           "to_n02_station_code": "003006",
+          "from_station_id": "st:jp:5626",
+          "to_station_id": "st:jp:5539",
           "line_names": [
             "武蔵野線"
           ],
@@ -1277,85 +1517,94 @@
         {
           "name": "西国分寺",
           "n02_station_code": "003611",
+          "station_id": "st:jp:4688",
+          "platform_number": null,
           "arrival": null,
           "departure": "15:59",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "新小平",
           "n02_station_code": "003385",
+          "station_id": "st:jp:5621",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "新秋津",
           "n02_station_code": "003152",
+          "station_id": "st:jp:5622",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "東所沢",
           "n02_station_code": "003100",
+          "station_id": "st:jp:5623",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "新座",
           "n02_station_code": "003081",
+          "station_id": "st:jp:5624",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "北朝霞",
           "n02_station_code": "003056",
+          "station_id": "st:jp:5625",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "西浦和",
           "n02_station_code": "003014",
+          "station_id": "st:jp:5626",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "武蔵浦和",
           "n02_station_code": "003006",
+          "station_id": "st:jp:5539",
+          "platform_number": null,
           "arrival": "16:25",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Local"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_12",
+      "id": "journey_8EEEEA38327E98645C7007A692CCAD31",
       "date": "2026-05-29",
       "number": "普通（16:28 大宮行）",
+      "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "武蔵浦和",
       "destination": "大宮",
       "direction": "down",
@@ -1368,16 +1617,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "東北線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -1385,6 +1634,8 @@
           "to": "中浦和",
           "from_n02_station_code": "003008",
           "to_n02_station_code": "002995",
+          "from_station_id": "st:jp:5539",
+          "to_station_id": "st:jp:5538",
           "line_names": [
             "東北線"
           ],
@@ -1397,6 +1648,8 @@
           "to": "南与野",
           "from_n02_station_code": "002995",
           "to_n02_station_code": "002975",
+          "from_station_id": "st:jp:5538",
+          "to_station_id": "st:jp:5537",
           "line_names": [
             "東北線"
           ],
@@ -1409,6 +1662,8 @@
           "to": "与野本町",
           "from_n02_station_code": "002975",
           "to_n02_station_code": "002951",
+          "from_station_id": "st:jp:5537",
+          "to_station_id": "st:jp:5536",
           "line_names": [
             "東北線"
           ],
@@ -1421,6 +1676,8 @@
           "to": "北与野",
           "from_n02_station_code": "002951",
           "to_n02_station_code": "002938",
+          "from_station_id": "st:jp:5536",
+          "to_station_id": "st:jp:5535",
           "line_names": [
             "東北線"
           ],
@@ -1433,6 +1690,8 @@
           "to": "大宮",
           "from_n02_station_code": "002938",
           "to_n02_station_code": "002912",
+          "from_station_id": "st:jp:5535",
+          "to_station_id": "st:jp:3220",
           "line_names": [
             "東北線"
           ],
@@ -1445,67 +1704,74 @@
         {
           "name": "武蔵浦和",
           "n02_station_code": "003008",
+          "station_id": "st:jp:5539",
+          "platform_number": null,
           "arrival": null,
           "departure": "16:28",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "中浦和",
           "n02_station_code": "002995",
+          "station_id": "st:jp:5538",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "南与野",
           "n02_station_code": "002975",
+          "station_id": "st:jp:5537",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "与野本町",
           "n02_station_code": "002951",
+          "station_id": "st:jp:5536",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "北与野",
           "n02_station_code": "002938",
+          "station_id": "st:jp:5535",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "大宮",
           "n02_station_code": "002912",
+          "station_id": "st:jp:3220",
+          "platform_number": null,
           "arrival": "16:40",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Local"
+      "region": "jp"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_13",
+      "id": "journey_5F07101A177600FAEAB79C27F00916AF",
       "date": "2026-05-29",
       "number": "草津・四万4号（予約区間）",
+      "number_en": "Kusatsu Shima 4",
       "train_type": "特急",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "大宮",
       "destination": "浦和",
       "direction": "up",
@@ -1518,44 +1784,62 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "大宮",
+          "to": "浦和",
+          "from_n02_station_code": "002912",
+          "to_n02_station_code": "002989",
+          "from_station_id": "st:jp:3220",
+          "to_station_id": "st:jp:5432"
+        }
+      ],
       "stops": [
         {
           "name": "大宮",
           "n02_station_code": "002912",
+          "station_id": "st:jp:3220",
+          "platform_number": null,
           "arrival": null,
           "departure": "17:44",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "浦和",
           "n02_station_code": "002989",
+          "station_id": "st:jp:5432",
+          "platform_number": null,
           "arrival": "17:50",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Kusatsu Shima 4"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_14",
+      "id": "journey_D8755000FA24D4235A8ED889B3A4AA9C",
       "date": "2026-05-29",
       "number": "スペーシア日光4号（予約区間）",
+      "number_en": "Spacia Nikkō 4",
       "train_type": "特急",
       "company": "JR東日本/東武鉄道",
+      "operator_ids": [
+        "op:jp:105",
+        "op:jp:106"
+      ],
       "origin": "浦和",
       "destination": "新宿",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e60012"
@@ -1565,51 +1849,75 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "浦和",
+          "to": "池袋",
+          "from_n02_station_code": "002989",
+          "to_n02_station_code": "003391",
+          "from_station_id": "st:jp:5432",
+          "to_station_id": "st:jp:4236"
+        },
+        {
+          "from": "池袋",
+          "to": "新宿",
+          "from_n02_station_code": "003391",
+          "to_n02_station_code": "003701",
+          "from_station_id": "st:jp:4236",
+          "to_station_id": "st:jp:1484"
+        }
+      ],
       "stops": [
         {
           "name": "浦和",
           "n02_station_code": "002989",
+          "station_id": "st:jp:5432",
+          "platform_number": null,
           "arrival": null,
           "departure": "18:11",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "池袋",
           "n02_station_code": "003391",
+          "station_id": "st:jp:4236",
+          "platform_number": null,
           "arrival": "18:29",
           "departure": "18:30",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "新宿",
           "n02_station_code": "003701",
+          "station_id": "st:jp:1484",
+          "platform_number": null,
           "arrival": "18:35",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Spacia Nikkō 4"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_15",
+      "id": "journey_868731BF1A9520928B670EC3A3B8566D",
       "date": "2026-05-29",
       "number": "あずさ50号（5050M）",
+      "number_en": "Azusa 50",
       "train_type": "特急",
+      "vehicle_type": "E353系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "新宿",
       "destination": "船橋",
       "direction": "down",
@@ -1622,52 +1930,75 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
-        "institution_filter_mode": "soft",
         "allowed_institution_type_codes": [
           "2"
-        ]
+        ],
+        "preferred_line_names": [],
+        "preferred_operator_names": [],
+        "institution_filter_mode": "soft"
       },
-      "route_sections": [],
+      "route_sections": [
+        {
+          "from": "新宿",
+          "to": "錦糸町",
+          "from_n02_station_code": "003693",
+          "to_n02_station_code": "003647",
+          "from_station_id": "st:jp:1484",
+          "to_station_id": "st:jp:4168"
+        },
+        {
+          "from": "錦糸町",
+          "to": "船橋",
+          "from_n02_station_code": "003647",
+          "to_n02_station_code": "003593",
+          "from_station_id": "st:jp:4168",
+          "to_station_id": "st:jp:5880"
+        }
+      ],
       "stops": [
         {
           "name": "新宿",
           "n02_station_code": "003693",
+          "station_id": "st:jp:1484",
+          "platform_number": null,
           "arrival": null,
           "departure": "20:11",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "錦糸町",
           "n02_station_code": "003647",
+          "station_id": "st:jp:4168",
+          "platform_number": null,
           "arrival": "20:27",
           "departure": "20:27",
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "船橋",
           "n02_station_code": "003593",
+          "station_id": "st:jp:5880",
+          "platform_number": null,
           "arrival": "20:38",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Azusa 50",
-      "vehicle_type": "E353系"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "tokyo_limited_express_loop_20260529_16",
+      "id": "journey_E4ED0EC66250F2E663AEB7ECE1FA8F5A",
       "date": "2026-05-29",
       "number": "中央・総武線各駅停車 1904Y（千葉行）",
+      "number_en": "Chūō-Sōbu Line Local",
       "train_type": "普通",
+      "vehicle_type": "E231系",
       "company": "JR東日本",
+      "operator_id": "op:jp:105",
       "origin": "船橋",
       "destination": "西千葉",
       "direction": "down",
@@ -1680,16 +2011,16 @@
         "jr_only": true,
         "allow_alternatives": false,
         "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "2"
+        ],
         "preferred_line_names": [
           "総武線"
         ],
         "preferred_operator_names": [
           "東日本旅客鉄道"
         ],
-        "institution_filter_mode": "soft",
-        "allowed_institution_type_codes": [
-          "2"
-        ]
+        "institution_filter_mode": "soft"
       },
       "route_sections": [
         {
@@ -1697,6 +2028,8 @@
           "to": "東船橋",
           "from_n02_station_code": "003593",
           "to_n02_station_code": "003613",
+          "from_station_id": "st:jp:5880",
+          "to_station_id": "st:jp:5882",
           "line_names": [
             "総武線"
           ],
@@ -1709,6 +2042,8 @@
           "to": "津田沼",
           "from_n02_station_code": "003613",
           "to_n02_station_code": "003681",
+          "from_station_id": "st:jp:5882",
+          "to_station_id": "st:jp:5883",
           "line_names": [
             "総武線"
           ],
@@ -1721,6 +2056,8 @@
           "to": "幕張本郷",
           "from_n02_station_code": "003681",
           "to_n02_station_code": "003815",
+          "from_station_id": "st:jp:5883",
+          "to_station_id": "st:jp:5884",
           "line_names": [
             "総武線"
           ],
@@ -1733,6 +2070,8 @@
           "to": "幕張",
           "from_n02_station_code": "003815",
           "to_n02_station_code": "003919",
+          "from_station_id": "st:jp:5884",
+          "to_station_id": "st:jp:5885",
           "line_names": [
             "総武線"
           ],
@@ -1745,6 +2084,8 @@
           "to": "新検見川",
           "from_n02_station_code": "003919",
           "to_n02_station_code": "003965",
+          "from_station_id": "st:jp:5885",
+          "to_station_id": "st:jp:5886",
           "line_names": [
             "総武線"
           ],
@@ -1757,6 +2098,8 @@
           "to": "稲毛",
           "from_n02_station_code": "003965",
           "to_n02_station_code": "004047",
+          "from_station_id": "st:jp:5886",
+          "to_station_id": "st:jp:5887",
           "line_names": [
             "総武線"
           ],
@@ -1769,6 +2112,8 @@
           "to": "西千葉",
           "from_n02_station_code": "004047",
           "to_n02_station_code": "004124",
+          "from_station_id": "st:jp:5887",
+          "to_station_id": "st:jp:5888",
           "line_names": [
             "総武線"
           ],
@@ -1781,79 +2126,85 @@
         {
           "name": "船橋",
           "n02_station_code": "003593",
+          "station_id": "st:jp:5880",
+          "platform_number": null,
           "arrival": null,
           "departure": "20:41",
           "stop_type": "origin",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "東船橋",
           "n02_station_code": "003613",
+          "station_id": "st:jp:5882",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "津田沼",
           "n02_station_code": "003681",
+          "station_id": "st:jp:5883",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "幕張本郷",
           "n02_station_code": "003815",
+          "station_id": "st:jp:5884",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "幕張",
           "n02_station_code": "003919",
+          "station_id": "st:jp:5885",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "新検見川",
           "n02_station_code": "003965",
+          "station_id": "st:jp:5886",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "稲毛",
           "n02_station_code": "004047",
+          "station_id": "st:jp:5887",
+          "platform_number": null,
           "arrival": null,
           "departure": null,
           "stop_type": "passenger_stop",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         },
         {
           "name": "西千葉",
           "n02_station_code": "004124",
+          "station_id": "st:jp:5888",
+          "platform_number": null,
           "arrival": "21:00",
           "departure": null,
           "stop_type": "destination",
-          "ride_segment": true,
-          "platform_number": null
+          "ride_segment": true
         }
       ],
-      "region": "jp",
-      "number_en": "Chūō-Sōbu Line Local",
-      "vehicle_type": "E231系"
+      "region": "jp"
     }
   ]
 }

@@ -1079,7 +1079,7 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
   const idProbes = [
     "a", "A", "0", "_", "-", "abc-123_XYZ", "", " a", "a ", "a.b", "a b",
     "a\nb", "a\n", "\na", "はやぶさ", "００１",
-    "café", "a/b", "20260703_01_haruka", "a b",
+    "café", "a/b", "journey_A9554752F257CDA52831A6C0EED248AF", "a b",
   ];
   const ids = idProbes.map((value) => ({ value, valid: idPattern.test(value) }));
 

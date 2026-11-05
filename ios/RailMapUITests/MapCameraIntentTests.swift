@@ -7,7 +7,7 @@ final class MapCameraIntentTests: XCTestCase {
 
     func testSelectedJourneyKeepsWholeRouteWhilePanningAndZoomingAway() throws {
 #if !targetEnvironment(macCatalyst)
-        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka",
+        let app = launch(tab: "all", stage: "compact", selected: "journey_A9554752F257CDA52831A6C0EED248AF",
                          autoFocus: false, layers: "")
         let status = app.staticTexts["railMapRenderStatus"]
         // The selected Japanese route must remain installed even while the
@@ -41,7 +41,7 @@ final class MapCameraIntentTests: XCTestCase {
     func testSelectedJourneyDoesNotReframeAfterLayoutReplacementOrStatistics() throws {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
-        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka", camera: nil)
+        let app = launch(tab: "all", stage: "compact", selected: "journey_A9554752F257CDA52831A6C0EED248AF", camera: nil)
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) {
             self.number("targetRideReady", $0) == 1
@@ -87,7 +87,7 @@ final class MapCameraIntentTests: XCTestCase {
         try waitFor(status) {
             self.number("targetRideReady", $0) == 1 && abs(self.number("centerLon", $0) + 74.027) < 0.01
         }
-        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        let row = app.descendants(matching: .any)["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
         try waitFor(status) { self.number("centerLon", $0) > 125 }
@@ -102,7 +102,7 @@ final class MapCameraIntentTests: XCTestCase {
             self.number("targetRideReady", $0) == 1 && abs(self.number("centerLat", $0) - 32.5) < 0.01
         }
         let before = number("distance", status.label)
-        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        let row = app.descendants(matching: .any)["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
         try waitFor(status) { self.number("distance", $0) < before * 0.5 }
@@ -118,7 +118,7 @@ final class MapCameraIntentTests: XCTestCase {
     }
 
     func testSelectedJourneyEndpointLabelsStaySeparate() throws {
-        let app = launch(tab: "all", stage: "compact", selected: "20260703_01_haruka",
+        let app = launch(tab: "all", stage: "compact", selected: "journey_A9554752F257CDA52831A6C0EED248AF",
                          autoFocus: false, camera: "34.55,135.4,0.55")
         let status = app.staticTexts["railMapRenderStatus"]
         try waitFor(status) { self.number("targetRideReady", $0) == 1 }
@@ -188,7 +188,7 @@ final class MapCameraIntentTests: XCTestCase {
         app.uiTestLaunch[.stage] = stage
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.query] = "haruka"
-        app.uiTestLaunch[.readyRide] = "20260703_01_haruka"
+        app.uiTestLaunch[.readyRide] = "journey_A9554752F257CDA52831A6C0EED248AF"
         app.uiTestLaunch[.layers] = layers
         if let camera {
             app.uiTestLaunch[.camera] = camera

@@ -37,7 +37,7 @@ final class JourneySharingUITests: XCTestCase {
     }
 
     func testJourneyMenuPreviewsBothKindsAndReturnsToSameJourney() {
-        let id = "20260703_01_haruka"
+        let id = "journey_A9554752F257CDA52831A6C0EED248AF"
         let app = launch(journeyID: id)
         let row = element("journeyRow-\(id)", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 60), app.debugDescription)

@@ -105,9 +105,9 @@ class AlignmentTests(unittest.TestCase):
 
     def test_english_caption_uses_shared_splitter_without_inventing_numbers(self):
         captions = alignment.latin_captions()
-        self.assertEqual(captions['20260708_02_shirasagi2'], 'Shirasagi 6')
-        self.assertEqual(captions['20260729_05_sunrise_izumo'], 'Sunrise Izumo')
-        self.assertNotIn('20260722_01_ibusuki_1321d_kagoshima_yamakawa', captions)
+        self.assertEqual(captions['journey_65F43AE4739DB31208BF9295B6539472'], 'Shirasagi 6')
+        self.assertEqual(captions['journey_F29762068C2DDB4CD79CF4AF30B29529'], 'Sunrise Izumo')
+        self.assertNotIn('journey_A18C112CF65FF5C2AD464A2C3309FB24', captions)
 
     def test_caption_vehicle_does_not_confuse_route_system_numbers(self):
         self.assertEqual(alignment.caption_vehicle('ソニック54号（885系「白いソニック」）'), '885系')

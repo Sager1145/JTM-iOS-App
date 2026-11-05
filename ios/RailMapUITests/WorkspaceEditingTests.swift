@@ -21,7 +21,7 @@ final class WorkspaceEditingTests: XCTestCase {
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.query] = "haruka"
         UITestLaunchSupport.launch(app)
-        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        let row = app.descendants(matching: .any)["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
         // Detail opens over Search; closing it retains the resident query.
@@ -58,7 +58,7 @@ final class WorkspaceEditingTests: XCTestCase {
     func testDetailEditsSurviveVisibilityChange() {
         // Open the known saved fixture through its native row so this isolated
         // test starts with a confirmed record identity.
-        let fixtureID = "20260704_02_kodama918"
+        let fixtureID = "journey_4CB9E326EEC18D85989CEF90ACF970A1"
         let originalNumber = "こだま918号（Kodama 918）（918A）"
         let app = XCUIApplication()
         app.uiTestLaunch[.storageId] = UUID().uuidString
@@ -318,13 +318,13 @@ final class WorkspaceEditingTests: XCTestCase {
                                "-interface-language", "en"]
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.tab] = "search"
-        app.uiTestLaunch[.query] = "20260704_02_kodama918"
+        app.uiTestLaunch[.query] = "journey_4CB9E326EEC18D85989CEF90ACF970A1"
         app.uiTestLaunch[.stage] = "expanded"
         UITestLaunchSupport.launch(app)
-        let row = app.buttons["journeyRow-20260704_02_kodama918"]
+        let row = app.buttons["journeyRow-journey_4CB9E326EEC18D85989CEF90ACF970A1"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         row.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["selectedJourney-20260704_02_kodama918"]
+        XCTAssertTrue(app.descendants(matching: .any)["selectedJourney-journey_4CB9E326EEC18D85989CEF90ACF970A1"]
             .firstMatch.waitForExistence(timeout: 8))
         let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 8))

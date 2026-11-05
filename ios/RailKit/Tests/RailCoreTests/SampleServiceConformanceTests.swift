@@ -16,15 +16,21 @@ struct SampleServiceConformanceTests {
         let features: [Feature]
     }
 
+    /// The rides below are named by their former descriptive ids; the bundled
+    /// store carries the derived `journey_…` ids.
+    private static func bundledIDs(_ table: [String: String]) -> [String: String] {
+        Dictionary(uniqueKeysWithValues: table.map { (SampleRideID.current($0.key), $0.value) })
+    }
+
     // Class descriptions, not named services. These are deliberately individual rides.
-    private let classOnly = [
+    private let classOnly = Self.bundledIDs([
         "20260707_06_a_ltdexp": "A特急 is a service class, without a named service",
         "20260711_05_seibu_ikebukuro_semiexp": "西武池袋線 急行 names a line and class",
-    ]
+    ])
 
     // Recorded named conventional rides, pinned independently of the lookup
     // under test. Shinkansen rides remain required by their explicit class.
-    private let namedConventionalServices = [
+    private let namedConventionalServices = Self.bundledIDs([
         "20260703_01_haruka": "haruka",
         "20260706_02_super_tsugaru2": "super-tsugaru",
         "20260706_03_inaho14": "inaho",
@@ -59,7 +65,7 @@ struct SampleServiceConformanceTests {
         "20260729_05_sunrise_izumo": "sunrise-izumo",
         "20260730_03_yakumo22": "yakumo",
         "20260731_02_rapit_alpha3": "rapit",
-    ]
+    ])
 
     @Test func sampleServiceConformance() throws {
         let root = try PortFixtures.repositoryRoot()

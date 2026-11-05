@@ -238,9 +238,14 @@ struct PlaybackParityTests {
 
     static func train(_ id: String) throws -> Train {
         let store = try store()
-        guard let train = store.trains.first(where: { $0.id == id }) else {
+        // The bundled ride carries a `journey_…` id; the fixtures still name it
+        // by its former descriptive id (which also encodes its date), so hand the
+        // ride back under that name.
+        let bundled = SampleRideID.current(id)
+        guard var train = store.trains.first(where: { $0.id == bundled }) else {
             throw CocoaError(.fileNoSuchFile)
         }
+        train.id = id
         return train
     }
 
