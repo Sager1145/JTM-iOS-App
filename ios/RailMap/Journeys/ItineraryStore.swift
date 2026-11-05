@@ -160,6 +160,7 @@ final class ItineraryStore {
         orderedJourneyGroups = (store?.trains ?? loaded?.trains ?? [])
             .compactMap(\.journeyGroup).filter { seen.insert($0.id).inserted }
             .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        RailSignpost.ui.mark("derived.journeyGroups", orderedJourneyGroups.count)
     }
 
     /// What a save actually did (§8.3).

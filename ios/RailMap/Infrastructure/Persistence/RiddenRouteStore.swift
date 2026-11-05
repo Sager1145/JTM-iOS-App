@@ -6,10 +6,10 @@ import os
 import RailCore
 import RailPresentation
 
-/// Precomputed ridden geometry shipped by the main fork's progressive sample
-/// datasets. Each part contains one canonical train plus the exact route
-/// features produced by the web solver; the native map consumes those
-/// source coordinates for statistics and slices the complete railway for display.
+/// Ridden geometry for every journey in the working set. Bundled examples and
+/// the reader's own journeys resolve the same way: the per-journey route
+/// cache, then the on-device solver. The map consumes the solved source
+/// coordinates for statistics and slices the complete railway for display.
 @MainActor
 @Observable
 final class RiddenRouteStore {
@@ -220,6 +220,14 @@ final class RiddenRouteStore {
     /// Full records remain the invalidation boundary. Reuse happens per
     /// journey, so a same-ID edit cannot leave stale route geometry behind.
     private var completedInputs: [String: Train] = [:]
+    /// The last full set `load` was asked for, so "reload all" re-resolves
+    /// exactly what the map was given — the same scoped, capped set.
+    private var lastRequestedInputs: [String: Train] = [:]
+    /// True from `reloadAll` until its load finishes, fails or is stopped.
+    private var reloadingAll = false
+    /// Set while `reloadAll` waits for the previous work to stop and the
+    /// cache to be discarded, so a second confirm cannot start it twice.
+    private var reloadStarting = false
     private var resolutionTickets: [String: UUID] = [:]
     /// Per-ride landing stamp. A resolution task stamps the ride it lands; a
     /// load publishes its older batch snapshot only for rides not stamped since
@@ -313,11 +321,15 @@ final class RiddenRouteStore {
     /// pipeline groups by it, and the per-region resources — the sections
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
-    func load(trains: [Train], preferredTrainID: String? = nil) {
+    func load(
+        trains: [Train], preferredTrainID: String? = nil,
+        priority: TaskPriority = .userInitiated
+    ) {
         bindPendingOwner()
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
+        lastRequestedInputs = wanted
         // View remounts and an order-only change share the batch already running.
         // Neither network rendering arrivals nor partial route publications are
         // solver inputs. Resource revisions are immutable for this app launch.
@@ -334,6 +346,7 @@ final class RiddenRouteStore {
         }
         loadTask?.cancel()
         cancelResolutions()
+        reloadingAll = false
         loadRevision += 1
         let revision = loadRevision
         let landingMark = landingCounter
@@ -366,7 +379,7 @@ final class RiddenRouteStore {
         let partials = PartialRidePublication()
         let inbox = PartialRideInbox()
         let owner = pendingSolveOwner
-        loadTask = Task(priority: .userInitiated) {
+        loadTask = Task(priority: priority) {
             await Self.$activePendingOwner.withValue(owner) {
             do {
                 let primed = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
@@ -394,7 +407,11 @@ final class RiddenRouteStore {
                                 let landed = self.landedSince(landingMark)
                                 for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
                                 self.noteRouteEntries(for: self.rides, wanted: [], keeping: landed)
-                                self.lineDetector.publishSelected(rides: self.rides)
+                                // Line rows are not republished per partial:
+                                // each pass walks every segment and re-renders
+                                // every row. The final `detectTraversedLines`
+                                // publishes once; recorded names cover until then.
+                                RailSignpost.data.mark("routes.partial.publish", partial.count)
                             }
                         }
                     }
@@ -411,6 +428,7 @@ final class RiddenRouteStore {
                 completedInputs = finalInputs
                 loadingInputs = nil
                 loadTask = nil
+                reloadingAll = false
                 state = .loaded(rides: rides)
                 noteRouteEntries(for: rides, wanted: wantedIDs, keeping: landed)
                 detectTraversedLines()
@@ -438,11 +456,101 @@ final class RiddenRouteStore {
                 guard loadRevision == revision else { return }
                 loadingInputs = nil
                 loadTask = nil
+                reloadingAll = false
                 state = .failed(error.localizedDescription)
                 noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
             }
             }
         }
+    }
+
+    // MARK: - Reload all
+
+    struct ReloadProgress: Equatable {
+        var done: Int
+        var total: Int
+    }
+
+    /// `n of N` while a reader-started reload runs; nil otherwise. Advances
+    /// as coalesced partial results land, never per journey.
+    var reloadProgress: ReloadProgress? {
+        guard reloadingAll, case .loading = state else { return nil }
+        let done = requestedOrder.reduce(0) { $0 + (completedInputs[$1] == nil ? 0 : 1) }
+        return ReloadProgress(done: done, total: requestedOrder.count)
+    }
+
+    /// True while a load is resolving. Derived products that summarise every
+    /// trip (statistics, passport) wait for this to clear instead of
+    /// recomputing on each partial publish.
+    var isLoading: Bool {
+        if case .loading = state { true } else { false }
+    }
+
+    /// Whether `load` has been handed any trips yet.
+    var requestedIsEmpty: Bool { requestedOrder.isEmpty }
+
+    /// Whether there is anything to reload.
+    var canReloadAll: Bool { !requestedOrder.isEmpty && !reloadingAll && !reloadStarting }
+
+    /// Forget every solved route and resolve the current set again.
+    ///
+    /// Runs through `load`, so it is the same path, the same single solve
+    /// permit and the same coalesced map updates as any load — at `.utility`
+    /// priority, so the reader can keep using the app while it runs. The disk
+    /// cache is removed first and each entry is rewritten atomically as its
+    /// journey lands, so stopping or restarting midway leaves only complete
+    /// entries; whatever was not reached is solved by the next load.
+    func reloadAll() async {
+        guard !reloadStarting, !reloadingAll, !requestedOrder.isEmpty else { return }
+        reloadStarting = true
+        defer { reloadStarting = false }
+        // Stop everything that could still publish or write a route, and wait
+        // for it: a cancelled solve that lands after the cache is gone would
+        // be replayed by the reload instead of being solved again.
+        let previousLoad = loadTask
+        let previousResolutions = Array(resolutionTasks.values)
+        loadRevision += 1
+        previousLoad?.cancel()
+        cancelResolutions()
+        loadTask = nil
+        loadingInputs = nil
+        await previousLoad?.value
+        for task in previousResolutions { await task.value }
+        completedInputs = [:]
+        await Self.discardSolvedRoutes()
+        completedInputs = [:]
+        // Read after the waits: a load that arrived meanwhile (an import, an
+        // edit) is the set to reload, not the one this call started with.
+        let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
+        guard !trains.isEmpty else { return }
+        load(trains: trains, priority: .utility)
+        if case .loading = state { reloadingAll = true }
+    }
+
+    /// Stop a forced reload. What it already solved stays; the rest of the
+    /// set goes back to an ordinary load — cached routes replay, missing ones
+    /// solve — so no trip is left without a route or a status.
+    func cancelReloadAll() {
+        guard reloadingAll else { return }
+        let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
+        // Not joined to the reload's batch: `load` would share a batch with
+        // the same inputs. The ordinary load below replaces it.
+        loadRevision += 1
+        loadTask?.cancel()
+        loadTask = nil
+        loadingInputs = nil
+        load(trains: trains, priority: .utility)
+        reloadingAll = false
+    }
+
+    /// The route cache on disk plus every in-memory memo of a solve, so a
+    /// reload solves rather than replays.
+    @concurrent private nonisolated static func discardSolvedRoutes() async {
+        let base = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        try? FileManager.default.removeItem(at: base)
+        await sharedJourneyWork.clear()
+        await releaseCachesForMemoryPressure()
     }
 
     private func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
@@ -460,6 +568,7 @@ final class RiddenRouteStore {
     }
 
     func clear() {
+        reloadingAll = false
         loadingInputs = nil
         requestedOrder = []
         loadRevision += 1
@@ -656,7 +765,6 @@ final class RiddenRouteStore {
                         let ride = try await solveMissingSequentialWithPermit(
                             [train], scope: scope, allowLegacy: true,
                             graphStore: graphStore.store, providedInputs: inputs,
-                            rejectPrecomputed: { _ in },
                             publish: { _ in }, saveRoutes: false).first
                         try Task.checkCancellation()
                         results.append((position, ride?.route.isResolved == true))
@@ -729,28 +837,24 @@ final class RiddenRouteStore {
         return entries
     }
 
-    /// Cache, then the precomputed datasets, then solve — per region.
+    /// Cache, then solve — per region, the same for every journey.
     ///
-    /// The order is the reverse of the web app's, and the reason is the merged
-    /// store. The web app reads its one dataset first because that dataset IS
-    /// its store; here a reader can hold the 201-journey Japanese sample, the
-    /// New Year loop and their own rides at once, so "which dataset?" has no
-    /// single answer and scanning every candidate on every reload would decode
-    /// 11 MB of parts to answer a question the on-disk cache has already
-    /// answered. Rides that come out of a dataset are written into that cache,
-    /// so the scan happens once per journey rather than once per load.
+    /// Bundled examples carry no precomputed geometry of their own. They are
+    /// folded into the working set like an imported file and resolved here
+    /// like any journey the reader added; every solved route is written to
+    /// the per-journey cache, so a relaunch reads instead of solving.
     ///
     /// ## Two phases, and the map is handed the first one
     ///
     /// The cache read is the whole of a warm load and costs ~20 ms for 201
-    /// journeys; the dataset scan and the solve are the cold one and cost
+    /// journeys; the solve is the cold one and costs
     /// seconds, because they read a country's `rail-sections*.json` and
     /// `stations*.json` (11.8 MB and 3.2 MB for Japan). Returning one array at
     /// the end meant a single uncached journey held every cached journey off
     /// the map for as long as its country took to read.
     ///
     /// So `publish` is called with everything the cache answered before any
-    /// dataset is opened, and again as each remaining journey finishes. A warm
+    /// solver input is read, and again as each remaining journey finishes. A warm
     /// load calls it zero times and is byte for byte what it was.
     ///
     /// ## …cheapest scope first, and in a fixed order
@@ -859,7 +963,7 @@ final class RiddenRouteStore {
         return result
     }
 
-    /// The shared inference, dataset, and solver pipeline after a cache miss.
+    /// The shared inference and solver pipeline after a cache miss.
     @concurrent private nonisolated static func decodeUncached(
         _ trains: [Train], scope: RouteScope, previous: [DrawnRide],
         graphStore: RouteGraph.RouteGraphStore? = nil,
@@ -870,30 +974,18 @@ final class RiddenRouteStore {
         var result = previous
         var missing = Dictionary(
             trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-        // A fresh JS precompute remains a valid legacy fallback, but cannot
-        // decide a different physical route before station inference.
-        // Both solver passes share this scope's graph and its corridor memos.
+        // Every journey — a bundled example or the reader's own — takes this
+        // one path: station inference first, then the legacy pass for what
+        // inference left. Both passes share this scope's graph and its
+        // corridor memos, and every answer lands in the per-journey cache.
         let previous = result
-        let rejections = PrecomputedRouteRejections()
         let inferred = try await solveMissing(
             trains, scope: scope, allowLegacy: false, graphStore: graphStore,
-            providedInputs: providedInputs,
-            rejectPrecomputed: { await rejections.reject($0) }) { partial in
+            providedInputs: providedInputs) { partial in
                 await publish(previous + partial)
             }
         for ride in inferred { missing.removeValue(forKey: ride.id) }
         result += inferred
-        for dataset in RideLibrary.routeDatasets(for: scope.home) {
-            let eligible = await rejections.allowed(missing)
-            if eligible.isEmpty { break }
-            let previous = result
-            let found = try await datasetRides(
-                dataset: dataset, country: scope.code, wanted: eligible) { partial in
-                    await publish(previous + partial)
-                }
-            for ride in found { missing.removeValue(forKey: ride.id) }
-            result += found
-        }
         if !missing.isEmpty {
             let previous = result
             result += try await solveMissing(
@@ -901,189 +993,6 @@ final class RiddenRouteStore {
                 graphStore: graphStore, providedInputs: providedInputs, publish: { partial in
                     await publish(previous + partial)
                 })
-        }
-        return result
-    }
-
-    /// The rides one precomputed dataset can answer for.
-    ///
-    /// A part is accepted only when its train's route-cache digest matches the
-    /// one in the store, which is what makes searching several datasets safe:
-    /// geometry solved for another itinerary is rejected rather than drawn.
-    ///
-    /// Which parts are even worth opening comes from ``DatasetPartIndex``.
-    /// This used to walk the manifest and decode every part in it before
-    /// reading the train id it had just paid for, so one journey missing from
-    /// the route cache cost the whole dataset — 201 files and 7 MB for the
-    /// Japanese sample — and the next journey cost it again.
-    @concurrent private nonisolated static func datasetRides(
-        dataset: String,
-        country: String,
-        wanted: [String: Train],
-        publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
-    ) async throws -> [DrawnRide] {
-        let interval = RailSignpost.data.begin("route.datasetLookup")
-        defer { RailSignpost.data.end("route.datasetLookup", interval) }
-        guard let manifestURL = Bundle.main.url(
-            forResource: "manifest", withExtension: "json", subdirectory: dataset),
-              let manifest = try? JSONDecoder().decode(
-                PrecomputedSources.self, from: Data(contentsOf: manifestURL)),
-              resourceRevisions?.acceptsPrecomputed(
-                sourceHashes: manifest.sourceHashes, country: country) == true
-        else { return [] }
-        let index = try await DatasetPartIndex.shared.parts(in: dataset)
-        // Sorted back into manifest order, because `wanted` is a dictionary
-        // and has none of its own, and the order rides come back in is the
-        // order the map is handed them in.
-        let hits = wanted.keys
-            .flatMap { index[$0] ?? [] }
-            .sorted { $0.position < $1.position }
-        let displayNetwork = try? await DisplayNetworkCache.shared.network(country: country)
-        var projectionCache = RouteProjectionCache()
-        var result: [DrawnRide] = []
-        result.reserveCapacity(hits.count)
-        // A journey whose route spans several bundled parts hits this loop
-        // once per part but is the same `wanted` train every time — normalised
-        // once here and reused for the digest, the template digest, the
-        // expected sections, and the cache write below, all of which used to
-        // each normalise it again.
-        var normalizedByID: [String: CanonicalRouteInput] = [:]
-        func canonical(for train: Train) async throws -> CanonicalRouteInput {
-            if let cached = normalizedByID[train.id] { return cached }
-            let value = try await canonicalRouteInput(train, country: country)
-            normalizedByID[train.id] = value
-            return value
-        }
-        for hit in hits {
-            try Task.checkCancellation()
-            guard let partURL = Bundle.main.url(
-                forResource: hit.name,
-                withExtension: "json",
-                subdirectory: dataset
-            ) else { throw LoadError.missingPart(dataset, hit.name) }
-            let part = try JSONDecoder().decode(Part.self, from: Data(contentsOf: partURL))
-            guard resourceRevisions?.acceptsPrecomputed(
-                manifestSourceHashes: manifest.sourceHashes,
-                partSourceHashes: part.sourceHashes, country: country) == true else { continue }
-            guard let train = wanted[part.train.id], !train.requiresRouteConfirmation,
-                  !RouteScope(train).crossesBorder else { continue }
-            guard let precomputedRoute = part.route,
-                  let precomputedFeatures = precomputedRoute.features else { continue }
-            let routeInput = try await canonical(for: train)
-            let trainCanonical = routeInput.train
-            // Physical identities select package survey intervals directly.
-            // A legacy N02 precompute can attest the journey, but cannot
-            // attest which of the closely parallel platform tracks it rode.
-            if trainCanonical.routeSections?.contains(where: { $0.sectionCodes?.isEmpty == false }) == true {
-                continue
-            }
-            let trainDigest = await routeCacheDigest(trainCanonical, raw: train, country: country)
-            let partDigest = await routeCacheDigest(
-                normalizedTrain(part.train, country: country), raw: part.train, country: country)
-            guard trainDigest == partDigest else { continue }
-            guard let expectedDigest = trainDigest,
-                  let revisions = historyRevisionSet(for: train) else { continue }
-            guard RailPrecomputedRouteGate.accepts(
-                precomputedRoute.solverContext,
-                expectedDigest: expectedDigest,
-                solverVersion: RouteGraph.routeSolverCacheVersion,
-                rideDate: Dates.normalizeDateString(train.date),
-                revisions: revisions,
-                expectedHashes: !revisions.contentHashes.isEmpty ? revisions.contentHashes : nil
-            ) else { continue } // Missing historical content attestation requires an on-demand solve.
-            let expectedTemplate = routeTemplateDigest(trainCanonical, country: country)
-            let matchingFeatures = precomputedFeatures.filter { feature in
-                guard let expectedTemplate else { return true }
-                return feature.properties?.routeTemplateKey == expectedTemplate
-            }
-            let indicesAreAuthoritative = matchingFeatures
-                .allSatisfy { $0.properties?.segmentIndex != nil }
-            // The precompute may contain a graph connector across a curve
-            // (Daimon–Akabanebashi). Slice the same complete display railway
-            // as the live solver, but keep its source path in the separate
-            // field consumed by statistics and exports.
-            // `partIndex` is assigned AFTER resolving each stroke's
-            // `segmentIndex` and dropping the too-short ones, using the same
-            // per-`segmentIndex` output-order counter `readCached` uses — see
-            // ``assigningPartIndex(to:segmentIndex:)``. Assigning it from the
-            // stroke's own position within its feature (as before) collided
-            // whenever a short part was dropped, a feature carried no
-            // authoritative `segment_index` (so the count restarted per
-            // feature), or two features shared a `segmentIndex`.
-            let sections = canonicalSections(trainCanonical)
-            // Legacy precomputes have no qualified endpoint provenance. A
-            // continuous itinerary must be assembled by the physical solver.
-            if zip(sections, sections.dropFirst()).contains(where: {
-                routeSectionBoundarySharesExplicitStop($0.0, $0.1)
-            }) { continue }
-            let usableStrokes = matchingFeatures.flatMap { feature in
-                feature.geometry.strokes.enumerated().compactMap { offset, coordinates
-                    -> (segmentIndex: Int, from: String?, to: String?, source: [Coordinate],
-                        hints: RouteHints, temporal: RouteGraph.TemporalKind, properties: Properties?)? in
-                    guard coordinates.count >= 2 else { return nil }
-                    let index = feature.properties?.segmentIndex ?? offset
-                    let section = sections.indices.contains(index) ? sections[index] : nil
-                    let properties = feature.properties
-                    return (
-                        segmentIndex: index, from: properties?.from, to: properties?.to,
-                        source: coordinates,
-                        hints: RouteHints(
-                            requiredLineNames: properties?.requiredLineNames ?? section?.lineNames ?? [],
-                            preferredLineNames: properties?.preferredLineNames ?? [],
-                            requiredOperatorNames: properties?.requiredOperatorNames ?? section?.operatorNames ?? [],
-                            preferredOperatorNames: properties?.preferredOperatorNames ?? [],
-                            requiredLineIDs: properties?.requiredLineIDs ?? section?.lineIDs ?? [],
-                            sectionCodes: properties?.sectionCodes ?? section?.sectionCodes ?? [],
-                            fromStationCode: SolverRegistryInput.persistedHopCode(
-                                persisted: properties?.fromStationCode,
-                                sectionCode: section?.fromN02StationCode,
-                                stationID: section?.fromStationID, region: country),
-                            toStationCode: SolverRegistryInput.persistedHopCode(
-                                persisted: properties?.toStationCode,
-                                sectionCode: section?.toN02StationCode,
-                                stationID: section?.toStationID, region: country)),
-                        temporal: properties?.temporalKind ?? .current, properties: properties)
-                }
-            }
-            let displayed = usableStrokes.flatMap { entry in
-                let parts = displayNetwork?.precomputedDisplayParts(
-                    source: entry.source, hints: entry.hints, temporalKind: entry.temporal,
-                    cache: &projectionCache)
-                return (parts ?? [.init(coordinates: entry.source, sourceCoordinates: entry.source)])
-                    .map { (entry: entry, part: $0) }
-            }
-            let segments = assigningPartIndex(to: displayed, segmentIndex: { $0.entry.segmentIndex })
-                .map { entry, partIndex -> DrawnSegment in
-                    DrawnSegment(
-                        segmentIndex: entry.entry.segmentIndex, partIndex: partIndex,
-                        from: entry.entry.from, to: entry.entry.to,
-                        coordinates: entry.part.coordinates,
-                        sourceCoordinates: entry.part.sourceCoordinates, country: country,
-                        historyIDs: entry.entry.properties?.historyIDs ?? [],
-                        validFrom: entry.entry.properties?.validFrom,
-                        validTo: entry.entry.properties?.validTo,
-                        temporalKind: entry.entry.temporal,
-                        physicalRoute: RideRouteResolution.displaySelection(
-                            lineIDs: entry.part.displayLineIDs, sectionCodes: entry.part.matchedSectionCodes,
-                            hints: entry.entry.hints, network: displayNetwork,
-                            sourceCoordinates: entry.entry.source))
-                }
-            guard !segments.isEmpty else { continue }
-            let ride = drawnRide(
-                train,
-                country: country,
-                segments: segments,
-                expectedSections: canonicalSections(trainCanonical),
-                indicesAreAuthoritative: indicesAreAuthoritative,
-                timetableFailure: routeInput.timetableFailure)
-            // Written into the same cache a solve writes to, so the next load
-            // finds this journey without opening a dataset at all. That is
-            // what keeps the dataset search a first-load cost rather than a
-            // per-load one.
-            if let trainDigest { try? saveCache(ride, digest: trainDigest, country: country, resourceScope: Region.scopeKey(Region.regionsTouched(train))) }
-            result.append(ride)
-            try Task.checkCancellation()
-            await publish(result)
         }
         return result
     }
@@ -1249,7 +1158,7 @@ final class RiddenRouteStore {
         canonical.requiresRouteConfirmation ? [] : canonical.routeSections ?? []
     }
 
-    /// Solve the journeys no cache and no dataset could answer for.
+    /// Solve the journeys the cache could not answer for.
     ///
     /// The scope, not a country, because of the three trains that cross the
     /// Canada–United States border. Their stops are split between two packages
@@ -1275,7 +1184,6 @@ final class RiddenRouteStore {
         allowLegacy: Bool = true,
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
-        rejectPrecomputed: @Sendable (String) async -> Void = { _ in },
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         guard trains.contains(where: { !$0.requiresRouteConfirmation }) else { return [] }
@@ -1297,8 +1205,7 @@ final class RiddenRouteStore {
                     try await solveMissingSequentialWithPermit(
                         [train], scope: scope, allowLegacy: allowLegacy,
                         graphStore: graphStoreBox?.store, providedInputs: inputs,
-                        providedCanonicalInputs: [routeInput],
-                        rejectPrecomputed: { _ in }, publish: { _ in }, saveRoutes: false)
+                        providedCanonicalInputs: [routeInput], publish: { _ in }, saveRoutes: false)
                 }
             }
             let solved: [DrawnRide]
@@ -1323,15 +1230,19 @@ final class RiddenRouteStore {
                     try? saveCache(ride, digest: digest, country: scope.code, resourceScope: scope.key)
                 }
                 await publish(results)
-            } else if !allowLegacy {
-                // A no-result first pass may have rejected ambiguous station
-                // choices. Keep that decision local to each subscriber.
-                let rejection = await SolverInputCache.shared.inferenceIsAmbiguous(
-                    train: canonical, raw: train, scope: scope, inputs: inputs)
-                if rejection { await rejectPrecomputed(train.id) }
             }
         }
         return results
+    }
+
+    /// Between journeys of a long solve: let the rest of the app run, and
+    /// back off while the device is hot rather than holding a core flat out.
+    private nonisolated static func yieldForDevice() async {
+        switch ProcessInfo.processInfo.thermalState {
+        case .serious: try? await Task.sleep(for: .milliseconds(250))
+        case .critical: try? await Task.sleep(for: .seconds(1))
+        default: await Task.yield()
+        }
     }
 
     private struct JourneyWorkKey: Hashable, Sendable {
@@ -1442,14 +1353,15 @@ final class RiddenRouteStore {
             return built
         }
 
-        func inferenceIsAmbiguous(train: Train, raw: Train, scope: RouteScope, inputs: SolverInputs) async -> Bool {
-            guard let network = try? await DisplayNetworkCache.shared.network(scope: scope) else { return false }
-            let prepared = networkIndexes(scope: scope, network: network, inputs: inputs)
-            let resolver = RideRouteResolution(inputs: inputs, country: scope.code, network: prepared)
-            return resolver.hasAmbiguousStationChoice(.init(train: raw, canonicalTrain: train))
-        }
-
         private func releaseCompleted() { completed = nil }
+
+        /// Drops the completed inputs and their derived indexes. In-flight
+        /// decodes keep running, and their callers keep their own copies.
+        func releaseForMemoryPressure() {
+            completed = nil
+            indexes.removeAll()
+            intervalIndexes.removeAll()
+        }
 
         private func retain(_ inputs: SolverInputs, key: String) {
             completed = (key, inputs)
@@ -1615,14 +1527,6 @@ final class RiddenRouteStore {
         return graphStore
     }
 
-    private actor PrecomputedRouteRejections {
-        private var ids: Set<String> = []
-        func reject(_ id: String) { ids.insert(id) }
-        func allowed(_ trains: [String: Train]) -> [String: Train] {
-            trains.filter { !ids.contains($0.key) }
-        }
-    }
-
     /// Production uses one worker to bound retained graph memory. Keep the
     /// parallel implementation dormant; W=1 takes exactly the serial path,
     /// with no task group, additional graph stores or completion backlog.
@@ -1639,8 +1543,7 @@ final class RiddenRouteStore {
             return try await RouteSolveLimiter.shared.withPermit {
                 try await solveMissingSequentialWithPermit(
                     trains, scope: scope, allowLegacy: true, graphStore: graphStore?.store,
-                    providedInputs: providedInputs,
-                    rejectPrecomputed: { _ in }, publish: publish)
+                    providedInputs: providedInputs, publish: publish)
             }
         }
         let queue = JourneyWorkQueue(indices: indices)
@@ -1668,7 +1571,6 @@ final class RiddenRouteStore {
                                 let solved = try await solveMissingSequentialWithPermit(
                                     [trains[index]], scope: scope, allowLegacy: true,
                                     graphStore: workerStore.store, providedInputs: inputs,
-                                    rejectPrecomputed: { _ in },
                                     publish: { _ in }, saveRoutes: false)
                                 return solved
                             }
@@ -1722,7 +1624,6 @@ final class RiddenRouteStore {
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
         providedCanonicalInputs: [CanonicalRouteInput]? = nil,
-        rejectPrecomputed: @Sendable (String) async -> Void,
         publish: @Sendable ([DrawnRide]) async -> Void,
         saveRoutes: Bool = true
     ) async throws -> [DrawnRide] {
@@ -1747,6 +1648,7 @@ final class RiddenRouteStore {
         for (trainIndex, train) in trains.enumerated() {
             try Task.checkCancellation()
             guard !train.requiresRouteConfirmation, !skipped.contains(train.id) else { continue }
+            await yieldForDevice()
             let routeInput: CanonicalRouteInput
             if let prepared = providedCanonicalInputs {
                 routeInput = prepared[trainIndex]
@@ -1757,7 +1659,6 @@ final class RiddenRouteStore {
             let result = try resolver.resolve(.init(train: train, canonicalTrain: canonical,
                 databaseSections: routeInput.databaseSections, databaseProvenance: routeInput.databaseProvenance),
                 allowLegacy: allowLegacy)
-            if result.requiresPrecomputedRejection { await rejectPrecomputed(train.id) }
             switch result.disposition {
             case .unsupported, .awaitingConfirmation, .noSections: continue
             case .geometry, .unavailable: break
@@ -1814,7 +1715,15 @@ final class RiddenRouteStore {
         if let url = railHistoryURL(region: region) {
             do {
                 let data = try Data(contentsOf: url)
-                let overlay = try RailHistoryOverlay.decode(data)
+                // One decoded overlay per file: `cachedHistoryOverlay` serves
+                // the edge index and journey admission from the same entry.
+                let overlay: RailHistoryOverlay
+                if let shared = overlayByURLCache.withLock({ $0[url] }) {
+                    overlay = shared
+                } else {
+                    overlay = try RailHistoryOverlay.decode(data)
+                    overlayByURLCache.withLock { $0[url] = overlay }
+                }
                 let hash = SHA256.hash(data: data).hex
                 state = .loaded(overlay, contentHash: hash)
             }
@@ -1845,6 +1754,18 @@ final class RiddenRouteStore {
     /// runtime; failures are rethrown uncached so error behaviour is unchanged.
     private nonisolated static let overlayByURLCache = OSAllocatedUnfairLock(
         initialState: [URL: RailHistoryOverlay]())
+
+    /// Releases the process-lifetime decodes this store keeps for speed:
+    /// solver inputs and their indexes, the junction registry and the
+    /// history overlays. Every one is a pure memo of a bundled file, so the
+    /// next use decodes it again with the same answer. Called on a memory
+    /// warning, when keeping them risks the process rather than a reload.
+    nonisolated static func releaseCachesForMemoryPressure() async {
+        junctionRegistryCache.withLock { $0.removeAll() }
+        overlayByURLCache.withLock { $0.removeAll() }
+        historyStateCache.withLock { $0.removeAll() }
+        await SolverInputCache.shared.releaseForMemoryPressure()
+    }
 
     nonisolated static func cachedHistoryOverlay(from url: URL) throws -> RailHistoryOverlay {
         if let cached = overlayByURLCache.withLock({ $0[url] }) { return cached }
@@ -1972,15 +1893,6 @@ final class RiddenRouteStore {
         })
         return RailHistoryRevisionSet(Dictionary(uniqueKeysWithValues:
             regions.map { ($0.code, railHistoryRevision(region: $0.code)) }), contentHashes: hashes)
-    }
-
-    private nonisolated static func routeTemplateDigest(
-        _ canonical: Train, country: String
-    ) -> String? {
-        let canonicalSections = canonical.routeSections ?? []
-        let sections = canonicalSections.map(RouteGraph.RouteSection.init)
-        guard !sections.isEmpty else { return nil }
-        return RouteGraph.keyDigest(RouteGraph.templateKey(sections: sections))
     }
 
     @TaskLocal nonisolated static var activePendingOwner: PendingSolveOwner?
@@ -2361,77 +2273,10 @@ final class RiddenRouteStore {
         return removed
     }
 
-    private nonisolated static func routeSectionBoundarySharesExplicitStop(
-        _ previous: RouteSection, _ next: RouteSection
-    ) -> Bool {
-        RouteSolver.routeSectionBoundarySharesExplicitStop(previous, next)
-    }
-
-    private struct Part: Decodable {
-        let train: Train
-        let route: CachedRoute?
-        let sourceHashes: [String: String]?
-        enum CodingKeys: String, CodingKey {
-            case train, route
-            case sourceHashes = "source_hashes"
-        }
-    }
-
-    private struct CachedRoute: Decodable {
-        let features: [Feature]?
-        let solverContext: RailPrecomputedSolverContext?
-
-        private enum CodingKeys: String, CodingKey {
-            case features
-            case solverContext = "solver_context"
-        }
-    }
-
-    private struct Feature: Decodable {
-        let properties: Properties?
-        let geometry: Geometry
-    }
-
-    private struct Properties: Decodable {
-        let routeTemplateKey: String?
-        let segmentIndex: Int?
-        let from: String?
-        let to: String?
-        let requiredLineNames: [String]?
-        let preferredLineNames: [String]?
-        let requiredOperatorNames: [String]?
-        let preferredOperatorNames: [String]?
-        let requiredLineIDs: [String]?
-        let sectionCodes: [String]?
-        let fromStationCode: String?
-        let toStationCode: String?
-        let temporalKind: RouteGraph.TemporalKind?
-        let historyIDs: [String]?
-        let validFrom: String?
-        let validTo: String?
-        private enum CodingKeys: String, CodingKey {
-            case routeTemplateKey = "route_template_key"
-            case segmentIndex = "segment_index"
-            case from, to
-            case requiredLineNames = "required_line_names"
-            case preferredLineNames = "preferred_line_names"
-            case requiredOperatorNames = "required_operator_names"
-            case preferredOperatorNames = "preferred_operator_names"
-            case requiredLineIDs = "required_line_ids"
-            case sectionCodes = "section_codes"
-            case fromStationCode = "from_n02_station_code"
-            case toStationCode = "to_n02_station_code"
-            case temporalKind = "temporal_kind"
-            case historyIDs = "history_ids"
-            case validFrom = "valid_from"
-            case validTo = "valid_to"
-        }
-    }
-
     private nonisolated static let resourceRevisionState = Result { try RailResourceRevisions.bundled() }
 
-    /// An unavailable attestation disables disk cache reuse and precomputed
-    /// routes; the physical solver remains usable and the reason stays visible.
+    /// An unavailable attestation disables disk cache reuse; the physical
+    /// solver remains usable and the reason stays visible.
     private nonisolated static func resourceRevisionFailure(for country: String) -> String? {
         do {
             _ = try resourceRevisionState.get().requiredRevision(for: country)
@@ -2442,11 +2287,6 @@ final class RiddenRouteStore {
     private nonisolated static var resourceRevisions: RailResourceRevisions? {
         if case .success(let revisions) = resourceRevisionState { return revisions }
         return nil
-    }
-
-    private struct PrecomputedSources: Decodable {
-        let sourceHashes: [String: String]?
-        enum CodingKeys: String, CodingKey { case sourceHashes = "source_hashes" }
     }
 
     private struct RuntimeCache: Codable {
@@ -2537,45 +2377,12 @@ final class RiddenRouteStore {
         }
     }
 
-    private struct Geometry: Decodable {
-        let strokes: [[Coordinate]]
-
-        private enum CodingKeys: String, CodingKey { case type, coordinates }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            switch try container.decode(String.self, forKey: .type) {
-            case "LineString":
-                let raw = try container.decode([[Double]].self, forKey: .coordinates)
-                strokes = [Self.coordinates(raw)]
-            case "MultiLineString":
-                let raw = try container.decode([[[Double]]].self, forKey: .coordinates)
-                strokes = raw.map(Self.coordinates)
-            default:
-                strokes = []
-            }
-        }
-
-        private static func coordinates(_ raw: [[Double]]) -> [Coordinate] {
-            raw.compactMap { pair in
-                guard pair.count >= 2, pair[0].isFinite, pair[1].isFinite else { return nil }
-                return Coordinate(lon: pair[0], lat: pair[1])
-            }
-        }
-    }
-
     enum LoadError: LocalizedError {
-        case missingManifest(String)
-        case missingPart(String, String)
         case missingSolverResources(String)
         case invalidHistory(String, String)
 
         var errorDescription: String? {
             switch self {
-            case .missingManifest(let dataset):
-                "\(dataset)/manifest.json is missing from the app bundle."
-            case .missingPart(let dataset, let name):
-                "\(dataset)/\(name).json is missing from the app bundle."
             case .missingSolverResources(let country):
                 "Runtime solver resources for \(country) are missing from the app bundle."
             case .invalidHistory(let country, let reason):
@@ -2585,93 +2392,6 @@ final class RiddenRouteStore {
     }
 }
 
-/// Which precomputed part holds which journey, built once per dataset.
-///
-/// The scan it replaces was paid per journey rather than per dataset: with a
-/// cold route cache, every train the load could not answer for reopened and
-/// re-decoded all 201 parts of the Japanese sample to discover that 200 of
-/// them belonged to somebody else.
-///
-/// Complete manifest identities answer the first ask without opening any parts.
-/// Legacy or incomplete identity maps fall back to the original one-time scan.
-/// Selected parts still undergo the normal route decode and provenance checks.
-///
-/// An `actor` rather than a lock, for the reason ``EdgeIndexCache`` is one:
-/// two regions can be decoding at the same time, and the second must wait on
-/// the first build instead of starting a second one beside it.
-private actor DatasetPartIndex {
-    static let shared = DatasetPartIndex()
-
-    /// Positions preserve manifest order, including repeated train identities.
-    typealias PartRef = DatasetManifestIndex.PartRef
-
-    private var indexes: [String: [String: [PartRef]]] = [:]
-    private var inFlight: [String: Task<[String: [PartRef]], Error>] = [:]
-
-    /// The index for one dataset, building it if this is the first ask.
-    func parts(in dataset: String) async throws -> [String: [PartRef]] {
-        if let ready = indexes[dataset] { return ready }
-        if let running = inFlight[dataset] { return try await running.value }
-
-        let task = Task.detached(priority: .userInitiated) {
-            try Self.build(dataset: dataset)
-        }
-        inFlight[dataset] = task
-        defer { inFlight[dataset] = nil }
-        // Detached, so a load cancelled halfway through the scan does not take
-        // it down and leave the next load to start it over. The scan is worth
-        // finishing: it is the only thing that ever has to read these files.
-        let built = try await task.value
-        indexes[dataset] = built
-        return built
-    }
-
-    /// Use manifest identities when complete; otherwise read each part for its id.
-    ///
-    /// ``PartIdentity`` deliberately cannot see the route: the coordinate
-    /// arrays are nearly all of a part's bytes and the scan needs none of
-    /// them, so what would have been a full geometry decode is now a parse
-    /// that keeps one string.
-    private nonisolated static func build(dataset: String) throws -> [String: [PartRef]] {
-        guard let manifestURL = Bundle.main.url(
-            forResource: "manifest",
-            withExtension: "json",
-            subdirectory: dataset
-        ) else { throw RiddenRouteStore.LoadError.missingManifest(dataset) }
-
-        let manifest = try JSONDecoder().decode(
-            DatasetManifestIndex.self,
-            from: Data(contentsOf: manifestURL)
-        )
-        if let index = manifest.indexedParts { return index }
-        var index: [String: [PartRef]] = [:]
-        index.reserveCapacity(manifest.parts.count)
-        for (position, name) in manifest.parts.enumerated() {
-            guard let partURL = Bundle.main.url(
-                forResource: name,
-                withExtension: "json",
-                subdirectory: dataset
-            ) else { throw RiddenRouteStore.LoadError.missingPart(dataset, name) }
-            let identity = try JSONDecoder().decode(
-                PartIdentity.self, from: Data(contentsOf: partURL))
-            // Appended rather than assigned. The datasets that ship carry one
-            // part per journey, but a dataset that ever carried two for the
-            // same id would have had both searched before, and dropping one
-            // here would silently stop drawing a route that used to draw.
-            index[identity.train.id, default: []].append(
-                PartRef(name: name, position: position))
-        }
-        return index
-    }
-
-    private struct PartIdentity: Decodable {
-        let train: TrainIdentity
-
-        struct TrainIdentity: Decodable {
-            let id: String
-        }
-    }
-}
 
 /// Latest solver partial, posted off the main actor. ``post`` returns true only
 /// for the caller that must schedule the drain; later posts replace ``latest``

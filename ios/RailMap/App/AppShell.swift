@@ -1,6 +1,7 @@
 import RailCore
 import RailPresentation
 import SwiftUI
+import os
 
 import UniformTypeIdentifiers
 
@@ -118,6 +119,16 @@ struct AppShell: View {
         .environment(itineraries)
         .environment(riddenRoutes)
         .environment(riddenRoutes.lineDetector)
+        // A phone that is short of memory ends the app outright. The decoded
+        // packages and indexes held for speed are pure memos of bundled
+        // files, so dropping them costs a later decode, not an answer.
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
+            Task.detached(priority: .utility) {
+                await RiddenRouteStore.releaseCachesForMemoryPressure()
+                await EdgeIndexCache.shared.releaseForMemoryPressure()
+            }
+        }
         .task {
             Task.detached(priority: .utility) {
                 _ = TrainServicePatterns.patterns
@@ -193,11 +204,46 @@ struct AppShell: View {
         // and `EdgeIndexCache` holds the indexes for the life of the process.
         .task(id: StatisticsLoadTrigger(shows: selection == .stats, key: statisticsLoadKey)) {
             guard selection == .stats, let loaded = itineraries.loaded else { return }
+            guard !riddenRoutes.isLoading, riddenRoutes.hasSettledRoutes(in: loaded.trains, matching: { _ in true }) else { return }
             mileageStatistics.load(
                 scope: StatisticsScope(region: regionScope.wrappedValue, area: statisticsArea.wrappedValue),
                 trains: loaded.trains, rides: riddenRoutes.rides)
         }
 #if DEBUG
+        // "Reload all", run by a harness that cannot tap through Settings:
+        // N runs back to back once the first load settles, the first one
+        // optionally stopped partway. Each run's wall time is logged under
+        // the app's subsystem for `log show`.
+        .task {
+            guard let raw = UITestLaunchConfiguration.current[.reloadAll],
+                  let runs = Int(raw), runs > 0 else { return }
+            let stopAfter = UITestLaunchConfiguration.current[.reloadAllStopAfterMilliseconds]
+                .flatMap(Int.init)
+            let log = Logger(subsystem: RailSignpost.subsystem, category: "harness")
+            @MainActor func settled() async {
+                for _ in 0..<2400 {
+                    if case .loading = riddenRoutes.state {} else if !riddenRoutes.requestedIsEmpty { return }
+                    try? await Task.sleep(for: .milliseconds(250))
+                }
+            }
+            await settled()
+            log.notice("reloadAll ready rides=\(riddenRoutes.rides.count, privacy: .public)")
+            for run in 1...runs {
+                let started = ContinuousClock.now
+                await riddenRoutes.reloadAll()
+                if run == 1, let stopAfter {
+                    try? await Task.sleep(for: .milliseconds(stopAfter))
+                    let progress = riddenRoutes.reloadProgress
+                    riddenRoutes.cancelReloadAll()
+                    log.notice("reloadAll run=\(run, privacy: .public) stopped done=\(progress?.done ?? -1, privacy: .public)/\(progress?.total ?? -1, privacy: .public)")
+                    continue
+                }
+                await settled()
+                let elapsed = ContinuousClock.now - started
+                log.notice("reloadAll run=\(run, privacy: .public) ms=\(Int(elapsed.components.seconds * 1000 + elapsed.components.attoseconds / 1_000_000_000_000_000), privacy: .public) rides=\(riddenRoutes.rides.count, privacy: .public)")
+            }
+            log.notice("reloadAll finished")
+        }
         // Which destination to open on, for the same reason
         // `RAILMAP_UI_TEST_SELECT` exists: a `simctl` screenshot harness
         // cannot tap a selector, so two of the three would only ever be
@@ -327,7 +373,7 @@ struct AppShell: View {
             region: regionScopeCode,
             area: statisticsAreaCode,
             trains: routeLoadKey,
-            ridesGeneration: riddenRoutes.ridesKeyGeneration)
+            ridesGeneration: riddenRoutes.isLoading ? -1 : riddenRoutes.ridesKeyGeneration)
     }
 
     private struct StatisticsLoadKey: Equatable {
