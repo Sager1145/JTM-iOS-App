@@ -48,6 +48,13 @@ struct RailWorkspaceView: View {
     @Binding var appearance: String
     @State private var render: RailMapView.RenderStats?
     @State private var query = ""
+    /// The Journeys tab's list mode when the search field is empty:
+    /// `.upcoming` or `.all`. `selection` holds `.search` while there is a
+    /// query, and returns to this when the field is cleared.
+    @State private var journeyMode: PrimaryTab = .upcoming
+    /// What the tab bar shows. Stored rather than derived so the system tab
+    /// view always binds to a plain value; kept in step with `selection`.
+    @State private var tabSelection: WorkspaceTab = .journeys
     @State private var selectedDate = Dates.allDates
     /// Alerts and confirmations share one presentation slot. Independent
     /// booleans here can all become true during the same map/menu callback,
@@ -237,8 +244,24 @@ struct RailWorkspaceView: View {
                     }
                 }
             }
-            .onChange(of: selection) { _, tab in
-                if tab != .search { searchFocused = false }
+            .onChange(of: selection, initial: true) { _, tab in
+                if tab == .stats { searchFocused = false }
+                if tab == .upcoming || tab == .all { journeyMode = tab }
+                if tabSelection != tab.workspaceTab { tabSelection = tab.workspaceTab }
+            }
+            .onChange(of: tabSelection) { _, tab in
+                guard tab != selection.workspaceTab else { return }
+                switch tab {
+                case .stats: selection = .stats
+                case .journeys: selection = currentJourneyPage
+                }
+            }
+            // Search is a state of the Journeys list, not a place: typing
+            // puts the list in `.search`, clearing it restores the list mode.
+            .onChange(of: query) { _, text in
+                let empty = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                if !empty, selection == .upcoming || selection == .all { selection = .search }
+                if empty, selection == .search { selection = journeyMode }
             }
             .railObserveHingedDisplay {
                 if !hasHingedDisplay { hasHingedDisplay = true }
@@ -874,17 +897,8 @@ struct RailWorkspaceView: View {
         if let launch = journeyEditor {
             journeyEditorPage(launch)
         } else {
-            WorkspaceTabs(selection: $selection) { tab in
-                switch tab {
-                case .upcoming:
-                    page(tab) { upcomingPanel }
-                case .stats:
-                    page(tab) { statisticsPanel }
-                case .all:
-                    page(tab) { allJourneysPanel() }
-                case .search:
-                    page(tab) { searchPanel }
-                }
+            WorkspaceTabs(selection: workspaceTabSelection) { tab in
+                workspacePage(pageTab(tab))
             }
         }
     }
@@ -1164,7 +1178,6 @@ struct RailWorkspaceView: View {
             derived: derived,
             journeyPresentation: { presentation(for: $0) },
             openJourney: { sheet = .detail($0.id) },
-            openData: openData,
             openSettings: openSettings)
     }
 
@@ -1173,14 +1186,12 @@ struct RailWorkspaceView: View {
     /// The title changes with the destination or selected journey, never its height.
     private func panelTitle(for tab: PrimaryTab) -> String {
         switch tab {
-        case .upcoming:
-            localization.text("nav.upcoming", fallback: "Upcoming")
         case .stats:
             localization.text("nav.stats", fallback: "Stats")
-        case .all:
-            localization.text("nav.allJourneys", fallback: "All journeys")
-        case .search:
-            localization.countryText("sec.search", fallback: "Search & Add")
+        case .upcoming, .all, .search:
+            // One destination, one title; the list mode is the segmented
+            // control under the search field and the subtitle's summary.
+            localization.text("ios.tab.journeys", fallback: "Journeys")
         }
     }
 
@@ -1259,25 +1270,18 @@ struct RailWorkspaceView: View {
                     train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
             },
             playback: { playbackButton },
-            journeyDate: { journeyDateMenu(for: tab) },
+            journeyFilter: { journeyFilterMenu },
             region: { regionMenu },
             statisticsDate: { statisticsDateMenu },
             statisticsShare: { statisticsShareButton },
             destinationMenu: { destinationMenu(for: tab) })
     }
 
+    /// The gear: utilities only. The date filter now lives in the Journeys
+    /// filter button on every list mode, "Clear selection" is the journey
+    /// card's own close button, and Save/Restore my rides are in Data Library.
     @ViewBuilder
     private func destinationMenu(for tab: PrimaryTab) -> some View {
-        if tab == .all || tab == .upcoming || tab == .search {
-            // The date filter is a BUTTON on Upcoming and All Journeys now
-            // (see ``panelActions(for:)``), so it appears here only for
-            // Search — one filter must not have two entries in one state.
-            if tab == .search, let loaded = itineraries.loaded, !loaded.days.isEmpty {
-                dateFilterSection(loaded)
-                Divider()
-            }
-            rideSourceSection
-        }
         WorkspaceUtilityMenuItems(
             onOpenData: openData,
             onOpenSettings: openSettings)
@@ -1326,7 +1330,7 @@ struct RailWorkspaceView: View {
     /// of the same scope, and both are on screen at every sheet stop.
     ///
     /// It changes the statistics only. §5.3.1: "Passport 的日期 Scope 独立于
-    /// Journeys 筛选，切换后不扰动旅程列表" — ``journeyDateMenu(for:)`` is the
+    /// Journeys 筛选，切换后不扰动旅程列表" — ``journeyFilterMenu`` is the
     /// other tabs' filter and is a different value with a different owner.
     private var statisticsDateMenu: some View {
         Button {
@@ -1401,6 +1405,41 @@ struct RailWorkspaceView: View {
     /// having the app silently move them somewhere they did not ask to be.
     private var regionMenu: some View {
         Menu {
+            regionMenuItems
+        } label: {
+            SheetIconLabel(
+                systemImage: "globe.asia.australia", isActive: regionScope != nil)
+        }
+        .accessibilityLabel(Text(localization.text("country.label", fallback: "Region")))
+        .accessibilityValue(Text(regionScopeName))
+        .accessibilityIdentifier("regionScopeButton")
+    }
+
+    /// The Journeys list's one scope control: region and date in a single
+    /// menu. Stats keeps its own date scope (§5.3.1 — the statistics period
+    /// is independent of the list filter) but shares the region value.
+    private var journeyFilterMenu: some View {
+        Menu {
+            Section(localization.countryText("country.label", fallback: "Region")) {
+                regionMenuItems
+            }
+            if let loaded = itineraries.loaded {
+                Section(localization.journeyText("ios.journey.dateFilter", fallback: "Date filter")) {
+                    dateFilterMenuContent(loaded, dates: journeyDates(for: selection, in: loaded))
+                }
+            }
+        } label: {
+            SheetIconLabel(
+                systemImage: "line.3.horizontal.decrease",
+                isActive: regionScope != nil || selectedDate != Dates.allDates)
+        }
+        .accessibilityLabel(Text(localization.text("ios.journey.filter", fallback: "Filter")))
+        .accessibilityValue(Text("\(regionScopeName), \(dateBucketLabel(selectedDate))"))
+        .accessibilityIdentifier("journeyFilterButton")
+    }
+
+    @ViewBuilder
+    private var regionMenuItems: some View {
             // 全部 first, and above a divider: it is not a sixth region, it is
             // the absence of the scope the other five apply.
             Button {
@@ -1426,13 +1465,6 @@ struct RailWorkspaceView: View {
                     }
                 }
             }
-        } label: {
-            SheetIconLabel(
-                systemImage: "globe.asia.australia", isActive: regionScope != nil)
-        }
-        .accessibilityLabel(Text(localization.text("country.label", fallback: "Region")))
-        .accessibilityValue(Text(regionScopeName))
-        .accessibilityIdentifier("regionScopeButton")
     }
 
     private func selectRegion(_ region: Region) {
@@ -1725,10 +1757,10 @@ struct RailWorkspaceView: View {
     @available(iOS 27.1, *)
     private func hingedWorkspaceLayout(expandedDisplay: Bool, containerWidth: CGFloat) -> some View {
         withPresentations(DuoWorkspaceShell(selection: Binding(
-            get: { selection },
+            get: { tabSelection },
             set: { tab in
-                guard journeyEditor == nil, tab != selection else { return }
-                selection = tab
+                guard journeyEditor == nil, tab != tabSelection else { return }
+                tabSelection = tab
                 sidebarMenuHidden = false
                 if stageSelection == .compact { stageSelection = .medium }
             }), map: {
@@ -1736,14 +1768,15 @@ struct RailWorkspaceView: View {
             }, usesKeyboardMenu: !expandedDisplay && searchFocused,
                preservesMenuBounds: searchFocused, containerWidth: containerWidth,
                panel: { tab, size, safe in
-                hingedCardLayout(size: size, safe: safe, expandedDisplay: expandedDisplay, tab: tab)
+                hingedCardLayout(size: size, safe: safe, expandedDisplay: expandedDisplay,
+                                 tab: pageTab(tab))
             }, controls: {
                 DuoMapToolbar(controller: controller, onLayers: { sheet = .mapLayers },
                         isMenuHidden: sidebarMenuHidden,
                         onToggleMenu: expandedDisplay ? { sidebarMenuHidden.toggle() } : nil,
                         onSelectPage: !expandedDisplay && searchFocused ? { tab in
                             guard journeyEditor == nil else { return }
-                            selection = tab
+                            workspaceTabSelection.wrappedValue = tab
                             searchFocused = false
                             if stageSelection == .compact { stageSelection = .medium }
                         } : nil)
@@ -1855,10 +1888,27 @@ struct RailWorkspaceView: View {
 
     private func workspacePage(_ tab: PrimaryTab) -> WorkspacePage {
         switch tab {
-        case .upcoming: page(tab) { upcomingPanel }
         case .stats: page(tab) { statisticsPanel }
-        case .all: page(tab) { allJourneysPanel() }
-        case .search: page(tab) { searchPanel }
+        case .upcoming, .all, .search: page(tab) { journeysPanel }
+        }
+    }
+
+    // MARK: - two destinations (UI reorganization pass 2)
+
+    /// The page the Journeys list shows when its tab is chosen: the query's
+    /// results while there is one, otherwise the remembered list mode.
+    private var currentJourneyPage: PrimaryTab {
+        query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? journeyMode : .search
+    }
+
+    /// The tab bar's two values; `tabSelection` and `selection` are kept in
+    /// step by the two `onChange` handlers on the workspace root.
+    private var workspaceTabSelection: Binding<WorkspaceTab> { $tabSelection }
+
+    private func pageTab(_ tab: WorkspaceTab) -> PrimaryTab {
+        switch tab {
+        case .stats: .stats
+        case .journeys: selection.isJourneyList ? selection : currentJourneyPage
         }
     }
 
@@ -2161,7 +2211,7 @@ struct RailWorkspaceView: View {
         railCommands.performSearch = {
             guard !self.presentedEditorOwnsShortcuts else { return }
             self.sidebarMenuHidden = false
-            self.selection = .search
+            if self.selection == .stats { self.selection = self.currentJourneyPage }
             Task { @MainActor in
                 await Task.yield()
                 self.searchFocused = true
@@ -2386,7 +2436,7 @@ struct RailWorkspaceView: View {
         journeyListState(searchQuery: "", region: regionScope, groupsByDate: false)
     }
 
-    /// The search destination, and its own field.
+    /// The Journeys destination: its own search field, the list mode and the list.
     ///
     /// The field is drawn here rather than left to `.searchable`, and that is
     /// the fix rather than a preference. `.searchable` was attached to the
@@ -2403,26 +2453,16 @@ struct RailWorkspaceView: View {
     /// same `.searchable` had no field to give either. A destination whose
     /// whole job is a query cannot depend on machinery that only one OS
     /// version has and this app has disabled there.
-    private var searchPanel: some View {
+    private var journeysPanel: some View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         return VStack(spacing: 0) {
             JourneySearchField(query: $query, isFocused: $searchFocused)
             Group {
                 if needle.isEmpty {
-                    // No action in this empty state any more: the `+` in the
-                    // panel header adds a journey, and it is on screen in this
-                    // state and in the results state alike. §16's mapping rule
-                    // — the same one this file argues for the gear a few
-                    // screens up — is that one action does not get two entries
-                    // in one state.
-                    WorkspaceUnavailableView(
-                        presentation: .init(title: .key(
-                            "sec.search", fallback: "Search journeys")),
-                        systemImage: "magnifyingglass",
-                        description: localization.countryText(
-                            "ph.search", fallback: "Train, station, or identifier"),
-                        perform: { perform($0, on: nil) },
-                        performSecondary: { perform($0, on: nil) })
+                    VStack(spacing: 0) {
+                        journeyModePicker
+                        if journeyMode == .all { ridesList } else { upcomingPanel }
+                    }
                 } else {
                     journeyListState(searchQuery: needle, region: nil)
                 }
@@ -2430,6 +2470,27 @@ struct RailWorkspaceView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .background { keyboardShortcuts }
+    }
+
+    /// Upcoming / All: which part of the log the list shows. This was two
+    /// tabs; it is one question about one list, so it is one control.
+    private var journeyModePicker: some View {
+        Picker(
+            localization.text("ios.journey.listScope", fallback: "Journeys to show"),
+            selection: Binding(
+                get: { journeyMode },
+                set: { selection = $0 })
+        ) {
+            Text(localization.text("ios.tab.upcoming", fallback: "Upcoming"))
+                .tag(PrimaryTab.upcoming)
+            Text(localization.text("ios.tab.all", fallback: "All"))
+                .tag(PrimaryTab.all)
+        }
+        .pickerStyle(.segmented)
+        .labelsHidden()
+        .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
+        .padding(.bottom, 8)
+        .accessibilityIdentifier("journeyListScope")
     }
 
     @ViewBuilder
@@ -2986,59 +3047,6 @@ struct RailWorkspaceView: View {
             naming: localization.stationNamingGeneration)
     }
 
-    /// §5.1's date filter, as a submenu of the header's gear menu.
-    ///
-    /// Search only, now. The other two destinations that read this value carry
-    /// it as a round button of their own — see ``journeyDateMenu(for:)`` —
-    /// and the contents are shared rather than written twice.
-    @ViewBuilder
-    private func dateFilterSection(_ loaded: ItineraryStore.Loaded) -> some View {
-        Menu {
-            dateFilterMenuContent(loaded, dates: availableDates(loaded))
-        } label: {
-            Label(
-                selectedDate == Dates.allDates
-                    ? localization.countryText("date.all", fallback: "All dates")
-                    : selectedDate,
-                systemImage: "calendar")
-        }
-    }
-
-    /// §5.1's date filter, as a round button in the header row.
-    ///
-    /// One value — ``selectedDate`` — shared by Upcoming and All Journeys,
-    /// because the two are asking the same question of the same log from
-    /// different ends of it, and a reader who scopes to one day in the log and
-    /// finds the other tab still showing every day is reading two answers. It
-    /// is NOT the statistics' date: §5.3.1 says so in as many words, and
-    /// ``statisticsDateMenu`` is that other value's control.
-    ///
-    /// What differs between the two tabs is which days are on offer. The log
-    /// offers every bucket the store has; Upcoming offers only the ones that
-    /// still lie ahead, because a menu that lets the reader pick a day in the
-    /// past on a list of what is coming is a control whose every entry empties
-    /// the screen.
-    @ViewBuilder
-    private func journeyDateMenu(for tab: PrimaryTab) -> some View {
-        Menu {
-            if let loaded = itineraries.loaded {
-                dateFilterMenuContent(loaded, dates: journeyDates(for: tab, in: loaded))
-            }
-        } label: {
-            SheetIconLabel(
-                systemImage: "calendar", isActive: selectedDate != Dates.allDates)
-        }
-        .accessibilityLabel(
-            Text(localization.journeyText("ios.journey.dateFilter", fallback: "Date filter")))
-        .accessibilityValue(Text(dateBucketLabel(selectedDate)))
-        .accessibilityIdentifier("journeyDateButton")
-    }
-
-    /// The days one destination may be scoped to.
-    ///
-    /// Region-scoped in both cases, so the globe and the calendar cannot
-    /// disagree: with the scope on 台灣, a Japanese-only day is not a day this
-    /// screen has.
     private func journeyDates(
         for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
     ) -> [String] {
@@ -3145,27 +3153,6 @@ struct RailWorkspaceView: View {
         return Dates.availableDates(trains, manualDates: manualDates.dates)
     }
 
-    /// The gear menu's view-state action.
-    ///
-    /// "Save as my rides" and "Restore my rides" used to sit here as well.
-    /// They change the working set, so they live in Data Library → My rides
-    /// only — the rule stated at the top of `SettingsView`: data-changing
-    /// operations are not mirrored into navigation menus. See
-    /// docs/ui-reorganization.md.
-    @ViewBuilder
-    private var rideSourceSection: some View {
-        if itineraries.selectedTrainID != nil {
-            Button {
-                itineraries.selectedTrainID = nil
-            } label: {
-                Label(
-                    localization.journeyText(
-                        "ios.journey.clearSelection", fallback: "Clear selection"),
-                    systemImage: "xmark.circle")
-            }
-            Divider()
-        }
-    }
 
     /// New journey — and, because there is no active region any more, which
     /// region it starts in.

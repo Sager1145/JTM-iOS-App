@@ -118,6 +118,7 @@ final class ConsoleSweepTests: XCTestCase {
         let all = app.tabBars.buttons.element(boundBy: index(of: "all"))
         if all.waitForExistence(timeout: 6) {
             all.tap()
+            selectJourneyScope("All", in: app)
             settle()
         }
     }
@@ -132,16 +133,24 @@ final class ConsoleSweepTests: XCTestCase {
                 continue
             }
             button.tap()
+            // Upcoming and All are segments of the Journeys tab's scope control.
+            if tab == "upcoming" { selectJourneyScope("Upcoming", in: app) }
+            if tab == "all" { selectJourneyScope("All", in: app) }
             settle()
         }
     }
 
+    /// The tab bar now has two tabs: Journeys (0) and Stats (1). Upcoming, All
+    /// and Search are all modes of the Journeys tab.
     private func index(of tab: String) -> Int {
-        switch tab {
-        case "upcoming": 0
-        case "stats": 1
-        case "all": 2
-        default: 3
+        tab == "stats" ? 1 : 0
+    }
+
+    /// Picks a segment of the Journeys tab's `journeyListScope` control.
+    private func selectJourneyScope(_ title: String, in app: XCUIApplication) {
+        let segment = app.segmentedControls["journeyListScope"].buttons[title]
+        if segment.waitForExistence(timeout: 6) {
+            segment.tap()
         }
     }
 
@@ -268,6 +277,7 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func walkJourneyDetailAndEditor(_ app: XCUIApplication) {
         app.tabBars.buttons.element(boundBy: index(of: "all")).tap()
+        selectJourneyScope("All", in: app)
         settle()
 
         let rows = app.collectionViews.cells

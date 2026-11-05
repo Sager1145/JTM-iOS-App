@@ -394,14 +394,14 @@ struct DuoMapToolbar: ToolbarContent {
     var isMenuHidden = false
     var onToggleMenu: (() -> Void)? = nil
     /// Folded Search replaces the full tabs with a compact native menu.
-    var onSelectPage: ((PrimaryTab) -> Void)? = nil
+    var onSelectPage: ((WorkspaceTab) -> Void)? = nil
     @Environment(AppLocalization.self) private var localization
 
     var body: some ToolbarContent {
         if let onSelectPage {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    ForEach(PrimaryTab.allCases.filter { $0 != .search }) { tab in
+                    ForEach(WorkspaceTab.allCases) { tab in
                         Button {
                             onSelectPage(tab)
                         } label: {

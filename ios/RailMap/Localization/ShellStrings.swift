@@ -41,6 +41,15 @@ enum ShellStrings {
         "ios.tab.all": [
             .en: "All", .ja: "すべて", .zhHans: "全部", .zhHant: "全部",
         ],
+        "ios.tab.journeys": [
+            .en: "Journeys", .ja: "旅程", .zhHans: "行程", .zhHant: "行程",
+        ],
+        "ios.journey.filter": [
+            .en: "Filter", .ja: "絞り込み", .zhHans: "筛选", .zhHant: "篩選",
+        ],
+        "ios.journey.listScope": [
+            .en: "Journeys to show", .ja: "表示する旅程", .zhHans: "显示的行程", .zhHant: "顯示的行程",
+        ],
         "ios.tab.search": [
             .en: "Search", .ja: "検索", .zhHans: "搜索", .zhHant: "搜尋",
         ],

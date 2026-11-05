@@ -5,8 +5,9 @@ import XCTest
 /// Explicit stress coverage; ordinary test runs do not launch it.
 @MainActor
 final class MenuStressUITests: XCTestCase {
+    // Logical destinations. The tab bar has only two tabs now (Journeys,
+    // Stats); Upcoming, All and Search are modes of the Journeys tab.
     private let tabs = ["Upcoming", "Stats", "All", "Search"]
-    private let headers = ["Upcoming", "Stats", "All journeys", "Search & Actions"]
     private let stages = ["compact", "medium", "expanded"]
     private let query = "menu stress retained query"
     private var app: XCUIApplication?
@@ -130,7 +131,16 @@ final class MenuStressUITests: XCTestCase {
     }
 
     private func destination(_ index: Int, in app: XCUIApplication) -> XCUIElement {
-        app.buttons.matching(NSPredicate(format: "label == %@", tabs[index])).firstMatch
+        let label = index == 1 ? "Stats" : "Journeys"
+        return app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+    }
+
+    private func scopeSegment(_ index: Int, in app: XCUIApplication) -> XCUIElement? {
+        switch index {
+        case 0: app.segmentedControls["journeyListScope"].buttons["Upcoming"]
+        case 2: app.segmentedControls["journeyListScope"].buttons["All"]
+        default: nil
+        }
     }
 
     private func choose(_ index: Int, in app: XCUIApplication) {
@@ -142,18 +152,24 @@ final class MenuStressUITests: XCTestCase {
         }
         wait { target.exists && target.isHittable }
         target.tap()
+        if let segment = scopeSegment(index, in: app) {
+            wait { segment.exists && segment.isHittable }
+            segment.tap()
+        }
         context += ", arrival=\(tabs[index]), actualStage=\(actualStage(in: app))"
         assertDestination(index, in: app)
     }
 
     private func assertDestination(_ index: Int, in app: XCUIApplication) {
         let tab = destination(index, in: app)
-        let header = app.staticTexts.matching(identifier: "panelHeader")
-            .matching(NSPredicate(format: "label == %@", headers[index])).firstMatch
+        let header = app.staticTexts.matching(identifier: "panelHeader").firstMatch
         wait { tab.isSelected && header.exists && header.isHittable
             && !header.frame.isEmpty && app.frame.contains(header.frame) }
         XCTAssertTrue(tab.isSelected, "The requested native destination must be selected. \(context)")
-        XCTAssertEqual(header.label, headers[index], context)
+        if index == 1 { XCTAssertEqual(header.label, "Stats", context) }
+        if let segment = scopeSegment(index, in: app) {
+            wait { segment.exists && segment.isSelected }
+        }
     }
 
     private func assertSearchQuery(in app: XCUIApplication, expected: String? = nil) {
@@ -163,8 +179,7 @@ final class MenuStressUITests: XCTestCase {
             if toggle.exists && toggle.isHittable {
                 toggle.tap()
             } else {
-                let header = app.staticTexts.matching(identifier: "panelHeader")
-                    .matching(NSPredicate(format: "label == %@", headers[3])).firstMatch
+                let header = app.staticTexts.matching(identifier: "panelHeader").firstMatch
                 let start = header.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
                 let end = start.withOffset(CGVector(dx: 0, dy: -260))
                 #if targetEnvironment(macCatalyst)
@@ -197,7 +212,7 @@ final class MenuStressUITests: XCTestCase {
     }
 
     private func isDuo(in app: XCUIApplication) -> Bool {
-        let first = destination(0, in: app), last = destination(3, in: app)
+        let first = destination(0, in: app), last = destination(1, in: app)
         return first.exists && last.exists && abs(first.frame.midX - last.frame.midX) < 4
             && first.frame.maxY < last.frame.minY
     }

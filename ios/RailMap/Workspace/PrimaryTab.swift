@@ -6,8 +6,12 @@
 /// of switches for the map already on screen behind it. Its package status and
 /// diagnostics moved to Settings, where the rest of the app's plumbing lives.
 ///
-/// What is left are the three questions a journey log actually answers:
-/// what is coming, what does it all add up to, and what have I got.
+/// What is left are the questions a journey log actually answers: what is
+/// coming, what does it all add up to, and what have I got.
+///
+/// Pass 2 (docs/ui-reorganization.md): these are now the workspace's PAGE
+/// states, not tabs. Upcoming, All and Search are list modes of the one
+/// Journeys tab; the tab bar shows `WorkspaceTab` below.
 enum PrimaryTab: String, CaseIterable, Identifiable {
     /// What is coming. Dated today or later, soonest first.
     case upcoming
@@ -22,8 +26,9 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
 
     var headerActionCount: Int {
         switch self {
-        case .upcoming, .stats, .all: 4
-        case .search: 2
+        // Journeys (any list mode): new, play, filter, utilities.
+        // Stats: share, date scope, region, utilities.
+        case .upcoming, .stats, .all, .search: 4
         }
     }
 
@@ -63,3 +68,47 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
     }
 }
 
+
+/// The two destinations on the tab bar (UI reorganization pass 2).
+///
+/// Upcoming, All and Search were three tabs over ONE journey list: Upcoming is
+/// a date rule, Search is a query. They are now one Journeys destination whose
+/// list mode (`PrimaryTab.upcoming` / `.all`) is a segmented control under the
+/// search field, and whose `.search` mode is simply "the field has text".
+/// `PrimaryTab` keeps those three values because the map scope, playback scope
+/// and filters already key off them; this enum is only what the tab bar shows.
+enum WorkspaceTab: String, CaseIterable, Identifiable {
+    case journeys
+    case stats
+
+    var id: String { rawValue }
+
+    var tabLocalizationKey: String {
+        switch self {
+        case .journeys: "ios.tab.journeys"
+        case .stats: "ios.tab.stats"
+        }
+    }
+
+    var tabFallbackName: String {
+        switch self {
+        case .journeys: "Journeys"
+        case .stats: "Stats"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .journeys: "tram"
+        case .stats: "chart.bar.xaxis"
+        }
+    }
+}
+
+extension PrimaryTab {
+    /// Which tab-bar destination shows this page.
+    var workspaceTab: WorkspaceTab { self == .stats ? .stats : .journeys }
+
+    /// Upcoming, All and Search are list modes of the one Journeys tab.
+    var isJourneyList: Bool { self != .stats }
+}

@@ -3,13 +3,13 @@ import SwiftUI
 
 /// Header controls render resolved actions and caller-supplied scope menus.
 /// This view neither owns a store nor decides which journey action is primary.
-struct WorkspacePanelActions<Playback: View, JourneyDate: View, RegionMenu: View,
+struct WorkspacePanelActions<Playback: View, JourneyFilter: View, RegionMenu: View,
                              StatisticsDate: View, StatisticsShare: View,
                              DestinationMenu: View>: View {
     let tab: PrimaryTab
     let newJourney: () -> Void
     @ViewBuilder var playback: () -> Playback
-    @ViewBuilder var journeyDate: () -> JourneyDate
+    @ViewBuilder var journeyFilter: () -> JourneyFilter
     @ViewBuilder var region: () -> RegionMenu
     @ViewBuilder var statisticsDate: () -> StatisticsDate
     @ViewBuilder var statisticsShare: () -> StatisticsShare
@@ -17,23 +17,20 @@ struct WorkspacePanelActions<Playback: View, JourneyDate: View, RegionMenu: View
     @Environment(AppLocalization.self) private var localization
 
     var body: some View {
-        // New journey leads on Upcoming — the default tab and where a
-        // planned trip appears once saved — and stays on Search. Same
-        // handler, so both open the one new-trip flow.
-        if tab == .upcoming { newJourneyButton }
-        if tab == .all { playback() }
-        if tab == .stats { statisticsShare() }
-        // Keep date, region and utilities anchored at the trailing edge.
-        // Tab-specific actions occupy the leading slot so filters do not move.
-        if tab == .upcoming || tab == .all {
-            journeyDate()
-            region()
-        }
-        if tab == .stats {
+        // Pass 2: one header per destination, the same four slots in every
+        // list mode so nothing moves while the reader types or switches
+        // Upcoming / All. New journey and playback each have exactly this
+        // one header entry (plus ⌘N, the empty state and the journey card's
+        // own Play for a single journey).
+        if tab.isJourneyList {
+            newJourneyButton
+            playback()
+            journeyFilter()
+        } else {
+            statisticsShare()
             statisticsDate()
             region()
         }
-        if tab == .search { newJourneyButton }
         Menu(content: destinationMenu) {
             SheetIconLabel(systemImage: "gearshape")
         }
@@ -48,6 +45,6 @@ struct WorkspacePanelActions<Playback: View, JourneyDate: View, RegionMenu: View
             accessibilityLabel: Text(localization.text(
                 "ios.newJourney", fallback: "New journey")),
             action: newJourney)
-        .accessibilityIdentifier("newJourneyButton.\(tab.rawValue)")
+        .accessibilityIdentifier("newJourneyButton")
     }
 }
