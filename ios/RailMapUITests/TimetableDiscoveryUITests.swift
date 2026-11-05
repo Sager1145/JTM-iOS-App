@@ -109,55 +109,31 @@ enum NewTripTimetableTestSupport {
         setDate(month: month, day: day, year: year, field: "newTripArrival", in: app)
     }
 
+    /// The editor's date and time are typed (TypedDateTimeField); the
+    /// calendar stays behind the field's calendar button.
     static func setTime(hour: Int, minute: Int, field: String, in app: XCUIApplication) {
-        let picker = app.datePickers[field]
-        reveal(picker, in: app)
-        let clock = picker.buttons.matching(NSPredicate(
-            format: "label MATCHES %@", "[0-9]{1,2}:[0-9]{2}")).firstMatch
-        XCTAssertTrue(clock.waitForExistence(timeout: 3), app.debugDescription)
-        clock.tap()
-        XCTAssertTrue(app.pickerWheels.firstMatch.waitForExistence(timeout: 8), app.debugDescription)
-        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: String(format: "%02d", hour))
-        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: String(format: "%02d", minute))
-        let dismiss = app.buttons["PopoverDismissRegion"]
-        if dismiss.waitForExistence(timeout: 2) { dismiss.tap() }
-        XCTAssertTrue(picker.buttons[String(format: "%02d:%02d", hour, minute)].exists,
-                      app.debugDescription)
+        type(String(format: "%d:%02d", hour, minute), into: "\(field)Time", in: app)
     }
 
     private static func setDate(
         month: String, day: Int, year: Int, field: String, in app: XCUIApplication
     ) {
-        let departure = app.datePickers[field]
-        reveal(departure, in: app)
-        // Compact style shows one "Date and Time Picker" button. Tapping it opens
-        // a calendar whose month control is DatePicker.Show (value "October 2026"),
-        // not a button labeled with the month and year.
-        let opener = departure.buttons.firstMatch
-        if opener.waitForExistence(timeout: 3) { opener.tap() } else { departure.tap() }
-        let show = app.buttons["DatePicker.Show"]
-        XCTAssertTrue(show.waitForExistence(timeout: 8), app.debugDescription)
-        let shown = (show.value as? String) ?? ""
-        if !shown.contains(month) || !shown.contains(String(year)) {
-            show.tap()
-            XCTAssertTrue(app.pickerWheels.firstMatch.waitForExistence(timeout: 8), app.debugDescription)
-            app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: month)
-            app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: String(year))
-            // Showing the wheels replaces DatePicker.Show with DatePicker.Hide.
-            let hide = app.buttons["DatePicker.Hide"]
-            if hide.waitForExistence(timeout: 3) {
-                hide.tap()
-            } else if show.exists {
-                show.tap()
-            }
+        let months = ["January", "February", "March", "April", "May", "June", "July",
+                      "August", "September", "October", "November", "December"]
+        let number = (months.firstIndex(of: month) ?? 0) + 1
+        type(String(format: "%04d-%02d-%02d", year, number, day), into: "\(field)Date", in: app)
+    }
+
+    private static func type(_ value: String, into identifier: String, in app: XCUIApplication) {
+        let text = app.textFields[identifier]
+        reveal(text, in: app)
+        XCTAssertTrue(text.waitForExistence(timeout: 8), app.debugDescription)
+        text.tap()
+        if let current = text.value as? String, !current.isEmpty, current != text.placeholderValue {
+            text.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
         }
-        let dayButton = app.buttons.matching(NSPredicate(
-            format: "label MATCHES %@",
-            ".*\\b\(month)\\b.*\\b\(day)\\b.*")).firstMatch
-        XCTAssertTrue(dayButton.waitForExistence(timeout: 8), app.debugDescription)
-        dayButton.tap()
-        let dismiss = app.buttons["PopoverDismissRegion"]
-        if dismiss.waitForExistence(timeout: 2) { dismiss.tap() }
+        text.typeText(value + "\n")
+        XCTAssertEqual(text.value as? String, value, app.debugDescription)
     }
 
     static func reveal(

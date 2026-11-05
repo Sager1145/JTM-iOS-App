@@ -102,6 +102,8 @@ final class JourneySaveUITests: XCTestCase {
         // Edit mode has no confirmation step. Leaving for a stop and coming
         // back is the same draft the confirmation screen used to round-trip.
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        // The stops sit above the details the group is part of.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: true))
         EditorUITestSupport.tap(origin, in: app)
         XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
         // The stop screen's back button, whatever its title.

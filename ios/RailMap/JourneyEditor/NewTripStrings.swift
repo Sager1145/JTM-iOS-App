@@ -191,10 +191,6 @@ enum NewTripStrings {
         "ios.newTrip.searchTitle": [
             .zhHans: "选择车站", .zhHant: "選擇車站", .ja: "駅を選択", .en: "Choose a station",
         ],
-        "ios.newTrip.onlyCompany": [
-            .zhHans: "仅{company}", .zhHant: "僅{company}",
-            .ja: "{company}のみ", .en: "Only {company}",
-        ],
         "ios.newTrip.fillDetails": [
             .en: "Fill in trip details", .ja: "行程の詳細を入力",
             .zhHant: "填入行程詳細", .zhHans: "填入行程详情",
@@ -318,6 +314,38 @@ enum NewTripStrings {
         "ios.newTrip.enterByHand": [
             .en: "Enter the rest by hand", .ja: "残りを手入力する",
             .zhHant: "其餘手動填寫", .zhHans: "其余手动填写",
+        ],
+        "ios.newTrip.filterCompany": [
+            .en: "Company", .ja: "会社",
+            .zhHant: "公司", .zhHans: "公司",
+        ],
+        "ios.newTrip.filterLine": [
+            .en: "Line", .ja: "路線",
+            .zhHant: "路線", .zhHans: "线路",
+        ],
+        "ios.newTrip.filterClear": [
+            .en: "Clear filters", .ja: "絞り込みを解除",
+            .zhHant: "清除篩選", .zhHans: "清除筛选",
+        ],
+        "ios.newTrip.dateHint": [
+            .en: "2026-11-05", .ja: "2026-11-05",
+            .zhHant: "2026-11-05", .zhHans: "2026-11-05",
+        ],
+        "ios.newTrip.dateForms": [
+            .en: "e.g. 2026-11-05, 11/05 or 1105", .ja: "例：2026-11-05、11/05、1105",
+            .zhHant: "例如 2026-11-05、11/05、1105", .zhHans: "例如 2026-11-05、11/05、1105",
+        ],
+        "ios.newTrip.dateInvalid": [
+            .en: "Not a date. Try 2026-11-05, 11/05 or 1105.", .ja: "日付として読めません。2026-11-05、11/05、1105 の形で入力してください。",
+            .zhHant: "無法辨識日期。請輸入 2026-11-05、11/05 或 1105。", .zhHans: "无法识别日期。请输入 2026-11-05、11/05 或 1105。",
+        ],
+        "ios.newTrip.timeInvalid": [
+            .en: "Not a time. Try 9:30 or 0930.", .ja: "時刻として読めません。9:30 または 0930 の形で入力してください。",
+            .zhHant: "無法辨識時間。請輸入 9:30 或 0930。", .zhHans: "无法识别时间。请输入 9:30 或 0930。",
+        ],
+        "ios.newTrip.openCalendar": [
+            .en: "Calendar", .ja: "カレンダー",
+            .zhHant: "月曆", .zhHans: "日历",
         ],
     ]
 }

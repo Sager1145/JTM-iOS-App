@@ -78,7 +78,16 @@ struct StationPickerView: View {
     var onLoad: ((EditorCatalog?, [RetiredStation], [String: String]) -> Void)? = nil
     var accessibilityPrefix = "rideEditorStation"
     @State private var query = ""
-    @State private var onlyCompany = false
+    /// Company, then optionally one of its lines. Both narrow the results
+    /// and the map; a line also lists its stations in route order.
+    @State private var filterOperatorID: String?
+    @State private var filterLineID: String?
+    /// Operators of this region, most ridden first. Built once per load from
+    /// the catalog's own operator → line index.
+    @State private var filterOperators: [CatalogOperator] = []
+    @State private var operatorLabels: [String: String] = [:]
+    @State private var riddenByLine: [String: Int] = [:]
+    @State private var lineFitRevision = 0
     @State private var search = StationPickerSearchController()
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
@@ -91,14 +100,16 @@ struct StationPickerView: View {
     @State private var didLoad = false
     @State private var loadError: String?
     /// Every station of the region, for tapping on the map above the list.
-    @State private var mapStations: [CatalogStation] = []
+    @State private var allStations: [CatalogStation] = []
 
     private var queryBinding: Binding<String> { inlineQuery ?? $query }
     private var searchText: String { queryBinding.wrappedValue }
     private var loadToken: String {
         "\(regionCode)|\(selectedLineIDs.sorted().joined(separator: ","))|\(rideDate ?? "")|\(onSelectRetired != nil)"
     }
-    private var companyName: String? { onlyCompany ? companyFilter : nil }
+    /// Saved rides, to rank companies and lines by use. Optional: the picker
+    /// also works where no store is in the environment.
+    @Environment(ItineraryStore.self) private var itineraries: ItineraryStore?
 
     private var operatorNames: [String: String] {
         guard let catalog else { return [:] }
@@ -213,8 +224,8 @@ struct StationPickerView: View {
             }
         }
         .task(id: loadToken) { await load() }
-        .onChange(of: searchText) { _, needle in search.apply(query: needle, companyName: companyName) }
-        .onChange(of: onlyCompany) { _, _ in search.apply(query: searchText, companyName: companyName) }
+        .onChange(of: searchText) { _, needle in search.apply(query: needle, companyName: nil) }
+        .onChange(of: filterLineID) { _, _ in lineFitRevision += 1 }
         .onDisappear { search.cancel() }
     }
 
@@ -226,6 +237,7 @@ struct StationPickerView: View {
         } else {
             VStack(spacing: 0) {
                 if !isSearching { mapHeader }
+                filterChips
                 list
             }
         }
@@ -236,7 +248,7 @@ struct StationPickerView: View {
         TripMapView(
             regionCode: regionCode,
             stations: mapStations,
-            content: TripMapContent(routes: [], marks: [], fitRevision: 0),
+            content: filterMapContent,
             reduceMotion: reduceMotion,
             onStation: { station in
                 if let onSelectWithLine { onSelectWithLine(station, nil, nil) }
@@ -245,7 +257,8 @@ struct StationPickerView: View {
             },
             onRoute: { _ in },
             onBackground: {},
-            onZoomChange: { _ in })
+            onZoomChange: { _ in },
+            showsAllStations: filterOperatorID != nil)
             .overlay(alignment: .top) {
                 Text(localization.text("ios.newTrip.pickOnMap", fallback: "Tap a station on the map, or search"))
                     .font(.footnote.weight(.medium))
@@ -261,15 +274,12 @@ struct StationPickerView: View {
 
     private var list: some View {
             List {
-                if let companyFilter, !companyFilter.isEmpty {
-                    Toggle(isOn: $onlyCompany) {
-                        Text(localization.text("ios.newTrip.onlyCompany", params: ["company": .string(companyFilter)],
-                                               fallback: "Only {company}"))
-                            .fixedSize(horizontal: false, vertical: true)
+                if let line = filterLineID.flatMap({ catalog?.line(id: $0, regionCode: regionCode) }), !isSearching {
+                    Section(line.name) {
+                        ForEach(lineStationRows(line)) { row in stationButton(row, line: line) }
                     }
-                }
-                if isSearching {
-                    ForEach(lineGroups) { group in
+                } else if isSearching {
+                    ForEach(filteredLineGroups) { group in
                         Section {
                             ForEach(group.rows) { row in stationButton(row, line: group.line) }
                         } header: {
@@ -280,14 +290,23 @@ struct StationPickerView: View {
                         }
                     }
                     ForEach(retiredStations) { station in retiredStationButton(station) }
-                    if lineGroups.isEmpty && retiredStations.isEmpty {
+                    if filteredLineGroups.isEmpty && retiredStations.isEmpty {
                         Text(localization.text("ios.editor.stationUnmatched")).foregroundStyle(.secondary)
                     }
-                } else if onSelectWithLine != nil {
+                } else if onSelectWithLine != nil, filterOperatorID == nil {
                     Text(localization.text("ios.newTrip.searchPrompt", fallback: "Search by station, line or company"))
                         .foregroundStyle(.secondary)
                 } else {
-                    ForEach(companyGroups) { company in
+                    if filterOperatorID != nil {
+                        // The company's lines: choosing one lists its stations in order.
+                        ForEach(filterLines, id: \.id) { line in
+                            Button { filterLineID = line.id } label: {
+                                Text(line.name).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            }
+                            .accessibilityIdentifier("stationPickerFilterLine-\(line.id)")
+                        }
+                    }
+                    ForEach(filterOperatorID == nil ? companyGroups : []) { company in
                         Section(company.name) {
                             ForEach(company.lines) { group in
                                 NavigationLink {
@@ -309,6 +328,172 @@ struct StationPickerView: View {
                     }
                 }
             }
+    }
+
+    // MARK: - company and line filter
+
+    /// A jointly run line belongs to every one of its companies.
+    private var filteredLineGroups: [CatalogStationLineGroup] {
+        guard let filterOperatorID else { return lineGroups }
+        let lineIDs = filterLineID.map { Set([$0]) } ?? Set(filterLines.map(\.id))
+        return lineGroups.filter { lineIDs.contains($0.line.id) }
+    }
+
+    private func operatorLabel(_ op: CatalogOperator) -> String {
+        operatorLabels[op.id] ?? op.shortName ?? op.name
+    }
+
+    /// The chosen company's lines, most ridden first, then by name.
+    private var filterLines: [CatalogLine] {
+        guard let filterOperatorID, let catalog else { return [] }
+        return catalog.lines(operatorID: filterOperatorID)
+            .filter { $0.regionCode == regionCode }
+            .sorted {
+                let lhs = riddenByLine[$0.id] ?? 0
+                let rhs = riddenByLine[$1.id] ?? 0
+                if lhs != rhs { return lhs > rhs }
+                return $0.name.localizedStandardCompare($1.name) == .orderedAscending
+            }
+    }
+
+    /// A line's stations in route order, ready to pick without typing.
+    private func lineStationRows(_ line: CatalogLine) -> [CatalogStationRow] {
+        guard let catalog else { return [] }
+        let ids = Dictionary(
+            lineGroups.first(where: { $0.line.id == line.id })?.rows.map { ($0.station.key, $0.stationID) } ?? [],
+            uniquingKeysWith: { first, _ in first })
+        return catalog.memberships(lineID: line.id, regionCode: regionCode)
+            .sorted { $0.sequence < $1.sequence }
+            .compactMap { membership in
+                guard let station = catalog.station(membership.stationKey) else { return nil }
+                return CatalogStationRow(
+                    station: station, subtitle: subtitleByCode[station.key.sourceCode] ?? "",
+                    copyText: copyLabels.label(for: station, catalog: catalog),
+                    stationID: ids[station.key] ?? nil)
+            }
+    }
+
+    /// Stations the map offers: the chosen line's, the company's, or all.
+    private var mapStations: [CatalogStation] {
+        guard let catalog, let filterOperatorID else { return allStations }
+        let lineIDs = filterLineID.map { [$0] } ?? catalog.lines(operatorID: filterOperatorID).map(\.id)
+        var seen: Set<StationKey> = []
+        return lineIDs.flatMap { catalog.memberships(lineID: $0, regionCode: regionCode) }
+            .compactMap { seen.insert($0.stationKey).inserted ? catalog.station($0.stationKey) : nil }
+    }
+
+    /// The chosen line drawn through its stations, so the camera frames it.
+    private var filterMapContent: TripMapContent {
+        guard let catalog, let filterLineID else { return TripMapContent() }
+        let coordinates = catalog.memberships(lineID: filterLineID, regionCode: regionCode)
+            .sorted { $0.sequence < $1.sequence }
+            .map { AppleMapDatum.display(Coordinate(lon: $0.longitude, lat: $0.latitude), country: regionCode).clLocation }
+        guard coordinates.count >= 2 else { return TripMapContent() }
+        let route = TripMapContent.Route(
+            id: filterLineID,
+            pieces: [.init(coordinates: coordinates, colorHex: nil, isConnector: false)],
+            isSelected: false)
+        return TripMapContent(routes: [route], marks: [], fitRevision: lineFitRevision)
+    }
+
+    @ViewBuilder private var filterChips: some View {
+        if !filterOperators.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    Menu {
+                        ForEach(filterOperators, id: \.id) { op in
+                            Button(operatorLabel(op)) {
+                                filterOperatorID = op.id
+                                filterLineID = nil
+                            }
+                        }
+                    } label: {
+                        chip(filterOperators.first { $0.id == filterOperatorID }.map(operatorLabel)
+                             ?? localization.text("ios.newTrip.filterCompany", fallback: "Company"),
+                             active: filterOperatorID != nil)
+                    }
+                    .accessibilityIdentifier("stationPickerCompanyFilter")
+                    if filterOperatorID != nil, !filterLines.isEmpty {
+                        Menu {
+                            ForEach(filterLines, id: \.id) { line in
+                                Button(line.name) { filterLineID = line.id }
+                            }
+                        } label: {
+                            chip(filterLines.first { $0.id == filterLineID }?.name
+                                 ?? localization.text("ios.newTrip.filterLine", fallback: "Line"),
+                                 active: filterLineID != nil)
+                        }
+                        .accessibilityIdentifier("stationPickerLineFilter")
+                    }
+                    if filterOperatorID != nil {
+                        Button {
+                            filterOperatorID = nil
+                            filterLineID = nil
+                        } label: {
+                            Label(localization.text("ios.newTrip.filterClear", fallback: "Clear filters"),
+                                  systemImage: "xmark.circle.fill")
+                                .labelStyle(.iconOnly)
+                                .font(.title3)
+                                .foregroundStyle(.secondary)
+                                .frame(minWidth: 44, minHeight: 44)
+                        }
+                        .accessibilityIdentifier("stationPickerClearFilters")
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 6)
+            }
+        }
+    }
+
+    private func chip(_ title: String, active: Bool) -> some View {
+        HStack(spacing: 4) {
+            Text(title).lineLimit(1)
+            Image(systemName: "chevron.down").font(.caption2.weight(.semibold))
+        }
+        .font(.subheadline.weight(active ? .semibold : .regular))
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+        .foregroundStyle(active ? Color.white : Color.primary)
+        .background(active ? Color.accentColor : Color(.tertiarySystemFill), in: Capsule())
+        .frame(minHeight: 44)
+    }
+
+    /// Operators with lines here, ranked by how often the reader rode them.
+    /// Labels come from the operator registry, the app's one display-name path.
+    private func prepareFilters(catalog: EditorCatalog) {
+        let operators = catalog.operators(in: regionCode).filter { !catalog.lines(operatorID: $0.id).isEmpty }
+        let identity = RegistryIdentityCache.identity(forRegion: regionCode)
+        var labels: [String: String] = [:]
+        if let identity {
+            for op in operators {
+                if let id = identity.operatorIDs(forCatalogName: op.name).first,
+                   let label = identity.operatorLabel(id), !label.isEmpty {
+                    labels[op.id] = label
+                }
+            }
+        }
+        var byLine: [String: Int] = [:]
+        for train in itineraries?.loaded?.trains ?? [] where (train.region ?? regionCode) == regionCode {
+            for id in Set((train.routeSections ?? []).flatMap { $0.lineIDs ?? [] }) { byLine[id, default: 0] += 1 }
+        }
+        var byOperator: [String: Int] = [:]
+        for op in operators {
+            byOperator[op.id] = catalog.lines(operatorID: op.id).reduce(0) { $0 + (byLine[$1.id] ?? 0) }
+        }
+        let preferred = companyFilter
+        operatorLabels = labels
+        riddenByLine = byLine
+        filterOperators = operators.sorted { lhs, rhs in
+            // The trip's own company, when the editor has one, comes first.
+            let lp = lhs.name == preferred || labels[lhs.id] == preferred
+            let rp = rhs.name == preferred || labels[rhs.id] == preferred
+            if lp != rp { return lp }
+            let l = byOperator[lhs.id] ?? 0
+            let r = byOperator[rhs.id] ?? 0
+            if l != r { return l > r }
+            return (labels[lhs.id] ?? lhs.name).localizedStandardCompare(labels[rhs.id] ?? rhs.name) == .orderedAscending
+        }
     }
 
     private func load() async {
@@ -353,13 +538,14 @@ struct StationPickerView: View {
                   search.install(index: loaded.1, retired: loaded.2, request: request,
                                  output: loaded.3, loadID: loadID) else { return }
             catalog = loaded.0
-            mapStations = loaded.0.stations(in: regionCode)
+            allStations = loaded.0.stations(in: regionCode)
             retiredByID = Dictionary(loaded.2.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             subtitleByCode = loaded.4
             lineLabelByID = loaded.6
             onLoad?(loaded.0, loaded.5, loaded.4)
             didLoad = true
-            if isSearching || onlyCompany { search.apply(query: searchText, companyName: companyName) }
+            prepareFilters(catalog: loaded.0)
+            if isSearching { search.apply(query: searchText, companyName: nil) }
         } catch {
             guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
             loadError = error.localizedDescription

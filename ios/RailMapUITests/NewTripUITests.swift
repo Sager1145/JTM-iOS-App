@@ -261,6 +261,48 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(app.buttons["newTripCancel"].waitForNonExistence(timeout: 8))
     }
 
+    /// Company, then one of its lines, lists that line's stations in route
+    /// order, so a station is chosen without typing.
+    func testStationPickerFiltersByCompanyThenLine() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let origin = app.buttons["newTripOrigin"]
+        XCTAssertTrue(reveal(origin, in: app, upward: true))
+        XCTAssertTrue(waitForEnabled(origin, timeout: 20))
+        let previousLabel = origin.label
+        origin.tap()
+        let company = app.buttons["stationPickerCompanyFilter"]
+        XCTAssertTrue(company.waitForExistence(timeout: 20), app.debugDescription)
+        company.tap()
+        let jrEast = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS %@ OR label CONTAINS %@", "JR東日本", "東日本旅客鉄道")).firstMatch
+        XCTAssertTrue(jrEast.waitForExistence(timeout: 8), app.debugDescription)
+        jrEast.tap()
+        let line = app.buttons["stationPickerFilterLine-jp-東日本旅客鉄道-山手線"]
+        var swipes = 0
+        while !line.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 30 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.75))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+            swipes += 1
+        }
+        XCTAssertTrue(line.exists, app.debugDescription)
+        line.tap()
+        XCTAssertTrue(app.buttons["stationPickerLineFilter"].waitForExistence(timeout: 5))
+        attachScreenshot("filter-line-stations", app)
+        let osaki = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004135"]
+        swipes = 0
+        while !osaki.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 30 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.75))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+            swipes += 1
+        }
+        XCTAssertTrue(osaki.exists, "The line's stations must be listed without typing. \(app.debugDescription)")
+        osaki.tap()
+        let chosen = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label != %@", previousLabel), object: origin)
+        XCTAssertEqual(XCTWaiter.wait(for: [chosen], timeout: 8), .completed, origin.label)
+    }
+
     func testMultipleCorridorsRequireChoice() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchNewTrip(app)

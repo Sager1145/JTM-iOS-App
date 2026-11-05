@@ -1050,16 +1050,14 @@ struct JourneyEditorView: View {
 
     private var timeSection: some View {
         Section {
-            DatePicker(
-                text("departure", fallback: "Departure"),
-                selection: timetableTimeSelection(isDeparture: true),
-                displayedComponents: [.date, .hourAndMinute])
-                .accessibilityIdentifier("newTripDeparture")
-            DatePicker(
-                text("arrival", fallback: "Arrival"),
-                selection: timetableTimeSelection(isDeparture: false),
-                displayedComponents: [.date, .hourAndMinute])
-                .accessibilityIdentifier("newTripArrival")
+            TypedDateTimeField(
+                title: text("departure", fallback: "Departure"),
+                value: timetableTimeSelection(isDeparture: true),
+                identifier: "newTripDeparture")
+            TypedDateTimeField(
+                title: text("arrival", fallback: "Arrival"),
+                value: timetableTimeSelection(isDeparture: false),
+                identifier: "newTripArrival")
             if arrival < departure {
                 Text(text(
                     "arrivalBeforeDeparture",

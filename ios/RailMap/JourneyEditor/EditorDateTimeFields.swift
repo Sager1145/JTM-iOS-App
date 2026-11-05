@@ -51,11 +51,18 @@ struct EditorDateField: View {
     }
 
     private var baseTextField: some View {
-        TextField(title, text: text, prompt: Text("YYYY-MM-DD"))
+        TextField(title, text: text, prompt: Text(localization.text("ios.newTrip.dateHint", fallback: "2026-11-05")))
             .keyboardType(.numbersAndPunctuation)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
             .accessibilityIdentifier(accessibilityID ?? "")
+            // Short forms (1105, 11/5, 20261105) become the full date on Return.
+            .onSubmit {
+                let year = Calendar.current.component(.year, from: pickerSelection.wrappedValue)
+                if case .valid(_, _, _, let canonical) = EditorTime.parseDateInput(date, defaultYear: year) {
+                    date = canonical
+                }
+            }
     }
 
     private var text: Binding<String> {
@@ -295,5 +302,124 @@ struct EditorTimeField: View {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .current
         return calendar
+    }
+}
+
+/// One typed date and time, the calendar one tap away. Used for every
+/// date-and-time the journey editor edits.
+///
+/// Typing accepts the short forms of ``EditorTime/parseDateInput(_:defaultYear:)``
+/// (`1105`, `11/5`, `20261105`; the year defaults to the value's own) and of
+/// ``EditorTime/parseTime(_:)`` (`0930`, `9:30`). A value is applied as soon as
+/// it parses, and invalid text is flagged in place without being rewritten.
+struct TypedDateTimeField: View {
+    @Environment(AppLocalization.self) private var localization
+    let title: String
+    @Binding var value: Date
+    let identifier: String
+    @State private var dateText = ""
+    @State private var timeText = ""
+    @State private var showsCalendar = false
+    @FocusState private var focused: Part?
+
+    private enum Part: Hashable { case date, time }
+
+    private var calendar: Calendar { Calendar.current }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 8) {
+                Text(title)
+                    .lineLimit(1)
+                    .layoutPriority(1)
+                Spacer(minLength: 4)
+                TextField(localization.text("ios.newTrip.dateHint", fallback: "2026-11-05"), text: $dateText)
+                    .keyboardType(.numbersAndPunctuation)
+                    .multilineTextAlignment(.trailing)
+                    .autocorrectionDisabled()
+                    .focused($focused, equals: .date)
+                    .frame(minWidth: 96, maxWidth: 120)
+                    .accessibilityLabel(title)
+                    .accessibilityIdentifier("\(identifier)Date")
+                    .onSubmit(normalize)
+                TextField("9:30", text: $timeText)
+                    .keyboardType(.numbersAndPunctuation)
+                    .multilineTextAlignment(.trailing)
+                    .autocorrectionDisabled()
+                    .focused($focused, equals: .time)
+                    .frame(width: 56)
+                    .accessibilityIdentifier("\(identifier)Time")
+                    .onSubmit(normalize)
+                Button {
+                    showsCalendar = true
+                } label: {
+                    Image(systemName: "calendar")
+                        .frame(minWidth: 44, minHeight: 44)
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel(localization.text("ios.newTrip.openCalendar", fallback: "Calendar"))
+                .accessibilityIdentifier(identifier)
+                .popover(isPresented: $showsCalendar) {
+                    DatePicker(title, selection: $value, displayedComponents: [.date, .hourAndMinute])
+                        .datePickerStyle(.graphical)
+                        .padding()
+                        .frame(minWidth: 320)
+                        .presentationCompactAdaptation(.popover)
+                }
+            }
+            if let problem {
+                Text(problem)
+                    .font(.footnote)
+                    .foregroundStyle(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else if focused == .date {
+                Text(localization.text("ios.newTrip.dateForms", fallback: "e.g. 2026-11-05, 11/05 or 1105"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(minHeight: 44)
+        .onAppear(perform: refresh)
+        .onChange(of: value) { _, _ in if focused == nil { refresh() } }
+        .onChange(of: focused) { _, part in if part == nil { normalize() } }
+        .onChange(of: dateText) { _, _ in apply() }
+        .onChange(of: timeText) { _, _ in apply() }
+    }
+
+    private var parsedDate: ServiceDateParse {
+        EditorTime.parseDateInput(dateText, defaultYear: calendar.component(.year, from: value))
+    }
+
+    private var problem: String? {
+        if case .invalid = parsedDate {
+            return localization.text("ios.newTrip.dateInvalid", fallback: "Not a date. Try 2026-11-05, 11/05 or 1105.")
+        }
+        if case .invalid = EditorTime.parseTime(timeText) {
+            return localization.text("ios.newTrip.timeInvalid", fallback: "Not a time. Try 9:30 or 0930.")
+        }
+        return nil
+    }
+
+    /// Writes the typed day and clock into `value` when both parse.
+    private func apply() {
+        guard case .valid(let year, let month, let day, _) = parsedDate,
+              case .valid(_, let time) = EditorTime.parseTime(timeText),
+              let start = calendar.date(from: DateComponents(year: year, month: month, day: day)),
+              let civil = calendar.date(byAdding: .day, value: time.dayOffset, to: start),
+              let next = calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: civil),
+              next != value else { return }
+        value = next
+    }
+
+    /// Leaving a field shows the value in its canonical form.
+    private func normalize() {
+        apply()
+        if problem == nil { refresh() }
+    }
+
+    private func refresh() {
+        dateText = RecordDate.text(from: value)
+        let parts = calendar.dateComponents([.hour, .minute], from: value)
+        timeText = String(format: "%d:%02d", parts.hour ?? 0, parts.minute ?? 0)
     }
 }
