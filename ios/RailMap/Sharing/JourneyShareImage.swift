@@ -52,7 +52,7 @@ enum JourneyPoster {
             return raw + " (" + day + ")"
         }
         field(l.countryText("field.company", fallback: "Operator"),
-              train.company ?? JourneyBranding.operatorLabels(of: train).joined(separator: " / "))
+              train.company.map(JourneyBranding.companyText) ?? JourneyBranding.operatorLabels(of: train).joined(separator: " / "))
         field(l.countryText("field.trainType", fallback: "Train type"), train.trainType)
         field(l.text("ios.journeyShare.date"), train.date ?? l.text("ios.journeyShare.undated"))
         if let english = train.numberEn, !english.isEmpty, english != train.number {

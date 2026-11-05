@@ -23,6 +23,40 @@ struct OperatorIdentityTests {
         #expect(OperatorIdentity.code(for: "Unknown") == nil)
     }
 
+    @Test func englishLabelsUseKnownCodesAndMatchTheNativeLevel() {
+        let codes = Set(OperatorIdentity.registry.operators.map(\.code))
+        for (code, label) in OperatorIdentity.englishLabels {
+            #expect(codes.contains(code), "\(code)")
+            #expect(!label.trimmingCharacters(in: .whitespaces).isEmpty, "\(code)")
+        }
+        #expect(OperatorIdentity.englishLabel(code: "jp.jr-east") == "JR East")
+        #expect(OperatorIdentity.englishLabel(code: "jp.tokyo-metro") == "Tokyo Metro")
+        #expect(OperatorIdentity.englishLabel(code: "kr.korail") == "Korail")
+        #expect(OperatorIdentity.englishLabel(code: "tw.tra") == "Taiwan Railway")
+        #expect(OperatorIdentity.englishLabel(code: "hk.mtr") == "MTR")
+        #expect(OperatorIdentity.displayName(code: "jp.jr-west", language: "en") == "JR West")
+    }
+
+    @Test func companyTextTranslatesOnlyInEnglishAndOnlyWhole() {
+        #expect(OperatorIdentity.displayLabel(forCompanyText: "東日本旅客鉄道", language: "en") == "JR East")
+        #expect(OperatorIdentity.displayLabel(forCompanyText: "東日本旅客鉄道", language: "ja") == "JR東日本")
+        #expect(OperatorIdentity.displayLabel(forCompanyText: "東日本旅客鉄道", language: "zh-Hant") == "JR東日本")
+        #expect(OperatorIdentity.englishLabel(forCompanyText: "JR東日本／東京メトロ") == "JR East / Tokyo Metro")
+        #expect(OperatorIdentity.englishLabel(forCompanyText: "JR東日本／Unknown Railway") == nil)
+        #expect(OperatorIdentity.displayLabel(forCompanyText: "Unknown Railway", language: "en") == "Unknown Railway")
+    }
+
+    @Test func registryLabelIsEnglishOnlyForEnglish() throws {
+        let root = try PortFixtures.repositoryRoot()
+        let data = try Data(contentsOf: root.appending(path: "app/data/registry-bundle/jp.json"))
+        let identity = RegistryIdentity(bundle: try JSONDecoder().decode(RegistryBundle.self, from: data))
+        let east = try #require(identity.bundle.operatorRecords.first { $0.value.identity == "jp.jr-east" }?.key)
+        #expect(identity.operatorLabel(east, language: "en") == "JR East")
+        for language in ["ja", "zh-Hans", "zh-Hant"] {
+            #expect(identity.operatorLabel(east, language: language) == identity.operatorLabel(east))
+        }
+    }
+
     @Test func displayNameFallsBackToTheStoredLabel() {
         #expect(OperatorIdentity.displayName(code: "jp.jr-west", language: "missing") == "JR西日本")
     }

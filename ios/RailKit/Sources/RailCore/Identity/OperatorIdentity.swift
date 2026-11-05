@@ -86,7 +86,69 @@ public enum OperatorIdentity {
 
     public static func displayName(code: String, language: String) -> String? {
         guard let op = byCode[code] else { return nil }
+        if language == "en", let english = englishLabel(code: code) { return english }
         let key = ["zh-Hans": "zhHans", "zh-Hant": "zhHant"][language] ?? language
         return op.names[key]?.first ?? op.label
+    }
+
+    // MARK: - English display labels
+
+    /// `operator-english-names.json`: identity code → the operator's own English
+    /// name, at the same level as its native ``Operator/label`` (a short brand
+    /// stays short: JR東日本 → JR East). Operators with no official or
+    /// established English name are absent and keep their native label.
+    /// Sources: `app/data/operator-english-names.sources.md`.
+    struct EnglishLabels: Decodable, Sendable {
+        let version: Int
+        let labels: [String: String]
+    }
+    static let englishLabels: [String: String] = {
+        guard let url = Bundle.module.url(forResource: "operator-english-names", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let result = try? JSONDecoder().decode(EnglishLabels.self, from: data) else {
+            preconditionFailure("Missing or invalid operator English names")
+        }
+        return result.labels
+    }()
+
+    /// English label for an identity code, or nil when the operator has none.
+    public static func englishLabel(code: String) -> String? {
+        guard let label = englishLabels[code], !label.isEmpty else { return nil }
+        return label
+    }
+
+    /// English for free company text (`東日本旅客鉄道`, `JR東日本／東京メトロ`).
+    /// Joined text translates only when every part has an English label, so a
+    /// row never mixes a translated and an untranslated company.
+    public static func englishLabel(forCompanyText text: String) -> String? {
+        let parts = text.components(separatedBy: CharacterSet(charactersIn: "/／"))
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        guard !parts.isEmpty else { return nil }
+        var labels: [String] = []
+        for part in parts {
+            guard let code = code(for: part), let label = englishLabel(code: code) else { return nil }
+            if !labels.contains(label) { labels.append(label) }
+        }
+        return labels.joined(separator: " / ")
+    }
+
+    /// The interface language operator names are shown in (`Localization.Language`
+    /// raw value). The app sets it from its language setting; only `"en"`
+    /// changes what is shown — every other language keeps the operator's own
+    /// native label, as before.
+    public static var displayLanguage: String {
+        get { languageLock.withLock { storedLanguage } }
+        set { languageLock.withLock { storedLanguage = newValue } }
+    }
+    private static let languageLock = NSLock()
+    nonisolated(unsafe) private static var storedLanguage = "ja"
+
+    /// What a reader sees for free company text: English when the display
+    /// language is English and the company has a label, else the native short
+    /// label (``OperatorBranding/companyLabel(_:)``).
+    public static func displayLabel(forCompanyText text: String, language: String = displayLanguage) -> String {
+        if language == "en", let english = englishLabel(forCompanyText: text) { return english }
+        return OperatorBranding.companyLabel(text)
     }
 }
