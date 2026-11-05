@@ -26,9 +26,9 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
                       "The status container must preserve the native map.")
         XCTAssertTrue(map.descendants(matching: .any)["AnnotationContainer"].exists,
                       "The status container must preserve native annotations: \(app.debugDescription)")
-        let all = app.tabBars.buttons["All"]
-        XCTAssertTrue(all.waitForExistence(timeout: 30), app.debugDescription)
-        all.tap()
+        let journeys = app.tabBars.buttons["Journeys"]
+        XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
+        journeys.tap()
         for id in ["20260722_06_sonic44",
                    "20260802_01_taoyuan_airport_mrt_express_t2_taipei"] {
             assertPhysicalRouteGenerated(id, in: app)
@@ -72,9 +72,9 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
                       "The status container must preserve the native map.")
         XCTAssertTrue(map.descendants(matching: .any)["AnnotationContainer"].exists,
                       "The status container must preserve native annotations: \(app.debugDescription)")
-        let all = app.tabBars.buttons["All"]
-        XCTAssertTrue(all.waitForExistence(timeout: 30), app.debugDescription)
-        all.tap()
+        let journeys = app.tabBars.buttons["Journeys"]
+        XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
+        journeys.tap()
         for id in ["20260722_06_sonic44",
                    "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
                    "HK-SAMPLE-EAL-LOW", "MO-SAMPLE-MLM-TAIPA", "KR-SAMPLE-GYEONGBUKSEON"] {
@@ -129,9 +129,12 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
     }
 
     private func revealRideRow(_ id: String, in app: XCUIApplication) -> XCUIElement {
-        let all = app.tabBars.buttons["All"]
-        XCTAssertTrue(all.waitForExistence(timeout: 15), app.debugDescription)
-        all.tap()
+        let journeys = app.tabBars.buttons["Journeys"]
+        XCTAssertTrue(journeys.waitForExistence(timeout: 15), app.debugDescription)
+        journeys.tap()
+        let allScope = app.segmentedControls["journeyListScope"].buttons["All"]
+        XCTAssertTrue(allScope.waitForExistence(timeout: 15), app.debugDescription)
+        allScope.tap()
         let header = app.descendants(matching: .any)["panelHeader"].firstMatch
         let viewport = app.descendants(matching: .any)["workspaceMenuViewport"].firstMatch
         XCTAssertTrue(header.waitForExistence(timeout: 15), app.debugDescription)

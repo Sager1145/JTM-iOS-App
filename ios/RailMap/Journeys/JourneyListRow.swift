@@ -141,11 +141,8 @@ struct JourneyListRow: View {
         } label: {
             Label(localization.text("ios.journeyGroup.title"), systemImage: "folder")
         }
-        Button(action: play) {
-            Label(
-                localization.countryText("btn.play", fallback: "Play journey"),
-                systemImage: "play.fill")
-        }
+        // No Play here (pass 2): playing one journey is the journey card's
+        // Play, and playing the list is the Journeys header's.
         Button(action: showDetail) {
             Label(
                 localization.text("ios.journeyInfo", fallback: "Journey information"),

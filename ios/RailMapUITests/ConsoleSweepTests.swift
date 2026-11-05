@@ -118,6 +118,7 @@ final class ConsoleSweepTests: XCTestCase {
         let all = app.tabBars.buttons.element(boundBy: index(of: "all"))
         if all.waitForExistence(timeout: 6) {
             all.tap()
+            selectJourneyScope("All", in: app)
             settle()
         }
     }
@@ -132,16 +133,24 @@ final class ConsoleSweepTests: XCTestCase {
                 continue
             }
             button.tap()
+            // Upcoming and All are segments of the Journeys tab's scope control.
+            if tab == "upcoming" { selectJourneyScope("Upcoming", in: app) }
+            if tab == "all" { selectJourneyScope("All", in: app) }
             settle()
         }
     }
 
+    /// The tab bar now has two tabs: Journeys (0) and Stats (1). Upcoming, All
+    /// and Search are all modes of the Journeys tab.
     private func index(of tab: String) -> Int {
-        switch tab {
-        case "upcoming": 0
-        case "stats": 1
-        case "all": 2
-        default: 3
+        tab == "stats" ? 1 : 0
+    }
+
+    /// Picks a segment of the Journeys tab's `journeyListScope` control.
+    private func selectJourneyScope(_ title: String, in app: XCUIApplication) {
+        let segment = app.segmentedControls["journeyListScope"].buttons[title]
+        if segment.waitForExistence(timeout: 6) {
+            segment.tap()
         }
     }
 
@@ -241,13 +250,24 @@ final class ConsoleSweepTests: XCTestCase {
             }
             entry.tap()
             settle(1.5)
-            // Settings is a Form with many sections; scrolling it mounts the
-            // rows below the fold, which is where the diagnostics live.
-            if app.tables.firstMatch.exists || app.collectionViews.firstMatch.exists {
-                app.swipeUp()
-                settle(0.5)
-                app.swipeUp()
-                settle(0.5)
+            // Settings keeps its sliders and diagnostics one level deeper
+            // (Map style, About & diagnostics). Open each page so its rows
+            // mount, then come back to the first screen before closing.
+            if destination == "utilitySettingsButton" {
+                for link in ["settingsMapStyleLink", "settingsDiagnosticsLink"] {
+                    let row = element(link, in: app)
+                    if !row.exists { app.swipeUp(); settle(0.5) }
+                    guard row.waitForExistence(timeout: 4) else {
+                        XCTFail("“\(link)” is not on the Settings screen")
+                        continue
+                    }
+                    row.tap()
+                    settle(1)
+                    app.swipeUp()
+                    settle(0.5)
+                    app.navigationBars.buttons.element(boundBy: 0).tap()
+                    settle(0.5)
+                }
             }
             dismissSheet(app)
         }
@@ -257,6 +277,7 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func walkJourneyDetailAndEditor(_ app: XCUIApplication) {
         app.tabBars.buttons.element(boundBy: index(of: "all")).tap()
+        selectJourneyScope("All", in: app)
         settle()
 
         let rows = app.collectionViews.cells

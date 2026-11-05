@@ -212,7 +212,7 @@ final class OrdinaryPhysicalRouteUITests: XCTestCase {
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 15))
 
-        app.tabBars.firstMatch.buttons.element(boundBy: 3).tap()
+        app.tabBars.firstMatch.buttons.element(boundBy: 0).tap() // Journeys tab hosts search
         let search = app.textFields["journeySearchField"]
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         EditorUITestSupport.tap(search, in: app)

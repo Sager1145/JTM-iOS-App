@@ -2,8 +2,8 @@ import SwiftUI
 
 /// System tab hosting only. Page state and content belong to the workspace.
 struct WorkspaceTabs: View {
-    @Binding var selection: PrimaryTab
-    let page: (PrimaryTab) -> WorkspacePage
+    @Binding var selection: WorkspaceTab
+    let page: (WorkspaceTab) -> WorkspacePage
     @Environment(AppLocalization.self) private var localization
 
     var body: some View {
@@ -17,17 +17,13 @@ struct WorkspaceTabs: View {
     @available(iOS 18.0, *)
     private var modernTabs: some View {
         TabView(selection: $selection) {
-            Tab(title(.upcoming), systemImage: PrimaryTab.upcoming.systemImage,
-                value: PrimaryTab.upcoming) { page(.upcoming) }
-            Tab(title(.stats), systemImage: PrimaryTab.stats.systemImage,
-                value: PrimaryTab.stats) { page(.stats) }
-            Tab(title(.all), systemImage: PrimaryTab.all.systemImage,
-                value: PrimaryTab.all) { page(.all) }
-            Tab(title(.search), systemImage: PrimaryTab.search.systemImage,
-                value: PrimaryTab.search, role: .search) { page(.search) }
+            Tab(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage,
+                value: WorkspaceTab.journeys) { page(.journeys) }
+            Tab(title(.stats), systemImage: WorkspaceTab.stats.systemImage,
+                value: WorkspaceTab.stats) { page(.stats) }
         }
-        // The system search role reproduces the reference's trailing circle.
-        // Its exact bar height and margins belong to the running iOS version.
+        // Two destinations: the journey log (with its own search field and
+        // list scope) and the statistics. See `WorkspaceTab`.
         .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()
         .modifier(SystemSheetTabSurface())
@@ -36,24 +32,18 @@ struct WorkspaceTabs: View {
 
     private var legacyTabs: some View {
         TabView(selection: $selection) {
-            page(.upcoming)
-                .tabItem { Label(title(.upcoming), systemImage: PrimaryTab.upcoming.systemImage) }
-                .tag(PrimaryTab.upcoming)
+            page(.journeys)
+                .tabItem { Label(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage) }
+                .tag(WorkspaceTab.journeys)
             page(.stats)
-                .tabItem { Label(title(.stats), systemImage: PrimaryTab.stats.systemImage) }
-                .tag(PrimaryTab.stats)
-            page(.all)
-                .tabItem { Label(title(.all), systemImage: PrimaryTab.all.systemImage) }
-                .tag(PrimaryTab.all)
-            page(.search)
-                .tabItem { Label(title(.search), systemImage: PrimaryTab.search.systemImage) }
-                .tag(PrimaryTab.search)
+                .tabItem { Label(title(.stats), systemImage: WorkspaceTab.stats.systemImage) }
+                .tag(WorkspaceTab.stats)
         }
         .modifier(SystemSheetTabSurface())
         .environment(\.locale, localization.locale)
     }
 
-    private func title(_ tab: PrimaryTab) -> String {
+    private func title(_ tab: WorkspaceTab) -> String {
         localization.text(tab.tabLocalizationKey, fallback: tab.tabFallbackName)
     }
 }
@@ -62,12 +52,12 @@ struct WorkspaceTabs: View {
 /// The map is a stable background; changing tabs only selects card content.
 @available(iOS 27.1, *)
 struct DuoWorkspaceShell<MapContent: View, Panel: View, Controls: ToolbarContent>: View {
-    @Binding var selection: PrimaryTab
+    @Binding var selection: WorkspaceTab
     @ViewBuilder var map: () -> MapContent
     var usesKeyboardMenu: Bool
     var preservesMenuBounds: Bool
     var containerWidth: CGFloat
-    @ViewBuilder var panel: (PrimaryTab, CGSize, EdgeInsets) -> Panel
+    @ViewBuilder var panel: (WorkspaceTab, CGSize, EdgeInsets) -> Panel
     @ToolbarContentBuilder var controls: () -> Controls
     @Environment(AppLocalization.self) private var localization
     @State private var menuBounds: CGRect?
@@ -76,14 +66,10 @@ struct DuoWorkspaceShell<MapContent: View, Panel: View, Controls: ToolbarContent
 
     var body: some View {
         TabView(selection: $selection) {
-            Tab(title(.upcoming), systemImage: PrimaryTab.upcoming.systemImage,
-                value: PrimaryTab.upcoming) { contentPage(.upcoming) }
-            Tab(title(.stats), systemImage: PrimaryTab.stats.systemImage,
-                value: PrimaryTab.stats) { contentPage(.stats) }
-            Tab(title(.all), systemImage: PrimaryTab.all.systemImage,
-                value: PrimaryTab.all) { contentPage(.all) }
-            Tab(title(.search), systemImage: PrimaryTab.search.systemImage,
-                value: PrimaryTab.search, role: .search) { contentPage(.search) }
+            Tab(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage,
+                value: WorkspaceTab.journeys) { contentPage(.journeys) }
+            Tab(title(.stats), systemImage: WorkspaceTab.stats.systemImage,
+                value: WorkspaceTab.stats) { contentPage(.stats) }
         }
         .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()
@@ -93,7 +79,7 @@ struct DuoWorkspaceShell<MapContent: View, Panel: View, Controls: ToolbarContent
         .environment(\.locale, localization.locale)
     }
 
-    private func contentPage(_ tab: PrimaryTab) -> some View {
+    private func contentPage(_ tab: WorkspaceTab) -> some View {
         NavigationStack {
             ZStack {
                 Color.clear
@@ -139,7 +125,7 @@ struct DuoWorkspaceShell<MapContent: View, Panel: View, Controls: ToolbarContent
         }
     }
 
-    private func title(_ tab: PrimaryTab) -> String {
+    private func title(_ tab: WorkspaceTab) -> String {
         localization.text(tab.tabLocalizationKey, fallback: tab.tabFallbackName)
     }
 }

@@ -16,7 +16,7 @@ final class RailMapUITests: XCTestCase {
             let app = launch(tab: "all", stage: stage, sample: "train-store")
             XCTAssertTrue(element("journeyRow-20260703_01_haruka", in: app)
                 .waitForExistence(timeout: 20))
-            let date = element("journeyDateButton", in: app)
+            let date = element("journeyFilterButton", in: app)
             XCTAssertTrue(date.isHittable)
             date.tap()
             let day = app.buttons.matching(NSPredicate(
@@ -79,12 +79,13 @@ final class RailMapUITests: XCTestCase {
         }
         // Duo exposes vertical native tabs as buttons in the shared bar
         // region, rather than as a horizontal XCUIElementTypeTabBar.
-        let searchTab = destination("Search")
+        // Two tabs now: Journeys (hosts Search/Upcoming/All) above Stats.
+        let searchTab = destination("Journeys")
         XCTAssertTrue(searchTab.waitForExistence(timeout: 8))
-        let upcomingTab = destination("Upcoming")
+        let upcomingTab = destination("Stats")
         try XCTSkipUnless(upcomingTab.exists && app.frame.width < 600
                           && abs(upcomingTab.frame.midX - searchTab.frame.midX) < 4
-                          && upcomingTab.frame.maxY < searchTab.frame.minY,
+                          && searchTab.frame.maxY < upcomingTab.frame.minY,
                           "Requires the folded Duo native vertical tab bar.")
         let field = app.textFields["journeySearchField"]
         XCTAssertTrue(field.waitForExistence(timeout: 8))
@@ -124,18 +125,24 @@ final class RailMapUITests: XCTestCase {
                 attach(app, named: "duo-folded-search-keyboard-map-menu")
                 destination("Map").tap()
             }
-            let title = ["all": "All", "stats": "Stats", "upcoming": "Upcoming"][tab]!
+            // Upcoming and All are segments of the Journeys tab.
+            let title = tab == "stats" ? "Stats" : "Journeys"
             let target = destination(title)
             XCTAssertTrue(target.waitForExistence(timeout: 5))
             XCTAssertTrue(target.isHittable)
             attach(app, named: "duo-folded-search-keyboard-pages-\(tab)")
             target.tap()
+            if tab == "all" || tab == "upcoming" {
+                let segment = app.segmentedControls["journeyListScope"]
+                    .buttons[tab == "all" ? "All" : "Upcoming"]
+                XCTAssertTrue(segment.waitForExistence(timeout: 5))
+                segment.tap()
+            }
         }
         chooseFromKeyboard("all")
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(destination("All").isSelected)
-        XCTAssertTrue(app.staticTexts.matching(identifier: "panelHeader")
-            .matching(NSPredicate(format: "label == %@", "All journeys")).firstMatch.isHittable)
+        XCTAssertTrue(destination("Journeys").isSelected)
+        XCTAssertTrue(app.segmentedControls["journeyListScope"].buttons["All"].isSelected)
         for identifier in ["mapNetworkToggle", "mapRoutesToggle", "mapLayersButton", "mapLocateToggle"] {
             let control = app.buttons[identifier]
             let restored = XCTNSPredicateExpectation(
@@ -158,9 +165,8 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
         chooseFromKeyboard("upcoming")
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(destination("Upcoming").isSelected)
-        XCTAssertTrue(app.staticTexts.matching(identifier: "panelHeader")
-            .matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch.isHittable)
+        XCTAssertTrue(destination("Journeys").isSelected)
+        XCTAssertTrue(app.segmentedControls["journeyListScope"].buttons["Upcoming"].isSelected)
         attach(app, named: "duo-folded-search-switched-page")
     }
 
@@ -168,8 +174,9 @@ final class RailMapUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         let app = launch(tab: "search", stage: "medium", sample: "train-store",
                          launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
-        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Search")).firstMatch
-        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
+        // Two native tabs now: Journeys (hosts search) and Stats.
+        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Journeys")).firstMatch
+        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Stats")).firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         try XCTSkipUnless(app.frame.width >= 600 && upcoming.exists
                           && abs(upcoming.frame.midX - search.frame.midX) < 4,
@@ -180,8 +187,8 @@ final class RailMapUITests: XCTestCase {
         let titleHeight = header.frame.height
         let searchTitle = header.label
         let actionSize = settings.frame.size
-        for (tab, title) in [("All", "All journeys"), ("Stats", "Stats"),
-                             ("Upcoming", "Upcoming"), ("Search", searchTitle)] {
+        // Journeys' panel header is shared by Upcoming/All/Search modes.
+        for (tab, title) in [("Journeys", searchTitle), ("Stats", "Stats")] {
             app.buttons.matching(NSPredicate(format: "label == %@", tab)).firstMatch.tap()
             let visibleHeader = app.staticTexts.matching(identifier: "panelHeader")
                 .matching(NSPredicate(format: "label == %@", title)).firstMatch
@@ -220,7 +227,7 @@ final class RailMapUITests: XCTestCase {
         let tabs = app.tabBars.firstMatch
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
 
-        for index in [2, 1, 0, 3] {
+        for index in [1, 0] {
             tabs.buttons.element(boundBy: index).tap()
             let viewport = element("workspaceMenuViewport", in: app)
             XCTAssertTrue(viewport.waitForExistence(timeout: 8))
@@ -304,15 +311,15 @@ final class RailMapUITests: XCTestCase {
             predicate: NSPredicate(format: "enabled == true"), object: share)
         XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 90), .completed,
                        "Statistics must publish before scrolling the completed dashboard.")
-        let note = element("passportShareNote", in: app)
+        // The "Replay and export" card (`passportShareNote`) is gone, so the
+        // dashboard's final content is whatever static text sits lowest in the
+        // viewport once the scroll has run out.
+        func lowestText() -> XCUIElement? {
+            let texts = viewport.descendants(matching: .staticText).allElementsBoundByIndex
+                .filter { $0.exists && !$0.frame.isEmpty && $0.frame.intersects(viewport.frame) }
+            return texts.max(by: { $0.frame.maxY < $1.frame.maxY })
+        }
         for _ in 0..<12 {
-            if note.exists {
-                let frame = note.frame
-                if !frame.isEmpty,
-                   frame.minY >= viewport.frame.minY,
-                   frame.maxY <= tabs.frame.minY,
-                   note.isHittable { break }
-            }
             // Flick this long dashboard inside its readable viewport, clear
             // of the floating tabs. Other panel tests keep their own drag.
             let frame = viewport.frame
@@ -325,9 +332,11 @@ final class RailMapUITests: XCTestCase {
             start.press(forDuration: 0.05, thenDragTo: end,
                         withVelocity: .fast, thenHoldForDuration: 0)
         }
-        print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) noteExists=\(note.exists) note=\(note.exists ? String(describing: note.frame) : "absent")")
-        XCTAssertTrue(note.exists)
-        XCTAssertTrue(note.isHittable)
+        guard let note = lowestText() else {
+            XCTFail("The statistics dashboard exposed no text to measure.")
+            return
+        }
+        print("[tab-clearance] viewport=\(viewport.frame) value=\(String(describing: viewport.value)) tab=\(tabs.frame) note=\(note.frame)")
         XCTAssertGreaterThanOrEqual(note.frame.minY, viewport.frame.minY)
         XCTAssertLessThanOrEqual(
             note.frame.maxY, tabs.frame.minY,
@@ -425,8 +434,9 @@ final class RailMapUITests: XCTestCase {
                          launchArguments: ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"])
         let header = element("panelHeader", in: app)
         XCTAssertTrue(header.waitForExistence(timeout: 8))
-        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Upcoming")).firstMatch
-        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Search")).firstMatch
+        // Two native tabs now: Journeys above Stats.
+        let upcoming = app.buttons.matching(NSPredicate(format: "label == %@", "Journeys")).firstMatch
+        let search = app.buttons.matching(NSPredicate(format: "label == %@", "Stats")).firstMatch
         try XCTSkipUnless(app.frame.width < 600 && upcoming.exists && search.exists
                           && abs(upcoming.frame.midX - search.frame.midX) < 4
                           && upcoming.frame.maxY < search.frame.minY,
@@ -572,10 +582,10 @@ final class RailMapUITests: XCTestCase {
 
         let tabs = app.tabBars.firstMatch
         XCTAssertTrue(tabs.waitForExistence(timeout: 8))
-        XCTAssertEqual(tabs.buttons.count, 4)
-        tabs.buttons.element(boundBy: 2).tap()
+        XCTAssertEqual(tabs.buttons.count, 2)
+        tabs.buttons.element(boundBy: 1).tap() // Stats
         XCTAssertFalse(search.exists)
-        tabs.buttons.element(boundBy: 3).tap()
+        tabs.buttons.element(boundBy: 0).tap() // Journeys (hosts search)
         if !search.exists { dragHeader(header, by: -360) }
         XCTAssertTrue(search.waitForExistence(timeout: 8), "Tabs must still work after repeated drags.")
     }
@@ -891,13 +901,13 @@ final class RailMapUITests: XCTestCase {
 
         // The docked card forces `.horizontalSizeClass` to `.compact` so its
         // `TabView` renders the phone's bottom tab bar rather than iPadOS's
-        // top capsule — four icon tabs, not a `List` sidebar and not a
+        // top capsule — two icon tabs, not a `List` sidebar and not a
         // capsule with no bar at all.
         let tabBar = app.tabBars.firstMatch
         XCTAssertTrue(tabBar.waitForExistence(timeout: 8))
-        XCTAssertEqual(tabBar.buttons.count, 4)
+        XCTAssertEqual(tabBar.buttons.count, 2) // Journeys, Stats
 
-        tabBar.buttons.element(boundBy: 3).tap()
+        tabBar.buttons.element(boundBy: 0).tap() // Journeys hosts the search field
         XCTAssertTrue(
             element("journeySearchField", in: app).waitForExistence(timeout: 8),
             "Tapping the docked card's own tab bar must update the shared map's content.")

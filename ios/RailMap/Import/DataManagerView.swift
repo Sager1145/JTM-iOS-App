@@ -33,7 +33,7 @@ struct DataManagerView: View {
     /// The sample a long-press asked to replace EVERYTHING with, held while
     /// the confirmation is up so the dialog can name it.
     private enum Destination: Equatable {
-        case importJSON, importGuide, importChoice, importFile, exportFile
+        case importJSON, importGuide, importFile, exportFile
         case deleteSaved, deleteAll, restore, replaceSample(RideLibrary.Sample)
     }
     @State private var destination: Destination?
@@ -80,23 +80,6 @@ struct DataManagerView: View {
         }
         .sheet(isPresented: isPresented(.importGuide)) {
             TransferGuideImportView(itineraries: itineraries, library: library)
-        }
-        .confirmationDialog(
-            localization.text("sec.import", fallback: "Import"),
-            isPresented: isPresented(.importChoice),
-            titleVisibility: .visible
-        ) {
-            Button(localization.text("btn.openLocal", fallback: "Open JSON")) {
-                destination = nil
-                presentationHost.afterTeardown { destination = .importFile }
-            }
-            Button(localization.text("sec.importPaste", fallback: "Paste JSON")) {
-                destination = nil
-                presentationHost.afterTeardown {
-                    flow.load("", origin: .pasted)
-                    destination = .importJSON
-                }
-            }
         }
         .fileImporter(isPresented: isPresented(.importFile), allowedContentTypes: [.json]) { result in
             switch result {
@@ -187,21 +170,11 @@ struct DataManagerView: View {
                 }
                 .accessibilityElement(children: .combine)
 
-                // One filled button per surface (§3.1). There is only one
-                // thing to do next here now: everything on this screen acts on
-                // the reader's own rides, so importing more of them is it.
-                Button {
-                    destination = .importChoice
-                } label: {
-                    Label(
-                        localization.text("sec.import", fallback: "Import"),
-                        systemImage: "square.and.arrow.down"
-                    )
-                    .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
-                .disabled(itineraries.isImporting || fileToImport != nil)
+                // No Import button here any more (pass 2): the Import
+                // section directly below lists all three ways in — file,
+                // paste and transfer guide — one tap each. A hero button that
+                // opened a dialog offering two of those three was a second,
+                // slower door to the same place.
             }
             .padding(.vertical, 6)
         } footer: {

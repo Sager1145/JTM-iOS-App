@@ -82,7 +82,6 @@ struct RideDetailView: View {
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
-    @State private var showsShare = false
 
     var body: some View {
         RideDetailContent(
@@ -108,12 +107,9 @@ struct RideDetailView: View {
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(localization.text("ios.journeyShare.title"), systemImage: "square.and.arrow.up") {
-                        showsShare = true
-                    }
-                    .accessibilityIdentifier("journeyShareButton")
-                }
+                // Share is the journey card's header button — the one share
+                // entry for a journey (pass 2). The details sheet opens from
+                // that card, so a second share here was the same verb twice.
                 if onSave != nil {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
@@ -122,9 +118,6 @@ struct RideDetailView: View {
                         .accessibilityIdentifier("rideDetailEdit")
                     }
                 }
-            }
-            .sheet(isPresented: $showsShare) {
-                JourneyShareView(train: train)
             }
             .sheet(isPresented: $showsEditor) {
                 RideEditorView(

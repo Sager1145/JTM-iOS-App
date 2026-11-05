@@ -43,18 +43,18 @@ struct SettingsView: View {
     @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
 
     var body: some View {
+        // The first screen holds what most readers change: language, theme,
+        // how names are written and which map they see. Fine-tuning (nine
+        // sliders) and troubleshooting read-outs are one level deeper, so the
+        // common path is not buried under them. See docs/ui-reorganization.md.
         Form {
-            languageSection
+            generalSection
             journeyNameSection
             stationNameSection
-            appearanceSection
-            launchScopeSection
-            mapContentSection
-            rideLineSection
-            stationMarkerSection
-            selectionSection
+            mapSection
+            moreSection
             resetSection
-            diagnosticsSection
+            aboutSection
         }
         .navigationTitle(localization.text("ios.settings", fallback: "Settings"))
         // The switch positions follow the interface language until the reader
@@ -63,6 +63,52 @@ struct SettingsView: View {
         .task { display.syncNameReadingDefaults(to: localization.language) }
         .onChange(of: localization.language) { _, language in
             display.syncNameReadingDefaults(to: language)
+        }
+    }
+
+    // MARK: - Drill-down pages
+
+    /// Map style: how the reader's rides are drawn. Visibility of each layer
+    /// belongs to the map's own Layers sheet; sizing and emphasis live here.
+    private var moreSection: some View {
+        Section {
+            NavigationLink {
+                Form {
+                    rideLineSection
+                    stationMarkerSection
+                    selectionSection
+                }
+                .navigationTitle(localization.text("ios.mapStyle", fallback: "Map style"))
+                .navigationBarTitleDisplayMode(.inline)
+            } label: {
+                Label(localization.text("ios.mapStyle", fallback: "Map style"),
+                      systemImage: "paintbrush")
+            }
+            .accessibilityIdentifier("settingsMapStyleLink")
+        } footer: {
+            Text(localization.text(
+                "ios.note.mapStyle",
+                fallback: "Line widths, station marker sizes and how the selected ride stands out."))
+        }
+    }
+
+    private var aboutSection: some View {
+        Section {
+            NavigationLink {
+                Form {
+                    LabeledContent(localization.text("ios.renderer", fallback: "Renderer")) {
+                        Text(verbatim: "Apple Maps")
+                    }
+                    diagnosticsSection
+                }
+                .navigationTitle(localization.text(
+                    "ios.aboutDiagnostics", fallback: "About & diagnostics"))
+                .navigationBarTitleDisplayMode(.inline)
+            } label: {
+                Label(localization.text("ios.aboutDiagnostics", fallback: "About & diagnostics"),
+                      systemImage: "stethoscope")
+            }
+            .accessibilityIdentifier("settingsDiagnosticsLink")
         }
     }
 
@@ -76,9 +122,9 @@ struct SettingsView: View {
     /// so the only region choice left in the app is the one on the statistics
     /// screen — where the categories and the coverage denominator genuinely
     /// belong to one network.
-    private var languageSection: some View {
+    private var generalSection: some View {
         @Bindable var localization = localization
-        return Section(localization.text("ios.regionLanguage", fallback: "Language")) {
+        return Section {
             Picker(
                 localization.countryText("lang.label", fallback: "Language"),
                 selection: $localization.language
@@ -91,6 +137,22 @@ struct SettingsView: View {
                 Text(verbatim: "English").tag(Localization.Language.en)
             }
             .pickerStyle(.navigationLink)
+            Picker(
+                localization.countryText("theme.label", fallback: "Theme"), selection: $appearance
+            ) {
+                Text(localization.countryText("theme.system", fallback: "System")).tag("system")
+                Text(localization.countryText("theme.light", fallback: "Light")).tag("light")
+                Text(localization.countryText("theme.dark", fallback: "Dark")).tag("dark")
+            }
+            .pickerStyle(.segmented)
+        } header: {
+            Text(localization.text("ios.general", fallback: "General"))
+        } footer: {
+            Text(
+                localization.text(
+                    "ios.note.theme",
+                    fallback:
+                        "Line colours automatically use each operator's light or dark palette."))
         }
     }
 
@@ -190,29 +252,6 @@ struct SettingsView: View {
         localization.setNameReadings(display.nameReadingPrefs)
     }
 
-    // MARK: - 2. Appearance
-
-    private var appearanceSection: some View {
-        Section {
-            Picker(
-                localization.countryText("theme.label", fallback: "Theme"), selection: $appearance
-            ) {
-                Text(localization.countryText("theme.system", fallback: "System")).tag("system")
-                Text(localization.countryText("theme.light", fallback: "Light")).tag("light")
-                Text(localization.countryText("theme.dark", fallback: "Dark")).tag("dark")
-            }
-            .pickerStyle(.segmented)
-        } header: {
-            Text(localization.text("ios.appearance", fallback: "Appearance"))
-        } footer: {
-            Text(
-                localization.text(
-                    "ios.note.theme",
-                    fallback:
-                        "Line colours automatically use each operator's light or dark palette."))
-        }
-    }
-
     // MARK: - 2b. Where the map opens
 
     /// 啟動地圖範圍 — the opening view, when the reader would rather say than
@@ -230,7 +269,7 @@ struct SettingsView: View {
     /// survives the trip out to 全球 and back regardless, which is why it is
     /// a preference of its own (see ``LaunchMapScope/region``).
     @ViewBuilder
-    private var launchScopeSection: some View {
+    private var mapSection: some View {
         Section {
             Picker(
                 localization.text("ios.launchScope", fallback: "Opening view"),
@@ -264,38 +303,6 @@ struct SettingsView: View {
                 fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-        } header: {
-            Text(localization.text("ios.launchScope.header", fallback: "Opening view"))
-        }
-    }
-
-    // MARK: - 3. Map content
-
-    private var mapContentSection: some View {
-        @Bindable var display = display
-        return Section {
-            SettingToggleRow(
-                title: localization.countryText("map.allRailways", fallback: "Complete rail network"),
-                note: localization.text(
-                    "ios.note.allRailways",
-                    fallback: "The complete rail network drawn beneath your rides."),
-                isOn: $controller.showsNetwork
-            )
-            VStack(alignment: .leading, spacing: 4) {
-                Button(localization.countryText("btn.fit", fallback: "Frame loaded network")) {
-                    controller.fitToNetwork()
-                }
-                Text(
-                    localization.text(
-                        "ios.note.fitToNetwork",
-                        fallback: "Moves the map to frame the network that is currently loaded.")
-                )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-            }
-            LabeledContent(localization.text("ios.renderer", fallback: "Renderer")) {
-                Text(verbatim: "Apple Maps")
-            }
             Picker(
                 localization.text("ios.networkEra", fallback: "Network era"),
                 selection: Binding(
@@ -312,7 +319,14 @@ struct SettingsView: View {
             }
             .pickerStyle(.navigationLink)
         } header: {
-            Text(localization.text("ios.mapContent", fallback: "Map content"))
+            Text(localization.text("ios.mapContent", fallback: "Map"))
+        } footer: {
+            // The rail-network switch is the map's own train button; framing
+            // the network is in the map's Layers sheet, where the reader can
+            // see the map move. Neither is repeated here.
+            Text(localization.text(
+                "ios.note.mapSettingsElsewhere",
+                fallback: "Show or hide the rail network with the train button on the map. Layer switches are in the map's Layers panel."))
         }
     }
 

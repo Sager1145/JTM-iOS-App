@@ -76,7 +76,7 @@ final class MapCameraIntentTests: XCTestCase {
         // Wait through the old animated statistics fit as well as the new
         // statistics redraw, so a transient preserved frame cannot pass.
         assertCameraStays(status, equalTo: before, for: 2)
-        tabs.buttons.element(boundBy: 2).tap()
+        tabs.buttons.element(boundBy: 0).tap() // Journeys (was the All tab)
         assertCameraStays(status, equalTo: before, for: 2)
         XCTAssertEqual(number("focusRevision", status.label), number("focusRevision", before))
     }
@@ -147,7 +147,8 @@ final class MapCameraIntentTests: XCTestCase {
         try waitFor(status) {
             self.number("centerLon", $0) > 125 && self.number("distance", $0) > 2_000_000
         }
-        XCTAssertEqual(app.buttons["regionScopeButton"].firstMatch.value as? String, "Japan")
+        // journeyFilterButton's value is "<region>, <date label>".
+        XCTAssertTrue((app.buttons["journeyFilterButton"].firstMatch.value as? String ?? "").hasPrefix("Japan"))
     }
 
     func testReselectingRegionZoomsFromOverviewEvenWhenCountryIsVisible() throws {
@@ -164,7 +165,7 @@ final class MapCameraIntentTests: XCTestCase {
     }
 
     private func selectJapan(in app: XCUIApplication) {
-        let region = app.buttons["regionScopeButton"].firstMatch
+        let region = app.buttons["journeyFilterButton"].firstMatch
         XCTAssertTrue(region.waitForExistence(timeout: 10))
         region.tap()
         let japan = app.buttons["Japan"].firstMatch
