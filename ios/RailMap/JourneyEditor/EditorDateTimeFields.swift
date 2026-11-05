@@ -343,7 +343,7 @@ struct TypedDateTimeField: View {
                     .frame(minWidth: 96, maxWidth: 120)
                     .accessibilityLabel(title)
                     .accessibilityIdentifier("\(identifier)Date")
-                    .onSubmit(normalize)
+                    .onSubmit(submit)
                 TextField("9:30", text: $timeText)
                     .keyboardType(.numbersAndPunctuation)
                     .multilineTextAlignment(.trailing)
@@ -351,7 +351,7 @@ struct TypedDateTimeField: View {
                     .focused($focused, equals: .time)
                     .frame(width: 56)
                     .accessibilityIdentifier("\(identifier)Time")
-                    .onSubmit(normalize)
+                    .onSubmit(submit)
                 Button {
                     // Typed text must not overwrite the calendar's pick later.
                     focused = nil
@@ -428,6 +428,13 @@ struct TypedDateTimeField: View {
     private func normalize() {
         apply()
         refresh()
+    }
+
+    /// Return finishes the entry: apply it and give the keyboard back, so the
+    /// next tap on the form acts at once instead of only closing the keyboard.
+    private func submit() {
+        normalize()
+        focused = nil
     }
 
     private func refresh() {

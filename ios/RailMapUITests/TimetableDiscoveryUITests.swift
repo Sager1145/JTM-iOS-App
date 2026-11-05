@@ -138,6 +138,9 @@ enum NewTripTimetableTestSupport {
         }
         text.typeText(value + "\n")
         XCTAssertEqual(text.value as? String, value, app.debugDescription)
+        let returnKey = app.keyboards.buttons["return"].firstMatch
+        if returnKey.exists, returnKey.isHittable { returnKey.tap() }
+        _ = app.keyboards.firstMatch.waitForNonExistence(timeout: 3)
     }
 
     static func reveal(
