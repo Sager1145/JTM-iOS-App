@@ -446,7 +446,7 @@
         "ios/RailKit/Sources/RailCore/Routing/TripConnectivity.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRouteGeometry.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRoutePlanner.swift",
-        "ios/RailKit/Sources/RailCore/Routing/TripRouteVia.swift",
+        "ios/RailKit/Sources/RailCore/Routing/TripRouteSections.swift",
         "ios/RailKit/Sources/RailCore/Stations/RailIntervalCodes.swift",
         "ios/RailKit/Sources/RailCore/Stations/StationCodeAliases.swift",
         "ios/RailKit/Sources/RailCore/Stations/StationIndex.swift",

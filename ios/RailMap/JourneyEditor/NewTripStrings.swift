@@ -347,5 +347,21 @@ enum NewTripStrings {
             .en: "Calendar", .ja: "カレンダー",
             .zhHant: "月曆", .zhHans: "日历",
         ],
+        "ios.newTrip.sectionTitle": [
+            .en: "Section {n} of {count}: {from} → {to}", .ja: "区間 {n}/{count}：{from} → {to}",
+            .zhHant: "第 {n}/{count} 段：{from} → {to}", .zhHans: "第 {n}/{count} 段：{from} → {to}",
+        ],
+        "ios.newTrip.sectionsToChoose": [
+            .en: "{count} sections still to choose before the stations are filled in", .ja: "あと {count} 区間を選ぶと、通過駅が入力されます",
+            .zhHant: "尚有 {count} 段需選擇，選完後會填入經過的車站", .zhHans: "还有 {count} 段需选择，选完后会填入经过的车站",
+        ],
+        "ios.newTrip.sectionNoRoute": [
+            .en: "No route", .ja: "経路なし",
+            .zhHant: "沒有路線", .zhHans: "没有路线",
+        ],
+        "ios.newTrip.sectionOptions": [
+            .en: "{count} options", .ja: "候補 {count} 件",
+            .zhHant: "{count} 個選項", .zhHans: "{count} 个选项",
+        ],
     ]
 }

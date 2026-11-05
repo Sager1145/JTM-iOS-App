@@ -46,6 +46,7 @@ struct JourneyEditorView: View {
     }
     private static let recordRouteID = "record"
     private static let repairRoutePrefix = "repair-"
+    private static let alternativePrefix = "alt"
     /// Alternatives drawn on the map. Each is an overlay with its own track;
     /// more than this is clutter on a phone and memory for nothing.
     nonisolated static let maximumDrawnRoutes = 4
@@ -108,7 +109,17 @@ struct JourneyEditorView: View {
     @State private var corridorsRemovedByDate = false
     /// The corridor the reader last picked, kept across replans that are
     /// cancelled before they finish and so never restore the live selection.
-    @State private var preferredCorridorID: String?
+    /// The trip in station-to-station sections, in travel order.
+    @State private var sections: [PlannedSection] = []
+    /// The reader's corridor per section, by section key, kept across replans.
+    @State private var sectionChoices: [String: String] = [:]
+    /// The section whose candidates are listed and drawn as alternatives.
+    @State private var activeSection = 0
+    /// Planned sections by key for this session, so moving one via only
+    /// re-plans the sections next to it.
+    @State private var sectionCache: [String: PlannedSection] = [:]
+    @State private var wholeTripCache: [String: [TripRoutePlanner.Corridor]] = [:]
+    @State private var wholeTrip: [TripRoutePlanner.Corridor] = []
     @State private var autofillFailed = false
     @State private var saveIssues: [RideDraftIssue] = []
     /// Catalog operator id → display name. Rebuilt when the catalog or stations change.
@@ -372,7 +383,12 @@ struct JourneyEditorView: View {
             routeProofFailure = nil
             selectedCorridorID = nil
             corridorsRemovedByDate = false
-            preferredCorridorID = nil
+            sections = []
+            sectionChoices = [:]
+            sectionCache = [:]
+            wholeTripCache = [:]
+            wholeTrip = []
+            activeSection = 0
             autofillFailed = false
             loadFailed = false
             saveIssues = []
@@ -575,27 +591,9 @@ struct JourneyEditorView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("newTripSavedRoute")
-        if let pause = repair.pause {
-            Text(text("repairChoose", fallback: "Choose the route between {from} and {to}",
-                      ["from": .string(visitName(pause.fromVisitID)), "to": .string(visitName(pause.toVisitID))]))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-            ForEach(Array(pause.choices.enumerated()), id: \.offset) { index, choice in
-                Button { chooseRepair(index) } label: {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(uniqued(choice.lineNames).joined(separator: " · "))
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(.primary)
-                        Text(text("stationCount", fallback: "{count} stations",
-                                  ["count": .string(String(choice.stations.count))]))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                }
-                .accessibilityIdentifier("newTripRepairChoice-\(index)")
-            }
+        if repair.pause != nil {
+            // The paused span is a section like any other: same rows, same map.
+            sectionRows
             Button(text("repairSkip", fallback: "Leave this part as it is")) {
                 guard let package, let geometryCache else { return }
                 repair.skip(package: package, geometry: geometryCache, text: repairText, apply: applyRepair)
@@ -653,9 +651,11 @@ struct JourneyEditorView: View {
                     if let index = Int(id.dropFirst(Self.repairRoutePrefix.count)) { chooseRepair(index) }
                     return
                 }
-                guard id != Self.recordRouteID, selectedCorridor?.id != id else { return }
-                selectedCorridorID = id
-                preferredCorridorID = id
+                // A grey line is one of the active section's candidates.
+                let parts = id.split(separator: "|", maxSplits: 2).map(String.init)
+                guard parts.count == 3, parts[0] == Self.alternativePrefix,
+                      let index = Int(parts[1]) else { return }
+                choose(parts[2], inSection: index)
             },
             onBackground: {
                 guard tappedStation != nil else { return }
@@ -934,18 +934,30 @@ struct JourneyEditorView: View {
             drawnRoutes = []
             return
         }
-        // Mid-replan the previous routes stay until the new outcome lands.
-        guard let outcome else { return }
-        guard case .corridors(let corridors) = outcome else {
-            drawnRoutes = []
-            return
+        // Mid-replan the previous routes stay until the new sections land.
+        guard !sections.isEmpty else { return }
+        var routes: [TripMapContent.Route] = []
+        // The active section's other candidates, grey and tappable.
+        if sections.indices.contains(activeSection) {
+            let section = sections[activeSection]
+            let chosen = sectionChoices[section.key]
+            for corridor in section.candidates.prefix(Self.maximumDrawnRoutes) where corridor.id != chosen
+                || section.candidates.count > 1 && chosen == nil {
+                guard let pieces = section.geometry[corridor.id], !pieces.isEmpty else { continue }
+                routes.append(mapRoute(
+                    id: [Self.alternativePrefix, String(activeSection), corridor.id].joined(separator: "|"),
+                    pieces: pieces, selected: false))
+            }
         }
-        let drawn = corridors.prefix(Self.maximumDrawnRoutes)
-            + corridors.dropFirst(Self.maximumDrawnRoutes).filter { $0.id == selectedCorridorID }
-        drawnRoutes = drawn.compactMap { corridor in
-            guard let pieces = corridorGeometry[corridor.id], !pieces.isEmpty else { return nil }
-            return mapRoute(id: corridor.id, pieces: pieces, selected: corridor.id == selectedCorridorID)
+        // Every section's choice so far, as one selected route.
+        let chosenPieces = sections.flatMap { section -> [TripRouteGeometry.Piece] in
+            guard let id = sectionChoices[section.key] else { return [] }
+            return section.geometry[id] ?? []
         }
+        if !chosenPieces.isEmpty {
+            routes.append(mapRoute(id: selectedCorridorID ?? "chosen", pieces: chosenPieces, selected: true))
+        }
+        drawnRoutes = routes
     }
 
     private var regionSection: some View {
@@ -1619,8 +1631,11 @@ struct JourneyEditorView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity)
                     .accessibilityLabel(text("searching", fallback: "Searching routes"))
-            } else if let outcome {
-                routeOutcome(outcome)
+            } else {
+                sectionRows
+                if let outcome {
+                    routeOutcome(outcome)
+                }
             }
             if let routeProofFailure {
                 Text(routeProofFailure)
@@ -1797,21 +1812,9 @@ struct JourneyEditorView: View {
     @ViewBuilder private func routeOutcome(_ outcome: TripRoutePlanner.Outcome) -> some View {
         switch outcome {
         case .corridors(let corridors):
-            if corridors.count > 1 {
-                Text(text(
-                    "multipleRoutes",
-                    fallback: "Multiple routes connect these stations — choose one"))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            ForEach(Array(corridors.enumerated()), id: \.element.id) { index, corridor in
-                VStack(alignment: .leading, spacing: 8) {
-                    corridorRow(corridor, index: index)
-                    if selectedCorridorID == corridor.id {
-                        passStations(corridor)
-                    }
-                }
+            // Every section is chosen: the passing stations are filled in.
+            if let joined = corridors.first, joined.id == selectedCorridorID {
+                passStations(joined)
             }
             if corridorsRemovedByDate {
                 Text(text(
@@ -1852,11 +1855,86 @@ struct JourneyEditorView: View {
         }
     }
 
+    /// Sections in order, then the active one's candidates. A section with one
+    /// plausible path settles alone; only the others ask.
+    @ViewBuilder private var sectionRows: some View {
+        if shownSections.count > 1 {
+            ForEach(Array(shownSections.enumerated()), id: \.offset) { index, section in
+                Button {
+                    activeSection = index
+                    refreshDrawnRoutes()
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: sectionChoices[section.key] != nil ? "checkmark.circle.fill"
+                              : section.candidates.count > 1 ? "questionmark.circle.fill" : "exclamationmark.circle")
+                            .foregroundStyle(sectionChoices[section.key] != nil ? Color.accentColor : Color.orange)
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(text("sectionTitle", fallback: "Section {n} of {count}: {from} → {to}", [
+                                "n": .string(String(index + 1)), "count": .string(String(shownSections.count)),
+                                "from": .string(section.fromName), "to": .string(section.toName)]))
+                                .font(.subheadline.weight(index == shownActiveSection ? .semibold : .regular))
+                                .foregroundStyle(.primary)
+                            Text(sectionStatus(section))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer(minLength: 0)
+                    }
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("newTripSection-\(index)")
+                .accessibilityAddTraits(index == shownActiveSection ? .isSelected : [])
+            }
+        }
+        if shownSections.indices.contains(shownActiveSection) {
+            let candidates = shownSections[shownActiveSection].candidates
+            if showsRecordRoute, let section = shownSections.first {
+                Text(text("repairChoose", fallback: "Choose the route between {from} and {to}",
+                          ["from": .string(section.fromName), "to": .string(section.toName)]))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else if candidates.count > 1 {
+                Text(text(
+                    "multipleRoutes",
+                    fallback: "Multiple routes connect these stations — choose one"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(Array(candidates.enumerated()), id: \.element.id) { index, corridor in
+                corridorRow(corridor, index: index)
+            }
+        }
+        if !pendingSections.isEmpty, shownSections.count > 1 {
+            Text(text("sectionsToChoose", fallback: "{count} sections still to choose before the stations are filled in",
+                      ["count": .string(String(pendingSections.count))]))
+                .font(.footnote)
+                .foregroundStyle(.orange)
+                .accessibilityIdentifier("newTripSectionsPending")
+        }
+    }
+
+    private func sectionStatus(_ section: PlannedSection) -> String {
+        if let id = sectionChoices[section.key], let corridor = section.candidates.first(where: { $0.id == id }) {
+            return corridor.lineNames.joined(separator: " → ")
+        }
+        switch section.candidates.count {
+        case 0: return text("sectionNoRoute", fallback: "No route")
+        default:
+            return text("sectionOptions", fallback: "{count} options", ["count": .string(String(section.candidates.count))])
+        }
+    }
+
     private func corridorRow(_ corridor: TripRoutePlanner.Corridor, index: Int) -> some View {
-        let selected = selectedCorridorID == corridor.id
+        let shown = shownSections
+        let key = shown.indices.contains(shownActiveSection) ? shown[shownActiveSection].key : ""
+        let selected = !showsRecordRoute && sectionChoices[key] == corridor.id
         return Button {
-            selectedCorridorID = corridor.id
-            preferredCorridorID = corridor.id
+            if showsRecordRoute { chooseRepair(index) } else { choose(corridor.id, inSection: activeSection) }
         } label: {
             HStack(alignment: .top, spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -2288,6 +2366,53 @@ struct JourneyEditorView: View {
         }
     }
 
+    // MARK: - sections
+
+    /// One station-to-station stretch of the trip, planned on its own.
+    struct PlannedSection: Equatable {
+        var key: String
+        var fromName: String
+        var toName: String
+        var outcome: TripRoutePlanner.Outcome
+        var geometry: [String: [TripRouteGeometry.Piece]]
+        /// Corridors the dated network proved, by id.
+        var proven: Set<String>
+        var proofFailure: String?
+        var removedByDate: Bool
+
+        var candidates: [TripRoutePlanner.Corridor] {
+            if case .corridors(let corridors) = outcome { return corridors }
+            return []
+        }
+    }
+
+    /// A section's cache key: everything its plan depends on, nothing else.
+    private func sectionKey(_ request: TripRoutePlanner.Request, rideDate: String) -> String {
+        [request.originCode, request.destinationCode, request.originLineID ?? "", request.destinationLineID ?? "",
+         request.trainType ?? "", request.operatorName ?? "", rideDate,
+         request.allowUnverifiedConnections ? "1" : "0"].joined(separator: "\u{1f}")
+    }
+
+    /// Sections the reader still has to choose.
+    private var pendingSections: [Int] {
+        sections.indices.filter { sections[$0].candidates.count > 1 && sectionChoices[sections[$0].key] == nil }
+    }
+
+    /// The sections on screen: the planner's, or the one span a paused route
+    /// repair asks about. One list, one candidate row, one map treatment.
+    private var shownSections: [PlannedSection] {
+        guard showsRecordRoute else { return sections }
+        guard let pause = repair.pause else { return [] }
+        let candidates = pause.choices.map { TripRoutePlanner.Corridor(choice: $0) }
+        return [PlannedSection(
+            key: "repair", fromName: visitName(pause.fromVisitID), toName: visitName(pause.toVisitID),
+            outcome: .corridors(candidates),
+            geometry: Dictionary(zip(candidates.map(\.id), pause.geometry), uniquingKeysWith: { first, _ in first }),
+            proven: [], proofFailure: nil, removedByDate: false)]
+    }
+
+    private var shownActiveSection: Int { showsRecordRoute ? 0 : activeSection }
+
     private func planRoute() async {
         // Typing a number or nudging a time changes the identity on every
         // keystroke. Wait for the input to settle before solving; a newer
@@ -2298,144 +2423,214 @@ struct JourneyEditorView: View {
         }
         let generation = draftGeneration
         let identity = routeIdentity
-        let previousSelectedCorridorID = selectedCorridorID ?? preferredCorridorID
-        outcome = nil
         plannedIdentity = ""
-        physicallyResolvedCorridorIDs.removeAll()
-        routeProofFailure = nil
-        selectedCorridorID = nil
-        corridorsRemovedByDate = false
         autofillFailed = false
         guard routeEdited, let origin, let destination, let package, let geometryCache else {
             searching = false
+            sections = []
+            outcome = nil
+            selectedCorridorID = nil
             refreshDrawnRoutes()
             return
         }
-        searching = true
-        let originCode = origin.key.sourceCode
-        let destinationCode = destination.key.sourceCode
-        let allowUnverifiedConnections = allowUnverifiedConnections
-        let originLineID = originLine?.id
-        let destinationLineID = destinationLine?.id
         let rideDate = dayString(departure)
         let viaCodes = vias.map(\.station.key.sourceCode)
-        let trainType = trainType
-        // Only an operator the catalog names filters the search. A saved
-        // journey's company text ("A・B" for a through service) does not.
         let operatorName = companyName.isEmpty || !companyOptions.contains(companyName)
-            ? nil
-            : (packageOperatorByDisplayName[companyName] ?? companyName)
-        let worker = Task.detached(priority: .userInitiated) {
-            let request = TripRoutePlanner.Request(
-                originCode: originCode,
-                destinationCode: destinationCode,
-                trainType: trainType,
-                operatorName: operatorName,
-                stationAliases: try loadJourneyStationAliases(
-                    for: [originCode, destinationCode] + viaCodes, package: package),
-                originLineID: originLineID,
-                destinationLineID: destinationLineID,
-                allowUnverifiedConnections: allowUnverifiedConnections)
-            let context = try loadJourneyAdmissionContext(rideDate: rideDate, package: package)
-            let outcome = try TripRoutePlanner.plan(
-                package: package, request: request, viaCodes: viaCodes, rideDate: rideDate,
-                admissionContext: context)
-            var geometry: [String: [TripRouteGeometry.Piece]] = [:]
-            if case .corridors(let corridors) = outcome {
-                for corridor in corridors.prefix(Self.maximumDrawnRoutes) {
+            ? nil : (packageOperatorByDisplayName[companyName] ?? companyName)
+        let base = TripRoutePlanner.Request(
+            originCode: origin.key.sourceCode, destinationCode: destination.key.sourceCode,
+            trainType: trainType, operatorName: operatorName,
+            originLineID: originLine?.id, destinationLineID: destinationLine?.id,
+            allowUnverifiedConnections: allowUnverifiedConnections)
+        let requests = TripRoutePlanner.sectionRequests(base, viaCodes: viaCodes)
+        let keys = requests.map { sectionKey($0, rideDate: rideDate) }
+        let wholeKey = viaCodes.isEmpty ? nil : "whole\u{1e}" + sectionKey(base, rideDate: rideDate)
+            + "\u{1e}" + viaCodes.joined(separator: ",")
+        let missing = zip(requests, keys).filter { sectionCache[$0.1] == nil }
+        let needsWhole = wholeKey.map { wholeTripCache[$0] == nil } ?? false
+        let names = Dictionary(
+            ([origin, destination] + vias.map(\.station)).map { ($0.key.sourceCode, $0.name) },
+            uniquingKeysWith: { first, _ in first })
+        searching = !missing.isEmpty || needsWhole
+        if !missing.isEmpty || needsWhole {
+            let codes = [base.originCode, base.destinationCode] + viaCodes
+            let worker = Task.detached(priority: .userInitiated) { () throws -> ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?) in
+                let aliases = try loadJourneyStationAliases(for: codes, package: package)
+                let context = try loadJourneyAdmissionContext(rideDate: rideDate, package: package)
+                var solved: [(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])] = []
+                for (request, key) in missing {
                     try Task.checkCancellation()
-                    geometry[corridor.id] = TripRouteGeometry.pieces(for: corridor.choice, cache: geometryCache)
-                }
-            }
-            return (outcome, geometry)
-        }
-        let result: TripRoutePlanner.Outcome
-        let geometry: [String: [TripRouteGeometry.Piece]]
-        do {
-            (result, geometry) = try await withTaskCancellationHandler {
-                try await worker.value
-            } onCancel: { worker.cancel() }
-        } catch is CancellationError {
-            return
-        } catch {
-            guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
-            searching = false
-            routeProofFailure = error.localizedDescription
-            drawnRoutes = []
-            return
-        }
-        guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
-        var publishedResult = result
-        var removedByDate = false
-        var physicallyResolvedIDs: Set<String> = []
-        var proofFailure: String?
-        if case .corridors(let corridors) = result {
-            let hasDatedNetwork = RiddenRouteStore.hasDatedNetwork(region: region.code)
-            var latestValidFrom: String?
-            do {
-                if hasDatedNetwork {
-                    latestValidFrom = try RiddenRouteStore.latestValidFrom(region: region.code)
-                }
-            } catch {
-                // Unknown date bounds cannot exclude otherwise valid corridors.
-                // Keep the proposals, show the actual resource failure, and leave them unproven.
-                proofFailure = error.localizedDescription
-            }
-            let normalizedRideDate = Dates.normalizeDateString(rideDate)
-            // Today's network cannot reject a date after its newest opening.
-            let needsDateValidation = hasDatedNetwork && proofFailure == nil && (
-                normalizedRideDate != rideDate
-                    || latestValidFrom.map { rideDate < $0 } == true)
-            if needsDateValidation {
-                let candidates = corridors.map {
-                    TripRouteValidation.Candidate(id: $0.id, train: corridorDraft(for: $0))
-                }
-                do {
-                    let validation = try await TripRouteValidation.validate(candidates: candidates) { trains in
-                        try await RiddenRouteStore.routeAvailabilities(trains).map {
-                            .init(datedResolved: $0.datedResolved, undatedResolved: $0.undatedResolved)
+                    var request = request
+                    request.stationAliases = aliases
+                    let outcome = try TripRoutePlanner.plan(
+                        package: package, request: request, rideDate: rideDate, admissionContext: context)
+                    var geometry: [String: [TripRouteGeometry.Piece]] = [:]
+                    if case .corridors(let corridors) = outcome {
+                        for corridor in corridors.prefix(Self.maximumDrawnRoutes) {
+                            geometry[corridor.id] = TripRouteGeometry.pieces(for: corridor.choice, cache: geometryCache)
                         }
                     }
-                    physicallyResolvedIDs = validation.physicallyResolvedIDs
-                    proofFailure = validation.unprovenReason
-                    if validation.unprovenReason != nil { physicallyResolvedIDs = [] }
-                    let filtered = corridors.filter { validation.retainedIDs.contains($0.id) }
-                    removedByDate = filtered.count < corridors.count
-                    publishedResult = .corridors(filtered)
-                } catch is CancellationError {
-                    return
-                } catch {
-                    // The records stay savable. Retained ids are not proof.
-                    physicallyResolvedIDs = []
-                    proofFailure = "Route proof is unavailable, so these records stay savable and unproven."
+                    solved.append((key, outcome, geometry))
                 }
+                var whole: [TripRoutePlanner.Corridor]?
+                if needsWhole {
+                    var request = base
+                    request.stationAliases = aliases
+                    if case .corridors(let corridors) = try TripRoutePlanner.plan(
+                        package: package, request: request, rideDate: rideDate, admissionContext: context) {
+                        whole = corridors
+                    } else {
+                        whole = []
+                    }
+                }
+                return (solved, whole)
             }
-            guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
+            let result: ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?)
+            do {
+                result = try await withTaskCancellationHandler {
+                    try await worker.value
+                } onCancel: { worker.cancel() }
+            } catch is CancellationError {
+                return
+            } catch {
+                guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
+                searching = false
+                routeProofFailure = error.localizedDescription
+                drawnRoutes = []
+                return
+            }
+            guard !Task.isCancelled, generation == draftGeneration else { return }
+            for (key, outcome, geometry) in result.0 {
+                let request = zip(requests, keys).first { $0.1 == key }?.0
+                var section = PlannedSection(
+                    key: key,
+                    fromName: request.flatMap { names[$0.originCode] } ?? "",
+                    toName: request.flatMap { names[$0.destinationCode] } ?? "",
+                    outcome: outcome, geometry: geometry, proven: [], proofFailure: nil, removedByDate: false)
+                await validateDates(&section, rideDate: rideDate)
+                guard !Task.isCancelled, generation == draftGeneration else { return }
+                sectionCache[key] = section
+            }
+            if let wholeKey, let whole = result.1 { wholeTripCache[wholeKey] = whole }
+            // Each section result is kept for this session; the cache only
+            // grows with the stations the reader actually tried.
+            if sectionCache.count > 64 { sectionCache = sectionCache.filter { keys.contains($0.key) } }
         }
-        physicallyResolvedCorridorIDs = physicallyResolvedIDs
-        routeProofFailure = proofFailure
-        plannedIdentity = identity
-        corridorGeometry = geometry
-        outcome = publishedResult
-        corridorsRemovedByDate = removedByDate
+        guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
+        sections = keys.compactMap { sectionCache[$0] }
+        wholeTrip = wholeKey.flatMap { wholeTripCache[$0] } ?? []
+        for section in sections where section.candidates.count == 1 {
+            sectionChoices[section.key] = section.candidates[0].id
+        }
+        if !sections.indices.contains(activeSection) || !pendingSections.isEmpty {
+            activeSection = pendingSections.first ?? 0
+        }
         searching = false
-        if case .corridors(let corridors) = publishedResult {
-            if let previousSelectedCorridorID,
-               corridors.contains(where: { $0.id == previousSelectedCorridorID }) {
-                selectedCorridorID = previousSelectedCorridorID
-            } else if corridors.count == 1 {
-                selectedCorridorID = corridors[0].id
-            }
-        }
-        // Build the drawn routes now, not in a later onChange, so the fit
-        // below frames the new routes rather than the previous set.
-        refreshDrawnRoutes()
+        plannedIdentity = identity
+        rejoin()
         // Frame the route once per set of stations; a time or train edit
         // replans without moving a camera the reader may have panned.
         if routeFitIdentity != endpointIdentity {
             routeFitIdentity = endpointIdentity
             mapFitRevision += 1
         }
+    }
+
+    /// The dated network may have opened a candidate after the ride date.
+    /// Filters this section's candidates and records which were proven.
+    private func validateDates(_ section: inout PlannedSection, rideDate: String) async {
+        guard case .corridors(let corridors) = section.outcome, !corridors.isEmpty else { return }
+        let hasDatedNetwork = RiddenRouteStore.hasDatedNetwork(region: region.code)
+        var latestValidFrom: String?
+        if hasDatedNetwork {
+            do { latestValidFrom = try RiddenRouteStore.latestValidFrom(region: region.code) }
+            catch {
+                // Unknown date bounds cannot exclude otherwise valid corridors.
+                section.proofFailure = error.localizedDescription
+                return
+            }
+        }
+        let normalized = Dates.normalizeDateString(rideDate)
+        guard hasDatedNetwork, normalized != rideDate || latestValidFrom.map({ rideDate < $0 }) == true else { return }
+        let candidates = corridors.compactMap { corridor in
+            candidateTrain(for: corridor).map { TripRouteValidation.Candidate(id: corridor.id, train: $0) }
+        }
+        do {
+            let validation = try await TripRouteValidation.validate(candidates: candidates) { trains in
+                try await RiddenRouteStore.routeAvailabilities(trains).map {
+                    .init(datedResolved: $0.datedResolved, undatedResolved: $0.undatedResolved)
+                }
+            }
+            section.proven = validation.unprovenReason == nil ? validation.physicallyResolvedIDs : []
+            section.proofFailure = validation.unprovenReason
+            let kept = corridors.filter { validation.retainedIDs.contains($0.id) }
+            section.removedByDate = kept.count < corridors.count
+            section.outcome = .corridors(kept)
+        } catch {
+            section.proven = []
+            section.proofFailure = "Route proof is unavailable, so these records stay savable and unproven."
+        }
+    }
+
+    /// A two-stop trip along one section's corridor, for date validation.
+    private func candidateTrain(for corridor: TripRoutePlanner.Corridor) -> Train? {
+        guard let first = corridor.choice.stations.first, let last = corridor.choice.stations.last else { return nil }
+        var scaffold = Train(id: draft.id, number: "check", origin: first.name, destination: last.name, stops: [
+            Stop(name: first.name, n02StationCode: first.code, stopType: "origin", rideSegment: true),
+            Stop(name: last.name, n02StationCode: last.code, stopType: "destination", rideSegment: true),
+        ])
+        scaffold.region = region.code
+        scaffold.date = dayString(departure)
+        return LocalJourneyAutofill.proposal(train: scaffold, choice: corridor.choice)?.train
+    }
+
+    /// Joins the chosen corridor of every section into the trip's route.
+    /// Cheap: changing one section's choice never re-plans the others.
+    private func rejoin() {
+        corridorsRemovedByDate = sections.contains(where: \.removedByDate)
+        routeProofFailure = sections.compactMap(\.proofFailure).first
+        if let failed = sections.first(where: { if case .corridors = $0.outcome { return false }; return true }) {
+            outcome = failed.outcome
+            selectedCorridorID = nil
+            refreshDrawnRoutes()
+            return
+        }
+        if sections.contains(where: \.candidates.isEmpty) {
+            outcome = .corridors([])
+            selectedCorridorID = nil
+            refreshDrawnRoutes()
+            return
+        }
+        let chosen = sections.compactMap { section in
+            section.candidates.first { $0.id == sectionChoices[section.key] }
+        }
+        guard chosen.count == sections.count else {
+            outcome = nil
+            selectedCorridorID = nil
+            refreshDrawnRoutes()
+            return
+        }
+        let lineNames = Dictionary((package?.lines ?? []).map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
+        let joined = TripRoutePlanner.joining(
+            chosen, wholeTrip: wholeTrip, allowUnverifiedConnections: allowUnverifiedConnections) { lineNames[$0] }
+        outcome = joined
+        if case .corridors(let route) = joined, let corridor = route.first {
+            corridorGeometry = [corridor.id: zip(sections, chosen).flatMap { $0.geometry[$1.id] ?? [] }]
+            physicallyResolvedCorridorIDs = zip(sections, chosen).allSatisfy({ $0.proven.contains($1.id) })
+                ? [corridor.id] : []
+            selectedCorridorID = corridor.id
+        } else {
+            selectedCorridorID = nil
+        }
+        refreshDrawnRoutes()
+    }
+
+    private func choose(_ corridorID: String, inSection index: Int) {
+        guard sections.indices.contains(index) else { return }
+        sectionChoices[sections[index].key] = corridorID
+        // Move on to the next section that still needs a choice.
+        activeSection = pendingSections.first ?? index
+        rejoin()
     }
 
     private func commit() { commit(confirmedRemoval: false) }
