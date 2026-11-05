@@ -95,6 +95,22 @@ enum NewTripStrings {
             .ja: "これらの駅を結ぶ経路が複数あります。1つ選んでください",
             .en: "Multiple routes connect these stations — choose one",
         ],
+        "ios.newTrip.historicalNotice": [
+            .zhHans: "此行程使用了已停运的线路，将按 {date} 当时的路网进行核对。",
+            .zhHant: "此行程使用了已停駛的路線，將依 {date} 當時的路網進行核對。",
+            .ja: "この旅程には廃止された路線が含まれています。{date}当時の路線網で確認しています。",
+            .en: "This trip uses a line that has since closed. It is checked against the network as it was on {date}.",
+        ],
+        "ios.newTrip.historicalNoRoute": [
+            .zhHans: "{date} 当天没有线路连接这些车站。如果该线路已停运，请检查乘车日期，或在途中添加一个停靠站。",
+            .zhHant: "{date} 當天沒有路線連接這些車站。如果該路線已停駛，請檢查乘車日期，或在途中加入一個停靠站。",
+            .ja: "{date}にこれらの駅を結ぶ路線はありませんでした。路線が廃止されている場合は、乗車日を確認するか、途中の駅を追加してください。",
+            .en: "No line connected these stations on {date}. If the line has closed, check the date you rode it, or add a stop along the way.",
+        ],
+        "ios.newTrip.showHistoricalLines": [
+            .zhHans: "在地图上显示历史线路", .zhHant: "在地圖上顯示歷史路線",
+            .ja: "地図に廃止路線を表示", .en: "Show historical lines on the map",
+        ],
         "ios.newTrip.corridorsHiddenByDate": [
             .zhHans: "部分路线因在该日期尚未开通而被隐藏。",
             .zhHant: "部分路線因在該日期尚未開通而被隱藏。",
