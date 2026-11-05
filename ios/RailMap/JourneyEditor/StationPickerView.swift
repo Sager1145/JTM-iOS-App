@@ -505,6 +505,13 @@ struct StationPickerView: View {
             suggested = applied + suggested
             applied = []
         }
+        // A query that names a station exactly is a station search, even when
+        // a company or line shares the name (横浜, 京急 etc.): offer the filter,
+        // do not swap the station out for it.
+        if response.results.contains(where: { $0.entity.kind == .station && $0.match.kind == .exact }) {
+            suggested = applied + suggested
+            applied = []
+        }
         if declinedFilterText == typed {
             suggested = applied + suggested
             applied = []

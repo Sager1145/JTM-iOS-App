@@ -65,7 +65,9 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
         edit.tap()
         let pending = app.staticTexts["Route pending confirmation"]
-        XCTAssertTrue(EditorUITestSupport.reveal(pending, in: app), app.debugDescription)
+        // The saved-route row sits below Trip details, past four drags.
+        XCTAssertTrue(EditorUITestSupport.reveal(pending, in: app, maxDrags: 14, unmountedRowIsAbove: false),
+                      app.debugDescription)
         XCTAssertTrue(pending.waitForExistence(timeout: 10),
                       "An operational proposal without resolver proof must reload as pending.")
         let reopened = XCTAttachment(screenshot: app.screenshot())
@@ -282,10 +284,13 @@ final class NewTripUITests: XCTestCase {
         _ = firstItem.waitForExistence(timeout: 8)
         let menuFrame = firstItem.exists ? firstItem.frame : app.frame
         var menuSwipes = 0
+        // Drag inside the menu itself; a drag outside it closes the menu.
+        let screen = app.coordinate(withNormalizedOffset: .zero)
+        let top = menuFrame.minY - app.frame.minY
+        let midX = menuFrame.midX - app.frame.minX
         while !jrEast.waitForExistence(timeout: 0.5), menuSwipes < 25 {
-            let x = (menuFrame.midX - app.frame.minX) / app.frame.width
-            app.coordinate(withNormalizedOffset: CGVector(dx: x, dy: 0.75))
-                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: x, dy: 0.25)))
+            screen.withOffset(CGVector(dx: midX, dy: top + 380))
+                .press(forDuration: 0.05, thenDragTo: screen.withOffset(CGVector(dx: midX, dy: top + 20)))
             menuSwipes += 1
         }
         XCTAssertTrue(jrEast.exists, app.debugDescription)
@@ -575,7 +580,8 @@ final class NewTripUITests: XCTestCase {
         let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 30))
         XCTAssertEqual(ridden.value as? String, "0", "The saved future plan must reload unridden.")
-        ridden.tap()
+        // The row's middle is its label; only the switch itself toggles.
+        ridden.switches.firstMatch.tap()
         app.buttons["newTripSave"].tap()
         XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
         assertSavedPassportCount(1, in: app)
@@ -597,11 +603,12 @@ final class NewTripUITests: XCTestCase {
         let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "0", "An untouched future plan starts unridden.")
-        ridden.tap()
+        // The row's middle is its label; only the switch itself toggles.
+        ridden.switches.firstMatch.tap()
         NewTripTimetableTestSupport.setDeparture(month: "October", day: 1, year: 2027, in: app)
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "1", "A reader-confirmed future ride stays confirmed after a date change.")
-        ridden.tap()
+        ridden.switches.firstMatch.tap()
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "0", "The reader's unridden choice also survives a past-date change.")
@@ -659,7 +666,8 @@ final class NewTripUITests: XCTestCase {
         expectsLabelChange: Bool = true, in app: XCUIApplication
     ) {
         let button = app.buttons[field]
-        XCTAssertTrue(reveal(button, in: app, upward: true), app.debugDescription)
+        // To sits below From: at large text sizes it starts below the fold.
+        XCTAssertTrue(reveal(button, in: app, upward: field != "newTripDestination"), app.debugDescription)
         XCTAssertTrue(waitForEnabled(button, timeout: 20), "\(field) stays disabled until the catalog loads.")
         button.tap()
         let search = app.searchFields.firstMatch
@@ -921,7 +929,15 @@ final class NewTripUITests: XCTestCase {
     private func revealed(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
         guard element.exists else { return false }
         if element.elementType == .textField { return frameInBand(element, in: app) }
-        return element.isHittable
+        guard element.isHittable else { return false }
+        // A row scrolled under the map panel stays "hittable" through the few
+        // points that still show at the form's top edge, and a tap there lands
+        // on the row's corner and does nothing. Count a form row as revealed
+        // only once its middle is inside the form.
+        let form = formList(in: app)
+        let frame = element.frame
+        guard form.exists, form.frame.intersects(frame) else { return true }
+        return form.frame.contains(CGPoint(x: frame.midX, y: frame.midY))
     }
 
     @discardableResult
