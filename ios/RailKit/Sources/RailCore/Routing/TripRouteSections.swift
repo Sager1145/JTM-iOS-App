@@ -36,13 +36,15 @@ extension TripRoutePlanner {
     /// junctions. Otherwise a line change at a via is `.none` and the result
     /// is `.disconnected` unless unverified connections are allowed. A route
     /// that passes a station twice is `.noRoute`.
+    /// `stationAliases` folds per-line codes of one interchange together, so
+    /// sections that meet at a station with a code per line still join.
     public static func joining(
         _ sections: [Corridor], wholeTrip: [Corridor] = [], allowUnverifiedConnections: Bool,
-        lineName: (String) -> String?
+        stationAliases: [String: String] = [:], lineName: (String) -> String?
     ) -> Outcome {
         guard var route = sections.first else { return .noRoute }
         for next in sections.dropFirst() {
-            guard let joined = joined(route, next, lineName: lineName) else { return .noRoute }
+            guard let joined = joined(route, next, aliases: stationAliases, lineName: lineName) else { return .noRoute }
             route = joined
         }
         if let proven = wholeTrip.first(where: { $0.id == route.id }) { return .corridors([proven]) }
@@ -64,12 +66,13 @@ extension TripRoutePlanner {
 
     /// Nil when the legs do not meet at one station or the result revisits a station.
     private static func joined(
-        _ head: Corridor, _ tail: Corridor, lineName: (String) -> String?
+        _ head: Corridor, _ tail: Corridor, aliases: [String: String] = [:], lineName: (String) -> String?
     ) -> Corridor? {
+        func fold(_ code: String) -> String { aliases[code] ?? code }
         guard let meeting = head.choice.stations.last, let start = tail.choice.stations.first,
-              meeting.code == start.code else { return nil }
+              fold(meeting.code) == fold(start.code) else { return nil }
         // A via is a pass-through point. Doubling back over it is a different trip.
-        let codes = head.choice.stations.map(\.code) + tail.choice.stations.dropFirst().map(\.code)
+        let codes = (head.choice.stations.map(\.code) + tail.choice.stations.dropFirst().map(\.code)).map(fold)
         guard Set(codes).count == codes.count else { return nil }
         var choice = head.choice
         choice.stations += tail.choice.stations.dropFirst()

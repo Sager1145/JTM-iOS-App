@@ -120,6 +120,9 @@ struct JourneyEditorView: View {
     @State private var sectionCache: [String: PlannedSection] = [:]
     @State private var wholeTripCache: [String: [TripRoutePlanner.Corridor]] = [:]
     @State private var wholeTrip: [TripRoutePlanner.Corridor] = []
+    @State private var activeSectionKey: String?
+    /// Interchange codes folded together, for joining sections at a via.
+    @State private var sectionAliases: [String: String] = [:]
     @State private var autofillFailed = false
     @State private var saveIssues: [RideDraftIssue] = []
     /// Catalog operator id → display name. Rebuilt when the catalog or stations change.
@@ -389,6 +392,8 @@ struct JourneyEditorView: View {
             wholeTripCache = [:]
             wholeTrip = []
             activeSection = 0
+            activeSectionKey = nil
+            sectionAliases = [:]
             autofillFailed = false
             loadFailed = false
             saveIssues = []
@@ -439,17 +444,17 @@ struct JourneyEditorView: View {
                 regionSection
             }
             stationsSection
-            if timetableTrain != nil || hasRecordRoute || (origin != nil && destination != nil) {
-                routeSection
-            }
-            timeSection
             serviceSection
+            timeSection
             Section {
                 Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
                     get: { isRidden }, set: { riddenOverride = $0 }))
                     .accessibilityIdentifier("newTripRidden")
             }
             tripDetailsSection
+            if timetableTrain != nil || hasRecordRoute || (origin != nil && destination != nil) {
+                routeSection
+            }
             JourneyEditorDetails(
                 draft: $draft, region: region, showsStops: showsRecordRoute,
                 suggestionTrains: suggestionTrains, issues: detailIssues,
@@ -940,7 +945,7 @@ struct JourneyEditorView: View {
         // The active section's other candidates, grey and tappable.
         if sections.indices.contains(activeSection) {
             let section = sections[activeSection]
-            let chosen = sectionChoices[section.key]
+            let chosen = choice(for: section)
             for corridor in section.candidates.prefix(Self.maximumDrawnRoutes) where corridor.id != chosen
                 || section.candidates.count > 1 && chosen == nil {
                 guard let pieces = section.geometry[corridor.id], !pieces.isEmpty else { continue }
@@ -951,7 +956,7 @@ struct JourneyEditorView: View {
         }
         // Every section's choice so far, as one selected route.
         let chosenPieces = sections.flatMap { section -> [TripRouteGeometry.Piece] in
-            guard let id = sectionChoices[section.key] else { return [] }
+            guard let id = choice(for: section) else { return [] }
             return section.geometry[id] ?? []
         }
         if !chosenPieces.isEmpty {
@@ -1865,9 +1870,9 @@ struct JourneyEditorView: View {
                     refreshDrawnRoutes()
                 } label: {
                     HStack(spacing: 10) {
-                        Image(systemName: sectionChoices[section.key] != nil ? "checkmark.circle.fill"
+                        Image(systemName: choice(for: section) != nil ? "checkmark.circle.fill"
                               : section.candidates.count > 1 ? "questionmark.circle.fill" : "exclamationmark.circle")
-                            .foregroundStyle(sectionChoices[section.key] != nil ? Color.accentColor : Color.orange)
+                            .foregroundStyle(choice(for: section) != nil ? Color.accentColor : Color.orange)
                             .accessibilityHidden(true)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(text("sectionTitle", fallback: "Section {n} of {count}: {from} → {to}", [
@@ -1919,7 +1924,7 @@ struct JourneyEditorView: View {
     }
 
     private func sectionStatus(_ section: PlannedSection) -> String {
-        if let id = sectionChoices[section.key], let corridor = section.candidates.first(where: { $0.id == id }) {
+        if let id = choice(for: section), let corridor = section.candidates.first(where: { $0.id == id }) {
             return corridor.lineNames.joined(separator: " → ")
         }
         switch section.candidates.count {
@@ -1931,8 +1936,8 @@ struct JourneyEditorView: View {
 
     private func corridorRow(_ corridor: TripRoutePlanner.Corridor, index: Int) -> some View {
         let shown = shownSections
-        let key = shown.indices.contains(shownActiveSection) ? shown[shownActiveSection].key : ""
-        let selected = !showsRecordRoute && sectionChoices[key] == corridor.id
+        let selected = !showsRecordRoute && shown.indices.contains(shownActiveSection)
+            && choice(for: shown[shownActiveSection]) == corridor.id
         return Button {
             if showsRecordRoute { chooseRepair(index) } else { choose(corridor.id, inSection: activeSection) }
         } label: {
@@ -2395,7 +2400,19 @@ struct JourneyEditorView: View {
 
     /// Sections the reader still has to choose.
     private var pendingSections: [Int] {
-        sections.indices.filter { sections[$0].candidates.count > 1 && sectionChoices[sections[$0].key] == nil }
+        sections.indices.filter { sections[$0].candidates.count > 1 && choice(for: sections[$0]) == nil }
+    }
+
+    /// A choice is kept by the section's shape (its ends and lines), so a new
+    /// date, company or "Continue anyway" keeps it while it is still offered.
+    private func choiceKey(_ section: PlannedSection) -> String {
+        section.key.split(separator: "\u{1f}", omittingEmptySubsequences: false).prefix(4).joined(separator: "\u{1f}")
+    }
+
+    private func choice(for section: PlannedSection) -> String? {
+        guard let id = sectionChoices[choiceKey(section)],
+              section.candidates.contains(where: { $0.id == id }) else { return nil }
+        return id
     }
 
     /// The sections on screen: the planner's, or the one span a paused route
@@ -2454,7 +2471,7 @@ struct JourneyEditorView: View {
         searching = !missing.isEmpty || needsWhole
         if !missing.isEmpty || needsWhole {
             let codes = [base.originCode, base.destinationCode] + viaCodes
-            let worker = Task.detached(priority: .userInitiated) { () throws -> ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?) in
+            let worker = Task.detached(priority: .userInitiated) { () throws -> ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?, [String: String]) in
                 let aliases = try loadJourneyStationAliases(for: codes, package: package)
                 let context = try loadJourneyAdmissionContext(rideDate: rideDate, package: package)
                 var solved: [(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])] = []
@@ -2483,9 +2500,9 @@ struct JourneyEditorView: View {
                         whole = []
                     }
                 }
-                return (solved, whole)
+                return (solved, whole, aliases)
             }
-            let result: ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?)
+            let result: ([(String, TripRoutePlanner.Outcome, [String: [TripRouteGeometry.Piece]])], [TripRoutePlanner.Corridor]?, [String: String])
             do {
                 result = try await withTaskCancellationHandler {
                     try await worker.value
@@ -2496,6 +2513,10 @@ struct JourneyEditorView: View {
                 guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
                 searching = false
                 routeProofFailure = error.localizedDescription
+                // The previous route is not this trip's any more.
+                sections = []
+                outcome = nil
+                selectedCorridorID = nil
                 drawnRoutes = []
                 return
             }
@@ -2512,6 +2533,7 @@ struct JourneyEditorView: View {
                 sectionCache[key] = section
             }
             if let wholeKey, let whole = result.1 { wholeTripCache[wholeKey] = whole }
+            sectionAliases.merge(result.2) { current, _ in current }
             // Each section result is kept for this session; the cache only
             // grows with the stations the reader actually tried.
             if sectionCache.count > 64 { sectionCache = sectionCache.filter { keys.contains($0.key) } }
@@ -2520,11 +2542,15 @@ struct JourneyEditorView: View {
         sections = keys.compactMap { sectionCache[$0] }
         wholeTrip = wholeKey.flatMap { wholeTripCache[$0] } ?? []
         for section in sections where section.candidates.count == 1 {
-            sectionChoices[section.key] = section.candidates[0].id
+            sectionChoices[choiceKey(section)] = section.candidates[0].id
         }
-        if !sections.indices.contains(activeSection) || !pendingSections.isEmpty {
+        // Stay on the section the reader is looking at while it still exists.
+        if let key = activeSectionKey, let kept = sections.firstIndex(where: { choiceKey($0) == key }) {
+            activeSection = kept
+        } else {
             activeSection = pendingSections.first ?? 0
         }
+        activeSectionKey = sections.indices.contains(activeSection) ? choiceKey(sections[activeSection]) : nil
         searching = false
         plannedIdentity = identity
         rejoin()
@@ -2602,7 +2628,7 @@ struct JourneyEditorView: View {
             return
         }
         let chosen = sections.compactMap { section in
-            section.candidates.first { $0.id == sectionChoices[section.key] }
+            section.candidates.first { $0.id == choice(for: section) }
         }
         guard chosen.count == sections.count else {
             outcome = nil
@@ -2612,10 +2638,11 @@ struct JourneyEditorView: View {
         }
         let lineNames = Dictionary((package?.lines ?? []).map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
         let joined = TripRoutePlanner.joining(
-            chosen, wholeTrip: wholeTrip, allowUnverifiedConnections: allowUnverifiedConnections) { lineNames[$0] }
+            chosen, wholeTrip: wholeTrip, allowUnverifiedConnections: allowUnverifiedConnections,
+            stationAliases: sectionAliases) { lineNames[$0] }
         outcome = joined
         if case .corridors(let route) = joined, let corridor = route.first {
-            corridorGeometry = [corridor.id: zip(sections, chosen).flatMap { $0.geometry[$1.id] ?? [] }]
+            corridorGeometry = [corridor.id: zip(sections.indices, chosen).flatMap { pieces(for: $1, inSection: $0) }]
             physicallyResolvedCorridorIDs = zip(sections, chosen).allSatisfy({ $0.proven.contains($1.id) })
                 ? [corridor.id] : []
             selectedCorridorID = corridor.id
@@ -2627,10 +2654,22 @@ struct JourneyEditorView: View {
 
     private func choose(_ corridorID: String, inSection index: Int) {
         guard sections.indices.contains(index) else { return }
-        sectionChoices[sections[index].key] = corridorID
+        sectionChoices[choiceKey(sections[index])] = corridorID
         // Move on to the next section that still needs a choice.
         activeSection = pendingSections.first ?? index
+        activeSectionKey = choiceKey(sections[activeSection])
         rejoin()
+    }
+
+    /// Track for a candidate. Only the first few are drawn ahead of time; a
+    /// later one is built when the reader picks it.
+    private func pieces(for corridor: TripRoutePlanner.Corridor, inSection index: Int) -> [TripRouteGeometry.Piece] {
+        if let pieces = sections[index].geometry[corridor.id] { return pieces }
+        guard let geometryCache else { return [] }
+        let pieces = TripRouteGeometry.pieces(for: corridor.choice, cache: geometryCache)
+        sections[index].geometry[corridor.id] = pieces
+        sectionCache[sections[index].key]?.geometry[corridor.id] = pieces
+        return pieces
     }
 
     private func commit() { commit(confirmedRemoval: false) }

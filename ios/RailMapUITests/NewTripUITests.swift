@@ -791,29 +791,17 @@ final class NewTripUITests: XCTestCase {
         return band.contains(frame)
     }
 
+    /// Types yesterday into the arrival's date field.
     private func moveArrivalToPreviousDay(in app: XCUIApplication) {
-        let arrival = app.datePickers["newTripArrival"]
+        let arrival = app.textFields["newTripArrivalDate"]
         XCTAssertTrue(reveal(arrival, in: app, timeout: 8))
-        let dateButton = arrival.buttons.firstMatch
-        if dateButton.exists { dateButton.tap() } else { arrival.tap() }
-
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.dateFormat = "EEEE, MMMM d"
-        let named = app.buttons[formatter.string(from: yesterday)]
-        if named.waitForExistence(timeout: 5) {
-            named.tap()
-        } else {
-            let day = String(Calendar.current.component(.day, from: yesterday))
-            let byNumber = app.buttons[day].firstMatch
-            XCTAssertTrue(byNumber.waitForExistence(timeout: 5),
-                          "The arrival calendar must offer yesterday.")
-            byNumber.tap()
+        let parts = Calendar.current.dateComponents([.year, .month, .day], from: yesterday)
+        arrival.tap()
+        if let current = arrival.value as? String, !current.isEmpty, current != arrival.placeholderValue {
+            arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
         }
-        if app.buttons["PopoverDismissRegion"].exists {
-            app.buttons["PopoverDismissRegion"].tap()
-        }
+        arrival.typeText(String(format: "%04d-%02d-%02d\n", parts.year!, parts.month!, parts.day!))
     }
 
     /// A loop such as 山手線 keeps both directions, so Save stays disabled until

@@ -77,6 +77,7 @@
 		A1D7C0DE0000000000000002 /* JourneyEditorSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */; };
 		A1D7C0DE0000000000000003 /* RouteRepairController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001003 /* RouteRepairController.swift */; };
 		A1D7C0DE0000000000000004 /* JourneyEditorManualEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */; };
+		A1D7C0DE0000000000000005 /* StationSearchHints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE0000000000001005 /* StationSearchHints.swift */; };
 		A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7C0DE00000000000000F1 /* TripMapView.swift */; };
 		4643E4B9E7B9636244738E6A /* TimetableRouteEvidence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8714C78DD769D4024644D6C0 /* TimetableRouteEvidence.swift */; };
 		49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397697865248E6D4DF39FDA /* InspectorMap.swift */; };
@@ -346,6 +347,7 @@
 		A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorSeed.swift; sourceTree = "<group>"; };
 		A1D7C0DE0000000000001003 /* RouteRepairController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRepairController.swift; sourceTree = "<group>"; };
 		A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorManualEntry.swift; sourceTree = "<group>"; };
+		A1D7C0DE0000000000001005 /* StationSearchHints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSearchHints.swift; sourceTree = "<group>"; };
 		A1D7C0DE00000000000000F1 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		628DBA7D128F32B95C9901ED /* DataStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStrings.swift; sourceTree = "<group>"; };
 		6397697865248E6D4DF39FDA /* InspectorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorMap.swift; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				A1D7C0DE0000000000001002 /* JourneyEditorSeed.swift */,
 				A1D7C0DE0000000000001003 /* RouteRepairController.swift */,
 				A1D7C0DE0000000000001004 /* JourneyEditorManualEntry.swift */,
+				A1D7C0DE0000000000001005 /* StationSearchHints.swift */,
 				A1D7C0DE00000000000000F1 /* TripMapView.swift */,
 			);
 			path = JourneyEditor;
@@ -1261,6 +1264,7 @@
 				A1D7C0DE0000000000000002 /* JourneyEditorSeed.swift in Sources */,
 				A1D7C0DE0000000000000003 /* RouteRepairController.swift in Sources */,
 				A1D7C0DE0000000000000004 /* JourneyEditorManualEntry.swift in Sources */,
+				A1D7C0DE0000000000000005 /* StationSearchHints.swift in Sources */,
 				A1D7C0DE00000000000000B1 /* TripMapView.swift in Sources */,
 				B946F8A49F03FA17BFCA8FDE /* StationPlaceStore.swift in Sources */,
 				7FD51A06743734AF948ACC3F /* StationReadingsStore.swift in Sources */,

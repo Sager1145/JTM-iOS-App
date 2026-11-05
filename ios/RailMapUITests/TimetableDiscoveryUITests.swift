@@ -67,11 +67,14 @@ final class TimetableDiscoveryUITests: XCTestCase {
     func testCancellingLocalDateSearchKeepsDepartureDateUnchanged() {
         let app = NewTripTimetableTestSupport.launch()
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
-        let departure = app.datePickers["newTripDeparture"]
+        let departure = app.textFields["newTripDepartureDate"]
         NewTripTimetableTestSupport.reveal(departure, in: app)
         let originalDate = departure.value as? String
         XCTAssertNotNil(originalDate)
-        NewTripTimetableTestSupport.reveal(app.buttons["newTripTimetableBrowse"], in: app)
+        // The timetable browser is in the one Fill in trip details sheet.
+        NewTripTimetableTestSupport.reveal(app.buttons["newTripFillDetails"], in: app)
+        app.buttons["newTripFillDetails"].tap()
+        XCTAssertTrue(app.buttons["newTripTimetableBrowse"].waitForExistence(timeout: 8))
         app.buttons["newTripTimetableBrowse"].tap()
         let dateEditor = app.descendants(matching: .any)["servicePatternDateEditor"].firstMatch
         XCTAssertTrue(dateEditor.waitForExistence(timeout: 8))

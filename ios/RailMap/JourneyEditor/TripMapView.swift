@@ -81,6 +81,8 @@ struct TripMapView: UIViewRepresentable {
     /// A filtered, small station set (one company or line) is shown at any
     /// zoom, so it can be picked straight from the framed network.
     var showsAllStations = false
+    /// Bumped by a caller whose station set can change at the same size.
+    var stationsRevision = 0
 
     /// Stations are drawn only below this latitude span, where a dot is a
     /// target a finger can actually hit.
@@ -177,7 +179,7 @@ struct TripMapView: UIViewRepresentable {
             // Count plus both ends: a company filter can keep the count and
             // still change the set.
             let token = stations.count &+ 31 &* (stations.first?.key.hashValue ?? 0)
-                &+ 17 &* (stations.last?.key.hashValue ?? 0)
+                &+ 17 &* (stations.last?.key.hashValue ?? 0) &+ 7919 &* (parent?.stationsRevision ?? 0)
             guard regionCode != self.regionCode || token != stationCount else { return }
             self.regionCode = regionCode
             stationCount = token

@@ -129,6 +129,8 @@ final class JourneySaveUITests: XCTestCase {
 
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
+        // The saved stops are listed below the route.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: false))
         EditorUITestSupport.tap(origin, in: app)
         let name = app.otherElements["rideEditorStopName"].textFields.firstMatch
         XCTAssertTrue(name.waitForExistence(timeout: 5))

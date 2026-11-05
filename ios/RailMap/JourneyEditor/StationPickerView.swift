@@ -88,6 +88,16 @@ struct StationPickerView: View {
     @State private var operatorLabels: [String: String] = [:]
     @State private var riddenByLine: [String: Int] = [:]
     @State private var lineFitRevision = 0
+    /// Filter results, computed once per filter change rather than per render.
+    @State private var filterLines: [CatalogLine] = []
+    @State private var mapStations: [CatalogStation] = []
+    @State private var mapStationsRevision = 0
+    @State private var filterMapContent = TripMapContent()
+    @State private var lineRows: [CatalogStationRow] = []
+    @State private var hints = StationSearchHints.none
+    /// The text a reader typed before an applied filter took its keywords,
+    /// restored when that chip is removed.
+    @State private var textBeforeAppliedFilter: String?
     @State private var search = StationPickerSearchController()
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
@@ -224,8 +234,15 @@ struct StationPickerView: View {
             }
         }
         .task(id: loadToken) { await load() }
-        .onChange(of: searchText) { _, needle in search.apply(query: needle, companyName: nil) }
-        .onChange(of: filterLineID) { _, _ in lineFitRevision += 1 }
+        .onChange(of: searchText) { _, needle in
+            search.apply(query: needle, companyName: nil)
+            readHints(needle)
+        }
+        .onChange(of: filterOperatorID) { _, _ in refreshFilterState() }
+        .onChange(of: filterLineID) { _, _ in
+            lineFitRevision += 1
+            refreshFilterState()
+        }
         .onDisappear { search.cancel() }
     }
 
@@ -258,7 +275,8 @@ struct StationPickerView: View {
             onRoute: { _ in },
             onBackground: {},
             onZoomChange: { _ in },
-            showsAllStations: filterOperatorID != nil)
+            showsAllStations: filterOperatorID != nil,
+            stationsRevision: mapStationsRevision)
             .overlay(alignment: .top) {
                 Text(localization.text("ios.newTrip.pickOnMap", fallback: "Tap a station on the map, or search"))
                     .font(.footnote.weight(.medium))
@@ -276,7 +294,7 @@ struct StationPickerView: View {
             List {
                 if let line = filterLineID.flatMap({ catalog?.line(id: $0, regionCode: regionCode) }), !isSearching {
                     Section(line.name) {
-                        ForEach(lineStationRows(line)) { row in stationButton(row, line: line) }
+                        ForEach(lineRows) { row in stationButton(row, line: line) }
                     }
                 } else if isSearching {
                     ForEach(filteredLineGroups) { group in
@@ -332,7 +350,7 @@ struct StationPickerView: View {
 
     // MARK: - company and line filter
 
-    /// A jointly run line belongs to every one of its companies.
+    /// Search results on the chosen company's lines, or on the chosen line.
     private var filteredLineGroups: [CatalogStationLineGroup] {
         guard let filterOperatorID else { return lineGroups }
         let lineIDs = filterLineID.map { Set([$0]) } ?? Set(filterLines.map(\.id))
@@ -343,8 +361,17 @@ struct StationPickerView: View {
         operatorLabels[op.id] ?? op.shortName ?? op.name
     }
 
+    /// Recomputes what the filters show. Runs when a filter changes.
+    private func refreshFilterState() {
+        filterLines = computeFilterLines()
+        mapStations = computeMapStations()
+        mapStationsRevision += 1
+        filterMapContent = computeFilterMapContent()
+        lineRows = filterLineID.flatMap { catalog?.line(id: $0, regionCode: regionCode) }.map(lineStationRows) ?? []
+    }
+
     /// The chosen company's lines, most ridden first, then by name.
-    private var filterLines: [CatalogLine] {
+    private func computeFilterLines() -> [CatalogLine] {
         guard let filterOperatorID, let catalog else { return [] }
         return catalog.lines(operatorID: filterOperatorID)
             .filter { $0.regionCode == regionCode }
@@ -356,25 +383,26 @@ struct StationPickerView: View {
             }
     }
 
-    /// A line's stations in route order, ready to pick without typing.
+    /// A line's stations in route order, ready to pick without typing. A
+    /// loop's closing station is listed once. The company station is resolved
+    /// from the code when the stop is written, as for a map pick.
     private func lineStationRows(_ line: CatalogLine) -> [CatalogStationRow] {
         guard let catalog else { return [] }
-        let ids = Dictionary(
-            lineGroups.first(where: { $0.line.id == line.id })?.rows.map { ($0.station.key, $0.stationID) } ?? [],
-            uniquingKeysWith: { first, _ in first })
+        var seen: Set<StationKey> = []
         return catalog.memberships(lineID: line.id, regionCode: regionCode)
             .sorted { $0.sequence < $1.sequence }
             .compactMap { membership in
-                guard let station = catalog.station(membership.stationKey) else { return nil }
+                guard seen.insert(membership.stationKey).inserted,
+                      let station = catalog.station(membership.stationKey) else { return nil }
                 return CatalogStationRow(
                     station: station, subtitle: subtitleByCode[station.key.sourceCode] ?? "",
                     copyText: copyLabels.label(for: station, catalog: catalog),
-                    stationID: ids[station.key] ?? nil)
+                    stationID: nil)
             }
     }
 
     /// Stations the map offers: the chosen line's, the company's, or all.
-    private var mapStations: [CatalogStation] {
+    private func computeMapStations() -> [CatalogStation] {
         guard let catalog, let filterOperatorID else { return allStations }
         let lineIDs = filterLineID.map { [$0] } ?? catalog.lines(operatorID: filterOperatorID).map(\.id)
         var seen: Set<StationKey> = []
@@ -383,7 +411,7 @@ struct StationPickerView: View {
     }
 
     /// The chosen line drawn through its stations, so the camera frames it.
-    private var filterMapContent: TripMapContent {
+    private func computeFilterMapContent() -> TripMapContent {
         guard let catalog, let filterLineID else { return TripMapContent() }
         let coordinates = catalog.memberships(lineID: filterLineID, regionCode: regionCode)
             .sorted { $0.sequence < $1.sequence }
@@ -396,7 +424,66 @@ struct StationPickerView: View {
         return TripMapContent(routes: [route], marks: [], fitRevision: lineFitRevision)
     }
 
+    /// Filters and corrections the search engine read from the text.
+    private func readHints(_ query: String) {
+        guard let catalog else { hints = .none; return }
+        let next = StationSearchHintSource.hints(for: query, regionCode: regionCode, catalog: catalog)
+        hints = next
+        guard !next.applied.isEmpty else { return }
+        textBeforeAppliedFilter = query
+        for filter in next.applied {
+            switch filter.kind {
+            case .company: filterOperatorID = filter.id
+            case .line:
+                if filterOperatorID == nil {
+                    filterOperatorID = catalog.line(id: filter.id, regionCode: regionCode)?.operatorIDs.first
+                }
+                filterLineID = filter.id
+            }
+        }
+        if let residual = next.residualText { queryBinding.wrappedValue = residual }
+    }
+
+    private func apply(_ filter: StationSearchHints.Filter) {
+        switch filter.kind {
+        case .company:
+            filterOperatorID = filter.id
+            filterLineID = nil
+        case .line:
+            filterOperatorID = catalog?.line(id: filter.id, regionCode: regionCode)?.operatorIDs.first
+            filterLineID = filter.id
+        }
+        if let residual = hints.residualText { queryBinding.wrappedValue = residual }
+        hints.suggested = []
+    }
+
+    @ViewBuilder private var hintRows: some View {
+        if !hints.suggested.isEmpty || hints.didYouMean != nil {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    if let correction = hints.didYouMean {
+                        Button {
+                            queryBinding.wrappedValue = correction
+                        } label: {
+                            Text(localization.text("ios.newTrip.didYouMean", params: ["text": .string(correction)],
+                                                   fallback: "Did you mean {text}?"))
+                                .font(.subheadline)
+                                .frame(minHeight: 44)
+                        }
+                        .accessibilityIdentifier("stationPickerDidYouMean")
+                    }
+                    ForEach(hints.suggested) { filter in
+                        Button { apply(filter) } label: { chip(filter.title, active: false) }
+                            .accessibilityIdentifier("stationPickerSuggestedFilter-\(filter.id)")
+                    }
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+    }
+
     @ViewBuilder private var filterChips: some View {
+        hintRows
         if !filterOperators.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
@@ -429,6 +516,11 @@ struct StationPickerView: View {
                         Button {
                             filterOperatorID = nil
                             filterLineID = nil
+                            // A filter the search applied gives its words back.
+                            if let typed = textBeforeAppliedFilter {
+                                textBeforeAppliedFilter = nil
+                                queryBinding.wrappedValue = typed
+                            }
                         } label: {
                             Label(localization.text("ios.newTrip.filterClear", fallback: "Clear filters"),
                                   systemImage: "xmark.circle.fill")
@@ -545,6 +637,7 @@ struct StationPickerView: View {
             onLoad?(loaded.0, loaded.5, loaded.4)
             didLoad = true
             prepareFilters(catalog: loaded.0)
+            refreshFilterState()
             if isSearching { search.apply(query: searchText, companyName: nil) }
         } catch {
             guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }

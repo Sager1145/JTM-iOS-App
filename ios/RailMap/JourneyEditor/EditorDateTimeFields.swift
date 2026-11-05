@@ -310,8 +310,10 @@ struct EditorTimeField: View {
 ///
 /// Typing accepts the short forms of ``EditorTime/parseDateInput(_:defaultYear:)``
 /// (`1105`, `11/5`, `20261105`; the year defaults to the value's own) and of
-/// ``EditorTime/parseTime(_:)`` (`0930`, `9:30`). A value is applied as soon as
-/// it parses, and invalid text is flagged in place without being rewritten.
+/// ``EditorTime/parseTime(_:)`` (`0930`, `9:30`). Text is checked as it is
+/// typed but applied only on Return or when the field is left, so a
+/// half-typed date (`11/1` on the way to `11/15`) never reaches the trip.
+/// Leaving a field with text that does not parse puts the trip's value back.
 struct TypedDateTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
@@ -351,6 +353,8 @@ struct TypedDateTimeField: View {
                     .accessibilityIdentifier("\(identifier)Time")
                     .onSubmit(normalize)
                 Button {
+                    // Typed text must not overwrite the calendar's pick later.
+                    focused = nil
                     showsCalendar = true
                 } label: {
                     Image(systemName: "calendar")
@@ -381,9 +385,7 @@ struct TypedDateTimeField: View {
         .frame(minHeight: 44)
         .onAppear(perform: refresh)
         .onChange(of: value) { _, _ in if focused == nil { refresh() } }
-        .onChange(of: focused) { _, part in if part == nil { normalize() } }
-        .onChange(of: dateText) { _, _ in apply() }
-        .onChange(of: timeText) { _, _ in apply() }
+        .onChange(of: focused) { old, part in if old != nil, part == nil { normalize() } }
     }
 
     private var parsedDate: ServiceDateParse {
@@ -406,15 +408,17 @@ struct TypedDateTimeField: View {
               case .valid(_, let time) = EditorTime.parseTime(timeText),
               let start = calendar.date(from: DateComponents(year: year, month: month, day: day)),
               let civil = calendar.date(byAdding: .day, value: time.dayOffset, to: start),
-              let next = calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: civil),
-              next != value else { return }
+              let next = calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: civil)
+        else { return }
+        // Same minute: nothing changed, and a seed's seconds stay untouched.
+        guard !calendar.isDate(next, equalTo: value, toGranularity: .minute) else { return }
         value = next
     }
 
     /// Leaving a field shows the value in its canonical form.
     private func normalize() {
         apply()
-        if problem == nil { refresh() }
+        refresh()
     }
 
     private func refresh() {
