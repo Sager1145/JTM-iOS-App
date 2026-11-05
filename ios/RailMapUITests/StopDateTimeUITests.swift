@@ -21,7 +21,7 @@ final class StopDateTimeUITests: XCTestCase {
         ])
 
         let first = app.buttons["rideEditorStop-0"]
-        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
         XCTAssertTrue(EditorUITestSupport.reveal(first, in: app), app.debugDescription)
         EditorUITestSupport.tap(first, in: app)
 

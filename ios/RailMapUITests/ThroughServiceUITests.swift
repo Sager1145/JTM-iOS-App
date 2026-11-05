@@ -10,7 +10,7 @@ final class ThroughServiceUITests: XCTestCase {
 
     func testSectionServiceApplyPreservesDraftNotes() {
         let app = launchEditing(hachiojiJourney())
-        let form = app.collectionViews["rideEditorForm"].firstMatch
+        let form = app.collectionViews["newTripForm"].firstMatch
         XCTAssertTrue(form.waitForExistence(timeout: 30))
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         let destination = app.descendants(matching: .any)["rideEditorStop-3"].firstMatch
@@ -75,10 +75,13 @@ final class ThroughServiceUITests: XCTestCase {
     /// tapped, and no stored subscription credentials are created or deleted.
     func testStandaloneChatGPTQueryRequiresDateAndSignedInAccount() {
         let app = launchEditing(blankJapanJourney())
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 40))
-        let pattern = app.buttons["rideEditorServicePattern"]
-        XCTAssertTrue(EditorUITestSupport.reveal(pattern, in: app), app.debugDescription)
-        XCTAssertTrue(pattern.waitForExistence(timeout: 8))
+        XCTAssertTrue(app.descendants(matching: .any)["newTripForm"].firstMatch.waitForExistence(timeout: 40))
+        // Entry moved: fill sheet (newTripFillDetails) -> newTripTimetableBrowse.
+        let fill = app.buttons["newTripFillDetails"]
+        XCTAssertTrue(EditorUITestSupport.reveal(fill, in: app), app.debugDescription)
+        EditorUITestSupport.tap(fill, in: app)
+        let pattern = app.buttons["newTripTimetableBrowse"]
+        XCTAssertTrue(pattern.waitForExistence(timeout: 8), app.debugDescription)
         EditorUITestSupport.tap(pattern, in: app)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
@@ -229,7 +232,7 @@ final class ThroughServiceUITests: XCTestCase {
         let candidates = app.collectionViews.allElementsBoundByIndex
         let indices = candidates.indices.filter { index in
             let candidate = candidates[index]
-            return candidate.identifier != "rideEditorForm"
+            return candidate.identifier != "newTripForm"
                 && candidate.frame.intersects(app.frame)
                 && (candidate.descendants(matching: .any)["rideEditorServiceFrom"].exists
                     || candidate.descendants(matching: .any)["rideEditorSectionNumber"].exists)
@@ -285,7 +288,7 @@ final class ThroughServiceUITests: XCTestCase {
                         app: XCUIApplication) -> Bool {
         guard form.waitForExistence(timeout: 8) else { return false }
         let isSectionForm = app.buttons["rideEditorApplyServiceLeg"].exists
-            && form.identifier != "rideEditorForm"
+            && form.identifier != "newTripForm"
         let maximumAttempts = isSectionForm ? 6 : 20
         for attempt in 0...maximumAttempts {
             var bounds = form.frame.intersection(app.frame).insetBy(dx: 0, dy: 10)

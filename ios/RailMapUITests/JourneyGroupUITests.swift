@@ -25,7 +25,7 @@ final class JourneyGroupUITests: XCTestCase {
         create.tap()
         let name = app.textFields["journeyGroupName"]
         XCTAssertTrue(EditorUITestSupport.reveal(name, in: app))
-        XCTAssertFalse(app.buttons["rideEditorSave"].isEnabled,
+        XCTAssertFalse(app.buttons["newTripSave"].isEnabled,
                        "Creating the empty group must select its unfinished draft.")
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         name.tap()
@@ -51,7 +51,7 @@ final class JourneyGroupUITests: XCTestCase {
         name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(XCUIKeyboardKey.delete.rawValue + "s\n")
         XCTAssertEqual(name.value as? String, "Rail holidas")
-        let save = app.buttons["rideEditorSave"]
+        let save = app.buttons["newTripSave"]
         XCTAssertTrue(save.waitForExistence(timeout: 8))
         XCTAssertTrue(save.isEnabled)
         save.tap()

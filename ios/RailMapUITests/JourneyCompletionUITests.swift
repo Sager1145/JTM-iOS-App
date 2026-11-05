@@ -24,7 +24,7 @@ final class JourneyCompletionUITests: XCTestCase {
         // The sheet also accepts raw text imports, so it is reachable before
         // the draft is eligible for an AI request. The Form creates this row
         // lazily, so reveal it before checking reachability.
-        let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        let editorForm = app.descendants(matching: .any)["newTripForm"].firstMatch
         XCTAssertTrue(editorForm.waitForExistence(timeout: 30))
         XCTAssertTrue(reveal(completion, in: editorForm, app: app, scrolling: .up))
         XCTAssertTrue(completion.isEnabled)
@@ -92,7 +92,7 @@ final class JourneyCompletionUITests: XCTestCase {
         let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 10))
         edit.tap()
-        let editor = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        let editor = app.descendants(matching: .any)["newTripForm"].firstMatch
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         let completion = app.buttons["rideEditorAICompletion"]
         XCTAssertTrue(reveal(completion, in: editor, app: app, scrolling: .up))
@@ -146,7 +146,7 @@ final class JourneyCompletionUITests: XCTestCase {
         scrolling preferredDirection: FormScrollDirection
     ) -> Bool {
         guard form.exists else { return false }
-        let attempts = form.identifier == "rideEditorForm" ? 24 : 12
+        let attempts = form.identifier == "newTripForm" ? 24 : 12
         for attempt in 0...attempts {
             let visibleForm = visibleBounds(of: form, in: app)
             guard isUsable(visibleForm) else { return false }
@@ -205,7 +205,7 @@ final class JourneyCompletionUITests: XCTestCase {
     ) {
         // An existing journey can have dozens of stop rows before the
         // completion section. Cover that form with larger controlled drags.
-        let distance = visibleForm.height * (form.identifier == "rideEditorForm" ? 0.55 : 0.18)
+        let distance = visibleForm.height * (form.identifier == "newTripForm" ? 0.55 : 0.18)
         let upward = direction == .up
         let startPoint = CGPoint(
             x: visibleForm.midX,

@@ -195,5 +195,61 @@ enum NewTripStrings {
             .zhHans: "仅{company}", .zhHant: "僅{company}",
             .ja: "{company}のみ", .en: "Only {company}",
         ],
+        "ios.newTrip.fillDetails": [
+            .en: "Fill in trip details", .ja: "行程の詳細を入力",
+            .zhHant: "填入行程詳細", .zhHans: "填入行程详情",
+        ],
+        "ios.newTrip.tripDetails": [
+            .en: "Trip details", .ja: "行程の詳細",
+            .zhHant: "行程詳細", .zhHans: "行程详情",
+        ],
+        "ios.newTrip.fillDetailsNote": [
+            .en: "Timetables, the line's services, and ChatGPT or pasted text, in one list.", .ja: "時刻表、路線の列車種別、ChatGPT または貼り付けたテキストをひとつの一覧で。",
+            .zhHant: "時刻表、路線的列車種別，以及 ChatGPT 或貼上的文字，集中在一個清單。", .zhHans: "时刻表、线路的列车种别，以及 ChatGPT 或粘贴的文字，集中在一个列表。",
+        ],
+        "ios.newTrip.completeWithText": [
+            .en: "ChatGPT or pasted text", .ja: "ChatGPT または貼り付けたテキスト",
+            .zhHant: "ChatGPT 或貼上的文字", .zhHans: "ChatGPT 或粘贴的文字",
+        ],
+        "ios.newTrip.completeWithTextNote": [
+            .en: "Review every proposed change before it is applied.", .ja: "適用する前に、提案された変更をすべて確認します。",
+            .zhHant: "套用前會先檢視每一項建議的變更。", .zhHans: "应用前会先查看每一项建议的更改。",
+        ],
+        "ios.newTrip.savedRoute": [
+            .en: "Saved route", .ja: "保存済みの経路",
+            .zhHant: "已儲存的路線", .zhHans: "已保存的路线",
+        ],
+        "ios.newTrip.repairChoose": [
+            .en: "Choose the route between {from} and {to}", .ja: "{from}と{to}の間の経路を選んでください",
+            .zhHant: "請選擇{from}與{to}之間的路線", .zhHans: "请选择{from}与{to}之间的路线",
+        ],
+        "ios.newTrip.repairSkip": [
+            .en: "Leave this part as it is", .ja: "この区間はそのままにする",
+            .zhHant: "此區段保持不變", .zhHans: "此区段保持不变",
+        ],
+        "ios.newTrip.repairing": [
+            .en: "Repairing route", .ja: "経路を修復中",
+            .zhHant: "正在修復路線", .zhHans: "正在修复路线",
+        ],
+        "ios.newTrip.trainTypeNotSet": [
+            .en: "Not set", .ja: "未設定",
+            .zhHant: "未設定", .zhHans: "未设置",
+        ],
+        "ios.newTrip.moreDetails": [
+            .en: "More details", .ja: "その他の詳細",
+            .zhHant: "更多詳細資料", .zhHans: "更多详细信息",
+        ],
+        "ios.newTrip.fewerDetails": [
+            .en: "Fewer details", .ja: "詳細を隠す",
+            .zhHant: "收起詳細資料", .zhHans: "收起详细信息",
+        ],
+        "ios.newTrip.stopsNote": [
+            .en: "To change the route, pick other stations or add a stop on the map.", .ja: "経路を変えるには、地図で別の駅を選ぶか経由駅を追加します。",
+            .zhHant: "若要變更路線，請在地圖上選擇其他車站或新增途經站。", .zhHans: "若要更改路线，请在地图上选择其他车站或添加途经站。",
+        ],
+        "ios.newTrip.pickOnMap": [
+            .en: "Tap a station on the map, or search", .ja: "地図で駅をタップするか、検索します",
+            .zhHant: "在地圖上點選車站，或搜尋", .zhHans: "在地图上点选车站，或搜索",
+        ],
     ]
 }

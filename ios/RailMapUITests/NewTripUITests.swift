@@ -451,6 +451,11 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(cancel.isHittable)
         XCTAssertTrue(save.isHittable)
         cancel.tap()
+        // The draft has stations, so Cancel asks first. The destructive
+        // action is the dialog's first button.
+        let discard = app.sheets.firstMatch.buttons.element(boundBy: 0)
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.tap()
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8),
                       "The header Cancel button must stay tappable at accessibility XXXL.")
     }
@@ -471,12 +476,12 @@ final class NewTripUITests: XCTestCase {
         app.uiTestLaunch[.tab] = "all"
         app.uiTestLaunch[.sheet] = "edit"
         UITestLaunchSupport.launch(app)
-        let ridden = app.switches["Ridden"]
+        let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 30))
         XCTAssertEqual(ridden.value as? String, "0", "The saved future plan must reload unridden.")
         ridden.tap()
-        app.buttons["rideEditorSave"].tap()
-        XCTAssertTrue(app.buttons["rideEditorSave"].waitForNonExistence(timeout: 20))
+        app.buttons["newTripSave"].tap()
+        XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
         assertSavedPassportCount(1, in: app)
     }
 
@@ -520,6 +525,10 @@ final class NewTripUITests: XCTestCase {
 
         let cancel = app.buttons["newTripCancel"]
         cancel.tap()
+        // A draft with stations asks before it is thrown away.
+        let discard = app.buttons["Discard changes"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.tap()
         XCTAssertTrue(cancel.waitForNonExistence(timeout: 8))
 
         app.terminate()

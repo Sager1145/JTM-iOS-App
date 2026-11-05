@@ -120,8 +120,9 @@ struct RideDetailView: View {
                 }
             }
             .sheet(isPresented: $showsEditor) {
-                RideEditorView(
+                JourneyEditorView(
                     train: train,
+                    isNew: false,
                     title: localization.text("ios.editJourney", fallback: "Edit journey"),
                     suggestionTrains: suggestionTrains,
                     onCancel: { showsEditor = false },

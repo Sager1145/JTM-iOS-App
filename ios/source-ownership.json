@@ -95,20 +95,17 @@
         "ios/RailMap/JourneyEditor/JourneyCompletionRequest.swift",
         "ios/RailMap/JourneyEditor/JourneyCompletionView.swift",
         "ios/RailMap/JourneyEditor/JourneyEditing.swift",
-        "ios/RailMap/JourneyEditor/LocalJourneyFillView.swift",
+        "ios/RailMap/JourneyEditor/JourneyEditorDetails.swift",
+        "ios/RailMap/JourneyEditor/JourneyEditorSeed.swift",
+        "ios/RailMap/JourneyEditor/JourneyEditorView.swift",
         "ios/RailMap/JourneyEditor/LocalLineServicesSection.swift",
         "ios/RailMap/JourneyEditor/NewTripStrings.swift",
-        "ios/RailMap/JourneyEditor/NewTripView.swift",
-        "ios/RailMap/JourneyEditor/RailwayRouteCorrectionView.swift",
-        "ios/RailMap/JourneyEditor/RailwayRouteGuideView.swift",
-        "ios/RailMap/JourneyEditor/RideEditorView.swift",
-        "ios/RailMap/JourneyEditor/RoutePolicyEditorView.swift",
-        "ios/RailMap/JourneyEditor/RouteRepairFlow.swift",
-        "ios/RailMap/JourneyEditor/RouteSectionEditorView.swift",
+        "ios/RailMap/JourneyEditor/RouteRepairController.swift",
         "ios/RailMap/JourneyEditor/ServiceRangeEditorView.swift",
         "ios/RailMap/JourneyEditor/StationPickerSearchController.swift",
         "ios/RailMap/JourneyEditor/StationPickerView.swift",
-        "ios/RailMap/JourneyEditor/StopEditorView.swift"
+        "ios/RailMap/JourneyEditor/StopEditorView.swift",
+        "ios/RailMap/JourneyEditor/TripMapView.swift"
       ]
     },
     {
@@ -446,7 +443,9 @@
         "ios/RailKit/Sources/RailCore/Routing/TokyoConventionalRouteInference.swift",
         "ios/RailKit/Sources/RailCore/Routing/TravelDirection.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripConnectivity.swift",
+        "ios/RailKit/Sources/RailCore/Routing/TripRouteGeometry.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRoutePlanner.swift",
+        "ios/RailKit/Sources/RailCore/Routing/TripRouteVia.swift",
         "ios/RailKit/Sources/RailCore/Stations/RailIntervalCodes.swift",
         "ios/RailKit/Sources/RailCore/Stations/StationCodeAliases.swift",
         "ios/RailKit/Sources/RailCore/Stations/StationIndex.swift",
@@ -492,6 +491,7 @@
         "ios/RailKit/Sources/RailPresentation/Journeys/JourneyServiceSections.swift",
         "ios/RailKit/Sources/RailPresentation/Journeys/JourneyTitle.swift",
         "ios/RailKit/Sources/RailPresentation/Journeys/LaunchJourneySelector.swift",
+        "ios/RailKit/Sources/RailPresentation/Journeys/RouteRepairGap.swift",
         "ios/RailKit/Sources/RailPresentation/Journeys/RouteStatusResolver.swift",
         "ios/RailKit/Sources/RailPresentation/Map/DisplayNetworkEra.swift",
         "ios/RailKit/Sources/RailPresentation/Map/LongitudeArc.swift",
@@ -528,7 +528,6 @@
         "ios/RailKit/Sources/RailApplication/Editor/RideDraftValidation.swift",
         "ios/RailKit/Sources/RailApplication/Import/ImportPreflight.swift",
         "ios/RailKit/Sources/RailApplication/Import/ImportStaging.swift",
-        "ios/RailKit/Sources/RailApplication/Journeys/RouteRepairSession.swift",
         "ios/RailKit/Sources/RailApplication/Routing/TripRouteValidation.swift",
         "ios/RailKit/Sources/RailApplication/Statistics/MileageMatching.swift"
       ]

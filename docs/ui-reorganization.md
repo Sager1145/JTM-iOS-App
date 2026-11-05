@@ -269,3 +269,20 @@ and by the sweep below.
 - Not run: the other updated UI tests (tab indices and filter-button changes in
   `RailMapUITests`, `RefactorReleaseMemoryUITests`, `MenuStressUITests` and the Duo tests).
   They compile but have not been executed.
+
+## Journey editing: one editor (2026-11-05)
+
+Branch `claude/journey-editor-unify`. Paths are relative to `ios/RailMap/`.
+
+| Before | After |
+|---|---|
+| `NewTripView` (map-first, new trips only) and `RideEditorView` (2,108 lines, existing trips): two editors for one `Train` | `JourneyEditor/JourneyEditorView.swift`. A new trip is an empty draft. A saved trip opens with its saved route drawn on the editor's map, its end stations found in the catalog, and its stops editable. Picking another station or a via on the map or in search replans the route there, with alternatives and via stops. `JourneyEditorDetails.swift` holds the record fields that the route and timetable never set: stops, English name, direction, vehicle, section services, notes, visibility, group, colour and identifier. |
+| Route repair in the workspace card (`RailWorkspaceView`, about 200 lines, persisting each step) and again in `RideEditorView`; the `RouteRepairGuide` and `RepairContinuation`/`RouteGuideRequest` pause types; `RouteRepairSession`; `RailwayRouteGuideView` and `RailwayRouteCorrectionView`; `RouteSectionEditorView`; `RoutePolicyEditorView` | One `JourneyEditor/RouteRepairController.swift`, with one pause type, over the editor's draft. The card's Repair route opens the editor in repair mode (`JourneyEditorLaunch.repairsRoute`). A span the package decides alone is applied. An ambiguous span shows its tracks as alternative routes on the editor's map and as buttons, and tapping one applies it. Nothing is saved until Save, so Undo is Cancel. `RouteRepair.Gap.init(SectionGap)` replaces the two copies of the gap mapping. `RouteRepairSession` and its tests are deleted. Manual range correction, route-section editing and route-policy editing are replaced by choosing the route on the map. |
+| Filling details from `LocalJourneyFillView`, `JourneyCompletionView` and the timetable research (`Timetable/`), each with its own entry | One **Fill in trip details** entry (`newTripFillDetails`) opens one sheet with every source: timetable matches for the trip, the full timetable browser, the line's service types, and ChatGPT or pasted text. What was applied stays shown in the editor. `LocalJourneyFillView` is deleted, because the map planner already offers the physical routes it searched. |
+| `StationPickerView` was a list picker. `StopEditorView`, `RouteSectionEditorView` and `LocalJourneyFillView` each opened it differently. | One picker: a map above the search (`stationPickerMap`; zoom in and tap a station), used by the editor's From/Via/To and by `StopEditorView`. The other two callers were deleted. |
+
+The saved record format is unchanged. A saved trip that is opened and saved without edits writes back the same record, except that an empty direction is inferred, as the old editor did. A header field (time, number, type, operator, ridden) is written back only when the reader changed it (`JourneyEditorSeed.swift`). A replanned route keeps the saved visits the new route still passes, with their clocks (`LocalJourneyAutofill.proposal` over the full saved stops).
+
+Removed with the second editor: manually adding, deleting and reordering stops (the route now comes from the map, and a stop along the way is a via), free-text origin and destination, the typed date field, the preferred-lines search, and the region and route-policy rows of the record section. The main map's draft pins are no longer published (`pins: []`), because the editor has its own map.
+
+Identifiers: the editor keeps the `newTrip*` names for its chrome (`newTripForm`, `newTripSave`, `newTripCancel`), and kept detail controls keep their `rideEditor*` names. A changed draft now asks before Cancel, for new trips too.

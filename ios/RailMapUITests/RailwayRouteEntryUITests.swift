@@ -1,6 +1,8 @@
 import RailPresentation
 import XCTest
 
+/// Route entry for a saved journey happens on the one editor's map: the
+/// saved route is shown as is, and picking another station replans it.
 @MainActor
 final class RailwayRouteEntryUITests: XCTestCase {
     override func setUp() async throws {
@@ -9,148 +11,88 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
-    func testNewJourneyCanOpenAndCancelRailwayRouteGuide() {
+    func testSavedJourneyOpensWithItsRouteAndSavesWithoutReplanning() {
         let app = launchSeededEditor()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30),
-                      "The seeded journey editor must open.")
-
-        openAndCancelGuide(in: app)
-        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        let destination = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app),
-                      "Cancelling must retain the origin stop.")
-        XCTAssertTrue(origin.exists, "Cancelling must retain the origin stop.")
-        // The destination row is the next lazy stop, below the route section
-        // the guide returns to. It is absent from the tree until scrolled in.
-        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app, unmountedRowIsAbove: false),
-                      "Cancelling must retain the destination stop.")
-        XCTAssertTrue(destination.exists, "Cancelling must retain the destination stop.")
-        XCTAssertFalse(app.descendants(matching: .any)["rideEditorStop-2"].firstMatch.exists,
-                       "Opening and cancelling the guide must leave the draft with exactly two stops.")
+        let savedRoute = app.descendants(matching: .any)["newTripSavedRoute"].firstMatch
+        XCTAssertTrue(savedRoute.waitForExistence(timeout: 30),
+                      "A saved journey must open with its saved route. \(app.debugDescription)")
+        XCTAssertFalse(app.buttons["newTripCorridor-0"].exists,
+                       "An untouched saved route must not be replanned.")
+        let origin = app.buttons["newTripOrigin"]
+        let found = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label CONTAINS %@", "東京"), object: origin)
+        XCTAssertEqual(XCTWaiter.wait(for: [found], timeout: 20), .completed,
+                       "The saved origin must be found in the catalog. \(origin.label)")
+        let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        XCTAssertTrue(EditorUITestSupport.reveal(firstStop, in: app, unmountedRowIsAbove: false),
+                      "The saved stops must stay editable.")
+        let save = app.buttons["newTripSave"]
+        XCTAssertTrue(waitForEnabled(save, timeout: 20),
+                      "An unchanged saved journey must be savable as it is.")
+        // Nothing changed, so leaving does not ask.
+        app.buttons["newTripCancel"].tap()
+        XCTAssertTrue(save.waitForNonExistence(timeout: 8))
     }
 
-    func testSavedJourneyCanOpenAndCancelRailwayRouteGuide() {
-        let app = launchEditor(sheet: "edit")
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30),
-                      "The saved journey launch harness must open the edit form.")
-        openAndCancelGuide(in: app)
-        XCTAssertTrue(app.buttons["rideEditorCancel"].exists,
-                      "Cancelling the railway guide must keep the saved journey editor open.")
-    }
-
-    func testRouteCanBeKeptPendingWithoutChoosingACandidate() {
-        let app = launchEditor(sheet: "edit")
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
-        let lines = app.buttons["rideEditorLines"]
-        reveal(lines, in: app)
-        lines.tap()
-        let pending = app.buttons["routeCorrectionPending"]
-        XCTAssertTrue(pending.waitForExistence(timeout: 10))
-        pending.tap()
-        XCTAssertTrue(pending.waitForNonExistence(timeout: 8))
-        let state = app.staticTexts["Route pending confirmation"]
-        reveal(state, in: app)
-        XCTAssertTrue(state.exists)
-        XCTAssertTrue(app.buttons["rideEditorSave"].isEnabled,
-                      "Pending physical geometry must not prevent saving the journey.")
-    }
-
-    func testMapSelectionMatchesAccessibleCandidateCard() {
+    func testChangingTheDestinationReplansOnTheMapAndCancelKeepsTheSavedJourney() {
         let app = launchSeededEditor()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 30))
-        let lines = app.buttons["rideEditorLines"]
-        reveal(lines, in: app)
-        lines.tap()
-        let compare = app.buttons["routeCorrectionCompare"]
-        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: compare)
-        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 20), .completed)
-        compare.tap()
-        let marker = app.buttons["routeGuideMapOption-1"]
-        XCTAssertTrue(marker.waitForExistence(timeout: 10))
-        marker.tap()
-        let firstCard = app.buttons["routeGuideOption1"]
-        XCTAssertTrue(firstCard.isSelected, "Map selection must select the same VoiceOver card.")
-        let secondCard = app.buttons["routeGuideOption2"]
-        for _ in 0..<6 {
-            if secondCard.exists && secondCard.isHittable { break }
-            let scroll = app.scrollViews["routeGuideScroll"]
-            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.8))
-                .press(forDuration: 0.05, thenDragTo: scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.3)))
+        XCTAssertTrue(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch
+            .waitForExistence(timeout: 30))
+        let destination = app.buttons["newTripDestination"]
+        XCTAssertTrue(waitForEnabled(destination, timeout: 20))
+        destination.tap()
+        let search = app.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 20))
+        XCTAssertTrue(app.descendants(matching: .any)["stationPickerMap"].firstMatch.waitForExistence(timeout: 5),
+                      "The one station picker shows the map above its search.")
+        search.tap()
+        search.typeText("大崎")
+        let row = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004135"]
+        var swipes = 0
+        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.4), swipes < 12 {
+            app.swipeUp()
+            swipes += 1
         }
-        XCTAssertTrue(secondCard.isHittable)
-        secondCard.tap()
-        let secondMarker = app.buttons["routeGuideMapOption-2"]
-        for _ in 0..<6 {
-            if secondMarker.exists && secondMarker.isHittable { break }
-            let scroll = app.scrollViews["routeGuideScroll"]
-            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.3))
-                .press(forDuration: 0.05, thenDragTo: scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.8)))
-        }
-        XCTAssertTrue(secondMarker.isSelected,
-                      "Card selection must select the same map candidate.")
+        XCTAssertTrue(row.exists, app.debugDescription)
+        row.tap()
+        XCTAssertTrue(app.searchFields.firstMatch.waitForNonExistence(timeout: 8))
+        XCTAssertFalse(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch.exists,
+                       "A new destination replaces the saved route.")
+        let corridor = app.buttons["newTripCorridor-0"]
+        XCTAssertTrue(corridor.waitForExistence(timeout: 30)
+                      || EditorUITestSupport.reveal(corridor, in: app, unmountedRowIsAbove: false),
+                      "A new destination must replan the route. \(app.debugDescription)")
+        let cancel = app.buttons["newTripCancel"]
+        cancel.tap()
+        let discard = app.buttons["Discard changes"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5), "A replanned route is an unsaved change.")
+        discard.tap()
+        XCTAssertTrue(cancel.waitForNonExistence(timeout: 8))
     }
 
     private func launchSeededEditor() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         let journey: [String: Any] = [
-            "id": "ui-tokyo-shinagawa",
-            "number": "",
+            "id": "ui-tokyo-shinagawa-\(UUID().uuidString.prefix(8))",
+            "date": "2026-10-12",
+            "number": "Route entry",
             "origin": "東京",
             "destination": "品川",
             "region": "jp",
             "visible": true,
             "stops": [
-                EditorLaunchSupport.stop("東京", code: "003766", type: "origin"),
-                EditorLaunchSupport.stop("品川", code: "004095", type: "destination"),
+                EditorLaunchSupport.stop("東京", code: "003766", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("品川", code: "004095", type: "destination", arrival: "09:12"),
             ],
         ]
         EditorLaunchSupport.launchEditing(app, journey: journey)
         return app
     }
 
-    private func launchEditor(sheet: String) -> XCUIApplication {
-        let app = XCUIApplication()
-        app.uiTestLaunch[.storageId] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
-        app.uiTestLaunch[.tab] = "all"
-        app.uiTestLaunch[.stage] = "expanded"
-        app.uiTestLaunch[.sheet] = sheet
-        if sheet == "edit" {
-            app.uiTestLaunch[.sample] = "train-store"
-        }
-        UITestLaunchSupport.launch(app)
-        return app
-    }
-
-    private func openAndCancelGuide(in app: XCUIApplication) {
-        let lines = app.buttons["rideEditorLines"]
-        reveal(lines, in: app)
-        let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: lines)
-        XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 15), .completed,
-                       "Railway route entry must become enabled for the journey's station codes.")
-        lines.tap()
-        for identifier in ["routeCorrectionFrom", "routeCorrectionTo", "routeCorrectionCompare", "routeCorrectionCancel"] {
-            XCTAssertTrue(app.descendants(matching: .any)[identifier].firstMatch.waitForExistence(timeout: 8),
-                          "Railway route entry must present the guided correction control \(identifier).")
-        }
-        let cancel = app.buttons["routeCorrectionCancel"]
-        cancel.tap()
-        XCTAssertTrue(cancel.waitForNonExistence(timeout: 8), "Cancel must dismiss the railway route guide.")
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch.waitForExistence(timeout: 8),
-                      "The journey editor must remain open after cancelling the route guide.")
-    }
-
-    private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
-        XCTAssertTrue(form.waitForExistence(timeout: 8), "Scrolling requires the journey editor form.")
-        for _ in 0..<14 {
-            if element.exists && element.isHittable && element.frame.maxY < app.frame.maxY - 120 { break }
-            let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65))
-            let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.35))
-            start.press(forDuration: 0.05, thenDragTo: end)
-        }
-        XCTAssertTrue(element.exists && element.isHittable,
-                      "The editor form must reveal \(element.identifier) within fourteen scroll gestures.")
+    private func waitForEnabled(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let enabled = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "exists == true AND enabled == true"), object: element)
+        return XCTWaiter.wait(for: [enabled], timeout: timeout) == .completed
     }
 }

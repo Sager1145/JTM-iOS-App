@@ -107,6 +107,12 @@ struct TripMapView: UIViewRepresentable {
         coordinator.apply(content, on: mapView, reduceMotion: reduceMotion)
     }
 
+    /// The editor closed: let MapKit drop its tiles, overlays and dots now
+    /// rather than whenever the hosting view is finally released.
+    static func dismantleUIView(_ mapView: MKMapView, coordinator: Coordinator) {
+        coordinator.release(mapView)
+    }
+
     // MARK: - coordinator
 
     @MainActor
@@ -130,6 +136,20 @@ struct TripMapView: UIViewRepresentable {
         private static func cell(_ coordinate: CLLocationCoordinate2D) -> Cell {
             Cell(x: Int((coordinate.longitude / cellSize).rounded(.down)),
                  y: Int((coordinate.latitude / cellSize).rounded(.down)))
+        }
+
+        func release(_ mapView: MKMapView) {
+            mapView.delegate = nil
+            mapView.gestureRecognizers?.forEach { mapView.removeGestureRecognizer($0) }
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.removeOverlays(mapView.overlays)
+            grid = [:]
+            displayStations = []
+            shownDots = [:]
+            markAnnotations = [:]
+            content = TripMapContent()
+            parent = nil
+            self.mapView = nil
         }
 
         func setStations(_ stations: [CatalogStation], regionCode: String, on mapView: MKMapView) {

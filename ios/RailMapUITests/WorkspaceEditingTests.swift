@@ -79,7 +79,7 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertTrue(edit.waitForExistence(timeout: 30))
         XCTAssertTrue(edit.isHittable)
         edit.tap()
-        let number = app.otherElements["rideEditorNumber"].textFields.firstMatch
+        let number = app.textFields["newTripNumber"]
         XCTAssertTrue(number.waitForExistence(timeout: 8))
         XCTAssertEqual(number.value as? String, originalNumber)
         EditorUITestSupport.tap(number, in: app)
@@ -90,7 +90,7 @@ final class WorkspaceEditingTests: XCTestCase {
                        "Typing must retain the complete original number.")
         XCTAssertEqual(edited.filter { $0 == "X" }.count, 1,
                        "The edited number must contain exactly the one inserted character.")
-        let save = app.buttons["rideEditorSave"]
+        let save = app.buttons["newTripSave"]
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 8))
 
@@ -310,8 +310,8 @@ final class WorkspaceEditingTests: XCTestCase {
     }
 
     func testServiceTypeSuggestionsAndCustomVehicleInput() {
-        // Train-type autocomplete is an existing-record field; new journeys
-        // choose their type through the region-step Picker.
+        // Train type is now the newTripTrainType picker (autocomplete removed);
+        // only the free-text vehicle input is exercised here.
         let app = XCUIApplication()
         app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
@@ -329,10 +329,10 @@ final class WorkspaceEditingTests: XCTestCase {
         let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
         edit.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        XCTAssertTrue(app.descendants(matching: .any)["newTripForm"].firstMatch
             .waitForExistence(timeout: 8))
 
-        let form = app.collectionViews["rideEditorForm"]
+        let form = app.collectionViews["newTripForm"]
         XCTAssertTrue(form.waitForExistence(timeout: 8))
         // This method's existing-record service fields are below the lazy Basics
         // cells. Measure native cell movement before each further upward reveal.
@@ -414,31 +414,6 @@ final class WorkspaceEditingTests: XCTestCase {
             }
             return false
         }
-        let type = app.otherElements["rideEditorTrainType"].textFields.firstMatch
-        guard revealServiceField(type, stage: "train-type") else {
-            XCTFail("The existing editor train-type input must materialize fully inside its Form viewport.")
-            return
-        }
-        EditorUITestSupport.tap(type, in: app)
-        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
-        if let initial = type.value as? String,
-           !initial.isEmpty && initial != type.placeholderValue {
-            type.press(forDuration: 1.1)
-            let selectAll = app.menuItems["Select All"].firstMatch
-            let button = app.buttons["Select All"].firstMatch
-            if button.waitForExistence(timeout: 3) {
-                button.tap()
-            } else {
-                XCTAssertTrue(selectAll.waitForExistence(timeout: 2))
-                selectAll.tap()
-            }
-        }
-        type.typeText("Rap")
-        XCTAssertEqual(type.value as? String, "Rap", "The complete initial train type must be replaced.")
-        let rapid = app.buttons["Rapid"].firstMatch
-        XCTAssertTrue(rapid.waitForExistence(timeout: 5))
-        rapid.tap()
-        XCTAssertEqual(type.value as? String, "Rapid")
         let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
         guard revealServiceField(vehicle, stage: "vehicle") else {
             XCTFail("The vehicle input must be fully inside the native Form viewport above the keyboard.")
@@ -462,208 +437,6 @@ final class WorkspaceEditingTests: XCTestCase {
         XCTAssertEqual(vehicle.value as? String, "E235")
     }
 
-    func testTypedDateAndLineSearch() {
-        // The new wizard's route control opens the physical route guide.
-        // Line preferences are edited through the saved journey's catalog.
-        let fixtureID = "20260727_08_narita_express"
-        let app = XCUIApplication()
-        app.uiTestLaunch[.storageId] = UUID().uuidString
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
-                               "-interface-language", "en"]
-        app.uiTestLaunch[.sample] = "train-store"
-        app.uiTestLaunch[.statsRegion] = "all"
-        app.uiTestLaunch[.tab] = "search"
-        app.uiTestLaunch[.query] = fixtureID
-        app.uiTestLaunch[.stage] = "expanded"
-        UITestLaunchSupport.launch(app)
-        let row = app.buttons["journeyRow-\(fixtureID)"]
-        XCTAssertTrue(row.waitForExistence(timeout: 30))
-        row.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["selectedJourney-\(fixtureID)"]
-            .firstMatch.waitForExistence(timeout: 8))
-        let edit = app.buttons["journeyMenuEdit"]
-        XCTAssertTrue(edit.waitForExistence(timeout: 30))
-        XCTAssertTrue(edit.isHittable)
-        edit.tap()
-        let lines = app.descendants(matching: .any)["rideEditorPreferredLines"].firstMatch
-        EditorUITestSupport.tap(lines, in: app)
-        let search = app.searchFields.firstMatch
-        XCTAssertTrue(search.waitForExistence(timeout: 5))
-        search.tap()
-        search.typeText("山手")
-        let result = app.buttons.matching(NSPredicate(
-            format: "identifier BEGINSWITH %@", "rideEditorLine-")).firstMatch
-        XCTAssertTrue(result.waitForExistence(timeout: 30))
-        result.tap()
-        let done = app.buttons["rideEditorLinesDone"]
-        XCTAssertTrue(done.waitForExistence(timeout: 5))
-        done.tap()
-        XCTAssertTrue(lines.waitForExistence(timeout: 5))
-        XCTAssertTrue(lines.label.contains("山手"))
-
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(EditorUITestSupport.reveal(date, in: app, unmountedRowIsAbove: true), app.debugDescription)
-        XCTAssertTrue(date.waitForExistence(timeout: 5))
-        replaceText(in: date, with: "2026-10-12", app: app)
-        XCTAssertEqual(date.value as? String, "2026-10-12")
-    }
-
-
-
-    func testAddingStopOpensItsEditorAndCancelProtectsDraft() {
-        let app = XCUIApplication()
-        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Add stop"))
-        let add = app.buttons["rideEditorAddStop"]
-        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
-        EditorUITestSupport.tap(add, in: app)
-        XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
-        let added = app.navigationBars["Stop 3"]
-        XCTAssertTrue(added.waitForExistence(timeout: 5))
-        added.buttons.firstMatch.tap()
-        app.buttons["rideEditorCancel"].tap()
-        XCTAssertTrue(app.buttons["Discard changes"].waitForExistence(timeout: 5))
-    }
-
-    func testExplicitUnriddenStopSurvivesChoosingToday() {
-        let app = XCUIApplication()
-        EditorLaunchSupport.launchEditing(
-            app, journey: seededJourney(number: "Ridden choice", date: "2026-12-01"))
-        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(app.buttons["rideEditorCancel"].waitForExistence(timeout: 30))
-        EditorUITestSupport.tap(origin, in: app)
-
-        func revealRiddenControl() -> XCUIElement {
-            // StopEditor places this toggle after the date and both time
-            // sections. Its lazy Form must reveal the row before querying it.
-            let form = app.collectionViews.firstMatch
-            XCTAssertTrue(form.waitForExistence(timeout: 8))
-            let ridden = app.switches["rideEditorStopRidden"]
-            for _ in 0..<8 {
-                if ridden.exists, ridden.isHittable, app.frame.contains(ridden.frame) { break }
-                form.swipeUp()
-            }
-            XCTAssertTrue(ridden.waitForExistence(timeout: 8))
-            let control = ridden.switches.firstMatch.exists ? ridden.switches.firstMatch : ridden
-            XCTAssertTrue(control.isHittable)
-            XCTAssertTrue(app.frame.contains(control.frame))
-            return control
-        }
-
-        let riddenControl = revealRiddenControl()
-        XCTAssertEqual(riddenControl.value as? String, "1")
-        riddenControl.tap()
-        XCTAssertEqual(riddenControl.value as? String, "0")
-        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
-
-        let date = app.textFields["rideEditorDateInput"]
-        XCTAssertTrue(EditorUITestSupport.reveal(date, in: app, unmountedRowIsAbove: true), app.debugDescription)
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.dateFormat = "yyyy-MM-dd"
-        replaceText(in: date, with: formatter.string(from: Date()), app: app)
-        date.typeText("\n")
-        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5))
-
-        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: false),
-                      app.debugDescription)
-        EditorUITestSupport.tap(origin, in: app)
-        let riddenAfterDate = revealRiddenControl()
-        XCTAssertEqual(riddenAfterDate.value as? String, "0",
-                       "Choosing today's date must not overwrite an explicit stop choice.")
-    }
-
-    func testStopDeleteUndoRestoresEndpointRolesAndRegionClearsUndo() {
-        let app = XCUIApplication()
-        EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Undo stops"))
-
-        func revealRole(_ role: String) -> XCUIElement {
-            let form = app.collectionViews.firstMatch
-            XCTAssertTrue(form.waitForExistence(timeout: 8))
-            let picker = app.buttons["Stop type, \(role)"]
-            for _ in 0..<8 {
-                if picker.exists, app.frame.contains(picker.frame) { break }
-                form.swipeUp()
-            }
-            XCTAssertTrue(picker.waitForExistence(timeout: 8))
-            XCTAssertTrue(app.frame.contains(picker.frame))
-            return picker
-        }
-
-        deleteFirstStop(in: app)
-        EditorUITestSupport.tap(app.buttons["rideEditorReorderStops"], in: app)
-        let remaining = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        XCTAssertTrue(remaining.waitForExistence(timeout: 8))
-        remaining.tap()
-        // Existing records keep the authored role. Promoting the new first
-        // stop to Origin, and disabling that picker, happens only for a new
-        // journey.
-        let remainingRole = revealRole("Destination")
-        XCTAssertTrue(remainingRole.isEnabled,
-                      "Edit mode keeps the authored destination role and allows changing it.")
-        app.navigationBars["Shinagawa"].buttons.firstMatch.tap()
-
-        let undo = app.buttons["rideEditorUndoStops"]
-        EditorUITestSupport.tap(undo, in: app)
-
-        let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
-        #if targetEnvironment(macCatalyst)
-        EditorUITestSupport.tap(origin, in: app)
-        #else
-        // Undo can leave this row mounted above the Form's visible header edge.
-        let navigation = app.navigationBars.containing(.button, identifier: "rideEditorCancel").firstMatch
-        XCTAssertTrue(navigation.exists)
-        let headerFrame = navigation.frame
-        XCTAssertTrue(!headerFrame.isEmpty && [headerFrame.minX, headerFrame.minY,
-            headerFrame.maxX, headerFrame.maxY].allSatisfy { $0.isFinite }
-            && app.frame.contains(headerFrame), navigation.debugDescription)
-        EditorUITestSupport.tap(origin, in: app, minimumVisibleY: headerFrame.maxY)
-        #endif
-        let originRole = revealRole("Origin")
-        XCTAssertTrue(originRole.isEnabled,
-                      "Undo must restore the first stop's authored origin role.")
-        app.navigationBars["Tokyo"].buttons.firstMatch.tap()
-
-        let destination = app.descendants(matching: .any)["rideEditorStop-1"].firstMatch
-        EditorUITestSupport.tap(destination, in: app)
-        let destinationRole = revealRole("Destination")
-        XCTAssertTrue(destinationRole.isEnabled,
-                      "Undo must restore the last stop's authored destination role.")
-        app.navigationBars["Shinagawa"].buttons.firstMatch.tap()
-
-        deleteFirstStop(in: app)
-        XCTAssertTrue(undo.waitForExistence(timeout: 5))
-        let region = app.descendants(matching: .any)["rideEditorRegion"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(region, in: app, unmountedRowIsAbove: false),
-                      app.debugDescription)
-        region.tap()
-        app.buttons["Taiwan"].firstMatch.tap()
-        XCTAssertTrue(undo.waitForNonExistence(timeout: 5),
-                      "Changing region must clear the stop-deletion undo.")
-    }
-
-    private func replaceText(in field: XCUIElement, with replacement: String, app: XCUIApplication) {
-        let current = field.value as? String ?? ""
-        field.tap()
-        if !current.isEmpty && current != field.placeholderValue {
-            field.press(forDuration: 1.1)
-            let selectAll = app.buttons["Select All"].firstMatch
-            let selectAllMenuItem = app.menuItems["Select All"].firstMatch
-            if selectAll.waitForExistence(timeout: 3) {
-                selectAll.tap()
-            } else {
-                XCTAssertTrue(selectAllMenuItem.waitForExistence(timeout: 2))
-                selectAllMenuItem.tap()
-            }
-            field.typeText(XCUIKeyboardKey.delete.rawValue + replacement)
-        } else if !replacement.isEmpty {
-            field.typeText(replacement)
-        }
-        let value = field.value as? String ?? ""
-        XCTAssertTrue(value == replacement || (replacement.isEmpty && value == field.placeholderValue),
-                      "Replacing text must change the entire native value, not only the tapped cursor prefix.")
-    }
-
     private func attach(_: XCUIApplication, named name: String) {
         let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name
@@ -677,35 +450,6 @@ final class WorkspaceEditingTests: XCTestCase {
         hierarchy.name = name + " accessibility hierarchy"
         hierarchy.lifetime = .keepAlways
         add(hierarchy)
-    }
-
-    private func deleteFirstStop(in app: XCUIApplication) {
-        let reorder = app.buttons["rideEditorReorderStops"]
-        EditorUITestSupport.tap(reorder, in: app)
-        // The explicit edit-mode minus now executes the same deletion handler
-        // directly; a native second-stage Delete confirmation no longer exists.
-        let remove = app.buttons["rideEditorDeleteStop-0"]
-        // Edit mode animates the minus controls in; allow for a loaded simulator.
-        XCTAssertTrue(remove.waitForExistence(timeout: 15))
-        EditorUITestSupport.tap(remove, in: app)
-        XCTAssertFalse(app.otherElements["rideEditorStopName"].textFields.firstMatch.exists,
-                       "The row's minus must delete without navigating into the stop editor.")
-    }
-
-    private func seededJourney(number: String, date: String = "2026-10-12") -> [String: Any] {
-        let compact = UUID().uuidString.replacingOccurrences(of: "-", with: "")
-        return [
-            "id": "uitest_\(compact.prefix(12))",
-            "date": date,
-            "number": number,
-            "origin": "Tokyo",
-            "destination": "Shinagawa",
-            "region": "jp",
-            "stops": [
-                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "09:00"),
-                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
-            ],
-        ]
     }
 
     private func launch(
@@ -751,7 +495,7 @@ enum EditorUITestSupport {
         if element.exists, element.isHittable, isUsable(element.frame),
            app.frame.contains(element.frame),
            minimumVisibleY.map({ element.frame.minY >= $0 }) ?? true { return true }
-        let form = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        let form = app.descendants(matching: .any)["newTripForm"].firstMatch
         guard form.waitForExistence(timeout: 2) else { return false }
         XCTContext.runActivity(named: "Lazy editor control before reveal") { activity in
             let screenshot = XCTAttachment(screenshot: app.screenshot())
@@ -787,7 +531,11 @@ enum EditorUITestSupport {
     /// Seed named endpoints through the real route picker before advancing
     /// the new-journey wizard to its date step.
     static func seedNamedRoute(in app: XCUIApplication) {
-        EditorUITestSupport.tap(app.buttons["rideEditorServicePattern"], in: app)
+        let fill = app.buttons["newTripFillDetails"]
+        EditorUITestSupport.tap(fill, in: app)
+        let browse = app.buttons["newTripTimetableBrowse"]
+        XCTAssertTrue(browse.waitForExistence(timeout: 8), app.debugDescription)
+        browse.tap()
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -822,7 +570,7 @@ enum EditorUITestSupport {
             XCTFail("The editor has no visible content below its header.", file: file, line: line)
             return
         }
-        let editorForm = app.descendants(matching: .any)["rideEditorForm"].firstMatch
+        let editorForm = app.descendants(matching: .any)["newTripForm"].firstMatch
         for attempt in 0...8 {
             guard element.exists else {
                 XCTFail("The element disappeared before it could be tapped.", file: file, line: line)
@@ -855,13 +603,13 @@ enum EditorUITestSupport {
                 return
             }
             guard editorForm.waitForExistence(timeout: 2) else {
-                XCTFail("rideEditorForm is unavailable to reveal the element.",
+                XCTFail("newTripForm is unavailable to reveal the element.",
                         file: file, line: line)
                 return
             }
             let visibleForm = editorForm.frame.intersection(visibleFrame)
             guard isUsable(visibleForm) else {
-                XCTFail("rideEditorForm has no visible scrolling area.", file: file, line: line)
+                XCTFail("newTripForm has no visible scrolling area.", file: file, line: line)
                 return
             }
 
@@ -885,14 +633,14 @@ enum EditorUITestSupport {
 
             let updatedFrame = element.frame
             guard isUsable(updatedFrame) else {
-                XCTFail("The element lost its usable frame while rideEditorForm scrolled.",
+                XCTFail("The element lost its usable frame while newTripForm scrolled.",
                         file: file, line: line)
                 return
             }
             let movement = updatedFrame.midY - frame.midY
             let movedTowardVisibleFrame = scrollUp ? movement < -1 : movement > 1
             if !movedTowardVisibleFrame {
-                XCTFail("rideEditorForm did not move the element toward the visible frame.",
+                XCTFail("newTripForm did not move the element toward the visible frame.",
                         file: file, line: line)
                 return
             }
@@ -906,53 +654,9 @@ enum EditorUITestSupport {
         return CGRect(x: frame.minX, y: top, width: frame.width, height: max(0, frame.maxY - top))
     }
 
-    static func enableDate(
-        in app: XCUIApplication,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let includeDate = app.switches["Include a date"]
-        guard includeDate.waitForExistence(timeout: 8) else {
-            XCTFail("The Include a date row did not appear.", file: file, line: line)
-            return
-        }
-        let childSwitch = includeDate.switches.firstMatch
-        guard childSwitch.waitForExistence(timeout: 5) else {
-            XCTFail("The Include a date row has no switch control.", file: file, line: line)
-            return
-        }
-        if !switchIsOn(includeDate) {
-            tap(childSwitch, in: app, file: file, line: line)
-        }
-
-        let enabled = XCTNSPredicateExpectation(
-            predicate: NSPredicate { object, _ in
-                guard let element = object as? XCUIElement else { return false }
-                if let value = element.value as? String { return value == "1" }
-                if let value = element.value as? NSNumber { return value.boolValue }
-                return false
-            },
-            object: includeDate)
-        guard XCTWaiter().wait(for: [enabled], timeout: 5) == .completed else {
-            XCTFail("The Include a date switch did not turn on.", file: file, line: line)
-            return
-        }
-        guard app.textFields["rideEditorDateInput"].waitForExistence(timeout: 5) else {
-            XCTFail("The date field did not appear after enabling the date.",
-                    file: file, line: line)
-            return
-        }
-    }
-
     private static func isUsable(_ frame: CGRect) -> Bool {
         !frame.isNull && !frame.isInfinite && !frame.isEmpty
             && frame.origin.x.isFinite && frame.origin.y.isFinite
             && frame.width.isFinite && frame.height.isFinite
-    }
-
-    private static func switchIsOn(_ element: XCUIElement) -> Bool {
-        if let value = element.value as? String { return value == "1" }
-        if let value = element.value as? NSNumber { return value.boolValue }
-        return false
     }
 }
