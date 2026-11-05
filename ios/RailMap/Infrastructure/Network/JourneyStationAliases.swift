@@ -17,5 +17,5 @@ nonisolated func loadJourneyAdmissionContext(
     guard let url = Bundle.main.url(
         forResource: Region.countrySuffixed("rail-history", country: package.country.lowercased()),
         withExtension: "json") else { return nil }
-    return try RailwayRouteChoices.AdmissionContext(history: RailHistoryOverlay.load(from: url), civilDay: rideDate)
+    return try RailwayRouteChoices.AdmissionContext(history: RiddenRouteStore.cachedHistoryOverlay(from: url), civilDay: rideDate)
 }

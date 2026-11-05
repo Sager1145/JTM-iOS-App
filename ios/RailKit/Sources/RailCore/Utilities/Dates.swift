@@ -656,7 +656,23 @@ public enum Dates {
     /// sharing an id (or both lacking one), where the comparator itself has
     /// no order to prefer between them.
     public static func sortByDateAndDeparture(_ trains: [Train]) -> [Train] {
-        trains.sorted { compareByDateAndDeparture($0, $1) < 0 }
+        // Decorate-sort-undecorate: the keys depend only on the train, so
+        // compute them once instead of on every comparison.
+        let decorated = trains.map { train in
+            (dateKey: dateSortKey(normalizeTrainDate(train, undatedValue: undated), undatedValue: undated),
+             departure: departureMinutes(of: train), id: train.id, train: train)
+        }
+        return decorated.sorted { a, b in
+            let order: Int
+            if a.dateKey != b.dateKey {
+                order = jsStringCompare(a.dateKey, b.dateKey)
+            } else if a.departure != b.departure {
+                order = a.departure < b.departure ? -1 : 1
+            } else {
+                order = localeCompareSign(a.id, b.id)
+            }
+            return order < 0
+        }.map(\.train)
     }
 
     /// `getAvailableDates` — every bucket in use, plus the manually-created

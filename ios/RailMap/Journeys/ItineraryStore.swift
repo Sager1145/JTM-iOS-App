@@ -53,7 +53,9 @@ final class ItineraryStore {
         typealias Day = JourneyDay
     }
 
-    private(set) var state: LoadState = .idle
+    private(set) var state: LoadState = .idle {
+        didSet { refreshOrderedJourneyGroups() }
+    }
 
     /// Every id in the working set. An id edit must not silently overwrite
     /// another record, and the editor can only warn about a collision it can see.
@@ -142,12 +144,20 @@ final class ItineraryStore {
     ///
     /// The store is held here as well as decoded, because saving needs the
     /// whole `TrainStore` (schema version included) and not just the trains.
-    private(set) var store: TrainStore?
+    private(set) var store: TrainStore? {
+        didSet { refreshOrderedJourneyGroups() }
+    }
 
     /// Groups retain the first authored record for each ID, in display order.
-    var orderedJourneyGroups: [JourneyGroup] {
+    ///
+    /// Stored, not computed: views read this from `body`, and the sort is
+    /// localized. Its only inputs are `store` and `state` (via `loaded`), and
+    /// both refresh it from `didSet`, so every mutation path is covered.
+    private(set) var orderedJourneyGroups: [JourneyGroup] = []
+
+    private func refreshOrderedJourneyGroups() {
         var seen = Set<String>()
-        return (store?.trains ?? loaded?.trains ?? [])
+        orderedJourneyGroups = (store?.trains ?? loaded?.trains ?? [])
             .compactMap(\.journeyGroup).filter { seen.insert($0.id).inserted }
             .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
     }

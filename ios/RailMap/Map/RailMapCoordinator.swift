@@ -3193,6 +3193,9 @@ extension RailMapView.Surface {
                 of ride: RiddenRouteStore.DrawnRide,
                 riddenStops: [Stop]
             ) -> Bool {
+                // `RiddenCategoryVisibility.draws` returns true at once when no
+                // category is hidden; skip building its key and arguments then.
+                guard layers.categories.anyHidden else { return true }
                 let isRidden = ride.stopInterval(forSectionIndex: segment.segmentIndex).map {
                     Statistics.isRideSegment(riddenStops, segmentIndex: $0)
                 } ?? false

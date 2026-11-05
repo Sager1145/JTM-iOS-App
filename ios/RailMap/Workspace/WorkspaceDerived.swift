@@ -423,4 +423,37 @@ final class WorkspaceDerived {
         regionDatesKey = RegionDatesKey(memberIDs: memberIDs, scopeKey: scopeKey, year: year, trains: trains, days: days, region: region)
         return regionDatesValue
     }
+
+    private struct AvailableYearsKey {
+        let trains: [Train]
+        let regionCode: String?
+        let groupID: String?
+        let memberIDs: Set<String>?
+        let currentYear: Int
+        let selectedYear: Int?
+    }
+
+    private var availableYearsKey: AvailableYearsKey?
+    private var availableYearsValue: [Int] = []
+
+    /// `PassportWorkspaceView.availableYears`, memoised: it slices every train
+    /// and was re-run on each body evaluation. Every input is in the key.
+    func availableYears(
+        trains: [Train], regionCode: String?, groupID: String?, memberIDs: Set<String>?,
+        currentYear: Int, selectedYear: Int?
+    ) -> [Int] {
+        if let key = availableYearsKey, key.regionCode == regionCode, key.groupID == groupID,
+           key.memberIDs == memberIDs, key.currentYear == currentYear,
+           key.selectedYear == selectedYear, ArrayGeneration.same(key.trains, trains) {
+            return availableYearsValue
+        }
+        availableYearsValue = StatisticsMembership.availableYears(
+            trains: trains, regionCode: regionCode, rule: Region.scopeRule,
+            groupID: groupID, memberIDs: memberIDs,
+            currentYear: currentYear, selectedYear: selectedYear)
+        availableYearsKey = AvailableYearsKey(
+            trains: trains, regionCode: regionCode, groupID: groupID, memberIDs: memberIDs,
+            currentYear: currentYear, selectedYear: selectedYear)
+        return availableYearsValue
+    }
 }

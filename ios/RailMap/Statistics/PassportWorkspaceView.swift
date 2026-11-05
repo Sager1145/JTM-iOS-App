@@ -124,8 +124,8 @@ struct PassportWorkspaceView: View {
 
     private var availableYears: [Int] {
         let trains = itineraries.loaded?.trains ?? []
-        return StatisticsMembership.availableYears(
-            trains: trains, regionCode: region?.code, rule: Region.scopeRule,
+        return derived.availableYears(
+            trains: trains, regionCode: region?.code,
             groupID: statistics.selectedJourneyGroupID, memberIDs: areaMembership?.ids,
             currentYear: Calendar(identifier: .gregorian).component(.year, from: Date()),
             selectedYear: statistics.selectedYear)

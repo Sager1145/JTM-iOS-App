@@ -192,7 +192,20 @@ final class RiddenRouteStore {
     }
 
     private(set) var state: LoadState = .idle
-    private(set) var rides: [DrawnRide] = []
+    private(set) var rides: [DrawnRide] = [] {
+        didSet {
+            // Bumped only when the (id, geometryDigest) sequence moves, which
+            // is exactly what the statistics load key observes; see
+            // `AppShell.statisticsLoadKey`. Runs on mutation, not on read.
+            guard rides.count != oldValue.count
+                || zip(rides, oldValue).contains(where: {
+                    $0.id != $1.id || $0.geometryDigest != $1.geometryDigest })
+            else { return }
+            ridesKeyGeneration &+= 1
+        }
+    }
+    /// Changes iff the ordered ride ids or geometry digests change.
+    private(set) var ridesKeyGeneration = 0
     /// Stable, already-filtered input for the map.
     ///
     /// Filtering in `RailWorkspaceView.body` allocated a fresh array on every
@@ -1513,7 +1526,7 @@ final class RiddenRouteStore {
         guard let registryURL = Bundle.main.url(forResource: "physical-rail-junctions", withExtension: "json") else {
             throw LoadError.missingSolverResources("physical-rail-junctions")
         }
-        let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: registryURL))
+        let registry = try cachedJunctionRegistry(at: registryURL)
         let junctions = scope.regions.flatMap { registry.junctions(for: $0.code) }
         return SolverInputs(sections: sections, stationCollection: stationCollection,
                             physicalJunctions: junctions,
@@ -1813,6 +1826,33 @@ final class RiddenRouteStore {
         return state
     }
 
+    /// The bundled junction registry is ~10 MB of JSON and immutable for the
+    /// process lifetime, so decode it once per URL. Failures are not cached.
+    private nonisolated static let junctionRegistryCache = OSAllocatedUnfairLock(
+        initialState: [URL: PhysicalRailJunctionRegistry]())
+
+    private nonisolated static func cachedJunctionRegistry(
+        at url: URL
+    ) throws -> PhysicalRailJunctionRegistry {
+        if let cached = junctionRegistryCache.withLock({ $0[url] }) { return cached }
+        let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: url))
+        junctionRegistryCache.withLock { $0[url] = registry }
+        return registry
+    }
+
+    /// Decoded `rail-history*.json` overlay shared by callers outside the
+    /// store (edge index, journey admission). Bundled files never change at
+    /// runtime; failures are rethrown uncached so error behaviour is unchanged.
+    private nonisolated static let overlayByURLCache = OSAllocatedUnfairLock(
+        initialState: [URL: RailHistoryOverlay]())
+
+    nonisolated static func cachedHistoryOverlay(from url: URL) throws -> RailHistoryOverlay {
+        if let cached = overlayByURLCache.withLock({ $0[url] }) { return cached }
+        let overlay = try RailHistoryOverlay.load(from: url)
+        overlayByURLCache.withLock { $0[url] = overlay }
+        return overlay
+    }
+
     private enum LatestValidFromState: Sendable {
         case none
         case value(String)
@@ -1864,7 +1904,7 @@ final class RiddenRouteStore {
         guard let url = Bundle.main.url(forResource: "physical-rail-junctions", withExtension: "json") else {
             throw LoadError.missingSolverResources("physical-rail-junctions")
         }
-        let registry = try PhysicalRailJunctionRegistry(data: Data(contentsOf: url))
+        let registry = try cachedJunctionRegistry(at: url)
         for junction in registry.junctions(for: region) { append(junction.validFrom) }
         let latest = values.max()
         latestValidFromCache.withLock {

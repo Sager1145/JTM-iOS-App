@@ -56,6 +56,26 @@ public enum JSNumber {
         if value == 0 { return "0" }  // also catches -0.0, which JS prints as "0"
         if value < 0 { return "-" + string(-value) }
         if value.isInfinite { return "Infinity" }
+        // Integral fast path. Below 2^53 every integer is exactly representable
+        // and its shortest round-trip digits are the integer itself, which is
+        // also the positional form JavaScript prints (n <= 21).
+        if value < 9_007_199_254_740_992, value == value.rounded(.towardZero) {
+            return String(Int(value))
+        }
+        return slowStringPositive(value)
+    }
+
+    /// The general algorithm, with no integral shortcut. Kept reachable so a
+    /// test can prove the fast path in ``string(_:)`` agrees with it.
+    static func slowString(_ value: Double) -> String {
+        if value.isNaN { return "NaN" }
+        if value == 0 { return "0" }
+        if value < 0 { return "-" + slowString(-value) }
+        if value.isInfinite { return "Infinity" }
+        return slowStringPositive(value)
+    }
+
+    private static func slowStringPositive(_ value: Double) -> String {
 
         let (digits, n) = decompose(value)
         let k = digits.count
