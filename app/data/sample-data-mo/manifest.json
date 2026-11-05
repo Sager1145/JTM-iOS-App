@@ -6,7 +6,7 @@
   "unsolvable": 0,
   "no_route": 0,
   "solver_context": {
-    "solver_version": "25",
+    "solver_version": "28",
     "history_revisions": {
       "mo": "none"
     }
@@ -15,6 +15,7 @@
     "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
     "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
     "mo-2025.json": "138abaeb5ace82a0499e64394f7bf8ca4208c6fe7263f2a4b0caf96030df58f6",
+    "physical-rail-junctions.json": "8d06d65c54c68800fc8995743a88aa46b3a205b54f468fcae49452a1c322f99e",
     "rail-sections-mo.json": "41f09aa00952e3dfc113281cc993ba5ec3177d0753123b8ef67a2731c310c3e9",
     "stations-mo.json": "276bbff22132d249bba953fc64bd76632417cb5956461f2a789c5c4f31a69430"
   },

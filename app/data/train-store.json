@@ -4,13 +4,13 @@
     {
       "id": "20260703_01_haruka",
       "date": "2026-07-03",
-      "number": "はるか38号（Haruka 38）（1038M）",
+      "number": "はるか38号（1038M）",
       "number_en": "Haruka 38",
       "train_type": "特急",
       "company": "JR西日本",
       "origin": "関西空港",
       "destination": "新大阪",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -23,7 +23,7 @@
         "allowed_institution_type_codes": [
           "2"
         ],
-        "institution_filter_mode": "soft"
+        "institution_filter_mode": "hard"
       },
       "route_sections": [],
       "stops": [
@@ -70,13 +70,13 @@
     {
       "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
       "date": "2026-07-03",
-      "number": "こだま号（Kodama）（846A）",
+      "number": "こだま号（846A）",
       "number_en": "Kodama",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "新大阪",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -313,17 +313,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "名古屋—静岡間はJR西日本おでかけネットの846A時刻表（2026-07-03）で確認。846Aは名古屋始発のため、新大阪—名古屋間の記録は別列車の可能性があり未確認。"
     },
     {
       "id": "20260703_03_tokaido_main_local",
       "date": "2026-07-03",
-      "number": "東海道本線 普通（Tōkaidō Main Line Local）",
+      "number": "東海道本線 普通",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#059669"
@@ -370,17 +371,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tōkaidō Main Line Local"
     },
     {
       "id": "20260704_01_local",
       "date": "2026-07-04",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "三島・熱海",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -433,18 +435,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260704_02_kodama918",
       "date": "2026-07-04",
-      "number": "こだま918号（Kodama 918）（918A）",
+      "number": "こだま918号（918A）",
       "number_en": "Kodama 918",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "品川",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#1f6fb2"
@@ -557,12 +560,11 @@
     {
       "id": "20260704_03_keikyu_asakusa_line",
       "date": "2026-07-04",
-      "number": "京急・浅草線（Keikyū / Asakusa Line）",
+      "number": "京急・浅草線",
       "train_type": "普通",
       "company": "京急電鉄/都営地下鉄",
       "origin": "品川",
       "destination": "大門",
-      "direction": "押上・浅草方面",
       "visible": true,
       "style": {
         "color": "#d7141a"
@@ -656,17 +658,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Keikyū / Asakusa Line"
     },
     {
       "id": "20260704_04_oedo_line",
       "date": "2026-07-04",
-      "number": "大江戸線（Ōedo Line）",
+      "number": "大江戸線",
       "train_type": "普通",
       "company": "都営地下鉄",
       "origin": "大門",
       "destination": "赤羽橋",
-      "direction": "六本木・都庁前",
       "visible": true,
       "style": {
         "color": "#b6007a"
@@ -719,17 +721,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Ōedo Line"
     },
     {
       "id": "20260704_05_mita_line",
       "date": "2026-07-04",
-      "number": "三田線（Mita Line）",
+      "number": "三田線",
       "train_type": "普通",
       "company": "都営地下鉄",
       "origin": "芝公園",
       "destination": "大手町",
-      "direction": "西高島平",
       "visible": true,
       "style": {
         "color": "#0079c2"
@@ -839,17 +841,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Mita Line"
     },
     {
       "id": "20260704_06_marunouchi_line",
       "date": "2026-07-04",
-      "number": "丸ノ内線（Marunouchi Line）",
+      "number": "丸ノ内線",
       "train_type": "普通",
       "company": "東京メトロ",
       "origin": "大手町",
       "destination": "池袋",
-      "direction": "池袋",
       "visible": true,
       "style": {
         "color": "#e60012"
@@ -1016,18 +1018,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Marunouchi Line"
     },
     {
       "id": "20260704_07_saikyo_line",
       "date": "2026-07-04",
-      "number": "埼京線（Saikyō Line）（1201F）",
+      "number": "埼京線（1201F）",
       "number_en": "Saikyō Line",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "池袋",
       "destination": "大宮",
-      "direction": "川越",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#00a650"
@@ -1333,13 +1336,12 @@
     {
       "id": "20260704_08_shonan_shinjuku_line",
       "date": "2026-07-04",
-      "number": "湘南新宿ライン（Shōnan-Shinjuku Line）（4835Y）",
+      "number": "湘南新宿ライン（4835Y）",
       "number_en": "Shōnan-Shinjuku Line",
       "train_type": "特別快速",
       "company": "JR東日本",
       "origin": "大宮",
       "destination": "横浜",
-      "direction": "小田原",
       "visible": true,
       "style": {
         "color": "#d7332d"
@@ -1950,12 +1952,12 @@
     {
       "id": "20260704_09_negishi_line",
       "date": "2026-07-04",
-      "number": "根岸線（Negishi Line）",
+      "number": "根岸線",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "横浜",
       "destination": "桜木町",
-      "direction": "大船・磯子",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#00a7db"
@@ -2008,17 +2010,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Negishi Line"
     },
     {
       "id": "20260704_10_minatomirai_line",
       "date": "2026-07-04",
-      "number": "みなとみらい線（Minatomirai Line）",
+      "number": "みなとみらい線",
       "train_type": "普通",
       "company": "横浜高速鉄道/東急電鉄",
       "origin": "みなとみらい",
       "destination": "横浜",
-      "direction": "横浜",
       "visible": true,
       "style": {
         "color": "#004098"
@@ -2090,17 +2092,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Minatomirai Line"
     },
     {
       "id": "20260704_11_keihin_tohoku_line",
       "date": "2026-07-04",
-      "number": "京浜東北線（Keihin-Tōhoku Line）",
+      "number": "京浜東北線",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "横浜",
       "destination": "東神奈川",
-      "direction": "大宮・南浦和",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#00a7db"
@@ -2153,17 +2156,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Keihin-Tōhoku Line"
     },
     {
       "id": "20260704_12_yokohama_line",
       "date": "2026-07-04",
-      "number": "横浜線（Yokohama Line）",
+      "number": "横浜線",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "東神奈川",
       "destination": "新横浜",
-      "direction": "八王子・橋本",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#7fb539"
@@ -2254,18 +2258,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yokohama Line"
     },
     {
       "id": "20260704_13_kodama915",
       "date": "2026-07-04",
-      "number": "こだま915号（Kodama 915）（915A）",
+      "number": "こだま915号（915A）",
       "number_en": "Kodama 915",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "新横浜",
       "destination": "三島",
-      "direction": "三島",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#1f6fb2"
@@ -2359,12 +2364,12 @@
     {
       "id": "20260704_14_local",
       "date": "2026-07-04",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "沼津・静岡",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -2417,17 +2422,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260705_01_local",
       "date": "2026-07-05",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "三島・熱海",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -2480,18 +2486,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260705_02_kodama802",
       "date": "2026-07-05",
-      "number": "こだま802号（Kodama 802）（802A）",
+      "number": "こだま802号（802A）",
       "number_en": "Kodama 802",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#1f6fb2"
@@ -2623,13 +2630,13 @@
     {
       "id": "20260705_03_chuo_line",
       "date": "2026-07-05",
-      "number": "中央線快速（Chūō Rapid）（1057T）",
+      "number": "中央線快速（1057T）",
       "number_en": "Chūō Rapid",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "新宿",
-      "direction": "新宿・高尾",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f15a22"
@@ -2858,12 +2865,12 @@
     {
       "id": "20260705_04_chuo_sobu_line",
       "date": "2026-07-05",
-      "number": "中央・総武線（Chūō-Sōbu Line）",
+      "number": "中央・総武線",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "新宿",
       "destination": "市ヶ谷",
-      "direction": "千葉・津田沼",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#d9a600"
@@ -2992,17 +2999,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Chūō-Sōbu Line"
     },
     {
       "id": "20260705_05_yurakucho_line",
       "date": "2026-07-05",
-      "number": "有楽町線（Yūrakuchō Line）",
+      "number": "有楽町線",
       "train_type": "普通",
       "company": "東京メトロ",
       "origin": "市ヶ谷",
       "destination": "江戸川橋",
-      "direction": "和光市・池袋",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#b59a4d"
@@ -3074,17 +3082,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yūrakuchō Line"
     },
     {
       "id": "20260705_06_yurakucho_line",
       "date": "2026-07-05",
-      "number": "有楽町線（Yūrakuchō Line）",
+      "number": "有楽町線",
       "train_type": "普通",
       "company": "東京メトロ",
       "origin": "江戸川橋",
       "destination": "池袋",
-      "direction": "和光市・池袋",
       "visible": true,
       "style": {
         "color": "#b59a4d"
@@ -3175,17 +3183,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yūrakuchō Line"
     },
     {
       "id": "20260705_07_yamanote_line",
       "date": "2026-07-05",
-      "number": "山手線（Yamanote Line）",
+      "number": "山手線",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "池袋",
       "destination": "上野",
-      "direction": "上野・東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#8fc31f"
@@ -3371,18 +3380,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yamanote Line"
     },
     {
       "id": "20260705_08_hayabusa59",
       "date": "2026-07-05",
-      "number": "はやぶさ59号（Hayabusa 59）（2059B）",
+      "number": "はやぶさ59号（2059B）",
       "number_en": "Hayabusa 59",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "上野",
       "destination": "仙台",
-      "direction": "新青森",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#007a3d"
@@ -3592,13 +3602,13 @@
     {
       "id": "20260706_01_hayabusa11",
       "date": "2026-07-06",
-      "number": "はやぶさ11号（Hayabusa 11）（11B）",
+      "number": "はやぶさ11号（11B）",
       "number_en": "Hayabusa 11",
       "train_type": "新幹線",
       "company": "JR東日本/JR北海道",
       "origin": "仙台",
       "destination": "新青森",
-      "direction": "新函館北斗",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#007a3d"
@@ -3863,13 +3873,13 @@
     {
       "id": "20260706_02_super_tsugaru2",
       "date": "2026-07-06",
-      "number": "スーパーつがる2号（Super Tsugaru 2）（2022M）",
+      "number": "スーパーつがる2号（2022M）",
       "number_en": "Super Tsugaru 2",
       "train_type": "特急",
       "company": "JR東日本",
       "origin": "新青森",
       "destination": "秋田",
-      "direction": "秋田",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#9b4d96"
@@ -3956,13 +3966,13 @@
     {
       "id": "20260706_03_inaho14",
       "date": "2026-07-06",
-      "number": "いなほ14号（Inaho 14）（14M）",
+      "number": "いなほ14号（14M）",
       "number_en": "Inaho 14",
       "train_type": "特急",
       "company": "JR東日本",
       "origin": "秋田",
       "destination": "新潟",
-      "direction": "新潟",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#f39800"
@@ -4130,13 +4140,13 @@
     {
       "id": "20260707_01_toki308",
       "date": "2026-07-07",
-      "number": "とき308号（Toki 308）（1308C）",
+      "number": "とき308号（1308C）",
       "number_en": "Toki 308",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "新潟",
       "destination": "高崎",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -4283,13 +4293,13 @@
     {
       "id": "20260707_02_hakutaka555",
       "date": "2026-07-07",
-      "number": "はくたか555号（Hakutaka 555）（555E）",
+      "number": "はくたか555号（555E）",
       "number_en": "Hakutaka 555",
       "train_type": "新幹線",
       "company": "JR東日本/JR西日本",
       "origin": "高崎",
       "destination": "長野",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -4417,13 +4427,12 @@
     {
       "id": "20260707_03_local",
       "date": "2026-07-07",
-      "number": "普通 松本行（Local）（2236M）",
+      "number": "普通 松本行（2236M）",
       "number_en": "Local",
       "train_type": "普通",
       "company": "しなの鉄道/JR東日本",
       "origin": "長野",
       "destination": "篠ノ井",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#059669"
@@ -4533,13 +4542,12 @@
     {
       "id": "20260707_04_local",
       "date": "2026-07-07",
-      "number": "普通列車（Local）（2635M）",
+      "number": "普通列車（2635M）",
       "number_en": "Local",
       "train_type": "普通",
       "company": "しなの鉄道/JR東日本",
       "origin": "篠ノ井",
       "destination": "長野",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -4649,12 +4657,11 @@
     {
       "id": "20260707_05_local",
       "date": "2026-07-07",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "長野電鉄",
       "origin": "長野",
       "destination": "須坂",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -4910,17 +4917,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260707_06_a_ltdexp",
       "date": "2026-07-07",
-      "number": "A特急（Limited Express (A)）",
+      "number": "A特急",
       "train_type": "特急",
       "company": "長野電鉄",
       "origin": "須坂",
       "destination": "長野",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -4966,18 +4973,19 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Limited Express (A)"
     },
     {
       "id": "20260707_07_hakutaka565",
       "date": "2026-07-07",
-      "number": "はくたか565号（Hakutaka 565）（565E）",
+      "number": "はくたか565号（565E）",
       "number_en": "Hakutaka 565",
       "train_type": "新幹線",
       "company": "JR東日本/JR西日本",
       "origin": "長野",
       "destination": "加賀温泉",
-      "direction": "加賀温泉",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#ca8a04"
@@ -5185,13 +5193,13 @@
     {
       "id": "20260708_01_tsurugi17",
       "date": "2026-07-08",
-      "number": "つるぎ17号（Tsurugi 17）（17E）",
+      "number": "つるぎ17号（17E）",
       "number_en": "Tsurugi 17",
       "train_type": "新幹線",
       "company": "JR西日本",
       "origin": "加賀温泉",
       "destination": "敦賀",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -5300,13 +5308,13 @@
     {
       "id": "20260708_02_shirasagi2",
       "date": "2026-07-08",
-      "number": "しらさぎ6号（Shirasagi 6）（6M）",
+      "number": "しらさぎ6号（6M）",
       "number_en": "Shirasagi 6",
       "train_type": "特急",
       "company": "JR西日本/JR東海",
       "origin": "敦賀",
       "destination": "米原",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -5559,13 +5567,13 @@
     {
       "id": "20260708_03_hikari648",
       "date": "2026-07-08",
-      "number": "ひかり648号（Hikari 648）（648A）",
+      "number": "ひかり648号（648A）",
       "number_en": "Hikari 648",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "米原",
       "destination": "名古屋",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#059669"
@@ -5636,13 +5644,13 @@
     {
       "id": "20260708_04_hikari706",
       "date": "2026-07-08",
-      "number": "ひかり706号（Hikari 706）（706A）",
+      "number": "ひかり706号（706A）",
       "number_en": "Hikari 706",
       "train_type": "新幹線",
       "company": "JR西日本/JR東海",
       "origin": "名古屋",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -5808,12 +5816,12 @@
     {
       "id": "20260708_05_local",
       "date": "2026-07-08",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -5860,17 +5868,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260709_01_local",
       "date": "2026-07-09",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -5917,18 +5926,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260709_02_hikari713",
       "date": "2026-07-09",
-      "number": "ひかり713号（Hikari 713）（713A）",
+      "number": "ひかり713号（713A）",
       "number_en": "Hikari 713",
       "train_type": "新幹線",
       "company": "JR東海/JR西日本",
       "origin": "三島",
       "destination": "京都",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#ca8a04"
@@ -6151,12 +6161,11 @@
     {
       "id": "20260709_03_miyakoji_rapid",
       "date": "2026-07-09",
-      "number": "みやこ路快速（Miyakoji Rapid）",
+      "number": "みやこ路快速",
       "train_type": "快速",
       "company": "JR西日本",
       "origin": "京都",
       "destination": "宇治",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -6336,17 +6345,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Miyakoji Rapid"
     },
     {
       "id": "20260709_04_d_section_rapid",
       "date": "2026-07-09",
-      "number": "D区間快速（Section Rapid (D)）",
+      "number": "D区間快速",
       "train_type": "区間快速",
       "company": "JR西日本",
       "origin": "宇治",
       "destination": "京都",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -6526,17 +6535,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Section Rapid (D)"
     },
     {
       "id": "20260710_01_nozomi252",
       "date": "2026-07-10",
-      "number": "のぞみ252号（Nozomi 252）",
+      "number": "のぞみ252号",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "京都",
       "destination": "名古屋",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#059669"
@@ -6621,17 +6631,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nozomi 252"
     },
     {
       "id": "20260710_02_kodama824",
       "date": "2026-07-10",
-      "number": "こだま824号（Kodama 824）",
+      "number": "こだま824号（824A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "名古屋",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -6732,8 +6743,8 @@
           "name": "三河安城",
           "n02_station_code": "006138",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:19",
+          "departure": "13:24",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -6741,8 +6752,8 @@
           "name": "豊橋",
           "n02_station_code": "006783",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:36",
+          "departure": "13:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -6750,8 +6761,8 @@
           "name": "浜松",
           "n02_station_code": "007060",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:53",
+          "departure": "13:58",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -6759,8 +6770,8 @@
           "name": "掛川",
           "n02_station_code": "006748",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:08",
+          "departure": "14:10",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -6768,7 +6779,7 @@
           "name": "静岡",
           "n02_station_code": "006129",
           "platform_number": null,
-          "arrival": null,
+          "arrival": "14:23",
           "departure": "14:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -6777,8 +6788,8 @@
           "name": "新富士",
           "n02_station_code": "005554",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:36",
+          "departure": "14:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -6792,17 +6803,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 824"
     },
     {
       "id": "20260710_03_local",
       "date": "2026-07-10",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -6849,17 +6862,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260710_04_local",
       "date": "2026-07-10",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -6906,17 +6920,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260710_05_hikari718",
       "date": "2026-07-10",
-      "number": "ひかり718号（Hikari 718）",
+      "number": "ひかり718号（718A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#ca8a04"
@@ -7015,8 +7030,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:24",
+          "departure": "20:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -7024,8 +7039,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:35",
+          "departure": "20:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -7039,18 +7054,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Hikari 718"
     },
     {
       "id": "20260710_06_yamabiko221",
       "date": "2026-07-10",
-      "number": "やまびこ221号（Yamabiko 221）（221B）",
+      "number": "やまびこ221号（221B）",
       "number_en": "Yamabiko 221",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "大宮",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -7121,13 +7138,13 @@
     {
       "id": "20260710_07_keihin_tohoku_local",
       "date": "2026-07-10",
-      "number": "京浜東北線 普通（Keihin-Tōhoku Line Local）（2145B）",
+      "number": "京浜東北線 普通（2145B）",
       "number_en": "Keihin-Tōhoku Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "大宮",
       "destination": "南浦和",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -7255,13 +7272,13 @@
     {
       "id": "20260711_01_keihin_tohoku_negishi_local",
       "date": "2026-07-11",
-      "number": "京浜東北・根岸線 普通（Keihin-Tōhoku / Negishi Line Local）（420B）",
+      "number": "京浜東北・根岸線 普通（420B）",
       "number_en": "Keihin-Tōhoku / Negishi Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "南浦和",
       "destination": "大宮",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#059669"
@@ -7389,13 +7406,13 @@
     {
       "id": "20260711_02_kagayaki501",
       "date": "2026-07-11",
-      "number": "かがやき501号（Kagayaki 501）（3501E）",
+      "number": "かがやき501号（3501E）",
       "number_en": "Kagayaki 501",
       "train_type": "新幹線",
       "company": "JR東日本/JR西日本",
       "origin": "大宮",
       "destination": "金沢",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -7713,13 +7730,13 @@
     {
       "id": "20260711_03_hakutaka560",
       "date": "2026-07-11",
-      "number": "はくたか560号（Hakutaka 560）（560E）",
+      "number": "はくたか560号（560E）",
       "number_en": "Hakutaka 560",
       "train_type": "新幹線",
       "company": "JR西日本/JR東日本",
       "origin": "金沢",
       "destination": "大宮",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -8037,13 +8054,13 @@
     {
       "id": "20260711_04_saikyo_local",
       "date": "2026-07-11",
-      "number": "埼京線 普通（Saikyō Line Local）（1338K）",
+      "number": "埼京線 普通（1338K）",
       "number_en": "Saikyō Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "大宮",
       "destination": "池袋",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -8342,12 +8359,11 @@
     {
       "id": "20260711_05_seibu_ikebukuro_semiexp",
       "date": "2026-07-11",
-      "number": "西武池袋線 急行 飯能行（Seibu Ikebukuro Line Express）",
+      "number": "西武池袋線 急行 飯能行",
       "train_type": "急行",
       "company": "西武鉄道",
       "origin": "池袋",
       "destination": "西所沢",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#ca8a04"
@@ -8698,17 +8714,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seibu Ikebukuro Line Express"
     },
     {
       "id": "20260711_06_seibu_sayama_local",
       "date": "2026-07-11",
-      "number": "西武狭山線 各駅停車 西武球場前行（臨時と推定）",
+      "number": "西武狭山線 各駅停車 西武球場前行",
       "train_type": "各駅停車",
       "company": "西武鉄道",
       "origin": "西所沢",
       "destination": "西武球場前",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -8774,18 +8790,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seibu Sayama Line Local",
+      "notes": "臨時列車と推定（公式時刻表では未確認）。"
     },
     {
       "id": "20260712_01_musashino_local",
       "date": "2026-07-12",
-      "number": "武蔵野線 普通（Musashino Line Local）（1224E）",
+      "number": "武蔵野線 普通（1224E）",
       "number_en": "Musashino Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "南浦和",
       "destination": "新秋津",
-      "direction": "府中本町",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -8938,12 +8956,11 @@
     {
       "id": "20260712_02_seibu_ikebukuro_semiexp",
       "date": "2026-07-12",
-      "number": "西武池袋線 準急 飯能行（Seibu Ikebukuro Line Semi-Express）",
+      "number": "西武池袋線 準急 飯能行",
       "train_type": "準急",
       "company": "西武鉄道",
       "origin": "秋津",
       "destination": "西所沢",
-      "direction": "飯能",
       "visible": true,
       "style": {
         "color": "#f59e0b"
@@ -9015,17 +9032,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seibu Ikebukuro Line Semi-Express"
     },
     {
       "id": "20260712_03_seibu_sayama_local",
       "date": "2026-07-12",
-      "number": "西武狭山線 普通（Seibu Sayama Line Local）",
+      "number": "西武狭山線 普通",
       "train_type": "普通",
       "company": "西武鉄道",
       "origin": "西所沢",
       "destination": "西武球場前",
-      "direction": "西武球場前",
       "visible": true,
       "style": {
         "color": "#f59e0b"
@@ -9097,17 +9114,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seibu Sayama Line Local"
     },
     {
       "id": "20260712_04_seibu_sayama_ikebukuro_local",
       "date": "2026-07-12",
-      "number": "西武狭山線・池袋線 各駅停車（Seibu Local）",
+      "number": "西武狭山線・池袋線 各駅停車",
       "train_type": "各駅停車",
       "company": "西武鉄道",
       "origin": "西武球場前",
       "destination": "秋津",
-      "direction": "池袋",
       "visible": true,
       "style": {
         "color": "#f59e0b"
@@ -9218,18 +9235,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seibu Local"
     },
     {
       "id": "20260712_05_musashino_local",
       "date": "2026-07-12",
-      "number": "武蔵野線 普通（Musashino Line Local）（2131E）",
+      "number": "武蔵野線 普通（2131E）",
       "number_en": "Musashino Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "新秋津",
       "destination": "南浦和",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -9382,12 +9400,12 @@
     {
       "id": "20260713_01_keihin_tohoku_negishi_local",
       "date": "2026-07-13",
-      "number": "京浜東北・根岸線 普通（Keihin-Tōhoku / Negishi Line Local）",
+      "number": "京浜東北・根岸線 普通",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "南浦和",
       "destination": "東京",
-      "direction": "大船",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#00a7e1"
@@ -9725,18 +9743,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Keihin-Tōhoku / Negishi Line Local"
     },
     {
       "id": "20260713_02_kodama801",
       "date": "2026-07-13",
-      "number": "こだま801号（Kodama 801）（801A）",
+      "number": "こだま801号（801A）",
       "number_en": "Kodama 801",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "東京",
       "destination": "三島",
-      "direction": "名古屋",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -9870,12 +9889,12 @@
     {
       "id": "20260713_03_tokaido_main_local",
       "date": "2026-07-13",
-      "number": "東海道本線 普通（Tōkaidō Main Line Local）",
+      "number": "東海道本線 普通",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "静岡",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -9928,17 +9947,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tōkaidō Main Line Local"
     },
     {
       "id": "20260713_04_tokaido_main_local",
       "date": "2026-07-13",
-      "number": "東海道本線 普通（Tōkaidō Main Line Local）",
+      "number": "東海道本線 普通",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "熱海",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -9991,18 +10011,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tōkaidō Main Line Local"
     },
     {
       "id": "20260713_05_kodama816",
       "date": "2026-07-13",
-      "number": "こだま816号（Kodama 816）（816A）",
+      "number": "こだま816号（816A）",
       "number_en": "Kodama 816",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -10136,13 +10157,13 @@
     {
       "id": "20260713_06_hayabusa27",
       "date": "2026-07-13",
-      "number": "はやぶさ27号（Hayabusa 27）（3027B）",
+      "number": "はやぶさ27号（3027B）",
       "number_en": "Hayabusa 27",
       "train_type": "新幹線",
       "company": "JR東日本/JR北海道",
       "origin": "東京",
       "destination": "新函館北斗",
-      "direction": "新函館北斗",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -10658,13 +10679,13 @@
     {
       "id": "20260713_07_hokuto21",
       "date": "2026-07-13",
-      "number": "北斗21号（Hokuto 21）（21D）",
+      "number": "北斗21号（21D）",
       "number_en": "Hokuto 21",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "新函館北斗",
       "destination": "札幌",
-      "direction": "札幌",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -10796,13 +10817,13 @@
     {
       "id": "20260714_01_ozora3",
       "date": "2026-07-14",
-      "number": "おおぞら3号（Ōzora 3）（4003D）",
+      "number": "おおぞら3号（4003D）",
       "number_en": "Ōzora 3",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "札幌",
       "destination": "釧路",
-      "direction": "釧路",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#7b4fb5"
@@ -10934,13 +10955,13 @@
     {
       "id": "20260714_02_nemuro_main_local",
       "date": "2026-07-14",
-      "number": "根室本線 普通（Nemuro Main Line Local）（5625D）",
+      "number": "根室本線 普通（5625D）",
       "number_en": "Nemuro Main Line Local",
       "train_type": "普通",
       "company": "JR北海道",
       "origin": "釧路",
       "destination": "根室",
-      "direction": "根室",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#1f7a3f"
@@ -11281,13 +11302,13 @@
     {
       "id": "20260714_03_nemuro_main_local",
       "date": "2026-07-14",
-      "number": "根室本線 普通（Nemuro Main Line Local）（5630D）",
+      "number": "根室本線 普通（5630D）",
       "number_en": "Nemuro Main Line Local",
       "train_type": "普通",
       "company": "JR北海道",
       "origin": "根室",
       "destination": "釧路",
-      "direction": "釧路",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#c0392b"
@@ -11628,13 +11649,13 @@
     {
       "id": "20260714_04_ozora12",
       "date": "2026-07-14",
-      "number": "おおぞら12号（Ōzora 12）（4012D）",
+      "number": "おおぞら12号（4012D）",
       "number_en": "Ōzora 12",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "釧路",
       "destination": "札幌",
-      "direction": "札幌",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2c7fb8"
@@ -11730,13 +11751,13 @@
     {
       "id": "20260715_01_soya",
       "date": "2026-07-15",
-      "number": "宗谷（Sōya）（51D）",
+      "number": "宗谷（51D）",
       "number_en": "Sōya",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "札幌",
       "destination": "稚内",
-      "direction": "稚内",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#8e44ad"
@@ -11913,13 +11934,13 @@
     {
       "id": "20260715_02_soya",
       "date": "2026-07-15",
-      "number": "宗谷（Sōya）（52D）",
+      "number": "宗谷（52D）",
       "number_en": "Sōya",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "稚内",
       "destination": "札幌",
-      "direction": "札幌",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#16a085"
@@ -12083,7 +12104,6 @@
       "company": "札幌市交通局",
       "origin": "さっぽろ",
       "destination": "すすきの",
-      "direction": "真駒内",
       "visible": true,
       "style": {
         "color": "#00893D"
@@ -12155,7 +12175,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Municipal Subway Namboku Line"
     },
     {
       "id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
@@ -12165,7 +12186,6 @@
       "company": "札幌市交通局",
       "origin": "大通",
       "destination": "中島公園",
-      "direction": "真駒内",
       "visible": true,
       "style": {
         "color": "#00893D"
@@ -12237,7 +12257,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Municipal Subway Namboku Line"
     },
     {
       "id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
@@ -12357,7 +12378,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Streetcar Inner Loop"
     },
     {
       "id": "20260716_04_sapporo_streetcar_susukino_chuokuyakushomae",
@@ -12478,7 +12500,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Streetcar Inner Loop"
     },
     {
       "id": "20260716_05_sapporo_subway_tozai_nishi11_odori",
@@ -12488,7 +12511,6 @@
       "company": "札幌市交通局",
       "origin": "西11丁目",
       "destination": "大通",
-      "direction": "新さっぽろ",
       "visible": true,
       "style": {
         "color": "#F58220"
@@ -12541,7 +12563,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Municipal Subway Tōzai Line"
     },
     {
       "id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
@@ -12551,7 +12574,6 @@
       "company": "札幌市交通局",
       "origin": "大通",
       "destination": "さっぽろ",
-      "direction": "麻生",
       "visible": true,
       "style": {
         "color": "#00893D"
@@ -12604,18 +12626,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sapporo Municipal Subway Namboku Line"
     },
     {
       "id": "20260716_07_hokuto20",
       "date": "2026-07-16",
-      "number": "北斗20号（Hokuto 20）（20D）",
+      "number": "北斗20号（20D）",
       "number_en": "Hokuto 20",
       "train_type": "特急",
       "company": "JR北海道",
       "origin": "札幌",
       "destination": "函館",
-      "direction": "函館",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#ca8a04"
@@ -12774,12 +12797,11 @@
     {
       "id": "20260717_01_hakodate_tram",
       "date": "2026-07-17",
-      "number": "函館市電５系統（Hakodate Tram Line 5）",
+      "number": "函館市電５系統",
       "train_type": "路面電車",
       "company": "函館市企業局交通部",
       "origin": "五稜郭公園前",
       "destination": "函館駅前",
-      "direction": "函館どつく前",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -12966,17 +12988,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hakodate Tram Line 5"
     },
     {
       "id": "20260717_02_hakodate_tram",
       "date": "2026-07-17",
-      "number": "函館市電５系統（Hakodate Tram Line 5）",
+      "number": "函館市電５系統",
       "train_type": "路面電車",
       "company": "函館市企業局交通部",
       "origin": "大町",
       "destination": "函館駅前",
-      "direction": "湯の川",
       "visible": true,
       "style": {
         "color": "#d97706"
@@ -13105,18 +13127,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hakodate Tram Line 5"
     },
     {
       "id": "20260718_01_hakodate_liner",
       "date": "2026-07-18",
-      "number": "はこだてライナー 普通（Hakodate Liner）（1321M）",
+      "number": "はこだてライナー 普通（1321M）",
       "number_en": "Hakodate Liner",
       "train_type": "普通",
       "company": "JR北海道",
       "origin": "函館",
       "destination": "新函館北斗",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -13244,13 +13267,13 @@
     {
       "id": "20260718_02_hayabusa10",
       "date": "2026-07-18",
-      "number": "はやぶさ10号（Hayabusa 10）（3010B）",
+      "number": "はやぶさ10号（3010B）",
       "number_en": "Hayabusa 10",
       "train_type": "新幹線",
       "company": "JR北海道/JR東日本",
       "origin": "新函館北斗",
       "destination": "八戸",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#27ae60"
@@ -13383,13 +13406,13 @@
     {
       "id": "20260718_03_hayabusa95",
       "date": "2026-07-18",
-      "number": "はやぶさ95号（Hayabusa 95）（3095B）",
+      "number": "はやぶさ95号（3095B）",
       "number_en": "Hayabusa 95",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "八戸",
       "destination": "新青森",
-      "direction": "新函館北斗",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -13464,13 +13487,13 @@
     {
       "id": "20260718_04_ou_main_local",
       "date": "2026-07-18",
-      "number": "奥羽本線 普通（Ōu Main Line Local）（4623M）",
+      "number": "奥羽本線 普通（4623M）",
       "number_en": "Ōu Main Line Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "新青森",
       "destination": "青森",
-      "direction": "青森",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#d9364f"
@@ -13526,12 +13549,12 @@
     {
       "id": "20260718_05_ou_main_local",
       "date": "2026-07-18",
-      "number": "奥羽本線 普通（Ōu Main Line Local）",
+      "number": "奥羽本線 普通",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "青森",
       "destination": "新青森",
-      "direction": "弘前",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0ea5e9"
@@ -13582,18 +13605,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Ōu Main Line Local"
     },
     {
       "id": "20260718_06_hayabusa",
       "date": "2026-07-18",
-      "number": "はやぶさ54号（Hayabusa 54）（2054B）",
+      "number": "はやぶさ54号（2054B）",
       "number_en": "Hayabusa 54",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "新青森",
       "destination": "盛岡",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -13725,13 +13749,13 @@
     {
       "id": "20260718_07_yamabiko",
       "date": "2026-07-18",
-      "number": "やまびこ56号（Yamabiko 56）（56B）",
+      "number": "やまびこ56号（56B）",
       "number_en": "Yamabiko 56",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "盛岡",
       "destination": "東京",
-      "direction": "東京",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -14087,13 +14111,13 @@
     {
       "id": "20260718_08_kodama839",
       "date": "2026-07-18",
-      "number": "こだま839号（Kodama 839）（839A）",
+      "number": "こだま839号（839A）",
       "number_en": "Kodama 839",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "東京",
       "destination": "三島",
-      "direction": "新大阪",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -14227,12 +14251,12 @@
     {
       "id": "20260718_09_tokaido_main_local",
       "date": "2026-07-18",
-      "number": "東海道本線 普通（Tōkaidō Main Line Local）",
+      "number": "東海道本線 普通",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "沼津",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -14285,17 +14309,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tōkaidō Main Line Local"
     },
     {
       "id": "20260718_10_tokaido_main_local",
       "date": "2026-07-18",
-      "number": "東海道本線 普通（Tōkaidō Main Line Local）",
+      "number": "東海道本線 普通",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "熱海",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -14348,18 +14373,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tōkaidō Main Line Local"
     },
     {
       "id": "20260718_11_hikari659",
       "date": "2026-07-18",
-      "number": "ひかり659号（Hikari 659）（659A）",
+      "number": "ひかり659号（659A）",
       "number_en": "Hikari 659",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "名古屋",
-      "direction": "新大阪",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -14525,13 +14551,13 @@
     {
       "id": "20260719_01_hikari703",
       "date": "2026-07-19",
-      "number": "ひかり703号（Hikari 703）（703A）",
+      "number": "ひかり703号（703A）",
       "number_en": "Hikari 703",
       "train_type": "新幹線",
       "company": "JR東海/JR西日本",
       "origin": "名古屋",
       "destination": "岡山",
-      "direction": "岡山",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -14697,13 +14723,13 @@
     {
       "id": "20260719_02_yakumo11",
       "date": "2026-07-19",
-      "number": "やくも11号（Yakumo 11）（1011M）",
+      "number": "やくも11号（1011M）",
       "number_en": "Yakumo 11",
       "train_type": "特急",
       "company": "JR西日本",
       "origin": "岡山",
       "destination": "米子",
-      "direction": "出雲市",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -14790,13 +14816,13 @@
     {
       "id": "20260719_03_super_oki5",
       "date": "2026-07-19",
-      "number": "スーパーおき5号（Super Oki 5）（3005D）",
+      "number": "スーパーおき5号（3005D）",
       "number_en": "Super Oki 5",
       "train_type": "特急",
       "company": "JR西日本",
       "origin": "米子",
       "destination": "新山口",
-      "direction": "新山口",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e8830c"
@@ -14991,13 +15017,13 @@
     {
       "id": "20260719_04_sakura770",
       "date": "2026-07-19",
-      "number": "さくら770号（Sakura 770）（770A）",
+      "number": "さくら770号（770A）",
       "number_en": "Sakura 770",
       "train_type": "新幹線",
       "company": "JR西日本",
       "origin": "新山口",
       "destination": "広島",
-      "direction": "新大阪",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -15066,7 +15092,7 @@
           "platform_number": null,
           "arrival": null,
           "departure": null,
-          "stop_type": "passenger_stop",
+          "stop_type": "pass_through",
           "ride_segment": true
         },
         {
@@ -15088,7 +15114,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系（8両）"
     },
     {
       "id": "20260720_41_hiroden1_hiroshimaeki_fukuromachi",
@@ -15098,7 +15125,6 @@
       "company": "広島電鉄",
       "origin": "広島駅",
       "destination": "袋町",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#e0533d"
@@ -15278,7 +15304,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hiroden Route 1"
     },
     {
       "id": "20260720_42_astram_hondori_johoku",
@@ -15288,7 +15315,6 @@
       "company": "広島高速交通",
       "origin": "本通",
       "destination": "城北",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#7a5cc9"
@@ -15354,7 +15380,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Astram Line"
     },
     {
       "id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
@@ -15364,7 +15391,6 @@
       "company": "広島電鉄",
       "origin": "紙屋町西",
       "destination": "商工センター入口",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#e88f2c"
@@ -15696,7 +15722,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hiroden Route 2"
     },
     {
       "id": "20260720_44_sanyo_local_shininokuchi_hiroshima",
@@ -15706,7 +15733,7 @@
       "company": "JR西日本",
       "origin": "新井口",
       "destination": "広島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#3a7bd5"
@@ -15810,7 +15837,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sanyō Main Line Local"
     },
     {
       "id": "20260720_45_sakura753_hiroshima_hakata",
@@ -15820,7 +15848,7 @@
       "company": "JR西日本/JR九州",
       "origin": "広島",
       "destination": "博多",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2ad645"
@@ -15981,7 +16009,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sakura 753"
     },
     {
       "id": "20260720_46_tsubame325_hakata_shintosu",
@@ -15991,7 +16020,7 @@
       "company": "JR九州",
       "origin": "博多",
       "destination": "新鳥栖",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#1fa87a"
@@ -16038,7 +16067,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tsubame 325"
     },
     {
       "id": "20260720_47_midori35_shintosu_arita",
@@ -16048,7 +16078,7 @@
       "company": "JR九州",
       "origin": "新鳥栖",
       "destination": "有田",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#d64f9e"
@@ -16112,7 +16142,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Midori 35"
     },
     {
       "id": "20260720_48_mr627d_arita_imari",
@@ -16122,7 +16153,6 @@
       "company": "松浦鉄道",
       "origin": "有田",
       "destination": "伊万里",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#b8860b"
@@ -16340,7 +16370,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Matsuura Railway Nishi-Kyūshū Line Local"
     },
     {
       "id": "20260720_49_mr369d_imari_tabirahiradoguchi",
@@ -16350,7 +16381,6 @@
       "company": "松浦鉄道",
       "origin": "伊万里",
       "destination": "たびら平戸口",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#c9762b"
@@ -16739,7 +16769,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Matsuura Railway Nishi-Kyūshū Line Local"
     },
     {
       "id": "20260720_50_mr_tabirahiradoguchi_sasebo",
@@ -16749,7 +16780,6 @@
       "company": "松浦鉄道",
       "origin": "たびら平戸口",
       "destination": "佐世保",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#a0522d"
@@ -17290,7 +17320,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Matsuura Railway Nishi-Kyūshū Line Local"
     },
     {
       "id": "20260720_51_seasideliner3233d_sasebo_nagasaki",
@@ -17300,7 +17331,7 @@
       "company": "JR九州",
       "origin": "佐世保",
       "destination": "長崎",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2b6cb0"
@@ -17784,7 +17815,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Seaside Liner"
     },
     {
       "id": "20260721_01_nagasaki_tram3_nagasakieki_heiwakoen",
@@ -17794,7 +17826,6 @@
       "company": "長崎電気軌道",
       "origin": "長崎駅前",
       "destination": "平和公園",
-      "direction": "赤迫",
       "visible": true,
       "style": {
         "color": "#e53935"
@@ -17954,7 +17985,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nagasaki Electric Tramway Route 3"
     },
     {
       "id": "20260721_02_nagasaki_tram3_urakamieki_nagasakieki",
@@ -17964,7 +17996,6 @@
       "company": "長崎電気軌道",
       "origin": "浦上駅前",
       "destination": "長崎駅前",
-      "direction": "蛍茶屋",
       "visible": true,
       "style": {
         "color": "#e53935"
@@ -18076,7 +18107,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nagasaki Electric Tramway Route 3"
     },
     {
       "id": "20260721_03_nagasaki_tram1_nagasakieki_dejima",
@@ -18086,7 +18118,6 @@
       "company": "長崎電気軌道",
       "origin": "長崎駅前",
       "destination": "出島",
-      "direction": "崇福寺",
       "visible": true,
       "style": {
         "color": "#1976d2"
@@ -18166,7 +18197,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nagasaki Electric Tramway Route 1"
     },
     {
       "id": "20260721_04_nagasaki_tram1_dejima_nagasakieki",
@@ -18176,7 +18208,6 @@
       "company": "長崎電気軌道",
       "origin": "出島",
       "destination": "長崎駅前",
-      "direction": "赤迫",
       "visible": true,
       "style": {
         "color": "#1976d2"
@@ -18256,18 +18287,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nagasaki Electric Tramway Route 1"
     },
     {
       "id": "20260721_05_kamome22",
       "date": "2026-07-21",
-      "number": "かもめ22号（Kamome 22）（2022G）",
+      "number": "かもめ22号（2022G）",
       "number_en": "Kamome 22",
       "train_type": "新幹線",
       "company": "JR九州",
       "origin": "長崎",
       "destination": "武雄温泉",
-      "direction": "武雄温泉",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e31a1c"
@@ -18368,13 +18400,13 @@
     {
       "id": "20260721_06_relay_kamome22",
       "date": "2026-07-21",
-      "number": "リレーかもめ22号（Relay Kamome 22）（2022H）",
+      "number": "リレーかもめ22号（2022H）",
       "number_en": "Relay Kamome 22",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "武雄温泉",
       "destination": "新鳥栖",
-      "direction": "博多",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e31a1c"
@@ -18434,13 +18466,13 @@
     {
       "id": "20260721_07_sakura749",
       "date": "2026-07-21",
-      "number": "さくら749号（Sakura 749）（749A）",
+      "number": "さくら749号（749A）",
       "number_en": "Sakura 749",
       "train_type": "新幹線",
       "company": "JR西日本/JR九州",
       "origin": "新鳥栖",
       "destination": "熊本",
-      "direction": "鹿児島中央",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#d35400"
@@ -18558,13 +18590,13 @@
     {
       "id": "20260721_08_asoboy3",
       "date": "2026-07-21",
-      "number": "あそぼーい！3号（Aso Boy! 3）（8093D）",
+      "number": "あそぼーい！3号（8093D）",
       "number_en": "Aso Boy! 3",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "熊本",
       "destination": "宮地",
-      "direction": "宮地",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#4b2e1e"
@@ -18642,13 +18674,13 @@
     {
       "id": "20260721_09_asoboy4",
       "date": "2026-07-21",
-      "number": "あそぼーい！4号（Aso Boy! 4）（8094D）",
+      "number": "あそぼーい！4号（8094D）",
       "number_en": "Aso Boy! 4",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "宮地",
       "destination": "熊本",
-      "direction": "熊本",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#4b2e1e"
@@ -18731,7 +18763,6 @@
       "company": "熊本市交通局",
       "origin": "熊本駅前",
       "destination": "辛島町",
-      "direction": "健軍町",
       "visible": true,
       "style": {
         "color": "#d71920"
@@ -18843,7 +18874,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kumamoto City Tram Route A"
     },
     {
       "id": "20260721_11_kumamoto_tram_karashimacho_suidocho",
@@ -18853,7 +18885,6 @@
       "company": "熊本市交通局",
       "origin": "辛島町",
       "destination": "水道町",
-      "direction": "健軍町",
       "visible": true,
       "style": {
         "color": "#d71920"
@@ -18949,7 +18980,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kumamoto City Tram"
     },
     {
       "id": "20260721_12_hohi_local1493m_shinsuizenji_musashizuka",
@@ -18959,7 +18991,7 @@
       "company": "JR九州",
       "origin": "新水前寺",
       "destination": "武蔵塚",
-      "direction": "肥後大津",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#64748b"
@@ -19055,7 +19087,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hōhi Main Line Local"
     },
     {
       "id": "20260721_13_hohi_local1498m_musashizuka_kumamoto",
@@ -19065,7 +19098,7 @@
       "company": "JR九州",
       "origin": "武蔵塚",
       "destination": "熊本",
-      "direction": "熊本",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#64748b"
@@ -19209,18 +19242,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hōhi Main Line Local"
     },
     {
       "id": "20260721_14_sakura767",
       "date": "2026-07-21",
-      "number": "さくら767号（Sakura 767）（767A）",
+      "number": "さくら767号（767A）",
       "number_en": "Sakura 767",
       "train_type": "新幹線",
       "company": "JR西日本/JR九州",
       "origin": "熊本",
       "destination": "鹿児島中央",
-      "direction": "鹿児島中央",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#d35400"
@@ -19343,7 +19377,6 @@
       "company": "JR九州",
       "origin": "鹿児島中央",
       "destination": "山川",
-      "direction": "枕崎",
       "visible": true,
       "style": {
         "color": "#0f8b8d"
@@ -19663,7 +19696,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Ibusuki Makurazaki Line Local"
     },
     {
       "id": "20260722_02_ibusuki_5321d_yamakawa_nishioyama",
@@ -19673,7 +19707,6 @@
       "company": "JR九州",
       "origin": "山川",
       "destination": "西大山",
-      "direction": "枕崎",
       "visible": true,
       "style": {
         "color": "#e07a1f"
@@ -19737,7 +19770,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Ibusuki Makurazaki Line Local"
     },
     {
       "id": "20260722_03_ibusuki_1326d_nishioyama_minamikagoshima",
@@ -19747,7 +19781,6 @@
       "company": "JR九州",
       "origin": "西大山",
       "destination": "南鹿児島",
-      "direction": "鹿児島中央",
       "visible": true,
       "style": {
         "color": "#7b4fb5"
@@ -20067,7 +20100,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Ibusuki Makurazaki Line Local"
     },
     {
       "id": "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
@@ -20077,7 +20111,6 @@
       "company": "鹿児島市交通局",
       "origin": "鹿児島中央駅前",
       "destination": "都通",
-      "direction": "郡元",
       "visible": true,
       "style": {
         "color": "#009944"
@@ -20130,7 +20163,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kagoshima City Tram Route 2"
     },
     {
       "id": "20260722_03b_nanohana3328d_minamikagoshima_kagoshima",
@@ -20140,7 +20174,6 @@
       "company": "JR九州",
       "origin": "南鹿児島",
       "destination": "鹿児島中央",
-      "direction": "鹿児島中央",
       "visible": true,
       "style": {
         "color": "#d4a900"
@@ -20204,18 +20237,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nanohana"
     },
     {
       "id": "20260722_04_kirishima8",
       "date": "2026-07-22",
-      "number": "きりしま8号（Kirishima 8）（6008M）",
+      "number": "きりしま8号（6008M）",
       "number_en": "Kirishima 8",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "鹿児島中央",
       "destination": "宮崎",
-      "direction": "宮崎",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#1f7a3f"
@@ -20329,13 +20363,13 @@
     {
       "id": "20260722_05_nichirin10",
       "date": "2026-07-22",
-      "number": "にちりん10号（Nichirin 10）（5010M）",
+      "number": "にちりん10号（5010M）",
       "number_en": "Nichirin 10",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "宮崎",
       "destination": "大分",
-      "direction": "大分",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#c0392b"
@@ -20458,13 +20492,13 @@
     {
       "id": "20260722_06_sonic44",
       "date": "2026-07-22",
-      "number": "ソニック44号（Sonic 44）（3044M）",
+      "number": "ソニック44号（3044M）",
       "number_en": "Sonic 44",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "大分",
       "destination": "博多",
-      "direction": "博多",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2c7fb8"
@@ -20641,13 +20675,13 @@
     {
       "id": "20260722_07_kirameki6",
       "date": "2026-07-22",
-      "number": "きらめき6号（Kirameki 6）（56M）",
+      "number": "きらめき6号（56M）",
       "number_en": "Kirameki 6",
       "train_type": "特急",
       "company": "JR九州",
       "origin": "博多",
       "destination": "小倉",
-      "direction": "門司港",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#d97706"
@@ -20758,7 +20792,7 @@
       "company": "JR九州",
       "origin": "小倉",
       "destination": "黒崎",
-      "direction": "博多",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#b45309"
@@ -20795,7 +20829,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Sonic 54"
     },
     {
       "id": "20260722_09_chikuho_electric_kurosaki_nogata",
@@ -20805,7 +20840,6 @@
       "company": "筑豊電気鉄道",
       "origin": "黒崎駅前",
       "destination": "筑豊直方",
-      "direction": "筑豊直方",
       "visible": true,
       "style": {
         "color": "#e67e22"
@@ -21219,7 +21253,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Chikuho Electric Railroad"
     },
     {
       "id": "20260722_10_heichiku_ita_nogata_tagawaita",
@@ -21229,7 +21264,6 @@
       "company": "平成筑豊鉄道",
       "origin": "直方",
       "destination": "田川伊田",
-      "direction": "田川伊田",
       "visible": true,
       "style": {
         "color": "#2e8b57"
@@ -21529,7 +21563,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Heisei Chikuho Railway Ita Line"
     },
     {
       "id": "20260722_11_hitahikosan_986d_tagawaita_kokura",
@@ -21539,7 +21574,7 @@
       "company": "JR九州",
       "origin": "田川伊田",
       "destination": "小倉",
-      "direction": "小倉",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -21802,7 +21837,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Hitahikosan Line Local"
     },
     {
       "id": "20260722_12_monorail_kokura_kikugaoka",
@@ -21812,7 +21848,6 @@
       "company": "北九州高速鉄道",
       "origin": "小倉",
       "destination": "企救丘",
-      "direction": "企救丘",
       "visible": true,
       "style": {
         "color": "#005bac"
@@ -22074,7 +22109,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kitakyushu Monorail"
     },
     {
       "id": "20260722_13_monorail_kikugaoka_kokura",
@@ -22084,7 +22120,6 @@
       "company": "北九州高速鉄道",
       "origin": "企救丘",
       "destination": "小倉",
-      "direction": "小倉",
       "visible": true,
       "style": {
         "color": "#005bac"
@@ -22346,18 +22381,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kitakyushu Monorail"
     },
     {
       "id": "20260723_01_sakura740",
       "date": "2026-07-23",
-      "number": "さくら740号（Sakura 740）（740A）",
+      "number": "さくら740号（740A）",
       "number_en": "Sakura 740",
       "train_type": "新幹線",
       "company": "JR九州/JR西日本",
       "origin": "小倉",
       "destination": "岡山",
-      "direction": "新大阪",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#d35400"
@@ -22587,13 +22623,12 @@
     {
       "id": "20260723_02_shiokaze5",
       "date": "2026-07-23",
-      "number": "しおかぜ5号（Shiokaze 5）（5M）",
+      "number": "しおかぜ5号（5M）",
       "number_en": "Shiokaze 5",
       "train_type": "特急",
       "company": "JR西日本/JR四国",
       "origin": "岡山",
       "destination": "宇多津",
-      "direction": "松山",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -22836,13 +22871,13 @@
     {
       "id": "20260723_03_ishizuchi10",
       "date": "2026-07-23",
-      "number": "いしづち10号（Ishizuchi 10）（1010M）",
+      "number": "いしづち10号（1010M）",
       "number_en": "Ishizuchi 10",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "宇多津",
       "destination": "高松",
-      "direction": "高松",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e11d48"
@@ -22898,7 +22933,7 @@
       "company": "JR四国",
       "origin": "高松",
       "destination": "栗林",
-      "direction": "徳島方面",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#64748b"
@@ -22978,18 +23013,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kōtoku Line Local"
     },
     {
       "id": "20260723_05_uzushio10",
       "date": "2026-07-23",
-      "number": "うずしお10号（Uzushio 10）（3010D）",
+      "number": "うずしお10号（3010D）",
       "number_en": "Uzushio 10",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "栗林",
       "destination": "高松",
-      "direction": "高松",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -23031,13 +23067,13 @@
     {
       "id": "20260724_01_ishizuchi9",
       "date": "2026-07-24",
-      "number": "いしづち9号（Ishizuchi 9）（9M）",
+      "number": "いしづち9号（1009M）",
       "number_en": "Ishizuchi 9",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "高松",
       "destination": "宇多津",
-      "direction": "宇多津",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#1f9e6b"
@@ -23067,8 +23103,8 @@
           "name": "坂出",
           "n02_station_code": "008240",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:03",
+          "departure": "12:04",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -23088,13 +23124,13 @@
     {
       "id": "20260724_02_nanpu9",
       "date": "2026-07-24",
-      "number": "南風9号（Nanpū 9）（39D）",
+      "number": "南風9号（39D）",
       "number_en": "Nanpū 9",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "宇多津",
       "destination": "阿波池田",
-      "direction": "阿波池田",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e0662b"
@@ -23394,13 +23430,13 @@
     {
       "id": "20260724_03_tsurugisan6",
       "date": "2026-07-24",
-      "number": "剣山6号（Tsurugisan 6）（56D）",
+      "number": "剣山6号（4006D）",
       "number_en": "Tsurugisan 6",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "阿波池田",
       "destination": "穴吹",
-      "direction": "穴吹",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2f6fb0"
@@ -23430,8 +23466,8 @@
           "name": "阿波加茂",
           "n02_station_code": "008545",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:40",
+          "departure": "14:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -23439,8 +23475,8 @@
           "name": "貞光",
           "n02_station_code": "008542",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:52",
+          "departure": "14:53",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -23465,7 +23501,7 @@
       "company": "JR四国",
       "origin": "穴吹",
       "destination": "阿波池田",
-      "direction": "阿波池田",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#6b7280"
@@ -23575,18 +23611,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tokushima Line Local"
     },
     {
       "id": "20260724_05_nanpu17",
       "date": "2026-07-24",
-      "number": "南風17号（Nanpū 17）（47D）",
+      "number": "南風17号（47D）",
       "number_en": "Nanpū 17",
       "train_type": "特急",
       "company": "JR四国",
       "origin": "阿波池田",
       "destination": "高知",
-      "direction": "高知",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#e0662b"
@@ -24085,13 +24122,13 @@
     {
       "id": "20260724_06_nanpu28",
       "date": "2026-07-24",
-      "number": "南風28号（Nanpū 28）（58D）",
+      "number": "南風28号（58D）",
       "number_en": "Nanpū 28",
       "train_type": "特急",
       "company": "JR四国/JR西日本",
       "origin": "高知",
       "destination": "岡山",
-      "direction": "岡山",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e0662b"
@@ -25094,13 +25131,13 @@
     {
       "id": "20260724_07_kodama970",
       "date": "2026-07-24",
-      "number": "こだま970号（500系）",
+      "number": "こだま970号（970A）",
       "train_type": "新幹線",
       "vehicle_type": "500系",
       "company": "JR西日本",
       "origin": "岡山",
       "destination": "姫路",
-      "direction": "姫路",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#d35400"
@@ -25157,8 +25194,8 @@
           "name": "相生",
           "n02_station_code": "006552",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:34",
+          "departure": "22:35",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25172,17 +25209,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Kodama 970"
     },
     {
       "id": "20260724_08_tosaden_south",
       "date": "2026-07-24",
-      "number": "とさでん路面電車 桟橋方面（Tosaden Tram, southbound）",
+      "number": "とさでん路面電車 桟橋方面",
       "train_type": "路面電車",
       "company": "とさでん交通",
       "origin": "高知駅前",
       "destination": "はりまや橋",
-      "direction": "桟橋方面",
       "visible": true,
       "style": {
         "color": "#4F6FA8"
@@ -25273,17 +25310,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tosaden Tram, southbound"
     },
     {
       "id": "20260724_09_tosaden_north",
       "date": "2026-07-24",
-      "number": "とさでん路面電車 高知駅前行（Tosaden Tram for Kōchi-Ekimae）",
+      "number": "とさでん路面電車 高知駅前行",
       "train_type": "路面電車",
       "company": "とさでん交通",
       "origin": "はりまや橋",
       "destination": "高知駅前",
-      "direction": "高知駅前",
       "visible": true,
       "style": {
         "color": "#4F6FA8"
@@ -25374,18 +25411,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Tosaden Tram for Kōchi-Ekimae"
     },
     {
       "id": "20260725_05_hikari706",
       "date": "2026-07-25",
-      "number": "ひかり706号（Hikari 706）（706A）",
+      "number": "ひかり706号（706A）",
       "number_en": "Hikari 706",
       "train_type": "新幹線",
       "company": "JR西日本/JR東海",
       "origin": "姫路",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -25494,8 +25532,8 @@
           "name": "新神戸",
           "n02_station_code": "007039",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:33",
+          "departure": "11:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25503,8 +25541,8 @@
           "name": "新大阪",
           "n02_station_code": "006911",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:46",
+          "departure": "11:48",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25512,8 +25550,8 @@
           "name": "京都",
           "n02_station_code": "006083",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:02",
+          "departure": "12:07",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25521,7 +25559,7 @@
           "name": "名古屋",
           "n02_station_code": "005456",
           "platform_number": null,
-          "arrival": null,
+          "arrival": "12:42",
           "departure": "12:43",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -25530,7 +25568,7 @@
           "name": "浜松",
           "n02_station_code": "007060",
           "platform_number": null,
-          "arrival": null,
+          "arrival": "13:13",
           "departure": "13:17",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -25554,17 +25592,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260725_06_local",
       "date": "2026-07-25",
-      "number": "普通列車（Local）",
+      "number": "普通列車",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -25617,18 +25656,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Local"
     },
     {
       "id": "20260726_01_local_numazu",
       "date": "2026-07-26",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -25680,18 +25720,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_02_local_mishima",
       "date": "2026-07-26",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -25743,18 +25784,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_03_hikari706",
       "date": "2026-07-26",
-      "number": "ひかり706号（Hikari 706）（706A）",
+      "number": "ひかり706号（706A）",
       "number_en": "Hikari 706",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -25821,8 +25863,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:24",
+          "departure": "14:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25830,8 +25872,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:35",
+          "departure": "14:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -25845,18 +25887,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260726_04_chuo_rapid_shinjuku",
       "date": "2026-07-26",
-      "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
+      "number": "中央線快速",
       "number_en": "Chūō Line Rapid",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "新宿",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f97316"
@@ -26053,18 +26096,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_05_chuo_rapid_tokyo",
       "date": "2026-07-26",
-      "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
+      "number": "中央線快速",
       "number_en": "Chūō Line Rapid",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "新宿",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#fb923c"
@@ -26261,17 +26305,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_06_kodama_atami",
       "date": "2026-07-26",
-      "number": "こだま841号（Kodama 841）",
+      "number": "こだま841号（841A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "東京",
       "destination": "熱海",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -26348,8 +26393,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:33",
+          "departure": "16:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -26357,8 +26402,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:44",
+          "departure": "16:45",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -26366,8 +26411,8 @@
           "name": "小田原",
           "n02_station_code": "005217",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:00",
+          "departure": "17:05",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -26381,18 +26426,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 841"
     },
     {
       "id": "20260726_07_odoriko",
       "date": "2026-07-26",
-      "number": "踊り子（Odoriko）（車号不明・時刻推定）",
+      "number": "踊り子",
       "number_en": "Odoriko",
       "train_type": "特急",
       "company": "JR東日本",
       "origin": "熱海",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -26447,18 +26494,18 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_08_chuo_rapid_shinjuku2",
       "date": "2026-07-26",
-      "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
+      "number": "中央線快速",
       "number_en": "Chūō Line Rapid",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "新宿",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#facc15"
@@ -26655,18 +26702,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260726_09_shonan_shinjuku_yokohama",
       "date": "2026-07-26",
-      "number": "湘南新宿ライン 快速（Shōnan-Shinjuku Line Rapid）（時刻推定）",
+      "number": "湘南新宿ライン 快速",
       "number_en": "Shōnan-Shinjuku Line Rapid",
       "train_type": "快速",
       "company": "JR東日本",
       "origin": "新宿",
       "destination": "横浜",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -26943,18 +26991,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_01_tokaido_through_numazu",
       "date": "2026-07-27",
-      "number": "東海道線 普通 直通（Tōkaidō Line Through Local）（時刻推定）",
+      "number": "東海道線 普通 直通",
       "number_en": "Tōkaidō Line Through Local",
       "train_type": "普通",
       "company": "JR東日本/JR東海",
       "origin": "横浜",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#64748b"
@@ -27367,18 +27416,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_02_local_mishima",
       "date": "2026-07-27",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -27430,17 +27480,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_03_hikari702",
       "date": "2026-07-27",
-      "number": "ひかり702号（Hikari 702）",
+      "number": "ひかり702号（702A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0ea5e9"
@@ -27507,8 +27558,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:24",
+          "departure": "12:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -27516,8 +27567,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:35",
+          "departure": "12:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -27531,17 +27582,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Hikari 702"
     },
     {
       "id": "20260727_04_nasuno259",
       "date": "2026-07-27",
-      "number": "なすの259号（Nasuno 259）",
+      "number": "なすの259号",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "大宮",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#22c55e"
@@ -27613,18 +27666,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Nasuno 259"
     },
     {
       "id": "20260727_05_komachi",
       "date": "2026-07-27",
-      "number": "こまち（Komachi）（車号不明・時刻推定）",
+      "number": "こまち",
       "number_en": "Komachi",
       "train_type": "新幹線",
       "company": "JR東日本",
       "origin": "大宮",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#e11d48"
@@ -27696,18 +27750,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_06_local_akihabara",
       "date": "2026-07-27",
-      "number": "京浜東北線 普通（Local）（時刻推定）",
+      "number": "京浜東北線 普通",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "秋葉原",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -27777,18 +27832,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_07_local_tokyo",
       "date": "2026-07-27",
-      "number": "京浜東北線 普通（Local）（時刻推定）",
+      "number": "京浜東北線 普通",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東日本",
       "origin": "秋葉原",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7dd3fc"
@@ -27858,18 +27914,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_08_narita_express",
       "date": "2026-07-27",
-      "number": "成田エクスプレス（Narita Express）（車号不明・時刻推定）",
+      "number": "成田エクスプレス",
       "number_en": "Narita Express",
       "train_type": "特急",
       "company": "JR東日本",
       "origin": "東京",
       "destination": "品川",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -27906,17 +27963,17 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260727_09_kodama837",
       "date": "2026-07-27",
-      "number": "こだま837号（Kodama 837）",
+      "number": "こだま837号（837A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "品川",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f97316"
@@ -27993,8 +28050,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:44",
+          "departure": "15:45",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28002,8 +28059,8 @@
           "name": "小田原",
           "n02_station_code": "005217",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:00",
+          "departure": "16:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28011,8 +28068,8 @@
           "name": "熱海",
           "n02_station_code": "005684",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:10",
+          "departure": "16:10",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28026,18 +28083,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 837"
     },
     {
       "id": "20260727_10_local_numazu",
       "date": "2026-07-27",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -28089,18 +28148,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260728_01_local_mishima",
       "date": "2026-07-28",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -28152,17 +28212,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260728_02_kodama829",
       "date": "2026-07-28",
-      "number": "こだま829号（Kodama 829）",
+      "number": "こだま829号（829A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "浜松",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -28239,8 +28300,8 @@
           "name": "新富士",
           "n02_station_code": "005554",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:31",
+          "departure": "14:37",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28248,8 +28309,8 @@
           "name": "静岡",
           "n02_station_code": "006129",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:47",
+          "departure": "14:52",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28257,8 +28318,8 @@
           "name": "掛川",
           "n02_station_code": "006748",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:06",
+          "departure": "15:08",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28272,18 +28333,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 829"
     },
     {
       "id": "20260728_03_entetsu_sukenobu",
       "date": "2026-07-28",
-      "number": "遠鉄電車 西鹿島行（Enshu Railway）（時刻推定）",
+      "number": "遠鉄電車 西鹿島行",
       "number_en": "Enshu Railway",
       "train_type": "普通",
       "company": "遠州鉄道",
       "origin": "新浜松",
       "destination": "助信",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#dc2626"
@@ -28389,18 +28451,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260728_04_entetsu_return",
       "date": "2026-07-28",
-      "number": "遠鉄電車 新浜松行（Enshu Railway）（時刻推定）",
+      "number": "遠鉄電車 新浜松行",
       "number_en": "Enshu Railway",
       "train_type": "普通",
       "company": "遠州鉄道",
       "origin": "助信",
       "destination": "新浜松",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#ea580c"
@@ -28506,17 +28568,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260728_05_kodama834",
       "date": "2026-07-28",
-      "number": "こだま834号（Kodama 834）",
+      "number": "こだま834号（834A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "浜松",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -28593,8 +28656,8 @@
           "name": "掛川",
           "n02_station_code": "006748",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:36",
+          "departure": "16:38",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28602,8 +28665,8 @@
           "name": "静岡",
           "n02_station_code": "006129",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:51",
+          "departure": "16:56",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28611,8 +28674,8 @@
           "name": "新富士",
           "n02_station_code": "005554",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:06",
+          "departure": "17:11",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28626,18 +28689,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 834"
     },
     {
       "id": "20260728_06_local_numazu",
       "date": "2026-07-28",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -28689,18 +28754,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260729_01_local_mishima",
       "date": "2026-07-29",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "沼津",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#0d9488"
@@ -28752,17 +28818,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260729_02_kodama840",
       "date": "2026-07-29",
-      "number": "こだま840号（Kodama 840）",
+      "number": "こだま840号（840A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "三島",
       "destination": "東京",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -28849,8 +28916,8 @@
           "name": "熱海",
           "n02_station_code": "005684",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:01",
+          "departure": "19:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28858,8 +28925,8 @@
           "name": "小田原",
           "n02_station_code": "005217",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:09",
+          "departure": "19:14",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28867,8 +28934,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:29",
+          "departure": "19:30",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28876,8 +28943,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:40",
+          "departure": "19:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28891,17 +28958,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 840"
     },
     {
       "id": "20260729_03_kodama911",
       "date": "2026-07-29",
-      "number": "こだま911号（Kodama 911）",
+      "number": "こだま911号（911A）",
       "train_type": "新幹線",
       "company": "JR東海",
       "origin": "東京",
       "destination": "三島",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#f59e0b"
@@ -28988,8 +29057,8 @@
           "name": "品川",
           "n02_station_code": "004092",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:51",
+          "departure": "21:52",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -28997,8 +29066,8 @@
           "name": "新横浜",
           "n02_station_code": "004501",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:02",
+          "departure": "22:03",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29006,8 +29075,8 @@
           "name": "小田原",
           "n02_station_code": "005217",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:18",
+          "departure": "22:19",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29015,8 +29084,8 @@
           "name": "熱海",
           "n02_station_code": "005684",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:26",
+          "departure": "22:27",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29030,18 +29099,20 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系",
+      "number_en": "Kodama 911"
     },
     {
       "id": "20260729_04_local_numazu",
       "date": "2026-07-29",
-      "number": "普通列車（Local）（時刻推定）",
+      "number": "普通列車",
       "number_en": "Local",
       "train_type": "普通",
       "company": "JR東海",
       "origin": "三島",
       "destination": "沼津",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -29093,18 +29164,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260729_05_sunrise_izumo",
       "date": "2026-07-29",
-      "number": "サンライズ出雲（Sunrise Izumo）（5031M/4031M）",
+      "number": "サンライズ出雲",
       "number_en": "Sunrise Izumo",
       "train_type": "寝台特急",
       "company": "JR東海/JR西日本",
       "origin": "沼津",
       "destination": "出雲市",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#db2777"
@@ -29117,7 +29189,7 @@
         "allowed_institution_type_codes": [
           "2"
         ],
-        "institution_filter_mode": "soft"
+        "institution_filter_mode": "hard"
       },
       "route_sections": [
         {
@@ -29320,13 +29392,12 @@
     {
       "id": "20260730_01_ichibata_taisha",
       "date": "2026-07-30",
-      "number": "一畑電車 大社線（Ichibata Taisha Line）（時刻推定）",
+      "number": "一畑電車 大社線",
       "number_en": "Ichibata Taisha Line",
       "train_type": "普通",
       "company": "一畑電車",
       "origin": "出雲大社前",
       "destination": "川跡",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#e11d48"
@@ -29432,18 +29503,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260730_02_ichibata_kitamatsue",
       "date": "2026-07-30",
-      "number": "一畑電車 北松江線（Ichibata Kita-Matsue Line）（時刻推定）",
+      "number": "一畑電車 北松江線",
       "number_en": "Ichibata Kita-Matsue Line",
       "train_type": "普通",
       "company": "一畑電車",
       "origin": "川跡",
       "destination": "電鉄出雲市",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#f97316"
@@ -29549,17 +29620,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260730_03_yakumo22",
       "date": "2026-07-30",
-      "number": "やくも22号（Yakumo 22）",
+      "number": "やくも22号（1022M）",
       "train_type": "特急",
       "company": "JR西日本",
       "origin": "出雲市",
       "destination": "岡山",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#7c3aed"
@@ -29589,8 +29661,8 @@
           "name": "松江",
           "n02_station_code": "004638",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:08",
+          "departure": "15:09",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29598,8 +29670,8 @@
           "name": "安来",
           "n02_station_code": "004748",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:27",
+          "departure": "15:27",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29607,8 +29679,8 @@
           "name": "米子",
           "n02_station_code": "004759",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:34",
+          "departure": "15:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29616,8 +29688,8 @@
           "name": "新見",
           "n02_station_code": "006070",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:45",
+          "departure": "16:46",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29625,8 +29697,8 @@
           "name": "備中高梁",
           "n02_station_code": "006686",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:13",
+          "departure": "17:14",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29634,8 +29706,8 @@
           "name": "倉敷",
           "n02_station_code": "007598",
           "platform_number": null,
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:35",
+          "departure": "17:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -29650,17 +29722,18 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Yakumo 22"
     },
     {
       "id": "20260730_04_sakura762",
       "date": "2026-07-30",
-      "number": "さくら762号（Sakura 762）",
+      "number": "さくら762号",
       "train_type": "新幹線",
       "company": "JR西日本",
       "origin": "岡山",
       "destination": "新大阪",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#db2777"
@@ -29713,18 +29786,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Sakura 762"
     },
     {
       "id": "20260730_05_shinkaisoku_osaka",
       "date": "2026-07-30",
-      "number": "新快速（Special Rapid）（時刻推定）",
+      "number": "新快速",
       "number_en": "Special Rapid",
       "train_type": "新快速",
       "company": "JR西日本",
       "origin": "新大阪",
       "destination": "大阪",
-      "direction": "unknown",
+      "direction": "down",
       "visible": true,
       "style": {
         "color": "#2563eb"
@@ -29776,18 +29850,19 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260730_06_osaka_loop",
       "date": "2026-07-30",
-      "number": "大阪環状線（Osaka Loop Line）（時刻推定）",
+      "number": "大阪環状線",
       "number_en": "Osaka Loop Line",
       "train_type": "普通",
       "company": "JR西日本",
       "origin": "大阪",
       "destination": "新今宮",
-      "direction": "unknown",
+      "direction": "up",
       "visible": true,
       "style": {
         "color": "#16a34a"
@@ -29965,18 +30040,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260730_07_nankai_sakai",
       "date": "2026-07-30",
-      "number": "南海本線（Nankai Main Line）（時刻推定）",
+      "number": "南海本線",
       "number_en": "Nankai Main Line",
       "train_type": "普通",
       "company": "南海電気鉄道",
       "origin": "新今宮",
       "destination": "堺",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -30154,18 +30229,18 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260731_01_nankai_shinimamiya",
       "date": "2026-07-31",
-      "number": "南海本線（Nankai Main Line）（時刻推定）",
+      "number": "南海本線",
       "number_en": "Nankai Main Line",
       "train_type": "普通",
       "company": "南海電気鉄道",
       "origin": "堺",
       "destination": "新今宮",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#0891b2"
@@ -30343,17 +30418,17 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
     },
     {
       "id": "20260731_02_rapit_alpha3",
       "date": "2026-07-31",
-      "number": "ラピートα3号（Rapi:t α3）",
+      "number": "ラピートα3号",
       "train_type": "特急",
       "company": "南海電気鉄道",
       "origin": "新今宮",
       "destination": "関西空港",
-      "direction": "unknown",
       "visible": true,
       "style": {
         "color": "#1d4ed8"
@@ -30384,7 +30459,7 @@
           "n02_station_code": "007483",
           "platform_number": null,
           "arrival": null,
-          "departure": null,
+          "departure": "06:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -30393,7 +30468,7 @@
           "n02_station_code": "007993",
           "platform_number": null,
           "arrival": null,
-          "departure": null,
+          "departure": "07:00",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -30402,7 +30477,7 @@
           "n02_station_code": "007997",
           "platform_number": null,
           "arrival": null,
-          "departure": null,
+          "departure": "07:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -30417,7 +30492,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "number_en": "Rapi:t α3"
     },
     {
       "id": "20260731_03_yui_naha_akamine",
@@ -30427,7 +30503,6 @@
       "company": "沖縄都市モノレール",
       "origin": "那覇空港",
       "destination": "赤嶺",
-      "direction": "赤嶺",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -30480,7 +30555,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260731_04_yui_akamine_naha",
@@ -30490,7 +30566,6 @@
       "company": "沖縄都市モノレール",
       "origin": "赤嶺",
       "destination": "那覇空港",
-      "direction": "那覇空港",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -30543,7 +30618,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260731_05_yui_tedako_shuri",
@@ -30553,7 +30629,6 @@
       "company": "沖縄都市モノレール",
       "origin": "てだこ浦西",
       "destination": "首里",
-      "direction": "首里",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -30663,7 +30738,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260731_06_yui_shuri_miebashi",
@@ -30673,7 +30749,6 @@
       "company": "沖縄都市モノレール",
       "origin": "首里",
       "destination": "美栄橋",
-      "direction": "美栄橋",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -30840,7 +30915,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260731_07_yui_miebashi_naha",
@@ -30850,7 +30926,6 @@
       "company": "沖縄都市モノレール",
       "origin": "美栄橋",
       "destination": "那覇空港",
-      "direction": "那覇空港",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -31017,7 +31092,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260731_08_yui_naha_miebashi",
@@ -31027,7 +31103,6 @@
       "company": "沖縄都市モノレール",
       "origin": "那覇空港",
       "destination": "美栄橋",
-      "direction": "美栄橋",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -31194,7 +31269,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     },
     {
       "id": "20260801_01_yui_miebashi_naha",
@@ -31204,7 +31280,6 @@
       "company": "沖縄都市モノレール",
       "origin": "美栄橋",
       "destination": "那覇空港",
-      "direction": "那覇空港",
       "visible": true,
       "style": {
         "color": "#009fe8"
@@ -31371,7 +31446,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "number_en": "Yui Rail"
     }
   ]
 }
