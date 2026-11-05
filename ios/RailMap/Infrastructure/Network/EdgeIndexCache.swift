@@ -25,6 +25,10 @@ actor EdgeIndexCache {
 
     private func releaseCompleted() { completed = nil }
 
+    /// Drops the one completed index. Builds in flight finish and are kept;
+    /// the next request after this rebuilds the same index on demand.
+    func releaseForMemoryPressure() { completed = nil }
+
     private func retain(_ value: BuiltIndex, key: CacheKey) {
         completed = (key, value)
     }

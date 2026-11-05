@@ -1451,6 +1451,14 @@ final class RiddenRouteStore {
 
         private func releaseCompleted() { completed = nil }
 
+        /// Drops the completed inputs and their derived indexes. In-flight
+        /// decodes keep running, and their callers keep their own copies.
+        func releaseForMemoryPressure() {
+            completed = nil
+            indexes.removeAll()
+            intervalIndexes.removeAll()
+        }
+
         private func retain(_ inputs: SolverInputs, key: String) {
             completed = (key, inputs)
         }
@@ -1814,7 +1822,15 @@ final class RiddenRouteStore {
         if let url = railHistoryURL(region: region) {
             do {
                 let data = try Data(contentsOf: url)
-                let overlay = try RailHistoryOverlay.decode(data)
+                // One decoded overlay per file: `cachedHistoryOverlay` serves
+                // the edge index and journey admission from the same entry.
+                let overlay: RailHistoryOverlay
+                if let shared = overlayByURLCache.withLock({ $0[url] }) {
+                    overlay = shared
+                } else {
+                    overlay = try RailHistoryOverlay.decode(data)
+                    overlayByURLCache.withLock { $0[url] = overlay }
+                }
                 let hash = SHA256.hash(data: data).hex
                 state = .loaded(overlay, contentHash: hash)
             }
@@ -1845,6 +1861,18 @@ final class RiddenRouteStore {
     /// runtime; failures are rethrown uncached so error behaviour is unchanged.
     private nonisolated static let overlayByURLCache = OSAllocatedUnfairLock(
         initialState: [URL: RailHistoryOverlay]())
+
+    /// Releases the process-lifetime decodes this store keeps for speed:
+    /// solver inputs and their indexes, the junction registry and the
+    /// history overlays. Every one is a pure memo of a bundled file, so the
+    /// next use decodes it again with the same answer. Called on a memory
+    /// warning, when keeping them risks the process rather than a reload.
+    nonisolated static func releaseCachesForMemoryPressure() async {
+        junctionRegistryCache.withLock { $0.removeAll() }
+        overlayByURLCache.withLock { $0.removeAll() }
+        historyStateCache.withLock { $0.removeAll() }
+        await SolverInputCache.shared.releaseForMemoryPressure()
+    }
 
     nonisolated static func cachedHistoryOverlay(from url: URL) throws -> RailHistoryOverlay {
         if let cached = overlayByURLCache.withLock({ $0[url] }) { return cached }

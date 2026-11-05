@@ -118,6 +118,16 @@ struct AppShell: View {
         .environment(itineraries)
         .environment(riddenRoutes)
         .environment(riddenRoutes.lineDetector)
+        // A phone that is short of memory ends the app outright. The decoded
+        // packages and indexes held for speed are pure memos of bundled
+        // files, so dropping them costs a later decode, not an answer.
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
+            Task.detached(priority: .utility) {
+                await RiddenRouteStore.releaseCachesForMemoryPressure()
+                await EdgeIndexCache.shared.releaseForMemoryPressure()
+            }
+        }
         .task {
             Task.detached(priority: .utility) {
                 _ = TrainServicePatterns.patterns
