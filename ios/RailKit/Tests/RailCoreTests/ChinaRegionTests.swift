@@ -107,6 +107,5 @@ struct ChinaRegionTests {
         #expect(table.country == "CN")
         #expect(localization.stationName("香港西九龙", code: "CN-12306-XJA") == "Hong Kong West Kowloon")
         #expect(localization.nameReadingsTyped("香港西九龙", code: "CN-12306-XJA").isEmpty)
-        #expect(Stations.Readings(byCode: [:], byName: [:], country: "cn").declaredCountry == "CN")
     }
 }

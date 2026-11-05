@@ -574,8 +574,8 @@ extension RecordedRouteAdmissionTests {
         #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination).isEmpty)
         #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination,
             admissionContext: before).count == 1)
-        #expect(LocalJourneySearch.choices(package: package, originCode: origin, destinationCode: destination,
-            admissionContext: before).count == 1)
+        #expect(LocalJourneySearch.search(package: package, originCode: origin, destinationCode: destination,
+            admissionContext: before).choices.count == 1)
         #expect(LocalJourneySearch.search(package: package, originCode: origin, destinationCode: destination,
             admissionContext: after).choices.isEmpty)
         #expect(RailwayRouteChoices.choices(package: package, originCode: origin, destinationCode: destination,

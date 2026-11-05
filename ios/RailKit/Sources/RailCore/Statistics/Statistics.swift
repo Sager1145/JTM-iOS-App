@@ -411,22 +411,7 @@ public enum Statistics {
         return mask
     }
 
-    /// Category of ONE station, classified from the line attributes its own
-    /// station feature carries (both schemas repeat the line's
-    /// institution/class/operator on every station). Used to hide a hidden
-    /// category's STATION DOTS along with its lines.
-    public static func markerCategoryForStation(
-        _ props: SectionProperties?, country: String
-    ) -> String? {
-        guard let props else { return nil }
-        if props.railwayClassCodeString.isEmpty && props.institutionTypeCodeString.isEmpty {
-            return nil
-        }
-        return filterCategoryForMask(classifySectionMask(props, country: country), country: country)
-    }
-
     // MARK: - JavaScript's own arithmetic
-
 
     /// `AppCore.equirectKm` — the cheap distance used for graph edge weights
     /// and every stats sum. (The route solver's haversine `distanceMeters`
@@ -772,18 +757,6 @@ public enum Statistics {
             }
             return .retired
         }
-    }
-
-    /// ``historicalClassification(kind:validFrom:validTo:asOf:)`` is `.retired`.
-    /// A future `validTo` is not retired.
-    public static func isRetiredNetworkEdge(
-        kind: RouteGraph.TemporalKind,
-        validFrom: String?,
-        validTo: String?,
-        asOf: String
-    ) -> Bool {
-        historicalClassification(
-            kind: kind, validFrom: validFrom, validTo: validTo, asOf: asOf) == .retired
     }
 
     /// Fold `overlay` through ``RailHistory/apply(_:sections:stations:)`` and
@@ -2304,17 +2277,5 @@ public enum Statistics {
         }
 
         public var anyHidden: Bool { !hsr || !jr || !metro || !priv }
-    }
-
-    public static func riddenFeatureVisible(
-        _ feature: RouteFeature, index: EdgeIndex?, country: String,
-        filter: RiddenCategoryFilter
-    ) -> Bool {
-        // Read-only: NEVER build the (expensive) edge index from the render
-        // path. Until the stats job has built it, everything stays visible.
-        guard let index,
-            let category = riddenFeatureCategory(feature, index: index, country: country)
-        else { return true }
-        return filter[category]
     }
 }
