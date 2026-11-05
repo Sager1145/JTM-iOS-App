@@ -8,6 +8,7 @@ import SwiftUI
 struct NewTripView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(ItineraryStore.self) private var itineraries: ItineraryStore?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let train: Train
     let title: String
@@ -19,8 +20,17 @@ struct NewTripView: View {
 
     private enum StationField: String, Identifiable {
         case origin
+        case via
         case destination
         var id: String { rawValue }
+    }
+
+    /// A reader-chosen station the route must pass. Narrows the planner's
+    /// candidates; saved only as an ordinary visit of the chosen route.
+    private struct ViaStop: Identifiable, Equatable {
+        let id = UUID()
+        var station: CatalogStation
+        var stationID: String?
     }
 
     @State private var region: Region
@@ -75,6 +85,18 @@ struct NewTripView: View {
     @State private var packageOperatorByDisplayName: [String: String] = [:]
     @State private var companyOptions: [String] = []
     @State private var lineLabelByID: [String: String] = [:]
+    @State private var vias: [ViaStop] = []
+    /// Station the reader tapped on the map, waiting for From / Via / To.
+    @State private var tappedStation: CatalogStation?
+    /// Track geometry for each planned corridor id, built off the main actor.
+    @State private var corridorGeometry: [String: [TripRouteGeometry.Piece]] = [:]
+    @State private var lineColorByID: [String: String] = [:]
+    @State private var mapFitRevision = 0
+    @State private var mapZoomedIn = false
+    @State private var mapStations: [CatalogStation] = []
+    /// Routes on the map. Kept through a replan so the line does not blink out.
+    @State private var drawnRoutes: [TripMapContent.Route] = []
+    @State private var routeFitIdentity = ""
 
     init(
         train: Train,
@@ -100,6 +122,7 @@ struct NewTripView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
+            mapPanel
             Form {
                 if loadFailed {
                     Text(text(
@@ -155,6 +178,8 @@ struct NewTripView: View {
                                 origin = station
                                 originLine = line
                                 originStationID = stationID
+                            case .via:
+                                vias.append(ViaStop(station: station, stationID: stationID))
                             case .destination:
                                 destination = station
                                 destinationLine = line
@@ -220,6 +245,13 @@ struct NewTripView: View {
             destinationLine = nil
             originStationID = nil
             destinationStationID = nil
+            vias = []
+            tappedStation = nil
+            corridorGeometry = [:]
+            drawnRoutes = []
+            routeFitIdentity = ""
+            lineColorByID = [:]
+            mapStations = []
             companyName = ""
             catalog = nil
             package = nil
@@ -243,6 +275,13 @@ struct NewTripView: View {
             allowUnverifiedConnections = false
             refreshCompanyCache()
         }
+        .onChange(of: vias) { _, _ in
+            allowUnverifiedConnections = false
+        }
+        .onChange(of: endpointIdentity) { _, _ in
+            // Frame the trip as soon as an endpoint moves, before the route arrives.
+            mapFitRevision += 1
+        }
         .onChange(of: companyOptions) { _, options in
             if !companyName.isEmpty, !options.contains(companyName) {
                 companyName = ""
@@ -251,7 +290,10 @@ struct NewTripView: View {
         .onChange(of: selectedCorridorID) { _, _ in
             autofillFailed = false
             saveIssues = []
+            refreshDrawnRoutes()
         }
+        .onChange(of: outcome) { _, _ in refreshDrawnRoutes() }
+        .onChange(of: timetableTrain != nil) { _, _ in refreshDrawnRoutes() }
         .task(id: region) { await loadRegion() }
         .task(id: routeIdentity) { await planRoute() }
     }
@@ -274,6 +316,295 @@ struct NewTripView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
+    }
+
+    // MARK: - map
+
+    private var mapPanel: some View {
+        TripMapView(
+            regionCode: region.code,
+            stations: mapStations,
+            content: mapContent,
+            reduceMotion: reduceMotion,
+            onStation: { station in
+                withAnimation(RailMotion.animation(RailMotion.spring, reduceMotion: reduceMotion)) {
+                    tappedStation = station
+                }
+            },
+            onRoute: { id in
+                guard selectedCorridor?.id != id else { return }
+                selectedCorridorID = id
+                preferredCorridorID = id
+            },
+            onBackground: {
+                guard tappedStation != nil else { return }
+                withAnimation(RailMotion.animation(RailMotion.enter, reduceMotion: reduceMotion)) {
+                    tappedStation = nil
+                }
+            },
+            onZoomChange: { mapZoomedIn = $0 })
+            .overlay(alignment: .top) { mapHint }
+            .overlay(alignment: .bottom) {
+                if let tappedStation {
+                    stationActionCard(tappedStation)
+                        .transition(RailMotion.anchoredTransition(reduceMotion: reduceMotion, anchor: .bottom))
+                }
+            }
+            .containerRelativeFrame(.vertical) { height, _ in
+                min(max(height * 0.42, 240), 460)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .padding(.horizontal, 12)
+            .padding(.bottom, 4)
+            .sensoryFeedback(.selection, trigger: selectedCorridorID) { old, new in
+                old != nil && new != nil
+            }
+    }
+
+    /// One short line telling the reader what the map will do next.
+    @ViewBuilder private var mapHint: some View {
+        let hint: String? = {
+            if tappedStation != nil { return nil }
+            if catalog == nil { return nil }
+            if !mapZoomedIn, origin == nil || destination == nil {
+                return text("mapZoomHint", fallback: "Zoom in to tap stations, or search below")
+            }
+            if origin == nil { return text("mapOriginHint", fallback: "Tap a station to start from") }
+            if destination == nil { return text("mapDestinationHint", fallback: "Tap where the trip ends") }
+            if timetableTrain != nil { return nil }
+            if searching { return text("searching", fallback: "Searching routes") }
+            if drawnRoutes.count > 1 {
+                return text("mapAlternativesHint",
+                            fallback: "{count} routes · tap a grey line, or add a stop",
+                            ["count": .string(String(drawnRoutes.count))])
+            }
+            return nil
+        }()
+        if let hint {
+            Text(hint)
+                .font(.footnote.weight(.medium))
+                .foregroundStyle(.primary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
+                .background(.regularMaterial, in: Capsule())
+                .padding(.top, 10)
+                .padding(.horizontal, 12)
+                .allowsHitTesting(false)
+                .accessibilityIdentifier("newTripMapHint")
+                .id(hint)
+                .transition(.opacity)
+                .animation(RailMotion.crossfade, value: hint)
+        }
+    }
+
+    private func stationActionCard(_ station: CatalogStation) -> some View {
+        let role = mapRole(of: station)
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(stationTitle(station))
+                        .font(.headline)
+                        .lineLimit(2)
+                    if let subtitle = stationSubtitle(station, line: nil) {
+                        Text(subtitle)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+                }
+                Spacer(minLength: 8)
+                Button {
+                    withAnimation(RailMotion.animation(RailMotion.enter, reduceMotion: reduceMotion)) {
+                        tappedStation = nil
+                    }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(text("close", fallback: "Close"))
+                .accessibilityIdentifier("newTripMapStationClose")
+            }
+            HStack(spacing: 8) {
+                if let role {
+                    actionButton(text("mapRemove", fallback: "Remove"), systemImage: "minus.circle",
+                                 identifier: "newTripMapRemove", prominent: false) {
+                        removeFromTrip(station, role: role)
+                    }
+                } else {
+                    actionButton(text("from", fallback: "From"), systemImage: "circle.fill",
+                                 identifier: "newTripMapSetOrigin", prominent: origin == nil) {
+                        assign(station, to: .origin)
+                    }
+                    if origin != nil, destination != nil, timetableTrain == nil {
+                        actionButton(text("mapVia", fallback: "Via"), systemImage: "plus",
+                                     identifier: "newTripMapAddVia", prominent: false) {
+                            assign(station, to: .via)
+                        }
+                    }
+                    actionButton(text("to", fallback: "To"), systemImage: "flag.fill",
+                                 identifier: "newTripMapSetDestination",
+                                 prominent: origin != nil && destination == nil) {
+                        assign(station, to: .destination)
+                    }
+                }
+            }
+        }
+        .padding(14)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+        .padding(10)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("newTripMapStationCard")
+    }
+
+    private func actionButton(
+        _ title: String, systemImage: String, identifier: String, prominent: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Group {
+            if prominent {
+                Button(action: action) {
+                    Label(title, systemImage: systemImage).frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                Button(action: action) {
+                    Label(title, systemImage: systemImage).frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+            }
+        }
+        .controlSize(.regular)
+        .labelStyle(.titleAndIcon)
+        .accessibilityIdentifier(identifier)
+    }
+
+    private enum MapRole: Equatable { case origin, via(UUID), destination }
+
+    private func mapRole(of station: CatalogStation) -> MapRole? {
+        if origin?.key == station.key { return .origin }
+        if destination?.key == station.key { return .destination }
+        if let via = vias.first(where: { $0.station.key == station.key }) { return .via(via.id) }
+        return nil
+    }
+
+    private func assign(_ station: CatalogStation, to field: StationField) {
+        clearTimetable()
+        switch field {
+        case .origin:
+            origin = station
+            originLine = nil
+            originStationID = nil
+        case .via:
+            vias.append(ViaStop(station: station, stationID: nil))
+        case .destination:
+            destination = station
+            destinationLine = nil
+            destinationStationID = nil
+        }
+        withAnimation(RailMotion.animation(RailMotion.enter, reduceMotion: reduceMotion)) {
+            tappedStation = nil
+        }
+    }
+
+    private func removeFromTrip(_ station: CatalogStation, role: MapRole) {
+        clearTimetable()
+        switch role {
+        case .origin:
+            origin = nil
+            originLine = nil
+            originStationID = nil
+        case .destination:
+            destination = nil
+            destinationLine = nil
+            destinationStationID = nil
+        case .via(let id):
+            vias.removeAll { $0.id == id }
+        }
+        withAnimation(RailMotion.animation(RailMotion.enter, reduceMotion: reduceMotion)) {
+            tappedStation = nil
+        }
+    }
+
+    private func viaRow(_ via: ViaStop, index: Int) -> some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(text("viaTitle", fallback: "Via"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(stationTitle(via.station))
+                if let subtitle = stationSubtitle(via.station, line: nil) {
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
+            }
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            Button {
+                clearTimetable()
+                vias.removeAll { $0.id == via.id }
+            } label: {
+                Image(systemName: "minus.circle.fill")
+                    .font(.title3)
+                    .foregroundStyle(.red)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(text("removeVia", fallback: "Remove stop"))
+            .accessibilityIdentifier("newTripRemoveVia-\(index)")
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("newTripVia-\(index)")
+    }
+
+    /// Endpoints and vias only; a change reframes the camera.
+    private var endpointIdentity: String {
+        ([origin, destination].map { $0?.key.sourceCode ?? "" }
+            + vias.map(\.station.key.sourceCode)).joined(separator: ",")
+    }
+
+    private var mapContent: TripMapContent {
+        var marks: [TripMapContent.Mark] = []
+        func mark(_ station: CatalogStation, role: TripMapContent.Role, id: String) {
+            let coordinate = AppleMapDatum.display(
+                Coordinate(lon: station.longitude, lat: station.latitude), country: region.code)
+            marks.append(.init(id: id, role: role, station: station, coordinate: coordinate.clLocation))
+        }
+        if let origin { mark(origin, role: .origin, id: "origin") }
+        for (index, via) in vias.enumerated() {
+            mark(via.station, role: .via(index), id: "via-\(via.id.uuidString)")
+        }
+        if let destination { mark(destination, role: .destination, id: "destination") }
+        return TripMapContent(routes: drawnRoutes, marks: marks, fitRevision: mapFitRevision)
+    }
+
+    private func refreshDrawnRoutes() {
+        guard origin != nil, destination != nil, timetableTrain == nil else {
+            drawnRoutes = []
+            return
+        }
+        // Mid-replan the previous routes stay until the new outcome lands.
+        guard let outcome else { return }
+        guard case .corridors(let corridors) = outcome else {
+            drawnRoutes = []
+            return
+        }
+        drawnRoutes = corridors.compactMap { corridor in
+            guard let pieces = corridorGeometry[corridor.id], !pieces.isEmpty else { return nil }
+            return TripMapContent.Route(
+                id: corridor.id,
+                pieces: pieces.map { piece in
+                    TripMapContent.Piece(
+                        coordinates: AppleMapDatum.display(piece.coordinates, country: region.code)
+                            .map(\.clLocation),
+                        colorHex: piece.lineID.flatMap { lineColorByID[$0] },
+                        isConnector: piece.isConnector)
+                },
+                isSelected: corridor.id == selectedCorridorID)
+        }
     }
 
     private var regionSection: some View {
@@ -306,6 +637,19 @@ struct NewTripView: View {
             .accessibilityIdentifier("newTripSwap")
             .accessibilityLabel(text("swap", fallback: "Swap stations"))
             .disabled(origin == nil && destination == nil)
+            ForEach(Array(vias.enumerated()), id: \.element.id) { index, via in
+                viaRow(via, index: index)
+            }
+            if origin != nil, destination != nil, timetableTrain == nil {
+                Button {
+                    picking = .via
+                } label: {
+                    Label(text("addVia", fallback: "Add a stop along the way"), systemImage: "plus.circle")
+                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                }
+                .disabled(catalog == nil)
+                .accessibilityIdentifier("newTripAddVia")
+            }
             stationButton(
                 title: text("to", fallback: "To"),
                 station: destination,
@@ -933,6 +1277,7 @@ struct NewTripView: View {
             destination?.key.sourceCode ?? "",
             originLine?.id ?? "",
             destinationLine?.id ?? "",
+            vias.map(\.station.key.sourceCode).joined(separator: ","),
             dayString(departure),
             String(departure.timeIntervalSinceReferenceDate),
             String(arrival.timeIntervalSinceReferenceDate),
@@ -1092,6 +1437,7 @@ struct NewTripView: View {
         let previousID = originStationID
         originStationID = destinationStationID
         destinationStationID = previousID
+        vias.reverse()
     }
 
     private func endpointStop(
@@ -1135,6 +1481,10 @@ struct NewTripView: View {
             guard !Task.isCancelled, region == self.region, generation == draftGeneration else { return }
             catalog = loaded.0
             package = loaded.1
+            mapStations = loaded.0.stations(in: region.code)
+            lineColorByID = Dictionary(
+                loaded.1.lines.compactMap { line in line.color.map { (line.id, $0) } },
+                uniquingKeysWith: { first, _ in first })
             refreshCompanyCache()
         } catch is CancellationError {
             return
@@ -1159,6 +1509,7 @@ struct NewTripView: View {
         autofillFailed = false
         guard let origin, let destination, let package else {
             searching = false
+            refreshDrawnRoutes()
             return
         }
         searching = true
@@ -1168,6 +1519,7 @@ struct NewTripView: View {
         let originLineID = originLine?.id
         let destinationLineID = destinationLine?.id
         let rideDate = dayString(departure)
+        let viaCodes = vias.map(\.station.key.sourceCode)
         let trainType = trainType
         let operatorName = companyName.isEmpty
             ? nil
@@ -1179,17 +1531,27 @@ struct NewTripView: View {
                 trainType: trainType,
                 operatorName: operatorName,
                 stationAliases: try loadJourneyStationAliases(
-                    for: [originCode, destinationCode], package: package),
+                    for: [originCode, destinationCode] + viaCodes, package: package),
                 originLineID: originLineID,
                 destinationLineID: destinationLineID,
                 allowUnverifiedConnections: allowUnverifiedConnections)
             let context = try loadJourneyAdmissionContext(rideDate: rideDate, package: package)
-            return try TripRoutePlanner.plan(package: package, request: request, rideDate: rideDate,
+            let outcome = try TripRoutePlanner.plan(
+                package: package, request: request, viaCodes: viaCodes, rideDate: rideDate,
                 admissionContext: context)
+            var geometry: [String: [TripRouteGeometry.Piece]] = [:]
+            if case .corridors(let corridors) = outcome {
+                let cache = TripRouteGeometry.Cache(package: package)
+                for corridor in corridors {
+                    geometry[corridor.id] = TripRouteGeometry.pieces(for: corridor.choice, cache: cache)
+                }
+            }
+            return (outcome, geometry)
         }
         let result: TripRoutePlanner.Outcome
+        let geometry: [String: [TripRouteGeometry.Piece]]
         do {
-            result = try await withTaskCancellationHandler {
+            (result, geometry) = try await withTaskCancellationHandler {
                 try await worker.value
             } onCancel: { worker.cancel() }
         } catch is CancellationError {
@@ -1198,6 +1560,7 @@ struct NewTripView: View {
             guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
             searching = false
             routeProofFailure = error.localizedDescription
+            drawnRoutes = []
             return
         }
         guard !Task.isCancelled, identity == routeIdentity, generation == draftGeneration else { return }
@@ -1251,6 +1614,7 @@ struct NewTripView: View {
         physicallyResolvedCorridorIDs = physicallyResolvedIDs
         routeProofFailure = proofFailure
         plannedIdentity = identity
+        corridorGeometry = geometry
         outcome = publishedResult
         corridorsRemovedByDate = removedByDate
         searching = false
@@ -1261,6 +1625,15 @@ struct NewTripView: View {
             } else if corridors.count == 1 {
                 selectedCorridorID = corridors[0].id
             }
+        }
+        // Build the drawn routes now, not in a later onChange, so the fit
+        // below frames the new routes rather than the previous set.
+        refreshDrawnRoutes()
+        // Frame the route once per set of stations; a time or train edit
+        // replans without moving a camera the reader may have panned.
+        if routeFitIdentity != endpointIdentity {
+            routeFitIdentity = endpointIdentity
+            mapFitRevision += 1
         }
     }
 
