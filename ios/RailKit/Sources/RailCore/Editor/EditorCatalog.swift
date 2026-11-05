@@ -766,28 +766,69 @@ public struct StationSearchResult: Hashable, Sendable {
     public var retired: [StationSearchHit]
     /// Best rank per current `StationKey`. Two stations that share a display name stay two hits.
     public var suggestions: [StationSearchHit]
+    /// The shared engine's answer for the same text: parsed/suggested filters,
+    /// did-you-mean, match reasons and highlights. Nil for the line browser.
+    public var response: SearchResponse?
 
-    public init(lines: [StationSearchLine] = [], retired: [StationSearchHit] = [], suggestions: [StationSearchHit] = []) {
+    public init(
+        lines: [StationSearchLine] = [], retired: [StationSearchHit] = [], suggestions: [StationSearchHit] = [],
+        response: SearchResponse? = nil
+    ) {
         self.lines = lines
         self.retired = retired
         self.suggestions = suggestions
+        self.response = response
     }
 }
 
-/// Line and station index for one catalog region. Ranking lives here; pickers only present hits.
+/// Line sections for one catalog region, ranked by the shared `SearchIndex`
+/// (normalization, romaji, typos, keyword filters). Pickers only present hits.
 public struct StationSearchIndex: Sendable {
     public let regionCode: String
+    /// The shared search engine index over the same region.
+    public let engine: SearchIndex
     private let lines: [IndexedLine]
 
-    fileprivate init(regionCode: String, lines: [IndexedLine]) {
+    fileprivate init(regionCode: String, engine: SearchIndex, lines: [IndexedLine]) {
         self.regionCode = regionCode
+        self.engine = engine
         self.lines = lines
+    }
+
+    /// Engine match kind → the picker's 0 exact / 1 prefix / 2 other / 3 via its line.
+    private static func rank(_ kind: SearchMatchKind) -> Int {
+        switch kind {
+        case .exact: 0
+        case .prefix: 1
+        case .substring, .fuzzy: 2
+        default: 3
+        }
     }
 
     public func search(_ query: StationSearchQuery, retired retiredStations: [RetiredStation] = []) -> StationSearchResult {
         let needle = query.needle.trimmingCharacters(in: .whitespacesAndNewlines)
-        let prepared = SearchFold.PreparedQuery(needle)
         let browsing = needle.isEmpty
+        var stationRanks: [String: (rank: Int, score: Double)] = [:]
+        var matchedLines: Set<String> = []
+        var response: SearchResponse?
+        if !browsing {
+            let answer = engine.query(
+                needle, scope: [.stations, .lines],
+                context: SearchContext(regionCode: regionCode, lineIDs: query.lineIDs, limit: 100_000))
+            response = answer
+            for result in answer.results {
+                switch result.entity.kind {
+                case .station:
+                    let rank = Self.rank(result.match.kind)
+                    if let existing = stationRanks[result.entity.id], existing.rank <= rank { continue }
+                    stationRanks[result.entity.id] = (rank, result.score)
+                case .line where result.match.kind != .fuzzy:
+                    matchedLines.insert(result.entity.id)
+                default: break
+                }
+            }
+            if Task.isCancelled { return StationSearchResult(response: response) }
+        }
         let company = query.companyName?.trimmingCharacters(in: .whitespacesAndNewlines)
         let identity = (company?.isEmpty == false)
             ? RegistryIdentityCache.identity(forRegion: regionCode) : nil
@@ -797,7 +838,7 @@ public struct StationSearchIndex: Sendable {
             return Set(identity.operatorIDs(forCatalogName: name))
         }
         var sections: [StationSearchLine] = []
-        var suggestionPool: [(hit: StationSearchHit, name: String, code: String)] = []
+        var suggestionPool: [(hit: StationSearchHit, name: String, code: String, score: Double)] = []
         var seenSuggestion: Set<StationKey> = []
         var rowCount = 0
 
@@ -810,10 +851,11 @@ public struct StationSearchIndex: Sendable {
                     let lineIDs = Set(line.operatorNames.flatMap { identity.operatorIDs(forCatalogName: $0) })
                     if lineIDs.isDisjoint(with: companyIDs) { continue }
                 }
-                let lineMatched = !browsing && Self.matches(prepared, fields: line.matchFields)
+                let lineMatched = !browsing && matchedLines.contains(line.id)
                 var hits: [StationSearchHit] = []
                 for station in line.stations {
-                    let stationRank = browsing ? 0 : Self.rank(prepared, fields: station.matchFields)
+                    let engineRank = browsing ? nil : stationRanks[station.key.sourceCode]
+                    let stationRank = browsing ? 0 : engineRank?.rank
                     guard browsing || lineMatched || stationRank != nil else { continue }
                     let rank = stationRank ?? 3
                     let ids = station.stationID.map { [$0] } ?? []
@@ -828,7 +870,8 @@ public struct StationSearchIndex: Sendable {
                                 stationID: station.stationID, complexID: station.complexID,
                                 qualifier: station.qualifier, stationIDs: ids),
                             station.name,
-                            station.key.sourceCode))
+                            station.key.sourceCode,
+                            engineRank?.score ?? 0))
                     }
                 }
                 guard !hits.isEmpty else { continue }
@@ -849,6 +892,7 @@ public struct StationSearchIndex: Sendable {
             : Self.groupSuggestions(suggestionPool, idsByComplex: Self.stationIDsByComplex(lines))
         let suggestions = grouped.sorted { lhs, rhs in
             if lhs.hit.rank != rhs.hit.rank { return lhs.hit.rank < rhs.hit.rank }
+            if lhs.score != rhs.score { return lhs.score > rhs.score }
             let order = lhs.name.localizedStandardCompare(rhs.name)
             if order != .orderedSame { return order == .orderedAscending }
             return lhs.code < rhs.code
@@ -857,9 +901,10 @@ public struct StationSearchIndex: Sendable {
         let retiredHits = query.eligibility.contains(.retired)
             ? Self.retiredHits(
                 eligibleRetired(retiredStations, rideDate: query.rideDate, lineIDs: query.lineIDs),
-                prepared: prepared, browsing: browsing)
+                query: SearchTextQuery(needle), browsing: browsing)
             : []
-        return StationSearchResult(lines: sections, retired: retiredHits, suggestions: Array(suggestions))
+        return StationSearchResult(
+            lines: sections, retired: retiredHits, suggestions: Array(suggestions), response: response)
     }
 
     /// Retired stations open on `rideDate`. An empty or non-ISO date yields nothing.
@@ -876,10 +921,10 @@ public struct StationSearchIndex: Sendable {
     }
 
     private static func retiredHits(
-        _ stations: [RetiredStation], prepared: SearchFold.PreparedQuery, browsing: Bool
+        _ stations: [RetiredStation], query: SearchTextQuery, browsing: Bool
     ) -> [StationSearchHit] {
         stations.compactMap { station in
-            let rank = browsing ? 0 : rank(prepared, fields: [station.name])
+            let rank = browsing ? 0 : query.match(station.name).map { Self.rank($0.kind) }
             guard let rank else { return nil }
             return StationSearchHit(subject: .retired(station.id), rank: rank)
         }
@@ -901,11 +946,11 @@ public struct StationSearchIndex: Sendable {
     /// One suggestion per registry complex. Stations with no complex stay separate,
     /// so two catalog rows that share a display name remain two hits.
     private static func groupSuggestions(
-        _ pool: [(hit: StationSearchHit, name: String, code: String)],
+        _ pool: [(hit: StationSearchHit, name: String, code: String, score: Double)],
         idsByComplex: [String: [String]]
-    ) -> [(hit: StationSearchHit, name: String, code: String)] {
+    ) -> [(hit: StationSearchHit, name: String, code: String, score: Double)] {
         var order: [String] = []
-        var buckets: [String: [(hit: StationSearchHit, name: String, code: String)]] = [:]
+        var buckets: [String: [(hit: StationSearchHit, name: String, code: String, score: Double)]] = [:]
         for item in pool {
             let key = item.hit.complexID ?? "station:\(item.code)"
             if buckets[key] == nil { order.append(key) }
@@ -915,6 +960,7 @@ public struct StationSearchIndex: Sendable {
             guard var items = buckets[key] else { return nil }
             items.sort { lhs, rhs in
                 if lhs.hit.rank != rhs.hit.rank { return lhs.hit.rank < rhs.hit.rank }
+                if lhs.score != rhs.score { return lhs.score > rhs.score }
                 let order = lhs.name.localizedStandardCompare(rhs.name)
                 if order != .orderedSame { return order == .orderedAscending }
                 return lhs.code < rhs.code
@@ -929,27 +975,13 @@ public struct StationSearchIndex: Sendable {
             }
             hit.stationID = hit.stationIDs.count == 1 ? hit.stationIDs[0] : nil
             hit.qualifier = items.compactMap(\.hit.qualifier).first { !$0.isEmpty }
-            return (hit, best.name, best.code)
+            return (hit, best.name, best.code, best.score)
         }
-    }
-
-    private static func matches(_ prepared: SearchFold.PreparedQuery, fields: [String]) -> Bool {
-        rank(prepared, fields: fields) != nil
-    }
-
-    private static func rank(_ prepared: SearchFold.PreparedQuery, fields: [String]) -> Int? {
-        let meaningful = fields.filter { !$0.isEmpty }
-        guard !prepared.isEmpty, prepared.matches(fields: meaningful) else { return nil }
-        let names = meaningful.map(SearchFold.fold)
-        if names.contains(prepared.whole) { return 0 }
-        if names.contains(where: { $0.hasPrefix(prepared.whole) }) { return 1 }
-        return 2
     }
 
     fileprivate struct IndexedStation: Sendable {
         var key: StationKey
         var name: String
-        var matchFields: [String]
         var stationID: String?
         var complexID: String?
         var qualifier: String?
@@ -963,7 +995,6 @@ public struct StationSearchIndex: Sendable {
         var operatorName: String
         var operatorNames: [String]
         var header: String
-        var matchFields: [String]
         var stations: [IndexedStation]
     }
 }
@@ -993,9 +1024,7 @@ extension EditorCatalog {
             for member in memberships(lineID: line.id, regionCode: regionCode) {
                 guard seen.insert(member.stationKey.sourceCode).inserted,
                       let station = station(member.stationKey) else { continue }
-                stations.append(Self.indexedStation(
-                    station, identity: registryReady ? identity : nil,
-                    extraNames: extraNames[station.key.sourceCode] ?? []))
+                stations.append(Self.indexedStation(station, identity: registryReady ? identity : nil))
             }
             guard !stations.isEmpty else { continue }
             let operatorID = line.operatorIDs.first ?? ""
@@ -1007,19 +1036,15 @@ extension EditorCatalog {
                 operatorName: operatorNames.first ?? "",
                 operatorNames: operatorNames,
                 header: header,
-                matchFields: [line.name] + line.aliases.filter { !$0.isEmpty }
-                    + operatorNames
-                    + lineOperators.compactMap(\.shortName).filter { !$0.isEmpty }
-                    + lineOperators.flatMap(\.aliases).filter { !$0.isEmpty },
                 stations: stations))
         }
-        return StationSearchIndex(regionCode: regionCode, lines: indexed)
+        let engine = SearchIndexBuilder.catalog(self, regionCode: regionCode, extraNames: extraNames)
+        return StationSearchIndex(regionCode: regionCode, engine: engine, lines: indexed)
     }
 
     private static func indexedStation(
-        _ station: CatalogStation, identity: RegistryIdentity?, extraNames: [String]
+        _ station: CatalogStation, identity: RegistryIdentity?
     ) -> StationSearchIndex.IndexedStation {
-        var fields = [station.name, station.key.sourceCode] + station.aliases
         var stationID: String?
         var complexID: String?
         var qualifier: String?
@@ -1029,22 +1054,10 @@ extension EditorCatalog {
             stationID = identifier
             complexID = record.cx
             qualifier = identity.searchQualifier(complexID: record.cx)
-            appendSearch(&fields, record.name)
-            if let base = record.parts?.base { appendSearch(&fields, base) }
-            if let bracket = record.parts?.bracket { appendSearch(&fields, bracket) }
-            for code in record.codes { appendSearch(&fields, code) }
-            if let complex = identity.complex(of: identifier) { appendSearch(&fields, complex.name) }
         }
-        for name in extraNames { appendSearch(&fields, name) }
         return StationSearchIndex.IndexedStation(
-            key: station.key, name: station.name, matchFields: fields,
+            key: station.key, name: station.name,
             stationID: stationID, complexID: complexID, qualifier: qualifier)
-    }
-
-    private static func appendSearch(_ fields: inout [String], _ value: String) {
-        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty, !fields.contains(trimmed) else { return }
-        fields.append(trimmed)
     }
 
     public func searchStations(

@@ -56,15 +56,21 @@ public enum JourneySearchMatcher {
     ) -> Bool {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return true }
-        return matches(train, prepared: SearchFold.PreparedQuery(needle), needle: needle, alsoNamed: alsoNamed)
+        return matches(train, prepared: SearchTextQuery(needle), needle: needle, alsoNamed: alsoNamed)
     }
 
     /// A prepared query is shared across all journeys in a filter operation.
+    ///
+    /// Matching is the shared engine's (`SearchTextQuery`): simplified/traditional
+    /// and shinjitai variants, kana, romaji spelling variants and cross-language
+    /// synonyms, as exact/prefix/substring. Typos are not matched per journey —
+    /// they would widen every list; ``suggestion(for:in:alsoNamed:)`` offers the
+    /// corrected spelling instead.
     private static func matches(
-        _ train: Train, prepared: SearchFold.PreparedQuery, needle: String,
+        _ train: Train, prepared: SearchTextQuery, needle: String,
         alsoNamed: (Train) -> [String]
     ) -> Bool {
-        guard !prepared.whole.isEmpty else { return false }
+        guard !prepared.isEmpty else { return false }
         let operatorIDs = queryOperatorIDs(needle, region: train.region)
         if !operatorIDs.isEmpty {
             var ride: Set<String> = []
@@ -75,7 +81,7 @@ public enum JourneySearchMatcher {
         }
         func hit(_ field: String?) -> Bool {
             guard let field, !field.isEmpty else { return false }
-            return prepared.matches(fields: [field])
+            return prepared.matchesAll(fields: [field])
         }
         if hit(train.number) || hit(train.numberEn) || hit(train.origin) || hit(train.destination) {
             return true
@@ -140,7 +146,51 @@ public enum JourneySearchMatcher {
     ) -> [Train] {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return trains }
-        let prepared = SearchFold.PreparedQuery(needle)
+        let prepared = SearchTextQuery(needle)
         return trains.filter { matches($0, prepared: prepared, needle: needle, alsoNamed: alsoNamed) }
+    }
+
+    /// "Did you mean …?" for a journey query: the closest station name, train
+    /// name or type spelled in these journeys, when the query matches none of them.
+    /// Nil when the query already matches, or nothing is close.
+    public static func suggestion(
+        for query: String, in trains: [Train], alsoNamed: (Train) -> [String] = { _ in [] }
+    ) -> SearchCorrection? {
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !needle.isEmpty, filter(trains, query: needle, alsoNamed: alsoNamed).isEmpty else { return nil }
+        return vocabulary(of: trains, alsoNamed: alsoNamed)
+            .query(needle, scope: .terms, context: SearchContext(regionCode: "", limit: 5)).didYouMean
+    }
+
+    /// Completion candidates for a journey search box: names spelled in these
+    /// journeys, ranked exact > prefix > substring > typo, frequent first.
+    public static func completions(
+        for query: String, in trains: [Train], alsoNamed: (Train) -> [String] = { _ in [] }, limit: Int = 8
+    ) -> [SearchResult] {
+        vocabulary(of: trains, alsoNamed: alsoNamed)
+            .query(query, scope: .terms, context: SearchContext(regionCode: "", limit: limit)).results
+    }
+
+    /// Station, train and type names in these journeys, weighted by how often they occur.
+    /// Build once per store generation when used per keystroke.
+    public static func vocabulary(
+        of trains: [Train], alsoNamed: (Train) -> [String] = { _ in [] }
+    ) -> SearchIndex {
+        var counts: [String: Int] = [:]
+        var order: [String] = []
+        func add(_ value: String?) {
+            guard let value = value?.trimmingCharacters(in: .whitespacesAndNewlines), !value.isEmpty else { return }
+            if counts[value] == nil { order.append(value) }
+            counts[value, default: 0] += 1
+        }
+        for train in trains {
+            add(train.number); add(train.numberEn); add(train.origin); add(train.destination)
+            add(train.trainType); add(train.company)
+            for stop in train.stops { add(stop.name) }
+            for name in alsoNamed(train) { add(name) }
+        }
+        let top = Float(counts.values.max() ?? 1)
+        return SearchIndexBuilder.vocabulary(
+            order, weights: counts.mapValues { log2(1 + Float($0)) / log2(1 + top) })
     }
 }
