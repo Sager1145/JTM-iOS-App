@@ -69,7 +69,7 @@ struct EditorLineSearchView: View {
         let groups = Dictionary(grouping: matches) { $0.operatorIDs.first ?? "" }
             .map { operatorID, lines in
                 OperatorLineGroup(id: operatorID,
-                    name: operatorNameByID[operatorID]
+                    name: operatorNameByID[operatorID].map(JourneyBranding.companyText)
                         ?? localization.countryText("field.company", fallback: "Operator"),
                     lines: lines)
             }.sorted {

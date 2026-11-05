@@ -178,6 +178,7 @@ final class WorkspaceDerived {
            ArrayGeneration.same(scopeKey.trains, trains) {
             return (scopeValue, scopeIDs)
         }
+        RailSignpost.ui.mark("derived.statsScope", trains.count)
         scopeValue = StatisticsMembership.slice(
             trains: trains, regionCode: region?.code, rule: Region.scopeRule,
             selection: .init(year: year, groupID: groupID, dates: dates),
@@ -227,8 +228,9 @@ final class WorkspaceDerived {
            ArrayGeneration.same(memberIDsKey.trains, trains) {
             return (memberIDsValue, memberIDsGeneration)
         }
-        memberIDsValue = Set(scope.filter(trains, rides: rides).map(\.id))
-        memberIDsGeneration &+= 1
+        let ids = Set(scope.filter(trains, rides: rides).map(\.id))
+        RailSignpost.ui.mark("derived.memberIDs", ids.count)
+        if ids != memberIDsValue { memberIDsValue = ids; memberIDsGeneration &+= 1 }
         memberIDsKey = MemberIDsKey(
             scopeKey: scope.key, trains: trains, ridesDigest: digest)
         return (memberIDsValue, memberIDsGeneration)
@@ -249,6 +251,7 @@ final class WorkspaceDerived {
         if let rideKey, ArrayGeneration.same(rideKey, rides) {
             return (rideIDsValue, riddenCountriesValue)
         }
+        RailSignpost.ui.mark("derived.rideSummary", rides.count)
         var ids = Set<String>()
         var countries = Set<String>()
         ids.reserveCapacity(rides.count)
@@ -381,6 +384,7 @@ final class WorkspaceDerived {
            ArrayGeneration.same(passportScopeKey.days, days) {
             return passportScopeValue
         }
+        RailSignpost.ui.mark("derived.passportScope", trains.count)
         let slice = StatisticsMembership.slice(
             trains: trains, days: days.map { JourneyDay(date: $0.date, trains: $0.trains) },
             regionCode: region?.code, rule: Region.scopeRule,
@@ -417,6 +421,7 @@ final class WorkspaceDerived {
            ArrayGeneration.same(regionDatesKey.days, days) {
             return regionDatesValue
         }
+        RailSignpost.ui.mark("derived.scopedDates", trains.count)
         regionDatesValue = StatisticsMembership.availableDates(
             trains: trains, regionCode: region?.code, rule: Region.scopeRule,
             year: year, memberIDs: memberIDs)
@@ -447,6 +452,7 @@ final class WorkspaceDerived {
            key.selectedYear == selectedYear, ArrayGeneration.same(key.trains, trains) {
             return availableYearsValue
         }
+        RailSignpost.ui.mark("derived.availableYears", trains.count)
         availableYearsValue = StatisticsMembership.availableYears(
             trains: trains, regionCode: regionCode, rule: Region.scopeRule,
             groupID: groupID, memberIDs: memberIDs,

@@ -1163,16 +1163,26 @@ public enum RouteGraph {
         public var railwayClassCode: String
         public var lineName: String
         public var `operator`: String
-        /// Non-nil only on the solver's station-transfer edges.
-        public var connector: StationConnector?
-        /// An evidenced physical junction, distinct from passenger transfers.
-        public var physicalJunction: PhysicalJunctionEdge? {
-            get { physicalJunctionStorage?.value }
-            set { physicalJunctionStorage = newValue.map(PhysicalJunctionStorage.init) }
-        }
-        private var physicalJunctionStorage: PhysicalJunctionStorage?
+        public var temporalKind: TemporalKind = .current
 
-        /// Immutable storage keeps edge copies independent when their payload is replaced.
+        /// The fields almost every edge leaves at their defaults, kept out of
+        /// line. A country graph holds hundreds of thousands of edges, and
+        /// carrying a connector, two validity bounds, history ids and track
+        /// bindings inline more than doubled each one's stride. `rare` is nil
+        /// exactly when every field below is at its default, so the
+        /// synthesized `==` still compares values, never box identity.
+        private struct Rare: Sendable, Equatable {
+            var connector: StationConnector?
+            /// Boxed again on its own: a junction payload is several hundred
+            /// bytes, and inline it would make every rare box that size.
+            var physicalJunction: PhysicalJunctionStorage?
+            var validFrom: String?
+            var validTo: String?
+            var historyIDs: [String] = []
+            var registeredTrackLineIDs: Set<String> = []
+            var registeredTrackID: String?
+        }
+
         private final class PhysicalJunctionStorage: Sendable, Equatable {
             let value: PhysicalJunctionEdge
 
@@ -1181,21 +1191,71 @@ public enum RouteGraph {
             }
 
             static func == (lhs: PhysicalJunctionStorage, rhs: PhysicalJunctionStorage) -> Bool {
-                lhs.value == rhs.value
+                lhs === rhs || lhs.value == rhs.value
             }
+        }
+
+        /// Immutable storage keeps edge copies independent when a rare field changes.
+        private final class RareStorage: Sendable, Equatable {
+            let value: Rare
+
+            init(_ value: Rare) {
+                self.value = value
+            }
+
+            static func == (lhs: RareStorage, rhs: RareStorage) -> Bool {
+                lhs === rhs || lhs.value == rhs.value
+            }
+        }
+
+        private var rareStorage: RareStorage?
+
+        private static let defaultRare = Rare()
+
+        /// Inline size of the out-of-line payload, for the layout test.
+        static var rarePayloadSize: Int { MemoryLayout<Rare>.stride }
+
+        private var rare: Rare {
+            get { rareStorage?.value ?? Self.defaultRare }
+            set { rareStorage = newValue == Self.defaultRare ? nil : RareStorage(newValue) }
+        }
+
+        /// Non-nil only on the solver's station-transfer edges.
+        public var connector: StationConnector? {
+            get { rareStorage?.value.connector }
+            set { rare.connector = newValue }
+        }
+        /// An evidenced physical junction, distinct from passenger transfers.
+        public var physicalJunction: PhysicalJunctionEdge? {
+            get { rareStorage?.value.physicalJunction?.value }
+            set { rare.physicalJunction = newValue.map(PhysicalJunctionStorage.init) }
         }
         /// ADR 0011 validity bounds, carried from the section (or, for a
         /// station-transfer connector, from the station) this edge came from.
-        public var validFrom: String? = nil
-        public var validTo: String? = nil
+        public var validFrom: String? {
+            get { rareStorage?.value.validFrom }
+            set { rare.validFrom = newValue }
+        }
+        public var validTo: String? {
+            get { rareStorage?.value.validTo }
+            set { rare.validTo = newValue }
+        }
         /// History-overlay identifiers this edge came from. Empty on current
         /// package track and on station-transfer connectors.
-        public var historyIDs: [String] = []
-        public var temporalKind: TemporalKind = .current
+        public var historyIDs: [String] {
+            get { rareStorage?.value.historyIDs ?? [] }
+            set { rare.historyIDs = newValue }
+        }
         /// Exact compact rows explicitly bound to this installed osmTrack edge.
         /// Empty on raw rail, transfer connectors and physical junctions.
-        public var registeredTrackLineIDs: Set<String> = []
-        fileprivate var registeredTrackID: String?
+        public var registeredTrackLineIDs: Set<String> {
+            get { rareStorage?.value.registeredTrackLineIDs ?? [] }
+            set { rare.registeredTrackLineIDs = newValue }
+        }
+        fileprivate var registeredTrackID: String? {
+            get { rareStorage?.value.registeredTrackID }
+            set { rare.registeredTrackID = newValue }
+        }
 
         init(
             to: String, length: Double, institutionTypeCode: String,
@@ -1210,12 +1270,10 @@ public enum RouteGraph {
             self.railwayClassCode = railwayClassCode
             self.lineName = lineName
             self.operator = `operator`
-            self.connector = connector
-            self.physicalJunctionStorage = physicalJunction.map(PhysicalJunctionStorage.init)
-            self.validFrom = validFrom
-            self.validTo = validTo
-            self.historyIDs = historyIDs
             self.temporalKind = temporalKind
+            self.rare = Rare(
+                connector: connector, physicalJunction: physicalJunction.map(PhysicalJunctionStorage.init),
+                validFrom: validFrom, validTo: validTo, historyIDs: historyIDs)
         }
     }
 

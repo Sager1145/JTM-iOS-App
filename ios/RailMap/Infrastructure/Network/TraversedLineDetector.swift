@@ -71,6 +71,7 @@ final class TraversedLineDetector {
     /// Selected route identity is already known when the map receives a ride.
     /// Publishing it never starts or restarts an edge-index geometry match.
     func publishSelected(rides: [RiddenRouteStore.DrawnRide]) {
+        RailSignpost.ui.mark("derived.lines.selected", rides.count)
         generation &+= 1
         task?.cancel()
         task = nil
@@ -117,6 +118,7 @@ final class TraversedLineDetector {
     /// routes retain only their explicit physical selections until detection
     /// finishes, and a cancelled walk returns without writing.
     func update(rides: [RiddenRouteStore.DrawnRide]) {
+        RailSignpost.ui.mark("derived.lines.detect", rides.count)
         generation &+= 1
         let snapshot = generation
         task?.cancel()
