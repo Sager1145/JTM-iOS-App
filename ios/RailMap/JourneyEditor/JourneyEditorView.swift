@@ -120,6 +120,9 @@ struct JourneyEditorView: View {
     /// Planned sections by key for this session, so moving one via only
     /// re-plans the sections next to it.
     @State private var sectionCache: [String: PlannedSection] = [:]
+    /// Dated-network probes by from/to/ride date, so a train-type or company
+    /// change does not ask again.
+    @State private var historicalProbeCache: [String: PlannedSection.HistoricalProbe] = [:]
     @State private var wholeTripCache: [String: [TripRoutePlanner.Corridor]] = [:]
     @State private var wholeTrip: [TripRoutePlanner.Corridor] = []
     @State private var activeSectionKey: String?
@@ -1881,7 +1884,7 @@ struct JourneyEditorView: View {
     /// Closed-line notices, one row per affected section, from the cached
     /// section state. No work happens here.
     @ViewBuilder private var historicalNotices: some View {
-        let notices = sections.enumerated().compactMap { index, section in
+        let notices = plannedIdentity != routeIdentity ? [] : sections.enumerated().compactMap { index, section in
             historicalNotice(for: section).map { (index, section, $0) }
         }
         if !notices.isEmpty {
@@ -1907,6 +1910,13 @@ struct JourneyEditorView: View {
                             .foregroundStyle(kind == .info ? Color.secondary : Color.orange)
                     }
                     .foregroundStyle(kind == .info ? Color.secondary : Color.orange)
+                    if kind == .info, !vias.isEmpty, section.historicalProbe == .historicalOnly {
+                        Text(text("historicalOwnTrip",
+                                  fallback: "Save the closed part as its own trip, without stops along the way."))
+                            .font(.footnote)
+                            .foregroundStyle(Color.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityElement(children: .combine)
@@ -1915,6 +1925,7 @@ struct JourneyEditorView: View {
             if displaySettings?.networkEra == .current {
                 Button(text("showHistoricalLines", fallback: "Show historical lines on the map")) {
                     displaySettings?.networkEra = .historicalOverlay
+                    displaySettings?.persist()
                 }
                 .accessibilityIdentifier("newTripShowHistoricalLines")
             }
@@ -1924,7 +1935,8 @@ struct JourneyEditorView: View {
     /// Single-section trip on a closed line: the planner has no corridor, but
     /// the dated network joins the two stations.
     private var historicalSaveAllowed: Bool {
-        sections.count == 1 && vias.isEmpty && sections[0].candidates.isEmpty
+        !hasRecordRoute && plannedIdentity == routeIdentity
+            && sections.count == 1 && vias.isEmpty && sections[0].candidates.isEmpty
             && sections[0].historicalProbe == .historicalOnly
     }
 
@@ -1933,35 +1945,20 @@ struct JourneyEditorView: View {
         guard historicalSaveAllowed, let origin, let destination else { return nil }
         var result = draft
         result.region = region.code
-        if !hasRecordRoute || result.stops.count < 2 {
-            result.stops = [
-                endpointStop(origin, stationID: originStationID, stopType: "origin", ridden: isRidden),
-                endpointStop(destination, stationID: destinationStationID, stopType: "destination", ridden: isRidden),
-            ]
-        } else {
-            let last = result.stops.count - 1
-            for (index, station, stationID) in [(0, origin, originStationID), (last, destination, destinationStationID)] {
-                result.stops[index].name = station.name
-                result.stops[index].n02StationCode = station.key.sourceCode
-                RegistryStationSelection.fill(
-                    &result.stops[index], regionCode: region.code, sourceCode: station.key.sourceCode,
-                    catalogName: station.name, stationID: stationID)
-            }
-        }
+        result.stops = [
+            endpointStop(origin, stationID: originStationID, stopType: "origin", ridden: isRidden),
+            endpointStop(destination, stationID: destinationStationID, stopType: "destination", ridden: isRidden),
+        ]
         result.routeSections = nil
         result.routeConfirmation = .pending
-        let last = result.stops.count - 1
-        if !hasRecordRoute {
-            result.date = dayString(departure)
-            result.stops[0].departure = clock(departure, extraDays: 0)
-            result.stops[last].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
-            result.trainType = trainType
-            let typedNumber = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
-            result.number = typedNumber.isEmpty ? (originLine?.name ?? "") : typedNumber
-            commitCompany(companyName, on: &result)
-        } else {
-            applyHeader(to: &result)
-        }
+        result.date = dayString(departure)
+        result.stops[0].departure = clock(departure, extraDays: 0)
+        result.stops[1].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+        result.trainType = trainType
+        let typedNumber = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
+        result.number = typedNumber.isEmpty
+            ? (originLine?.name ?? "\(origin.name) → \(destination.name)") : typedNumber
+        commitCompany(companyName, on: &result)
         result.origin = origin.name
         result.destination = destination.name
         return result
@@ -2697,10 +2694,10 @@ struct JourneyEditorView: View {
         let hasDatedNetwork = RiddenRouteStore.hasDatedNetwork(region: region.code)
         guard hasDatedNetwork else { return }
         var corridors: [TripRoutePlanner.Corridor] = []
+        var unconnected = false
         switch section.outcome {
         case .noRoute, .disconnected:
-            await probeHistorical(&section, rideDate: rideDate, endpoints: endpoints)
-            return
+            unconnected = true
         case .corridors(let found) where !found.isEmpty:
             corridors = found
         default:
@@ -2710,14 +2707,16 @@ struct JourneyEditorView: View {
         do { latestValidFrom = try RiddenRouteStore.latestValidFrom(region: region.code) }
         catch {
             // Unknown date bounds cannot exclude otherwise valid corridors.
-            section.proofFailure = error.localizedDescription
+            if !unconnected { section.proofFailure = error.localizedDescription }
             return
         }
         let normalized = Dates.normalizeDateString(rideDate)
-        let today = RecordDate.today(in: Region.resolved(timetableBase).clock)
-        // A line closed after the ride date is only visible to the dated
-        // network, so any past ride date is checked, not only pre-latest ones.
-        guard normalized != rideDate || latestValidFrom.map({ rideDate < $0 }) == true || rideDate < today else { return }
+        if unconnected {
+            guard latestValidFrom.map({ rideDate < $0 }) == true else { return }
+            await probeHistorical(&section, rideDate: rideDate, endpoints: endpoints)
+            return
+        }
+        guard normalized != rideDate || latestValidFrom.map({ rideDate < $0 }) == true else { return }
         let candidates = corridors.compactMap { corridor in
             candidateTrain(for: corridor).map { TripRouteValidation.Candidate(id: corridor.id, train: $0) }
         }
@@ -2746,6 +2745,11 @@ struct JourneyEditorView: View {
         _ section: inout PlannedSection, rideDate: String, endpoints: (from: String, to: String)?
     ) async {
         guard let endpoints, !section.fromName.isEmpty, !section.toName.isEmpty else { return }
+        let probeKey = [endpoints.from, endpoints.to, rideDate].joined(separator: "\u{1e}")
+        if let cached = historicalProbeCache[probeKey] {
+            section.historicalProbe = cached
+            return
+        }
         var scaffold = Train(id: draft.id, number: "check", origin: section.fromName, destination: section.toName, stops: [
             Stop(name: section.fromName, n02StationCode: endpoints.from, stopType: "origin", rideSegment: true),
             Stop(name: section.toName, n02StationCode: endpoints.to, stopType: "destination", rideSegment: true),
@@ -2753,12 +2757,19 @@ struct JourneyEditorView: View {
         scaffold.region = region.code
         scaffold.date = rideDate
         scaffold.routeConfirmation = .confirmed
+        // A failed call stays uncached so the next plan retries it.
         guard let status = try? await RiddenRouteStore.routeAvailabilities([scaffold]), status.count == 1 else { return }
+        let probe: PlannedSection.HistoricalProbe?
         if status[0].datedResolved && !status[0].undatedResolved {
-            section.historicalProbe = .historicalOnly
+            probe = .historicalOnly
         } else if !status[0].datedResolved {
-            section.historicalProbe = PlannedSection.HistoricalProbe.none
+            probe = PlannedSection.HistoricalProbe.none
+        } else {
+            probe = nil
         }
+        guard !Task.isCancelled, let probe else { return }
+        historicalProbeCache[probeKey] = probe
+        section.historicalProbe = probe
     }
 
     /// A two-stop trip along one section's corridor, for date validation.

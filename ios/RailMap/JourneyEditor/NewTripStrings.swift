@@ -107,6 +107,12 @@ enum NewTripStrings {
             .ja: "{date}にこれらの駅を結ぶ路線はありませんでした。路線が廃止されている場合は、乗車日を確認するか、途中の駅を追加してください。",
             .en: "No line connected these stations on {date}. If the line has closed, check the date you rode it, or add a stop along the way.",
         ],
+        "ios.newTrip.historicalOwnTrip": [
+            .zhHans: "请将已停运的部分另存为单独的行程，中途不加停靠站。",
+            .zhHant: "請將已停駛的部分另存為單獨的行程，途中不加停靠站。",
+            .ja: "廃止された区間は、途中の駅を入れずに別の旅程として保存してください。",
+            .en: "Save the closed part as its own trip, without stops along the way.",
+        ],
         "ios.newTrip.showHistoricalLines": [
             .zhHans: "在地图上显示历史线路", .zhHant: "在地圖上顯示歷史路線",
             .ja: "地図に廃止路線を表示", .en: "Show historical lines on the map",
