@@ -39,7 +39,7 @@
         {
           "name": "天王寺",
           "n02_station_code": "007439",
-          "platform_number": null,
+          "platform_number": 18,
           "arrival": "16:48",
           "departure": "16:50",
           "stop_type": "passenger_stop",
@@ -48,7 +48,7 @@
         {
           "name": "大阪",
           "n02_station_code": "007069",
-          "platform_number": null,
+          "platform_number": 24,
           "arrival": "17:01",
           "departure": "17:02",
           "stop_type": "passenger_stop",
@@ -57,7 +57,7 @@
         {
           "name": "新大阪",
           "n02_station_code": "006910",
-          "platform_number": null,
+          "platform_number": 1,
           "arrival": "17:06",
           "departure": null,
           "stop_type": "destination",
@@ -546,7 +546,7 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "08:00",
           "stop_type": "origin",
@@ -555,7 +555,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 7,
           "arrival": "08:07",
           "departure": "08:08",
           "stop_type": "passenger_stop",
@@ -564,7 +564,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "08:15",
           "departure": "08:20",
           "stop_type": "passenger_stop",
@@ -573,7 +573,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "08:35",
           "departure": "08:36",
           "stop_type": "passenger_stop",
@@ -582,14 +582,15 @@
         {
           "name": "品川",
           "n02_station_code": "004092",
-          "platform_number": null,
+          "platform_number": 21,
           "arrival": "08:46",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260704_03_keikyu_asakusa_line",
@@ -2317,7 +2318,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Keihin-Tōhoku Line"
+      "number_en": "Keihin-Tōhoku Line",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260704_12_yokohama_line",
@@ -2425,7 +2427,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yokohama Line"
+      "number_en": "Yokohama Line",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260704_13_kodama915",
@@ -2497,7 +2500,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 3,
           "arrival": null,
           "departure": "23:07",
           "stop_type": "origin",
@@ -2506,7 +2509,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": "23:21",
           "departure": "23:22",
           "stop_type": "passenger_stop",
@@ -2515,7 +2518,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": "23:31",
           "departure": "23:32",
           "stop_type": "passenger_stop",
@@ -2524,14 +2527,15 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": "23:39",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260704_14_local",
@@ -2759,7 +2763,7 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "09:24",
           "stop_type": "origin",
@@ -2768,7 +2772,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 7,
           "arrival": "09:31",
           "departure": "09:32",
           "stop_type": "passenger_stop",
@@ -2777,7 +2781,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "09:39",
           "departure": "09:44",
           "stop_type": "passenger_stop",
@@ -2786,7 +2790,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "09:59",
           "departure": "10:00",
           "stop_type": "passenger_stop",
@@ -2795,7 +2799,7 @@
         {
           "name": "品川",
           "n02_station_code": "004092",
-          "platform_number": null,
+          "platform_number": 21,
           "arrival": "10:11",
           "departure": "10:12",
           "stop_type": "passenger_stop",
@@ -2804,14 +2808,15 @@
         {
           "name": "東京",
           "n02_station_code": "003768",
-          "platform_number": null,
+          "platform_number": 17,
           "arrival": "10:18",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260705_03_chuo_line",
@@ -3066,7 +3071,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260705_04_chuo_sobu_line",
@@ -3623,7 +3629,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yamanote Line"
+      "number_en": "Yamanote Line",
+      "vehicle_type": "E235系"
     },
     {
       "id": "20260705_08_hayabusa59",
@@ -4245,7 +4252,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "E751系"
     },
     {
       "id": "20260706_03_inaho14",
@@ -4419,7 +4427,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "E653系"
     },
     {
       "id": "20260707_01_toki308",
@@ -4584,7 +4593,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "E7系"
     },
     {
       "id": "20260707_02_hakutaka555",
@@ -5650,7 +5660,7 @@
         {
           "name": "福井",
           "n02_station_code": "010179",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": null,
           "departure": "10:41",
           "stop_type": "passenger_stop",
@@ -5668,7 +5678,7 @@
         {
           "name": "敦賀",
           "n02_station_code": "010181",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": "11:01",
           "departure": null,
           "stop_type": "destination",
@@ -5850,7 +5860,7 @@
         {
           "name": "敦賀",
           "n02_station_code": "004004",
-          "platform_number": null,
+          "platform_number": 34,
           "arrival": null,
           "departure": "11:10",
           "stop_type": "origin",
@@ -5949,7 +5959,7 @@
         {
           "name": "米原",
           "n02_station_code": "005077",
-          "platform_number": null,
+          "platform_number": 7,
           "arrival": "11:44",
           "departure": null,
           "stop_type": "destination",
@@ -6012,7 +6022,7 @@
         {
           "name": "米原",
           "n02_station_code": "005073",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": null,
           "departure": "11:57",
           "stop_type": "origin",
@@ -6021,7 +6031,7 @@
         {
           "name": "岐阜羽島",
           "n02_station_code": "005065",
-          "platform_number": null,
+          "platform_number": 1,
           "arrival": null,
           "departure": "12:15",
           "stop_type": "passenger_stop",
@@ -6030,14 +6040,15 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "12:25",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700S"
     },
     {
       "id": "20260708_04_hikari706",
@@ -6153,7 +6164,7 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 15,
           "arrival": null,
           "departure": "12:43",
           "stop_type": "origin",
@@ -6180,7 +6191,7 @@
         {
           "name": "浜松",
           "n02_station_code": "007060",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": null,
           "departure": "13:17",
           "stop_type": "passenger_stop",
@@ -6198,7 +6209,7 @@
         {
           "name": "静岡",
           "n02_station_code": "006129",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": "13:37",
           "departure": "13:41",
           "stop_type": "passenger_stop",
@@ -6216,14 +6227,15 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": "13:57",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260708_05_local",
@@ -6495,7 +6507,7 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": null,
           "departure": "13:46",
           "stop_type": "origin",
@@ -6513,7 +6525,7 @@
         {
           "name": "静岡",
           "n02_station_code": "006129",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": "14:02",
           "departure": "14:07",
           "stop_type": "passenger_stop",
@@ -6531,7 +6543,7 @@
         {
           "name": "浜松",
           "n02_station_code": "007060",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "14:31",
           "stop_type": "passenger_stop",
@@ -6558,7 +6570,7 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 16,
           "arrival": "15:01",
           "departure": "15:03",
           "stop_type": "passenger_stop",
@@ -6585,14 +6597,15 @@
         {
           "name": "京都",
           "n02_station_code": "006083",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "15:37",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260709_03_miyakoji_rapid",
@@ -6718,7 +6731,7 @@
         {
           "name": "京都",
           "n02_station_code": "006079",
-          "platform_number": null,
+          "platform_number": 10,
           "arrival": null,
           "departure": "18:03",
           "stop_type": "origin",
@@ -6996,7 +7009,7 @@
         {
           "name": "京都",
           "n02_station_code": "006079",
-          "platform_number": null,
+          "platform_number": 10,
           "arrival": "20:14",
           "departure": null,
           "stop_type": "destination",
@@ -7071,7 +7084,7 @@
         {
           "name": "京都",
           "n02_station_code": "006083",
-          "platform_number": null,
+          "platform_number": 11,
           "arrival": null,
           "departure": "12:30",
           "stop_type": "origin",
@@ -7098,7 +7111,7 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "13:04",
           "departure": null,
           "stop_type": "destination",
@@ -7106,7 +7119,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Nozomi 252"
+      "number_en": "Nozomi 252",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260710_02_kodama824",
@@ -7783,7 +7797,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260711_01_keihin_tohoku_negishi_local",
@@ -7927,7 +7942,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260711_02_kagayaki501",
@@ -8493,7 +8509,7 @@
         {
           "name": "金沢",
           "n02_station_code": "002094",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": null,
           "departure": "10:58",
           "stop_type": "origin",
@@ -8511,7 +8527,7 @@
         {
           "name": "富山",
           "n02_station_code": "001927",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": "11:20",
           "departure": "11:21",
           "stop_type": "passenger_stop",
@@ -8538,7 +8554,7 @@
         {
           "name": "上越妙高",
           "n02_station_code": "001643",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": "12:00",
           "departure": "12:01",
           "stop_type": "passenger_stop",
@@ -8547,7 +8563,7 @@
         {
           "name": "飯山",
           "n02_station_code": "001770",
-          "platform_number": null,
+          "platform_number": 11,
           "arrival": "12:13",
           "departure": "12:13",
           "stop_type": "passenger_stop",
@@ -8556,7 +8572,7 @@
         {
           "name": "長野",
           "n02_station_code": "002034",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": "12:24",
           "departure": "12:26",
           "stop_type": "passenger_stop",
@@ -8601,7 +8617,7 @@
         {
           "name": "高崎",
           "n02_station_code": "002387",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "13:03",
           "departure": "13:04",
           "stop_type": "passenger_stop",
@@ -8628,7 +8644,7 @@
         {
           "name": "大宮",
           "n02_station_code": "002914",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": "13:27",
           "departure": null,
           "stop_type": "destination",
@@ -10468,7 +10484,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Keihin-Tōhoku / Negishi Line Local"
+      "number_en": "Keihin-Tōhoku / Negishi Line Local",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260713_02_kodama801",
@@ -10566,7 +10583,7 @@
         {
           "name": "東京",
           "n02_station_code": "003768",
-          "platform_number": null,
+          "platform_number": 19,
           "arrival": null,
           "departure": "06:30",
           "stop_type": "origin",
@@ -10575,7 +10592,7 @@
         {
           "name": "品川",
           "n02_station_code": "004092",
-          "platform_number": null,
+          "platform_number": 23,
           "arrival": null,
           "departure": "06:37",
           "stop_type": "passenger_stop",
@@ -10584,7 +10601,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 4,
           "arrival": null,
           "departure": "06:48",
           "stop_type": "passenger_stop",
@@ -10593,7 +10610,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": null,
           "departure": "07:05",
           "stop_type": "passenger_stop",
@@ -10602,7 +10619,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "07:14",
           "stop_type": "passenger_stop",
@@ -10611,14 +10628,15 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": "07:20",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260713_03_tokaido_main_local",
@@ -10848,7 +10866,7 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "12:54",
           "stop_type": "origin",
@@ -10857,7 +10875,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 7,
           "arrival": null,
           "departure": "13:02",
           "stop_type": "passenger_stop",
@@ -10866,7 +10884,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": null,
           "departure": "13:14",
           "stop_type": "passenger_stop",
@@ -10875,7 +10893,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "13:29",
           "departure": null,
           "stop_type": "passenger_stop",
@@ -10884,7 +10902,7 @@
         {
           "name": "品川",
           "n02_station_code": "004092",
-          "platform_number": null,
+          "platform_number": 21,
           "arrival": "13:40",
           "departure": null,
           "stop_type": "passenger_stop",
@@ -10893,14 +10911,15 @@
         {
           "name": "東京",
           "n02_station_code": "003768",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "13:48",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260713_06_hayabusa27",
@@ -11610,7 +11629,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260714_01_ozora3",
@@ -11748,7 +11768,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260714_02_nemuro_main_local",
@@ -12608,7 +12629,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260715_01_soya",
@@ -12791,7 +12813,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260715_02_soya",
@@ -12956,7 +12979,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260716_01_sapporo_subway_namboku_sapporo_susukino",
@@ -13042,7 +13066,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sapporo Municipal Subway Namboku Line"
+      "number_en": "Sapporo Municipal Subway Namboku Line",
+      "vehicle_type": "5000形"
     },
     {
       "id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
@@ -13128,7 +13153,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sapporo Municipal Subway Namboku Line"
+      "number_en": "Sapporo Municipal Subway Namboku Line",
+      "vehicle_type": "5000形"
     },
     {
       "id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
@@ -13452,7 +13478,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sapporo Municipal Subway Tōzai Line"
+      "number_en": "Sapporo Municipal Subway Tōzai Line",
+      "vehicle_type": "8000形"
     },
     {
       "id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
@@ -13517,7 +13544,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sapporo Municipal Subway Namboku Line"
+      "number_en": "Sapporo Municipal Subway Namboku Line",
+      "vehicle_type": "5000形"
     },
     {
       "id": "20260716_07_hokuto20",
@@ -13682,7 +13710,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ261系"
     },
     {
       "id": "20260717_01_hakodate_tram",
@@ -14188,7 +14217,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "733系"
     },
     {
       "id": "20260718_02_hayabusa10",
@@ -15192,7 +15222,7 @@
         {
           "name": "東京",
           "n02_station_code": "003768",
-          "platform_number": null,
+          "platform_number": 17,
           "arrival": null,
           "departure": "15:57",
           "stop_type": "origin",
@@ -15201,7 +15231,7 @@
         {
           "name": "品川",
           "n02_station_code": "004092",
-          "platform_number": null,
+          "platform_number": 24,
           "arrival": "16:03",
           "departure": "16:04",
           "stop_type": "passenger_stop",
@@ -15210,7 +15240,7 @@
         {
           "name": "新横浜",
           "n02_station_code": "004501",
-          "platform_number": null,
+          "platform_number": 3,
           "arrival": "16:14",
           "departure": "16:15",
           "stop_type": "passenger_stop",
@@ -15219,7 +15249,7 @@
         {
           "name": "小田原",
           "n02_station_code": "005217",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": "16:30",
           "departure": "16:35",
           "stop_type": "passenger_stop",
@@ -15228,7 +15258,7 @@
         {
           "name": "熱海",
           "n02_station_code": "005684",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": "16:42",
           "departure": "16:43",
           "stop_type": "passenger_stop",
@@ -15237,14 +15267,15 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": "16:50",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260718_09_tokaido_main_local",
@@ -15492,7 +15523,7 @@
         {
           "name": "三島",
           "n02_station_code": "005600",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": null,
           "departure": "19:46",
           "stop_type": "origin",
@@ -15510,7 +15541,7 @@
         {
           "name": "静岡",
           "n02_station_code": "006129",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": "20:02",
           "departure": "20:07",
           "stop_type": "passenger_stop",
@@ -15528,7 +15559,7 @@
         {
           "name": "浜松",
           "n02_station_code": "007060",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "20:31",
           "stop_type": "passenger_stop",
@@ -15555,14 +15586,15 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 16,
           "arrival": "21:01",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260719_01_hikari703",
@@ -15678,7 +15710,7 @@
         {
           "name": "名古屋",
           "n02_station_code": "005456",
-          "platform_number": null,
+          "platform_number": 16,
           "arrival": null,
           "departure": "10:03",
           "stop_type": "origin",
@@ -15687,7 +15719,7 @@
         {
           "name": "京都",
           "n02_station_code": "006083",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "10:37",
           "departure": "10:43",
           "stop_type": "passenger_stop",
@@ -15696,7 +15728,7 @@
         {
           "name": "新大阪",
           "n02_station_code": "006912",
-          "platform_number": null,
+          "platform_number": 21,
           "arrival": "10:57",
           "departure": "10:59",
           "stop_type": "passenger_stop",
@@ -15705,7 +15737,7 @@
         {
           "name": "新神戸",
           "n02_station_code": "007039",
-          "platform_number": null,
+          "platform_number": 1,
           "arrival": null,
           "departure": "11:12",
           "stop_type": "passenger_stop",
@@ -15714,7 +15746,7 @@
         {
           "name": "西明石",
           "n02_station_code": "007307",
-          "platform_number": null,
+          "platform_number": 11,
           "arrival": null,
           "departure": "11:23",
           "stop_type": "passenger_stop",
@@ -15723,7 +15755,7 @@
         {
           "name": "姫路",
           "n02_station_code": "006511",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": null,
           "departure": "11:36",
           "stop_type": "passenger_stop",
@@ -15732,7 +15764,7 @@
         {
           "name": "相生",
           "n02_station_code": "006552",
-          "platform_number": null,
+          "platform_number": 11,
           "arrival": null,
           "departure": "11:47",
           "stop_type": "passenger_stop",
@@ -15741,14 +15773,15 @@
         {
           "name": "岡山",
           "n02_station_code": "007329",
-          "platform_number": null,
+          "platform_number": 21,
           "arrival": "12:02",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260719_02_yakumo11",
@@ -15779,7 +15812,7 @@
         {
           "name": "岡山",
           "n02_station_code": "007313",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": null,
           "departure": "12:13",
           "stop_type": "origin",
@@ -15833,7 +15866,7 @@
         {
           "name": "米子",
           "n02_station_code": "004759",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "14:26",
           "departure": null,
           "stop_type": "destination",
@@ -15841,7 +15874,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "273系"
     },
     {
       "id": "20260719_03_super_oki5",
@@ -15872,7 +15906,7 @@
         {
           "name": "米子",
           "n02_station_code": "004759",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": null,
           "departure": "14:57",
           "stop_type": "origin",
@@ -15971,7 +16005,7 @@
         {
           "name": "益田",
           "n02_station_code": "007236",
-          "platform_number": null,
+          "platform_number": 1,
           "arrival": null,
           "departure": "17:38",
           "stop_type": "passenger_stop",
@@ -16016,7 +16050,7 @@
         {
           "name": "山口",
           "n02_station_code": "008418",
-          "platform_number": null,
+          "platform_number": 1,
           "arrival": "19:00",
           "departure": "19:01",
           "stop_type": "passenger_stop",
@@ -16034,7 +16068,7 @@
         {
           "name": "新山口",
           "n02_station_code": "008477",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "19:14",
           "departure": null,
           "stop_type": "destination",
@@ -16042,7 +16076,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ187系"
     },
     {
       "id": "20260719_04_sakura770",
@@ -16437,7 +16472,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Astram Line"
+      "number_en": "Astram Line",
+      "vehicle_type": "7000系"
     },
     {
       "id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
@@ -16926,7 +16962,7 @@
         {
           "name": "広島",
           "n02_station_code": "008031",
-          "platform_number": null,
+          "platform_number": 5,
           "arrival": "12:31",
           "departure": null,
           "stop_type": "destination",
@@ -17049,7 +17085,7 @@
         {
           "name": "広島",
           "n02_station_code": "008025",
-          "platform_number": null,
+          "platform_number": 11,
           "arrival": null,
           "departure": "12:54",
           "stop_type": "origin",
@@ -17067,7 +17103,7 @@
         {
           "name": "徳山",
           "n02_station_code": "008530",
-          "platform_number": null,
+          "platform_number": 7,
           "arrival": "13:15",
           "departure": "13:15",
           "stop_type": "passenger_stop",
@@ -17103,7 +17139,7 @@
         {
           "name": "小倉",
           "n02_station_code": "008682",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": "13:42",
           "departure": "13:43",
           "stop_type": "passenger_stop",
@@ -17112,7 +17148,7 @@
         {
           "name": "博多",
           "n02_station_code": "009034",
-          "platform_number": null,
+          "platform_number": 15,
           "arrival": "13:59",
           "departure": null,
           "stop_type": "destination",
@@ -17120,7 +17156,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sakura 753"
+      "number_en": "Sakura 753",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260720_46_tsubame325_hakata_shintosu",
@@ -19713,7 +19750,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700S"
     },
     {
       "id": "20260721_06_relay_kamome22",
@@ -19870,7 +19908,7 @@
         {
           "name": "久留米",
           "n02_station_code": "009385",
-          "platform_number": null,
+          "platform_number": 12,
           "arrival": "12:18",
           "departure": "12:19",
           "stop_type": "passenger_stop",
@@ -19906,14 +19944,15 @@
         {
           "name": "熊本",
           "n02_station_code": "009779",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": "12:39",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260721_08_asoboy3",
@@ -19997,7 +20036,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ183系"
     },
     {
       "id": "20260721_09_asoboy4",
@@ -20081,7 +20121,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ183系"
     },
     {
       "id": "20260721_10_kumamoto_tram_a_kumamotoeki_karashimacho",
@@ -20693,7 +20734,7 @@
         {
           "name": "熊本",
           "n02_station_code": "009779",
-          "platform_number": null,
+          "platform_number": 13,
           "arrival": null,
           "departure": "21:04",
           "stop_type": "origin",
@@ -20738,14 +20779,15 @@
         {
           "name": "鹿児島中央",
           "n02_station_code": "010049",
-          "platform_number": null,
+          "platform_number": 14,
           "arrival": "21:51",
           "departure": null,
           "stop_type": "destination",
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260722_01_ibusuki_1321d_kagoshima_yamakawa",
@@ -21818,7 +21860,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "787系"
     },
     {
       "id": "20260722_05_nichirin10",
@@ -21947,7 +21990,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "787系"
     },
     {
       "id": "20260722_06_sonic44",
@@ -23686,7 +23730,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Kitakyushu Monorail"
+      "number_en": "Kitakyushu Monorail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260722_13_monorail_kikugaoka_kokura",
@@ -23982,7 +24027,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Kitakyushu Monorail"
+      "number_en": "Kitakyushu Monorail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260723_01_sakura740",
@@ -24242,7 +24288,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260723_02_shiokaze5",
@@ -24399,7 +24446,7 @@
         {
           "name": "岡山",
           "n02_station_code": "007310",
-          "platform_number": null,
+          "platform_number": 6,
           "arrival": null,
           "departure": "09:25",
           "stop_type": "origin",
@@ -24716,7 +24763,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "2700系"
     },
     {
       "id": "20260724_01_ishizuchi9",
@@ -25105,7 +25153,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "2700系"
     },
     {
       "id": "20260724_03_tsurugisan6",
@@ -25171,7 +25220,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "キハ185系"
     },
     {
       "id": "20260724_04_tokushima_local_463d",
@@ -25851,7 +25901,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "2700系"
     },
     {
       "id": "20260724_06_nanpu28",
@@ -26956,7 +27007,8 @@
           "ride_segment": true
         }
       ],
-      "region": "jp"
+      "region": "jp",
+      "vehicle_type": "2700系"
     },
     {
       "id": "20260724_07_kodama970",
@@ -27965,7 +28017,8 @@
         }
       ],
       "region": "jp",
-      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260726_05_chuo_rapid_tokyo",
@@ -28174,7 +28227,8 @@
         }
       ],
       "region": "jp",
-      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260726_06_kodama_atami",
@@ -28579,7 +28633,8 @@
         }
       ],
       "region": "jp",
-      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260726_09_shonan_shinjuku_yokohama",
@@ -29641,7 +29696,8 @@
         }
       ],
       "region": "jp",
-      "notes": "列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E6系"
     },
     {
       "id": "20260727_06_local_akihabara",
@@ -29723,7 +29779,8 @@
         }
       ],
       "region": "jp",
-      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260727_07_local_tokyo",
@@ -29805,7 +29862,8 @@
         }
       ],
       "region": "jp",
-      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E233系"
     },
     {
       "id": "20260727_08_narita_express",
@@ -29853,7 +29911,8 @@
         }
       ],
       "region": "jp",
-      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。"
+      "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。列車番号は不明。時刻は乗車記録からの推定値で、公式時刻表では未確認。",
+      "vehicle_type": "E259系"
     },
     {
       "id": "20260727_09_kodama837",
@@ -31240,7 +31299,7 @@
         {
           "name": "静岡",
           "n02_station_code": "006128",
-          "platform_number": null,
+          "platform_number": 4,
           "arrival": "23:57",
           "departure": "23:59",
           "stop_type": "passenger_stop",
@@ -31249,7 +31308,7 @@
         {
           "name": "浜松",
           "n02_station_code": "007059",
-          "platform_number": null,
+          "platform_number": 4,
           "arrival": "24:53",
           "departure": "24:54",
           "stop_type": "passenger_stop",
@@ -31258,7 +31317,7 @@
         {
           "name": "姫路",
           "n02_station_code": "006509",
-          "platform_number": null,
+          "platform_number": 8,
           "arrival": "29:25",
           "departure": "29:26",
           "stop_type": "passenger_stop",
@@ -31267,7 +31326,7 @@
         {
           "name": "岡山",
           "n02_station_code": "007313",
-          "platform_number": null,
+          "platform_number": 8,
           "arrival": "30:27",
           "departure": "30:34",
           "stop_type": "passenger_stop",
@@ -31303,7 +31362,7 @@
         {
           "name": "米子",
           "n02_station_code": "004759",
-          "platform_number": null,
+          "platform_number": 2,
           "arrival": "33:05",
           "departure": "33:08",
           "stop_type": "passenger_stop",
@@ -31347,7 +31406,8 @@
         }
       ],
       "region": "jp",
-      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。\n通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
+      "notes": "岡山まで5031M、岡山から4031M。東京—岡山間はサンライズ瀬戸に併結。\n通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
+      "vehicle_type": "285系"
     },
     {
       "id": "20260730_01_ichibata_taisha",
@@ -31683,7 +31743,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Yakumo 22"
+      "number_en": "Yakumo 22",
+      "vehicle_type": "273系"
     },
     {
       "id": "20260730_04_sakura762",
@@ -31732,7 +31793,7 @@
         {
           "name": "岡山",
           "n02_station_code": "007329",
-          "platform_number": null,
+          "platform_number": 23,
           "arrival": null,
           "departure": "18:14",
           "stop_type": "origin",
@@ -31741,7 +31802,7 @@
         {
           "name": "新大阪",
           "n02_station_code": "006911",
-          "platform_number": null,
+          "platform_number": 20,
           "arrival": "18:59",
           "departure": null,
           "stop_type": "destination",
@@ -31749,7 +31810,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Sakura 762"
+      "number_en": "Sakura 762",
+      "vehicle_type": "N700系"
     },
     {
       "id": "20260730_05_shinkaisoku_osaka",
@@ -32455,7 +32517,8 @@
       ],
       "region": "jp",
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。",
-      "number_en": "Rapi:t α3"
+      "number_en": "Rapi:t α3",
+      "vehicle_type": "50000系"
     },
     {
       "id": "20260731_03_yui_naha_akamine",
@@ -32520,7 +32583,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260731_04_yui_akamine_naha",
@@ -32585,7 +32649,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260731_05_yui_tedako_shuri",
@@ -32713,7 +32778,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260731_06_yui_shuri_miebashi",
@@ -32904,7 +32970,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260731_07_yui_miebashi_naha",
@@ -33095,7 +33162,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260731_08_yui_naha_miebashi",
@@ -33286,7 +33354,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     },
     {
       "id": "20260801_01_yui_miebashi_naha",
@@ -33477,7 +33546,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Yui Rail"
+      "number_en": "Yui Rail",
+      "vehicle_type": "1000形"
     }
   ]
 }

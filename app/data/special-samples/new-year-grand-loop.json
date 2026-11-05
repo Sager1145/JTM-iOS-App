@@ -827,7 +827,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E531系"
     },
     {
       "id": "new_year_grand_loop_20251231_04",
@@ -2335,7 +2336,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20251231_09",
@@ -2737,7 +2739,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E131系"
     },
     {
       "id": "new_year_grand_loop_20251231_10",
@@ -3185,7 +3188,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20251231_12",
@@ -3376,7 +3380,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E131系"
     },
     {
       "id": "new_year_grand_loop_20251231_13",
@@ -4231,7 +4236,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20251231_18",
@@ -4318,7 +4324,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Rapid"
+      "number_en": "Rapid",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20251231_19",
@@ -4811,7 +4818,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20251231_22",
@@ -5405,7 +5413,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E231系"
     },
     {
       "id": "new_year_grand_loop_20260101_24",
@@ -8040,7 +8049,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Rapid"
+      "number_en": "Rapid",
+      "vehicle_type": "E235系"
     },
     {
       "id": "new_year_grand_loop_20260101_34",
@@ -8148,7 +8158,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E231系"
     },
     {
       "id": "new_year_grand_loop_20260101_35",
@@ -8427,7 +8438,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Rapid"
+      "number_en": "Rapid",
+      "vehicle_type": "E233系"
     },
     {
       "id": "new_year_grand_loop_20260101_37",
@@ -8683,7 +8695,8 @@
         }
       ],
       "region": "jp",
-      "number_en": "Local"
+      "number_en": "Local",
+      "vehicle_type": "E235系"
     },
     {
       "id": "new_year_grand_loop_20260101_38",
