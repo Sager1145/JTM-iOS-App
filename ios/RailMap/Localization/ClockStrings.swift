@@ -5,7 +5,7 @@ import RailCore
 ///
 /// Its own table rather than a corner of `JourneyStrings` because the zone
 /// names are not one screen's copy: they name the supported regions' clocks, and
-/// they are read out of `RailPresentation.RegionClock.nameKey` — one tier
+/// they are read out of `RailCore.RegionClock.nameKey` — one tier
 /// down, where there is no catalog. That tier hands up a key and a structural
 /// English fallback exactly as `PresentationText` does; this is where the four
 /// languages live.

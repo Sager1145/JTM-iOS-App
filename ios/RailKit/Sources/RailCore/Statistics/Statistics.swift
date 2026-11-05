@@ -1879,13 +1879,27 @@ public enum Statistics {
     /// the UTC offset difference between the first and last effectively ridden
     /// stops (not stop 0 and the last stop). With a clock that has no per-stop
     /// table the result is identical to the one-argument form.
+    ///
+    /// The zone shift is applied before the overnight wrap, so a westbound
+    /// ride printed 23:30 (JST) → 23:10 (TST) is 40 minutes, not 1480. As in
+    /// the one-argument form, a span still negative after one wrap is nil.
     public static func trainRideMinutes(_ train: Train, clock: JourneyClock) -> Double? {
-        guard let minutes = trainRideMinutes(train) else { return nil }
-        guard clock.crossesTimeZones, let bounds = rideBoundaryIndexes(train.stops)
-        else { return minutes }
-        let shift = clock.offsetMinutes(
-            fromStopIndex: bounds.first, toStopIndex: bounds.last, on: train.date)
-        return minutes - Double(shift)
+        guard clock.crossesTimeZones else { return trainRideMinutes(train) }
+        let stops = train.stops
+        guard let bounds = rideBoundaryIndexes(stops) else { return nil }
+        let first = stops[bounds.first]
+        let last = stops[bounds.last]
+        guard
+            let start = Dates.parseTimeToMinutes(first.departure)
+                ?? Dates.parseTimeToMinutes(first.arrival),
+            let end = Dates.parseTimeToMinutes(last.arrival)
+                ?? Dates.parseTimeToMinutes(last.departure)
+        else { return nil }
+        let shift = Double(clock.offsetMinutes(
+            fromStopIndex: bounds.first, toStopIndex: bounds.last, on: train.date))
+        var span = end - start - shift
+        if span < 0 { span += 24 * 60 }
+        return span < 0 ? nil : span
     }
 
     public static func sumRideMinutes(_ trains: [Train]) -> Double {

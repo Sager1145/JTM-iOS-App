@@ -69,6 +69,20 @@ struct RideDurationTests {
         #expect(Statistics.trainRideMinutes(train, clock: clock) == 120)
     }
 
+    @Test("the zone shift is applied before the overnight wrap")
+    func crossZoneNearMidnight() {
+        let date = "2026-08-27"
+        let train = Train(
+            id: "W", date: date, number: "W", origin: "A", destination: "B",
+            stops: [
+                Stop(name: "A", departure: "23:30", stopType: "origin", rideSegment: true),
+                Stop(name: "B", arrival: "23:10", stopType: "destination", rideSegment: true),
+            ])
+        let clock = JourneyClock(stops: [.japan, .taiwan], fallback: .japan, on: date)
+        // 23:30 JST = 14:30Z, 23:10 TST = 15:10Z.
+        #expect(Statistics.trainRideMinutes(train, clock: clock) == 40)
+    }
+
     @Test("the correction uses the first and last ridden stops, not stop 0 and the end")
     func riddenSubrangeCorrection() {
         let date = "2026-08-27"
