@@ -223,9 +223,6 @@
       ],
       "sources": [
         "ios/RailMap/Diagnostics/AppleMapDatumProbe.swift",
-        "ios/RailMap/Diagnostics/MapIndependentRailPrototype.swift",
-        "ios/RailMap/Diagnostics/MapProjectedRailScene.swift",
-        "ios/RailMap/Diagnostics/MapRailHomography.swift",
         "ios/RailMap/Diagnostics/MapRenderDiagnostics.swift",
         "ios/RailMap/Diagnostics/ReduceMotionUITestProbe.swift",
         "ios/RailMap/Diagnostics/RouteStressHarness.swift",
@@ -298,6 +295,7 @@
         "ios/RailMap/Infrastructure/Persistence/RideLibrary.swift",
         "ios/RailMap/Infrastructure/Persistence/RidePersistenceQueue.swift",
         "ios/RailMap/Infrastructure/Persistence/RideStorage.swift",
+        "ios/RailMap/Infrastructure/Persistence/SampleLegacyRideIDs.swift",
         "ios/RailMap/Infrastructure/Persistence/TimetableRouteEvidence.swift",
         "ios/RailMap/Infrastructure/Subscription/ChatGPTSubscriptionAuth.swift",
         "ios/RailMap/Infrastructure/Subscription/ChatGPTSubscriptionService.swift"
