@@ -44,18 +44,12 @@ final class StatisticsRhythmYearUITests: XCTestCase {
         screenshot.lifetime = .keepAlways
         add(screenshot)
 
-        let widget = element("statisticsWidget-rhythm", in: app)
-        for _ in 0..<8 where !widget.isHittable { app.swipeUp() }
-        XCTAssertTrue(widget.isHittable)
-        widget.tap()
-
         let januaryColumn = element("statisticsRhythmColumn-1", in: app)
         for _ in 0..<8 where !januaryColumn.isHittable { app.swipeUp() }
         XCTAssertTrue(januaryColumn.isHittable)
         XCTAssertEqual(januaryColumn.value as? String, "\(january) train(s)")
         XCTAssertEqual(element("statisticsRhythmColumn-12", in: app).value as? String,
                        "\(december) train(s)")
-        app.buttons["Done"].tap()
     }
 
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {
