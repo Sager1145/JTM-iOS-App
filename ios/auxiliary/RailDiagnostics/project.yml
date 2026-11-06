@@ -42,15 +42,9 @@ targets:
       - path: ../RailAlignmentInspector/Resources
         buildPhase: resources
       - path: ../RailAlignmentInspector/Assets.xcassets
-        excludes:
-          - AppIcon.appiconset
       - path: ../ThroughWorkbench/App/Assets.xcassets
-        excludes:
-          - AppIcon.appiconset
       - path: ../ThroughWorkbench/App
         excludes:
-          - ThroughWorkbenchApp.swift
-          - Info.plist
           - Assets.xcassets
     dependencies:
       - package: RailKit

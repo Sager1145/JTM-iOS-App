@@ -1,48 +1,6 @@
 import RailPresentation
 import SwiftUI
 
-// MARK: - where the panel is
-
-/// What the ride panel is showing.
-///
-/// The panel is *one* surface whose content is replaced. It is not a stack of
-/// surfaces: opening a journey does not present a second card over the list,
-/// it swaps what the single card draws. The list stays mounted underneath —
-/// its search text, its scroll offset and its expanded sections are still
-/// there when the reader comes back, because the view was never torn down.
-///
-/// That is the whole reason this is an enum and not a `NavigationPath`. A push
-/// would give correct navigation and lose the state; a second `.sheet` would
-/// give correct state and stack two translucent surfaces over the map, which
-/// is the one thing a map-first layout cannot afford.
-enum RideRoute: Equatable {
-    case home
-    case ride(String)
-
-    /// The route's *kind*, which is what detents and measurements are keyed
-    /// by. Two different journeys are two `.ride` routes but one card: the
-    /// reader who left the card half-open expects it half-open for the next
-    /// journey too, not reset because the identifier changed.
-    enum Kind: Hashable {
-        case home
-        case ride
-    }
-
-    var kind: Kind {
-        switch self {
-        case .home: .home
-        case .ride: .ride
-        }
-    }
-
-    var rideID: String? {
-        if case .ride(let id) = self { return id }
-        return nil
-    }
-
-    var isHome: Bool { self == .home }
-}
-
 /// How much of the panel is showing.
 ///
 /// Named rather than measured, because the content is written against these

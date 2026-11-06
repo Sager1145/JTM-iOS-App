@@ -41,22 +41,6 @@ enum CardShape: String, CaseIterable, Identifiable, Codable, Hashable, Sendable 
     }
 }
 
-struct CardSize: Hashable, Codable, Sendable {
-    var shape: CardShape
-    var scale: Int
-
-    init(shape: CardShape, scale: Int = 1) {
-        self.shape = shape
-        self.scale = max(1, scale)
-    }
-
-    var span: GridSpan {
-        GridSpan(
-            columns: shape.baseSpan.columns * scale,
-            rows: shape.baseSpan.rows * scale)
-    }
-}
-
 extension StatisticsCardKind {
     var preferredWidgetShape: CardShape {
         switch self {
