@@ -27,7 +27,7 @@ struct ResourceProfileTests {
         #expect(compact.trimsRegionalGraphsAfterEachRide)
         #expect(compact.countryCacheSlots == 1)
         #expect(compact.displayResidentByteBudget == 16 * 1024 * 1024)
-        #expect(compact.geometryFrameCapacity == 8)
+        #expect(compact.geometryFrameCapacity == 5)
         #expect(compact.mapTripLimit == 500)
 
         let large = ResourceProfile(tier: .large)

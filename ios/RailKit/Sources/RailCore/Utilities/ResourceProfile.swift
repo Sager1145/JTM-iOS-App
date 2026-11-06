@@ -120,7 +120,7 @@ public struct ResourceProfile: Sendable, Equatable {
     }
 
     /// Zoom/era frames of prepared network geometry kept for reuse.
-    public var geometryFrameCapacity: Int { tier == .compact ? 8 : 16 }
+    public var geometryFrameCapacity: Int { tier == .compact ? 5 : 16 }
 
     /// The most trips the map draws at once.
     public var mapTripLimit: Int { tier == .desktop ? 1_500 : 500 }

@@ -1,3 +1,4 @@
+import RailCore
 import RailPresentation
 import MapKit
 import Observation
@@ -13,6 +14,9 @@ struct RailMapApp: App {
     @State private var localization = AppLocalization()
 
     init() {
+        // Decide the device tier before any cache reads a budget from it, so
+        // the tier is measured at launch rather than at first use.
+        _ = ResourceProfile.detected
         BundledRegistry.install()
         BundledRegistry.preload(regions: [Region.jp.code])
     }

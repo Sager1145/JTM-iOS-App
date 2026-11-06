@@ -1607,7 +1607,8 @@ final class RiddenRouteStore {
     }
 
     /// Select existing cache behavior for one explicitly requested diagnostic run.
-    /// Shipping builds retain the bounded 100,000-node policy.
+    /// Without options the bounded policy uses the device profile's load
+    /// budget, as shipping builds do.
     nonisolated static func diagnosticGraphCacheConfiguration(
         arguments: [String] = ProcessInfo.processInfo.arguments
     ) throws -> DiagnosticGraphCacheConfiguration {
@@ -1638,7 +1639,7 @@ final class RiddenRouteStore {
             return .standard
         }
         guard let nodeValue else {
-            return .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget)
+            return .bounded(maximumNodes: ResourceProfile.current.regionalGraphLoadNodeBudget)
         }
         guard let nodes = Int(nodeValue), (1...2_000_000).contains(nodes) else {
             throw invalid("\(nodesFlag) requires one integer between 1 and 2000000.")
