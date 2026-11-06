@@ -121,8 +121,16 @@ public enum TripRoutePlanner {
             memo[key] = value
             return value
         }
+        // "Continue anyway" may change rows at a bare shared station code only
+        // inside the region around the two chosen stations. Shared codes never
+        // widen the search across the whole network.
+        let overrideRegion = request.allowUnverifiedConnections
+            ? OverrideRegion(package: package, originKey: originKey, destinationKey: destinationKey,
+                             stationKey: stationKey)
+            : nil
         func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
-            request.allowUnverifiedConnections || link(from, to, code).continues
+            if link(from, to, code).continues { return true }
+            return overrideRegion?.contains(stationKey(code)) ?? false
         }
         let seeds: [CompactPackage.Line]
         if let id = request.originLineID, let line = package.lines.first(where: { $0.id == id }) {
@@ -301,6 +309,38 @@ public enum TripRoutePlanner {
             return .disconnected(disconnected.isEmpty ? all : disconnected)
         }
         return constrainedTruncated ? .truncated : .noRoute
+    }
+
+    /// The area "Continue anyway" may change rows in: the box around the two
+    /// chosen stations, widened by a quarter of its span and at least
+    /// `minimumMarginDegrees` (about 30 km) on every side.
+    struct OverrideRegion {
+        static let minimumMarginDegrees = 0.3
+        private var coordinates: [String: Coordinate] = [:]
+        private let minLon: Double, maxLon: Double, minLat: Double, maxLat: Double
+
+        init?(package: CompactPackage, originKey: String, destinationKey: String,
+              stationKey: (String) -> String) {
+            for line in package.lines {
+                for station in line.stations where coordinates[stationKey(station.id)] == nil {
+                    coordinates[stationKey(station.id)] = station.coordinate
+                }
+            }
+            guard let origin = coordinates[originKey], let destination = coordinates[destinationKey] else {
+                return nil
+            }
+            let lonMargin = max(abs(origin.lon - destination.lon) / 4, Self.minimumMarginDegrees)
+            let latMargin = max(abs(origin.lat - destination.lat) / 4, Self.minimumMarginDegrees)
+            minLon = min(origin.lon, destination.lon) - lonMargin
+            maxLon = max(origin.lon, destination.lon) + lonMargin
+            minLat = min(origin.lat, destination.lat) - latMargin
+            maxLat = max(origin.lat, destination.lat) + latMargin
+        }
+
+        func contains(_ key: String) -> Bool {
+            guard let point = coordinates[key] else { return false }
+            return (minLon...maxLon).contains(point.lon) && (minLat...maxLat).contains(point.lat)
+        }
     }
 
     private static func junctions(for choice: RailwayRouteChoices.Choice,
