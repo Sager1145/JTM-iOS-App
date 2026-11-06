@@ -411,6 +411,32 @@ enum JourneyStrings {
             .ja: "今後の行程はありません。",
             .en: "No upcoming journeys.",
         ],
+        // An upcoming trip whose time has gone by. It stays in Upcoming until
+        // the reader files it; these name the state and the three choices.
+        "ios.journey.overdue": [
+            .zhHant: "已逾時",
+            .zhHans: "已逾时",
+            .ja: "時刻超過",
+            .en: "Overdue",
+        ],
+        "ios.journey.overduePrompt": [
+            .zhHant: "此行程的時間已過。",
+            .zhHans: "此行程的时间已过。",
+            .ja: "この行程の時刻を過ぎました。",
+            .en: "This trip's time has passed.",
+        ],
+        "ios.journey.moveToPast": [
+            .zhHant: "移至過去行程",
+            .zhHans: "移至过去行程",
+            .ja: "過去の行程に移動",
+            .en: "Move to past trips",
+        ],
+        "ios.journey.moveToUpcoming": [
+            .zhHant: "移至未來行程",
+            .zhHans: "移至未来行程",
+            .ja: "今後の行程に移動",
+            .en: "Move to upcoming",
+        ],
         "ios.journey.daySummary": [
             .zhHant: "{journeys} 趟行程",
             .zhHans: "{journeys} 趟行程",

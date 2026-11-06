@@ -121,6 +121,29 @@ struct WorkspaceJourneyRulesTests {
         ])
     }
 
+    @Test("a stored list membership overrides the date rule in the scope and the menu")
+    func storedMembershipOverridesDate() {
+        var overdue = train("overdue", date: "2026-09-01")
+        overdue.listMembership = .upcoming
+        var filedPast = train("filed-past", date: "2026-09-08")
+        filedPast.listMembership = .past
+        let legacy = train("legacy", date: "2026-09-08")
+        let trains = [overdue, filedPast, legacy]
+
+        let scope = WorkspaceJourneyRules.upcomingScope(
+            trains: trains, regionCode: nil, selectedDate: Dates.allDates,
+            todayByRegion: today, rule: rule)
+        #expect(scope.map(\.id) == ["overdue", "legacy"])
+        #expect(WorkspaceJourneyRules.journeyDates(
+            trains: trains, regionCode: nil, upcoming: true, todayByRegion: today,
+            manualDates: [], rule: rule) == ["2026-09-01", "2026-09-08"])
+        // History is exactly the rest, and keeps manual buckets.
+        #expect(WorkspaceJourneyRules.journeyDates(
+            trains: trains, regionCode: nil, upcoming: false, history: true,
+            todayByRegion: today, manualDates: ["2026-08-30"], rule: rule)
+            == ["2026-08-30", "2026-09-08"])
+    }
+
     @Test("upcoming menus exclude undated and malformed records")
     func upcomingMenusExcludeUndated() {
         let trains = [train("today", date: "2026-09-07"), train("undated", date: Dates.undated), train("bad", date: "tomorrow")]
