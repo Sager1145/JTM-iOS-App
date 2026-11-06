@@ -1443,10 +1443,15 @@ final class RiddenRouteStore {
     private typealias SolverInputs = RideRouteResolution.SourceInputs
 
     /// Immutable source/history inputs are shared by edits and batch loads.
-    /// Mutable graphs stay private to one sequential worker.
+    /// Mutable graphs stay private to one sequential worker. Completed inputs
+    /// keep ``ResourceProfile/countryCacheSlots`` slots (one on a compact
+    /// device); with two, the Japan-only scope is never the one evicted.
     private actor SolverInputCache {
         static let shared = SolverInputCache()
-        private var completed: (key: String, inputs: SolverInputs)?
+        /// Completed inputs, oldest first, at most ``slotCount``.
+        private var completed: [(key: String, inputs: SolverInputs)] = []
+        private let slotCount = ResourceProfile.current.countryCacheSlots
+        private static let pinnedScopeKey = RouteScope(regions: [.jp]).key
         // Independent admission avoids nesting the global route/display permit.
         private let decodeLimiter = RouteSolveLimiter(limit: 1)
         private var running: [String: Task<SolverInputs, Error>] = [:]
@@ -1481,11 +1486,23 @@ final class RiddenRouteStore {
             return built
         }
 
-        private func releaseCompleted() { completed = nil }
+        private nonisolated static func isPinned(_ key: String) -> Bool {
+            key.hasPrefix(pinnedScopeKey + ":")
+        }
+
+        /// Frees a slot before a decode allocates its replacement: with one
+        /// slot the completed inputs are dropped, as before; with two, the
+        /// oldest that is not Japan's goes first.
+        private func releaseCompleted() {
+            while !completed.isEmpty, completed.count >= slotCount {
+                let victim = completed.firstIndex { !Self.isPinned($0.key) } ?? 0
+                completed.remove(at: victim)
+            }
+        }
 
         /// Forces fresh solves from the retained inputs without re-decoding.
         func clearResolutionMemo() {
-            completed?.inputs.clearResolutionMemo()
+            for entry in completed { entry.inputs.clearResolutionMemo() }
             // The network indexes carry the station-interval memo; they are
             // cheap to rebuild next to the decoded inputs that stay.
             indexes.removeAll()
@@ -1494,20 +1511,25 @@ final class RiddenRouteStore {
         /// Drops the completed inputs and their derived indexes. In-flight
         /// decodes keep running, and their callers keep their own copies.
         func releaseForMemoryPressure() {
-            completed = nil
+            completed.removeAll()
             indexes.removeAll()
             intervalIndexes.removeAll()
         }
 
         private func retain(_ inputs: SolverInputs, key: String) {
-            completed = (key, inputs)
+            completed.removeAll { $0.key == key }
+            completed.append((key, inputs))
+            while completed.count > slotCount {
+                let victim = completed.firstIndex { !Self.isPinned($0.key) && $0.key != key } ?? 0
+                completed.remove(at: victim)
+            }
         }
 
         func inputs(scope: RouteScope) async throws -> SolverInputs {
             try Task.checkCancellation()
             let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
             let key = scope.key + ":" + revision
-            if let completed, completed.key == key { return completed.inputs }
+            if let ready = completed.first(where: { $0.key == key }) { return ready.inputs }
             if let task = running[key] {
                 let inputs = try await task.value
                 try Task.checkCancellation()
