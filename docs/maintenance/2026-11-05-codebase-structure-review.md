@@ -21,6 +21,20 @@ This is phase 1 of the codebase-cleanup session. It is a read-only review and a 
 
 ## 2. Waves
 
+### Phase 2 execution record (2026-11-05)
+
+Phase 2 ran on `claude/codebase-cleanup-4e53a5` after merging main at e3cacef73. Every wave was compile-checked with an incremental build of RailKit (`swift build`), the RailMap app (iOS Simulator) and RailDiagnostics (Mac Catalyst), using a dedicated DerivedData. Wave C also built the test bundles: `swift build --build-tests`, then RailMap and RailMapTests `build-for-testing`. Per the coordinator, no tests were run; the full test phase follows the cleanup. The fixture parity check (`build-port-fixtures.mjs --check`) was not run either: no wave touched `app/`, `port-fixtures/` or `rail-stroke.js`.
+
+| Wave | Commit | Outcome |
+|---|---|---|
+| A | 5e85b378a | Executed as planned, with three changes. (1) `ios/tools/tests/test_normalize_reviewed_timetable_profiles.py` was **kept**: its fixture `tests/fixtures/reviewed-timetable-profiles/` exists, so the scout misread it. (2) The prototype and its two helpers were already deleted on main (fab4456b2), so Wave A2 is moot. (3) Regenerating the RailDiagnostics xcodeproj also added the merged `Diagnostics/AppControl` and `DevTools` sources, which `project.yml` already covers through `../../RailMap` but the checked-in project lacked. |
+| B | bfef61acd | Also listed the 14 unlisted RailKit sources in `source-ownership.json`, including the new `RiddenLineSequence` and `RegionConnectivity`. |
+| C | 8afb5d2c5 | 271 test files moved. The 23 port-fixture parity suites went to `RailCoreTests/Parity/` rather than per feature. RailApplicationTests (5 files) stays flat. Six fixed-depth `#filePath` roots were adjusted, and each was checked to resolve to its target file. |
+| D | 5f6e81a7f | Executed as planned. Both built apps still carry `Unifont.otf` and `jp-area-grid.json` at the bundle root. |
+| E | — | **Deferred.** See the Wave E note below. |
+| F | (see the final commit) | Moves and link fixes as planned. The two feature-interface audits were not merged: `docs/architecture/feature-interface-audit.md` is the live one, and the older `ios/docs/reviews/...-2026-10-15.md` already marks itself 已过时 (outdated). Seventeen live markdown links into `docs/reports/` became labelled path references to the external evidence drive; dated plans, specs and the archive were left as written. |
+
+
 The waves are independent of each other: they touch different files and can land in any order. The order below runs from lowest risk and smallest diff up to the most churn.
 
 ### Wave A: dead code and legacy files (deletions only)
@@ -90,6 +104,9 @@ Verification: `swift build --build-tests`, then one focused `swift test --filter
 Verification: incremental RailDiagnostics build and app build, plus one bundle-content check for the two resources.
 
 ### Wave E: `ios/tools` grouping
+
+> **Deferred in phase 2.** About 600 scripts and tests derive the repo root from a fixed depth: `Path(__file__).resolve().parents[2]` in scripts, and `parents[1]` or `parents[3]` in tests. They also import `train_timetable.py` and the other root builders as siblings through `TOOLS` or `sys.path`. 78 tests import from both the reviewed chain and `train_timetable`. Splitting them into `reviewed-timetable/` and `build/` would mean rewriting several hundred path expressions, and only running the Python tests could verify that, which is out of scope here. Follow-up: add one shared path helper (for example `ios/tools/_paths.py`) and switch every script to it, then move the files.
+
 
 The reviewed-timetable normalizer chain is **kept**. The scouts saw `app/data/train-service-history/candidates/` as missing, but it exists in the main checkout: it is git-ignored, line 96 of `.gitignore`, and holds 485 inputs. `rebuild-reviewed-train-timetable.py` drives all 359 normalizers, and it is the only regenerator of the committed reviewed timetable data. So the chain is still a live artifact builder, not dead.
 
@@ -308,6 +325,9 @@ That is 135 files, 229,794,497 bytes in all: 126 byte-identical and 9 older copi
 | `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/city-native-page37 3.png` | 881955 | identical |
 
 ## 5. Follow-ups (not moves or deletions)
+
+0. **Wave E, the `ios/tools` regroup:** introduce a shared path helper first (see Wave E).
+0. **`docs/maintenance/sample-trips-verification.md`** cites `RailCoreTests/SampleTripDisplayCensusTests.swift`. That test exists only on an unmerged WIP branch (b5bd8f6af).
 
 1. **`TimetableDiscoveryUITests.swift:70` is not stale: no fix is needed.** The scout reported `newTripDepartureDate` as missing because no literal string matches it. The ID is composed at runtime: `JourneyEditorView.swift:1096` passes `identifier: "newTripDeparture"` to `TypedDateTimeField`, which tags its date `TextField` with `"\(identifier)Date"` (`EditorDateTimeFields.swift:345`). The same file's `setDeparture` helper relies on that pattern.
 2. **`MapIndependentRailPrototype`: integration-fixes owns the deletion.** That branch (`claude/adoring-moser-80ec3b`) deletes the prototype file, its UI test and its pbxproj and source-ownership entries, so none of it is in these waves. The "19 Map hooks" in audit:562 are already gone on the current base. `git grep` finds no reference to the prototype, `RAILMAP_RUN_INDEPENDENT_RAIL_PROTOTYPE` or `MapProjectedRailScene`/`MapRailHomography` anywhere in `ios/RailMap` outside `Diagnostics/`. Two files are used only by the prototype: `Diagnostics/MapProjectedRailScene.swift` and `Diagnostics/MapRailHomography.swift`. After that branch lands: if they still exist, delete them in **Wave A2**, regenerate the RailDiagnostics xcodeproj, which lists both explicitly at pbxproj:85 and :232, and mark audit:562 as resolved.

@@ -1,5 +1,7 @@
 # Xcode 与 Swift 源码结构
 
+> 2026-11-05：目录调整（测试按功能子目录、检查台移入 `ios/auxiliary/RailDiagnostics/Modules/`、两份统计资源移入 `Statistics/Resources/`）见 [代码库结构审查](../../docs/maintenance/2026-11-05-codebase-structure-review.md)；下文的文件数和路径是 2026-10-10 的记录。
+
 2026-10-10 本次整理以当前工作副本为基础。主应用 173 个原始 Swift 文件、RailKit 120 个原始 Swift 文件和三个诊断应用的生产 Swift 都纳入了结构检查；拆分后主应用和 RailKit 共 333 个生产 Swift 文件。声明、函数数量和文件职责清单也包含原生回归测试，见 [逐文件清单](reviews/source-structure-inventory.md)。这是组织、命名、注释和抽取边界审查，不是每个函数的完整逻辑正确性、运行时或性能证明。
 
 ## 工程入口
@@ -71,4 +73,4 @@ RailKit 各 target 的 `Resources/` 不移动；主应用 Assets、字体、Icon
 模拟器增量编译通过；源码无编译警告。显示检查台只有无 AppIntents 依赖时的
 可选 metadata 跳过提示。RouteWorkbench／ThroughWorkbench 做了路径和语法检查，
 未在本聊天分别编译产品。未执行完整 native 测试、UI／性能／泄漏或设备矩阵。
-结果与修复过的集成问题记录在 ../refactor-parallel/architecture-coverage.md。
+结果与修复过的集成问题记录在 ../../docs/maintenance/archive/2026-10-refactor/architecture-coverage.md。

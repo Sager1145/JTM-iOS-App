@@ -9,7 +9,7 @@
 /// What is left are the questions a journey log actually answers: what is
 /// coming, what does it all add up to, and what have I got.
 ///
-/// Pass 2 (docs/ui-reorganization.md): these are now the workspace's PAGE
+/// Pass 2 (docs/maintenance/ui-reorganization.md): these are now the workspace's PAGE
 /// states, not tabs. Upcoming, All and Search are list modes of the one
 /// Journeys tab; the tab bar shows `WorkspaceTab` below.
 enum PrimaryTab: String, CaseIterable, Identifiable {

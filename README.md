@@ -157,7 +157,7 @@ Start with a review of the changed code or data and its affected dependencies. F
 
 The opt-in `ios/verify.sh` exposes independent `swift`, `build`, `route`, and `alignment` modules; running it without arguments prints help. It does not launch an automatic full verification pipeline. Follow [the current verification policy](ios/VERIFICATION.md), reuse applicable evidence, and coordinate one heavy job at a time.
 
-Feature descriptions here identify implemented surfaces. Current acceptance questions and dated results remain in the [scope ledgers](ios/refactor-parallel/) and [reports](docs/reports/).
+Feature descriptions here identify implemented surfaces. Current acceptance questions and dated results remain in the [archived 2026-10 scope ledgers](docs/maintenance/archive/2026-10-refactor/) and reports (`docs/reports/`, 外部证据盘).
 
 ## Further reading
 

@@ -1,8 +1,8 @@
 # 实际功能、接口与实现归属
 
-2026-10-19 交接补充：[已完成／未完成工作清单](../reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/work-inventory-20261019.md)与[数据结构重构准备](railway-data-overhaul-preparation.md)。后者追加了实际Compact→JS→builder→Swift→诊断数据合同追踪；身份注册表ADR0013仍是提案，尚未切换schema。本表下面的2026-10-18记录是其原复核范围，不表示本次重新验证所有功能。
+2026-10-19 交接补充：已完成／未完成工作清单 (`docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/work-inventory-20261019.md`, 外部证据盘)与[数据结构重构准备](railway-data-overhaul-preparation.md)。后者追加了实际Compact→JS→builder→Swift→诊断数据合同追踪；身份注册表ADR0013仍是提案，尚未切换schema。本表下面的2026-10-18记录是其原复核范围，不表示本次重新验证所有功能。
 
-更新：2026-10-18。当前入口以本文为准；修复历史和逐项验证保留在[联合审计 T8](../reports/integration/function-interface-architecture-2026-10-15.md#t8-按审计落实交互状态唯一实现与数据流2026-10-17)。旧报告前半部分的候选不能直接当作当前缺陷。
+更新：2026-10-18。当前入口以本文为准；修复历史和逐项验证保留在联合审计 T8 (`docs/reports/integration/function-interface-architecture-2026-10-15.md#t8-按审计落实交互状态唯一实现与数据流2026-10-17`, 外部证据盘)。旧报告前半部分的候选不能直接当作当前缺陷。
 
 采用 Matt Pocock `codebase-design` 和 `improve-codebase-architecture`。本次复核主应用已收敛的调用链，并独立检查正在整合的诊断 App；未重新逐函数审计整个仓库。下表按实际能力列出 interface 和权威 implementation，不把 private helper、按钮数量、文件数量或布局变体当作额外功能。诊断 App 已完成最终增量构建及有界人工、agent、键盘原生观察，结果见[诊断证据](../../ios/auxiliary/RailDiagnostics/Evidence/20261017-remake/README.md)。
 

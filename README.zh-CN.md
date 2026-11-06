@@ -157,7 +157,7 @@ railway-sources/        来源目录；原始输入仅保存在本地
 
 按需使用的 `ios/verify.sh` 提供独立的 `swift`、`build`、`route` 和 `alignment` 模块，不带参数运行时显示帮助，不会启动自动全量验证流水线。请遵循 [当前验证政策](ios/VERIFICATION.md)，复用仍然适用的证据，并协调同一时间只运行一个重型任务。
 
-本文介绍代码中已实现的功能界面。当前验收问题和带日期的结果保留在 [工作范围记录](ios/refactor-parallel/) 和 [报告](docs/reports/) 中。
+本文介绍代码中已实现的功能界面。当前验收问题和带日期的结果保留在 [2026-10 工作范围记录（存档）](docs/maintenance/archive/2026-10-refactor/) 和 报告 (`docs/reports/`, 外部证据盘) 中。
 
 ## 延伸阅读
 

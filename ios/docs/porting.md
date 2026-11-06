@@ -82,7 +82,7 @@ measurements do not establish a bound for newly changed code or inputs.
 
 Use [the current verification policy](../VERIFICATION.md). Begin in chat with the
 diff and affected dependencies. Review relevant existing tests under
-`ios/RailKit/Tests/`; `RailCoreTests/PortFixtures.swift` reads fixtures and shipped
+`ios/RailKit/Tests/`; `RailCoreTests/Support/PortFixtures.swift` reads fixtures and shipped
 packages from the repository, so a detached copy of the package lacks those inputs.
 Tests use Swift Testing (`@Test`, `#expect`) and `PortFixtures.decode(...)` or
 `PortFixtures.package(country:)` where appropriate.

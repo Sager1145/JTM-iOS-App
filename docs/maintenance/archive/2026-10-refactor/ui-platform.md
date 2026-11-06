@@ -296,7 +296,7 @@ Reviewed the changed Swift dependencies and RC SDK toolbar declarations. Final i
 
 Native visual observations on both folded and expanded displays confirm one navigation sidebar, one capsule containing three map actions, separate location circle, card adjacent to sidebar, and card command above it. Final expand/hide/restore actions observed; earlier unchanged shell observations confirmed destination selection restores the card, Settings includes legend/data-sources, and map dragging works. Captures: railmap-duo-expanded.png and railmap-duo-folded.png in the task visualization directory. No runtime performance, leaks, complete accessibility or physical-device claims.
 
-Apple guidance: ChatGPT Pro annotated 47-source index saved in docs/reference/apple-ui-pro-source-index-20261013.md. Forty selected original Apple HIG documents downloaded as JSON and bundled with manifests and docs/reference/apple-ui-practices-duo-20261013.md in apple-ui-guidance-20261013.zip. This is the task-relevant source set, not every Apple publication. No commit/push.
+Apple guidance: ChatGPT Pro annotated 47-source index saved in docs/maintenance/archive/2026-10-refactor/apple-ui-pro-source-index-20261013.md. Forty selected original Apple HIG documents downloaded as JSON and bundled with manifests and docs/reference/apple-ui-practices-duo-20261013.md in apple-ui-guidance-20261013.zip. This is the task-relevant source set, not every Apple publication. No commit/push.
 
 
 2026-10-13 — Duo menu detents and shared compact headers follow-up

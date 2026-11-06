@@ -143,7 +143,7 @@ Moved out of Settings:
 - UI tests: `ConsoleSweepTests` now opens the two Settings drill-downs so the
   diagnostics rows are still mounted by the sweep.
 
-Before/after screenshots: `docs/screenshots/ui-reorganization/`.
+Before/after screenshots: `docs/maintenance/screenshots/ui-reorganization/`.
 
 ## 4. Verification (2026-11-05)
 
@@ -246,7 +246,7 @@ launch hook still accepts `upcoming`, `all`, `search` and `stats`.
 - `Localization/ShellStrings.swift`: `ios.tab.journeys`, `ios.journey.filter`, `ios.journey.listScope` (en/ja/zh-Hans/zh-Hant).
 - UI tests updated where tab indices, the filter button or removed entries were used.
 
-Screenshots: `docs/screenshots/ui-reorganization/pass2-before-*.png` and `pass2-after-*.png`
+Screenshots: `docs/maintenance/screenshots/ui-reorganization/pass2-before-*.png` and `pass2-after-*.png`
 (Journeys All, Upcoming and search results; Stats). There is no after screenshot of Data
 Library: the shared simulator kept getting other sessions' builds installed over this one,
 and the shot was lost. The single Import section was checked by eye on an earlier capture
@@ -635,7 +635,7 @@ Focused runs on the shared iPhone 17 simulator, per `ios/VERIFICATION.md`:
     comma in its labels) and the long saved trip. Two RailMapUITests fail at the edit form on
     the `train-store` sample.
 
-Screenshots (`docs/screenshots/ui-reorganization/`):
+Screenshots (`docs/maintenance/screenshots/ui-reorganization/`):
 - `pass3-before-share-*`: the old poster and composer.
 - `pass3-after-share-*` and `pass3-after-export-*`: the new card, and the system share sheet on
   export.

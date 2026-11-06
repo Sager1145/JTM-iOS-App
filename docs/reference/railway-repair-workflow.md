@@ -1,6 +1,6 @@
 # 铁路检查与修复流程
 
-范围为既有排序输入中的全部 658 条独立线路。顺序继续使用 `ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json` 中 lineID 的首次出现顺序；进度记录在 ordered-continuation 的现有 `chat-handoff-20261017/audit-status.md`，证据放在各线路目录。不另建重复状态库。采集完成、已查原图、证据确认、修复应用和 Main 确认分别记录，不能互相代替。
+范围为既有排序输入中的全部 658 条独立线路。顺序继续使用 `ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json`（本地未跟踪证据；2026-10 协调记录已存档到 `docs/maintenance/archive/2026-10-refactor/`） 中 lineID 的首次出现顺序；进度记录在 ordered-continuation 的现有 `chat-handoff-20261017/audit-status.md`，证据放在各线路目录。不另建重复状态库。采集完成、已查原图、证据确认、修复应用和 Main 确认分别记录，不能互相代替。
 
 ## 每条线路的操作
 

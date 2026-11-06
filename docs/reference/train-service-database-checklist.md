@@ -256,7 +256,7 @@
 
 Logo 证据单独更新于 2026-09-30，品牌 JSON 的 SHA-256 为 `f7bf617978f15c0c6d78490aa3a7f672ab713c04e2e3088e16de6bb6308a9924`。本次仅同步本节的 Logo 列与素材统计；上方验收元数据、辨识结果及下方路线／停靠站验收仍为原有快照，未由本次 Logo 核对重新验证。
 
-✅ 只表示专用图稿文件存在，不表示已取得开放再分发许可。既有 `spacia-x.png`、`hinotori.png`、`shimakaze.png` 的来源未声明开放再分发许可，三个缺口仍保留。178 条未收录服务继续使用公司标志／默认图标回退；来源、适用范围与许可见[Logo 来源审计](../reports/timetable/train-service-logo-sources.md)和[素材清单](../../app/public/rail/service-logos/README.md)。
+✅ 只表示专用图稿文件存在，不表示已取得开放再分发许可。既有 `spacia-x.png`、`hinotori.png`、`shimakaze.png` 的来源未声明开放再分发许可，三个缺口仍保留。178 条未收录服务继续使用公司标志／默认图标回退；来源、适用范围与许可见Logo 来源审计 (`docs/reports/timetable/train-service-logo-sources.md`, 外部证据盘)和[素材清单](../../app/public/rail/service-logos/README.md)。
 
 
 ## 二、停靠站模式（298 条）

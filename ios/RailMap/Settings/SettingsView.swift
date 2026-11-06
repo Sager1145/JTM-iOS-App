@@ -49,7 +49,7 @@ struct SettingsView: View {
         // The first screen holds what most readers change: language, theme,
         // how names are written and which map they see. Fine-tuning (nine
         // sliders) and troubleshooting read-outs are one level deeper, so the
-        // common path is not buried under them. See docs/ui-reorganization.md.
+        // common path is not buried under them. See docs/maintenance/ui-reorganization.md.
         Form {
             generalSection
             journeyNameSection

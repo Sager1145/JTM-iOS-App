@@ -37,7 +37,7 @@ OSM 缓存和 N02 下载从同机器的 Web/builder checkout 复制导入；外�
 `d75307df9c812abf1259b86b75202ba7b0048679`。原件位于
 `local/china/crtrainroute/<commit>/`，只保留 JSON、README 和 LICENSE；不读取成品 pickle。
 归属说明见 [CRTrainRoute attribution](attribution/CRTrainRoute/README.md)，
-比较结果与原始 OSM 生产接入依据见 [研究报告](../docs/reports/sources/crtrainroute-study-20261018.md)。
+比较结果与原始 OSM 生产接入依据见 研究报告 (`docs/reports/sources/crtrainroute-study-20261018.md`, 外部证据盘)。
 
 恢复该提交的 `data/geojson/*.geojson`、`data/stations.json`、
 `data/station_names.json`、`data/station_lanes.json` 后，在仓库根目录运行：

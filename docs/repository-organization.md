@@ -2,16 +2,20 @@
 
 本页是整个仓库的分类入口。2026-10-10 整理保留正式源码、构建器、数据库、工程引用及其他聊天的活跃路径；完成目录分类和无依赖本地杂项归档，随后按用户要求删除了三份过期提示／交接文档；没有改写 Git 历史。分类不是代码正确性、全国铁路完整性或过期报告有效性的证明。
 
+## 2026-11-05 整理
+
+全仓审查与执行记录见 [代码库结构审查](maintenance/2026-11-05-codebase-structure-review.md)：删除死代码与遗留文件；`source-ownership.json` 与磁盘一致；原生测试按功能子目录存放；`Unifont.otf`、`jp-area-grid.json` 移入 `ios/RailMap/Statistics/Resources/`；三个检查台移入 `ios/auxiliary/RailDiagnostics/Modules/`；UI 重组、样例行程验证记录和 2026-10 协调记录移入 `docs/maintenance/`。`ios/tools/` 仍保持平铺，理由见下文。
+
 ## 从任务找到目录
 
 | 任务 | 正式位置 | 内容与发布规则 |
 | --- | --- | --- |
 | iOS 主应用 | `ios/RailMap/` | Swift/SwiftUI 页面、状态接入、原生地图和品牌资源；发布源码。 |
 | 共用 Swift 规则 | `ios/RailKit/Sources/` | RailCore 求解/身份/数据、RailPresentation 展示规则、RailApplication 状态；发布源码和包内必要资源。 |
-| 生产回归测试 | `ios/RailKit/Tests/`、`ios/RailMapUITests/`、`app/tests/` | 有实际生产行为契约的测试；保留，按具体变更选择运行。 |
-| 线路求解检查台 | `ios/auxiliary/RailDiagnostics/Modules/RouteWorkbench/` | Mac Catalyst 诊断应用、Logo、详细报告和使用说明；独立容器。 |
-| 历史直通检查台 | `ios/auxiliary/RailDiagnostics/Modules/ThroughWorkbench/` | 历史服务检查界面、WorkbenchCore、已有报告；报告注明日期和输入边界。 |
-| 显示轨道检查台 | `ios/auxiliary/RailDiagnostics/Modules/RailAlignmentInspector/` | 几何/支轨/折返显示检查；归显示聊天负责，不能当作物理连接审批。 |
+| 生产回归测试 | `ios/RailKit/Tests/`、`ios/RailMapTests/`、`ios/RailMapUITests/`、`app/tests/` | 有实际生产行为契约的测试；保留，按具体变更选择运行。原生测试按功能子目录存放：RailKit 测试镜像 `Sources/` 子目录（端口 fixture 一致性测试在 `Parity/`，共享夹具在 `Support/`），应用测试镜像 `ios/RailMap/` 功能目录。 |
+| 线路求解检查台 | `ios/auxiliary/RailDiagnostics/Modules/RouteWorkbench/` | RailDiagnostics 的内部模块（原独立 Catalyst 应用已于 2026-10-10 退役）；Logo、报告和使用说明。 |
+| 历史直通检查台 | `ios/auxiliary/RailDiagnostics/Modules/ThroughWorkbench/` | RailDiagnostics 的内部模块：历史服务检查界面、WorkbenchCore、已有报告；报告注明日期和输入边界。 |
+| 显示轨道检查台 | `ios/auxiliary/RailDiagnostics/Modules/RailAlignmentInspector/` | RailDiagnostics 的内部模块：几何/支轨/折返显示检查，InspectionKit；不能当作物理连接审批。 |
 | Xcode/SwiftPM 工程 | `ios/*.xcodeproj/`、各检查台工程、`ios/RailKit/Package.swift` | 目标成员、资源复制和共享 scheme；路径改变需要连同引用集成。 |
 | 原生打包资源 | `ios/Resources/` | 主应用需要的字体、品牌和本地资源；依赖 `ios/copy-rail-packages.sh` 的资源保持其合同。 |
 | Web 与 JS 对应逻辑 | `app/shared/`、`app/index.html`、`app/package*.json` | Web 入口、共享 JavaScript 和依赖锁；Swift/JS 共同行为改变时核对两端。 |
@@ -22,12 +26,12 @@
 | 两端等价 fixture | `port-fixtures/` | 已构建的跨语言生产规则 fixture；不是原始铁路下载，也不是验证通过声明。 |
 | 铁路原始资料 | `railway-sources/local/` | 本地原始下载、标准化输入、候选和参考，Git 忽略；来源目录说明见 [源数据中心](../railway-sources/README.md)。 |
 | 来源目录与许可 | `railway-sources/catalog.json`、`railway-sources/attribution/` | 可发布的分类、恢复位置、许可/NOTICE；不包含原始轨道载荷。 |
-| 设计、决定与使用文档 | `docs/`、`ios/docs/`、`ios/*.md` | 当前手册放 `docs/guides/`，API／数据合同放 `docs/reference/`，维护规则放 `docs/maintenance/`；历史报告按主题放 `docs/reports/`，原生指南放 `ios/docs/`。入口见 [文档目录](README.md)。 |
+| 设计、决定与使用文档 | `docs/`、`ios/docs/`、`ios/*.md` | 当前手册放 `docs/guides/`，API／数据合同放 `docs/reference/`，维护规则放 `docs/maintenance/`；带日期的维护记录放 `docs/maintenance/`（旧协调记录存档在 `docs/maintenance/archive/`）；历史报告 `docs/reports/` 已于 2026-10-30 移到外部证据盘（见 [证据存放](../railway-evidence/README.md)），旧文档中的该路径是查找键；原生指南放 `ios/docs/`。入口见 [文档目录](README.md)。 |
 | 执行计划/设计 | `docs/superpowers/plans/`、`docs/superpowers/specs/`、`docs/superpowers/completed/` | 有日期和范围的工作记录；旧计划不自动授权重新运行退役检查。 |
-| 聊天归属/集成记录 | `ios/refactor-parallel/` | 独占文件范围、交接和当前集成状态，见 [聊天归属](../ios/refactor-parallel/task-ownership-20261010.md)。 |
+| 聊天归属/集成记录（存档） | `docs/maintenance/archive/2026-10-refactor/` | 2026-10 的独占文件范围和交接记录，见 [聊天归属](maintenance/archive/2026-10-refactor/task-ownership-20261010.md)。 |
 | 本地报告、截图与工作资料 | `outputs/` | 已有忽略规则。保留历史测量/截图和旧构建，注明输入状态；新整理资料放 `outputs/repository-organization/`。 |
 | 退役地区备份 | `backups/` | 原位保留，分类时不打开美国/加拿大载荷、不恢复打包；按已有 manifest/restore 说明使用。 |
-| 同步冲突/源码备份 | `ios/sync-conflicts/`、`ios/source-backups/`、`backups/empty-numbered-data-dirs/` | 已标为保留副本。空的编号目录只换了位置，没有删除，也不能当作正式样例。 |
+| 同步冲突/源码备份 | 无 | `ios/source-backups/` 的唯一 `.bak` 已于 2026-11-05 删除（无现行对应源码）；`ios/sync-conflicts/` 与 `backups/empty-numbered-data-dirs/` 已不存在。 |
 
 ## 根目录与隐藏目录
 
@@ -105,8 +109,8 @@
 | 删除的旧文件 | 当前入口 |
 | --- | --- |
 | `ios/REFACTOR_PROMPT.md` | [源码结构](../ios/docs/source-structure.md)与[当前验证政策](../ios/VERIFICATION.md) |
-| `ios/PERFORMANCE_OPTIMIZATION_PROMPT.md` | [性能范围账本](../ios/refactor-parallel/performance-m.md) |
-| `ios/REFACTOR_PARALLEL_HANDOFF_20261009.md` | [2026-10-10 聊天归属](../ios/refactor-parallel/task-ownership-20261010.md) |
+| `ios/PERFORMANCE_OPTIMIZATION_PROMPT.md` | [性能范围账本](maintenance/archive/2026-10-refactor/performance-m.md) |
+| `ios/REFACTOR_PARALLEL_HANDOFF_20261009.md` | [2026-10-10 聊天归属](maintenance/archive/2026-10-refactor/task-ownership-20261010.md) |
 
 当前使用指南改为五个支持地区；API 文档修正三模块与只读 SQLite 合同；运行／移植指南移除自动全量检查要求。历史 feature ledger 和旧重构计划保留为报告，不能作为今日通过声明。检查仅限内容与引用；没有运行构建或测试。
 

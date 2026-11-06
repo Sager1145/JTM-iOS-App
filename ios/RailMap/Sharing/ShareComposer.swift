@@ -61,7 +61,7 @@ struct ShareVideoInputs {
 /// Every Share entry opens this. Three decisions — scope (this journey · the
 /// journey list · statistics), format (image · video), and for an image its
 /// shape and look — over a live preview that IS the card: ``ShareCardView``,
-/// the same view the export renders. See docs/ui-reorganization.md.
+/// the same view the export renders. See docs/maintenance/ui-reorganization.md.
 ///
 /// Phone budget: the card content is plain strings built from values the
 /// statistics store already computed; the route map is one `MKMapSnapshotter`

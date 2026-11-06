@@ -4,7 +4,7 @@
 
 ## 从哪里继续
 
-- [工作完成度、修复与未完成清单](../reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/work-inventory-20261019.md)是本次静态交接快照；后续执行状态仍更新既有 [audit-status](../reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/audit-status.md)，不新建另一份可变状态数据库。
+- 工作完成度、修复与未完成清单 (`docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/work-inventory-20261019.md`, 外部证据盘)是本次静态交接快照；后续执行状态仍更新既有 audit-status (`docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/audit-status.md`, 外部证据盘)，不新建另一份可变状态数据库。
 - [实际功能与实现归属](function-interface-map.md)描述主 App、Web、诊断和构建的现有 interface；[修复流程](railway-repair-workflow.md)记录已采用的操作方式。
 - [ADR 0013](../decisions/0013-railway-identity-registry.md)已经提出稳定身份注册表、公司车站层、历史改键、CN 归并和 NA 入库。它仍为 **Proposed**；本文接续适用的计划，不另选一套 ID 或建立第二套注册表。其NA入库阶段与当前 ios/AGENTS.md 的“North America is retired”约束冲突，故不纳入实施。
 - [ADR 0004](../decisions/0004-wgs84-mapkit-datum-boundary.md)、[0008](../decisions/0008-chunked-display-network-database.md)、[0010](../decisions/0010-unified-station-tables.md)、[0011](../decisions/0011-dated-rail-history-overlay.md)、[0012](../decisions/0012-per-ride-resolution-and-catalog-eligibility.md)仍是迁移约束。旧 ADR 中引用的退役验证脚本以当前 [验证政策](../../ios/VERIFICATION.md)为准。

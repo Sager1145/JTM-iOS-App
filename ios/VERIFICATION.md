@@ -87,7 +87,7 @@ Do not turn retiring a gate into a claim that its requirements now pass.
 The five JTM coordination/refactor chats have been instructed to stop their old
 pipelines, explain and delete their owned scratch verification scripts, and record
 a lighter process only where their scope needs one. Their proposals live in
-`ios/refactor-parallel/`. No replacement umbrella script is introduced here.
+`docs/maintenance/archive/2026-10-refactor/`. No replacement umbrella script is introduced here.
 
 ## Retired umbrella gate (historical, not the current script)
 
