@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(os)
+import os
+#endif
 
 /// The routable graph, its spatial index, and the keys that decide whether
 /// either has to be built.
@@ -1416,6 +1419,9 @@ public enum RouteGraph {
         /// Set only while a compiled build appends physical junctions: the
         /// nodes and edges they add, folded into ``compiledComponentSeed``.
         fileprivate var junctionComponentLog: [(String, String?)]?
+        /// Set only while ``RouteGraph/addPhysicalJunctions`` runs: the node
+        /// keys it added. Everything else in ``nodes`` is surveyed.
+        fileprivate var junctionAddedNodeKeys: Set<String>?
         private var physicalJunctionEdgeCache: [(
             junction: PhysicalJunction, endpointKeys: [String]
         )]?
@@ -1689,10 +1695,25 @@ public enum RouteGraph {
         }
     }
 
+    #if canImport(os)
+    /// Same subsystem and category as the app's `RailSignpost.data`, so a
+    /// recording filtered on it shows graph builds beside package loads.
+    static let buildSignposter = OSSignposter(subsystem: "com.jtm.railmap", category: "data")
+    #endif
+
     static func build<S: Sequence>(compiled c: CompiledSections, featureIndices: S,
                                    junctions: [PhysicalJunction], plans: [JunctionPlan]? = nil,
-                                   identityPeriods: [RailHistoryOverlay.IdentityPeriod] = []) -> Graph where S.Element == Int {
+                                   identityPeriods: [RailHistoryOverlay.IdentityPeriod] = [],
+                                   kind: String = "direct") -> Graph where S.Element == Int {
         let graph = Graph(cellSize: graphCellSize)
+        #if canImport(os)
+        let signpost = buildSignposter.beginInterval("graph.build", id: buildSignposter.makeSignpostID(),
+                                                     "kind=\(kind, privacy: .public)")
+        defer {
+            buildSignposter.endInterval("graph.build", signpost,
+                                        "kind=\(kind, privacy: .public) nodes=\(graph.nodes.count)")
+        }
+        #endif
         for f in featureIndices { c.ensure(f) }
         var localOf = [Int32](repeating: -1, count: c.idCount)
         var creator: [Int] = []
@@ -1913,15 +1934,12 @@ public enum RouteGraph {
         let plans = plans ?? junctions.map(JunctionPlan.init)
         let policy = BuildPolicy.physicalRailway
         if policy == .physicalRailway {
-            // Acceptance sees only the surveyed vertices captured before augmentation.
-            let surveyedNodes = graph.nodes
-            var nodesByCoord: [String: [String]] = [:]
-            if !identityPeriods.isEmpty {
-                nodesByCoord.reserveCapacity(surveyedNodes.count)
-                for (key, coordinate) in surveyedNodes {
-                    nodesByCoord[Grid.coordKey(coordinate), default: []].append(key)
-                }
-            }
+            // Acceptance sees only the surveyed vertices present before
+            // augmentation. Copying `graph.nodes` for that made the first
+            // junction write duplicate a country-sized dictionary.
+            graph.junctionAddedNodeKeys = []
+            defer { graph.junctionAddedNodeKeys = nil }
+            let surveyedNodes = SurveyedNodes(graph: graph)
             var acceptedIDs: Set<String> = []
             for (junction, rawPlan) in zip(junctions, plans) {
                 guard let plan = resolvedJunctionPlan(rawPlan, graph: graph) else {
@@ -1929,9 +1947,29 @@ public enum RouteGraph {
                     continue
                 }
                 appendPhysicalJunction(junction, plan: plan, graph: graph, policy: policy,
-                    surveyedNodes: surveyedNodes, nodesByCoord: nodesByCoord,
+                    surveyedNodes: surveyedNodes,
                     identityPeriods: identityPeriods, acceptedIDs: &acceptedIDs)
             }
+        }
+    }
+
+    /// The graph's surveyed vertices: every node except those junction
+    /// augmentation added. A view, not a snapshot.
+    struct SurveyedNodes {
+        let graph: Graph
+
+        subscript(key: String) -> Coordinate? {
+            if graph.junctionAddedNodeKeys?.contains(key) == true { return nil }
+            return graph.nodes[key]
+        }
+
+        /// Surveyed keys whose coordinate quantises to `coordinate`'s
+        /// `Grid.coordKey`, in node insertion order. Such a node lies in the
+        /// normalized coordinate's own grid cell, so one bucket is read.
+        func keys(at coordinate: Coordinate) -> [String] {
+            let normalized = Grid.normalizeGraphCoord(coordinate)
+            return graph.grid[graphGridKey(normalized, cellSize: graph.cellSize)]?
+                .filter { self[$0] == normalized } ?? []
         }
     }
 
@@ -1955,6 +1993,7 @@ public enum RouteGraph {
             : graph.resolvedPhysicalCoordinateKey(coordinateKey) else { return nil }
         if graph.nodes[key] == nil {
             graph.junctionComponentLog?.append((key, nil))
+            graph.junctionAddedNodeKeys?.insert(key)
             graph.nodes[key] = normalized
             graph.adjacency[key] = []
             graph.nodeMeta[key] = NodeMeta()
@@ -2037,7 +2076,7 @@ public enum RouteGraph {
     /// expanded: its foreign stub is a third identity this hop does not rewrite.
     private static func appendIdentityAwareJunction(
         _ junction: PhysicalJunction, graph: Graph, policy: BuildPolicy,
-        surveyedNodes: [String: Coordinate], nodesByCoord: [String: [String]],
+        surveyedNodes: SurveyedNodes,
         identityPeriods: [RailHistoryOverlay.IdentityPeriod], acceptedIDs: inout Set<String>
     ) {
         if acceptedIDs.contains(junction.id) {
@@ -2046,12 +2085,10 @@ public enum RouteGraph {
         }
         let fromCandidates = identityCandidates(
             named: junction.from.identity, coordinate: junction.from.coordinate,
-            periods: identityPeriods, graph: graph, surveyedNodes: surveyedNodes,
-            nodesByCoord: nodesByCoord)
+            periods: identityPeriods, graph: graph, surveyedNodes: surveyedNodes)
         let toCandidates = identityCandidates(
             named: junction.to.identity, coordinate: junction.to.coordinate,
-            periods: identityPeriods, graph: graph, surveyedNodes: surveyedNodes,
-            nodesByCoord: nodesByCoord)
+            periods: identityPeriods, graph: graph, surveyedNodes: surveyedNodes)
 
         struct ResolvedPair {
             var fromKey: String
@@ -2160,7 +2197,7 @@ public enum RouteGraph {
     private static func identityCandidates(
         named: TrackIdentity, coordinate: Coordinate,
         periods: [RailHistoryOverlay.IdentityPeriod], graph: Graph,
-        surveyedNodes: [String: Coordinate], nodesByCoord: [String: [String]]
+        surveyedNodes: SurveyedNodes
     ) -> [IdentityCandidate] {
         var namedWindows: [(from: String?, to: String?)] = [(nil, nil)]
         var extras: [IdentityCandidate] = []
@@ -2177,8 +2214,7 @@ public enum RouteGraph {
                 let resolved = existingIdentities(
                     historical, probe: classSpecified ? .exact : .ifMissing,
                     lineName: period.identity.lineName, operatorName: period.identity.operator,
-                    coordinate: coordinate, graph: graph, surveyedNodes: surveyedNodes,
-                    nodesByCoord: nodesByCoord)
+                    coordinate: coordinate, graph: graph, surveyedNodes: surveyedNodes)
                 let window = (from: period.validFrom, to: Optional(period.validTo))
                 for identity in resolved where nonemptyIdentityWindow(window.from, window.to) {
                     extras.append(IdentityCandidate(identity: identity, windows: [window]))
@@ -2197,7 +2233,7 @@ public enum RouteGraph {
                 if period.validFrom != nil { windows.append((nil, period.validFrom)) }
                 let currents = currentMatchIdentities(
                     period, template: named, coordinate: coordinate, graph: graph,
-                    surveyedNodes: surveyedNodes, nodesByCoord: nodesByCoord)
+                    surveyedNodes: surveyedNodes)
                 for identity in currents {
                     extras.append(IdentityCandidate(identity: identity, windows: windows))
                 }
@@ -2272,7 +2308,7 @@ public enum RouteGraph {
     /// key with the match line and operator is accepted.
     private static func currentMatchIdentities(
         _ period: RailHistoryOverlay.IdentityPeriod, template: TrackIdentity, coordinate: Coordinate,
-        graph: Graph, surveyedNodes: [String: Coordinate], nodesByCoord: [String: [String]]
+        graph: Graph, surveyedNodes: SurveyedNodes
     ) -> [TrackIdentity] {
         let classChanged = !(period.identity.railwayClassCode?.isEmpty ?? true)
         let direct = identityCopy(
@@ -2281,15 +2317,14 @@ public enum RouteGraph {
         return existingIdentities(
             direct, probe: classChanged ? .also : .ifMissing,
             lineName: period.match.lineName, operatorName: period.match.operator,
-            coordinate: coordinate, graph: graph, surveyedNodes: surveyedNodes, nodesByCoord: nodesByCoord)
+            coordinate: coordinate, graph: graph, surveyedNodes: surveyedNodes)
     }
 
     private enum IdentityClassProbe { case exact, ifMissing, also }
 
     private static func existingIdentities(
         _ direct: TrackIdentity, probe: IdentityClassProbe, lineName: String, operatorName: String,
-        coordinate: Coordinate, graph: Graph, surveyedNodes: [String: Coordinate],
-        nodesByCoord: [String: [String]]
+        coordinate: Coordinate, graph: Graph, surveyedNodes: SurveyedNodes
     ) -> [TrackIdentity] {
         var found: [TrackIdentity] = []
         var seen = Set<String>()
@@ -2304,8 +2339,7 @@ public enum RouteGraph {
         case .ifMissing where !found.isEmpty: return found
         case .ifMissing, .also: break
         }
-        let coord = Grid.coordKey(coordinate)
-        for nodeKey in nodesByCoord[coord] ?? [] {
+        for nodeKey in surveyedNodes.keys(at: coordinate) {
             guard let meta = graph.nodeMeta[nodeKey],
                   meta.lineNames.contains(lineName), meta.operators.contains(operatorName) else { continue }
             var classes = meta.railwayClassCodes
@@ -2381,7 +2415,7 @@ public enum RouteGraph {
 
     private static func appendPhysicalJunction(
         _ junction: PhysicalJunction, plan: JunctionPlan, graph: Graph, policy: BuildPolicy,
-        surveyedNodes: [String: Coordinate], nodesByCoord: [String: [String]] = [:],
+        surveyedNodes: SurveyedNodes,
         identityPeriods: [RailHistoryOverlay.IdentityPeriod] = [],
         acceptedIDs: inout Set<String>
     ) {
@@ -2392,7 +2426,7 @@ public enum RouteGraph {
         if !identityPeriods.isEmpty,
            junction.kind == .zeroLength || junction.kind == .shortLink || junction.kind == .osmConnector {
             appendIdentityAwareJunction(junction, graph: graph, policy: policy,
-                surveyedNodes: surveyedNodes, nodesByCoord: nodesByCoord,
+                surveyedNodes: surveyedNodes,
                 identityPeriods: identityPeriods, acceptedIDs: &acceptedIDs)
             return
         }
@@ -2872,7 +2906,7 @@ extension RouteGraph {
             return made
         }
 
-        private func build(featureIndices: [Int]) -> Graph {
+        private func build(featureIndices: [Int], kind: String) -> Graph {
             let plans: [JunctionPlan]?
             if case .physicalRailway = policy {
                 plans = junctionPlans()
@@ -2881,7 +2915,7 @@ extension RouteGraph {
             }
             let graph = RouteGraph.build(compiled: compiled(), featureIndices: featureIndices,
                                          junctions: junctions, plans: plans,
-                                         identityPeriods: identityPeriods)
+                                         identityPeriods: identityPeriods, kind: kind)
             if let sourceSnapshotID, augment == nil {
                 graph.qualifySourceProofs(.init(snapshotID: sourceSnapshotID, featureIndices: featureIndices))
             }
@@ -3078,7 +3112,7 @@ extension RouteGraph {
         public func fullGraph() -> Graph {
             if let fullGraphCache { return fullGraphCache }
             prepareForGraphBuild(full: true)
-            let graph = build(featureIndices: Array(sections.indices))
+            let graph = build(featureIndices: Array(sections.indices), kind: "full")
             augment?(graph, nil)
             if mayRetain(graph) { fullGraphCache = graph }
             return graph
@@ -3121,7 +3155,7 @@ extension RouteGraph {
                 return cached
             }
             prepareForGraphBuild()
-            let graph = build(featureIndices: featureIndicesInBBox(qbbox))
+            let graph = build(featureIndices: featureIndicesInBBox(qbbox), kind: "regional")
             augment?(graph, qbbox)
             graph.regionBBox = qbbox
             guard mayRetain(graph) else { return graph }
@@ -3234,7 +3268,7 @@ extension RouteGraph {
                 return corridorGraphs[cachedIndex].graph
             }
             prepareForGraphBuild()
-            let graph = build(featureIndices: indices)
+            let graph = build(featureIndices: indices, kind: "corridor")
             if let augment, !coordinates.isEmpty {
                 let bbox = RouteGraph.padBBoxMeters(BBox(
                     minX: coordinates.map(\.lon).min()!, minY: coordinates.map(\.lat).min()!,
