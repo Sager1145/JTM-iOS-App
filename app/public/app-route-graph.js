@@ -1127,16 +1127,35 @@ function solvePreferredOperatorNames(train) {
       ...derivedPreferredOperatorNames(train),
     ];
   }
+  return registryPackageOperatorNames(
+    recordedRouteOperatorIDs(train),
+    train.route_policy?.preferred_operator_names || [],
+  );
+}
+
+// Mirrors SolverRegistryInput.recordedOperatorIDs.
+function recordedRouteOperatorIDs(train) {
   const recorded = [];
-  if (train.operator_id) recorded.push(train.operator_id);
-  (Array.isArray(train.operator_ids) ? train.operator_ids : []).forEach(
+  if (train?.operator_id) recorded.push(train.operator_id);
+  (Array.isArray(train?.operator_ids) ? train.operator_ids : []).forEach(
     (identifier) => {
       if (identifier && !recorded.includes(identifier)) recorded.push(identifier);
     },
   );
-  return registryPackageOperatorNames(
-    recorded,
-    train.route_policy?.preferred_operator_names || [],
+  return recorded;
+}
+
+// Names a Sonic/Haruka service hint requires. Mirrors Swift's
+// RouteSolver.registryServiceOperators: with a registry configured, every
+// name on the records of the ride's operator ids (possibly none); without
+// one, null so the caller keeps the service's package name.
+function solveServiceOperatorNames(train) {
+  const registry = routeRegistryOperators;
+  if (!registry) return null;
+  return recordedRouteOperatorIDs(train).flatMap(
+    (identifier) =>
+      registry.records.get(registry.aliases[identifier] ?? identifier)?.names ||
+      [],
   );
 }
 

@@ -8,20 +8,23 @@
   "solver_context": {
     "solver_version": "28",
     "history_revisions": {
-      "jp": "2026-10-11.1"
+      "jp": "2026-10-11.3"
     },
     "history_hashes": {
-      "jp": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc"
+      "jp": "e2b1ed264b293e196a20bc7b43b8b3492bb9eb24ab9a29bb86d7a2ba6af1b672"
     }
   },
   "source_hashes": {
-    "jp-2025.json": "622a230af78a387ed58d788c2c261c66d3ceab45d70d71a0022bafb69a442b3e",
+    "jp-2025.json": "b44313f43b7561f712f221131698e5f963686612765661397a2689b9efa884fb",
     "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
     "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
-    "physical-rail-junctions.json": "8d06d65c54c68800fc8995743a88aa46b3a205b54f468fcae49452a1c322f99e",
-    "rail-history.json": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc",
+    "physical-rail-junctions.json": "1cae1b9b1a16411bb5633fb49d23c81fcb61c75130877f55713bc4fe42d965de",
+    "rail-history.json": "e2b1ed264b293e196a20bc7b43b8b3492bb9eb24ab9a29bb86d7a2ba6af1b672",
     "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
     "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+  },
+  "registry_hashes": {
+    "jp": "5872ca343cd1beb3521443c124ece41952cc271608db3b4073769ac49a22754c"
   },
   "parts": [
     "part-000",
@@ -42,22 +45,22 @@
     "part-015"
   ],
   "part_train_ids": {
-    "part-000": "tokyo_limited_express_loop_20260529_01",
-    "part-001": "tokyo_limited_express_loop_20260529_02",
-    "part-002": "tokyo_limited_express_loop_20260529_03",
-    "part-003": "tokyo_limited_express_loop_20260529_04",
-    "part-004": "tokyo_limited_express_loop_20260529_05",
-    "part-005": "tokyo_limited_express_loop_20260529_06",
-    "part-006": "tokyo_limited_express_loop_20260529_07",
-    "part-007": "tokyo_limited_express_loop_20260529_08",
-    "part-008": "tokyo_limited_express_loop_20260529_09",
-    "part-009": "tokyo_limited_express_loop_20260529_10",
-    "part-010": "tokyo_limited_express_loop_20260529_11",
-    "part-011": "tokyo_limited_express_loop_20260529_12",
-    "part-012": "tokyo_limited_express_loop_20260529_13",
-    "part-013": "tokyo_limited_express_loop_20260529_14",
-    "part-014": "tokyo_limited_express_loop_20260529_15",
-    "part-015": "tokyo_limited_express_loop_20260529_16"
+    "part-000": "journey_FB378E723A1A1C6D845DDBF2F4EC7B80",
+    "part-001": "journey_FCF5080D6BF57735BD6B550726AEBCC2",
+    "part-002": "journey_AE4B3D6ECECDF1F02B9D88E33DB71D35",
+    "part-003": "journey_1367E2AD44FB1282A603082C6B023451",
+    "part-004": "journey_B113D59026AE72C23BC7DCC1E062B3D9",
+    "part-005": "journey_8473C35D9B0263A67C1AE3CF2EF35F88",
+    "part-006": "journey_DBB4A436D118AFC963F3D76ACC6D7F5A",
+    "part-007": "journey_A15A2CDA79EC2AB1DB648F12DECB9CFF",
+    "part-008": "journey_3C1174A1740BAC769A067CDF20A0CF5F",
+    "part-009": "journey_DA0120B61DAC677C7FE9EFB54CF8F052",
+    "part-010": "journey_346B51D9286011FC76E1B3066295219B",
+    "part-011": "journey_8EEEEA38327E98645C7007A692CCAD31",
+    "part-012": "journey_5F07101A177600FAEAB79C27F00916AF",
+    "part-013": "journey_D8755000FA24D4235A8ED889B3A4AA9C",
+    "part-014": "journey_868731BF1A9520928B670EC3A3B8566D",
+    "part-015": "journey_E4ED0EC66250F2E663AEB7ECE1FA8F5A"
   },
   "full": "sample-full",
   "dates": {

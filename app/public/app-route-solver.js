@@ -1078,6 +1078,12 @@ const SONIC_NIPPO_CORRIDOR_STATIONS = [
   "亀川", "別府", "大分", "鶴崎", "大在", "幸崎", "臼杵", "津久見", "佐伯",
 ];
 
+// The ride's registry operator names, or null when no registry is configured
+// (RouteSolver.registryServiceOperators).
+function serviceOperatorNames(train) {
+  return routeGraphApi?.serviceOperatorNames?.(train) ?? null;
+}
+
 function inferSectionRouteConstraints(section, train) {
   const text = [
     train?.id,
@@ -1105,14 +1111,18 @@ function inferSectionRouteConstraints(section, train) {
     )
   ) {
     lineNames.add("日豊線");
-    operatorNames.add("九州旅客鉄道");
+    (serviceOperatorNames(train) ?? ["九州旅客鉄道"]).forEach((name) =>
+      operatorNames.add(name),
+    );
   }
 
   // Haruka keeps its JR West operator preference (away from nearby subway
   // geometry) but no longer pins a line per section; reviewed physical
   // junctions decide which rows a train can cross. Mirrors RouteSolver.swift.
   if (/はるか|haruka/i.test(text)) {
-    operatorNames.add("西日本旅客鉄道");
+    (serviceOperatorNames(train) ?? ["西日本旅客鉄道"]).forEach((name) =>
+      operatorNames.add(name),
+    );
   }
 
   return {

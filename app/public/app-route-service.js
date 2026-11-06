@@ -42,6 +42,7 @@ configureRouteGraphApi({
   nearbyNodes: (...args) => nearbyGraphNodes(...args),
   preferredOperatorNames: (...args) => solvePreferredOperatorNames(...args),
   sectionOperatorNames: (...args) => solveSectionOperatorNames(...args),
+  serviceOperatorNames: (...args) => solveServiceOperatorNames(...args),
   resolveSectionEndpoints: (...args) => resolveSectionEndpoints(...args),
   templateKey: (...args) => getTrainRouteTemplateKey(...args),
 });

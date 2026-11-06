@@ -316,6 +316,156 @@ export function assertCurrentPrecomputeSolverContext(
   return actual;
 }
 
+// ---------------------------------------------------------------------------
+// Registry upgrade — mirrors Swift's RegistryIdentityUpgrade.apply
+// (RegistryBundle.swift). Native recomputes a loaded ride's operator id from
+// its company and every stop / section endpoint station id from its code
+// before it builds the solve key, so the solve here reads the same upgraded
+// ride. The stored part train stays the raw store train.
+// ---------------------------------------------------------------------------
+const LINE_EMBEDDING_OPERATORS = new Set(["MTR", "LR", "MLM"]);
+
+// StationCodeAliases.canonical.
+function canonicalStationCode(code) {
+  const segments = code.split("-");
+  if (segments.length < 3) return code;
+  const last = segments[segments.length - 1];
+  const secondLast = segments[segments.length - 2];
+  if (LINE_EMBEDDING_OPERATORS.has(secondLast)) return `${secondLast}-${last}`;
+  if (segments[0] === "TRAM") return `TRAM-${last}`;
+  if (segments[1] === "NETWORK") {
+    segments.splice(1, 1);
+    return segments.join("-");
+  }
+  return code;
+}
+
+export function upgradeTrainRegistryIdentity(train, bundle, normalizeTaiwanCompanyName = (value) => value) {
+  const aliases = bundle.aliases || {};
+  const canonicalID = (identifier) => aliases[identifier] ?? identifier;
+  const operatorNames = Object.fromEntries(
+    Object.entries(bundle.operators || {}).map(([identifier, value]) => [
+      identifier,
+      Array.isArray(value) ? value : value?.names || [],
+    ]),
+  );
+  const stationCodes = bundle.stationCodes || {};
+  const groupCodes = bundle.groupCodes || {};
+  const stationOperator = bundle.stationOperator || {};
+  const isTaiwan = String(bundle.region || "").toLowerCase() === "tw";
+  const normalizedCompany = (value) => {
+    const folded = String(value).trim().normalize("NFKC");
+    return isTaiwan ? normalizeTaiwanCompanyName(folded) : folded;
+  };
+  const matchingOperators = (company) => {
+    const wanted = normalizedCompany(company);
+    if (!wanted) return [];
+    return Object.entries(operatorNames)
+      .filter(([, names]) => names.some((name) => normalizedCompany(name) === wanted))
+      .map(([identifier]) => identifier);
+  };
+  const companyParts = (company) =>
+    company.split(/[/／]/).map((part) => part.trim()).filter(Boolean);
+  const stationIDForCode = (code, operatorID) => {
+    if (Object.hasOwn(stationCodes, code)) return stationCodes[code];
+    const candidates = groupCodes[code];
+    if (!candidates) return null;
+    if (candidates.length === 1) return candidates[0];
+    if (operatorID == null) return null;
+    const narrowed = candidates.filter((candidate) =>
+      Object.hasOwn(stationOperator, candidate) && stationOperator[candidate] === operatorID);
+    return narrowed.length === 1 ? narrowed[0] : null;
+  };
+  const bundleContainsStation = (identifier) =>
+    Object.values(stationCodes).includes(identifier) ||
+    Object.hasOwn(stationOperator, identifier) ||
+    Object.values(groupCodes).some((stations) => stations.includes(identifier));
+  const codeContainsStation = (identifier, code) =>
+    Object.hasOwn(stationCodes, code)
+      ? stationCodes[code] === identifier
+      : (groupCodes[code] || []).includes(identifier);
+  const keepOrClearStationID = (existing, code) => {
+    if (existing == null) return null;
+    const live = canonicalID(existing);
+    const onCode = code == null ? false : codeContainsStation(live, code);
+    return bundleContainsStation(live) && onCode ? live : null;
+  };
+  const upgradedStationID = (existing, raw, operatorID) => {
+    if (raw == null || raw === "") return keepOrClearStationID(existing, null);
+    const code = canonicalStationCode(raw);
+    return stationIDForCode(code, operatorID) ?? keepOrClearStationID(existing, code);
+  };
+  const assign = (object, key, value) => {
+    if (value == null) delete object[key];
+    else object[key] = value;
+  };
+
+  const upgraded = structuredClone(train);
+  // canonicalizeOperators
+  if (Object.keys(aliases).length) {
+    if (upgraded.operator_id != null) upgraded.operator_id = canonicalID(upgraded.operator_id);
+    if (Array.isArray(upgraded.operator_ids))
+      upgraded.operator_ids = upgraded.operator_ids.map(canonicalID);
+  }
+  // recomputeOperator
+  recompute: {
+    const company = upgraded.company ?? "";
+    const parts = companyParts(company);
+    if (parts.length >= 2) {
+      const converted = parts.map(matchingOperators);
+      if (converted.every((matches) => matches.length === 1)) {
+        upgraded.operator_ids = converted.map((matches) => matches[0]);
+        delete upgraded.operator_id;
+        break recompute;
+      }
+    }
+    delete upgraded.operator_ids;
+    const matches = matchingOperators(company);
+    if (matches.length === 1) {
+      upgraded.operator_id = matches[0];
+      break recompute;
+    }
+    if (upgraded.operator_id == null) break recompute;
+    const existing = canonicalID(upgraded.operator_id);
+    upgraded.operator_id = existing;
+    const names = operatorNames[existing];
+    if (!names) {
+      delete upgraded.operator_id;
+      break recompute;
+    }
+    const wanted = normalizedCompany(company);
+    const consistent = Boolean(wanted) &&
+      names.some((name) => normalizedCompany(name) === wanted);
+    if (!consistent) delete upgraded.operator_id;
+  }
+  const operatorID = upgraded.operator_id ?? null;
+  (upgraded.stops || []).forEach((stop) => {
+    assign(stop, "station_id",
+      upgradedStationID(stop.station_id, stop.n02_station_code, operatorID));
+  });
+  (upgraded.route_sections || []).forEach((section) => {
+    assign(section, "from_station_id",
+      upgradedStationID(section.from_station_id, section.from_n02_station_code, operatorID));
+    assign(section, "to_station_id",
+      upgradedStationID(section.to_station_id, section.to_n02_station_code, operatorID));
+  });
+  return upgraded;
+}
+
+// RegistryIdentityUpgrade.applyLoaded: the ride's region, else the store's.
+// Only this run's region has a bundle loaded; any other ride is unchanged.
+function upgradeStoreTextForSolve(trainStoreText, bundle, normalizeTaiwanCompanyName) {
+  const store = JSON.parse(trainStoreText);
+  const region = String(bundle.region || COUNTRY);
+  return JSON.stringify({
+    ...store,
+    trains: store.trains.map((train) =>
+      (train.region || COUNTRY) === region
+        ? upgradeTrainRegistryIdentity(train, bundle, normalizeTaiwanCompanyName)
+        : train),
+  });
+}
+
 function requirePartTrainID(train, name) {
   if (typeof train?.id !== "string" || !train.id.trim()) {
     throw new Error(`${name} requires a nonempty train.id for the manifest index.`);
@@ -407,7 +557,7 @@ function publishStagedOutput(stagingDir) {
   fs.rmSync(previousDir, { recursive: true, force: true });
 }
 
-async function restampPrecomputedOutput(context) {
+async function restampPrecomputedOutput(context, rawTrains) {
   if (!fs.existsSync(OUT_DIR)) {
     throw new Error(`Cannot restamp missing output directory ${OUT_DIR}.`);
   }
@@ -443,7 +593,7 @@ async function restampPrecomputedOutput(context) {
     if (part.train?.id !== generated.id) {
       throw new Error(`${name} train id does not match the current store.`);
     }
-    if (JSON.stringify(part.train) !== JSON.stringify(generated.raw)) {
+    if (JSON.stringify(part.train) !== JSON.stringify(rawTrains[index])) {
       throw new Error(
         `${name} train or route sections changed; full regeneration is required.`,
       );
@@ -626,9 +776,14 @@ async function main() {
   evaluateAppScripts(context, appScripts);
   // The route key and solver bias name operators from the registry record, as
   // native does once its registry is ready.
-  context.configureRouteRegistryOperators(
-    readJson(path.join(DATA_DIR, "registry-bundle", `${COUNTRY}.json`)),
-  );
+  const registryBundle = readJson(path.join(DATA_DIR, "registry-bundle", `${COUNTRY}.json`));
+  context.configureRouteRegistryOperators(registryBundle);
+  // The solve reads each ride as native loads it: registry-upgraded. Parts
+  // and sample-full keep the raw store trains.
+  const rawTrains = JSON.parse(trainStoreText).trains;
+  const solveStoreText = upgradeStoreTextForSolve(
+    trainStoreText, registryBundle,
+    context.RailOperatorBranding?.normalizeTaiwanCompanyName);
 
   const physicalLineIDs = new Set(JSON.parse(trainStoreText).trains.flatMap((train) =>
     (train.route_sections || []).flatMap((section) => [
@@ -651,12 +806,12 @@ async function main() {
     matchedRoutes,
     historyOverlays,
     historyHashes,
-    trainStoreText,
+    trainStoreText: solveStoreText,
   };
   if (process.env.PRECOMPUTE_RESTAMP) {
     if (rangeEnv) throw new Error("PRECOMPUTE_RESTAMP cannot be combined with PRECOMPUTE_RANGE.");
     context.__host = baseHost;
-    await restampPrecomputedOutput(context);
+    await restampPrecomputedOutput(context, rawTrains);
     return;
   }
 
@@ -685,7 +840,8 @@ async function main() {
 
   context.__host = {
     ...baseHost,
-    onTrainSolved({ index, id, raw, route, featureCount, ms }) {
+    onTrainSolved({ index, id, route, featureCount, ms }) {
+      const raw = rawTrains[index];
       const name = `part-${String(sliceStart + index).padStart(3, "0")}`;
       partNames.push(name);
       partTrainIDs[name] = requirePartTrainID(raw, name);
