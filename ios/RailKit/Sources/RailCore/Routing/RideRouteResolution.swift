@@ -577,9 +577,13 @@ public struct RideRouteResolution {
             requiresPrecomputedRejection: rejectPrecomputed, sourcePhysicalPathKeys: sourcePhysicalPathKeys)
     }
 
+    // Trade-off: the budget admits the full JP graph (~377k nodes, a few
+    // hundred MB) for the life of the store, raising transient peak memory in
+    // exchange for not rebuilding it on every full-graph fallback.
     private static func graphStore(_ inputs: SourceInputs) -> RouteGraph.RouteGraphStore {
         RouteGraph.RouteGraphStore(sections: inputs.sections, policy: .physicalRailway,
-            junctions: inputs.physicalJunctions, cachePolicy: .bounded(maximumNodes: 100_000),
+            junctions: inputs.physicalJunctions,
+            cachePolicy: .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget),
             identityPeriods: inputs.identityPeriods, sourceSnapshotID: inputs.snapshotID)
     }
 

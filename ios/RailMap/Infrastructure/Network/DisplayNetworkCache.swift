@@ -11,15 +11,17 @@ import RailCore
 /// resident. Layout (``DisplayParts``) runs once for that same generation and is
 /// what both the map and ``RouteNetwork`` consume.
 ///
-/// Residency stays one package, one layout, and one network. A newer region or
-/// revision drops the previous slot; the next ask reads the file again. Failure
+/// Residency is one package and one layout, plus up to two networks: the
+/// routing region (`jp`, pinned) and one other, least recently used first out.
+/// A newer revision of a key replaces only that key's entry. Failure
 /// is not stored. A subscriber’s cancellation resumes only that subscriber.
 ///
 /// The build permit is this cache’s own limiter, not ``RouteSolveLimiter/shared``
 /// and not ``EdgeIndexCache``’s. Edge construction awaits this cache while
 /// holding its limiter; folding the two into one non-reentrant permit deadlocks.
-/// Admission order inside the permit is release the retained network, then
-/// allocate the replacement, then publish before the permit is released.
+/// Admission order inside the permit is release a stale or evictable
+/// non-jp network, then allocate the replacement, then publish before the
+/// permit is released.
 actor DisplayNetworkCache {
     static let shared = DisplayNetworkCache()
 
@@ -47,6 +49,11 @@ actor DisplayNetworkCache {
     private var residentParts: ResidentParts?
     private var networks: [String: RouteNetwork] = [:]
     private var networkIdentity: [String: PackageIdentity] = [:]
+    /// Keys of `networks`, least recently used first.
+    private var networkOrder: [String] = []
+    /// The routing region stays resident; every other key shares the remaining slot.
+    private static let pinnedNetworkKey = "jp"
+    private static let networkSlots = 2
 
     private var packageLoads: [PackageIdentity: Task<DisplayParts.LoadedPackage, Error>] = [:]
     private var partLoads: [PackageIdentity: Task<LineLayout, Error>] = [:]
@@ -114,7 +121,10 @@ actor DisplayNetworkCache {
     func network(scope: RouteScope) async throws -> RouteNetwork {
         guard scope.crossesBorder else { return try await network(country: scope.code) }
         let identity = scopeIdentity(scope)
-        if let ready = networks[scope.key], networkIdentity[scope.key] == identity { return ready }
+        if let ready = networks[scope.key], networkIdentity[scope.key] == identity {
+            touchNetwork(scope.key)
+            return ready
+        }
         // Catalog order, not request order and not the statistics merge key.
         var lines: [RouteNetwork.Line] = []
         for region in scope.graphRegions {
@@ -127,13 +137,16 @@ actor DisplayNetworkCache {
 
     func network(country: String) async throws -> RouteNetwork {
         let identity = identity(for: country)
-        if let ready = networks[country], networkIdentity[country] == identity { return ready }
+        if let ready = networks[country], networkIdentity[country] == identity {
+            touchNetwork(country)
+            return ready
+        }
         if let running = networkLoads[identity] { return try await joinShared(running) }
         let limiter = buildLimiter
         let task = Task.detached(priority: .userInitiated) { () throws -> RouteNetwork in
             do {
                 return try await limiter.withPermit {
-                    await self.beginNetwork(identity)
+                    await self.beginNetwork(identity, key: country)
                     let interval = RailSignpost.data.begin("data.displayNetwork.build")
                     defer { RailSignpost.data.end("data.displayNetwork.build", interval) }
                     let loaded = try await self.loadPackage(identity)
@@ -158,6 +171,7 @@ actor DisplayNetworkCache {
         residentParts = nil
         networks.removeAll()
         networkIdentity.removeAll()
+        networkOrder.removeAll()
         packageLoads.removeAll()
         partLoads.removeAll()
         networkLoads.removeAll()
@@ -286,9 +300,16 @@ actor DisplayNetworkCache {
         return partsTicket
     }
 
-    /// Release the previous network before the caller allocates its replacement.
-    private func beginNetwork(_ identity: PackageIdentity) {
-        releaseCachedNetwork()
+    /// Drop only what the replacement supersedes before the caller allocates it:
+    /// a stale entry for the same key, and (for a non-routing key) the other
+    /// non-routing slot. The routing region is never evicted by another build.
+    private func beginNetwork(_ identity: PackageIdentity, key: String) {
+        if networkIdentity[key] != identity { dropNetwork(key) }
+        if key != Self.pinnedNetworkKey {
+            for other in networkOrder where other != key && other != Self.pinnedNetworkKey {
+                dropNetwork(other)
+            }
+        }
         networkAdmitted = identity
         if packageAdmitted != identity {
             packageTicket += 1
@@ -333,13 +354,29 @@ actor DisplayNetworkCache {
     }
 
     private func retain(_ network: RouteNetwork, key: String, identity: PackageIdentity) {
-        networks = [key: network]
-        networkIdentity = [key: identity]
+        networks[key] = network
+        networkIdentity[key] = identity
+        touchNetwork(key)
+        while networkOrder.count > Self.networkSlots,
+              let victim = networkOrder.first(where: { $0 != Self.pinnedNetworkKey }) {
+            dropNetwork(victim)
+        }
     }
 
-    private func releaseCachedNetwork() {
-        networks.removeAll()
-        networkIdentity.removeAll()
+    private func touchNetwork(_ key: String) {
+        networkOrder.removeAll { $0 == key }
+        networkOrder.append(key)
+    }
+
+    private func dropNetwork(_ key: String) {
+        networks[key] = nil
+        networkIdentity[key] = nil
+        networkOrder.removeAll { $0 == key }
+    }
+
+    /// Memory warning: drop non-routing networks; the routing region stays.
+    func releaseForMemoryPressure() {
+        for key in networkOrder where key != Self.pinnedNetworkKey { dropNetwork(key) }
     }
 
     private func consumeFailure() -> Bool {

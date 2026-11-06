@@ -2,6 +2,39 @@ import MapKit
 import RailCore
 import RailPresentation
 import SwiftUI
+#if DEBUG
+import OSLog
+
+/// DEBUG: the latest map-coordinator counters, read by app-control `state`
+/// (`map.probe`). Main-actor state written only by the coordinator.
+@MainActor enum MapRenderProbe {
+    struct RideStationDots {
+        /// Ride-station dots handed to the shared circle overlay this pass.
+        var drawn: Int
+        /// Every ride-station annotation the marker election produced.
+        var stations: Int
+        /// What the mounted `RideStationOverlay` holds after the pass.
+        var overlayStations: Int
+    }
+    static var rideStationDots: RideStationDots?
+    /// Matching workers started, requests skipped as unchanged, and requests
+    /// that waited for a burst's trailing debounce.
+    static var matchingRuns = 0
+    static var matchingSkipped = 0
+    static var matchingDeferred = 0
+    /// How long network-geometry preparations waited for their permit.
+    static var geometryWaits = 0
+    static var lastGeometryWaitMilliseconds = 0
+    static var maxGeometryWaitMilliseconds = 0
+    static let log = Logger(subsystem: RailSignpost.subsystem, category: "map")
+
+    static func recordGeometryWait(milliseconds: Int) {
+        geometryWaits += 1
+        lastGeometryWaitMilliseconds = milliseconds
+        maxGeometryWaitMilliseconds = max(maxGeometryWaitMilliseconds, milliseconds)
+    }
+}
+#endif
 
 /// MapKit owns mounted overlays and annotations. Projection, lane offsets,
 /// corner rounding and polyline construction live in MapLineGeometry's worker.
@@ -150,9 +183,35 @@ extension RailMapView.Surface {
             /// Background matching and its display-datum chain index, independent of zoom.
             private var matchingTask: Task<Void, Never>?
             // Cancellation is cooperative: keep a winding-down worker's permit
-            // until it exits before admitting either replacement preparation.
-            private let renderWorkLimiter = RouteSolveLimiter(limit: 1)
+            // until it exits before admitting its replacement. Network geometry
+            // and ride matching hold separate permits, so a long match during a
+            // route load never makes a pan or zoom wait for its railways.
+            private let geometryWorkLimiter = RouteSolveLimiter(limit: 1)
+            private let matchingWorkLimiter = RouteSolveLimiter(limit: 1)
             private var matchingRevision = 0
+            /// Coalesces ride/line changes into matching runs; see
+            /// ``requestStrokeReferences()``.
+            private var matchingDebounceTask: Task<Void, Never>?
+            /// The input the running worker matches, and its line generation.
+            private var matchingInFlight: (signature: Int, generation: Int)?
+            /// The input the last completed worker matched.
+            private var matchedSignature: Int?
+            /// A change arrived while a same-generation worker was running.
+            private var matchingRerunOwed = false
+            /// The current burst of change requests: when the last match
+            /// started (for the max wait) and when the last request arrived.
+            private var matchingBurst: (lastStart: ContinuousClock.Instant, lastRequest: ContinuousClock.Instant)?
+            /// Requests closer together than this are one burst — a route
+            /// load's partial publishes (every 750 ms) or regions streaming in.
+            private static let matchingBurstWindow: Duration = .milliseconds(1500)
+            /// Trailing quiet time before a burst's match starts.
+            private static let matchingDebounce: Duration = .milliseconds(1000)
+            /// A long burst still matches this often, so rides do not stay on
+            /// fallback geometry for a whole long load.
+            private static let matchingMaxWait: Duration = .milliseconds(5000)
+            /// Last `NetworkLOD.select` inputs and answer; see ``networkSelection(zoom:buildRect:)``.
+            private var networkSelectionMemo: (generation: Int, zoom: Double, buildRect: MKMapRect,
+                result: (lines: [RailNetworkStore.DrawnLine], culledOffScreen: Int))?
             private var preparedStrokeIndex: (generation: Int, index: StrokeRide.Index)?
             /// One ride's own segments, matched against ``prepareStrokeReferences()``
             /// — see ``strokeRef(for:of:)``. Keyed by `ride.id`; a ride whose
@@ -434,7 +493,7 @@ extension RailMapView.Surface {
                     refreshLineInputs()
                 }
                 if linesChanged || stationsChanged || ridesChanged {
-                    prepareStrokeReferences()
+                    requestStrokeReferences()
                 }
 
                 let selectedRide = rides.first { $0.id == selectedTrainID }
@@ -749,8 +808,15 @@ extension RailMapView.Surface {
                 viewportResizeTask = nil
                 matchingTask?.cancel()
                 matchingTask = nil
+                matchingDebounceTask?.cancel()
+                matchingDebounceTask = nil
+                matchingInFlight = nil
+                matchedSignature = nil
+                matchingRerunOwed = false
+                matchingBurst = nil
                 matchingRevision += 1
                 pendingStrokeRefs = nil
+                networkSelectionMemo = nil
                 cancelGeometryPreparation()
                 markerBuildContext = nil
                 annotationReconciler.removeRetiring(on: dismantledMapView)
@@ -1051,7 +1117,7 @@ extension RailMapView.Surface {
                 }
                 networkGeometry.beginFrame(key: key)
                 let selected = showsNetwork
-                    ? NetworkLOD.select(from: lines, zoom: visibilityZoom, buildRect: buildRect).lines
+                    ? networkSelection(zoom: visibilityZoom, buildRect: buildRect).lines
                         .filter { !$0.continuous || $0.intervalRects.contains { $0.intersects(buildRect) } }
                     : []
                 var needed = Set(selected.filter(\.continuous).map(\.id))
@@ -1095,27 +1161,36 @@ extension RailMapView.Surface {
                 let era = temporalContext.era
                 let rideDate = temporalContext.rideDate
                 let todayByRegion = temporalContext.todayByRegion
-                let limiter = renderWorkLimiter
+                let limiter = geometryWorkLimiter
                 let joinedChains = networkGeometry.joinedChains
                 let chainPixels = networkGeometry.chainPixels
                 let datumToken = AppleMapDatum.gcj02Countries.sorted().joined(separator: ",")
+                let requested = ContinuousClock.now
                 let worker = Task.detached(priority: .userInitiated) {
                     try await limiter.withPermit {
-                        try MapLineGeometry.prepare(
+                        // How long this request queued behind the previous
+                        // preparation for its permit.
+                        let waited = (ContinuousClock.now - requested).milliseconds
+                        RailSignpost.map.mark("map.geometry.wait", waited)
+                        return (waited, try MapLineGeometry.prepare(
                             lines: missingLines, strokes: missingStrokes, allLines: byID,
                             anchors: anchors, cachedStrokes: cachedStrokes,
                             joinedChains: joinedChains, chainPixels: chainPixels,
                             frameKey: key, datumToken: datumToken,
                             mapScale: mapScale, scale: scale, laneScale: laneLOD.scale,
-                            era: era, rideDate: rideDate, todayByRegion: todayByRegion)
+                            era: era, rideDate: rideDate, todayByRegion: todayByRegion))
                     }
                 }
                 geometryPreparation = Task { @MainActor [weak self, weak mapView] in
-                    let result = await withTaskCancellationHandler {
+                    let workerOutput = await withTaskCancellationHandler {
                         try? await worker.value
                     } onCancel: {
                         worker.cancel()
                     }
+#if DEBUG
+                    if let waited = workerOutput?.0 { MapRenderProbe.recordGeometryWait(milliseconds: waited) }
+#endif
+                    let result = workerOutput?.1
                     guard let self else { return }
                     @MainActor func clearPreparationIfCurrent() {
                         guard self.geometryPreparationID == requestID else { return }
@@ -1299,7 +1374,7 @@ extension RailMapView.Surface {
                 // than the web app's at low zoom, and deliberately outside the
                 // ported tier, because there is no JavaScript to check it against.
                 let selection = showsNetwork
-                    ? NetworkLOD.select(from: lines, zoom: visibilityZoom, buildRect: buildRect)
+                    ? networkSelection(zoom: visibilityZoom, buildRect: buildRect)
                     : nil
 
                 let buildScale = MapProjection.quantised(
@@ -2869,6 +2944,9 @@ extension RailMapView.Surface {
                 // ordinary circle batches here; rebuilding deck order would
                 // put a selected early ride underneath later journeys.
                 if rides.contains(where: { $0.id == selectedTrainID }) {
+#if DEBUG
+                    recordRideStationDots(drawn: 0, overlayStations: 0)
+#endif
                     retiringStationOverlays.removeAll()
                     overlayInstaller.install(base, replacing: reconciliation, scale: scale, on: mapView,
                         detailTransitionDuration: networkTransitionDuration,
@@ -2899,6 +2977,10 @@ extension RailMapView.Surface {
                 // every journey's strokes. See ``RideStationOverlay``.
                 let dots = rides.flatMap { stations[$0.id] ?? [] }
                 let old = previous[Self.allRideStationsID]
+#if DEBUG
+                var overlayStationCount = 0
+                defer { recordRideStationDots(drawn: dots.count, overlayStations: overlayStationCount) }
+#endif
                 if !dots.isEmpty || (duration > 0 && old != nil) {
                     let overlay: RideStationOverlay
                     if let old {
@@ -2908,6 +2990,9 @@ extension RailMapView.Surface {
                         overlay = RideStationOverlay(rideID: Self.allRideStationsID, stations: dots)
                     }
                     overlay.transitionDuration = duration
+#if DEBUG
+                    overlayStationCount = overlay.stations.count
+#endif
                     if let renderer = mapView.renderer(for: overlay) as? RideStationOverlayRenderer {
                         renderer.updateStations(duration: duration)
                     }
@@ -2935,6 +3020,18 @@ extension RailMapView.Surface {
                     detailTransitionDuration: networkTransitionDuration,
                     alphaTransitionDuration: highlightTransitionDuration)
             }
+
+#if DEBUG
+            /// A selection keeps its dots on the selected ride's own layers, so
+            /// that pass reports no shared-overlay dots.
+            private func recordRideStationDots(drawn: Int, overlayStations: Int) {
+                let stationsCount = rideStationAnnotations.count
+                MapRenderProbe.rideStationDots = .init(
+                    drawn: drawn, stations: stationsCount, overlayStations: overlayStations)
+                MapRenderProbe.log.debug(
+                    "rideStationDots drawn=\(drawn) stations=\(stationsCount) overlayStations=\(overlayStations)")
+            }
+#endif
 
             /// The marker records, built once per ride set rather than per pan.
             ///
@@ -3038,10 +3135,17 @@ extension RailMapView.Surface {
             /// rebuilt every frame: unlike the pixel geometry in
             /// the frame-stroke cache, none of this depends on zoom.
             /// Joining, indexing and matching operate on immutable snapshots.
-            /// A newer input cancels the old worker; only its own revision may
-            /// publish, including when a removed journey reused an ID.
-            private func prepareStrokeReferences() {
+            /// A newer line generation cancels the old worker; only its own
+            /// revision may publish, including when a removed journey reused an ID.
+            /// Called only through ``requestStrokeReferences()``.
+            private func prepareStrokeReferences(signature: Int) {
                 matchingTask?.cancel()
+                // Results published but not yet installed are still valid
+                // per-ride cache entries: each is keyed on its own geometry
+                // and line generation, which the worker re-checks.
+                let cached = pendingStrokeRefs.map { pending in
+                    strokeRefCache.merging(pending.refs) { _, new in new }
+                } ?? strokeRefCache
                 pendingStrokeRefs = nil
                 matchingRevision += 1
                 let revision = matchingRevision
@@ -3049,8 +3153,14 @@ extension RailMapView.Surface {
                 let lines = self.lines
                 let stations = self.stations
                 let rides = self.rides
-                let cached = strokeRefCache
                 let inputs = lineInputs
+                let now = ContinuousClock.now
+                matchingInFlight = (signature, generation)
+                matchingRerunOwed = false
+                matchingBurst = (now, matchingBurst?.lastRequest ?? now)
+#if DEBUG
+                MapRenderProbe.matchingRuns += 1
+#endif
                 let readyIndex: @Sendable () async -> StrokeRide.Index? = { [weak self] in
                     await MainActor.run {
                         guard let self, self.mapView != nil, self.linesGeneration == generation,
@@ -3064,7 +3174,7 @@ extension RailMapView.Surface {
                         self.preparedStrokeIndex = (generation, index)
                     }
                 }
-                let limiter = renderWorkLimiter
+                let limiter = matchingWorkLimiter
                 let joinedChains = networkGeometry.joinedChains
                 let worker = Task.detached(priority: .userInitiated) {
                     try await limiter.withPermit {
@@ -3119,8 +3229,13 @@ extension RailMapView.Surface {
                     let completed = !Task.isCancelled && result != nil
                     RailSignpost.map.end("map.matching", matchingInterval)
                     RailSignpost.map.mark("map.matching.completed", completed ? 1 : 0)
-                    guard !Task.isCancelled, let self, self.matchingRevision == revision,
-                        let (_, results) = result else { return }
+                    guard !Task.isCancelled, let self, self.matchingRevision == revision else { return }
+                    self.matchingInFlight = nil
+                    guard let (_, results) = result else {
+                        self.runOwedStrokeMatching()
+                        return
+                    }
+                    self.matchedSignature = signature
                     self.pendingStrokeRefs = (revision, results, inputs)
                     self.networkBuildState.invalidateZoomBucket()
                     if self.playback?.isActive == true, self.playbackLayer.lastSnapshot != nil {
@@ -3131,7 +3246,102 @@ extension RailMapView.Surface {
                         RailSignpost.map.mark("map.rebuild.trigger", 6)
                         self.rebuild(on: map)
                     }
+                    self.runOwedStrokeMatching()
                 }
+            }
+
+            /// What one matching run depends on: the line/station generation
+            /// and the ordered `(id, geometryDigest)` of every ride. Equal
+            /// signatures produce identical results, so a repeat is skipped.
+            private func strokeMatchingSignature() -> Int {
+                var hasher = Hasher()
+                hasher.combine(linesGeneration)
+                hasher.combine(rides.count)
+                for ride in rides {
+                    hasher.combine(ride.id)
+                    hasher.combine(ride.geometryDigest)
+                }
+                return hasher.finalize()
+            }
+
+            /// The single entry point for ride matching, coalescing every
+            /// `ridesChanged`/`linesChanged`/`stationsChanged` request.
+            ///
+            /// - An input equal to the running or last matched one is skipped.
+            /// - The first request after a quiet period starts at once.
+            /// - Requests inside ``matchingBurstWindow`` of the previous one
+            ///   (a route load's 750 ms partial publishes, regions streaming
+            ///   in) wait for ``matchingDebounce`` of quiet, bounded by
+            ///   ``matchingMaxWait`` since the last run started, so the final
+            ///   ride set is matched about a second after the last publish.
+            /// - At most one worker runs: a same-generation worker is left to
+            ///   finish and one rerun is owed; a worker on stale lines is
+            ///   cancelled by its replacement and its permit drains first.
+            private func requestStrokeReferences() {
+                let signature = strokeMatchingSignature()
+                if signature == (matchingInFlight?.signature ?? matchedSignature) {
+                    matchingDebounceTask?.cancel()
+                    matchingDebounceTask = nil
+                    matchingRerunOwed = false
+#if DEBUG
+                    MapRenderProbe.matchingSkipped += 1
+#endif
+                    return
+                }
+                let now = ContinuousClock.now
+                matchingDebounceTask?.cancel()
+                matchingDebounceTask = nil
+                guard let burst = matchingBurst, now - burst.lastRequest < Self.matchingBurstWindow else {
+                    matchingBurst = (matchingBurst?.lastStart ?? now, now)
+                    startStrokeMatching(signature: signature)
+                    return
+                }
+                matchingBurst = (burst.lastStart, now)
+                let delay = max(.zero, min(Self.matchingDebounce,
+                                           burst.lastStart + Self.matchingMaxWait - now))
+#if DEBUG
+                MapRenderProbe.matchingDeferred += 1
+#endif
+                matchingDebounceTask = Task { @MainActor [weak self] in
+                    do { try await Task.sleep(for: delay) } catch { return }
+                    guard let self, !Task.isCancelled else { return }
+                    self.matchingDebounceTask = nil
+                    self.startStrokeMatching(signature: self.strokeMatchingSignature())
+                }
+            }
+
+            private func startStrokeMatching(signature: Int) {
+                guard signature != (matchingInFlight?.signature ?? matchedSignature) else { return }
+                if let inFlight = matchingInFlight, inFlight.generation == linesGeneration {
+                    // Same lines: its index and most rides are still right.
+                    // Let it publish, then match whatever is current.
+                    matchingRerunOwed = true
+                    return
+                }
+                prepareStrokeReferences(signature: signature)
+            }
+
+            private func runOwedStrokeMatching() {
+                guard matchingRerunOwed, matchingInFlight == nil else { return }
+                matchingRerunOwed = false
+                startStrokeMatching(signature: strokeMatchingSignature())
+            }
+
+            /// `NetworkLOD.select` for the current lines, memoised on its exact
+            /// inputs. `prepareNetworkGeometry` and the `rebuild` that installs
+            /// its result ask the same question in one pass and again when the
+            /// worker returns; only a new line generation, visibility zoom or
+            /// build rect pays the filter.
+            private func networkSelection(
+                zoom: Double, buildRect: MKMapRect
+            ) -> (lines: [RailNetworkStore.DrawnLine], culledOffScreen: Int) {
+                if let memo = networkSelectionMemo, memo.generation == linesGeneration,
+                   memo.zoom == zoom, MKMapRectEqualToRect(memo.buildRect, buildRect) {
+                    return memo.result
+                }
+                let result = NetworkLOD.select(from: lines, zoom: zoom, buildRect: buildRect)
+                networkSelectionMemo = (linesGeneration, zoom, buildRect, result)
+                return result
             }
 
             /// Reads prepared results or a verified reference into an unchanged
