@@ -193,17 +193,21 @@ struct JunctionApproachTests {
         let registry = try PhysicalRailJunctionRegistry(data: registryData)
         let fullJunctions = registry.junctions(for: "jp")
         let baselineJunctions = fullJunctions.filter { originalJunctionIDs.contains($0.id) }
+        // The one reviewed junction that is not at a station: a mid-tunnel class seam.
+        let stationlessJunctionIDs: Set<String> = ["kintetsu-keihanna-class21-class12-mid-tunnel"]
         let addedRecords = try document.junctions.filter {
             $0.region == "jp" && !originalJunctionIDs.contains($0.id)
         }.map { record in
             (id: record.id,
-             station: try #require(record.station, "JP junction \(record.id) has no station"),
+             station: stationlessJunctionIDs.contains(record.id)
+                ? ""
+                : try #require(record.station, "JP junction \(record.id) has no station"),
              validFrom: record.validFrom)
         }
 
         #expect(baselineJunctions.count == 10)
-        #expect(addedRecords.count == 193)
-        #expect(Set(addedRecords.map(\.station)).count == 160)
+        #expect(addedRecords.count == 206)
+        #expect(Set(addedRecords.map(\.station)).count == 173)
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 

@@ -11647,6 +11647,495 @@
       "temporalEvidence": "Operator company outline states operation began 平成6年8月20日. Operator 2024 timetable shows the same train calling at 城北,県庁前,本通 in sequence, establishing passenger through continuity across this existing surveyed seam. No closure bound is supplied."
     },
     {
+      "id": "kitaosaka-minoh-semba-class12-class21",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "箕面船場阪大前",
+      "stationCode": "010184",
+      "lineIDs": [
+        "jp-北大阪急行電鉄-南北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "北大阪急行電鉄",
+          "lineName": "南北線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.48992582,
+          34.82253949
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "北大阪急行電鉄",
+          "lineName": "南北線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          135.48992582,
+          34.82253949
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[21896] (class12) ends at [135.48992582,34.82253949]; features[21897] (class21) starts at the identical existing endpoint. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": "2024-03-23",
+      "validTo": null,
+      "temporalEvidence": "MLIT N02-25 (001884569) dates the 箕面船場阪大前 extension of 北大阪急行電鉄 南北線 to 2024-03-23. The class12 and class21 features of the same line meet at this station's existing endpoint, establishing through continuity across the seam. No closure bound is supplied."
+    },
+    {
+      "id": "hiroden-inaricho-main-minami",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "稲荷町",
+      "stationCode": "008066",
+      "lineIDs": [
+        "jp-広島電鉄-本線",
+        "jp-広島電鉄-皆実線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "広島電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          132.47195523,
+          34.39289541
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "広島電鉄",
+          "lineName": "皆実線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          132.47195523,
+          34.39289541
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[21920] (本線 class21) and features[21922] (本線 class21, ends here) share the vertex [132.47195523,34.39289541] with features[21919] (皆実線 class21), which ends at the identical existing endpoint. Same N02 operator. This is the 稲荷町 junction between 本線 and 皆実線; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": "2025-08-03",
+      "validTo": null,
+      "temporalEvidence": "MLIT N02-25 (001884569) and the app history overlay date the 広島電鉄 稲荷町 south approach to 2025-08-03. The 本線 and 皆実線 class21 features meet at the existing 稲荷町 endpoint, establishing physical continuity. No closure bound is supplied."
+    },
+    {
+      "id": "kobe-new-transit-rokko-island-class16-class24-minami-uozaki",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "南魚崎",
+      "stationCode": "007042",
+      "lineIDs": [
+        "jp-神戸新交通-六甲アイランド線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "六甲アイランド線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.26781,
+          34.70704
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "六甲アイランド線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.26781,
+          34.70704
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[6661] (class16) and features[6663] (class24) share the identical existing endpoint [135.26781, 34.70704]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "kobe-new-transit-rokko-island-class24-class16-island-kitaguchi",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "アイランド北口",
+      "stationCode": "007126",
+      "lineIDs": [
+        "jp-神戸新交通-六甲アイランド線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "六甲アイランド線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.26873,
+          34.69264
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "六甲アイランド線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.26873,
+          34.69264
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[6665] (class24) and features[6666] (class16) share the identical existing endpoint [135.26873, 34.69264]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "kobe-new-transit-port-island-class24-class16-port-terminal",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "ポートターミナル",
+      "stationCode": "007203",
+      "lineIDs": [
+        "jp-神戸新交通-ポートアイランド線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "ポートアイランド線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.20213,
+          34.68177
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "ポートアイランド線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.20213,
+          34.68177
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[21044] (class24) and features[21055] (class16) share the identical existing endpoint [135.20213, 34.68177]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "kobe-new-transit-port-island-class16-class24-minami-koen",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "南公園",
+      "stationCode": "007343",
+      "lineIDs": [
+        "jp-神戸新交通-ポートアイランド線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "ポートアイランド線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.21676,
+          34.66454
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸新交通",
+          "lineName": "ポートアイランド線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.21676,
+          34.66454
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[21045] (class16) and features[21052] (class24) share the identical existing endpoint [135.21676, 34.66454]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "osaka-metro-nankou-port-town-class16-class24-trade-center-mae",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "トレードセンター前",
+      "stationCode": "007473",
+      "lineIDs": [
+        "jp-大阪市高速電気軌道-南港ポートタウン線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.41155,
+          34.63901
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.41155,
+          34.63901
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[10572] (class16) and features[10573] (class24) share the identical existing endpoint [135.41155, 34.63901]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "osaka-metro-nankou-port-town-class16-class24-nakafuto",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "中ふ頭",
+      "stationCode": "007494",
+      "lineIDs": [
+        "jp-大阪市高速電気軌道-南港ポートタウン線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.41695,
+          34.63419
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.41695,
+          34.63419
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[10579] (class16) and features[10586] (class24) share the identical existing endpoint [135.41695, 34.63419]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "osaka-metro-nankou-port-town-class24-class16-ferry-terminal",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "フェリーターミナル",
+      "stationCode": "007552",
+      "lineIDs": [
+        "jp-大阪市高速電気軌道-南港ポートタウン線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "24"
+        },
+        "coordinate": [
+          135.43481,
+          34.61961
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "南港ポートタウン線",
+          "railwayClassCode": "16"
+        },
+        "coordinate": [
+          135.43481,
+          34.61961
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[10583] (class24) and features[10585] (class16) share the identical existing endpoint [135.43481, 34.61961]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "osaka-metro-chuo-class12-class21-osakako",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "大阪港",
+      "stationCode": "007409",
+      "lineIDs": [
+        "jp-大阪市高速電気軌道-4号線(中央線)"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "4号線(中央線)",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.43489,
+          34.65409
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "大阪市高速電気軌道",
+          "lineName": "4号線(中央線)",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          135.43489,
+          34.65409
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[10479] (class12) and features[10489] (class21) share the identical existing endpoint [135.43489, 34.65409]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "fukui-railway-fukubu-class12-class21-shokokaigisho-mae",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "商工会議所前",
+      "stationCode": "002698",
+      "lineIDs": [
+        "jp-福井鉄道-福武線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "福井鉄道",
+          "lineName": "福武線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.21562,
+          36.05227
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "福井鉄道",
+          "lineName": "福武線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          136.21562,
+          36.05227
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[18639] (class12) and features[18657] (class21) share the identical existing endpoint [136.21562, 36.05227]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "kintetsu-keihanna-class21-class12-mid-tunnel",
+      "kind": "zeroLength",
+      "region": "jp",
+      "lineIDs": [
+        "jp-近畿日本鉄道-けいはんな線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "近畿日本鉄道",
+          "lineName": "けいはんな線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          135.64704,
+          34.68002
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "近畿日本鉄道",
+          "lineName": "けいはんな線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.64704,
+          34.68002
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "mid-tunnel class seam, nearest station 新石切 544 m. app/data/rail-sections.json MLIT N02-25: zero-based features[21024] (class21) and features[21026] (class12) share the identical existing endpoint [135.64704, 34.68002]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06"
+    },
+    {
+      "id": "toyama-chitetsu-toyamako-class12-class21-okuda-chugakko-mae",
+      "kind": "zeroLength",
+      "region": "jp",
+      "station": "奥田中学校前",
+      "stationCode": "001918",
+      "lineIDs": [
+        "jp-富山地方鉄道-富山港線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山港線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          137.22362,
+          36.70331
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山港線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.22362,
+          36.70331
+        ]
+      },
+      "evidence": [
+        "https://www.mlit.go.jp/statistics/details/content/001884569.pdf"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02-25: zero-based features[21075] (class12) and features[21079] (class21) share the identical existing endpoint [137.22362, 36.70331]. Same N02 operator and line. This explicitly bridges the classification seam; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": "2020-02-22",
+      "validTo": null,
+      "temporalEvidence": "app/data/rail-history.json (jp.h2005.h2.toyama-port-transfer, source https://www.city.toyama.lg.jp/shisei/koho/1010848/1010852/1002725.html) dates the 富山地方鉄道 富山港線 operation to 2020-02-22; the class12 and class21 features of the same line meet at this existing endpoint. No closure bound is supplied."
+    },
+    {
       "id": "cn-osm-node-29583114-6bd126f86f1e8b94",
       "kind": "zeroLength",
       "region": "cn",

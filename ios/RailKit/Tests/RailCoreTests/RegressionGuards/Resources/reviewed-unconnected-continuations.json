@@ -1,0 +1,10 @@
+{
+  "format": "jtm-reviewed-unconnected-continuations-v1",
+  "reasons": [
+    "through-running impossible",
+    "different gauge",
+    "station transfer only",
+    "separate operations, no shared track"
+  ],
+  "marks": []
+}
