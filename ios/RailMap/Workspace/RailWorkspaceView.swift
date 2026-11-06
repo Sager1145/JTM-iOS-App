@@ -1647,11 +1647,13 @@ struct RailWorkspaceView: View {
 
     /// The journeys that have not happened yet, soonest first.
     ///
-    /// "Not yet" is decided by the date the record carries, not by a live
-    /// service: §1.1 forbids implying departures, delays or operation. A dated
-    /// record on or after today is upcoming; an undated one is not — it has no
-    /// position on a calendar to be ahead of, and putting it here would be
-    /// claiming one.
+    /// "Not yet" is decided by the record, not by a live service: §1.1
+    /// forbids implying departures, delays or operation. A trip is filed
+    /// under Upcoming or past once, when it is added, and stays there until
+    /// the reader moves it — see `TripListRules`. A record from before that
+    /// field keeps the date rule: dated on or after today is upcoming; an
+    /// undated one is not — it has no position on a calendar to be ahead of,
+    /// and putting it here would be claiming one.
     ///
     /// **Today is the ride's, not the device's.** With five networks in one
     /// store there are five answers to "what day is it" at any instant, and
@@ -1782,13 +1784,17 @@ struct RailWorkspaceView: View {
             // text size, where an empty state can be taller than the panel.
             .modifier(ScrollableIfNeeded())
         } else {
-            List {
-                ForEach(trains, id: \.id) { train in
-                    journeyRow(train, showsDate: true)
+            // Once a minute, so an upcoming trip is marked overdue while the
+            // app is open. It is only marked: moving it is the reader's call.
+            TimelineView(.everyMinute) { context in
+                List {
+                    ForEach(trains, id: \.id) { train in
+                        journeyRow(train, showsDate: true, overdueAt: context.date)
+                    }
                 }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
         }
     }
 
@@ -2014,8 +2020,10 @@ struct RailWorkspaceView: View {
         return copy
     }
 
-    /// Every journey dated today or later on its own region's clock: the
-    /// line between Upcoming and History, whatever the filter says.
+    /// Every journey in the Upcoming list (``TripListRules/isUpcoming(_:today:)``:
+    /// its stored list, or for a legacy record dated today or later on its
+    /// region's clock): the line between Upcoming and History, whatever the
+    /// filter says. History is exactly the rest.
     private var aheadIDs: Set<String> {
         let trains = itineraries.loaded?.trains ?? []
         let today = todayByRegion()
@@ -2857,8 +2865,14 @@ struct RailWorkspaceView: View {
     /// What stays here is only what the row cannot know: which journey the
     /// playhead is on, where a detail sheet is presented, and which dialog the
     /// workspace raises for a delete.
-    private func journeyRow(_ train: Train, showsDate: Bool? = nil) -> some View {
-        JourneyListRow(
+    ///
+    /// `overdueAt` is the instant the Upcoming list checks overdue trips
+    /// against; the other lists pass `nil` and mark nothing.
+    private func journeyRow(
+        _ train: Train, showsDate: Bool? = nil, overdueAt now: Date? = nil
+    ) -> some View {
+        let clock = Region.resolved(train).clock
+        return JourneyListRow(
             train: train,
             presentation: presentation(for: train),
             showsDate: showsDate ?? (selectedDate == Dates.allDates),
@@ -2866,7 +2880,23 @@ struct RailWorkspaceView: View {
             select: { pick(train) },
             showDetail: { sheet = .detail(train.id) },
             setRidden: { setRidden(train, $0) },
-            confirmDelete: { dialog = .delete(train) })
+            confirmDelete: { dialog = .delete(train) },
+            isUpcoming: TripListRules.isUpcoming(
+                train, today: todayByRegion()[Region.resolved(train)]),
+            isOverdue: now.map { TripListRules.isOverdue(train, clock: clock, now: $0) } ?? false,
+            setUpcoming: { setListMembership(train, $0 ? .upcoming : .past) },
+            edit: { perform(SecondaryAction.edit, on: train) })
+    }
+
+    /// File a trip under Upcoming or past — the reader's decision, which the
+    /// clock never makes for them. One verified commit through `replace`,
+    /// like ``setRidden(_:_:)``.
+    private func setListMembership(_ train: Train, _ membership: TripListMembership) {
+        guard train.listMembership != membership else { return }
+        var filed = train
+        filed.listMembership = membership
+        _ = itineraries.replace(filed, replacing: train.id)
+        signal(.saved)
     }
 
     /// Say whether a journey was ridden, and write it down.
@@ -3064,10 +3094,12 @@ struct RailWorkspaceView: View {
     private func journeyDates(
         for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
     ) -> [String] {
-        WorkspaceJourneyRules.journeyDates(
-            trains: scopedTrains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
-            todayByRegion: tab == .upcoming
-                ? Dictionary(uniqueKeysWithValues: todayByRegion().map { ($0.key.code, $0.value) }) : [:],
+        let list = listTab(for: tab)
+        return WorkspaceJourneyRules.journeyDates(
+            trains: scopedTrains, regionCode: regionScope?.code, upcoming: list == .upcoming,
+            history: list == .history,
+            todayByRegion: Dictionary(
+                uniqueKeysWithValues: todayByRegion().map { ($0.key.code, $0.value) }),
             manualDates: manualDates.dates, rule: Region.scopeRule)
     }
 

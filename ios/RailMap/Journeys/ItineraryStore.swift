@@ -260,6 +260,11 @@ final class ItineraryStore {
         // original id in place; the validation surface can explain the
         // collision without destroying either journey.
         var candidate = train
+        // An edit keeps the list the trip is filed under. A draft rebuilt from
+        // a timetable carries no membership; only an explicit one moves it.
+        if candidate.listMembership == nil {
+            candidate.listMembership = next.trains[index].listMembership
+        }
         var outcome = SaveOutcome.saved
         if candidate.id != originalID,
             next.trains.contains(where: { $0.id == candidate.id })
@@ -283,8 +288,9 @@ final class ItineraryStore {
     @discardableResult
     func add(_ train: Train) -> Commit<String?> {
         guard (try? TrainValidation.validateSupportedRegions(train)) != nil else { return .refused(nil) }
+        let filed = Self.filedOnAdd(train, now: Date())
         let commit = mutate(region: Region.resolved(train)) { workspace in
-            StoreOperations.addTrain(train.taggingRegion(), in: &workspace)
+            StoreOperations.addTrain(filed.taggingRegion(), in: &workspace)
         }
         return Commit(outcome: commit.outcome.committedSelectedID, save: commit.save)
     }
@@ -302,9 +308,11 @@ final class ItineraryStore {
             country: Region.resolved(first).code
         )
         var ids: [String] = []
+        let now = Date()
         for train in trains {
             guard (try? TrainValidation.validateSupportedRegions(train)) != nil else { continue }
-            guard StoreOperations.addTrain(train.taggingRegion(), in: &workspace) != nil,
+            let filed = Self.filedOnAdd(train, now: now)
+            guard StoreOperations.addTrain(filed.taggingRegion(), in: &workspace) != nil,
                 let id = workspace.selectedTrainID
             else { continue }
             ids.append(id)
@@ -319,6 +327,17 @@ final class ItineraryStore {
         publishRecordIndex()
         regroup(self.store ?? next, reassertingSelection: true)
         return Commit(outcome: ids, save: save)
+    }
+
+    /// A new trip is filed under Upcoming or past once, here, from its own
+    /// time on its region's clock. Passing time never refiles it afterwards;
+    /// only the reader does. See ``RailPresentation/TripListRules``.
+    private static func filedOnAdd(_ train: Train, now: Date) -> Train {
+        guard train.listMembership == nil else { return train }
+        var filed = train
+        filed.listMembership = TripListRules.initialMembership(
+            for: train, clock: Region.resolved(train).clock, now: now)
+        return filed
     }
 
     @discardableResult

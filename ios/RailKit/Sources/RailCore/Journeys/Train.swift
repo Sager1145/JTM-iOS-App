@@ -42,6 +42,18 @@ public enum RouteConfirmation: String, Codable, Equatable, Sendable {
     case confirmed
 }
 
+/// Which journey list a trip is filed under — the record's `list` field.
+///
+/// Decided once, when a trip is added (see `TripListRules` in
+/// RailPresentation), and changed afterwards only by the reader. Passing time
+/// never moves a trip: an upcoming trip whose time has gone by stays upcoming
+/// and is shown as overdue until the reader files it. Absent on every record
+/// written before the field existed; those keep the date rule.
+public enum TripListMembership: String, Codable, Equatable, Sendable {
+    case upcoming
+    case past
+}
+
 /// `{ "schema_version": "1.3", "trains": [...] }` — jsonspec §2.1.
 ///
 /// The top level is an object and never an array, and it carries exactly
@@ -118,6 +130,9 @@ public struct Train: Codable, Equatable, Sendable {
     /// the type's documentation.
     public var direction: String?
     public var visible: Bool?
+    /// The list this trip is filed under. Written only when set, so a store
+    /// that never had one round-trips unchanged. See ``TripListMembership``.
+    public var listMembership: TripListMembership?
     public var style: TrainStyle?
     public var routePolicy: RoutePolicy?
     public var routeSections: [RouteSection]?
@@ -197,6 +212,7 @@ public struct Train: Codable, Equatable, Sendable {
 
     private enum CodingKeys: String, CodingKey {
         case id, date, number, origin, destination, direction, visible, style, stops
+        case listMembership = "list"
         case numberEn = "number_en"
         case trainType = "train_type"
         case vehicleType = "vehicle_type"
@@ -234,6 +250,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encode(destination, forKey: .destination)
         try container.encodeIfPresent(direction, forKey: .direction)
         try container.encodeIfPresent(visible, forKey: .visible)
+        try container.encodeIfPresent(listMembership, forKey: .listMembership)
         try container.encodeIfPresent(style, forKey: .style)
         try container.encodeIfPresent(routePolicy, forKey: .routePolicy)
         try container.encodeIfPresent(routeSections, forKey: .routeSections)
@@ -1868,6 +1885,7 @@ public enum TrainValidation {
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
+                "list",
             ],
             "Train")
 
@@ -1895,8 +1913,9 @@ public enum TrainValidation {
         let service =
             explicitLatin.map { ServiceCaption(primary: caption, latinName: $0) }
             ?? ServiceCaption.split(caption)
+        let listMembership = try normalizeImportedListMembership(train["list"])
 
-        return Train(
+        var normalized = Train(
             id: id,
             date: Dates.normalizeTrainDate(
                 id: id, date: (train["date"] ?? .null).stringOrNilIfNotString,
@@ -1930,6 +1949,16 @@ public enum TrainValidation {
             routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]),
             operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString,
             operatorIDs: optionalOperatorIDs(train["operator_ids"]))
+        normalized.listMembership = listMembership
+        return normalized
+    }
+
+    private static func normalizeImportedListMembership(_ value: JSON?) throws -> TripListMembership? {
+        guard let value, value != .null else { return nil }
+        guard let raw = value.stringOrNilIfNotString, let membership = TripListMembership(rawValue: raw) else {
+            throw fail("Journey list must be upcoming or past.")
+        }
+        return membership
     }
 
     private static func normalizeImportedRouteConfirmation(_ value: JSON?) throws -> RouteConfirmation? {
@@ -2132,7 +2161,7 @@ public enum TrainValidation {
     public static func normalizeExportTrain(
         _ train: Train, country: String = "jp", stations: StationTable = .empty
     ) -> Train {
-        Train(
+        var exported = Train(
             id: train.id,
             date: Dates.normalizeTrainDate(train),
             number: train.number,
@@ -2162,6 +2191,9 @@ public enum TrainValidation {
             routeConfirmation: train.routeConfirmation,
             operatorID: train.operatorID,
             operatorIDs: train.operatorIDs)
+        // Carried for the same reason as `region`: the reader filed it.
+        exported.listMembership = train.listMembership
+        return exported
     }
 
     /// Route inputs for solving and geometry display. Pending hints are
