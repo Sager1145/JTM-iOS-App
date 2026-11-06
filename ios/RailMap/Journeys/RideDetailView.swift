@@ -1247,6 +1247,11 @@ private struct RideRouteStateCard: View {
                     ? localization.text("ios.route.connectionUnverified", params: [
                         "station": .string(name(gap.from, stopIndex: gap.segmentIndex)),
                     ])
+                    : gap.isUnproven
+                    ? localization.text("ios.route.unprovenSection", params: [
+                        "from": .string(name(gap.from, stopIndex: gap.segmentIndex)),
+                        "to": .string(name(gap.to, stopIndex: gap.segmentIndex + 1)),
+                    ])
                     : localization.text(
                         "ios.route.affectedSection", params: [
                             "index": .number(Double(gap.segmentIndex + 1)),

@@ -217,7 +217,10 @@ final class JapanAreaGrid: @unchecked Sendable {
         }
         lock.unlock()
 
-        let coordinates = ride.segments.flatMap(\.coordinates)
+        let unproven = ride.unprovenSegmentIndices
+        let coordinates = ride.segments
+            .filter { !unproven.contains($0.segmentIndex) }
+            .flatMap(\.coordinates)
         let result = Set(coordinates.compactMap { leaf(lat: $0.lat, lon: $0.lon) })
         lock.lock()
         if currentGeometryDigest == digest, storage.currentDigest[ride.id] == digest {

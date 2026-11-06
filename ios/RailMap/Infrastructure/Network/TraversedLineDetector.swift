@@ -62,7 +62,7 @@ final class TraversedLineDetector {
 
     private func retainCountries(for rides: [RiddenRouteStore.DrawnRide]) {
         countriesByTrainID = Dictionary(rides.filter { ride in
-            ride.segments.contains { $0.physicalRoute == nil }
+            ride.needsLineDetection
         }.map { ($0.id, $0.country) }, uniquingKeysWith: { _, last in last })
         let countries = Set(countriesByTrainID.values)
         failuresByCountry = failuresByCountry.filter { countries.contains($0.key) }
@@ -131,7 +131,7 @@ final class TraversedLineDetector {
         var reusable: [String: [Statistics.TraversedLine]] = [:]
         for ride in rides {
             let selected = Self.selectedLines(ride)
-            if !selected.isEmpty && ride.segments.allSatisfy({ $0.physicalRoute != nil }) {
+            if !selected.isEmpty && !ride.needsLineDetection {
                 let digest = Self.detectionDigest(ride)
                 cache[ride.id] = CachedResult(digest: digest, lines: selected)
                 reusable[ride.id] = selected
@@ -178,7 +178,10 @@ final class TraversedLineDetector {
                 }
                 for ride in group {
                     guard !Task.isCancelled else { return }
-                    let features = ride.segments.filter { $0.physicalRoute == nil }.map { segment in
+                    let unproven = ride.unprovenSegmentIndices
+                    let features = ride.segments.filter {
+                        $0.physicalRoute == nil && !unproven.contains($0.segmentIndex)
+                    }.map { segment in
                         Statistics.RouteFeature(
                             lines: [segment.sourceCoordinates], hasGeometry: true,
                             // The route the train runs, not the stretch the
@@ -224,5 +227,14 @@ final class TraversedLineDetector {
         failuresByCountry = [:]
         liveIDs = []
         linesByTrainID = [:]
+    }
+}
+
+private extension RiddenRouteStore.DrawnRide {
+    /// A detached segment needs detection; an unproven one is deliberately
+    /// excluded from traversed-line statistics.
+    var needsLineDetection: Bool {
+        let unproven = unprovenSegmentIndices
+        return segments.contains { $0.physicalRoute == nil && !unproven.contains($0.segmentIndex) }
     }
 }

@@ -98,6 +98,10 @@ enum JourneyBridge {
             ? localization.text("ios.route.connectionUnverified", params: [
                 "station": .string(first.from ?? "?"),
             ])
+            : first.isUnproven && gaps.count == 1
+            ? localization.text("ios.route.unprovenSection", params: [
+                "from": .string(first.from ?? "?"), "to": .string(first.to ?? "?"),
+            ])
             : localization.countryText(
                 "ios.journey.endpoints",
                 params: ["from": .string(first.from ?? "?"), "to": .string(first.to ?? "?")],

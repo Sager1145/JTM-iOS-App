@@ -543,6 +543,10 @@ struct JourneyEditorView: View {
     /// Gaps the route status reported for the saved journey, while the draft
     /// still visits the same stations. Nil when nothing needs repair.
     private var repairGaps: [RouteRepair.Gap]? {
+        reviewGaps?.map(RouteRepair.Gap.init)
+    }
+
+    private var reviewGaps: [SectionGap]? {
         guard !isNew, showsRecordRoute,
               draft.stops.count == train.stops.count,
               zip(draft.stops, train.stops).allSatisfy({
@@ -552,7 +556,7 @@ struct JourneyEditorView: View {
                   forTrainID: train.id,
                   pendingConfirmationIDs: itineraries?.pendingConfirmationIDs ?? []),
               case .needsReview(_, _, let gaps) = status, !gaps.isEmpty else { return nil }
-        return gaps.map(RouteRepair.Gap.init)
+        return gaps
     }
 
     private func repairText(_ key: String, _ params: [String: Localization.Param]) -> String {
@@ -601,6 +605,17 @@ struct JourneyEditorView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("newTripSavedRoute")
+        // ADR 0007 amendment 1: a section drawn from guard-rejected track, in
+        // the same per-section notice row as the closed-line notices. The
+        // Repair route button below covers it.
+        ForEach((reviewGaps ?? []).filter(\.isUnproven), id: \.segmentIndex) { gap in
+            sectionNotice(
+                title: nil, warning: true,
+                message: localization.text("ios.route.unprovenSection", params: [
+                    "from": .string(gap.from ?? "?"), "to": .string(gap.to ?? "?"),
+                ]))
+                .accessibilityIdentifier("newTripUnprovenNotice-\(gap.segmentIndex)")
+        }
         if repair.pause != nil {
             // The paused span is a section like any other: same rows, same map.
             sectionRows
@@ -1881,6 +1896,37 @@ struct JourneyEditorView: View {
         }
     }
 
+    /// One per-section notice row: closed-line notices while planning, and
+    /// unproven sections of a saved route. A warning is orange with a
+    /// triangle; information is secondary with the history clock.
+    private func sectionNotice(
+        title: String?, warning: Bool, message: String, detail: String? = nil
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            if let title {
+                Text(title)
+                    .font(.footnote.weight(.semibold))
+            }
+            Label {
+                Text(message)
+                    .font(.footnote)
+                    .fixedSize(horizontal: false, vertical: true)
+            } icon: {
+                Image(systemName: warning ? "exclamationmark.triangle" : "clock.arrow.circlepath")
+                    .foregroundStyle(warning ? Color.orange : Color.secondary)
+            }
+            .foregroundStyle(warning ? Color.orange : Color.secondary)
+            if let detail {
+                Text(detail)
+                    .font(.footnote)
+                    .foregroundStyle(Color.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
+
     /// Closed-line notices, one row per affected section, from the cached
     /// section state. No work happens here.
     @ViewBuilder private var historicalNotices: some View {
@@ -1890,37 +1936,21 @@ struct JourneyEditorView: View {
         if !notices.isEmpty {
             let date = dayString(departure)
             ForEach(notices, id: \.0) { index, section, kind in
-                VStack(alignment: .leading, spacing: 4) {
-                    if sections.count > 1 {
-                        Text("\(section.fromName) → \(section.toName)")
-                            .font(.footnote.weight(.semibold))
-                    }
-                    Label {
-                        Text(kind == .info
-                             ? text("historicalNotice",
-                                    fallback: "This trip uses a line that has since closed. It is checked against the network as it was on {date}.",
-                                    ["date": .string(date)])
-                             : text("historicalNoRoute",
-                                    fallback: "No line connected these stations on {date}. If the line has closed, check the date you rode it, or add a stop along the way.",
-                                    ["date": .string(date)]))
-                            .font(.footnote)
-                            .fixedSize(horizontal: false, vertical: true)
-                    } icon: {
-                        Image(systemName: kind == .info ? "clock.arrow.circlepath" : "exclamationmark.triangle")
-                            .foregroundStyle(kind == .info ? Color.secondary : Color.orange)
-                    }
-                    .foregroundStyle(kind == .info ? Color.secondary : Color.orange)
-                    if kind == .info, !vias.isEmpty, section.historicalProbe == .historicalOnly {
-                        Text(text("historicalOwnTrip",
-                                  fallback: "Save the closed part as its own trip, without stops along the way."))
-                            .font(.footnote)
-                            .foregroundStyle(Color.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("newTripHistoricalNotice-\(index)")
+                sectionNotice(
+                    title: sections.count > 1 ? "\(section.fromName) → \(section.toName)" : nil,
+                    warning: kind == .warning,
+                    message: kind == .info
+                        ? text("historicalNotice",
+                               fallback: "This trip uses a line that has since closed. It is checked against the network as it was on {date}.",
+                               ["date": .string(date)])
+                        : text("historicalNoRoute",
+                               fallback: "No line connected these stations on {date}. If the line has closed, check the date you rode it, or add a stop along the way.",
+                               ["date": .string(date)]),
+                    detail: kind == .info && !vias.isEmpty && section.historicalProbe == .historicalOnly
+                        ? text("historicalOwnTrip",
+                               fallback: "Save the closed part as its own trip, without stops along the way.")
+                        : nil)
+                    .accessibilityIdentifier("newTripHistoricalNotice-\(index)")
             }
             if displaySettings?.networkEra == .current {
                 Button(text("showHistoricalLines", fallback: "Show historical lines on the map")) {

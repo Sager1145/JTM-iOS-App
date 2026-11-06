@@ -111,8 +111,15 @@ enum StatisticsMapSnapshot {
             for ride in rides {
                 guard let color = UIColor(railHex: ride.colorHex) else { continue }
                 cg.setStrokeColor(color.cgColor)
-                cg.setLineWidth(max(2, min(size.width, size.height) / 180))
+                let lineWidth = max(2, min(size.width, size.height) / 180)
+                cg.setLineWidth(lineWidth)
+                let unproven = ride.unprovenSegmentIndices
                 for segment in ride.segments where segment.coordinates.count > 1 {
+                    // Unproven sections keep the map's dotted mark here too.
+                    cg.setLineDash(phase: 0, lengths: unproven.contains(segment.segmentIndex)
+                        ? RailStyle.historyDot(atScale: lineWidth / RailStyle.dashReferenceWidth)
+                            .map { CGFloat(truncating: $0) }
+                        : [])
                     let points = segment.coordinates.map {
                         snapshot.point(for: CLLocationCoordinate2D(
                             latitude: $0.lat, longitude: $0.lon))

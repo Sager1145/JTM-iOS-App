@@ -623,6 +623,12 @@ enum EditorStrings {
             .zhHant: "{station} 處的路線銜接未核實",
             .ja: "{station}での線路接続は未確認",
         ],
+        "ios.route.unprovenSection": [
+            .en: "{from} → {to}: drawn to a station that may not be the one you meant; not counted in distance. Check the station or add a via stop.",
+            .ja: "{from} → {to}：意図した駅と異なる可能性のある駅まで描画しており、距離には含めていません。駅を確認するか経由駅を追加してください。",
+            .zhHant: "{from} → {to}：路線畫到的車站可能不是您要的那一站，未計入里程。請確認車站，或加入經由站。",
+            .zhHans: "{from} → {to}：线路画到的车站可能不是您要的那一站，未计入里程。请确认车站，或添加经由站。",
+        ],
         "ios.route.affectedSection": [
             .zhHant: "第 {index} 段 · {from} → {to}",
             .zhHans: "第 {index} 段 · {from} → {to}",
