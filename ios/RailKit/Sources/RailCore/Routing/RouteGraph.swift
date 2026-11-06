@@ -1164,11 +1164,101 @@ public enum RouteGraph {
         /// Source rail metres, floored at 0.01. Same-coordinate physical
         /// junctions have exactly zero length and no invented rail geometry.
         public var length: Double
-        public var institutionTypeCode: String
-        public var railwayClassCode: String
-        public var lineName: String
-        public var `operator`: String
-        public var temporalKind: TemporalKind = .current
+
+        /// The five section attributes every edge of one feature shares,
+        /// boxed so the compiled build points all of a feature's edges at one
+        /// allocation. Immutable: a setter builds a new box, never mutates a
+        /// shared one.
+        fileprivate final class AttributeStorage: Sendable, Equatable {
+            let institutionTypeCode: String
+            let railwayClassCode: String
+            let lineName: String
+            let `operator`: String
+            let temporalKind: TemporalKind
+
+            init(institutionTypeCode: String, railwayClassCode: String, lineName: String,
+                 operator: String, temporalKind: TemporalKind) {
+                self.institutionTypeCode = institutionTypeCode
+                self.railwayClassCode = railwayClassCode
+                self.lineName = lineName
+                self.operator = `operator`
+                self.temporalKind = temporalKind
+            }
+
+            static func == (lhs: AttributeStorage, rhs: AttributeStorage) -> Bool {
+                lhs === rhs || (lhs.institutionTypeCode == rhs.institutionTypeCode
+                    && lhs.railwayClassCode == rhs.railwayClassCode
+                    && lhs.lineName == rhs.lineName
+                    && lhs.operator == rhs.operator
+                    && lhs.temporalKind == rhs.temporalKind)
+            }
+
+            static let defaultValue = AttributeStorage(
+                institutionTypeCode: "", railwayClassCode: "", lineName: "", operator: "", temporalKind: .current)
+
+            /// The shared default box when every field is default.
+            static func make(institutionTypeCode: String, railwayClassCode: String, lineName: String,
+                             operator: String, temporalKind: TemporalKind) -> AttributeStorage {
+                if institutionTypeCode.isEmpty, railwayClassCode.isEmpty, lineName.isEmpty,
+                   `operator`.isEmpty, temporalKind == .current {
+                    return defaultValue
+                }
+                return AttributeStorage(
+                    institutionTypeCode: institutionTypeCode, railwayClassCode: railwayClassCode,
+                    lineName: lineName, operator: `operator`, temporalKind: temporalKind)
+            }
+        }
+
+        fileprivate var attributes: AttributeStorage
+
+        public var institutionTypeCode: String {
+            get { attributes.institutionTypeCode }
+            set {
+                attributes = AttributeStorage.make(
+                    institutionTypeCode: newValue, railwayClassCode: attributes.railwayClassCode,
+                    lineName: attributes.lineName, operator: attributes.operator,
+                    temporalKind: attributes.temporalKind)
+            }
+        }
+        public var railwayClassCode: String {
+            get { attributes.railwayClassCode }
+            set {
+                attributes = AttributeStorage.make(
+                    institutionTypeCode: attributes.institutionTypeCode, railwayClassCode: newValue,
+                    lineName: attributes.lineName, operator: attributes.operator,
+                    temporalKind: attributes.temporalKind)
+            }
+        }
+        public var lineName: String {
+            get { attributes.lineName }
+            set {
+                attributes = AttributeStorage.make(
+                    institutionTypeCode: attributes.institutionTypeCode,
+                    railwayClassCode: attributes.railwayClassCode,
+                    lineName: newValue, operator: attributes.operator,
+                    temporalKind: attributes.temporalKind)
+            }
+        }
+        public var `operator`: String {
+            get { attributes.operator }
+            set {
+                attributes = AttributeStorage.make(
+                    institutionTypeCode: attributes.institutionTypeCode,
+                    railwayClassCode: attributes.railwayClassCode,
+                    lineName: attributes.lineName, operator: newValue,
+                    temporalKind: attributes.temporalKind)
+            }
+        }
+        public var temporalKind: TemporalKind {
+            get { attributes.temporalKind }
+            set {
+                attributes = AttributeStorage.make(
+                    institutionTypeCode: attributes.institutionTypeCode,
+                    railwayClassCode: attributes.railwayClassCode,
+                    lineName: attributes.lineName, operator: attributes.operator,
+                    temporalKind: newValue)
+            }
+        }
 
         /// The fields almost every edge leaves at their defaults, kept out of
         /// line. A country graph holds hundreds of thousands of edges, and
@@ -1176,7 +1266,7 @@ public enum RouteGraph {
         /// bindings inline more than doubled each one's stride. `rare` is nil
         /// exactly when every field below is at its default, so the
         /// synthesized `==` still compares values, never box identity.
-        private struct Rare: Sendable, Equatable {
+        fileprivate struct Rare: Sendable, Equatable {
             var connector: StationConnector?
             /// Boxed again on its own: a junction payload is several hundred
             /// bytes, and inline it would make every rare box that size.
@@ -1188,7 +1278,7 @@ public enum RouteGraph {
             var registeredTrackID: String?
         }
 
-        private final class PhysicalJunctionStorage: Sendable, Equatable {
+        fileprivate final class PhysicalJunctionStorage: Sendable, Equatable {
             let value: PhysicalJunctionEdge
 
             init(_ value: PhysicalJunctionEdge) {
@@ -1201,7 +1291,7 @@ public enum RouteGraph {
         }
 
         /// Immutable storage keeps edge copies independent when a rare field changes.
-        private final class RareStorage: Sendable, Equatable {
+        fileprivate final class RareStorage: Sendable, Equatable {
             let value: Rare
 
             init(_ value: Rare) {
@@ -1213,9 +1303,18 @@ public enum RouteGraph {
             }
         }
 
-        private var rareStorage: RareStorage?
+        fileprivate var rareStorage: RareStorage?
 
         private static let defaultRare = Rare()
+
+        /// One shared rare box for a feature's edges: nil when every field a
+        /// plain section edge can carry is at its default.
+        fileprivate static func makeRareStorage(
+            validFrom: String?, validTo: String?, historyIDs: [String]
+        ) -> RareStorage? {
+            let value = Rare(validFrom: validFrom, validTo: validTo, historyIDs: historyIDs)
+            return value == defaultRare ? nil : RareStorage(value)
+        }
 
         /// Inline size of the out-of-line payload, for the layout test.
         static var rarePayloadSize: Int { MemoryLayout<Rare>.stride }
@@ -1271,14 +1370,21 @@ public enum RouteGraph {
         ) {
             self.to = to
             self.length = length
-            self.institutionTypeCode = institutionTypeCode
-            self.railwayClassCode = railwayClassCode
-            self.lineName = lineName
-            self.operator = `operator`
-            self.temporalKind = temporalKind
+            self.attributes = AttributeStorage.make(
+                institutionTypeCode: institutionTypeCode, railwayClassCode: railwayClassCode,
+                lineName: lineName, operator: `operator`, temporalKind: temporalKind)
+            self.rareStorage = nil
             self.rare = Rare(
                 connector: connector, physicalJunction: physicalJunction.map(PhysicalJunctionStorage.init),
                 validFrom: validFrom, validTo: validTo, historyIDs: historyIDs)
+        }
+
+        /// The compiled build's initializer: shares the per-feature boxes.
+        fileprivate init(to: String, length: Double, attributes: AttributeStorage, rareStorage: RareStorage?) {
+            self.to = to
+            self.length = length
+            self.attributes = attributes
+            self.rareStorage = rareStorage
         }
     }
 
@@ -1286,11 +1392,101 @@ public enum RouteGraph {
     /// membership tests, so a `Set` is faithful — the JavaScript never
     /// iterates these in a way that reaches an answer.
     public struct NodeMeta: Sendable, Equatable {
-        public var lineNames: Set<String> = []
-        public var operators: Set<String> = []
-        public var institutionTypeCodes: Set<String> = []
-        public var railwayClassCodes: Set<String> = []
+        /// One shared immutable box per distinct meta value: most nodes share
+        /// a handful of values, so inline sets cost four buffers per node.
+        fileprivate final class Storage: Sendable, Equatable {
+            let lineNames: Set<String>
+            let operators: Set<String>
+            let institutionTypeCodes: Set<String>
+            let railwayClassCodes: Set<String>
+
+            init(lineNames: Set<String>, operators: Set<String>,
+                 institutionTypeCodes: Set<String>, railwayClassCodes: Set<String>) {
+                self.lineNames = lineNames
+                self.operators = operators
+                self.institutionTypeCodes = institutionTypeCodes
+                self.railwayClassCodes = railwayClassCodes
+            }
+
+            static func == (lhs: Storage, rhs: Storage) -> Bool {
+                lhs === rhs || (lhs.lineNames == rhs.lineNames
+                    && lhs.operators == rhs.operators
+                    && lhs.institutionTypeCodes == rhs.institutionTypeCodes
+                    && lhs.railwayClassCodes == rhs.railwayClassCodes)
+            }
+
+            static let empty = Storage(lineNames: [], operators: [], institutionTypeCodes: [], railwayClassCodes: [])
+        }
+
+        fileprivate var storage: Storage = Storage.empty
+
+        public var lineNames: Set<String> {
+            get { storage.lineNames }
+            set {
+                storage = Storage(lineNames: newValue, operators: storage.operators,
+                                  institutionTypeCodes: storage.institutionTypeCodes,
+                                  railwayClassCodes: storage.railwayClassCodes)
+            }
+        }
+        public var operators: Set<String> {
+            get { storage.operators }
+            set {
+                storage = Storage(lineNames: storage.lineNames, operators: newValue,
+                                  institutionTypeCodes: storage.institutionTypeCodes,
+                                  railwayClassCodes: storage.railwayClassCodes)
+            }
+        }
+        public var institutionTypeCodes: Set<String> {
+            get { storage.institutionTypeCodes }
+            set {
+                storage = Storage(lineNames: storage.lineNames, operators: storage.operators,
+                                  institutionTypeCodes: newValue,
+                                  railwayClassCodes: storage.railwayClassCodes)
+            }
+        }
+        public var railwayClassCodes: Set<String> {
+            get { storage.railwayClassCodes }
+            set {
+                storage = Storage(lineNames: storage.lineNames, operators: storage.operators,
+                                  institutionTypeCodes: storage.institutionTypeCodes,
+                                  railwayClassCodes: newValue)
+            }
+        }
         public init() {}
+
+        /// Inserts each non-empty value, in the order lineName, operator,
+        /// institutionTypeCode, railwayClassCode, into copies of the sets.
+        fileprivate func merging(lineName: String, operator: String,
+                                 institutionTypeCode: String, railwayClassCode: String) -> NodeMeta {
+            var lineNames = storage.lineNames
+            var operators = storage.operators
+            var institutionTypeCodes = storage.institutionTypeCodes
+            var railwayClassCodes = storage.railwayClassCodes
+            var changed = false
+            if !lineName.isEmpty { changed = lineNames.insert(lineName).inserted || changed }
+            if !`operator`.isEmpty { changed = operators.insert(`operator`).inserted || changed }
+            if !institutionTypeCode.isEmpty {
+                changed = institutionTypeCodes.insert(institutionTypeCode).inserted || changed
+            }
+            if !railwayClassCode.isEmpty { changed = railwayClassCodes.insert(railwayClassCode).inserted || changed }
+            // Nothing new: keep sharing the existing box.
+            guard changed else { return self }
+            var merged = NodeMeta()
+            merged.storage = Storage(lineNames: lineNames, operators: operators,
+                                     institutionTypeCodes: institutionTypeCodes,
+                                     railwayClassCodes: railwayClassCodes)
+            return merged
+        }
+    }
+
+    /// Memo of "node meta X merged with the current feature" results in a
+    /// compiled build. It holds only the feature being appended: features
+    /// are visited once, so an older entry can never hit again. Each entry
+    /// keeps its source meta alive, so its `ObjectIdentifier` key cannot be
+    /// reused by another box while the entry exists.
+    fileprivate struct MetaMergeMemo {
+        var position = 0
+        var table: [ObjectIdentifier: (source: NodeMeta, merged: NodeMeta)] = [:]
     }
 
     /// The routable graph.
@@ -1629,6 +1825,9 @@ public enum RouteGraph {
             let historyIDs: [String]
             let meta: NodeMeta
             let lineRanges: [Range<Int>]
+            /// Shared by every edge this feature contributes.
+            fileprivate let attributes: Edge.AttributeStorage
+            fileprivate let rareStorage: Edge.RareStorage?
         }
         let features: [SectionFeature]
         let policy: BuildPolicy
@@ -1690,8 +1889,17 @@ public enum RouteGraph {
                 }
                 ranges.append(start..<vertexID.count)
             }
-            records[f] = FeatureRecord(properties: properties, historyIDs: properties.carriedHistoryIDs,
-                                       meta: meta, lineRanges: ranges)
+            let historyIDs = properties.carriedHistoryIDs
+            records[f] = FeatureRecord(properties: properties, historyIDs: historyIDs,
+                                       meta: meta, lineRanges: ranges,
+                                       attributes: Edge.AttributeStorage.make(
+                                           institutionTypeCode: properties.institutionTypeCode,
+                                           railwayClassCode: properties.railwayClassCode,
+                                           lineName: properties.lineName, operator: properties.operator,
+                                           temporalKind: properties.temporalKind),
+                                       rareStorage: Edge.makeRareStorage(
+                                           validFrom: properties.validFrom, validTo: properties.validTo,
+                                           historyIDs: historyIDs))
         }
     }
 
@@ -1725,13 +1933,15 @@ public enum RouteGraph {
         var meta: [NodeMeta] = []
         var metaStamp: [Int] = []
         var parents: [Int] = []
+        var metaMemo = MetaMergeMemo()
         var position = 0
         for f in featureIndices {
             position += 1
             appendCompiledFeature(c, feature: f, position: position,
                 localOf: &localOf, creator: &creator, adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp,
-                parents: &parents)
+                parents: &parents, metaMemo: &metaMemo)
         }
+        metaMemo = MetaMergeMemo()
         // Global-to-local lookup and stamps are needed only while recording edges.
         localOf.removeAll(keepingCapacity: false)
         metaStamp.removeAll(keepingCapacity: false)
@@ -1762,7 +1972,8 @@ public enum RouteGraph {
     private static func appendCompiledFeature(
         _ c: CompiledSections, feature f: Int, position: Int,
         localOf: inout [Int32], creator: inout [Int], adjacency: inout [[Edge]],
-        meta: inout [NodeMeta], metaStamp: inout [Int], parents: inout [Int]
+        meta: inout [NodeMeta], metaStamp: inout [Int], parents: inout [Int],
+        metaMemo: inout MetaMergeMemo
     ) {
         let rec = c.records[f]!
         for range in rec.lineRanges {
@@ -1770,7 +1981,7 @@ public enum RouteGraph {
                 adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp, parents: &parents)
             appendCompiledEdges(range, compiled: c, rec: rec, position: position,
                 localOf: localOf, creator: creator, adjacency: &adjacency, meta: &meta, metaStamp: &metaStamp,
-                parents: &parents)
+                parents: &parents, metaMemo: &metaMemo)
         }
     }
 
@@ -1793,17 +2004,29 @@ public enum RouteGraph {
 
     private static func recordCompiledMeta(
         _ l: Int, rec: CompiledSections.FeatureRecord, position: Int,
-        meta: inout [NodeMeta], metaStamp: inout [Int]
+        meta: inout [NodeMeta], metaStamp: inout [Int], metaMemo: inout MetaMergeMemo
     ) {
         let properties = rec.properties
         if metaStamp[l] == position { return }
         if metaStamp[l] == 0 {
             meta[l] = rec.meta
         } else {
-            if !properties.lineName.isEmpty { meta[l].lineNames.insert(properties.lineName) }
-            if !properties.operator.isEmpty { meta[l].operators.insert(properties.operator) }
-            if !properties.institutionTypeCode.isEmpty { meta[l].institutionTypeCodes.insert(properties.institutionTypeCode) }
-            if !properties.railwayClassCode.isEmpty { meta[l].railwayClassCodes.insert(properties.railwayClassCode) }
+            if metaMemo.position != position {
+                metaMemo.table.removeAll(keepingCapacity: true)
+                metaMemo.position = position
+            }
+            let key = ObjectIdentifier(meta[l].storage)
+            if let hit = metaMemo.table[key] {
+                meta[l] = hit.merged
+            } else {
+                let source = meta[l]
+                let merged = source.merging(
+                    lineName: properties.lineName, operator: properties.operator,
+                    institutionTypeCode: properties.institutionTypeCode,
+                    railwayClassCode: properties.railwayClassCode)
+                metaMemo.table[key] = (source: source, merged: merged)
+                meta[l] = merged
+            }
         }
         metaStamp[l] = position
     }
@@ -1811,30 +2034,21 @@ public enum RouteGraph {
     private static func appendCompiledEdges(
         _ range: Range<Int>, compiled c: CompiledSections, rec: CompiledSections.FeatureRecord, position: Int,
         localOf: [Int32], creator: [Int], adjacency: inout [[Edge]], meta: inout [NodeMeta], metaStamp: inout [Int],
-        parents: inout [Int]
+        parents: inout [Int], metaMemo: inout MetaMergeMemo
     ) {
-        let properties = rec.properties
-        let historyIDs = rec.historyIDs
         var v = range.lowerBound
         while v + 1 < range.upperBound {
             let a = Int(localOf[Int(c.vertexID[v])])
             let b = Int(localOf[Int(c.vertexID[v + 1])])
             if a != b {
-                recordCompiledMeta(a, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp)
-                recordCompiledMeta(b, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp)
+                recordCompiledMeta(a, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp, metaMemo: &metaMemo)
+                recordCompiledMeta(b, rec: rec, position: position, meta: &meta, metaStamp: &metaStamp, metaMemo: &metaMemo)
                 let length = Geometry.distanceMeters(c.vertexCoord[creator[a]], c.vertexCoord[creator[b]])
                 let edge = Edge(
                     to: c.vertexKey[v + 1],
                     length: max(length, 0.01),
-                    institutionTypeCode: properties.institutionTypeCode,
-                    railwayClassCode: properties.railwayClassCode,
-                    lineName: properties.lineName,
-                    operator: properties.operator,
-                    connector: nil,
-                    validFrom: properties.validFrom,
-                    validTo: properties.validTo,
-                    historyIDs: historyIDs,
-                    temporalKind: properties.temporalKind)
+                    attributes: rec.attributes,
+                    rareStorage: rec.rareStorage)
                 adjacency[a].append(edge)
                 var reverse = edge
                 reverse.to = c.vertexKey[v]
