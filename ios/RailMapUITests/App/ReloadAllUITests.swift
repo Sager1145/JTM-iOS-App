@@ -69,7 +69,7 @@ final class ReloadAllUITests: XCTestCase {
         let enabled = expectation(for: NSPredicate(format: "isEnabled == true"), evaluatedWith: button)
         wait(for: [enabled], timeout: 60)
         button.tap()
-        let confirm = app.buttons["reloadAllConfirm"]
+        let confirm = app.buttons["reloadAllConfirm"].firstMatch
         XCTAssertTrue(confirm.waitForExistence(timeout: 8))
         confirm.tap()
     }
