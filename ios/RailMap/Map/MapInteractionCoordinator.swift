@@ -13,9 +13,67 @@ final class MapInteractionCoordinator {
     private var cachedTapIndex: RideTapIndex?
     private var rideAnsweredTap: ContinuousClock.Instant?
 
+    /// What the tap geometry of every ride depends on that the invalidation
+    /// sites above the rebuild do not already cover: the network frame and which
+    /// referenced chains are stroke-resident (with the identity of each stored
+    /// stroke). A ride segment draws from a frame stroke when its chain is
+    /// resident and from raw coordinates otherwise, so only a change here moves
+    /// the drawn geometry on a rebuild.
+    struct TapGeometrySignature: Hashable {
+        let frameKey: String
+        let residentStrokes: [String: Int]
+    }
+
+    private var tapSignature: TapGeometrySignature?
+    private var indexGeneration = 0
+    private var prebuildTask: Task<Void, Never>?
+    /// Captures the drawn geometry on the main actor; set by the map coordinator.
+    /// Returns nil while the map is busy (gesture, camera settling); the
+    /// prebuild then retries later.
+    var tapSnapshotProvider: (@MainActor () -> RideTapIndex.Snapshot?)?
+
     /// Geometry/filter/matching changes discard the index without rebuilding
-    /// inside a SwiftUI update. The first subsequent tap pays for its snapshot.
-    func invalidateRideGeometry() { cachedTapIndex = nil }
+    /// inside a SwiftUI update; a coalesced prebuild replaces it once the map
+    /// is idle, and a tap that beats it falls back to a synchronous build.
+    func invalidateRideGeometry() {
+        cachedTapIndex = nil
+        // An external invalidation leaves the signature stale; force the next
+        // rebuild's `updateTapGeometry` to invalidate again.
+        tapSignature = nil
+        indexGeneration += 1
+        schedulePrebuild()
+    }
+
+    /// Invalidates only when the tap geometry signature moved.
+    func updateTapGeometry(signature: TapGeometrySignature) {
+        guard signature != tapSignature else { return }
+        invalidateRideGeometry()
+        tapSignature = signature
+    }
+
+    private func schedulePrebuild() {
+        prebuildTask?.cancel()
+        guard tapSnapshotProvider != nil else { prebuildTask = nil; return }
+        let generation = indexGeneration
+        prebuildTask = Task { [weak self] in
+            while true {
+                try? await Task.sleep(for: .milliseconds(300))
+                guard !Task.isCancelled, let self, self.indexGeneration == generation,
+                    self.cachedTapIndex == nil, let provider = self.tapSnapshotProvider
+                else { return }
+                guard let snapshot = provider() else { continue }
+                let built = await Task.detached(priority: .utility) { () -> RideTapIndex in
+                    let interval = RailSignpost.map.begin("map.tapIndex.prebuild")
+                    defer { RailSignpost.map.end("map.tapIndex.prebuild", interval) }
+                    return RideTapIndex(snapshot: snapshot)
+                }.value
+                guard self.indexGeneration == generation, self.cachedTapIndex == nil
+                else { return }
+                self.cachedTapIndex = built
+                return
+            }
+        }
+    }
 
     func beginTouch() { rideAnsweredTap = nil }
 
@@ -35,6 +93,8 @@ final class MapInteractionCoordinator {
             let interval = RailSignpost.map.begin("map.tapIndex.build")
             index = RideTapIndex(rides: rides, drawnStrokes: drawnStrokes)
             self.cachedTapIndex = index
+            prebuildTask?.cancel()
+            prebuildTask = nil
             RailSignpost.map.end("map.tapIndex.build", interval)
         }
         // The pitch fallback still projects the complete drawn geometry.
@@ -69,6 +129,11 @@ final class MapInteractionCoordinator {
     }
 
     func tearDown() {
+        prebuildTask?.cancel()
+        prebuildTask = nil
+        tapSnapshotProvider = nil
+        tapSignature = nil
+        indexGeneration += 1
         cachedTapIndex = nil
         rideAnsweredTap = nil
         stations = []

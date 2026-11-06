@@ -131,6 +131,14 @@ extension RailMapView.Surface {
             /// The installed selection includes every drawable segment, even
             /// outside the padded viewport. A new pick must expand its route once.
             private var fullyBuiltSelectedRideID: String?
+            /// Rides the last full rebuild drew inside a shared `rides|` batch
+            /// (every ride but that rebuild's selection), with how many
+            /// polylines each contributed. The selection fast path only ever
+            /// answers for `fullyBuiltSelectedRideID` (see the guard in
+            /// `updateSelection`), whose own per-ride cores are not in any
+            /// batch and stay mounted as unselected cores. Diagnostics read the
+            /// counts, since a batch's overlay no longer names its rides.
+            private var batchedRidePartCounts: [String: Int] = [:]
             private let selectedStationSnapshots = MapSelectedStationSnapshotController()
             private struct LineInputs: Equatable, Sendable {
                 let contentID: UUID
@@ -570,6 +578,7 @@ extension RailMapView.Surface {
                     rebuildDeferredByPlayback = true
                 } else {
                     rebuildDeferredByPlayback = false
+                    RailSignpost.map.mark("map.rebuild.trigger", 1)
                     rebuild(on: mapView)
                 }
             }
@@ -748,6 +757,7 @@ extension RailMapView.Surface {
                 overlayInstaller.removeRetiring(on: dismantledMapView)
                 retiringStationOverlays.removeAll()
                 overlayStyles.removeAll()
+                batchedRidePartCounts = [:]
                 interaction.tearDown()
 #if DEBUG
                 diagnostics.tearDown()
@@ -800,6 +810,7 @@ extension RailMapView.Surface {
                     // rebuild's install rescales the new ones once.
                     let zoom = MapProjection.zoomLevel(of: mapView)
                     self.restyle(on: mapView, overlays: !self.strokeBucketPending(at: zoom))
+                    RailSignpost.map.mark("map.rebuild.trigger", 2)
                     self.rebuild(on: mapView)
                 }
             }
@@ -823,6 +834,7 @@ extension RailMapView.Surface {
                     } else if self.isManipulating {
                         self.rebuildDeferredByGesture = true
                     } else {
+                        RailSignpost.map.mark("map.rebuild.trigger", 3)
                         self.rebuild(on: mapView)
                     }
                     self.layoutEndpointLabels(on: mapView)
@@ -974,6 +986,7 @@ extension RailMapView.Surface {
             func appearanceChanged(on mapView: MKMapView) {
                 annotationsNeedRefresh = true
                 networkBuildState.invalidateZoomBucket()
+                RailSignpost.map.mark("map.rebuild.trigger", 4)
                 rebuild(on: mapView)
             }
 
@@ -1151,6 +1164,7 @@ extension RailMapView.Surface {
                         return
                     }
                     clearPreparationIfCurrent()
+                    RailSignpost.map.mark("map.rebuild.trigger", 5)
                     self.rebuild(on: mapView)
                 }
                 return false
@@ -1200,6 +1214,7 @@ extension RailMapView.Surface {
                     networkBuildState.invalidateGeometry()
                     networkGeometry.resetFrameStrokes()
                     markerBuildContext = nil
+                    batchedRidePartCounts = [:]
                     interaction.invalidateRideGeometry()
 #if DEBUG
                     diagnostics.publishEmpty(on: mapView, targetReadiness: targetRideReadiness(on: mapView))
@@ -1407,10 +1422,34 @@ extension RailMapView.Surface {
                          mapPointsPerScreenPoint: mapPointsPerScreenPoint),
                         for: line.id)
                 }
-                // The frame-stroke cache just moved — a stale tap index would score a
-                // ride against last frame's pixel geometry. See
-                // ``drawnCoordinates(of:)`` and ``MapInteractionCoordinator/rideHits(at:on:rides:drawnStrokes:)``.
-                interaction.invalidateRideGeometry()
+                // The frame-stroke cache just moved, but a ride's tap geometry only
+                // changes when the frame or a referenced chain's stored stroke
+                // does — see ``MapInteractionCoordinator/TapGeometrySignature``.
+                if interaction.tapSnapshotProvider == nil {
+                    interaction.tapSnapshotProvider = { [weak self] in
+                        // Not while a gesture or the camera is settling; the
+                        // prebuild retries.
+                        guard let self, !self.isManipulating,
+                            self.lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) != true
+                        else { return nil }
+                        return RideTapIndex.Snapshot(rides: self.rides,
+                            drawnStrokes: { self.drawnStrokes(of: $0) })
+                    }
+                }
+                // Only the chains some ride references can change a ride's tap
+                // geometry; each is keyed by its stored stroke's identity.
+                var referencedChains: Set<String> = []
+                for matches in strokeRefCache.values {
+                    for ref in matches.refs.values { referencedChains.insert(ref.chainID) }
+                }
+                var residentStrokes: [String: Int] = [:]
+                for id in referencedChains.union(neededStrokeLineIDs) {
+                    if let generation = networkGeometry.strokeGeneration(for: id) {
+                        residentStrokes[id] = generation
+                    }
+                }
+                interaction.updateTapGeometry(signature: .init(
+                    frameKey: geometryFrame.key, residentStrokes: residentStrokes))
 
                 // The budget is applied to what decimation actually produced, not
                 // to the stored vertex count. Budgeting on the raw count cut a
@@ -1500,15 +1539,16 @@ extension RailMapView.Surface {
                             vertices += kept.reduce(0) { $0 + $1.pointCount }
                         }
                     }
-                    for run in withheldRunsByLineID[build.line.id] ?? [] {
+                    for (runIndex, run) in (withheldRunsByLineID[build.line.id] ?? []).enumerated() {
                         guard run.coordinates.count >= 2 else { continue }
                         let runColor = dark ? run.colorDarkHex : run.colorHex
                         let runKey = runColor + lodSuffix
                         colors[runKey] = colors[runKey]
                             ?? UIColor(Color(hex: runColor) ?? .accentColor)
-                        let coordinates = run.coordinates.map(\.clLocation)
-                        withheldByColor[runKey, default: []].append(
-                            MKPolyline(coordinates: coordinates, count: coordinates.count))
+                        guard let polyline = networkGeometry.withheldPolyline(
+                            lineID: build.line.id, runIndex: runIndex, coordinates: run.coordinates)
+                        else { continue }
+                        withheldByColor[runKey, default: []].append(polyline)
                     }
                 }
 
@@ -1577,6 +1617,11 @@ extension RailMapView.Surface {
                         scope: scope, isSelected: selected, hasSelection: hasSelection)
                 }
 
+                func rideBatchAlpha(inScope: Bool) -> CGFloat {
+                    hasSelection ? RailStyle.selectDim
+                        : (inScope ? CGFloat(display.riddenOpacity) : scope.dimOpacity)
+                }
+
                 let rideOverlayInterval = RailSignpost.map.begin("map.rebuild.rideOverlays")
 #if DEBUG
                 let rideOverlaysStarted = ContinuousClock.now
@@ -1585,6 +1630,7 @@ extension RailMapView.Surface {
                 var rideCasings: [MKMultiPolyline] = []
                 var rideOverlays: [MKMultiPolyline] = []
                 var selectedRideOverlays: [MKMultiPolyline] = []
+                var batchEntries: [RideOverlayBatching.RideEntry] = []
                 // 列車路線 off draws no route lines and leaves every station
                 // dot alone — `RailMap.setVisible` moves the route, cross-day,
                 // hover and selection layers and no marker layer at all.
@@ -1667,6 +1713,17 @@ extension RailMapView.Surface {
                     }
                     guard !solid.isEmpty || !crossDay.isEmpty || !unproven.isEmpty else { continue }
                     let selected = ride.id == selectedTrainID
+                    // Everything but the selected ride is drawn from shared
+                    // batches (`RideOverlayBatching`), planned after the loop.
+                    guard selected else {
+                        batchEntries.append(.init(
+                            rideID: ride.id, colorHex: ride.colorHex,
+                            inScope: !(scope.isActive && !MapDateScope.inScope(ride.daySpan, scope)),
+                            cell: RideOverlayBatching.cell(of: ride.segments.dropFirst().reduce(
+                                ride.segments.first?.boundingRect ?? .null) { $0.union($1.boundingRect) }),
+                            solid: solid, crossDay: crossDay, unproven: unproven))
+                        continue
+                    }
                     let color = UIColor(railHex: ride.colorHex) ?? .systemBlue
                     let width = rideWidthToken(selected: selected)
                     let alpha = rideAlpha(ride, selected: selected)
@@ -1683,8 +1740,7 @@ extension RailMapView.Surface {
                         overlayStyles[styleKey] = .init(
                             color: color, widthToken: width, alpha: alpha, dashed: dashed,
                             historical: historical)
-                        rideOverlays.append(multi)
-                        if selected { selectedRideOverlays.append(multi) }
+                        selectedRideOverlays.append(multi)
 
                         // §10.5: a selection has to change more than a colour.
                         // The casing is a dark halo UNDER the selected line,
@@ -1694,7 +1750,6 @@ extension RailMapView.Surface {
                         // differently at every zoom. It follows the dash too:
                         // a solid casing under a dashed core would fill the
                         // gaps back in and undo the distinction.
-                        guard selected else { continue }
                         let casingKey = "\(suffix)-casing|\(ride.id)"
                         let casing = overlayReconciliation.multiPolyline(polylines, key: casingKey)
                         overlayStyles[casingKey] = .init(
@@ -1715,15 +1770,29 @@ extension RailMapView.Surface {
                         rideCasings.append(casing)
                     }
                 }
+                // Non-selected rides: one overlay per colour x kind x date-scope
+                // class. The style is exactly what `MapDateScope.alpha` gives a
+                // non-selected ride of that class.
+                let batchPlan = RideOverlayBatching.plan(
+                    entries: batchEntries, selectedRideID: selectedTrainID)
+                batchedRidePartCounts = Dictionary(batchEntries.map {
+                    ($0.rideID, $0.solid.count + $0.crossDay.count + $0.unproven.count)
+                }, uniquingKeysWith: +)
+                for batch in batchPlan.batches {
+                    let multi = overlayReconciliation.multiPolyline(batch.polylines, key: batch.key)
+                    overlayStyles[batch.key] = .init(
+                        color: UIColor(railHex: batch.colorHex) ?? .systemBlue,
+                        widthToken: rideWidthToken(selected: false),
+                        alpha: rideBatchAlpha(inScope: batch.scopeClass == .inScope),
+                        dashed: batch.kind.dashed, historical: batch.kind.historical)
+                    rideOverlays.append(multi)
+                }
                 // Casings first so the coloured cores land on top of them.
                 // Both above the base map's labels, for the reason the
                 // network's strokes are.
                 desiredOverlays.append(contentsOf: retiringCasings(
                     from: overlayReconciliation.oldOverlays, on: mapView))
-                let selectedOverlayIDs = Set(selectedRideOverlays.map(ObjectIdentifier.init))
-                desiredOverlays.append(contentsOf: rideOverlays.filter {
-                    !selectedOverlayIDs.contains(ObjectIdentifier($0))
-                })
+                desiredOverlays.append(contentsOf: rideOverlays)
                 desiredOverlays.append(contentsOf: rideCasings)
                 desiredOverlays.append(contentsOf: selectedRideOverlays)
                 // Keep dot renderers alive until marker reconciliation updates
@@ -1767,7 +1836,8 @@ extension RailMapView.Surface {
                     zoom: zoom,
                     visibilityZoom: visibilityZoom,
                     visibleLines: visible.count,
-                    overlays: overlays.count + rideOverlays.count + rideCasings.count,
+                    overlays: overlays.count + rideOverlays.count + selectedRideOverlays.count
+                        + rideCasings.count,
                     vertices: vertices,
                     buildMilliseconds: elapsed.milliseconds,
                     culledOffScreen: selection?.culledOffScreen ?? 0,
@@ -1810,7 +1880,9 @@ extension RailMapView.Surface {
 
             private func targetRideReadiness(on mapView: MKMapView) -> String {
                 diagnostics.targetRideReadiness(on: mapView, rides: rides,
-                    categoryCountries: Set(categoryIndexes.keys), draws: draws)
+                    categoryCountries: Set(categoryIndexes.keys),
+                    batchedParts: { [batchedRidePartCounts] in batchedRidePartCounts[$0] ?? 0 },
+                    draws: draws)
             }
 #endif
 
@@ -3040,9 +3112,13 @@ extension RailMapView.Surface {
                     }
                 }
                 matchingTask = Task { [weak self] in
+                    let matchingInterval = RailSignpost.map.begin("map.matching")
                     let result = await withTaskCancellationHandler {
                         try? await worker.value
                     } onCancel: { worker.cancel() }
+                    let completed = !Task.isCancelled && result != nil
+                    RailSignpost.map.end("map.matching", matchingInterval)
+                    RailSignpost.map.mark("map.matching.completed", completed ? 1 : 0)
                     guard !Task.isCancelled, let self, self.matchingRevision == revision,
                         let (_, results) = result else { return }
                     self.pendingStrokeRefs = (revision, results, inputs)
@@ -3052,6 +3128,7 @@ extension RailMapView.Surface {
                     } else if self.isManipulating {
                         self.rebuildDeferredByGesture = true
                     } else if let map = self.mapView {
+                        RailSignpost.map.mark("map.rebuild.trigger", 6)
                         self.rebuild(on: map)
                     }
                 }
@@ -3859,6 +3936,18 @@ extension RailMapView.Surface {
                         overlayStyles[key] = style
                         continue
                     }
+                    if let key = overlay.title ?? nil, MapOverlayStyles.isRideBatchKey(key),
+                       var style = overlayStyles[key] {
+                        // rides|<kind>|<in|off>|<#colour>|c<cell>
+                        let parts = key.split(separator: "|")
+                        let inScope = parts.count > 2 && parts[2] == "in"
+                        style.widthToken = (RailStyle.riddenWidth * CGFloat(display.routeWidthScale))
+                            * RailStyle.riddenWidthScale
+                        style.alpha = hasSelection ? RailStyle.selectDim
+                            : (inScope ? CGFloat(display.riddenOpacity) : dateScope.dimOpacity)
+                        overlayStyles[key] = style
+                        continue
+                    }
                     guard let key = overlay.title ?? nil,
                         MapOverlayStyles.isRideCoreKey(key),
                         let separator = key.firstIndex(of: "|"),
@@ -4004,6 +4093,7 @@ extension RailMapView.Surface {
                 if snapshot != nil { restyle(on: mapView) }
                 guard releasedCamera, rebuildDeferredByPlayback else { return }
                 rebuildDeferredByPlayback = false
+                RailSignpost.map.mark("map.rebuild.trigger", 7)
                 rebuild(on: mapView)
             }
 
