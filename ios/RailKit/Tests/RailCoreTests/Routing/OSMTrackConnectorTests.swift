@@ -203,7 +203,7 @@ struct OSMTrackConnectorTests {
             contentsOf: data.appending(path: "stations.json")).features
         let overlay = try RailHistoryOverlay.load(from: data.appending(path: "rail-history.json"))
         _ = RailHistory.apply(overlay, sections: &features, stations: &stations)
-        let junctions = Localization.supportedCountries.flatMap { registry.junctions(for: $0) }
+        let junctions = registry.junctions(for: "jp")
         let graph = RouteGraph.build(from: features, junctions: junctions,
                                      identityPeriods: overlay.identityPeriods)
         #expect(graph.rejectedPhysicalJunctionIDs == [])
