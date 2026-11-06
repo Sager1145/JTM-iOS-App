@@ -1,5 +1,7 @@
 # Swift source organization inventory — 2026-10-10
 
+> **Historical (2026-10-10).** Paths are as of that date. Since then tests moved into feature subfolders, the three workbenches moved under `ios/auxiliary/RailDiagnostics/Modules/`, and some files were deleted; see [the 2026-11-05 structure review](../../../docs/maintenance/2026-11-05-codebase-structure-review.md). Not regenerated.
+
 This is a declaration/function-section inventory, not a full behavior audit. Production dependency/body review and completed extractions are documented in source-structure.md and source-structure-railkit-review.md. Native regression files are included for filename/type/helper organization; their cases were not run.
 
 | File | Lines | Top-level owners | Function declarations |

@@ -26,12 +26,15 @@ ios/
     RailCore/                domain algorithms, grouped by feature
     RailPresentation/        portable presentation rules, grouped by feature
     RailApplication/         snapshot use cases, grouped by feature
-  RailKit/Tests/              module-level production regression tests
-  RailMapUITests/             native UI production regression tests
+  RailKit/Tests/              module-level production regression tests (mirror Sources)
+  RailMapTests/               native unit tests, by app feature folder
+  RailMapUITests/             native UI production regression tests, by app feature folder
   auxiliary/
-    RouteWorkbench/          route solver diagnostic app
-    ThroughWorkbench/        historical through-service diagnostic app
-    RailAlignmentInspector/  display geometry diagnostic app
+    RailDiagnostics/         unified Mac Catalyst diagnostics app (xcodegen project.yml)
+      Modules/
+        RouteWorkbench/          route solver module
+        ThroughWorkbench/        historical through-service module (+ WorkbenchCore)
+        RailAlignmentInspector/  display geometry module (+ InspectionKit)
   Resources/                 native packaging resources
   copy-rail-packages.sh       resource packaging build phase
   VERIFICATION.md            focused verification policy
@@ -208,7 +211,7 @@ Every active Swift source has an explicit responsibility in `source-ownership.js
 Review ownership and imports for changed sources in chat. Add the source owner
 to `source-ownership.json` when necessary. The retired scripts are explained in
 `VERIFICATION.md`; use focused existing tests only when the change needs execution.
-See [the historical refactor plan](../docs/reports/integration/full-codebase-refactor-plan.md) and [the historical responsibility matrix](../docs/reports/integration/refactor-feature-matrix.md) for product
+See the historical refactor plan (`docs/reports/integration/full-codebase-refactor-plan.md`, 外部证据盘) and the historical responsibility matrix (`docs/reports/integration/refactor-feature-matrix.md`, 外部证据盘) for product
 scope; their historical verification commands are superseded by this policy.
 
 Resource assembly consumes verified inputs. If a timetable is stale, run
@@ -413,7 +416,7 @@ OS coverage only when the changed API or behavior requires it.
 Instruments can distinguish background `map.geometry.prepare` from main-thread
 `map.rebuild` and its overlay/annotation phases.
 Recorded platform results, including unresolved intermittent timing failures,
-are in [the September 8 validation report](../docs/reports/map-display/PARALLEL_RAIL_ZOOM_VALIDATION_2026-09-08.md).
+are in the September 8 validation report (`docs/reports/map-display/PARALLEL_RAIL_ZOOM_VALIDATION_2026-09-08.md`, 外部证据盘).
 
 The first version drew one SwiftUI `MapPolyline` per station interval. On
 Japan that is 9,568 overlays, and the simulator was explicit about the result:
@@ -605,8 +608,8 @@ service-catalog run has 105 issues; the frozen phone UI suite has 126 registered
 cases, 77 passed, 36 failed and 13 skipped. Later targeted repairs do not rewrite
 that suite's result. Full-viewport basemap dimming remains NO-GO, and comparable
 cold/warm device performance acceptance is still outstanding. See
-[the execution ledger](../docs/reports/integration/refactor-execution-2026-10-03.md) and
-[the responsibility matrix](../docs/reports/integration/refactor-feature-matrix.md) for current evidence.
+the execution ledger (`docs/reports/integration/refactor-execution-2026-10-03.md`, 外部证据盘) and
+the responsibility matrix (`docs/reports/integration/refactor-feature-matrix.md`, 外部证据盘) for current evidence.
 
 The app supports jp/tw/hk/mo/kr. North America resources remain offline under
 `backups/north-america/2026-10-03/` and are never app inputs. iPhone is portrait

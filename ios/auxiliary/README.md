@@ -4,9 +4,9 @@
 
 | Internal workspace | Implementation | Purpose |
 |---|---|---|
-| Alignment | `RailAlignmentInspector/Sources`, `InspectionKit` | Native basemap screenshots, display geometry, extraction and scoped observations |
-| Physical routes | `RouteWorkbench/App` | Production route solving, journey evidence and consistency review |
-| Through history | `ThroughWorkbench/App`, `WorkbenchCore` | Dated service patterns, historical issues and patch documents |
+| Alignment | `RailDiagnostics/Modules/RailAlignmentInspector/Sources`, `InspectionKit` | Native basemap screenshots, display geometry, extraction and scoped observations |
+| Physical routes | `RailDiagnostics/Modules/RouteWorkbench/App` | Production route solving, journey evidence and consistency review |
+| Through history | `RailDiagnostics/Modules/ThroughWorkbench/App`, `WorkbenchCore` | Dated service patterns, historical issues and patch documents |
 | Tasks & evidence | `RailDiagnostics/Sources` | Human task creation, agent requests, progress, resume and evidence records |
 
 The old directory names identify internal modules and preserved evidence, not independently buildable apps. The three standalone projects and entry points have been retired. Build and launch only [RailDiagnostics](RailDiagnostics/README.md). Historical reports/captures remain usable under their recorded contracts; do not recapture three copies by default.

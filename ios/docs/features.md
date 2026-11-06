@@ -24,7 +24,7 @@ Read [the user guide](../../docs/guides/user-guide.md) for workflows and
 [the source structure guide](source-structure.md) for module and file ownership.
 Use the [current function/interface/implementation map](../../docs/reference/function-interface-map.md)
 for ownership, the unified diagnostics interface, and outstanding simplifications.
-The [historical feature parity ledger](../../docs/reports/integration/feature-parity-ledger.md)
-retains its recorded gaps and evidence. Current scope ledgers under
-`ios/refactor-parallel/` retain unresolved acceptance questions. Use
+The historical feature parity ledger (`docs/reports/integration/feature-parity-ledger.md`, external evidence drive)
+retains its recorded gaps and evidence. Archived 2026-10 scope ledgers under
+`docs/maintenance/archive/2026-10-refactor/` retain unresolved acceptance questions. Use
 [the current verification policy](../VERIFICATION.md) to select evidence.

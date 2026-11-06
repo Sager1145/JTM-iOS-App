@@ -87,13 +87,13 @@ Do not turn retiring a gate into a claim that its requirements now pass.
 The five JTM coordination/refactor chats have been instructed to stop their old
 pipelines, explain and delete their owned scratch verification scripts, and record
 a lighter process only where their scope needs one. Their proposals live in
-`ios/refactor-parallel/`. No replacement umbrella script is introduced here.
+`docs/maintenance/archive/2026-10-refactor/`. No replacement umbrella script is introduced here.
 
 ## Retired umbrella gate (historical, not the current script)
 
 What follows is the deleted 1,055-line umbrella. `bash ios/verify.sh` does not
 run it. The living entry is the opt-in dispatcher above, which forwards one
-module to `ios/tools/verification/{swift,build,route,alignment}.sh`. It has no
+module to `ios/tools/verification/{swift,build,diagnostic}.sh`. It has no
 `native` mode. Do not treat the stages below as a gate that still runs.
 
 Modes the umbrella accepted: everything (default), `--swift`, `--core`, `--js`, `--app`,
