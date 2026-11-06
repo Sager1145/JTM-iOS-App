@@ -208,6 +208,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
+				"zh-Hant",
+				"zh-Hans",
 			);
 			mainGroup = 000000000000000000000104;
 			minimizedProjectReferenceProxies = 1;
@@ -363,6 +366,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "tools/app-control/RailMap-Debug-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scans paper tickets so trip details can be filled in. Photos stay on this device.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows where you are on the railway map.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -395,6 +399,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Scans paper tickets so trip details can be filled in. Photos stay on this device.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows where you are on the railway map.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";

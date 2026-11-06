@@ -47,29 +47,49 @@ struct JourneyListRow: View {
     /// actor after an `await` — a plain `() -> Void` cannot cross that.
     let confirmDelete: @MainActor @Sendable () -> Void
 
+    /// Whether the trip is in the Upcoming list, which decides whether the
+    /// menu offers "Move to past trips" or "Move to upcoming".
+    let isUpcoming: Bool
+
+    /// An upcoming trip whose time has gone by. It is never refiled on its
+    /// own: the row marks it and offers the reader the three choices.
+    let isOverdue: Bool
+
+    /// File the trip under Upcoming (`true`) or past (`false`).
+    let setUpcoming: (Bool) -> Void
+
+    /// Open the journey editor. `@Sendable` for the same reason as
+    /// ``confirmDelete``: the menu's copy waits for the menu's teardown.
+    let edit: @MainActor @Sendable () -> Void
+
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
     @State private var showsGroupAssignment = false
 
     var body: some View {
-        // The workspace highlights the route and presents a separate journey
-        // menu. The source list retains its filters and scroll position.
-        Button {
-            select()
-        } label: {
-            JourneySummaryRow(
-                train: train,
-                presentation: presentation,
-                isSelected: editing.itineraries.selectedTrainID == train.id,
-                showsDate: showsDate)
+        VStack(alignment: .leading, spacing: 8) {
+            // The workspace highlights the route and presents a separate journey
+            // menu. The source list retains its filters and scroll position.
+            Button {
+                select()
+            } label: {
+                JourneySummaryRow(
+                    train: train,
+                    presentation: presentation,
+                    isSelected: editing.itineraries.selectedTrainID == train.id,
+                    showsDate: showsDate,
+                    isOverdue: isOverdue)
+            }
+            // §14.3's first line, on the control this app is tapped through more
+            // than any other. `.plain` inside a `List` draws no highlight at all,
+            // so selecting a journey used to give nothing back until the store
+            // came round and the row's border changed — which is after the finger
+            // has already lifted.
+            .buttonStyle(RailRowPressStyle())
+            .accessibilityIdentifier("journeyRow-\(train.id)")
+
+            if isOverdue { overduePrompt }
         }
-        // §14.3's first line, on the control this app is tapped through more
-        // than any other. `.plain` inside a `List` draws no highlight at all,
-        // so selecting a journey used to give nothing back until the store
-        // came round and the row's border changed — which is after the finger
-        // has already lifted.
-        .buttonStyle(RailRowPressStyle())
-        .accessibilityIdentifier("journeyRow-\(train.id)")
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets(top: WorkspaceMenuMetrics.listRowVerticalInset,
@@ -135,6 +155,14 @@ struct JourneyListRow: View {
                     ridden ? "ios.detail.markNotRidden" : "ios.detail.confirmRidden"),
                 systemImage: ridden ? "circle.dashed" : "checkmark.circle")
         }
+        listMembershipButton
+        if isOverdue {
+            Button {
+                presentationHost.afterTeardown(edit)
+            } label: {
+                Label(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil")
+            }
+        }
         Button {
             presentationHost.afterTeardown { showsGroupAssignment = true }
         } label: {
@@ -180,6 +208,61 @@ struct JourneyListRow: View {
             // the menu down, and the confirmation would be dropped.
             presentationHost.afterTeardown(confirmDelete)
         } label: {
+            Label(
+                localization.countryText("btn.delete", fallback: "Delete"),
+                systemImage: "trash")
+        }
+    }
+
+    /// Moving between the lists is the reader's decision, never the clock's.
+    private var listMembershipButton: some View {
+        Button {
+            setUpcoming(!isUpcoming)
+        } label: {
+            Label(
+                localization.text(
+                    isUpcoming ? "ios.journey.moveToPast" : "ios.journey.moveToUpcoming",
+                    fallback: isUpcoming ? "Move to past trips" : "Move to upcoming"),
+                systemImage: isUpcoming ? "clock.arrow.circlepath" : "calendar")
+        }
+    }
+
+    /// The overdue trip's inline choices: file it as past, edit it, or delete
+    /// it through the workspace's usual confirmation.
+    private var overduePrompt: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(
+                localization.text(
+                    "ios.journey.overduePrompt", fallback: "This trip's time has passed."),
+                systemImage: "clock.badge.exclamationmark")
+                .font(.caption)
+                .foregroundStyle(.orange)
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 8) { overdueActions }
+                VStack(alignment: .leading, spacing: 6) { overdueActions }
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+        }
+        .padding(.horizontal, 4)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("journeyOverdue-\(train.id)")
+    }
+
+    @ViewBuilder
+    private var overdueActions: some View {
+        Button {
+            setUpcoming(false)
+        } label: {
+            Label(
+                localization.text("ios.journey.moveToPast", fallback: "Move to past trips"),
+                systemImage: "clock.arrow.circlepath")
+        }
+        .tint(.orange)
+        Button(action: edit) {
+            Label(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil")
+        }
+        Button(role: .destructive, action: confirmDelete) {
             Label(
                 localization.countryText("btn.delete", fallback: "Delete"),
                 systemImage: "trash")

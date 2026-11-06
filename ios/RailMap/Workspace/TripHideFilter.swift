@@ -5,12 +5,13 @@ import RailPresentation
 
 /// The most trips the map draws at once.
 ///
-/// The one hard-coded cap, applied where the scoped trips feed the map
+/// The one cap, applied where the scoped trips feed the map
 /// (`RailWorkspaceView.mapRides`), and reused by the two other places that
 /// can draw many routes: playback's queue and the share card's map. Lists
-/// still scroll through every trip; only drawing is capped.
+/// still scroll through every trip; only drawing is capped. 500 on a phone
+/// or iPad, 1,500 on a Mac (``ResourceProfile/mapTripLimit``).
 enum MapTripCap {
-    static let limit = 500
+    static let limit = ResourceProfile.current.mapTripLimit
 
     /// Trip id → normalised `YYYY-MM-DD` ("" when undated), the sort key.
     static func dates(_ trains: [Train]) -> [String: String] {

@@ -634,6 +634,8 @@ extension StoreOperations {
         pairs.append(("destination", .string(train.destination)))
         if let direction = train.direction { pairs.append(("direction", .string(direction))) }
         if let visible = train.visible { pairs.append(("visible", .bool(visible))) }
+        if let list = train.listMembership { pairs.append(("list", .string(list.rawValue))) }
+        if let byDate = train.listByDate { pairs.append(("list_by_date", .bool(byDate))) }
         if let style = train.style { pairs.append(("style", json(style))) }
         if let policy = train.routePolicy { pairs.append(("route_policy", json(policy))) }
         if let sections = train.routeSections {
@@ -654,6 +656,8 @@ extension StoreOperations {
         if let confirmation = train.routeConfirmation {
             pairs.append(("route_confirmation", .string(confirmation.rawValue)))
         }
+        if let stock = train.rollingStock { pairs.append(("rolling_stock", TrainValidation.json(stock))) }
+        if let ticket = train.ticket { pairs.append(("ticket", TrainValidation.json(ticket))) }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 

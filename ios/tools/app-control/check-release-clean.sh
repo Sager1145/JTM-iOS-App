@@ -24,6 +24,7 @@ markers=(
   AppControlDispatcher
   AppControlRequest
   AppControlEditorHandle
+  AppControlCameraRun
   DevToolsController
   DevToolsWindow
   DevPerfSampler

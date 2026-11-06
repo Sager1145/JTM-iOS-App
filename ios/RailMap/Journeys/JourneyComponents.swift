@@ -407,6 +407,10 @@ struct JourneySummaryRow: View {
     var isSelected: Bool
     var showsDate: Bool
     var surface: Surface = .card
+    /// An upcoming trip whose time has gone by. Drawn with the caution role's
+    /// orange border, which neither the accent selection border nor a
+    /// region's colour uses; the selection keeps its tinted surface beneath.
+    var isOverdue = false
 
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display: DisplaySettings?
@@ -419,14 +423,19 @@ struct JourneySummaryRow: View {
         .overlay {
             if surface == .card {
                 RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous)
-                    .strokeBorder(
-                        isSelected ? Color.accentColor.opacity(0.55) : .clear,
-                        lineWidth: 1.5)
+                    .strokeBorder(borderColor, lineWidth: isOverdue ? 2 : 1.5)
             }
         }
         .contentShape(.rect)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
+        .accessibilityValue(isOverdue
+            ? Text(localization.text("ios.journey.overdue", fallback: "Overdue")) : Text(""))
+    }
+
+    private var borderColor: Color {
+        if isOverdue { return .orange }
+        return isSelected ? Color.accentColor.opacity(0.55) : .clear
     }
 
     /// Ticket identity above the endpoint pair, shared with the opened card.

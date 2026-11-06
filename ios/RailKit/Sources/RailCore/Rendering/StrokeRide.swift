@@ -44,12 +44,28 @@ public struct ChainRef: Sendable {
     /// takes, so a snapped endpoint's index is usable against the built
     /// stroke's `anchors` array without translation.
     public var anchors: [Int]
+    /// Identifies `points` and `measures` (not `anchors`) for
+    /// ``StrokeRide/Index/updated(chains:)``: two chains with the same id and
+    /// the same non-nil key are trusted to have identical geometry. Nil
+    /// compares the coordinates themselves.
+    public var contentKey: String?
 
-    public init(id: String, points: [Coordinate], measures: [Double], anchors: [Int]) {
+    public init(
+        id: String, points: [Coordinate], measures: [Double], anchors: [Int],
+        contentKey: String? = nil
+    ) {
         self.id = id
         self.points = points
         self.measures = measures
         self.anchors = anchors
+        self.contentKey = contentKey
+    }
+
+    /// Same id and geometry; anchors are compared separately.
+    fileprivate func hasSameGeometry(as other: ChainRef) -> Bool {
+        guard id == other.id, points.count == other.points.count else { return false }
+        if let contentKey, let otherKey = other.contentKey { return contentKey == otherKey }
+        return points == other.points && measures == other.measures
     }
 }
 
@@ -97,7 +113,7 @@ public enum StrokeRide {
     /// edge order, so equal-distance projections and first-chain ties have
     /// exactly the same answer as the exhaustive matcher.
     public struct Index: Sendable {
-        private struct Bounds: Sendable {
+        fileprivate struct Bounds: Sendable {
             let minLat: Double, maxLat: Double, minLon: Double, maxLon: Double
 
             init(_ points: ArraySlice<Coordinate>) {
@@ -141,6 +157,14 @@ public enum StrokeRide {
                 }
             }
 
+            /// The same geometry with new anchors: bounds and blocks depend
+            /// only on the points.
+            init(reusing entry: Entry, chain: ChainRef) {
+                self.chain = chain
+                bounds = entry.bounds
+                blocks = entry.blocks
+            }
+
             func project(_ point: Coordinate, tolerance: Double) -> Projection? {
                 let sx = 111_320.0 * cos(point.lat * .pi / 180)
                 var best: Projection?
@@ -174,9 +198,16 @@ public enum StrokeRide {
         private let root: Int?
 
         public init(chains: [ChainRef]) {
-            let entries = chains.filter {
-                $0.points.count >= 2 && $0.points.count == $0.measures.count
-            }.map(Entry.init)
+            self.init(entries: chains.filter(Self.isIndexable).map(Entry.init))
+        }
+
+        private static func isIndexable(_ chain: ChainRef) -> Bool {
+            chain.points.count >= 2 && chain.points.count == chain.measures.count
+        }
+
+        /// Every chain's own entry, in caller order; the hierarchy is a pure
+        /// function of that list, so equal lists answer identically.
+        private init(entries: [Entry]) {
             self.entries = entries
             var nodes: [Node] = []
             nodes.reserveCapacity(max(1, entries.count / 2))
@@ -242,6 +273,87 @@ public enum StrokeRide {
                     fromAnchor: fromAnchor, toAnchor: toAnchor)
             }
             return nil
+        }
+
+        /// The index for `chains` (the complete ordered list, as
+        /// ``init(chains:)`` takes it), reusing this index's prepared entries
+        /// for chains whose geometry is unchanged. The result answers exactly
+        /// as `Index(chains: chains)` does.
+        ///
+        /// `change` names what moved, so a caller can keep earlier answers
+        /// for segments it does not affect: see ``Change/affects(segment:)``.
+        public func updated(chains: [ChainRef]) -> (index: Index, change: Change) {
+            var previous: [String: [Int]] = [:]
+            for (position, entry) in entries.enumerated() {
+                previous[entry.chain.id, default: []].append(position)
+            }
+            var claimed = Set<Int>()
+            var next: [Entry] = []
+            var changed: [Bounds] = []
+            var retainedOldPositions: [Int] = []
+            for chain in chains where Self.isIndexable(chain) {
+                var reused: Entry?
+                if var positions = previous[chain.id], !positions.isEmpty {
+                    let position = positions.removeFirst()
+                    previous[chain.id] = positions
+                    let old = entries[position]
+                    if old.chain.hasSameGeometry(as: chain) {
+                        claimed.insert(position)
+                        if old.chain.anchors == chain.anchors {
+                            reused = old
+                            retainedOldPositions.append(position)
+                        } else {
+                            reused = Entry(reusing: old, chain: chain)
+                            changed.append(old.bounds)
+                        }
+                    }
+                }
+                if let reused {
+                    next.append(reused)
+                } else {
+                    let entry = Entry(chain)
+                    changed.append(entry.bounds)
+                    next.append(entry)
+                }
+            }
+            for (position, entry) in entries.enumerated() where !claimed.contains(position) {
+                changed.append(entry.bounds)
+            }
+            let reordered = zip(retainedOldPositions, retainedOldPositions.dropFirst())
+                .contains { $0 >= $1 }
+            return (Index(entries: next), Change(bounds: changed, reordered: reordered))
+        }
+
+        /// What differs between an index and its ``updated(chains:)``
+        /// successor: the bounds of every added, removed or altered chain
+        /// (old and new versions), and whether unchanged chains swapped order.
+        public struct Change: Sendable {
+            fileprivate let bounds: [Bounds]
+            /// Unchanged chains changed relative order, so first-match ties
+            /// may resolve differently anywhere.
+            public let reordered: Bool
+
+            fileprivate init(bounds: [Bounds], reordered: Bool) {
+                self.bounds = bounds
+                self.reordered = reordered
+            }
+
+            /// Nothing moved: every answer of the old index still holds.
+            public var isEmpty: Bool { bounds.isEmpty && !reordered }
+
+            /// Whether the updated index may answer `segment` differently.
+            /// A chain is a candidate only when its padded bounds hold both
+            /// endpoints, and unchanged candidates keep their verdicts and
+            /// order; so a segment no changed chain could hold resolves the
+            /// same in both indexes. False positives are allowed.
+            public func affects(segment: [Coordinate]) -> Bool {
+                if reordered { return true }
+                guard segment.count >= 2 else { return false }
+                let first = segment[0], last = segment[segment.count - 1]
+                return bounds.contains {
+                    $0.contains(first, pad: boundsPadDegrees) && $0.contains(last, pad: boundsPadDegrees)
+                }
+            }
         }
     }
 

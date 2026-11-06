@@ -394,7 +394,8 @@ final class RiddenRouteStore {
         loadTask = Task(priority: priority) {
             await Self.$activePendingOwner.withValue(owner) {
             do {
-                let primed = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
+                let preread = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
+                let primed = preread.rides.first
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 if let primed {
@@ -406,7 +407,7 @@ final class RiddenRouteStore {
                 }
                 let decoded = try await Self.decode(
                     wanted: pending, requestedOrder: wantedIDs,
-                    preferredTrainID: preferredTrainID, primed: primed
+                    preferredTrainID: preferredTrainID, primed: primed, preread: preread
                 ) { partial in
                     if inbox.post(partial) {
                         Task { @MainActor in
@@ -444,7 +445,7 @@ final class RiddenRouteStore {
                 state = .loaded(rides: rides)
                 noteRouteEntries(for: rides, wanted: wantedIDs, keeping: landed)
                 detectTraversedLines()
-                Self.sweepRouteCacheOnce()
+                Self.sweepRouteCacheOnce(protecting: Set(completedInputs.keys))
             } catch is CancellationError {
                 inbox.close()
                 partials.cancel()
@@ -560,6 +561,7 @@ final class RiddenRouteStore {
     @concurrent nonisolated static func discardSolvedRoutes() async {
         let base = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
             ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        RouteDigestIndexStore.shared.clear()
         try? FileManager.default.removeItem(at: base)
         await sharedJourneyWork.clear()
         // Only the memoised section solves are dropped; the ~26 MB of decoded
@@ -578,11 +580,13 @@ final class RiddenRouteStore {
 
     /// Read the last-viewed route only. A miss deliberately does not solve:
     /// the complete decoder below owns expensive work and its cancellation.
+    /// A miss hands its canonical input and digest to the decoder, so the
+    /// preferred journey is enriched and read once rather than three times.
     @concurrent private nonisolated static func loadPreferred(
         id: String?, wanted: [String: Train]
-    ) async throws -> DrawnRide? {
-        guard let id, let train = wanted[id] else { return nil }
-        return try await loadCached([train], country: RouteScope(train).code).rides.first
+    ) async throws -> CacheBatch {
+        guard let id, let train = wanted[id] else { return CacheBatch() }
+        return try await loadCached([train], country: RouteScope(train).code)
     }
 
     func clear() {
@@ -911,8 +915,10 @@ final class RiddenRouteStore {
         try Task.checkCancellation()
         guard !train.requiresRouteConfirmation else { return nil }
         let cached = try await loadCached([train], country: scope.code)
+        cached.noteCurrentDigests()
+        RouteDigestIndexStore.shared.flush()
         if let ride = cached.rides.first { return ride }
-        return try await solveMissing(cached.missing, scope: scope).first
+        return try await solveMissing(cached.missing, scope: scope, prepared: cached.prepared).first
     }
 
     /// What each journey the load was asked about ended up with.
@@ -970,10 +976,12 @@ final class RiddenRouteStore {
     /// drawn over which.
     @concurrent private nonisolated static func decode(
         wanted: [String: Train], requestedOrder: [String],
-        preferredTrainID: String?, primed: DrawnRide? = nil,
+        preferredTrainID: String?, primed: DrawnRide? = nil, preread: CacheBatch = CacheBatch(),
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
+        preread.noteCurrentDigests()
+        var prepared = preread.prepared
         var unresolved: [(
             scope: RouteScope, trains: [Train], graphStore: RouteGraph.RouteGraphStore?,
             providedInputs: SolverInputs?
@@ -1002,10 +1010,13 @@ final class RiddenRouteStore {
         // over which.
         for scope in RouteScope.ordered(byScope.keys) where scope.home.isEnabled {
             guard let trains = byScope[scope] else { continue }
-            let cached = try await loadCachedConcurrently(trains, country: scope.code)
+            let cached = try await loadCachedConcurrently(trains, country: scope.code, prepared: prepared)
+            cached.noteCurrentDigests()
+            prepared.merge(cached.prepared) { _, new in new }
             result += cached.rides
             if !cached.missing.isEmpty { unresolved.append((scope, cached.missing, nil, nil)) }
         }
+        RouteDigestIndexStore.shared.flush(includeUsage: true)
 
         // Everything the on-disk cache could answer, on the map before a
         // single dataset is opened.
@@ -1034,7 +1045,7 @@ final class RiddenRouteStore {
             unresolved[index].providedInputs = inputs
             result = try await decodeUncached(
                 [preferred], scope: scope, previous: result, graphStore: graphStore,
-                providedInputs: inputs,
+                providedInputs: inputs, prepared: prepared,
                 publish: publish)
             unresolved[index].trains.removeAll { $0.id == preferredTrainID }
             if unresolved[index].trains.isEmpty {
@@ -1058,7 +1069,7 @@ final class RiddenRouteStore {
             result = try await decodeUncached(
                 trains, scope: scope, previous: result,
                 graphStore: unresolved[index].graphStore,
-                providedInputs: unresolved[index].providedInputs, publish: publish)
+                providedInputs: unresolved[index].providedInputs, prepared: prepared, publish: publish)
             unresolved[index].graphStore = nil
             unresolved[index].providedInputs = nil
         }
@@ -1070,6 +1081,7 @@ final class RiddenRouteStore {
         _ trains: [Train], scope: RouteScope, previous: [DrawnRide],
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
+        prepared: [String: PreparedRoute] = [:],
         publish: @Sendable ([DrawnRide]) async -> Void
     ) async throws -> [DrawnRide] {
         try Task.checkCancellation()
@@ -1083,7 +1095,7 @@ final class RiddenRouteStore {
         let previous = result
         let inferred = try await solveMissing(
             trains, scope: scope, allowLegacy: false, graphStore: graphStore,
-            providedInputs: providedInputs) { partial in
+            providedInputs: providedInputs, prepared: prepared) { partial in
                 await publish(previous + partial)
             }
         for ride in inferred { missing.removeValue(forKey: ride.id) }
@@ -1092,7 +1104,7 @@ final class RiddenRouteStore {
             let previous = result
             result += try await solveMissing(
                 trains.filter { missing[$0.id] != nil }, scope: scope,
-                graphStore: graphStore, providedInputs: providedInputs, publish: { partial in
+                graphStore: graphStore, providedInputs: providedInputs, prepared: prepared, publish: { partial in
                     await publish(previous + partial)
                 })
         }
@@ -1232,6 +1244,8 @@ final class RiddenRouteStore {
         let originalSections = base.routeSections ?? []
         let match: TimetablePhysicalRouteMatch.Match?
         var timetableFailure: String?
+        let interval = RailSignpost.data.begin("route.enrich")
+        defer { RailSignpost.data.end("route.enrich", interval) }
         do {
             match = try await TimetableRouteEvidence.enrich(train: raw, country: country, sections: originalSections)
         } catch is CancellationError {
@@ -1289,6 +1303,7 @@ final class RiddenRouteStore {
         allowLegacy: Bool = true,
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
+        prepared: [String: PreparedRoute] = [:],
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         guard trains.contains(where: { !$0.requiresRouteConfirmation }) else { return [] }
@@ -1300,9 +1315,17 @@ final class RiddenRouteStore {
         var results: [DrawnRide] = []
         for train in trains where !train.requiresRouteConfirmation && !skipped.contains(train.id) {
             try Task.checkCancellation()
-            let routeInput = try await canonicalRouteInput(train, country: scope.code)
+            // The cache read already enriched and digested this journey.
+            let routeInput: CanonicalRouteInput
+            let digest: String?
+            if let known = prepared[train.id], known.train == train, known.registrySettled {
+                routeInput = known.input
+                digest = known.digest
+            } else {
+                routeInput = try await canonicalRouteInput(train, country: scope.code)
+                digest = await routeCacheDigest(routeInput.train, raw: train, country: scope.code)
+            }
             let canonical = routeInput.train
-            let digest = await routeCacheDigest(canonical, raw: train, country: scope.code)
             // Joining happens before admission. Only the producer acquires the
             // sole permit, so a subscriber never holds it while awaiting work.
             let operation: @Sendable () async throws -> [DrawnRide] = {
@@ -1420,10 +1443,15 @@ final class RiddenRouteStore {
     private typealias SolverInputs = RideRouteResolution.SourceInputs
 
     /// Immutable source/history inputs are shared by edits and batch loads.
-    /// Mutable graphs stay private to one sequential worker.
+    /// Mutable graphs stay private to one sequential worker. Completed inputs
+    /// keep ``ResourceProfile/countryCacheSlots`` slots (one on a compact
+    /// device); with two, the Japan-only scope is never the one evicted.
     private actor SolverInputCache {
         static let shared = SolverInputCache()
-        private var completed: (key: String, inputs: SolverInputs)?
+        /// Completed inputs, oldest first, at most ``slotCount``.
+        private var completed: [(key: String, inputs: SolverInputs)] = []
+        private let slotCount = ResourceProfile.current.countryCacheSlots
+        private static let pinnedScopeKey = RouteScope(regions: [.jp]).key
         // Independent admission avoids nesting the global route/display permit.
         private let decodeLimiter = RouteSolveLimiter(limit: 1)
         private var running: [String: Task<SolverInputs, Error>] = [:]
@@ -1458,11 +1486,23 @@ final class RiddenRouteStore {
             return built
         }
 
-        private func releaseCompleted() { completed = nil }
+        private nonisolated static func isPinned(_ key: String) -> Bool {
+            key.hasPrefix(pinnedScopeKey + ":")
+        }
+
+        /// Frees a slot before a decode allocates its replacement: with one
+        /// slot the completed inputs are dropped, as before; with two, the
+        /// oldest that is not Japan's goes first.
+        private func releaseCompleted() {
+            while !completed.isEmpty, completed.count >= slotCount {
+                let victim = completed.firstIndex { !Self.isPinned($0.key) } ?? 0
+                completed.remove(at: victim)
+            }
+        }
 
         /// Forces fresh solves from the retained inputs without re-decoding.
         func clearResolutionMemo() {
-            completed?.inputs.clearResolutionMemo()
+            for entry in completed { entry.inputs.clearResolutionMemo() }
             // The network indexes carry the station-interval memo; they are
             // cheap to rebuild next to the decoded inputs that stay.
             indexes.removeAll()
@@ -1471,20 +1511,25 @@ final class RiddenRouteStore {
         /// Drops the completed inputs and their derived indexes. In-flight
         /// decodes keep running, and their callers keep their own copies.
         func releaseForMemoryPressure() {
-            completed = nil
+            completed.removeAll()
             indexes.removeAll()
             intervalIndexes.removeAll()
         }
 
         private func retain(_ inputs: SolverInputs, key: String) {
-            completed = (key, inputs)
+            completed.removeAll { $0.key == key }
+            completed.append((key, inputs))
+            while completed.count > slotCount {
+                let victim = completed.firstIndex { !Self.isPinned($0.key) && $0.key != key } ?? 0
+                completed.remove(at: victim)
+            }
         }
 
         func inputs(scope: RouteScope) async throws -> SolverInputs {
             try Task.checkCancellation()
             let revision = RiddenRouteStore.resourceRevisions?.revision(for: scope.key) ?? "unversioned"
             let key = scope.key + ":" + revision
-            if let completed, completed.key == key { return completed.inputs }
+            if let ready = completed.first(where: { $0.key == key }) { return ready.inputs }
             if let task = running[key] {
                 let inputs = try await task.value
                 try Task.checkCancellation()
@@ -1584,7 +1629,8 @@ final class RiddenRouteStore {
     }
 
     /// Select existing cache behavior for one explicitly requested diagnostic run.
-    /// Shipping builds retain the bounded 100,000-node policy.
+    /// Without options the bounded policy uses the device profile's load
+    /// budget, as shipping builds do.
     nonisolated static func diagnosticGraphCacheConfiguration(
         arguments: [String] = ProcessInfo.processInfo.arguments
     ) throws -> DiagnosticGraphCacheConfiguration {
@@ -1615,7 +1661,7 @@ final class RiddenRouteStore {
             return .standard
         }
         guard let nodeValue else {
-            return .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget)
+            return .bounded(maximumNodes: ResourceProfile.current.regionalGraphLoadNodeBudget)
         }
         guard let nodes = Int(nodeValue), (1...2_000_000).contains(nodes) else {
             throw invalid("\(nodesFlag) requires one integer between 1 and 2000000.")
@@ -1626,7 +1672,7 @@ final class RiddenRouteStore {
 
     private nonisolated static func fallbackGraphStore(
         inputs: SolverInputs, displayNetwork: RouteNetwork?,
-        maximumNodes: Int = RouteGraph.regionalGraphLoadNodeBudget
+        maximumNodes: Int = ResourceProfile.current.regionalGraphLoadNodeBudget
     ) -> RouteGraph.RouteGraphStore {
         let sections = inputs.sections
         #if RAIL_DIAGNOSTICS
@@ -2080,6 +2126,8 @@ final class RiddenRouteStore {
     private nonisolated static func routeCacheDigest(
         _ canonical: Train, raw: Train, country: String
     ) async -> String? {
+        let interval = RailSignpost.data.begin("route.digest")
+        defer { RailSignpost.data.end("route.digest", interval) }
         let canonicalSections = canonical.routeSections ?? []
         let sections = canonicalSections.map(RouteGraph.RouteSection.init)
         let policy = canonical.routePolicy
@@ -2113,19 +2161,60 @@ final class RiddenRouteStore {
         return digest
     }
 
-    private nonisolated static func loadCached(
-        _ trains: [Train], country: String
-    ) async throws -> (rides: [DrawnRide], missing: [Train]) {
+    /// A journey's canonical input and digest, computed once by the cache read
+    /// that missed and reused by the solve that follows it.
+    private struct PreparedRoute: Sendable {
+        /// The raw train these were computed for; reuse requires equality.
+        let train: Train
+        let input: CanonicalRouteInput
+        let digest: String?
+        /// Every graph region's registry had settled before `input` was
+        /// computed, so the solve's own post-settle canonicalisation would
+        /// produce the same value.
+        let registrySettled: Bool
+    }
+
+    private enum CacheRead: Sendable {
+        case hit(DrawnRide, digest: String)
+        case miss(PreparedRoute?, digest: String?)
+    }
+
+    /// What a batch of cache reads answered, plus what the misses already
+    /// computed and every digest the batch resolved.
+    private struct CacheBatch: Sendable {
         var rides: [DrawnRide] = []
         var missing: [Train] = []
-        for train in trains {
-            if let ride = try await readCached(train, country: country) {
+        var prepared: [String: PreparedRoute] = [:]
+        var digests: [String: String] = [:]
+
+        mutating func append(_ read: CacheRead, for train: Train) {
+            switch read {
+            case .hit(let ride, let digest):
                 rides.append(ride)
-            } else {
+                digests[train.id] = digest
+            case .miss(let route, let digest):
                 missing.append(train)
+                if let route { prepared[train.id] = route }
+                if let digest { digests[train.id] = digest }
             }
         }
-        return (rides, missing)
+
+        /// Marks these digests as the current working set's, which the
+        /// route-cache sweep never evicts. Only load and resolve batches call
+        /// this; availability probes read altered trains.
+        func noteCurrentDigests() {
+            for (id, digest) in digests { CurrentRouteDigests.shared.note(id: id, digest: digest) }
+        }
+    }
+
+    private nonisolated static func loadCached(
+        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:]
+    ) async throws -> CacheBatch {
+        var batch = CacheBatch()
+        for train in trains {
+            batch.append(try await readCached(train, country: country, prepared: prepared[train.id]), for: train)
+        }
+        return batch
     }
 
     /// The same answer, reading several journeys' cache files at once.
@@ -2153,36 +2242,38 @@ final class RiddenRouteStore {
     /// and that order reaches the map: it is the order the overlays are added
     /// in, and therefore which line is drawn over which.
     private nonisolated static func loadCachedConcurrently(
-        _ trains: [Train], country: String
-    ) async throws -> (rides: [DrawnRide], missing: [Train]) {
-        guard trains.count > 1 else { return try await loadCached(trains, country: country) }
+        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:]
+    ) async throws -> CacheBatch {
+        guard trains.count > 1 else {
+            return try await loadCached(trains, country: country, prepared: prepared)
+        }
         let interval = RailSignpost.data.begin("route.cacheRead")
         defer { RailSignpost.data.end("route.cacheRead", interval) }
-        var found = [DrawnRide?](repeating: nil, count: trains.count)
-        try await withThrowingTaskGroup(of: (Int, DrawnRide?).self) { group in
+        var found = [CacheRead?](repeating: nil, count: trains.count)
+        try await withThrowingTaskGroup(of: (Int, CacheRead).self) { group in
             var next = 0
             func addNext() {
                 guard next < trains.count else { return }
                 let position = next
                 let train = trains[position]
+                let known = prepared[train.id]
                 next += 1
                 group.addTask {
                     try Task.checkCancellation()
-                    return (position, try await readCached(train, country: country))
+                    return (position, try await readCached(train, country: country, prepared: known))
                 }
             }
             for _ in 0..<Swift.min(cacheReadWidth, trains.count) { addNext() }
-            while let (position, ride) = try await group.next() {
-                found[position] = ride
+            while let (position, read) = try await group.next() {
+                found[position] = read
                 addNext()
             }
         }
-        var rides: [DrawnRide] = []
-        var missing: [Train] = []
-        for (position, ride) in found.enumerated() {
-            if let ride { rides.append(ride) } else { missing.append(trains[position]) }
+        var batch = CacheBatch()
+        for (position, read) in found.enumerated() {
+            batch.append(read ?? .miss(nil, digest: nil), for: trains[position])
         }
-        return (rides, missing)
+        return batch
     }
 
     /// How many cache files are read at once. See ``loadCachedConcurrently``.
@@ -2211,25 +2302,59 @@ final class RiddenRouteStore {
         }
     }
 
-    /// One journey's cached route, or `nil` if there is not a usable one.
+    /// One journey's cached route, or a miss carrying whatever the read
+    /// computed on the way.
+    ///
+    /// The digest comes from the persisted ``RouteDigestIndex`` when it has an
+    /// entry for this exact train under the current inputs; only a miss there
+    /// runs timetable enrichment and the digest, and records the answer.
+    /// `prepared` is a miss this load already computed: it is returned as is.
     private nonisolated static func readCached(
-        _ train: Train, country: String
-    ) async throws -> DrawnRide? {
-        guard !train.requiresRouteConfirmation else { return nil }
-        // Normalised once and reused for the digest and the expected
-        // sections below, instead of each calling `normalizeExportTrain`
-        // again for the same train.
-        let routeInput = try await canonicalRouteInput(train, country: country)
-        let canonical = routeInput.train
-        guard let revision = runtimeResourceRevision(scope: Region.scopeKey(Region.regionsTouched(train))),
-              let digest = await routeCacheDigest(canonical, raw: train, country: country),
+        _ train: Train, country: String, prepared: PreparedRoute? = nil
+    ) async throws -> CacheRead {
+        guard !train.requiresRouteConfirmation else { return .miss(nil, digest: nil) }
+        if let prepared, prepared.train == train { return .miss(prepared, digest: prepared.digest) }
+        guard let revision = runtimeResourceRevision(scope: Region.scopeKey(Region.regionsTouched(train)))
+        else { return .miss(nil, digest: nil) }
+        let indexInputs = await digestIndexInputs(for: train, country: country, revision: revision)
+        let indexKey = indexInputs.flatMap { RouteDigestIndex.key(train: train, inputs: $0) }
+        let resolvedDigest: String?
+        let expectedSections: [RouteSection]
+        let timetableFailure: String?
+        var computed: PreparedRoute?
+        if let indexKey, let entry = RouteDigestIndexStore.shared.lookup(indexKey) {
+            resolvedDigest = entry.digest
+            expectedSections = entry.expectedSections
+            timetableFailure = nil
+        } else {
+            // Normalised once and reused for the digest and the expected
+            // sections below, instead of each calling `normalizeExportTrain`
+            // again for the same train.
+            let settled = RouteDigestIndexIdentity.registry(regions: digestIndexRegions(train, country: country)) != nil
+            let routeInput = try await canonicalRouteInput(train, country: country)
+            let canonical = routeInput.train
+            let digest = await routeCacheDigest(canonical, raw: train, country: country)
+            resolvedDigest = digest
+            expectedSections = canonicalSections(canonical)
+            timetableFailure = routeInput.timetableFailure
+            computed = PreparedRoute(
+                train: train, input: routeInput, digest: digest, registrySettled: settled)
+            // Recorded only for a clean answer whose inputs held still while
+            // it was computed (no registry settle, no editor-applied occurrence).
+            if let indexKey, let digest, routeInput.timetableFailure == nil,
+               currentDigestIndexInputs(for: train, country: country, revision: revision) == indexInputs,
+               RouteDigestIndex.roundTrips(expectedSections) {
+                RouteDigestIndexStore.shared.record(indexKey, digest: digest, expectedSections: expectedSections)
+            }
+        }
+        guard let digest = resolvedDigest,
               let data = try? Data(contentsOf: cacheURL(country: country, digest: digest)),
               let cache = try? JSONDecoder().decode(RuntimeCache.self, from: data),
               cache.version == RouteGraph.routeDrawnCacheVersion,
               cache.resolutionSemantics == resolutionSemantics,
               cache.digest == digest,
               cache.resourceRevision == revision
-        else { return nil }
+        else { return .miss(computed, digest: resolvedDigest) }
         // Re-resolve malformed metadata without invalidating unrelated cache
         // entries or treating geometry-only selections as interval proof.
         guard cache.segments.allSatisfy({ segment in
@@ -2238,7 +2363,7 @@ final class RiddenRouteStore {
                 fromCode: selection.fromStationCode, toCode: selection.toStationCode,
                 intervals: selection.intervals, provenance: selection.provenance.rawValue)
                 .isStructurallyValid
-        }) else { return nil }
+        }) else { return .miss(computed, digest: digest) }
         // A given `segmentIndex` can carry more than one cached entry — one
         // per `MultiLineString` part, written in part order by `saveCache`.
         // Counting occurrences here, the same way the live dataset path
@@ -2263,13 +2388,49 @@ final class RiddenRouteStore {
                     validTo: cached.validTo, temporalKind: cached.temporalKind,
                     physicalRoute: cached.physicalRoute)
             }
-        guard !segments.isEmpty else { return nil }
-        return drawnRide(
+        guard !segments.isEmpty else { return .miss(computed, digest: digest) }
+        return .hit(drawnRide(
             train,
             country: country,
             segments: segments,
-            expectedSections: canonicalSections(canonical), indicesAreAuthoritative: cache.indicesAreAuthoritative ?? true,
-            physicalGaps: cache.physicalGaps, timetableFailure: routeInput.timetableFailure)
+            expectedSections: expectedSections, indicesAreAuthoritative: cache.indicesAreAuthoritative ?? true,
+            physicalGaps: cache.physicalGaps, timetableFailure: timetableFailure), digest: digest)
+    }
+
+    /// Every input besides the train that the enriched canonical input and
+    /// its digest depend on, after the scope's registry settles (the digest
+    /// waits for it anyway). `nil` disables the index for this read: a
+    /// registry still decoding, no history revision, no build identity, or
+    /// an editor-applied occurrence that enrichment could prefer.
+    private nonisolated static func digestIndexInputs(
+        for train: Train, country: String, revision: String
+    ) async -> RouteDigestIndex.Inputs? {
+        _ = await SolverRegistryInput.awaitReady(region: country)
+        return currentDigestIndexInputs(for: train, country: country, revision: revision)
+    }
+
+    /// The regions whose registry can change this train's canonical input:
+    /// its graph regions, the scope home and its own region.
+    private nonisolated static func digestIndexRegions(_ train: Train, country: String) -> [String] {
+        RouteScope(train).graphRegions.map(\.code) + [country] + (train.region.map { [$0] } ?? [])
+    }
+
+    private nonisolated static func currentDigestIndexInputs(
+        for train: Train, country: String, revision: String
+    ) -> RouteDigestIndex.Inputs? {
+        guard !TimetableRouteEvidence.holdsAppliedOccurrences,
+              let build = RouteDigestIndexIdentity.build,
+              let history = historyRevisionSet(for: train)
+        else { return nil }
+        guard let registry = RouteDigestIndexIdentity.registry(
+            regions: digestIndexRegions(train, country: country)) else { return nil }
+        return RouteDigestIndex.Inputs(
+            country: country, resourceRevision: revision,
+            timetableEvidenceRevision: TimetableRouteEvidence.evidenceRevision,
+            solverCacheVersion: RouteGraph.routeSolverCacheVersion,
+            drawnCacheVersion: RouteGraph.routeDrawnCacheVersion,
+            resolutionSemantics: resolutionSemantics,
+            historyRevision: history.canonical, registry: registry, build: build)
     }
 
     /// Writes the route cache entry for an already-computed digest. The
@@ -2321,8 +2482,11 @@ final class RiddenRouteStore {
     /// is 201 journeys and a reader can hold all three Japanese ones at once —
     /// because what fills the remainder is not journeys but revisions of them.
     /// A digest covers a journey's sections and policy, so every edit writes a
-    /// new file and orphans the old one, correct and never read again.
-    private nonisolated static let routeCacheEntryBudget = 512
+    /// new file and orphans the old one, correct and never read again. A
+    /// history-revision change orphans a whole set at once. The sweep never
+    /// removes a digest the current load uses, so a smaller budget only
+    /// trims orphans sooner.
+    private nonisolated static let routeCacheEntryBudget = 1024
 
     private static var didSweepRouteCache = false
 
@@ -2333,13 +2497,13 @@ final class RiddenRouteStore {
     /// times in a session pays for the tidying on the next launch instead of
     /// twenty times over. A cancelled load never reaches here, so the flag is
     /// only ever spent on a load that finished.
-    private static func sweepRouteCacheOnce() {
+    private static func sweepRouteCacheOnce(protecting ids: Set<String>) {
         guard !didSweepRouteCache else { return }
         didSweepRouteCache = true
         // Detached and low priority: nothing waits on the answer, and the
         // reader is already looking at their map by the time it runs.
         Task.detached(priority: .utility) {
-            _ = sweepRouteCache()
+            _ = sweepRouteCache(protecting: CurrentRouteDigests.shared.digests(for: ids))
         }
     }
 
@@ -2366,7 +2530,7 @@ final class RiddenRouteStore {
     /// The count is returned rather than reported because nothing in this app
     /// logs; it is there so a sweep that removes nothing, or everything, is
     /// visible to whoever next has a debugger on this.
-    private nonisolated static func sweepRouteCache() -> Int {
+    private nonisolated static func sweepRouteCache(protecting protected: Set<String>) -> Int {
         let manager = FileManager.default
         let keys: Set<URLResourceKey> = [.isRegularFileKey, .contentModificationDateKey]
         var removed = 0
@@ -2376,21 +2540,20 @@ final class RiddenRouteStore {
                 includingPropertiesForKeys: Array(keys),
                 options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
             else { continue }
-            let entries = contents.compactMap { url -> (url: URL, written: Date)? in
+            let entries = contents.compactMap { url -> RouteCacheSweep.Entry? in
                 guard url.pathExtension == "json",
                       let values = try? url.resourceValues(forKeys: keys),
                       values.isRegularFile == true
                 else { return nil }
-                return (url, values.contentModificationDate ?? .distantPast)
+                return RouteCacheSweep.Entry(
+                    digest: url.deletingPathExtension().lastPathComponent,
+                    written: values.contentModificationDate ?? .distantPast)
             }
-            guard entries.count > routeCacheEntryBudget else { continue }
-            let doomed = entries
-                .sorted { $0.written < $1.written }
-                .prefix(entries.count - routeCacheEntryBudget)
-            for entry in doomed {
+            for entry in RouteCacheSweep.victims(entries, budget: routeCacheEntryBudget, protected: protected) {
                 // A failure needs no handling: the entry either went or it did
                 // not, and either way the next load re-solves what is missing.
-                guard (try? manager.removeItem(at: entry.url)) != nil else { continue }
+                guard (try? manager.removeItem(at: cacheURL(country: region.code, digest: entry.digest))) != nil
+                else { continue }
                 removed += 1
             }
         }

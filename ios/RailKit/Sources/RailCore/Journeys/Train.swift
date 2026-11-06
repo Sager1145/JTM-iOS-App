@@ -42,6 +42,18 @@ public enum RouteConfirmation: String, Codable, Equatable, Sendable {
     case confirmed
 }
 
+/// Which journey list a trip is filed under — the record's `list` field.
+///
+/// Decided once, when a trip is added (see `TripListRules` in
+/// RailPresentation), and changed afterwards only by the reader. Passing time
+/// never moves a trip: an upcoming trip whose time has gone by stays upcoming
+/// and is shown as overdue until the reader files it. Absent on every record
+/// written before the field existed; those keep the date rule.
+public enum TripListMembership: String, Codable, Equatable, Sendable {
+    case upcoming
+    case past
+}
+
 /// `{ "schema_version": "1.3", "trains": [...] }` — jsonspec §2.1.
 ///
 /// The top level is an object and never an array, and it carries exactly
@@ -118,6 +130,14 @@ public struct Train: Codable, Equatable, Sendable {
     /// the type's documentation.
     public var direction: String?
     public var visible: Bool?
+    /// The list this trip is filed under. Written only when set, so a store
+    /// that never had one round-trips unchanged. See ``TripListMembership``.
+    public var listMembership: TripListMembership?
+    /// The trip was filed by its date alone (`list_by_date`): its clocks are
+    /// the editor's placeholder, not a time the reader, a timetable or a
+    /// ticket gave, so the list rules read its date and never its clocks.
+    /// Written only when true.
+    public var listByDate: Bool?
     public var style: TrainStyle?
     public var routePolicy: RoutePolicy?
     public var routeSections: [RouteSection]?
@@ -148,6 +168,11 @@ public struct Train: Codable, Equatable, Sendable {
     public var notes: String?
     /// Optional user grouping, shared across regions and preserved in archives.
     public var journeyGroup: JourneyGroup?
+    /// Set, cars and livery ridden. Written only when set (`rolling_stock`);
+    /// `vehicleType` stays the series field.
+    public var rollingStock: RollingStock?
+    /// Seat, class, fare and ticket kind. Written only when set (`ticket`).
+    public var ticket: Ticket?
 
     public init(
         id: String,
@@ -170,7 +195,9 @@ public struct Train: Codable, Equatable, Sendable {
         journeyGroup: JourneyGroup? = nil,
         routeConfirmation: RouteConfirmation? = nil,
         operatorID: String? = nil,
-        operatorIDs: [String]? = nil
+        operatorIDs: [String]? = nil,
+        rollingStock: RollingStock? = nil,
+        ticket: Ticket? = nil
     ) {
         self.id = id
         self.date = date
@@ -193,10 +220,14 @@ public struct Train: Codable, Equatable, Sendable {
         self.routeConfirmation = routeConfirmation
         self.operatorID = operatorID
         self.operatorIDs = operatorIDs.flatMap { $0.isEmpty ? nil : $0 }
+        self.rollingStock = rollingStock
+        self.ticket = ticket
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, date, number, origin, destination, direction, visible, style, stops
+        case listMembership = "list"
+        case listByDate = "list_by_date"
         case numberEn = "number_en"
         case trainType = "train_type"
         case vehicleType = "vehicle_type"
@@ -208,6 +239,8 @@ public struct Train: Codable, Equatable, Sendable {
         case region, notes
         case journeyGroup = "journey_group"
         case routeConfirmation = "route_confirmation"
+        case rollingStock = "rolling_stock"
+        case ticket
     }
 
     // Written out only when present, so that a store which omits a field
@@ -234,6 +267,8 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encode(destination, forKey: .destination)
         try container.encodeIfPresent(direction, forKey: .direction)
         try container.encodeIfPresent(visible, forKey: .visible)
+        try container.encodeIfPresent(listMembership, forKey: .listMembership)
+        try container.encodeIfPresent(listByDate, forKey: .listByDate)
         try container.encodeIfPresent(style, forKey: .style)
         try container.encodeIfPresent(routePolicy, forKey: .routePolicy)
         try container.encodeIfPresent(routeSections, forKey: .routeSections)
@@ -242,6 +277,8 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(notes, forKey: .notes)
         try container.encodeIfPresent(journeyGroup, forKey: .journeyGroup)
         try container.encodeIfPresent(routeConfirmation, forKey: .routeConfirmation)
+        try container.encodeIfPresent(rollingStock, forKey: .rollingStock)
+        try container.encodeIfPresent(ticket, forKey: .ticket)
     }
 }
 
@@ -1149,6 +1186,7 @@ public enum TrainValidation {
         if let color = train.style?.color, !color.isEmpty, !isValidTrainColor(color) {
             issues.append(Diagnostic(path: "style.color", reason: "style.color must be #RRGGBB."))
         }
+        issues.append(contentsOf: tripDetailDiagnostics(train))
         return issues
     }
 
@@ -1349,6 +1387,13 @@ public enum TrainValidation {
         for key in ["train_type", "vehicle_type", "company", "number_en", "notes"] {
             if let value = json[key], !value.isString {
                 return Diagnostic(path: key, reason: "\(key) must be a string when present.")
+            }
+        }
+        for key in ["rolling_stock", "ticket"] {
+            if let value = json[key], value != .null {
+                guard case .object = value else {
+                    return Diagnostic(path: key, reason: "\(key) must be an object when present.")
+                }
             }
         }
         _ = try normalizeImportedRouteConfirmation(json["route_confirmation"])
@@ -1561,7 +1606,9 @@ public enum TrainValidation {
             notes: optionalText(json, "notes"),
             routeConfirmation: try normalizeImportedRouteConfirmation(json["route_confirmation"]),
             operatorID: optionalText(json, "operator_id"),
-            operatorIDs: optionalOperatorIDs(json["operator_ids"]))
+            operatorIDs: optionalOperatorIDs(json["operator_ids"]),
+            rollingStock: rollingStock(json["rolling_stock"]),
+            ticket: ticket(json["ticket"]))
     }
 
     private static func optionalOperatorIDs(_ value: JSON?) -> [String]? {
@@ -1868,6 +1915,7 @@ public enum TrainValidation {
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
+                "list", "list_by_date", "rolling_stock", "ticket",
             ],
             "Train")
 
@@ -1895,8 +1943,10 @@ public enum TrainValidation {
         let service =
             explicitLatin.map { ServiceCaption(primary: caption, latinName: $0) }
             ?? ServiceCaption.split(caption)
+        let listMembership = try normalizeImportedListMembership(train["list"])
+        let listByDate = try normalizeImportedListByDate(train["list_by_date"])
 
-        return Train(
+        var normalized = Train(
             id: id,
             date: Dates.normalizeTrainDate(
                 id: id, date: (train["date"] ?? .null).stringOrNilIfNotString,
@@ -1929,7 +1979,28 @@ public enum TrainValidation {
             journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]),
             routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]),
             operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString,
-            operatorIDs: optionalOperatorIDs(train["operator_ids"]))
+            operatorIDs: optionalOperatorIDs(train["operator_ids"]),
+            rollingStock: rollingStock(train["rolling_stock"]),
+            ticket: ticket(train["ticket"]))
+        normalized.listMembership = listMembership
+        normalized.listByDate = listByDate
+        return normalized
+    }
+
+    private static func normalizeImportedListByDate(_ value: JSON?) throws -> Bool? {
+        guard let value, value != .null else { return nil }
+        guard case .bool(let flag) = value else {
+            throw fail("Journey list_by_date must be true or false.")
+        }
+        return flag ? true : nil
+    }
+
+    private static func normalizeImportedListMembership(_ value: JSON?) throws -> TripListMembership? {
+        guard let value, value != .null else { return nil }
+        guard let raw = value.stringOrNilIfNotString, let membership = TripListMembership(rawValue: raw) else {
+            throw fail("Journey list must be upcoming or past.")
+        }
+        return membership
     }
 
     private static func normalizeImportedRouteConfirmation(_ value: JSON?) throws -> RouteConfirmation? {
@@ -2132,7 +2203,7 @@ public enum TrainValidation {
     public static func normalizeExportTrain(
         _ train: Train, country: String = "jp", stations: StationTable = .empty
     ) -> Train {
-        Train(
+        var exported = Train(
             id: train.id,
             date: Dates.normalizeTrainDate(train),
             number: train.number,
@@ -2161,7 +2232,13 @@ public enum TrainValidation {
             journeyGroup: train.journeyGroup,
             routeConfirmation: train.routeConfirmation,
             operatorID: train.operatorID,
-            operatorIDs: train.operatorIDs)
+            operatorIDs: train.operatorIDs,
+            rollingStock: train.rollingStock,
+            ticket: train.ticket)
+        // Carried for the same reason as `region`: the reader filed it.
+        exported.listMembership = train.listMembership
+        exported.listByDate = train.listByDate
+        return exported
     }
 
     /// Route inputs for solving and geometry display. Pending hints are

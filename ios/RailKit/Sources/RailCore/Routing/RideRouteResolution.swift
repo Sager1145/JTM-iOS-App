@@ -573,7 +573,10 @@ public struct RideRouteResolution {
                 displayContinuity = drawnParts.last?.last
             }
         }
-        graphStore?.trimRegionalGraphCache(target: RouteGraph.regionalGraphNodeBudget)
+        let profile = ResourceProfile.current
+        if profile.trimsRegionalGraphsAfterEachRide {
+            graphStore?.trimRegionalGraphCache(target: profile.regionalGraphNodeBudget)
+        }
         try Task.checkCancellation()
         return Result(disposition: unsupported && !allowLegacy ? .unsupported : (segments.isEmpty ? .unavailable : .geometry),
             segments: segments, physicalGaps: physicalGaps, expectedSections: sections,
@@ -586,7 +589,7 @@ public struct RideRouteResolution {
     private static func graphStore(_ inputs: SourceInputs) -> RouteGraph.RouteGraphStore {
         RouteGraph.RouteGraphStore(sections: inputs.sections, policy: .physicalRailway,
             junctions: inputs.physicalJunctions,
-            cachePolicy: .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget),
+            cachePolicy: .bounded(maximumNodes: ResourceProfile.current.regionalGraphLoadNodeBudget),
             identityPeriods: inputs.identityPeriods, sourceSnapshotID: inputs.snapshotID)
     }
 

@@ -51,14 +51,18 @@ public enum WorkspaceJourneyRules {
     /// Dates offered by the Upcoming or All Journeys menus.
     ///
     /// The normal menu includes manually created empty buckets. Upcoming is
-    /// built only from journeys whose normalized stored date is on or after today in
-    /// that journey's region; manual buckets are intentionally absent. The
+    /// built only from journeys in the Upcoming list (see
+    /// ``TripListRules/isUpcoming(_:today:)``); manual buckets are intentionally absent. The
     /// menu remains bucket-based, so an overnight journey offers its own date
     /// here even though the list and map scopes can include its later days.
+    ///
+    /// `history` narrows the normal menu to the History list — every journey
+    /// NOT in Upcoming — and keeps the manual buckets.
     public static func journeyDates(
         trains: [Train],
         regionCode: String?,
         upcoming: Bool,
+        history: Bool = false,
         todayByRegion: [String: String],
         manualDates: [String],
         rule: RegionScopeRule
@@ -67,24 +71,23 @@ public enum WorkspaceJourneyRules {
             guard let regionCode else { return true }
             return resolvedRegion(of: train, rule: rule) == regionCode
         }
+        func isUpcoming(_ train: Train) -> Bool {
+            TripListRules.isUpcoming(
+                train, today: todayByRegion[resolvedRegion(of: train, rule: rule)])
+        }
         guard upcoming else {
-            return Dates.availableDates(regional, manualDates: manualDates)
+            let listed = history ? regional.filter { !isUpcoming($0) } : regional
+            return Dates.availableDates(listed, manualDates: manualDates)
         }
-        let future = regional.filter { train in
-            let region = resolvedRegion(of: train, rule: rule)
-            guard let date = Dates.normalizeDateString(train.date),
-                let today = todayByRegion[region]
-            else { return false }
-            return date >= today
-        }
-        return Dates.availableDates(future)
+        return Dates.availableDates(regional.filter(isUpcoming))
     }
 
     /// The journeys in the Upcoming list.
     ///
     /// The reader's date filter is a span filter here: an overnight journey
-    /// remains present on its second day. Whether it is upcoming is still
-    /// decided from the normalized date stored on the record, matching the workspace.
+    /// remains present on its second day. Whether it is upcoming is the
+    /// record's stored list membership, or for a legacy record its date — see
+    /// ``TripListRules/isUpcoming(_:today:)``.
     public static func upcomingScope(
         trains: [Train],
         regionCode: String?,
@@ -101,10 +104,7 @@ public enum WorkspaceJourneyRules {
                 {
                     return false
                 }
-                guard let date = Dates.normalizeDateString(train.date),
-                    let today = todayByRegion[region]
-                else { return false }
-                return date >= today
+                return TripListRules.isUpcoming(train, today: todayByRegion[region])
             }
             .sorted { lhs, rhs in
                 let leftDate = lhs.date ?? ""

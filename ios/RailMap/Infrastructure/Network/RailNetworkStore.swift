@@ -468,6 +468,7 @@ final class RailNetworkStore {
         requestSerial = 0
         currentBatchWave = nil
         currentBatchIDs = []
+        currentBatchRect = nil
         networkExtent = nil
         residentLineCount = 0
         evictedLineTotal = 0
@@ -835,6 +836,8 @@ final class RailNetworkStore {
     private enum DisplayLoadWave { case urgent, padded, prefetch }
     @ObservationIgnored private var currentBatchWave: DisplayLoadWave?
     @ObservationIgnored private var currentBatchIDs: Set<String> = []
+    /// The request rect the running batch was started for.
+    @ObservationIgnored private var currentBatchRect: MKMapRect?
     /// The most recent request serial that named each line — bumped once per
     /// ``ensure(regionsIntersecting:cameraZoom:)`` call and used as the LRU
     /// key by eviction. A prefetched line's serial is the request that
@@ -845,7 +848,8 @@ final class RailNetworkStore {
     private static let displayAttemptLimit = 3
     /// Resident chunk bytes the store keeps before eviction starts trimming
     /// the least-recently-requested lines. Same unit as ``activeNetworkBytes``.
-    private static let residentByteBudget = 16 * 1024 * 1024
+    /// Per device: 16 MB compact, 48 MB large, 128 MB desktop.
+    private static let residentByteBudget = ResourceProfile.current.displayResidentByteBudget
     /// How many chunks a batch decodes at once. Bounded by the device's own
     /// core count rather than a flat constant — a chunk is kilobytes, so the
     /// limiting resource is CPU for JSON decode and geometry, not memory.
@@ -895,13 +899,24 @@ final class RailNetworkStore {
 
         // One batch at a time — except a prefetch batch, which a real camera
         // request always preempts: idle-ring work must never make a pan wait.
+        // An urgent or padded batch for a rect the camera has left entirely
+        // is preempted too; its lines were not failures, so their attempts
+        // are refunded.
         if displayLoadTask != nil {
-            if currentBatchWave == .prefetch {
+            let cameraLeft = currentBatchRect.map { !$0.intersects(rect) } ?? false
+            if currentBatchWave == .prefetch || cameraLeft {
                 displayLoadTask?.cancel()
                 loadingDisplayLines.subtract(currentBatchIDs)
+                if currentBatchWave != .prefetch {
+                    for id in currentBatchIDs {
+                        let remaining = (displayAttempts[id] ?? 1) - 1
+                        displayAttempts[id] = remaining > 0 ? remaining : nil
+                    }
+                }
                 displayLoadTask = nil
                 currentBatchWave = nil
                 currentBatchIDs = []
+                currentBatchRect = nil
             } else {
                 return
             }
@@ -999,6 +1014,7 @@ final class RailNetworkStore {
         }
         currentBatchWave = wave
         currentBatchIDs = Set(batch.map(\.id))
+        currentBatchRect = rect
         let detailByID = Dictionary(uniqueKeysWithValues: batch.map {
             ($0.id, wantedDetail(for: $0, cameraZoom: cameraZoom))
         })
@@ -1044,6 +1060,7 @@ final class RailNetworkStore {
             displayLoadTask = nil
             currentBatchWave = nil
             currentBatchIDs = []
+            currentBatchRect = nil
             for entry in batch { loadingDisplayLines.remove(entry.id) }
             displayBlobs.merge(result.blobs, uniquingKeysWith: { _, new in new })
             for entry in batch { displayFailures[entry.region] = nil }

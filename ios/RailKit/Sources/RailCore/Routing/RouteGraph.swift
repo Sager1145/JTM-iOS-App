@@ -3081,6 +3081,9 @@ extension RouteGraph {
 
         public let sections: [SectionFeature]
         private let cachePolicy: GraphCachePolicy
+        /// Regional LRU trim targets: the JavaScript constants for
+        /// `.standard` (parity), the device ``ResourceProfile`` for `.bounded`.
+        private let regionalBudgets: (steady: Int, load: Int)
         public let policy: BuildPolicy
         public let junctions: [PhysicalJunction]
         /// Section identity periods used to install registry junctions between
@@ -3159,6 +3162,13 @@ extension RouteGraph {
                 precondition(maximumNodes > 0, "Graph cache node budget must be positive")
             }
             self.cachePolicy = cachePolicy
+            switch cachePolicy {
+            case .standard:
+                regionalBudgets = (RouteGraph.regionalGraphNodeBudget, RouteGraph.regionalGraphLoadNodeBudget)
+            case .bounded:
+                let profile = ResourceProfile.current
+                regionalBudgets = (profile.regionalGraphNodeBudget, profile.regionalGraphLoadNodeBudget)
+            }
             self.sections = sections
             self.policy = policy
             self.junctions = junctions
@@ -3382,8 +3392,8 @@ extension RouteGraph {
             residentNodes += graph.nodeCount
             trimRegionalGraphCache(
                 target: importInProgress || routeSolveInProgress
-                    ? RouteGraph.regionalGraphLoadNodeBudget
-                    : RouteGraph.regionalGraphNodeBudget)
+                    ? regionalBudgets.load
+                    : regionalBudgets.steady)
             enforceBoundedBudget(keeping: graph)
             return graph
         }

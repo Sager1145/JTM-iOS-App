@@ -32,6 +32,7 @@ struct AppControlProtocolTests {
             "openEditor": ["id": "t"], "addTrip": ["from": "a", "to": "b"], "editTrip": ["id": "t"],
             "deleteTrip": ["id": "t"], "wait": ["condition": "idle"],
             "devtools": ["action": "show"], "setLayer": ["name": "routes", "on": false],
+            "camera": ["action": "fit"], "perf": ["action": "read"],
         ]
         for name in AppControlCommand.names {
             let command = try parse(name, minimal[name] ?? [:])
@@ -187,6 +188,66 @@ struct AppControlProtocolTests {
         #expect(withState.data?.object?["editor"]?.object?["planned"] == true)
         let badID = await AppControlDispatcher.run(AppControlRequest(id: "a/b", command: "state"), driver: driver)
         #expect(badID.status == .rejected)
+    }
+
+    @Test("camera parses each action with defaults and rejects out-of-range values")
+    func cameraParsing() throws {
+        #expect(try parse("camera", ["action": "set", "lat": 35.68, "lon": 139.76, "zoom": 11, "animated": "true"])
+            == .camera(.set(lat: 35.68, lon: 139.76, zoom: 11, animated: true)))
+        #expect(try parse("camera", ["action": "set", "lat": 35, "lon": 139])
+            == .camera(.set(lat: 35, lon: 139, zoom: nil, animated: false)))
+        #expect(try parse("camera", ["action": "pan", "dLat": -0.5, "dLon": 1.25])
+            == .camera(.pan(dLat: -0.5, dLon: 1.25, steps: 30, stepMs: 33)))
+        #expect(try parse("camera", ["action": "pan", "dLat": 0, "dLon": 2, "steps": 10, "stepMs": 16])
+            == .camera(.pan(dLat: 0, dLon: 2, steps: 10, stepMs: 16)))
+        #expect(try parse("camera", ["action": "zoom", "to": 14])
+            == .camera(.zoom(from: nil, to: 14, steps: 30, stepMs: 33)))
+        #expect(try parse("camera", ["action": "zoom", "from": 6, "to": 12, "steps": 5, "stepMs": 0])
+            == .camera(.zoom(from: 6, to: 12, steps: 5, stepMs: 0)))
+        #expect(try parse("camera", ["action": "fit"]) == .camera(.fit(.network)))
+        #expect(try parse("camera", ["action": "fit", "target": "selection"]) == .camera(.fit(.selection)))
+        #expect(throws: AppControlError.missingArgument("action")) { try parse("camera") }
+        #expect(throws: AppControlError.invalidArgument("action", "orbit")) { try parse("camera", ["action": "orbit"]) }
+        #expect(throws: AppControlError.missingArgument("lon")) { try parse("camera", ["action": "set", "lat": 1]) }
+        #expect(throws: AppControlError.invalidArgument("lat", "expected a number in -90.0...90.0")) {
+            try parse("camera", ["action": "set", "lat": 91, "lon": 0])
+        }
+        #expect(throws: AppControlError.invalidArgument("zoom", "expected a number in 0.0...22.0")) {
+            try parse("camera", ["action": "set", "lat": 0, "lon": 0, "zoom": 30])
+        }
+        #expect(throws: AppControlError.invalidArgument("steps", "expected 1...600")) {
+            try parse("camera", ["action": "zoom", "to": 5, "steps": 0])
+        }
+        #expect(throws: AppControlError.invalidArgument("steps", "expected 1...600")) {
+            try parse("camera", ["action": "pan", "dLat": 1, "dLon": 1, "steps": 601])
+        }
+        #expect(throws: AppControlError.invalidArgument("target", "expected network or selection")) {
+            try parse("camera", ["action": "fit", "target": "world"])
+        }
+    }
+
+    @Test("perf takes start, stop or read")
+    func perfParsing() throws {
+        for action in AppControlCommand.perfActions {
+            #expect(try parse("perf", ["action": .string(action)]) == .perf(action: action))
+        }
+        #expect(throws: AppControlError.missingArgument("action")) { try parse("perf") }
+        #expect(throws: AppControlError.invalidArgument("action", "reset")) { try parse("perf", ["action": "reset"]) }
+    }
+
+    @Test("camera and perf persist nothing, so they run on the real store")
+    @MainActor
+    func cameraAndPerfOnSharedStore() async {
+        #expect(AppControlCommand.camera(.fit(.network)).allowedOnSharedStore)
+        #expect(AppControlCommand.perf(action: "read").allowedOnSharedStore)
+        let driver = RecordingDriver(storage: nil)
+        let camera = await AppControlDispatcher.run(
+            AppControlRequest(id: "c1", command: "camera", args: ["action": "fit"]), driver: driver)
+        let perf = await AppControlDispatcher.run(
+            AppControlRequest(id: "p1", command: "perf", args: ["action": "start"]), driver: driver)
+        #expect(camera.status == .ok)
+        #expect(perf.status == .ok)
+        #expect(driver.performed == [.camera(.fit(.network)), .perf(action: "start")])
     }
 }
 #endif

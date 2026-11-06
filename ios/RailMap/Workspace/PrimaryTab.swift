@@ -13,12 +13,13 @@
 /// states, not tabs. Upcoming, All and Search are list modes of the one
 /// Journeys tab; the tab bar shows `WorkspaceTab` below.
 enum PrimaryTab: String, CaseIterable, Identifiable {
-    /// What is coming. Dated today or later, soonest first.
+    /// What is coming: trips filed as upcoming (legacy records: dated today
+    /// or later), soonest first.
     case upcoming
     /// What it adds up to — §5.3's Passport, by its plainer name.
     case stats
-    /// The History tab (pass 3): everything before today, and undated
-    /// records. The raw value stays `all` for the UI-test hook's old spelling.
+    /// The History tab (pass 3): every trip not in Upcoming — filed as past,
+    /// or a legacy record dated before today — and undated records. The raw value stays `all` for the UI-test hook's old spelling.
     case all
     /// System Search, also the entry point for adding a journey.
     case search
