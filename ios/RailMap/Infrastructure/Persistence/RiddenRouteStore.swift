@@ -2482,8 +2482,11 @@ final class RiddenRouteStore {
     /// is 201 journeys and a reader can hold all three Japanese ones at once —
     /// because what fills the remainder is not journeys but revisions of them.
     /// A digest covers a journey's sections and policy, so every edit writes a
-    /// new file and orphans the old one, correct and never read again.
-    private nonisolated static let routeCacheEntryBudget = 4096
+    /// new file and orphans the old one, correct and never read again. A
+    /// history-revision change orphans a whole set at once. The sweep never
+    /// removes a digest the current load uses, so a smaller budget only
+    /// trims orphans sooner.
+    private nonisolated static let routeCacheEntryBudget = 1024
 
     private static var didSweepRouteCache = false
 
