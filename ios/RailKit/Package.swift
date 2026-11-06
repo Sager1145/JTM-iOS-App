@@ -24,7 +24,7 @@ let package = Package(
         .target(name: "RailPresentation", dependencies: ["RailCore"]),
         .target(name: "RailApplication", dependencies: ["RailCore"]),
         .testTarget(name: "RailCoreTests", dependencies: ["RailCore"]),
-        .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation"]),
+        .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation", "RailCore"]),
         .testTarget(name: "RailApplicationTests", dependencies: ["RailApplication", "RailCore"]),
     ]
 )

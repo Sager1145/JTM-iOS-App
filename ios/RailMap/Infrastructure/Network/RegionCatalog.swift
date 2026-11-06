@@ -218,7 +218,7 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// The clock this region's journeys are dated on.
     ///
-    /// The table itself is `RailPresentation.RegionClock`, one tier down,
+    /// The table itself is `RegionClock` (RailCore), one tier down,
     /// where `swift test` can reach it — the app target has no test target
     /// under it, and "which day is it in Macao" is exactly the kind of claim
     /// that has to be checked rather than reviewed. This property is only the
