@@ -39,10 +39,16 @@ enum Fixture {
         return try load(root)
     }
 
+    /// Fills the op's reason and source and, for a drafted junction row, the
+    /// row evidence the reviewer would add (the registry rules require it).
     static func provenance(_ op: PatchOp) -> PatchOp {
         var op = op
         op.reason = "fixture repair"
         op.source = ["https://example.org/evidence"]
+        if op.op.file == .junctions, var row = op.after, row["evidence"]?.arrayValue?.isEmpty != false {
+            row["evidence"] = .array(op.source.map(AreaJSON.string))
+            op.after = row
+        }
         return op
     }
 }

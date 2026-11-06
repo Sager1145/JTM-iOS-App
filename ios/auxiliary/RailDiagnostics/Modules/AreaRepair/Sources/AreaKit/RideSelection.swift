@@ -61,10 +61,36 @@ public enum RideSelection {
             .serialized(style: .compact)
     }
 
-    /// Rides with a recorded section that stops in the area or runs along a
-    /// scoped line across a scoped interval (station-order range test).
+    /// The train the resolver solves: the app's canonical route input
+    /// without timetable enrichment (endpoint names restored, export
+    /// normalisation, corridor preference). Its `routeSections` are the
+    /// recorded sections when they chain the stops, else one leg per
+    /// consecutive stop pair (`TrainValidation.rideRouteSections`).
+    public static func canonicalTrain(_ train: Train, country: String) -> Train {
+        RecordedRouteAdmission.applyingCorridorPreference(to: TrainValidation.normalizeExportTrain(
+            TrainValidation.restoringRouteSectionEndpointNames(train), country: country,
+            stations: TrainValidation.StationTable.empty))
+    }
+
+    /// Whether leg `index` of the solved sections is ridden. Stop-derived
+    /// legs (one per stop pair) follow `ride_segment`; recorded sections that
+    /// do not map one-to-one onto stop pairs count as ridden.
+    static func isRidden(_ train: Train, sections: [RouteSection], index: Int) -> Bool {
+        guard sections.count == train.stops.count - 1 else { return true }
+        return Statistics.isRideSegment(train.stops, segmentIndex: index)
+    }
+
+    /// Rides with a ridden leg (recorded section or consecutive stop pair)
+    /// that stops in the area or runs along a scoped line across a scoped
+    /// interval (station-order range test).
     public static func ridesCrossing(_ scope: AreaScope, trains: [Train], data: AreaData) -> [Train] {
-        trains.filter { train in (train.routeSections ?? []).contains { sectionCrosses($0, scope: scope, data: data) } }
+        trains.filter { train in
+            let sections = canonicalTrain(train, country: data.region).routeSections ?? []
+            return sections.indices.contains { index in
+                isRidden(train, sections: sections, index: index)
+                    && sectionCrosses(sections[index], scope: scope, data: data)
+            }
+        }
     }
 
     static func sectionCrosses(_ section: RouteSection, scope: AreaScope, data: AreaData) -> Bool {
@@ -72,11 +98,26 @@ public enum RideSelection {
         let areaCodes = Set(scope.stations.compactMap(\.code))
         if codes.contains(where: areaCodes.contains) { return true }
         guard codes.count == 2 else { return false }
+        func span(_ line: CompactPackage.Line) -> Range<Int>? {
+            guard let a = line.stations.firstIndex(where: { $0.id == codes[0] }),
+                  let b = line.stations.firstIndex(where: { $0.id == codes[1] }) else { return nil }
+            return min(a, b)..<max(a, b)
+        }
         for scoped in scope.lines {
-            guard let line = data.linesByID[scoped.lineID],
-                  let a = line.stations.firstIndex(where: { $0.id == codes[0] }),
-                  let b = line.stations.firstIndex(where: { $0.id == codes[1] }) else { continue }
-            if scoped.intervalIndices.contains(where: { (min(a, b)..<max(a, b)).contains($0) }) { return true }
+            guard let line = data.linesByID[scoped.lineID] else { continue }
+            if let span = span(line) {
+                if scoped.intervalIndices.contains(where: span.contains) { return true }
+                continue
+            }
+            // A paired row may not carry both endpoints: take the span on its
+            // base line and test whether a scoped interval's two stations lie in it.
+            guard let baseID = scoped.alignmentOf, let base = data.linesByID[baseID],
+                  let baseSpan = span(base), !line.stations.isEmpty else { continue }
+            let between = Set(base.stations[baseSpan.lowerBound...baseSpan.upperBound].map(\.id))
+            let count = line.stations.count
+            if scoped.intervalIndices.contains(where: {
+                between.contains(line.stations[$0 % count].id) && between.contains(line.stations[($0 + 1) % count].id)
+            }) { return true }
         }
         return false
     }
@@ -94,7 +135,8 @@ public struct RideOutcome: Codable, Equatable, Sendable {
         public var gaps: [String]
         public var provenance: String?
         public var lineIDs: [String]
-        /// The section touches the area (see RideSelection).
+        /// The ridden section touches the area: its stations or scoped
+        /// intervals (see RideSelection), or its drawn geometry crosses the box.
         public var inArea: Bool
     }
     public var trainID: String
@@ -107,23 +149,27 @@ public struct RideOutcome: Codable, Equatable, Sendable {
     public static func resolve(_ trains: [Train], data: AreaData, scope: AreaScope) -> [RideOutcome] {
         var resolver = data.resolver()
         return trains.map { train in
-            let recorded = train.routeSections ?? []
-            guard let result = try? resolver.resolve(.init(train: train)) else {
+            let canonical = RideSelection.canonicalTrain(train, country: data.region)
+            let solved = canonical.routeSections ?? []
+            guard let result = try? resolver.resolve(.init(train: train, canonicalTrain: canonical)) else {
                 return RideOutcome(trainID: train.id, date: train.date, disposition: "error", sections: [])
             }
             let uncertified = RideRouteResolution.PhysicalGap.uncertifiedSections(result.physicalGaps)
-            let sections = recorded.indices.map { index -> Section in
-                let section = recorded[index]
+            let sections = solved.indices.map { index -> Section in
+                let section = solved[index]
                 let gaps = result.physicalGaps.filter { $0.segmentIndex == index }.map {
                     $0.isBoundary ? "boundary" : ($0.isUnproven ? "unproven" : "gap")
                 }
-                let route = result.segments.first { $0.segmentIndex == index }?.physicalRoute
+                let segments = result.segments.filter { $0.segmentIndex == index }
+                let route = segments.first?.physicalRoute
+                let touches = RideSelection.sectionCrosses(section, scope: scope, data: data)
+                    || segments.contains { scope.bbox.intersects(polyline: $0.drawnCoordinates) }
                 return Section(index: index, from: section.from, to: section.to,
                                fromCode: section.fromN02StationCode, toCode: section.toN02StationCode,
                                certified: !uncertified.contains(index), gaps: gaps,
                                provenance: route?.provenance.rawValue,
                                lineIDs: route?.lines.map(\.lineID) ?? section.lineIDs ?? [],
-                               inArea: RideSelection.sectionCrosses(section, scope: scope, data: data))
+                               inArea: touches && RideSelection.isRidden(train, sections: solved, index: index))
             }
             return RideOutcome(trainID: train.id, date: train.date, disposition: "\(result.disposition)", sections: sections)
         }

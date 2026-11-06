@@ -190,3 +190,72 @@ struct WriteTransactionTests {
         }
     }
 }
+
+/// Junction rows previewed or written follow the registry policy.
+struct JunctionRuleTests {
+    /// A shortLink between 本線 at 駅二 and a point `metres` north on 支線.
+    static func shortLink(id: String = "area-rule-test", metres: Double, evidence: [String] = ["https://example.org/evidence"],
+                          lineIDs: [String] = [Fixture.main, Fixture.branch]) -> PatchOp {
+        func end(_ line: String, _ lat: Double) -> AreaJSON {
+            .object([("identity", .object([("operatorName", .string("テスト鉄道")), ("lineName", .string(line)), ("railwayClassCode", .string("12"))])),
+                     ("coordinate", .array([.number(140.01), .number(lat)]))])
+        }
+        let row = AreaJSON.object([
+            ("id", .string(id)), ("kind", .string("shortLink")), ("region", .string("jp")), ("station", .string("駅二")),
+            ("stationCode", .string("100002")), ("lineIDs", .array(lineIDs.map(AreaJSON.string))),
+            ("from", end("本線", 35.0)), ("to", end("支線", 35.0 + metres / 111_195)),
+            ("evidence", .array(evidence.map(AreaJSON.string))), ("geometryEvidence", .string("fixture vertices")),
+            ("reviewedAt", .string("2026-11-06")), ("validFrom", .null), ("validTo", .null), ("temporalEvidence", .string("")),
+        ])
+        return Fixture.provenance(PatchOp(op: .junctionAdd, key: id, before: nil, after: row))
+    }
+
+    private func preview(_ op: PatchOp) throws {
+        let repo = try Fixture.repo()
+        try ScratchOverlay.materialize(repo: repo, patches: [AreaPatch(id: "rules", area: Fixture.everything, ops: [op])],
+                                       into: repo.appending(path: ".scratch"))
+    }
+
+    private func message(_ op: PatchOp) -> String? {
+        do { try preview(op); return nil } catch { return error.localizedDescription }
+    }
+
+    @Test func shortLinkOverThirtyMetresIsRejected() {
+        let text = message(Self.shortLink(metres: 35))
+        #expect(text?.contains("at most 30.0 m") == true, "\(text ?? "accepted")")
+    }
+
+    @Test func shortLinkOfTwelveMetresIsAccepted() throws {
+        try preview(Self.shortLink(metres: 12))
+    }
+
+    @Test func missingEvidenceIsRejected() {
+        var op = Self.shortLink(metres: 12)
+        op.after?["evidence"] = .array([])
+        #expect(message(op)?.contains("evidence") == true)
+        op.after?["evidence"] = .array([.string(" ")])
+        #expect(message(op)?.contains("evidence") == true)
+    }
+
+    @Test func duplicateIDIsRejected() throws {
+        let existing = try #require(try JunctionFileEditor.rows(in: Data(contentsOf: try Fixture.repo().appending(path: DataFile.junctions.relativePath))).first)
+        let id = try #require(existing["id"]?.stringValue)
+        #expect(message(Self.shortLink(id: id, metres: 12))?.contains("already exists") == true)
+    }
+
+    @Test func unknownLineIDIsRejected() {
+        #expect(message(Self.shortLink(metres: 12, lineIDs: [Fixture.main, "jp-テスト鉄道-無線"]))?.contains("are not lines") == true)
+    }
+
+    @Test func writeRefusesTheSameRows() throws {
+        let repo = try Fixture.repo()
+        let transaction = WriteTransaction(repo: repo, patchDirectory: repo.appending(path: ".patches/r"))
+        #expect(throws: AreaRepairError.self) {
+            try transaction.check(AreaPatch(id: "r", area: Fixture.everything, ops: [Self.shortLink(metres: 12, lineIDs: [Fixture.main, "jp-x"])]))
+        }
+        #expect(throws: AreaRepairError.self) {
+            try DataFileEditor.apply([Self.shortLink(metres: 35)], file: .junctions,
+                                     to: Data(contentsOf: repo.appending(path: DataFile.junctions.relativePath)))
+        }
+    }
+}

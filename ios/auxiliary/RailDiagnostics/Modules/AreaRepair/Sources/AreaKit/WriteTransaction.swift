@@ -63,6 +63,7 @@ public struct WriteTransaction: Sendable {
             default: break
             }
         }
+        try JunctionRowRules.validateLineIDs(patch.ops, packageURL: repo.appending(path: DataFile.package.relativePath))
     }
 
     /// Writes `patch`. Returns the receipt; `status == .reverted` means a

@@ -189,3 +189,36 @@ struct DetectorTests {
         #expect((json?["junctions"] as? [Any])?.isEmpty == true)
     }
 }
+
+@Suite(.serialized)
+struct RideSelectionTests {
+    static func train(_ id: String, _ stops: [(String, String)], ridden: Bool = true) -> Train {
+        Train(id: id, date: "2026-01-01", number: id, origin: stops[0].0, destination: stops[stops.count - 1].0,
+              routeSections: [], stops: stops.enumerated().map { index, stop in
+                  Stop(name: stop.0, n02StationCode: stop.1,
+                       stopType: index == 0 ? "origin" : (index == stops.count - 1 ? "destination" : "passenger_stop"),
+                       rideSegment: ridden)
+              }, region: "jp")
+    }
+
+    /// Mid-interval 駅一–駅二 on 本線: no station of the area, only the intervals.
+    static let midInterval = AreaSelection(mode: .centre(lon: 140.005, lat: 35.0, radiusMetres: 100), marginMetres: 0)
+
+    @Test func stopDerivedLegsBracketingTheAreaAreSelected() throws {
+        let data = try Fixture.load(DataRoot(repo: try Fixture.repo()))
+        let scope = try AreaScope.resolve(Self.midInterval, data: data)
+        #expect(scope.stations.isEmpty)
+        #expect(scope.line(Fixture.main)?.intervalIndices == [0])
+        let through = Self.train("through", [("駅一", "100001"), ("駅三", "100003")])
+        let outside = Self.train("outside", [("駅五", "100005"), ("駅六", "100006")])
+        let unridden = Self.train("unridden", [("駅一", "100001"), ("駅三", "100003")], ridden: false)
+        let selected = RideSelection.ridesCrossing(scope, trains: [through, outside, unridden], data: data)
+        #expect(selected.map(\.id) == ["through"])
+
+        let outcome = try #require(RideOutcome.resolve([through], data: data, scope: scope).first)
+        #expect(outcome.sections.count == 1)
+        #expect(outcome.sections.first?.inArea == true)
+        #expect(outcome.sections.first?.fromCode == "100001" && outcome.sections.first?.toCode == "100003")
+        #expect(RideOutcome.resolve([outside], data: data, scope: scope).first?.sections.contains(where: \.inArea) == false)
+    }
+}

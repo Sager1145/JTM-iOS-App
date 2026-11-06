@@ -35,7 +35,7 @@ Output is one compact JSON: `{requestID,state,message,capturedCount,failedCount,
 ## Background UI control (computer-use `app_menu`)
 
 Prefer `app_menu` over clicks/keys so the app need not be frontmost. Bundle id `com.JRM.RailDiagnostics`. Paths:
-`["Diagnostics","New diagnostic task"]`, `["Diagnostics","Open task request…"]`, `["Diagnostics","Run / resume task"]`, `["Diagnostics","Pause current operation"]`, `["Diagnostics","Previous captured view"]`, `["Diagnostics","Next captured view"]`, `["Diagnostics","Tasks & evidence"]`, `["Diagnostics","Alignment"]`, `["Diagnostics","Physical routes"]`, `["Diagnostics","Through history"]` (workspace switch; titles confirmed live 2026-10-20). Workspace-specific items (viewpoint/station navigation, capture, export) are added to the same Diagnostics menu only while that inspection workspace has focus; otherwise the menu shows "Select an inspection workspace". List the menu first with `app_menu {list:"Diagnostics"}` and press only titles it returns.
+`["Diagnostics","New diagnostic task"]`, `["Diagnostics","Open task request…"]`, `["Diagnostics","Run / resume task"]`, `["Diagnostics","Pause current operation"]`, `["Diagnostics","Previous captured view"]`, `["Diagnostics","Next captured view"]`, `["Diagnostics","Tasks & evidence"]`, `["Diagnostics","Alignment"]`, `["Diagnostics","Physical routes"]`, `["Diagnostics","Through history"]`, `["Diagnostics","Area repair"]` (workspace switch; titles confirmed live 2026-10-20). Workspace-specific items (viewpoint/station navigation, capture, export) are added to the same Diagnostics menu only while that inspection workspace has focus; otherwise the menu shows "Select an inspection workspace". List the menu first with `app_menu {list:"Diagnostics"}` and press only titles it returns.
 
 | Shortcut | Command |
 |---|---|
@@ -43,7 +43,7 @@ Prefer `app_menu` over clicks/keys so the app need not be frontmost. Bundle id `
 | ⇧⌘O | Open task request… |
 | ⌘↩ | Run / resume task |
 | Esc | Pause current operation |
-| ⌃⌘1…4 | Tasks / Alignment / Physical routes / Through history |
+| ⌃⌘1…5 | Tasks / Alignment / Physical routes / Through history / Area repair |
 | ⌃⌘J / ⌃⌘K | Previous / Next captured view |
 | ⌘F / ⇧⌘G | Search / Go to coordinates |
 | ⌘1… | Comparison modes (in order) |
@@ -58,8 +58,45 @@ Prefer `app_menu` over clicks/keys so the app need not be frontmost. Bundle id `
 | ⇧⌘C | Capture current interval |
 | ⌥⇧⌘C | Capture current line |
 | ⌘O | Import journeys JSON / working document (route, through workspaces) |
+| (menu only) | Area repair workspace: Resolve area / Preview patch / Undo last fix / Export patch for guarded write… |
 
 Pause waits for the active capture lease; the workspace switcher is disabled while work is active.
+
+## Small-area capture and repair
+
+Capture one small area (stationPair, lineSection, rect or centre+radius; margin default 500 m), list detected problems, draft and preview a patch, write it behind `--confirm`. Full docs: `ios/auxiliary/RailDiagnostics/Modules/AreaRepair/README.md`.
+
+```sh
+# app capture: views + area-evidence.json (jtm-area-evidence-v1) in the session dir; exit codes as capture
+python3 -I ios/tools/verification/diagnostic-run.py area capture --stations 'LINE:A-B' [--margin M] [--zoom 17] --name my-area
+#   selectors: --stations LINE:A-B | --line L --intervals a-b | --rect minLon,minLat,maxLon,maxLat | --centre lon,lat --radius M
+# headless (no app): same selectors; every verb prints one JSON; --help per verb
+bash ios/verify.sh area capture-data <selector> --out DIR
+bash ios/verify.sh area problems <selector> --out DIR --propose DIR/patch.json
+bash ios/verify.sh area apply --patch P --scratch DIR            # scratch overlay, repo untouched
+bash ios/verify.sh area preview --patch P --out DIR              # baseline vs patched rides/problems
+bash ios/verify.sh area write --patch P                          # dry-run plan, exit 2, writes nothing
+bash ios/verify.sh area write --patch P --confirm                # real write
+bash ios/verify.sh area undo --receipt R --confirm
+```
+
+Flow: capture, `problems --propose`, fill every op's `reason` and at least one `source` (the draft is blanked and fails validation until you do), `apply` to scratch, `preview`, `write` dry-run, show the user, then `--confirm` only on their explicit go-ahead. Selector/data options: `--margin`, `--repo`, `--overlay`, `--journeys FILE` (repeatable), `--no-default-rides`, `--thresholds JSON|FILE`, `--zoom`. Detectors: missingJunction, lostHistoryStamp, uncertifiedPairedTrack, stationDotOffLine, overRoundedCorner, pairedDirectionSide (thresholds 300/25/15/500 m configurable).
+
+Exit codes (jtm-area): 0 ok, 2 invalid input or refused (also dry-run write), 4 error/warning problems found or guard failure, 1 internal. Patch format `jtm-area-patch-v1`; ops carry reason + source. Patches live in `<evidence root>/area-repairs/<id>/` (`RAILWAY_EVIDENCE_ROOT` or the mounted archive, else pass `--patch-dir`); `write --confirm` saves backups and an inverse receipt in `receipts/<timestamp>/`, regenerates `physical-rail-topology.json` when junctions change, runs the per-class guards (`bash ios/verify.sh swift --filter ...`) and auto-reverts on failure. `guard --patch P --dry-run` lists the guards.
+
+Example (立石–西屋敷):
+
+```sh
+python3 -I ios/tools/verification/diagnostic-run.py area capture --stations 'jp-九州旅客鉄道-日豊線:西屋敷-立石' --name tateishi-nishiyashiki
+bash ios/verify.sh area problems --stations 'jp-九州旅客鉄道-日豊線:西屋敷-立石' --out "$D" --propose "$D/patch.json"
+```
+
+Rules:
+- Never pass `--confirm` (write or undo) without the user's explicit go-ahead in chat.
+- Writable by default: `app/data/physical-rail-junctions.json` only. `rail-history.json` ops are report-only unless `--allow-generated --confirm`, then mirror the change into `app/scripts/railway/jp-rail-history-events.json` (code's reported mirror). `jp-2025.json` ops are always refused; report them as mirrors into `app/scripts/railway/jp-directional-alignment-overrides.json` / the builder (website pipeline owns it) and stop.
+- The app cannot run guards: its Export writes `patch.json` and shows the `write --patch ... --confirm` command; run it from the shell. The main app never reads overlays.
+- Reuse guards; no broad tests. Heavy jobs (build, swift, write) run one at a time machine-wide via the lock.
+- The app reads the repo root from `--repo-root PATH`, `JTM_REPO_ROOT`, else the source path; macOS may prompt for Documents access.
 
 ## Main final check
 

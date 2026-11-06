@@ -38,6 +38,26 @@ struct RealDataTests {
         print("REAL-AREA bbox: \(scope.bbox) junctions: \(scope.junctionIDs.count) history: \(scope.historyIDs)")
         for problem in problems { print("REAL-AREA problem: [\(problem.severity.rawValue)] \(problem.id) — \(problem.message)") }
         print("REAL-AREA crossing rides: \(trains.map(\.id))")
+        #expect(trains.contains { $0.id == "20260722_06_sonic44" })
+        for outcome in RideOutcome.resolve(trains, data: data, scope: scope) {
+            for section in outcome.sections where section.inArea {
+                print("REAL-AREA ride \(outcome.trainID) [\(outcome.disposition)] #\(section.index) \(section.from ?? "?")(\(section.fromCode ?? "?"))→\(section.to ?? "?")(\(section.toCode ?? "?")): "
+                      + "\(section.certified ? "certified" : "UNCERTIFIED \(section.gaps)") provenance \(section.provenance ?? "none") lines \(section.lineIDs)")
+            }
+        }
+        // Every bundled registry row passes the static rules AreaKit enforces on patches.
+        let junctionFile = try Data(contentsOf: data.root.url(.junctions))
+        let rows = try JunctionFileEditor.rows(in: junctionFile)
+        let rowOps = rows.map { PatchOp(op: .junctionAdd, key: $0["id"]?.stringValue ?? "", before: nil, after: $0) }
+        var broken: [String] = []
+        for op in rowOps {
+            do { try JunctionRowRules.validate(op.after!, op: op) } catch { broken.append(error.localizedDescription) }
+        }
+        #expect(broken.isEmpty, "\(broken.prefix(5))")
+        try JunctionRowRules.validateLineIDs(rowOps.filter { op in
+            (op.after?["lineIDs"]?.arrayValue ?? []).allSatisfy { data.linesByID[$0.stringValue ?? ""] != nil }
+        }, packageURL: data.root.url(.package))
+        print("REAL-AREA junction rows checked: \(rows.count), rule failures: \(broken.count), jp rows naming lines absent from the package: \(rowOps.filter { op in op.after?["region"] == .string("jp") && !(op.after?["lineIDs"]?.arrayValue ?? []).allSatisfy { data.linesByID[$0.stringValue ?? ""] != nil } }.count)")
         for line in ["jp-東日本旅客鉄道-奥羽線-p1", "jp-九州旅客鉄道-鹿児島線-p1", "jp-九州旅客鉄道-鹿児島線-2-p1", paired] {
             let m = PairedDirectionSideDetector.measure(data, lineID: line)
             print("REAL-AREA side \(line): declared \(data.linesByID[line]?.alignmentDirection ?? "?") measured \(String(describing: m))")

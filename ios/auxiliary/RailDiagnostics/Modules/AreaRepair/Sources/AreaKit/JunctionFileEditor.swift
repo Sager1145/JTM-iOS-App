@@ -1,4 +1,5 @@
 import Foundation
+import RailCore
 
 /// Textual edits of `physical-rail-junctions.json`: a row is located by its
 /// `id` among the `junctions` array elements and only that row's bytes (and
@@ -82,6 +83,7 @@ public enum JunctionFileEditor {
         if let after = op.after, after["id"]?.stringValue != op.key {
             throw AreaRepairError.invalidPatch("\(op.op.rawValue): the row id must equal the key \(op.key).")
         }
+        if let after = op.after { try JunctionRowRules.validate(after, op: op) }
         // Element indentation: the whitespace before the first row (or 2 deeper than the array's line).
         let indent: Int = {
             if let first = layout.elements.first {
@@ -133,4 +135,129 @@ public enum JunctionFileEditor {
         }
         return Data(bytes)
     }
+}
+
+/// The registry policy's static rules for one row
+/// (`physical-rail-junctions.json` `policy`, PhysicalRailJunctionRegistry
+/// decoding and RouteGraph's loader limits). Checked on every add or update
+/// a scratch preview or a write applies, so a row the app's loader would
+/// reject never previews as a repair. Endpoint vertices are not checked
+/// here: that needs the physical graph (the loader rejects them).
+public enum JunctionRowRules {
+    static let kinds = ["zeroLength", "shortLink", "osmConnector", "osmTrack"]
+
+    /// Throws `invalidPatch` naming the first broken rule.
+    public static func validate(_ row: AreaJSON, op: PatchOp) throws {
+        func fail(_ reason: String) -> AreaRepairError { .invalidPatch("\(op.op.rawValue) \(op.key): \(reason)") }
+        func text(_ key: String) -> String? {
+            row[key]?.stringValue.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0 }
+        }
+        guard text("id") != nil else { throw fail("id is required.") }
+        guard let region = text("region") else { throw fail("region is required.") }
+        guard Localization.supportedCountries.contains(region) else {
+            throw fail("region \(region) is not one of \(Localization.supportedCountries).")
+        }
+        let kind = row["kind"].map { $0.stringValue ?? "" } ?? "zeroLength"
+        guard kinds.contains(kind) else { throw fail("kind \(kind) is not one of \(kinds).") }
+        func endpoint(_ key: String) throws -> Coordinate {
+            guard let end = row[key], let identity = end["identity"],
+                  ["operatorName", "lineName", "railwayClassCode"].allSatisfy({ identity[$0]?.stringValue?.isEmpty == false }) else {
+                throw fail("\(key).identity needs operatorName, lineName and railwayClassCode.")
+            }
+            guard let point = coordinate(end["coordinate"]) else { throw fail("\(key).coordinate must be a valid [lon, lat].") }
+            return point
+        }
+        let from = try endpoint("from"), to = try endpoint("to")
+        guard let evidence = row["evidence"]?.arrayValue, !evidence.isEmpty,
+              evidence.allSatisfy({ $0.stringValue?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false }) else {
+            throw fail("evidence must list at least one non-empty source (the loader rejects a row without evidence).")
+        }
+        guard text("geometryEvidence") != nil else { throw fail("geometryEvidence is required.") }
+        let lineIDs = row["lineIDs"]?.arrayValue?.compactMap(\.stringValue) ?? []
+        if kind != "osmTrack", lineIDs.isEmpty { throw fail("lineIDs must name the joined package lines.") }
+        guard Set(lineIDs).count == lineIDs.count else { throw fail("lineIDs repeats a line.") }
+        let bounds = ["validFrom", "validTo"].map { row[$0].flatMap { $0 == .null ? nil : $0 } }
+        for (name, value) in zip(["validFrom", "validTo"], bounds) where value != nil {
+            guard let day = value?.stringValue, isPlainISODay(day) else { throw fail("\(name) must be null or YYYY-MM-DD.") }
+        }
+        if let a = bounds[0]?.stringValue, let b = bounds[1]?.stringValue, a >= b { throw fail("validFrom must precede validTo.") }
+
+        let metres = Geometry.distanceMeters(from, to)
+        let maxLink = RouteGraph.PhysicalJunction.maximumReviewedLinkMeters
+        let maxAttach = RouteGraph.PhysicalJunction.maximumOSMAttachMeters
+        switch kind {
+        case "zeroLength":
+            guard from == to else {
+                throw fail("a zeroLength row joins identical vertices; its endpoints are \(format(metres)) apart (use shortLink up to \(format(maxLink))).")
+            }
+        case "shortLink":
+            guard from != to else { throw fail("a shortLink row joins two different vertices; use zeroLength.") }
+            guard metres <= maxLink else {
+                throw fail("a shortLink row may join vertices at most \(format(maxLink)) apart; its endpoints are \(format(metres)) apart.")
+            }
+            if let link = row["linkMeters"]?.doubleValue, link > maxLink {
+                throw fail("linkMeters \(format(link)) exceeds the \(format(maxLink)) shortLink limit.")
+            }
+        default:
+            guard let path = row["path"]?.arrayValue?.map(coordinate), path.count >= 2, path.allSatisfy({ $0 != nil }) else {
+                throw fail("an \(kind) row needs a path of at least two valid [lon, lat] points.")
+            }
+            guard let source = row["source"], field(in: source, "provider") != nil, field(in: source, "license") != nil,
+                  source["ways"]?.arrayValue?.isEmpty == false else {
+                throw fail("an \(kind) row needs source.provider, source.license and source.ways.")
+            }
+            let deadEnd = row["terminus"]?["end"]?.stringValue == "to"
+            if kind == "osmConnector", row["terminus"] != nil { throw fail("a terminus requires kind osmTrack.") }
+            guard let attachFrom = row["attachMeters"]?["from"]?.doubleValue,
+                  let attachTo = row["attachMeters"]?["to"]?.doubleValue else {
+                throw fail("an \(kind) row needs attachMeters.from and attachMeters.to.")
+            }
+            guard attachFrom <= maxAttach, deadEnd || attachTo <= maxAttach else {
+                throw fail("attach stubs may be at most \(format(maxAttach)); they are \(format(attachFrom)) / \(format(attachTo)).")
+            }
+            if kind == "osmConnector" {
+                let points = path.compactMap { $0 }
+                let total = zip(points, points.dropFirst()).reduce(attachFrom + attachTo) { $0 + Geometry.distanceMeters($1.0, $1.1) }
+                let maxTotal = RouteGraph.PhysicalJunction.maximumOSMTotalMeters
+                guard total <= maxTotal else {
+                    throw fail("an osmConnector may be at most \(format(maxTotal)) long with its stubs; it is \(format(total)).")
+                }
+            }
+        }
+    }
+
+    /// Every jp add/update row's lineIDs exist in the jp package at
+    /// `packageURL` (rows of other regions name lines of their own packages).
+    public static func validateLineIDs(_ ops: [PatchOp], packageURL: URL) throws {
+        let rows = ops.filter { $0.op.file == .junctions }.compactMap { op in op.after.map { (op, $0) } }
+            .filter { $0.1["region"]?.stringValue == "jp" }
+        guard !rows.isEmpty else { return }
+        struct Package: Decodable { struct Line: Decodable { let id: String }; let lines: [Line] }
+        let known = Set(try JSONDecoder().decode(Package.self, from: Data(contentsOf: packageURL)).lines.map(\.id))
+        for (op, row) in rows {
+            let missing = (row["lineIDs"]?.arrayValue ?? []).compactMap(\.stringValue).filter { !known.contains($0) }
+            guard missing.isEmpty else {
+                throw AreaRepairError.invalidPatch("\(op.op.rawValue) \(op.key): lineIDs \(missing) are not lines of \(DataFile.package.relativePath).")
+            }
+        }
+    }
+
+    static func coordinate(_ value: AreaJSON?) -> Coordinate? {
+        guard let pair = value?.arrayValue?.compactMap(\.doubleValue), pair.count == 2,
+              let point = Coordinate(pair: pair), point.lon.isFinite, point.lat.isFinite,
+              (-180...180).contains(point.lon), (-90...90).contains(point.lat) else { return nil }
+        return point
+    }
+
+    static func field(in object: AreaJSON, _ key: String) -> String? {
+        object[key]?.stringValue.flatMap { $0.isEmpty ? nil : $0 }
+    }
+
+    static func isPlainISODay(_ value: String) -> Bool {
+        let scalars = Array(value.unicodeScalars)
+        guard scalars.count == 10, scalars[4] == "-", scalars[7] == "-" else { return false }
+        return [0, 1, 2, 3, 5, 6, 8, 9].allSatisfy { (48...57).contains(scalars[$0].value) }
+    }
+
+    static func format(_ metres: Double) -> String { String(format: "%.1f m", metres) }
 }

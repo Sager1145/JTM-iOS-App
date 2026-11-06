@@ -25,6 +25,7 @@ does not restore the retired pipeline. Run it with `bash ios/verify.sh`.
 | `swift` | `--filter TEST_NAME` | Existing focused RailKit Swift tests (`swift test --package-path ios/RailKit --filter`), two jobs by default, reused scratch products. This module does not run Xcode native tests |
 | `build` | `--target diagnostics` | One incremental unified Catalyst build, two jobs by default, reused DerivedData |
 | `diagnostic` | `--request /absolute/request.json` | One exact RailDiagnostics task; request selects alignment capture, route solve or through-history inspection |
+| `area` | `VERB [options]` | `jtm-area` small-area CLI (capture-data, problems, apply, preview, write, undo, guard): builds incrementally under the heavy-job lock, then runs; `write` needs `--confirm`, reuses focused swift guards |
 
 Every module supports `--dry-run`. Build and Swift modules accept `--jobs` and explicit build/scratch locations. The diagnostic module accepts `--app`; the unified app must already be built. Use a new session directory when task scope/settings change; resume the same immutable request to retain valid evidence. The app captures one requested line automatically at its requested zoom/viewport/appearance. Partial and failed evidence stays explicit; launch/capture completion is not an alignment verdict. The old standalone RouteWorkbench, ThroughWorkbench and RailAlignmentInspector app targets are retired; their implementations remain internal modules of RailDiagnostics.
 
@@ -36,6 +37,7 @@ The Main cold ON/OFF final check is `bash ios/tools/verification/main-cold-pair.
 bash ios/verify.sh swift --filter TimetablePhysicalRouteMatchTests
 bash ios/verify.sh build --target diagnostics
 bash ios/verify.sh diagnostic --request /private/tmp/rail-diagnostic-request.json
+bash ios/verify.sh area problems --stations 'jp-九州旅客鉄道-日豊線:西屋敷-立石' --out /private/tmp/area-out
 ```
 
 The `RailMap` scheme builds the app and its Test action contains `RailMapUITests`

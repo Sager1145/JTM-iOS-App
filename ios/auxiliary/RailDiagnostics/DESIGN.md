@@ -41,3 +41,15 @@ Requested image modes enter the native capture implementation before PNG encodin
 ## Candidate input evidence (2026-10-18)
 
 [The bounded input-interface evidence](Evidence/20261017-remake/candidate-package-input-20261018/README.md) retains the incremental build and agent/human prepared requests plus a missing-input failure. The focused inputPath contract test passed in the parent tool record. These checks establish input plumbing only; changed-geometry resume, repaired-corner pixels and Main composition are separate evidence.
+
+## Small-area capture and repair
+
+Layout: `Modules/AreaRepair` is a SwiftPM package. `AreaKit` is the pure library (scope, loader/data root, detectors, patch, scratch overlay, preview, write transaction, guard runner); `jtm-area` is the CLI over it; `App/` is the Catalyst workspace compiled into RailDiagnostics. The app and CLI share AreaKit so both see identical evidence and problems.
+
+Data root and overlay: AreaKit reads `app/data`, `app/public/rail/jp-2025.json` and rides (`app/data/sample-data`, `default-trains.json`, optional `--journeys`) from a repo root, optionally through a scratch overlay of patched files, so baseline and patched states are compared without touching the repository. Evidence is `area-evidence.json` (jtm-area-evidence-v1).
+
+Detectors (one file each): missingJunction, lostHistoryStamp, uncertifiedPairedTrack, stationDotOffLine, overRoundedCorner, pairedDirectionSide; thresholds (300 m / 25 m / 15 m / 500 m) are configurable. Every proposal needs a reason and a source before the patch validates.
+
+Patch and write: `jtm-area-patch-v1` ops are typed per data file. Only `physical-rail-junctions.json` is writable by default; generated `rail-history.json` needs `--allow-generated --confirm` and a mirror into its source; `jp-2025.json` ops are always refused (website pipeline owns it). `write --confirm` takes the heavy-job lock, backs up files and saves an inverse receipt under `area-repairs/<id>/receipts/`, applies ops, regenerates `physical-rail-topology.json` when junctions change, runs per-op-class focused RailKit guards through `ios/verify.sh swift --filter`, and reverts automatically on any failure. `undo` restores from the receipt.
+
+Why the app exports: Foundation `Process` is unavailable on Mac Catalyst, so the app cannot run guards, and an unguarded write would bypass the repair contract. The app therefore writes `patch.json` and shows the command; the CLI owns every repository write. The main app never reads overlays.

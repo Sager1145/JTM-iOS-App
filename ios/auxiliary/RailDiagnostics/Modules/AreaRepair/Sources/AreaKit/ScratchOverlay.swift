@@ -2,6 +2,8 @@ import Foundation
 
 /// A scratch copy of only the files a patch stack touches, with every op
 /// applied (report-only ops included, so a preview shows their effect).
+/// Junction rows are checked against the registry rules (JunctionRowRules)
+/// before anything is written.
 /// The overlay is a pure function of (repository, patch stack): undoing a
 /// patch is popping it and materialising again.
 public enum ScratchOverlay {
@@ -16,6 +18,7 @@ public enum ScratchOverlay {
             if fm.fileExists(atPath: target.path) { try fm.removeItem(at: target) }
         }
         let ops = patches.flatMap(\.ops)
+        try JunctionRowRules.validateLineIDs(ops, packageURL: repo.appending(path: DataFile.package.relativePath))
         for file in DataFile.allCases {
             let fileOps = ops.filter { $0.op.file == file }
             guard !fileOps.isEmpty else { continue }
