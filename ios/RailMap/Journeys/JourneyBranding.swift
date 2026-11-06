@@ -30,7 +30,7 @@ enum JourneyBranding {
     /// name (``RouteBadgeIndex/passengerName(region:operatorName:lineName:)``);
     /// the extra unique pass is because the map can collapse two N02 lines
     /// (2号線/4号線名城線) into the one 名城線 a rider knows.
-    static func lineNames(
+    private static func lineNames(
         of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
     ) -> [String] {
         let region = Region.resolved(train).code
@@ -38,6 +38,30 @@ enum JourneyBranding {
             let operatorName = detected.first { $0.name == name }?.operatorName
             return badges?.passengerName(region: region, operatorName: operatorName, lineName: name) ?? name
         })
+    }
+
+    /// The passenger name of one ridden run: a line-id override first
+    /// (``RiddenLineSequence/passengerName(forLineID:language:)``), then the
+    /// package's name for a run that only knows its id, then the badge
+    /// index's passenger spelling of an administrative name.
+    static func lineLabel(
+        _ line: RiddenLineSequence.Line, region: String, badges: RouteBadgeIndex?
+    ) -> String {
+        if let lineID = line.lineID, let override = RiddenLineSequence.passengerName(forLineID: lineID) {
+            return override
+        }
+        let name = line.name.isEmpty || line.name == line.lineID
+            ? line.lineID.flatMap { badges?.lineName(lineID: $0) } ?? line.name
+            : line.name
+        return badges?.passengerName(region: region, operatorName: line.operatorName, lineName: name) ?? name
+    }
+
+    /// Shown line names in travel order, from the ridden line sequence.
+    static func lineNames(
+        of sequence: RiddenLineSequence, train: Train, badges: RouteBadgeIndex?
+    ) -> [String] {
+        let region = Region.resolved(train).code
+        return JourneyRouteIdentity.lineNames(of: sequence) { lineLabel($0, region: region, badges: badges) }
     }
 
     /// The operators this journey ran under, spelled the way the source
@@ -72,7 +96,10 @@ enum JourneyBranding {
     static func operatorLabels(
         of train: Train, detected: [Statistics.TraversedLine] = []
     ) -> [String] {
-        let labelled = uniqueNonEmpty(JourneyRouteIdentity.operatorLabels(of: train, detected: detected))
+        shortest(uniqueNonEmpty(JourneyRouteIdentity.operatorLabels(of: train, detected: detected)))
+    }
+
+    private static func shortest(_ labelled: [String]) -> [String] {
         // One more collapse, and it is not the table's job. The table maps a
         // LEGAL name to a short one (京浜急行電鉄 → 京急); a record whose own
         // `company` field is already half-short (京急電鉄, 都営地下鉄) is left
@@ -93,14 +120,21 @@ enum JourneyBranding {
         return OperatorIdentity.englishLabel(forCompanyText: company) ?? company
     }
 
-    /// 「東海道本線 · JR東海」 — the line, then who runs it.
+    /// 「東北線 → 赤羽線 → 山手線 · JR東日本」 — the lines in travel order,
+    /// then who runs them, both from the ridden line sequence.
     static func routeText(
-        of train: Train, detected: [Statistics.TraversedLine] = [], badges: RouteBadgeIndex? = nil
+        of train: Train, sequence: RiddenLineSequence, badges: RouteBadgeIndex? = nil
     ) -> String {
-        [lineNames(of: train, detected: detected, badges: badges).joined(separator: " / "),
-         operatorLabels(of: train, detected: detected).joined(separator: " / ")]
+        let region = Region.resolved(train).code
+        return [JourneyLineText.summary(sequence) { lineLabel($0, region: region, badges: badges) },
+                operatorLabels(of: train, sequence: sequence).joined(separator: " / ")]
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
+    }
+
+    /// ``operatorLabels(of:detected:)`` for the operators of a line sequence.
+    static func operatorLabels(of train: Train, sequence: RiddenLineSequence) -> [String] {
+        shortest(uniqueNonEmpty(JourneyRouteIdentity.operatorLabels(of: train, sequence: sequence)))
     }
 
     /// A limited express wears its dedicated service mark; failing that, its

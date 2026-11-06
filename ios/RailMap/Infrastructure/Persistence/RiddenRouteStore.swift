@@ -155,6 +155,10 @@ final class RiddenRouteStore {
         }
         var indicesAreAuthoritative = true
         var expectedSectionCount = 0
+        /// The route sections this ride was solved for (`Result.expectedSections`),
+        /// which ``RiddenLineSequence`` reads section by section. In memory
+        /// only: the route cache recomputes them from the train on load.
+        var expectedSections: [RouteSection] = []
         var recordedRouteMapping: RecordedRouteMapping? = nil
         /// Endpoint ownership is independent of the number of drawn geometry
         /// parts belonging to one physical section.
@@ -1171,6 +1175,7 @@ final class RiddenRouteStore {
         ride.physicalGaps = physicalGaps
         ride.indicesAreAuthoritative = indicesAreAuthoritative
         ride.expectedSectionCount = expected
+        ride.expectedSections = expectedSections
         ride.recordedRouteMapping = recordedMapping
         for segment in segments {
             let old = ride.sectionPartRanges[segment.segmentIndex] ?? segment.partIndex...segment.partIndex

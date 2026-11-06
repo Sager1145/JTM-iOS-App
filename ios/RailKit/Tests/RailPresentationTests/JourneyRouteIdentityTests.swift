@@ -1,5 +1,5 @@
 import Testing
-import RailCore
+@testable import RailCore
 @testable import RailPresentation
 
 struct JourneyRouteIdentityTests {
@@ -165,14 +165,48 @@ struct JourneyRouteIdentityTests {
         #expect(JourneyRouteIdentity.operatorNames(of: local, detected: selected) == ["東日本旅客鉄道"])
     }
 
-    @Test func partialSelectedRouteDoesNotInventUnresolvedRecordedLegs() {
-        var local = train(type: "普通 直通", lines: ["東横線", "副都心線"])
+    // Contract change (trip-line-names): line names now come from
+    // RiddenLineSequence, per section. A recorded name for a section the
+    // solve left unresolved IS shown (marked `.recorded`), in section order,
+    // instead of being dropped because another section was selected. Policy
+    // alternatives (日比谷線) still never appear while any section has a name.
+    // The record therefore has two sections: 東横線 (unsolved) then 副都心線
+    // (selected), and the expected names are both, in that order.
+    @Test func partialSelectedRouteKeepsUnresolvedRecordedLegInSectionOrder() {
+        var local = train(type: "普通 直通", lines: [])
+        local.routeSections = [RouteSection(lineNames: ["東横線"]), RouteSection(lineNames: ["副都心線"])]
         local.routePolicy = RoutePolicy(preferredLineNames: ["東横線", "日比谷線"])
-        let selected = [Statistics.TraversedLine(
-            name: "副都心線", operatorName: "東京メトロ", km: 12,
-            selectedLineID: "jp-東京地下鉄-副都心線")]
-        #expect(JourneyRouteIdentity.lineNames(of: local, detected: selected) == ["副都心線"])
-        #expect(JourneyRouteIdentity.operatorNames(of: local, detected: selected) == ["東京メトロ"])
+        let selection = RideRouteResolution.PhysicalRouteSelection(
+            fromStationCode: "a", toStationCode: "b", intervals: [],
+            lines: [ResolvedRailLine(lineID: "jp-東京地下鉄-副都心線", name: "副都心線",
+                                     operatorName: "東京メトロ", km: 12)],
+            provenance: .explicit)
+        let sequence = RiddenLineSequence(
+            train: local, selections: [1: selection], drawnSections: [1], solveSettled: true,
+            continuations: nil)
+        #expect(sequence.sections.map(\.source) == [.recorded, .solved])
+        #expect(sequence.sections[0].status == .unresolved)
+        #expect(JourneyRouteIdentity.lineNames(of: sequence) == ["東横線", "副都心線"])
+        // Operators of a solved route stay the route's own.
+        #expect(JourneyRouteIdentity.operatorNames(of: local, sequence: sequence) == ["東京メトロ"])
+        #expect(JourneyLineText.summary(sequence) == "東横線 → 副都心線")
+    }
+
+    // New (trip-line-names): the summary folds an operator change on one
+    // named line, keeps a repeated line, and never shows the service caption.
+    @Test func summaryFoldsOperatorChangeAndKeepsRepeatedLine() {
+        var ride = train(type: "普通", lines: [])
+        ride.routeSections = [
+            RouteSection(lineNames: ["東海道線"], operatorNames: ["JR東日本"]),
+            RouteSection(lineNames: ["東海道線"], operatorNames: ["JR東海"]),
+            RouteSection(lineNames: ["御殿場線"], operatorNames: ["JR東海"]),
+            RouteSection(lineNames: ["東海道線"], operatorNames: ["JR東海"]),
+        ]
+        let sequence = RiddenLineSequence(train: ride, continuations: nil)
+        #expect(sequence.summary.runs.count == 4)
+        #expect(JourneyLineText.summary(sequence) == "東海道線 → 御殿場線 → 東海道線")
+        #expect(!JourneyLineText.summary(sequence).contains(ride.number))
+        #expect(JourneyRouteIdentity.lineNames(of: sequence) == ["東海道線", "御殿場線", "東海道線"])
     }
 
     @Test func selectedOperatorsKeepPhysicalTraversalOrderAndRemoveDuplicates() {
