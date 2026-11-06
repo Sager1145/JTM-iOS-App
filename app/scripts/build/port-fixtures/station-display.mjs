@@ -56,6 +56,25 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 export const name = "station-display.json";
+export const provenanceInputs = [
+  "app/data/matched-routes.json",
+  "app/data/matched-stops.json",
+  "app/data/stations-hk.json",
+  "app/data/stations-kr.json",
+  "app/data/stations-mo.json",
+  "app/data/stations-tw.json",
+  "app/data/stations.json",
+  "app/data/train-store-hk.json",
+  "app/data/train-store-kr.json",
+  "app/data/train-store-mo.json",
+  "app/data/train-store-tw.json",
+  "app/data/train-store.json",
+  "app/public/rail/hk-2025.json",
+  "app/public/rail/jp-2025.json",
+  "app/public/rail/kr-2025.json",
+  "app/public/rail/mo-2025.json",
+  "app/public/rail/tw-2025.json",
+];
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const APP_DIR = path.join(SCRIPT_DIR, "..", "..", "..");

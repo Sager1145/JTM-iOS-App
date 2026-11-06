@@ -224,6 +224,22 @@ export function currentPrecomputeSourceHashes({country = COUNTRY, dataDir = DATA
     [name, createHash("sha256").update(fs.readFileSync(path.join(dir, name))).digest("hex")]));
 }
 
+// The registry record names operators in the route key, so it is an input of
+// the solve; recorded beside (never inside) source_hashes, which native code
+// matches key-for-key.
+export function assertCurrentPrecomputeRegistryHashes(actual, label, expected = currentPrecomputeRegistryHashes()) {
+  if (!actual || JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(
+      `${label} lacks the current registry_hashes (solved without, or before a change to, the registry bundle); ` +
+        "restamp cannot attest it — run a full solve (npm run precompute*).");
+  }
+}
+
+export function currentPrecomputeRegistryHashes({country = COUNTRY, dataDir = DATA_DIR} = {}) {
+  return {[country]: createHash("sha256")
+    .update(fs.readFileSync(path.join(dataDir, "registry-bundle", `${country}.json`))).digest("hex")};
+}
+
 // The solver can return a positive cache entry after skipping unresolved
 // sections. Such a partial journey must not be published as a complete North
 // American sample. Keep its source train and publish an explicit negative hit.
@@ -312,6 +328,7 @@ function requirePartTrainID(train, name) {
 // has its part on disk, in order.
 function finalizeManifestFromParts() {
   const sourceHashes = currentPrecomputeSourceHashes();
+  const registryHashes = currentPrecomputeRegistryHashes();
   const store = JSON.parse(
     fs.readFileSync(STORE_PATH, "utf8"),
   );
@@ -328,6 +345,7 @@ function finalizeManifestFromParts() {
       fs.readFileSync(path.join(OUT_DIR, `${name}.json`), "utf8"),
     );
     assertCurrentPrecomputeSourceHashes(part.source_hashes, sourceHashes);
+    assertCurrentPrecomputeRegistryHashes(part.registry_hashes, name, registryHashes);
     assertPrecomputedTrainMatches(part.train, store.trains[i], name);
     partNames.push(name);
     partTrainIDs[name] = requirePartTrainID(part.train, name);
@@ -355,6 +373,7 @@ function finalizeManifestFromParts() {
     no_route: noRouteCount,
     solver_context: solverContext,
     source_hashes: sourceHashes,
+    registry_hashes: registryHashes,
     parts: partNames,
     part_train_ids: partTrainIDs,
     full: "sample-full",
@@ -395,6 +414,9 @@ async function restampPrecomputedOutput(context) {
   const current = currentPrecomputeSolverContext();
   const manifest = readJson(path.join(OUT_DIR, "manifest.json"));
   assertCurrentPrecomputeSourceHashes(manifest.source_hashes);
+  // Restamp may not attest a registry: only a solve may. A manifest without
+  // registry_hashes was solved without the registry and is a mismatch too.
+  assertCurrentPrecomputeRegistryHashes(manifest.registry_hashes, "manifest");
   const summary = await vm.runInContext(CONTEXT_DRIVER_SOURCE, context, {
     filename: "precompute-context-driver.js",
   });
@@ -417,6 +439,7 @@ async function restampPrecomputedOutput(context) {
     const name = manifest.parts[index];
     const part = readJson(path.join(OUT_DIR, `${name}.json`));
     const generated = summary.results[index];
+    assertCurrentPrecomputeRegistryHashes(part.registry_hashes, name);
     if (part.train?.id !== generated.id) {
       throw new Error(`${name} train id does not match the current store.`);
     }
@@ -537,6 +560,7 @@ async function main() {
   console.log("Loading datasets...");
   console.log(`Country: ${COUNTRY} (${RAIL_SECTIONS_FILE}, ${STATIONS_FILE}).`);
   const sourceHashes = currentPrecomputeSourceHashes();
+  const registryHashes = currentPrecomputeRegistryHashes();
   // Match the browser's region scope. US and CA share infrastructure for
   // cross-border journeys; all other countries keep their separate graph.
   const mergeCollections = (name) => ({
@@ -600,6 +624,11 @@ async function main() {
     `Evaluating the app script family in sandbox (${appScripts.length} files)...`,
   );
   evaluateAppScripts(context, appScripts);
+  // The route key and solver bias name operators from the registry record, as
+  // native does once its registry is ready.
+  context.configureRouteRegistryOperators(
+    readJson(path.join(DATA_DIR, "registry-bundle", `${COUNTRY}.json`)),
+  );
 
   const physicalLineIDs = new Set(JSON.parse(trainStoreText).trains.flatMap((train) =>
     (train.route_sections || []).flatMap((section) => [
@@ -671,7 +700,7 @@ async function main() {
       }
       fs.writeFileSync(
         path.join(writeDir, `${name}.json`),
-        JSON.stringify({ format: 1, source_hashes: sourceHashes, train: raw, route }),
+        JSON.stringify({ format: 1, source_hashes: sourceHashes, registry_hashes: registryHashes, train: raw, route }),
       );
       console.log(
         `  [${index + 1}] ${id}: ${
@@ -710,6 +739,7 @@ async function main() {
       no_route: noRouteCount,
       solver_context: solverContext,
       source_hashes: sourceHashes,
+      registry_hashes: registryHashes,
       parts: partNames,
       part_train_ids: partTrainIDs,
       full: "sample-full",
@@ -738,6 +768,7 @@ async function main() {
     throw new Error("No train solved — refusing to publish empty parts.");
   }
   assertCurrentPrecomputeSourceHashes(sourceHashes);
+  assertCurrentPrecomputeRegistryHashes(registryHashes, "solve");
   if (!rangeEnv) publishStagedOutput(stagingDir);
   console.log(
     `\nDone in ${Math.round((performance.now() - started) / 1000)} s: ${summary.total} trains ` +

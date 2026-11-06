@@ -11,6 +11,7 @@ import Testing
 struct SamplePrecomputeProvenanceTests {
     private struct Manifest: Decodable {
         let parts: [String]
+        let total: Int
     }
 
     private struct Part: Decodable {
@@ -132,7 +133,13 @@ struct SamplePrecomputeProvenanceTests {
         let manifest = try JSONDecoder().decode(
             Manifest.self,
             from: Data(contentsOf: datasetDirectory.appending(path: "manifest.json")))
-        #expect(manifest.parts.count == 201)
+        // Derived, not pinned: the manifest total is the sample store's train
+        // count, and every train has exactly one part.
+        let storeObject = try JSONSerialization.jsonObject(
+            with: Data(contentsOf: datasetDirectory.appending(path: "sample-full.json")))
+        let storeTrains = try #require((storeObject as? [String: Any])?["trains"] as? [Any])
+        #expect(manifest.parts.count == manifest.total)
+        #expect(manifest.total == storeTrains.count)
 
         // Normalization needs the jp registry (part-171 journey_680A26B9C2D06FDE49DABFF6A02DF17C (Narita Express)
         // relies on the Tokyo corridor inference), as production loads it.

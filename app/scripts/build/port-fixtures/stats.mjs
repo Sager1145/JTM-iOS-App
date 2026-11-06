@@ -29,6 +29,21 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 export const name = "stats.json";
+export const provenanceInputs = [
+  "app/data/matched-routes.json",
+  "app/data/rail-sections-hk.json",
+  "app/data/rail-sections-kr.json",
+  "app/data/rail-sections-mo.json",
+  "app/data/rail-sections-tw.json",
+  "app/data/rail-sections.json",
+  "app/data/stations-hk.json",
+  "app/data/stations-kr.json",
+  "app/data/stations-mo.json",
+  "app/data/stations-tw.json",
+  "app/data/stations.json",
+  "app/data/train-store-tw.json",
+  "app/data/train-store.json",
+];
 
 // The whole fixture is computed at module load, under a top-level await, and
 // `build()` hands back the memoised result.

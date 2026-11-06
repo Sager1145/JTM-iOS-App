@@ -22,7 +22,7 @@ struct SampleStoreUpgradeTests {
             Issue.record("Sample store must contain a trains array")
             return
         }
-        try #require(rows.count == 201)
+        try #require(rows.count == original.trains.count)
         var session = ImportEngine.Session(country: "jp")
         for (index, row) in rows.enumerated() {
             try session.appendImportedTrain(row)

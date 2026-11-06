@@ -917,11 +917,16 @@ struct StationDisplayParityTests {
         // Removing unsupported untimed passes removed 963 marker records.
         // Sakura770's reviewed Shin-Iwakuni stop-to-pass correction replaces
         // two stop markers with one pass; exact JavaScript comparisons remain.
-        #expect(totalRecords == 3118, "3,118 marker records, got \(totalRecords)")
+        // The counts live in a provenance-stamped expectation file (see
+        // DataCountExpectations); the per-record comparisons above are exact.
+        try DataCountExpectations.check(
+            "station-display-parity",
+            inputs: ["port-fixtures/station-display.json"],
+            counts: ["markerRecords": totalRecords, "namedMarkerRecords": totalNamed],
+            filter: "StationDisplayParityTests")
         // Two fifths of them: a station reached by several trains ships one
         // record per train and one of those wins, and every intermediate stop
         // also ships a stop-center that can never win at all.
-        #expect(totalNamed == 1104, "1,104 of them carry a name, got \(totalNamed)")
     }
 
     @Test("Sakura770 passes Shin-Iwakuni without a passenger stop-center")

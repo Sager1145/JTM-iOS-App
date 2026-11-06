@@ -1,0 +1,18 @@
+{
+  "counts" : {
+    "markerRecords" : 3118,
+    "namedMarkerRecords" : 1104
+  },
+  "format" : "jtm-data-count-expectations/1",
+  "provenance" : {
+    "format" : "jtm-artifact-provenance/1",
+    "generator" : "ios/RailKit/Tests/RailCoreTests/Support/DataCountExpectations.swift",
+    "history_revisions" : {
+
+    },
+    "inputs" : {
+      "port-fixtures/station-display.json" : "161b02b1a6eeb81dbe1f51901f26c87d2b24115cbeefbe8bf919e514f17cfb01"
+    },
+    "regenerate" : "JTM_REGENERATE_EXPECTATIONS=1 swift test --package-path ios/RailKit --filter StationDisplayParityTests"
+  }
+}

@@ -72,6 +72,13 @@
 // =========================================================================
 
 export const name = "display-parts.json";
+export const provenanceInputs = [
+  "app/public/rail/hk-2025.json",
+  "app/public/rail/jp-2025.json",
+  "app/public/rail/kr-2025.json",
+  "app/public/rail/mo-2025.json",
+  "app/public/rail/tw-2025.json",
+];
 
 const COUNTRIES = ["mo", "hk", "tw", "kr", "jp"];
 

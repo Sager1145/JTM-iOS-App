@@ -1,5 +1,30 @@
 {
   "fixture": "station-display.json",
+  "provenance": {
+    "format": "jtm-artifact-provenance/1",
+    "generator": "app/scripts/build/port-fixtures/station-display.mjs",
+    "regenerate": "node app/scripts/build/build-port-fixtures.mjs --only=station-display.json",
+    "history_revisions": {},
+    "inputs": {
+      "app/data/matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+      "app/data/matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+      "app/data/stations-hk.json": "8c2041a38ebeb1e7fcaf14d596e12c5b353162ec71b3d065562926a07f99d1a4",
+      "app/data/stations-kr.json": "98589dce8d90335603a0e480fc5cf6d8d50addf16919a1b592bc067e085345cf",
+      "app/data/stations-mo.json": "276bbff22132d249bba953fc64bd76632417cb5956461f2a789c5c4f31a69430",
+      "app/data/stations-tw.json": "21e6b9be6fce9b5c1060cbecb41cdffb960961aaa0f138ae150d0fcd44f6a60a",
+      "app/data/stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
+      "app/data/train-store-hk.json": "fb50bf234af9634b16b940116cf8aef7c87870d028ffb4f01626782f3e35bacf",
+      "app/data/train-store-kr.json": "cbf18217c0e63b232b769445abf275f23aeadad37483cba6fb30ef57da3f2b2c",
+      "app/data/train-store-mo.json": "919104dcbdfb34483ccf235fb2837d10184f3b8002c4a046aeef188e93a7693e",
+      "app/data/train-store-tw.json": "e4e4fbdf21e9f9c70b91606265f6cf9ba5da72bc379cf31fc719ae5b3537c29b",
+      "app/data/train-store.json": "7b49846a43523fed13db600958ed730c749c12e02977dc29e0d57d28aff06f14",
+      "app/public/rail/hk-2025.json": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184",
+      "app/public/rail/jp-2025.json": "622a230af78a387ed58d788c2c261c66d3ceab45d70d71a0022bafb69a442b3e",
+      "app/public/rail/kr-2025.json": "207c07029b46962847b7b464f3346be0949ad3f5a2d4a210b8d50734dcbd5687",
+      "app/public/rail/mo-2025.json": "138abaeb5ace82a0499e64394f7bf8ca4208c6fe7263f2a4b0caf96030df58f6",
+      "app/public/rail/tw-2025.json": "2d22f8dd3ce0d7fe1018951af252731bd1308234bc3249159552e3dd0b51b638"
+    }
+  },
   "describes": "railmap-popup.js buildPopupModel; rail-network.js's station-label election (network.stationLabels); railmap-geometry.js markerLabelWinners + markerRecordsToFC and the three role tiers behind them",
   "contract": "A station is named ONCE. 東京 is nine platforms of five railways and one name, and the source data hands it over as TWO station groups four hundred metres apart — so neither the group key nor a renderer-side collision pass can produce that on its own, because every platform finds room for its own copy. Both elections exist for that and for nothing else: they grant a LABEL right and change nothing, so every platform keeps its own dot and its own line identity.\n\nWhat a port gets wrong here is never arithmetic:\n  1. JavaScript compares strings by UTF-16 code unit; Swift's String compares by canonical equivalence. The jp package spells 笹塚 with U+FA10 — the only non-NFC name among 13,483 — so the hazard is real and invisible at volume. Every name test here is a code-unit test: the popup's operator+name dedupe key, the label election's `other.name !== name`, and the group / line / station maps.\n  2. Array.prototype.sort is stable and Swift's is not. Twelve real popups list two rows with the SAME label, and the group's member order is what decides which of them is drawn first.\n  3. The row order comes from localeCompare, whose collation is the HOST's. Of the 4,845 ordered label pairs the seven packages compare, exactly one disagrees with code-unit order — 下関's 山陽線 (San’yo Main Line) against 山陽線 (Sanyo Line), where U+2019 sorts before a letter under ICU and after it by code unit.\n  4. The two elections do NOT share a distance. The network's is 600 m under rail-network.js's equirectangular metric; the ride's is a 0.0055° SQUARE in raw degrees — about 500 m across in longitude at 35°N and 610 m in latitude everywhere. Unifying them changes which stations are named.\n  5. The role tiers are three because the roles are three densities. A ride has exactly two ends, so naming them costs nothing and they appear at z8; its intermediate stops are a handful per train (z10); the stations it merely rolled through are every station on the line and are worth naming only once the view is one district (z13). stop-center is absent from the rank table on purpose — it is the black core of a stop whose own record already holds the name.",
   "cases": [

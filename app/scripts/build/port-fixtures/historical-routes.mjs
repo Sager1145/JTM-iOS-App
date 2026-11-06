@@ -12,6 +12,22 @@ import { execFileSync } from "node:child_process";
 
 export const name = "historical-routes.json";
 
+// Stamped (see artifact-provenance.mjs). The read tracer fails the build when
+// an input is read that is not listed here; the child process is traced too.
+export const solverDependent = true;
+export const provenanceInputs = [
+  "app/data/rail-history.json",
+  "app/data/rail-sections.json",
+  "app/data/stations.json",
+  "app/data/matched-routes.json",
+  "app/data/matched-stops.json",
+  "app/data/physical-rail-junctions.json",
+  "app/scripts/railway/jp-rail-history-events.json",
+  "app/data/jp-history-sources/reviewed-station-renames-2019.json",
+  "app/data/jp-history-sources/reviewed-partial-opening-events.json",
+  "app/data/jp-history-sources/reviewed-mlit-row-selectors.json",
+];
+
 const currentStations = JSON.parse(fs.readFileSync(
   new URL("../../../data/stations.json", import.meta.url), "utf8")).features;
 const temporalEvents = JSON.parse(fs.readFileSync(
@@ -419,7 +435,7 @@ for (const route of routes) {
 }
 
 function freshContext() {
-  const context = sandbox.makeSandbox({ userAgent: "node-historical-routes-fixture" });
+  const context = sandbox.makeSandbox({ userAgent: "node-historical-routes-fixture", dataDir: path.join(appDir, "data") });
   sandbox.evaluateAppScripts(context, sandbox.readOrderedAppScripts());
   context.console = { log() {}, warn() {}, error() {}, info() {} };
   return context;

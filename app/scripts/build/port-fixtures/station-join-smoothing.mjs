@@ -653,7 +653,7 @@ if (kept.length !== wanted.size)
       " curated train(s) are not in " + files.store,
   );
 
-const context = sandbox.makeSandbox({ userAgent: "node-port-fixtures" });
+const context = sandbox.makeSandbox({ userAgent: "node-port-fixtures", dataDir: path.join(APP_DIR, "data") });
 sandbox.evaluateAppScripts(context, sandbox.readOrderedAppScripts());
 context.__host = {
   country,

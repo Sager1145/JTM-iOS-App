@@ -1,5 +1,26 @@
 {
   "fixture": "stats.json",
+  "provenance": {
+    "format": "jtm-artifact-provenance/1",
+    "generator": "app/scripts/build/port-fixtures/stats.mjs",
+    "regenerate": "node app/scripts/build/build-port-fixtures.mjs --only=stats.json",
+    "history_revisions": {},
+    "inputs": {
+      "app/data/matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+      "app/data/rail-sections-hk.json": "459b61aa1c582970cfa77f2cd5db79e06c7e64f6b6ac01a78ee1c036a61e8561",
+      "app/data/rail-sections-kr.json": "d16629ae4fec52e0bf00046b39b6d187514a1f1a5b464925b057d613d6aa15f6",
+      "app/data/rail-sections-mo.json": "41f09aa00952e3dfc113281cc993ba5ec3177d0753123b8ef67a2731c310c3e9",
+      "app/data/rail-sections-tw.json": "06761f3e9579eb1b36cec234925c5f8e6b2c9ee19f295d93a1a72c9d884aeacb",
+      "app/data/rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+      "app/data/stations-hk.json": "8c2041a38ebeb1e7fcaf14d596e12c5b353162ec71b3d065562926a07f99d1a4",
+      "app/data/stations-kr.json": "98589dce8d90335603a0e480fc5cf6d8d50addf16919a1b592bc067e085345cf",
+      "app/data/stations-mo.json": "276bbff22132d249bba953fc64bd76632417cb5956461f2a789c5c4f31a69430",
+      "app/data/stations-tw.json": "21e6b9be6fce9b5c1060cbecb41cdffb960961aaa0f138ae150d0fcd44f6a60a",
+      "app/data/stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
+      "app/data/train-store-tw.json": "e4e4fbdf21e9f9c70b91606265f6cf9ba5da72bc379cf31fc719ae5b3537c29b",
+      "app/data/train-store.json": "7b49846a43523fed13db600958ed730c749c12e02977dc29e0d57d28aff06f14"
+    }
+  },
   "describes": "app-stats.js §23a — section classification, the N02 edge index, and mileage aggregation (the per-category breakdown, ride time, service tiers and 最常乘坐區間). Everything app-stats-render.js does with the result — formatting, Intl collation, DOM — is out of scope.",
   "contract": "Coverage is a DEDUPED UNION over N02 edge ids, not an accumulated sum: aggregateMileageStats folds every train's edges into ONE Set and sums idx.km over that Set, so riding a section twice adds it to the total once. Each aggregate case carries summedTrainKm beside it — the accumulating answer — so the two can never be confused for each other. Connector spans (the off-network bridges the solver leaves between matched edges) dedupe separately by span key, are counted nationally, and the mask-0 remainder is reported as unmatchedKm. The ITERATION ORDER of that Set is load-bearing: it is JavaScript insertion order, and a sum of hundreds of thousands of doubles taken in another order is another double, which is why `everything` and `everything-reversed` are both recorded. ride_segment must be EXACTLY true — the feature filter is `!== true`, so 1 and \"true\" are unridden. Per-train km is the opposite convention on purpose: it accumulates repeats, because it pairs with ride time and ride count in the service-tier rows.",
   "cases": [

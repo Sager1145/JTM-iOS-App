@@ -56,6 +56,16 @@ import {
 } from "../../lib/app-family-sandbox.mjs";
 
 export const name = "playback.json";
+// The fixture solves real itineraries with the JS route solver.
+export const solverDependent = true;
+export const provenanceInputs = [
+  "app/data/matched-routes.json",
+  "app/data/matched-stops.json",
+  "app/data/physical-rail-junctions.json",
+  "app/data/rail-sections.json",
+  "app/data/stations.json",
+  "app/data/train-store.json",
+];
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const APP_DIR = path.join(SCRIPT_DIR, "..", "..", "..");

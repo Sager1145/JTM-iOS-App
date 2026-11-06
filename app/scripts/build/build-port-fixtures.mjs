@@ -33,7 +33,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { createRequire } from "node:module";
+import { createRequire, syncBuiltinESMExports } from "node:module";
+import os from "node:os";
+import { artifactProvenance } from "./artifact-provenance.mjs";
 
 const require = createRequire(import.meta.url);
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -124,6 +126,8 @@ const packageCache = new Map();
 
 /** Reads and caches one country's compact package. */
 function railPackage(country) {
+  // Cached, so the read below may not happen for every module that asks.
+  activeTrace?.add(path.join(APP_DIR, "public", "rail", `${country}-2025.json`));
   if (!packageCache.has(country))
     packageCache.set(
       country,
@@ -315,8 +319,91 @@ function builtInFixtures() {
   ];
 }
 
-function serialize(name, fixture) {
-  return `${JSON.stringify({ fixture: name, ...fixture }, null, 2)}\n`;
+function serialize(name, fixture, provenance = null) {
+  return `${JSON.stringify(
+    { fixture: name, ...(provenance ? { provenance } : {}), ...fixture },
+    null,
+    2,
+  )}\n`;
+}
+
+// ── read tracing for stamped fixtures ───────────────────────────────────
+// A stamped module declares `provenanceInputs`; the declaration is only worth
+// anything if it is complete, so every .json read while the module is
+// imported and built is recorded and compared against it. Children inherit
+// the trace through NODE_OPTIONS (lib/fixture-read-trace.mjs).
+const TRACE_CHILD_PRELOAD = pathToFileURL(
+  path.join(SCRIPT_DIR, "lib", "fixture-read-trace.mjs"),
+).href;
+let activeTrace = null;
+const originalReadFileSync = fs.readFileSync;
+function recordRead(target) {
+  if (activeTrace && (typeof target === "string" || target instanceof URL)) {
+    activeTrace.add(target instanceof URL ? fileURLToPath(target) : path.resolve(target));
+  }
+}
+fs.readFileSync = function (target, ...rest) {
+  recordRead(target);
+  return originalReadFileSync.call(this, target, ...rest);
+};
+// `import { readFileSync } from "node:fs"` binds to the live named export;
+// republishing the patched function covers modules imported after this point.
+syncBuiltinESMExports();
+const originalPromisesReadFile = fs.promises.readFile;
+fs.promises.readFile = function (target, ...rest) {
+  recordRead(target);
+  return originalPromisesReadFile.call(this, target, ...rest);
+};
+
+/** Runs `fn` with reads recorded; returns the result and repo-relative .json paths read. */
+function traced(fn) {
+  const reads = new Set();
+  const log = path.join(os.tmpdir(), `jtm-fixture-reads-${process.pid}-${Date.now()}.log`);
+  const saved = {
+    options: process.env.NODE_OPTIONS,
+    log: process.env.JTM_FIXTURE_READ_LOG,
+  };
+  const previousTrace = activeTrace;
+  activeTrace = reads;
+  process.env.JTM_FIXTURE_READ_LOG = log;
+  process.env.NODE_OPTIONS = `${saved.options ?? ""} --import=${TRACE_CHILD_PRELOAD}`.trim();
+  try {
+    return { value: fn(), reads: collectReads(reads, log) };
+  } finally {
+    activeTrace = previousTrace;
+    for (const [key, value] of [["NODE_OPTIONS", saved.options], ["JTM_FIXTURE_READ_LOG", saved.log]]) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    fs.rmSync(log, { force: true });
+  }
+}
+
+async function tracedAsync(fn) {
+  const reads = new Set();
+  const log = path.join(os.tmpdir(), `jtm-fixture-reads-${process.pid}-${Date.now()}.log`);
+  const previousTrace = activeTrace;
+  activeTrace = reads;
+  try {
+    return { value: await fn(), reads: collectReads(reads, log) };
+  } finally {
+    activeTrace = previousTrace;
+  }
+}
+
+function collectReads(reads, log) {
+  const all = new Set(reads);
+  if (fs.existsSync(log)) {
+    for (const line of originalReadFileSync.call(fs, log, "utf8").split("\n")) if (line) all.add(line);
+  }
+  const out = new Set();
+  for (const file of all) {
+    const rel = path.relative(REPO_DIR, file).split(path.sep).join("/");
+    if (!file.endsWith(".json") || rel.startsWith("..") || path.isAbsolute(rel)) continue;
+    if (rel.startsWith("port-fixtures/") || rel.split("/").includes("node_modules")) continue;
+    out.add(rel);
+  }
+  return out;
 }
 
 // Fixture modules. Anything dropped into scripts/build/port-fixtures/ is
@@ -344,12 +431,14 @@ async function loadFixtureModules() {
     // skip those imports as well as their builders (module/fixture basenames
     // match throughout this directory).
     if (only && file !== only.replace(/\.json$/, ".mjs")) continue;
-    const module = await import(pathToFileURL(path.join(dir, file)).href);
+    const { value: module, reads } = await tracedAsync(() =>
+      import(pathToFileURL(path.join(dir, file)).href),
+    );
     if (!module.name || typeof module.build !== "function") {
       console.error(`  ! ${file} exports no { name, build } — skipped`);
       continue;
     }
-    loaded.push(module);
+    loaded.push({ module, file, importReads: reads });
   }
   return loaded;
 }
@@ -361,9 +450,46 @@ async function loadFixtureModules() {
  * time. The case count comes back with the text because counting it
  * afterwards would mean keeping the graph alive to be counted.
  */
-function render(name, build) {
-  const fixture = build();
-  return { cases: fixture.cases.length, text: serialize(name, fixture) };
+function render(name, build, stamp = null) {
+  if (!stamp) {
+    const fixture = build();
+    return { cases: fixture.cases.length, text: serialize(name, fixture) };
+  }
+  const { value: fixture, reads } = traced(build);
+  for (const rel of stamp.importReads) reads.add(rel);
+  const declared = new Set(stamp.inputs);
+  const undeclared = [...reads].filter((rel) => !declared.has(rel)).sort();
+  if (undeclared.length) {
+    throw new Error(
+      `${name} read undeclared input(s) ${undeclared.join(", ")}; ` +
+        `add to provenanceInputs in port-fixtures/${stamp.file}`,
+    );
+  }
+  const provenance = artifactProvenance({
+    repoDir: REPO_DIR,
+    appDir: APP_DIR,
+    generator: `app/scripts/build/port-fixtures/${stamp.file}`,
+    regenerate: `node app/scripts/build/build-port-fixtures.mjs --only=${name}`,
+    inputs: stamp.inputs,
+    solverDependent: stamp.solverDependent,
+  });
+  return { cases: fixture.cases.length, text: serialize(name, fixture, provenance) };
+}
+
+/** "answers changed" vs "provenance stale (answers unchanged)" for a differing file. */
+function describeChange(previous, text) {
+  try {
+    const strip = (source) => {
+      const parsed = JSON.parse(source);
+      delete parsed.provenance;
+      return JSON.stringify(parsed);
+    };
+    return strip(previous) === strip(text)
+      ? "provenance stale (answers unchanged)"
+      : "answers changed";
+  } catch {
+    return "answers changed";
+  }
 }
 
 const check = process.argv.includes("--check");
@@ -375,10 +501,21 @@ let changed = 0;
 // Modules are imported up front, because a name collision should be reported
 // wherever it is found — but their `build` is deferred like the built-ins',
 // so no module's answer is computed before its turn.
-const modules = (await loadFixtureModules()).map((module) => ({
-  name: module.name,
-  build: () => module.build({ RailNetwork, AppCore, js, railPackage, APP_DIR }),
-}));
+const modules = (await loadFixtureModules()).map(({ module, file, importReads }) => {
+  const stamped = Array.isArray(module.provenanceInputs);
+  return {
+    name: module.name,
+    stamp: stamped
+      ? {
+          file,
+          importReads,
+          inputs: module.provenanceInputs,
+          solverDependent: module.solverDependent === true,
+        }
+      : null,
+    build: () => module.build({ RailNetwork, AppCore, js, railPackage, APP_DIR }),
+  };
+});
 
 // Built, compared and released one fixture at a time, so that peak memory
 // tracks the largest single fixture instead of growing with every one added.
@@ -402,7 +539,7 @@ for (const fixture of [...builtInFixtures(), ...modules]) {
   rendered.add(name);
 
   const startedAt = process.hrtime.bigint();
-  const { cases, text } = render(name, fixture.build);
+  const { cases, text } = render(name, fixture.build, fixture.stamp ?? null);
   const target = path.join(OUT_DIR, name);
   const previous = fs.existsSync(target) ? fs.readFileSync(target, "utf8") : null;
   if (previous === text) {
@@ -410,7 +547,9 @@ for (const fixture of [...builtInFixtures(), ...modules]) {
   } else {
     changed += 1;
     if (check) {
-      console.error(`  ! ${name} would change — regenerate deliberately`);
+      console.error(
+        `  ! ${name} would change — ${previous ? describeChange(previous, text) : "not generated yet"}`,
+      );
     } else {
       fs.writeFileSync(target, text);
       console.log(`  ${previous ? "~" : "+"} ${name} (${cases} cases)`);

@@ -323,8 +323,14 @@ struct ImportParityTests {
         // The two committed stores, whole: 201 + 28 trains, and four events
         // each plus the door's own bookends.
         let japanese = fixture.cases.first { $0.label == "the committed jp store, replaced from a parsed value" }
-        #expect(japanese?.state.trainIds.count == 201, "the jp store is no longer 201 trains")
-        #expect(japanese?.events.count == 810, "the jp run no longer emits 810 events")
+        try DataCountExpectations.check(
+            "import-parity",
+            inputs: ["port-fixtures/import.json", "app/data/train-store.json"],
+            counts: [
+                "jpStoreTrains": japanese?.state.trainIds.count ?? -1,
+                "jpRunEvents": japanese?.events.count ?? -1,
+            ],
+            filter: "ImportParityTests")
     }
 
     // MARK: - whole runs

@@ -1,0 +1,19 @@
+{
+  "counts" : {
+    "jpRunEvents" : 810,
+    "jpStoreTrains" : 201
+  },
+  "format" : "jtm-data-count-expectations/1",
+  "provenance" : {
+    "format" : "jtm-artifact-provenance/1",
+    "generator" : "ios/RailKit/Tests/RailCoreTests/Support/DataCountExpectations.swift",
+    "history_revisions" : {
+
+    },
+    "inputs" : {
+      "app/data/train-store.json" : "7b49846a43523fed13db600958ed730c749c12e02977dc29e0d57d28aff06f14",
+      "port-fixtures/import.json" : "44dcfaad2ec09c46bf4575d174e70de38e625aacc72acde51689ce158fc77553"
+    },
+    "regenerate" : "JTM_REGENERATE_EXPECTATIONS=1 swift test --package-path ios/RailKit --filter ImportParityTests"
+  }
+}
