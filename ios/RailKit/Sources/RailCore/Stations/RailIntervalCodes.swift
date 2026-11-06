@@ -14,6 +14,23 @@ public enum RailIntervalCodes {
         public let coordinates: [Coordinate]
     }
 
+    /// The two station codes of an interval code `lineID@stA:stB` or
+    /// `lineID@stA:stB~n`, in the code's sorted order. Nil when malformed.
+    public static func stationCodes(ofIntervalCode code: String) -> (String, String)? {
+        guard let at = code.lastIndex(of: "@") else { return nil }
+        var body = code[code.index(after: at)...]
+        if let tilde = body.lastIndex(of: "~") { body = body[..<tilde] }
+        let parts = body.split(separator: ":", omittingEmptySubsequences: false)
+        guard parts.count == 2, !parts[0].isEmpty, !parts[1].isEmpty else { return nil }
+        return (String(parts[0]), String(parts[1]))
+    }
+
+    /// The line identity of an interval code: everything before the last `@`.
+    public static func lineID(ofIntervalCode code: String) -> String? {
+        guard let at = code.lastIndex(of: "@"), at != code.startIndex else { return nil }
+        return String(code[..<at])
+    }
+
     public static func intervals(for line: CompactPackage.Line) -> [Interval] {
         guard line.stations.count >= 2 else { return [] }
         let pairs = line.segments.indices.compactMap { index -> (CompactPackage.Station, CompactPackage.Station)? in

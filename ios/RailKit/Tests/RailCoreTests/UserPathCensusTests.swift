@@ -171,6 +171,12 @@ struct UserPathCensusTests {
         var legCount = 0
         /// Drawn stroke, `[lon, lat]` WGS84, before any `AppleMapDatum`.
         var drawnCoordinates: [[Double]] = []
+        /// Ride-level `RiddenLineSequence` summary run names, in travel order.
+        var lineSummary: [String] = []
+        /// `RiddenLineSequence.Source` per route section, in section order.
+        var lineSources: [String] = []
+        /// Summary boundaries as `<station code or ?>:<kind>`.
+        var lineBoundaries: [String] = []
     }
 
     // MARK: - Mirrored scope rules (RegionScopeRule, RouteScope)
@@ -623,6 +629,7 @@ struct UserPathCensusTests {
     ) throws -> [Leg] {
         let data = try load(scope: scope, root: root, junctions: junctions)
         let country = scope.home
+        let lineStrict = ProcessInfo.processInfo.environment["SAMPLE_LINE_NAMES_STRICT"] == "1"
 
         // canonicalRouteInput runs per pass in the app; it is deterministic
         // (and memoised there), so it runs once per ride here.
@@ -694,8 +701,31 @@ struct UserPathCensusTests {
             }
             let sections = result.expectedSections
             let drawnSections = Set(result.segments.map(\.segmentIndex))
+            let selections = RiddenLineSequence.selections(
+                result.segments.map { (segmentIndex: $0.segmentIndex, selection: $0.physicalRoute) })
+            let lineSequence = RiddenLineSequence(
+                train: ride.train, sections: sections, selections: selections,
+                drawnSections: drawnSections, gaps: result.physicalGaps, solveSettled: true)
+            let lineSummary = lineSequence.summary
+            let summaryNames = lineSummary.runs.map(\.name)
+            let summarySources = lineSequence.sections.map(\.source.rawValue)
+            let summaryBoundaries = lineSummary.boundaries.map { boundary -> String in
+                let kind: String
+                switch boundary.kind {
+                case .throughService(let codes): kind = "through(\(codes.joined(separator: ",")))"
+                case .operatorChange: kind = "operatorChange"
+                case .lineChange: kind = "lineChange"
+                }
+                return "\(boundary.stationCode ?? "?"):\(kind)"
+            }
+            if lineStrict {
+                Self.checkLineSequence(lineSequence, ride: ride.train, sections: sections, selections: selections)
+            }
             func base(_ index: Int, from: String?, to: String?) -> Leg {
                 var leg = Leg(store: ride.store, ride: ride.train.id, segment: index, from: from, to: to)
+                leg.lineSummary = summaryNames
+                leg.lineSources = summarySources
+                leg.lineBoundaries = summaryBoundaries
                 leg.disposition = disposition
                 leg.timetableMatched = input.databaseProvenance != nil
                 leg.timetableFailure = input.timetableFailure
@@ -786,5 +816,86 @@ struct UserPathCensusTests {
             }
         }
         return legs
+    }
+
+    // MARK: - Line-name contract (SAMPLE_LINE_NAMES_STRICT=1)
+
+    /// (a) an emitted ride names at least one line; (b) a selected section's
+    /// runs are its intervals' run-length encoded line ids, folded by
+    /// `RiddenLineSequence.continues`; (c) a section that requests line ids
+    /// shows no other derived id; (d) a consecutive (A, B, S) the catalog
+    /// joins on the ride date is a through-service boundary, unless it is an
+    /// operator change on one named line.
+    static func checkLineSequence(
+        _ sequence: RiddenLineSequence, ride: Train, sections: [RouteSection],
+        selections: [Int: RideRouteResolution.PhysicalRouteSelection]
+    ) {
+        typealias Line = RiddenLineSequence.Line
+        let id = ride.id
+        #expect(!sequence.summary.runs.isEmpty, "\(id): empty line summary")
+        let date = ride.date.map { String($0.prefix(10)) }
+        func through(_ a: String, _ b: String, _ station: String) -> Bool {
+            !(RiddenLineSequence.bundledContinuations(a, b, station, date)
+                + RiddenLineSequence.bundledContinuations(b, a, station, date)).isEmpty
+        }
+        func isThrough(_ kind: RiddenLineSequence.BoundaryKind) -> Bool {
+            if case .throughService = kind { return true }
+            return false
+        }
+        func line(_ lineID: String, in selection: RideRouteResolution.PhysicalRouteSelection) -> Line {
+            let known = selection.lines.first { $0.lineID == lineID }
+            return Line(lineID: lineID, name: known?.name ?? lineID, operatorName: known?.operatorName)
+        }
+        func sameNameOtherOperator(_ a: Line, _ b: Line) -> Bool {
+            TrainServiceBranding.canonicalLineName(a.name) == TrainServiceBranding.canonicalLineName(b.name)
+                && a.operatorName != b.operatorName
+        }
+        for section in sequence.sections {
+            let index = section.sectionIndex
+            if section.source == .solved, let selection = selections[index] {
+                var ids: [String] = []
+                for lineID in (selection.intervals.isEmpty
+                    ? selection.lines.map(\.lineID) : selection.intervals.map(\.lineID))
+                where ids.last != lineID { ids.append(lineID) }
+                var expected: [Line] = []
+                for lineID in ids {
+                    let next = line(lineID, in: selection)
+                    if let last = expected.last, RiddenLineSequence.continues(last, next) { continue }
+                    expected.append(next)
+                }
+                #expect(section.runs.map(\.lineID) == expected.map(\.lineID),
+                        "\(id) #\(index): runs \(section.runs.map(\.name)) vs intervals \(ids)")
+
+                // (d) inside the section, at the station two intervals share.
+                for (a, b) in zip(selection.intervals, selection.intervals.dropFirst()) where a.lineID != b.lineID {
+                    guard let p = RailIntervalCodes.stationCodes(ofIntervalCode: a.code),
+                          let q = RailIntervalCodes.stationCodes(ofIntervalCode: b.code) else { continue }
+                    let shared = Set([p.0, p.1]).intersection([q.0, q.1])
+                    guard shared.count == 1, let station = shared.first, through(a.lineID, b.lineID, station),
+                          !sameNameOtherOperator(line(a.lineID, in: selection), line(b.lineID, in: selection)),
+                          !RiddenLineSequence.continues(line(a.lineID, in: selection), line(b.lineID, in: selection))
+                    else { continue }
+                    #expect(section.boundaries.contains { $0.stationCode == station && isThrough($0.kind) },
+                            "\(id) #\(index): \(a.lineID) → \(b.lineID) at \(station) is not a through boundary")
+                }
+            }
+            if sections.indices.contains(index), let requested = sections[index].lineIDs, !requested.isEmpty,
+               section.source == .solved || section.source == .geometry {
+                let outside = section.runs.compactMap(\.lineID).filter { !requested.contains($0) }
+                #expect(outside.isEmpty, "\(id) #\(index): runs outside the requested lines \(outside)")
+            }
+        }
+        // (d) across section joins.
+        for (later, join) in sequence.joins {
+            // Only solved-to-solved joins are checkable against selections.
+            guard sequence.sections.first(where: { $0.sectionIndex == later - 1 })?.source == .solved,
+                  sequence.sections.first(where: { $0.sectionIndex == later })?.source == .solved,
+                  let previous = selections[later - 1], let next = selections[later],
+                  let a = previous.intervals.last?.lineID, let b = next.intervals.first?.lineID,
+                  a != b, through(a, b, previous.toStationCode),
+                  !sameNameOtherOperator(line(a, in: previous), line(b, in: next)) else { continue }
+            #expect(isThrough(join.kind),
+                    "\(id) join #\(later): \(a) → \(b) at \(previous.toStationCode) is not a through boundary")
+        }
     }
 }

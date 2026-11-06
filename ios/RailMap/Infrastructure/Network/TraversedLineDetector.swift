@@ -29,10 +29,16 @@ final class TraversedLineDetector {
     private struct CachedResult {
         let digest: Int
         let lines: [Statistics.TraversedLine]
+        var sectionLines: [Int: [Statistics.TraversedLine]] = [:]
     }
 
     /// Detected lines for rides in the current snapshot.
     private(set) var linesByTrainID: [String: [Statistics.TraversedLine]] = [:]
+    /// Geometry-detected lines per route section, only for drawn sections
+    /// without a physical selection: `[trainID: [sectionIndex: lines]]`.
+    private(set) var sectionLinesByTrainID: [String: [Int: [Statistics.TraversedLine]]] = [:]
+    /// The rides of the current snapshot, which ``lineSequence(for:)`` reads.
+    private(set) var ridesByID: [String: RiddenRouteStore.DrawnRide] = [:]
     private(set) var failuresByCountry: [String: String] = [:]
 
     @ObservationIgnored private var cache: [String: CachedResult] = [:]
@@ -44,6 +50,76 @@ final class TraversedLineDetector {
     /// Ids the current snapshot may publish. A stale walk cannot add an id
     /// that has since left the set.
     @ObservationIgnored private var liveIDs: Set<String> = []
+    private struct SequenceMemo {
+        let train: Train
+        let digest: Int?
+        let sectionLines: [Int: [Statistics.TraversedLine]]?
+        let detected: [Statistics.TraversedLine]?
+        let expectedSections: [RouteSection]?
+        let authoritative: Bool?
+        let settled: Bool
+        let sequence: RiddenLineSequence
+    }
+    @ObservationIgnored private var sequenceMemo: [String: SequenceMemo] = [:]
+
+    /// The ridden lines of one journey, per section, from this snapshot's
+    /// solved route, its gaps and the per-section geometry. A journey with no
+    /// ride yet reads its recorded sections, still pending.
+    func lineSequence(for train: Train) -> RiddenLineSequence {
+        let ride = ridesByID[train.id]
+        let geometry = sectionLinesByTrainID[train.id]
+        let detected = linesByTrainID[train.id]
+        let settled = ride.map { !$0.needsLineDetection || cache[train.id] != nil } ?? false
+        if let memo = sequenceMemo[train.id], memo.train == train, memo.digest == ride?.geometryDigest,
+           memo.sectionLines == geometry, memo.detected == detected,
+           memo.expectedSections == ride?.expectedSections,
+           memo.authoritative == ride?.indicesAreAuthoritative, memo.settled == settled {
+            return memo.sequence
+        }
+        let sequence: RiddenLineSequence
+        if let ride, ride.indicesAreAuthoritative {
+            let stops = ride.stops
+            let recordedCount = train.routeSections?.count ?? 0
+            // Sections solved for a different train (stops or section count
+            // changed) say nothing about this one: recorded-only until the
+            // re-solve arrives.
+            let current = ride.stops.map(\.n02StationCode) == train.stops.map(\.n02StationCode)
+                && (ride.expectedSections.isEmpty || ride.expectedSections.count == recordedCount)
+            if current {
+                sequence = RiddenLineSequence(
+                    train: train,
+                    sections: ride.expectedSections.isEmpty ? nil : ride.expectedSections,
+                    selections: RiddenLineSequence.selections(
+                        ride.segments.map { (segmentIndex: $0.segmentIndex, selection: $0.physicalRoute) }),
+                    drawnSections: Set(ride.segments.map(\.segmentIndex)),
+                    gaps: ride.physicalGaps,
+                    geometryLines: geometry ?? [:],
+                    solveSettled: settled,
+                    stationName: { code in stops.first { $0.n02StationCode == code }?.name })
+            } else {
+                sequence = RiddenLineSequence(train: train, sections: nil, solveSettled: settled)
+            }
+        } else {
+            // Positional (non-authoritative) indices say nothing about which
+            // section a stroke belongs to, so only the record speaks. When the
+            // record names nothing, the train-level detected lines stand in as
+            // geometry lines of one section, so the physical lines and
+            // operators the ride showed before are not lost.
+            let recorded = RiddenLineSequence(train: train, solveSettled: ride != nil)
+            if recorded.summary.runs.isEmpty, let detected, !detected.isEmpty,
+               (train.routeSections?.count ?? 0) >= 1 {
+                sequence = RiddenLineSequence(
+                    train: train, drawnSections: [0], geometryLines: [0: detected], solveSettled: ride != nil)
+            } else {
+                sequence = recorded
+            }
+        }
+        sequenceMemo[train.id] = SequenceMemo(
+            train: train, digest: ride?.geometryDigest, sectionLines: geometry, detected: detected,
+            expectedSections: ride?.expectedSections, authoritative: ride?.indicesAreAuthoritative,
+            settled: settled, sequence: sequence)
+        return sequence
+    }
 
     /// The detected railways for one journey, or empty when none have landed
     /// or the record is still awaiting route confirmation.
@@ -79,15 +155,20 @@ final class TraversedLineDetector {
         liveIDs = ids
         retainCountries(for: rides)
         cache = cache.filter { ids.contains($0.key) }
+        // Every id here is (re)published below: its memo is stale.
+        sequenceMemo = [:]
         var lines: [String: [Statistics.TraversedLine]] = [:]
+        var sectionLines: [String: [Int: [Statistics.TraversedLine]]] = [:]
         for ride in rides {
             let selected = Self.selectedLines(ride)
+            let hit = cache[ride.id].flatMap { $0.digest == Self.detectionDigest(ride) ? $0 : nil }
             if !selected.isEmpty { lines[ride.id] = selected }
-            else if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
-                lines[ride.id] = hit.lines
-            }
+            else if let hit { lines[ride.id] = hit.lines }
+            if let hit, !hit.sectionLines.isEmpty { sectionLines[ride.id] = hit.sectionLines }
         }
         linesByTrainID = lines
+        sectionLinesByTrainID = sectionLines
+        ridesByID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { _, last in last })
     }
 
     private nonisolated static func selectedLines(_ ride: RiddenRouteStore.DrawnRide) -> [Statistics.TraversedLine] {
@@ -126,9 +207,13 @@ final class TraversedLineDetector {
         liveIDs = ids
         retainCountries(for: rides)
         cache = cache.filter { ids.contains($0.key) }
+        // Every id here is (re)published below: its memo is stale.
+        sequenceMemo = [:]
+        ridesByID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { _, last in last })
 
         var stale: [RiddenRouteStore.DrawnRide] = []
         var reusable: [String: [Statistics.TraversedLine]] = [:]
+        var reusableSections: [String: [Int: [Statistics.TraversedLine]]] = [:]
         for ride in rides {
             let selected = Self.selectedLines(ride)
             if !selected.isEmpty && !ride.needsLineDetection {
@@ -137,6 +222,7 @@ final class TraversedLineDetector {
                 reusable[ride.id] = selected
             } else if let hit = cache[ride.id], hit.digest == Self.detectionDigest(ride) {
                 reusable[ride.id] = hit.lines
+                if !hit.sectionLines.isEmpty { reusableSections[ride.id] = hit.sectionLines }
             } else {
                 // Changed geometry cannot retain labels inferred from its old route.
                 // Explicit physical selections are still evidence in this snapshot.
@@ -150,6 +236,8 @@ final class TraversedLineDetector {
         var published = linesByTrainID.filter { ids.contains($0.key) }
         for (id, lines) in reusable { published[id] = lines }
         linesByTrainID = published
+        // Stale rides drop their per-section geometry with their old route.
+        sectionLinesByTrainID = reusableSections
         let pendingCountries = Set(stale.map(\.country))
         failuresByCountry = failuresByCountry.filter { pendingCountries.contains($0.key) }
 
@@ -160,7 +248,8 @@ final class TraversedLineDetector {
 
         let staleRides = stale
         task = Task.detached(priority: .utility) {
-            var fresh: [String: (digest: Int, lines: [Statistics.TraversedLine])] = [:]
+            var fresh: [String: (digest: Int, lines: [Statistics.TraversedLine],
+                                 sections: [Int: [Statistics.TraversedLine]])] = [:]
             var failures: [String: String] = [:]
             var completedCountries = Set<String>()
             let byCountry = Dictionary(grouping: staleRides, by: \.country)
@@ -179,23 +268,48 @@ final class TraversedLineDetector {
                 for ride in group {
                     guard !Task.isCancelled else { return }
                     let unproven = ride.unprovenSegmentIndices
-                    let features = ride.segments.filter {
+                    let candidates = ride.segments.filter {
                         $0.physicalRoute == nil && !unproven.contains($0.segmentIndex)
-                    }.map { segment in
-                        Statistics.RouteFeature(
-                            lines: [segment.sourceCoordinates], hasGeometry: true,
-                            // The route the train runs, not the stretch the
-                            // reader rode — every segment counts.
-                            rideSegment: true,
-                            from: segment.from, to: segment.to)
                     }
-                    let entry = Statistics.collectTrainStatsEntry(
-                        features: features, index: index, rideDate: ride.daySpan.date)
+                    // One walk per section, in drawn order. Features are
+                    // walked independently, so the concatenated section edges
+                    // are exactly the edges of one walk over the whole ride.
+                    var order: [Int] = []
+                    var partsBySection: [Int: [RiddenRouteStore.DrawnSegment]] = [:]
+                    for segment in candidates {
+                        if partsBySection[segment.segmentIndex] == nil { order.append(segment.segmentIndex) }
+                        partsBySection[segment.segmentIndex, default: []].append(segment)
+                    }
+                    var edges: [Int] = []
+                    var sectionLines: [Int: [Statistics.TraversedLine]] = [:]
+                    for sectionIndex in order {
+                        let features = (partsBySection[sectionIndex] ?? []).map { segment in
+                            Statistics.RouteFeature(
+                                lines: [segment.sourceCoordinates], hasGeometry: true,
+                                // The route the train runs, not the stretch the
+                                // reader rode — every segment counts.
+                                rideSegment: true,
+                                from: segment.from, to: segment.to)
+                        }
+                        let entry = Statistics.collectTrainStatsEntry(
+                            features: features, index: index, rideDate: ride.daySpan.date)
+                        edges += entry.edges
+                        let lines = Statistics.traversedLines(edges: entry.edges, index: index)
+                        if !lines.isEmpty { sectionLines[sectionIndex] = lines }
+                    }
+                    let whole = Statistics.traversedLines(edges: edges, index: index)
+                    // A section's own floor is a fraction of that section; keep
+                    // only lines that also clear the whole ride's threshold.
+                    let wholeNames = Set(whole.map { TrainServiceBranding.canonicalLineName($0.name) })
+                    sectionLines = sectionLines.compactMapValues { lines in
+                        let kept = lines.filter { wholeNames.contains(TrainServiceBranding.canonicalLineName($0.name)) }
+                        return kept.isEmpty ? nil : kept
+                    }
                     let selected = Self.selectedLines(ride)
                     let names = Set(selected.map { TrainServiceBranding.canonicalLineName($0.name) })
-                    let lines = selected + Statistics.traversedLines(edges: entry.edges, index: index)
+                    let lines = selected + whole
                         .filter { !names.contains(TrainServiceBranding.canonicalLineName($0.name)) }
-                    fresh[ride.id] = (Self.detectionDigest(ride), lines)
+                    fresh[ride.id] = (Self.detectionDigest(ride), lines, sectionLines)
                 }
                 completedCountries.insert(country)
             }
@@ -208,8 +322,10 @@ final class TraversedLineDetector {
                 self.failuresByCountry.merge(failures, uniquingKeysWith: { _, latest in latest })
                 for (id, result) in fresh {
                     guard self.liveIDs.contains(id) else { continue }
-                    self.cache[id] = CachedResult(digest: result.digest, lines: result.lines)
+                    self.cache[id] = CachedResult(
+                        digest: result.digest, lines: result.lines, sectionLines: result.sections)
                     self.linesByTrainID[id] = result.lines
+                    self.sectionLinesByTrainID[id] = result.sections.isEmpty ? nil : result.sections
                 }
             }
         }
@@ -227,6 +343,9 @@ final class TraversedLineDetector {
         failuresByCountry = [:]
         liveIDs = []
         linesByTrainID = [:]
+        sectionLinesByTrainID = [:]
+        ridesByID = [:]
+        sequenceMemo = [:]
     }
 }
 

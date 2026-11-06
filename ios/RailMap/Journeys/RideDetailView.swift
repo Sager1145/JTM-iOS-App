@@ -299,13 +299,22 @@ struct RideDetailContent: View {
     /// Reads the detected route ahead of the recorded names, so this redraws
     /// once ``TraversedLineDetector`` lands.
     private var identityDetailText: String {
-        let detected = traversedLines?.lines(
-            forTrainID: train.id, pendingConfirmationIDs: pendingConfirmationIDs) ?? []
-        let route = JourneyBranding.routeText(of: train, detected: detected, badges: network?.badges)
+        let route = JourneyBranding.routeText(of: train, sequence: lineSequence, badges: network?.badges)
         return [train.trainType.flatMap { $0.isEmpty ? nil : $0 },
                 route.isEmpty ? nil : route]
             .compactMap { $0 }
             .joined(separator: " · ")
+    }
+
+    /// The ridden lines, per section, from the one derivation every trip
+    /// surface reads. Redraws when the solve or the detected geometry lands.
+    private var lineSequence: RiddenLineSequence {
+        guard !pendingConfirmationIDs.contains(train.id) else {
+            var pending = train
+            pending.routeConfirmation = .pending
+            return RiddenLineSequence(train: pending)
+        }
+        return traversedLines?.lineSequence(for: train) ?? RiddenLineSequence(train: train)
     }
 
     // MARK: - 2. Route timing (§7.3)
@@ -432,19 +441,24 @@ struct RideDetailContent: View {
     // MARK: - 3. Stop timeline (§7.4)
 
     private func timelineCard(_ detail: JourneyDetailSnapshot) -> some View {
-        let sections = detail.sections
+        let sequence = lineSequence
+        let lastInterval = train.stops.count - 2
+        let solvedIDs = Set(sequence.resolvedLineIDs)
+        let intervals = lastInterval < 0 ? [] : (0...lastInterval).map {
+            timelineLines(sequence.stopInterval($0), solvedIDs: solvedIDs)
+        }
         // Deferring the card alone still lays out every stop when it appears.
         return LazyVStack(alignment: .leading, spacing: 0) {
             Text(localization.countryText("sec.stops", fallback: "Stops"))
                 .font(.headline)
                 .padding(.bottom, 12)
             ForEach(Array(train.stops.enumerated()), id: \.offset) { index, stop in
-                let section = sections.indices.contains(index) ? sections[index] : nil
-                let previous = sections.indices.contains(index - 1) ? sections[index - 1] : nil
-                timelineRow(stop, index: index, detail: detail, section: section ?? previous,
-                            showsLineNames: section != nil && (index == 0
-                                || section?.lineNames != previous?.lineNames
-                                || section?.operatorNames != previous?.operatorNames))
+                let lines = intervals.indices.contains(index) ? intervals[index] : nil
+                let previous = intervals.indices.contains(index - 1) ? intervals[index - 1] : nil
+                timelineRow(stop, index: index, detail: detail, lines: lines ?? previous ?? [],
+                            identity: stopIdentity(index: index, sequence: sequence),
+                            showsLineNames: lines != nil && (index == 0
+                                || lines?.map(\.name) != previous?.map(\.name)))
             }
             localTimeNote
         }
@@ -506,10 +520,9 @@ struct RideDetailContent: View {
             ])
     }
 
-    private func timelineRow(_ stop: Stop, index: Int, detail: JourneyDetailSnapshot, section: RouteSection?,
+    private func timelineRow(_ stop: Stop, index: Int, detail: JourneyDetailSnapshot,
+                             lines: [(name: String, color: Color)], identity: StationLabel.Text,
                              showsLineNames: Bool) -> some View {
-        let lines = timelineLines(for: section)
-        let identity = stopIdentity(index: index)
         let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
         return HStack(alignment: .top, spacing: 12) {
             VStack(spacing: 0) {
@@ -648,23 +661,29 @@ struct RideDetailContent: View {
     private func endpointIdentity(stop: Stop?, isArrival: Bool) -> StationLabel.Text {
         let index = isArrival ? train.stops.count - 1 : 0
         if stop != nil, train.stops.indices.contains(index) {
-            return stopIdentity(index: index)
+            return stopIdentity(index: index, sequence: lineSequence)
         }
         return StationLabel.countryOnly(name: stop?.name ?? "", countryCode: detailRegion.code.uppercased())
     }
 
-    /// Arrival line is the section before this stop. Departure line is the section after it.
-    private func stopIdentity(index: Int) -> StationLabel.Text {
+    /// Arrival line is the last run before this stop. Departure line is the
+    /// first run after it. A transfer is named where the sequence joins two
+    /// lines at this stop.
+    private func stopIdentity(index: Int, sequence: RiddenLineSequence) -> StationLabel.Text {
         let stop = train.stops[index]
-        let sections = prepared?.sections ?? []
-        func lineName(_ sectionIndex: Int) -> String? {
-            guard sections.indices.contains(sectionIndex) else { return nil }
-            return timelineLines(for: sections[sectionIndex]).first?.name
+        let region = detailRegion.code
+        func shown(_ interval: Int) -> [String] {
+            guard interval >= 0, interval < train.stops.count - 1 else { return [] }
+            return JourneyLineText.folded(sequence.stopInterval(interval)) {
+                JourneyBranding.lineLabel($0, region: region, badges: network?.badges)
+            }.map(\.name)
         }
-        let country = detailRegion.code.uppercased()
-        let depart = lineName(index)
-        let arrive = lineName(index - 1)
-        if let arrive, let depart, arrive != depart {
+        let country = region.uppercased()
+        let depart = shown(index).first
+        let arrive = shown(index - 1).last
+        let joinsHere = sequence.joins.values.contains { $0.stopIndex == index }
+            || sequence.joins.values.allSatisfy { $0.stopIndex == nil }
+        if let arrive, let depart, arrive != depart, joinsHere {
             return StationLabel.transferText(name: stop.name, countryCode: country, from: arrive, to: depart)
         }
         if let line = depart ?? arrive {
@@ -680,31 +699,31 @@ struct RideDetailContent: View {
             countryName: StationQualifierCopy.countryName(identity.countryCode, localization: localization))
     }
 
-    /// Each connecting straight line follows the recorded section's railway
-    /// palette, so a through service changes colour at its changeover station.
-    private func timelineLines(for section: RouteSection?) -> [(name: String, color: Color)] {
-        guard let section else { return [] }
-        let recordedNames = section.lineNames ?? []
-        let names = recordedNames.isEmpty
-            ? (section.lineIDs ?? []).compactMap { network?.badges.lineName(lineID: $0) }
-            : recordedNames
+    /// Each connecting straight line follows its run's railway palette, so a
+    /// through service changes colour at its changeover station. A stop
+    /// interval that runs through several lines (東横線 → みなとみらい線)
+    /// keeps the existing one-stripe-and-label-per-line layout, in run order.
+    private func timelineLines(
+        _ runs: (runs: [RiddenLineSequence.Line], boundaries: [RiddenLineSequence.Boundary]),
+        solvedIDs: Set<String>
+    ) -> [(name: String, color: Color)] {
         let region = detailRegion.code
-        return names.map { name in
-            // Names and IDs are independently normalized in the record;
-            // resolve complete identities rather than pairing array offsets.
-            let colorHex = (section.operatorNames ?? []).lazy.compactMap {
-                    network?.badges.color(region: region, operatorName: $0,
-                                          lineName: name, dark: colorScheme == .dark)
-                }.first
-                ?? (section.lineIDs ?? []).lazy.compactMap { lineID -> String? in
-                    guard network?.badges.lineName(lineID: lineID) == name else { return nil }
-                    return network?.badges.color(lineID: lineID, dark: colorScheme == .dark)
-                }.first
-                ?? network?.badges.color(region: region, operatorName: nil,
-                                         lineName: name, dark: colorScheme == .dark)
-            let displayName = network?.badges.passengerName(
-                region: region, operatorName: section.operatorNames?.first, lineName: name) ?? name
-            return (displayName, colorHex.flatMap { Color(hex: $0) } ?? JourneyBranding.color(of: train))
+        let dark = colorScheme == .dark
+                return JourneyLineText.folded(runs) {
+            JourneyBranding.lineLabel($0, region: region, badges: network?.badges)
+        }.map { shown in
+            let line = shown.line
+            // A line id from a solved route is trusted; a recorded run's id
+            // only when the package names it the same as the run.
+            let trustedID = line.lineID.flatMap {
+                solvedIDs.contains($0) || network?.badges.lineName(lineID: $0) == line.name ? $0 : nil
+            }
+            let colorHex = trustedID.flatMap { network?.badges.color(lineID: $0, dark: dark) }
+                ?? line.operatorName.flatMap {
+                    network?.badges.color(region: region, operatorName: $0, lineName: line.name, dark: dark)
+                }
+                ?? network?.badges.color(region: region, operatorName: nil, lineName: line.name, dark: dark)
+            return (shown.name, colorHex.flatMap { Color(hex: $0) } ?? JourneyBranding.color(of: train))
         }
     }
 
