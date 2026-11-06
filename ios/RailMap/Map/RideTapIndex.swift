@@ -48,7 +48,7 @@ import RailPresentation
 /// take this path at all and projects everything, as before. Pitch arrives
 /// only from a deliberate two-finger drag, and correctness is not worth
 /// trading for the frames it would save there.
-struct RideTapIndex {
+struct RideTapIndex: Sendable {
 
     /// One run of a stroke, with the box its vertices fall in.
     private struct Chunk {
@@ -85,16 +85,42 @@ struct RideTapIndex {
         rides: [RiddenRouteStore.DrawnRide],
         drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]] = { $0.strokes }
     ) {
+        self.init(snapshot: Snapshot(rides: rides, drawnStrokes: drawnStrokes))
+    }
+
+    /// The drawn geometry the index is built from, captured on the main actor
+    /// so the build itself can run elsewhere.
+    struct Snapshot: Sendable {
+        let ids: [String]
+        let strokes: [[[Coordinate]]]
+
+        init(
+            rides: [RiddenRouteStore.DrawnRide],
+            drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]]
+        ) {
+            var ids: [String] = []
+            var strokes: [[[Coordinate]]] = []
+            ids.reserveCapacity(rides.count)
+            strokes.reserveCapacity(rides.count)
+            for ride in rides {
+                // `strokes` is a computed property that rebuilds its outer array
+                // on every read; read it once here and never again per tap.
+                strokes.append(drawnStrokes(ride))
+                ids.append(ride.id)
+            }
+            self.ids = ids
+            self.strokes = strokes
+        }
+    }
+
+    init(snapshot: Snapshot) {
         var strokes: [[[Coordinate]]] = []
         var ids: [String] = []
         var chunks: [Chunk] = []
         var vertices = 0
-        strokes.reserveCapacity(rides.count)
-        ids.reserveCapacity(rides.count)
-        for (rideIndex, ride) in rides.enumerated() {
-            // `strokes` is a computed property that rebuilds its outer array
-            // on every read; read it once here and never again per tap.
-            let rideStrokes = drawnStrokes(ride)
+        strokes.reserveCapacity(snapshot.ids.count)
+        ids.reserveCapacity(snapshot.ids.count)
+        for (rideIndex, rideStrokes) in snapshot.strokes.enumerated() {
             for (strokeIndex, stroke) in rideStrokes.enumerated() {
                 vertices += stroke.count
                 for range in RideTapResolver.chunkRanges(count: stroke.count) {
@@ -105,7 +131,7 @@ struct RideTapIndex {
                 }
             }
             strokes.append(rideStrokes)
-            ids.append(ride.id)
+            ids.append(snapshot.ids[rideIndex])
         }
         self.strokes = strokes
         self.ids = ids

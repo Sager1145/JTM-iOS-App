@@ -101,7 +101,18 @@ final class MapNetworkGeometryCache {
         var strokeBuilds: [String: ContinuousStrokeBuild] = [:]
         var lineBuilds: [String: LineBuild] = [:]
         var ridePolylines: [String: MKPolyline] = [:]
+        /// Identity of the stroke build last stored per id; moves whenever
+        /// ``storePrepared(_:key:)`` replaces a build.
+        var strokeGenerations: [String: Int] = [:]
+        var withheldPolylines: [String: WithheldPolylineEntry] = [:]
         var familyFallbacks: [String: FamilyFallbackEntry] = [:]
+    }
+    private struct WithheldPolylineEntry {
+        let lineID: String
+        let count: Int
+        let first: Coordinate
+        let last: Coordinate
+        let polyline: MKPolyline
     }
     private struct FamilyFallbackEntry {
         let lineID: String
@@ -118,6 +129,7 @@ final class MapNetworkGeometryCache {
     /// Most recent last.
     private var recentKeys: [String] = []
     private var frameStrokes: [String: BuiltStroke] = [:]
+    private var nextStrokeGeneration = 0
 
     init() {
         let joinedChains = JoinedChainCache()
@@ -188,6 +200,12 @@ final class MapNetworkGeometryCache {
             if let kept = entries[key]?.familyFallbacks.filter({ ids.contains($0.value.lineID) }) {
                 entries[key]?.familyFallbacks = kept
             }
+            if let kept = entries[key]?.withheldPolylines.filter({ ids.contains($0.value.lineID) }) {
+                entries[key]?.withheldPolylines = kept
+            }
+            if let kept = entries[key]?.strokeGenerations.filter({ ids.contains($0.key) }) {
+                entries[key]?.strokeGenerations = kept
+            }
         }
         clearRidePolylines()
     }
@@ -202,6 +220,13 @@ final class MapNetworkGeometryCache {
         // Mutate in place: copying an entry out and back would copy its
         // dictionaries on every store.
         entries[frameKey, default: FrameEntry()].strokeBuilds.merge(result.strokes) { _, new in new }
+        for id in result.strokes.keys {
+            nextStrokeGeneration += 1
+            entries[frameKey, default: FrameEntry()].strokeGenerations[id] = nextStrokeGeneration
+            // A replaced stroke build invalidates the dashed runs cut from it.
+            entries[frameKey, default: FrameEntry()].withheldPolylines =
+                entries[frameKey, default: FrameEntry()].withheldPolylines.filter { $0.value.lineID != id }
+        }
         entries[frameKey, default: FrameEntry()].lineBuilds.merge(result.lines) { _, new in new }
         return true
     }
@@ -227,6 +252,33 @@ final class MapNetworkGeometryCache {
 
     func storeStroke(_ value: BuiltStroke, for id: String) {
         frameStrokes[id] = value
+    }
+
+    /// Identity of the stroke resident for `id` this frame, or nil when none is.
+    /// Equal values mean equal drawn pixels for the same frame key.
+    func strokeGeneration(for id: String) -> Int? {
+        guard frameStrokes[id] != nil else { return nil }
+        return currentEntry.strokeGenerations[id] ?? 0
+    }
+
+    /// The dashed polyline of one withheld run, identical across rebuilds of the
+    /// same frame so overlay reconciliation can reuse its batch. The content
+    /// guard (count, first and last vertex) catches a run that changed without
+    /// its stroke build being replaced.
+    func withheldPolyline(
+        lineID: String, runIndex: Int, coordinates: [Coordinate]
+    ) -> MKPolyline? {
+        guard let first = coordinates.first, let last = coordinates.last else { return nil }
+        let key = "\(lineID)|\(runIndex)"
+        if let cached = currentEntry.withheldPolylines[key],
+            cached.count == coordinates.count, cached.first == first, cached.last == last {
+            return cached.polyline
+        }
+        let points = coordinates.map(\.clLocation)
+        let polyline = MKPolyline(coordinates: points, count: points.count)
+        entries[frameKey, default: FrameEntry()].withheldPolylines[key] = WithheldPolylineEntry(
+            lineID: lineID, count: coordinates.count, first: first, last: last, polyline: polyline)
+        return polyline
     }
 
     func containsStroke(for id: String) -> Bool {

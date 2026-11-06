@@ -1407,10 +1407,29 @@ extension RailMapView.Surface {
                          mapPointsPerScreenPoint: mapPointsPerScreenPoint),
                         for: line.id)
                 }
-                // The frame-stroke cache just moved — a stale tap index would score a
-                // ride against last frame's pixel geometry. See
-                // ``drawnCoordinates(of:)`` and ``MapInteractionCoordinator/rideHits(at:on:rides:drawnStrokes:)``.
-                interaction.invalidateRideGeometry()
+                // The frame-stroke cache just moved, but a ride's tap geometry only
+                // changes when the frame or a referenced chain's stored stroke
+                // does — see ``MapInteractionCoordinator/TapGeometrySignature``.
+                if interaction.tapSnapshotProvider == nil {
+                    interaction.tapSnapshotProvider = { [weak self] in
+                        RideTapIndex.Snapshot(rides: self?.rides ?? [],
+                            drawnStrokes: { self?.drawnStrokes(of: $0) ?? [] })
+                    }
+                }
+                // Only the chains some ride references can change a ride's tap
+                // geometry; each is keyed by its stored stroke's identity.
+                var referencedChains: Set<String> = []
+                for matches in strokeRefCache.values {
+                    for ref in matches.refs.values { referencedChains.insert(ref.chainID) }
+                }
+                var residentStrokes: [String: Int] = [:]
+                for id in referencedChains.union(neededStrokeLineIDs) {
+                    if let generation = networkGeometry.strokeGeneration(for: id) {
+                        residentStrokes[id] = generation
+                    }
+                }
+                interaction.updateTapGeometry(signature: .init(
+                    frameKey: geometryFrame.key, residentStrokes: residentStrokes))
 
                 // The budget is applied to what decimation actually produced, not
                 // to the stored vertex count. Budgeting on the raw count cut a
@@ -1500,15 +1519,16 @@ extension RailMapView.Surface {
                             vertices += kept.reduce(0) { $0 + $1.pointCount }
                         }
                     }
-                    for run in withheldRunsByLineID[build.line.id] ?? [] {
+                    for (runIndex, run) in (withheldRunsByLineID[build.line.id] ?? []).enumerated() {
                         guard run.coordinates.count >= 2 else { continue }
                         let runColor = dark ? run.colorDarkHex : run.colorHex
                         let runKey = runColor + lodSuffix
                         colors[runKey] = colors[runKey]
                             ?? UIColor(Color(hex: runColor) ?? .accentColor)
-                        let coordinates = run.coordinates.map(\.clLocation)
-                        withheldByColor[runKey, default: []].append(
-                            MKPolyline(coordinates: coordinates, count: coordinates.count))
+                        guard let polyline = networkGeometry.withheldPolyline(
+                            lineID: build.line.id, runIndex: runIndex, coordinates: run.coordinates)
+                        else { continue }
+                        withheldByColor[runKey, default: []].append(polyline)
                     }
                 }
 
