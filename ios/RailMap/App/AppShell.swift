@@ -217,6 +217,11 @@ struct AppShell: View {
                 trains: tripHide.scoped(loaded).trains, rides: riddenRoutes.rides)
         }
 #if DEBUG
+        // Test control channel (railmap-test:// URLs and the container inbox).
+        // See `AppControlHost` and `.claude/skills/app-control/SKILL.md`.
+        .modifier(AppControlRegistration(stores: AppControlHost.Stores(
+            network: network, itineraries: itineraries, library: library, riddenRoutes: riddenRoutes,
+            controller: mapController, tripHide: tripHide, selection: $selection)))
         // "Reload all", run by a harness that cannot tap through Settings:
         // N runs back to back once the first load settles, the first one
         // optionally stopped partway. Each run's wall time is logged under

@@ -12,7 +12,9 @@
       ],
       "sources": [
         "ios/RailMap/App/AppShell.swift",
-        "ios/RailMap/App/RailMapApp.swift"
+        "ios/RailMap/App/RailMapApp.swift",
+        "ios/RailMap/Diagnostics/AppControl/AppControlHandles.swift",
+        "ios/RailMap/Diagnostics/AppControl/AppControlHost.swift"
       ]
     },
     {
@@ -521,6 +523,7 @@
         "ios/RailKit/Sources/RailPresentation/Statistics/StatisticsMembership.swift",
         "ios/RailKit/Sources/RailPresentation/Workspace/PanelDetentResolver.swift",
         "ios/RailKit/Sources/RailPresentation/Workspace/PickDuringRunRule.swift",
+        "ios/RailKit/Sources/RailPresentation/Workspace/AppControlProtocol.swift",
         "ios/RailKit/Sources/RailPresentation/Workspace/UITestLaunchConfiguration.swift",
         "ios/RailKit/Sources/RailPresentation/Workspace/WorkspaceJourneyRules.swift",
         "ios/RailKit/Sources/RailPresentation/Workspace/WorkspaceLayoutPolicy.swift"
