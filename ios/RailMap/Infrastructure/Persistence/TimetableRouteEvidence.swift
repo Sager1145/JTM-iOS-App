@@ -14,7 +14,7 @@ actor TimetableRouteEvidence {
         catch { return .failure(.damaged(String(describing: error))) }
     }()
     private let dates = SharedRouteWork<String, TimetablePhysicalRouteMatch.CandidateIndex>(
-        maxEntries: 6, maxCost: 5_000, cost: { max(1, $0.tripCount) })
+        maxEntries: 40, maxCost: 60_000, cost: { max(1, $0.tripCount) })
 
     private struct CacheKey: Hashable {
         let identity: TimetablePhysicalRouteMatch.MatchRequestIdentity
@@ -27,8 +27,24 @@ actor TimetableRouteEvidence {
         var access: UInt64
     }
 
+    private static let matchLimit = 4096
     private var matches: [CacheKey: Cached] = [:]
     private var access: UInt64 = 0
+
+    /// The rail and timetable revisions enrichment keys on, as one identity
+    /// for the persisted route-digest index. A failed read is its own value:
+    /// enrichment then throws for Japan and nothing is recorded.
+    nonisolated static var evidenceRevision: String {
+        switch resourceRevisions {
+        case .success(let revisions): "rail:\(revisions.rail)|timetable:\(revisions.timetable)"
+        case .failure: "unavailable"
+        }
+    }
+
+    /// Whether an editor-applied occurrence may currently change an
+    /// enrichment result. The persisted digest index stays out of the way
+    /// while one is held, since those answers are process-local.
+    nonisolated static var holdsAppliedOccurrences: Bool { !applied.isEmpty }
 
     /// Keeps an editor-applied occurrence only while the kept train and the
     /// current rail and timetable revisions still match. Missing revisions are
@@ -128,7 +144,7 @@ actor TimetableRouteEvidence {
     }
 
     private func retain(_ outcome: TimetablePhysicalRouteMatch.Outcome, for key: CacheKey) {
-        if matches[key] == nil, matches.count >= 128,
+        if matches[key] == nil, matches.count >= Self.matchLimit,
            let oldest = matches.min(by: { $0.value.access < $1.value.access }) {
             matches.removeValue(forKey: oldest.key)
         }
@@ -168,6 +184,12 @@ private final class AppliedEvidenceStore: @unchecked Sendable {
         order.removeAll { $0 == key }
         order.append(key)
         entries[key] = evidence
+    }
+
+    var isEmpty: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return entries.isEmpty
     }
 
     func lookup(
