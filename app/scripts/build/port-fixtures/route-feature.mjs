@@ -393,7 +393,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     (index) => index <= 1,
   );
   solverChain(
-    "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+    "journey_5C3C741549CF09E20FE4CC4F7389B758",
     "tw",
     "taoyuan-mrt",
     "Real solver output on the 桃園機場捷運 — a hop whose first station is " +
@@ -402,7 +402,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
     (index) => index <= 2,
   );
   solverChain(
-    "20260813_01_star_of_taiwan_round_island_loop",
+    "journey_C929D1DB4BBEDD1ED71B9C4885026D78",
     "tw",
     "round-island",
     "Real solver output on the 縱貫線 through 臺北 — several railways share " +

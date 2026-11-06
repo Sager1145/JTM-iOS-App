@@ -10,6 +10,12 @@ export const APP_DIR = path.resolve(HERE, "..", "..", "..");
 
 export const SCHEMA_ID = "jtm-registry/1";
 export const KINDS = ["op", "lp", "cx", "st", "ls", "rp", "fc"];
+// N02 operator name -> package-operator name, for operators where the two sources disagree.
+const N02_OPERATOR_PACKAGE_NAME = new Map([
+  ["東京地下鉄", "東京メトロ"],
+  ["大阪市高速電気軌道", "Osaka Metro"],
+]);
+
 export const REGIONS = ["jp", "tw", "hk", "mo", "kr", "cn"];
 const FILE_KINDS = ["op", "ln", "lp", "cx", "st", "ls", "rp", "fc"];
 const COUNTRY_CODES = ["jp", "tw", "hk", "mo", "kr", "cn"];
@@ -1210,6 +1216,11 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     for (const [oldSt, scheme] of olds) if (pendingRetire.has(oldSt)) pushAlias(oldSt, scheme, newSt);
   }
   const opIdByName = new Map(operators.map((row) => [row.name, row.id]));
+  // N02 (source_station) names these operators differently from the package operator names.
+  for (const [n02Name, packageName] of N02_OPERATOR_PACKAGE_NAME) {
+    const id = opIdByName.get(packageName);
+    if (id != null) opIdByName.set(n02Name, id);
+  }
   const stationCodeRows = [];
   for (const row of codeRows) {
     if (!row.station_code) continue;

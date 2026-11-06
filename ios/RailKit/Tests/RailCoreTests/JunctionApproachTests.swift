@@ -173,7 +173,7 @@ struct JunctionApproachTests {
         struct Store: Decodable { let trains: [Train] }
         let data = try PortFixtures.repositoryRoot().appending(path: "app/data")
         let store = try JSONDecoder().decode(Store.self, from: Data(contentsOf: data.appending(path: "train-store.json")))
-        let train = try #require(store.trains.first { $0.id == "20260724_06_nanpu28" })
+        let train = try #require(store.trains.first { $0.id == SampleRideID.current("20260724_06_nanpu28") })
         let sections = try #require(train.routeSections)
         let features = try RouteGraph.SectionFeatureCollection.load(contentsOf: data.appending(path: "rail-sections.json")).features.filter {
             ["宇野線", "本四備讃線", "予讃線"].contains($0.properties.lineName)
@@ -221,7 +221,9 @@ struct JunctionApproachTests {
             dataRoot.appending(path: "train-store.json")))
         let indexedIDs = Set(store.trains.filter { $0.region == nil || $0.region == "jp" }.map(\.id))
         #expect(manifest.parts.count == indexedIDs.count)
-        #expect(Set(manifest.partTrainIDs.values) == indexedIDs)
+        // The manifest and parts still name rides by their former ids; the store
+        // carries the derived `journey_…` ids.
+        #expect(Set(manifest.partTrainIDs.values.map(SampleRideID.current)) == indexedIDs)
 
         let pipeline = PhysicalEndpointTrimTests()
         var trains: [Train] = []

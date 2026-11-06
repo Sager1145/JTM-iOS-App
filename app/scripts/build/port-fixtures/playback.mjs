@@ -71,7 +71,7 @@ const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 // diff rather than as a stale comment.
 const CASES = [
   {
-    id: "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
+    id: "journey_FF81EAF940C88B515459211A732AD78C",
     why:
       "The SHORTEST journey in the committed store: 313.9 m of 鹿児島市電, " +
       "eight vertices, one interval. Both clamps bite at once — duration " +
@@ -80,21 +80,21 @@ const CASES = [
       "it is small enough to look like rounding.",
   },
   {
-    id: "20260704_04_oedo_line",
+    id: "journey_C07243F8AADDB594384BBF1CC16C13EA",
     why:
       "A single-stop journey: two stops, one ridden interval. The whole time " +
       "budget goes to one hop and the interval split has nothing to split, " +
       "so t0/t1 must land exactly on 0 and the duration.",
   },
   {
-    id: "20260730_06_osaka_loop",
+    id: "journey_475F1E0ED575D680352459093F852ED6",
     why:
       "大阪環状線 — a loop. The head comes back to within a few hundred " +
       "metres of where it started, so a port that identifies a position by " +
       "proximity rather than by arc distance answers plausibly and wrongly.",
   },
   {
-    id: "20260721_08_asoboy3",
+    id: "journey_02C494EB5E72DE2FE0D3E5BC7D303309",
     why:
       "The longest DWELL in the store: 16 minutes at 立野, which is also a " +
       "switchback — the train reverses there. It proves the point the " +
@@ -104,7 +104,7 @@ const CASES = [
       "nothing else.",
   },
   {
-    id: "20260703_01_haruka",
+    id: "journey_A9554752F257CDA52831A6C0EED248AF",
     why:
       "37 ridden intervals, 4 stations: everything between 関西空港 and " +
       "新大阪 is pass_through. The pass_through exclusion at scale — and the " +
@@ -112,14 +112,14 @@ const CASES = [
       "list and membership of the HOP list are different questions.",
   },
   {
-    id: "20260713_06_hayabusa27",
+    id: "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0",
     why:
       "824.2 km up the 東北新幹線: the second journey to hit the T_MAX " +
       "duration clamp, and the one showing the clamp is on duration alone — " +
       "its zoom is not at Z_MIN, so the two laws are still separate.",
   },
   {
-    id: "20260729_05_sunrise_izumo",
+    id: "journey_F29762068C2DDB4CD79CF4AF30B29529",
     why:
       "The Sunrise: the LONGEST journey in the store (825.7 km), the most " +
       "intervals (216), the most vertices (10 954), 203 pass_through stops " +
@@ -133,7 +133,7 @@ const CASES = [
 ];
 
 /** The loop the synthetic feature lists are edited out of. */
-const SYNTHETIC_BASE_ID = "20260730_06_osaka_loop";
+const SYNTHETIC_BASE_ID = "journey_475F1E0ED575D680352459093F852ED6";
 
 // ── exporting the closure ───────────────────────────────────────────────
 //

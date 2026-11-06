@@ -15,7 +15,7 @@ final class JourneyTranslationUITests: XCTestCase {
         assertTranslationSwitchValue("0", toggle: toggle, in: app)
         app.buttons["utilityCloseButton"].tap()
 
-        let row = app.buttons["journeyRow-20260703_01_haruka"]
+        let row = app.buttons["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         XCTAssertTrue(row.label.contains("はるか38号"))
         XCTAssertFalse(row.label.contains("Haruka 38"))
@@ -45,10 +45,10 @@ final class JourneyTranslationUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.tab] = "search"
-        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.query] = "journey_A9554752F257CDA52831A6C0EED248AF"
         app.uiTestLaunch[.stage] = "expanded"
         UITestLaunchSupport.launch(app)
-        XCTAssertTrue(app.buttons["journeyRow-20260703_01_haruka"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].waitForExistence(timeout: 30))
         return app
     }
 
@@ -145,7 +145,7 @@ final class JourneyTranslationUITests: XCTestCase {
         XCTAssertTrue(close.waitForExistence(timeout: 8))
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 8))
-        let row = app.buttons["journeyRow-20260703_01_haruka"]
+        let row = app.buttons["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"]
         XCTAssertTrue(row.waitForExistence(timeout: 15))
         openOfficialNameEditor(in: app)
         XCTAssertTrue(english.waitForExistence(timeout: 8))
@@ -160,22 +160,22 @@ final class JourneyTranslationUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.tab] = "search"
-        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.query] = "journey_A9554752F257CDA52831A6C0EED248AF"
         app.uiTestLaunch[.stage] = "expanded"
         UITestLaunchSupport.launch(app)
-        XCTAssertTrue(app.buttons["journeyRow-20260703_01_haruka"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].waitForExistence(timeout: 30))
         return app
     }
 
     private func openOfficialNameEditor(in app: XCUIApplication) {
-        let row = app.buttons["journeyRow-20260703_01_haruka"]
+        let row = app.buttons["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"]
         XCTAssertTrue(row.waitForExistence(timeout: 30))
         let reachable = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "hittable == true"), object: row)
         XCTAssertEqual(XCTWaiter.wait(for: [reachable], timeout: 8), .completed)
         row.tap()
         XCTAssertTrue(app.descendants(matching: .any)
-            .matching(identifier: "selectedJourney-20260703_01_haruka").firstMatch.waitForExistence(timeout: 8))
+            .matching(identifier: "selectedJourney-journey_A9554752F257CDA52831A6C0EED248AF").firstMatch.waitForExistence(timeout: 8))
         let edit = app.buttons["journeyMenuEdit"]
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
         XCTAssertTrue(edit.isHittable)
@@ -261,9 +261,9 @@ final class JourneyTranslationUITests: XCTestCase {
         app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         app.uiTestLaunch[.sample] = "train-store"
-        app.uiTestLaunch[.select] = "20260703_01_haruka"
+        app.uiTestLaunch[.select] = "journey_A9554752F257CDA52831A6C0EED248AF"
         app.uiTestLaunch[.tab] = "search"
-        app.uiTestLaunch[.query] = "20260703_01_haruka"
+        app.uiTestLaunch[.query] = "journey_A9554752F257CDA52831A6C0EED248AF"
         app.uiTestLaunch[.stage] = "expanded"
         app.uiTestLaunch[.sheet] = sheet
         UITestLaunchSupport.launch(app)

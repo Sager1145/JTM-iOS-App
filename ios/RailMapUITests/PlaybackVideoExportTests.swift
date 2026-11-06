@@ -43,7 +43,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         // One bundled, single-source-line journey; asynchronous route arrival
         // must not silently select a different sample for another test.
         app.uiTestLaunch[.playbackTrainId] =
-            "20260703_02_tokaido_shinkansen_hikari_kodama"
+            "journey_923A26BB27C37BDF1717F1E4F21D5AF2"
         UITestLaunchSupport.launch(app)
 
         let pauseResume = element("playbackPauseResume", in: app)
@@ -114,7 +114,7 @@ final class PlaybackVideoExportTests: XCTestCase {
         // One bundled, single-source-line journey; asynchronous route arrival
         // must not silently select a different sample for another test.
         app.uiTestLaunch[.playbackTrainId] =
-            "20260703_02_tokaido_shinkansen_hikari_kodama"
+            "journey_923A26BB27C37BDF1717F1E4F21D5AF2"
         UITestLaunchSupport.launch(app)
 
         let pauseResume = element("playbackPauseResume", in: app)

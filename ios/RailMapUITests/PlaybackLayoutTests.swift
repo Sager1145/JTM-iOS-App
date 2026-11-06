@@ -75,7 +75,7 @@ final class PlaybackLayoutTests: XCTestCase {
         // Match the video regression's explicit, longer surveyed journey;
         // asynchronous first-ready routes can finish before the hit checks.
         app.uiTestLaunch[.playbackTrainId] =
-            "20260703_02_tokaido_shinkansen_hikari_kodama"
+            "journey_923A26BB27C37BDF1717F1E4F21D5AF2"
         if ProcessInfo.processInfo.environment[UITestLaunchConfiguration.Key.playbackHitProbe.rawValue] == "1" {
             app.uiTestLaunch[.playbackHitProbe] = "1"
         }

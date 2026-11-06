@@ -331,6 +331,7 @@ struct TravelDirectionTests {
     private func stored(_ id: String) throws -> Train {
         let url = try PortFixtures.repositoryRoot().appending(path: "app/data/train-store.json")
         let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
-        return try #require(store.trains.first { $0.id == id })
+        let bundled = SampleRideID.current(id)
+        return try #require(store.trains.first { $0.id == bundled })
     }
 }

@@ -14,7 +14,7 @@ final class RailMapUITests: XCTestCase {
 
         for stage in ["medium", "expanded"] {
             let app = launch(tab: "all", stage: stage, sample: "train-store")
-            XCTAssertTrue(element("journeyRow-20260703_01_haruka", in: app)
+            XCTAssertTrue(element("journeyRow-journey_A9554752F257CDA52831A6C0EED248AF", in: app)
                 .waitForExistence(timeout: 20))
             let date = element("journeyFilterButton", in: app)
             XCTAssertTrue(date.isHittable)
@@ -40,7 +40,7 @@ final class RailMapUITests: XCTestCase {
 
             let viewport = element("workspaceMenuViewport", in: app)
             let tabs = app.tabBars.firstMatch
-            let last = element("journeyRow-20260703_03_tokaido_main_local", in: app)
+            let last = element("journeyRow-journey_A3CFCBD90A222CC4066ACAF20A6C06C2", in: app)
             for _ in 0..<6 {
                 if last.exists {
                     let frame = last.frame
@@ -353,7 +353,7 @@ final class RailMapUITests: XCTestCase {
 #if !targetEnvironment(macCatalyst)
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
         let app = launch(tab: "all", stage: "compact",
-                         selectedJourney: "20260703_01_haruka", sample: "train-store",
+                         selectedJourney: "journey_A9554752F257CDA52831A6C0EED248AF", sample: "train-store",
                          hiddenLayers: "terminals", mapGestures: true)
         let title = app.descendants(matching: .any).matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "selectedJourney-")).firstMatch
@@ -675,15 +675,15 @@ final class RailMapUITests: XCTestCase {
             tab: "all", stage: "expanded", sample: "train-store")
 
         for id in [
-            "20260703_01_haruka",
-            "20260703_02_tokaido_shinkansen_hikari_kodama",
+            "journey_A9554752F257CDA52831A6C0EED248AF",
+            "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
         ] {
             let row = element("journeyRow-\(id)", in: app)
             XCTAssertTrue(
                 row.waitForExistence(timeout: 20),
                 "The bundled journey \(id) never appeared in All Journeys.")
             XCTAssertFalse(row.label.contains("stops"), "The list card should contain ticket information only.")
-            if id == "20260703_01_haruka" {
+            if id == "journey_A9554752F257CDA52831A6C0EED248AF" {
                 XCTAssertTrue(row.label.contains("16:14"))
                 XCTAssertTrue(row.label.contains("17:06"))
                 XCTAssertFalse(row.label.contains("阪和線"))
@@ -714,7 +714,7 @@ final class RailMapUITests: XCTestCase {
         // Exercise the short same-line Mishima–Numazu journey. The primary
         // action assertion below prevents a partial route from standing in
         // for the actual Locate action.
-        let id = "20260703_03_tokaido_main_local"
+        let id = "journey_A3CFCBD90A222CC4066ACAF20A6C06C2"
         let row = element("journeyRow-\(id)", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 20))
         row.tap()
@@ -770,7 +770,7 @@ final class RailMapUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
         let app = launch(tab: "all", stage: "expanded", sample: "train-store", mapGestures: true)
         let header = element("panelHeader", in: app)
-        let row = element("journeyRow-20260703_01_haruka", in: app)
+        let row = element("journeyRow-journey_A9554752F257CDA52831A6C0EED248AF", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 20))
         let originalTop = header.frame.minY
         XCTAssertLessThan(originalTop, app.frame.height * 0.25)
@@ -778,7 +778,7 @@ final class RailMapUITests: XCTestCase {
         for _ in 0..<2 {
             row.tap()
             let close = element("journeyBackToList", in: app)
-            let title = element("selectedJourney-20260703_01_haruka", in: app)
+            let title = element("selectedJourney-journey_A9554752F257CDA52831A6C0EED248AF", in: app)
             XCTAssertTrue(close.waitForExistence(timeout: 8))
             XCTAssertTrue(close.isHittable)
             XCTAssertGreaterThan(title.frame.minY, app.frame.height * 0.5,
@@ -808,7 +808,7 @@ final class RailMapUITests: XCTestCase {
         XCTAssertTrue(header.waitForExistence(timeout: 8))
         let title = header.label
         let height = header.frame.height
-        for id in ["20260703_01_haruka", "20260703_02_tokaido_shinkansen_hikari_kodama"] {
+        for id in ["journey_A9554752F257CDA52831A6C0EED248AF", "journey_923A26BB27C37BDF1717F1E4F21D5AF2"] {
             let row = element("journeyRow-\(id)", in: app)
             XCTAssertTrue(row.waitForExistence(timeout: 20))
             row.tap()
@@ -832,7 +832,7 @@ final class RailMapUITests: XCTestCase {
         try XCTSkipUnless(UIDevice.current.userInterfaceIdiom == .phone)
         XCUIDevice.shared.orientation = .portrait
         let app = launch(tab: "all", stage: "medium", sample: "train-store")
-        let id = "20260703_01_haruka"
+        let id = "journey_A9554752F257CDA52831A6C0EED248AF"
         let row = element("journeyRow-\(id)", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 20))
         row.tap()

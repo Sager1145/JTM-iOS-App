@@ -592,15 +592,15 @@ function taiwanRides(twSections, matched) {
   const add = (id, why, features, train) => trains.push({ id, why, features, train });
 
   add(
-    "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+    "journey_5C3C741549CF09E20FE4CC4F7389B758",
     "Real solver output on the Taiwanese package — a country whose buckets are exclusive, with no JR-style union to record.",
-    matchedRouteFeatures(matched, "20260802_01_taoyuan_airport_mrt_express_t2_taipei"),
+    matchedRouteFeatures(matched, "journey_5C3C741549CF09E20FE4CC4F7389B758"),
     { train_type: "直達車", date: "2026-08-02", stops: RIDDEN_STOPS },
   );
   add(
-    "20260813_01_star_of_taiwan_round_island_loop",
+    "journey_C929D1DB4BBEDD1ED71B9C4885026D78",
     "Real solver output for the round-island loop: the ride that makes 臺鐵 coverage move.",
-    matchedRouteFeatures(matched, "20260813_01_star_of_taiwan_round_island_loop"),
+    matchedRouteFeatures(matched, "journey_C929D1DB4BBEDD1ED71B9C4885026D78"),
     { train_type: "自強", date: "2026-08-13", stops: RIDDEN_STOPS },
   );
   add(

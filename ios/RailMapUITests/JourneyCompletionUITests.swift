@@ -83,7 +83,7 @@ final class JourneyCompletionUITests: XCTestCase {
         app.uiTestLaunch[.sample] = "train-store"
         app.uiTestLaunch[.query] = "haruka"
         UITestLaunchSupport.launch(app)
-        let row = app.descendants(matching: .any)["journeyRow-20260703_01_haruka"].firstMatch
+        let row = app.descendants(matching: .any)["journeyRow-journey_A9554752F257CDA52831A6C0EED248AF"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 40))
         row.press(forDuration: 1)
         let info = app.buttons["Journey information"]
@@ -103,7 +103,7 @@ final class JourneyCompletionUITests: XCTestCase {
         XCTAssertTrue(reveal(response, in: form, app: app, scrolling: .up))
         tapVisible(response, in: form, app: app)
         response.typeText("""
-        {"trains":[{"id":"20260703_01_haruka","sources":[{"url":"https://example.com/timetable","explanation":"UI test fixture"}],"intermediate_stops":[{"after_index":0,"name":"Review stop A","arrival":"16:15","departure":"16:15"},{"after_index":0,"name":"Review stop B","arrival":"16:16","departure":"16:16"}]}]}
+        {"trains":[{"id":"journey_A9554752F257CDA52831A6C0EED248AF","sources":[{"url":"https://example.com/timetable","explanation":"UI test fixture"}],"intermediate_stops":[{"after_index":0,"name":"Review stop A","arrival":"16:15","departure":"16:15"},{"after_index":0,"name":"Review stop B","arrival":"16:16","departure":"16:16"}]}]}
         """)
         let preview = app.buttons["aiCompletionPreview"]
         XCTAssertTrue(reveal(preview, in: form, app: app, scrolling: .up))
