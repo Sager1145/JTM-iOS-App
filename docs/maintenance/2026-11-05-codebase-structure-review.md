@@ -61,7 +61,7 @@ Verification: an incremental build of the app and RailDiagnostics (after `xcodeg
   - `Support/`: EditorLaunchSupport, UITestLaunchSupport
   - `App/`: RailMapUITests, MenuStressUITests, ReloadAllUITests, AppTypographyPolicyTests, ConsoleSweepTests
   - `Workspace/`: WorkspaceEditingTests
-  - `Map/`: BasemapRendering, MapCameraIntent, MapDetailLevel, MapLargeDataset, MapLayerToggle, MapZoomPerformance, RouteStress, StationPresentation, RefactorReleaseMemory, MapIndependentRailPrototype
+  - `Map/`: BasemapRendering, MapCameraIntent, MapDetailLevel, MapLargeDataset, MapLayerToggle, MapZoomPerformance, RouteStress, StationPresentation, RefactorReleaseMemory (MapIndependentRailPrototypeUITests is deleted by integration-fixes; not moved here)
   - `Journeys/`: JourneyCompletion, JourneyGroup, JourneyTranslation, LongJourneyDetail
   - `JourneyEditor/`: JourneySave, NewTrip, RailwayRouteEntry, StopDateTime, ThroughService
   - `Playback/`, `Statistics/`, `Sharing/`, `Timetable/`: the matching files
@@ -140,7 +140,6 @@ This is the wave most likely to conflict with in-flight tooling work, so it land
 | Reviewed-timetable normalizers and their tests | A live regenerator; see Wave E. |
 | `ios/Resources/` (136) | All bundled by `copy-rail-packages.sh` (badge rasters at :180, `Localizable.xcstrings` at :237). |
 | `RailAlignmentInspector/Resources/tabata-reference.geojson` | Loaded at `InspectorModel.swift:182`. |
-| `MapIndependentRailPrototype` (+ scene, homography, ~770 lines, DEBUG) and its UI test | Test-only, but it has 19 hooks in the Map production path (audit:562). Removing it is a refactor; see follow-ups. |
 | `RefactorReleaseMemoryUITests`, `ConsoleSweepTests` | Live regression guards, cited by `docs/ui-reorganization.md` and by app comments. |
 | `docs/specs/REFACTOR_FOR_SWIFT_FORK_PROMPT.md`, `JRM_FLIGHTY_UI_REFACTOR_SPEC.md` | Cited as contract sources in `CompactPackage.swift:6`, `copy-rail-packages.sh:6` and five presentation-resolver comments. |
 | `docs/reference/railway-identity-phase0-freeze.md` | Documents `app/data/registry/phase0-freeze.json`, which `mint-registry.mjs` and `validate-registry.mjs` read. |
@@ -164,8 +163,8 @@ These Finder/iCloud copies exist only in `/Users/sager/Documents/GitHub/JTM-iOS-
 
 ## 5. Follow-ups (not moves or deletions)
 
-1. **`ios/RailMapUITests/TimetableDiscoveryUITests.swift:70` is broken.** It queries `newTripDepartureDate`, which was removed from the app in 057ffe265. The test needs updating; that's a behavior change to the test.
-2. **`MapIndependentRailPrototype`.** Decide whether to retire the DEBUG prototype and its 19 Map hooks together with its UI test. This is a refactor.
+1. **`TimetableDiscoveryUITests.swift:70` is not stale: no fix is needed.** The scout reported `newTripDepartureDate` as missing because no literal string matches it. The ID is composed at runtime: `JourneyEditorView.swift:1096` passes `identifier: "newTripDeparture"` to `TypedDateTimeField`, which tags its date `TextField` with `"\(identifier)Date"` (`EditorDateTimeFields.swift:345`). The same file's `setDeparture` helper relies on that pattern.
+2. **`MapIndependentRailPrototype`: integration-fixes owns the deletion.** That branch (`claude/adoring-moser-80ec3b`) deletes the prototype file, its UI test and its pbxproj and source-ownership entries, so none of it is in these waves. The "19 Map hooks" in audit:562 are already gone on the current base. `git grep` finds no reference to the prototype, `RAILMAP_RUN_INDEPENDENT_RAIL_PROTOTYPE` or `MapProjectedRailScene`/`MapRailHomography` anywhere in `ios/RailMap` outside `Diagnostics/`. Two files are used only by the prototype: `Diagnostics/MapProjectedRailScene.swift` and `Diagnostics/MapRailHomography.swift`. After that branch lands: if they still exist, delete them in **Wave A2**, regenerate the RailDiagnostics xcodeproj, which lists both explicitly at pbxproj:85 and :232, and mark audit:562 as resolved.
 3. **Website repo follow-ups:**
    - Confirm whether `app/data/sample-*audit*.json` and `app/scripts/samples/*` are still needed.
    - Clean the `app/public/rail/* 2.json` duplicates in the website checkout.
