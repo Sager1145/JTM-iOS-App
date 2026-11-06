@@ -11,11 +11,10 @@ struct DirectionalAlignmentSelectionTests {
 
     static let cases: [Case] = [
         .init(base: "jp-九州旅客鉄道-日豊線", pair: "p1", forward: false),
-        .init(base: "jp-九州旅客鉄道-鹿児島線", pair: "p1", forward: false),
         .init(base: "jp-北海道旅客鉄道-函館線", pair: "p1", forward: true),
         .init(base: "jp-東日本旅客鉄道-上越線", pair: "p1", forward: false),
         .init(base: "jp-東日本旅客鉄道-上越線", pair: "p2", forward: false),
-        .init(base: "jp-東日本旅客鉄道-奥羽線", pair: "p1", forward: true),
+        .init(base: "jp-東日本旅客鉄道-奥羽線", pair: "p1", forward: false),
         .init(base: "jp-東日本旅客鉄道-東北線", pair: "p2", forward: false),
         .init(base: "jp-東海旅客鉄道-東海道線-2", pair: "p1", forward: true),
         .init(base: "jp-西日本旅客鉄道-北陸線", pair: "p1", forward: true),
@@ -60,6 +59,44 @@ struct DirectionalAlignmentSelectionTests {
         }
     }
 
+    @Test("Matsubara tunnel carries only down trains: p1 allows 白沢→陣場, the parent 陣場→白沢")
+    func ouMatsubaraTunnelDirection() throws {
+        // https://ja.wikipedia.org/wiki/矢立峠 and OSM way 487965538.
+        let package = try PortFixtures.package(country: "jp")
+        let base = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-奥羽線" })
+        let pair = try #require(package.lines.first { $0.id == "jp-東日本旅客鉄道-奥羽線-p1" })
+        #expect(pair.stations.map(\.name) == ["陣場", "白沢"])
+        // Stored order is 陣場→白沢 (+1); 白沢→陣場 is -1.
+        #expect(RailwayDirection.allowedDirections(for: pair, intervalIndex: 0) == [-1])
+        let jin = try #require(base.stations.firstIndex { $0.name == "陣場" })
+        let shira = try #require(base.stations.firstIndex { $0.name == "白沢" })
+        #expect(jin < shira)
+        #expect(RailwayDirection.allowedDirections(for: base, intervalIndex: jin) == [1])
+        let jinCode = try #require(pair.stations.first).id
+        let shiraCode = try #require(pair.stations.last).id
+        let down = RailwayRouteChoices.choices(package: package, originCode: shiraCode, destinationCode: jinCode)
+        let up = RailwayRouteChoices.choices(package: package, originCode: jinCode, destinationCode: shiraCode)
+        #expect(down.contains { $0.lineIDs.contains(pair.id) })
+        #expect(!up.contains { $0.lineIDs.contains(pair.id) })
+        #expect(up.contains { $0.lineIDs.contains(base.id) })
+        #expect(!down.contains { $0.lineIDs.contains(base.id) })
+    }
+
+    @Test("Kagoshima 植木–田原坂 is unassigned: both rows allow either direction in the span")
+    func kagoshimaUnassigned() throws {
+        let package = try PortFixtures.package(country: "jp")
+        let base = try #require(package.lines.first { $0.id == "jp-九州旅客鉄道-鹿児島線" })
+        let pair = try #require(package.lines.first { $0.id == "jp-九州旅客鉄道-鹿児島線-p1" })
+        #expect(pair.alignmentDirection == "unassigned")
+        #expect(base.alignmentPairs.first { $0.with == pair.id }?.direction == "unassigned")
+        #expect(RailwayDirection.allowedDirections(for: pair, intervalIndex: 0) == [-1, 1])
+        let start = try #require(base.stations.firstIndex { $0.id == pair.stations.first?.id })
+        let end = try #require(base.stations.firstIndex { $0.id == pair.stations.last?.id })
+        for index in min(start, end)..<max(start, end) {
+            #expect(RailwayDirection.allowedDirections(for: base, intervalIndex: index) == [-1, 1])
+        }
+    }
+
     @Test("Endpoint order selects directional tracks inside a longer journey", arguments: cases)
     func endpointOnlyFullSpan(item: Case) throws {
         let package = try PortFixtures.package(country: "jp")
@@ -88,7 +125,7 @@ struct DirectionalAlignmentSelectionTests {
         }
     }
 
-    @Test("All nine sourced pairs follow official direction independently of stored station order",
+    @Test("All eight sourced pairs follow official direction independently of stored station order",
           arguments: cases)
     func packageChoices(item: Case) throws {
         let package = try PortFixtures.package(country: "jp")
@@ -197,12 +234,12 @@ struct DirectionalAlignmentSelectionTests {
     func unassignedDirections() throws {
         let package = try PortFixtures.package(country: "jp")
         let pairs = package.lines.filter { $0.alignmentOf != nil && $0.alignmentDirection == "unassigned" }
-        #expect(pairs.count == 7)
+        #expect(pairs.count == 8)
         let northboundOsakiID = "jp-東日本旅客鉄道-大崎支線-p1"
         for pair in pairs {
             // Osaki's reviewed northbound track has a sourced reverse traversal,
             // independently of the unassigned physical up/down classification.
-            // The original six pairs have no traversal restriction.
+            // The other seven pairs have no traversal restriction.
             #expect(pair.permittedTraversal == (pair.id == northboundOsakiID ? "reverse" : nil))
             let first = try #require(pair.stations.first)
             let last = try #require(pair.stations.last)

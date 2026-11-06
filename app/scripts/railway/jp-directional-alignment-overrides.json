@@ -44,9 +44,10 @@
             "009670",
             "009664"
           ],
-          "alignmentDirection": "down",
+          "alignmentDirection": "unassigned",
           "alignmentSource": "https://ja.wikipedia.org/wiki/鹿児島本線",
-          "mainAlignmentDirection": "up"
+          "mainAlignmentDirection": "unassigned",
+          "alignmentNote": "Set to unassigned until a second source confirms the direction; only OSM supports the previous inversion, so geometry decides."
         }
       ]
     },
@@ -134,9 +135,15 @@
             "000644",
             "000654"
           ],
-          "alignmentDirection": "up",
+          "alignmentDirection": "down",
           "alignmentSource": "https://ja.wikipedia.org/wiki/矢立峠",
-          "mainAlignmentDirection": "down"
+          "mainAlignmentDirection": "up",
+          "primaryAlignmentSource": {
+            "url": "https://www.openstreetmap.org/way/487965538",
+            "publisher": "OpenStreetMap",
+            "retrieved": "2026-11-06",
+            "evidence": "Way 487965538 is the 2,404 m 松原トンネル, lying on this pair row (0 m) and 1,113 m from the parent row. 矢立峠 (https://ja.wikipedia.org/wiki/矢立峠) states 松原トンネル carries only 下り trains between 白沢 and 陣場, so p1 runs down (白沢→陣場) and the parent runs up (陣場→白沢)."
+          }
         }
       ]
     },
