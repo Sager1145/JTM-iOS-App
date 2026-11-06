@@ -7,6 +7,13 @@ import RailCore
 @MainActor
 final class MapStationLabelCoordinator {
     private var markerCache: (key: Int, settings: MapRideMarkers.Settings, drawn: [MapRideMarkers.Drawn])?
+    /// Each ride's own records, so a deck change rebuilds only the rides that
+    /// changed. Valid for one `settings` and one stroke generation: stroke
+    /// references move with the network's lines and stations.
+    private var rideRecordCache: (
+        settings: MapRideMarkers.Settings, strokeGeneration: Int,
+        rides: [String: (identity: Int, records: MapRideMarkers.RideRecords)]
+    )?
     private var selectedNameCache: (key: String, settings: MapRideMarkers.Settings, keys: Set<String>)?
     /// One timer per quiet period; each camera frame only moves its deadline.
     private let settleTimer = MapDeadlineTimer(delay: .milliseconds(32))
@@ -18,8 +25,12 @@ final class MapStationLabelCoordinator {
     private static let passMinInterval = Duration.milliseconds(100)
     private static let movingBudget = Duration.milliseconds(8)
 
+    /// `geometryIdentity` names the whole deck and `rideIdentity` each ride;
+    /// `strokeGeneration` is the network generation the stroke references
+    /// were resolved against.
     func records(
         for rides: [RiddenRouteStore.DrawnRide], geometryIdentity: Int,
+        rideIdentity: (RiddenRouteStore.DrawnRide) -> Int?, strokeGeneration: Int,
         settings: MapRideMarkers.Settings,
         strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
     )
@@ -28,7 +39,26 @@ final class MapStationLabelCoordinator {
         if let markerCache, markerCache.key == geometryIdentity, markerCache.settings == settings {
             return markerCache.drawn
         }
-        let drawn = MapRideMarkers.drawn(rides: rides, settings: settings, strokeRef: strokeRef)
+        // Ids name the cache entries, so a deck that repeats one is not cached.
+        let unique = Set(rides.map(\.id)).count == rides.count
+        var previous: [String: (identity: Int, records: MapRideMarkers.RideRecords)] = [:]
+        if unique, let cache = rideRecordCache, cache.settings == settings,
+           cache.strokeGeneration == strokeGeneration {
+            previous = cache.rides
+        }
+        var next: [String: (identity: Int, records: MapRideMarkers.RideRecords)] = [:]
+        let perRide = rides.map { ride -> MapRideMarkers.RideRecords in
+            let identity = unique ? rideIdentity(ride) : nil
+            if let identity, let cached = previous[ride.id], cached.identity == identity {
+                next[ride.id] = cached
+                return cached.records
+            }
+            let records = MapRideMarkers.rideRecords(of: ride, settings: settings, strokeRef: strokeRef)
+            if let identity { next[ride.id] = (identity, records) }
+            return records
+        }
+        rideRecordCache = (settings, strokeGeneration, next)
+        let drawn = MapRideMarkers.drawn(assembling: perRide)
         markerCache = (geometryIdentity, settings, drawn)
         return drawn
     }
@@ -94,6 +124,7 @@ final class MapStationLabelCoordinator {
 
     func invalidateGeometry() {
         markerCache = nil
+        rideRecordCache = nil
         selectedNameCache = nil
     }
 

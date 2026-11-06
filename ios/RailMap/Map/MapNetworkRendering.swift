@@ -190,6 +190,20 @@ final class MapNetworkGeometryCache {
         }
     }
 
+    /// ``retainRidePolylines(withKeys:)`` restricted to the polylines of
+    /// `rideIDs`; every other ride's polylines are left as they are.
+    func retainRidePolylines(ofRides rideIDs: Set<String>, withKeys keys: Set<String>) {
+        guard !rideIDs.isEmpty else { return }
+        for key in Array(entries.keys) {
+            if let kept = entries[key]?.ridePolylines.filter({ entry in
+                keys.contains(entry.key)
+                    || !rideIDs.contains(String(entry.key.prefix { $0 != "|" }))
+            }) {
+                entries[key]?.ridePolylines = kept
+            }
+        }
+    }
+
     func retainLineBuilds(withIDs ids: Set<String>) {
         for key in Array(entries.keys) {
             if let kept = entries[key]?.strokeBuilds.filter({ ids.contains($0.key) }) {
