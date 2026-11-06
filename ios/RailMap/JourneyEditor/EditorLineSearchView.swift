@@ -23,6 +23,11 @@ struct EditorLineSearchView: View {
     @State private var userEdited = false
     @State private var loadError: String?
     @State private var snapshot = SearchSnapshot()
+    /// The shared engine's index for this region; nil until built.
+    @State private var searchIndex: SearchIndex?
+    /// Set when the shared index failed to build; the simple name filter stays in use.
+    @State private var indexError: String?
+    @State private var languageTask: Task<Void, Never>?
 
     private struct OperatorLineGroup: Identifiable {
         var id: String
@@ -52,17 +57,23 @@ struct EditorLineSearchView: View {
         let candidates = resolvedStation
             ? regionLines.filter { stationLineIDs.contains($0.id) } : regionLines
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        let prepared = SearchFold.PreparedQuery(needle)
-        let identity = RegistryIdentityCache.identity(forRegion: region.code)
-        let operatorIDs = identity?.operatorIDs(matchingQuery: needle) ?? []
-        let matches = candidates.filter { line in
-            if !operatorIDs.isEmpty, let identity {
-                return line.operatorIDs.contains { packageOperator in
-                    let name = operatorNameByID[packageOperator] ?? ""
-                    return !Set(identity.operatorIDs(forCatalogName: name)).isDisjoint(with: operatorIDs)
-                }
+        let matches: [CatalogLine]
+        if needle.isEmpty {
+            matches = candidates
+        } else if let searchIndex {
+            let response = searchIndex.query(
+                needle, scope: .lines,
+                context: SearchContext(
+                    regionCode: region.code, lineIDs: resolvedStation ? stationLineIDs : [], limit: 100_000))
+            let ids = Set(response.results.filter { $0.entity.kind == .line }.map(\.entity.id))
+            matches = candidates.filter { ids.contains($0.id) }
+        } else {
+            // The index is loading or failed to build: filter by name, alias and operator.
+            let prepared = SearchFold.PreparedQuery(needle)
+            matches = candidates.filter { line in
+                let operatorFields = line.operatorIDs.compactMap { operatorNameByID[$0] }
+                return prepared.matches(fields: [line.name] + line.aliases + operatorFields)
             }
-            return needle.isEmpty || prepared.matches(fields: [line.name] + line.aliases)
         }
         let selected = regionLines.filter { selectedIDs.contains($0.id) }
         let conflicts = resolvedStation ? selected.filter { !stationLineIDs.contains($0.id) } : []
@@ -127,6 +138,11 @@ struct EditorLineSearchView: View {
                             }
                         }
                     }
+                    if let indexError {
+                        Section {
+                            Text(indexError).font(.footnote).foregroundStyle(.secondary)
+                        }
+                    }
                     if !snapshot.hasMatches {
                         Section {
                             Text(localization.text("ios.editor.noLineMatches"))
@@ -163,6 +179,8 @@ struct EditorLineSearchView: View {
                 regionLines = loaded.lines(in: region.code)
                 catalog = loaded
                 refreshSnapshot()
+                await loadSearchIndex()
+                refreshSnapshot()
             } catch {
                 guard !Task.isCancelled else { return }
                 loadError = error.localizedDescription
@@ -170,7 +188,16 @@ struct EditorLineSearchView: View {
         }
         .onChange(of: query) { _, _ in refreshSnapshot() }
         .onChange(of: stationCodes) { _, _ in refreshSnapshot() }
-        .onChange(of: localization.language) { _, _ in refreshSnapshot() }
+        .onChange(of: localization.language) { _, _ in
+            refreshSnapshot()
+            languageTask?.cancel()
+            languageTask = Task {
+                await loadSearchIndex()
+                guard !Task.isCancelled else { return }
+                refreshSnapshot()
+            }
+        }
+        .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -180,6 +207,22 @@ struct EditorLineSearchView: View {
                 }
                 .accessibilityIdentifier("rideEditorLinesDone")
             }
+        }
+    }
+
+    /// The region's shared index, rebuilt only when the language's readings changed.
+    private func loadSearchIndex() async {
+        SharedSearchEngine.shared.prepare(
+            regionCode: region.code, readings: localization.stationSearchNames(region: region))
+        do {
+            let index = try await SharedSearchEngine.shared.engine.index(regionCode: region.code)
+            guard !Task.isCancelled else { return }
+            searchIndex = index
+            indexError = nil
+        } catch {
+            guard !Task.isCancelled else { return }
+            searchIndex = nil
+            indexError = error.localizedDescription
         }
     }
 

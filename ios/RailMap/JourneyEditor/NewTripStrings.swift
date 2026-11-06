@@ -95,6 +95,28 @@ enum NewTripStrings {
             .ja: "これらの駅を結ぶ経路が複数あります。1つ選んでください",
             .en: "Multiple routes connect these stations — choose one",
         ],
+        "ios.newTrip.historicalNotice": [
+            .zhHans: "此行程使用了已停运的线路，将按 {date} 当时的路网进行核对。",
+            .zhHant: "此行程使用了已停駛的路線，將依 {date} 當時的路網進行核對。",
+            .ja: "この旅程には廃止された路線が含まれています。{date}当時の路線網で確認しています。",
+            .en: "This trip uses a line that has since closed. It is checked against the network as it was on {date}.",
+        ],
+        "ios.newTrip.historicalNoRoute": [
+            .zhHans: "{date} 当天没有线路连接这些车站。如果该线路已停运，请检查乘车日期，或在途中添加一个停靠站。",
+            .zhHant: "{date} 當天沒有路線連接這些車站。如果該路線已停駛，請檢查乘車日期，或在途中加入一個停靠站。",
+            .ja: "{date}にこれらの駅を結ぶ路線はありませんでした。路線が廃止されている場合は、乗車日を確認するか、途中の駅を追加してください。",
+            .en: "No line connected these stations on {date}. If the line has closed, check the date you rode it, or add a stop along the way.",
+        ],
+        "ios.newTrip.historicalOwnTrip": [
+            .zhHans: "请将已停运的部分另存为单独的行程，中途不加停靠站。",
+            .zhHant: "請將已停駛的部分另存為單獨的行程，途中不加停靠站。",
+            .ja: "廃止された区間は、途中の駅を入れずに別の旅程として保存してください。",
+            .en: "Save the closed part as its own trip, without stops along the way.",
+        ],
+        "ios.newTrip.showHistoricalLines": [
+            .zhHans: "在地图上显示历史线路", .zhHant: "在地圖上顯示歷史路線",
+            .ja: "地図に廃止路線を表示", .en: "Show historical lines on the map",
+        ],
         "ios.newTrip.corridorsHiddenByDate": [
             .zhHans: "部分路线因在该日期尚未开通而被隐藏。",
             .zhHant: "部分路線因在該日期尚未開通而被隱藏。",
@@ -190,10 +212,6 @@ enum NewTripStrings {
         ],
         "ios.newTrip.searchTitle": [
             .zhHans: "选择车站", .zhHant: "選擇車站", .ja: "駅を選択", .en: "Choose a station",
-        ],
-        "ios.newTrip.onlyCompany": [
-            .zhHans: "仅{company}", .zhHant: "僅{company}",
-            .ja: "{company}のみ", .en: "Only {company}",
         ],
         "ios.newTrip.fillDetails": [
             .en: "Fill in trip details", .ja: "行程の詳細を入力",
@@ -318,6 +336,58 @@ enum NewTripStrings {
         "ios.newTrip.enterByHand": [
             .en: "Enter the rest by hand", .ja: "残りを手入力する",
             .zhHant: "其餘手動填寫", .zhHans: "其余手动填写",
+        ],
+        "ios.newTrip.filterCompany": [
+            .en: "Company", .ja: "会社",
+            .zhHant: "公司", .zhHans: "公司",
+        ],
+        "ios.newTrip.filterLine": [
+            .en: "Line", .ja: "路線",
+            .zhHant: "路線", .zhHans: "线路",
+        ],
+        "ios.newTrip.filterClear": [
+            .en: "Clear filters", .ja: "絞り込みを解除",
+            .zhHant: "清除篩選", .zhHans: "清除筛选",
+        ],
+        "ios.newTrip.dateHint": [
+            .en: "YYYY-MM-DD", .ja: "年-月-日",
+            .zhHant: "年-月-日", .zhHans: "年-月-日",
+        ],
+        "ios.newTrip.dateForms": [
+            .en: "e.g. 2026-11-05, 11/05 or 1105", .ja: "例：2026-11-05、11/05、1105",
+            .zhHant: "例如 2026-11-05、11/05、1105", .zhHans: "例如 2026-11-05、11/05、1105",
+        ],
+        "ios.newTrip.dateInvalid": [
+            .en: "Not a date. Try 2026-11-05, 11/05 or 1105.", .ja: "日付として読めません。2026-11-05、11/05、1105 の形で入力してください。",
+            .zhHant: "無法辨識日期。請輸入 2026-11-05、11/05 或 1105。", .zhHans: "无法识别日期。请输入 2026-11-05、11/05 或 1105。",
+        ],
+        "ios.newTrip.timeInvalid": [
+            .en: "Not a time. Try 9:30 or 0930.", .ja: "時刻として読めません。9:30 または 0930 の形で入力してください。",
+            .zhHant: "無法辨識時間。請輸入 9:30 或 0930。", .zhHans: "无法识别时间。请输入 9:30 或 0930。",
+        ],
+        "ios.newTrip.openCalendar": [
+            .en: "Calendar", .ja: "カレンダー",
+            .zhHant: "月曆", .zhHans: "日历",
+        ],
+        "ios.newTrip.sectionTitle": [
+            .en: "Section {n} of {count}: {from} → {to}", .ja: "区間 {n}/{count}：{from} → {to}",
+            .zhHant: "第 {n}/{count} 段：{from} → {to}", .zhHans: "第 {n}/{count} 段：{from} → {to}",
+        ],
+        "ios.newTrip.sectionsToChoose": [
+            .en: "{count} sections still to choose before the stations are filled in", .ja: "あと {count} 区間を選ぶと、通過駅が入力されます",
+            .zhHant: "尚有 {count} 段需選擇，選完後會填入經過的車站", .zhHans: "还有 {count} 段需选择，选完后会填入经过的车站",
+        ],
+        "ios.newTrip.sectionNoRoute": [
+            .en: "No route", .ja: "経路なし",
+            .zhHant: "沒有路線", .zhHans: "没有路线",
+        ],
+        "ios.newTrip.sectionOptions": [
+            .en: "{count} options", .ja: "候補 {count} 件",
+            .zhHant: "{count} 個選項", .zhHans: "{count} 个选项",
+        ],
+        "ios.newTrip.didYouMean": [
+            .en: "Did you mean {text}?", .ja: "もしかして：{text}",
+            .zhHant: "您是不是要找：{text}", .zhHans: "您是不是要找：{text}",
         ],
     ]
 }

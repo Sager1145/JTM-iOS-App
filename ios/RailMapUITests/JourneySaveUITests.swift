@@ -102,6 +102,8 @@ final class JourneySaveUITests: XCTestCase {
         // Edit mode has no confirmation step. Leaving for a stop and coming
         // back is the same draft the confirmation screen used to round-trip.
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
+        // The stops sit above the details the group is part of.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: true))
         EditorUITestSupport.tap(origin, in: app)
         XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
         // The stop screen's back button, whatever its title.
@@ -127,6 +129,8 @@ final class JourneySaveUITests: XCTestCase {
 
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         XCTAssertTrue(app.buttons["newTripCancel"].waitForExistence(timeout: 30))
+        // The saved stops are listed below the route.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: false))
         EditorUITestSupport.tap(origin, in: app)
         let name = app.otherElements["rideEditorStopName"].textFields.firstMatch
         XCTAssertTrue(name.waitForExistence(timeout: 5))
@@ -207,6 +211,8 @@ final class JourneySaveUITests: XCTestCase {
         let row = app.buttons["newTripStation-\(lineID)-\(code)"]
         // Name search lists one row per line. A shared name can still sit below
         // earlier sections, so scroll the lazy list until that line's row exists.
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'newTripStation-'"))
+            .firstMatch.waitForExistence(timeout: 20), "\(query) must list station rows.")
         // Same scrolling as NewTripUITests: short drags through the lazy list,
         // since a station deep in a long result list mounts only on screen.
         var swipes = 0

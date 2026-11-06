@@ -283,6 +283,29 @@ Branch `claude/journey-editor-unify`. Paths are relative to `ios/RailMap/`.
 
 The saved record format is unchanged. A saved trip that is opened and saved without edits writes back the same record, except that an empty direction is inferred, as the old editor did. A header field (time, number, type, operator, ridden) is written back only when the reader changed it (`JourneyEditorSeed.swift`). A replanned route keeps the saved visits the new route still passes, with their clocks (`LocalJourneyAutofill.proposal` over the full saved stops).
 
-Removed with the second editor: manually adding, deleting and reordering stops (the route now comes from the map, and a stop along the way is a via), free-text origin and destination, the typed date field, the preferred-lines search, and the region and route-policy rows of the record section. The main map's draft pins are no longer published (`pins: []`), because the editor has its own map.
+Removed with the second editor: manually adding, deleting and reordering stops (the route now comes from the map, and a stop along the way is a via), free-text origin and destination, the typed date field, the preferred-lines search, and the region and route-policy rows of the record section. The main map's draft pins are no longer published (`pins: []`), because the editor has its own map. The detail sections (English name, section services, notes, visibility, group, colour, identifier) sit under one collapsed **More details** row.
+
+**Direction.** Travel direction (上り/下り) is read from the route, never typed:
+`TravelDirection.legs` (RailCore) gives each line stretch of a trip its own direction and the
+terminal it runs toward. It is computed for display and not stored. The editor shows it per
+leg in the Route section and as arrows on the map. The 方面 label is the reader's choice. It
+is stored in the record's existing `direction` field, which saved data already uses for such
+labels (for example "和光市・池袋"). The editor offers the line terminals and the trip's
+last stop as suggestions, and saves nothing until the reader picks one. A stored `up`/`down`
+value is treated as a direction, not a 方面, and is never rewritten. The manual Direction
+field and the inference on save are removed.
+
+Per-leg 方面 and platform letter suffixes are not stored. The record format has no per-section
+bound-for field, and `platform_number` is an integer. The importer's strict key check
+(`assertOnlyKeys`) is shared with the website, so a new key needs a website format change
+first.
+
+**Manual entry.** What no source filled is entered by hand in the editor's Trip details
+section, which counts what is still missing ("Still missing: vehicle type · 3 platforms").
+Vehicle type opens a picker that lists the applied timetable's own vehicle, then vehicle types
+the reader used on the same lines or the same train, then free text. Platforms are set with a
+badge on each stop row and on the departure and arrival rows. The badge opens a number pad
+(1–20, any other whole number, or Clear), with no screen per stop. The Fill in trip details
+sheet lists what is still missing after its sources and hands off to this entry.
 
 Identifiers: the editor keeps the `newTrip*` names for its chrome (`newTripForm`, `newTripSave`, `newTripCancel`), and kept detail controls keep their `rideEditor*` names. A changed draft now asks before Cancel, for new trips too.

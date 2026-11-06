@@ -671,6 +671,10 @@ public struct StationSearchQuery: Hashable, Sendable {
     public var eligibility: StationSearchEligibility
     public var lineIDs: Set<String>
     public var companyName: String?
+    /// Ranking signals handed to the shared engine's `SearchContext`.
+    public var recentPicks: [SearchEntityID] = []
+    public var rideCounts: [SearchEntityID: Int] = [:]
+    public var visibleRegion: SearchMapRect?
     /// Applied only when `needle` is non-empty. An empty needle is the line browser.
     public var sectionLimit: Int
     public var rowLimit: Int
@@ -814,7 +818,9 @@ public struct StationSearchIndex: Sendable {
         if !browsing {
             let answer = engine.query(
                 needle, scope: [.stations, .lines],
-                context: SearchContext(regionCode: regionCode, lineIDs: query.lineIDs, limit: 100_000))
+                context: SearchContext(
+                    regionCode: regionCode, recentPicks: query.recentPicks, rideCounts: query.rideCounts,
+                    visibleRegion: query.visibleRegion, lineIDs: query.lineIDs, limit: 100_000))
             response = answer
             for result in answer.results {
                 switch result.entity.kind {
@@ -1007,6 +1013,13 @@ extension EditorCatalog {
     public func stationSearchIndex(
         regionCode: String, extraNames: [String: [String]] = [:]
     ) -> StationSearchIndex {
+        stationSearchIndex(
+            regionCode: regionCode,
+            engine: SearchIndexBuilder.catalog(self, regionCode: regionCode, extraNames: extraNames))
+    }
+
+    /// The same picker index over an engine index built (and shared) elsewhere.
+    public func stationSearchIndex(regionCode: String, engine: SearchIndex) -> StationSearchIndex {
         let identity = RegistryIdentityCache.identity(forRegion: regionCode)
         let registryReady = identity.map { !$0.bundle.stations.isEmpty } ?? false
         let operatorsByID = Dictionary(
@@ -1038,7 +1051,6 @@ extension EditorCatalog {
                 header: header,
                 stations: stations))
         }
-        let engine = SearchIndexBuilder.catalog(self, regionCode: regionCode, extraNames: extraNames)
         return StationSearchIndex(regionCode: regionCode, engine: engine, lines: indexed)
     }
 

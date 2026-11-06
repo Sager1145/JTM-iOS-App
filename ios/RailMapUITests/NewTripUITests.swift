@@ -65,7 +65,9 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(edit.waitForExistence(timeout: 8))
         edit.tap()
         let pending = app.staticTexts["Route pending confirmation"]
-        XCTAssertTrue(EditorUITestSupport.reveal(pending, in: app), app.debugDescription)
+        // The saved-route row sits below Trip details, past four drags.
+        XCTAssertTrue(EditorUITestSupport.reveal(pending, in: app, maxDrags: 14, unmountedRowIsAbove: false),
+                      app.debugDescription)
         XCTAssertTrue(pending.waitForExistence(timeout: 10),
                       "An operational proposal without resolver proof must reload as pending.")
         let reopened = XCTAttachment(screenshot: app.screenshot())
@@ -177,7 +179,7 @@ final class NewTripUITests: XCTestCase {
         pickStation(field: "newTripDestination", query: "丸ノ内", code: "003390", in: app)
 
         let error = app.descendants(matching: .any)["newTripRouteError"]
-        XCTAssertTrue(reveal(error, in: app, timeout: 20))
+        XCTAssertTrue(reveal(error, in: app, timeout: 40))
         XCTAssertTrue(error.label.contains("赤坂見附"), error.label)
         XCTAssertFalse(app.buttons["newTripSave"].isEnabled,
                        "A disconnected pair must not be savable.")
@@ -259,6 +261,63 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(discard.waitForExistence(timeout: 5))
         discard.tap()
         XCTAssertTrue(app.buttons["newTripCancel"].waitForNonExistence(timeout: 8))
+    }
+
+    /// Company, then one of its lines, lists that line's stations in route
+    /// order, so a station is chosen without typing.
+    func testStationPickerFiltersByCompanyThenLine() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let origin = app.buttons["newTripOrigin"]
+        XCTAssertTrue(reveal(origin, in: app, upward: true))
+        XCTAssertTrue(waitForEnabled(origin, timeout: 20))
+        let previousLabel = origin.label
+        origin.tap()
+        let company = app.buttons["stationPickerCompanyFilter"]
+        XCTAssertTrue(company.waitForExistence(timeout: 20), app.debugDescription)
+        company.tap()
+        let jrEast = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS %@ OR label CONTAINS %@ OR label CONTAINS %@",
+            "JR East", "JR東日本", "東日本旅客鉄道")).firstMatch
+        // The menu lists every company of the region; scroll it to JR East.
+        let firstItem = app.buttons.matching(NSPredicate(format: "label == %@", "Abukuma Express")).firstMatch
+        _ = firstItem.waitForExistence(timeout: 8)
+        let menuFrame = firstItem.exists ? firstItem.frame : app.frame
+        var menuSwipes = 0
+        // Drag inside the menu itself; a drag outside it closes the menu.
+        let screen = app.coordinate(withNormalizedOffset: .zero)
+        let top = menuFrame.minY - app.frame.minY
+        let midX = menuFrame.midX - app.frame.minX
+        while !jrEast.waitForExistence(timeout: 0.5), menuSwipes < 25 {
+            screen.withOffset(CGVector(dx: midX, dy: top + 380))
+                .press(forDuration: 0.05, thenDragTo: screen.withOffset(CGVector(dx: midX, dy: top + 20)))
+            menuSwipes += 1
+        }
+        XCTAssertTrue(jrEast.exists, app.debugDescription)
+        jrEast.tap()
+        let line = app.buttons["stationPickerFilterLine-jp-東日本旅客鉄道-山手線"]
+        var swipes = 0
+        while !line.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 30 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.75))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+            swipes += 1
+        }
+        XCTAssertTrue(line.exists, app.debugDescription)
+        line.tap()
+        XCTAssertTrue(app.buttons["stationPickerLineFilter"].waitForExistence(timeout: 5))
+        attachScreenshot("filter-line-stations", app)
+        let osaki = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004135"]
+        swipes = 0
+        while !osaki.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 30 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.75))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+            swipes += 1
+        }
+        XCTAssertTrue(osaki.exists, "The line's stations must be listed without typing. \(app.debugDescription)")
+        osaki.tap()
+        let chosen = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label != %@", previousLabel), object: origin)
+        XCTAssertEqual(XCTWaiter.wait(for: [chosen], timeout: 8), .completed, origin.label)
     }
 
     func testMultipleCorridorsRequireChoice() {
@@ -521,7 +580,8 @@ final class NewTripUITests: XCTestCase {
         let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 30))
         XCTAssertEqual(ridden.value as? String, "0", "The saved future plan must reload unridden.")
-        ridden.tap()
+        // The row's middle is its label; only the switch itself toggles.
+        ridden.switches.firstMatch.tap()
         app.buttons["newTripSave"].tap()
         XCTAssertTrue(app.buttons["newTripSave"].waitForNonExistence(timeout: 20))
         assertSavedPassportCount(1, in: app)
@@ -543,11 +603,12 @@ final class NewTripUITests: XCTestCase {
         let ridden = app.switches["newTripRidden"]
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "0", "An untouched future plan starts unridden.")
-        ridden.tap()
+        // The row's middle is its label; only the switch itself toggles.
+        ridden.switches.firstMatch.tap()
         NewTripTimetableTestSupport.setDeparture(month: "October", day: 1, year: 2027, in: app)
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "1", "A reader-confirmed future ride stays confirmed after a date change.")
-        ridden.tap()
+        ridden.switches.firstMatch.tap()
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
         XCTAssertTrue(reveal(ridden, in: app, timeout: 8))
         XCTAssertEqual(ridden.value as? String, "0", "The reader's unridden choice also survives a past-date change.")
@@ -605,7 +666,8 @@ final class NewTripUITests: XCTestCase {
         expectsLabelChange: Bool = true, in app: XCUIApplication
     ) {
         let button = app.buttons[field]
-        XCTAssertTrue(reveal(button, in: app, upward: true), app.debugDescription)
+        // To sits below From: at large text sizes it starts below the fold.
+        XCTAssertTrue(reveal(button, in: app, upward: field != "newTripDestination"), app.debugDescription)
         XCTAssertTrue(waitForEnabled(button, timeout: 20), "\(field) stays disabled until the catalog loads.")
         button.tap()
         let search = app.searchFields.firstMatch
@@ -749,29 +811,17 @@ final class NewTripUITests: XCTestCase {
         return band.contains(frame)
     }
 
+    /// Types yesterday into the arrival's date field.
     private func moveArrivalToPreviousDay(in app: XCUIApplication) {
-        let arrival = app.datePickers["newTripArrival"]
+        let arrival = app.textFields["newTripArrivalDate"]
         XCTAssertTrue(reveal(arrival, in: app, timeout: 8))
-        let dateButton = arrival.buttons.firstMatch
-        if dateButton.exists { dateButton.tap() } else { arrival.tap() }
-
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.dateFormat = "EEEE, MMMM d"
-        let named = app.buttons[formatter.string(from: yesterday)]
-        if named.waitForExistence(timeout: 5) {
-            named.tap()
-        } else {
-            let day = String(Calendar.current.component(.day, from: yesterday))
-            let byNumber = app.buttons[day].firstMatch
-            XCTAssertTrue(byNumber.waitForExistence(timeout: 5),
-                          "The arrival calendar must offer yesterday.")
-            byNumber.tap()
+        let parts = Calendar.current.dateComponents([.year, .month, .day], from: yesterday)
+        arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+        if let current = arrival.value as? String, !current.isEmpty {
+            arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }
-        if app.buttons["PopoverDismissRegion"].exists {
-            app.buttons["PopoverDismissRegion"].tap()
-        }
+        arrival.typeText(String(format: "%04d-%02d-%02d\n", parts.year!, parts.month!, parts.day!))
     }
 
     /// A loop such as 山手線 keeps both directions, so Save stays disabled until
@@ -879,7 +929,15 @@ final class NewTripUITests: XCTestCase {
     private func revealed(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
         guard element.exists else { return false }
         if element.elementType == .textField { return frameInBand(element, in: app) }
-        return element.isHittable
+        guard element.isHittable else { return false }
+        // A row scrolled under the map panel stays "hittable" through the few
+        // points that still show at the form's top edge, and a tap there lands
+        // on the row's corner and does nothing. Count a form row as revealed
+        // only once its middle is inside the form.
+        let form = formList(in: app)
+        let frame = element.frame
+        guard form.exists, form.frame.intersects(frame) else { return true }
+        return form.frame.contains(CGPoint(x: frame.midX, y: frame.midY))
     }
 
     @discardableResult
