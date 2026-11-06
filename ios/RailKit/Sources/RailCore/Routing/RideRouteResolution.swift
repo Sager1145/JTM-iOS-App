@@ -273,6 +273,18 @@ public struct RideRouteResolution {
                 && RouteSolver.routeSectionBoundarySharesExplicitStop(sections[index - 1], section)
             let anchor = sharesBoundary ? continuity : nil
             let previousPhysicalKey = sharesBoundary ? physicalContinuationKey : nil
+            if !RegionConnectivity.isSupported(country)
+                || RegionConnectivity.firstUnconnectedPair(
+                    stationIDs: [section.fromStationID, section.toStationID]) != nil {
+                // Endpoints in regions with no connected rail network: a
+                // flagged gap, never drawn track and never a straight chord.
+                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
+                continuity = nil
+                displayContinuity = nil
+                lastSolvedIndex = nil
+                physicalContinuationKey = nil
+                continue
+            }
             if inferred.ambiguous.contains(index) {
                 continuity = nil
                 displayContinuity = nil

@@ -176,6 +176,11 @@ final class TripHideFilter {
         return byYear.keys.sorted(by: >).map { ($0, byYear[$0]!.sorted()) }
     }
 
+    /// Whether the store holds trips in a disabled region (hidden everywhere).
+    func hasDisabledRegionTrips(_ trains: [Train]) -> Bool {
+        index(trains).values.contains { !$0.region.isEnabled }
+    }
+
     /// The regions that have trips, in the interface's order.
     func regions(_ trains: [Train]) -> [Region] {
         let present = Set(index(trains).values.map(\.region))
@@ -198,7 +203,8 @@ final class TripHideFilter {
     /// Returns the SAME arrays until the store or a choice changes, so the
     /// memoised derivations downstream keep their keys.
     func scoped(_ loaded: ItineraryStore.Loaded) -> Scoped {
-        if !isActive { return Scoped(trains: loaded.trains, days: loaded.days, hiddenIDs: []) }
+        // Trips in a disabled region (RegionConnectivity) are always hidden
+        // here — display only; the store still holds, saves and exports them.
         if let scopedKey, ArrayGeneration.same(scopedKey.trains, loaded.trains),
            ArrayGeneration.same(scopedKey.days, loaded.days),
            scopedKey.regions == hiddenRegions, scopedKey.years == hiddenYears,
@@ -208,6 +214,7 @@ final class TripHideFilter {
         let index = index(loaded.trains)
         var hidden = Set<String>()
         for (id, entry) in index {
+            if !entry.region.isEnabled { hidden.insert(id); continue }
             if hiddenRegions.contains(entry.region.code) { hidden.insert(id); continue }
             if let month = entry.month, isMonthHidden(month) { hidden.insert(id) }
         }

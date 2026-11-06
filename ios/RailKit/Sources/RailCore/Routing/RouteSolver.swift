@@ -3259,6 +3259,12 @@ public enum RouteSolver {
         country: String,
         stations: Stations.Index
     ) -> PreparedSectionEndpoints? {
+        // Region guard: a disabled region does no work, and a section whose
+        // endpoints sit in regions with no connected rail network has no path.
+        guard RegionConnectivity.isSupported(country),
+              RegionConnectivity.firstUnconnectedPair(
+                stationIDs: [rawSection.fromStationID, rawSection.toStationID]) == nil
+        else { return nil }
         var section = rawSection
         if section.from?.isEmpty != false {
             section.from = stations.name(forCode: section.fromN02StationCode)

@@ -306,6 +306,13 @@ struct SettingsView: View {
                 fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+            if itineraries.loaded?.trains.contains(where: { !Region.resolved($0).isEnabled }) == true {
+                Text(localization.text(
+                    "ios.note.disabledRegionTrips",
+                    fallback: "Mainland China trips are hidden. They stay saved and will reappear if support returns."))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
             Picker(
                 localization.text("ios.networkEra", fallback: "Network era"),
                 selection: Binding(
