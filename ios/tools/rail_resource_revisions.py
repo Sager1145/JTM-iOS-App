@@ -100,6 +100,11 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
         ] + [f"rail-display-network/{region}.{ending}" for ending in
              ("display.bin", "stations.json", "display-history.json")]
         inputs = shared + [(name, bundle / name) for name in names]
+        # The identity registry (app/data/registry-bundle/<region>.json, shipped
+        # as registry-<region>.json) feeds station/operator identity and
+        # junctions into every solve, so a registry-only fix must re-solve.
+        registry = f"registry-{region}.json"
+        inputs.append((registry, bundle / registry))
         for name in names:
             path = bundle / name
             if "/" not in name and path.is_file():

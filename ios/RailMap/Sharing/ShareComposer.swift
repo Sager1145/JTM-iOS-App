@@ -168,10 +168,16 @@ struct ShareComposer: View {
 
     /// The drawn route's length per journey, for cards opened before the
     /// statistics have matched a journey's mileage. Only the scope's rides.
-    private var drawnKm: [String: Double] {
-        Dictionary(mapRides.map { ride in
-            (ride.id, ride.segments.reduce(0) { total, segment in
-                zip(segment.coordinates, segment.coordinates.dropFirst()).reduce(total) {
+    private var drawnKm: [String: Double] { Self.drawnKm(mapRides) }
+
+    /// Sections drawn from guard-rejected track (`.unproven`, ADR 0007
+    /// option B) are left out, as Stats leaves them out of every km figure.
+    static func drawnKm(_ rides: [RiddenRouteStore.DrawnRide]) -> [String: Double] {
+        Dictionary(rides.map { ride in
+            let unproven = ride.unprovenSegmentIndices
+            return (ride.id, ride.segments.reduce(0) { total, segment in
+                guard !unproven.contains(segment.segmentIndex) else { return total }
+                return zip(segment.coordinates, segment.coordinates.dropFirst()).reduce(total) {
                     $0 + Self.kilometres($1.0, $1.1)
                 }
             })

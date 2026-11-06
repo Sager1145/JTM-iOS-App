@@ -733,7 +733,28 @@ final class RiddenRouteStore {
             entry = (key, built)
             return built
         }
+
+        var isEmpty: Bool {
+            lock.lock()
+            defer { lock.unlock() }
+            return entry == nil
+        }
+
+        func clear() {
+            lock.lock()
+            defer { lock.unlock() }
+            entry = nil
+        }
     }
+
+    #if DEBUG
+    /// Test seam: whether a probe graph is memoised, and a way to put one there.
+    nonisolated static var probeGraphIsCached: Bool { !ProbeGraphCache.shared.isEmpty }
+
+    nonisolated static func seedProbeGraphCacheForTesting() {
+        _ = ProbeGraphCache.shared.store(key: "test-seed") { RouteGraph.RouteGraphStore(sections: []) }
+    }
+    #endif
 
     /// Whether a line connected the train's two stations on its ride date,
     /// for the editor's historical-line notice. Dated only: the planner has
@@ -1821,13 +1842,15 @@ final class RiddenRouteStore {
 
     /// Releases the process-lifetime decodes this store keeps for speed:
     /// solver inputs and their indexes, the junction registry and the
-    /// history overlays. Every one is a pure memo of a bundled file, so the
+    /// history overlays, and the historical-line probe's regional graph. Every
+    /// one is a pure memo of a bundled file, so the
     /// next use decodes it again with the same answer. Called on a memory
     /// warning, when keeping them risks the process rather than a reload.
     nonisolated static func releaseCachesForMemoryPressure() async {
         junctionRegistryCache.withLock { $0.removeAll() }
         overlayByURLCache.withLock { $0.removeAll() }
         historyStateCache.withLock { $0.removeAll() }
+        ProbeGraphCache.shared.clear()
         await SolverInputCache.shared.releaseForMemoryPressure()
     }
 

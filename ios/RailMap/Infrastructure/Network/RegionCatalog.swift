@@ -427,6 +427,12 @@ extension Train {
         JourneyClock(home: Region.resolved(self).clock)
     }
 
+    /// Minutes on board, on this journey's clock. The one answer the
+    /// passport, the share card and the dashboard print.
+    var rideMinutes: Double? {
+        Statistics.trainRideMinutes(self, clock: journeyClock)
+    }
+
     /// The same train with its region written down — when the ride actually
     /// says which one it is.
     ///

@@ -83,6 +83,28 @@ struct RideDurationTests {
         #expect(Statistics.trainRideMinutes(train, clock: clock) == 40)
     }
 
+    @Test("the dashboard sum and service rows use the zone-aware rule across midnight")
+    func dashboardUsesClockAwareRule() {
+        let date = "2026-08-27"
+        let train = Train(
+            id: "W", date: date, number: "W", trainType: "特急", origin: "A", destination: "B",
+            stops: [
+                Stop(name: "A", departure: "23:30", stopType: "origin", rideSegment: true),
+                Stop(name: "B", arrival: "00:10", stopType: "destination", rideSegment: true),
+            ])
+        let clock = JourneyClock(stops: [.japan, .taiwan], fallback: .japan, on: date)
+        // 23:30 JST = 14:30Z, 00:10 TST (next day) = 16:10Z.
+        let expected = Statistics.trainRideMinutes(train, clock: clock)
+        #expect(expected == 100)
+        #expect(Statistics.sumRideMinutes([train], clock: { _ in clock }) == 100)
+        let groups = Statistics.serviceGroupStats(
+            trains: [train], entries: [Statistics.TrainEntry()], country: "jp",
+            clock: { _ in clock })
+        #expect(groups.hsr.minutes + groups.ltd.minutes + groups.other.minutes == 100)
+        // With no clock supplied the regional one-clock rule is the port's.
+        #expect(Statistics.sumRideMinutes([train]) == Statistics.trainRideMinutes(train))
+    }
+
     @Test("the correction uses the first and last ridden stops, not stop 0 and the end")
     func riddenSubrangeCorrection() {
         let date = "2026-08-27"

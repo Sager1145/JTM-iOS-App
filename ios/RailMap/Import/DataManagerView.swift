@@ -388,7 +388,9 @@ struct DataManagerView: View {
                         committed = false
                     }
                 } else {
-                    switch try await itineraries.merge(incoming, into: library).outcome {
+                    switch try await itineraries.merge(
+                        incoming, into: library,
+                        legacySampleIDs: SampleLegacyRideIDs.map(for: sample.resource)).outcome {
                     case .committed: committed = true
                     case .refused: committed = false
                     }

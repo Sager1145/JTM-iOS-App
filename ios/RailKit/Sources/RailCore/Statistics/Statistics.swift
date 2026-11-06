@@ -1875,9 +1875,18 @@ public enum Statistics {
         return span < 0 ? nil : span
     }
 
-    public static func sumRideMinutes(_ trains: [Train]) -> Double {
+    /// The clock a journey's printed times are read on when the caller
+    /// supplies none: its region's one clock, so the answer is the
+    /// one-argument ``trainRideMinutes(_:)`` (and the JavaScript port's).
+    public static func defaultRideClock(_ train: Train) -> JourneyClock {
+        JourneyClock(regionCode: train.region)
+    }
+
+    public static func sumRideMinutes(
+        _ trains: [Train], clock: (Train) -> JourneyClock = defaultRideClock
+    ) -> Double {
         var total = 0.0
-        for train in trains { if let m = trainRideMinutes(train) { total += m } }
+        for train in trains { if let m = trainRideMinutes(train, clock: clock(train)) { total += m } }
         return total
     }
 
@@ -2007,14 +2016,15 @@ public enum Statistics {
     }
 
     public static func serviceGroupStats(
-        trains: [Train], entries: [TrainEntry], country: String
+        trains: [Train], entries: [TrainEntry], country: String,
+        clock: (Train) -> JourneyClock = defaultRideClock
     ) -> ServiceGroups {
         var groups = ServiceGroups()
         for i in trains.indices {
             let name = serviceGroupOfTrain(trainType: trains[i].trainType, country: country)
             var group = name == "hsr" ? groups.hsr : name == "ltd" ? groups.ltd : groups.other
             group.km += i < entries.count ? entries[i].km : 0
-            if let m = trainRideMinutes(trains[i]) { group.minutes += m }
+            if let m = trainRideMinutes(trains[i], clock: clock(trains[i])) { group.minutes += m }
             group.count += 1
             if name == "hsr" { groups.hsr = group } else if name == "ltd" {
                 groups.ltd = group
@@ -2204,11 +2214,13 @@ public enum Statistics {
         country: String,
         selectedDate: String?,
         trainDate: (Train) -> String,
-        dateLabel: (String) -> String
+        dateLabel: (String) -> String,
+        clock: (Train) -> JourneyClock = defaultRideClock
     ) -> MileageStatsView {
         var overall = aggregateMileageStats(index: index, entries: entries, country: country)
-        overall.rideMinutes = sumRideMinutes(trains)
-        overall.services = serviceGroupStats(trains: trains, entries: entries, country: country)
+        overall.rideMinutes = sumRideMinutes(trains, clock: clock)
+        overall.services = serviceGroupStats(
+            trains: trains, entries: entries, country: country, clock: clock)
         overall.topSegments = topRiddenSegments(entries: entries, country: country)
 
         var daily: DailyStats? = nil
@@ -2221,9 +2233,9 @@ public enum Statistics {
             }
             var stats = aggregateMileageStats(
                 index: index, entries: dayEntries, country: country)
-            stats.rideMinutes = sumRideMinutes(dayTrains)
+            stats.rideMinutes = sumRideMinutes(dayTrains, clock: clock)
             stats.services = serviceGroupStats(
-                trains: dayTrains, entries: dayEntries, country: country)
+                trains: dayTrains, entries: dayEntries, country: country, clock: clock)
             daily = DailyStats(
                 date: dateLabel(selectedDate), trainCount: dayTrains.count, stats: stats)
         }
