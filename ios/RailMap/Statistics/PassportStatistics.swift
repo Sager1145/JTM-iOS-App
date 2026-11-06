@@ -200,18 +200,9 @@ struct PassportStatistics: Sendable {
                 measured += 1
                 completedDistanceKm += km
             }
-            // The ported answer, then the correction for a journey that
-            // changes clock on the way. `Statistics.trainRideMinutes`
-            // subtracts a printed departure from a printed arrival, which is
-            // exact for a journey on one clock and two hours short for the
-            // *Empire Builder*. The correction cannot live in `RailCore` —
-            // that tier is checked against JavaScript that has no zones at
-            // all — so it is applied here, on top, in the ported unit. See
-            // ``JourneyClock/rideMinutes(_:stopCount:on:)``.
-            let minutes = train.journeyClock.rideMinutes(
-                Statistics.trainRideMinutes(train),
-                stopCount: train.stops.count,
-                on: train.date)
+            // The one zone-aware ride duration the share card and the
+            // dashboard also use: `Statistics.trainRideMinutes(_:clock:)`.
+            let minutes = train.rideMinutes
 
             totalKm += km
             if let minutes, minutes.isFinite, minutes > 0 {

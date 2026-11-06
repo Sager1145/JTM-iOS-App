@@ -133,31 +133,6 @@ public struct JourneyClock: Sendable, Hashable {
         return (toSeconds - fromSeconds) / 60
     }
 
-    /// A ride's length in minutes, corrected for a journey that changes clock.
-    ///
-    /// `ported` is whatever `RailCore.Statistics.trainRideMinutes` answered —
-    /// the arithmetic difference between two printed times, which is right for
-    /// a journey on one clock and short (or long) by the offset for one that
-    /// is not. A westbound journey's ported answer understates the
-    /// duration by the difference between its origin and destination clocks.
-    ///
-    /// New callers should use `Statistics.trainRideMinutes(_:clock:)`, which
-    /// corrects between the first and last RIDDEN stops rather than between
-    /// stop 0 and the last stop. This remains for existing callers.
-    ///
-    /// `nil` in, `nil` out: a journey whose times cannot be read has no length
-    /// to correct, and inventing one here would make an unanswerable question
-    /// look answered.
-    public func rideMinutes(
-        _ ported: Double?, stopCount: Int, on date: String?
-    ) -> Double? {
-        guard let ported else { return nil }
-        guard crossesTimeZones, stopCount > 1 else { return ported }
-        let shift = offsetMinutes(
-            fromStopIndex: 0, toStopIndex: stopCount - 1, on: date)
-        return ported - Double(shift)
-    }
-
     // MARK: - the questions the app actually asks
 
     /// Today, on this journey's clock.

@@ -20,9 +20,7 @@ struct ShareCardBuilder {
 
     private func minutes(_ train: Train) -> Double? {
         if let minutes = passport?.journeyMinutes[train.id] { return minutes }
-        let minutes = train.journeyClock.rideMinutes(
-            Statistics.trainRideMinutes(train), stopCount: train.stops.count, on: train.date)
-        return minutes.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
+        return train.rideMinutes.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
     }
 
     private var l: AppLocalization { localization }
