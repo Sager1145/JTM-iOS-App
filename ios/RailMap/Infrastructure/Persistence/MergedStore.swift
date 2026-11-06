@@ -130,8 +130,26 @@ enum MergedStore {
     /// 載入示例資料 swaps one region's store for another, which is the same
     /// operation when a store can only hold one region. Merging is what that
     /// operation becomes when it cannot.
-    static func merging(_ incoming: TrainStore, into existing: TrainStore) -> TrainStore {
-        var trains = existing.trains
+    ///
+    /// `legacyIDs` (old id → current id, ``SampleLegacyRideIDs``) migrates a
+    /// sample loaded on a build that stored its rides under their old ids. A
+    /// stored ride is touched only when its id is a legacy id AND the incoming
+    /// store carries the id it became: that ride is replaced in place, or
+    /// dropped if the current id is stored too. Every other ride, including
+    /// every one the reader added, is left exactly as it was.
+    static func merging(
+        _ incoming: TrainStore, into existing: TrainStore, legacyIDs: [String: String] = [:]
+    ) -> TrainStore {
+        mergingReportingLegacy(incoming, into: existing, legacyIDs: legacyIDs).store
+    }
+
+    /// As ``merging(_:into:legacyIDs:)``, also answering the stored legacy
+    /// rides that were replaced or dropped.
+    static func mergingReportingLegacy(
+        _ incoming: TrainStore, into existing: TrainStore, legacyIDs: [String: String]
+    ) -> (store: TrainStore, removedLegacy: [Train]) {
+        let migrated = migratingLegacyIDs(existing.trains, incoming: incoming, legacyIDs: legacyIDs)
+        var trains = migrated.trains
         var byID = Dictionary(
             trains.enumerated().map { ($0.element.id, $0.offset) },
             uniquingKeysWith: { first, _ in first })
@@ -144,7 +162,33 @@ enum MergedStore {
                 trains.append(train)
             }
         }
-        return TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: trains)
+        return (TrainStore(schemaVersion: TrainValidation.schemaVersion, trains: trains), migrated.departed)
+    }
+
+    private static func migratingLegacyIDs(
+        _ stored: [Train], incoming: TrainStore, legacyIDs: [String: String]
+    ) -> (trains: [Train], departed: [Train]) {
+        guard !legacyIDs.isEmpty else { return (stored, []) }
+        let incomingIDs = Set(incoming.trains.map(\.id))
+        var placed = Set(stored.map(\.id).filter { legacyIDs[$0] == nil })
+        var kept: [Train] = []
+        var departed: [Train] = []
+        kept.reserveCapacity(stored.count)
+        for train in stored {
+            guard let current = legacyIDs[train.id], incomingIDs.contains(current) else {
+                kept.append(train)
+                continue
+            }
+            departed.append(train)
+            // Already stored under its current id: the legacy copy is the
+            // duplicate. Otherwise it keeps its place under the current id and
+            // the incoming ride replaces it.
+            guard placed.insert(current).inserted else { continue }
+            var renamed = train
+            renamed.id = current
+            kept.append(renamed)
+        }
+        return (kept, departed)
     }
 
     /// The trains of one region, in store order.

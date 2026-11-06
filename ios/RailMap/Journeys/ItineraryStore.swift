@@ -758,7 +758,12 @@ final class ItineraryStore {
     /// so a caller cannot mistake "an import owns the store" for "merged
     /// nothing".
     @discardableResult
-    func merge(_ incoming: TrainStore, into library: RideLibrary) async throws -> Commit<MergeOutcome> {
+    ///
+    /// `legacySampleIDs` is a bundled sample's old-id map
+    /// (``SampleLegacyRideIDs``); empty for a file the reader opened.
+    func merge(
+        _ incoming: TrainStore, into library: RideLibrary, legacySampleIDs: [String: String] = [:]
+    ) async throws -> Commit<MergeOutcome> {
         // Placed BEFORE the fold, not corrected after it. Every bundled sample
         // is a web-app store with no `region` in it, and outside Japan its
         // codes name no region on their face — so a sample folded in untagged
@@ -784,7 +789,10 @@ final class ItineraryStore {
         // ride the reader already had.
         guard !isImporting, let current = store else { return .refused(.refused) }
         attach(library)
-        let next = MergedStore.merging(tagged, into: current)
+        // Route cache files are keyed by route content, not ride id, so a
+        // migrated legacy ride's cached route is the one its journey_
+        // successor reads; nothing is left to delete.
+        let next = MergedStore.merging(tagged, into: current, legacyIDs: legacySampleIDs)
         let save = commitWorkingSet(next)
         publishRecordIndex()
         regroup(self.store ?? next)
