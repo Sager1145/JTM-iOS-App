@@ -2155,10 +2155,10 @@
           "toStationCode": "004256"
         },
         {
-          "lineID": "jp-西日本旅客鉄道-北陸線-p1",
+          "lineID": "jp-西日本旅客鉄道-北陸線",
           "fromStationCode": "004256",
           "toStationCode": "010186",
-          "reverseLineID": "jp-西日本旅客鉄道-北陸線"
+          "reverseLineID": "jp-西日本旅客鉄道-北陸線-p1"
         },
         {
           "lineID": "jp-ハピラインふくい-ハピラインふくい線",

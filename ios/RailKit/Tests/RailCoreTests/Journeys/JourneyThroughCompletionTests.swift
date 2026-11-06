@@ -128,6 +128,8 @@ struct JourneyThroughCompletionTests {
     @Test("splitting an interval preserves recorded company-specific outer station codes")
     func splitPreservesBoundaryCodes() throws {
         var original = train()
+        // The stop carries no conflicting code, so the section's company-specific code is kept.
+        original.stops[0].n02StationCode = nil
         original.routeSections = [RouteSection(
             from: "Alpha", to: "Boundary", fromN02StationCode: "ALT-A",
             toN02StationCode: "ALT-B", lineNames: ["First Line"], number: "101M")]

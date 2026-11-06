@@ -906,8 +906,9 @@ public enum Stations {
         /// Whether a dated, old-name station membership is a reviewed alias
         /// of the current directory name for the same fixed code.
         ///
-        /// The historical feature must carry both its event identity and the
-        /// builder's exact-current-geometry certification. The current feature
+        /// The historical feature must carry its event identity and either the
+        /// builder's exact-current-geometry certification or an overlay
+        /// identity-period history id. The current feature
         /// must be in the exact code pool with identical geometry, line and
         /// operator. A shared group or nearby platform is insufficient.
         public func isCertifiedHistoricalNameAlias(
@@ -917,10 +918,16 @@ public enum Stations {
                   !referenceName.utf16.isEmpty, !referenceCode.utf16.isEmpty
             else { return false }
             let actual = features[actualIndex]
+            // Either the builder certified the old-name row, or the row is an
+            // overlay `identity_periods` variant (`<id>.identity.period<N>…`),
+            // which relabels a copy of the current feature in place.
+            let historyID = truthyString(actual.properties["history_id"])
+            let certified = truthyString(actual.properties["station_code_basis"])
+                == "exact_current_geometry_identity"
+            let identityPeriod = historyID?.contains(".identity.period") == true
             guard stationCode(actual).map({ sameCodeUnits($0, referenceCode) }) == true,
-                  truthyString(actual.properties["station_code_basis"])
-                    == "exact_current_geometry_identity",
-                  truthyString(actual.properties["history_id"])?.utf16.isEmpty == false,
+                  certified || identityPeriod,
+                  historyID?.utf16.isEmpty == false,
                   let actualGeometry = actual.geometry
             else { return false }
             let actualLine = stationLineName(actual)

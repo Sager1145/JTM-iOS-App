@@ -199,8 +199,10 @@ struct JapanThroughServicesTests {
         // 新橋 lies on both rows between 東京 and 品川; no train changes rows there.
         #expect(TripConnectivity.link(from: tokaido, to: sobu, atStationCode: "003872", patterns: (try JapanThroughServices.loadBundled()).patterns, connectors: (try JapanThroughServices.loadBundled()).connectors) == .none)
         #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "003872", patterns: (try JapanThroughServices.loadBundled()).patterns, connectors: (try JapanThroughServices.loadBundled()).connectors) == .none)
-        // The same pair still joins at a listed anchor (東京).
-        #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "003766", patterns: (try JapanThroughServices.loadBundled()).patterns, connectors: (try JapanThroughServices.loadBundled()).connectors) != .none)
+        // 東京 is not an anchor for this pair (no terminal-station fallback).
+        #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "003766", patterns: (try JapanThroughServices.loadBundled()).patterns, connectors: (try JapanThroughServices.loadBundled()).connectors) == .none)
+        // The same pair joins at its listed anchor (鶴見).
+        #expect(TripConnectivity.link(from: sobu, to: tokaido, atStationCode: "004496", patterns: (try JapanThroughServices.loadBundled()).patterns, connectors: (try JapanThroughServices.loadBundled()).connectors) != .none)
     }
 
     @Test("Keisei to Keikyu crosses only the anchored Asakusa corridor")

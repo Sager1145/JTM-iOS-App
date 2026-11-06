@@ -181,8 +181,16 @@ struct DirectionalAlignmentSelectionTests {
                          toStationCode: forward ? last.id : first.id))))
         #expect(!result.displayLineIds.contains(pairID))
         #expect(result.displayLineIds.contains(item.base))
-        #expect(result.geometry.lines.first?.first == (forward ? first.coordinate : last.coordinate))
-        #expect(result.geometry.lines.last?.last == (forward ? last.coordinate : first.coordinate))
+        // The corrected route ends on the main row's own platform for each station code,
+        // which can differ from the pair row's surveyed vertex (e.g. 日豊線 p1 at 立石).
+        let base = try #require(package.lines.first { $0.id == item.base })
+        func baseCoordinate(_ code: String) throws -> Coordinate {
+            try #require(base.stations.first { $0.id == code }).coordinate
+        }
+        let startCoordinate = try baseCoordinate(forward ? first.id : last.id)
+        let endCoordinate = try baseCoordinate(forward ? last.id : first.id)
+        #expect(result.geometry.lines.first?.first == startCoordinate)
+        #expect(result.geometry.lines.last?.last == endCoordinate)
     }
 
     @Test("Unknown physical directions remain bidirectional unless traversal is explicitly sourced")

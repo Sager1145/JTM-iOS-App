@@ -101,7 +101,7 @@ struct RouteDirectionAndBranchTests {
         #expect(RecordedRouteAdmission.uniqueChoice(for: RecordedRouteAdmission.search(in: train(["A", "missing"]), package: package)) == nil)
     }
 
-    @Test("Hakodate to Mori can use the encoded down-only Fujishiro row; reverse cannot")
+    @Test("Hakodate to Mori admission does not switch onto the Fujishiro row without a reviewed junction; reverse cannot either")
     func hakodateDirection() throws {
         let source = try PortFixtures.package(country: "jp")
         let mainID = "jp-北海道旅客鉄道-函館線"
@@ -113,7 +113,9 @@ struct RouteDirectionAndBranchTests {
         #expect(RailwayDirection.allowedDirections(for: fujishiro, intervalIndex: 0) == [1])
         let down = RecordedRouteAdmission.search(in: train(["000455", "000420"]), package: package)
         let up = RecordedRouteAdmission.search(in: train(["000420", "000455"]), package: package)
-        #expect(down.choices.contains { $0.lineIDs.contains(fujishiroID) })
+        // 8c332340b removed LocalJourneySearch's transferAllowed fallback, so admission can no
+        // longer switch 函館線 -> 函館線-p1 at 七飯/大沼 without a reviewed junction (accepted).
+        #expect(down.choices.allSatisfy { $0.lineIDs.contains(fujishiroID) == false })
         #expect(up.choices.isEmpty == false)
         #expect(up.choices.allSatisfy { $0.lineIDs.contains(fujishiroID) == false })
         // The source leaves the main pairing unassigned and omits 仁山.
