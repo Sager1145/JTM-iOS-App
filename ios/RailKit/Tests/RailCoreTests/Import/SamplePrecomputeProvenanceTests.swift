@@ -2,7 +2,7 @@ import CryptoKit
 import Foundation
 import Testing
 
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 /// The two bundled routes used by the cold-start UI checks must carry a solve
 /// identity that native code can reconstruct from the train and the exact
@@ -43,88 +43,75 @@ struct SamplePrecomputeProvenanceTests {
         _ filename: String,
         datasetDirectory: URL,
         historyHash: String,
-        revisions: RailHistoryRevisionSet
+        revisions: RailHistoryRevisionSet,
+        registry: RegistryBundle
     ) throws -> String {
         let part = try JSONDecoder().decode(
             Part.self,
             from: Data(contentsOf: datasetDirectory.appending(path: filename)))
-        // Reconstruct the attested browser artifact with its original solver
-        // identity, then independently prove the strict native gate rejects it.
-        // Existing corridor inference remains part of normalization.
-        let canonical = TokyoConventionalRouteInference.applying(to:
+        // Browser parts are produced by precompute-train-parts.mjs under the same
+        // solver namespace as native (`ROUTE_SOLVER_CACHE_VERSION` ==
+        // `RouteGraph.routeSolverCacheVersion`), so the stored key must equal the
+        // key native rebuilds, and the strict gate must accept the part.
+        //
+        // Built the way the app's on-demand solve builds it
+        // (`RiddenRouteStore.canonicalRouteInput` + `routeCacheDigest`): the
+        // registry upgrade `BundledRegistry.upgradeIfReady` applies once jp is
+        // ready, export normalization, the corridor preference, and the
+        // operator ids the solve context and service inference read. The
+        // app-target timetable enrichment is not reproduced here.
+        let raw = RegistryIdentityUpgrade.apply(part.train, bundle: registry)
+        let canonical = RecordedRouteAdmission.applyingCorridorPreference(to:
             TrainValidation.normalizeExportTrain(
-                TrainValidation.restoringRouteSectionEndpointNames(part.train),
+                TrainValidation.restoringRouteSectionEndpointNames(raw),
                 country: "jp",
                 stations: .empty))
-        let sections = (canonical.routeSections ?? []).map { section in
-            RouteGraph.RouteSection(
-                from: section.from,
-                to: section.to,
-                fromStationCode: section.fromN02StationCode,
-                toStationCode: section.toN02StationCode,
-                lineNames: section.lineNames ?? [],
-                operatorNames: section.operatorNames ?? [],
-                lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [])
-        }
+        let sections = (canonical.routeSections ?? []).map { RouteGraph.RouteSection($0) }
         let policy = canonical.routePolicy
         let cacheTrain = RouteGraph.CacheKeyTrain(
-            id: part.train.id,
-            number: part.train.number,
-            trainType: part.train.trainType ?? "",
+            id: raw.id,
+            number: raw.number,
+            trainType: raw.trainType ?? "",
             company: canonical.company ?? "",
-            origin: part.train.origin,
-            destination: part.train.destination,
+            origin: raw.origin,
+            destination: raw.destination,
             preferredLineNames: policy?.preferredLineNames ?? [],
             preferredOperatorNames: policy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: policy?.allowedInstitutionTypeCodes,
-            institutionFilterMode: policy?.institutionFilterMode)
-        let browserSolveContext = try #require(RouteGraph.solveContext(
+            institutionFilterMode: policy?.institutionFilterMode,
+            operatorID: raw.operatorID ?? canonical.operatorID,
+            operatorIDs: raw.operatorIDs ?? canonical.operatorIDs ?? [])
+        let rideDate = Dates.normalizeDateString(canonical.date)
+        // `cache_key` is the browser RouteService key, whose history identity is
+        // revisions only. The attested digest inserts `|hashes:` right after
+        // `|history:` (app-precompute-adapter.js `serializedPrecomputeSolveContext`),
+        // which is where `RailHistoryRevisionSet.canonical` places it natively.
+        let browserContext = try #require(RouteGraph.solveContext(
             train: cacheTrain,
             routeSections: sections,
             country: "jp",
-            cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
-            rideDate: Dates.normalizeDateString(part.train.date),
-            historyRevision: revisions.revisions.keys.sorted().map {
-                "\($0):\(revisions.revisions[$0]!)"
-            }.joined(separator: "|")))
-        #expect(part.route.cacheKey == browserSolveContext.cacheKey)
-        let legacySolveContext = try #require(RouteGraph.solveContext(
+            rideDate: rideDate,
+            historyRevision: RailHistoryRevisionSet(
+                revisions.revisions.mapValues { Optional($0) }).canonical))
+        #expect(part.route.cacheKey == browserContext.cacheKey, "\(filename)")
+        let nativeContext = try #require(RouteGraph.solveContext(
             train: cacheTrain,
             routeSections: sections,
             country: "jp",
-            cacheVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
-            rideDate: Dates.normalizeDateString(part.train.date),
+            rideDate: rideDate,
             historyRevision: revisions.canonical))
-        let expectedDigest = RouteGraph.keyDigest(legacySolveContext.cacheKey)
+        let expectedDigest = RouteGraph.keyDigest(nativeContext.cacheKey)
         let context = part.route.solverContext
 
-        #expect(context.routeCacheDigest == expectedDigest)
+        #expect(context.routeCacheDigest == expectedDigest, "\(filename)")
         #expect(context.historyHashes == ["jp": historyHash])
         #expect(RailPrecomputedRouteGate.accepts(
             context,
             expectedDigest: expectedDigest,
-            solverVersion: RouteGraph.legacyCoordinateSolverCacheVersion,
-            rideDate: Dates.normalizeDateString(part.train.date),
+            solverVersion: RouteGraph.routeSolverCacheVersion,
+            rideDate: rideDate,
             revisions: revisions,
-            expectedHashes: revisions.contentHashes))
-        let strictSolveContext = try #require(RouteGraph.solveContext(
-            train: cacheTrain, routeSections: sections, country: "jp",
-            rideDate: Dates.normalizeDateString(part.train.date), historyRevision: revisions.canonical))
-        let strictDigest = RouteGraph.keyDigest(strictSolveContext.cacheKey)
-        #expect(strictSolveContext.cacheKey != legacySolveContext.cacheKey)
-        #expect(strictDigest != expectedDigest)
-        #expect(!RailPrecomputedRouteGate.accepts(
-            context, expectedDigest: strictDigest,
-            solverVersion: RouteGraph.routeSolverCacheVersion,
-            rideDate: Dates.normalizeDateString(part.train.date),
-            revisions: revisions, expectedHashes: revisions.contentHashes))
-        // Even with the old digest supplied, the version gate alone must reject
-        // coordinate-parity geometry for the strict native solver.
-        #expect(!RailPrecomputedRouteGate.accepts(
-            context, expectedDigest: expectedDigest,
-            solverVersion: RouteGraph.routeSolverCacheVersion,
-            rideDate: Dates.normalizeDateString(part.train.date),
-            revisions: revisions, expectedHashes: revisions.contentHashes))
+            expectedHashes: revisions.contentHashes), "\(filename)")
         return part.train.id
     }
 
@@ -147,16 +134,26 @@ struct SamplePrecomputeProvenanceTests {
             from: Data(contentsOf: datasetDirectory.appending(path: "manifest.json")))
         #expect(manifest.parts.count == 201)
 
+        // Normalization needs the jp registry (part-171 journey_680A26B9C2D06FDE49DABFF6A02DF17C (Narita Express)
+        // relies on the Tokyo corridor inference), as production loads it.
+        let bundleData = try Data(contentsOf: Self.repositoryURL("app/data/registry-bundle/jp.json"))
+        let registry = try JSONDecoder().decode(RegistryBundle.self, from: bundleData)
+        let identity = RegistryIdentity(bundle: registry)
         var idsByPart: [String: String] = [:]
-        for part in manifest.parts {
-            idsByPart[part] = try Self.verifyPart(
-                "\(part).json",
-                datasetDirectory: datasetDirectory,
-                historyHash: historyHash,
-                revisions: revisions)
+        try RegistryIdentityLookup.withTestProvider({ region in
+            region.lowercased() == "jp" ? identity : nil
+        }) {
+            for part in manifest.parts {
+                idsByPart[part] = try Self.verifyPart(
+                    "\(part).json",
+                    datasetDirectory: datasetDirectory,
+                    historyHash: historyHash,
+                    revisions: revisions,
+                    registry: registry)
+            }
         }
-        #expect(idsByPart["part-000"] == "20260703_01_haruka")
-        #expect(idsByPart["part-008"] == "20260704_06_marunouchi_line")
+        #expect(idsByPart["part-000"] == "journey_A9554752F257CDA52831A6C0EED248AF")
+        #expect(idsByPart["part-008"] == "journey_09AC64CFCEE12C93E83510873DD6FEC1")
     }
 
     @Test func leanSectionEndpointRestorationPreservesExplicitAndUnknownNames() {

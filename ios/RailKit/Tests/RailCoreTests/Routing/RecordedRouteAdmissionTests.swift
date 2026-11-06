@@ -336,7 +336,7 @@ extension RecordedRouteAdmissionTests {
                 groups[code] = group
             }
         }
-        for id in ["20260719_03_super_oki5", "20260708_02_shirasagi2"] {
+        for id in ["journey_55E89F3BE5BD16BC06291B252CFFA81B" /* 20260719_03_super_oki5 */, "journey_65F43AE4739DB31208BF9295B6539472" /* 20260708_02_shirasagi2 */] {
             let train = try #require(store.trains.first { $0.id == id })
             let aliases = LocalJourneySearch.stationAliases(for: train.stops.compactMap(\.n02StationCode),
                 package: package) { groups[$0] }
@@ -358,9 +358,9 @@ extension RecordedRouteAdmissionTests {
         let ids = try #require(TokyoConventionalRouteInference.tunnelStationIDs(in: package))
         let part = try JSONDecoder().decode(SamplePart.self, from: Data(contentsOf:
             root.appending(path: "app/data/sample-data/part-171.json")))
-        #expect(part.train.id == "20260727_08_narita_express")
-        let tokyoID = "st:jp:tokyo-corridor"
-        let shinagawaID = "st:jp:shinagawa-corridor"
+        #expect(part.train.id == "journey_680A26B9C2D06FDE49DABFF6A02DF17C" /* 20260727_08_narita_express */)
+        let tokyoID = "st:jp:4248" // 東京, the id the regenerated sample stop carries
+        let shinagawaID = "st:jp:1443" // 品川
         let identity = RegistryIdentity(bundle: RegistryBundle(
             region: "jp", run: 1,
             stationCodes: ["003766": tokyoID, ids[2]: shinagawaID],
@@ -420,11 +420,11 @@ extension RecordedRouteAdmissionTests {
         }
         // One surveyed row still resolves. Rides that change package row have no
         // reviewed junction, so they stay without a proposal and cannot auto-apply.
-        let singleRowIDs: Set<String> = ["20260723_03_ishizuchi10", "20260724_01_ishizuchi9"]
-        let crossRowIDs: Set<String> = ["20260703_01_haruka", "20260713_07_hokuto21",
-            "20260722_06_sonic44", "20260729_05_sunrise_izumo",
-            "20260724_02_nanpu9", "20260724_06_nanpu28",
-            "20260704_08_shonan_shinjuku_line", "20260726_09_shonan_shinjuku_yokohama"]
+        let singleRowIDs: Set<String> = ["journey_BEEF6E99345E6E5CD1F5B4AF369AC636" /* 20260723_03_ishizuchi10 */, "journey_07E6AD25D8057D28D08088C1D40C2491" /* 20260724_01_ishizuchi9 */]
+        let crossRowIDs: Set<String> = ["journey_A9554752F257CDA52831A6C0EED248AF" /* 20260703_01_haruka */, "journey_7FDB2E2A33B27404C1C8198B3C2B29F8" /* 20260713_07_hokuto21 */,
+            "journey_6F379655E47131DD2F854B65A847B9F0" /* 20260722_06_sonic44 */, "journey_F29762068C2DDB4CD79CF4AF30B29529" /* 20260729_05_sunrise_izumo */,
+            "journey_2A4BA95A7B92CB19921B27A2D3279C34" /* 20260724_02_nanpu9 */, "journey_6322F5578A2F139890D3B028ADDAF45A" /* 20260724_06_nanpu28 */,
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302" /* 20260704_08_shonan_shinjuku_line */, "journey_856C6D19621F1681AAF99048FEEAED8D" /* 20260726_09_shonan_shinjuku_yokohama */]
         let requiredIDs = singleRowIDs.union(crossRowIDs)
         var checkedIDs: Set<String> = []
         var emptyIDs: [String] = []
@@ -486,7 +486,7 @@ extension RecordedRouteAdmissionTests {
         let data = try PhysicalEndpointTrimTests().loadRealData(root: root)
         let store = try JSONDecoder().decode(TrainStore.self,
             from: Data(contentsOf: root.appending(path: "app/data/sample-data/sample-full.json")))
-        let train = try #require(store.trains.first { $0.id == "20260704_08_shonan_shinjuku_line" })
+        let train = try #require(store.trains.first { $0.id == "journey_F3AE731354D1EAA0C06B45E04BE9F302" /* 20260704_08_shonan_shinjuku_line */ })
         let sections = try #require(train.routeSections)
         // The institutions the app itself allows for this journey.
         let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(RouteGraph.CacheKeyTrain(

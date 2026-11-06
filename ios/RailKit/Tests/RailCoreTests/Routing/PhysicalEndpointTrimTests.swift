@@ -240,13 +240,13 @@ struct PhysicalEndpointTrimTests {
         let data = try loadRealData(root: root)
 
         let hikari = try gapCounts(
-            fixture: "part-001", expectedID: "20260703_02_tokaido_shinkansen_hikari_kodama",
+            fixture: "part-001", expectedID: "journey_923A26BB27C37BDF1717F1E4F21D5AF2" /* 20260703_02_tokaido_shinkansen_hikari_kodama */,
             branch: .source, root: root, data: data)
         #expect(hikari.boundaryStations.isEmpty)
         #expect(hikari.nonBoundary == 0)
 
         let oki = try gapCounts(
-            fixture: "part-097", expectedID: "20260719_03_super_oki5",
+            fixture: "part-097", expectedID: "journey_55E89F3BE5BD16BC06291B252CFFA81B" /* 20260719_03_super_oki5 */,
             branch: .legacy, root: root, data: data)
         #expect(oki.boundaryStations.isEmpty)
         #expect(oki.nonBoundary == 0)

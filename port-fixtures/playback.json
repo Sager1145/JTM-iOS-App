@@ -1753,7 +1753,7 @@
   "cases": [
     {
       "trainId": "journey_FF81EAF940C88B515459211A732AD78C",
-      "cacheKey": "journey_FF81EAF940C88B515459211A732AD78C:010051->010053|lines:唐湊線|operators:鹿児島市:11:0",
+      "cacheKey": "journey_FF81EAF940C88B515459211A732AD78C:010051->010053|lines:唐湊線|operators:鹿児島市|from_st:st:jp:9454|to_st:st:jp:9455:11:0",
       "features": [
         {
           "geometry": 0,
@@ -2381,7 +2381,7 @@
     },
     {
       "trainId": "journey_C07243F8AADDB594384BBF1CC16C13EA",
-      "cacheKey": "journey_C07243F8AADDB594384BBF1CC16C13EA:003939->003954|lines:12号線大江戸線|operators:東京都:11:0",
+      "cacheKey": "journey_C07243F8AADDB594384BBF1CC16C13EA:003939->003954|lines:12号線大江戸線|operators:東京都|from_st:st:jp:4395|to_st:st:jp:4394:11:0",
       "features": [
         {
           "geometry": 1,
@@ -3047,7 +3047,7 @@
     },
     {
       "trainId": "journey_475F1E0ED575D680352459093F852ED6",
-      "cacheKey": "journey_475F1E0ED575D680352459093F852ED6:007069->007091|lines:大阪環状線|operators:|007091->007159|lines:大阪環状線|operators:|007159->007188|lines:大阪環状線|operators:|007188->007285|lines:大阪環状線|operators:|007285->007336|lines:大阪環状線|operators:|007336->007379|lines:大阪環状線|operators:|007379->007408|lines:大阪環状線|operators:|007408->007424|lines:大阪環状線|operators::111111111:0",
+      "cacheKey": "journey_475F1E0ED575D680352459093F852ED6:007069->007091|lines:大阪環状線|operators:|from_st:st:jp:7613|to_st:st:jp:7614|007091->007159|lines:大阪環状線|operators:|from_st:st:jp:7614|to_st:st:jp:7616|007159->007188|lines:大阪環状線|operators:|from_st:st:jp:7616|to_st:st:jp:7617|007188->007285|lines:大阪環状線|operators:|from_st:st:jp:7617|to_st:st:jp:3386|007285->007336|lines:大阪環状線|operators:|from_st:st:jp:3386|to_st:st:jp:3420|007336->007379|lines:大阪環状線|operators:|from_st:st:jp:3420|to_st:st:jp:7619|007379->007408|lines:大阪環状線|operators:|from_st:st:jp:7619|to_st:st:jp:7620|007408->007424|lines:大阪環状線|operators:|from_st:st:jp:7620|to_st:st:jp:2368:111111111:0",
       "features": [
         {
           "geometry": 2,
@@ -4176,7 +4176,7 @@
     },
     {
       "trainId": "journey_02C494EB5E72DE2FE0D3E5BC7D303309",
-      "cacheKey": "journey_02C494EB5E72DE2FE0D3E5BC7D303309:009786->009770|lines:|operators:|009770->009674|lines:|operators:|009674->009672|lines:|operators:|009672->009642|lines:|operators:|009642->009643|lines:|operators::111111:0",
+      "cacheKey": "journey_02C494EB5E72DE2FE0D3E5BC7D303309:009786->009770|lines:|operators:|from_st:st:jp:702|to_st:st:jp:1076|009770->009674|lines:|operators:|from_st:st:jp:1076|to_st:st:jp:1084|009674->009672|lines:|operators:|from_st:st:jp:1084|to_st:st:jp:1086|009672->009642|lines:|operators:|from_st:st:jp:1086|to_st:st:jp:1091|009642->009643|lines:|operators:|from_st:st:jp:1091|to_st:st:jp:1093:111111:0",
       "features": [
         {
           "geometry": 10,
@@ -5868,7 +5868,7 @@
     },
     {
       "trainId": "journey_A9554752F257CDA52831A6C0EED248AF",
-      "cacheKey": "journey_A9554752F257CDA52831A6C0EED248AF:007958->007439|lines:|operators:|007439->007069|lines:|operators:|007069->006910|lines:|operators::1111:0",
+      "cacheKey": "journey_A9554752F257CDA52831A6C0EED248AF:007958->007439|lines:|operators:|from_st:st:jp:2425|to_st:st:jp:3333|007439->007069|lines:|operators:|from_st:st:jp:3333|to_st:st:jp:7613|007069->006910|lines:|operators:|from_st:st:jp:7613|to_st:st:jp:3323:1111:0",
       "features": [
         {
           "geometry": 15,
@@ -7219,7 +7219,7 @@
     },
     {
       "trainId": "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0",
-      "cacheKey": "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0:003769->003505|lines:東北新幹線|operators:東日本旅客鉄道|003505->002915|lines:東北新幹線|operators:東日本旅客鉄道|002915->002406|lines:東北新幹線|operators:東日本旅客鉄道|002406->002115|lines:東北新幹線|operators:東日本旅客鉄道|002115->001720|lines:東北新幹線|operators:東日本旅客鉄道|001720->001629|lines:東北新幹線|operators:東日本旅客鉄道|001629->001506|lines:東北新幹線|operators:東日本旅客鉄道|001506->001374|lines:東北新幹線|operators:東日本旅客鉄道|001374->001272|lines:東北新幹線|operators:東日本旅客鉄道|001272->001177|lines:東北新幹線|operators:東日本旅客鉄道|001177->001052|lines:東北新幹線|operators:東日本旅客鉄道|001052->001011|lines:東北新幹線|operators:東日本旅客鉄道|001011->000977|lines:東北新幹線|operators:東日本旅客鉄道|000977->000942|lines:東北新幹線|operators:東日本旅客鉄道|000942->000911|lines:東北新幹線|operators:東日本旅客鉄道|000911->000863|lines:東北新幹線|operators:東日本旅客鉄道|000863->000790|lines:東北新幹線|operators:東日本旅客鉄道|000790->000733|lines:東北新幹線|operators:東日本旅客鉄道|000733->000669|lines:東北新幹線|operators:東日本旅客鉄道|000669->000625|lines:東北新幹線|operators:東日本旅客鉄道|000625->000561|lines:東北新幹線|operators:東日本旅客鉄道|000561->000531|lines:東北新幹線|operators:東日本旅客鉄道|000531->000491|lines:北海道新幹線|operators:北海道旅客鉄道|000491->000476|lines:北海道新幹線|operators:北海道旅客鉄道|000476->000430|lines:北海道新幹線|operators:北海道旅客鉄道:11111111111111111111111111:0",
+      "cacheKey": "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0:003769->003505|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:4248|to_st:st:jp:4209|003505->002915|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:4209|to_st:st:jp:3220|002915->002406|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:3220|to_st:st:jp:4624|002406->002115|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:4624|to_st:st:jp:5411|002115->001720|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5411|to_st:st:jp:5426|001720->001629|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5426|to_st:st:jp:5425|001629->001506|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5425|to_st:st:jp:5424|001506->001374|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5424|to_st:st:jp:5234|001374->001272|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5234|to_st:st:jp:5423|001272->001177|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5423|to_st:st:jp:1712|001177->001052|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:1712|to_st:st:jp:5422|001052->001011|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5422|to_st:st:jp:5421|001011->000977|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5421|to_st:st:jp:5139|000977->000942|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5139|to_st:st:jp:5420|000942->000911|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5420|to_st:st:jp:4964|000911->000863|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:4964|to_st:st:jp:5419|000863->000790|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5419|to_st:st:jp:397|000790->000733|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:397|to_st:st:jp:387|000733->000669|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:387|to_st:st:jp:380|000669->000625|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:380|to_st:st:jp:4909|000625->000561|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:4909|to_st:st:jp:5418|000561->000531|lines:東北新幹線|operators:東日本旅客鉄道|from_st:st:jp:5418|to_st:st:jp:2052|000531->000491|lines:北海道新幹線|operators:北海道旅客鉄道|from_st:st:jp:2052|to_st:st:jp:2050|000491->000476|lines:北海道新幹線|operators:北海道旅客鉄道|from_st:st:jp:2050|to_st:st:jp:2048|000476->000430|lines:北海道新幹線|operators:北海道旅客鉄道|from_st:st:jp:2048|to_st:st:jp:1971:11111111111111111111111111:0",
       "features": [
         {
           "geometry": 18,
@@ -9114,7 +9114,7 @@
     },
     {
       "trainId": "journey_F29762068C2DDB4CD79CF4AF30B29529",
-      "cacheKey": "journey_F29762068C2DDB4CD79CF4AF30B29529:005689->005523|lines:|operators:|005523->006128|lines:|operators:|006128->007059|lines:|operators:|007059->006509|lines:|operators:|006509->007313|lines:|operators:|007313->007599|lines:|operators:|007599->006686|lines:|operators:|006686->006070|lines:|operators:|006070->004759|lines:|operators:|004759->004748|lines:|operators:|004748->004638|lines:|operators:|004638->004793|lines:|operators:|004793->004943|lines:|operators::11111111111111:0",
+      "cacheKey": "journey_F29762068C2DDB4CD79CF4AF30B29529:005689->005523|lines:|operators:|from_st:st:jp:6415|to_st:st:jp:6445|005523->006128|lines:|operators:|from_st:st:jp:6445|to_st:st:jp:6439|006128->007059|lines:|operators:|from_st:st:jp:6439|to_st:st:jp:6438|007059->006509|lines:|operators:|from_st:st:jp:6438|to_st:st:jp:7671|006509->007313|lines:|operators:|from_st:st:jp:7671|to_st:st:jp:7494|007313->007599|lines:|operators:|from_st:st:jp:7494|to_st:st:jp:7438|007599->006686|lines:|operators:|from_st:st:jp:7438|to_st:st:jp:7433|006686->006070|lines:|operators:|from_st:st:jp:7433|to_st:st:jp:7427|006070->004759|lines:|operators:|from_st:st:jp:7427|to_st:st:jp:7603|004759->004748|lines:|operators:|from_st:st:jp:7603|to_st:st:jp:7843|004748->004638|lines:|operators:|from_st:st:jp:7843|to_st:st:jp:7839|004638->004793|lines:|operators:|from_st:st:jp:7839|to_st:st:jp:7835|004793->004943|lines:|operators:|from_st:st:jp:7835|to_st:st:jp:7832:11111111111111:0",
       "features": [
         {
           "geometry": 43,

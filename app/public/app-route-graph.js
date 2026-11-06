@@ -145,6 +145,8 @@ function getTrainRouteTemplateKey(train) {
       if (section.line_ids?.length) key += `|line_ids:${[...section.line_ids].sort().join(",")}`;
       if (section.section_codes?.length) key += `|section_codes:${section.section_codes.join(",")}`;
       if (section.section_codes_origin) key += `|section_codes_origin:${section.section_codes_origin}`;
+      if (section.from_station_id) key += `|from_st:${section.from_station_id}`;
+      if (section.to_station_id) key += `|to_st:${section.to_station_id}`;
       return key;
     })
     .join("|");
