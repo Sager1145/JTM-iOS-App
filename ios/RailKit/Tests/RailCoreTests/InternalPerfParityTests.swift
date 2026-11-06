@@ -42,7 +42,7 @@ struct InternalPerfParityTests {
         // edge with a validity bound, history id, track binding or connector.
         print("PERF Rare box payload", RouteGraph.Edge.rarePayloadSize)
         #expect(RouteGraph.Edge.rarePayloadSize <= 160)
-        #expect(MemoryLayout<RouteGraph.Edge>.stride <= 112)
+        #expect(MemoryLayout<RouteGraph.Edge>.stride <= 40)
         let plain = RouteGraph.Edge(to: "a", length: 1, institutionTypeCode: "1",
             railwayClassCode: "11", lineName: "L", operator: "O")
         var withRare = plain
