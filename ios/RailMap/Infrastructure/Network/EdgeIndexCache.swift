@@ -13,6 +13,10 @@ actor EdgeIndexCache {
         case scoped([String], String)
     }
     private var completed: (key: CacheKey, value: BuiltIndex)?
+    /// Denominator-only views (totals and line totals, no edges) per country.
+    /// A few kilobytes each, so they survive the single completed slot and
+    /// memory pressure: a country nobody rode is not re-decoded after eviction.
+    private var summaries: [String: Statistics.EdgeIndex] = [:]
     private var inFlight: [String: Task<BuiltIndex, Error>] = [:]
     // Independent of route and display admission: country construction awaits
     // DisplayNetworkCache while holding this permit. Merges acquire it only
@@ -51,6 +55,7 @@ actor EdgeIndexCache {
                 await self.releaseCompleted()
                 let n02 = try Self.build(country: country)
                 let count = n02.km.count
+                await self.storeSummary(Self.summary(of: n02), key: key)
                 // A display-package failure is not an N02-only success. Caching
                 // that fallback would keep the incomplete index for this residency.
                 let network = try await DisplayNetworkCache.shared.network(country: country)
@@ -73,21 +78,115 @@ actor EdgeIndexCache {
         }
     }
 
+    private func storeSummary(_ summary: Statistics.EdgeIndex, key: String) {
+        summaries[key] = summary
+    }
+
+    /// The countries whose edges a ride set can match: each ride's own region
+    /// plus the regions whose track physically meets it (the Pearl River Delta
+    /// border). Every other country contributes only its denominator.
+    nonisolated static func matchableCountries(rideCountries: some Sequence<String>) -> Set<String> {
+        var result = Set<String>()
+        for country in rideCountries {
+            result.insert(country)
+            result.formUnion(adjacentCountries[country] ?? [])
+        }
+        return result
+    }
+
+    private nonisolated static let adjacentCountries: [String: Set<String>] = [
+        "cn": ["hk", "mo"], "hk": ["cn", "mo"], "mo": ["cn", "hk"],
+    ]
+
+    /// `matchable` nil keeps every country's full index. Otherwise a country
+    /// outside it is merged as its denominator alone: its N02 totals and line
+    /// totals are unchanged, so coverage, line rows and line-name qualification
+    /// are identical, while its display package is never decoded. Falls back to
+    /// full indexes when no requested country is matchable, so an index that
+    /// has no edges at all never replaces one that would.
+    private nonisolated static func fullCountries(
+        _ countries: [String], matchable: Set<String>?
+    ) -> Set<String>? {
+        guard let matchable, countries.contains(where: matchable.contains) else { return nil }
+        return matchable.intersection(countries)
+    }
+
+    private nonisolated static func fullKey(_ full: Set<String>?) -> String {
+        full.map { $0.sorted().joined(separator: ",") } ?? "*"
+    }
+
+    private func parts(
+        countries: [String], full: Set<String>?,
+        japan: Statistics.EdgeIndex? = nil
+    ) async throws -> [(country: String, index: Statistics.EdgeIndex)] {
+        var parts: [(country: String, index: Statistics.EdgeIndex)] = []
+        for country in countries {
+            try Task.checkCancellation()
+            if country == Region.jp.code, let japan {
+                parts.append((country, japan))
+            } else if let full, !full.contains(country) {
+                parts.append((country, try await summaryIndex(country)))
+            } else {
+                parts.append((country, try await index(country: country)))
+            }
+        }
+        return parts
+    }
+
+    /// One country's denominator without its edges or display package.
+    private func summaryIndex(_ country: String) async throws -> Statistics.EdgeIndex {
+        let key = Self.countryCacheKey(country)
+        if let ready = summaries[key] { return ready }
+        if let full = cached(.country(key)) {
+            let summary = Self.summary(of: full.index)
+            summaries[key] = summary
+            return summary
+        }
+        let flightKey = "summary|" + key
+        if let running = inFlight[flightKey] { return try await running.value.index }
+        let limiter = buildLimiter
+        let task = Task.detached(priority: .userInitiated) { () async throws -> BuiltIndex in
+            try await limiter.withPermit {
+                await self.releaseCompleted()
+                let summary = Self.summary(of: try Self.build(country: country))
+                await self.storeSummary(summary, key: key)
+                return (index: summary, denominatorEdgeCount: 0)
+            }
+        }
+        inFlight[flightKey] = task
+        do {
+            let built = try await task.value
+            if inFlight[flightKey] == task { inFlight[flightKey] = nil }
+            return built.index
+        } catch {
+            if inFlight[flightKey] == task { inFlight[flightKey] = nil }
+            throw error
+        }
+    }
+
+    /// The denominator fields of an index with every edge array emptied.
+    /// `appendingVector` never changes these, so N02 alone is enough.
+    private nonisolated static func summary(of index: Statistics.EdgeIndex) -> Statistics.EdgeIndex {
+        Statistics.EdgeIndex(
+            map: [:], km: [], mask: [], lineName: [], lineMask: [],
+            totalKm: index.totalKm, totalsByMask: index.totalsByMask,
+            lineTotByCat: index.lineTotByCat, lineOperator: index.lineOperator)
+    }
+
     /// Preserve the caller's order, including duplicate countries and line-name
     /// qualification. Components are fetched before admitting the pure merge.
-    func merged(countries: [String]) async throws -> Statistics.EdgeIndex {
+    func merged(
+        countries: [String], matchable: Set<String>? = nil
+    ) async throws -> Statistics.EdgeIndex {
         guard countries.count > 1 else {
             guard let only = countries.first else { return Self.merge([]) }
             return Self.merge([(only, try await index(country: only))])
         }
-        let key = CacheKey.merged(countries, "attribution-policy-v2")
+        let full = Self.fullCountries(countries, matchable: matchable)
+        let key = CacheKey.merged(countries, "attribution-policy-v2|" + Self.fullKey(full))
         if let ready = cached(key) { return ready.index }
-        var parts: [(country: String, index: Statistics.EdgeIndex)] = []
-        for country in countries {
-            try Task.checkCancellation()
-            parts.append((country, try await index(country: country)))
-        }
-        return try await mergedResult(parts, key: key)
+        return try await mergedResult(
+            try await parts(countries: countries, full: full), key: key)
     }
 
     private func mergedResult(
@@ -107,19 +206,22 @@ actor EdgeIndexCache {
     /// The N02 denominator count travels with its country result. A country
     /// eviction cannot make Japan clipping count appended display-only edges.
     func scoped(
-        countries: [String], japanLeaves: Set<JapanAreaLeaf>?
+        countries: [String], japanLeaves: Set<JapanAreaLeaf>?,
+        matchable: Set<String>? = nil
     ) async throws -> Statistics.EdgeIndex {
-        guard let japanLeaves else { return try await merged(countries: countries) }
+        guard let japanLeaves else {
+            return try await merged(countries: countries, matchable: matchable)
+        }
         let leavesKey = japanLeaves.map(\.rawValue).sorted().joined(separator: ",")
-        let key = CacheKey.scoped(countries, leavesKey)
+        // Clipped Japan needs its edges for the restricted totals, so it is
+        // always built in full; only the other countries may be summaries.
+        let full = Self.fullCountries(
+            countries, matchable: matchable.map { $0.union([Region.jp.code]) })
+        let key = CacheKey.scoped(countries, leavesKey + "|" + Self.fullKey(full))
         if let ready = cached(key) { return ready.index }
         let japan = try await restrictedJapan(to: japanLeaves)
-        var parts: [(country: String, index: Statistics.EdgeIndex)] = []
-        for country in countries {
-            try Task.checkCancellation()
-            parts.append((country, country == Region.jp.code ? japan : try await index(country: country)))
-        }
-        return try await mergedResult(parts, key: key)
+        return try await mergedResult(
+            try await parts(countries: countries, full: full, japan: japan), key: key)
     }
 
     // End the full-country result's lifetime before fetching other regions.

@@ -374,16 +374,34 @@ final class MileageStatisticsStore {
         state = .loading
         let total = trains.count
         let country = Self.categoryCountry(for: countries)
+        // Only the regions these rides can reach need their edges; the rest
+        // contribute their unchanged denominators without decoding a package.
+        // Every region a journey is solved across (`RouteScope.regions`), not
+        // only the home region a ride is filed under.
+        var matchable: Set<String>? = EdgeIndexCache.matchableCountries(
+            rideCountries: rides.map(\.country)
+                + trains.flatMap { Region.regionsTouched($0).map(\.code) })
+#if DEBUG
+        // A/B measurement only: every region decoded in full, as before.
+        if ProcessInfo.processInfo.environment["RAILMAP_DEBUG_STATS_FULL_INDEX"] == "1" {
+            matchable = nil
+        }
+#endif
+        let matchableKey = matchable.map {
+            countries.filter($0.contains).sorted().joined(separator: ",")
+        } ?? "*"
         task = Task { [weak self] in
             guard let self else { return }
             let interval = RailSignpost.jobs.begin("stats.load")
             defer { RailSignpost.jobs.end("stats.load", interval) }
 #if DEBUG
             let started = ContinuousClock.now
+            let peakAtStart = Self.peakFootprintMB()
 #endif
             do {
                 self.progress = Progress(stage: .readingNetwork)
-                let index = try await Self.readNetwork(countries: countries, japanLeaves: japanLeaves)
+                let index = try await Self.readNetwork(
+                    countries: countries, japanLeaves: japanLeaves, matchable: matchable)
                 try Task.checkCancellation()
 #if DEBUG
                 let indexed = ContinuousClock.now
@@ -398,8 +416,11 @@ final class MileageStatisticsStore {
                 // a country-only key would reuse entries matched under the
                 // previous attribution. No history or package revision is in
                 // scope here, so the key does not carry one.
+                // The matchable countries decide which regions carry edges, so
+                // they are part of the index identity: a first ride in a new
+                // region rebuilds its edges and shifts the merged edge ids.
                 let indexKey = countries.joined(separator: ",") + "|" + leavesKey
-                    + "|attribution-policy-v2"
+                    + "|" + matchableKey + "|attribution-policy-v2"
                 if self.entryCacheIndexKey != indexKey {
                     self.entryCache = [:]
                     self.entryCacheIndexKey = indexKey
@@ -448,8 +469,9 @@ final class MileageStatisticsStore {
                 try Task.checkCancellation()
 #if DEBUG
                 let finished = ContinuousClock.now
-                NSLog("[stats.timing] regions=%@ rides=%d read=%@ match=%@ aggregate=%@ total=%@",
-                    countries.joined(separator: ","), total,
+                NSLog("[stats.timing] regions=%@ rides=%d edges=%d peakMB=%.0f->%.0f read=%@ match=%@ aggregate=%@ total=%@",
+                    countries.joined(separator: ","), total, index.km.count,
+                    peakAtStart, Self.peakFootprintMB(),
                     String(describing: started.duration(to: indexed)),
                     String(describing: indexed.duration(to: matched)),
                     String(describing: matched.duration(to: finished)),
@@ -673,6 +695,21 @@ final class MileageStatisticsStore {
         }
     }
 
+#if DEBUG
+    private nonisolated static func peakFootprintMB() -> Double {
+        var info = task_vm_info_data_t()
+        var count = mach_msg_type_number_t(
+            MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<integer_t>.size)
+        let result = withUnsafeMutablePointer(to: &info) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+                task_info(mach_task_self_, task_flavor_t(TASK_VM_INFO), $0, &count)
+            }
+        }
+        guard result == KERN_SUCCESS else { return -1 }
+        return Double(info.ledger_phys_footprint_peak) / 1_048_576
+    }
+#endif
+
     // MARK: - the phases
 
     /// The region's edge index, from the cache that owns it.
@@ -683,12 +720,12 @@ final class MileageStatisticsStore {
     /// ``EdgeIndexCache``, which is also what the map's ridden-line category
     /// filter classifies against.
     private nonisolated static func readNetwork(
-        countries: [String], japanLeaves: Set<JapanAreaLeaf>?
+        countries: [String], japanLeaves: Set<JapanAreaLeaf>?, matchable: Set<String>?
     ) async throws -> Statistics.EdgeIndex {
         let interval = RailSignpost.jobs.begin("stats.readNetwork")
         defer { RailSignpost.jobs.end("stats.readNetwork", interval) }
         let index = try await EdgeIndexCache.shared.scoped(
-            countries: countries, japanLeaves: japanLeaves)
+            countries: countries, japanLeaves: japanLeaves, matchable: matchable)
         try Task.checkCancellation()
         return index
     }
