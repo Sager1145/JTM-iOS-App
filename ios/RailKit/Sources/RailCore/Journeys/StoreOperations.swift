@@ -655,6 +655,8 @@ extension StoreOperations {
         if let confirmation = train.routeConfirmation {
             pairs.append(("route_confirmation", .string(confirmation.rawValue)))
         }
+        if let stock = train.rollingStock { pairs.append(("rolling_stock", TrainValidation.json(stock))) }
+        if let ticket = train.ticket { pairs.append(("ticket", TrainValidation.json(ticket))) }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 

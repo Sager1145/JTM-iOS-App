@@ -163,6 +163,11 @@ public struct Train: Codable, Equatable, Sendable {
     public var notes: String?
     /// Optional user grouping, shared across regions and preserved in archives.
     public var journeyGroup: JourneyGroup?
+    /// Set, cars and livery ridden. Written only when set (`rolling_stock`);
+    /// `vehicleType` stays the series field.
+    public var rollingStock: RollingStock?
+    /// Seat, class, fare and ticket kind. Written only when set (`ticket`).
+    public var ticket: Ticket?
 
     public init(
         id: String,
@@ -185,7 +190,9 @@ public struct Train: Codable, Equatable, Sendable {
         journeyGroup: JourneyGroup? = nil,
         routeConfirmation: RouteConfirmation? = nil,
         operatorID: String? = nil,
-        operatorIDs: [String]? = nil
+        operatorIDs: [String]? = nil,
+        rollingStock: RollingStock? = nil,
+        ticket: Ticket? = nil
     ) {
         self.id = id
         self.date = date
@@ -208,6 +215,8 @@ public struct Train: Codable, Equatable, Sendable {
         self.routeConfirmation = routeConfirmation
         self.operatorID = operatorID
         self.operatorIDs = operatorIDs.flatMap { $0.isEmpty ? nil : $0 }
+        self.rollingStock = rollingStock
+        self.ticket = ticket
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -224,6 +233,8 @@ public struct Train: Codable, Equatable, Sendable {
         case region, notes
         case journeyGroup = "journey_group"
         case routeConfirmation = "route_confirmation"
+        case rollingStock = "rolling_stock"
+        case ticket
     }
 
     // Written out only when present, so that a store which omits a field
@@ -259,6 +270,8 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(notes, forKey: .notes)
         try container.encodeIfPresent(journeyGroup, forKey: .journeyGroup)
         try container.encodeIfPresent(routeConfirmation, forKey: .routeConfirmation)
+        try container.encodeIfPresent(rollingStock, forKey: .rollingStock)
+        try container.encodeIfPresent(ticket, forKey: .ticket)
     }
 }
 
@@ -1166,6 +1179,7 @@ public enum TrainValidation {
         if let color = train.style?.color, !color.isEmpty, !isValidTrainColor(color) {
             issues.append(Diagnostic(path: "style.color", reason: "style.color must be #RRGGBB."))
         }
+        issues.append(contentsOf: tripDetailDiagnostics(train))
         return issues
     }
 
@@ -1366,6 +1380,13 @@ public enum TrainValidation {
         for key in ["train_type", "vehicle_type", "company", "number_en", "notes"] {
             if let value = json[key], !value.isString {
                 return Diagnostic(path: key, reason: "\(key) must be a string when present.")
+            }
+        }
+        for key in ["rolling_stock", "ticket"] {
+            if let value = json[key], value != .null {
+                guard case .object = value else {
+                    return Diagnostic(path: key, reason: "\(key) must be an object when present.")
+                }
             }
         }
         _ = try normalizeImportedRouteConfirmation(json["route_confirmation"])
@@ -1578,7 +1599,9 @@ public enum TrainValidation {
             notes: optionalText(json, "notes"),
             routeConfirmation: try normalizeImportedRouteConfirmation(json["route_confirmation"]),
             operatorID: optionalText(json, "operator_id"),
-            operatorIDs: optionalOperatorIDs(json["operator_ids"]))
+            operatorIDs: optionalOperatorIDs(json["operator_ids"]),
+            rollingStock: rollingStock(json["rolling_stock"]),
+            ticket: ticket(json["ticket"]))
     }
 
     private static func optionalOperatorIDs(_ value: JSON?) -> [String]? {
@@ -1885,7 +1908,7 @@ public enum TrainValidation {
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
-                "list",
+                "list", "rolling_stock", "ticket",
             ],
             "Train")
 
@@ -1948,7 +1971,9 @@ public enum TrainValidation {
             journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]),
             routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]),
             operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString,
-            operatorIDs: optionalOperatorIDs(train["operator_ids"]))
+            operatorIDs: optionalOperatorIDs(train["operator_ids"]),
+            rollingStock: rollingStock(train["rolling_stock"]),
+            ticket: ticket(train["ticket"]))
         normalized.listMembership = listMembership
         return normalized
     }
@@ -2190,7 +2215,9 @@ public enum TrainValidation {
             journeyGroup: train.journeyGroup,
             routeConfirmation: train.routeConfirmation,
             operatorID: train.operatorID,
-            operatorIDs: train.operatorIDs)
+            operatorIDs: train.operatorIDs,
+            rollingStock: train.rollingStock,
+            ticket: train.ticket)
         // Carried for the same reason as `region`: the reader filed it.
         exported.listMembership = train.listMembership
         return exported
