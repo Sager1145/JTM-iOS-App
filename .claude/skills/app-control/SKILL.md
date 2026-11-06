@@ -82,6 +82,10 @@ $A screenshot name=after-add && $A pull-screenshot after-add --out /private/tmp/
 
 When station names are ambiguous, the first catalog match is used. Pass the source code to be exact. `addTrip` returns once the editor's plan has settled (`planned && !searching`). If a section has several candidates, choose them with `sectionChoices` (or `editTrip id=<draft id> sectionChoices=…`) and then `saveEditor`.
 
+## Sweep (same pass on every target)
+
+`app-control.py --target sim|mac|device sweep [sample]` runs one timed pass over every command family on an app started with `launch`. The steps: wait mapReady, state, loadSamples, wait routesLoaded, select/focus/screenshot/openEditor/cancel on the first trip, addTrip 品川→横浜 (plan only), openStats, hide filter on/off, a layer off/on, reloadAll, clearRouteCaches, memoryWarning, a closing screenshot, state, then exportDiagnostics, pulled to the Mac. It prints `{ok, failedSteps, steps[{status, appMs, roundTripMs, timings…}], export}`, with exit 4 if a required step failed. Compare targets on `appMs`. On a device `roundTripMs` includes about 1 s per `devicectl copy`.
+
 ## Developer ball (DEBUG only)
 
 The ball is a draggable button that snaps to the nearer side edge. It lives in its own window above all app UI and sheets, and tapping it expands the panel. Its side, height, expanded state and page persist per device in UserDefaults. Its ring is **red on the real ride store** and green on an isolated one, and the panel shows a matching banner. The ball is hidden by `RAILMAP_DEVTOOLS=0` and, by default, for any UI-test launch (any `RAILMAP_UI_TEST_*` key) unless `RAILMAP_DEVTOOLS=1`. `screenshot` captures only the app's window, never the ball. Collapsed, it costs nothing beyond the ball: sampling and the signpost recorder run only while the Perf page (recorder: Perf or State) is open.

@@ -376,6 +376,66 @@ def cmd_devtools(a):
     out(result, code)
 
 
+def cmd_sweep(a):
+    """A standard timed pass over every command family, identical on sim, mac and device.
+    Needs an app started with `launch` (isolated store). Prints one JSON summary; exit 4 if any step failed."""
+    steps = []
+
+    def step(command, *pairs, required=True):
+        result = send(a, build_request(command, list(pairs), None))
+        data = result.get("data") or {}
+        entry = {"step": command, "args": list(pairs), "status": result.get("status"),
+                 "appMs": result.get("elapsedMs"), "roundTripMs": result.get("roundTripMs")}
+        if result.get("error"):
+            entry["error"] = result["error"][:300]
+        for key in ("timings", "ms", "waitedMs", "trips", "merged"):
+            if key in data:
+                entry[key] = data[key]
+        if command == "state" and isinstance(data, dict):
+            entry["inventory"] = data.get("inventory")
+            entry["memory"] = data.get("memory")
+            entry["signposts"] = [(s["name"], s["count"], s["maxMs"]) for s in
+                                  (data.get("signposts") or {}).get("byName", [])[:12]]
+        entry["required"] = required
+        steps.append(entry)
+        return result
+
+    samples = a.rest[0] if a.rest else "tokyo-limited-express-loop"
+    step("wait", "condition=mapReady", "timeoutMs=60000")
+    step("state", "trips=false")
+    step("loadSamples", "samples=" + samples)
+    step("wait", "condition=routesLoaded", "timeoutMs=600000")
+    first = send(a, build_request("state", [], None))
+    trips = ((first.get("data") or {}).get("trips") or [])
+    trip = trips[0]["id"] if trips else None
+    if trip:
+        step("selectTrip", "id=" + trip)
+        step("focusTrip", "id=" + trip)
+        step("screenshot", "name=sweep-selected")
+        step("openEditor", "id=" + trip)
+        step("cancelEditor")
+    step("addTrip", "from=品川", "to=横浜", "date=2025-01-03", required=False)
+    step("cancelEditor", required=False)
+    step("openStats")
+    step("setHideFilter", "years=[2025]")
+    step("setHideFilter", "mode=showAll")
+    step("setLayer", "name=metro", "on=false")
+    step("setLayer", "name=metro", "on=true")
+    step("reloadAll", "wait=true", "timeoutMs=600000")
+    step("clearRouteCaches")
+    step("memoryWarning")
+    step("screenshot", "name=sweep-end")
+    step("state", "trips=false")
+    exported = send(a, build_request("exportDiagnostics", [], None))
+    export = {"status": exported.get("status")}
+    if exported.get("status") == "ok":
+        name = exported["data"]["name"]
+        export["pulled"] = pull(a, "exports/" + name, "railmap-{}-{}".format(a.target, name))
+    failed = [s for s in steps if s["required"] and s["status"] != "ok"]
+    out({"target": a.target, "device": device_id(a), "ok": not failed,
+         "failedSteps": [s["step"] for s in failed], "steps": steps, "export": export}, 0 if not failed else 4)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--target", choices=["sim", "mac", "device"], default="sim")
@@ -397,7 +457,7 @@ def main():
                     help="build/install/launch: product configuration (Release only for check-release)")
     ap.add_argument("--dry-run", action="store_true", help="build: print the xcodebuild command")
     ap.add_argument("--data-only", action="store_true", help="print only the result's data on success")
-    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release")
+    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release|sweep")
     ap.add_argument("rest", nargs="*", help="key=value args (or the screenshot name for pull-screenshot)")
     a = ap.parse_args()
 
@@ -405,6 +465,8 @@ def main():
         cmd_build(a)
     if a.action == "check-release":
         cmd_check_release(a)
+    if a.action == "sweep":
+        cmd_sweep(a)
     if a.action == "install":
         cmd_install(a)
     if a.action == "launch":
