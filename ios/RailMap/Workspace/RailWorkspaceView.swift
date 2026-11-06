@@ -2004,7 +2004,7 @@ struct RailWorkspaceView: View {
     }
 
     private func scopedLoaded(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
-        guard tripHide.isActive else { return loaded }
+        guard tripHide.needsScoping(loaded) else { return loaded }
         let scoped = tripHide.scoped(loaded)
         var copy = loaded
         copy.trains = scoped.trains
@@ -2683,7 +2683,7 @@ struct RailWorkspaceView: View {
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .failed(.load(message))),
                 systemImage: "exclamationmark.triangle")
-        case .loaded(let loaded) where !loaded.days.isEmpty && tripHide.isActive
+        case .loaded(let loaded) where !loaded.days.isEmpty && tripHide.needsScoping(loaded)
                 && tripHide.scoped(loaded).days.isEmpty:
             // Every trip is in a hidden region or month: say so, with the reset.
             VStack(spacing: 10) {

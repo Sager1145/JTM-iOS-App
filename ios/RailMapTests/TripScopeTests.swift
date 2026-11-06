@@ -145,4 +145,16 @@ struct DisabledRegionScopeTests {
         #expect(filter.scoped(loaded).hiddenIDs == ["cn-1"])
         #expect(StatisticsScope.everything.regions.contains(.cn) == false)
     }
+
+    @Test("a Hong Kong trip naming a CN-OSM source code never gets a merged route scope")
+    func unconnectedSourceCodesDoNotMerge() {
+        var hk = StoreOperations.createBlankTrain(country: "hk")
+        hk.region = "hk"
+        hk.routeSections = [RouteSection(
+            from: "A", to: "B", fromN02StationCode: "CN-OSM-N1", toN02StationCode: "CN-OSM-N2")]
+        let scope = RouteScope(hk)
+        #expect(!scope.crossesBorder)
+        #expect(scope.graphRegions.count == 1)
+        #expect(scope.home == .hk)
+    }
 }

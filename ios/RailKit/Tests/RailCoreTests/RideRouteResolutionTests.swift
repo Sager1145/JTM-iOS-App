@@ -199,7 +199,7 @@ struct RideRouteResolutionTests {
         #expect(result.physicalGaps.isEmpty)
     }
 
-    @Test("Name-only stops retain the solver's source station IDs as geometry-matched metadata", .disabled("Mainland China support disabled; see region-connectivity.json"))
+    @Test("Name-only stops retain the solver's source station IDs as geometry-matched metadata", .mainlandChinaEnabled)
     func nameOnlySourceStationIdentitySurvives() throws {
         let fromCode = "CN-OSM-N1588514426"
         let toCode = "CN-OSM-N1588514327"
@@ -240,7 +240,7 @@ struct RideRouteResolutionTests {
             hints: RouteHints(), network: network, sourceCoordinates: coordinates) == nil)
     }
 
-    @Test("CN source-node paths cannot be redrawn or identified as a nearby untraversed metro", .disabled("Mainland China support disabled; see region-connectivity.json"))
+    @Test("CN source-node paths cannot be redrawn or identified as a nearby untraversed metro", .mainlandChinaEnabled)
     func sourceNodePathRejectsNearbyCanonicalIdentity() throws {
         var resolution = try sourceCanonicalFixture()
         let result = try resolution.resolve(.init(train: unconstrainedTrain(country: "cn")))
@@ -253,7 +253,7 @@ struct RideRouteResolutionTests {
         #expect(segment.physicalRoute == nil)
     }
 
-    @Test("A CN canonical line actually traversed by the source-node path keeps its drawing and identity", .disabled("Mainland China support disabled; see region-connectivity.json"))
+    @Test("A CN canonical line actually traversed by the source-node path keeps its drawing and identity", .mainlandChinaEnabled)
     func sourceNodePathKeepsMatchingCanonicalIdentity() throws {
         var resolution = try sourceCanonicalFixture(canonicalIsSource: true)
         let result = try resolution.resolve(.init(train: unconstrainedTrain(country: "cn")))
@@ -265,7 +265,7 @@ struct RideRouteResolutionTests {
         #expect(result.physicalGaps.isEmpty)
     }
 
-    @Test("CN paths without original node IDs retain the existing canonical display contract", .disabled("Mainland China support disabled; see region-connectivity.json"))
+    @Test("CN paths without original node IDs retain the existing canonical display contract", .mainlandChinaEnabled)
     func unqualifiedPathKeepsLegacyCanonicalDisplay() throws {
         var resolution = try sourceCanonicalFixture(sourceNodeIDs: false)
         let result = try resolution.resolve(.init(train: unconstrainedTrain(country: "cn")))

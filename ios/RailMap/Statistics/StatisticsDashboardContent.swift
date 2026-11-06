@@ -1416,7 +1416,7 @@ struct StatisticsDashboardContent: View {
     /// The store minus hidden regions/months (same arrays until a choice or
     /// the store changes, so the memoised scope below keeps its key).
     private func visibleStore(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
-        guard let tripHide, tripHide.isActive else { return loaded }
+        guard let tripHide, tripHide.needsScoping(loaded) else { return loaded }
         let scoped = tripHide.scoped(loaded)
         var copy = loaded
         copy.trains = scoped.trains

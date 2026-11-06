@@ -299,12 +299,12 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
     ///
     /// The neutral automatic-launch fallback for an empty journey store.
     static var eastAsiaNetworkExtent: MKCoordinateRegion {
-        combinedNetworkExtent(of: Array(allCases))
+        combinedNetworkExtent(of: enabledOrdered)
     }
 
     /// Every supported network, using the same extent reduction as launch.
     static var everyNetworkExtent: MKCoordinateRegion {
-        combinedNetworkExtent(of: Array(allCases))
+        combinedNetworkExtent(of: enabledOrdered)
     }
 
     /// One stable box for a set of catalog regions.
@@ -382,7 +382,15 @@ struct RouteScope: Hashable, Sendable {
     var crossesBorder: Bool { regions.count > 1 }
 
     init(regions: [Region]) {
-        self.regions = regions.isEmpty ? [.jp] : regions
+        let regions = regions.isEmpty ? [Region.jp] : regions
+        // Regions whose rail networks are not connected (or that are not
+        // supported) never merge into one working set: only the home region
+        // is kept.
+        if regions.count > 1, !RegionConnectivity.allConnected(regions.map(\.code)) {
+            self.regions = [regions[0]]
+        } else {
+            self.regions = regions
+        }
     }
 
     /// The scope one itinerary is solved in.

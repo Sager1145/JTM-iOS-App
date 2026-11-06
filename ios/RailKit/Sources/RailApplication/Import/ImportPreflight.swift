@@ -84,6 +84,10 @@ public enum ImportPreflight {
         public var kept: Int
         public var renames: [Rename]
         public var issues: [Issue]
+        /// Rows whose stops span regions whose rail networks do not connect
+        /// (`RegionConnectivity`). Not blocking: the journey is kept, and its
+        /// cross-region sections are never drawn as track.
+        public var crossRegionRows: [Int] = []
 
         /// A commit is offered only when nothing is wrong.
         ///
@@ -153,7 +157,7 @@ public enum ImportPreflight {
             trains: session.trains, country: country, mode: mode,
             rowsAreEmpty: rows.isEmpty, issues: &issues)
 
-        return Report(
+        var report = Report(
             mode: mode,
             country: country,
             schemaVersion: schema,
@@ -163,6 +167,8 @@ public enum ImportPreflight {
             kept: mode == .replaceAll ? 0 : currentTrains.count,
             renames: renames,
             issues: issues)
+        report.crossRegionRows = rows.indices.filter { TrainValidation.crossRegionPair(rows[$0]) != nil }
+        return report
     }
 
     private static func documentFailure(

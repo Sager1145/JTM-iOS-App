@@ -586,8 +586,16 @@ struct DataManagerView: View {
                         if let store = itineraries.store {
                             try await library.snapshotBackup(store, reason: .beforeDeleteAll)
                         }
-                        try await library.deleteSavedStore()
-                        itineraries.load(from: library)
+                        // Hidden trips in a disabled region (mainland China)
+                        // are kept: empty the visible rides and save, rather
+                        // than removing the file.
+                        if let store = itineraries.store,
+                           !ItineraryStore.disabledRegionTrips(store.trains).isEmpty {
+                            itineraries.deleteAll(clearing: library)
+                        } else {
+                            try await library.deleteSavedStore()
+                            itineraries.load(from: library)
+                        }
                     } catch {
                         operationError = OperationError(
                             titleKey: "data.loadFailedTitle",
@@ -643,7 +651,8 @@ struct DataManagerView: View {
             Text(
                 localization.text(
                     "data.deleteAllScope", params: ["region": .string(regionName), "count": .number(Double(trainCount))])
-                    + "\n" + localization.text("data.deleteAllRecovery"))
+                    + "\n" + localization.text("data.deleteAllRecovery")
+                    + (hasHiddenRegionTrips ? "\n" + localization.text("data.hiddenRegionKept") : ""))
         }
         // 重置示例, which now names WHICH sample rather than "the one this
         // region ships": the reader long-pressed a specific one, so the
@@ -676,7 +685,15 @@ struct DataManagerView: View {
 
     // MARK: - the sentences the hero says
 
-    private var trainCount: Int { itineraries.loaded?.trains.count ?? 0 }
+    /// Journeys the reader can see; hidden disabled-region journeys are kept by
+    /// every bulk operation and are not counted as replaced or deleted.
+    private var trainCount: Int {
+        itineraries.loaded?.trains.reduce(0) { $0 + (Region.resolved($1).isEnabled ? 1 : 0) } ?? 0
+    }
+
+    private var hasHiddenRegionTrips: Bool {
+        itineraries.loaded?.trains.contains { !Region.resolved($0).isEnabled } == true
+    }
 
     private func regionName(_ region: Region) -> String {
         StatisticsFormat.regionName(region, localization: localization)
