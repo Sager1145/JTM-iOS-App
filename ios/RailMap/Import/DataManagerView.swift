@@ -341,8 +341,9 @@ struct DataManagerView: View {
     }
 
     /// Fold a sample in, or — from the long-press action — make it the whole
-    /// working set. Either way a recovery copy is written first, because both
-    /// can overwrite rides the reader edited.
+    /// working set. Only the second writes a recovery copy first: it discards
+    /// the reader's own rides, while a fold replaces only that sample's
+    /// example rides with their bundled copies.
     private func loadSample(_ sample: RideLibrary.Sample, replacingEverything: Bool) {
         // A `Task` because both doors now place the incoming rides in their
         // region before they are published, and that reads a shipped dataset
@@ -365,12 +366,15 @@ struct DataManagerView: View {
                     return
                 }
                 let incoming = try await library.sample(sample.resource)
-                if let store = itineraries.store, !store.trains.isEmpty {
-                    // Aborts into the catch below on failure, before either
-                    // door touches the working set — a sample load must not
-                    // overwrite rides a backup could not be taken of.
-                    try await library.snapshotBackup(
-                        store, reason: replacingEverything ? .beforeReplace : .beforeImport)
+                // Only replacing everything writes a recovery copy first: it
+                // discards the reader's own rides. Folding a sample in touches
+                // only that sample's example rides, which it puts back to the
+                // bundled copy by design (user decision 2026-11-05: an edited
+                // example ride is not kept and not backed up).
+                if replacingEverything, let store = itineraries.store, !store.trains.isEmpty {
+                    // Aborts into the catch below on failure, before the
+                    // working set is touched.
+                    try await library.snapshotBackup(store, reason: .beforeReplace)
                 }
                 // `forgetLoadedSamples`/`noteSampleLoaded` only follow a
                 // commit that actually landed: an import claiming the store
