@@ -361,6 +361,7 @@
 				DEVELOPMENT_TEAM = 9JN2TD2UES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "tools/app-control/RailMap-Debug-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows where you are on the railway map.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

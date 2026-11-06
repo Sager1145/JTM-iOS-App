@@ -1,5 +1,8 @@
 import Foundation
 import os
+#if DEBUG
+import RailCore
+#endif
 
 /// The app's one signpost surface.
 ///
@@ -58,6 +61,18 @@ enum RailSignpost {
         ProcessInfo.processInfo.environment["RAILMAP_SIGNPOSTS"] == "0"
 }
 
+#if DEBUG
+/// DEBUG: the Instruments interval plus its in-process recording
+/// (`SignpostRecorder`, shown by the developer panel). Release keeps the
+/// bare `OSSignpostIntervalState`, so nothing changes there.
+struct RailSignpostInterval {
+    var state: OSSignpostIntervalState?
+    var recorded: SignpostRecorder.Token?
+}
+#else
+typealias RailSignpostInterval = OSSignpostIntervalState
+#endif
+
 extension OSSignposter {
 
     /// Open an interval, or answer `nil` when nothing is listening.
@@ -70,15 +85,28 @@ extension OSSignposter {
     ///     let interval = RailSignpost.map.begin("map.rebuild")
     ///     defer { RailSignpost.map.end("map.rebuild", interval) }
     @inline(__always)
-    func begin(_ name: StaticString) -> OSSignpostIntervalState? {
+    func begin(_ name: StaticString) -> RailSignpostInterval? {
+#if DEBUG
+        let recorded = SignpostRecorder.shared.begin(name)
+        let state = isEnabled && !RailSignpost.isSuppressed ? beginInterval(name, id: makeSignpostID()) : nil
+        guard state != nil || recorded != nil else { return nil }
+        return RailSignpostInterval(state: state, recorded: recorded)
+#else
         guard isEnabled, !RailSignpost.isSuppressed else { return nil }
         return beginInterval(name, id: makeSignpostID())
+#endif
     }
 
     @inline(__always)
-    func end(_ name: StaticString, _ state: OSSignpostIntervalState?) {
-        guard let state else { return }
+    func end(_ name: StaticString, _ interval: RailSignpostInterval?) {
+#if DEBUG
+        guard let interval else { return }
+        SignpostRecorder.shared.end(interval.recorded)
+        if let state = interval.state { endInterval(name, state) }
+#else
+        guard let state = interval else { return }
         endInterval(name, state)
+#endif
     }
 
     /// An interval the tools treat as an animation: Instruments' Animation
@@ -86,9 +114,16 @@ extension OSSignposter {
     /// inside it. For gestures the reader watches frame by frame, such as
     /// the docked card's header drag. Ended with ``end(_:_:)`` like any other.
     @inline(__always)
-    func beginAnimation(_ name: StaticString) -> OSSignpostIntervalState? {
+    func beginAnimation(_ name: StaticString) -> RailSignpostInterval? {
+#if DEBUG
+        let recorded = SignpostRecorder.shared.begin(name)
+        let state = isEnabled && !RailSignpost.isSuppressed ? beginAnimationInterval(name, id: makeSignpostID()) : nil
+        guard state != nil || recorded != nil else { return nil }
+        return RailSignpostInterval(state: state, recorded: recorded)
+#else
         guard isEnabled, !RailSignpost.isSuppressed else { return nil }
         return beginAnimationInterval(name, id: makeSignpostID())
+#endif
     }
 
     /// A count rather than a duration — how many overlays a rebuild produced,

@@ -628,6 +628,8 @@ struct RailWorkspaceView: View {
             else { return }
             query = wanted
         }
+        // Test control channel: lend the workspace's own actions (AppControlHost).
+        .onAppear { AppControlHost.shared.workspace = appControlHandle }
 #endif
         .task(id: "\(riddenRoutes.rides.count)|\(controller.isMapReady)") {
             guard !didRunDebugPlayback,
@@ -3689,3 +3691,31 @@ private struct RailCommandRefreshKey: Equatable {
     .environment(AppLocalization())
     .environment(PresentationHost())
 }
+
+#if DEBUG
+extension RailWorkspaceView {
+    /// The workspace's own actions, for the test control channel. Each closure
+    /// is the code path a tap takes; see `AppControlHost`.
+    var appControlHandle: AppControlWorkspaceHandle {
+        AppControlWorkspaceHandle(
+            selectTrip: { pick($0) },
+            focusTrip: { id in
+                controller.requestAutoFocus(.journey(id), enabled: true, playbackIsActive: playback.isActive)
+            },
+            presentEditor: { presentJourneyEditor($0) },
+            newTripScaffold: { newJourneyScaffold(in: $0) },
+            closeEditor: { closeJourneyEditor() },
+            editorState: {
+                AppControlWorkspaceHandle.EditorState(
+                    open: journeyEditor != nil, isNew: journeyEditor?.isNew ?? false,
+                    trainID: journeyEditor?.train.id, recordID: journeyEditorRecordID,
+                    saving: journeySaveAttemptID != nil, saveFailure: journeySaveFailureDetail)
+            },
+            sheetID: { sheet?.id },
+            renderStats: { render },
+            drawableRideCount: { mapRides.count },
+            stage: { "\(stageSelection)" },
+            tab: { selection.rawValue })
+    }
+}
+#endif

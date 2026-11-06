@@ -550,7 +550,7 @@ final class RiddenRouteStore {
 
     /// The route cache on disk plus every in-memory memo of a solve, so a
     /// reload solves rather than replays.
-    @concurrent private nonisolated static func discardSolvedRoutes() async {
+    @concurrent nonisolated static func discardSolvedRoutes() async {
         let base = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
             ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
         try? FileManager.default.removeItem(at: base)

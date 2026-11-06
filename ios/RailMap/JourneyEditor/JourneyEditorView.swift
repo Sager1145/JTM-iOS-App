@@ -433,6 +433,10 @@ struct JourneyEditorView: View {
         .onChange(of: timetableTrain != nil) { _, _ in refreshDrawnRoutes() }
         .task(id: region) { await loadRegion() }
         .task(id: routeIdentity) { await planRoute() }
+#if DEBUG
+        // Test control channel: lend this editor's own actions (AppControlHost).
+        .modifier(AppControlEditorRegistration(handle: appControlHandle))
+#endif
     }
 
     private var form: some View {
@@ -3202,3 +3206,117 @@ struct JourneyEditorView: View {
         localization.text("ios.newTrip.\(key)", params: params, fallback: fallback)
     }
 }
+
+#if DEBUG
+extension JourneyEditorView {
+    /// This editor's own station assignment, planner state, section choice and
+    /// save, for the test control channel; see `AppControlHost`.
+    var appControlHandle: AppControlEditorHandle {
+        AppControlEditorHandle(
+            trainID: train.id, isNew: isNew,
+            isReady: { (catalog != nil && package != nil && geometryCache != nil) || loadFailed },
+            loadFailed: { loadFailed },
+            region: { region.code },
+            station: { query in
+                let exact = mapStations.filter { $0.key.sourceCode == query }
+                if !exact.isEmpty { return exact }
+                let named = mapStations.filter { $0.name == query }
+                return named.isEmpty ? mapStations.filter { $0.aliases.contains(query) } : named
+            },
+            setRoute: { from, to, via in
+                if let from { assign(from, to: .origin) }
+                if let to { assign(to, to: .destination) }
+                if let via {
+                    vias = []
+                    for station in via { assign(station, to: .via) }
+                }
+            },
+            setDay: { day in
+                guard let target = RecordDate.date(from: day),
+                      let current = RecordDate.date(from: dayString(departure)) else { return }
+                departure = target.addingTimeInterval(departure.timeIntervalSince(current))
+            },
+            choose: { id, index in
+                guard sections.indices.contains(index),
+                      sections[index].candidates.contains(where: { $0.id == id }) else { return false }
+                choose(id, inSection: index)
+                return true
+            },
+            commit: { confirmed in commit(confirmedRemoval: confirmed) },
+            snapshot: { appControlSnapshot })
+    }
+
+    private var appControlSnapshot: AppControlEditorSnapshot {
+        typealias Snapshot = AppControlEditorSnapshot
+        let planned = plannedIdentity == routeIdentity
+        let notices: [String] = [
+            loadFailed ? "loadFailed" : nil,
+            autofillFailed ? "autofillFailed" : nil,
+            corridorsRemovedByDate ? "corridorsHiddenByDate" : nil,
+            routeProofFailure.map { "routeProofFailure: \($0)" },
+            historicalSaveAllowed ? "historicalSaveAllowed" : nil,
+        ].compactMap { $0 }
+        let sectionList = sections.enumerated().map { index, section in
+            let (name, detail) = Snapshot.outcomeName(section.outcome)
+            let notice: String? = switch historicalNotice(for: section) {
+            case .info: "info"
+            case .warning: "warning"
+            case nil: nil
+            }
+            let probe: String? = switch section.historicalProbe {
+            case .some(.historicalOnly): "historicalOnly"
+            case .some(.none): "none"
+            case nil: nil
+            }
+            return Snapshot.Section(
+                key: section.key, index: index, from: section.fromName, to: section.toName, outcome: name, outcomeDetail: detail,
+                candidates: section.candidates.map {
+                    Snapshot.candidate($0, proven: section.proven, historical: section.historical)
+                },
+                chosen: choice(for: section), historicalNotice: notice, historicalProbe: probe,
+                proofFailure: section.proofFailure, removedByDate: section.removedByDate)
+        }
+        let corridor = selectedCorridor
+        let removalStations: [String]? = removal.flatMap { request -> [String]? in
+            if case .save = request.action { return request.stations }
+            return nil
+        }
+        return AppControlEditorSnapshot(
+            trainID: train.id, isNew: isNew, region: region.code,
+            ready: catalog != nil && package != nil, searching: searching, planned: planned,
+            routeEdited: routeEdited, canSave: canSave, date: dayString(departure),
+            origin: origin.map {
+                Snapshot.Station(code: $0.key.sourceCode, name: $0.name, stationID: originStationID, lineID: originLine?.id)
+            },
+            destination: destination.map {
+                Snapshot.Station(code: $0.key.sourceCode, name: $0.name, stationID: destinationStationID,
+                                 lineID: destinationLine?.id)
+            },
+            vias: vias.map { Snapshot.Station(code: $0.station.key.sourceCode, name: $0.station.name) },
+            sections: sectionList, pendingSections: pendingSections, selectedCorridorID: selectedCorridorID,
+            joinedOutcome: outcome.map { Snapshot.outcomeName($0).0 },
+            passStations: corridor?.choice.stations.map { Snapshot.Station(code: $0.code, name: $0.name) } ?? [],
+            conflicts: corridor.map { corridorConflicts($0).map(\.name) } ?? [],
+            removalPending: removalStations,
+            notices: notices,
+            saveIssues: saveIssues.map { "\($0.severity):\($0.field):\($0.literal ?? $0.key)" },
+            sectionChoices: sectionChoices.reduce(into: [:]) { result, item in
+                result[item.key.replacingOccurrences(of: "\u{1f}", with: "|")] = item.value
+            },
+            allowUnverifiedConnections: allowUnverifiedConnections,
+            physicallyResolvedCorridorIDs: physicallyResolvedCorridorIDs.sorted(),
+            trainType: trainType, company: companyName)
+    }
+}
+
+/// Registers the open editor with the control channel while it is on screen.
+private struct AppControlEditorRegistration: ViewModifier {
+    let handle: AppControlEditorHandle
+    @State private var token = UUID()
+    func body(content: Content) -> some View {
+        content
+            .onAppear { AppControlHost.shared.register(editor: handle, token: token) }
+            .onDisappear { AppControlHost.shared.unregister(editor: token) }
+    }
+}
+#endif

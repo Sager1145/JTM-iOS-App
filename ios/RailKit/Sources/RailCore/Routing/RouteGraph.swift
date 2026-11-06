@@ -1709,6 +1709,10 @@ public enum RouteGraph {
         #if canImport(os)
         let signpost = buildSignposter.beginInterval("graph.build", id: buildSignposter.makeSignpostID(),
                                                      "kind=\(kind, privacy: .public)")
+        #if DEBUG
+        let recorded = SignpostRecorder.shared.begin("graph.build")
+        defer { SignpostRecorder.shared.end(recorded) }
+        #endif
         defer {
             buildSignposter.endInterval("graph.build", signpost,
                                         "kind=\(kind, privacy: .public) nodes=\(graph.nodes.count)")

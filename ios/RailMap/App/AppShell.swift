@@ -23,8 +23,7 @@ struct AppShell: View {
     @State private var mileageStatistics = MileageStatisticsStore()
     /// Hidden regions, years and months: one scope for the map, the lists
     /// and Stats (see ``TripHideFilter``).
-    @State private var tripHide = TripHideFilter(
-        storageID: UITestLaunchConfiguration.current[.storageId])
+    @State private var tripHide = TripHideFilter(storageID: AppShell.launchStorageID)
     /// One transport for the whole app. See the type note above.
     @State private var playback = PlaybackController()
     /// Published into the environment rather than passed down: the two places
@@ -73,7 +72,9 @@ struct AppShell: View {
         let storage: RideStorage
         let preferences: UserDefaults
 #if DEBUG
-        if let value = UITestLaunchConfiguration.current[.storageId],
+        // The UI-test storage ID, or the developer panel's isolated store
+        // (`DevStorage`); otherwise the real store.
+        if let value = DevStorage.launchID,
             let id = UUID(uuidString: value)
         {
             // A UI case owns this store across its relaunches. Sample loading
@@ -97,6 +98,15 @@ struct AppShell: View {
     }
 
     @State private var presentationHost = PresentationHost()
+
+    /// The isolated store's ID the hidden-trips filter is keyed on.
+    private static var launchStorageID: String? {
+#if DEBUG
+        DevStorage.launchID
+#else
+        UITestLaunchConfiguration.current[.storageId]
+#endif
+    }
 
     var body: some View {
         // One map, and one resident sheet over it. The system TabView is inside
@@ -217,6 +227,11 @@ struct AppShell: View {
                 trains: tripHide.scoped(loaded).trains, rides: riddenRoutes.rides)
         }
 #if DEBUG
+        // Test control channel (railmap-test:// URLs and the container inbox).
+        // See `AppControlHost` and `.claude/skills/app-control/SKILL.md`.
+        .modifier(AppControlRegistration(stores: AppControlHost.Stores(
+            network: network, itineraries: itineraries, library: library, riddenRoutes: riddenRoutes,
+            controller: mapController, tripHide: tripHide, selection: $selection)))
         // "Reload all", run by a harness that cannot tap through Settings:
         // N runs back to back once the first load settles, the first one
         // optionally stopped partway. Each run's wall time is logged under
