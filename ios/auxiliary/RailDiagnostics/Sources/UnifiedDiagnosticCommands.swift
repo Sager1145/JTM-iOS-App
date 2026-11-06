@@ -7,6 +7,7 @@ struct UnifiedDiagnosticCommands: Commands {
     @FocusedValue(\.inspectorCommands) private var alignment
     @FocusedValue(\.routeWorkbenchCommands) private var route
     @FocusedValue(\.throughWorkbenchCommands) private var through
+    @FocusedValue(\.areaRepairCommands) private var area
 
     var body: some Commands {
         CommandMenu("Diagnostics") {
@@ -45,6 +46,11 @@ struct UnifiedDiagnosticCommands: Commands {
                         .keyboardShortcut("o", modifiers: .command).disabled(!through.canOpen)
                     Divider()
                     ThroughWorkbenchCommandItems(bridge: through)
+                } else if let area {
+                    Button("Resolve area") { area.resolve?() }.disabled(!area.canResolve)
+                    Button("Preview patch") { area.preview?() }.disabled(!area.canPreview)
+                    Button("Undo last fix") { area.undo?() }.disabled(!area.canUndo)
+                    Button("Write patch…") { area.write?() }.disabled(!area.canWrite)
                 } else {
                     Text("Select an inspection workspace")
                 }

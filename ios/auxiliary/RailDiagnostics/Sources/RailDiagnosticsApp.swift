@@ -21,10 +21,10 @@ struct RailDiagnosticsApp: App {
 }
 
 enum DiagnosticWorkspace: String, CaseIterable, Identifiable {
-    case tasks = "Tasks & evidence", alignment = "Alignment", route = "Physical routes", through = "Through history"
+    case tasks = "Tasks & evidence", alignment = "Alignment", route = "Physical routes", through = "Through history", area = "Area repair"
     var id: String { rawValue }
     var symbol: String {
-        switch self { case .tasks: "checklist"; case .alignment: "point.topleft.down.to.point.bottomright.curvepath"; case .route: "arrow.triangle.branch"; case .through: "calendar" }
+        switch self { case .tasks: "checklist"; case .alignment: "point.topleft.down.to.point.bottomright.curvepath"; case .route: "arrow.triangle.branch"; case .through: "calendar"; case .area: "square.dashed" }
     }
     var shortcut: String { "⌃⌘" + String((Self.allCases.firstIndex(of: self) ?? 0) + 1) }
 }
@@ -33,6 +33,7 @@ struct DiagnosticWorkspaceView: View {
     @State private var session = DiagnosticSession()
     @State private var workspace = DiagnosticWorkspace.tasks
     @State private var commands = DiagnosticTaskCommandBridge()
+    @State private var areaModel = AreaRepairModel()
     private enum Presentation: Equatable { case compose, importRequest, screenshot(URL) }
     @State private var presentation: Presentation?
     @State private var pendingRequest: DiagnosticRequest?
@@ -81,6 +82,7 @@ struct DiagnosticWorkspaceView: View {
                 case .alignment: InspectorView(model: session.alignment).id(session.identity)
                 case .route: RouteWorkbenchContentView(model: session.route).id(session.identity)
                 case .through: WorkbenchView(store: session.through).id(session.identity)
+                case .area: AreaWorkspaceView(model: areaModel)
                 }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
             Divider()
@@ -133,7 +135,7 @@ struct DiagnosticWorkspaceView: View {
         Picker("Workspace", selection: $workspace) {
             ForEach(DiagnosticWorkspace.allCases) { Text($0.rawValue + "  " + $0.shortcut).tag($0) }
         }.pickerStyle(.segmented).disabled(busy)
-            .accessibilityHint(busy ? "Wait for the current operation to settle before switching workspaces." : "Control Command 1 through 4 switch workspace.")
+            .accessibilityHint(busy ? "Wait for the current operation to settle before switching workspaces." : "Control Command 1 through 5 switch workspace.")
     }
 
     private var taskActions: some View {
@@ -354,6 +356,7 @@ struct DiagnosticWorkspaceView: View {
             return (request.lineID ?? "") + scope + (request.viewpointIDs.map { " · \($0.count) exact viewpoints" } ?? "") + (request.stationIDs.map { " · stations " + $0.joined(separator: ", ") } ?? "")
         case .route: return request.inputPath ?? ""
         case .through: return (request.patternID ?? "") + " · " + (request.reviewDay ?? "")
+        case .area: return request.area.map(AreaRepairModel.describe) ?? ""
         }
     }
     private func start(_ request: DiagnosticRequest) {

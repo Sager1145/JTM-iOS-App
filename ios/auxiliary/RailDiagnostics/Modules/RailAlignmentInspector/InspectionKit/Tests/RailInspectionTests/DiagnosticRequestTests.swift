@@ -201,4 +201,60 @@ struct DiagnosticRequestTests {
         #expect(object["corner"] == nil)
         #expect(candidate.itemIDs == ["a#0"])
     }
+
+    private func areaRequest(_ fields: String = "") throws -> DiagnosticRequest {
+        try JSONDecoder().decode(DiagnosticRequest.self, from: Data("""
+        {"requestID":"area","workspace":"area","action":"capture","sessionDirectory":"/tmp/area"\(fields)}
+        """.utf8))
+    }
+    @Test func areaRequestRoundTripsAndKeepsAreaInEquality() throws {
+        let selection = AreaSelection(mode: .centre(lon: 139.7, lat: 35.68, radiusMetres: 800))
+        let value = DiagnosticRequest(requestID: "area", workspace: .area, action: .capture, sessionDirectory: "/tmp/area",
+                                      captureSettings: .init(zoom: 18), area: selection)
+        try value.validate()
+        let decoded = try JSONDecoder().decode(DiagnosticRequest.self, from: JSONEncoder().encode(value))
+        #expect(decoded == value)
+        var other = value
+        other.area = AreaSelection(mode: .centre(lon: 139.7, lat: 35.68, radiusMetres: 900))
+        #expect(other != value)
+        var prepare = value
+        prepare.action = .prepare
+        try prepare.validate()
+        prepare.action = .solve
+        #expect(throws: DiagnosticError.self) { try prepare.validate() }
+    }
+    @Test func areaRequestRequiresAreaAndRejectsAlignmentScope() throws {
+        var missing = DiagnosticRequest(requestID: "area", workspace: .area, action: .capture, sessionDirectory: "/tmp/area")
+        #expect(throws: DiagnosticError.self) { try missing.validate() }
+        missing.area = AreaSelection(mode: .rect(minLon: 139, minLat: 35, maxLon: 139.1, maxLat: 35.1))
+        try missing.validate()
+        for mutate in [{ (r: inout DiagnosticRequest) in r.lineID = "a" },
+                       { (r: inout DiagnosticRequest) in r.intervalIndices = [0] },
+                       { (r: inout DiagnosticRequest) in r.stationIDs = ["s"] },
+                       { (r: inout DiagnosticRequest) in r.patternID = "p" }] {
+            var value = missing
+            mutate(&value)
+            #expect(throws: DiagnosticError.self) { try value.validate() }
+        }
+        var invalidSelection = missing
+        invalidSelection.area = AreaSelection(mode: .rect(minLon: 140, minLat: 35, maxLon: 139, maxLat: 35.1))
+        #expect(throws: (any Error).self) { try invalidSelection.validate() }
+        #expect(throws: DiagnosticError.self) { try areaRequest().validate() }
+    }
+    @Test func areaFieldIsRejectedOutsideTheAreaWorkspace() throws {
+        var alignment = try request()
+        alignment.area = AreaSelection(mode: .rect(minLon: 139, minLat: 35, maxLon: 139.1, maxLat: 35.1))
+        #expect(throws: DiagnosticError.self) { try alignment.validate() }
+    }
+    @Test func areaRequestDecodingStaysStrictAndOldRequestsAreUnchanged() throws {
+        let flat = ",\"area\":{\"kind\":\"rect\",\"minLon\":139,\"minLat\":35,\"maxLon\":139.1,\"maxLat\":35.1}"
+        try areaRequest(flat).validate()
+        #expect(throws: DecodingError.self) { try areaRequest(",\"areas\":{}") }
+        #expect(throws: DecodingError.self) { try areaRequest(",\"area\":{\"kind\":\"rect\",\"minLon\":1,\"minLat\":1,\"maxLon\":2,\"maxLat\":2,\"extra\":1}") }
+        let old = try request()
+        #expect(old.area == nil)
+        let object = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(old)) as? [String: Any])
+        #expect(object["area"] == nil)
+        #expect(try JSONDecoder().decode(DiagnosticRequest.self, from: JSONEncoder().encode(old)) == old)
+    }
 }

@@ -82,7 +82,7 @@ public struct DiagnosticCaptureSettings: Codable, Equatable, Sendable {
 
 /// Local, bounded invocation shared by the unified native workspaces.
 public struct DiagnosticRequest: Codable, Equatable, Sendable {
-    public enum Workspace: String, Codable, Sendable { case alignment, route, through }
+    public enum Workspace: String, Codable, Sendable { case alignment, route, through, area }
     public enum Action: String, Codable, Sendable { case prepare, capture, retryFailures, solve, inspect }
     public var schemaVersion: Int = 1
     public var requestID: String
@@ -102,11 +102,13 @@ public struct DiagnosticRequest: Codable, Equatable, Sendable {
     public var captureLimit: Int?
     public var evidencePaths: [String]?
     public var captureSettings: DiagnosticCaptureSettings?
+    /// Area workspace only: the exact selection to capture and repair.
+    public var area: AreaSelection?
     public var normalizedCaptureSettings: DiagnosticCaptureSettings { captureSettings ?? .init() }
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case schemaVersion, requestID, workspace, action, sessionDirectory, lineID, intervalIndices, stationIDs
-        case inputPath, patternID, reviewDay, alignmentEvidenceDirectory, captureLimit, viewpointIDs, evidencePaths, captureSettings
+        case inputPath, patternID, reviewDay, alignmentEvidenceDirectory, captureLimit, viewpointIDs, evidencePaths, captureSettings, area
     }
     private struct InputKey: CodingKey {
         var stringValue: String
@@ -142,7 +144,8 @@ public struct DiagnosticRequest: Codable, Equatable, Sendable {
                   captureLimit: try values.decodeIfPresent(Int.self, forKey: .captureLimit),
                   viewpointIDs: try values.decodeIfPresent([String].self, forKey: .viewpointIDs),
                   evidencePaths: try values.decodeIfPresent([String].self, forKey: .evidencePaths),
-                  captureSettings: try values.decodeIfPresent(DiagnosticCaptureSettings.self, forKey: .captureSettings))
+                  captureSettings: try values.decodeIfPresent(DiagnosticCaptureSettings.self, forKey: .captureSettings),
+                  area: try values.decodeIfPresent(AreaSelection.self, forKey: .area))
         schemaVersion = try values.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
     }
 
@@ -150,18 +153,19 @@ public struct DiagnosticRequest: Codable, Equatable, Sendable {
                 lineID: String? = nil, intervalIndices: [Int]? = nil, stationIDs: [String]? = nil,
                 inputPath: String? = nil, patternID: String? = nil, reviewDay: String? = nil,
                 alignmentEvidenceDirectory: String? = nil, captureLimit: Int? = nil, viewpointIDs: [String]? = nil,
-                evidencePaths: [String]? = nil, captureSettings: DiagnosticCaptureSettings? = nil) {
+                evidencePaths: [String]? = nil, captureSettings: DiagnosticCaptureSettings? = nil, area: AreaSelection? = nil) {
         self.requestID = requestID; self.workspace = workspace; self.action = action
         self.sessionDirectory = sessionDirectory; self.lineID = lineID; self.intervalIndices = intervalIndices
         self.stationIDs = stationIDs; self.inputPath = inputPath; self.patternID = patternID; self.reviewDay = reviewDay
         self.alignmentEvidenceDirectory = alignmentEvidenceDirectory; self.captureLimit = captureLimit
         self.evidencePaths = evidencePaths; self.captureSettings = captureSettings; self.viewpointIDs = viewpointIDs
+        self.area = area
     }
 
     public func validate() throws {
         try normalizedCaptureSettings.validate()
-        if captureSettings != nil, workspace != .alignment {
-            throw DiagnosticError.invalidRequest("Capture settings apply only to alignment requests.")
+        if captureSettings != nil, workspace != .alignment, workspace != .area {
+            throw DiagnosticError.invalidRequest("Capture settings apply only to alignment and area requests.")
         }
         guard schemaVersion == 1, !requestID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               (sessionDirectory as NSString).isAbsolutePath else { throw DiagnosticError.invalidRequest("Version, request ID and absolute session directory are required.") }
@@ -177,10 +181,13 @@ public struct DiagnosticRequest: Codable, Equatable, Sendable {
             throw DiagnosticError.invalidRequest("Station scope must be nonempty.")
         }
         if let ids = viewpointIDs {
-            guard workspace == .alignment, !ids.isEmpty, Set(ids).count == ids.count,
+            guard workspace == .alignment || workspace == .area, !ids.isEmpty, Set(ids).count == ids.count,
                   ids.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) else {
-                throw DiagnosticError.invalidRequest("Viewpoint IDs must be nonempty, unique exact IDs on an alignment request.")
+                throw DiagnosticError.invalidRequest("Viewpoint IDs must be nonempty, unique exact IDs on an alignment or area request.")
             }
+        }
+        if area != nil, workspace != .area {
+            throw DiagnosticError.invalidRequest("An area selection applies only to area requests.")
         }
         if let captureLimit, !(1...1000).contains(captureLimit) { throw DiagnosticError.invalidRequest("Capture limit must be 1...1000.") }
         switch workspace {
@@ -188,6 +195,14 @@ public struct DiagnosticRequest: Codable, Equatable, Sendable {
             guard let lineID, !lineID.isEmpty, [.prepare, .capture, .retryFailures].contains(action) else {
                 throw DiagnosticError.invalidRequest("Alignment requires one exact line ID and prepare/capture/retryFailures.")
             }
+        case .area:
+            guard let area, [.prepare, .capture].contains(action) else {
+                throw DiagnosticError.invalidRequest("Area requires an area selection and prepare/capture.")
+            }
+            guard lineID == nil, intervalIndices == nil, stationIDs == nil, patternID == nil, reviewDay == nil, inputPath == nil else {
+                throw DiagnosticError.invalidRequest("Area requests select scope only through the area field; line, interval, station, pattern, review day and input path are not accepted.")
+            }
+            try area.validate()
         case .route:
             guard inputPath != nil, [.prepare, .solve].contains(action) else { throw DiagnosticError.invalidRequest("Route requires inputPath and prepare/solve.") }
         case .through:

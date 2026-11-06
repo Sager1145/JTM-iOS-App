@@ -28,6 +28,24 @@ struct DiagnosticTaskComposer: View {
     @State private var basemap = true
     @State private var display = true
     @State private var smooth = true
+    private enum AreaKind: String, CaseIterable, Identifiable {
+        case rect = "Rectangle", stationPair = "Station pair", lineSection = "Line section", centre = "Centre + radius"
+        var id: String { rawValue }
+    }
+    @State private var areaKind = AreaKind.rect
+    @State private var areaMinLon = ""
+    @State private var areaMinLat = ""
+    @State private var areaMaxLon = ""
+    @State private var areaMaxLat = ""
+    @State private var areaLineID = ""
+    @State private var areaFromStation = ""
+    @State private var areaToStation = ""
+    @State private var areaFirstInterval = ""
+    @State private var areaLastInterval = ""
+    @State private var areaCentreLon = ""
+    @State private var areaCentreLat = ""
+    @State private var areaRadius = "800"
+    @State private var areaMargin = "500"
     @State private var captureLimit = ""
     @State private var viewpointIDs = ""
     @State private var lines: [CompactPackage.Headers.Line] = []
@@ -44,6 +62,7 @@ struct DiagnosticTaskComposer: View {
                         Text("Alignment & screenshots").tag(DiagnosticRequest.Workspace.alignment)
                         Text("Physical route solve").tag(DiagnosticRequest.Workspace.route)
                         Text("Through-service history").tag(DiagnosticRequest.Workspace.through)
+                        Text("Area capture & repair").tag(DiagnosticRequest.Workspace.area)
                     }.disabled(retainingInput || importing)
                     Picker("Action", selection: $action) {
                         Text("Prepare only").tag(DiagnosticRequest.Action.prepare)
@@ -51,6 +70,7 @@ struct DiagnosticTaskComposer: View {
                         case .alignment: Text("Capture screenshots").tag(DiagnosticRequest.Action.capture)
                         case .route: Text("Solve journeys").tag(DiagnosticRequest.Action.solve)
                         case .through: Text("Inspect selected date").tag(DiagnosticRequest.Action.inspect)
+                        case .area: Text("Capture area screenshots").tag(DiagnosticRequest.Action.capture)
                         }
                     }.disabled(retainingInput || importing)
                     TextField("Task ID", text: $requestID)
@@ -68,6 +88,7 @@ struct DiagnosticTaskComposer: View {
                         if retainingInput { ProgressView("Retaining selected input…") }
                         Text("Only journeys in this file are solved.").font(.caption).foregroundStyle(.secondary)
                     }
+                case .area: areaFields
                 case .through:
                     Section("Historical scope") {
                         TextField("Exact pattern ID", text: $patternID)
@@ -92,7 +113,7 @@ struct DiagnosticTaskComposer: View {
         }
         .frame(idealWidth: 720, idealHeight: 780)
         .onChange(of: workspace) { _, value in
-            action = value == .alignment ? .capture : value == .route ? .solve : .inspect
+            action = value == .alignment || value == .area ? .capture : value == .route ? .solve : .inspect
             error = nil
             inputRetentionFailed = false
         }
@@ -186,6 +207,79 @@ struct DiagnosticTaskComposer: View {
         }
     }
 
+    private var areaFields: some View {
+        Group {
+            Section("Area") {
+                Picker("Selection", selection: $areaKind) { ForEach(AreaKind.allCases) { Text($0.rawValue).tag($0) } }
+                switch areaKind {
+                case .rect:
+                    TextField("Min longitude", text: $areaMinLon); TextField("Min latitude", text: $areaMinLat)
+                    TextField("Max longitude", text: $areaMaxLon); TextField("Max latitude", text: $areaMaxLat)
+                case .stationPair:
+                    TextField("Exact line ID", text: $areaLineID).font(.callout.monospaced())
+                    TextField("From station ID", text: $areaFromStation).font(.callout.monospaced())
+                    TextField("To station ID", text: $areaToStation).font(.callout.monospaced())
+                case .lineSection:
+                    TextField("Exact line ID", text: $areaLineID).font(.callout.monospaced())
+                    TextField("First interval · zero-based", text: $areaFirstInterval)
+                    TextField("Last interval · zero-based", text: $areaLastInterval)
+                case .centre:
+                    TextField("Longitude", text: $areaCentreLon); TextField("Latitude", text: $areaCentreLat)
+                    TextField("Radius · metres", text: $areaRadius)
+                }
+                TextField("Margin · metres", text: $areaMargin)
+                Text("Every railway crossing the padded area is captured, not one owning line. Screenshot settings below apply.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Section("Automatic screenshots") {
+                Stepper(value: $zoom, in: 10...20, step: 0.5) { Text("Zoom \(zoom, specifier: "%.1f") · 256-point tiles") }
+                HStack {
+                    TextField("Width", value: $width, format: .number)
+                    Text("×")
+                    TextField("Height", value: $height, format: .number)
+                    Text("points · 1×").foregroundStyle(.secondary)
+                }
+                Toggle("Dark basemap", isOn: $dark)
+                Toggle("Original basemap", isOn: $basemap)
+                Toggle("Display geometry", isOn: $display)
+                Toggle("Smoothed geometry", isOn: $smooth)
+                TextField("Optional capture limit · blank captures all pending views", text: $captureLimit)
+            }
+        }
+    }
+
+    private func areaSelection() throws -> AreaSelection {
+        func number(_ text: String, _ name: String) throws -> Double {
+            guard let value = Double(text.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+                throw DiagnosticError.invalidRequest("\(name) must be a number.")
+            }
+            return value
+        }
+        func integer(_ text: String, _ name: String) throws -> Int {
+            guard let value = Int(text.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+                throw DiagnosticError.invalidRequest("\(name) must be an integer.")
+            }
+            return value
+        }
+        let line = areaLineID.trimmingCharacters(in: .whitespacesAndNewlines)
+        let mode: AreaSelection.Mode
+        switch areaKind {
+        case .rect:
+            mode = .rect(minLon: try number(areaMinLon, "Min longitude"), minLat: try number(areaMinLat, "Min latitude"),
+                         maxLon: try number(areaMaxLon, "Max longitude"), maxLat: try number(areaMaxLat, "Max latitude"))
+        case .stationPair:
+            mode = .stationPair(lineID: line, fromStationID: areaFromStation.trimmingCharacters(in: .whitespacesAndNewlines),
+                                toStationID: areaToStation.trimmingCharacters(in: .whitespacesAndNewlines))
+        case .lineSection:
+            mode = .lineSection(lineID: line, firstInterval: try integer(areaFirstInterval, "First interval"),
+                                lastInterval: try integer(areaLastInterval, "Last interval"))
+        case .centre:
+            mode = .centre(lon: try number(areaCentreLon, "Longitude"), lat: try number(areaCentreLat, "Latitude"),
+                           radiusMetres: try number(areaRadius, "Radius"))
+        }
+        return AreaSelection(mode: mode, marginMetres: try number(areaMargin, "Margin"))
+    }
+
     private var matches: [CompactPackage.Headers.Line] {
         lines.filter { [$0.id, $0.name, $0.operator ?? ""].contains { $0.localizedCaseInsensitiveContains(search) } }
     }
@@ -195,7 +289,12 @@ struct DiagnosticTaskComposer: View {
         do {
             let indices: [Int]?
             let limit: Int?
-            if workspace == .alignment {
+            if workspace == .area {
+                indices = nil
+                let trimmedLimit = captureLimit.trimmingCharacters(in: .whitespacesAndNewlines)
+                limit = Int(trimmedLimit)
+                if !trimmedLimit.isEmpty && limit == nil { throw DiagnosticError.invalidRequest("Capture limit must be an integer.") }
+            } else if workspace == .alignment {
                 indices = try parseIndices()
                 let trimmedLimit = captureLimit.trimmingCharacters(in: .whitespacesAndNewlines)
                 limit = Int(trimmedLimit)
@@ -219,10 +318,11 @@ struct DiagnosticTaskComposer: View {
                     : workspace == .route ? inputPath.trimmingCharacters(in: .whitespacesAndNewlines) : nil,
                 patternID: workspace == .through ? patternID : nil,
                 reviewDay: workspace == .through ? reviewDay : nil,
-                captureLimit: workspace == .alignment ? limit : nil,
+                captureLimit: workspace == .alignment || workspace == .area ? limit : nil,
                 viewpointIDs: workspace == .alignment && !viewpointIDs.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                     ? viewpointIDs.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) } : nil,
-                captureSettings: workspace == .alignment ? settings : nil)
+                captureSettings: workspace == .alignment || workspace == .area ? settings : nil,
+                area: workspace == .area ? try areaSelection() : nil)
             try request.validate()
             start(request); dismiss()
         } catch { self.error = DiagnosticSession.explain(error) }
