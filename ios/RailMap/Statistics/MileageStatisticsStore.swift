@@ -912,7 +912,7 @@ final class MileageStatisticsStore {
     /// `Journey.date` (the bucket) or ``entryDigest(train:ride:)`` (the stop
     /// fields `effectivelyRiddenStopIndexes` and `trainRideMinutes` read).
     ///
-    /// That leaves: the raw `date` string — `journeyClock.rideMinutes(on:)`
+    /// That leaves: the raw `date` string — `Statistics.trainRideMinutes(_:clock:)`
     /// reads the record's own field, not the normalised bucket, so two
     /// journeys sharing a bucket but not a timestamp can still owe different
     /// minutes; `number`, which `JourneyTitle.compact` reads together with
@@ -1031,7 +1031,9 @@ final class MileageStatisticsStore {
             // Reading `Train.date` here would skip id inference and invalid
             // dates, and would not be the day the mileage walk used.
             trainDate: { Dates.trainDate($0) },
-            dateLabel: { $0 })
+            dateLabel: { $0 },
+            // The passport's and share card's clock, so all three read one rule.
+            clock: { $0.journeyClock })
     }
 
     /// The passport's per-journey grouping, off the main actor.
