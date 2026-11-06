@@ -731,7 +731,7 @@ struct DisplayPartsParityTests {
         var found: [String: DisplayParts.LineTopology] = [:]
         for country in PortFixtures.countries {
             let url = root.appending(path: "app/public/rail/\(country)-2025.json")
-            for (id, topology) in try DisplayParts.LineTopology.byLineID(contentsOf: url) {
+            for (id, topology) in try DisplayParts.LoadedPackage.load(contentsOf: url).topologyByLineID {
                 found["\(country):\(id)"] = topology
             }
         }

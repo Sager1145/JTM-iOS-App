@@ -206,55 +206,12 @@ enum RailMotion {
     }
 }
 
-/// A type size a transaction can actually animate.
-///
-/// `Font` is not `Animatable`. SwiftUI has nothing to interpolate between
-/// `.system(size: 20)` and `.system(size: 34)`, so inside an animated
-/// transaction the glyphs take the new size on the first frame while the
-/// padding, the reserved heights and the panel itself glide to meet it over
-/// the next third of a second. That is what made the bottom sheet's large
-/// title arrive before the sheet did every time a drag was released short of a
-/// stop (see `ResidentBottomSheetModifier`).
-///
-/// Carrying the size as `animatableData` makes SwiftUI re-evaluate this
-/// modifier once per frame with the interpolated value, so the title travels
-/// with everything else — §4.4 and §9.1's "one element moving", rather than
-/// two halves of one header on two clocks.
-///
-/// Nothing changes while the reader's finger is on the sheet: with no
-/// animation in the transaction, `animatableData` is set straight through and
-/// this is the same single evaluation `.font(.system(size:))` always was.
-///
-/// The `Animatable` conformance is `nonisolated` because SwiftUI interpolates
-/// `animatableData` off the main actor. The stored properties it touches are
-/// this struct's own value copies, which is why that is safe to say here and
-/// would not be on a type holding anything shared.
-struct RailInterpolatedFont: ViewModifier, nonisolated Animatable {
-    var size: CGFloat
-    var weight: Font.Weight
-
-    nonisolated var animatableData: CGFloat {
-        get { size }
-        set { size = newValue }
-    }
-
-    func body(content: Content) -> some View {
-        content.font(.system(size: size, weight: weight))
-    }
-}
-
 extension View {
     /// `animation(_:value:)` with the Reduce Motion swap already applied.
     func railAnimation<V: Equatable>(
         _ animation: Animation, value: V, reduceMotion: Bool
     ) -> some View {
         self.animation(RailMotion.animation(animation, reduceMotion: reduceMotion), value: value)
-    }
-
-    /// `.font(.system(size:weight:))`, but interpolated rather than swapped.
-    /// See ``RailInterpolatedFont``.
-    func railInterpolatedFont(size: CGFloat, weight: Font.Weight) -> some View {
-        modifier(RailInterpolatedFont(size: size, weight: weight))
     }
 }
 

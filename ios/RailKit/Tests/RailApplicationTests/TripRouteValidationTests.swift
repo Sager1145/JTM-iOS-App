@@ -40,6 +40,22 @@ struct TripRouteValidationTests {
         #expect(result.unprovenReason == nil)
     }
 
+    @Test func historicalOnlyIsDatedWithoutUndated() async throws {
+        let ids = ["both", "historical", "closed", "none"]
+        let resolver = Resolver([
+            .init(datedResolved: true, undatedResolved: true),
+            .init(datedResolved: true, undatedResolved: false),
+            .init(datedResolved: false, undatedResolved: true),
+            .init(datedResolved: false, undatedResolved: false),
+        ])
+        let result = try await TripRouteValidation.validate(
+            candidates: ids.map { .init(id: $0, train: Self.train(id: $0)) },
+            resolve: { try await resolver.resolve($0) })
+        #expect(result.historicalOnlyIDs == ["historical"])
+        #expect(result.retainedIDs == ["both", "historical", "none"])
+        #expect(result.physicallyResolvedIDs == ["both", "historical"])
+    }
+
     @Test func pendingInputIsConfirmedOnlyInResolverSnapshot() async throws {
         var original = Self.train()
         original.routeConfirmation = .pending

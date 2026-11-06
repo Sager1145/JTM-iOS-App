@@ -121,6 +121,54 @@ public enum EditorTime {
         return parsed
     }
 
+    /// Typed date, short forms included. Full forms are the same as
+    /// ``parseDate(_:)``; additionally:
+    /// - `YYYYMMDD` (8 digits), `YYYY-M-D` / `YYYY/M/D`, `YYYY.M.D`
+    /// - `MMDD` (4 digits), `M/D`, `M-D`, `M.D`, `MM/DD` with the year omitted,
+    ///   which takes `defaultYear` (the trip's or the current year)
+    /// Fullwidth digits and separators are folded first. A day that does not
+    /// exist in its month is invalid.
+    public static func parseDateInput(_ raw: String?, defaultYear: Int) -> ServiceDateParse {
+        guard let raw else { return .unset }
+        let trimmed = trim(foldFullwidth(raw))
+            .replacingOccurrences(of: "／", with: "/")
+            .replacingOccurrences(of: "－", with: "-")
+            .replacingOccurrences(of: "．", with: ".")
+        if trimmed.isEmpty { return .unset }
+        if let strict = strictDate(trimmed) { return strict }
+        let scalars = Array(trimmed.unicodeScalars)
+        var year = defaultYear
+        var month = 0
+        var day = 0
+        if scalars.allSatisfy(isDigit) {
+            switch scalars.count {
+            case 8:
+                year = decimal(scalars[0...3]); month = decimal(scalars[4...5]); day = decimal(scalars[6...7])
+            case 4:
+                month = decimal(scalars[0...1]); day = decimal(scalars[2...3])
+            default:
+                return .invalid(raw: raw)
+            }
+        } else {
+            let parts = trimmed.split(whereSeparator: { "-/.".contains($0) }).map(String.init)
+            guard parts.allSatisfy({ !$0.isEmpty && $0.unicodeScalars.allSatisfy(isDigit) }) else {
+                return .invalid(raw: raw)
+            }
+            switch parts.count {
+            case 3 where parts[0].count == 4 && parts[1].count <= 2 && parts[2].count <= 2:
+                year = Int(parts[0]) ?? 0; month = Int(parts[1]) ?? 0; day = Int(parts[2]) ?? 0
+            case 2 where parts[0].count <= 2 && parts[1].count <= 2:
+                month = Int(parts[0]) ?? 0; day = Int(parts[1]) ?? 0
+            default:
+                return .invalid(raw: raw)
+            }
+        }
+        guard (1...9999).contains(year), (1...12).contains(month),
+              (1...daysInMonth(year: year, month: month)).contains(day) else { return .invalid(raw: raw) }
+        return .valid(year: year, month: month, day: day,
+                      canonical: String(format: "%04d-%02d-%02d", year, month, day))
+    }
+
     // MARK: - time
 
     private static func strictTime(_ text: String) -> ServiceClockTime? {

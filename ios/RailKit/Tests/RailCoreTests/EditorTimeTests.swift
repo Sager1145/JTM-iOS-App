@@ -4,6 +4,41 @@ import Testing
 @testable import RailCore
 
 struct EditorTimeTests {
+    @Test("Typed dates accept short forms and take the given year when it is omitted")
+    func typedDateShortForms() {
+        func canonical(_ raw: String, year: Int = 2026) -> String? {
+            if case .valid(_, _, _, let value) = EditorTime.parseDateInput(raw, defaultYear: year) { return value }
+            return nil
+        }
+        #expect(canonical("2026-11-05") == "2026-11-05")
+        #expect(canonical("2026/11/5") == "2026-11-05")
+        #expect(canonical("2026.1.2") == "2026-01-02")
+        #expect(canonical("20261105") == "2026-11-05")
+        #expect(canonical("1105") == "2026-11-05")
+        #expect(canonical("11/05") == "2026-11-05")
+        #expect(canonical("1/2", year: 2027) == "2027-01-02")
+        #expect(canonical("１１／０５") == "2026-11-05")
+        #expect(canonical("0229", year: 2028) == "2028-02-29")
+        #expect(canonical("0229", year: 2026) == nil)
+        #expect(canonical("1332") == nil)
+        #expect(canonical("11/31") == nil)
+        #expect(canonical("110") == nil)
+        #expect(canonical("11/5/2026") == nil)
+        #expect(canonical("abc") == nil)
+        #expect(EditorTime.parseDateInput("  ", defaultYear: 2026) == .unset)
+        #expect(EditorTime.parseDateInput("13/01", defaultYear: 2026) == .invalid(raw: "13/01"))
+    }
+
+    @Test("Typed times keep the quick forms the picker field already accepts")
+    func typedTimeQuickForms() {
+        for (raw, minutes) in [("0930", 570), ("930", 570), ("9:30", 570), ("2510", 1510)] {
+            guard case .valid(_, let time) = EditorTime.parseTime(raw) else {
+                Issue.record("\(raw) should parse"); continue
+            }
+            #expect(time.serviceMinutes == minutes)
+        }
+    }
+
     @Test func emptyAndWhitespaceAreUnset() {
         #expect(EditorTime.parseTime(nil) == .unset)
         #expect(EditorTime.parseTime("") == .unset)

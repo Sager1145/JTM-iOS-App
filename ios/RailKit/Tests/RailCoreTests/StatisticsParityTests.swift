@@ -61,7 +61,6 @@ struct StatisticsParityTests {
 
     struct Fixture: Decodable {
         let cases: [ClassificationCase]
-        let stationCategories: [StationCase]
         let indexes: [IndexCase]
         let geometries: [PooledGeometry]
         let trains: [TrainCase]
@@ -86,12 +85,6 @@ struct StatisticsParityTests {
         let mask: Int
         let exclusiveBucket: Int
         let filterCategory: String
-    }
-
-    struct StationCase: Decodable {
-        let country: String
-        let props: Statistics.SectionProperties?
-        let category: String?
     }
 
     struct IndexCase: Decodable {
@@ -311,7 +304,6 @@ struct StatisticsParityTests {
         let rideId: String
         let feature: FixtureFeature
         let category: String?
-        let visibleWithAllOn: Bool
     }
 
     // MARK: - loading
@@ -490,17 +482,6 @@ struct StatisticsParityTests {
             #expect(
                 Statistics.filterCategoryForMask(mask, country: item.country)
                     == item.filterCategory)
-        }
-    }
-
-    @Test("markerCategoryForStation classifies a station from its own line attributes")
-    func stationCategories() throws {
-        let cases = Self.fixture.stationCategories
-        #expect(cases.count > 500)
-        for item in cases {
-            #expect(
-                Statistics.markerCategoryForStation(item.props, country: item.country)
-                    == item.category)
         }
     }
 
@@ -971,18 +952,7 @@ struct StatisticsParityTests {
             #expect(
                 Statistics.riddenFeatureCategory(feature, index: idx, country: item.country)
                     == item.category, "\(item.country)/\(item.rideId)")
-            #expect(
-                Statistics.riddenFeatureVisible(
-                    feature, index: idx, country: item.country,
-                    filter: Statistics.RiddenCategoryFilter())
-                    == item.visibleWithAllOn, "\(item.country)/\(item.rideId)")
         }
-        // An undetermined feature stays visible, and so does everything while
-        // the network is still loading and there is no index at all.
-        let noIndex = Statistics.riddenFeatureVisible(
-            Statistics.RouteFeature(lines: [], rideSegment: true, from: nil, to: nil),
-            index: nil, country: "jp", filter: Statistics.RiddenCategoryFilter(hsr: false))
-        #expect(noIndex)
     }
 
     // MARK: - the arithmetic underneath

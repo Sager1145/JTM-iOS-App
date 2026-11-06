@@ -20,6 +20,18 @@ public enum TripRouteValidation {
         public let physicallyResolvedIDs: Set<String>
         /// Set when proof could not be established. Retained records stay savable.
         public let unprovenReason: String?
+        /// Retained candidates that resolve only on the ride date (a line closed since).
+        public let historicalOnlyIDs: Set<String>
+
+        public init(
+            retainedIDs: Set<String>, physicallyResolvedIDs: Set<String>,
+            unprovenReason: String?, historicalOnlyIDs: Set<String> = []
+        ) {
+            self.retainedIDs = retainedIDs
+            self.physicallyResolvedIDs = physicallyResolvedIDs
+            self.unprovenReason = unprovenReason
+            self.historicalOnlyIDs = historicalOnlyIDs
+        }
     }
 
     public struct Availability: Sendable, Equatable {
@@ -42,6 +54,7 @@ public enum TripRouteValidation {
         var retainedIDs = Set(candidates.map(\.id))
         var physicallyResolvedIDs: Set<String> = []
         var unprovenReason: String?
+        var historicalOnlyIDs: Set<String> = []
         var probes: [(id: String, train: Train)] = []
         for candidate in candidates {
             try Task.checkCancellation()
@@ -64,6 +77,7 @@ public enum TripRouteValidation {
                     for (probe, status) in zip(probes, availability) {
                         if status.datedResolved {
                             physicallyResolvedIDs.insert(probe.id)
+                            if !status.undatedResolved { historicalOnlyIDs.insert(probe.id) }
                         } else if status.undatedResolved {
                             retainedIDs.remove(probe.id)
                         }
@@ -80,10 +94,11 @@ public enum TripRouteValidation {
             }
         }
         try Task.checkCancellation()
-        if unprovenReason != nil { physicallyResolvedIDs = [] }
+        if unprovenReason != nil { physicallyResolvedIDs = []; historicalOnlyIDs = [] }
         return Result(
             retainedIDs: retainedIDs,
             physicallyResolvedIDs: physicallyResolvedIDs,
-            unprovenReason: unprovenReason)
+            unprovenReason: unprovenReason,
+            historicalOnlyIDs: historicalOnlyIDs)
     }
 }

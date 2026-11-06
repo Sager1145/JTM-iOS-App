@@ -130,21 +130,21 @@ struct ServicePatternPickerView: View {
             List {
                 Section {
                     Button { showsDateEditor.toggle() } label: {
-                        Label(localization.editorText("ios.editor.timetableBrowseDate")
+                        Label(localization.text("ios.editor.timetableBrowseDate")
                               + (rideDate.map { ": " + $0 } ?? ""), systemImage: "calendar")
                     }
                     .accessibilityIdentifier("servicePatternDateEditor")
                     if showsDateEditor {
                         EditorDateField(
-                            title: localization.editorText("ios.editor.timetableBrowseDate"),
+                            title: localization.text("ios.editor.timetableBrowseDate"),
                             date: $rideDate, region: Region(rawValue: region) ?? .jp,
                             accessibilityID: "servicePatternDateInput")
-                        Button(localization.editorText("ios.editor.timetableAnyDate")) { rideDate = nil }
+                        Button(localization.text("ios.editor.timetableAnyDate")) { rideDate = nil }
                     }
-                    Text(localization.editorText("ios.editor.timetableSearchHelp"))
+                    Text(localization.text("ios.editor.timetableSearchHelp"))
                         .font(.caption).foregroundStyle(.secondary)
                     if showsSearchLoading {
-                        ProgressView(localization.editorText("ios.editor.timetableSearching"))
+                        ProgressView(localization.text("ios.editor.timetableSearching"))
                     }
                     if let rideDate {
                         Toggle(pickerText("showHistory"), isOn: $showsAllHistory)
@@ -227,7 +227,7 @@ struct ServicePatternPickerView: View {
                         }
                     }
                     if !results.incompleteTrips.isEmpty {
-                        Section(localization.editorText("ios.editor.timetablePublishedDraft")) {
+                        Section(localization.text("ios.editor.timetablePublishedDraft")) {
                             ForEach(results.incompleteTrips) { trip in
                                 VStack(alignment: .leading, spacing: 8) {
                                     tripRow(trip)
@@ -263,7 +263,7 @@ struct ServicePatternPickerView: View {
             .accessibilityIdentifier("servicePatternList")
             .navigationTitle(pickerText("title"))
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $query, prompt: Text(localization.editorText("ios.editor.timetableSearchPrompt")))
+            .searchable(text: $query, prompt: Text(localization.text("ios.editor.timetableSearchPrompt")))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(pickerText("cancel")) { dismiss() }
@@ -298,7 +298,7 @@ struct ServicePatternPickerView: View {
     }
 
     private func pickerText(_ key: String, _ params: [String: Localization.Param]? = nil) -> String {
-        localization.editorText("ios.editor.pattern." + key, params)
+        localization.text("ios.editor.pattern." + key, params: params)
     }
 
     private func patternRow(_ pattern: TrainServicePatterns.Pattern) -> some View {
@@ -424,7 +424,7 @@ struct ServicePatternPickerView: View {
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier(trip.canApplyToRouteEditor
             ? "timetableTrip-\(trip.id)" : "timetableIncompleteTrip-\(trip.id)")
-        .accessibilityHint(localization.editorText("ios.editor.timetableMatchNote"))
+        .accessibilityHint(localization.text("ios.editor.timetableMatchNote"))
     }
 
     private func validityCaption(for pattern: TrainServicePatterns.Pattern) -> String {

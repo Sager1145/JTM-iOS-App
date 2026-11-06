@@ -15,7 +15,7 @@ struct RideDraftIssue: Identifiable, Equatable {
 
     let field: Field
     let severity: Severity
-    /// A key for ``AppLocalization/editorText(_:_:)``, or — for `.record` — a
+    /// A key for ``AppLocalization/text(_:params:fallback:)``, or — for `.record` — a
     /// message out of `TrainValidation` that is not translatable.
     let key: String
     let params: [String: Localization.Param]

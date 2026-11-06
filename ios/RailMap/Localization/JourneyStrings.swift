@@ -512,7 +512,7 @@ enum JourneyStrings {
         // is absent from `Resources/Localizable.xcstrings`, so the native call
         // sites in this workspace were rendering their English fallback in all
         // four languages. Kept under the web key rather than renamed, so that
-        // when the catalog does grow the entry it silently wins (`journeyText`
+        // when the catalog does grow the entry it silently wins (`countryText`
         // asks the catalog first).
 
         "btn.add": [

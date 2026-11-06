@@ -78,6 +78,13 @@ struct TripMapView: UIViewRepresentable {
     var onRoute: (String) -> Void
     var onBackground: () -> Void
     var onZoomChange: (Bool) -> Void
+    /// Called once the camera is idle (not per frame) with the visible area.
+    var onRegionChange: (SearchMapRect) -> Void = { _ in }
+    /// A filtered, small station set (one company or line) is shown at any
+    /// zoom, so it can be picked straight from the framed network.
+    var showsAllStations = false
+    /// Bumped by a caller whose station set can change at the same size.
+    var stationsRevision = 0
 
     /// Stations are drawn only below this latitude span, where a dot is a
     /// target a finger can actually hit.
@@ -171,9 +178,13 @@ struct TripMapView: UIViewRepresentable {
         }
 
         func setStations(_ stations: [CatalogStation], regionCode: String, on mapView: MKMapView) {
-            guard regionCode != self.regionCode || stations.count != stationCount else { return }
+            // Count plus both ends: a company filter can keep the count and
+            // still change the set.
+            let token = stations.count &+ 31 &* (stations.first?.key.hashValue ?? 0)
+                &+ 17 &* (stations.last?.key.hashValue ?? 0) &+ 7919 &* (parent?.stationsRevision ?? 0)
+            guard regionCode != self.regionCode || token != stationCount else { return }
             self.regionCode = regionCode
-            stationCount = stations.count
+            stationCount = token
             displayStations = stations.map { station in
                 let display = AppleMapDatum.display(
                     Coordinate(lon: station.longitude, lat: station.latitude), country: regionCode)
@@ -301,7 +312,13 @@ struct TripMapView: UIViewRepresentable {
             }
             var wanted: [StationKey: CatalogStation] = [:]
             var coordinates: [StationKey: CLLocationCoordinate2D] = [:]
-            if isZoomedIn {
+            if parent?.showsAllStations == true, displayStations.count <= TripMapView.stationLimit {
+                let marked = Set(content.marks.map(\.station.key))
+                for entry in displayStations where !marked.contains(entry.station.key) {
+                    wanted[entry.station.key] = entry.station
+                    coordinates[entry.station.key] = entry.coordinate
+                }
+            } else if isZoomedIn {
                 let marked = Set(content.marks.map(\.station.key))
                 let south = region.center.latitude - region.span.latitudeDelta * 0.6
                 let north = region.center.latitude + region.span.latitudeDelta * 0.6
@@ -338,6 +355,11 @@ struct TripMapView: UIViewRepresentable {
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             refreshDots(on: mapView)
+            let region = mapView.region
+            guard region.span.latitudeDelta > 0, region.span.longitudeDelta > 0 else { return }
+            parent?.onRegionChange(SearchMapRect(
+                centerLatitude: region.center.latitude, centerLongitude: region.center.longitude,
+                latitudeDelta: region.span.latitudeDelta, longitudeDelta: region.span.longitudeDelta))
         }
 
         func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {

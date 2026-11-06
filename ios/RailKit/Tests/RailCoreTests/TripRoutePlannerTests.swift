@@ -172,10 +172,10 @@ struct TripRoutePlannerTests {
         #expect(explicitNil.choices.map(\.lineIDs) == [["equal"], ["direct"]])
         #expect(explicitNil.isTruncated == baseline.isTruncated)
         #expect(explicitNil.topologyIsComplete == baseline.topologyIsComplete)
-        #expect(LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D",
-                                           continuation: nil) == baseline.choices)
-        let blocked = LocalJourneySearch.choices(package: package, originCode: "A", destinationCode: "D",
-                                                 continuation: { _, _, _ in false })
+        #expect(LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                                           continuation: nil).choices == baseline.choices)
+        let blocked = LocalJourneySearch.search(package: package, originCode: "A", destinationCode: "D",
+                                                 continuation: { _, _, _ in false }).choices
         #expect(blocked.map(\.lineIDs) == [["equal"], ["direct"]])
     }
 

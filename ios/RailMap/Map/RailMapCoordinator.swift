@@ -75,7 +75,6 @@ extension RailMapView.Surface {
             private var selectedDate = Dates.allDates
             private var networkRideDate: String?
             private var naming = MapNaming()
-            private var minZoomByLineId: [String: Int] = [:]
             /// Starts where `RailMapController.showsNetwork` starts, so the
             /// first update is not told the layer just changed.
             private var showsNetwork = false
@@ -186,13 +185,8 @@ extension RailMapView.Surface {
             private var styledOverlayScale: CGFloat = .nan
 #if DEBUG
             private let diagnostics = MapRenderDiagnostics()
-            private var independentRailPrototype: MapIndependentRailPrototype?
             private var pendingRideScanMilliseconds = 0
             private var pendingMaterializeMilliseconds = 0
-
-            func attachIndependentRailPrototype(on mapView: MKMapView) {
-                independentRailPrototype = MapIndependentRailPrototype(on: mapView)
-            }
 
             func attachDiagnosticsStatus(_ status: UILabel) { diagnostics.status = status }
 #endif
@@ -397,9 +391,6 @@ extension RailMapView.Surface {
                     // built from `self.lines` alone; both are stale the
                     // moment it moves.
                     linesGeneration += 1
-                    self.minZoomByLineId = Dictionary(
-                        lines.map { ($0.lineID, $0.minZoom) },
-                        uniquingKeysWith: { first, _ in first })
                 }
 
                 if linesChanged || stationsChanged {
@@ -759,8 +750,6 @@ extension RailMapView.Surface {
                 overlayStyles.removeAll()
                 interaction.tearDown()
 #if DEBUG
-                independentRailPrototype?.tearDown()
-                independentRailPrototype = nil
                 diagnostics.tearDown()
 #endif
 
@@ -881,9 +870,6 @@ extension RailMapView.Surface {
                     runLabelPass(on: mapView, moving: true)
                 }
                 restartLabelSettleTask(on: mapView)
-#if DEBUG
-                independentRailPrototype?.visibleRegionChanged(on: mapView)
-#endif
             }
 
             /// Debounces the settle-time label pass (and `restyle`) behind the
@@ -1201,17 +1187,7 @@ extension RailMapView.Surface {
                 guard showsNetwork || !rides.isEmpty else {
                     annotationReconciler.removeRetiring(on: mapView)
                     overlayInstaller.removeRetiring(on: mapView)
-                    var retiringOverlays = mapView.overlays(in: .aboveLabels)
-#if DEBUG
-                    if MapIndependentRailPrototype.enabled {
-                        // The independent raster reference is owned by the
-                        // prototype, not an empty production rail generation.
-                        // Removing it here erases moving-frame ground truth.
-                        retiringOverlays.removeAll {
-                            ($0 as? MKMultiPolyline)?.title == MapIndependentRailPrototype.nativeBaselineTitle
-                        }
-                    }
-#endif
+                    let retiringOverlays = mapView.overlays(in: .aboveLabels)
                     mapView.removeOverlays(retiringOverlays)
                     if !networkAnnotations.isEmpty { mapView.removeAnnotations(networkAnnotations) }
                     networkAnnotations = []
@@ -2702,11 +2678,15 @@ extension RailMapView.Surface {
 #if DEBUG
                 finishMarkerPhase("networkStations")
 #endif
-#if DEBUG
                 let networkAnnotationPlan = annotationReconciler.plan(
                     desiredNetworkAnnotations, replacing: networkAnnotations)
+                networkAnnotations = annotationReconciler.apply(
+                    networkAnnotationPlan, on: mapView, duration: detailDuration)
                 let rideStationAnnotationPlan = annotationReconciler.plan(
                     markerAnnotations, replacing: rideStationAnnotations)
+                rideStationAnnotations = annotationReconciler.apply(
+                    rideStationAnnotationPlan, on: mapView, duration: detailDuration)
+#if DEBUG
                 annotationAddedCount = networkAnnotationPlan.addedCount
                     + rideStationAnnotationPlan.addedCount
                 annotationRemovedCount = networkAnnotationPlan.removedCount
@@ -2715,22 +2695,10 @@ extension RailMapView.Surface {
                     + rideStationAnnotationPlan.retainedCount
                 annotationCoordinateChangedCount = networkAnnotationPlan.coordinateChangedCount
                     + rideStationAnnotationPlan.coordinateChangedCount
-                finishMarkerPhase("annotationDiff")
-                networkAnnotations = annotationReconciler.apply(
-                    networkAnnotationPlan, on: mapView, duration: detailDuration)
-                rideStationAnnotations = annotationReconciler.apply(
-                    rideStationAnnotationPlan, on: mapView, duration: detailDuration)
                 diagnostics.reusedAnnotations(
                     networkAnnotationPlan.retainedOldCount
                         + rideStationAnnotationPlan.retainedOldCount)
                 finishMarkerPhase("annotationApply")
-#else
-                networkAnnotations = annotationReconciler.reconcile(
-                    desiredNetworkAnnotations, replacing: networkAnnotations, on: mapView,
-                    duration: detailDuration)
-                rideStationAnnotations = annotationReconciler.reconcile(
-                    markerAnnotations, replacing: rideStationAnnotations, on: mapView,
-                    duration: detailDuration)
 #endif
                 // A moving label pass never installs ride-station overlays: it
                 // only relabels, and must not fight the gesture for the dots
@@ -3442,12 +3410,6 @@ extension RailMapView.Surface {
                 guard recognizer.state == .ended, let mapView,
                       !(playback?.isActive == true && playbackLayer.lastSnapshot != nil)
                 else { return }
-#if DEBUG
-                if let independentRailPrototype {
-                    independentRailPrototype.select(at: recognizer.location(in: mapView))
-                    return
-                }
-#endif
                 // 列車経路 off takes the rides' HIT AREA with their ink.
                 //
                 // `RailMap.setVisible` moves `TRAIN_PICK_LAYER` and
@@ -4089,13 +4051,6 @@ extension RailMapView.Surface {
             /// false), and one that found no ride under it makes no claim — so
             /// both of those still open their card.
             func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
-#if DEBUG
-                if let reference = annotation as? MapIndependentRailPrototype.Reference {
-                    mapView.deselectAnnotation(annotation, animated: false)
-                    independentRailPrototype?.selectReference(reference.id)
-                    return
-                }
-#endif
                 if let draft = annotation as? DraftStopAnnotation {
                     mapView.deselectAnnotation(annotation, animated: false)
                     controller?.onDraftPin?(draft.occurrenceID)
@@ -4123,19 +4078,6 @@ extension RailMapView.Surface {
             // MARK: - rendering
 
             func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
-#if DEBUG
-                if let baseline = overlay as? MKMultiPolyline,
-                    baseline.title == MapIndependentRailPrototype.nativeBaselineTitle {
-                    let renderer: MKOverlayPathRenderer = MapIndependentRailPrototype.usesExactReferencePath
-                        ? MapIndependentRailPrototype.ExactPathReferenceRenderer(overlay: baseline)
-                        : MKMultiPolylineRenderer(multiPolyline: baseline)
-                    renderer.strokeColor = .green
-                    renderer.lineWidth = MapIndependentRailPrototype.referenceStrokeWidth
-                    renderer.lineCap = .round
-                    renderer.lineJoin = .round
-                    return renderer
-                }
-#endif
                 // The weight ramp, applied at the one place a token becomes points.
                 //
                 // This used to read "MapKit line widths are already in points and
@@ -4158,31 +4100,28 @@ extension RailMapView.Surface {
                     return renderer
                 }
                 if let polyline = overlay as? MKPolyline {
-                    let renderer = MKPolylineRenderer(polyline: polyline)
-                    let key = polyline.title ?? ""
-                    let style = overlayStyles[key]
-                    renderer.strokeColor = (style?.color ?? .systemBlue)
-                        .withAlphaComponent(style?.alpha ?? 1)
-                    renderer.lineWidth = MapOverlayStyles.drawnWidth(style, atScale: scale)
-                    // A round cap adds half a line width to each dash and eats
-                    // its gap, the same reason the web app's dashed layers
-                    // (`rn-segments-withheld-casing`, `train-routes-xday`, the
-                    // suspended layers) all set `line-cap: butt`.
-                    let patterned = style?.dashed == true || style?.historical == true
-                    renderer.lineCap = patterned ? .butt : .round
-                    renderer.lineJoin = .round
-                    renderer.lineDashPattern = MapOverlayStyles.dashPattern(style, atScale: scale)
-                    overlayStyles.remember(renderer, forKey: key)
-                    return renderer
+                    return styled(MKPolylineRenderer(polyline: polyline),
+                        title: polyline.title, scale: scale)
                 }
                 guard let multi = overlay as? MKMultiPolyline else {
                     return MKOverlayRenderer(overlay: overlay)
                 }
-                let renderer = MKMultiPolylineRenderer(multiPolyline: multi)
-                let key = multi.title ?? ""
+                return styled(MKMultiPolylineRenderer(multiPolyline: multi),
+                    title: multi.title, scale: scale)
+            }
+
+            /// Applies the stored overlay style for `title` to a path renderer.
+            private func styled(_ renderer: MKOverlayPathRenderer, title: String?,
+                                scale: CGFloat) -> MKOverlayRenderer {
+                let key = title ?? ""
                 let style = overlayStyles[key]
-                renderer.strokeColor = (style?.color ?? .systemBlue).withAlphaComponent(style?.alpha ?? 1)
+                renderer.strokeColor = (style?.color ?? .systemBlue)
+                    .withAlphaComponent(style?.alpha ?? 1)
                 renderer.lineWidth = MapOverlayStyles.drawnWidth(style, atScale: scale)
+                // A round cap adds half a line width to each dash and eats
+                // its gap, the same reason the web app's dashed layers
+                // (`rn-segments-withheld-casing`, `train-routes-xday`, the
+                // suspended layers) all set `line-cap: butt`.
                 let patterned = style?.dashed == true || style?.historical == true
                 renderer.lineCap = patterned ? .butt : .round
                 renderer.lineJoin = .round
@@ -4194,11 +4133,6 @@ extension RailMapView.Surface {
             func mapView(
                 _ mapView: MKMapView, viewFor annotation: any MKAnnotation
             ) -> MKAnnotationView? {
-#if DEBUG
-                if let reference = annotation as? MapIndependentRailPrototype.Reference {
-                    return MapIndependentRailPrototype.referenceView(reference, on: mapView)
-                }
-#endif
                 let zoom = MapProjection.zoomLevel(of: mapView)
                 let scale = mapView.bounds.width > 1
                     ? MapProjection.quantised(RailStyle.scale(atZoom: zoom), on: mapView) : 1

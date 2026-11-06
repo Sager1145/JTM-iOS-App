@@ -455,9 +455,6 @@ struct RailMapView: View {
                 (view: MKMapView, _: UITraitCollection) in
                 context.coordinator.appearanceChanged(on: view)
             }
-#if DEBUG
-            if MapIndependentRailPrototype.enabled { context.coordinator.attachIndependentRailPrototype(on: mapView) }
-#endif
             return mapView
         }
 

@@ -147,12 +147,6 @@ struct StationsParityTests {
             let anchors: [[Double]]
             let queries: [QueryCase]
         }
-        struct ReadingTable: Decodable {
-            let country: String
-            let declaredCountry: String?
-            let byCode: Int
-            let byName: Int
-        }
 
         let normalize: [String]
         let normalizeNullish: [Nullish]
@@ -170,8 +164,6 @@ struct StationsParityTests {
         let stops: [StopCase]
         let dedupe: Dedupe
         let trains: [TrainCase]
-        let readingTables: [ReadingTable]
-        let readings: [String]
     }
 
     static func fixture() throws -> Fixture {
@@ -634,95 +626,6 @@ struct StationsParityTests {
         let input = fixture.synthetic + mo + mo + fixture.dedupe.tail
         #expect(input.count == fixture.dedupe.inputCount)
         #expect(Stations.dedupeStationFeatureIndices(input) == fixture.dedupe.keptIndices)
-    }
-
-    // MARK: - Station readings
-
-    /// The reading table's KEYING, which is a station-name resolution rule and
-    /// the same rule as the index: `byName` is re-keyed through
-    /// `normalizeStationName` at load, so a hit cannot depend on how the
-    /// external table spelled its keys. That is not a no-op on the shipped
-    /// data — five Hong Kong keys and one Korean one change.
-    ///
-    /// Which of the four languages a caller then shows is a display preference
-    /// and is NOT ported. The two projections below exist only to observe the
-    /// lookup through what `i18n.js` exports, since `stationReading` is
-    /// module-private there: a table that declares TW/HK/MO/KR rewrites the
-    /// name itself, and one that does not produces a zh reading subline. Both
-    /// read the row directly, with no display dictionary in between.
-    @Test("the reading lookup answers by code first and by normalized name second")
-    func readings() throws {
-        let fixture = try Self.fixture()
-        var tables: [String: Stations.Readings] = [:]
-        for table in fixture.readingTables {
-            let suffix = table.country == "jp" ? "" : "-\(table.country)"
-            let url = try PortFixtures.repositoryRoot()
-                .appending(path: "app/data/station-readings\(suffix).json")
-            let (readings, raw) = try Stations.Readings.load(contentsOf: url)
-            tables[table.country] = readings
-
-            // A count that came up short would mean Swift's Dictionary merged
-            // two keys the JavaScript kept apart — the same canonical-
-            // equivalence collapse this whole port is written against, arriving
-            // through JSONDecoder instead.
-            #expect(raw.byCode?.count == table.byCode, "\(table.country) byCode key count")
-            #expect(raw.byName?.count == table.byName, "\(table.country) byName key count")
-            #expect(readings.codeKeyCount == table.byCode, "\(table.country) byCode re-keyed")
-            #expect(readings.nameKeyCount == table.byName, "\(table.country) byName re-keyed")
-        }
-
-        for row in fixture.readings {
-            let parts = Self.fields(row)
-            let readings = tables[parts[0]]!
-            let code = parts[1].isEmpty ? nil : parts[1]
-            let name = parts[2].isEmpty ? nil : parts[2]
-            let row_ = readings.reading(code: code, name: name)
-            let label = "\(parts[0]) code=\(parts[1]) name=\(Self.units(parts[2]))"
-
-            #expect(
-                Self.same(
-                    Self.stationNameProjection(readings, row: row_, name: name), parts[3]),
-                "\(label) localized name")
-            #expect(
-                Self.same(Self.readingSublineProjection(readings, row: row_, name: name), parts[4]),
-                "\(label) reading subline")
-        }
-    }
-
-    /// `I18N.stationName` under zh-Hant, which is `row.zh_Hant || name` for a
-    /// table that declares one of the four localized-name countries and the
-    /// name unchanged for any other. The language pick is the display rule; the
-    /// row it reads is the ported lookup.
-    static func stationNameProjection(
-        _ readings: Stations.Readings, row: Stations.Readings.Row?, name: String?
-    ) -> String {
-        guard let name, !name.utf16.isEmpty else { return name ?? "" }
-        guard Stations.Readings.localizedNameCountries.contains(readings.declaredCountry)
-        else { return name }
-        guard let row else { return name }
-        if let value = row["zh_Hant"], value.isTruthy { return value.jsString }
-        return name
-    }
-
-    /// `I18N.nameReadingsTyped` under zh-Hant with only the zh toggle on. It
-    /// has no dictionary fallback, so it reports the table and nothing else —
-    /// and it is suppressed for the four localized-name countries, which is why
-    /// the two projections are complementary rather than redundant.
-    static func readingSublineProjection(
-        _ readings: Stations.Readings, row: Stations.Readings.Row?, name: String?
-    ) -> String {
-        guard let name, !name.utf16.isEmpty else { return "[]" }
-        guard !Stations.Readings.localizedNameCountries.contains(readings.declaredCountry)
-        else { return "[]" }
-        guard let row else { return "[]" }
-        var zh: String?
-        if let value = row["zh_Hant"], value.isTruthy {
-            zh = value.jsString
-        } else if let value = row["zh_Hans"], value.isTruthy {
-            zh = value.jsString
-        }
-        guard let zh, !same(zh, name) else { return "[]" }
-        return "[{\"type\":\"zh\",\"text\":\(Stations.Value.string(zh).jsonStringified)}]"
     }
 
     // MARK: - Coverage

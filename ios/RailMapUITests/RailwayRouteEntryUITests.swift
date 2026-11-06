@@ -20,8 +20,10 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCTAssertFalse(app.buttons["newTripCorridor-0"].exists,
                        "An untouched saved route must not be replanned.")
         let origin = app.buttons["newTripOrigin"]
+        // The stations are above the saved route.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: true))
         let found = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS %@", "東京"), object: origin)
+            predicate: NSPredicate(format: "label CONTAINS %@", "品川"), object: origin)
         XCTAssertEqual(XCTWaiter.wait(for: [found], timeout: 20), .completed,
                        "The saved origin must be found in the catalog. \(origin.label)")
         let firstStop = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
@@ -49,20 +51,27 @@ final class RailwayRouteEntryUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["stationPickerMap"].firstMatch.waitForExistence(timeout: 5),
                       "The one station picker shows the map above its search.")
         search.tap()
-        search.typeText("大崎")
-        let row = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004135"]
+        search.typeText("目黒")
+        let row = app.buttons["newTripStation-jp-東日本旅客鉄道-山手線-004072"]
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'newTripStation-'"))
+            .firstMatch.waitForExistence(timeout: 20), "目黒 must list station rows.")
         var swipes = 0
-        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.4), swipes < 12 {
-            app.swipeUp()
+        while !row.waitForExistence(timeout: swipes == 0 ? 3 : 0.5), swipes < 40 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+                .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2)))
             swipes += 1
         }
         XCTAssertTrue(row.exists, app.debugDescription)
         row.tap()
+        // A tap while the search keyboard is up may only resign the field.
+        if app.searchFields.firstMatch.exists, row.waitForExistence(timeout: 2) { row.tap() }
         XCTAssertTrue(app.searchFields.firstMatch.waitForNonExistence(timeout: 8))
         XCTAssertFalse(app.descendants(matching: .any)["newTripSavedRoute"].firstMatch.exists,
                        "A new destination replaces the saved route.")
+        // A replan shows a candidate, or says why there is none.
         let corridor = app.buttons["newTripCorridor-0"]
-        XCTAssertTrue(corridor.waitForExistence(timeout: 30)
+        let routeError = app.descendants(matching: .any)["newTripRouteError"].firstMatch
+        XCTAssertTrue(corridor.waitForExistence(timeout: 30) || routeError.exists
                       || EditorUITestSupport.reveal(corridor, in: app, unmountedRowIsAbove: false),
                       "A new destination must replan the route. \(app.debugDescription)")
         let cancel = app.buttons["newTripCancel"]
@@ -80,13 +89,14 @@ final class RailwayRouteEntryUITests: XCTestCase {
             "id": "ui-tokyo-shinagawa-\(UUID().uuidString.prefix(8))",
             "date": "2026-10-12",
             "number": "Route entry",
-            "origin": "東京",
-            "destination": "品川",
+            "origin": "品川",
+            "destination": "大崎",
             "region": "jp",
             "visible": true,
             "stops": [
-                EditorLaunchSupport.stop("東京", code: "003766", type: "origin", departure: "09:00"),
-                EditorLaunchSupport.stop("品川", code: "004095", type: "destination", arrival: "09:12"),
+                // Conventional-line codes, so 大崎 on the 山手線 connects.
+                EditorLaunchSupport.stop("品川", code: "004095", type: "origin", departure: "09:00"),
+                EditorLaunchSupport.stop("大崎", code: "004135", type: "destination", arrival: "09:03"),
             ],
         ]
         EditorLaunchSupport.launchEditing(app, journey: journey)

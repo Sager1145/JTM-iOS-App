@@ -42,6 +42,27 @@ public enum TripRoutePlanner {
         public var junctions: [Junction]
         public var distanceKm: Double
         public var passStationCount: Int
+
+        init(
+            id: String, choice: RailwayRouteChoices.Choice, lineNames: [String], operatorNames: [String],
+            junctions: [Junction], distanceKm: Double, passStationCount: Int
+        ) {
+            self.id = id
+            self.choice = choice
+            self.lineNames = lineNames
+            self.operatorNames = operatorNames
+            self.junctions = junctions
+            self.distanceKm = distanceKm
+            self.passStationCount = passStationCount
+        }
+
+        /// A candidate from another source, such as a route-repair span, so
+        /// every section choice is presented the same way.
+        public init(choice: RailwayRouteChoices.Choice, distanceKm: Double = 0) {
+            self.init(
+                id: choice.id, choice: choice, lineNames: choice.lineNames, operatorNames: choice.operatorNames,
+                junctions: [], distanceKm: distanceKm, passStationCount: max(0, choice.stations.count - 2))
+        }
     }
 
     public enum Outcome: Sendable, Equatable {
