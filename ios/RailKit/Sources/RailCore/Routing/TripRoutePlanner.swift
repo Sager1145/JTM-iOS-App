@@ -76,17 +76,23 @@ public enum TripRoutePlanner {
 
     public static func plan(package: CompactPackage, request: Request, rideDate: String? = nil,
                             admissionContext: RailwayRouteChoices.AdmissionContext? = nil) throws -> Outcome {
+        let junctions = TripConnectivity.Junctions.bundled(region: package.country)
         guard package.country.lowercased() == "jp" else {
-            return plan(package: package, request: request, rideDate: rideDate, patterns: [], connectors: [], admissionContext: admissionContext)
+            return plan(package: package, request: request, rideDate: rideDate, patterns: [], connectors: [],
+                        junctions: junctions, admissionContext: admissionContext)
         }
         let catalog = try JapanThroughServices.loadBundled()
         return plan(package: package, request: request, rideDate: rideDate,
-                    patterns: catalog.patterns, connectors: catalog.connectors, admissionContext: admissionContext)
+                    patterns: catalog.patterns, connectors: catalog.connectors,
+                    junctions: junctions, admissionContext: admissionContext)
     }
 
+    /// Row changes follow ``TripConnectivity`` only: the same row, a dated
+    /// reviewed physical junction or a dated through service.
     static func plan(package: CompactPackage, request: Request, rideDate: String?,
                      patterns: [JapanThroughServices.Pattern],
                      connectors: [JapanThroughServices.Connector],
+                     junctions physicalJunctions: TripConnectivity.Junctions = .empty,
                      admissionContext: RailwayRouteChoices.AdmissionContext? = nil) -> Outcome {
         guard admissionContext?.matches(rideDate) != false else { return .noRoute }
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
@@ -110,14 +116,13 @@ public enum TripRoutePlanner {
             let key = from.id + "\u{1F}" + to.id + "\u{1F}" + code + "\u{1F}" + (rideDate ?? "")
             if let known = memo[key] { return known }
             let value = TripConnectivity.link(from: from, to: to, atStationCode: code,
-                                              on: rideDate, patterns: patterns, connectors: connectors)
+                                              on: rideDate, patterns: patterns, connectors: connectors,
+                                              junctions: physicalJunctions)
             memo[key] = value
             return value
         }
         func allows(_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ code: String) -> Bool {
-            let verified = TripConnectivity.allows(
-                from: from, to: to, atStationCode: code, on: rideDate)
-            return request.allowUnverifiedConnections || verified
+            request.allowUnverifiedConnections || link(from, to, code).continues
         }
         let seeds: [CompactPackage.Line]
         if let id = request.originLineID, let line = package.lines.first(where: { $0.id == id }) {
@@ -208,7 +213,8 @@ public enum TripRoutePlanner {
                     id: choice.id, choice: choice, lineNames: choice.lineNames,
                     operatorNames: choice.operatorNames,
                     junctions: junctions(for: choice, package: package, rideDate: rideDate,
-                                         patterns: patterns, connectors: connectors),
+                                         patterns: patterns, connectors: connectors,
+                                         physicalJunctions: physicalJunctions),
                     distanceKm: distance(for: choice, package: package),
                     passStationCount: max(0, choice.stations.count - 2))
                 let key = choice.lineIDs.joined(separator: "→") + "|"
@@ -289,7 +295,8 @@ public enum TripRoutePlanner {
             originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs, admissionContext: admissionContext)
         if let choice = unconstrained.choices.first(where: matchesHints) ?? unconstrained.choices.first {
             let all = junctions(for: choice, package: package, rideDate: rideDate,
-                                patterns: patterns, connectors: connectors)
+                                patterns: patterns, connectors: connectors,
+                                physicalJunctions: physicalJunctions)
             let disconnected = all.filter { $0.link == .none }
             return .disconnected(disconnected.isEmpty ? all : disconnected)
         }
@@ -299,7 +306,8 @@ public enum TripRoutePlanner {
     private static func junctions(for choice: RailwayRouteChoices.Choice,
                                   package: CompactPackage, rideDate: String?,
                                   patterns: [JapanThroughServices.Pattern],
-                                  connectors: [JapanThroughServices.Connector]) -> [Junction] {
+                                  connectors: [JapanThroughServices.Connector],
+                                  physicalJunctions: TripConnectivity.Junctions) -> [Junction] {
         var result: [Junction] = []
         for index in choice.routeSections.indices {
             let section = choice.routeSections[index]
@@ -316,7 +324,8 @@ public enum TripRoutePlanner {
                 fromLineID: from.id, fromLineName: from.name,
                 toLineID: to.id, toLineName: to.name,
                 link: TripConnectivity.link(from: from, to: to, atStationCode: code,
-                    on: rideDate, patterns: patterns, connectors: connectors)))
+                    on: rideDate, patterns: patterns, connectors: connectors,
+                    junctions: physicalJunctions)))
         }
         for (index, pair) in zip(choice.routeSections, choice.routeSections.dropFirst()).enumerated() {
             let (section, next) = pair
@@ -333,7 +342,7 @@ public enum TripRoutePlanner {
                                    toLineID: to.id, toLineName: to.name,
                                    link: TripConnectivity.link(from: from, to: to,
                                        atStationCode: code, on: rideDate, patterns: patterns,
-                                       connectors: connectors)))
+                                       connectors: connectors, junctions: physicalJunctions)))
         }
         return result
     }

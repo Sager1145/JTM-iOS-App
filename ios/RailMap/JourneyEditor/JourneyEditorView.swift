@@ -2843,7 +2843,7 @@ struct JourneyEditorView: View {
         let lineNames = Dictionary((package?.lines ?? []).map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
         let joined = TripRoutePlanner.joining(
             chosen, wholeTrip: wholeTrip, allowUnverifiedConnections: allowUnverifiedConnections,
-            stationAliases: sectionAliases) { lineNames[$0] }
+            stationAliases: sectionAliases, region: package?.country, rideDate: dayString(departure)) { lineNames[$0] }
         outcome = joined
         if case .corridors(let route) = joined, let corridor = route.first {
             corridorGeometry = [corridor.id: zip(sections.indices, chosen).flatMap { pieces(for: $1, inSection: $0) }]
@@ -3093,7 +3093,7 @@ struct JourneyEditorView: View {
         case .none:
             return text("unverifiedConnection", fallback: "Unverified connection at {station}",
                         ["station": .string(station)])
-        case .sameLine:
+        case .sameLine, .physicalJunction:
             return nil
         }
     }
