@@ -21,7 +21,7 @@ Transport (default `--transport poll`): the CLI writes `inbox/<id>.json` into th
 
 ## Safety rules
 
-- **Isolated storage only.** `launch` always passes `RAILMAP_UI_TEST_STORAGE_ID=<UUID>` (new by default, or `--storage UUID`). On the real store the app runs only commands that persist nothing: `state`, `screenshot`, `wait`, `useStorage`, `devtools`, `exportDiagnostics`, `memoryWarning`, `clearRouteCaches`, `setLayer`, `focusTrip` and `openStats`. Everything else, including `selectTrip` (it writes the last-viewed trip) and every editor command, is `rejected`. Never write to the real `com.JRM.RailMap` store. Do not launch the app any other way before sending write commands.
+- **Isolated storage only.** `launch` always passes `RAILMAP_UI_TEST_STORAGE_ID=<UUID>` (new by default, or `--storage UUID`). On the real store the app runs only commands that persist nothing: `state`, `screenshot`, `wait`, `useStorage`, `devtools`, `exportDiagnostics`, `memoryWarning`, `clearRouteCaches`, `setLayer`, `focusTrip`, `openStats`, `camera` and `perf`. Everything else, including `selectTrip` (it writes the last-viewed trip) and every editor command, is `rejected`. Never write to the real `com.JRM.RailMap` store. Do not launch the app any other way before sending write commands.
 - **One native job at a time, machine-wide.** That covers builds, simulator runs and device runs across all chats. Coordinate before building or launching.
 - **A single simulator:** iPhone 17 `0DBE2488-0BEB-4932-9B55-091B3CC793B6`. Don't boot or create others.
 - Follow `ios/VERIFICATION.md`: focused, incremental, reuse evidence. One request ID runs once (re-sending a finished ID is ignored).
@@ -69,6 +69,8 @@ Values parse as JSON when they can, so `save=true`, `timeoutMs=5000`, `via='["Âê
 | `clearRouteCaches` | | removed bytes (`Caches/RailMap/Routes` plus the solver/edge-index memos) |
 | `memoryWarning` | | memory before/after the app's memory-warning handler |
 | `setLayer` | `name=routes\|stops\|terminals\|pass\|hsr\|jr\|metro\|priv\|network`, `on=true\|false` | all layer flags |
+| `camera` | `action=set lat= lon= [zoom=] [animated=false]` (zoom keeps the current one when omitted); `action=pan dLat= dLon= [steps=30] [stepMs=33]` (the total move in degrees, in equal steps); `action=zoom [from=] to= [steps=30] [stepMs=33]`; `action=fit [target=network\|selection]`. Zoom is the map's own scale (`camera:` in `railMapRenderStatus`), 0 to 22, steps 1 to 600 | One measured run, waiting until the camera and rebuild count are quiet for 400 ms (max 8 s): `frames`, `maxGapMs` (largest display-link gap), `hitches` (gap over 1.5 frames), `rebuilds` and `gestureBuilds` (deltas), `buildMs` (`samples`, `p50`, `p95`, `max`, sampled at about 20 Hz whenever the rebuild count moved, so a build between two samples is missed), `overlays`, `vertices` (last `RenderStats`), `geometryWait` (`count` delta, `maxMs` since launch), `footprintMB` (`before`, `after`, `delta`), camera `from`/`to`, `durationMs`, `settleMs`. `set`/`pan`/`zoom` go through `RailMapController.setCameraForUITest` (non-animated except `set animated=true`); `fit` calls `fitToNetwork`/`fitToSelection`. Persists nothing, so it runs on the real store |
+| `perf` | `action=start\|stop\|read` | The developer panel's `DevPerfSampler` (1 Hz FPS, hitches, longest frame, footprint, CPU; last 120 s) without opening the panel: `running`, `count`, `summary` and `samples`. `start` clears and restarts; `stop` keeps the samples for `read`. Separate from the panel's own sampler |
 
 ```sh
 A="python3 -I ios/tools/app-control.py --target sim"
@@ -104,7 +106,7 @@ python3 -I ios/tools/app-control.py --target sim devtools hide
 
 ## Release check
 
-All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `RailSignpost` keeps the bare `OSSignpostIntervalState` in Release. The proof is `ios/tools/app-control/check-release-clean.sh RailMap.app`, which runs `strings` and demangled `nm` over the main binary and every embedded Mach-O, and checks the Info.plist, for 15 DEBUG-only markers (type names and literals over 15 bytes; shorter Swift literals are stored inline, where `strings` cannot see them). Its `--debug-sanity` mode fails unless every marker is detected in a Debug build. The Release build is a heavy job, so coordinate it:
+All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `RailSignpost` keeps the bare `OSSignpostIntervalState` in Release. The proof is `ios/tools/app-control/check-release-clean.sh RailMap.app`, which runs `strings` and demangled `nm` over the main binary and every embedded Mach-O, and checks the Info.plist, for 16 DEBUG-only markers (type names and literals over 15 bytes; shorter Swift literals are stored inline, where `strings` cannot see them). Its `--debug-sanity` mode fails unless every marker is detected in a Debug build. The Release build is a heavy job, so coordinate it:
 
 ```sh
 python3 -I ios/tools/app-control.py --target sim --configuration Release build

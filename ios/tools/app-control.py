@@ -10,7 +10,8 @@ command through its own stores and views and writes results/result-<id>.json, wh
 for by request ID and prints as one compact JSON line.
 
 Commands: loadSamples useStorage reloadAll state selectTrip focusTrip openEditor addTrip editTrip
-saveEditor cancelEditor deleteTrip openStats setHideFilter screenshot wait.
+saveEditor cancelEditor deleteTrip openStats setHideFilter screenshot wait devtools exportDiagnostics
+clearRouteCaches memoryWarning setLayer camera perf.
 Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise they are strings.
 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),
@@ -33,7 +34,8 @@ DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=ma
 STATE_DIR = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control"))
 COMMANDS = ["loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
             "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
-            "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer"]
+            "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
+            "camera", "perf"]
 DEVTOOLS_ACTIONS = ["show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export"]
 # CLI wait (seconds) per command when no timeoutMs is passed: at least the app-side default.
 DEFAULT_WAIT = {"reloadAll": 660, "addTrip": 200, "editTrip": 200, "openEditor": 90, "saveEditor": 60,
@@ -198,6 +200,11 @@ def send(a, request):
     args_timeout = request["args"].get("timeoutMs")
     if isinstance(args_timeout, (int, float)):
         timeout = max(timeout, args_timeout / 1000 + 10)
+    if request["command"] == "camera":
+        # A ramp lasts steps x stepMs in the app, plus its settle (up to 8 s).
+        steps, step_ms = request["args"].get("steps", 30), request["args"].get("stepMs", 33)
+        if isinstance(steps, (int, float)) and isinstance(step_ms, (int, float)):
+            timeout = max(timeout, steps * step_ms / 1000 + 30)
     interval = 1.0 if a.target == "device" else 0.15
     picked_up = False
     while time.time() - started < timeout:

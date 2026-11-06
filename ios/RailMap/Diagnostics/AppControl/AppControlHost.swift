@@ -43,6 +43,8 @@ final class AppControlHost: AppControlDriver {
     @ObservationIgnored private var tail: Task<Void, Never>?
     @ObservationIgnored private var queued: Set<String> = []
     @ObservationIgnored private var poller: Task<Void, Never>?
+    /// The `perf` command's own sampler; the developer panel keeps its own.
+    @ObservationIgnored private let perfSampler = DevPerfSampler()
     @ObservationIgnored private let log = Logger(subsystem: RailSignpost.subsystem, category: "app-control")
 
     /// The store this launch uses (`DevStorage`): `nil` is the real store.
@@ -320,6 +322,12 @@ final class AppControlHost: AppControlDriver {
             default: throw AppControlError.invalidArgument("name", name)
             }
             return ["layer": .string(name), "on": .bool(on), "layers": Self.layers(controller)]
+        case .camera(let action):
+            return try await AppControlCameraRun(
+                controller: stores.controller, renderStats: { [weak self] in self?.workspace?.renderStats() }
+            ).run(action)
+        case .perf(let action):
+            return perf(action)
         case .wait(let condition, let timeoutMs):
             let started = ContinuousClock.now
             try await until(condition, timeoutMs: timeoutMs) { [weak self] in
@@ -649,6 +657,34 @@ final class AppControlHost: AppControlDriver {
         }
         return ["visible": .bool(tools.isVisible), "expanded": .bool(tools.isExpanded),
                 "recorder": .bool(SignpostRecorder.shared.isActive)]
+    }
+
+    /// `perf start|stop|read`: the panel's sampler (1 Hz FPS, hitches, footprint, CPU) without the panel.
+    private func perf(_ action: String) -> AppControlJSON {
+        switch action {
+        case "start":
+            perfSampler.stop()
+            perfSampler.clear()
+            perfSampler.start()
+        case "stop": perfSampler.stop()
+        default: break
+        }
+        let samples = perfSampler.samples
+        func mean(_ values: [Double]) -> AppControlJSON {
+            values.isEmpty ? .null : .number((values.reduce(0, +) / Double(values.count) * 10).rounded() / 10)
+        }
+        return [
+            "running": .bool(perfSampler.isRunning), "count": .number(Double(samples.count)),
+            "summary": [
+                "fpsMean": mean(samples.map(\.fps)),
+                "fpsMin": samples.map(\.fps).min().map { .number(($0 * 10).rounded() / 10) } ?? .null,
+                "hitches": .number(Double(samples.reduce(0) { $0 + $1.hitches })),
+                "longestFrameMs": samples.map(\.longestFrameMs).max().map { .number(($0 * 10).rounded() / 10) } ?? .null,
+                "memoryMBMax": samples.map(\.memoryMB).max().map { .number(($0 * 10).rounded() / 10) } ?? .null,
+                "cpuPercentMean": mean(samples.map(\.cpuPercent)),
+            ],
+            "samples": perfSampler.json,
+        ]
     }
 
     /// The solved-route cache on disk plus the process memos a memory warning
