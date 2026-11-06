@@ -31,7 +31,8 @@ function loadScope(APP_DIR, AppCore, RailNetwork) {
       allowedInstitutionCodes: (...a) => getAllowedInstitutionTypeCodes(...a),
       intersects: (...a) => intersects(...a), keyDigest: (...a) => routeKeyDigest(...a),
       nearbyNodes: (...a) => nearbyGraphNodes(...a),
-      preferredOperatorNames: (...a) => derivedPreferredOperatorNames(...a),
+      preferredOperatorNames: (...a) => solvePreferredOperatorNames(...a),
+      sectionOperatorNames: (...a) => solveSectionOperatorNames(...a),
       resolveSectionEndpoints: (...a) => resolveSectionEndpoints(...a),
       templateKey: (...a) => getTrainRouteTemplateKey(...a),
     });

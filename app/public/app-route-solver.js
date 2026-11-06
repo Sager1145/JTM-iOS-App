@@ -1129,11 +1129,9 @@ function buildSegmentRouteHints(section, fromStations, toStations, train) {
       .filter(Boolean),
   );
   const preferredOperators = new Set(
-    [
-      ...(train.route_policy?.preferred_operator_names || []),
-      // 公司 field soft-biases the solver toward that operator's tracks.
-      ...routeGraphApi.preferredOperatorNames(train),
-    ]
+    // The train's operators (registry names when a registry is configured,
+    // else the policy plus the 公司 field) soft-bias the solver toward their tracks.
+    routeGraphApi.preferredOperatorNames(train)
       .map(String)
       .filter(Boolean),
   );
@@ -1143,9 +1141,7 @@ function buildSegmentRouteHints(section, fromStations, toStations, train) {
     ...(inferredConstraints.line_names || []),
   ]);
   const explicitRequiredOperators = new Set([
-    ...(section.operator_names || [])
-      .map(String)
-      .filter(Boolean),
+    ...routeGraphApi.sectionOperatorNames(section),
     ...(inferredConstraints.operator_names || []),
   ]);
   const requiredLines = new Set(explicitRequiredLines);

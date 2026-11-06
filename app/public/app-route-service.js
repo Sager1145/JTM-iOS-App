@@ -40,7 +40,8 @@ configureRouteGraphApi({
   intersects: (...args) => intersects(...args),
   keyDigest: (...args) => routeKeyDigest(...args),
   nearbyNodes: (...args) => nearbyGraphNodes(...args),
-  preferredOperatorNames: (...args) => derivedPreferredOperatorNames(...args),
+  preferredOperatorNames: (...args) => solvePreferredOperatorNames(...args),
+  sectionOperatorNames: (...args) => solveSectionOperatorNames(...args),
   resolveSectionEndpoints: (...args) => resolveSectionEndpoints(...args),
   templateKey: (...args) => getTrainRouteTemplateKey(...args),
 });

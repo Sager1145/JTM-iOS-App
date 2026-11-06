@@ -230,12 +230,7 @@ function buildTrainRouteSolveContext(train) {
     ...(train.route_policy?.preferred_line_names || []).map(
       (value) => `line:${value}`,
     ),
-    ...(train.route_policy?.preferred_operator_names || []).map(
-      (value) => `operator:${value}`,
-    ),
-    ...derivedPreferredOperatorNames(train).map(
-      (value) => `operator:${value}`,
-    ),
+    ...solvePreferredOperatorNames(train).map((value) => `operator:${value}`),
     `institution_filter:${train.route_policy?.institution_filter_mode || "soft"}`,
   ]
     .sort()
@@ -586,8 +581,7 @@ function solveTaiwanRouteSectionOnOfficialInterval(
     ...requiredLines,
   ]);
   const preferredOperators = normalizedRouteSectionHintValues([
-    ...(train?.route_policy?.preferred_operator_names || []),
-    ...derivedPreferredOperatorNames(train),
+    ...solvePreferredOperatorNames(train || {}),
     match.operator,
   ]);
 
@@ -1043,6 +1037,115 @@ function derivedPreferredOperatorNames(train) {
     names.add(COMPANY_OPERATOR_ALIASES[part] || part);
   });
   return [...names];
+}
+
+// Registry operator identity for route solving. Mirrors Swift's
+// SolverRegistryInput.packageOperatorNames: once a registry bundle is
+// configured, a train's operator names are every name on the records its
+// operator ids (and stored spellings that convert to one) point at. Without a
+// bundle the literal names plus the company-derived names apply, like Swift's
+// `.unavailable` path.
+let routeRegistryOperators = null;
+
+function routeRegistryExactKey(value, region) {
+  const folded = String(value ?? "").trim().normalize("NFKC");
+  return String(region || "").toLowerCase() === "tw"
+    ? RailOperatorBranding.normalizeTaiwanCompanyName(folded)
+    : folded;
+}
+
+function configureRouteRegistryOperators(bundle) {
+  if (!bundle) {
+    routeRegistryOperators = null;
+    return;
+  }
+  const region = bundle.region || "";
+  const aliases = bundle.aliases || {};
+  const records = new Map();
+  const owners = new Map();
+  Object.entries(bundle.operators || {}).forEach(([identifier, value]) => {
+    const record = Array.isArray(value) ? { names: value } : value || {};
+    const names = Array.isArray(record.names) ? record.names : [];
+    records.set(identifier, { names });
+    const sources = [...names];
+    if (record.identity) sources.push(record.identity);
+    sources.forEach((raw) => {
+      const key = routeRegistryExactKey(raw, region);
+      if (!key) return;
+      if (!owners.has(key)) owners.set(key, new Set());
+      owners.get(key).add(identifier);
+    });
+  });
+  const exact = new Map();
+  owners.forEach((identifiers, key) => {
+    if (identifiers.size === 1) exact.set(key, [...identifiers][0]);
+  });
+  routeRegistryOperators = { region, aliases, records, exact };
+}
+
+function registryPackageOperatorNames(operatorIDs, storedNames) {
+  const registry = routeRegistryOperators;
+  const recordFor = (identifier) =>
+    registry.records.get(registry.aliases[identifier] ?? identifier);
+  const identifiers = [];
+  const seenIDs = new Set();
+  const addID = (identifier) => {
+    if (!recordFor(identifier) || seenIDs.has(identifier)) return;
+    seenIDs.add(identifier);
+    identifiers.push(identifier);
+  };
+  operatorIDs.forEach(addID);
+  storedNames.forEach((stored) => {
+    const trimmed = String(stored ?? "").trim();
+    if (!trimmed) return;
+    if (recordFor(trimmed)) addID(trimmed);
+    else {
+      const identifier = registry.exact.get(
+        routeRegistryExactKey(trimmed, registry.region),
+      );
+      if (identifier) addID(identifier);
+    }
+  });
+  const names = [];
+  const seen = new Set();
+  identifiers.forEach((identifier) => {
+    recordFor(identifier).names.forEach((name) => {
+      const trimmed = String(name ?? "").trim();
+      if (!trimmed || seen.has(trimmed)) return;
+      seen.add(trimmed);
+      names.push(trimmed);
+    });
+  });
+  return names;
+}
+
+// Operator names that bias and key one train's solve.
+function solvePreferredOperatorNames(train) {
+  if (!routeRegistryOperators) {
+    return [
+      ...(train.route_policy?.preferred_operator_names || []),
+      ...derivedPreferredOperatorNames(train),
+    ];
+  }
+  const recorded = [];
+  if (train.operator_id) recorded.push(train.operator_id);
+  (Array.isArray(train.operator_ids) ? train.operator_ids : []).forEach(
+    (identifier) => {
+      if (identifier && !recorded.includes(identifier)) recorded.push(identifier);
+    },
+  );
+  return registryPackageOperatorNames(
+    recorded,
+    train.route_policy?.preferred_operator_names || [],
+  );
+}
+
+// A section's explicit operator names, converted like the train's.
+function solveSectionOperatorNames(section) {
+  const names = (section.operator_names || []).map(String).filter(Boolean);
+  return routeRegistryOperators
+    ? registryPackageOperatorNames([], names)
+    : names;
 }
 
 // Derive N02_002 institution-type codes from train_type + company. Empty
