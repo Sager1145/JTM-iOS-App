@@ -26,6 +26,32 @@ public struct LineScope: Codable, Equatable, Sendable {
     public var isPaired: Bool { alignmentOf != nil || !alignmentPairs.isEmpty }
 }
 
+/// The display intervals between two stations of one package line. Interval
+/// `i` joins station `i` to station `i + 1`; on a loop (`isLoop`) the last
+/// interval joins the last station back to the first, so a pair may be
+/// joined either way round: the one with fewer intervals is taken (a tie
+/// keeps station order).
+public enum StationSpan {
+    public static func intervals(_ line: CompactPackage.Line, _ a: Int, _ b: Int) -> [Int] {
+        intervals(a, b, stationCount: line.stations.count, isLoop: line.isLoop)
+    }
+
+    /// Interval indices in travel order from the lower end (station order), or
+    /// from the higher index through the wrap when that way is shorter.
+    public static func intervals(_ a: Int, _ b: Int, stationCount n: Int, isLoop: Bool) -> [Int] {
+        let low = min(a, b), high = max(a, b)
+        guard isLoop, n - (high - low) < high - low else { return Array(low..<high) }
+        return Array(high..<n) + Array(0..<low)
+    }
+
+    /// Station indices the intervals touch (both ends of each).
+    public static func stations(_ intervals: [Int], stationCount n: Int) -> [Int] {
+        var out: [Int] = []
+        for i in intervals { for s in [i % n, (i + 1) % n] where !out.contains(s) { out.append(s) } }
+        return out
+    }
+}
+
 /// A stations.json feature inside the area.
 public struct ScopedStation: Codable, Equatable, Sendable {
     public var featureIndex: Int
@@ -70,7 +96,7 @@ public struct AreaScope: Codable, Equatable, Sendable {
             guard let b = line.stations.firstIndex(where: { $0.id == toID }) else {
                 throw AreaRepairError.invalidScope("station \(toID) is not on \(lineID).")
             }
-            core = try intervalBox(line, Array(min(a, b)..<max(a, b)))
+            core = try intervalBox(line, StationSpan.intervals(line, a, b))
         case let .lineSection(lineID, first, last):
             guard let line = data.linesByID[lineID] else { throw AreaRepairError.invalidScope("unknown line \(lineID).") }
             guard last < line.segments.count else {

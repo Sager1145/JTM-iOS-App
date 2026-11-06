@@ -48,8 +48,6 @@ public struct AreaThresholds: Codable, Equatable, Sendable {
     public var marginMetres = 500.0
     /// Search radius around a shared station for each line's track vertices.
     public var junctionSearchMetres = 300.0
-    /// At or below: identical-vertex (zeroLength) junction proposal.
-    public var zeroLengthMetres = 1.0
     /// At or below: reviewed shortLink proposal (registry policy maximum).
     public var shortLinkMetres = 30.0
     /// A station anchor farther than this from its own line is off the line.
@@ -73,7 +71,7 @@ public struct AreaThresholds: Codable, Equatable, Sendable {
     public static let `default` = AreaThresholds()
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case marginMetres, junctionSearchMetres, zeroLengthMetres, shortLinkMetres, stationOffLineMetres
+        case marginMetres, junctionSearchMetres, shortLinkMetres, stationOffLineMetres
         case cornerMinimumDegrees, cornerWindowMetres, cornerSampleMetres, cornerDeviationMetres, roundingZoom
         case pairedSideContradictionFraction, pairedSideMinimumOffsetMetres
     }
@@ -86,7 +84,6 @@ public struct AreaThresholds: Codable, Equatable, Sendable {
         let d = AreaThresholds()
         marginMetres = try value(.marginMetres, d.marginMetres)
         junctionSearchMetres = try value(.junctionSearchMetres, d.junctionSearchMetres)
-        zeroLengthMetres = try value(.zeroLengthMetres, d.zeroLengthMetres)
         shortLinkMetres = try value(.shortLinkMetres, d.shortLinkMetres)
         stationOffLineMetres = try value(.stationOffLineMetres, d.stationOffLineMetres)
         cornerMinimumDegrees = try value(.cornerMinimumDegrees, d.cornerMinimumDegrees)

@@ -245,7 +245,7 @@ final class InspectorModel {
                             Double(RailStyle.strokeCornerRadius * weight), Double(RailStyle.minimumCornerRadius(atScale: weight)),
                             RailStyle.strokeMinRamp]
             let actual = [style.railWidth, style.laneGap, style.cornerRadius, style.minCornerRadius, style.minRamp]
-            assert(zip(expected, actual).allSatisfy { abs($0 - $1) < 1e-9 },
+            assert(expected == actual,
                    "StrokeStyle.diagnosticsDefault(zoom: \(zoom)) \(actual) diverged from RailStyle \(expected)")
         }
     }

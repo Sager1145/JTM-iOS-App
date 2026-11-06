@@ -112,15 +112,38 @@ public struct GuardRunner: Sendable {
 public struct ProcessGuardCommandRunner: GuardCommandRunning {
     public init() {}
 
+    /// `shell` inside the machine-wide heavy-job lock, following
+    /// /private/tmp/jtm-heavy-job-run.sh: the holder writes `pid` and `cmd`
+    /// (the command comes from `$JTM_LOCK_CMD`); a waiter removes the lock only
+    /// when its pid file names a dead process (never one without a pid file)
+    /// and says once on stderr whom it waits for; the exit trap removes pid,
+    /// cmd and the directory.
+    public static func lockedScript(_ shell: String, lock: String = GuardRunner.heavyJobLock) -> String {
+        """
+        LOCK='\(lock)'; announced=0
+        while ! mkdir "$LOCK" 2>/dev/null; do
+          holder=$(cat "$LOCK/pid" 2>/dev/null)
+          if [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null; then
+            rm -f "$LOCK/pid" "$LOCK/cmd"; rmdir "$LOCK" 2>/dev/null; continue
+          fi
+          if [ "$announced" = 0 ]; then
+            echo "jtm-area: waiting for heavy-job lock held by PID ${holder:-unknown} ($(cat "$LOCK/cmd" 2>/dev/null))" >&2; announced=1
+          fi
+          sleep 20
+        done
+        echo $$ > "$LOCK/pid"; printf '%s\\n' "$JTM_LOCK_CMD" > "$LOCK/cmd"
+        trap 'rm -f "$LOCK/pid" "$LOCK/cmd"; rmdir "$LOCK" 2>/dev/null' EXIT
+        DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \(shell)
+        """
+    }
+
     public func run(_ command: GuardCommand, repo: URL) throws -> GuardCommandResult {
         #if os(macOS)
-        let lock = GuardRunner.heavyJobLock
-        let script = command.isSwiftTest
-            ? "until mkdir \(lock) 2>/dev/null; do sleep 20; done; trap 'rmdir \(lock)' EXIT; DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \(command.shell)"
-            : command.shell
+        let script = command.isSwiftTest ? Self.lockedScript(command.shell) : command.shell
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/bin/bash")
         process.arguments = ["-c", script]
+        process.environment = ProcessInfo.processInfo.environment.merging(["JTM_LOCK_CMD": command.shell]) { $1 }
         process.currentDirectoryURL = repo
         let pipe = Pipe()
         process.standardOutput = pipe

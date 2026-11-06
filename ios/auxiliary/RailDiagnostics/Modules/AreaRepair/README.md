@@ -15,7 +15,7 @@ Small-area capture and repair for Rail Diagnostics: select an area, collect evid
 
 ## Writes
 
-Default writable target: `app/data/physical-rail-junctions.json`. `rail-history.json` needs `--allow-generated --confirm`; `jp-2025.json` is always refused. `write` without `--confirm` is a dry-run. Backups and an inverse receipt go under `<evidence root>/area-repairs/<id>/receipts/`.
+Default writable target: `app/data/physical-rail-junctions.json`. `rail-history.json` needs `--allow-generated --confirm`, and the result then lists `generatorFixNeeded` (mirror into `app/scripts/railway/jp-rail-history-events.json`); `jp-2025.json` is always refused. One decision (`OpDisposition`) drives both the dry-run plan and the write check. `write` without `--confirm` is a dry-run. Backups, the inverse patch and a `pending` receipt listing every file's hashes go under `<evidence root>/area-repairs/<id>/receipts/` before the first repository write; any failure restores the backups. `undo` accepts a `written` or `pending` (interrupted) receipt. Scratch overlays (`apply --scratch`, preview) refuse the repository root, its ancestors, its `app/` tree and any directory whose targets resolve to repository data files.
 
 ## Tests
 

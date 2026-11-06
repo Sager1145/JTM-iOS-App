@@ -4,6 +4,14 @@
 capture/send write or take a request, open it in the app, then wait for the
 requestID-matched run-status.json, or a rejection record. Exit: 0 ok, 2 rejected,
 3 timeout, 4 failed. Does not build the app; one native job at a time.
+
+Launch: `open -a APP REQUEST`, plus `--env RAILWAY_EVIDENCE_ROOT=...` when that
+variable is set. With a repository root (`area capture` always: --repo-root,
+default the repository containing this script; `capture`/`send` only when
+--repo-root is given) the app is started as a new instance so it receives it:
+`open -n -a APP [--env ...] REQUEST --args --repo-root PATH`. The first time the
+app reads a repository under ~/Documents, macOS may prompt for Documents-folder
+access; allow it, or the area workspace cannot load the repository's data.
 """
 import argparse, datetime, json, os, re, subprocess, sys, tempfile, time
 from pathlib import Path
@@ -162,7 +170,19 @@ def summarize(req_id, session, status, result):
             "views": session_views(session)}
 
 
-def send_and_wait(req_path, req, timeout, app):
+def launch_command(app, req_path, repo_root=None):
+    """The `open` invocation: a new instance with --args only when a repository root is passed."""
+    cmd = ["open"] + (["-n"] if repo_root else []) + ["-a", app]
+    evidence = os.environ.get("RAILWAY_EVIDENCE_ROOT")
+    if evidence:
+        cmd += ["--env", "RAILWAY_EVIDENCE_ROOT=" + evidence]
+    cmd.append(str(req_path))
+    if repo_root:
+        cmd += ["--args", "--repo-root", str(Path(repo_root).resolve())]
+    return cmd
+
+
+def send_and_wait(req_path, req, timeout, app, repo_root=None):
     try:
         require_write_path(req["sessionDirectory"])
         if req.get("alignmentEvidenceDirectory"):
@@ -175,7 +195,7 @@ def send_and_wait(req_path, req, timeout, app):
     log = EVIDENCE / "diagnostics/inbox/rejections.jsonl"
     before = rejection_count(log)
     started = time.time()
-    r = subprocess.run(["open", "-a", app, str(req_path)], capture_output=True, text=True)
+    r = subprocess.run(launch_command(app, req_path, repo_root), capture_output=True, text=True)
     if r.returncode != 0:
         out({"rejected": False, "state": "openFailed", "reason": r.stderr.strip()}, 4)
     deadline = started + timeout
@@ -246,11 +266,16 @@ def main():
     ac.add_argument("--dry-run", action="store_true", help="print the request; write and open nothing")
     ac.add_argument("--timeout", type=int, default=900)
     ac.add_argument("--app", default=DEFAULT_APP)
+    ac.add_argument("--repo-root", default=str(REPO),
+                    help="repository the app's area workspace reads (default: %(default)s); macOS may ask "
+                         "for Documents-folder access the first time the app reads a repository under ~/Documents")
     s = sub.add_parser("send", help="send an existing absolute request.json")
     s.add_argument("request")
     for p in (c, s):
         p.add_argument("--timeout", type=int, default=900)
         p.add_argument("--app", default=DEFAULT_APP)
+        p.add_argument("--repo-root", help="launch a new app instance with --repo-root PATH (macOS may ask for "
+                                           "Documents-folder access the first time the app reads a repository under ~/Documents)")
     st = sub.add_parser("status", help="show run-status.json and result counts")
     st.add_argument("session")
     v = sub.add_parser("views", help="list captured views from capture-index.json")
@@ -274,7 +299,7 @@ def main():
             out({"rejected": True, "reason": str(error)}, 2)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(req, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        send_and_wait(path, req, a.timeout, a.app)
+        send_and_wait(path, req, a.timeout, a.app, a.repo_root)
     elif a.cmd == "capture":
         name, req = build_request(a)
         session = Path(req["sessionDirectory"])
@@ -290,13 +315,13 @@ def main():
             out({"rejected": True, "reason": str(error)}, 2)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(req, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        send_and_wait(path, req, a.timeout, a.app)
+        send_and_wait(path, req, a.timeout, a.app, a.repo_root)
     elif a.cmd == "send":
         path = Path(a.request)
         req = read_json(path)
         if not path.is_absolute() or not isinstance(req, dict) or "requestID" not in req or "sessionDirectory" not in req:
             out({"rejected": True, "reason": "Need an absolute readable request.json with requestID and sessionDirectory."}, 2)
-        send_and_wait(path, req, a.timeout, a.app)
+        send_and_wait(path, req, a.timeout, a.app, a.repo_root)
     elif a.cmd == "status":
         session = resolve_session(a.session)
         stt = read_json(session / "run-status.json")

@@ -3,8 +3,9 @@ import RailCore
 
 /// A station code served by two scoped package lines whose own surveyed
 /// tracks neither share a physical graph node (same identity, same 5-decimal
-/// vertex) nor have a reviewed registry row. Proposes a zero-length row
-/// (≤ 1 m), a shortLink row (≤ 30 m), or reports "needs survey".
+/// vertex) nor have a reviewed registry row. Proposes a zeroLength row when
+/// the nearest vertices are identical, a shortLink row when they are distinct
+/// and ≤ 30 m apart (the JunctionRowRules split), or reports "needs survey".
 public enum MissingJunctionDetector {
     struct TrackEnd { var identity: RouteGraph.TrackIdentity; var vertices: [Coordinate] }
 
@@ -43,7 +44,7 @@ public enum MissingJunctionDetector {
                     if distance <= t.shortLinkMetres {
                         let row = proposedRow(code: code, station: stationA.name, a: a.lineID, b: b.lineID,
                                               from: (nearest.identityA, nearest.a), to: (nearest.identityB, nearest.b),
-                                              metres: distance, zeroLength: distance <= t.zeroLengthMetres)
+                                              metres: distance, zeroLength: nearest.a == nearest.b)
                         proposal = PatchOp(op: .junctionAdd, key: row["id"]!.stringValue!, before: nil, after: row)
                         message = "\(stationA.name) (\(code)): \(a.lineID) and \(b.lineID) are not physically joined; their tracks are \(AreaProblems.format(distance)) apart."
                     } else {

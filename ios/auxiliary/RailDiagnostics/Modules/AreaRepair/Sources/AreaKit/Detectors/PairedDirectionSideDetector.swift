@@ -20,15 +20,16 @@ public enum PairedDirectionSideDetector {
     }
 
     /// The side measurement of paired row `lineID` against its base, or nil
-    /// when the row is not a paired alignment with a usable base span.
-    public static func measure(_ data: AreaData, lineID: String) -> Measurement? {
+    /// when the row is not a paired alignment with a usable base span. With
+    /// `bbox`, only the paired row's samples inside it count.
+    public static func measure(_ data: AreaData, lineID: String, within bbox: AreaBBox? = nil) -> Measurement? {
         guard let paired = data.linesByID[lineID], let baseID = paired.alignmentOf,
               let base = data.linesByID[baseID], let first = paired.stations.first, let last = paired.stations.last,
               let a = base.stations.firstIndex(where: { $0.id == first.id }),
               let b = base.stations.firstIndex(where: { $0.id == last.id }), a != b else { return nil }
         let intervals = CompactPackage.decodeIntervals(base)
         var polyline: [Coordinate] = []
-        for index in min(a, b)..<max(a, b) where intervals.indices.contains(index) {
+        for index in StationSpan.intervals(base, a, b) where intervals.indices.contains(index) {
             polyline += polyline.isEmpty ? intervals[index] : Array(intervals[index].dropFirst())
         }
         // Station order is "down" unless the base declares it "up".
@@ -38,7 +39,7 @@ public enum PairedDirectionSideDetector {
         let midpoints = zip(own, own.dropFirst()).map { Coordinate(lon: ($0.lon + $1.lon) / 2, lat: ($0.lat + $1.lat) / 2) }
         var left = 0, counted = 0
         var offsets: [Double] = []
-        for p in midpoints {
+        for p in midpoints where bbox?.contains(p) ?? true {
             guard let (side, offset) = signedSide(p, polyline) else { continue }
             offsets.append(offset)
             guard offset > 0.5 else { continue }
@@ -71,7 +72,7 @@ public enum PairedDirectionSideDetector {
         var problems: [Problem] = []
         for scoped in context.scope.lines where scoped.alignmentOf != nil {
             guard let declared = scoped.alignmentDirection, ["up", "down"].contains(declared),
-                  let m = measure(context.data, lineID: scoped.lineID) else { continue }
+                  let m = measure(context.data, lineID: scoped.lineID, within: context.scope.bbox) else { continue }
             let contradiction = declared == "down" ? 1 - m.leftFraction : m.leftFraction
             guard contradiction > t.pairedSideContradictionFraction, m.medianOffsetMetres > t.pairedSideMinimumOffsetMetres else { continue }
             let flipped = declared == "up" ? "down" : "up"

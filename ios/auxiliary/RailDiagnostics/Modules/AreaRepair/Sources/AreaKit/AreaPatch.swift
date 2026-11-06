@@ -81,11 +81,13 @@ public struct PatchOp: Codable, Equatable, Sendable {
         self.writable = op.defaultWritable; self.mirror = op.mirror
     }
 
-    /// The op that restores the state before this one.
+    /// The op that restores the state before this one. A junction add
+    /// writes its row in canonical key order, so the inverse remove expects
+    /// that order.
     public var inverse: PatchOp {
         var op = self
         op.op = self.op.inverse
-        op.before = after
+        op.before = self.op == .junctionAdd ? after.map(JunctionFileEditor.canonicalised) : after
         op.after = before
         return op
     }

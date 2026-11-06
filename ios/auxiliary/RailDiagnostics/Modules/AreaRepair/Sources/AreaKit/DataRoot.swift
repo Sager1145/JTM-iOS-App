@@ -20,7 +20,7 @@ public enum AreaRepairError: LocalizedError, Equatable {
         case .confirmationRequired: "Writing to the repository requires an explicit confirmation (--confirm)."
         case .refused(let reason): "Refused: \(reason)"
         case .guardFailed(let reason): "Regression guard failed; the write was reverted. \(reason)"
-        case .changedSinceWrite(let path): "\(path) changed after the write; undo refuses to overwrite it."
+        case .changedSinceWrite(let path): "\(path) matches neither its pre-write nor its written bytes (it changed after the write); undo refuses to overwrite it."
         }
     }
 }

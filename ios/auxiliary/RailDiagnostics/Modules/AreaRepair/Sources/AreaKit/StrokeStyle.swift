@@ -29,8 +29,10 @@ public struct StrokeStyle: Codable, Equatable, Sendable {
     /// RailStyle's tokens scaled for `zoom`.
     public static func diagnosticsDefault(zoom: Double) -> StrokeStyle {
         let w = weight(atZoom: zoom)
-        let railWidth = 1.5
-        return StrokeStyle(railWidth: railWidth * w, laneGap: (railWidth + 1.2) * w, cornerRadius: 3.6 * w,
+        // RailStyle's own expressions, operation for operation, so every value is bit-identical.
+        let stationDiameter = 6.0
+        let railWidth = stationDiameter * 0.25
+        return StrokeStyle(railWidth: railWidth * w, laneGap: (railWidth + 1.2) * w, cornerRadius: stationDiameter * 0.6 * w,
                            minCornerRadius: max(1, railWidth * 2 * w), minRamp: 24)
     }
 

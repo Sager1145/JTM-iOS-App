@@ -120,7 +120,8 @@ let helpText: [String: String] = [
     jtm-area problems <selector> [--out DIR] [--propose PATCH.json] [options]
       Lists detected problems; --out also writes DIR/problems.json. --propose writes a draft
       patch with every proposal; reason and source are blanked (the patch fails validation
-      until a reason and at least one source are filled). Exit 4 if any error/warning problem.
+      until a reason and at least one source are filled). Exit 4 if any error/warning problem;
+      --propose with nothing proposable prints {"proposed":0,...}, writes no file and exits 0.
     \(selectorHelp)
     \(dataHelp)
     """,
@@ -137,13 +138,17 @@ let helpText: [String: String] = [
     """,
     "write": """
     jtm-area write --patch FILE [--confirm] [--allow-generated] [--patch-dir DIR] [--repo DIR]
-      Without --confirm prints the dry-run plan and exits 2 having written nothing.
+      Without --confirm prints the dry-run plan and exits 2 having written nothing. Plan status per op:
+      writable, generated-needs-flag (rail-history.json: needs --allow-generated and --confirm; the
+      result then lists generatorFixNeeded, the jp-rail-history-events.json mirror), or refused
+      (jp-2025.json always; junction ops marked not writable).
       Default patch dir: <evidence root>/area-repairs/<patch id> (RAILWAY_EVIDENCE_ROOT or the
       mounted /Volumes/JTM Evidence archive).
     """,
     "undo": """
     jtm-area undo --receipt FILE --confirm [--repo DIR]
-      Restores the files of a written receipt from its backups, then re-runs the guards.
+      Restores the files of a written or pending (interrupted) receipt from its backups, then
+      re-runs the guards. Refuses a file that matches neither its pre-write nor its written bytes.
     """,
     "guard": """
     jtm-area guard --patch FILE [--dry-run] [--repo DIR]
@@ -306,7 +311,12 @@ func captureData(_ options: Options, problemsOnly: Bool) throws -> Int32 {
                                       "rides": trains.count, "elapsed": seconds(clock.now - start)]
         if let propose = options.one("propose") {
             let ops = problems.compactMap(\.proposal)
-            guard !ops.isEmpty else { throw CLIError(message: "No problem in this area has a repair proposal.") }
+            guard !ops.isEmpty else {
+                var kinds: [String] = []
+                for kind in problems.map(\.kind.rawValue) where !kinds.contains(kind) { kinds.append(kind) }
+                emit(["proposed": 0, "note": "no problem in this area has an automatic proposal", "problems": kinds] as [String: Any])
+                return 0
+            }
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
             formatter.dateFormat = "yyyyMMdd-HHmmss"
@@ -403,23 +413,11 @@ func write(_ options: Options) throws -> Int32 {
     let allowGenerated = options.flags.contains("allow-generated")
     let confirm = options.flags.contains("confirm")
 
-    var plan: [[String: Any]] = []
-    for op in patch.ops {
-        var row: [String: Any] = ["op": op.op.rawValue, "key": op.key, "file": op.file]
-        if op.op.file == .package {
-            row["status"] = "report-only"
-            row["note"] = "generated package; mirror into \(op.mirror ?? "its source") in the website repository"
-        } else if op.op.file == .history, !allowGenerated {
-            row["status"] = "refused"
-            row["note"] = "generated rail-history.json; pass --allow-generated and mirror into \(op.mirror ?? "its source")"
-        } else if !op.writable {
-            row["status"] = "refused"
-            row["note"] = "marked not writable"
-        } else {
-            row["status"] = "writable"
-            if let mirror = op.mirror { row["note"] = "mirror into \(mirror)" }
-        }
-        plan.append(row)
+    let transactionPlan = WriteTransaction(repo: repo, patchDirectory: repo, allowGenerated: allowGenerated).plan(patch)
+    let plan: [[String: Any]] = transactionPlan.map { op, disposition in
+        var row: [String: Any] = ["op": op.op.rawValue, "key": op.key, "file": op.file, "status": disposition.status.rawValue]
+        if let note = disposition.note { row["note"] = note }
+        return row
     }
     var patchDirectory = options.one("patch-dir").map(fileURL)
     if patchDirectory == nil, let root = evidenceRoot() {
@@ -440,11 +438,19 @@ func write(_ options: Options) throws -> Int32 {
     guard let patchDirectory else {
         throw CLIError(message: "No evidence root: the external archive /Volumes/JTM Evidence is not mounted and RAILWAY_EVIDENCE_ROOT is unset. Pass --patch-dir DIR or set RAILWAY_EVIDENCE_ROOT.")
     }
-    let receipt = try WriteTransaction(repo: repo, patchDirectory: patchDirectory, allowGenerated: allowGenerated)
-        .write(patch, confirm: true)
-    emit(["patch": patch.id, "status": receipt.status.rawValue, "receipt": receipt.receiptURL.path,
-          "files": receipt.files.map(\.relativePath), "topologyRegenerated": receipt.topologyRegenerated,
-          "guards": receipt.guards.map(outcomeRow), "plan": plan] as [String: Any])
+    let transaction = WriteTransaction(repo: repo, patchDirectory: patchDirectory, allowGenerated: allowGenerated)
+    let receipt = try transaction.write(patch, confirm: true)
+    var summary: [String: Any] = [
+        "patch": patch.id, "status": receipt.status.rawValue, "receipt": receipt.receiptURL.path,
+        "files": receipt.files.map(\.relativePath), "topologyRegenerated": receipt.topologyRegenerated,
+        "guards": receipt.guards.map(outcomeRow), "plan": plan,
+    ]
+    let fixes = transaction.generatorFixes(patch)
+    if receipt.status == .written, !fixes.isEmpty {
+        summary["generatorFixNeeded"] = fixes
+        summary["generatorFixNote"] = "rail-history.json is generated: mirror each change into its source or the next history build reverts it."
+    }
+    emit(summary)
     return receipt.status == .written ? 0 : 4
 }
 

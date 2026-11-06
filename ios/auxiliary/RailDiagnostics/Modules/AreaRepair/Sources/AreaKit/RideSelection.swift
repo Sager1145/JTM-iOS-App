@@ -98,10 +98,11 @@ public enum RideSelection {
         let areaCodes = Set(scope.stations.compactMap(\.code))
         if codes.contains(where: areaCodes.contains) { return true }
         guard codes.count == 2 else { return false }
-        func span(_ line: CompactPackage.Line) -> Range<Int>? {
+        /// The leg's intervals on `line` (the shorter way round on a loop).
+        func span(_ line: CompactPackage.Line) -> [Int]? {
             guard let a = line.stations.firstIndex(where: { $0.id == codes[0] }),
                   let b = line.stations.firstIndex(where: { $0.id == codes[1] }) else { return nil }
-            return min(a, b)..<max(a, b)
+            return StationSpan.intervals(line, a, b)
         }
         for scoped in scope.lines {
             guard let line = data.linesByID[scoped.lineID] else { continue }
@@ -112,8 +113,8 @@ public enum RideSelection {
             // A paired row may not carry both endpoints: take the span on its
             // base line and test whether a scoped interval's two stations lie in it.
             guard let baseID = scoped.alignmentOf, let base = data.linesByID[baseID],
-                  let baseSpan = span(base), !line.stations.isEmpty else { continue }
-            let between = Set(base.stations[baseSpan.lowerBound...baseSpan.upperBound].map(\.id))
+                  let baseSpan = span(base), !line.stations.isEmpty, !base.stations.isEmpty else { continue }
+            let between = Set(StationSpan.stations(baseSpan, stationCount: base.stations.count).map { base.stations[$0].id })
             let count = line.stations.count
             if scoped.intervalIndices.contains(where: {
                 between.contains(line.stations[$0 % count].id) && between.contains(line.stations[($0 + 1) % count].id)
