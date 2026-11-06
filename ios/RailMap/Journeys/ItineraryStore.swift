@@ -523,13 +523,13 @@ final class ItineraryStore {
         // The imported journeys were normalised under one region's company
         // rules, so they are tagged with that region here rather than being
         // re-derived from stops that may carry no codes at all.
-        let next = TrainStore(
+        let next = Self.keepingDisabledRegionTrips(TrainStore(
             schemaVersion: TrainValidation.schemaVersion,
             trains: commit.trains.map { train in
                 var copy = train
                 copy.region = train.region ?? region.code
                 return copy
-            })
+            }), from: baseline)
         for train in next.trains { try TrainValidation.validateSupportedRegions(train) }
         // Finish every cancellable phase before publishing. Once this
         // operation commits, it must return its result to the caller's save
@@ -579,7 +579,12 @@ final class ItineraryStore {
     @discardableResult
     func deleteAll() -> Commit<Bool> {
         let commit = mutate(region: .jp, persisting: false) { workspace in
-            StoreOperations.deleteAllTrains(in: &workspace)
+            // Trips in a disabled region are hidden, not deletable by a bulk
+            // operation: they stay in the store.
+            let hidden = Self.disabledRegionTrips(workspace.store.trains)
+            let result = StoreOperations.deleteAllTrains(in: &workspace)
+            workspace.store.trains = hidden
+            return result
         }
         return Commit(outcome: commit.outcome.isCommitted, save: nil)
     }
@@ -606,6 +611,24 @@ final class ItineraryStore {
             let text = await worker.value
             return Task.isCancelled ? nil : text
         } onCancel: { worker.cancel() }
+    }
+
+    /// Trips whose region is disabled (see `RegionConnectivity`). They are hidden
+    /// from every surface, so a whole-store replace or delete must carry them
+    /// over rather than silently destroy what the reader cannot see.
+    nonisolated static func disabledRegionTrips(_ trains: [Train]) -> [Train] {
+        trains.filter { !Region.resolved($0).isEnabled }
+    }
+
+    /// `next` plus the old store's disabled-region trips that it lacks.
+    nonisolated static func keepingDisabledRegionTrips(_ next: TrainStore, from old: TrainStore?) -> TrainStore {
+        guard let old else { return next }
+        let present = Set(next.trains.map(\.id))
+        let kept = disabledRegionTrips(old.trains).filter { !present.contains($0.id) }
+        guard !kept.isEmpty else { return next }
+        var merged = next
+        merged.trains += kept
+        return merged
     }
 
     /// Run one of RailCore's verified store transitions and rebuild the view
@@ -808,7 +831,8 @@ final class ItineraryStore {
         guard !isImporting, incoming.trains.allSatisfy({
             (try? TrainValidation.validateSupportedRegions($0)) != nil
         }) else { return .refused(.refused) }
-        let next = try await MergedStore.regionTagged(incoming)
+        let next = Self.keepingDisabledRegionTrips(
+            try await MergedStore.regionTagged(incoming), from: store)
         // Re-checked after the suspension above: an import may have started claiming the
         // store, or a load may still be reading the file this would otherwise
         // overwrite, since the guard above ran.

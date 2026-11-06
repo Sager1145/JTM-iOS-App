@@ -331,6 +331,9 @@ final class RiddenRouteStore {
         priority: TaskPriority = .userInitiated
     ) {
         bindPendingOwner()
+        // Trips in a disabled region stay in the store but are never cached,
+        // solved or drawn. Their route-cache files are left on disk.
+        let trains = trains.filter { Region.resolved($0).isEnabled }
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -983,7 +986,7 @@ final class RiddenRouteStore {
         // differently on every launch, and the order rides come back in is the
         // order the map is handed them in and therefore which line is drawn
         // over which.
-        for scope in RouteScope.ordered(byScope.keys) {
+        for scope in RouteScope.ordered(byScope.keys) where scope.home.isEnabled {
             guard let trains = byScope[scope] else { continue }
             let cached = try await loadCachedConcurrently(trains, country: scope.code)
             result += cached.rides

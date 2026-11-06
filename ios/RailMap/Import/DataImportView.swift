@@ -282,6 +282,16 @@ struct DataImportView: View {
                     scopeLabel("data.willRename", report.renames.count)
                 }
             }
+            if !report.crossRegionRows.isEmpty {
+                Label(
+                    localization.text("ios.import.regionsNotConnected")
+                        + " (\(report.crossRegionRows.count))",
+                    systemImage: "exclamationmark.triangle"
+                )
+                .font(.footnote)
+                .foregroundStyle(.orange)
+                .accessibilityIdentifier("importCrossRegionWarning")
+            }
         }
 
         if !report.issues.isEmpty {

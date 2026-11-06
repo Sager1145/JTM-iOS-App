@@ -390,6 +390,10 @@ enum DataStrings {
             .ja: "{region} の {count} 本を、この端末の保存分も含めて削除します。他の地域には影響しません。",
             .en: "Deletes {region}'s {count} journeys, including the copy saved on this device. Other regions are untouched.",
         ],
+        "data.hiddenRegionKept": [
+            .zhHant: "已隱藏的中國大陸行程會保留。", .zhHans: "已隐藏的中国大陆行程会保留。",
+            .ja: "非表示の中国本土の行程は保持されます。", .en: "Hidden Mainland China journeys are kept.",
+        ],
         "data.deleteAllRecovery": [
             .zhHant: "刪除前會先寫一份備份，之後可以從「從備份恢復」還原。",
             .zhHans: "删除前会先写一份备份，之后可以从「从备份恢复」还原。",
