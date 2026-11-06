@@ -49,6 +49,8 @@ struct AppControlEditorHandle {
     var choose: (_ corridorID: String, _ section: Int) -> Bool
     var commit: (_ confirmedRemoval: Bool) -> Void
     var snapshot: () -> AppControlEditorSnapshot
+    /// The `proposal` input for the selected corridor (see the editor's DEBUG extension).
+    var autofillProbe: () -> AppControlJSON
 }
 
 /// The editor's planning state, as the control channel reports it.

@@ -3213,7 +3213,49 @@ extension JourneyEditorView {
                 return true
             },
             commit: { confirmed in commit(confirmedRemoval: confirmed) },
-            snapshot: { appControlSnapshot })
+            snapshot: { appControlSnapshot },
+            autofillProbe: { appControlAutofillProbe })
+    }
+
+    /// What `corridorDraft(for:)` hands `LocalJourneyAutofill.proposal` for the
+    /// selected corridor, rebuilt without side effects, for diagnosing a save
+    /// that ends in `autofillFailed`. Mirrors the endpoint replacement there.
+    private var appControlAutofillProbe: AppControlJSON {
+        func encode(_ value: some Encodable) -> AppControlJSON {
+            (try? JSONEncoder().encode(value)).flatMap { try? JSONDecoder().decode(AppControlJSON.self, from: $0) } ?? .null
+        }
+        guard let corridor = selectedCorridor, let origin, let destination else {
+            return ["selectedCorridor": .null, "hasRecordRoute": .bool(hasRecordRoute), "draft": encode(draft)]
+        }
+        var input = draft
+        input.region = region.code
+        let replaced = !hasRecordRoute || input.stops.count < 2
+        if replaced {
+            input.stops = [
+                endpointStop(origin, stationID: originStationID, stopType: "origin", ridden: isRidden),
+                endpointStop(destination, stationID: destinationStationID, stopType: "destination", ridden: isRidden),
+            ]
+        }
+        let proposal = LocalJourneyAutofill.proposal(train: input, choice: corridor.choice)
+        let sections = input.routeSections ?? []
+        return [
+            "hasRecordRoute": .bool(hasRecordRoute),
+            "region": .string(region.code),
+            "endpointsReplaced": .bool(replaced),
+            "corridorID": .string(corridor.id),
+            "corridorLineIDs": .array(corridor.choice.lineIDs.map { .string($0) }),
+            "corridorSectionCount": .number(Double(corridor.choice.sectionCodes.count)),
+            "draft": encode(draft),
+            "input": encode(input),
+            "inputRouteSectionCount": .number(Double(sections.count)),
+            "inputFirstSection": sections.first.map(encode) ?? .null,
+            "inputLastSection": sections.last.map(encode) ?? .null,
+            "inputRouteConfirmation": encode(input.routeConfirmation),
+            "proposalNil": .bool(proposal == nil),
+            "proposalStopCount": .number(Double(proposal?.train.stops.count ?? -1)),
+            "candidateTrainNil": .bool(candidateTrain(for: corridor) == nil),
+            "corridorDraftNil": .bool(corridorDraft(for: corridor) == nil),
+        ]
     }
 
     private var appControlSnapshot: AppControlEditorSnapshot {
