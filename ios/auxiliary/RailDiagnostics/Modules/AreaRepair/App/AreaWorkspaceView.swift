@@ -1,7 +1,8 @@
 import MapKit
 import SwiftUI
 
-/// Area repair: select, resolve, review problems, stack fixes, preview, and write only through a confirmation.
+/// Area repair: select, resolve, review problems, stack fixes and preview in-app; repository writes
+/// happen only through the exported patch and the guarded CLI command.
 struct AreaWorkspaceView: View {
     @Bindable var model: AreaRepairModel
     @State private var commands = AreaRepairCommandBridge()
@@ -16,11 +17,11 @@ struct AreaWorkspaceView: View {
                 }
                 if model.hasResolved { problemsSection; proposalSection; stackSection }
                 if let preview = model.preview { previewSection(preview) }
-                if !model.guardLog.isEmpty { guardSection }
+                if let export = model.export { exportSection(export) }
             }.padding(16).frame(maxWidth: .infinity, alignment: .leading)
         }
         .focusedSceneValue(\.areaRepairCommands, commands)
-        .sheet(isPresented: $model.confirmingWrite) { writeSheet }
+        .sheet(isPresented: $model.confirmingExport) { exportSheet }
         .onAppear(perform: installCommands)
         .onChange(of: model.busy) { _, _ in installCommands() }
         .onChange(of: model.ops) { _, _ in installCommands() }
@@ -31,11 +32,11 @@ struct AreaWorkspaceView: View {
         commands.canResolve = !model.busy
         commands.canPreview = !model.busy && !model.ops.isEmpty
         commands.canUndo = !model.busy && !model.ops.isEmpty
-        commands.canWrite = model.canWrite
+        commands.canExport = model.canExport
         commands.resolve = { model.resolve() }
         commands.preview = { model.runPreview() }
         commands.undo = { model.undoLast() }
-        commands.write = { model.confirmingWrite = true }
+        commands.export = { model.confirmingExport = true }
     }
 
     private var header: some View {
@@ -121,7 +122,7 @@ struct AreaWorkspaceView: View {
                 ForEach(model.ops) { op in
                     VStack(alignment: .leading, spacing: 2) {
                         Label(op.title, systemImage: op.writable ? "square.and.pencil" : "doc.text").font(.callout.weight(.semibold))
-                        Text(op.file + (op.writable ? "" : "  · report-only")).font(.caption.monospaced()).foregroundStyle(.secondary)
+                        Text(op.file + " [" + op.key + "]" + (op.writable ? "" : "  · report-only")).font(.caption.monospaced()).foregroundStyle(.secondary)
                         Text(op.reason).font(.caption)
                     }
                 }
@@ -131,15 +132,15 @@ struct AreaWorkspaceView: View {
                     Button("Preview  ⌃⌘P") { model.runPreview() }.disabled(model.ops.isEmpty || model.busy)
                         .keyboardShortcut("p", modifiers: [.control, .command])
                     Spacer()
-                    Button("Write patch…") { model.confirmingWrite = true }.buttonStyle(.borderedProminent)
-                        .disabled(!model.canWrite)
+                    Button("Export patch for guarded write…") { model.confirmingExport = true }.buttonStyle(.borderedProminent)
+                        .disabled(!model.canExport)
                 }
             }.padding(6)
         }
     }
 
     private func previewSection(_ preview: AreaPreviewData) -> some View {
-        GroupBox("Preview · \(preview.problemsBefore) → \(preview.problemsAfter) problems") {
+        GroupBox("Preview · \(preview.problemsBefore) → \(preview.problemsAfter) problems · \(preview.cleared) cleared · \(preview.introduced) introduced") {
             VStack(alignment: .leading, spacing: 10) {
                 Map {
                     ForEach(Array(preview.baseline.enumerated()), id: \.offset) { _, path in
@@ -171,38 +172,45 @@ struct AreaWorkspaceView: View {
         }
     }
 
-    private var guardSection: some View {
-        GroupBox("Write and guard log") {
+    private func exportSection(_ export: AreaPatchExport) -> some View {
+        GroupBox("Exported patch") {
             VStack(alignment: .leading, spacing: 6) {
-                ForEach(Array(model.guardLog.enumerated()), id: \.offset) { _, line in
-                    Text(line).font(.caption.monospaced()).textSelection(.enabled)
+                Text("Patch: " + export.patchPath).font(.caption.monospaced()).textSelection(.enabled)
+                if let reportOnly = export.reportOnlyPath {
+                    Text("Report-only ops (mirror into their sources): " + reportOnly).font(.caption.monospaced()).textSelection(.enabled)
                 }
-                if let receipt = model.lastReceiptDescription {
-                    Text("Receipt: " + receipt).font(.caption2.monospaced()).foregroundStyle(.secondary)
-                    Button("Undo write") { model.undoWrite() }.disabled(model.busy)
-                }
+                Text("Run from " + export.repository + ":").font(.caption)
+                Text(export.command).font(.callout.monospaced()).textSelection(.enabled)
+                Button("Copy command") { model.copyCommand() }
+                Text("The command backs up the files, writes the patch, runs the regression guards and restores the backup automatically if any guard fails.")
+                    .font(.caption).foregroundStyle(.secondary)
             }.frame(maxWidth: .infinity, alignment: .leading).padding(6)
         }
     }
 
-    private var writeSheet: some View {
+    private var exportSheet: some View {
         NavigationStack {
             Form {
-                Section("Writable (changes repo data)") {
-                    ForEach(model.ops.filter(\.writable)) { Text("\($0.title) → \($0.file)").font(.callout.monospaced()) }
+                Section("Writable (written by the guarded command)") {
+                    ForEach(model.ops.filter(\.writable)) { Text("\($0.title) → \($0.file) [\($0.key)]").font(.callout.monospaced()) }
                 }
-                Section("Report-only (never written)") {
-                    ForEach(model.ops.filter { !$0.writable }) { Text("\($0.title) → \($0.file)").font(.callout.monospaced()).foregroundStyle(.secondary) }
+                Section("Report-only (refused by the write; mirror instead)") {
+                    ForEach(model.ops.filter { !$0.writable }) { op in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("\(op.title) → \(op.file) [\(op.key)]").font(.callout.monospaced()).foregroundStyle(.secondary)
+                            if let mirror = op.mirror { Text("Mirror into " + mirror).font(.caption) }
+                        }
+                    }
                 }
                 Section {
-                    Text("Backups and an inverse are saved first. The guard suites run afterwards; a failure restores the backup automatically.")
+                    Text("This app does not write repository data. Export saves patch.json in the evidence archive's area-repairs folder and copies the command `bash ios/verify.sh area write --patch <path> --confirm`, which writes with backups, guards and auto-revert.")
                         .font(.caption)
                 }
             }
-            .navigationTitle("Write \(model.writableCount) change(s)?")
+            .navigationTitle("Export \(model.writableCount) change(s)?")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { model.confirmingWrite = false } }
-                ToolbarItem(placement: .confirmationAction) { Button("Write") { model.write() } }
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { model.confirmingExport = false } }
+                ToolbarItem(placement: .confirmationAction) { Button("Export") { model.exportPatch() } }
             }
         }.frame(idealWidth: 560, idealHeight: 480)
     }

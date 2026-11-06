@@ -1,3 +1,4 @@
+import AreaKit
 import Foundation
 import MapKit
 import Observation
@@ -90,7 +91,7 @@ final class InspectorModel {
         let literalIdentity = line.map { DisplayLiteralSpans.resolve($0, parts: display).map { spans in
             spans.map { "\($0.mode ?? "literal-v1"):\($0.edgeIndex):\($0.witnesses.map { [$0.lon, $0.lat] })" }.joined(separator: ",")
         }.joined(separator: ";") } ?? ""
-        return "\(InspectorStrokeGeometry.revision);\(InspectorStrokeGeometry.joinContract);\(RailStyle.railWidth);\(RailStyle.strokeCornerRadius);\(RailStyle.strokeMinRamp);\(RailStyle.parallelLaneCentreDistance);\(values);literal=\(literalIdentity)"
+        return "\(AreaStrokeGeometry.revision);\(AreaStrokeGeometry.joinContract);\(RailStyle.railWidth);\(RailStyle.strokeCornerRadius);\(RailStyle.strokeMinRamp);\(RailStyle.parallelLaneCentreDistance);\(values);literal=\(literalIdentity)"
     }
     private var renderedInput: [[InspectionPoint]] {
         display.map { $0.map { InspectionPoint(longitude: $0.lon, latitude: $0.lat) } }
@@ -142,10 +143,17 @@ final class InspectorModel {
         }
     }
 
-    func load() async {
+    /// `packageOverride` is the area workspace's repository package, so its
+    /// captures render the same bytes AreaKit resolved the area from.
+    func load(packageOverride: URL? = nil) async {
         guard lines.isEmpty, error == nil else { return }
+        #if DEBUG
+        Self.assertStrokeStyleMatchesRailStyle()
+        #endif
         let url: URL
-        if let inputPath = diagnosticRequest?.inputPath {
+        if let packageOverride {
+            url = packageOverride
+        } else if let inputPath = diagnosticRequest?.inputPath {
             url = URL(fileURLWithPath: inputPath)
         } else if let bundled = Bundle.main.url(forResource: "jp-2025", withExtension: "json") {
             url = bundled
@@ -202,6 +210,46 @@ final class InspectorModel {
                             protectedScope: Set(selected.map(\.id)), settings: diagnosticRequest.normalizedCaptureSettings)
         admittedCaptureInputs = selected
     }
+
+    /// Area workspace: one batch over every scoped interval of every scoped
+    /// line, admitting only viewpoints whose view can overlap `bounds` (the
+    /// area expanded by half the viewport on each axis).
+    func configureAreaBatch(intervals: [String: Set<Int>], bounds: MKMapRect,
+                            settings: DiagnosticCaptureSettings) throws -> (inputs: [InspectionInput], viewpointIDs: Set<String>) {
+        let selected = inputsByID.values.filter { intervals[$0.lineID]?.contains($0.intervalIndex) == true }
+            .sorted { ($0.lineID, $0.intervalIndex) < ($1.lineID, $1.intervalIndex) }
+        guard !selected.isEmpty else { throw DiagnosticError.invalidRequest("The area contains no package station intervals.") }
+        try batch.configure(inputs: selected,
+                            linesByID: Dictionary(uniqueKeysWithValues: lines.map { ($0.id, $0) }),
+                            topology: topology, packageVersion: version, reference: reference,
+                            protectedScope: Set(selected.map(\.id)), settings: settings)
+        admittedCaptureInputs = selected
+        guard let plan = batch.plan else { throw DiagnosticError.invalidRequest("No scoped capture plan is available.") }
+        let size = BatchCaptureGeometry.size(settings: settings)
+        let mapPoints = BatchCaptureGeometry.mapPointsPerPoint(settings: settings)
+        let admitted = bounds.insetBy(dx: -Double(size.width) * mapPoints / 2, dy: -Double(size.height) * mapPoints / 2)
+        let ids = Set(plan.viewpoints.filter {
+            admitted.contains(MKMapPoint(CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)))
+        }.map(\.id))
+        guard !ids.isEmpty else { throw DiagnosticError.invalidRequest("No capture viewpoint of the scoped intervals falls within the area.") }
+        return (selected, ids)
+    }
+
+    #if DEBUG
+    /// AreaKit's smoother takes its metrics as a value; they must stay RailStyle's.
+    private static func assertStrokeStyleMatchesRailStyle() {
+        for zoom in [0.0, 8, 14, 15, 17, 18, 22] {
+            let style = StrokeStyle.diagnosticsDefault(zoom: zoom)
+            let weight = RailStyle.scale(atZoom: zoom)
+            let expected = [Double(RailStyle.railWidth * weight), Double(RailStyle.parallelLaneCentreDistance * weight),
+                            Double(RailStyle.strokeCornerRadius * weight), Double(RailStyle.minimumCornerRadius(atScale: weight)),
+                            RailStyle.strokeMinRamp]
+            let actual = [style.railWidth, style.laneGap, style.cornerRadius, style.minCornerRadius, style.minRamp]
+            assert(zip(expected, actual).allSatisfy { abs($0 - $1) < 1e-9 },
+                   "StrokeStyle.diagnosticsDefault(zoom: \(zoom)) \(actual) diverged from RailStyle \(expected)")
+        }
+    }
+    #endif
 
     /// UI and keyboard actions must return to the sole immutable-task owner.
     func startBatch(selectedOnly: Bool = false) {

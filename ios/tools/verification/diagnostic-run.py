@@ -69,6 +69,70 @@ def build_request(a):
     return name, req
 
 
+def package_lines():
+    return json.loads((REPO / "app/public/rail/jp-2025.json").read_text(encoding="utf-8"))["lines"]
+
+
+def station_id(line_id, ref):
+    """A station ID, or a station name on that line (must be unambiguous)."""
+    line = next((l for l in package_lines() if l["id"] == line_id), None)
+    if line is None:
+        raise ValueError("Unknown line " + line_id)
+    stations = line["stations"]
+    if any(s[0] == ref for s in stations):
+        return ref
+    hits = [s[0] for s in stations if s[1] == ref]
+    if len(hits) != 1:
+        raise ValueError("Station {!r} matches {} stations on {}; use a station ID.".format(ref, len(hits), line_id))
+    return hits[0]
+
+
+def build_area(a):
+    """The area selection object from the same flags as the jtm-area CLI."""
+    chosen = [bool(x) for x in (a.stations, a.line, a.rect, a.centre)]
+    if sum(chosen) != 1:
+        raise ValueError("Give exactly one of --stations, --line (with --intervals), --rect, --centre (with --radius).")
+    if a.stations:
+        line_id, _, pair = a.stations.rpartition(":")
+        ends = pair.split("-", 1)
+        if not line_id or len(ends) != 2:
+            raise ValueError("--stations expects LINE:A-B.")
+        area = {"kind": "stationPair", "lineID": line_id,
+                "fromStationID": station_id(line_id, ends[0]), "toStationID": station_id(line_id, ends[1])}
+    elif a.line:
+        first, _, last = (a.intervals or "").partition("-")
+        if not (first.isdigit() and last.isdigit()):
+            raise ValueError("--line needs --intervals FIRST-LAST.")
+        area = {"kind": "lineSection", "lineID": a.line, "firstInterval": int(first), "lastInterval": int(last)}
+    elif a.rect:
+        v = [float(x) for x in a.rect.split(",")]
+        if len(v) != 4:
+            raise ValueError("--rect expects minLon,minLat,maxLon,maxLat.")
+        area = {"kind": "rect", "minLon": v[0], "minLat": v[1], "maxLon": v[2], "maxLat": v[3]}
+    else:
+        v = [float(x) for x in a.centre.split(",")]
+        if len(v) != 2 or a.radius is None:
+            raise ValueError("--centre expects lon,lat and needs --radius METRES.")
+        area = {"kind": "centre", "lon": v[0], "lat": v[1], "radiusMetres": a.radius}
+    if a.margin is not None:
+        area["marginMetres"] = a.margin
+    return area
+
+
+def build_area_request(a):
+    now = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    area = build_area(a)
+    name = a.name or "area-{}-z{}-{}".format(slug(area["kind"] + " " + str(area.get("lineID", ""))), a.zoom, now)
+    w, h = (int(x) for x in a.size.lower().split("x"))
+    req = {"schemaVersion": 1, "requestID": name, "workspace": "area", "action": "capture",
+           "sessionDirectory": str(EVIDENCE / "diagnostics/sessions" / name), "area": area,
+           "captureSettings": {"appearance": a.appearance, "basemapStyle": a.basemap, "height": h,
+                               "outputModes": a.modes.split(","), "width": w, "zoom": a.zoom}}
+    if a.capture_limit is not None:
+        req["captureLimit"] = a.capture_limit
+    return name, req
+
+
 def rejection_count(log):
     try:
         return len(Path(log).read_text(encoding="utf-8").splitlines())
@@ -164,6 +228,24 @@ def main():
     c.add_argument("--input"); c.add_argument("--name")
     c.add_argument("--action", default="capture", choices=["capture", "prepare"])
     c.add_argument("--dry-run", action="store_true", help="print the request; write and open nothing")
+    ar = sub.add_parser("area", help="area workspace requests")
+    asub = ar.add_subparsers(dest="area_cmd", required=True)
+    ac = asub.add_parser("capture", help="build an area capture request, send it, wait")
+    ac.add_argument("--stations", help="LINE:A-B (station IDs or names on that line)")
+    ac.add_argument("--line"); ac.add_argument("--intervals", help="FIRST-LAST with --line")
+    ac.add_argument("--rect", help="minLon,minLat,maxLon,maxLat")
+    ac.add_argument("--centre", help="lon,lat"); ac.add_argument("--radius", type=float)
+    ac.add_argument("--margin", type=float)
+    ac.add_argument("--zoom", type=int, default=17)
+    ac.add_argument("--size", default="2400x2000")
+    ac.add_argument("--appearance", default="light")
+    ac.add_argument("--basemap", default="standard")
+    ac.add_argument("--modes", default="basemap,smooth")
+    ac.add_argument("--capture-limit", type=int)
+    ac.add_argument("--name")
+    ac.add_argument("--dry-run", action="store_true", help="print the request; write and open nothing")
+    ac.add_argument("--timeout", type=int, default=900)
+    ac.add_argument("--app", default=DEFAULT_APP)
     s = sub.add_parser("send", help="send an existing absolute request.json")
     s.add_argument("request")
     for p in (c, s):
@@ -175,7 +257,25 @@ def main():
     v.add_argument("session"); v.add_argument("--interval", type=int)
     a = ap.parse_args()
 
-    if a.cmd == "capture":
+    if a.cmd == "area":
+        try:
+            name, req = build_area_request(a)
+        except (ValueError, OSError, KeyError) as error:
+            out({"rejected": True, "reason": str(error)}, 2)
+        session = Path(req["sessionDirectory"])
+        if a.dry_run:
+            print(json.dumps(req, ensure_ascii=False, indent=2)); return
+        if session.exists():
+            out({"rejected": True, "reason": "Session directory exists: {}; use a new --name.".format(session)}, 2)
+        try:
+            require_write_path(session)
+            path = require_write_path(EVIDENCE / "requests" / (name + ".json"))
+        except (OSError, ValueError) as error:
+            out({"rejected": True, "reason": str(error)}, 2)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(req, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        send_and_wait(path, req, a.timeout, a.app)
+    elif a.cmd == "capture":
         name, req = build_request(a)
         session = Path(req["sessionDirectory"])
         if a.dry_run:

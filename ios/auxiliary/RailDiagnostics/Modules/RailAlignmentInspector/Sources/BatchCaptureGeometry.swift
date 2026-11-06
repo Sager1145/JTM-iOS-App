@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import MapKit
+import AreaKit
 import RailCore
 import RailInspection
 
@@ -11,7 +12,7 @@ struct BatchCaptureGeometry {
     static let size = CGSize(width: 1024, height: 768)
     static let mapPointsPerPoint = MKMapSize.world.width / (256 * pow(2, zoom))
     // Bump when DisplayParts / ContinuousStroke integration changes.
-    static let revision = InspectorStrokeGeometry.revision + ";specified-capture-v3;projection-witness-v1"
+    static let revision = AreaStrokeGeometry.revision + ";specified-capture-v3;projection-witness-v1"
 
     static func mapPointsPerPoint(settings: DiagnosticCaptureSettings) -> Double {
         MKMapSize.world.width / (256 * pow(2, settings.zoom))
@@ -57,15 +58,15 @@ struct BatchCaptureGeometry {
 
     static func styleContract(settings: DiagnosticCaptureSettings) -> String {
         let weight = RailStyle.scale(atZoom: settings.zoom)
-        let standard = "\(revision);\(InspectorStrokeGeometry.joinContract);w=\(RailStyle.railWidth);lane=\(RailStyle.parallelLaneCentreDistance);r=\(RailStyle.strokeCornerRadius);rmin=\(RailStyle.minimumCornerRadius(atScale: weight));ramp=\(RailStyle.strokeMinRamp);weight=\(weight);zoom=\(settings.zoom);scale=\(mapPointsPerPoint(settings: settings));viewport=\(settings.width)x\(settings.height);backing=1;flat;\(settings.appearance.rawValue);outputs=\(settings.outputModes.map(\.rawValue).joined(separator: ","));coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings"
+        let standard = "\(revision);\(AreaStrokeGeometry.joinContract);w=\(RailStyle.railWidth);lane=\(RailStyle.parallelLaneCentreDistance);r=\(RailStyle.strokeCornerRadius);rmin=\(RailStyle.minimumCornerRadius(atScale: weight));ramp=\(RailStyle.strokeMinRamp);weight=\(weight);zoom=\(settings.zoom);scale=\(mapPointsPerPoint(settings: settings));viewport=\(settings.width)x\(settings.height);backing=1;flat;\(settings.appearance.rawValue);outputs=\(settings.outputModes.map(\.rawValue).joined(separator: ","));coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings"
         // Retain existing standard receipt identities; only imagery adds a token.
         return settings.basemapStyle == .standard ? standard : standard + ";basemap=imagery"
     }
 
     static func render(line: CompactPackage.Line, display: [[Coordinate]], settings: DiagnosticCaptureSettings = .init()) -> RenderedLine {
         let spans = DisplayLiteralSpans.resolve(line, parts: display)
-        let result = InspectorStrokeGeometry.render(display: display, stations: line.displayStations.map(\.coordinate),
-            mapPointsPerPoint: mapPointsPerPoint(settings: settings), zoom: settings.zoom, literalSpans: spans)
+        let result = AreaStrokeGeometry.render(display: display, stations: line.displayStations.map(\.coordinate),
+            mapPointsPerPoint: mapPointsPerPoint(settings: settings), style: .diagnosticsDefault(zoom: settings.zoom), literalSpans: spans)
         return .init(lineID: line.id, display: display, smooth: result.paths,
                      decodedDisplay: CompactPackage.decodeDisplayIntervals(line), literalSpans: spans,
                      appliedLiteralSpanEdges: result.appliedLiteralSpanEdges,

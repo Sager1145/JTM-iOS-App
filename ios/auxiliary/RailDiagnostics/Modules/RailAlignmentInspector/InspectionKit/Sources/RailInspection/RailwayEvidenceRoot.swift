@@ -33,9 +33,10 @@ public enum RailwayEvidenceRoot {
     /// compatibility leaf link in the checkout. This function creates nothing.
     public static func validatedWriteURL(_ url: URL, externalVolumeAvailable: Bool? = nil) throws -> URL {
         let resolved = url.resolvingSymlinksInPath().standardizedFileURL
-        let scratchRoots = [URL(fileURLWithPath: "/private/tmp", isDirectory: true),
-                            FileManager.default.temporaryDirectory.resolvingSymlinksInPath()]
-        if scratchRoots.contains(where: { contains(resolved, in: $0) }) { return resolved }
+        // Resolution spells an existing /private/tmp path as /tmp/… (and the
+        // standardised root as /tmp), a missing one as /private/tmp/…: accept both.
+        let tmp = ["/private/tmp", "/tmp"].contains { resolved.path == $0 || resolved.path.hasPrefix($0 + "/") }
+        if tmp || contains(resolved, in: FileManager.default.temporaryDirectory.resolvingSymlinksInPath()) { return resolved }
         guard contains(resolved, in: canonicalRoot) else {
             throw WriteError.outsideEvidenceStorage(url.path)
         }

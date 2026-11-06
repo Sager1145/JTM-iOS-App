@@ -22,6 +22,15 @@ struct RailwayEvidenceRootTests {
         #expect(decoded == request)
     }
 
+    @Test func existingPrivateTmpScratchDirectoryIsWritable() throws {
+        let directory = URL(fileURLWithPath: "/private/tmp/jtm-evidence-root-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        // The existing directory resolves to /tmp/…; it must still count as private scratch.
+        #expect(try RailwayEvidenceRoot.validatedWriteURL(directory.appendingPathComponent("result.json"), externalVolumeAvailable: false)
+            .path.hasSuffix(directory.lastPathComponent + "/result.json"))
+    }
+
     @Test func unmountedArchiveAndInternalCheckoutCannotReceiveNewEvidence() {
         #expect(throws: Error.self) {
             try RailwayEvidenceRoot.validatedWriteURL(RailwayEvidenceRoot.resolve(environment: [:]), externalVolumeAvailable: false)

@@ -1,5 +1,7 @@
+import AreaKit
 import CryptoKit
 import Foundation
+import MapKit
 import Observation
 import RailCore
 import RailInspection
@@ -124,6 +126,7 @@ final class DiagnosticSession {
             case .alignment: try await runAlignment(request)
             case .route: try await runRoute(request)
             case .through: try await runThrough(request)
+            case .area: try await runArea(request)
             }
             try persist()
         } catch {
@@ -218,21 +221,99 @@ final class DiagnosticSession {
         try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]).write(to: geometryURL, options: .atomic)
         evidence.append(geometryURL.path)
         guard !stopRequested && !Task.isCancelled else { state = "paused"; message = "Paused before capture."; return }
-        if request.action != .prepare {
-            state = "running"; try persist()
-            if request.action == .retryFailures {
-                // Retrying stays confined to the exact scope; receipts retain failed attempts.
-                alignment.batch.retryFailed(scope: captureScope, limit: request.captureLimit, viewpointIDs: captureViewpointIDs)
-            } else { alignment.batch.start(scope: captureScope, limit: request.captureLimit, viewpointIDs: captureViewpointIDs) }
-            while alignment.batch.isRunning {
-                if Task.isCancelled || stopRequested { alignment.batch.pause() }
-                message = captureProgressMessage
-                if publishedCaptureRevision != alignment.batch.evidenceRevision { try persist() }
-                else { try persistRunStatus() }
-                try await Task.sleep(for: .milliseconds(500))
-            }
-        }
+        try await captureScopedViews(request)
         updateAlignmentState()
+    }
+
+    /// The one native capture loop, shared by alignment and area requests.
+    private func captureScopedViews(_ request: DiagnosticRequest) async throws {
+        guard request.action != .prepare else { return }
+        state = "running"; try persist()
+        if request.action == .retryFailures {
+            // Retrying stays confined to the exact scope; receipts retain failed attempts.
+            alignment.batch.retryFailed(scope: captureScope, limit: request.captureLimit, viewpointIDs: captureViewpointIDs)
+        } else { alignment.batch.start(scope: captureScope, limit: request.captureLimit, viewpointIDs: captureViewpointIDs) }
+        while alignment.batch.isRunning {
+            if Task.isCancelled || stopRequested { alignment.batch.pause() }
+            message = captureProgressMessage
+            if publishedCaptureRevision != alignment.batch.evidenceRevision { try persist() }
+            else { try persistRunStatus() }
+            try await Task.sleep(for: .milliseconds(500))
+        }
+    }
+
+    /// AreaKit's resolution of one area, computed off the main actor.
+    private struct ResolvedArea: Sendable {
+        let packageURL: URL
+        let scope: AreaScope
+        let evidence: AreaEvidence
+    }
+
+    /// Area capture: resolve the area against the repository's data, capture
+    /// every scoped line's views that overlap it, then retain one
+    /// area-evidence.json. Prepare stops after the plan and evidence.
+    private func runArea(_ request: DiagnosticRequest) async throws {
+        guard let selection = request.area else { throw DiagnosticError.invalidRequest("Area requires an area selection.") }
+        let settings = request.normalizedCaptureSettings
+        let repo = try AreaRepository.root()
+        let resolved = try await Task.detached(priority: .userInitiated) { () throws -> ResolvedArea in
+            let data = try AreaData.load(DataRoot(repo: repo))
+            let scope = try AreaScope.resolve(selection, data: data)
+            let trains = RideSelection.ridesCrossing(scope, trains: try RideSelection.loadTrains(RideSource.defaults(data.root)), data: data)
+            let evidence = try AreaEvidence.make(data: data, scope: scope,
+                                                 rides: RideOutcome.resolve(trains, data: data, scope: scope),
+                                                 problems: AreaProblems.detect(scope: scope, data: data, trains: trains),
+                                                 zoom: settings.zoom, views: [])
+            return ResolvedArea(packageURL: data.root.url(.package), scope: scope, evidence: evidence)
+        }.value
+        guard !stopRequested && !Task.isCancelled else { state = "paused"; message = "Paused before capture planning."; return }
+        await alignment.load(packageOverride: resolved.packageURL)
+        if let error = alignment.error { throw DiagnosticError.invalidRequest(error) }
+        let bbox = resolved.scope.bbox
+        let southWest = MKMapPoint(CLLocationCoordinate2D(latitude: bbox.minLat, longitude: bbox.minLon))
+        let northEast = MKMapPoint(CLLocationCoordinate2D(latitude: bbox.maxLat, longitude: bbox.maxLon))
+        let bounds = MKMapRect(x: min(southWest.x, northEast.x), y: min(southWest.y, northEast.y),
+                               width: abs(northEast.x - southWest.x), height: abs(northEast.y - southWest.y))
+        let intervals = Dictionary(resolved.scope.lines.map { ($0.lineID, Set($0.intervalIndices)) }, uniquingKeysWith: { $0.union($1) })
+        let configured = try alignment.configureAreaBatch(intervals: intervals, bounds: bounds, settings: settings)
+        if let requested = request.viewpointIDs.map(Set.init) {
+            guard requested.isSubset(of: configured.viewpointIDs) else {
+                throw DiagnosticError.invalidRequest("Unknown or out-of-area viewpoint ID; no wider fallback is allowed.")
+            }
+            captureViewpointIDs = requested
+        } else { captureViewpointIDs = configured.viewpointIDs }
+        let owners = Set(alignment.batch.plan?.viewpoints.filter { captureViewpointIDs!.contains($0.id) }.map(\.itemID) ?? [])
+        let selected = configured.inputs.filter { owners.contains($0.id) }
+        selectedItemIDs = selected.map(\.id)
+        captureScope = Set(selectedItemIDs)
+        let all = Array(alignment.inputsByID.values)
+        candidates = Dictionary(grouping: selected, by: \.lineID).sorted { $0.key < $1.key }.flatMap { lineID, inputs in
+            DiagnosticCandidate.tasks(selected: inputs, context: all.filter { $0.lineID == lineID })
+        }
+        for lineID in Set(selected.map(\.lineID)).sorted() {
+            guard let line = alignment.lines.first(where: { $0.id == lineID }) else { continue }
+            dependencies["lineRender/" + lineID] = BatchCaptureGeometry.dependency(
+                line: line, display: DisplayParts.parts(for: line, topology: alignment.topology[lineID] ?? .init()), settings: settings)
+        }
+        dependencies["packageVersion"] = alignment.version
+        for (path, digest) in resolved.evidence.dataRoot.sha256 { dependencies["areaData/" + path] = digest }
+        try verifyDependencies()
+        evidence.append(alignment.batch.outputURL.path)
+        func writeAreaEvidence() throws {
+            var areaEvidence = resolved.evidence
+            areaEvidence.views = alignment.batch.capturedViewDirectories(scope: captureScope, viewpointIDs: captureViewpointIDs)
+                .map { AreaEvidence.View(viewpointID: $0.viewpointID, directory: $0.directory) }
+            let url = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory).appendingPathComponent("area-evidence.json"))
+            try areaEvidence.write(to: url.deletingLastPathComponent())
+            if !evidence.contains(url.path) { evidence.append(url.path) }
+        }
+        guard !stopRequested && !Task.isCancelled else {
+            try writeAreaEvidence(); state = "paused"; message = "Paused before capture."; return
+        }
+        try await captureScopedViews(request)
+        try writeAreaEvidence()
+        updateAlignmentState()
+        message += " \(resolved.scope.lines.count) line(s) and \(resolved.evidence.problems.count) detected problem(s) in the area; problems are review candidates."
     }
 
     private func runRoute(_ request: DiagnosticRequest) async throws {
@@ -360,7 +441,7 @@ final class DiagnosticSession {
             let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory))
             let archive = root.appendingPathComponent("attempts/" + UUID().uuidString, isDirectory: true)
             try FileManager.default.createDirectory(at: archive, withIntermediateDirectories: true)
-            for name in ["result.json", "candidate-tasks.json", "route-report.json", "through-report.json", "capture-index.json"] {
+            for name in ["result.json", "candidate-tasks.json", "route-report.json", "through-report.json", "capture-index.json", "area-evidence.json"] {
                 let file = root.appendingPathComponent(name)
                 if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.copyItem(at: file, to: archive.appendingPathComponent(name)) }
             }
@@ -385,7 +466,7 @@ final class DiagnosticSession {
         try persistRunStatus()
         guard admitted, let request else { return }
         let root = try RailwayEvidenceRoot.validatedWriteURL(URL(fileURLWithPath: request.sessionDirectory))
-        if request.workspace == .alignment && !captureScope.isEmpty,
+        if Self.capturesViews(request.workspace) && !captureScope.isEmpty,
            publishedCaptureRevision != alignment.batch.evidenceRevision {
             try alignment.batch.scopedEvidenceIndex(scope: captureScope, viewpointIDs: captureViewpointIDs).write(to: RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("capture-index.json")), options: .atomic)
             publishedCaptureRevision = alignment.batch.evidenceRevision
@@ -397,6 +478,15 @@ final class DiagnosticSession {
             publishedCandidates = true
         }
         let summary = alignmentSummary
+        let capturing = Self.capturesViews(request.workspace)
+        let packageSource: Any
+        switch request.workspace {
+        case .area: packageSource = "repository"
+        case .alignment: packageSource = request.inputPath == nil ? "bundle" : "request"
+        case .route, .through: packageSource = NSNull()
+        }
+        let settingsObject: Any = capturing ? try JSONSerialization.jsonObject(with: Self.encoder.encode(request.normalizedCaptureSettings)) : NSNull()
+        let areaEvidencePath: Any = request.workspace == .area ? root.appendingPathComponent("area-evidence.json").path : NSNull()
         let object: [String: Any] = [
             "schemaVersion": 1, "requestID": request.requestID, "workspace": request.workspace.rawValue,
             "invocationID": invocationID, "processID": Int(ProcessInfo.processInfo.processIdentifier),
@@ -404,10 +494,9 @@ final class DiagnosticSession {
             "action": request.action.rawValue, "state": state, "message": message,
             "requestPath": root.appendingPathComponent("request.json").path,
             "runStatusPath": root.appendingPathComponent("run-status.json").path,
-            "captureIndexPath": request.workspace == .alignment ? root.appendingPathComponent("capture-index.json").path : NSNull(),
-            "packageInputPath": request.workspace == .alignment ? (alignment.packageURL?.path as Any? ?? NSNull()) : NSNull(),
-            "packageInputSource": request.workspace == .alignment ? (request.inputPath == nil ? "bundle" : "request") : NSNull(),
-            "captureSettings": request.workspace == .alignment ? try JSONSerialization.jsonObject(with: Self.encoder.encode(request.normalizedCaptureSettings)) : NSNull(),
+            "captureIndexPath": capturing ? root.appendingPathComponent("capture-index.json").path : NSNull(),
+            "packageInputPath": capturing ? (alignment.packageURL?.path as Any? ?? NSNull()) : NSNull(),
+            "packageInputSource": packageSource, "captureSettings": settingsObject, "areaEvidencePath": areaEvidencePath,
             "updatedAt": ISO8601DateFormatter().string(from: Date()), "itemIDs": selectedItemIDs,
             "dependencies": dependencies, "dependenciesVerified": dependenciesVerified, "evidencePaths": evidence, "candidateTasksPath": candidatesURL.path,
             "reviewNotesPath": root.appendingPathComponent("review-notes.json").path,
@@ -421,6 +510,9 @@ final class DiagnosticSession {
         ]
         try JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]).write(to: RailwayEvidenceRoot.validatedWriteURL(root.appendingPathComponent("result.json")), options: .atomic)
     }
+
+    /// Workspaces whose requests run the native screenshot batch.
+    static func capturesViews(_ workspace: DiagnosticRequest.Workspace) -> Bool { workspace == .alignment || workspace == .area }
 
     static func explain(_ error: Error) -> String {
         let context: DecodingError.Context

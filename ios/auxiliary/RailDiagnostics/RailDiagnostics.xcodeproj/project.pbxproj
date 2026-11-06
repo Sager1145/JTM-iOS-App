@@ -99,7 +99,6 @@
 		543DB9E8C4FBF1D3DC350DB9 /* VideoExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5CA922E32F752434E94EF4 /* VideoExportOptionsView.swift */; };
 		56F97BDB2CFBA8EE0C198B6A /* WorkspacePanelPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */; };
 		57532C9D68AEA80B393BF5D0 /* WorkspacePresentations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DD89CCF628141C9F5F5D0 /* WorkspacePresentations.swift */; };
-		59CB0E31281014D431CE76C0 /* InspectorStrokeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1280A19A0C20AA2DB5513 /* InspectorStrokeGeometry.swift */; };
 		5AB65AB0215555CAC84F27A3 /* PanelMorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A566E44F9A8692C586D9E /* PanelMorph.swift */; };
 		5B06E3FD12F632C9BE40738F /* RideOverlayBatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC23127055571695B1E0033 /* RideOverlayBatching.swift */; };
 		5C2739755648283E6D6D8DAC /* InspectionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6F01AA56FB0D35D2593982 /* InspectionPlanView.swift */; };
@@ -359,7 +358,6 @@
 		4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCardView.swift; sourceTree = "<group>"; };
 		4B8E69B0BAEAC80141948F06 /* StationPlaceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPlaceStore.swift; sourceTree = "<group>"; };
 		4CCEC62379C3256F4EA4E1E8 /* tabata-reference.geojson */ = {isa = PBXFileReference; path = "tabata-reference.geojson"; sourceTree = "<group>"; };
-		4DD1280A19A0C20AA2DB5513 /* InspectorStrokeGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorStrokeGeometry.swift; sourceTree = "<group>"; };
 		4DEEABE7B7C91957933732EF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4E07B3A5C4ED22367D1AF96A /* TicketScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScanView.swift; sourceTree = "<group>"; };
 		4E1C621A1A2AD6320A020584 /* WorkbenchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchStore.swift; sourceTree = "<group>"; };
@@ -736,7 +734,6 @@
 				A0480CC5AB53874842E7F666 /* InspectionViewpoints.swift */,
 				6397697865248E6D4DF39FDA /* InspectorMap.swift */,
 				2EFA194865498F4ADB2CCC36 /* InspectorModel.swift */,
-				4DD1280A19A0C20AA2DB5513 /* InspectorStrokeGeometry.swift */,
 				A993B2DE60ABBE00932D8E5E /* InspectorViews.swift */,
 			);
 			name = Sources;
@@ -1290,7 +1287,6 @@
 				BE1F77B1CE4173C151A16F91 /* InspectionViewpoints.swift in Sources */,
 				49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */,
 				25672A729A74C727E4484375 /* InspectorModel.swift in Sources */,
-				59CB0E31281014D431CE76C0 /* InspectorStrokeGeometry.swift in Sources */,
 				ED083771C0DA7277D2114843 /* InspectorViews.swift in Sources */,
 				38D74E0761DF5E9AB887E31F /* ItineraryStore.swift in Sources */,
 				D1F2B3CFBE4421CA4362016C /* JourneyBranding.swift in Sources */,

@@ -20,7 +20,10 @@ let package = Package(
             .product(name: "RailCore", package: "RailKit"),
             .product(name: "RailInspection", package: "InspectionKit"),
         ]),
-        .executableTarget(name: "jtm-area", dependencies: ["AreaKit"]),
+        .executableTarget(name: "jtm-area", dependencies: [
+            "AreaKit",
+            .product(name: "RailInspection", package: "InspectionKit"),
+        ]),
         .testTarget(name: "AreaKitTests", dependencies: ["AreaKit"],
                     resources: [.copy("Fixtures")]),
     ]

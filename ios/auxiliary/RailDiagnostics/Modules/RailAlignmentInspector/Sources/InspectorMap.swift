@@ -1,3 +1,4 @@
+import AreaKit
 import MapKit
 import RailCore
 import RailInspection
@@ -78,9 +79,9 @@ struct InspectorMap: UIViewRepresentable {
             let mode = model.peek ? ComparisonMode.basemap : model.mode
             if mode == .decoded { add(model.decoded, kind: "decoded", map: map) }
             if mode == .display || mode == .compare { add(model.display, kind: "display", map: map) }
-            let smoothed = InspectorStrokeGeometry.build(display: model.display,
+            let smoothed = AreaStrokeGeometry.build(display: model.display,
                 stations: (model.line?.displayStations ?? []).map(\.coordinate),
-                mapPointsPerPoint: scale, zoom: zoom,
+                mapPointsPerPoint: scale, style: .diagnosticsDefault(zoom: zoom),
                 literalSpans: model.line.map { DisplayLiteralSpans.resolve($0, parts: model.display) } ?? [])
             let smoothCount = smoothed.filter { $0.count > 1 }.reduce(0) { $0 + $1.count }
             if mode == .smooth || mode == .compare { add(smoothed, kind: "smooth", map: map) }

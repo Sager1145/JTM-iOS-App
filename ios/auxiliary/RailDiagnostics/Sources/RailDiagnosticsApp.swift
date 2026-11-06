@@ -152,7 +152,7 @@ struct DiagnosticWorkspaceView: View {
             if busy { ProgressView().controlSize(.small) }
             Label(statusTitle, systemImage: statusSymbol).font(.callout.weight(.medium))
             Text(session.request?.requestID ?? "No active task").font(.caption.monospaced()).lineLimit(1)
-            if let request = session.request, request.workspace == .alignment {
+            if let request = session.request, DiagnosticSession.capturesViews(request.workspace) {
                 let settings = request.normalizedCaptureSettings
                 Text("z\(settings.zoom, specifier: "%.1f") · \(settings.width)×\(settings.height)").font(.caption.monospaced()).foregroundStyle(.secondary)
             }
@@ -205,7 +205,7 @@ struct DiagnosticWorkspaceView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Progress").font(.headline)
                         Text(session.message).textSelection(.enabled)
-                        if session.request?.workspace == .alignment {
+                        if let request = session.request, DiagnosticSession.capturesViews(request.workspace) {
                             HStack(spacing: 24) {
                                 count("Captured", session.alignmentSummary.capturedCount)
                                 count("Pending", session.alignmentSummary.pendingCount)
@@ -214,7 +214,7 @@ struct DiagnosticWorkspaceView: View {
                         }
                         Text(session.outputPath).font(.caption.monospaced()).foregroundStyle(.secondary).textSelection(.enabled)
                     }
-                    if let request = session.request, request.workspace == .alignment {
+                    if let request = session.request, DiagnosticSession.capturesViews(request.workspace) {
                         DiagnosticCaptureGallery(indexPath: request.sessionDirectory + "/capture-index.json",
                                                  revision: session.evidenceRevision,
                                                  controlsEnabled: !busy && presentation == nil,
@@ -255,8 +255,8 @@ struct DiagnosticWorkspaceView: View {
                 HStack { Label(title, systemImage: "doc.text").font(.headline); Spacer(); Text(request.workspace.rawValue.capitalized).font(.caption).foregroundStyle(.secondary) }
                 Text(request.requestID).font(.title3.weight(.semibold)).textSelection(.enabled)
                 Text(summary(request)).font(.callout.monospaced()).textSelection(.enabled)
-                if request.workspace == .alignment {
-                    Text("Package: " + (request.inputPath ?? "Bundled jp-2025.json"))
+                if DiagnosticSession.capturesViews(request.workspace) {
+                    Text("Package: " + (request.workspace == .area ? "Repository app/public/rail/jp-2025.json" : request.inputPath ?? "Bundled jp-2025.json"))
                         .font(.caption.monospaced()).foregroundStyle(.secondary).textSelection(.enabled)
                     let settings = request.normalizedCaptureSettings
                     Text("Zoom \(settings.zoom, specifier: "%.1f") · \(settings.width) × \(settings.height) pt · \(settings.basemapStyle.rawValue) · \(settings.appearance.rawValue) · \(settings.outputModes.map(\.rawValue).joined(separator: ", "))")

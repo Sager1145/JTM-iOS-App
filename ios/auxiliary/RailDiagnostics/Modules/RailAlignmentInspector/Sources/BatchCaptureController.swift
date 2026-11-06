@@ -357,6 +357,15 @@ final class BatchCaptureController {
             "unavailableItemIDs": (plan?.items ?? []).filter { scope.contains($0.itemID) && $0.geometryStatus != .available }.map(\.itemID)], options: [.prettyPrinted, .sortedKeys])
     }
 
+    /// Captured views in scope with their absolute evidence directories.
+    func capturedViewDirectories(scope: Set<String>, viewpointIDs: Set<String>? = nil) -> [(viewpointID: String, directory: String)] {
+        (checkpoint?.progress ?? []).filter {
+            $0.status == .captured && scope.contains($0.itemID) && (viewpointIDs == nil || viewpointIDs!.contains($0.viewpointID))
+        }.map { row in
+            (row.viewpointID, outputURL.appendingPathComponent(captureDirectory(inputID: row.itemID, pointOrdinal: row.viewpoint.pointOrdinal)).path)
+        }
+    }
+
     private func capture(_ viewpoint: BatchInspectionViewpoint) async throws {
         guard let input = inputs[viewpoint.itemID], let line = lines[input.lineID] else { throw CaptureError.missingLine }
         if renderedLine?.lineID != line.id {

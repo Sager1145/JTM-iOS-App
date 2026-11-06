@@ -50,7 +50,7 @@ struct UnifiedDiagnosticCommands: Commands {
                     Button("Resolve area") { area.resolve?() }.disabled(!area.canResolve)
                     Button("Preview patch") { area.preview?() }.disabled(!area.canPreview)
                     Button("Undo last fix") { area.undo?() }.disabled(!area.canUndo)
-                    Button("Write patch…") { area.write?() }.disabled(!area.canWrite)
+                    Button("Export patch for guarded write…") { area.export?() }.disabled(!area.canExport)
                 } else {
                     Text("Select an inspection workspace")
                 }
