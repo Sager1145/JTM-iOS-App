@@ -30,7 +30,13 @@ struct KeishinDisplayCurveTests {
             Coordinate(lon: 135.8587602, lat: 35.0012836),
             Coordinate(lon: 135.8587231, lat: 35.0013891),
         ]
-        #expect(Set(line.displayIntervalCoordinates.keys) == [4])
+        // The reviewed Kamisakaemachi stage (repair-keishin-kamisakaemachi-display.mjs,
+        // 2026-10-12) later welds a passenger display anchor at 005987 between the
+        // Otani curve and interval 5, with local tapers; physical identity is kept.
+        let kamisakaemachi = Coordinate(lon: 135.8601033764409, lat: 35.005199183147624)
+        let incomingSeam = Coordinate(lon: 135.86004, lat: 35.00486)
+        let outgoingSeam = Coordinate(lon: 135.86048, lat: 35.00564)
+        #expect(Set(line.displayIntervalCoordinates.keys) == [4, 5])
         #expect(physical[4].contains(n02Apex))
         #expect(line.segments[4].distanceKm == 1.655)
         #expect(line.stations[4].id == "006037")
@@ -38,11 +44,20 @@ struct KeishinDisplayCurveTests {
         #expect(!override.contains(n02Apex))
         let first = try #require(physical[4].firstIndex(of: start))
         let last = try #require(physical[4].firstIndex(of: end))
-        #expect(override == Array(physical[4][...first]) + surveyedCurve + Array(physical[4][last...]))
+        let seam = try #require(physical[4].firstIndex(of: incomingSeam))
+        let overrideSeam = try #require(override.firstIndex(of: incomingSeam))
+        #expect(Array(override[...overrideSeam])
+            == Array(physical[4][...first]) + surveyedCurve + Array(physical[4][last...seam]))
         #expect(display[4] == override)
         #expect(display[4].first == line.stations[4].coordinate)
-        #expect(display[4].last == line.stations[5].coordinate)
-        for index in physical.indices where index != 4 {
+        #expect(line.stations[5].coordinate == Coordinate(lon: 135.86019, lat: 35.00518))
+        #expect(line.displayStationCoordinates["005987"] == kamisakaemachi)
+        #expect(display[4].last == kamisakaemachi)
+        #expect(display[5].first == kamisakaemachi)
+        let physicalOut = try #require(physical[5].firstIndex(of: outgoingSeam))
+        let displayOut = try #require(display[5].firstIndex(of: outgoingSeam))
+        #expect(Array(display[5][displayOut...]) == Array(physical[5][physicalOut...]))
+        for index in physical.indices where index != 4 && index != 5 {
             #expect(display[index] == physical[index], "Unchanged Keishin interval \(index)")
         }
     }

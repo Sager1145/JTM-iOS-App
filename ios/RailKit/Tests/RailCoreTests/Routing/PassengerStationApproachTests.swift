@@ -124,8 +124,12 @@ struct PassengerStationApproachTests {
         #expect(displayPoint != sourcePoint)
         #expect(display[index - 1].last == displayPoint)
         #expect(display[index].first == displayPoint)
-        #expect(Set(line.displayStationCoordinates.keys) == (hakone ? ["005260", "005269"] : [stationID]))
-        let repairedIntervals: Set<Int> = hakone ? [4, 5, 6, 7, 8, 9] : [index - 1, index]
+        // Later reviewed outer stages (2026-10-12) add their own anchors on the same
+        // lines: Hakone Yamasaki (interval 3) and the Gora terminal anchor 005231
+        // (interval 9); Kisuki Minami-Daito 005094 (intervals 4 and 5).
+        #expect(Set(line.displayStationCoordinates.keys)
+            == (hakone ? ["005231", "005260", "005269"] : ["005094", "005725"]))
+        let repairedIntervals: Set<Int> = hakone ? [3, 4, 5, 6, 7, 8, 9] : [4, 5, 14, 15]
         #expect(Set(line.displayIntervalCoordinates.keys) == repairedIntervals)
         for other in physical.indices where !repairedIntervals.contains(other) {
             #expect(display[other] == physical[other])
