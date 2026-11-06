@@ -716,6 +716,63 @@ final class RiddenRouteStore {
         let datedResolved: Bool
     }
 
+    /// The graph a historical-connection probe solves on, kept for the next
+    /// probe in the same area. Built only from the rail sections near the
+    /// two stations, so even the solver's last-resort full-graph pass stays
+    /// regional: the national graph is never built for a probe.
+    private final class ProbeGraphCache: @unchecked Sendable {
+        static let shared = ProbeGraphCache()
+        private let lock = NSLock()
+        private var entry: (key: String, store: UncheckedGraphStoreBox)?
+
+        func store(key: String, build: () -> RouteGraph.RouteGraphStore) -> UncheckedGraphStoreBox {
+            lock.lock()
+            defer { lock.unlock() }
+            if let entry, entry.key == key { return entry.store }
+            let built = UncheckedGraphStoreBox(store: build())
+            entry = (key, built)
+            return built
+        }
+    }
+
+    /// Whether a line connected the train's two stations on its ride date,
+    /// for the editor's historical-line notice. Dated only: the planner has
+    /// already found no route on today's network. Never publishes or saves.
+    @concurrent nonisolated static func historicalConnection(
+        _ train: Train, between from: Coordinate, and to: Coordinate
+    ) async throws -> Bool {
+        try Task.checkCancellation()
+        let scope = RouteScope(train)
+        let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+        try Task.checkCancellation()
+        let ends = RouteGraph.BBox(
+            minX: min(from.lon, to.lon), minY: min(from.lat, to.lat),
+            maxX: max(from.lon, to.lon), maxY: max(from.lat, to.lat))
+        // The solver's widest regional margin for this span.
+        let margin = max(90_000, RouteGraph.bboxDiagonalMeters(ends) * 1.5)
+        let area = RouteGraph.quantizeBBoxOutward(RouteGraph.padBBoxMeters(ends, meters: margin))
+        let key = ([scope.key, String(describing: inputs.snapshotID)]
+            + area.array.map { String(format: "%.3f", $0) })
+            .joined(separator: "\u{1f}")
+        let graphStore = ProbeGraphCache.shared.store(key: key) {
+            let nearby = inputs.sections.filter { feature in
+                RouteGraph.featureBBox(feature).map { RouteGraph.bboxIntersects($0, area) } ?? false
+            }
+            return RouteGraph.RouteGraphStore(
+                sections: nearby, policy: .physicalRailway, junctions: inputs.physicalJunctions,
+                cachePolicy: .bounded(maximumNodes: 100_000),
+                identityPeriods: inputs.identityPeriods, sourceSnapshotID: inputs.snapshotID)
+        }
+        try Task.checkCancellation()
+        let ride = try await RouteSolveLimiter.shared.withPermit {
+            try await solveMissingSequentialWithPermit(
+                [train], scope: scope, allowLegacy: true,
+                graphStore: graphStore.store, providedInputs: inputs,
+                publish: { _ in }, saveRoutes: false).first
+        }
+        return ride?.route.isResolved == true
+    }
+
     /// Probe together so both passes reuse one mutable graph and never publish or persist.
     @concurrent nonisolated static func routeAvailabilities(
         _ datedTrains: [Train]
