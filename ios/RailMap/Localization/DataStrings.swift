@@ -50,10 +50,10 @@ enum DataStrings {
             .en: "{count} journeys · bundled sample, never overwritten",
         ],
         "data.sampleFootnote": [
-            .zhHant: "編輯示例會另存成你自己的資料；內建示例永遠不會被覆寫。",
-            .zhHans: "编辑示例会另存成你自己的数据；内置示例永远不会被覆盖。",
-            .ja: "サンプルを編集すると自分のデータとして別に保存されます。内蔵サンプルが上書きされることはありません。",
-            .en: "Editing a sample saves a copy as your own data; bundled samples are never overwritten.",
+            .zhHant: "再次載入示例組會還原其內建行程；對示例行程的修改會被取代。你自己的行程永遠不會被更動。",
+            .zhHans: "再次载入示例组会还原其内置行程；对示例行程的修改会被替换。你自己的行程永远不会被更改。",
+            .ja: "サンプルセットを再度読み込むと、内蔵の旅程に戻ります。サンプル旅程への編集は置き換えられます。自分で追加した旅程が変更されることはありません。",
+            .en: "Loading a sample set again restores its bundled trips; edits to sample trips are replaced. Your own trips are never changed.",
         ],
         "data.readingJourneys": [
             .zhHant: "正在讀取行程…",
