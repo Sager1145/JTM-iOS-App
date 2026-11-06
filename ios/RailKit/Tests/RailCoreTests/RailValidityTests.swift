@@ -261,7 +261,7 @@ final class RailValidityTests: XCTestCase {
         XCTAssertNotEqual(a, c)
         XCTAssertTrue(a.hasPrefix("solver:28|"), a)
         XCTAssertEqual(RouteGraph.routeSolverCacheVersion, "28")
-        XCTAssertEqual(RouteGraph.routeDrawnCacheVersion, "32")
+        XCTAssertEqual(RouteGraph.routeDrawnCacheVersion, "33")
         XCTAssertTrue(a.contains("|date:2019-12-31|history:r1"), a)
         let undated = try XCTUnwrap(cacheKey(rideDate: nil, historyRevision: nil))
         XCTAssertTrue(undated.contains("|date:none|history:none"), undated)

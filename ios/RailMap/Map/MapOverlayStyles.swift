@@ -37,9 +37,32 @@ final class MapOverlayStyles {
         /// dash and stroke down together. Cross-day rides and withheld
         /// casings. Not the historical network mark.
         var dashed = false
-        /// Historical and relocated-old network strokes. A different on/off
-        /// from ``dashed`` (`RailStyle.historyDot`, not `dashPattern`).
+        /// Historical and relocated-old network strokes, and unproven ride
+        /// strokes (`ride-unproven`). A different on/off from ``dashed``
+        /// (`RailStyle.historyDot`, not `dashPattern`).
         var historical = false
+    }
+
+    /// Ride overlay key prefixes before the `|<rideID>`: solid, cross-day
+    /// continuation, and unproven (drawn from rejected track, not counted).
+    static let rideSuffixes = ["ride", "ride-xday", "ride-unproven"]
+
+    static func isRideCoreKey(_ key: String) -> Bool {
+        rideSuffixes.contains { key.hasPrefix("\($0)|") }
+    }
+
+    static func isRideCasingKey(_ key: String) -> Bool {
+        rideSuffixes.contains { key.hasPrefix("\($0)-casing|") }
+    }
+
+    /// Every core key a ride may be installed under.
+    static func rideCoreKeys(for rideID: String) -> Set<String> {
+        Set(rideSuffixes.map { "\($0)|\(rideID)" })
+    }
+
+    /// Every casing key a ride may be installed under.
+    static func rideCasingKeys(for rideID: String) -> Set<String> {
+        Set(rideSuffixes.map { "\($0)-casing|\(rideID)" })
     }
 
     private var styles: [String: Style] = [:]

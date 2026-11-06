@@ -608,7 +608,9 @@ public enum RouteGraph {
     public static let legacyCoordinateDrawnCacheVersion = "26"
     // Version 31 retires display paths with duplicated branch lead-ins and old junction offsets.
     // Version 32 retires rides that fell back to physical geometry over reviewed display intervals.
-    public static let routeDrawnCacheVersion = "32"
+    // Version 33 re-resolves guard-rejected sections so they carry the unproven
+    // physical gap (ADR 0007 amendment 1, option B).
+    public static let routeDrawnCacheVersion = "33"
 
     /// The operators a `company` field names, split on `/` or full-width `／`.
     ///

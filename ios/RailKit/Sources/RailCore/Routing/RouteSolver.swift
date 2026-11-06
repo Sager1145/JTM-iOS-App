@@ -39,9 +39,11 @@ public enum RouteSolver {
     /// find the near one. Only applied beyond
     /// `endpointAmbiguityMinStraightMeters`, only to endpoints the section
     /// names without an N02 code, never to a from-station pinned by the
-    /// continuity anchor, and a rejected result is still returned as a last
+    /// continuity anchor. A rejected result is still returned as a last
     /// resort when no attempt (including the fallback) finds anything else,
-    /// so a section that solved before this guard existed never becomes nil.
+    /// but it carries `SectionOutcome.unproven` (ADR 0007 amendment 1, option
+    /// B): it is drawn with a distinct mark and excluded from mileage, and its
+    /// solver-chosen endpoint station is never recorded.
     static let endpointAmbiguityMinStraightMeters = 20_000.0
     static let endpointAmbiguityDistanceFactor = 2.0
 
@@ -1333,6 +1335,18 @@ public enum RouteSolver {
              mode: "institution_only_unbiased_fallback")
     }
 
+    /// Whether a solved section passed every plausibility guard.
+    ///
+    /// ADR 0007 amendment 1, option B: `.unproven` is real track that a guard
+    /// (today only the endpoint ambiguity guard) rejected, kept as a last
+    /// resort. It may be drawn, marked, but must not count as a route:
+    /// `RideRouteResolution` records it as an unproven physical gap, so it is
+    /// excluded from mileage and statistics and offered for route repair.
+    enum SectionOutcome: String, Sendable, Equatable {
+        case proven
+        case unproven
+    }
+
     struct SolvedSection: Sendable, Equatable {
         var segmentIndex: Int
         /// The section endpoint's fixed station identity when its dated record
@@ -1360,6 +1374,7 @@ public enum RouteSolver {
         var validFrom: String? = nil
         var validTo: String? = nil
         var temporalKind: RouteGraph.TemporalKind = .current
+        var outcome: SectionOutcome = .proven
     }
 
     /// The only cross-identity continuation admitted before a section's own
@@ -3352,6 +3367,7 @@ public enum RouteSolver {
         var to: StationNodeCandidate
         var hints: SegmentHints
         var attemptIndex: Int
+        var outcome: SectionOutcome = .proven
     }
 
     private static func stationCoordinates(_ indices: [Int], stations: Stations.Index) -> [Int: Coordinate] {
@@ -3637,9 +3653,18 @@ public enum RouteSolver {
             if guardedFallback == nil { guardedFallback = attempt.guarded }
             best = attempt.best
         }
-        // Last resort: a result the endpoint guard rejected is better than
-        // no route at all (see `endpointAmbiguityDistanceFactor`).
-        if best == nil { best = guardedFallback }
+        // Last resort (ADR 0007 amendment 1, option B): keep a result the
+        // endpoint guard rejected, but tagged `.unproven` so no consumer can
+        // mistake it for a proven solve (see `endpointAmbiguityDistanceFactor`).
+        // Web parity: the JS twin `app/public/app-route-solver.js`
+        // (`guardedFallback`) still returns it untagged. The two diverge until
+        // the website repo mirrors this outcome. `routeSolverCacheVersion`
+        // stays "28" until then: it keys JS precomputes, which cannot carry the
+        // flag; native persisted solves are retired by `routeDrawnCacheVersion`.
+        if best == nil, var guarded = guardedFallback {
+            guarded.outcome = .unproven
+            best = guarded
+        }
         return best
     }
 
@@ -3685,7 +3710,8 @@ public enum RouteSolver {
             rawPhysicalLength: best.physicalLength,
             cost: best.totalCost, attemptIndex: best.attemptIndex,
             historyIDs: provenance.historyIDs, validFrom: provenance.validFrom,
-            validTo: provenance.validTo, temporalKind: provenance.temporalKind)
+            validTo: provenance.validTo, temporalKind: provenance.temporalKind,
+            outcome: best.outcome)
     }
 
     static func solveSectionOnDemand(
@@ -3723,7 +3749,9 @@ public enum RouteSolver {
                 section, segmentIndex: segmentIndex, train: train, country: country,
                 graph: graph, stations: stations, continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork)
             {
-                lastResult = result
+                if result.outcome == .proven || lastResult?.outcome != .proven {
+                    lastResult = result
+                }
                 // A regional result is only trustworthy without checking wider
                 // margins or the full graph when it came from the very first
                 // (strictest) solve attempt AND it doesn't touch the region
@@ -3736,15 +3764,23 @@ public enum RouteSolver {
                    !RouteGraph.pathTouchesRegionEdge(
                     lines: [result.coordinates], regionBBox: graph.regionBBox, marginDeg: 0.02)
                 {
-                    return result
+                    // An unproven (guard-rejected) result widens once more: a
+                    // wider region may hold a proven route. The guard is about
+                    // which same-name station is meant, not region size, so
+                    // the widest margin settles it without a full-graph build.
+                    if result.outcome == .proven { return result }
+                    if margin == margins.last, lastResult?.outcome != .proven { return result }
                 }
             }
         }
         guard !Task.isCancelled else { return nil }
-        return solveSection(
+        let full = solveSection(
             section, segmentIndex: segmentIndex, train: train, country: country,
             graph: graphStore.fullGraph(), stations: stations,
-            continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork) ?? lastResult
+            continuityAnchor: continuityAnchor, physicalContinuationKey: physicalContinuationKey, traversalPolicy: traversalPolicy, directionNetwork: directionNetwork)
+        // A proven regional result beats an unproven full-graph one.
+        if full?.outcome != .proven, lastResult?.outcome == .proven { return lastResult }
+        return full ?? lastResult
     }
 
     static func completeRouteEndpointCoordinates(

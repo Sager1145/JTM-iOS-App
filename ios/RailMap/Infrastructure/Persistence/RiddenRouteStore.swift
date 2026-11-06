@@ -148,6 +148,11 @@ final class RiddenRouteStore {
         /// Kept beside its geometry so another record cannot clear or inherit them.
         var resourceWarnings: [String] = []
         var physicalGaps: [PhysicalGap] = []
+        /// Sections drawn from track a plausibility guard rejected: shown
+        /// dotted, never counted in distance, coverage or traversed lines.
+        var unprovenSegmentIndices: Set<Int> {
+            Set(physicalGaps.lazy.filter(\.isUnproven).map(\.segmentIndex))
+        }
         var indicesAreAuthoritative = true
         var expectedSectionCount = 0
         var recordedRouteMapping: RecordedRouteMapping? = nil
@@ -1026,7 +1031,8 @@ final class RiddenRouteStore {
         for gap in physicalGaps where expectedSections.indices.contains(gap.segmentIndex) {
             let section = expectedSections[gap.segmentIndex]
             let sectionGap = SectionGap(segmentIndex: gap.segmentIndex,
-                from: section.from, to: section.to, isBoundary: gap.isBoundary)
+                from: section.from, to: section.to, isBoundary: gap.isBoundary,
+                isUnproven: gap.isUnproven)
             if let existing = unsolved.firstIndex(where: { $0.segmentIndex == gap.segmentIndex }) {
                 // An interior failure must remain visible even if a boundary was recorded first.
                 if unsolved[existing].isBoundary && !gap.isBoundary {
@@ -1054,7 +1060,8 @@ final class RiddenRouteStore {
         geometryHasher.combine(segments.count)
         geometryHasher.combine(recordedMapping?.sectionStopIntervals)
         geometryHasher.combine(recordedMapping?.stopSectionBoundaries)
-        for gap in physicalGaps { geometryHasher.combine(gap.segmentIndex); geometryHasher.combine(gap.isBoundary) }
+        for gap in physicalGaps { geometryHasher.combine(gap.segmentIndex); geometryHasher.combine(gap.isBoundary)
+            geometryHasher.combine(gap.isUnproven) }
         for segment in segments {
             geometryHasher.combine(segment.segmentIndex)
             geometryHasher.combine(segment.partIndex)

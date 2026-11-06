@@ -88,6 +88,34 @@ public struct RideRouteResolution {
         public let segmentIndex: Int
         /// True marks a missing connection before an independently drawn leg.
         public let isBoundary: Bool
+        /// ADR 0007 amendment 1, option B: the section is drawn from track a
+        /// plausibility guard rejected (`RouteSolver.SectionOutcome.unproven`).
+        /// It is never a boundary gap. Like any interior gap it is excluded
+        /// from mileage and offered for route repair; the map marks it.
+        public let isUnproven: Bool
+
+        public init(segmentIndex: Int, isBoundary: Bool, isUnproven: Bool = false) {
+            self.segmentIndex = segmentIndex
+            self.isBoundary = isBoundary
+            self.isUnproven = isUnproven && !isBoundary
+        }
+
+        /// Sections whose drawn geometry is not a certified route: every
+        /// interior (non-boundary) gap, unproven sections included. Mileage
+        /// and the passport exclude exactly these sections.
+        public static func uncertifiedSections(_ gaps: [PhysicalGap]) -> Set<Int> {
+            Set(gaps.lazy.filter { !$0.isBoundary }.map(\.segmentIndex))
+        }
+
+        private enum CodingKeys: String, CodingKey { case segmentIndex, isBoundary, isUnproven }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.init(
+                segmentIndex: try container.decode(Int.self, forKey: .segmentIndex),
+                isBoundary: try container.decode(Bool.self, forKey: .isBoundary),
+                isUnproven: try container.decodeIfPresent(Bool.self, forKey: .isUnproven) ?? false)
+        }
     }
 
     public struct Segment: Sendable {
@@ -341,6 +369,27 @@ public struct RideRouteResolution {
                     directionNetwork: displayNetwork)
             }
             try Task.checkCancellation()
+            if let unproven = solved, unproven.outcome == .unproven, unproven.coordinates.count >= 2 {
+                // ADR 0007 amendment 1, option B. Draw the guard-rejected
+                // track as solved, marked, but record nothing it would prove:
+                // no certified path keys, no physical selection (so the
+                // solver-chosen far station code is never stored), no display
+                // canonicalization, and no continuity into the next section.
+                physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false, isUnproven: true))
+                segments.append(Segment(
+                    segmentIndex: index, partIndex: 0,
+                    from: section.from ?? stationIndex.name(forCode: section.fromN02StationCode),
+                    to: section.to ?? stationIndex.name(forCode: section.toN02StationCode),
+                    coordinates: unproven.coordinates, country: country,
+                    historyIDs: unproven.historyIDs, validFrom: unproven.validFrom,
+                    validTo: unproven.validTo, temporalKind: unproven.temporalKind,
+                    physicalRoute: nil))
+                lastSolvedIndex = nil
+                continuity = nil
+                displayContinuity = nil
+                physicalContinuationKey = nil
+                continue
+            }
             if var solved, solved.coordinates.count >= 2 {
                 if solved.rawPathKeys.first?.contains("@") != true {
                     solved.rawPathKeys = RouteSolver.verifiedPhysicalPathKeys(

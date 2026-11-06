@@ -161,6 +161,13 @@ enum JourneyPoster {
                         "station": .string(l.stationName(gap.from ?? stop?.name, in: train,
                             code: code)),
                     ])
+                    : gap.isUnproven
+                    ? l.text("ios.route.unprovenSection", params: [
+                        "from": .string(l.stationName(gap.from, in: train, code: code)),
+                        "to": .string(l.stationName(gap.to, in: train,
+                            code: sections.indices.contains(gap.segmentIndex)
+                                ? sections[gap.segmentIndex].toN02StationCode : nil)),
+                    ])
                     : (gap.from ?? "?") + " → " + (gap.to ?? "?")
                 result.append(Block(text: text))
             }

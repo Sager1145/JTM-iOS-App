@@ -216,6 +216,9 @@ enum MapRideMarkers {
         var result = ride.markerPositions
         let stops = ride.stops
         guard !stops.isEmpty else { return [:] }
+        // An unproven section's far end is the station the solver chose, not
+        // a proven alighting point (ADR 0007 amendment 1): it places no bead.
+        let unproven = ride.unprovenSegmentIndices
         for segment in ride.segments.sorted(by: { $0.segmentIndex < $1.segmentIndex }) {
             guard let first = segment.coordinates.first,
                   let last = segment.coordinates.last else { continue }
@@ -224,7 +227,8 @@ enum MapRideMarkers {
                agrees(segment.from, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = first
             }
-            if let index = endpoints.to, stops.indices.contains(index),
+            if !unproven.contains(segment.segmentIndex),
+               let index = endpoints.to, stops.indices.contains(index),
                agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = last
             }
@@ -284,6 +288,7 @@ enum MapRideMarkers {
         var result: [Int: StrokeAnchorRef] = [:]
         let stops = ride.stops
         guard !stops.isEmpty else { return [:] }
+        let unproven = ride.unprovenSegmentIndices
         for segment in ride.segments.sorted(by: { $0.segmentIndex < $1.segmentIndex }) {
             guard let ref = strokeRef(segment) else { continue }
             let endpoints = ride.recordedStopIndices(for: segment)
@@ -293,7 +298,8 @@ enum MapRideMarkers {
                     chainID: ref.chainID, vertexIndex: ref.fromAnchor,
                     segmentIndex: segment.segmentIndex, partIndex: segment.partIndex, isSegmentStart: true)
             }
-            if let index = endpoints.to, stops.indices.contains(index),
+            if !unproven.contains(segment.segmentIndex),
+               let index = endpoints.to, stops.indices.contains(index),
                agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.toAnchor,

@@ -37,12 +37,17 @@ public struct SectionGap: Sendable, Equatable {
     public let from: String?
     public let to: String?
     public let isBoundary: Bool
+    /// Drawn from track a plausibility guard rejected (likely the wrong
+    /// same-name station); interior, never counted in distance.
+    public let isUnproven: Bool
 
-    public init(segmentIndex: Int, from: String?, to: String?, isBoundary: Bool = false) {
+    public init(segmentIndex: Int, from: String?, to: String?, isBoundary: Bool = false,
+                isUnproven: Bool = false) {
         self.segmentIndex = segmentIndex
         self.from = from
         self.to = to
         self.isBoundary = isBoundary
+        self.isUnproven = isUnproven
     }
 }
 
