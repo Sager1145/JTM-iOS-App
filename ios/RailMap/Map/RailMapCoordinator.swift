@@ -186,6 +186,8 @@ extension RailMapView.Surface {
                 let dependencies: [String: UUID]
             }
             private var lineInputs: [String: LineInputs] = [:]
+            private var junctionIndex = StrokeJunctionIndex([])
+            private var lineDependencyIDs: [String: Set<String>] = [:]
             private var matchedLineInputs: [String: LineInputs] = [:]
             /// Background matching and its display-datum chain index, independent of zoom.
             private var matchingTask: Task<Void, Never>?
@@ -3309,11 +3311,18 @@ extension RailMapView.Surface {
 
             /// Revalidate only the inputs a line build actually reads. A
             /// country arriving must not discard every other country's pixels.
+            /// The junction index and per-line dependency ids update incrementally.
             private func refreshLineInputs() {
                 let byID = Dictionary(lines.map { ($0.id, $0) },
                     uniquingKeysWith: { first, _ in first })
                 networkGeometry.retainDisplayChains(Set(lines.map(JoinedChainKey.init)))
-                let junctionCandidates = JunctionCandidateIndex(byID, chains: networkGeometry.joinedChains)
+                let junctionLines = lines.map { line in
+                    StrokeJunctionIndex.Line(
+                        id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
+                        coordinates: networkGeometry.joinedChains.chain(of: line).points,
+                        continuous: line.continuous, follows: line.follows.map(\.canonicalID))
+                }
+                let change = junctionIndex.update(junctionLines)
                 var anchors: [String: [Int]] = [:]
                 for station in stations {
                     guard let slot = station.slot else { continue }
@@ -3321,8 +3330,15 @@ extension RailMapView.Surface {
                         .append(slot.anchor)
                 }
                 var next: [String: LineInputs] = [:]
+                var nextDependencyIDs: [String: Set<String>] = [:]
                 for line in lines {
-                    let dependencyIDs = junctionCandidates.dependencyIDs(of: line.id)
+                    let dependencyIDs: Set<String>
+                    if !change.affectedIDs.contains(line.id), let cached = lineDependencyIDs[line.id] {
+                        dependencyIDs = cached
+                    } else {
+                        dependencyIDs = junctionIndex.dependencyIDs(of: line.id)
+                    }
+                    nextDependencyIDs[line.id] = dependencyIDs
                     var dependencies: [String: UUID] = [:]
                     for id in dependencyIDs { dependencies[id] = byID[id]?.contentID }
                     next[line.id] = LineInputs(contentID: line.contentID,
@@ -3331,6 +3347,7 @@ extension RailMapView.Surface {
                 let retainedIDs = Set(next.keys.filter { next[$0] == lineInputs[$0] })
                 networkGeometry.retainLineBuilds(withIDs: retainedIDs)
                 lineInputs = next
+                lineDependencyIDs = nextDependencyIDs
                 interaction.invalidateRideGeometry()
             }
 
