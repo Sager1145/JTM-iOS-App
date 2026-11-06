@@ -1944,7 +1944,14 @@
           "from_n02_station_code": "003693",
           "to_n02_station_code": "003647",
           "from_station_id": "st:jp:1484",
-          "to_station_id": "st:jp:4168"
+          "to_station_id": "st:jp:4168",
+          "line_names": [
+            "中央線",
+            "総武線"
+          ],
+          "operator_names": [
+            "東日本旅客鉄道"
+          ]
         },
         {
           "from": "錦糸町",
@@ -1952,7 +1959,13 @@
           "from_n02_station_code": "003647",
           "to_n02_station_code": "003593",
           "from_station_id": "st:jp:4168",
-          "to_station_id": "st:jp:5880"
+          "to_station_id": "st:jp:5880",
+          "line_names": [
+            "総武線"
+          ],
+          "operator_names": [
+            "東日本旅客鉄道"
+          ]
         }
       ],
       "stops": [
