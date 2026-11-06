@@ -478,12 +478,36 @@ enum MapRideMarkers {
         rides: [RiddenRouteStore.DrawnRide], settings: Settings,
         strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef? = { _, _ in nil }
     ) -> [Drawn] {
-        let built = records(rides: rides, settings: settings, strokeRef: strokeRef)
-        let features = StationDisplay.markerRecordsToFC(built.map(\.record))
+        drawn(assembling: rides.map { rideRecords(of: $0, settings: settings, strokeRef: strokeRef) })
+    }
 
-        // Density is local rather than journey-wide. A five-station window
-        // lets a local train stay quiet through central Tokyo without forcing
-        // its widely spaced rural calls to wait for the same close zoom.
+    /// One ride's records and their local density floors: everything in a
+    /// ``Drawn`` that does not depend on the other rides. ``records(rides:settings:strokeRef:)``
+    /// keeps no state between rides, so the deck's records are these
+    /// concatenated in ride order.
+    struct RideRecords {
+        var built: [(
+            record: StationDisplay.MarkerRecord, code: String?, ride: RiddenRouteStore.DrawnRide,
+            strokeAnchor: StrokeAnchorRef?
+        )]
+        var density: [Coordinate: Int]
+    }
+
+    static func rideRecords(
+        of ride: RiddenRouteStore.DrawnRide, settings: Settings,
+        strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
+    ) -> RideRecords {
+        let built = records(rides: [ride], settings: settings, strokeRef: strokeRef)
+        return RideRecords(built: built, density: densityByRide(built)[ride.id] ?? [:])
+    }
+
+    /// Density is local rather than journey-wide. A five-station window
+    /// lets a local train stay quiet through central Tokyo without forcing
+    /// its widely spaced rural calls to wait for the same close zoom.
+    private static func densityByRide(
+        _ built: [(record: StationDisplay.MarkerRecord, code: String?, ride: RiddenRouteStore.DrawnRide,
+                   strokeAnchor: StrokeAnchorRef?)]
+    ) -> [String: [Coordinate: Int]] {
         var positionsByRide: [String: [Coordinate]] = [:]
         var seenByRide: [String: Set<Coordinate>] = [:]
         for entry in built where entry.record.role != "stop-center" {
@@ -510,7 +534,27 @@ enum MapRideMarkers {
                     densityByRide[rideID]?[positions[index]] ?? 0, density)
             }
         }
+        return densityByRide
+    }
 
+    /// The deck's records with their elected names, from each ride's own
+    /// records in ride order. The election is deck-wide by design: a shared
+    /// station's name goes to whichever record arrives first.
+    static func drawn(assembling rides: [RideRecords]) -> [Drawn] {
+        let built = rides.flatMap(\.built)
+        let features = StationDisplay.markerRecordsToFC(built.map(\.record))
+        // A ride's window never crosses into another ride, so per-ride floors
+        // are the deck's — unless two rides share an id, whose positions the
+        // deck-wide rule walks as one sequence.
+        let ids = rides.compactMap { $0.built.first?.ride.id }
+        let densityByRide: [String: [Coordinate: Int]]
+        if Set(ids).count == ids.count {
+            densityByRide = Dictionary(uniqueKeysWithValues: rides.compactMap { ride in
+                ride.built.first.map { ($0.ride.id, ride.density) }
+            })
+        } else {
+            densityByRide = Self.densityByRide(built)
+        }
         return zip(built, features).map { entry, feature in
             Drawn(
                 record: entry.record, feature: feature, stationCode: entry.code,

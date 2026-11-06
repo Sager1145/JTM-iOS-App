@@ -118,12 +118,12 @@ enum RouteDigestIndexIdentity {
     }()
 
     private static func imageUUID(_ header: UnsafePointer<mach_header>) -> String? {
-        let is64 = header.pointee.magic == MH_MAGIC_64
+        let is64 = header.pointee.magic == UInt32(MH_MAGIC_64)
         let headerSize = is64 ? MemoryLayout<mach_header_64>.size : MemoryLayout<mach_header>.size
         var command = UnsafeRawPointer(header).advanced(by: headerSize)
         for _ in 0..<header.pointee.ncmds {
             let load = command.assumingMemoryBound(to: load_command.self).pointee
-            if load.cmd == LC_UUID {
+            if load.cmd == UInt32(LC_UUID) {
                 let uuid = command.assumingMemoryBound(to: uuid_command.self).pointee.uuid
                 return UUID(uuid: uuid).uuidString
             }

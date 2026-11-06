@@ -52,6 +52,7 @@
 		340AEDBE2F19098BA917780D /* JourneySearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5D3A0F933A92A5F795C64 /* JourneySearchField.swift */; };
 		343AD3DC4A58976EABDFE2D9 /* TicketJimon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097871E7B684EA392B90634B /* TicketJimon.swift */; };
 		34AD669A5BDFE773BAFC8521 /* AppShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA14AE98B914FEBA341FC83 /* AppShell.swift */; };
+		35C84D11FE5E931C3E8D33D1 /* RideIncrementalUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B2D3E89B5DFC50AAA6A7E /* RideIncrementalUpdate.swift */; };
 		37AE9FAE2CBB0F72B1D55E65 /* MergedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1BAED36F2B151418B13211 /* MergedStore.swift */; };
 		380C2A6E8BF92A8A7F2FB412 /* MapOverlayStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD1C0B4DDA6A46EE542A4F2 /* MapOverlayStyles.swift */; };
 		38AF3A045A04C4E2A89F882D /* MapRideStationImportance.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0EBCAE3F2EA7616E6A7B72 /* MapRideStationImportance.swift */; };
@@ -79,6 +80,7 @@
 		49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397697865248E6D4DF39FDA /* InspectorMap.swift */; };
 		49E5ED9C2688622F6C025DD4 /* MapDateScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CFF14C878A7B40D58A6A3E /* MapDateScope.swift */; };
 		4A0B02AEBB6B385C7C10AB4D /* StopEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A345007BC8F43C8B3CE0D7 /* StopEditorView.swift */; };
+		4A25805EDAB7BB35F38C86FA /* RouteDigestIndexStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475625A0FBE8B6C78C31EAD6 /* RouteDigestIndexStore.swift */; };
 		4B9520F66C78D49E7FB15C3D /* JourneyLabelAnnotationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719F9358899CC53490D82BA3 /* JourneyLabelAnnotationViews.swift */; };
 		4CA9B27442CF049BD0B28180 /* EditorFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB75D3F9F830E75D3A694AE1 /* EditorFields.swift */; };
 		4DFC92FDB3FDCC15557CB08F /* DiagnosticCaptureGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FC004E191D5E65A73EE177 /* DiagnosticCaptureGallery.swift */; };
@@ -323,6 +325,7 @@
 		4610709E922C93AA4D822234 /* StationPickerSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPickerSearchController.swift; sourceTree = "<group>"; };
 		46B1C2FAC06ED5378A0EAE83 /* MapNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNaming.swift; sourceTree = "<group>"; };
 		473976D4A7CCB6AE0F1A4ACA /* RideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideStorage.swift; sourceTree = "<group>"; };
+		475625A0FBE8B6C78C31EAD6 /* RouteDigestIndexStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDigestIndexStore.swift; sourceTree = "<group>"; };
 		4834D7FF5E50EB012674A42D /* AppLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocalization.swift; sourceTree = "<group>"; };
 		48A8E5F9777D70F3604A461B /* ServiceSectionSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSectionSummary.swift; sourceTree = "<group>"; };
 		48F046D66D660D327093FB59 /* AppleMapAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapAnalysisService.swift; sourceTree = "<group>"; };
@@ -334,6 +337,7 @@
 		4E1C621A1A2AD6320A020584 /* WorkbenchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchStore.swift; sourceTree = "<group>"; };
 		4E6F01AA56FB0D35D2593982 /* InspectionPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectionPlanView.swift; sourceTree = "<group>"; };
 		4E92C6BC62194DB632EC5684 /* WorkspaceDerived.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDerived.swift; sourceTree = "<group>"; };
+		4F6B2D3E89B5DFC50AAA6A7E /* RideIncrementalUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideIncrementalUpdate.swift; sourceTree = "<group>"; };
 		4F6E50357CD352D51E955BCF /* TabClearanceDiagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabClearanceDiagnostic.swift; sourceTree = "<group>"; };
 		4FD12B0725D1862BAF185800 /* Coordinate+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+MapKit.swift"; sourceTree = "<group>"; };
 		500333D4E17A63480C825B78 /* RailDisplayNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailDisplayNetwork.swift; sourceTree = "<group>"; };
@@ -667,6 +671,7 @@
 				D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */,
 				6C8ED17385FD30F1E6443251 /* RailMapView.swift */,
 				6CC03421FDB472439D129682 /* RailwayLineCardView.swift */,
+				4F6B2D3E89B5DFC50AAA6A7E /* RideIncrementalUpdate.swift */,
 				ECC23127055571695B1E0033 /* RideOverlayBatching.swift */,
 				016E700A556C584EC5F04245 /* RideStationOverlay.swift */,
 				51A842D865F20B59EE7FAFCD /* RideTapIndex.swift */,
@@ -924,6 +929,7 @@
 				D86354E99E74D8D60783B878 /* RideLibrary.swift */,
 				3B086C40A5B15D428874113E /* RidePersistenceQueue.swift */,
 				473976D4A7CCB6AE0F1A4ACA /* RideStorage.swift */,
+				475625A0FBE8B6C78C31EAD6 /* RouteDigestIndexStore.swift */,
 				DC1B3938A00CD8A9E09ADDEB /* sample-legacy-ride-ids.json */,
 				AEBC93143DDE585C1FB4871A /* SampleLegacyRideIDs.swift */,
 				8714C78DD769D4024644D6C0 /* TimetableRouteEvidence.swift */,
@@ -1285,6 +1291,7 @@
 				3B894BCBEC461413017F8998 /* RideCard.swift in Sources */,
 				CF3F75B1D64774512DAEEB7D /* RideChooserView.swift in Sources */,
 				13270A3521AEEA48B8F59E24 /* RideDetailView.swift in Sources */,
+				35C84D11FE5E931C3E8D33D1 /* RideIncrementalUpdate.swift in Sources */,
 				5EAAB25FC510A68947A629B3 /* RideLibrary.swift in Sources */,
 				5B06E3FD12F632C9BE40738F /* RideOverlayBatching.swift in Sources */,
 				A8593FC7EA71B7DBA2CE59AD /* RidePersistenceQueue.swift in Sources */,
@@ -1293,6 +1300,7 @@
 				2A78EFF38767EFA1BDEE7E89 /* RideStorage.swift in Sources */,
 				0FF39D4F6F70077DC758B7B4 /* RideTapIndex.swift in Sources */,
 				80A5A8E55BCAB9B5923C1458 /* RouteBadgeIndex.swift in Sources */,
+				4A25805EDAB7BB35F38C86FA /* RouteDigestIndexStore.swift in Sources */,
 				B45BF0910337040B23481158 /* RouteGlyph.swift in Sources */,
 				D0991E74351BB8FC2198EAC7 /* RouteGuideStrings.swift in Sources */,
 				9D279CC2B2FEE92D28389670 /* RouteLogoSquare.swift in Sources */,
