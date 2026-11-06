@@ -30,6 +30,9 @@ final class AppControlSmokeUITests: XCTestCase {
 
     private func send(_ request: AppControlRequest, to app: XCUIApplication) throws {
         app.open(try AppControlURL.make(request))
+        // iOS 26+ may confirm a custom-scheme URL ("Open in “RailMap”?").
+        let confirm = XCUIApplication(bundleIdentifier: "com.apple.springboard").buttons["Open"]
+        if confirm.waitForExistence(timeout: 3) { confirm.tap() }
         let result = app.descendants(matching: .any)["appControlLastResult"]
         let expected = "\(request.id):ok"
         let done = NSPredicate { _, _ in

@@ -9,15 +9,15 @@ description: Drive the DEBUG RailMap app (com.JRM.RailMap) on the iOS simulator,
 
 The DEBUG app has a control channel (`ios/RailMap/Diagnostics/AppControl/`, protocol in `RailPresentation/Workspace/AppControlProtocol.swift`). Every command runs through the app's own code: the workspace's `pick`/`presentJourneyEditor`, and the editor's station assignment, planner, section choice and `commit`. It is compiled out of Release (`#if DEBUG`). The `railmap-test` URL scheme is only in the Debug Info.plist (`ios/tools/app-control/RailMap-Debug-Info.plist`, set as `INFOPLIST_FILE` for Debug only). There is no socket.
 
-Transport: the CLI opens `railmap-test://run?json=<base64url request>` (large requests go to `inbox/<id>.json` with `?request=<id>`). The app writes `results/result-<id>.json` under `Library/Application Support/RailMapAppControl/` in its container: first `running`, then final. The CLI waits for the result matching its request ID and prints one JSON line. Exit codes: **0** ok, **2** rejected, **3** timeout, **4** failed, **1** tool/usage error.
+Transport (default `--transport poll`): the CLI writes `inbox/<id>.json` into the app's container, under `Library/Application Support/RailMapAppControl/`. The app's poller (every 0.4 s, running only when the app was started with `launch`, i.e. `RAILMAP_APP_CONTROL=1`) runs the request and writes `results/result-<id>.json`: first `running`, then final. The CLI waits for the result matching its request ID and prints one JSON line. Exit codes: **0** ok, **2** rejected, **3** timeout, **4** failed, **1** tool/usage error.
 
-| Target | Send | Read results |
-|---|---|---|
-| `sim` (default; iPhone 17 `0DBE2488-…`) | `simctl openurl` | `simctl get_app_container … data` |
-| `mac` | `open -g -a RailMap.app URL` | `~/Library/Application Support/RailMapAppControl` (the app is unsandboxed; the CLI also checks the sandbox container) |
-| `device` (default iPhone 16 Pro `00008140-000575142288801C`) | `devicectl device process openURL` | `devicectl device copy from --domain-type appDataContainer --domain-identifier com.JRM.RailMap`, about 1 s per poll |
+| Target | Write request / read result |
+|---|---|
+| `sim` (default; iPhone 17 `0DBE2488-…`) | files in `simctl get_app_container … data` |
+| `mac` | `~/Library/Application Support/RailMapAppControl` (the app is unsandboxed; the CLI also checks the sandbox container) |
+| `device` (default iPhone 16 Pro `00008140-000575142288801C`) | `devicectl device copy to/from --domain-type appDataContainer --domain-identifier com.JRM.RailMap`, about 1 s per poll. Requests are copied as `inbox/<id>.req`, and the app retries a file that does not decode yet (the copy is not atomic) |
 
-On a device, large requests are copied as `inbox/<id>.req`, which only the URL reads (the copy is not atomic). `--transport poll` writes only the inbox file. The app's poller picks it up (it runs when the app was started with `launch`) without opening a URL, so the app is not brought to the front.
+`--transport url|file` also opens `railmap-test://run?json=…` / `?request=<id>` (via `simctl openurl`, `open -g -a`, `devicectl device process openURL`). **iOS 26+ asks "Open in "RailMap"?" for every such URL** (seen on the simulator 2026-11-06), which needs a tap, so the URL is only a fallback for an app not started with `launch`.
 
 ## Safety rules
 
@@ -100,7 +100,7 @@ python3 -I ios/tools/app-control.py --target sim devtools hide
 
 ## Release check
 
-All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `RailSignpost` keeps the bare `OSSignpostIntervalState` in Release. The proof is `ios/tools/app-control/check-release-clean.sh RailMap.app`, which runs `strings` and demangled `nm` over the main binary and every embedded Mach-O, and checks the Info.plist, for 17 DEBUG-only markers. Its `--debug-sanity` mode checks that the markers really appear in a Debug build. The Release build is a heavy job, so coordinate it:
+All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `RailSignpost` keeps the bare `OSSignpostIntervalState` in Release. The proof is `ios/tools/app-control/check-release-clean.sh RailMap.app`, which runs `strings` and demangled `nm` over the main binary and every embedded Mach-O, and checks the Info.plist, for 15 DEBUG-only markers (type names and literals over 15 bytes; shorter Swift literals are stored inline, where `strings` cannot see them). Its `--debug-sanity` mode fails unless every marker is detected in a Debug build. The Release build is a heavy job, so coordinate it:
 
 ```sh
 python3 -I ios/tools/app-control.py --target sim --configuration Release build

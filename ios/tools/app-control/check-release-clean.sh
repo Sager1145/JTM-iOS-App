@@ -15,9 +15,10 @@ if [[ "${1:-}" == "--debug-sanity" ]]; then expect_present=true; shift; fi
 app=${1:-}
 [[ -d "$app" ]] || { echo "usage: $0 [--debug-sanity] RailMap.app" >&2; exit 2; }
 
-# Type names and strings that exist only in #if DEBUG code.
+# Type names (reflection metadata) and string literals longer than 15 bytes
+# (shorter Swift literals are stored inline in code, invisible to `strings`)
+# that exist only in #if DEBUG code. The URL scheme is checked in Info.plist.
 markers=(
-  railmap-test
   RailMapAppControl
   AppControlHost
   AppControlDispatcher
@@ -32,7 +33,6 @@ markers=(
   RAILMAP_DEVTOOLS
   RAILMAP_SIGNPOST_RECORDER
   appControlLastResult
-  devToolsBall
   devtools.storageOverride
 )
 
@@ -56,8 +56,15 @@ for bin in "${binaries[@]}"; do
 done
 
 if $expect_present; then
-  if (( ${#found[@]} == 0 )); then echo "debug-sanity FAILED: no developer markers in a Debug build" >&2; exit 1; fi
-  echo "debug-sanity ok: ${#found[@]} marker hits in Debug (${#binaries[@]} binaries scanned)"
+  # Every marker must be detectable in a Debug build, or it proves nothing in Release.
+  missing=()
+  for marker in "${markers[@]}"; do
+    printf '%s\n' "${found[@]}" | grep -qF -- ": $marker" || missing+=("$marker")
+  done
+  if (( ${#missing[@]} > 0 )); then
+    echo "debug-sanity FAILED: not detectable in Debug: ${missing[*]}" >&2; exit 1
+  fi
+  echo "debug-sanity ok: all ${#markers[@]} markers detected in Debug (${#binaries[@]} binaries scanned)"
   exit 0
 fi
 if (( ${#found[@]} > 0 )); then

@@ -116,16 +116,16 @@ final class AppControlHost: AppControlDriver {
     private func scanInbox() {
         let inbox = Self.folder(AppControl.inboxFolder)
         guard let names = try? FileManager.default.contentsOfDirectory(atPath: inbox.path) else { return }
-        for name in names.sorted() where name.hasSuffix(".json") {
-            readInbox(id: String(name.dropLast(5)))
+        for name in names.sorted() where name.hasSuffix(".json") || name.hasSuffix(".req") {
+            readInbox(id: String(name.prefix(upTo: name.lastIndex(of: ".")!)))
         }
     }
 
     private func readInbox(id: String) {
         guard AppControl.isValidRequestID(id) else { return }
         let inbox = Self.folder(AppControl.inboxFolder)
-        // `.req` is what the CLI copies to a device: the poller only scans
-        // `.json`, so a copy still in progress is read only when its URL arrives.
+        // `.req` is what the CLI copies to a device, where the copy is not
+        // atomic: a file that does not decode yet is left for the next scan.
         let candidates = [inbox.appending(path: "\(id).json"), inbox.appending(path: "\(id).req")]
         guard let file = candidates.first(where: { FileManager.default.fileExists(atPath: $0.path) }),
               let data = try? Data(contentsOf: file) else {
@@ -137,14 +137,20 @@ final class AppControlHost: AppControlDriver {
             }
             return
         }
-        try? FileManager.default.removeItem(at: file)
+        let request: AppControlRequest
         do {
-            var request = try JSONDecoder().decode(AppControlRequest.self, from: data)
-            if request.id != id { request.id = id }
-            enqueue(request)
+            request = try JSONDecoder().decode(AppControlRequest.self, from: data)
         } catch {
+            let modified = (try? file.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
+            if let modified, Date().timeIntervalSince(modified) < 15 { return }  // still arriving
+            try? FileManager.default.removeItem(at: file)
             write(failure(id: id, command: "", .invalidRequest(error.localizedDescription)))
+            return
         }
+        try? FileManager.default.removeItem(at: file)
+        var adopted = request
+        if adopted.id != id { adopted.id = id }
+        enqueue(adopted)
     }
 
     /// The developer panel's entry point: the same queue, dispatcher and
@@ -251,7 +257,8 @@ final class AppControlHost: AppControlDriver {
             return try await apply(spec, openTimings: timing, stores)
         case .editTrip(let id, let spec):
             var timing: AppControlJSON = ["openMs": 0]
-            if editor?.trainID != id || editor?.isNew == true || workspace?.editorState().open != true {
+            // An editor already open on this id (a saved trip, or the new draft `addTrip` returned) is edited in place.
+            if editor?.trainID != id || workspace?.editorState().open != true {
                 let train = try trip(id, stores)
                 timing = try await openEditor(JourneyEditorLaunch(train: train, isNew: false, originalID: train.id))
             }
@@ -282,7 +289,9 @@ final class AppControlHost: AppControlDriver {
         case .devtools(let action):
             return devtools(action)
         case .exportDiagnostics:
-            return try await DevDiagnostics.export(state: state(stores, includeTrips: true))
+            var snapshot = state(stores, includeTrips: true).object ?? [:]
+            snapshot["caches"] = await Task.detached(priority: .utility) { AppControlHost.caches() }.value
+            return try await DevDiagnostics.export(state: .object(snapshot))
         case .clearRouteCaches:
             return await clearRouteCaches()
         case .memoryWarning:
@@ -399,7 +408,14 @@ final class AppControlHost: AppControlDriver {
         ]
         if !choiceErrors.isEmpty { result["choiceErrors"] = .array(choiceErrors) }
         if spec.save {
-            result["save"] = try await saveEditor(confirmRemoval: spec.confirmRemoval, timeoutMs: 30_000, stores)
+            do {
+                result["save"] = try await saveEditor(confirmRemoval: spec.confirmRemoval, timeoutMs: 30_000, stores)
+            } catch let error as AppControlError {
+                // Keep the plan in the failure: it names the sections still to choose.
+                let pending = editor.snapshot().sections.filter { $0.candidates.count > 1 && $0.chosen == nil }
+                let hint = pending.map { "section \($0.index) \($0.from)→\($0.to): \($0.candidates.count) candidates" }
+                throw AppControlError.failed("\(error.description)\(hint.isEmpty ? "" : "; choose with sectionChoices (editTrip id=\(editor.trainID)): " + hint.joined(separator: ", "))")
+            }
         }
         return .object(result)
     }
@@ -491,7 +507,8 @@ final class AppControlHost: AppControlDriver {
 
     // MARK: state
 
-    func state(_ stores: Stores, includeTrips: Bool, includeCaches: Bool = true) -> AppControlJSON {
+    /// Cache sizes walk directories; only the diagnostics export asks for them (off the main actor).
+    func state(_ stores: Stores, includeTrips: Bool, includeCaches: Bool = false) -> AppControlJSON {
         let routes = stores.riddenRoutes
         let phase: String = switch routes.state {
         case .idle: "idle"
@@ -607,9 +624,9 @@ final class AppControlHost: AppControlDriver {
     func clearRouteCaches() async -> AppControlJSON {
         let routes = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
             ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
-        let bytes = Self.directorySize(routes)
-        try? FileManager.default.removeItem(at: routes)
-        await RiddenRouteStore.releaseCachesForMemoryPressure()
+        let bytes = await Task.detached(priority: .utility) { AppControlHost.directorySize(routes) }.value
+        // The store's own discard (disk cache, solved-journey memo, solver memos), as Reload all uses.
+        await RiddenRouteStore.discardSolvedRoutes()
         await EdgeIndexCache.shared.releaseForMemoryPressure()
         return ["removedDiskBytes": .number(Double(bytes)), "memory": Self.memory()]
     }

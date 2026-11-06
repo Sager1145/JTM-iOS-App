@@ -185,8 +185,8 @@ def send(a, request):
     if a.transport == "url" and len(encoded) < 3500:
         open_url(a, "{}://run?json={}".format(SCHEME, encoded))
     else:
-        # On a device the copy is not atomic: write `.req`, which only the URL (not the poller) reads.
-        suffix = "req" if a.target == "device" and a.transport != "poll" else "json"
+        # A device copy is not atomic: `.req` tells the app to retry a file that does not decode yet.
+        suffix = "req" if a.target == "device" else "json"
         write_container_file(a, "inbox/{}.{}".format(rid, suffix), payload)
         if a.transport != "poll":
             open_url(a, "{}://run?request={}".format(SCHEME, rid))
@@ -383,8 +383,10 @@ def main():
     ap.add_argument("--app", help="built RailMap.app (default: " + str(DERIVED) + "/Build/Products/<config>)")
     ap.add_argument("--timeout", type=float, default=None,
                     help="seconds to wait for a result (default per command, at least the app's own timeout)")
-    ap.add_argument("--transport", choices=["url", "file", "poll"], default="url",
-                    help="url: inline URL (file+URL when large); file: inbox file + URL; poll: inbox file only")
+    ap.add_argument("--transport", choices=["poll", "url", "file"], default="poll",
+                    help="poll (default): inbox file, picked up by the app's poller (needs `launch`); "
+                         "url / file: also open a railmap-test:// URL, which iOS 26+ confirms with an "
+                         "'Open in RailMap?' prompt that needs a tap")
     ap.add_argument("--json", help="extra args as one JSON object")
     ap.add_argument("--storage", help="launch: isolated storage UUID or 'new' (default new)")
     ap.add_argument("--env", action="append", help="launch: extra KEY=VALUE for the app")

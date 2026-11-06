@@ -535,6 +535,22 @@ public struct AppControlResult: Codable, Equatable, Sendable {
     public var storageID: String?
     public var processID: Int32
     public var data: AppControlJSON?
+
+    public init(
+        id: String, command: String, status: Status, error: String?, startedAt: String,
+        finishedAt: String?, elapsedMs: Double?, storageID: String?, processID: Int32, data: AppControlJSON?
+    ) {
+        self.id = id
+        self.command = command
+        self.status = status
+        self.error = error
+        self.startedAt = startedAt
+        self.finishedAt = finishedAt
+        self.elapsedMs = elapsedMs
+        self.storageID = storageID
+        self.processID = processID
+        self.data = data
+    }
 }
 
 /// Performs one parsed command through the app's own stores and views.

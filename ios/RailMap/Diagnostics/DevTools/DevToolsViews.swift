@@ -237,6 +237,7 @@ private struct TriggersPage: View {
             Button("Switch and quit") {
                 DevStorage.setOverride(UUID().uuidString)
                 DevStorage.setPendingCommand(AppControlRequest(id: "dev-pending-\(UUID().uuidString.prefix(8))", command: "loadSamples"))
+                UserDefaults.standard.synchronize()  // flush before the hard exit
                 exit(0)
             }
             Button("Cancel", role: .cancel) {}
@@ -419,7 +420,10 @@ private struct ToolsPage: View {
             .buttonStyle(.bordered)
         }
         .alert("Restart to switch stores", isPresented: Binding(get: { relaunch != nil }, set: { if !$0 { relaunch = nil } })) {
-            Button("Quit now") { exit(0) }
+            Button("Quit now") {
+                UserDefaults.standard.synchronize()  // flush before the hard exit
+                exit(0)
+            }
             Button("Later", role: .cancel) {}
         } message: {
             Text((relaunch ?? "") + " The stores are built once at launch, so the app has to be reopened.")

@@ -82,6 +82,9 @@ final class DevToolsController {
     func setVisible(_ visible: Bool) {
         isVisible = visible
         if visible { attachIfNeeded() }
+        if !visible, let window, window.isKeyWindow {
+            window.windowScene?.windows.first(where: { $0 !== window && !$0.isHidden })?.makeKey()
+        }
         window?.isHidden = !visible
         updateSampling()
     }
