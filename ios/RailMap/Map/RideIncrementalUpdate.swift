@@ -23,7 +23,7 @@ struct RideDeckState {
 
     private(set) var ids: [String] = []
     private(set) var digests: [String: Int] = [:]
-    private(set) var deckDigest: Int = RideDeckState.deckDigest(ids: [], digests: [:])
+    private(set) var deckDigest: Int = RideDeckState.deckDigest(positional: [])
 
     /// The deck `rides` would be, and how it differs from this one.
     func advanced(to rides: [RiddenRouteStore.DrawnRide]) -> (next: RideDeckState, change: Change) {
@@ -31,12 +31,16 @@ struct RideDeckState {
         next.ids = rides.map(\.id)
         var digests: [String: Int] = [:]
         digests.reserveCapacity(rides.count)
+        var positional: [Int] = []
+        positional.reserveCapacity(rides.count)
         var ambiguous = false
         for ride in rides {
-            if digests.updateValue(Self.rideDigest(ride), forKey: ride.id) != nil { ambiguous = true }
+            let digest = Self.rideDigest(ride)
+            positional.append(digest)
+            if digests.updateValue(digest, forKey: ride.id) != nil { ambiguous = true }
         }
         next.digests = digests
-        next.deckDigest = Self.deckDigest(ids: next.ids, digests: digests)
+        next.deckDigest = Self.deckDigest(positional: positional)
         var changed: Set<String> = []
         for (id, digest) in digests where self.digests[id] != digest { changed.insert(id) }
         for id in self.digests.keys where digests[id] == nil { changed.insert(id) }
@@ -79,10 +83,14 @@ struct RideDeckState {
         return hasher.finalize()
     }
 
-    private static func deckDigest(ids: [String], digests: [String: Int]) -> Int {
+    /// Each ride's own digest in deck order. Not looked up by id: with a
+    /// duplicate id every position would read the last ride's digest, and a
+    /// change to an earlier duplicate would leave the deck digest — and the
+    /// marker caches keyed on it — unchanged.
+    private static func deckDigest(positional: [Int]) -> Int {
         var hasher = Hasher()
-        hasher.combine(ids.count)
-        for id in ids { hasher.combine(digests[id]) }
+        hasher.combine(positional.count)
+        for digest in positional { hasher.combine(digest) }
         return hasher.finalize()
     }
 }
