@@ -434,12 +434,13 @@ struct StationDisplayParityTests {
             ("jp-東日本旅客鉄道-東北線-2:003766", "jp-東日本旅客鉄道-東海道線:003766"),
             ("jp-東日本旅客鉄道-総武線-3:003766", "jp-東日本旅客鉄道-総武線:003766"),
         ]
-        // The historical fixture counted Shinagawa Sobu as a shared circle.
-        // This repair restores exactly that one circle; Tokyo aliases below
-        // still account for the remaining difference from logical row count.
-        let restoredShinagawaCircles = 1
+        // Drawable circles: logical rows minus same-coordinate circle aliases
+        // (the Tokyo pair below). Shinagawa Sobu-3 004095 is no longer an
+        // alias of the Tokaido circle (its owner declaration was dropped and
+        // it carries its own display anchor), and the regenerated fixture's
+        // JavaScript count already includes that restored circle.
         #expect(network.stations.count - network.circleAliasStationIDs.count
-            == japan.stationCount + restoredShinagawaCircles)
+            == japan.stationCount)
         for entry in fixture.packages where entry.country != "jp" {
             #expect(try Self.network(entry).stations.count == entry.stationCount)
         }
@@ -477,7 +478,12 @@ struct StationDisplayParityTests {
         #expect(sobu.coordinate != surface.coordinate)
         let sourceSobu = try #require(currentCompact.lines.first { $0.id == sobuID })
         let sourceStation = try #require(sourceSobu.stations.first { $0.id == "004095" })
-        #expect(sobu.coordinate == sourceStation.coordinate)
+        // The reviewed shinagawa-normal-passenger-pair stage (2026-10-11) gives
+        // Sobu-3's 004095 a display anchor; the physical point is unchanged and
+        // station circles sit at the display coordinate.
+        #expect(sourceStation.coordinate == Coordinate(lon: 139.739427, lat: 35.629035))
+        #expect(sobu.coordinate == sourceSobu.displayCoordinate(for: sourceStation))
+        #expect(sobu.coordinate == Coordinate(lon: 139.73965305042694, lat: 35.629035))
         #expect(sobu.stationGroupID == surface.stationGroupID)
         #expect(current.groupMembers(ofStationID: sobuStationID) == current.groupMembers(ofStationID: surfaceStationID))
         let sobuPopup = StationDisplay.buildPopupModel(network: current, stationID: sobuStationID)
@@ -911,7 +917,7 @@ struct StationDisplayParityTests {
         // Removing unsupported untimed passes removed 963 marker records.
         // Sakura770's reviewed Shin-Iwakuni stop-to-pass correction replaces
         // two stop markers with one pass; exact JavaScript comparisons remain.
-        #expect(totalRecords == 3119, "3,119 marker records, got \(totalRecords)")
+        #expect(totalRecords == 3118, "3,118 marker records, got \(totalRecords)")
         // Two fifths of them: a station reached by several trains ships one
         // record per train and one of those wins, and every intermediate stop
         // also ships a stop-center that can never win at all.

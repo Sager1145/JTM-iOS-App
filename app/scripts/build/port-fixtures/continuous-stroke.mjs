@@ -1028,10 +1028,31 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
   addSlice(trunkIndex, trunkHi, trunkLo); // reversed, whole part
   addSlice(trunkIndex, trunkLo - 1e6, trunkHi + 1e6); // clamped beyond both ends
 
-  const filletIndex = findCase("right angle on a station anchor: rounded through the anchor by an arc, the bead stays on the line");
-  const filletMeasures = cases[filletIndex].expected.measures;
-  addSlice(filletIndex, filletMeasures[2], filletMeasures[6]); // inside a fillet's curve
-  addSlice(filletIndex, filletMeasures[6], filletMeasures[2]); // reversed, inside a fillet
+  // The fillet span is read from the built stroke, not from fixed indices:
+  // the arc is the one maximal run of turning vertices (the tangent points
+  // and every sample between them), and the slice takes the vertices
+  // strictly inside it, so both ends land on the curve itself. The right-
+  // angle anchor case this used to read stopped filleting once the kernel
+  // kept surveyed right angles sharp (both ports emit its five input
+  // vertices), so the 30 degree anchor arc carries the coverage now.
+  const filletIndex = findCase("30 degree turn on a station anchor: rounded through the anchor by an arc, the bead stays on the line");
+  const filletStroke = cases[filletIndex].expected;
+  const filletMeasures = filletStroke.measures;
+  const turning = [];
+  for (let i = 1; i + 1 < filletStroke.points.length; i++) {
+    const [a, b, c] = [filletStroke.points[i - 1], filletStroke.points[i], filletStroke.points[i + 1]];
+    const turn = Math.abs(Math.atan2(
+      (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]),
+      (b[0] - a[0]) * (c[0] - b[0]) + (b[1] - a[1]) * (c[1] - b[1])));
+    if (turn > 1e-9) turning.push(i);
+  }
+  const arcFirst = turning[0];
+  const arcLast = turning.at(-1);
+  if (!turning.length || arcLast - arcFirst + 1 !== turning.length || arcLast - arcFirst < 4
+      || !(filletMeasures[arcFirst + 1] < filletMeasures[arcLast - 1]))
+    throw new Error(`continuous-stroke fixture: no fillet curve to slice in ${cases[filletIndex].note}`);
+  addSlice(filletIndex, filletMeasures[arcFirst + 1], filletMeasures[arcLast - 1]); // inside a fillet's curve
+  addSlice(filletIndex, filletMeasures[arcLast - 1], filletMeasures[arcFirst + 1]); // reversed, inside a fillet
 
   const jogIndex = findCase("seam jog: a 30 m sideways step is tapered over 150 m either side");
   addSlice(jogIndex, 400, 600); // across a taper window

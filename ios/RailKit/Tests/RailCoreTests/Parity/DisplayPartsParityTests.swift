@@ -346,7 +346,7 @@ struct DisplayPartsParityTests {
             contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
         let cases: [(id: String, interval: Int, extent: Coordinate, counts: [Int])] = [
             ("jp-九州旅客鉄道-肥薩線", 15, Coordinate(lon: 130.78504, lat: 32.16386), [8, 1551, 9, 1171]),
-            ("jp-西日本旅客鉄道-木次線", 14, Coordinate(lon: 133.11333, lat: 35.10687), [8, 1573, 525])
+            ("jp-西日本旅客鉄道-木次線", 14, Coordinate(lon: 133.11333, lat: 35.10687), [8, 1598, 530])
         ]
         for item in cases {
             let line = try #require(loaded.package.lines.first { $0.id == item.id })
