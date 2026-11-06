@@ -127,7 +127,7 @@ This is the wave most likely to conflict with in-flight tooling work, so it land
   - `docs/ui-reorganization.md` and `docs/screenshots/ui-reorganization/`. These are pass records; update the inbound comment mentions in ShareComposer, PrimaryTab and SettingsView, comments only.
   - `docs/sample-trips-verification.md`. It has no inbound links.
 - **Archive.** `ios/refactor-parallel/*.md` (6 dated 2026-10-10 coordination notes) and the two `docs/reference/apple-ui-*-20261013.md` files they cite go to `docs/maintenance/archive/2026-10-refactor/`. Update the links in README.md, README.zh-CN.md, docs/README.md, docs/repository-organization.md, ios/docs/source-structure.md and ThroughWorkbench/REPAIR_LEDGER.md.
-- **Broken links.** Fix the ~25 links to `docs/reports/`: point them at the evidence-drive note in `railway-evidence/README.md`, or drop the link and keep the text. Fix the other dead paths the link check found. The list is in the session notes (`lc.py`).
+- **Broken links.** Fix the ~25 links to `docs/reports/`: point them at the evidence-drive note in `railway-evidence/README.md`, or drop the link and keep the text. Fix the other dead paths the link check found. The list and the checker are in the side-session notes folder `codebase-cleanup/` (`scout-docs.md`, `lc.py`); rerun `lc.py` at execution time.
 - **Rewrite** the layout and taxonomy tables in `docs/repository-organization.md` to match the post-wave tree. Drop `docs/reports/*`, the three deleted `ios/*PROMPT*.md` paths, `ios/source-backups/` and `ios/sync-conflicts/`.
 - **Consolidate** `docs/architecture/feature-interface-audit.md` with `ios/docs/reviews/feature-interface-audit-2026-10-15.md`. Keep the newer one, and leave a one-line pointer in place of the other.
 
