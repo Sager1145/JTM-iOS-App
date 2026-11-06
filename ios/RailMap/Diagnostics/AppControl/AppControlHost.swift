@@ -547,6 +547,22 @@ final class AppControlHost: AppControlDriver {
                     ]
                 } ?? .null,
                 "networkLines": .number(Double(stores.network.lines.count)),
+                "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
+                    [
+                        "drawn": .number(Double(dots.drawn)), "stations": .number(Double(dots.stations)),
+                        "overlayStations": .number(Double(dots.overlayStations)),
+                    ]
+                } ?? .null,
+                "matching": [
+                    "runs": .number(Double(MapRenderProbe.matchingRuns)),
+                    "skipped": .number(Double(MapRenderProbe.matchingSkipped)),
+                    "deferred": .number(Double(MapRenderProbe.matchingDeferred)),
+                ],
+                "geometryWait": [
+                    "count": .number(Double(MapRenderProbe.geometryWaits)),
+                    "lastMs": .number(Double(MapRenderProbe.lastGeometryWaitMilliseconds)),
+                    "maxMs": .number(Double(MapRenderProbe.maxGeometryWaitMilliseconds)),
+                ],
             ],
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),
