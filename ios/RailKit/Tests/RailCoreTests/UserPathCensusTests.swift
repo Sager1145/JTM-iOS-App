@@ -887,7 +887,10 @@ struct UserPathCensusTests {
         }
         // (d) across section joins.
         for (later, join) in sequence.joins {
-            guard let previous = selections[later - 1], let next = selections[later],
+            // Only solved-to-solved joins are checkable against selections.
+            guard sequence.sections.first(where: { $0.sectionIndex == later - 1 })?.source == .solved,
+                  sequence.sections.first(where: { $0.sectionIndex == later })?.source == .solved,
+                  let previous = selections[later - 1], let next = selections[later],
                   let a = previous.intervals.last?.lineID, let b = next.intervals.first?.lineID,
                   a != b, through(a, b, previous.toStationCode),
                   !sameNameOtherOperator(line(a, in: previous), line(b, in: next)) else { continue }

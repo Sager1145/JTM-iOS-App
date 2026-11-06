@@ -141,7 +141,7 @@ public struct RiddenLineSequence: Equatable, Sendable {
                 return .operatorChange
             }
             if let from = a.lineID, let to = b.lineID, let station, let continuations {
-                let codes = Set(continuations(from, to, station, date) + continuations(to, from, station, date))
+                let codes = Set(continuations(from, to, station, date))
                 if !codes.isEmpty { return .throughService(codes.sorted()) }
             }
             return .lineChange
@@ -177,7 +177,9 @@ public struct RiddenLineSequence: Equatable, Sendable {
             let operators = section.operatorNames ?? []
             return names.enumerated().compactMap { offset, name in
                 guard !name.isEmpty else { return nil }
-                let lineID = ids.count == names.count ? ids[offset] : nil
+                // The name and id arrays are not parallel (ids are stored sorted), so an
+                // id is attached only when unambiguous: one name, one id.
+                let lineID = names.count == 1 && ids.count == 1 ? ids[0] : nil
                 let operatorName = operators.count == names.count ? operators[offset]
                     : operators.count == 1 ? operators[0] : nil
                 return (line: Line(lineID: lineID?.isEmpty == false ? lineID : nil, name: name,

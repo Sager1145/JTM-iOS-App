@@ -593,9 +593,12 @@ struct JourneyEditorView: View {
     }
 
     @ViewBuilder private var recordRouteRows: some View {
-        let lines = (draft.routeSections ?? []).compactMap { $0.lineNames?.first }
+        // Same derivation as ride detail over the recorded sections (no solve
+        // in the editor). Policy-only names keep the "Saved route" caption.
+        let sequence = RiddenLineSequence(train: draft, continuations: nil)
+        let lines = sequence.sections.contains { $0.source == .recorded } ? JourneyLineText.summary(sequence) : ""
         VStack(alignment: .leading, spacing: 4) {
-            Text(lines.isEmpty ? text("savedRoute", fallback: "Saved route") : uniqued(lines).joined(separator: " · "))
+            Text(lines.isEmpty ? text("savedRoute", fallback: "Saved route") : lines)
                 .font(.body.weight(.semibold))
             Text(text("stationCount", fallback: "{count} stations",
                       ["count": .string(String(draft.stops.count))]))
@@ -665,11 +668,6 @@ struct JourneyEditorView: View {
     private func visitName(_ id: UUID) -> String {
         guard let stop = draft.stops.first(where: { $0.routeEditing?.visitID == id }) else { return "" }
         return localization.stationName(stop.name, code: stop.n02StationCode, region: region)
-    }
-
-    private func uniqued(_ values: [String]) -> [String] {
-        var seen: Set<String> = []
-        return values.filter { !$0.isEmpty && seen.insert($0).inserted }
     }
 
     // MARK: - map

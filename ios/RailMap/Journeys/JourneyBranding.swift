@@ -56,14 +56,6 @@ enum JourneyBranding {
         return badges?.passengerName(region: region, operatorName: line.operatorName, lineName: name) ?? name
     }
 
-    /// Shown line names in travel order, from the ridden line sequence.
-    static func lineNames(
-        of sequence: RiddenLineSequence, train: Train, badges: RouteBadgeIndex?
-    ) -> [String] {
-        let region = Region.resolved(train).code
-        return JourneyRouteIdentity.lineNames(of: sequence) { lineLabel($0, region: region, badges: badges) }
-    }
-
     /// The operators this journey ran under, spelled the way the source
     /// spells them.
     ///

@@ -443,7 +443,10 @@ struct RideDetailContent: View {
     private func timelineCard(_ detail: JourneyDetailSnapshot) -> some View {
         let sequence = lineSequence
         let lastInterval = train.stops.count - 2
-        let intervals = lastInterval < 0 ? [] : (0...lastInterval).map { timelineLines(sequence.stopInterval($0)) }
+        let solvedIDs = Set(sequence.resolvedLineIDs)
+        let intervals = lastInterval < 0 ? [] : (0...lastInterval).map {
+            timelineLines(sequence.stopInterval($0), solvedIDs: solvedIDs)
+        }
         // Deferring the card alone still lays out every stop when it appears.
         return LazyVStack(alignment: .leading, spacing: 0) {
             Text(localization.countryText("sec.stops", fallback: "Stops"))
@@ -701,15 +704,21 @@ struct RideDetailContent: View {
     /// interval that runs through several lines (東横線 → みなとみらい線)
     /// keeps the existing one-stripe-and-label-per-line layout, in run order.
     private func timelineLines(
-        _ runs: (runs: [RiddenLineSequence.Line], boundaries: [RiddenLineSequence.Boundary])
+        _ runs: (runs: [RiddenLineSequence.Line], boundaries: [RiddenLineSequence.Boundary]),
+        solvedIDs: Set<String>
     ) -> [(name: String, color: Color)] {
         let region = detailRegion.code
         let dark = colorScheme == .dark
-        return JourneyLineText.folded(runs) {
+                return JourneyLineText.folded(runs) {
             JourneyBranding.lineLabel($0, region: region, badges: network?.badges)
         }.map { shown in
             let line = shown.line
-            let colorHex = line.lineID.flatMap { network?.badges.color(lineID: $0, dark: dark) }
+            // A line id from a solved route is trusted; a recorded run's id
+            // only when the package names it the same as the run.
+            let trustedID = line.lineID.flatMap {
+                solvedIDs.contains($0) || network?.badges.lineName(lineID: $0) == line.name ? $0 : nil
+            }
+            let colorHex = trustedID.flatMap { network?.badges.color(lineID: $0, dark: dark) }
                 ?? line.operatorName.flatMap {
                     network?.badges.color(region: region, operatorName: $0, lineName: line.name, dark: dark)
                 }

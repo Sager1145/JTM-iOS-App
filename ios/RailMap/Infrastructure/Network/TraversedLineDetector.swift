@@ -54,6 +54,9 @@ final class TraversedLineDetector {
         let train: Train
         let digest: Int?
         let sectionLines: [Int: [Statistics.TraversedLine]]?
+        let detected: [Statistics.TraversedLine]?
+        let expectedSections: [RouteSection]?
+        let authoritative: Bool?
         let settled: Bool
         let sequence: RiddenLineSequence
     }
@@ -65,32 +68,56 @@ final class TraversedLineDetector {
     func lineSequence(for train: Train) -> RiddenLineSequence {
         let ride = ridesByID[train.id]
         let geometry = sectionLinesByTrainID[train.id]
+        let detected = linesByTrainID[train.id]
         let settled = ride.map { !$0.needsLineDetection || cache[train.id] != nil } ?? false
         if let memo = sequenceMemo[train.id], memo.train == train, memo.digest == ride?.geometryDigest,
-           memo.sectionLines == geometry, memo.settled == settled {
+           memo.sectionLines == geometry, memo.detected == detected,
+           memo.expectedSections == ride?.expectedSections,
+           memo.authoritative == ride?.indicesAreAuthoritative, memo.settled == settled {
             return memo.sequence
         }
         let sequence: RiddenLineSequence
         if let ride, ride.indicesAreAuthoritative {
             let stops = ride.stops
-            sequence = RiddenLineSequence(
-                train: train,
-                sections: ride.expectedSections.isEmpty ? nil : ride.expectedSections,
-                selections: RiddenLineSequence.selections(
-                    ride.segments.map { (segmentIndex: $0.segmentIndex, selection: $0.physicalRoute) }),
-                drawnSections: Set(ride.segments.map(\.segmentIndex)),
-                gaps: ride.physicalGaps,
-                geometryLines: geometry ?? [:],
-                solveSettled: settled,
-                stationName: { code in stops.first { $0.n02StationCode == code }?.name })
+            let recordedCount = train.routeSections?.count ?? 0
+            // Sections solved for a different train (stops or section count
+            // changed) say nothing about this one: recorded-only until the
+            // re-solve arrives.
+            let current = ride.stops.map(\.n02StationCode) == train.stops.map(\.n02StationCode)
+                && (ride.expectedSections.isEmpty || ride.expectedSections.count == recordedCount)
+            if current {
+                sequence = RiddenLineSequence(
+                    train: train,
+                    sections: ride.expectedSections.isEmpty ? nil : ride.expectedSections,
+                    selections: RiddenLineSequence.selections(
+                        ride.segments.map { (segmentIndex: $0.segmentIndex, selection: $0.physicalRoute) }),
+                    drawnSections: Set(ride.segments.map(\.segmentIndex)),
+                    gaps: ride.physicalGaps,
+                    geometryLines: geometry ?? [:],
+                    solveSettled: settled,
+                    stationName: { code in stops.first { $0.n02StationCode == code }?.name })
+            } else {
+                sequence = RiddenLineSequence(train: train, sections: nil, solveSettled: settled)
+            }
         } else {
             // Positional (non-authoritative) indices say nothing about which
-            // section a stroke belongs to, so only the record speaks.
-            sequence = RiddenLineSequence(train: train, solveSettled: ride != nil)
+            // section a stroke belongs to, so only the record speaks. When the
+            // record names nothing, the train-level detected lines stand in as
+            // geometry lines of one section, so the physical lines and
+            // operators the ride showed before are not lost.
+            let recorded = RiddenLineSequence(train: train, solveSettled: ride != nil)
+            if recorded.summary.runs.isEmpty, let detected, !detected.isEmpty,
+               (train.routeSections?.count ?? 0) >= 1 {
+                sequence = RiddenLineSequence(
+                    train: train, drawnSections: [0], geometryLines: [0: detected], solveSettled: ride != nil)
+            } else {
+                sequence = recorded
+            }
         }
         sequenceMemo[train.id] = SequenceMemo(
-            train: train, digest: ride?.geometryDigest, sectionLines: geometry, settled: settled,
-            sequence: sequence)
+            train: train, digest: ride?.geometryDigest, sectionLines: geometry, detected: detected,
+            expectedSections: ride?.expectedSections, authoritative: ride?.indicesAreAuthoritative,
+            settled: settled, sequence: sequence)
         return sequence
     }
 
@@ -128,7 +155,8 @@ final class TraversedLineDetector {
         liveIDs = ids
         retainCountries(for: rides)
         cache = cache.filter { ids.contains($0.key) }
-        sequenceMemo = sequenceMemo.filter { ids.contains($0.key) }
+        // Every id here is (re)published below: its memo is stale.
+        sequenceMemo = [:]
         var lines: [String: [Statistics.TraversedLine]] = [:]
         var sectionLines: [String: [Int: [Statistics.TraversedLine]]] = [:]
         for ride in rides {
@@ -179,7 +207,8 @@ final class TraversedLineDetector {
         liveIDs = ids
         retainCountries(for: rides)
         cache = cache.filter { ids.contains($0.key) }
-        sequenceMemo = sequenceMemo.filter { ids.contains($0.key) }
+        // Every id here is (re)published below: its memo is stale.
+        sequenceMemo = [:]
         ridesByID = Dictionary(rides.map { ($0.id, $0) }, uniquingKeysWith: { _, last in last })
 
         var stale: [RiddenRouteStore.DrawnRide] = []
@@ -268,9 +297,17 @@ final class TraversedLineDetector {
                         let lines = Statistics.traversedLines(edges: entry.edges, index: index)
                         if !lines.isEmpty { sectionLines[sectionIndex] = lines }
                     }
+                    let whole = Statistics.traversedLines(edges: edges, index: index)
+                    // A section's own floor is a fraction of that section; keep
+                    // only lines that also clear the whole ride's threshold.
+                    let wholeNames = Set(whole.map { TrainServiceBranding.canonicalLineName($0.name) })
+                    sectionLines = sectionLines.compactMapValues { lines in
+                        let kept = lines.filter { wholeNames.contains(TrainServiceBranding.canonicalLineName($0.name)) }
+                        return kept.isEmpty ? nil : kept
+                    }
                     let selected = Self.selectedLines(ride)
                     let names = Set(selected.map { TrainServiceBranding.canonicalLineName($0.name) })
-                    let lines = selected + Statistics.traversedLines(edges: edges, index: index)
+                    let lines = selected + whole
                         .filter { !names.contains(TrainServiceBranding.canonicalLineName($0.name)) }
                     fresh[ride.id] = (Self.detectionDigest(ride), lines, sectionLines)
                 }

@@ -35,21 +35,6 @@ public enum JourneyLineText {
         return stations.isEmpty ? names : names + " (" + stations.joined(separator: "・") + ")"
     }
 
-    /// First and last line: 「東北新幹線 → 北海道新幹線」, every line when
-    /// there are at most three, else 「first → … → last」.
-    public static func compact(_ sequence: RiddenLineSequence, naming: Naming = defaultNaming) -> String {
-        let names = folded(sequence.summary, naming: naming).map(\.name)
-        guard names.count > 3, let first = names.first, let last = names.last else {
-            return names.joined(separator: separator)
-        }
-        return [first, "…", last].joined(separator: separator)
-    }
-
-    /// Number of distinct shown runs in the summary (after folding).
-    public static func lineCount(_ sequence: RiddenLineSequence, naming: Naming = defaultNaming) -> Int {
-        folded(sequence.summary, naming: naming).count
-    }
-
     /// The boundary's station name, e.g. 「横浜」; nil when unknown.
     public static func boundaryText(_ boundary: RiddenLineSequence.Boundary) -> String? {
         guard let name = boundary.stationName?.trimmingCharacters(in: .whitespacesAndNewlines),
