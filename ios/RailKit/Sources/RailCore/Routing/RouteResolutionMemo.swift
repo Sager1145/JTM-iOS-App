@@ -165,6 +165,16 @@ public final class RouteResolutionMemo: @unchecked Sendable {
         cost += entryCost
     }
 
+    /// Forgets every retained result. Results are pure functions of the
+    /// owning snapshot, so later calls recompute identical values.
+    public func removeAll() {
+        lock.lock()
+        defer { lock.unlock() }
+        entries.removeAll()
+        order.removeAll()
+        cost = 0
+    }
+
     // Available to focused regression tests without exposing mutable storage.
     var retainedEntryCount: Int {
         lock.lock()
