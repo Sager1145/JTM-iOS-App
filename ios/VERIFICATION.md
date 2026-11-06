@@ -93,7 +93,7 @@ a lighter process only where their scope needs one. Their proposals live in
 
 What follows is the deleted 1,055-line umbrella. `bash ios/verify.sh` does not
 run it. The living entry is the opt-in dispatcher above, which forwards one
-module to `ios/tools/verification/{swift,build,route,alignment}.sh`. It has no
+module to `ios/tools/verification/{swift,build,diagnostic}.sh`. It has no
 `native` mode. Do not treat the stages below as a gate that still runs.
 
 Modes the umbrella accepted: everything (default), `--swift`, `--core`, `--js`, `--app`,

@@ -33,7 +33,8 @@ gh release download north-america-backup-2026-10-03 --repo Sager1145/JTM-iOS-App
 shasum -a 256 /path/to/offline-backup/north-america-2026-10-03.tar.gz
 # Compare to the SHA-256 above before extracting.
 tar -xzf /path/to/offline-backup/north-america-2026-10-03.tar.gz -C /path/to/offline-backup
-python3 ios/tools/verify-north-america-archive.py --archive /path/to/offline-backup/2026-10-03
+# A separate archive verifier (ios/tools/verify-north-america-archive.py) is not in
+# this repository; the SHA-256 check above is the integrity check.
 ```
 
 The package preserves 1,002 payloads (1,219,923,843 bytes) plus the README and

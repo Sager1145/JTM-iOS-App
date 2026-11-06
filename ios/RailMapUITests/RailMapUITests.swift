@@ -590,8 +590,10 @@ final class RailMapUITests: XCTestCase {
     }
 
     /// This test is intentionally skipped unless the simulator's real system
-    /// setting is enabled. Run `ios/tools/verify-reduce-motion-ui.sh` to set
-    /// and restore that setting around this test; an app-only launch variable
+    /// setting is enabled. Set it with `xcrun simctl spawn booted defaults write
+    /// com.apple.Accessibility ReduceMotionEnabled -bool true` and restore it
+    /// afterwards (the retired helper is `git show 75031837:ios/tools/verify-reduce-motion-ui.sh`);
+    /// an app-only launch variable
     /// cannot change SwiftUI's read-only accessibility environment.
     func testSystemReduceMotionPathRemainsReachable() throws {
         let app = launch(
@@ -602,7 +604,7 @@ final class RailMapUITests: XCTestCase {
         let systemState = header.value as? String
         try XCTSkipUnless(
             systemState == "enabled",
-            "System Reduce Motion is disabled; run ios/tools/verify-reduce-motion-ui.sh.")
+            "System Reduce Motion is disabled; enable it on the simulator first.")
 
         XCTAssertTrue(element("journeySearchField", in: app).waitForExistence(timeout: 8))
     }
