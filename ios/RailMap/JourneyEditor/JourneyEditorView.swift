@@ -1857,7 +1857,9 @@ struct JourneyEditorView: View {
             }
         case .disconnected(let junctions):
             VStack(alignment: .leading, spacing: 8) {
-                routeError(disconnectedMessage(junctions))
+                if !routeErrorCoveredByNotice {
+                    routeError(disconnectedMessage(junctions))
+                }
                 Text(text("continueAnywayExplanation",
                           fallback: "Treat the listed stations as through-running connections."))
                     .font(.caption).foregroundStyle(.secondary)
@@ -1867,9 +1869,11 @@ struct JourneyEditorView: View {
                 .accessibilityIdentifier("newTripContinueAnyway")
             }
         case .noRoute:
-            routeError(text(
-                "noRoute",
-                fallback: "No rail connection between these stations."))
+            if !routeErrorCoveredByNotice {
+                routeError(text(
+                    "noRoute",
+                    fallback: "No rail connection between these stations."))
+            }
         case .noCompanyRoute(let name):
             routeError(text(
                 "noCompanyRoute",
@@ -1884,16 +1888,42 @@ struct JourneyEditorView: View {
         }
     }
 
-    private enum HistoricalNotice { case info, warning }
+    enum HistoricalNotice { case info, warning }
 
     private func historicalNotice(for section: PlannedSection) -> HistoricalNotice? {
-        if let id = choice(for: section), section.historical.contains(id) { return .info }
+        Self.historicalNotice(for: section, choice: choice(for: section))
+    }
+
+    static func historicalNotice(for section: PlannedSection, choice: String?) -> HistoricalNotice? {
+        if let id = choice, section.historical.contains(id) { return .info }
         if section.historicalProbe == .historicalOnly { return .info }
         switch section.outcome {
         case .noRoute, .disconnected:
             return section.historicalProbe == PlannedSection.HistoricalProbe.none ? .warning : nil
         default: return nil
         }
+    }
+
+    /// The first failed section sets the trip's outcome (`rejoin`). When that
+    /// section shows a historical notice, the red noRoute/disconnected error
+    /// would contradict it ("closed line") or repeat it ("no line on this
+    /// date"), so only the notice is shown.
+    static func routeErrorCoveredByNotice(
+        _ sections: [PlannedSection], choice: (PlannedSection) -> String?
+    ) -> Bool {
+        guard let failed = sections.first(where: {
+            if case .corridors = $0.outcome { return false }
+            return true
+        }) else { return false }
+        switch failed.outcome {
+        case .noRoute, .disconnected: return historicalNotice(for: failed, choice: choice(failed)) != nil
+        default: return false
+        }
+    }
+
+    private var routeErrorCoveredByNotice: Bool {
+        plannedIdentity == routeIdentity
+            && Self.routeErrorCoveredByNotice(sections) { choice(for: $0) }
     }
 
     /// One per-section notice row: closed-line notices while planning, and
