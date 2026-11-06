@@ -107,9 +107,18 @@ final class NewTripUITests: XCTestCase {
         add(active)
 
         NewTripTimetableTestSupport.setDeparture(month: "May", day: 29, year: 2015, in: app)
-        let error = app.descendants(matching: .any)["newTripRouteError"]
-        XCTAssertTrue(reveal(error, in: app, timeout: 40), routeState(app))
-        XCTAssertTrue(error.label.contains("not connected"), error.label)
+        // The red route error is hidden under the historical notice (599139d54).
+        let notice = app.descendants(matching: .any)["newTripHistoricalNotice-0"].firstMatch
+        let noticeShown = reveal(notice, in: app, timeout: 40)
+        if !noticeShown {
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "senseki-tohoku-2015-05-29-no-notice"
+            tree.lifetime = .keepAlways
+            add(tree)
+        }
+        XCTAssertTrue(noticeShown, routeState(app) + "\n" + app.debugDescription)
+        XCTAssertFalse(app.descendants(matching: .any)["newTripRouteError"].firstMatch.exists,
+                       "The route error must stay hidden under the historical notice.")
         XCTAssertFalse(app.buttons["newTripSave"].isEnabled)
         XCTAssertFalse(app.buttons["newTripCorridor-0"].exists)
         let unopened = XCTAttachment(screenshot: app.screenshot())
@@ -150,15 +159,16 @@ final class NewTripUITests: XCTestCase {
         replaceSearch(search, with: "Ginza", in: app)
         XCTAssertTrue(stationRows(in: app).firstMatch.waitForExistence(timeout: 20))
         XCTAssertGreaterThan(stationRows(in: app).count, 1)
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(
-            format: "label CONTAINS %@", "銀座")).firstMatch.waitForExistence(timeout: 8),
-                      "A line query must list that line's stations.")
+        XCTAssertTrue(stationRows(in: app).matching(NSPredicate(
+            format: "label CONTAINS '銀座'")).firstMatch.waitForExistence(timeout: 8),
+                      "A line query must list stations whose label (title，qualifier) names the 銀座 line.")
 
         replaceSearch(search, with: "東京メトロ", in: app)
         XCTAssertTrue(stationRows(in: app).firstMatch.waitForExistence(timeout: 20),
                       "A company query must list that company's stations.")
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(
-            format: "label CONTAINS %@", "東京メトロ")).firstMatch.waitForExistence(timeout: 8))
+        XCTAssertTrue(stationRows(in: app).matching(NSPredicate(
+            format: "label CONTAINS '東京メトロ'")).firstMatch.waitForExistence(timeout: 8),
+                      "A company query must list stations whose label (title，qualifier) names 東京メトロ.")
 
         replaceSearch(search, with: "Ginza", in: app)
         let ginzaShibuya = stationRows(in: app).matching(NSPredicate(
@@ -189,7 +199,7 @@ final class NewTripUITests: XCTestCase {
     func testThroughServiceCorridorSavesWithPassStations() {
         let number = "Through \(UUID().uuidString.prefix(8))"
         let app = XCUIApplication()
-        EditorLaunchSupport.launchNewTrip(app)
+        EditorLaunchSupport.launchNewTrip(app, environment: [UITestLaunchConfiguration.Key.tab.rawValue: "upcoming"])
         pickStation(field: "newTripOrigin", query: "東横", code: "003922", in: app)
         pickStation(field: "newTripDestination", query: "みなとみらい", code: "004704", in: app)
 
@@ -441,7 +451,8 @@ final class NewTripUITests: XCTestCase {
         app.buttons["newTripSwap"].tap()
         // Labels carry their row role ("From, …" / "To, …"); compare the station part.
         func station(_ label: String) -> Substring {
-            label.split(separator: ",", maxSplits: 1).last ?? Substring(label)
+            // The role prefix ends at "," or the full-width "，" (title + "，" + qualifier).
+            label.split(whereSeparator: { $0 == "," || $0 == "，" }).last ?? Substring(label)
         }
         XCTAssertEqual(station(origin.label), station(destinationBefore))
         XCTAssertEqual(station(destination.label), station(originBefore))
@@ -468,7 +479,7 @@ final class NewTripUITests: XCTestCase {
 
     func testSaveWithoutNumberUsesLineName() {
         let app = XCUIApplication()
-        EditorLaunchSupport.launchNewTrip(app)
+        EditorLaunchSupport.launchNewTrip(app, environment: [UITestLaunchConfiguration.Key.tab.rawValue: "upcoming"])
         pickStation(field: "newTripOrigin", query: "品川", code: "004095",
                     lineID: "jp-東日本旅客鉄道-山手線", in: app)
         pickStation(field: "newTripDestination", query: "大崎", code: "004135",
@@ -637,7 +648,8 @@ final class NewTripUITests: XCTestCase {
 
         app.terminate()
         app.uiTestLaunch[.sheet] = ""
-        app.uiTestLaunch[.tab] = "search"
+        // Today-dated trips list under Upcoming (pass 3), so absence there proves something.
+        app.uiTestLaunch[.tab] = "upcoming"
         app.uiTestLaunch[.query] = number
         UITestLaunchSupport.launch(app)
         let search = app.textFields["journeySearchField"]
@@ -668,7 +680,7 @@ final class NewTripUITests: XCTestCase {
     ) {
         let button = app.buttons[field]
         // To sits below From: at large text sizes it starts below the fold.
-        XCTAssertTrue(reveal(button, in: app, upward: field != "newTripDestination"), app.debugDescription)
+        XCTAssertTrue(reveal(button, in: app, timeout: 40, upward: true), app.debugDescription)
         XCTAssertTrue(waitForEnabled(button, timeout: 20), "\(field) stays disabled until the catalog loads.")
         button.tap()
         let search = app.searchFields.firstMatch

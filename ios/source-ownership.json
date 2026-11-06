@@ -13,6 +13,7 @@
       "sources": [
         "ios/RailMap/App/AppShell.swift",
         "ios/RailMap/App/RailMapApp.swift",
+        "ios/RailMap/Diagnostics/AppControl/AppControlCameraRun.swift",
         "ios/RailMap/Diagnostics/AppControl/AppControlHandles.swift",
         "ios/RailMap/Diagnostics/AppControl/AppControlHost.swift",
         "ios/RailMap/Diagnostics/DevTools/DevDiagnostics.swift",

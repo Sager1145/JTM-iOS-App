@@ -405,6 +405,22 @@ final class RailMapController {
         mapView.setRegion(region, animated: false)
     }
 
+    /// App-control camera: centre on `center` at the map's own zoom scale
+    /// (`MapProjection.zoomLevel`), so a `camera set` and the reported `camera:`
+    /// status field agree. No edge padding; the view's middle is the centre.
+    func setCameraForUITest(center: CLLocationCoordinate2D, zoom: Double, animated: Bool) {
+        guard let mapView, mapView.bounds.width > 0, mapView.bounds.height > 0 else { return }
+        claimCamera()
+        stopFollowingUser()
+        let pointsPerScreenPoint = MKMapSize.world.width / (256 * exp2(zoom))
+        let width = Double(mapView.bounds.width) * pointsPerScreenPoint
+        let height = Double(mapView.bounds.height) * pointsPerScreenPoint
+        let point = MKMapPoint(center)
+        mapView.setVisibleMapRect(
+            MKMapRect(x: point.x - width / 2, y: point.y - height / 2, width: width, height: height),
+            animated: animated)
+    }
+
     /// Package-bounds audit framing, after the normal opening move. Unlike the
     /// explicit region override, it does not change launch ownership flags.
     func frameForUITest(_ rect: MKMapRect) {

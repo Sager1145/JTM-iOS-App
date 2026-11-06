@@ -14,7 +14,7 @@ final class JourneySaveUITests: XCTestCase {
     func testSavedJourneyIsStillPresentAfterRelaunch() {
         let number = "Persist \(UUID().uuidString.prefix(8))"
         let app = XCUIApplication()
-        EditorLaunchSupport.launchNewTrip(app)
+        EditorLaunchSupport.launchNewTrip(app, environment: [UITestLaunchConfiguration.Key.tab.rawValue: "upcoming"])
         pickStation(field: "newTripOrigin", query: "品川", code: "004095",
                     lineID: "jp-東日本旅客鉄道-山手線", in: app)
         pickStation(field: "newTripDestination", query: "大崎", code: "004135",
@@ -46,7 +46,7 @@ final class JourneySaveUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
         app.uiTestLaunch[.sheet] = ""
-        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.tab] = "upcoming"
         app.uiTestLaunch[.query] = number
         UITestLaunchSupport.launch(app)
 
@@ -163,7 +163,7 @@ final class JourneySaveUITests: XCTestCase {
                       "Discarding must close the editor without committing the draft.")
         app.terminate()
         app.uiTestLaunch[.sheet] = ""
-        app.uiTestLaunch[.tab] = "search"
+        app.uiTestLaunch[.tab] = "upcoming"
         app.uiTestLaunch[.query] = unsavedName
         UITestLaunchSupport.launch(app)
         let search = app.textFields["journeySearchField"]

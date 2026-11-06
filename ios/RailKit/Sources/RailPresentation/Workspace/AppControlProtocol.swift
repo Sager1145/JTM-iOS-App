@@ -197,6 +197,34 @@ public struct AppControlHideFilter: Equatable, Sendable {
     }
 }
 
+/// One camera run: a single jump, a pan or zoom ramp, or a framing call.
+/// Each runs through the map controller's own camera entry points and
+/// reports frame, rebuild and memory figures for the run.
+public enum AppControlCameraAction: Equatable, Sendable {
+    public enum FitTarget: String, Sendable { case network, selection }
+
+    /// Centre on `lat`/`lon`; `zoom` keeps the current zoom when `nil`.
+    case set(lat: Double, lon: Double, zoom: Double?, animated: Bool)
+    /// `steps` equal moves totalling (`dLat`, `dLon`) degrees, `stepMs` apart.
+    case pan(dLat: Double, dLon: Double, steps: Int, stepMs: Int)
+    /// `steps` equal zoom increments from `from` (the current zoom when `nil`) to `to`.
+    case zoom(from: Double?, to: Double, steps: Int, stepMs: Int)
+    case fit(FitTarget)
+
+    public var name: String {
+        switch self {
+        case .set: "set"
+        case .pan: "pan"
+        case .zoom: "zoom"
+        case .fit: "fit"
+        }
+    }
+
+    public static let names = ["set", "pan", "zoom", "fit"]
+    public static let zoomRange = 0.0...22.0
+    public static let maximumSteps = 600
+}
+
 public enum AppControlCommand: Equatable, Sendable {
     case loadSamples([String])
     case useStorage(String)
@@ -220,13 +248,19 @@ public enum AppControlCommand: Equatable, Sendable {
     case clearRouteCaches
     case memoryWarning
     case setLayer(name: String, on: Bool)
+    case camera(AppControlCameraAction)
+    /// The performance sampler without the panel: start, stop or read its samples.
+    case perf(action: String)
 
     /// Every command name the parser accepts, for the CLI's help and tests.
     public static let names = [
         "loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
         "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
         "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
+        "camera", "perf",
     ]
+
+    public static let perfActions = ["start", "stop", "read"]
 
     public static let devtoolsActions = [
         "show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export",
@@ -261,6 +295,8 @@ public enum AppControlCommand: Equatable, Sendable {
         case .clearRouteCaches: "clearRouteCaches"
         case .memoryWarning: "memoryWarning"
         case .setLayer: "setLayer"
+        case .camera: "camera"
+        case .perf: "perf"
         }
     }
 
@@ -274,7 +310,7 @@ public enum AppControlCommand: Equatable, Sendable {
     public var allowedOnSharedStore: Bool {
         switch self {
         case .state, .screenshot, .wait, .useStorage, .devtools, .exportDiagnostics, .memoryWarning,
-             .clearRouteCaches, .setLayer, .focusTrip, .openStats:
+             .clearRouteCaches, .setLayer, .focusTrip, .openStats, .camera, .perf:
             true
         case .loadSamples, .reloadAll, .selectTrip, .openEditor, .addTrip, .editTrip, .saveEditor,
              .cancelEditor, .deleteTrip, .setHideFilter:
@@ -302,6 +338,23 @@ public enum AppControlCommand: Equatable, Sendable {
                 throw AppControlError.invalidArgument(key, "expected a non-negative number")
             }
             return Int(number)
+        }
+        func double(_ key: String, in range: ClosedRange<Double>) throws -> Double {
+            guard let raw = args[key] else { throw AppControlError.missingArgument(key) }
+            guard let number = raw.number, number.isFinite, range.contains(number) else {
+                throw AppControlError.invalidArgument(key, "expected a number in \(range.lowerBound)...\(range.upperBound)")
+            }
+            return number
+        }
+        func optionalDouble(_ key: String, in range: ClosedRange<Double>) throws -> Double? {
+            args[key] == nil ? nil : try double(key, in: range)
+        }
+        func steps(default value: Int) throws -> Int {
+            let count = try int("steps", default: value)
+            guard (1...AppControlCameraAction.maximumSteps).contains(count) else {
+                throw AppControlError.invalidArgument("steps", "expected 1...\(AppControlCameraAction.maximumSteps)")
+            }
+            return count
         }
         func bool(_ key: String, default value: Bool) throws -> Bool {
             guard let raw = args[key] else { return value }
@@ -394,6 +447,36 @@ public enum AppControlCommand: Equatable, Sendable {
             guard Self.layerNames.contains(name) else { throw AppControlError.invalidArgument("name", name) }
             guard let on = args["on"]?.bool else { throw AppControlError.missingArgument("on") }
             return .setLayer(name: name, on: on)
+        case "camera":
+            let action = try string("action")
+            switch action {
+            case "set":
+                return .camera(.set(
+                    lat: try double("lat", in: -90...90), lon: try double("lon", in: -180...180),
+                    zoom: try optionalDouble("zoom", in: AppControlCameraAction.zoomRange),
+                    animated: try bool("animated", default: false)))
+            case "pan":
+                return .camera(.pan(
+                    dLat: try double("dLat", in: -180...180), dLon: try double("dLon", in: -360...360),
+                    steps: try steps(default: 30), stepMs: try int("stepMs", default: 33)))
+            case "zoom":
+                return .camera(.zoom(
+                    from: try optionalDouble("from", in: AppControlCameraAction.zoomRange),
+                    to: try double("to", in: AppControlCameraAction.zoomRange),
+                    steps: try steps(default: 30), stepMs: try int("stepMs", default: 33)))
+            case "fit":
+                let target = optionalString("target") ?? "network"
+                guard let fit = AppControlCameraAction.FitTarget(rawValue: target) else {
+                    throw AppControlError.invalidArgument("target", "expected network or selection")
+                }
+                return .camera(.fit(fit))
+            default:
+                throw AppControlError.invalidArgument("action", action)
+            }
+        case "perf":
+            let action = try string("action")
+            guard Self.perfActions.contains(action) else { throw AppControlError.invalidArgument("action", action) }
+            return .perf(action: action)
         default:
             throw AppControlError.unknownCommand(request.command)
         }
