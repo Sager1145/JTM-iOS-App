@@ -1,8 +1,9 @@
 import Foundation
 import RailCore
 
-/// Shares one completed statistics index and coalesces active country builds.
-/// Evicted countries rebuild on demand; active callers retain their own value.
+/// Shares the completed statistics indexes (one slot on a compact device, two
+/// on larger ones, Japan pinned) and coalesces active country builds. Evicted
+/// countries rebuild on demand; active callers retain their own value.
 actor EdgeIndexCache {
     static let shared = EdgeIndexCache()
 
@@ -12,7 +13,10 @@ actor EdgeIndexCache {
         case merged([String], String)
         case scoped([String], String)
     }
-    private var completed: (key: CacheKey, value: BuiltIndex)?
+    /// Completed results, oldest first, at most ``slotCount``.
+    private var completed: [(key: CacheKey, value: BuiltIndex)] = []
+    private let slotCount = ResourceProfile.current.countryCacheSlots
+    private static let pinnedKey = CacheKey.country(countryCacheKey(Region.jp.code))
     /// Denominator-only views (totals and line totals, no edges) per country.
     /// A few kilobytes each, so they survive the single completed slot and
     /// memory pressure: a country nobody rode is not re-decoded after eviction.
@@ -24,17 +28,30 @@ actor EdgeIndexCache {
     private let buildLimiter = RouteSolveLimiter(limit: 1)
 
     private func cached(_ key: CacheKey) -> BuiltIndex? {
-        completed?.key == key ? completed?.value : nil
+        completed.first { $0.key == key }?.value
     }
 
-    private func releaseCompleted() { completed = nil }
+    /// Frees a slot before a build allocates its replacement: with one slot
+    /// the completed index is dropped, as before; with two, the oldest result
+    /// that is not Japan's country index goes first.
+    private func releaseCompleted() {
+        while !completed.isEmpty, completed.count >= slotCount {
+            let victim = completed.firstIndex { $0.key != Self.pinnedKey } ?? 0
+            completed.remove(at: victim)
+        }
+    }
 
-    /// Drops the one completed index. Builds in flight finish and are kept;
+    /// Drops every completed index. Builds in flight finish and are kept;
     /// the next request after this rebuilds the same index on demand.
-    func releaseForMemoryPressure() { completed = nil }
+    func releaseForMemoryPressure() { completed.removeAll() }
 
     private func retain(_ value: BuiltIndex, key: CacheKey) {
-        completed = (key, value)
+        completed.removeAll { $0.key == key }
+        completed.append((key, value))
+        while completed.count > slotCount {
+            let victim = completed.firstIndex { $0.key != Self.pinnedKey && $0.key != key } ?? 0
+            completed.remove(at: victim)
+        }
     }
 
     private nonisolated static func countryCacheKey(_ country: String) -> String {

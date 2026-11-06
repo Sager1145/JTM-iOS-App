@@ -57,6 +57,23 @@ public enum Geometry {
     public static func douglasPeuckerIndices(
         _ points: [Coordinate], epsilonMeters: Double
     ) -> [Int] {
+        // The check never fires, so the non-throwing entry cannot throw.
+        (try? douglasPeuckerIndices(points, epsilonMeters: epsilonMeters, checkingCancellation: false))
+            ?? Array(points.indices)
+    }
+
+    /// ``douglasPeuckerIndices(_:epsilonMeters:)`` for a cancellable worker:
+    /// the same answer, but it throws `CancellationError` within a few
+    /// thousand distance tests of its task being cancelled.
+    public static func cancellableDouglasPeuckerIndices(
+        _ points: [Coordinate], epsilonMeters: Double
+    ) throws -> [Int] {
+        try douglasPeuckerIndices(points, epsilonMeters: epsilonMeters, checkingCancellation: true)
+    }
+
+    private static func douglasPeuckerIndices(
+        _ points: [Coordinate], epsilonMeters: Double, checkingCancellation: Bool
+    ) throws -> [Int] {
         let n = points.count
         if n < 3 || epsilonMeters <= 0 { return Array(0..<n) }
 
@@ -72,7 +89,15 @@ public enum Geometry {
         keep[n - 1] = true
 
         var stack: [(Int, Int)] = [(0, n - 1)]
+        var tested = 0
         while let (s, e) = stack.popLast() {
+            if checkingCancellation {
+                tested += e - s
+                if tested >= 4096 {
+                    tested = 0
+                    try Task.checkCancellation()
+                }
+            }
             var maxDistance = -1.0
             var index = -1
             for i in (s + 1)..<e {

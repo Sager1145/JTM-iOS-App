@@ -211,4 +211,77 @@ struct StrokeRideTests {
         #expect(StrokeRide.Index(chains: [chain]).resolve(segment: segment) == nil)
     }
 
+    @Test("incremental index updates answer exactly like a full rebuild, and unaffected segments keep their answers")
+    func incrementalMatchesFullRebuild() {
+        func wave(_ id: String, lon: Double, lat: Double, phase: Double, count: Int = 90) -> ChainRef {
+            Self.chain(id: id, points: (0..<count).map { i in
+                Coordinate(lon: lon + Double(i) * 0.0002, lat: lat + sin(Double(i) * 0.1 + phase) * 0.0005)
+            }, anchors: [0, count / 2, count - 1])
+        }
+        // Overlapping corridors (ties decided by order), a duplicate, and far chains.
+        let a = wave("a", lon: 139.70, lat: 35.60, phase: 0)
+        let b = Self.chain(id: "b", points: a.points, anchors: [0, 10, 89])
+        let c = wave("c", lon: 139.71, lat: 35.60, phase: 0)
+        let d = wave("d", lon: 135.50, lat: 34.70, phase: 1)
+        let e = wave("e", lon: 135.50, lat: 34.70, phase: 1.02)
+        let f = wave("f", lon: 141.35, lat: 43.06, phase: 2)
+        var aMoved = a
+        aMoved.points = a.points.map { .init(lon: $0.lon, lat: $0.lat + 0.0003) }
+        var dReanchored = d
+        dReanchored.anchors = [5, 60]
+        let keyed = { (chain: ChainRef, key: String) -> ChainRef in
+            var copy = chain
+            copy.contentKey = key
+            return copy
+        }
+        let malformed = ChainRef(id: "bad", points: a.points, measures: [], anchors: [])
+        let pool = [a, b, c, d, e, f, aMoved]
+        var segments: [[Coordinate]] = []
+        for chain in pool {
+            for start in stride(from: 0, to: 80, by: 9) {
+                for count in [2, 12, 30] where start + count <= chain.points.count {
+                    let piece = Array(chain.points[start..<(start + count)])
+                    segments.append(piece)
+                    segments.append(piece.reversed())
+                }
+            }
+        }
+        let sequences: [[[ChainRef]]] = [
+            // Regions arrive in the middle of the canonical order, then leave.
+            [[a, f], [a, d, f], [a, c, d, e, f], [a, b, c, d, e, f], [c, d, f], [d], []],
+            // Geometry and anchor changes in place, then a malformed chain.
+            [[a, b, d, e], [aMoved, b, d, e], [aMoved, b, dReanchored, e], [a, b, dReanchored, e, malformed]],
+            // Unchanged chains swap order.
+            [[a, b, c], [b, a, c], [c, b, a]],
+            // Content keys decide reuse; a new key replaces the entry.
+            [[keyed(a, "1"), keyed(d, "1")], [keyed(a, "1"), keyed(d, "1"), keyed(f, "1")],
+             [keyed(aMoved, "2"), keyed(d, "1"), keyed(f, "1")]],
+            // Duplicate ids.
+            [[a, a, d], [a, d], [a, a, a, d]],
+        ]
+        for sequence in sequences {
+            var incremental = StrokeRide.Index(chains: [])
+            for chains in sequence {
+                let (next, change) = incremental.updated(chains: chains)
+                let full = StrokeRide.Index(chains: chains)
+                for segment in segments {
+                    let answer = next.resolve(segment: segment)
+                    #expect(answer == full.resolve(segment: segment))
+                    if !change.affects(segment: segment) {
+                        #expect(answer == incremental.resolve(segment: segment))
+                    }
+                }
+                incremental = next
+            }
+        }
+        let (same, unchanged) = StrokeRide.Index(chains: [a, d]).updated(chains: [a, d])
+        #expect(unchanged.isEmpty)
+        #expect(same.resolve(segment: Array(a.points[0..<20]))?.chainID == "a")
+        let (_, swapped) = StrokeRide.Index(chains: [a, b]).updated(chains: [b, a])
+        #expect(swapped.reordered)
+        let (_, added) = StrokeRide.Index(chains: [a]).updated(chains: [a, f])
+        #expect(added.affects(segment: Array(f.points[0..<10])))
+        #expect(!added.affects(segment: Array(a.points[0..<10])))
+    }
+
 }

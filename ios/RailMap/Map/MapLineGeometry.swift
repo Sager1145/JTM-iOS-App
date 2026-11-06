@@ -570,7 +570,9 @@ func continuousStrokeBuild(
     chains: ChainPixelReader,
     mapPointsPerScreenPoint: Double, scale: CGFloat,
     laneScale: Double = 1, junctionCandidates: JunctionCandidateIndex = JunctionCandidateIndex()
-) -> ContinuousStrokeBuild {
+) throws -> ContinuousStrokeBuild {
+    // Cooperative cancellation between the build's expensive steps, so a
+    // stale frame releases the geometry permit without finishing the line.
     // `Stroke` has no public initializer of its own (`ContinuousStroke.swift`
     // is not this file's to extend), so an empty one is built the same way
     // `buildStroke` builds one for fewer than two points itself.
@@ -581,6 +583,7 @@ func continuousStrokeBuild(
             runs: [], anchors: [:], stroke: emptyStroke, sourceMeasures: [], withheldRuns: [],
             emittedFamilyWindows: [])
     }
+    try Task.checkCancellation()
     let chain = chains.chain(of: line)
     let pixels = chain.points
     guard pixels.count >= 2 else {
@@ -601,6 +604,7 @@ func continuousStrokeBuild(
             points: canonChain.points, measures: canonChain.measures,
             shapeBoundaryMeasures: canon.familyWindows.flatMap { [$0.from, $0.to] })
     }
+    try Task.checkCancellation()
     var literalSpans: [ContinuousStroke.LiteralSpan] = []
     if !line.literalDisplaySpansV1.isEmpty, line.region == .jp, line.continuous,
        line.lane == 0, line.laneRows.allSatisfy({ $0.lane == 0 }),
@@ -622,6 +626,7 @@ func continuousStrokeBuild(
                 project: { projected[$0]! })
         }
     }
+    try Task.checkCancellation()
     let stroke = ContinuousStroke.buildStroke(
         pixels,
         options: .init(
@@ -643,6 +648,7 @@ func continuousStrokeBuild(
                 of: line, at: true, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
             enforceMinimumCornerRadius: true,
             literalSpans: literalSpans))
+    try Task.checkCancellation()
     func mapPoint(_ point: ContinuousStroke.Point) -> MKMapPoint {
         MKMapPoint(x: point.x * mapPointsPerScreenPoint, y: point.y * mapPointsPerScreenPoint)
     }
@@ -707,9 +713,11 @@ func continuousStrokeBuild(
             totalMetres: line.totalMetres, tenantWindows: tenantSpans, landlordWindows: landlordSpans,
             measureStart: lower, measureEnd: upper)
         for piece in partition.base {
+            try Task.checkCancellation()
             if let run = sliceRun(piece.from, piece.to) { runs.append(run) }
         }
         for piece in partition.family {
+            try Task.checkCancellation()
             // `familyPartition` returns one piece per surviving landlord
             // window (never merged with a neighbour), so the source window
             // this piece came from is the one of the same group that
@@ -746,6 +754,7 @@ func continuousStrokeBuild(
     // track keeps this line's own colour.
     var withheldRuns: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])] = []
     for span in line.withheld {
+        try Task.checkCancellation()
         let clipped = ContinuousStroke.clipRangesToComplement(
             [ContinuousStroke.Interval(from: span.from, to: span.to)], tenantWindows: tenantSpans)
         for piece in clipped {
@@ -843,7 +852,7 @@ enum MapLineGeometry {
         let junctionCandidates = JunctionCandidateIndex(allLines, chains: joinedChains)
         for line in strokes {
             try Task.checkCancellation()
-            result.strokes[line.id] = continuousStrokeBuild(
+            result.strokes[line.id] = try continuousStrokeBuild(
                 for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
                 chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
                 laneScale: laneScale, junctionCandidates: junctionCandidates)
@@ -863,8 +872,8 @@ enum MapLineGeometry {
                     try Task.checkCancellation()
                     // Continuous geometry already spent its simplification budget
                     // before rounding. Never decimate those arcs a second time.
-                    let coordinates = line.continuous || line.lane != 0 ? interval.map(\.clLocation)
-                        : Geometry.douglasPeuckerIndices(interval, epsilonMeters: epsilon)
+                    let coordinates = try line.continuous || line.lane != 0 ? interval.map(\.clLocation)
+                        : Geometry.cancellableDouglasPeuckerIndices(interval, epsilonMeters: epsilon)
                             .map { interval[$0].clLocation }
                     let points = parallelLaneCoordinates(
                         coordinates, lane: line.lane,
@@ -968,7 +977,7 @@ enum MapLineGeometry {
                                           && $0.from < max(follow.canonicalFrom, follow.canonicalTo)
                                   }) else { continue }
                             try Task.checkCancellation()
-                            result.strokes[owner.id] = continuousStrokeBuild(
+                            result.strokes[owner.id] = try continuousStrokeBuild(
                                 for: owner, anchors: anchors[owner.id] ?? [], canonical: { allLines[$0] },
                                 chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
                                 laneScale: laneScale, junctionCandidates: junctionCandidates)

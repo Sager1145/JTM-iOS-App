@@ -8,7 +8,8 @@ import RailCore
 final class MapStationLabelCoordinator {
     private var markerCache: (key: Int, settings: MapRideMarkers.Settings, drawn: [MapRideMarkers.Drawn])?
     private var selectedNameCache: (key: String, settings: MapRideMarkers.Settings, keys: Set<String>)?
-    private var settleTask: Task<Void, Never>?
+    /// One timer per quiet period; each camera frame only moves its deadline.
+    private let settleTimer = MapDeadlineTimer(delay: .milliseconds(32))
     private var lastPassStep = Double.nan
     private var lastPassAt: ContinuousClock.Instant?
     private var lastMovingPassCost = Duration.zero
@@ -88,13 +89,7 @@ final class MapStationLabelCoordinator {
     /// full geometry rebuild's 120 ms debounce. The callback checks live scene
     /// state when it runs; a stale captured geometry snapshot is never applied.
     func scheduleSettledPass(_ perform: @escaping @MainActor () -> Void) {
-        settleTask?.cancel()
-        settleTask = Task { @MainActor [weak self] in
-            do { try await Task.sleep(for: .milliseconds(32)) } catch { return }
-            guard let self else { return }
-            self.settleTask = nil
-            perform()
-        }
+        settleTimer.schedule(perform)
     }
 
     func invalidateGeometry() {
@@ -103,8 +98,7 @@ final class MapStationLabelCoordinator {
     }
 
     func tearDown() {
-        settleTask?.cancel()
-        settleTask = nil
+        settleTimer.cancel()
         invalidateGeometry()
     }
 }

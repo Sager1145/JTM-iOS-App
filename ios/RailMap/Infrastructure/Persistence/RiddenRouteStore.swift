@@ -1626,7 +1626,7 @@ final class RiddenRouteStore {
 
     private nonisolated static func fallbackGraphStore(
         inputs: SolverInputs, displayNetwork: RouteNetwork?,
-        maximumNodes: Int = RouteGraph.regionalGraphLoadNodeBudget
+        maximumNodes: Int = ResourceProfile.current.regionalGraphLoadNodeBudget
     ) -> RouteGraph.RouteGraphStore {
         let sections = inputs.sections
         #if RAIL_DIAGNOSTICS

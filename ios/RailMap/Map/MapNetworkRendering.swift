@@ -119,7 +119,8 @@ final class MapNetworkGeometryCache {
         let builds: [FamilyRunBuild]
     }
 
-    private static let frameCapacity = 5
+    /// Zoom/era frames kept: 8 on a compact device, 16 otherwise.
+    private static let frameCapacity = ResourceProfile.current.geometryFrameCapacity
 
     let joinedChains: JoinedChainCache
     let chainPixels: ChainPixelCache
