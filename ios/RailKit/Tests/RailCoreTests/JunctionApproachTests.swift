@@ -13,18 +13,6 @@ struct JunctionApproachTests {
         let junctions: [Record]
     }
 
-    private struct SampleManifest: Decodable {
-        let parts: [String]
-        let partTrainIDs: [String: String]
-
-        enum CodingKeys: String, CodingKey {
-            case parts
-            case partTrainIDs = "part_train_ids"
-        }
-    }
-
-    private struct SamplePart: Decodable { let train: Train }
-
     private struct BoundaryGap {
         let station: String
         let previous: String?
@@ -173,7 +161,7 @@ struct JunctionApproachTests {
         struct Store: Decodable { let trains: [Train] }
         let data = try PortFixtures.repositoryRoot().appending(path: "app/data")
         let store = try JSONDecoder().decode(Store.self, from: Data(contentsOf: data.appending(path: "train-store.json")))
-        let train = try #require(store.trains.first { $0.id == SampleRideID.current("20260724_06_nanpu28") })
+        let train = try #require(store.trains.first { $0.id == "journey_6322F5578A2F139890D3B028ADDAF45A" }) // nanpu28
         let sections = try #require(train.routeSections)
         let features = try RouteGraph.SectionFeatureCollection.load(contentsOf: data.appending(path: "rail-sections.json")).features.filter {
             ["宇野線", "本四備讃線", "予讃線"].contains($0.properties.lineName)
@@ -215,26 +203,15 @@ struct JunctionApproachTests {
 
         try assertRegistryAccepted(dataRoot: dataRoot, junctions: fullJunctions)
 
-        let manifest = try JSONDecoder().decode(SampleManifest.self, from: Data(contentsOf:
-            dataRoot.appending(path: "sample-data/manifest.json")))
         let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf:
             dataRoot.appending(path: "train-store.json")))
-        let indexedIDs = Set(store.trains.filter { $0.region == nil || $0.region == "jp" }.map(\.id))
-        #expect(manifest.parts.count == indexedIDs.count)
-        // The manifest and parts still name rides by their former ids; the store
-        // carries the derived `journey_…` ids.
-        #expect(Set(manifest.partTrainIDs.values.map(SampleRideID.current)) == indexedIDs)
 
         let pipeline = PhysicalEndpointTrimTests()
         var trains: [Train] = []
-        for partName in manifest.parts {
-            let expectedID = try #require(manifest.partTrainIDs[partName])
-            let part = try JSONDecoder().decode(SamplePart.self, from: Data(contentsOf:
-                dataRoot.appending(path: "sample-data/\(partName).json")))
-            #expect(part.train.id == expectedID)
-            let normalized = pipeline.normalizedSampleTrain(part.train)
+        for train in store.trains where train.region == nil || train.region == "jp" {
+            let normalized = pipeline.normalizedSampleTrain(train)
             try #require(normalized.routeSections?.isEmpty == false,
-                "Sample pipeline produced no sections for \(expectedID)")
+                "Sample pipeline produced no sections for \(train.id)")
             trains.append(normalized)
         }
 
@@ -246,7 +223,7 @@ struct JunctionApproachTests {
         printCensus("baseline (original 10 junctions)", census: baseline, total: trains.count)
         printCensus("expanded registry", census: expanded, total: trains.count)
 
-        let oki = try #require(expanded.gapsByRide["20260719_03_super_oki5"])
+        let oki = try #require(expanded.gapsByRide["journey_55E89F3BE5BD16BC06291B252CFFA81B"]) // super_oki5
         #expect(oki.boundaryStations.isEmpty)
         #expect(oki.nonBoundary == 0)
 

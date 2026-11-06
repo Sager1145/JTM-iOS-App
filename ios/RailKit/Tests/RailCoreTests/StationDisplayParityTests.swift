@@ -861,7 +861,7 @@ struct StationDisplayParityTests {
     @Test("Narita Express underground route emits only its recorded Tokyo and Shinagawa calls")
     func undergroundNaritaExpressMarkers() throws {
         let japan = try #require(Self.fixture.rides.first { $0.country == "jp" })
-        let trainID = "20260727_08_narita_express"
+        let trainID = "journey_680A26B9C2D06FDE49DABFF6A02DF17C" // narita_express
         let rows = japan.records.filter { Self.same(Self.cells($0)[11], trainID) }
         // The inferred physical corridor runs through Shimbashi, but the
         // cleaned source records only these two passenger calls. Physical
@@ -923,7 +923,7 @@ struct StationDisplayParityTests {
         let japan = try #require(Self.fixture.rides.first { $0.country == "jp" })
         let rows = japan.records.filter {
             let cells = Self.cells($0)
-            return Self.same(cells[11], "20260719_04_sakura770")
+            return Self.same(cells[11], "journey_CE6CDD905BB6708E69DD82011EB8182B") // sakura770
                 && Self.same(cells[2], "新岩国")
         }
         let records = try rows.map(Self.record)

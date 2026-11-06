@@ -2,7 +2,7 @@
   "schema_version": "1.3",
   "trains": [
     {
-      "id": "20260722_06_sonic44",
+      "id": "journey_6F379655E47131DD2F854B65A847B9F0",
       "date": "2026-07-22",
       "number": "ソニック44号（Sonic 44）（3044M）",
       "number_en": "Sonic 44",
@@ -185,7 +185,7 @@
       "notes": "通過駅・経由線は未検証のため省略。地図の経路は停車駅間の推定表示で、実際の列車経路の証明ではありません。"
     },
     {
-      "id": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+      "id": "journey_5C3C741549CF09E20FE4CC4F7389B758",
       "date": "2026-08-02",
       "number": "桃園機場捷運 直達車（機場第二航廈站→台北車站）",
       "train_type": "直達車",

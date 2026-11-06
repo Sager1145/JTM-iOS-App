@@ -238,14 +238,9 @@ struct PlaybackParityTests {
 
     static func train(_ id: String) throws -> Train {
         let store = try store()
-        // The bundled ride carries a `journey_…` id; the fixtures still name it
-        // by its former descriptive id (which also encodes its date), so hand the
-        // ride back under that name.
-        let bundled = SampleRideID.current(id)
-        guard var train = store.trains.first(where: { $0.id == bundled }) else {
+        guard let train = store.trains.first(where: { $0.id == id }) else {
             throw CocoaError(.fileNoSuchFile)
         }
-        train.id = id
         return train
     }
 
@@ -365,7 +360,7 @@ struct PlaybackParityTests {
     // And all four numbers come from ONE EDGE OF ONE RIDE. Six of the seven
     // itineraries are bit-exact end to end (``arcDistancesAreLibmBound``
     // asserts that, so it cannot quietly stop being true). The seventh,
-    // 20260721_08_asoboy3, first disagrees at its 49th vertex, on the 103.3 m
+    // journey_02C494EB5E72DE2FE0D3E5BC7D303309, first disagrees at its 49th vertex, on the 103.3 m
     // edge (130.70397, 32.78174) → (130.70495, 32.78217) near 立野:
     // `Geometry.distanceMeters` is a haversine over Darwin's `sin`/`cos`/
     // `asin` rather than V8's fdlibm port of them, and this pair is one of the
@@ -920,7 +915,7 @@ struct PlaybackParityTests {
         #expect(t.times.worst <= Self.TIME_ULP, "synthetic:\n\(t.summary)")
     }
 
-    static let syntheticBaseID = "20260730_06_osaka_loop"
+    static let syntheticBaseID = "journey_475F1E0ED575D680352459093F852ED6" // osaka_loop
 
     /// The `ride_segment` filter is `=== true`, not "truthy".
     @Test("a truthy-but-not-true ride flag means NOT ridden")
@@ -1171,7 +1166,7 @@ struct PlaybackParityTests {
             // journey while retaining exact totals for the other six.
             var total = Divergence()
             total.record(path.totalMeters, item.path.totalMeters, "\(item.trainId).totalMeters")
-            let totalCeiling = item.trainId == "20260721_08_asoboy3" ? Self.ARC_ULP : 0
+            let totalCeiling = item.trainId == "journey_02C494EB5E72DE2FE0D3E5BC7D303309" ? Self.ARC_ULP : 0 // asoboy3
             #expect(total.worst <= totalCeiling, "\(total.summary)")
             // The whole camera's zoom remains bit-exact on every journey.
             #expect(

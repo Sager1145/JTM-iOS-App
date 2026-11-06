@@ -117,6 +117,9 @@ export function makeDummyElement() {
 //   userAgent  — navigator.userAgent, so sandbox errors identify their host.
 //   fetchErrorMessage — thrown by the default fetch stub (tests replace fetch
 //     per-case; the precompute driver must never reach the network).
+//   dataDir    — when given, `fetch` serves files under that directory,
+//     read-only, for the relative dataset URLs the web code requests
+//     ("./api/<name>.json" is <dataDir>/<name>.json). Anything else is a 404.
 //   indexedDB  — injected only when provided; the app family feature-detects
 //     via `window.indexedDB` truthiness, so absence and undefined are
 //     equivalent.
@@ -124,6 +127,7 @@ export function makeDummyElement() {
 export function makeSandbox({
   userAgent = "node-vm",
   fetchErrorMessage = "fetch is not available in this sandbox",
+  dataDir,
   indexedDB,
   i18n,
 } = {}) {
@@ -187,9 +191,29 @@ export function makeSandbox({
     },
     RailMap: {},
     maplibregl: {},
-    fetch: () => {
-      throw new Error(fetchErrorMessage);
-    },
+    fetch: dataDir
+      ? async (url) => {
+          const name = String(url).replace(/^\.\/api\//, "").split(/[?#]/)[0];
+          const root = path.resolve(dataDir);
+          const file = path.resolve(root, name);
+          if (
+            name.includes("..") ||
+            !file.startsWith(root + path.sep) ||
+            !fs.existsSync(file)
+          )
+            return { ok: false, status: 404, statusText: "Not Found" };
+          const text = fs.readFileSync(file, "utf8");
+          return {
+            ok: true,
+            status: 200,
+            statusText: "OK",
+            json: async () => JSON.parse(text),
+            text: async () => text,
+          };
+        }
+      : () => {
+          throw new Error(fetchErrorMessage);
+        },
   };
   if (indexedDB !== undefined) sandbox.indexedDB = indexedDB;
   if (i18n) Object.assign(sandbox.I18N, i18n);

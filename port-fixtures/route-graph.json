@@ -99696,7 +99696,7 @@
     {
       "country": "mo",
       "train": {
-        "id": "MO-SAMPLE-MLM-TAIPA",
+        "id": "journey_E155548B9C8291DA928D5426A9D0134B",
         "number": "氹仔線 官方路線示例",
         "date": "2026-08-10",
         "origin": "媽閣",
@@ -99866,7 +99866,7 @@
     {
       "country": "hk",
       "train": {
-        "id": "HK-SAMPLE-EAL-LOW",
+        "id": "journey_E432976CF3960943D65E32F615830502",
         "number": "東鐵綫 官方路線示例",
         "date": "2026-08-10",
         "origin": "金鐘",
@@ -100048,7 +100048,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+        "id": "journey_5C3C741549CF09E20FE4CC4F7389B758",
         "number": "桃園機場捷運 直達車（機場第二航廈站→台北車站）",
         "date": "2026-08-02",
         "origin": "機場第二航廈站",
@@ -100236,7 +100236,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260802_02_trtc_bl_taipei_main_ximen",
+        "id": "journey_48FE139478368C9C7274289E1D49510A",
         "number": "台北捷運 板南線（台北車站→西門）",
         "date": "2026-08-02",
         "origin": "台北車站",
@@ -100292,7 +100292,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260802_03_trtc_bl_ximen_zhongxiao_fuxing",
+        "id": "journey_7F9FEBF55983F06E943C4BF21837CD2E",
         "number": "台北捷運 板南線（西門→忠孝復興）",
         "date": "2026-08-02",
         "origin": "西門",
@@ -100384,7 +100384,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260802_04_trtc_bl_zhongxiao_fuxing_ximen",
+        "id": "journey_B34C34D4052B67C1D1F2468F4B8826A4",
         "number": "台北捷運 板南線（忠孝復興→西門）",
         "date": "2026-08-02",
         "origin": "忠孝復興",
@@ -100476,7 +100476,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260805_01_thsr_165_taipei_taichung",
+        "id": "journey_E2BA1597EB6DEA75FB126926E564D6CD",
         "number": "台灣高鐵 165次（台北→台中）",
         "date": "2026-08-05",
         "origin": "台北",
@@ -100580,7 +100580,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260805_02_tra_local_3262_xinwuri_taichung",
+        "id": "journey_253013612D5701BF5895AD9C0FC1A850",
         "number": "區間 3262次（新烏日→臺中）",
         "date": "2026-08-05",
         "origin": "新烏日",
@@ -100672,7 +100672,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260806_01_tra_tze_chiang_3000_137_taichung_changhua",
+        "id": "journey_0A8EC92F75B878119658D0752A71E41F",
         "number": "自強(3000) 137次（臺中→彰化）",
         "date": "2026-08-06",
         "origin": "臺中",
@@ -100788,7 +100788,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260806_02_tra_local_2204_changhua_taichung",
+        "id": "journey_85C2F9F935C9A4701208C881737C7ADC",
         "number": "區間 2204次（彰化→臺中）",
         "date": "2026-08-06",
         "origin": "彰化",
@@ -100904,7 +100904,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260808_01_tra_tze_chiang_3000_191_taichung_chiayi",
+        "id": "journey_D902105FFF79F2BC91DD69001C1D1752",
         "number": "自強(3000) 191次（臺中→嘉義）",
         "date": "2026-08-08",
         "origin": "臺中",
@@ -101213,7 +101213,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260808_02_alsr_5_chiayi_alishan",
+        "id": "journey_D6E210E0D14743B7AFE4EF6855ADC7FA",
         "number": "阿里山號 5次（嘉義→阿里山）",
         "date": "2026-08-08",
         "origin": "嘉義",
@@ -101449,7 +101449,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260808_03_alsr_120_alishan_shenmu",
+        "id": "journey_214DEC1A58D8A2E683D5E17A47BFCE7F",
         "number": "神木線 120次（阿里山→神木）",
         "date": "2026-08-08",
         "origin": "阿里山",
@@ -101505,7 +101505,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260808_04_alsr_121_shenmu_alishan",
+        "id": "journey_5BADD88C12380B6A886444FB69041F7F",
         "number": "神木線 121次（神木→阿里山）",
         "date": "2026-08-08",
         "origin": "神木",
@@ -101561,7 +101561,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260809_02_alsr_zhushan_observation_alishan_zhushan",
+        "id": "journey_E12389096A2B7F909034258E902F941E",
         "number": "祝山線觀日列車（阿里山→祝山）",
         "date": "2026-08-09",
         "origin": "阿里山",
@@ -101629,7 +101629,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260809_03_alsr_zhushan_observation_zhushan_alishan",
+        "id": "journey_DFA582684EEDC99182E6D448F71607F7",
         "number": "祝山線觀日列車（祝山→阿里山）",
         "date": "2026-08-09",
         "origin": "祝山",
@@ -101697,7 +101697,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260809_01_alsr_8_alishan_chiayi",
+        "id": "journey_D4687FB43F9C1C43E0B0E40017AC9EDC",
         "number": "阿里山號 8次（阿里山→嘉義）",
         "date": "2026-08-09",
         "origin": "阿里山",
@@ -101933,7 +101933,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260809_04_tra_tze_chiang_3000_125_chiayi_kaohsiung",
+        "id": "journey_CEB49C47CA401AD978BFE56F3D55F4C7",
         "number": "自強(3000) 125次（嘉義→高雄）",
         "date": "2026-08-09",
         "origin": "嘉義",
@@ -102325,7 +102325,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_01_krtc_red_kaohsiung_gangshan_station",
+        "id": "journey_2FDE3816A557FFFB50406D18A131A336",
         "number": "高雄捷運 紅線（高雄車站→岡山車站）",
         "date": "2026-08-10",
         "origin": "高雄車站",
@@ -102549,7 +102549,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_02_krtc_red_gangshan_station_siaogang",
+        "id": "journey_F889D3193B98C1B436F80571170668AA",
         "number": "高雄捷運 紅線（岡山車站→小港）",
         "date": "2026-08-10",
         "origin": "岡山車站",
@@ -102881,7 +102881,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_03_krtc_red_siaogang_sanduo",
+        "id": "journey_927016E22113A45080FBC58092D28EB0",
         "number": "高雄捷運 紅線（小港→三多商圈）",
         "date": "2026-08-10",
         "origin": "小港",
@@ -102997,7 +102997,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_04_krtc_red_sanduo_kaisyuan",
+        "id": "journey_10253133B7525E17509D09650522E725",
         "number": "高雄捷運 紅線（三多商圈→凱旋）",
         "date": "2026-08-10",
         "origin": "三多商圈",
@@ -103065,7 +103065,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_05_klrt_c3_counterclockwise_loop",
+        "id": "journey_0960494E1EEF4CBDB6B1E4B1FE90BEB7",
         "number": "高雄輕軌 逆行環狀（前鎮之星→前鎮之星）",
         "date": "2026-08-10",
         "origin": "前鎮之星",
@@ -103565,7 +103565,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260810_06_krtc_red_kaisyuan_kaohsiung",
+        "id": "journey_392AB4A925F885DE6CD17FA95C36040E",
         "number": "高雄捷運 紅線（凱旋→高雄車站）",
         "date": "2026-08-10",
         "origin": "凱旋",
@@ -103669,7 +103669,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260812_01_krtc_red_kaohsiung_zuoying",
+        "id": "journey_BCCC18D524113D54156C5874685CEE29",
         "number": "高雄捷運 紅線（高雄車站→左營）",
         "date": "2026-08-12",
         "origin": "高雄車站",
@@ -103773,7 +103773,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260812_02_thsr_826_zuoying_taipei",
+        "id": "journey_4D389948FB54DDE74017B2CCFC5B526D",
         "number": "台灣高鐵 826次（左營→台北）",
         "date": "2026-08-12",
         "origin": "左營",
@@ -103937,7 +103937,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260812_03_tra_local_1208_taipei_keelung",
+        "id": "journey_701B2439EE7B2E05AF11E637D13B1CB5",
         "number": "區間 1208次（臺北→基隆）",
         "date": "2026-08-12",
         "origin": "臺北",
@@ -104101,7 +104101,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260812_04_tra_local_4209_nuannuan_nangang",
+        "id": "journey_06535A45062A8500166100F9B37C31F1",
         "number": "區間 4209次（暖暖→南港）",
         "date": "2026-08-12",
         "origin": "暖暖",
@@ -104230,7 +104230,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260812_05_thsr_161_nangang_taipei",
+        "id": "journey_5A3C1D43A8E70734A5D5DA40D6D39099",
         "number": "台灣高鐵 161次（南港→台北）",
         "date": "2026-08-12",
         "origin": "南港",
@@ -104286,7 +104286,7 @@
     {
       "country": "tw",
       "train": {
-        "id": "20260813_01_star_of_taiwan_round_island_loop",
+        "id": "journey_C929D1DB4BBEDD1ED71B9C4885026D78",
         "number": "環島之星觀光列車 1次（臺北→環島→臺北）",
         "date": "2026-08-13",
         "origin": "臺北",
@@ -106665,7 +106665,7 @@
     {
       "country": "kr",
       "train": {
-        "id": "KR-SAMPLE-GYEONGBUKSEON",
+        "id": "journey_B7F582C16E904392DA2C9CE339DF6780",
         "number": "경북선 공식 노선 예시",
         "date": "2026-08-11",
         "origin": "김천",
@@ -106823,7 +106823,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260703_01_haruka",
+        "id": "journey_A9554752F257CDA52831A6C0EED248AF",
         "number": "はるか38号（Haruka 38）（1038M）",
         "date": "2026-07-03",
         "origin": "関西空港",
@@ -106877,7 +106877,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
+        "id": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
         "number": "こだま号（Kodama）（846A）",
         "date": "2026-07-03",
         "origin": "新大阪",
@@ -107045,7 +107045,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260703_03_tokaido_main_local",
+        "id": "journey_A3CFCBD90A222CC4066ACAF20A6C06C2",
         "number": "東海道本線 普通（Tōkaidō Main Line Local）",
         "date": "2026-07-03",
         "origin": "三島",
@@ -107093,7 +107093,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_01_local",
+        "id": "journey_D7889CA9349256238A038E0045DE7D0D",
         "number": "普通列車（Local）",
         "date": "2026-07-04",
         "origin": "沼津",
@@ -107145,7 +107145,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_02_kodama918",
+        "id": "journey_4CB9E326EEC18D85989CEF90ACF970A1",
         "number": "こだま918号（Kodama 918）（918A）",
         "date": "2026-07-04",
         "origin": "三島",
@@ -107231,7 +107231,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_03_keikyu_asakusa_line",
+        "id": "journey_9EBA4C59A5675EBCE17BEBAC846CF2CA",
         "number": "京急・浅草線（Keikyū / Asakusa Line）",
         "date": "2026-07-04",
         "origin": "品川",
@@ -107313,7 +107313,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_04_oedo_line",
+        "id": "journey_C07243F8AADDB594384BBF1CC16C13EA",
         "number": "大江戸線（Ōedo Line）",
         "date": "2026-07-04",
         "origin": "大門",
@@ -107366,7 +107366,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_05_mita_line",
+        "id": "journey_5C3BA9F2C1A8F58936EC22D01F4E22E2",
         "number": "三田線（Mita Line）",
         "date": "2026-07-04",
         "origin": "芝公園",
@@ -107455,7 +107455,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_06_marunouchi_line",
+        "id": "journey_09AC64CFCEE12C93E83510873DD6FEC1",
         "number": "丸ノ内線（Marunouchi Line）",
         "date": "2026-07-04",
         "origin": "大手町",
@@ -107579,7 +107579,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_07_saikyo_line",
+        "id": "journey_EAACE466C535944D58A31E97A124CF0C",
         "number": "埼京線（Saikyō Line）（1201F）",
         "date": "2026-07-04",
         "origin": "池袋",
@@ -107788,7 +107788,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_08_shonan_shinjuku_line",
+        "id": "journey_F3AE731354D1EAA0C06B45E04BE9F302",
         "number": "湘南新宿ライン（Shōnan-Shinjuku Line）（4835Y）",
         "date": "2026-07-04",
         "origin": "大宮",
@@ -108190,7 +108190,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_09_negishi_line",
+        "id": "journey_9F1B97EDB6DCD7A4DB1908060F60E180",
         "number": "根岸線（Negishi Line）",
         "date": "2026-07-04",
         "origin": "横浜",
@@ -108242,7 +108242,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_10_minatomirai_line",
+        "id": "journey_2840A4D4E48F45ECA2F36BE4ED5C5E2A",
         "number": "みなとみらい線（Minatomirai Line）",
         "date": "2026-07-04",
         "origin": "みなとみらい",
@@ -108308,7 +108308,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_11_keihin_tohoku_line",
+        "id": "journey_595FE5006ED23F7B331795A1C3A877E9",
         "number": "京浜東北線（Keihin-Tōhoku Line）",
         "date": "2026-07-04",
         "origin": "横浜",
@@ -108360,7 +108360,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_12_yokohama_line",
+        "id": "journey_1BF192064CE880673A0BB314C77436DB",
         "number": "横浜線（Yokohama Line）",
         "date": "2026-07-04",
         "origin": "東神奈川",
@@ -108436,7 +108436,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_13_kodama915",
+        "id": "journey_5DDC220B564315ABDE363017D45930D6",
         "number": "こだま915号（Kodama 915）（915A）",
         "date": "2026-07-04",
         "origin": "新横浜",
@@ -108510,7 +108510,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260704_14_local",
+        "id": "journey_A6980FF0C00F952ADEA44DB6724A69A7",
         "number": "普通列車（Local）",
         "date": "2026-07-04",
         "origin": "三島",
@@ -108562,7 +108562,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_01_local",
+        "id": "journey_45B9E5DDA1ACD772D91C5332674B66F6",
         "number": "普通列車（Local）",
         "date": "2026-07-05",
         "origin": "沼津",
@@ -108614,7 +108614,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_02_kodama802",
+        "id": "journey_7ED510CE68E0BE81303D118A1B9E3575",
         "number": "こだま802号（Kodama 802）（802A）",
         "date": "2026-07-05",
         "origin": "三島",
@@ -108712,7 +108712,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_03_chuo_line",
+        "id": "journey_DAE47A568594FC62E600A5F695EB7365",
         "number": "中央線快速（Chūō Rapid）（1057T）",
         "date": "2026-07-05",
         "origin": "東京",
@@ -108872,7 +108872,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_04_chuo_sobu_line",
+        "id": "journey_588AB2A1A40723D13732520638875B90",
         "number": "中央・総武線（Chūō-Sōbu Line）",
         "date": "2026-07-05",
         "origin": "新宿",
@@ -108972,7 +108972,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_05_yurakucho_line",
+        "id": "journey_B6AC22131D2441B90E2E47880C035680",
         "number": "有楽町線（Yūrakuchō Line）",
         "date": "2026-07-05",
         "origin": "市ヶ谷",
@@ -109036,7 +109036,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_06_yurakucho_line",
+        "id": "journey_A6900040ECB7DC73804CD885E0C55A77",
         "number": "有楽町線（Yūrakuchō Line）",
         "date": "2026-07-05",
         "origin": "江戸川橋",
@@ -109112,7 +109112,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_07_yamanote_line",
+        "id": "journey_2421C1DE7244064D1E03E50A9E4A1707",
         "number": "山手線（Yamanote Line）",
         "date": "2026-07-05",
         "origin": "池袋",
@@ -109248,7 +109248,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260705_08_hayabusa59",
+        "id": "journey_5D02E4142B00032F153A4A2DF85B955D",
         "number": "はやぶさ59号（Hayabusa 59）（2059B）",
         "date": "2026-07-05",
         "origin": "上野",
@@ -109396,7 +109396,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260706_01_hayabusa11",
+        "id": "journey_E7BA8AD080B2F29F785AC451F915075F",
         "number": "はやぶさ11号（Hayabusa 11）（11B）",
         "date": "2026-07-06",
         "origin": "仙台",
@@ -109579,7 +109579,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260706_02_super_tsugaru2",
+        "id": "journey_290DDF7BAF84271A16574A1D9669181F",
         "number": "スーパーつがる2号（Super Tsugaru 2）（2022M）",
         "date": "2026-07-06",
         "origin": "新青森",
@@ -109651,7 +109651,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260706_03_inaho14",
+        "id": "journey_03F366E23A32B262DDDA6774510A20D4",
         "number": "いなほ14号（Inaho 14）（14M）",
         "date": "2026-07-06",
         "origin": "秋田",
@@ -109777,7 +109777,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_01_toki308",
+        "id": "journey_F977C83D37F1F33106F63344B048477F",
         "number": "とき308号（Toki 308）（1308C）",
         "date": "2026-07-07",
         "origin": "新潟",
@@ -109885,7 +109885,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_02_hakutaka555",
+        "id": "journey_B3210B8E26A09DDE4055CBC06E62E202",
         "number": "はくたか555号（Hakutaka 555）（555E）",
         "date": "2026-07-07",
         "origin": "高崎",
@@ -109982,7 +109982,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_03_local",
+        "id": "journey_AD986EA2AE199842C86F1FE0C72C1F98",
         "number": "普通 松本行（Local）（2236M）",
         "date": "2026-07-07",
         "origin": "長野",
@@ -110070,7 +110070,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_04_local",
+        "id": "journey_410D06F4D03FC76877879DC916484BBC",
         "number": "普通列車（Local）（2635M）",
         "date": "2026-07-07",
         "origin": "篠ノ井",
@@ -110158,7 +110158,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_05_local",
+        "id": "journey_5214DDD3F5A2C014BA41D682C8847138",
         "number": "普通列車（Local）",
         "date": "2026-07-07",
         "origin": "長野",
@@ -110338,7 +110338,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_06_a_ltdexp",
+        "id": "journey_3741AFAFFD9A67394E057294ACF48B00",
         "number": "A特急（Limited Express (A)）",
         "date": "2026-07-07",
         "origin": "須坂",
@@ -110386,7 +110386,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260707_07_hakutaka565",
+        "id": "journey_55DB5F0FE70F752721E67BA029168A20",
         "number": "はくたか565号（Hakutaka 565）（565E）",
         "date": "2026-07-07",
         "origin": "長野",
@@ -110533,7 +110533,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260708_01_tsurugi17",
+        "id": "journey_74236A39F500AA7027A8F519567B952B",
         "number": "つるぎ17号（Tsurugi 17）（17E）",
         "date": "2026-07-08",
         "origin": "加賀温泉",
@@ -110617,7 +110617,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260708_02_shirasagi2",
+        "id": "journey_65F43AE4739DB31208BF9295B6539472",
         "number": "しらさぎ6号（Shirasagi 6）（6M）",
         "date": "2026-07-08",
         "origin": "敦賀",
@@ -110797,7 +110797,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260708_03_hikari648",
+        "id": "journey_F57EA63347F47F36D98DF654CBAFDA69",
         "number": "ひかり648号（Hikari 648）（648A）",
         "date": "2026-07-08",
         "origin": "米原",
@@ -110857,7 +110857,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260708_04_hikari706",
+        "id": "journey_FB79023EBDF3D810C09FBCE322F2B679",
         "number": "ひかり706号（Hikari 706）（706A）",
         "date": "2026-07-08",
         "origin": "名古屋",
@@ -110978,7 +110978,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260708_05_local",
+        "id": "journey_059D25F92EEAD0E27416DA75021EFBB2",
         "number": "普通列車（Local）",
         "date": "2026-07-08",
         "origin": "三島",
@@ -111026,7 +111026,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260709_01_local",
+        "id": "journey_DC682B71ACE23212D62D87D4C371A5E1",
         "number": "普通列車（Local）",
         "date": "2026-07-09",
         "origin": "沼津",
@@ -111074,7 +111074,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260709_02_hikari713",
+        "id": "journey_E60A7D258F854777D4460EDFE961AE32",
         "number": "ひかり713号（Hikari 713）（713A）",
         "date": "2026-07-09",
         "origin": "三島",
@@ -111231,7 +111231,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260709_03_miyakoji_rapid",
+        "id": "journey_80163C1B9EDB32F4644B6CED30B291F5",
         "number": "みやこ路快速（Miyakoji Rapid）",
         "date": "2026-07-09",
         "origin": "京都",
@@ -111363,7 +111363,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260709_04_d_section_rapid",
+        "id": "journey_2C4B34CD53F9E78ECA8875BC1ABCD617",
         "number": "D区間快速（Section Rapid (D)）",
         "date": "2026-07-09",
         "origin": "宇治",
@@ -111495,7 +111495,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_01_nozomi252",
+        "id": "journey_0488BA679E26E3DF7B20C50B61F5242A",
         "number": "のぞみ252号（Nozomi 252）",
         "date": "2026-07-10",
         "origin": "京都",
@@ -111567,7 +111567,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_02_kodama824",
+        "id": "journey_D04B2C63CEA86422F386166CABE2A3FB",
         "number": "こだま824号（Kodama 824）",
         "date": "2026-07-10",
         "origin": "名古屋",
@@ -111687,7 +111687,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_03_local",
+        "id": "journey_E0ABE3D84C386F12C84C5EBB53E9DB42",
         "number": "普通列車（Local）",
         "date": "2026-07-10",
         "origin": "三島",
@@ -111735,7 +111735,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_04_local",
+        "id": "journey_552CE7006F50D9DD20F7EFB7B0B91BA8",
         "number": "普通列車（Local）",
         "date": "2026-07-10",
         "origin": "沼津",
@@ -111783,7 +111783,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_05_hikari718",
+        "id": "journey_1CB70EB6BDEE3E624E5E990D2B1C00FB",
         "number": "ひかり718号（Hikari 718）",
         "date": "2026-07-10",
         "origin": "三島",
@@ -111879,7 +111879,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_06_yamabiko221",
+        "id": "journey_FD6353765B0036EFBE30A6B9D31CE9D3",
         "number": "やまびこ221号（Yamabiko 221）（221B）",
         "date": "2026-07-10",
         "origin": "東京",
@@ -111939,7 +111939,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260710_07_keihin_tohoku_local",
+        "id": "journey_6C38BB258FF7BBA93CB1A6C6284BC9C4",
         "number": "京浜東北線 普通（Keihin-Tōhoku Line Local）（2145B）",
         "date": "2026-07-10",
         "origin": "大宮",
@@ -112035,7 +112035,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_01_keihin_tohoku_negishi_local",
+        "id": "journey_5DD4E6CA03675E3FA6AC32063B33E078",
         "number": "京浜東北・根岸線 普通（Keihin-Tōhoku / Negishi Line Local）（420B）",
         "date": "2026-07-11",
         "origin": "南浦和",
@@ -112131,7 +112131,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_02_kagayaki501",
+        "id": "journey_1EAE35C4A37558CFA7DD681330411832",
         "number": "かがやき501号（Kagayaki 501）（3501E）",
         "date": "2026-07-11",
         "origin": "大宮",
@@ -112348,7 +112348,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_03_hakutaka560",
+        "id": "journey_7A3B8940A7731646F2E0DB38A8C89C21",
         "number": "はくたか560号（Hakutaka 560）（560E）",
         "date": "2026-07-11",
         "origin": "金沢",
@@ -112565,7 +112565,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_04_saikyo_local",
+        "id": "journey_0F013B23352B2D55E622E87E2E8E1DB4",
         "number": "埼京線 普通（Saikyō Line Local）（1338K）",
         "date": "2026-07-11",
         "origin": "大宮",
@@ -112769,7 +112769,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_05_seibu_ikebukuro_semiexp",
+        "id": "journey_8AD20CEBC2F4E010D786EA9CEE066ABE",
         "number": "西武池袋線 急行 飯能行（Seibu Ikebukuro Line Express）",
         "date": "2026-07-11",
         "origin": "池袋",
@@ -113009,7 +113009,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260711_06_seibu_sayama_local",
+        "id": "journey_37EBEBB6809CFBA2C08E96855F63306A",
         "number": "西武狭山線 各駅停車 西武球場前行（臨時と推定）",
         "date": "2026-07-11",
         "origin": "西所沢",
@@ -113069,7 +113069,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260712_01_musashino_local",
+        "id": "journey_99AFD75780558F89BFB7FC505A282831",
         "number": "武蔵野線 普通（Musashino Line Local）（1224E）",
         "date": "2026-07-12",
         "origin": "南浦和",
@@ -113181,7 +113181,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260712_02_seibu_ikebukuro_semiexp",
+        "id": "journey_F9ABBBD9EF93833A99D5F678570D5898",
         "number": "西武池袋線 準急 飯能行（Seibu Ikebukuro Line Semi-Express）",
         "date": "2026-07-12",
         "origin": "秋津",
@@ -113245,7 +113245,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260712_03_seibu_sayama_local",
+        "id": "journey_025A9A2E73804710C0A0544D46DA840F",
         "number": "西武狭山線 普通（Seibu Sayama Line Local）",
         "date": "2026-07-12",
         "origin": "西所沢",
@@ -113309,7 +113309,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260712_04_seibu_sayama_ikebukuro_local",
+        "id": "journey_3D6CBC5295CE31F009A715F0A483EDF5",
         "number": "西武狭山線・池袋線 各駅停車（Seibu Local）",
         "date": "2026-07-12",
         "origin": "西武球場前",
@@ -113398,7 +113398,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260712_05_musashino_local",
+        "id": "journey_578784BBC21BEB37C6BCDB3F75623287",
         "number": "武蔵野線 普通（Musashino Line Local）（2131E）",
         "date": "2026-07-12",
         "origin": "新秋津",
@@ -113510,7 +113510,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_01_keihin_tohoku_negishi_local",
+        "id": "journey_AEDF22100651041F822E1DFD54EC4653",
         "number": "京浜東北・根岸線 普通（Keihin-Tōhoku / Negishi Line Local）",
         "date": "2026-07-13",
         "origin": "南浦和",
@@ -113742,7 +113742,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_02_kodama801",
+        "id": "journey_D67EA61A2C641A02967314209A67C0A5",
         "number": "こだま801号（Kodama 801）（801A）",
         "date": "2026-07-13",
         "origin": "東京",
@@ -113842,7 +113842,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_03_tokaido_main_local",
+        "id": "journey_660F1956DE6A9A62DB219B218967D58C",
         "number": "東海道本線 普通（Tōkaidō Main Line Local）",
         "date": "2026-07-13",
         "origin": "三島",
@@ -113894,7 +113894,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_04_tokaido_main_local",
+        "id": "journey_10CEA8306C1111A9244968C8560B886D",
         "number": "東海道本線 普通（Tōkaidō Main Line Local）",
         "date": "2026-07-13",
         "origin": "沼津",
@@ -113946,7 +113946,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_05_kodama816",
+        "id": "journey_5515D04C2ECC7C28FC099F7E25093E2D",
         "number": "こだま816号（Kodama 816）（816A）",
         "date": "2026-07-13",
         "origin": "三島",
@@ -114046,7 +114046,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_06_hayabusa27",
+        "id": "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0",
         "number": "はやぶさ27号（Hayabusa 27）（3027B）",
         "date": "2026-07-13",
         "origin": "東京",
@@ -114389,7 +114389,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260713_07_hokuto21",
+        "id": "journey_7FDB2E2A33B27404C1C8198B3C2B29F8",
         "number": "北斗21号（Hokuto 21）（21D）",
         "date": "2026-07-13",
         "origin": "新函館北斗",
@@ -114491,7 +114491,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260714_01_ozora3",
+        "id": "journey_43D90DF84B5E40D6304EC290E8ED4E74",
         "number": "おおぞら3号（Ōzora 3）（4003D）",
         "date": "2026-07-14",
         "origin": "札幌",
@@ -114593,7 +114593,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260714_02_nemuro_main_local",
+        "id": "journey_318CA3E19DF94AF4005322F937025412",
         "number": "根室本線 普通（Nemuro Main Line Local）（5625D）",
         "date": "2026-07-14",
         "origin": "釧路",
@@ -114823,7 +114823,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260714_03_nemuro_main_local",
+        "id": "journey_4404D8979CD787663FD77A73C2572D0C",
         "number": "根室本線 普通（Nemuro Main Line Local）（5630D）",
         "date": "2026-07-14",
         "origin": "根室",
@@ -115053,7 +115053,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260714_04_ozora12",
+        "id": "journey_F6F27BD3CBEFAA23FC0956F049DED550",
         "number": "おおぞら12号（Ōzora 12）（4012D）",
         "date": "2026-07-14",
         "origin": "釧路",
@@ -115131,7 +115131,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260715_01_soya",
+        "id": "journey_32E525B07148EE19DC4F3B99A36535ED",
         "number": "宗谷（Sōya）（51D）",
         "date": "2026-07-15",
         "origin": "札幌",
@@ -115263,7 +115263,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260715_02_soya",
+        "id": "journey_10F4EC2286758F85D709118AAFA6260E",
         "number": "宗谷（Sōya）（52D）",
         "date": "2026-07-15",
         "origin": "稚内",
@@ -115383,7 +115383,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_01_sapporo_subway_namboku_sapporo_susukino",
+        "id": "journey_8B59A27F6F916CAE6A525B4F32488204",
         "number": "札幌市営地下鉄 南北線（さっぽろ→すすきの）",
         "date": "2026-07-16",
         "origin": "さっぽろ",
@@ -115448,7 +115448,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
+        "id": "journey_17CC2EDF6C8FBBE0584149B2BADE9D7B",
         "number": "札幌市営地下鉄 南北線（大通→中島公園）",
         "date": "2026-07-16",
         "origin": "大通",
@@ -115513,7 +115513,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
+        "id": "journey_FF43AD962224E5B60A731748776A27EB",
         "number": "札幌市電 内回り（中島公園通→すすきの）",
         "date": "2026-07-16",
         "origin": "中島公園通",
@@ -115599,7 +115599,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_04_sapporo_streetcar_susukino_chuokuyakushomae",
+        "id": "journey_5AB6DC7EDCD13272F4DD08F0EEEDDDB5",
         "number": "札幌市電 内回り（すすきの→中央区役所前）",
         "date": "2026-07-16",
         "origin": "すすきの",
@@ -115686,7 +115686,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_05_sapporo_subway_tozai_nishi11_odori",
+        "id": "journey_97A52E47E661D43859B9236D25ECE603",
         "number": "札幌市営地下鉄 東西線（西11丁目→大通）",
         "date": "2026-07-16",
         "origin": "西11丁目",
@@ -115739,7 +115739,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
+        "id": "journey_B9B2EB9096BA7E1B096FCF563147469F",
         "number": "札幌市営地下鉄 南北線（大通→さっぽろ）",
         "date": "2026-07-16",
         "origin": "大通",
@@ -115792,7 +115792,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260716_07_hokuto20",
+        "id": "journey_8BADA44ED18197CDFA42A2D89B3028F1",
         "number": "北斗20号（Hokuto 20）（20D）",
         "date": "2026-07-16",
         "origin": "札幌",
@@ -115912,7 +115912,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260717_01_hakodate_tram",
+        "id": "journey_A51DFF674B84CF19A725723E186BE42B",
         "number": "函館市電５系統（Hakodate Tram Line 5）",
         "date": "2026-07-17",
         "origin": "五稜郭公園前",
@@ -116047,7 +116047,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260717_02_hakodate_tram",
+        "id": "journey_0CD36C937D37303F9498C53BF7B42430",
         "number": "函館市電５系統（Hakodate Tram Line 5）",
         "date": "2026-07-17",
         "origin": "大町",
@@ -116145,7 +116145,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_01_hakodate_liner",
+        "id": "journey_9D02C3A9C9EC22156727EE34EF3EECD9",
         "number": "はこだてライナー 普通（Hakodate Liner）（1321M）",
         "date": "2026-07-18",
         "origin": "函館",
@@ -116241,7 +116241,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_02_hayabusa10",
+        "id": "journey_915349569139B316338DF97618D6F773",
         "number": "はやぶさ10号（Hayabusa 10）（3010B）",
         "date": "2026-07-18",
         "origin": "新函館北斗",
@@ -116341,7 +116341,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_03_hayabusa95",
+        "id": "journey_024B5864D9989D220DE5C73F0EAE833F",
         "number": "はやぶさ95号（Hayabusa 95）（3095B）",
         "date": "2026-07-18",
         "origin": "八戸",
@@ -116403,7 +116403,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_04_ou_main_local",
+        "id": "journey_440A0D15C84B56D9F16C5EB444C9E5B1",
         "number": "奥羽本線 普通（Ōu Main Line Local）（4623M）",
         "date": "2026-07-18",
         "origin": "新青森",
@@ -116453,7 +116453,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_05_ou_main_local",
+        "id": "journey_81234AF32797B453C451E437222D2E60",
         "number": "奥羽本線 普通（Ōu Main Line Local）",
         "date": "2026-07-18",
         "origin": "青森",
@@ -116503,7 +116503,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_06_hayabusa",
+        "id": "journey_8B77161CDFB6C2A3CCCE5B7C674FF523",
         "number": "はやぶさ54号（Hayabusa 54）（2054B）",
         "date": "2026-07-18",
         "origin": "新青森",
@@ -116601,7 +116601,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_07_yamabiko",
+        "id": "journey_596792300B91ACEAE52DDC2FF9D11D2E",
         "number": "やまびこ56号（Yamabiko 56）（56B）",
         "date": "2026-07-18",
         "origin": "盛岡",
@@ -116841,7 +116841,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_08_kodama839",
+        "id": "journey_969009740BE6241F5DEEE35BD8CAA7BA",
         "number": "こだま839号（Kodama 839）（839A）",
         "date": "2026-07-18",
         "origin": "東京",
@@ -116941,7 +116941,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_09_tokaido_main_local",
+        "id": "journey_119A68426CA3EE502CDB96C972B317D4",
         "number": "東海道本線 普通（Tōkaidō Main Line Local）",
         "date": "2026-07-18",
         "origin": "三島",
@@ -116993,7 +116993,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_10_tokaido_main_local",
+        "id": "journey_DDD0A86A0B072018582A3CED0998B99D",
         "number": "東海道本線 普通（Tōkaidō Main Line Local）",
         "date": "2026-07-18",
         "origin": "沼津",
@@ -117045,7 +117045,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260718_11_hikari659",
+        "id": "journey_9409400F1A9EC5DA6CDB7FFBD64EBE2D",
         "number": "ひかり659号（Hikari 659）（659A）",
         "date": "2026-07-18",
         "origin": "三島",
@@ -117165,7 +117165,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260719_01_hikari703",
+        "id": "journey_C60F2E6092D87D9F5F85243B93428D5E",
         "number": "ひかり703号（Hikari 703）（703A）",
         "date": "2026-07-19",
         "origin": "名古屋",
@@ -117286,7 +117286,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260719_02_yakumo11",
+        "id": "journey_9B1957E8CA2CA62A34EEBFC519E64422",
         "number": "やくも11号（Yakumo 11）（1011M）",
         "date": "2026-07-19",
         "origin": "岡山",
@@ -117358,7 +117358,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260719_03_super_oki5",
+        "id": "journey_55E89F3BE5BD16BC06291B252CFFA81B",
         "number": "スーパーおき5号（Super Oki 5）（3005D）",
         "date": "2026-07-19",
         "origin": "米子",
@@ -117502,7 +117502,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260719_04_sakura770",
+        "id": "journey_CE6CDD905BB6708E69DD82011EB8182B",
         "number": "さくら770号（Sakura 770）（770A）",
         "date": "2026-07-19",
         "origin": "新山口",
@@ -117578,7 +117578,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_41_hiroden1_hiroshimaeki_fukuromachi",
+        "id": "journey_76C5FA48675C931CCDE2EB71E9A05658",
         "number": "広電1号線（広島駅→袋町）",
         "date": "2026-07-20",
         "origin": "広島駅",
@@ -117710,7 +117710,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_42_astram_hondori_johoku",
+        "id": "journey_AEF095A24CF065375213A5A9A0AC163A",
         "number": "アストラムライン（本通→城北）",
         "date": "2026-07-20",
         "origin": "本通",
@@ -117768,7 +117768,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
+        "id": "journey_9F86A38C7DD4FAD1DB6894D4FD0118D1",
         "number": "広電2号線（紙屋町西→商工センター入口）",
         "date": "2026-07-20",
         "origin": "紙屋町西",
@@ -117996,7 +117996,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_44_sanyo_local_shininokuchi_hiroshima",
+        "id": "journey_4B847D0A569A7FF0DFF0101FF69D5F0A",
         "number": "山陽本線 普通（新井口→広島）",
         "date": "2026-07-20",
         "origin": "新井口",
@@ -118080,7 +118080,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_45_sakura753_hiroshima_hakata",
+        "id": "journey_0D198248AFFDB230E7BBFF14146178C0",
         "number": "さくら753号（753A）",
         "date": "2026-07-20",
         "origin": "広島",
@@ -118201,7 +118201,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_46_tsubame325_hakata_shintosu",
+        "id": "journey_54E586655BBD3609E653BC7290FA2B34",
         "number": "つばめ325号（325A）",
         "date": "2026-07-20",
         "origin": "博多",
@@ -118249,7 +118249,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_47_midori35_shintosu_arita",
+        "id": "journey_06EC08904789EE82E214ED3D28758DE5",
         "number": "みどり35号（4035M）",
         "date": "2026-07-20",
         "origin": "新鳥栖",
@@ -118309,7 +118309,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_48_mr627d_arita_imari",
+        "id": "journey_71DD8854E028C292A3A8359556C3866B",
         "number": "松浦鉄道 西九州線 普通（627D）",
         "date": "2026-07-20",
         "origin": "有田",
@@ -118465,7 +118465,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_49_mr369d_imari_tabirahiradoguchi",
+        "id": "journey_082EA2B0A90F678FE1E8D274B729F9D4",
         "number": "松浦鉄道 西九州線 普通（369D）",
         "date": "2026-07-20",
         "origin": "伊万里",
@@ -118729,7 +118729,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_50_mr_tabirahiradoguchi_sasebo",
+        "id": "journey_B1AB45AE6B8B33C3A8CD8BC12BB07D33",
         "number": "松浦鉄道 西九州線 普通（たびら平戸口始発）",
         "date": "2026-07-20",
         "origin": "たびら平戸口",
@@ -119089,7 +119089,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260720_51_seasideliner3233d_sasebo_nagasaki",
+        "id": "journey_FC8005E13BA7158E6129934006093962",
         "number": "快速シーサイドライナー（3233D）",
         "date": "2026-07-20",
         "origin": "佐世保",
@@ -119413,7 +119413,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_01_nagasaki_tram3_nagasakieki_heiwakoen",
+        "id": "journey_87D92EF0BAE97A00C634BA96DA890A46",
         "number": "長崎電気軌道3号系統（長崎駅前→平和公園）",
         "date": "2026-07-21",
         "origin": "長崎駅前",
@@ -119521,7 +119521,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_02_nagasaki_tram3_urakamieki_nagasakieki",
+        "id": "journey_08B980D1C7CB9F6CAD15CD060A45807F",
         "number": "長崎電気軌道3号系統（浦上駅前→長崎駅前）",
         "date": "2026-07-21",
         "origin": "浦上駅前",
@@ -119602,7 +119602,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_03_nagasaki_tram1_nagasakieki_dejima",
+        "id": "journey_AD59A05EAE440ED38AA3279A20557058",
         "number": "長崎電気軌道1号系統（長崎駅前→出島）",
         "date": "2026-07-21",
         "origin": "長崎駅前",
@@ -119665,7 +119665,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_04_nagasaki_tram1_dejima_nagasakieki",
+        "id": "journey_C9DEC0495C5FAE492C4FE858535C3E30",
         "number": "長崎電気軌道1号系統（出島→長崎駅前）",
         "date": "2026-07-21",
         "origin": "出島",
@@ -119728,7 +119728,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_05_kamome22",
+        "id": "journey_33CBB95F33F145A44996E104C7110877",
         "number": "かもめ22号（Kamome 22）（2022G）",
         "date": "2026-07-21",
         "origin": "長崎",
@@ -119802,7 +119802,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_06_relay_kamome22",
+        "id": "journey_9E0FE255A29C5BBDEE31480F4AED2BE8",
         "number": "リレーかもめ22号（Relay Kamome 22）（2022H）",
         "date": "2026-07-21",
         "origin": "武雄温泉",
@@ -119856,7 +119856,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_07_sakura749",
+        "id": "journey_151F1405ADA1BC7794EB8C44CD7709C2",
         "number": "さくら749号（Sakura 749）（749A）",
         "date": "2026-07-21",
         "origin": "新鳥栖",
@@ -119941,7 +119941,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_08_asoboy3",
+        "id": "journey_02C494EB5E72DE2FE0D3E5BC7D303309",
         "number": "あそぼーい！3号（Aso Boy! 3）（8093D）",
         "date": "2026-07-21",
         "origin": "熊本",
@@ -120007,7 +120007,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_09_asoboy4",
+        "id": "journey_71102CEF82BE99D98F5C7101CD080E07",
         "number": "あそぼーい！4号（Aso Boy! 4）（8094D）",
         "date": "2026-07-21",
         "origin": "宮地",
@@ -120073,7 +120073,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_10_kumamoto_tram_a_kumamotoeki_karashimacho",
+        "id": "journey_425FC76FB050394D51554A9A2D6B369B",
         "number": "熊本市電A系統（熊本駅前→辛島町）",
         "date": "2026-07-21",
         "origin": "熊本駅前",
@@ -120156,7 +120156,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_11_kumamoto_tram_karashimacho_suidocho",
+        "id": "journey_8B16C03F0CFAADDD02FD4A3500661E2E",
         "number": "熊本市電（辛島町→水道町、下下班）",
         "date": "2026-07-21",
         "origin": "辛島町",
@@ -120230,7 +120230,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_12_hohi_local1493m_shinsuizenji_musashizuka",
+        "id": "journey_1100C5554DA23F0F99BBBD8F912CC604",
         "number": "普通1493M（豊肥本線）",
         "date": "2026-07-21",
         "origin": "新水前寺",
@@ -120304,7 +120304,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_13_hohi_local1498m_musashizuka_kumamoto",
+        "id": "journey_3B958DB027F701A9AFD801879294548F",
         "number": "普通1498M（豊肥本線）",
         "date": "2026-07-21",
         "origin": "武蔵塚",
@@ -120405,7 +120405,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260721_14_sakura767",
+        "id": "journey_5E47ABA2FB7E3A6CC5F14CBCC010472D",
         "number": "さくら767号（Sakura 767）（767A）",
         "date": "2026-07-21",
         "origin": "熊本",
@@ -120490,7 +120490,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_01_ibusuki_1321d_kagoshima_yamakawa",
+        "id": "journey_A18C112CF65FF5C2AD464A2C3309FB24",
         "number": "普通1321D（指宿枕崎線）",
         "date": "2026-07-22",
         "origin": "鹿児島中央",
@@ -120690,7 +120690,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_02_ibusuki_5321d_yamakawa_nishioyama",
+        "id": "journey_B96A06031B5BCFDD1064C35D950BFB91",
         "number": "普通5321D（指宿枕崎線）",
         "date": "2026-07-22",
         "origin": "山川",
@@ -120746,7 +120746,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_03_ibusuki_1326d_nishioyama_minamikagoshima",
+        "id": "journey_F497F768F6A74DE792D14B3DA43949F9",
         "number": "普通1326D（指宿枕崎線）",
         "date": "2026-07-22",
         "origin": "西大山",
@@ -120946,7 +120946,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
+        "id": "journey_FF81EAF940C88B515459211A732AD78C",
         "number": "鹿児島市電2系統（鹿児島中央駅前→都通）",
         "date": "2026-07-22",
         "origin": "鹿児島中央駅前",
@@ -120998,7 +120998,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_03b_nanohana3328d_minamikagoshima_kagoshima",
+        "id": "journey_61F39B7DCD1B8DFFC6688097802C44C8",
         "number": "快速なのはな（3328D）",
         "date": "2026-07-22",
         "origin": "南鹿児島",
@@ -121054,7 +121054,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_04_kirishima8",
+        "id": "journey_45E72A351DEC6512AF96B89578A93E9A",
         "number": "きりしま8号（Kirishima 8）（6008M）",
         "date": "2026-07-22",
         "origin": "鹿児島中央",
@@ -121144,7 +121144,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_05_nichirin10",
+        "id": "journey_E9C359F48C7CC40ABC70DBD05B606CFA",
         "number": "にちりん10号（Nichirin 10）（5010M）",
         "date": "2026-07-22",
         "origin": "宮崎",
@@ -121240,7 +121240,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_06_sonic44",
+        "id": "journey_6F379655E47131DD2F854B65A847B9F0",
         "number": "ソニック44号（Sonic 44）（3044M）",
         "date": "2026-07-22",
         "origin": "大分",
@@ -121372,7 +121372,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_07_kirameki6",
+        "id": "journey_31C35A5D2E003443D5E26D7654555B25",
         "number": "きらめき6号（Kirameki 6）（56M）",
         "date": "2026-07-22",
         "origin": "博多",
@@ -121456,7 +121456,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_08_sonic54_kokura_kurosaki",
+        "id": "journey_FEDC12334D0F270D498B929602534FA8",
         "number": "ソニック54号（885系「白いソニック」）",
         "date": "2026-07-22",
         "origin": "小倉",
@@ -121498,7 +121498,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_09_chikuho_electric_kurosaki_nogata",
+        "id": "journey_4BB3DDFC465CB6E4719AB69741432424",
         "number": "筑豊電気鉄道（黒崎駅前→筑豊直方）",
         "date": "2026-07-22",
         "origin": "黒崎駅前",
@@ -121778,7 +121778,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_10_heichiku_ita_nogata_tagawaita",
+        "id": "journey_FA2577CF26696BE8E3619FBC6FA06440",
         "number": "平成筑豊鉄道 伊田線（直方→田川伊田）",
         "date": "2026-07-22",
         "origin": "直方",
@@ -121984,7 +121984,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_11_hitahikosan_986d_tagawaita_kokura",
+        "id": "journey_7DCFF106FEBEC9FBCFCB4EB3109885B8",
         "number": "普通986D（日田彦山線）",
         "date": "2026-07-22",
         "origin": "田川伊田",
@@ -122169,7 +122169,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_12_monorail_kokura_kikugaoka",
+        "id": "journey_1B73B253ED48ADAE75E0A27CD5EDD87C",
         "number": "北九州モノレール（小倉→企救丘）",
         "date": "2026-07-22",
         "origin": "小倉",
@@ -122353,7 +122353,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260722_13_monorail_kikugaoka_kokura",
+        "id": "journey_FA664788B3F334B952706589201D498B",
         "number": "北九州モノレール（企救丘→小倉）",
         "date": "2026-07-22",
         "origin": "企救丘",
@@ -122537,7 +122537,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260723_01_sakura740",
+        "id": "journey_BDD9F936F447CBF04C5075C26DA76C88",
         "number": "さくら740号（Sakura 740）（740A）",
         "date": "2026-07-23",
         "origin": "小倉",
@@ -122685,7 +122685,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260723_02_shiokaze5",
+        "id": "journey_CECE2010BC0D2F1EB19C89BFD5900CAD",
         "number": "しおかぜ5号（Shiokaze 5）（5M）",
         "date": "2026-07-23",
         "origin": "岡山",
@@ -122846,7 +122846,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260723_03_ishizuchi10",
+        "id": "journey_BEEF6E99345E6E5CD1F5B4AF369AC636",
         "number": "いしづち10号（Ishizuchi 10）（1010M）",
         "date": "2026-07-23",
         "origin": "宇多津",
@@ -122894,7 +122894,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260723_04_kotoku_local_takamatsu_ritsurin",
+        "id": "journey_DFF892AFBEB679C6AA793A67226FF57C",
         "number": "普通（高徳線）",
         "date": "2026-07-23",
         "origin": "高松",
@@ -122959,7 +122959,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260723_05_uzushio10",
+        "id": "journey_771C696806C4705B412A265B953BD9A7",
         "number": "うずしお10号（Uzushio 10）（3010D）",
         "date": "2026-07-23",
         "origin": "栗林",
@@ -123001,7 +123001,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_01_ishizuchi9",
+        "id": "journey_07E6AD25D8057D28D08088C1D40C2491",
         "number": "いしづち9号（Ishizuchi 9）（9M）",
         "date": "2026-07-24",
         "origin": "高松",
@@ -123049,7 +123049,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_02_nanpu9",
+        "id": "journey_2A4BA95A7B92CB19921B27A2D3279C34",
         "number": "南風9号（Nanpū 9）（39D）",
         "date": "2026-07-24",
         "origin": "宇多津",
@@ -123259,7 +123259,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_03_tsurugisan6",
+        "id": "journey_510175D3C325909EF4C88C3A42E1108B",
         "number": "剣山6号（Tsurugisan 6）（56D）",
         "date": "2026-07-24",
         "origin": "阿波池田",
@@ -123313,7 +123313,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_04_tokushima_local_463d",
+        "id": "journey_7607A5FC50F4ABA60EDB87451A5E0724",
         "number": "普通（徳島線 463D）",
         "date": "2026-07-24",
         "origin": "穴吹",
@@ -123401,7 +123401,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_05_nanpu17",
+        "id": "journey_D2D514AAEA06253635D51310E9C4C06B",
         "number": "南風17号（Nanpū 17）（47D）",
         "date": "2026-07-24",
         "origin": "阿波池田",
@@ -123740,7 +123740,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_06_nanpu28",
+        "id": "journey_6322F5578A2F139890D3B028ADDAF45A",
         "number": "南風28号（Nanpū 28）（58D）",
         "date": "2026-07-24",
         "origin": "高知",
@@ -124409,7 +124409,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_07_kodama970",
+        "id": "journey_FBC327CBC341BD103BEEAE00FD568C91",
         "number": "こだま970号（500系）",
         "date": "2026-07-24",
         "origin": "岡山",
@@ -124473,7 +124473,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_08_tosaden_south",
+        "id": "journey_350E1BD8273A1E04690813FB31BF720C",
         "number": "とさでん路面電車 桟橋方面（Tosaden Tram, southbound）",
         "date": "2026-07-24",
         "origin": "高知駅前",
@@ -124547,7 +124547,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260724_09_tosaden_north",
+        "id": "journey_0694D992D0F11AE81676A5DCDFBFD38D",
         "number": "とさでん路面電車 高知駅前行（Tosaden Tram for Kōchi-Ekimae）",
         "date": "2026-07-24",
         "origin": "はりまや橋",
@@ -124621,7 +124621,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260725_05_hikari706",
+        "id": "journey_C163CF0702200718E5E57A2BE6C21885",
         "number": "ひかり706号（Hikari 706）（706A）",
         "date": "2026-07-25",
         "origin": "姫路",
@@ -124748,7 +124748,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260725_06_local",
+        "id": "journey_E98005859D36F61CDF6C0BEDE09A3258",
         "number": "普通列車（Local）",
         "date": "2026-07-25",
         "origin": "三島",
@@ -124800,7 +124800,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_01_local_numazu",
+        "id": "journey_8888515C58457DCC681836C3325CE638",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-26",
         "origin": "三島",
@@ -124849,7 +124849,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_02_local_mishima",
+        "id": "journey_DEA753DDFBC0519639A0FECAA3242CC5",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-26",
         "origin": "沼津",
@@ -124898,7 +124898,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_03_hikari706",
+        "id": "journey_CD24799CE25B1CF61107969F8A30406F",
         "number": "ひかり706号（Hikari 706）（706A）",
         "date": "2026-07-26",
         "origin": "三島",
@@ -124974,7 +124974,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_04_chuo_rapid_shinjuku",
+        "id": "journey_C03AE74555ED48DBCCA3989A84157CB7",
         "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
         "date": "2026-07-26",
         "origin": "東京",
@@ -125096,7 +125096,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_05_chuo_rapid_tokyo",
+        "id": "journey_10321A2FDEF5906E4DCE8DB6986E3C03",
         "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
         "date": "2026-07-26",
         "origin": "新宿",
@@ -125218,7 +125218,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_06_kodama_atami",
+        "id": "journey_029F2E79178CF1AA008FB454C06992F7",
         "number": "こだま841号（Kodama 841）",
         "date": "2026-07-26",
         "origin": "東京",
@@ -125306,7 +125306,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_07_odoriko",
+        "id": "journey_1C77A10398A5B717F5372522CD764D5F",
         "number": "踊り子（Odoriko）（車号不明・時刻推定）",
         "date": "2026-07-26",
         "origin": "熱海",
@@ -125360,7 +125360,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_08_chuo_rapid_shinjuku2",
+        "id": "journey_1F9D3D61F6C18F4BC2B202DC16B92231",
         "number": "中央線快速（Chūō Line Rapid）（時刻推定）",
         "date": "2026-07-26",
         "origin": "東京",
@@ -125482,7 +125482,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260726_09_shonan_shinjuku_yokohama",
+        "id": "journey_856C6D19621F1681AAF99048FEEAED8D",
         "number": "湘南新宿ライン 快速（Shōnan-Shinjuku Line Rapid）（時刻推定）",
         "date": "2026-07-26",
         "origin": "新宿",
@@ -125648,7 +125648,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_01_tokaido_through_numazu",
+        "id": "journey_583C80C04E9545A24F3711263868E484",
         "number": "東海道線 普通 直通（Tōkaidō Line Through Local）（時刻推定）",
         "date": "2026-07-27",
         "origin": "横浜",
@@ -125879,7 +125879,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_02_local_mishima",
+        "id": "journey_2445827DCEE24FDDD9BDAFF031574BF8",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-27",
         "origin": "沼津",
@@ -125928,7 +125928,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_03_hikari702",
+        "id": "journey_2634C4C2410DA151187D68ACC14F1201",
         "number": "ひかり702号（Hikari 702）",
         "date": "2026-07-27",
         "origin": "三島",
@@ -126004,7 +126004,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_04_nasuno259",
+        "id": "journey_A83E8C0CD3219DDE9BDACE75633FE06B",
         "number": "なすの259号（Nasuno 259）",
         "date": "2026-07-27",
         "origin": "東京",
@@ -126068,7 +126068,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_05_komachi",
+        "id": "journey_8468CDB2F92CD8F1CB56D7175B261C34",
         "number": "こまち（Komachi）（車号不明・時刻推定）",
         "date": "2026-07-27",
         "origin": "大宮",
@@ -126132,7 +126132,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_06_local_akihabara",
+        "id": "journey_5AB68AB4738C250255A82B17A485CD8E",
         "number": "京浜東北線 普通（Local）（時刻推定）",
         "date": "2026-07-27",
         "origin": "東京",
@@ -126190,7 +126190,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_07_local_tokyo",
+        "id": "journey_DD359818F2CA9B303F5EF5A05FCDA15D",
         "number": "京浜東北線 普通（Local）（時刻推定）",
         "date": "2026-07-27",
         "origin": "秋葉原",
@@ -126248,7 +126248,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_08_narita_express",
+        "id": "journey_680A26B9C2D06FDE49DABFF6A02DF17C",
         "number": "成田エクスプレス（Narita Express）（車号不明・時刻推定）",
         "date": "2026-07-27",
         "origin": "東京",
@@ -126303,7 +126303,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_09_kodama837",
+        "id": "journey_21B9459DC7DFD29026EE0E54B15BF121",
         "number": "こだま837号（Kodama 837）",
         "date": "2026-07-27",
         "origin": "品川",
@@ -126391,7 +126391,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260727_10_local_numazu",
+        "id": "journey_072BD550CC395E21A18FADA5A4255413",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-27",
         "origin": "三島",
@@ -126440,7 +126440,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_01_local_mishima",
+        "id": "journey_A50D14E9010F9184B45D3BD166A7488C",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-28",
         "origin": "沼津",
@@ -126489,7 +126489,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_02_kodama829",
+        "id": "journey_A4B7BCFE572DCF976943553B301BBF51",
         "number": "こだま829号（Kodama 829）",
         "date": "2026-07-28",
         "origin": "三島",
@@ -126577,7 +126577,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_03_entetsu_sukenobu",
+        "id": "journey_7296C07F3881D0CAAF2DE8828D443471",
         "number": "遠鉄電車 西鹿島行（Enshu Railway）（時刻推定）",
         "date": "2026-07-28",
         "origin": "新浜松",
@@ -126651,7 +126651,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_04_entetsu_return",
+        "id": "journey_323ADE1BA38D637024FE37B30449D56E",
         "number": "遠鉄電車 新浜松行（Enshu Railway）（時刻推定）",
         "date": "2026-07-28",
         "origin": "助信",
@@ -126725,7 +126725,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_05_kodama834",
+        "id": "journey_D34CC990A1B67E5BE0BA9D9730CA6916",
         "number": "こだま834号（Kodama 834）",
         "date": "2026-07-28",
         "origin": "浜松",
@@ -126813,7 +126813,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260728_06_local_numazu",
+        "id": "journey_FD2B8C351E5D802CF873225C04133FB4",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-28",
         "origin": "三島",
@@ -126862,7 +126862,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260729_01_local_mishima",
+        "id": "journey_1539FA6CAEDB8148D507E34ED7D4D897",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-29",
         "origin": "沼津",
@@ -126911,7 +126911,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260729_02_kodama840",
+        "id": "journey_96B2EFFD4EC25479AFA91263963111A2",
         "number": "こだま840号（Kodama 840）",
         "date": "2026-07-29",
         "origin": "三島",
@@ -127011,7 +127011,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260729_03_kodama911",
+        "id": "journey_8C70A9CF2CB598C4C2ABDA2EAABCE0F5",
         "number": "こだま911号（Kodama 911）",
         "date": "2026-07-29",
         "origin": "東京",
@@ -127111,7 +127111,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260729_04_local_numazu",
+        "id": "journey_C1F3524AE95815918C6C76DA80E813CD",
         "number": "普通列車（Local）（時刻推定）",
         "date": "2026-07-29",
         "origin": "三島",
@@ -127160,7 +127160,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260729_05_sunrise_izumo",
+        "id": "journey_F29762068C2DDB4CD79CF4AF30B29529",
         "number": "サンライズ出雲（Sunrise Izumo）（5031M/4031M）",
         "date": "2026-07-29",
         "origin": "沼津",
@@ -127288,7 +127288,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_01_ichibata_taisha",
+        "id": "journey_E97B57247FA4FAF2AD7C092FA6C78A0E",
         "number": "一畑電車 大社線（Ichibata Taisha Line）（時刻推定）",
         "date": "2026-07-30",
         "origin": "出雲大社前",
@@ -127362,7 +127362,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_02_ichibata_kitamatsue",
+        "id": "journey_1066A578B168E8867C0C2526F4C4918A",
         "number": "一畑電車 北松江線（Ichibata Kita-Matsue Line）（時刻推定）",
         "date": "2026-07-30",
         "origin": "川跡",
@@ -127436,7 +127436,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_03_yakumo22",
+        "id": "journey_BB3AD8FEF0D118561F7FC4FA6227A5A6",
         "number": "やくも22号（Yakumo 22）",
         "date": "2026-07-30",
         "origin": "出雲市",
@@ -127514,7 +127514,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_04_sakura762",
+        "id": "journey_20A4F24136AEE7B83D1AD4A267C4DE85",
         "number": "さくら762号（Sakura 762）",
         "date": "2026-07-30",
         "origin": "岡山",
@@ -127566,7 +127566,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_05_shinkaisoku_osaka",
+        "id": "journey_42081FC544A1354AECB52C9720DA202D",
         "number": "新快速（Special Rapid）（時刻推定）",
         "date": "2026-07-30",
         "origin": "新大阪",
@@ -127615,7 +127615,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_06_osaka_loop",
+        "id": "journey_475F1E0ED575D680352459093F852ED6",
         "number": "大阪環状線（Osaka Loop Line）（時刻推定）",
         "date": "2026-07-30",
         "origin": "大阪",
@@ -127727,7 +127727,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260730_07_nankai_sakai",
+        "id": "journey_95838C76BAA5FDF356AC92F8B54F802F",
         "number": "南海本線（Nankai Main Line）（時刻推定）",
         "date": "2026-07-30",
         "origin": "新今宮",
@@ -127839,7 +127839,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_01_nankai_shinimamiya",
+        "id": "journey_C409454EC8F3724E2ECD7CD942A27B3D",
         "number": "南海本線（Nankai Main Line）（時刻推定）",
         "date": "2026-07-31",
         "origin": "堺",
@@ -127951,7 +127951,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_02_rapit_alpha3",
+        "id": "journey_0DCC26B17610DE9969C200D26CBA75DE",
         "number": "ラピートα3号（Rapi:t α3）",
         "date": "2026-07-31",
         "origin": "新今宮",
@@ -128011,7 +128011,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_03_yui_naha_akamine",
+        "id": "journey_A04D207B2E4D8CA4B9088FA6DF5BDD29",
         "number": "ゆいレール（那覇空港→赤嶺）",
         "date": "2026-07-31",
         "origin": "那覇空港",
@@ -128063,7 +128063,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_04_yui_akamine_naha",
+        "id": "journey_959DFFAA45FED199E0FD06F93A12C93B",
         "number": "ゆいレール（赤嶺→那覇空港）",
         "date": "2026-07-31",
         "origin": "赤嶺",
@@ -128115,7 +128115,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_05_yui_tedako_shuri",
+        "id": "journey_EE957F00F2B8D8D291D4CD7EB1826810",
         "number": "ゆいレール（てだこ浦西→首里）",
         "date": "2026-07-31",
         "origin": "てだこ浦西",
@@ -128203,7 +128203,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_06_yui_shuri_miebashi",
+        "id": "journey_3A264FF820AE17659ADDD22FDDADB270",
         "number": "ゆいレール（首里→美栄橋）",
         "date": "2026-07-31",
         "origin": "首里",
@@ -128327,7 +128327,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_07_yui_miebashi_naha",
+        "id": "journey_B29C2B434D4A5E393447665740312185",
         "number": "ゆいレール（美栄橋→那覇空港）",
         "date": "2026-07-31",
         "origin": "美栄橋",
@@ -128451,7 +128451,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260731_08_yui_naha_miebashi",
+        "id": "journey_311418DF2394CCFFF6AA3C0151F0CB10",
         "number": "ゆいレール（那覇空港→美栄橋）",
         "date": "2026-07-31",
         "origin": "那覇空港",
@@ -128575,7 +128575,7 @@
     {
       "country": "jp",
       "train": {
-        "id": "20260801_01_yui_miebashi_naha",
+        "id": "journey_2DB618BA4041AF100A4FB6C47DA4B27C",
         "number": "ゆいレール（美栄橋→那覇空港）",
         "date": "2026-08-01",
         "origin": "美栄橋",

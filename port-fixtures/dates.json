@@ -1,12 +1,12 @@
 {
   "fixture": "dates.json",
   "describes": "app-dates.js §6 (date buckets, ordering, cross-day spans) over the app-core.js date primitives it is built on",
-  "contract": "A train lives in exactly ONE date bucket — its own `date`, or the date inferred from its id, or UNDATED — and every per-day view is derived from that, never stored beside it. An overnight train stays in one bucket while physically covering several calendar days, so getTrainDaySpan derives the days it touches from its own stop times (25:10 is 01:10 the next day) and the map filters on the resulting span key. The arithmetic behind those days is UTC-only: addDaysToDateString goes through Date.UTC plus a whole number of 86 400 000 ms and reads back through getUTC*, so it carries no time zone and DST cannot reach it — a port that adds a day through a local calendar answers differently for anyone west of UTC, and differently again twice a year. Bucket ordering is a plain UTF-16 string comparison with UNDATED mapped to U+FFFF so it sorts last; the train comparator falls from date to departure minute to String#localeCompare on the id, and only the SIGN of its result is contractual.",
+  "contract": "A train lives in exactly ONE date bucket — its own `date`, or UNDATED — and every per-day view is derived from that, never stored beside it. An overnight train stays in one bucket while physically covering several calendar days, so getTrainDaySpan derives the days it touches from its own stop times (25:10 is 01:10 the next day) and the map filters on the resulting span key. The arithmetic behind those days is UTC-only: addDaysToDateString goes through Date.UTC plus a whole number of 86 400 000 ms and reads back through getUTC*, so it carries no time zone and DST cannot reach it — a port that adds a day through a local calendar answers differently for anyone west of UTC, and differently again twice a year. Bucket ordering is a plain UTF-16 string comparison with UNDATED mapped to U+FFFF so it sorts last; the train comparator falls from date to departure minute to String#localeCompare on the id, and only the SIGN of its result is contractual.",
   "trains": [
     {
       "index": 0,
       "source": "jp",
-      "id": "20260703_01_haruka",
+      "id": "journey_A9554752F257CDA52831A6C0EED248AF",
       "date": "2026-07-03",
       "stops": [
         {
@@ -34,7 +34,7 @@
     {
       "index": 1,
       "source": "jp",
-      "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "id": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "date": "2026-07-03",
       "stops": [
         {
@@ -102,7 +102,7 @@
     {
       "index": 2,
       "source": "jp",
-      "id": "20260703_03_tokaido_main_local",
+      "id": "journey_A3CFCBD90A222CC4066ACAF20A6C06C2",
       "date": "2026-07-03",
       "stops": [
         {
@@ -120,7 +120,7 @@
     {
       "index": 3,
       "source": "jp",
-      "id": "20260704_01_local",
+      "id": "journey_D7889CA9349256238A038E0045DE7D0D",
       "date": "2026-07-04",
       "stops": [
         {
@@ -138,7 +138,7 @@
     {
       "index": 4,
       "source": "jp",
-      "id": "20260704_02_kodama918",
+      "id": "journey_4CB9E326EEC18D85989CEF90ACF970A1",
       "date": "2026-07-04",
       "stops": [
         {
@@ -171,7 +171,7 @@
     {
       "index": 5,
       "source": "jp",
-      "id": "20260704_03_keikyu_asakusa_line",
+      "id": "journey_9EBA4C59A5675EBCE17BEBAC846CF2CA",
       "date": "2026-07-04",
       "stops": [
         {
@@ -199,7 +199,7 @@
     {
       "index": 6,
       "source": "jp",
-      "id": "20260704_04_oedo_line",
+      "id": "journey_C07243F8AADDB594384BBF1CC16C13EA",
       "date": "2026-07-04",
       "stops": [
         {
@@ -217,7 +217,7 @@
     {
       "index": 7,
       "source": "jp",
-      "id": "20260704_05_mita_line",
+      "id": "journey_5C3BA9F2C1A8F58936EC22D01F4E22E2",
       "date": "2026-07-04",
       "stops": [
         {
@@ -250,7 +250,7 @@
     {
       "index": 8,
       "source": "jp",
-      "id": "20260704_06_marunouchi_line",
+      "id": "journey_09AC64CFCEE12C93E83510873DD6FEC1",
       "date": "2026-07-04",
       "stops": [
         {
@@ -298,7 +298,7 @@
     {
       "index": 9,
       "source": "jp",
-      "id": "20260704_07_saikyo_line",
+      "id": "journey_EAACE466C535944D58A31E97A124CF0C",
       "date": "2026-07-04",
       "stops": [
         {
@@ -381,7 +381,7 @@
     {
       "index": 10,
       "source": "jp",
-      "id": "20260704_08_shonan_shinjuku_line",
+      "id": "journey_F3AE731354D1EAA0C06B45E04BE9F302",
       "date": "2026-07-04",
       "stops": [
         {
@@ -544,7 +544,7 @@
     {
       "index": 11,
       "source": "jp",
-      "id": "20260704_09_negishi_line",
+      "id": "journey_9F1B97EDB6DCD7A4DB1908060F60E180",
       "date": "2026-07-04",
       "stops": [
         {
@@ -562,7 +562,7 @@
     {
       "index": 12,
       "source": "jp",
-      "id": "20260704_10_minatomirai_line",
+      "id": "journey_2840A4D4E48F45ECA2F36BE4ED5C5E2A",
       "date": "2026-07-04",
       "stops": [
         {
@@ -585,7 +585,7 @@
     {
       "index": 13,
       "source": "jp",
-      "id": "20260704_11_keihin_tohoku_line",
+      "id": "journey_595FE5006ED23F7B331795A1C3A877E9",
       "date": "2026-07-04",
       "stops": [
         {
@@ -603,7 +603,7 @@
     {
       "index": 14,
       "source": "jp",
-      "id": "20260704_12_yokohama_line",
+      "id": "journey_1BF192064CE880673A0BB314C77436DB",
       "date": "2026-07-04",
       "stops": [
         {
@@ -631,7 +631,7 @@
     {
       "index": 15,
       "source": "jp",
-      "id": "20260704_13_kodama915",
+      "id": "journey_5DDC220B564315ABDE363017D45930D6",
       "date": "2026-07-04",
       "stops": [
         {
@@ -659,7 +659,7 @@
     {
       "index": 16,
       "source": "jp",
-      "id": "20260704_14_local",
+      "id": "journey_A6980FF0C00F952ADEA44DB6724A69A7",
       "date": "2026-07-04",
       "stops": [
         {
@@ -677,7 +677,7 @@
     {
       "index": 17,
       "source": "jp",
-      "id": "20260705_01_local",
+      "id": "journey_45B9E5DDA1ACD772D91C5332674B66F6",
       "date": "2026-07-05",
       "stops": [
         {
@@ -695,7 +695,7 @@
     {
       "index": 18,
       "source": "jp",
-      "id": "20260705_02_kodama802",
+      "id": "journey_7ED510CE68E0BE81303D118A1B9E3575",
       "date": "2026-07-05",
       "stops": [
         {
@@ -733,7 +733,7 @@
     {
       "index": 19,
       "source": "jp",
-      "id": "20260705_03_chuo_line",
+      "id": "journey_DAE47A568594FC62E600A5F695EB7365",
       "date": "2026-07-05",
       "stops": [
         {
@@ -796,7 +796,7 @@
     {
       "index": 20,
       "source": "jp",
-      "id": "20260705_04_chuo_sobu_line",
+      "id": "journey_588AB2A1A40723D13732520638875B90",
       "date": "2026-07-05",
       "stops": [
         {
@@ -834,7 +834,7 @@
     {
       "index": 21,
       "source": "jp",
-      "id": "20260705_05_yurakucho_line",
+      "id": "journey_B6AC22131D2441B90E2E47880C035680",
       "date": "2026-07-05",
       "stops": [
         {
@@ -857,7 +857,7 @@
     {
       "index": 22,
       "source": "jp",
-      "id": "20260705_06_yurakucho_line",
+      "id": "journey_A6900040ECB7DC73804CD885E0C55A77",
       "date": "2026-07-05",
       "stops": [
         {
@@ -885,7 +885,7 @@
     {
       "index": 23,
       "source": "jp",
-      "id": "20260705_07_yamanote_line",
+      "id": "journey_2421C1DE7244064D1E03E50A9E4A1707",
       "date": "2026-07-05",
       "stops": [
         {
@@ -938,7 +938,7 @@
     {
       "index": 24,
       "source": "jp",
-      "id": "20260705_08_hayabusa59",
+      "id": "journey_5D02E4142B00032F153A4A2DF85B955D",
       "date": "2026-07-05",
       "stops": [
         {
@@ -996,7 +996,7 @@
     {
       "index": 25,
       "source": "jp",
-      "id": "20260706_01_hayabusa11",
+      "id": "journey_E7BA8AD080B2F29F785AC451F915075F",
       "date": "2026-07-06",
       "stops": [
         {
@@ -1069,7 +1069,7 @@
     {
       "index": 26,
       "source": "jp",
-      "id": "20260706_02_super_tsugaru2",
+      "id": "journey_290DDF7BAF84271A16574A1D9669181F",
       "date": "2026-07-06",
       "stops": [
         {
@@ -1112,7 +1112,7 @@
     {
       "index": 27,
       "source": "jp",
-      "id": "20260706_03_inaho14",
+      "id": "journey_03F366E23A32B262DDDA6774510A20D4",
       "date": "2026-07-06",
       "stops": [
         {
@@ -1200,7 +1200,7 @@
     {
       "index": 28,
       "source": "jp",
-      "id": "20260707_01_toki308",
+      "id": "journey_F977C83D37F1F33106F63344B048477F",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1243,7 +1243,7 @@
     {
       "index": 29,
       "source": "jp",
-      "id": "20260707_02_hakutaka555",
+      "id": "journey_B3210B8E26A09DDE4055CBC06E62E202",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1281,7 +1281,7 @@
     {
       "index": 30,
       "source": "jp",
-      "id": "20260707_03_local",
+      "id": "journey_AD986EA2AE199842C86F1FE0C72C1F98",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1314,7 +1314,7 @@
     {
       "index": 31,
       "source": "jp",
-      "id": "20260707_04_local",
+      "id": "journey_410D06F4D03FC76877879DC916484BBC",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1347,7 +1347,7 @@
     {
       "index": 32,
       "source": "jp",
-      "id": "20260707_05_local",
+      "id": "journey_5214DDD3F5A2C014BA41D682C8847138",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1420,7 +1420,7 @@
     {
       "index": 33,
       "source": "jp",
-      "id": "20260707_06_a_ltdexp",
+      "id": "journey_3741AFAFFD9A67394E057294ACF48B00",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1443,7 +1443,7 @@
     {
       "index": 34,
       "source": "jp",
-      "id": "20260707_07_hakutaka565",
+      "id": "journey_55DB5F0FE70F752721E67BA029168A20",
       "date": "2026-07-07",
       "stops": [
         {
@@ -1501,7 +1501,7 @@
     {
       "index": 35,
       "source": "jp",
-      "id": "20260708_01_tsurugi17",
+      "id": "journey_74236A39F500AA7027A8F519567B952B",
       "date": "2026-07-08",
       "stops": [
         {
@@ -1534,7 +1534,7 @@
     {
       "index": 36,
       "source": "jp",
-      "id": "20260708_02_shirasagi2",
+      "id": "journey_65F43AE4739DB31208BF9295B6539472",
       "date": "2026-07-08",
       "stops": [
         {
@@ -1602,7 +1602,7 @@
     {
       "index": 37,
       "source": "jp",
-      "id": "20260708_03_hikari648",
+      "id": "journey_F57EA63347F47F36D98DF654CBAFDA69",
       "date": "2026-07-08",
       "stops": [
         {
@@ -1625,7 +1625,7 @@
     {
       "index": 38,
       "source": "jp",
-      "id": "20260708_04_hikari706",
+      "id": "journey_FB79023EBDF3D810C09FBCE322F2B679",
       "date": "2026-07-08",
       "stops": [
         {
@@ -1673,7 +1673,7 @@
     {
       "index": 39,
       "source": "jp",
-      "id": "20260708_05_local",
+      "id": "journey_059D25F92EEAD0E27416DA75021EFBB2",
       "date": "2026-07-08",
       "stops": [
         {
@@ -1691,7 +1691,7 @@
     {
       "index": 40,
       "source": "jp",
-      "id": "20260709_01_local",
+      "id": "journey_DC682B71ACE23212D62D87D4C371A5E1",
       "date": "2026-07-09",
       "stops": [
         {
@@ -1709,7 +1709,7 @@
     {
       "index": 41,
       "source": "jp",
-      "id": "20260709_02_hikari713",
+      "id": "journey_E60A7D258F854777D4460EDFE961AE32",
       "date": "2026-07-09",
       "stops": [
         {
@@ -1772,7 +1772,7 @@
     {
       "index": 42,
       "source": "jp",
-      "id": "20260709_03_miyakoji_rapid",
+      "id": "journey_80163C1B9EDB32F4644B6CED30B291F5",
       "date": "2026-07-09",
       "stops": [
         {
@@ -1825,7 +1825,7 @@
     {
       "index": 43,
       "source": "jp",
-      "id": "20260709_04_d_section_rapid",
+      "id": "journey_2C4B34CD53F9E78ECA8875BC1ABCD617",
       "date": "2026-07-09",
       "stops": [
         {
@@ -1878,7 +1878,7 @@
     {
       "index": 44,
       "source": "jp",
-      "id": "20260710_01_nozomi252",
+      "id": "journey_0488BA679E26E3DF7B20C50B61F5242A",
       "date": "2026-07-10",
       "stops": [
         {
@@ -1906,7 +1906,7 @@
     {
       "index": 45,
       "source": "jp",
-      "id": "20260710_02_kodama824",
+      "id": "journey_D04B2C63CEA86422F386166CABE2A3FB",
       "date": "2026-07-10",
       "stops": [
         {
@@ -1915,33 +1915,33 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:19",
+          "departure": "13:24",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:36",
+          "departure": "13:41",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:53",
+          "departure": "13:58",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:08",
+          "departure": "14:10",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
+          "arrival": "14:23",
           "departure": "14:25",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:36",
+          "departure": "14:41",
           "stop_type": "passenger_stop"
         },
         {
@@ -1954,7 +1954,7 @@
     {
       "index": 46,
       "source": "jp",
-      "id": "20260710_03_local",
+      "id": "journey_E0ABE3D84C386F12C84C5EBB53E9DB42",
       "date": "2026-07-10",
       "stops": [
         {
@@ -1972,7 +1972,7 @@
     {
       "index": 47,
       "source": "jp",
-      "id": "20260710_04_local",
+      "id": "journey_552CE7006F50D9DD20F7EFB7B0B91BA8",
       "date": "2026-07-10",
       "stops": [
         {
@@ -1990,7 +1990,7 @@
     {
       "index": 48,
       "source": "jp",
-      "id": "20260710_05_hikari718",
+      "id": "journey_1CB70EB6BDEE3E624E5E990D2B1C00FB",
       "date": "2026-07-10",
       "stops": [
         {
@@ -2009,13 +2009,13 @@
           "stop_type": "pass_through"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:24",
+          "departure": "20:25",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:35",
+          "departure": "20:36",
           "stop_type": "passenger_stop"
         },
         {
@@ -2028,7 +2028,7 @@
     {
       "index": 49,
       "source": "jp",
-      "id": "20260710_06_yamabiko221",
+      "id": "journey_FD6353765B0036EFBE30A6B9D31CE9D3",
       "date": "2026-07-10",
       "stops": [
         {
@@ -2051,7 +2051,7 @@
     {
       "index": 50,
       "source": "jp",
-      "id": "20260710_07_keihin_tohoku_local",
+      "id": "journey_6C38BB258FF7BBA93CB1A6C6284BC9C4",
       "date": "2026-07-10",
       "stops": [
         {
@@ -2089,7 +2089,7 @@
     {
       "index": 51,
       "source": "jp",
-      "id": "20260711_01_keihin_tohoku_negishi_local",
+      "id": "journey_5DD4E6CA03675E3FA6AC32063B33E078",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2127,7 +2127,7 @@
     {
       "index": 52,
       "source": "jp",
-      "id": "20260711_02_kagayaki501",
+      "id": "journey_1EAE35C4A37558CFA7DD681330411832",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2215,7 +2215,7 @@
     {
       "index": 53,
       "source": "jp",
-      "id": "20260711_03_hakutaka560",
+      "id": "journey_7A3B8940A7731646F2E0DB38A8C89C21",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2303,7 +2303,7 @@
     {
       "index": 54,
       "source": "jp",
-      "id": "20260711_04_saikyo_local",
+      "id": "journey_0F013B23352B2D55E622E87E2E8E1DB4",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2386,7 +2386,7 @@
     {
       "index": 55,
       "source": "jp",
-      "id": "20260711_05_seibu_ikebukuro_semiexp",
+      "id": "journey_8AD20CEBC2F4E010D786EA9CEE066ABE",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2484,7 +2484,7 @@
     {
       "index": 56,
       "source": "jp",
-      "id": "20260711_06_seibu_sayama_local",
+      "id": "journey_37EBEBB6809CFBA2C08E96855F63306A",
       "date": "2026-07-11",
       "stops": [
         {
@@ -2507,7 +2507,7 @@
     {
       "index": 57,
       "source": "jp",
-      "id": "20260712_01_musashino_local",
+      "id": "journey_99AFD75780558F89BFB7FC505A282831",
       "date": "2026-07-12",
       "stops": [
         {
@@ -2550,7 +2550,7 @@
     {
       "index": 58,
       "source": "jp",
-      "id": "20260712_02_seibu_ikebukuro_semiexp",
+      "id": "journey_F9ABBBD9EF93833A99D5F678570D5898",
       "date": "2026-07-12",
       "stops": [
         {
@@ -2573,7 +2573,7 @@
     {
       "index": 59,
       "source": "jp",
-      "id": "20260712_03_seibu_sayama_local",
+      "id": "journey_025A9A2E73804710C0A0544D46DA840F",
       "date": "2026-07-12",
       "stops": [
         {
@@ -2596,7 +2596,7 @@
     {
       "index": 60,
       "source": "jp",
-      "id": "20260712_04_seibu_sayama_ikebukuro_local",
+      "id": "journey_3D6CBC5295CE31F009A715F0A483EDF5",
       "date": "2026-07-12",
       "stops": [
         {
@@ -2629,7 +2629,7 @@
     {
       "index": 61,
       "source": "jp",
-      "id": "20260712_05_musashino_local",
+      "id": "journey_578784BBC21BEB37C6BCDB3F75623287",
       "date": "2026-07-12",
       "stops": [
         {
@@ -2672,7 +2672,7 @@
     {
       "index": 62,
       "source": "jp",
-      "id": "20260713_01_keihin_tohoku_negishi_local",
+      "id": "journey_AEDF22100651041F822E1DFD54EC4653",
       "date": "2026-07-13",
       "stops": [
         {
@@ -2765,7 +2765,7 @@
     {
       "index": 63,
       "source": "jp",
-      "id": "20260713_02_kodama801",
+      "id": "journey_D67EA61A2C641A02967314209A67C0A5",
       "date": "2026-07-13",
       "stops": [
         {
@@ -2803,7 +2803,7 @@
     {
       "index": 64,
       "source": "jp",
-      "id": "20260713_03_tokaido_main_local",
+      "id": "journey_660F1956DE6A9A62DB219B218967D58C",
       "date": "2026-07-13",
       "stops": [
         {
@@ -2821,7 +2821,7 @@
     {
       "index": 65,
       "source": "jp",
-      "id": "20260713_04_tokaido_main_local",
+      "id": "journey_10CEA8306C1111A9244968C8560B886D",
       "date": "2026-07-13",
       "stops": [
         {
@@ -2839,7 +2839,7 @@
     {
       "index": 66,
       "source": "jp",
-      "id": "20260713_05_kodama816",
+      "id": "journey_5515D04C2ECC7C28FC099F7E25093E2D",
       "date": "2026-07-13",
       "stops": [
         {
@@ -2877,7 +2877,7 @@
     {
       "index": 67,
       "source": "jp",
-      "id": "20260713_06_hayabusa27",
+      "id": "journey_4DBADC9CC0B33FDC9F5E0DA527EC5AA0",
       "date": "2026-07-13",
       "stops": [
         {
@@ -3015,7 +3015,7 @@
     {
       "index": 68,
       "source": "jp",
-      "id": "20260713_07_hokuto21",
+      "id": "journey_7FDB2E2A33B27404C1C8198B3C2B29F8",
       "date": "2026-07-13",
       "stops": [
         {
@@ -3083,7 +3083,7 @@
     {
       "index": 69,
       "source": "jp",
-      "id": "20260714_01_ozora3",
+      "id": "journey_43D90DF84B5E40D6304EC290E8ED4E74",
       "date": "2026-07-14",
       "stops": [
         {
@@ -3151,7 +3151,7 @@
     {
       "index": 70,
       "source": "jp",
-      "id": "20260714_02_nemuro_main_local",
+      "id": "journey_318CA3E19DF94AF4005322F937025412",
       "date": "2026-07-14",
       "stops": [
         {
@@ -3244,7 +3244,7 @@
     {
       "index": 71,
       "source": "jp",
-      "id": "20260714_03_nemuro_main_local",
+      "id": "journey_4404D8979CD787663FD77A73C2572D0C",
       "date": "2026-07-14",
       "stops": [
         {
@@ -3337,7 +3337,7 @@
     {
       "index": 72,
       "source": "jp",
-      "id": "20260714_04_ozora12",
+      "id": "journey_F6F27BD3CBEFAA23FC0956F049DED550",
       "date": "2026-07-14",
       "stops": [
         {
@@ -3385,7 +3385,7 @@
     {
       "index": 73,
       "source": "jp",
-      "id": "20260715_01_soya",
+      "id": "journey_32E525B07148EE19DC4F3B99A36535ED",
       "date": "2026-07-15",
       "stops": [
         {
@@ -3478,7 +3478,7 @@
     {
       "index": 74,
       "source": "jp",
-      "id": "20260715_02_soya",
+      "id": "journey_10F4EC2286758F85D709118AAFA6260E",
       "date": "2026-07-15",
       "stops": [
         {
@@ -3561,7 +3561,7 @@
     {
       "index": 75,
       "source": "jp",
-      "id": "20260716_01_sapporo_subway_namboku_sapporo_susukino",
+      "id": "journey_8B59A27F6F916CAE6A525B4F32488204",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3584,7 +3584,7 @@
     {
       "index": 76,
       "source": "jp",
-      "id": "20260716_02_sapporo_subway_namboku_odori_nakajimakoen",
+      "id": "journey_17CC2EDF6C8FBBE0584149B2BADE9D7B",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3607,7 +3607,7 @@
     {
       "index": 77,
       "source": "jp",
-      "id": "20260716_03_sapporo_streetcar_nakajimakoendori_susukino",
+      "id": "journey_FF43AD962224E5B60A731748776A27EB",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3640,7 +3640,7 @@
     {
       "index": 78,
       "source": "jp",
-      "id": "20260716_04_sapporo_streetcar_susukino_chuokuyakushomae",
+      "id": "journey_5AB6DC7EDCD13272F4DD08F0EEEDDDB5",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3673,7 +3673,7 @@
     {
       "index": 79,
       "source": "jp",
-      "id": "20260716_05_sapporo_subway_tozai_nishi11_odori",
+      "id": "journey_97A52E47E661D43859B9236D25ECE603",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3691,7 +3691,7 @@
     {
       "index": 80,
       "source": "jp",
-      "id": "20260716_06_sapporo_subway_namboku_odori_sapporo",
+      "id": "journey_B9B2EB9096BA7E1B096FCF563147469F",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3709,7 +3709,7 @@
     {
       "index": 81,
       "source": "jp",
-      "id": "20260716_07_hokuto20",
+      "id": "journey_8BADA44ED18197CDFA42A2D89B3028F1",
       "date": "2026-07-16",
       "stops": [
         {
@@ -3792,7 +3792,7 @@
     {
       "index": 82,
       "source": "jp",
-      "id": "20260717_01_hakodate_tram",
+      "id": "journey_A51DFF674B84CF19A725723E186BE42B",
       "date": "2026-07-17",
       "stops": [
         {
@@ -3845,7 +3845,7 @@
     {
       "index": 83,
       "source": "jp",
-      "id": "20260717_02_hakodate_tram",
+      "id": "journey_0CD36C937D37303F9498C53BF7B42430",
       "date": "2026-07-17",
       "stops": [
         {
@@ -3883,7 +3883,7 @@
     {
       "index": 84,
       "source": "jp",
-      "id": "20260718_01_hakodate_liner",
+      "id": "journey_9D02C3A9C9EC22156727EE34EF3EECD9",
       "date": "2026-07-18",
       "stops": [
         {
@@ -3921,7 +3921,7 @@
     {
       "index": 85,
       "source": "jp",
-      "id": "20260718_02_hayabusa10",
+      "id": "journey_915349569139B316338DF97618D6F773",
       "date": "2026-07-18",
       "stops": [
         {
@@ -3959,7 +3959,7 @@
     {
       "index": 86,
       "source": "jp",
-      "id": "20260718_03_hayabusa95",
+      "id": "journey_024B5864D9989D220DE5C73F0EAE833F",
       "date": "2026-07-18",
       "stops": [
         {
@@ -3982,7 +3982,7 @@
     {
       "index": 87,
       "source": "jp",
-      "id": "20260718_04_ou_main_local",
+      "id": "journey_440A0D15C84B56D9F16C5EB444C9E5B1",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4000,7 +4000,7 @@
     {
       "index": 88,
       "source": "jp",
-      "id": "20260718_05_ou_main_local",
+      "id": "journey_81234AF32797B453C451E437222D2E60",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4018,7 +4018,7 @@
     {
       "index": 89,
       "source": "jp",
-      "id": "20260718_06_hayabusa",
+      "id": "journey_8B77161CDFB6C2A3CCCE5B7C674FF523",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4056,7 +4056,7 @@
     {
       "index": 90,
       "source": "jp",
-      "id": "20260718_07_yamabiko",
+      "id": "journey_596792300B91ACEAE52DDC2FF9D11D2E",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4154,7 +4154,7 @@
     {
       "index": 91,
       "source": "jp",
-      "id": "20260718_08_kodama839",
+      "id": "journey_969009740BE6241F5DEEE35BD8CAA7BA",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4192,7 +4192,7 @@
     {
       "index": 92,
       "source": "jp",
-      "id": "20260718_09_tokaido_main_local",
+      "id": "journey_119A68426CA3EE502CDB96C972B317D4",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4210,7 +4210,7 @@
     {
       "index": 93,
       "source": "jp",
-      "id": "20260718_10_tokaido_main_local",
+      "id": "journey_DDD0A86A0B072018582A3CED0998B99D",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4228,7 +4228,7 @@
     {
       "index": 94,
       "source": "jp",
-      "id": "20260718_11_hikari659",
+      "id": "journey_9409400F1A9EC5DA6CDB7FFBD64EBE2D",
       "date": "2026-07-18",
       "stops": [
         {
@@ -4276,7 +4276,7 @@
     {
       "index": 95,
       "source": "jp",
-      "id": "20260719_01_hikari703",
+      "id": "journey_C60F2E6092D87D9F5F85243B93428D5E",
       "date": "2026-07-19",
       "stops": [
         {
@@ -4324,7 +4324,7 @@
     {
       "index": 96,
       "source": "jp",
-      "id": "20260719_02_yakumo11",
+      "id": "journey_9B1957E8CA2CA62A34EEBFC519E64422",
       "date": "2026-07-19",
       "stops": [
         {
@@ -4367,7 +4367,7 @@
     {
       "index": 97,
       "source": "jp",
-      "id": "20260719_03_super_oki5",
+      "id": "journey_55E89F3BE5BD16BC06291B252CFFA81B",
       "date": "2026-07-19",
       "stops": [
         {
@@ -4470,7 +4470,7 @@
     {
       "index": 98,
       "source": "jp",
-      "id": "20260719_04_sakura770",
+      "id": "journey_CE6CDD905BB6708E69DD82011EB8182B",
       "date": "2026-07-19",
       "stops": [
         {
@@ -4481,7 +4481,7 @@
         {
           "arrival": null,
           "departure": null,
-          "stop_type": "passenger_stop"
+          "stop_type": "pass_through"
         },
         {
           "arrival": null,
@@ -4498,7 +4498,7 @@
     {
       "index": 99,
       "source": "jp",
-      "id": "20260720_41_hiroden1_hiroshimaeki_fukuromachi",
+      "id": "journey_76C5FA48675C931CCDE2EB71E9A05658",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4551,7 +4551,7 @@
     {
       "index": 100,
       "source": "jp",
-      "id": "20260720_42_astram_hondori_johoku",
+      "id": "journey_AEF095A24CF065375213A5A9A0AC163A",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4574,7 +4574,7 @@
     {
       "index": 101,
       "source": "jp",
-      "id": "20260720_43_hiroden2_kamiyachonishi_shokocenter",
+      "id": "journey_9F86A38C7DD4FAD1DB6894D4FD0118D1",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4667,7 +4667,7 @@
     {
       "index": 102,
       "source": "jp",
-      "id": "20260720_44_sanyo_local_shininokuchi_hiroshima",
+      "id": "journey_4B847D0A569A7FF0DFF0101FF69D5F0A",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4700,7 +4700,7 @@
     {
       "index": 103,
       "source": "jp",
-      "id": "20260720_45_sakura753_hiroshima_hakata",
+      "id": "journey_0D198248AFFDB230E7BBFF14146178C0",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4748,7 +4748,7 @@
     {
       "index": 104,
       "source": "jp",
-      "id": "20260720_46_tsubame325_hakata_shintosu",
+      "id": "journey_54E586655BBD3609E653BC7290FA2B34",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4766,7 +4766,7 @@
     {
       "index": 105,
       "source": "jp",
-      "id": "20260720_47_midori35_shintosu_arita",
+      "id": "journey_06EC08904789EE82E214ED3D28758DE5",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4799,7 +4799,7 @@
     {
       "index": 106,
       "source": "jp",
-      "id": "20260720_48_mr627d_arita_imari",
+      "id": "journey_71DD8854E028C292A3A8359556C3866B",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4862,7 +4862,7 @@
     {
       "index": 107,
       "source": "jp",
-      "id": "20260720_49_mr369d_imari_tabirahiradoguchi",
+      "id": "journey_082EA2B0A90F678FE1E8D274B729F9D4",
       "date": "2026-07-20",
       "stops": [
         {
@@ -4970,7 +4970,7 @@
     {
       "index": 108,
       "source": "jp",
-      "id": "20260720_50_mr_tabirahiradoguchi_sasebo",
+      "id": "journey_B1AB45AE6B8B33C3A8CD8BC12BB07D33",
       "date": "2026-07-20",
       "stops": [
         {
@@ -5118,7 +5118,7 @@
     {
       "index": 109,
       "source": "jp",
-      "id": "20260720_51_seasideliner3233d_sasebo_nagasaki",
+      "id": "journey_FC8005E13BA7158E6129934006093962",
       "date": "2026-07-20",
       "stops": [
         {
@@ -5251,7 +5251,7 @@
     {
       "index": 110,
       "source": "jp",
-      "id": "20260721_01_nagasaki_tram3_nagasakieki_heiwakoen",
+      "id": "journey_87D92EF0BAE97A00C634BA96DA890A46",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5304,7 +5304,7 @@
     {
       "index": 111,
       "source": "jp",
-      "id": "20260721_02_nagasaki_tram3_urakamieki_nagasakieki",
+      "id": "journey_08B980D1C7CB9F6CAD15CD060A45807F",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5342,7 +5342,7 @@
     {
       "index": 112,
       "source": "jp",
-      "id": "20260721_03_nagasaki_tram1_nagasakieki_dejima",
+      "id": "journey_AD59A05EAE440ED38AA3279A20557058",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5370,7 +5370,7 @@
     {
       "index": 113,
       "source": "jp",
-      "id": "20260721_04_nagasaki_tram1_dejima_nagasakieki",
+      "id": "journey_C9DEC0495C5FAE492C4FE858535C3E30",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5398,7 +5398,7 @@
     {
       "index": 114,
       "source": "jp",
-      "id": "20260721_05_kamome22",
+      "id": "journey_33CBB95F33F145A44996E104C7110877",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5431,7 +5431,7 @@
     {
       "index": 115,
       "source": "jp",
-      "id": "20260721_06_relay_kamome22",
+      "id": "journey_9E0FE255A29C5BBDEE31480F4AED2BE8",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5459,7 +5459,7 @@
     {
       "index": 116,
       "source": "jp",
-      "id": "20260721_07_sakura749",
+      "id": "journey_151F1405ADA1BC7794EB8C44CD7709C2",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5497,7 +5497,7 @@
     {
       "index": 117,
       "source": "jp",
-      "id": "20260721_08_asoboy3",
+      "id": "journey_02C494EB5E72DE2FE0D3E5BC7D303309",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5535,7 +5535,7 @@
     {
       "index": 118,
       "source": "jp",
-      "id": "20260721_09_asoboy4",
+      "id": "journey_71102CEF82BE99D98F5C7101CD080E07",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5573,7 +5573,7 @@
     {
       "index": 119,
       "source": "jp",
-      "id": "20260721_10_kumamoto_tram_a_kumamotoeki_karashimacho",
+      "id": "journey_425FC76FB050394D51554A9A2D6B369B",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5611,7 +5611,7 @@
     {
       "index": 120,
       "source": "jp",
-      "id": "20260721_11_kumamoto_tram_karashimacho_suidocho",
+      "id": "journey_8B16C03F0CFAADDD02FD4A3500661E2E",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5644,7 +5644,7 @@
     {
       "index": 121,
       "source": "jp",
-      "id": "20260721_12_hohi_local1493m_shinsuizenji_musashizuka",
+      "id": "journey_1100C5554DA23F0F99BBBD8F912CC604",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5677,7 +5677,7 @@
     {
       "index": 122,
       "source": "jp",
-      "id": "20260721_13_hohi_local1498m_musashizuka_kumamoto",
+      "id": "journey_3B958DB027F701A9AFD801879294548F",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5725,7 +5725,7 @@
     {
       "index": 123,
       "source": "jp",
-      "id": "20260721_14_sakura767",
+      "id": "journey_5E47ABA2FB7E3A6CC5F14CBCC010472D",
       "date": "2026-07-21",
       "stops": [
         {
@@ -5763,7 +5763,7 @@
     {
       "index": 124,
       "source": "jp",
-      "id": "20260722_01_ibusuki_1321d_kagoshima_yamakawa",
+      "id": "journey_A18C112CF65FF5C2AD464A2C3309FB24",
       "date": "2026-07-22",
       "stops": [
         {
@@ -5866,7 +5866,7 @@
     {
       "index": 125,
       "source": "jp",
-      "id": "20260722_02_ibusuki_5321d_yamakawa_nishioyama",
+      "id": "journey_B96A06031B5BCFDD1064C35D950BFB91",
       "date": "2026-07-22",
       "stops": [
         {
@@ -5889,7 +5889,7 @@
     {
       "index": 126,
       "source": "jp",
-      "id": "20260722_03_ibusuki_1326d_nishioyama_minamikagoshima",
+      "id": "journey_F497F768F6A74DE792D14B3DA43949F9",
       "date": "2026-07-22",
       "stops": [
         {
@@ -5992,7 +5992,7 @@
     {
       "index": 127,
       "source": "jp",
-      "id": "20260722_03a_kagoshima_tram_kagoshimachuoeki_miyakodori",
+      "id": "journey_FF81EAF940C88B515459211A732AD78C",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6010,7 +6010,7 @@
     {
       "index": 128,
       "source": "jp",
-      "id": "20260722_03b_nanohana3328d_minamikagoshima_kagoshima",
+      "id": "journey_61F39B7DCD1B8DFFC6688097802C44C8",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6033,7 +6033,7 @@
     {
       "index": 129,
       "source": "jp",
-      "id": "20260722_04_kirishima8",
+      "id": "journey_45E72A351DEC6512AF96B89578A93E9A",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6091,7 +6091,7 @@
     {
       "index": 130,
       "source": "jp",
-      "id": "20260722_05_nichirin10",
+      "id": "journey_E9C359F48C7CC40ABC70DBD05B606CFA",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6154,7 +6154,7 @@
     {
       "index": 131,
       "source": "jp",
-      "id": "20260722_06_sonic44",
+      "id": "journey_6F379655E47131DD2F854B65A847B9F0",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6247,7 +6247,7 @@
     {
       "index": 132,
       "source": "jp",
-      "id": "20260722_07_kirameki6",
+      "id": "journey_31C35A5D2E003443D5E26D7654555B25",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6300,7 +6300,7 @@
     {
       "index": 133,
       "source": "jp",
-      "id": "20260722_08_sonic54_kokura_kurosaki",
+      "id": "journey_FEDC12334D0F270D498B929602534FA8",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6318,7 +6318,7 @@
     {
       "index": 134,
       "source": "jp",
-      "id": "20260722_09_chikuho_electric_kurosaki_nogata",
+      "id": "journey_4BB3DDFC465CB6E4719AB69741432424",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6431,7 +6431,7 @@
     {
       "index": 135,
       "source": "jp",
-      "id": "20260722_10_heichiku_ita_nogata_tagawaita",
+      "id": "journey_FA2577CF26696BE8E3619FBC6FA06440",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6514,7 +6514,7 @@
     {
       "index": 136,
       "source": "jp",
-      "id": "20260722_11_hitahikosan_986d_tagawaita_kokura",
+      "id": "journey_7DCFF106FEBEC9FBCFCB4EB3109885B8",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6587,7 +6587,7 @@
     {
       "index": 137,
       "source": "jp",
-      "id": "20260722_12_monorail_kokura_kikugaoka",
+      "id": "journey_1B73B253ED48ADAE75E0A27CD5EDD87C",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6660,7 +6660,7 @@
     {
       "index": 138,
       "source": "jp",
-      "id": "20260722_13_monorail_kikugaoka_kokura",
+      "id": "journey_FA664788B3F334B952706589201D498B",
       "date": "2026-07-22",
       "stops": [
         {
@@ -6733,7 +6733,7 @@
     {
       "index": 139,
       "source": "jp",
-      "id": "20260723_01_sakura740",
+      "id": "journey_BDD9F936F447CBF04C5075C26DA76C88",
       "date": "2026-07-23",
       "stops": [
         {
@@ -6806,7 +6806,7 @@
     {
       "index": 140,
       "source": "jp",
-      "id": "20260723_02_shiokaze5",
+      "id": "journey_CECE2010BC0D2F1EB19C89BFD5900CAD",
       "date": "2026-07-23",
       "stops": [
         {
@@ -6879,7 +6879,7 @@
     {
       "index": 141,
       "source": "jp",
-      "id": "20260723_03_ishizuchi10",
+      "id": "journey_BEEF6E99345E6E5CD1F5B4AF369AC636",
       "date": "2026-07-23",
       "stops": [
         {
@@ -6902,7 +6902,7 @@
     {
       "index": 142,
       "source": "jp",
-      "id": "20260723_04_kotoku_local_takamatsu_ritsurin",
+      "id": "journey_DFF892AFBEB679C6AA793A67226FF57C",
       "date": "2026-07-23",
       "stops": [
         {
@@ -6930,7 +6930,7 @@
     {
       "index": 143,
       "source": "jp",
-      "id": "20260723_05_uzushio10",
+      "id": "journey_771C696806C4705B412A265B953BD9A7",
       "date": "2026-07-23",
       "stops": [
         {
@@ -6948,7 +6948,7 @@
     {
       "index": 144,
       "source": "jp",
-      "id": "20260724_01_ishizuchi9",
+      "id": "journey_07E6AD25D8057D28D08088C1D40C2491",
       "date": "2026-07-24",
       "stops": [
         {
@@ -6957,8 +6957,8 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:03",
+          "departure": "12:04",
           "stop_type": "passenger_stop"
         },
         {
@@ -6971,7 +6971,7 @@
     {
       "index": 145,
       "source": "jp",
-      "id": "20260724_02_nanpu9",
+      "id": "journey_2A4BA95A7B92CB19921B27A2D3279C34",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7049,7 +7049,7 @@
     {
       "index": 146,
       "source": "jp",
-      "id": "20260724_03_tsurugisan6",
+      "id": "journey_510175D3C325909EF4C88C3A42E1108B",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7058,13 +7058,13 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:40",
+          "departure": "14:41",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:52",
+          "departure": "14:53",
           "stop_type": "passenger_stop"
         },
         {
@@ -7077,7 +7077,7 @@
     {
       "index": 147,
       "source": "jp",
-      "id": "20260724_04_tokushima_local_463d",
+      "id": "journey_7607A5FC50F4ABA60EDB87451A5E0724",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7110,7 +7110,7 @@
     {
       "index": 148,
       "source": "jp",
-      "id": "20260724_05_nanpu17",
+      "id": "journey_D2D514AAEA06253635D51310E9C4C06B",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7238,7 +7238,7 @@
     {
       "index": 149,
       "source": "jp",
-      "id": "20260724_06_nanpu28",
+      "id": "journey_6322F5578A2F139890D3B028ADDAF45A",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7491,7 +7491,7 @@
     {
       "index": 150,
       "source": "jp",
-      "id": "20260724_07_kodama970",
+      "id": "journey_FBC327CBC341BD103BEEAE00FD568C91",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7500,8 +7500,8 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:34",
+          "departure": "22:35",
           "stop_type": "passenger_stop"
         },
         {
@@ -7514,7 +7514,7 @@
     {
       "index": 151,
       "source": "jp",
-      "id": "20260724_08_tosaden_south",
+      "id": "journey_350E1BD8273A1E04690813FB31BF720C",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7542,7 +7542,7 @@
     {
       "index": 152,
       "source": "jp",
-      "id": "20260724_09_tosaden_north",
+      "id": "journey_0694D992D0F11AE81676A5DCDFBFD38D",
       "date": "2026-07-24",
       "stops": [
         {
@@ -7570,7 +7570,7 @@
     {
       "index": 153,
       "source": "jp",
-      "id": "20260725_05_hikari706",
+      "id": "journey_C163CF0702200718E5E57A2BE6C21885",
       "date": "2026-07-25",
       "stops": [
         {
@@ -7579,27 +7579,27 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:33",
+          "departure": "11:34",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:46",
+          "departure": "11:48",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:02",
+          "departure": "12:07",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
+          "arrival": "12:42",
           "departure": "12:43",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
+          "arrival": "13:13",
           "departure": "13:17",
           "stop_type": "passenger_stop"
         },
@@ -7618,7 +7618,7 @@
     {
       "index": 154,
       "source": "jp",
-      "id": "20260725_06_local",
+      "id": "journey_E98005859D36F61CDF6C0BEDE09A3258",
       "date": "2026-07-25",
       "stops": [
         {
@@ -7636,7 +7636,7 @@
     {
       "index": 155,
       "source": "jp",
-      "id": "20260726_01_local_numazu",
+      "id": "journey_8888515C58457DCC681836C3325CE638",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7654,7 +7654,7 @@
     {
       "index": 156,
       "source": "jp",
-      "id": "20260726_02_local_mishima",
+      "id": "journey_DEA753DDFBC0519639A0FECAA3242CC5",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7672,7 +7672,7 @@
     {
       "index": 157,
       "source": "jp",
-      "id": "20260726_03_hikari706",
+      "id": "journey_CD24799CE25B1CF61107969F8A30406F",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7681,13 +7681,13 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:24",
+          "departure": "14:25",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:35",
+          "departure": "14:36",
           "stop_type": "passenger_stop"
         },
         {
@@ -7700,7 +7700,7 @@
     {
       "index": 158,
       "source": "jp",
-      "id": "20260726_04_chuo_rapid_shinjuku",
+      "id": "journey_C03AE74555ED48DBCCA3989A84157CB7",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7758,7 +7758,7 @@
     {
       "index": 159,
       "source": "jp",
-      "id": "20260726_05_chuo_rapid_tokyo",
+      "id": "journey_10321A2FDEF5906E4DCE8DB6986E3C03",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7816,7 +7816,7 @@
     {
       "index": 160,
       "source": "jp",
-      "id": "20260726_06_kodama_atami",
+      "id": "journey_029F2E79178CF1AA008FB454C06992F7",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7825,18 +7825,18 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:33",
+          "departure": "16:34",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:44",
+          "departure": "16:45",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:00",
+          "departure": "17:05",
           "stop_type": "passenger_stop"
         },
         {
@@ -7849,7 +7849,7 @@
     {
       "index": 161,
       "source": "jp",
-      "id": "20260726_07_odoriko",
+      "id": "journey_1C77A10398A5B717F5372522CD764D5F",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7877,7 +7877,7 @@
     {
       "index": 162,
       "source": "jp",
-      "id": "20260726_08_chuo_rapid_shinjuku2",
+      "id": "journey_1F9D3D61F6C18F4BC2B202DC16B92231",
       "date": "2026-07-26",
       "stops": [
         {
@@ -7935,7 +7935,7 @@
     {
       "index": 163,
       "source": "jp",
-      "id": "20260726_09_shonan_shinjuku_yokohama",
+      "id": "journey_856C6D19621F1681AAF99048FEEAED8D",
       "date": "2026-07-26",
       "stops": [
         {
@@ -8013,7 +8013,7 @@
     {
       "index": 164,
       "source": "jp",
-      "id": "20260727_01_tokaido_through_numazu",
+      "id": "journey_583C80C04E9545A24F3711263868E484",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8131,7 +8131,7 @@
     {
       "index": 165,
       "source": "jp",
-      "id": "20260727_02_local_mishima",
+      "id": "journey_2445827DCEE24FDDD9BDAFF031574BF8",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8149,7 +8149,7 @@
     {
       "index": 166,
       "source": "jp",
-      "id": "20260727_03_hikari702",
+      "id": "journey_2634C4C2410DA151187D68ACC14F1201",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8158,13 +8158,13 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:24",
+          "departure": "12:25",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:35",
+          "departure": "12:36",
           "stop_type": "passenger_stop"
         },
         {
@@ -8177,7 +8177,7 @@
     {
       "index": 167,
       "source": "jp",
-      "id": "20260727_04_nasuno259",
+      "id": "journey_A83E8C0CD3219DDE9BDACE75633FE06B",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8200,7 +8200,7 @@
     {
       "index": 168,
       "source": "jp",
-      "id": "20260727_05_komachi",
+      "id": "journey_8468CDB2F92CD8F1CB56D7175B261C34",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8223,7 +8223,7 @@
     {
       "index": 169,
       "source": "jp",
-      "id": "20260727_06_local_akihabara",
+      "id": "journey_5AB68AB4738C250255A82B17A485CD8E",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8246,7 +8246,7 @@
     {
       "index": 170,
       "source": "jp",
-      "id": "20260727_07_local_tokyo",
+      "id": "journey_DD359818F2CA9B303F5EF5A05FCDA15D",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8269,7 +8269,7 @@
     {
       "index": 171,
       "source": "jp",
-      "id": "20260727_08_narita_express",
+      "id": "journey_680A26B9C2D06FDE49DABFF6A02DF17C",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8287,7 +8287,7 @@
     {
       "index": 172,
       "source": "jp",
-      "id": "20260727_09_kodama837",
+      "id": "journey_21B9459DC7DFD29026EE0E54B15BF121",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8296,18 +8296,18 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:44",
+          "departure": "15:45",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:00",
+          "departure": "16:02",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:10",
+          "departure": "16:10",
           "stop_type": "passenger_stop"
         },
         {
@@ -8320,7 +8320,7 @@
     {
       "index": 173,
       "source": "jp",
-      "id": "20260727_10_local_numazu",
+      "id": "journey_072BD550CC395E21A18FADA5A4255413",
       "date": "2026-07-27",
       "stops": [
         {
@@ -8338,7 +8338,7 @@
     {
       "index": 174,
       "source": "jp",
-      "id": "20260728_01_local_mishima",
+      "id": "journey_A50D14E9010F9184B45D3BD166A7488C",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8356,7 +8356,7 @@
     {
       "index": 175,
       "source": "jp",
-      "id": "20260728_02_kodama829",
+      "id": "journey_A4B7BCFE572DCF976943553B301BBF51",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8365,18 +8365,18 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:31",
+          "departure": "14:37",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:47",
+          "departure": "14:52",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:06",
+          "departure": "15:08",
           "stop_type": "passenger_stop"
         },
         {
@@ -8389,7 +8389,7 @@
     {
       "index": 176,
       "source": "jp",
-      "id": "20260728_03_entetsu_sukenobu",
+      "id": "journey_7296C07F3881D0CAAF2DE8828D443471",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8422,7 +8422,7 @@
     {
       "index": 177,
       "source": "jp",
-      "id": "20260728_04_entetsu_return",
+      "id": "journey_323ADE1BA38D637024FE37B30449D56E",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8455,7 +8455,7 @@
     {
       "index": 178,
       "source": "jp",
-      "id": "20260728_05_kodama834",
+      "id": "journey_D34CC990A1B67E5BE0BA9D9730CA6916",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8464,18 +8464,18 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:36",
+          "departure": "16:38",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:51",
+          "departure": "16:56",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:06",
+          "departure": "17:11",
           "stop_type": "passenger_stop"
         },
         {
@@ -8488,7 +8488,7 @@
     {
       "index": 179,
       "source": "jp",
-      "id": "20260728_06_local_numazu",
+      "id": "journey_FD2B8C351E5D802CF873225C04133FB4",
       "date": "2026-07-28",
       "stops": [
         {
@@ -8506,7 +8506,7 @@
     {
       "index": 180,
       "source": "jp",
-      "id": "20260729_01_local_mishima",
+      "id": "journey_1539FA6CAEDB8148D507E34ED7D4D897",
       "date": "2026-07-29",
       "stops": [
         {
@@ -8524,7 +8524,7 @@
     {
       "index": 181,
       "source": "jp",
-      "id": "20260729_02_kodama840",
+      "id": "journey_96B2EFFD4EC25479AFA91263963111A2",
       "date": "2026-07-29",
       "stops": [
         {
@@ -8533,23 +8533,23 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:01",
+          "departure": "19:02",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:09",
+          "departure": "19:14",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:29",
+          "departure": "19:30",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:40",
+          "departure": "19:41",
           "stop_type": "passenger_stop"
         },
         {
@@ -8562,7 +8562,7 @@
     {
       "index": 182,
       "source": "jp",
-      "id": "20260729_03_kodama911",
+      "id": "journey_8C70A9CF2CB598C4C2ABDA2EAABCE0F5",
       "date": "2026-07-29",
       "stops": [
         {
@@ -8571,23 +8571,23 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:51",
+          "departure": "21:52",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:02",
+          "departure": "22:03",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:18",
+          "departure": "22:19",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:26",
+          "departure": "22:27",
           "stop_type": "passenger_stop"
         },
         {
@@ -8600,7 +8600,7 @@
     {
       "index": 183,
       "source": "jp",
-      "id": "20260729_04_local_numazu",
+      "id": "journey_C1F3524AE95815918C6C76DA80E813CD",
       "date": "2026-07-29",
       "stops": [
         {
@@ -8618,7 +8618,7 @@
     {
       "index": 184,
       "source": "jp",
-      "id": "20260729_05_sunrise_izumo",
+      "id": "journey_F29762068C2DDB4CD79CF4AF30B29529",
       "date": "2026-07-29",
       "stops": [
         {
@@ -8696,7 +8696,7 @@
     {
       "index": 185,
       "source": "jp",
-      "id": "20260730_01_ichibata_taisha",
+      "id": "journey_E97B57247FA4FAF2AD7C092FA6C78A0E",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8729,7 +8729,7 @@
     {
       "index": 186,
       "source": "jp",
-      "id": "20260730_02_ichibata_kitamatsue",
+      "id": "journey_1066A578B168E8867C0C2526F4C4918A",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8762,7 +8762,7 @@
     {
       "index": 187,
       "source": "jp",
-      "id": "20260730_03_yakumo22",
+      "id": "journey_BB3AD8FEF0D118561F7FC4FA6227A5A6",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8771,33 +8771,33 @@
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:08",
+          "departure": "15:09",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:27",
+          "departure": "15:27",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:34",
+          "departure": "15:36",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:45",
+          "departure": "16:46",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:13",
+          "departure": "17:14",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:35",
+          "departure": "17:36",
           "stop_type": "passenger_stop"
         },
         {
@@ -8810,7 +8810,7 @@
     {
       "index": 188,
       "source": "jp",
-      "id": "20260730_04_sakura762",
+      "id": "journey_20A4F24136AEE7B83D1AD4A267C4DE85",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8828,7 +8828,7 @@
     {
       "index": 189,
       "source": "jp",
-      "id": "20260730_05_shinkaisoku_osaka",
+      "id": "journey_42081FC544A1354AECB52C9720DA202D",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8846,7 +8846,7 @@
     {
       "index": 190,
       "source": "jp",
-      "id": "20260730_06_osaka_loop",
+      "id": "journey_475F1E0ED575D680352459093F852ED6",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8899,7 +8899,7 @@
     {
       "index": 191,
       "source": "jp",
-      "id": "20260730_07_nankai_sakai",
+      "id": "journey_95838C76BAA5FDF356AC92F8B54F802F",
       "date": "2026-07-30",
       "stops": [
         {
@@ -8952,7 +8952,7 @@
     {
       "index": 192,
       "source": "jp",
-      "id": "20260731_01_nankai_shinimamiya",
+      "id": "journey_C409454EC8F3724E2ECD7CD942A27B3D",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9005,7 +9005,7 @@
     {
       "index": 193,
       "source": "jp",
-      "id": "20260731_02_rapit_alpha3",
+      "id": "journey_0DCC26B17610DE9969C200D26CBA75DE",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9015,17 +9015,17 @@
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "06:34",
           "stop_type": "passenger_stop"
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "07:00",
           "stop_type": "passenger_stop"
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "07:02",
           "stop_type": "passenger_stop"
         },
         {
@@ -9038,7 +9038,7 @@
     {
       "index": 194,
       "source": "jp",
-      "id": "20260731_03_yui_naha_akamine",
+      "id": "journey_A04D207B2E4D8CA4B9088FA6DF5BDD29",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9056,7 +9056,7 @@
     {
       "index": 195,
       "source": "jp",
-      "id": "20260731_04_yui_akamine_naha",
+      "id": "journey_959DFFAA45FED199E0FD06F93A12C93B",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9074,7 +9074,7 @@
     {
       "index": 196,
       "source": "jp",
-      "id": "20260731_05_yui_tedako_shuri",
+      "id": "journey_EE957F00F2B8D8D291D4CD7EB1826810",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9107,7 +9107,7 @@
     {
       "index": 197,
       "source": "jp",
-      "id": "20260731_06_yui_shuri_miebashi",
+      "id": "journey_3A264FF820AE17659ADDD22FDDADB270",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9155,7 +9155,7 @@
     {
       "index": 198,
       "source": "jp",
-      "id": "20260731_07_yui_miebashi_naha",
+      "id": "journey_B29C2B434D4A5E393447665740312185",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9203,7 +9203,7 @@
     {
       "index": 199,
       "source": "jp",
-      "id": "20260731_08_yui_naha_miebashi",
+      "id": "journey_311418DF2394CCFFF6AA3C0151F0CB10",
       "date": "2026-07-31",
       "stops": [
         {
@@ -9251,7 +9251,7 @@
     {
       "index": 200,
       "source": "jp",
-      "id": "20260801_01_yui_miebashi_naha",
+      "id": "journey_2DB618BA4041AF100A4FB6C47DA4B27C",
       "date": "2026-08-01",
       "stops": [
         {
@@ -9299,7 +9299,7 @@
     {
       "index": 201,
       "source": "tw",
-      "id": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+      "id": "journey_5C3C741549CF09E20FE4CC4F7389B758",
       "date": "2026-08-02",
       "stops": [
         {
@@ -9372,7 +9372,7 @@
     {
       "index": 202,
       "source": "tw",
-      "id": "20260802_02_trtc_bl_taipei_main_ximen",
+      "id": "journey_48FE139478368C9C7274289E1D49510A",
       "date": "2026-08-02",
       "stops": [
         {
@@ -9390,7 +9390,7 @@
     {
       "index": 203,
       "source": "tw",
-      "id": "20260802_03_trtc_bl_ximen_zhongxiao_fuxing",
+      "id": "journey_7F9FEBF55983F06E943C4BF21837CD2E",
       "date": "2026-08-02",
       "stops": [
         {
@@ -9423,7 +9423,7 @@
     {
       "index": 204,
       "source": "tw",
-      "id": "20260802_04_trtc_bl_zhongxiao_fuxing_ximen",
+      "id": "journey_B34C34D4052B67C1D1F2468F4B8826A4",
       "date": "2026-08-02",
       "stops": [
         {
@@ -9456,7 +9456,7 @@
     {
       "index": 205,
       "source": "tw",
-      "id": "20260805_01_thsr_165_taipei_taichung",
+      "id": "journey_E2BA1597EB6DEA75FB126926E564D6CD",
       "date": "2026-08-05",
       "stops": [
         {
@@ -9494,7 +9494,7 @@
     {
       "index": 206,
       "source": "tw",
-      "id": "20260805_02_tra_local_3262_xinwuri_taichung",
+      "id": "journey_253013612D5701BF5895AD9C0FC1A850",
       "date": "2026-08-05",
       "stops": [
         {
@@ -9527,7 +9527,7 @@
     {
       "index": 207,
       "source": "tw",
-      "id": "20260806_01_tra_tze_chiang_3000_137_taichung_changhua",
+      "id": "journey_0A8EC92F75B878119658D0752A71E41F",
       "date": "2026-08-06",
       "stops": [
         {
@@ -9570,7 +9570,7 @@
     {
       "index": 208,
       "source": "tw",
-      "id": "20260806_02_tra_local_2204_changhua_taichung",
+      "id": "journey_85C2F9F935C9A4701208C881737C7ADC",
       "date": "2026-08-06",
       "stops": [
         {
@@ -9613,7 +9613,7 @@
     {
       "index": 209,
       "source": "tw",
-      "id": "20260808_01_tra_tze_chiang_3000_191_taichung_chiayi",
+      "id": "journey_D902105FFF79F2BC91DD69001C1D1752",
       "date": "2026-08-08",
       "stops": [
         {
@@ -9736,7 +9736,7 @@
     {
       "index": 210,
       "source": "tw",
-      "id": "20260808_02_alsr_5_chiayi_alishan",
+      "id": "journey_D6E210E0D14743B7AFE4EF6855ADC7FA",
       "date": "2026-08-08",
       "stops": [
         {
@@ -9829,7 +9829,7 @@
     {
       "index": 211,
       "source": "tw",
-      "id": "20260808_03_alsr_120_alishan_shenmu",
+      "id": "journey_214DEC1A58D8A2E683D5E17A47BFCE7F",
       "date": "2026-08-08",
       "stops": [
         {
@@ -9847,7 +9847,7 @@
     {
       "index": 212,
       "source": "tw",
-      "id": "20260808_04_alsr_121_shenmu_alishan",
+      "id": "journey_5BADD88C12380B6A886444FB69041F7F",
       "date": "2026-08-08",
       "stops": [
         {
@@ -9865,7 +9865,7 @@
     {
       "index": 213,
       "source": "tw",
-      "id": "20260809_02_alsr_zhushan_observation_alishan_zhushan",
+      "id": "journey_E12389096A2B7F909034258E902F941E",
       "date": "2026-08-09",
       "stops": [
         {
@@ -9888,7 +9888,7 @@
     {
       "index": 214,
       "source": "tw",
-      "id": "20260809_03_alsr_zhushan_observation_zhushan_alishan",
+      "id": "journey_DFA582684EEDC99182E6D448F71607F7",
       "date": "2026-08-09",
       "stops": [
         {
@@ -9911,7 +9911,7 @@
     {
       "index": 215,
       "source": "tw",
-      "id": "20260809_01_alsr_8_alishan_chiayi",
+      "id": "journey_D4687FB43F9C1C43E0B0E40017AC9EDC",
       "date": "2026-08-09",
       "stops": [
         {
@@ -10004,7 +10004,7 @@
     {
       "index": 216,
       "source": "tw",
-      "id": "20260809_04_tra_tze_chiang_3000_125_chiayi_kaohsiung",
+      "id": "journey_CEB49C47CA401AD978BFE56F3D55F4C7",
       "date": "2026-08-09",
       "stops": [
         {
@@ -10162,7 +10162,7 @@
     {
       "index": 217,
       "source": "tw",
-      "id": "20260810_01_krtc_red_kaohsiung_gangshan_station",
+      "id": "journey_2FDE3816A557FFFB50406D18A131A336",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10250,7 +10250,7 @@
     {
       "index": 218,
       "source": "tw",
-      "id": "20260810_02_krtc_red_gangshan_station_siaogang",
+      "id": "journey_F889D3193B98C1B436F80571170668AA",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10383,7 +10383,7 @@
     {
       "index": 219,
       "source": "tw",
-      "id": "20260810_03_krtc_red_siaogang_sanduo",
+      "id": "journey_927016E22113A45080FBC58092D28EB0",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10426,7 +10426,7 @@
     {
       "index": 220,
       "source": "tw",
-      "id": "20260810_04_krtc_red_sanduo_kaisyuan",
+      "id": "journey_10253133B7525E17509D09650522E725",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10449,7 +10449,7 @@
     {
       "index": 221,
       "source": "tw",
-      "id": "20260810_05_klrt_c3_counterclockwise_loop",
+      "id": "journey_0960494E1EEF4CBDB6B1E4B1FE90BEB7",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10652,7 +10652,7 @@
     {
       "index": 222,
       "source": "tw",
-      "id": "20260810_06_krtc_red_kaisyuan_kaohsiung",
+      "id": "journey_392AB4A925F885DE6CD17FA95C36040E",
       "date": "2026-08-10",
       "stops": [
         {
@@ -10690,7 +10690,7 @@
     {
       "index": 223,
       "source": "tw",
-      "id": "20260812_01_krtc_red_kaohsiung_zuoying",
+      "id": "journey_BCCC18D524113D54156C5874685CEE29",
       "date": "2026-08-12",
       "stops": [
         {
@@ -10728,7 +10728,7 @@
     {
       "index": 224,
       "source": "tw",
-      "id": "20260812_02_thsr_826_zuoying_taipei",
+      "id": "journey_4D389948FB54DDE74017B2CCFC5B526D",
       "date": "2026-08-12",
       "stops": [
         {
@@ -10791,7 +10791,7 @@
     {
       "index": 225,
       "source": "tw",
-      "id": "20260812_03_tra_local_1208_taipei_keelung",
+      "id": "journey_701B2439EE7B2E05AF11E637D13B1CB5",
       "date": "2026-08-12",
       "stops": [
         {
@@ -10854,7 +10854,7 @@
     {
       "index": 226,
       "source": "tw",
-      "id": "20260812_04_tra_local_4209_nuannuan_nangang",
+      "id": "journey_06535A45062A8500166100F9B37C31F1",
       "date": "2026-08-12",
       "stops": [
         {
@@ -10902,7 +10902,7 @@
     {
       "index": 227,
       "source": "tw",
-      "id": "20260812_05_thsr_161_nangang_taipei",
+      "id": "journey_5A3C1D43A8E70734A5D5DA40D6D39099",
       "date": "2026-08-12",
       "stops": [
         {
@@ -10920,7 +10920,7 @@
     {
       "index": 228,
       "source": "tw",
-      "id": "20260813_01_star_of_taiwan_round_island_loop",
+      "id": "journey_C929D1DB4BBEDD1ED71B9C4885026D78",
       "date": "2026-08-13",
       "stops": [
         {
@@ -11902,8 +11902,7 @@
     },
     {
       "index": 229,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260703_01_haruka",
+      "source": "projection — date and id dropped, falls through to UNDATED",
       "stops": [
         {
           "arrival": null,
@@ -11929,66 +11928,75 @@
     },
     {
       "index": 230,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "source": "projection — date and id dropped, falls through to UNDATED",
       "stops": [
         {
           "arrival": null,
-          "departure": "17:18",
+          "departure": "23:16",
           "stop_type": "origin"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "23:31",
+          "departure": "23:32",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "23:57",
+          "departure": "23:59",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "24:53",
+          "departure": "24:54",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": null,
-          "departure": "18:38",
+          "arrival": "29:25",
+          "departure": "29:26",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "18:48",
-          "departure": "18:53",
+          "arrival": "30:27",
+          "departure": "30:34",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "19:05",
-          "departure": "19:09",
+          "arrival": "30:46",
+          "departure": "30:47",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "19:21",
-          "departure": "19:26",
+          "arrival": "31:14",
+          "departure": "31:14",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "19:37",
-          "departure": "19:38",
+          "arrival": "31:43",
+          "departure": "31:44",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "19:51",
-          "departure": "19:56",
+          "arrival": "33:05",
+          "departure": "33:08",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "20:07",
-          "departure": "20:13",
+          "arrival": "33:16",
+          "departure": "33:17",
           "stop_type": "passenger_stop"
         },
         {
-          "arrival": "20:22",
+          "arrival": "33:33",
+          "departure": "33:34",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": "33:47",
+          "departure": "33:48",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": "34:00",
           "departure": null,
           "stop_type": "destination"
         }
@@ -11996,16 +12004,70 @@
     },
     {
       "index": 231,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260703_03_tokaido_main_local",
+      "source": "projection — date and id dropped, falls through to UNDATED",
       "stops": [
         {
           "arrival": null,
-          "departure": "20:34",
+          "departure": "13:25",
           "stop_type": "origin"
         },
         {
-          "arrival": "20:40",
+          "arrival": null,
+          "departure": "13:28",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": "13:41",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": null,
+          "departure": "13:55",
+          "stop_type": "passenger_stop"
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "stop_type": "pass_through"
+        },
+        {
+          "arrival": "14:04",
           "departure": null,
           "stop_type": "destination"
         }
@@ -12013,455 +12075,8 @@
     },
     {
       "index": 232,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260704_01_local",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "07:35",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "07:39",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 233,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260704_02_kodama918",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "08:00",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "08:07",
-          "departure": "08:08",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "08:15",
-          "departure": "08:20",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "08:35",
-          "departure": "08:36",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "08:46",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 234,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260704_03_keikyu_asakusa_line",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "08:55",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "09:09",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 235,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260729_05_sunrise_izumo",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "23:16",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "23:31",
-          "departure": "23:32",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "23:57",
-          "departure": "23:59",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "24:53",
-          "departure": "24:54",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "29:25",
-          "departure": "29:26",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "30:27",
-          "departure": "30:34",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "30:46",
-          "departure": "30:47",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "31:14",
-          "departure": "31:14",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "31:43",
-          "departure": "31:44",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:05",
-          "departure": "33:08",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:16",
-          "departure": "33:17",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:33",
-          "departure": "33:34",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:47",
-          "departure": "33:48",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "34:00",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 236,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "13:25",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": null,
-          "departure": "13:28",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": "13:41",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": "13:55",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": "14:04",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 237,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260802_02_trtc_bl_taipei_main_ximen",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "14:45",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "14:47",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 238,
-      "source": "projection — date dropped, so it is inferred from the id",
-      "id": "20260802_03_trtc_bl_ximen_zhongxiao_fuxing",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "15:52",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "15:54",
-          "departure": "15:54",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "15:56",
-          "departure": "15:56",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "15:58",
-          "departure": "15:58",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "16:00",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 239,
-      "source": "projection — date and id dropped, falls through to UNDATED",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "16:14",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "16:48",
-          "departure": "16:50",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "17:01",
-          "departure": "17:02",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "17:06",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 240,
-      "source": "projection — date and id dropped, falls through to UNDATED",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "23:16",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": "23:31",
-          "departure": "23:32",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "23:57",
-          "departure": "23:59",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "24:53",
-          "departure": "24:54",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "29:25",
-          "departure": "29:26",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "30:27",
-          "departure": "30:34",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "30:46",
-          "departure": "30:47",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "31:14",
-          "departure": "31:14",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "31:43",
-          "departure": "31:44",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:05",
-          "departure": "33:08",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:16",
-          "departure": "33:17",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:33",
-          "departure": "33:34",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "33:47",
-          "departure": "33:48",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": "34:00",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 241,
-      "source": "projection — date and id dropped, falls through to UNDATED",
-      "stops": [
-        {
-          "arrival": null,
-          "departure": "13:25",
-          "stop_type": "origin"
-        },
-        {
-          "arrival": null,
-          "departure": "13:28",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": "13:41",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": null,
-          "departure": "13:55",
-          "stop_type": "passenger_stop"
-        },
-        {
-          "arrival": null,
-          "departure": null,
-          "stop_type": "pass_through"
-        },
-        {
-          "arrival": "14:04",
-          "departure": null,
-          "stop_type": "destination"
-        }
-      ]
-    },
-    {
-      "index": 242,
       "source": "projection — the overnight itinerary re-dated to 2026-07-31",
-      "id": "20260729_05_sunrise_izumo",
+      "id": "journey_F29762068C2DDB4CD79CF4AF30B29529",
       "date": "2026-07-31",
       "stops": [
         {
@@ -12537,9 +12152,9 @@
       ]
     },
     {
-      "index": 243,
+      "index": 233,
       "source": "projection — the overnight itinerary re-dated to 2026-08-01",
-      "id": "20260729_05_sunrise_izumo",
+      "id": "journey_F29762068C2DDB4CD79CF4AF30B29529",
       "date": "2026-08-01",
       "stops": [
         {
@@ -12615,9 +12230,9 @@
       ]
     },
     {
-      "index": 244,
+      "index": 234,
       "source": "projection — the overnight itinerary re-dated to 2026-08-13",
-      "id": "20260729_05_sunrise_izumo",
+      "id": "journey_F29762068C2DDB4CD79CF4AF30B29529",
       "date": "2026-08-13",
       "stops": [
         {
@@ -12693,23 +12308,23 @@
       ]
     },
     {
-      "index": 245,
+      "index": 235,
       "source": "projection — stops dropped, so the id tiebreak decides",
-      "id": "20260703_01_haruka",
+      "id": "journey_A9554752F257CDA52831A6C0EED248AF",
       "date": "2026-07-03",
       "stops": []
     },
     {
-      "index": 246,
+      "index": 236,
       "source": "projection — stops dropped, so the id tiebreak decides",
-      "id": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "id": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "date": "2026-07-03",
       "stops": []
     },
     {
-      "index": 247,
+      "index": 237,
       "source": "projection — stops dropped, so the id tiebreak decides",
-      "id": "20260703_03_tokaido_main_local",
+      "id": "journey_A3CFCBD90A222CC4066ACAF20A6C06C2",
       "date": "2026-07-03",
       "stops": []
     }
@@ -15705,191 +15320,50 @@
     },
     {
       "train": 229,
-      "trainDate": "2026-07-03",
+      "trainDate": "undated",
       "hasCrossDayTimes": false,
       "breaks": [],
-      "spanDate": "2026-07-03",
+      "spanDate": "undated",
       "spanBreaks": [],
       "dates": [
-        "2026-07-03"
+        "undated"
       ],
-      "key": "|2026-07-03|",
-      "sig": "|2026-07-03|"
+      "key": "|undated|",
+      "sig": "|undated|"
     },
     {
       "train": 230,
-      "trainDate": "2026-07-03",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-07-03",
+      "trainDate": "undated",
+      "hasCrossDayTimes": true,
+      "breaks": [
+        {
+          "index": 2,
+          "day": 1
+        }
+      ],
+      "spanDate": "undated",
       "spanBreaks": [],
       "dates": [
-        "2026-07-03"
+        "undated"
       ],
-      "key": "|2026-07-03|",
-      "sig": "|2026-07-03|"
+      "key": "|undated|",
+      "sig": "|undated|"
     },
     {
       "train": 231,
-      "trainDate": "2026-07-03",
+      "trainDate": "undated",
       "hasCrossDayTimes": false,
       "breaks": [],
-      "spanDate": "2026-07-03",
+      "spanDate": "undated",
       "spanBreaks": [],
       "dates": [
-        "2026-07-03"
+        "undated"
       ],
-      "key": "|2026-07-03|",
-      "sig": "|2026-07-03|"
+      "key": "|undated|",
+      "sig": "|undated|"
     },
     {
       "train": 232,
-      "trainDate": "2026-07-04",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-07-04",
-      "spanBreaks": [],
-      "dates": [
-        "2026-07-04"
-      ],
-      "key": "|2026-07-04|",
-      "sig": "|2026-07-04|"
-    },
-    {
-      "train": 233,
-      "trainDate": "2026-07-04",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-07-04",
-      "spanBreaks": [],
-      "dates": [
-        "2026-07-04"
-      ],
-      "key": "|2026-07-04|",
-      "sig": "|2026-07-04|"
-    },
-    {
-      "train": 234,
-      "trainDate": "2026-07-04",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-07-04",
-      "spanBreaks": [],
-      "dates": [
-        "2026-07-04"
-      ],
-      "key": "|2026-07-04|",
-      "sig": "|2026-07-04|"
-    },
-    {
-      "train": 235,
-      "trainDate": "2026-07-29",
-      "hasCrossDayTimes": true,
-      "breaks": [
-        {
-          "index": 2,
-          "day": 1
-        }
-      ],
-      "spanDate": "2026-07-29",
-      "spanBreaks": [
-        {
-          "index": 2,
-          "day": 1
-        }
-      ],
-      "dates": [
-        "2026-07-29",
-        "2026-07-30"
-      ],
-      "key": "|2026-07-29|2026-07-30|",
-      "sig": "|2026-07-29|2026-07-30|2>1"
-    },
-    {
-      "train": 236,
-      "trainDate": "2026-08-02",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-08-02",
-      "spanBreaks": [],
-      "dates": [
-        "2026-08-02"
-      ],
-      "key": "|2026-08-02|",
-      "sig": "|2026-08-02|"
-    },
-    {
-      "train": 237,
-      "trainDate": "2026-08-02",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-08-02",
-      "spanBreaks": [],
-      "dates": [
-        "2026-08-02"
-      ],
-      "key": "|2026-08-02|",
-      "sig": "|2026-08-02|"
-    },
-    {
-      "train": 238,
-      "trainDate": "2026-08-02",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "2026-08-02",
-      "spanBreaks": [],
-      "dates": [
-        "2026-08-02"
-      ],
-      "key": "|2026-08-02|",
-      "sig": "|2026-08-02|"
-    },
-    {
-      "train": 239,
-      "trainDate": "undated",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "undated",
-      "spanBreaks": [],
-      "dates": [
-        "undated"
-      ],
-      "key": "|undated|",
-      "sig": "|undated|"
-    },
-    {
-      "train": 240,
-      "trainDate": "undated",
-      "hasCrossDayTimes": true,
-      "breaks": [
-        {
-          "index": 2,
-          "day": 1
-        }
-      ],
-      "spanDate": "undated",
-      "spanBreaks": [],
-      "dates": [
-        "undated"
-      ],
-      "key": "|undated|",
-      "sig": "|undated|"
-    },
-    {
-      "train": 241,
-      "trainDate": "undated",
-      "hasCrossDayTimes": false,
-      "breaks": [],
-      "spanDate": "undated",
-      "spanBreaks": [],
-      "dates": [
-        "undated"
-      ],
-      "key": "|undated|",
-      "sig": "|undated|"
-    },
-    {
-      "train": 242,
       "trainDate": "2026-07-31",
       "hasCrossDayTimes": true,
       "breaks": [
@@ -15913,7 +15387,7 @@
       "sig": "|2026-07-31|2026-08-01|2>1"
     },
     {
-      "train": 243,
+      "train": 233,
       "trainDate": "2026-08-01",
       "hasCrossDayTimes": true,
       "breaks": [
@@ -15937,7 +15411,7 @@
       "sig": "|2026-08-01|2026-08-02|2>1"
     },
     {
-      "train": 244,
+      "train": 234,
       "trainDate": "2026-08-13",
       "hasCrossDayTimes": true,
       "breaks": [
@@ -15961,7 +15435,7 @@
       "sig": "|2026-08-13|2026-08-14|2>1"
     },
     {
-      "train": 245,
+      "train": 235,
       "trainDate": "2026-07-03",
       "hasCrossDayTimes": false,
       "breaks": [],
@@ -15974,7 +15448,7 @@
       "sig": "|2026-07-03|"
     },
     {
-      "train": 246,
+      "train": 236,
       "trainDate": "2026-07-03",
       "hasCrossDayTimes": false,
       "breaks": [],
@@ -15987,7 +15461,7 @@
       "sig": "|2026-07-03|"
     },
     {
-      "train": 247,
+      "train": 237,
       "trainDate": "2026-07-03",
       "hasCrossDayTimes": false,
       "breaks": [],
@@ -16521,17 +15995,7 @@
         234,
         235,
         236,
-        237,
-        238,
-        239,
-        240,
-        241,
-        242,
-        243,
-        244,
-        245,
-        246,
-        247
+        237
       ],
       "manualDates": [],
       "dates": [
@@ -17136,34 +16600,13 @@
     },
     {
       "trains": [
-        239,
-        240,
-        241
+        229,
+        230,
+        231
       ],
       "manualDates": [],
       "dates": [
         "undated"
-      ]
-    },
-    {
-      "trains": [
-        229,
-        230,
-        231,
-        232,
-        233,
-        234,
-        235,
-        236,
-        237,
-        238
-      ],
-      "manualDates": [],
-      "dates": [
-        "2026-07-03",
-        "2026-07-04",
-        "2026-07-29",
-        "2026-08-02"
       ]
     }
   ],
@@ -17174,12 +16617,9 @@
         0,
         1,
         2,
-        229,
-        230,
-        231,
-        245,
-        246,
-        247
+        235,
+        236,
+        237
       ]
     },
     {
@@ -17198,10 +16638,7 @@
         13,
         14,
         15,
-        16,
-        232,
-        233,
-        234
+        16
       ]
     },
     {
@@ -17494,8 +16931,7 @@
         181,
         182,
         183,
-        184,
-        235
+        184
       ]
     },
     {
@@ -17521,14 +16957,14 @@
         197,
         198,
         199,
-        242
+        232
       ]
     },
     {
       "date": "2026-08-01",
       "trains": [
         200,
-        243
+        233
       ]
     },
     {
@@ -17537,10 +16973,7 @@
         201,
         202,
         203,
-        204,
-        236,
-        237,
-        238
+        204
       ]
     },
     {
@@ -17600,15 +17033,15 @@
       "date": "2026-08-13",
       "trains": [
         228,
-        244
+        234
       ]
     },
     {
       "date": "undated",
       "trains": [
-        239,
-        240,
-        241
+        229,
+        230,
+        231
       ]
     },
     {
@@ -19612,34 +19045,18 @@
         234,
         235,
         236,
-        237,
-        238,
-        239,
-        240,
-        241,
-        242,
-        243,
-        244,
-        245,
-        246,
-        247
+        237
       ],
       "order": [
         0,
-        229,
         1,
-        230,
         2,
-        231,
-        245,
-        246,
-        247,
+        236,
+        237,
+        235,
         3,
-        232,
         4,
-        233,
         5,
-        234,
         6,
         7,
         8,
@@ -19819,7 +19236,6 @@
         182,
         183,
         184,
-        235,
         185,
         186,
         187,
@@ -19835,15 +19251,12 @@
         197,
         198,
         199,
-        242,
+        232,
         200,
-        243,
+        233,
         201,
-        236,
         202,
-        237,
         203,
-        238,
         204,
         205,
         206,
@@ -19869,23 +19282,23 @@
         226,
         227,
         228,
-        244,
-        241,
-        239,
-        240
+        234,
+        231,
+        229,
+        230
       ]
     },
     {
       "label": "id tiebreak only",
       "input": [
-        247,
-        246,
-        245
+        237,
+        236,
+        235
       ],
       "order": [
-        245,
-        246,
-        247
+        236,
+        237,
+        235
       ]
     },
     {
@@ -20063,1254 +19476,1204 @@
     {
       "a": 33,
       "b": 234,
-      "sign": 1
-    },
-    {
-      "a": 34,
-      "b": 241,
       "sign": -1
     },
     {
+      "a": 34,
+      "b": 3,
+      "sign": 1
+    },
+    {
       "a": 35,
-      "b": 0,
+      "b": 10,
       "sign": 1
     },
     {
       "a": 36,
-      "b": 7,
+      "b": 17,
       "sign": 1
     },
     {
       "a": 37,
-      "b": 14,
+      "b": 24,
       "sign": 1
     },
     {
       "a": 38,
-      "b": 21,
+      "b": 31,
       "sign": 1
     },
     {
       "a": 39,
-      "b": 28,
+      "b": 38,
       "sign": 1
     },
     {
       "a": 40,
-      "b": 35,
-      "sign": 1
+      "b": 45,
+      "sign": -1
     },
     {
       "a": 41,
-      "b": 42,
+      "b": 52,
       "sign": -1
     },
     {
       "a": 42,
-      "b": 49,
+      "b": 59,
       "sign": -1
     },
     {
       "a": 43,
-      "b": 56,
+      "b": 66,
       "sign": -1
     },
     {
       "a": 44,
-      "b": 63,
+      "b": 73,
       "sign": -1
     },
     {
       "a": 45,
-      "b": 70,
+      "b": 80,
       "sign": -1
     },
     {
       "a": 46,
-      "b": 77,
+      "b": 87,
       "sign": -1
     },
     {
       "a": 47,
-      "b": 84,
+      "b": 94,
       "sign": -1
     },
     {
       "a": 48,
-      "b": 91,
+      "b": 101,
       "sign": -1
     },
     {
       "a": 49,
-      "b": 98,
+      "b": 108,
       "sign": -1
     },
     {
       "a": 50,
-      "b": 105,
+      "b": 115,
       "sign": -1
     },
     {
       "a": 51,
-      "b": 112,
+      "b": 122,
       "sign": -1
     },
     {
       "a": 52,
-      "b": 119,
+      "b": 129,
       "sign": -1
     },
     {
       "a": 53,
-      "b": 126,
+      "b": 136,
       "sign": -1
     },
     {
       "a": 54,
-      "b": 133,
+      "b": 143,
       "sign": -1
     },
     {
       "a": 55,
-      "b": 140,
+      "b": 150,
       "sign": -1
     },
     {
       "a": 56,
-      "b": 147,
+      "b": 157,
       "sign": -1
     },
     {
       "a": 57,
-      "b": 154,
+      "b": 164,
       "sign": -1
     },
     {
       "a": 58,
-      "b": 161,
+      "b": 171,
       "sign": -1
     },
     {
       "a": 59,
-      "b": 168,
+      "b": 178,
       "sign": -1
     },
     {
       "a": 60,
-      "b": 175,
+      "b": 185,
       "sign": -1
     },
     {
       "a": 61,
-      "b": 182,
+      "b": 192,
       "sign": -1
     },
     {
       "a": 62,
-      "b": 189,
+      "b": 199,
       "sign": -1
     },
     {
       "a": 63,
-      "b": 196,
+      "b": 206,
       "sign": -1
     },
     {
       "a": 64,
-      "b": 203,
+      "b": 213,
       "sign": -1
     },
     {
       "a": 65,
-      "b": 210,
+      "b": 220,
       "sign": -1
     },
     {
       "a": 66,
-      "b": 217,
+      "b": 227,
       "sign": -1
     },
     {
       "a": 67,
-      "b": 224,
+      "b": 234,
       "sign": -1
     },
     {
       "a": 68,
-      "b": 231,
+      "b": 3,
       "sign": 1
     },
     {
       "a": 69,
-      "b": 238,
-      "sign": -1
+      "b": 10,
+      "sign": 1
     },
     {
       "a": 70,
-      "b": 245,
+      "b": 17,
       "sign": 1
     },
     {
       "a": 71,
-      "b": 4,
+      "b": 24,
       "sign": 1
     },
     {
       "a": 72,
-      "b": 11,
+      "b": 31,
       "sign": 1
     },
     {
       "a": 73,
-      "b": 18,
+      "b": 38,
       "sign": 1
     },
     {
       "a": 74,
-      "b": 25,
+      "b": 45,
       "sign": 1
     },
     {
       "a": 75,
-      "b": 32,
+      "b": 52,
       "sign": 1
     },
     {
       "a": 76,
-      "b": 39,
+      "b": 59,
       "sign": 1
     },
     {
       "a": 77,
-      "b": 46,
+      "b": 66,
       "sign": 1
     },
     {
       "a": 78,
-      "b": 53,
+      "b": 73,
       "sign": 1
     },
     {
       "a": 79,
-      "b": 60,
-      "sign": 1
+      "b": 80,
+      "sign": -1
     },
     {
       "a": 80,
-      "b": 67,
-      "sign": 1
+      "b": 87,
+      "sign": -1
     },
     {
       "a": 81,
-      "b": 74,
-      "sign": 1
+      "b": 94,
+      "sign": -1
     },
     {
       "a": 82,
-      "b": 81,
-      "sign": 1
+      "b": 101,
+      "sign": -1
     },
     {
       "a": 83,
-      "b": 88,
+      "b": 108,
       "sign": -1
     },
     {
       "a": 84,
-      "b": 95,
+      "b": 115,
       "sign": -1
     },
     {
       "a": 85,
-      "b": 102,
+      "b": 122,
       "sign": -1
     },
     {
       "a": 86,
-      "b": 109,
+      "b": 129,
       "sign": -1
     },
     {
       "a": 87,
-      "b": 116,
+      "b": 136,
       "sign": -1
     },
     {
       "a": 88,
-      "b": 123,
+      "b": 143,
       "sign": -1
     },
     {
       "a": 89,
-      "b": 130,
+      "b": 150,
       "sign": -1
     },
     {
       "a": 90,
-      "b": 137,
+      "b": 157,
       "sign": -1
     },
     {
       "a": 91,
-      "b": 144,
+      "b": 164,
       "sign": -1
     },
     {
       "a": 92,
-      "b": 151,
+      "b": 171,
       "sign": -1
     },
     {
       "a": 93,
-      "b": 158,
+      "b": 178,
       "sign": -1
     },
     {
       "a": 94,
-      "b": 165,
+      "b": 185,
       "sign": -1
     },
     {
       "a": 95,
-      "b": 172,
+      "b": 192,
       "sign": -1
     },
     {
       "a": 96,
-      "b": 179,
+      "b": 199,
       "sign": -1
     },
     {
       "a": 97,
-      "b": 186,
+      "b": 206,
       "sign": -1
     },
     {
       "a": 98,
-      "b": 193,
+      "b": 213,
       "sign": -1
     },
     {
       "a": 99,
-      "b": 200,
+      "b": 220,
       "sign": -1
     },
     {
       "a": 100,
-      "b": 207,
+      "b": 227,
       "sign": -1
     },
     {
       "a": 101,
-      "b": 214,
+      "b": 234,
       "sign": -1
     },
     {
       "a": 102,
-      "b": 221,
-      "sign": -1
+      "b": 3,
+      "sign": 1
     },
     {
       "a": 103,
-      "b": 228,
-      "sign": -1
+      "b": 10,
+      "sign": 1
     },
     {
       "a": 104,
-      "b": 235,
-      "sign": -1
+      "b": 17,
+      "sign": 1
     },
     {
       "a": 105,
-      "b": 242,
-      "sign": -1
+      "b": 24,
+      "sign": 1
     },
     {
       "a": 106,
-      "b": 1,
+      "b": 31,
       "sign": 1
     },
     {
       "a": 107,
-      "b": 8,
+      "b": 38,
       "sign": 1
     },
     {
       "a": 108,
-      "b": 15,
+      "b": 45,
       "sign": 1
     },
     {
       "a": 109,
-      "b": 22,
+      "b": 52,
       "sign": 1
     },
     {
       "a": 110,
-      "b": 29,
+      "b": 59,
       "sign": 1
     },
     {
       "a": 111,
-      "b": 36,
+      "b": 66,
       "sign": 1
     },
     {
       "a": 112,
-      "b": 43,
+      "b": 73,
       "sign": 1
     },
     {
       "a": 113,
-      "b": 50,
+      "b": 80,
       "sign": 1
     },
     {
       "a": 114,
-      "b": 57,
+      "b": 87,
       "sign": 1
     },
     {
       "a": 115,
-      "b": 64,
+      "b": 94,
       "sign": 1
     },
     {
       "a": 116,
-      "b": 71,
+      "b": 101,
       "sign": 1
     },
     {
       "a": 117,
-      "b": 78,
+      "b": 108,
       "sign": 1
     },
     {
       "a": 118,
-      "b": 85,
+      "b": 115,
       "sign": 1
     },
     {
       "a": 119,
-      "b": 92,
-      "sign": 1
+      "b": 122,
+      "sign": -1
     },
     {
       "a": 120,
-      "b": 99,
-      "sign": 1
+      "b": 129,
+      "sign": -1
     },
     {
       "a": 121,
-      "b": 106,
-      "sign": 1
+      "b": 136,
+      "sign": -1
     },
     {
       "a": 122,
-      "b": 113,
-      "sign": 1
+      "b": 143,
+      "sign": -1
     },
     {
       "a": 123,
-      "b": 120,
-      "sign": 1
+      "b": 150,
+      "sign": -1
     },
     {
       "a": 124,
-      "b": 127,
+      "b": 157,
       "sign": -1
     },
     {
       "a": 125,
-      "b": 134,
+      "b": 164,
       "sign": -1
     },
     {
       "a": 126,
-      "b": 141,
+      "b": 171,
       "sign": -1
     },
     {
       "a": 127,
-      "b": 148,
+      "b": 178,
       "sign": -1
     },
     {
       "a": 128,
-      "b": 155,
+      "b": 185,
       "sign": -1
     },
     {
       "a": 129,
-      "b": 162,
+      "b": 192,
       "sign": -1
     },
     {
       "a": 130,
-      "b": 169,
+      "b": 199,
       "sign": -1
     },
     {
       "a": 131,
-      "b": 176,
+      "b": 206,
       "sign": -1
     },
     {
       "a": 132,
-      "b": 183,
+      "b": 213,
       "sign": -1
     },
     {
       "a": 133,
-      "b": 190,
+      "b": 220,
       "sign": -1
     },
     {
       "a": 134,
-      "b": 197,
+      "b": 227,
       "sign": -1
     },
     {
       "a": 135,
-      "b": 204,
+      "b": 234,
       "sign": -1
     },
     {
       "a": 136,
-      "b": 211,
-      "sign": -1
+      "b": 3,
+      "sign": 1
     },
     {
       "a": 137,
-      "b": 218,
-      "sign": -1
+      "b": 10,
+      "sign": 1
     },
     {
       "a": 138,
-      "b": 225,
-      "sign": -1
+      "b": 17,
+      "sign": 1
     },
     {
       "a": 139,
-      "b": 232,
+      "b": 24,
       "sign": 1
     },
     {
       "a": 140,
-      "b": 239,
-      "sign": -1
+      "b": 31,
+      "sign": 1
     },
     {
       "a": 141,
-      "b": 246,
+      "b": 38,
       "sign": 1
     },
     {
       "a": 142,
-      "b": 5,
+      "b": 45,
       "sign": 1
     },
     {
       "a": 143,
-      "b": 12,
+      "b": 52,
       "sign": 1
     },
     {
       "a": 144,
-      "b": 19,
+      "b": 59,
       "sign": 1
     },
     {
       "a": 145,
-      "b": 26,
+      "b": 66,
       "sign": 1
     },
     {
       "a": 146,
-      "b": 33,
+      "b": 73,
       "sign": 1
     },
     {
       "a": 147,
-      "b": 40,
+      "b": 80,
       "sign": 1
     },
     {
       "a": 148,
-      "b": 47,
+      "b": 87,
       "sign": 1
     },
     {
       "a": 149,
-      "b": 54,
+      "b": 94,
       "sign": 1
     },
     {
       "a": 150,
-      "b": 61,
+      "b": 101,
       "sign": 1
     },
     {
       "a": 151,
-      "b": 68,
+      "b": 108,
       "sign": 1
     },
     {
       "a": 152,
-      "b": 75,
+      "b": 115,
       "sign": 1
     },
     {
       "a": 153,
-      "b": 82,
+      "b": 122,
       "sign": 1
     },
     {
       "a": 154,
-      "b": 89,
+      "b": 129,
       "sign": 1
     },
     {
       "a": 155,
-      "b": 96,
+      "b": 136,
       "sign": 1
     },
     {
       "a": 156,
-      "b": 103,
+      "b": 143,
       "sign": 1
     },
     {
       "a": 157,
-      "b": 110,
+      "b": 150,
       "sign": 1
     },
     {
       "a": 158,
-      "b": 117,
+      "b": 157,
       "sign": 1
     },
     {
       "a": 159,
-      "b": 124,
-      "sign": 1
+      "b": 164,
+      "sign": -1
     },
     {
       "a": 160,
-      "b": 131,
-      "sign": 1
+      "b": 171,
+      "sign": -1
     },
     {
       "a": 161,
-      "b": 138,
-      "sign": 1
+      "b": 178,
+      "sign": -1
     },
     {
       "a": 162,
-      "b": 145,
-      "sign": 1
+      "b": 185,
+      "sign": -1
     },
     {
       "a": 163,
-      "b": 152,
-      "sign": 1
+      "b": 192,
+      "sign": -1
     },
     {
       "a": 164,
-      "b": 159,
-      "sign": 1
+      "b": 199,
+      "sign": -1
     },
     {
       "a": 165,
-      "b": 166,
+      "b": 206,
       "sign": -1
     },
     {
       "a": 166,
-      "b": 173,
+      "b": 213,
       "sign": -1
     },
     {
       "a": 167,
-      "b": 180,
+      "b": 220,
       "sign": -1
     },
     {
       "a": 168,
-      "b": 187,
+      "b": 227,
       "sign": -1
     },
     {
       "a": 169,
-      "b": 194,
+      "b": 234,
       "sign": -1
     },
     {
       "a": 170,
-      "b": 201,
-      "sign": -1
+      "b": 3,
+      "sign": 1
     },
     {
       "a": 171,
-      "b": 208,
-      "sign": -1
+      "b": 10,
+      "sign": 1
     },
     {
       "a": 172,
-      "b": 215,
-      "sign": -1
+      "b": 17,
+      "sign": 1
     },
     {
       "a": 173,
-      "b": 222,
-      "sign": -1
+      "b": 24,
+      "sign": 1
     },
     {
       "a": 174,
-      "b": 229,
+      "b": 31,
       "sign": 1
     },
     {
       "a": 175,
-      "b": 236,
-      "sign": -1
+      "b": 38,
+      "sign": 1
     },
     {
       "a": 176,
-      "b": 243,
-      "sign": -1
+      "b": 45,
+      "sign": 1
     },
     {
       "a": 177,
-      "b": 2,
+      "b": 52,
       "sign": 1
     },
     {
       "a": 178,
-      "b": 9,
+      "b": 59,
       "sign": 1
     },
     {
       "a": 179,
-      "b": 16,
+      "b": 66,
       "sign": 1
     },
     {
       "a": 180,
-      "b": 23,
+      "b": 73,
       "sign": 1
     },
     {
       "a": 181,
-      "b": 30,
+      "b": 80,
       "sign": 1
     },
     {
       "a": 182,
-      "b": 37,
+      "b": 87,
       "sign": 1
     },
     {
       "a": 183,
-      "b": 44,
+      "b": 94,
       "sign": 1
     },
     {
       "a": 184,
-      "b": 51,
+      "b": 101,
       "sign": 1
     },
     {
       "a": 185,
-      "b": 58,
+      "b": 108,
       "sign": 1
     },
     {
       "a": 186,
-      "b": 65,
+      "b": 115,
       "sign": 1
     },
     {
       "a": 187,
-      "b": 72,
+      "b": 122,
       "sign": 1
     },
     {
       "a": 188,
-      "b": 79,
+      "b": 129,
       "sign": 1
     },
     {
       "a": 189,
-      "b": 86,
+      "b": 136,
       "sign": 1
     },
     {
       "a": 190,
-      "b": 93,
+      "b": 143,
       "sign": 1
     },
     {
       "a": 191,
-      "b": 100,
+      "b": 150,
       "sign": 1
     },
     {
       "a": 192,
-      "b": 107,
+      "b": 157,
       "sign": 1
     },
     {
       "a": 193,
-      "b": 114,
+      "b": 164,
       "sign": 1
     },
     {
       "a": 194,
-      "b": 121,
+      "b": 171,
       "sign": 1
     },
     {
       "a": 195,
-      "b": 128,
+      "b": 178,
       "sign": 1
     },
     {
       "a": 196,
-      "b": 135,
+      "b": 185,
       "sign": 1
     },
     {
       "a": 197,
-      "b": 142,
+      "b": 192,
       "sign": 1
     },
     {
       "a": 198,
-      "b": 149,
-      "sign": 1
+      "b": 199,
+      "sign": -1
     },
     {
       "a": 199,
-      "b": 156,
-      "sign": 1
+      "b": 206,
+      "sign": -1
     },
     {
       "a": 200,
-      "b": 163,
-      "sign": 1
+      "b": 213,
+      "sign": -1
     },
     {
       "a": 201,
-      "b": 170,
-      "sign": 1
+      "b": 220,
+      "sign": -1
     },
     {
       "a": 202,
-      "b": 177,
-      "sign": 1
+      "b": 227,
+      "sign": -1
     },
     {
       "a": 203,
-      "b": 184,
-      "sign": 1
+      "b": 234,
+      "sign": -1
     },
     {
       "a": 204,
-      "b": 191,
+      "b": 3,
       "sign": 1
     },
     {
       "a": 205,
-      "b": 198,
+      "b": 10,
       "sign": 1
     },
     {
       "a": 206,
-      "b": 205,
+      "b": 17,
       "sign": 1
     },
     {
       "a": 207,
-      "b": 212,
-      "sign": -1
+      "b": 24,
+      "sign": 1
     },
     {
       "a": 208,
-      "b": 219,
-      "sign": -1
+      "b": 31,
+      "sign": 1
     },
     {
       "a": 209,
-      "b": 226,
-      "sign": -1
+      "b": 38,
+      "sign": 1
     },
     {
       "a": 210,
-      "b": 233,
+      "b": 45,
       "sign": 1
     },
     {
       "a": 211,
-      "b": 240,
-      "sign": -1
+      "b": 52,
+      "sign": 1
     },
     {
       "a": 212,
-      "b": 247,
+      "b": 59,
       "sign": 1
     },
     {
       "a": 213,
-      "b": 6,
+      "b": 66,
       "sign": 1
     },
     {
       "a": 214,
-      "b": 13,
+      "b": 73,
       "sign": 1
     },
     {
       "a": 215,
-      "b": 20,
+      "b": 80,
       "sign": 1
     },
     {
       "a": 216,
-      "b": 27,
+      "b": 87,
       "sign": 1
     },
     {
       "a": 217,
-      "b": 34,
+      "b": 94,
       "sign": 1
     },
     {
       "a": 218,
-      "b": 41,
+      "b": 101,
       "sign": 1
     },
     {
       "a": 219,
-      "b": 48,
+      "b": 108,
       "sign": 1
     },
     {
       "a": 220,
-      "b": 55,
+      "b": 115,
       "sign": 1
     },
     {
       "a": 221,
-      "b": 62,
+      "b": 122,
       "sign": 1
     },
     {
       "a": 222,
-      "b": 69,
+      "b": 129,
       "sign": 1
     },
     {
       "a": 223,
-      "b": 76,
+      "b": 136,
       "sign": 1
     },
     {
       "a": 224,
-      "b": 83,
+      "b": 143,
       "sign": 1
     },
     {
       "a": 225,
-      "b": 90,
+      "b": 150,
       "sign": 1
     },
     {
       "a": 226,
-      "b": 97,
+      "b": 157,
       "sign": 1
     },
     {
       "a": 227,
-      "b": 104,
+      "b": 164,
       "sign": 1
     },
     {
       "a": 228,
-      "b": 111,
+      "b": 171,
       "sign": 1
     },
     {
       "a": 229,
-      "b": 118,
-      "sign": -1
+      "b": 178,
+      "sign": 1
     },
     {
       "a": 230,
-      "b": 125,
-      "sign": -1
+      "b": 185,
+      "sign": 1
     },
     {
       "a": 231,
-      "b": 132,
-      "sign": -1
+      "b": 192,
+      "sign": 1
     },
     {
       "a": 232,
-      "b": 139,
-      "sign": -1
+      "b": 199,
+      "sign": 1
     },
     {
       "a": 233,
-      "b": 146,
+      "b": 206,
       "sign": -1
     },
     {
       "a": 234,
-      "b": 153,
+      "b": 213,
+      "sign": 1
+    },
+    {
+      "a": 235,
+      "b": 220,
+      "sign": -1
+    },
+    {
+      "a": 236,
+      "b": 227,
+      "sign": -1
+    },
+    {
+      "a": 237,
+      "b": 234,
       "sign": -1
     },
     {
       "a": 235,
-      "b": 160,
+      "b": 235,
+      "sign": 0
+    },
+    {
+      "a": 235,
+      "b": 236,
+      "sign": 1
+    },
+    {
+      "a": 235,
+      "b": 237,
       "sign": 1
     },
     {
       "a": 236,
-      "b": 167,
-      "sign": 1
-    },
-    {
-      "a": 237,
-      "b": 174,
-      "sign": 1
-    },
-    {
-      "a": 238,
-      "b": 181,
-      "sign": 1
-    },
-    {
-      "a": 239,
-      "b": 188,
-      "sign": 1
-    },
-    {
-      "a": 240,
-      "b": 195,
-      "sign": 1
-    },
-    {
-      "a": 241,
-      "b": 202,
-      "sign": 1
-    },
-    {
-      "a": 242,
-      "b": 209,
+      "b": 235,
       "sign": -1
     },
     {
-      "a": 243,
-      "b": 216,
-      "sign": -1
+      "a": 236,
+      "b": 236,
+      "sign": 0
     },
     {
-      "a": 244,
-      "b": 223,
-      "sign": 1
-    },
-    {
-      "a": 245,
-      "b": 230,
-      "sign": 1
-    },
-    {
-      "a": 246,
+      "a": 236,
       "b": 237,
       "sign": -1
     },
     {
-      "a": 247,
-      "b": 244,
+      "a": 237,
+      "b": 235,
       "sign": -1
     },
     {
-      "a": 245,
-      "b": 245,
-      "sign": 0
-    },
-    {
-      "a": 245,
-      "b": 246,
-      "sign": -1
-    },
-    {
-      "a": 245,
-      "b": 247,
-      "sign": -1
-    },
-    {
-      "a": 246,
-      "b": 245,
+      "a": 237,
+      "b": 236,
       "sign": 1
     },
     {
-      "a": 246,
-      "b": 246,
-      "sign": 0
-    },
-    {
-      "a": 246,
-      "b": 247,
-      "sign": -1
-    },
-    {
-      "a": 247,
-      "b": 245,
-      "sign": 1
-    },
-    {
-      "a": 247,
-      "b": 246,
-      "sign": 1
-    },
-    {
-      "a": 247,
-      "b": 247,
+      "a": 237,
+      "b": 237,
       "sign": 0
     }
   ],
   "idTiebreak": [
     {
-      "a": "20260703_01_haruka",
-      "b": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
       "sign": 0
     },
     {
-      "a": "20260703_01_haruka",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": -1
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "a_b",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "a-b",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "AB",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "ab",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "A",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "a",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "Z",
       "sign": -1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "_",
       "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "0",
       "sign": 1
     },
     {
-      "a": "20260703_01_haruka",
+      "a": "journey_A9554752F257CDA52831A6C0EED248AF",
       "b": "-",
       "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "sign": 0
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "a_b",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "a-b",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "AB",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "ab",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "A",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "a",
-      "sign": -1
+      "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "Z",
       "sign": -1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "_",
       "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "0",
       "sign": 1
     },
     {
-      "a": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "a": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "b": "-",
       "sign": 1
     },
     {
       "a": "a_b",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "a_b",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "a_b",
@@ -21364,13 +20727,13 @@
     },
     {
       "a": "a-b",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "a-b",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "a-b",
@@ -21424,13 +20787,13 @@
     },
     {
       "a": "AB",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "AB",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "AB",
@@ -21484,13 +20847,13 @@
     },
     {
       "a": "ab",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "ab",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "ab",
@@ -21544,13 +20907,13 @@
     },
     {
       "a": "A",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "A",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "A",
@@ -21604,13 +20967,13 @@
     },
     {
       "a": "a",
-      "b": "20260703_01_haruka",
-      "sign": 1
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
+      "sign": -1
     },
     {
       "a": "a",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
-      "sign": 1
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
+      "sign": -1
     },
     {
       "a": "a",
@@ -21664,12 +21027,12 @@
     },
     {
       "a": "Z",
-      "b": "20260703_01_haruka",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
       "sign": 1
     },
     {
       "a": "Z",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "sign": 1
     },
     {
@@ -21724,12 +21087,12 @@
     },
     {
       "a": "_",
-      "b": "20260703_01_haruka",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
       "sign": -1
     },
     {
       "a": "_",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "sign": -1
     },
     {
@@ -21784,12 +21147,12 @@
     },
     {
       "a": "0",
-      "b": "20260703_01_haruka",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
       "sign": -1
     },
     {
       "a": "0",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "sign": -1
     },
     {
@@ -21844,12 +21207,12 @@
     },
     {
       "a": "-",
-      "b": "20260703_01_haruka",
+      "b": "journey_A9554752F257CDA52831A6C0EED248AF",
       "sign": -1
     },
     {
       "a": "-",
-      "b": "20260703_02_tokaido_shinkansen_hikari_kodama",
+      "b": "journey_923A26BB27C37BDF1717F1E4F21D5AF2",
       "sign": -1
     },
     {
@@ -22827,74 +22190,34 @@
     },
     {
       "train": 230,
-      "minutes": 1038
+      "minutes": 1396
     },
     {
       "train": 231,
-      "minutes": 1234
+      "minutes": 805
     },
     {
       "train": 232,
-      "minutes": 455
+      "minutes": 1396
     },
     {
       "train": 233,
-      "minutes": 480
+      "minutes": 1396
     },
     {
       "train": 234,
-      "minutes": 535
+      "minutes": 1396
     },
     {
       "train": 235,
-      "minutes": 1396
+      "minutes": null
     },
     {
       "train": 236,
-      "minutes": 805
+      "minutes": null
     },
     {
       "train": 237,
-      "minutes": 885
-    },
-    {
-      "train": 238,
-      "minutes": 952
-    },
-    {
-      "train": 239,
-      "minutes": 974
-    },
-    {
-      "train": 240,
-      "minutes": 1396
-    },
-    {
-      "train": 241,
-      "minutes": 805
-    },
-    {
-      "train": 242,
-      "minutes": 1396
-    },
-    {
-      "train": 243,
-      "minutes": 1396
-    },
-    {
-      "train": 244,
-      "minutes": 1396
-    },
-    {
-      "train": 245,
-      "minutes": null
-    },
-    {
-      "train": 246,
-      "minutes": null
-    },
-    {
-      "train": 247,
       "minutes": null
     }
   ],
@@ -22950,152 +22273,152 @@
       "spans": true
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-07-29",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-07-30",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-07-31",
       "spans": true
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-08-01",
       "spans": true
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-08-02",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-08-13",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "2026-08-14",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "undated",
       "spans": false
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "__all__",
       "spans": true
     },
     {
-      "train": 242,
+      "train": 232,
       "date": "",
       "spans": true
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-07-29",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-07-30",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-07-31",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-08-01",
       "spans": true
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-08-02",
       "spans": true
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-08-13",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "2026-08-14",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "undated",
       "spans": false
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "__all__",
       "spans": true
     },
     {
-      "train": 243,
+      "train": 233,
       "date": "",
       "spans": true
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-07-29",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-07-30",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-07-31",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-08-01",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-08-02",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-08-13",
       "spans": true
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "2026-08-14",
       "spans": true
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "undated",
       "spans": false
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "__all__",
       "spans": true
     },
     {
-      "train": 244,
+      "train": 234,
       "date": "",
       "spans": true
     },
@@ -23196,56 +22519,6 @@
     },
     {
       "train": 201,
-      "date": "",
-      "spans": true
-    },
-    {
-      "train": 239,
-      "date": "2026-07-29",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-07-30",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-07-31",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-08-01",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-08-02",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-08-13",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "2026-08-14",
-      "spans": false
-    },
-    {
-      "train": 239,
-      "date": "undated",
-      "spans": true
-    },
-    {
-      "train": 239,
-      "date": "__all__",
-      "spans": true
-    },
-    {
-      "train": 239,
       "date": "",
       "spans": true
     },
@@ -23287,7 +22560,7 @@
     {
       "train": 229,
       "date": "undated",
-      "spans": false
+      "spans": true
     },
     {
       "train": 229,
@@ -23362,182 +22635,182 @@
       "date": "2026-07-30"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": -1,
       "date": "2026-07-31"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 0,
       "date": "2026-07-31"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 1,
       "date": "2026-07-31"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 13,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 14,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 15,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 16,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 100,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 215,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 216,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 217,
       "date": "2026-08-01"
     },
     {
-      "train": 242,
+      "train": 232,
       "segmentIndex": 1000,
       "date": "2026-08-01"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": -1,
       "date": "2026-08-01"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 0,
       "date": "2026-08-01"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 1,
       "date": "2026-08-01"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 13,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 14,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 15,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 16,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 100,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 215,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 216,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 217,
       "date": "2026-08-02"
     },
     {
-      "train": 243,
+      "train": 233,
       "segmentIndex": 1000,
       "date": "2026-08-02"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": -1,
       "date": "2026-08-13"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 0,
       "date": "2026-08-13"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 1,
       "date": "2026-08-13"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 13,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 14,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 15,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 16,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 100,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 215,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 216,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 217,
       "date": "2026-08-14"
     },
     {
-      "train": 244,
+      "train": 234,
       "segmentIndex": 1000,
       "date": "2026-08-14"
     },
@@ -24683,9 +23956,9 @@
     {
       "selectedDate": "undated",
       "trains": [
-        239,
-        240,
-        241
+        229,
+        230,
+        231
       ],
       "manualDates": [],
       "result": "undated"

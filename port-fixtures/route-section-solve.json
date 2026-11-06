@@ -6,7 +6,7 @@
     {
       "country": "mo",
       "train": {
-        "id": "MO-SAMPLE-MLM-TAIPA",
+        "id": "journey_E155548B9C8291DA928D5426A9D0134B",
         "number": "氹仔線 官方路線示例",
         "trainType": "示例列車",
         "company": "澳門輕軌",
@@ -46,8 +46,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -203,8 +203,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -336,8 +336,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -473,8 +473,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -586,8 +586,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -707,8 +707,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -827,8 +827,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -997,8 +997,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -1139,8 +1139,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -1281,8 +1281,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -1403,8 +1403,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -1525,8 +1525,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "MO-SAMPLE-MLM-TAIPA",
-              "route_id": "MO-SAMPLE-MLM-TAIPA-runtime-primary",
+              "train_id": "journey_E155548B9C8291DA928D5426A9D0134B",
+              "route_id": "journey_E155548B9C8291DA928D5426A9D0134B-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -1632,7 +1632,7 @@
     {
       "country": "hk",
       "train": {
-        "id": "HK-SAMPLE-EAL-LOW",
+        "id": "journey_E432976CF3960943D65E32F615830502",
         "number": "東鐵綫 官方路線示例",
         "trainType": "示例列車",
         "company": "MTR",
@@ -1672,8 +1672,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -1801,8 +1801,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -1970,8 +1970,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -2139,8 +2139,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -2284,8 +2284,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -2449,8 +2449,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "single_best_path",
@@ -2569,8 +2569,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -2703,8 +2703,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -2877,8 +2877,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -3047,8 +3047,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -3201,8 +3201,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",
@@ -3367,8 +3367,8 @@
           "feature": {
             "type": "Feature",
             "properties": {
-              "train_id": "HK-SAMPLE-EAL-LOW",
-              "route_id": "HK-SAMPLE-EAL-LOW-runtime-primary",
+              "train_id": "journey_E432976CF3960943D65E32F615830502",
+              "route_id": "journey_E432976CF3960943D65E32F615830502-runtime-primary",
               "variant_rank": 0,
               "is_primary": true,
               "route_choice": "official_interval_exact",

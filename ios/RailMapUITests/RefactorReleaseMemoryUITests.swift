@@ -29,8 +29,8 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         let journeys = app.tabBars.buttons["History"]
         XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
         journeys.tap()
-        for id in ["20260722_06_sonic44",
-                   "20260802_01_taoyuan_airport_mrt_express_t2_taipei"] {
+        for id in ["journey_6F379655E47131DD2F854B65A847B9F0", // sonic44
+                   "journey_5C3C741549CF09E20FE4CC4F7389B758"] { // taoyuan_airport_mrt_express_t2_taipei
             assertPhysicalRouteGenerated(id, in: app)
         }
         let stats = app.tabBars.buttons["Stats"]
@@ -75,9 +75,9 @@ final class RefactorReleaseMemoryUITests: XCTestCase {
         let journeys = app.tabBars.buttons["History"]
         XCTAssertTrue(journeys.waitForExistence(timeout: 30), app.debugDescription)
         journeys.tap()
-        for id in ["20260722_06_sonic44",
-                   "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
-                   "HK-SAMPLE-EAL-LOW", "MO-SAMPLE-MLM-TAIPA", "KR-SAMPLE-GYEONGBUKSEON"] {
+        for id in ["journey_6F379655E47131DD2F854B65A847B9F0", // sonic44
+                   "journey_5C3C741549CF09E20FE4CC4F7389B758", // taoyuan_airport_mrt_express_t2_taipei
+                   "journey_E432976CF3960943D65E32F615830502", "journey_E155548B9C8291DA928D5426A9D0134B", "journey_B7F582C16E904392DA2C9CE339DF6780"] { // HK-SAMPLE-EAL-LOW, MO-SAMPLE-MLM-TAIPA, KR-SAMPLE-GYEONGBUKSEON
             assertPhysicalRouteGenerated(id, in: app)
         }
         let stats = app.tabBars.buttons["Stats"]

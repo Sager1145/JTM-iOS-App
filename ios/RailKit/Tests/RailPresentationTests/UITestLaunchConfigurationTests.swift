@@ -6,13 +6,13 @@ import Testing
     @Test func preparationPreservesScenarioAndStorageAcrossRelaunches() throws {
         var configuration = UITestLaunchConfiguration(environment: ["AppleLanguages": "(ja)"])
         configuration[.tab] = "search"
-        configuration[.query] = "20260703_01_haruka"
+        configuration[.query] = "journey_A9554752F257CDA52831A6C0EED248AF" // haruka
         let prepared = configuration.preparedForLaunch()
         let storage = try #require(prepared[.storageId])
         #expect(UUID(uuidString: storage) != nil)
         #expect(prepared.preparedForLaunch() == prepared)
         #expect(prepared[.tab] == "search")
-        #expect(prepared[.query] == "20260703_01_haruka")
+        #expect(prepared[.query] == "journey_A9554752F257CDA52831A6C0EED248AF") // haruka
         #expect(prepared.environment["AppleLanguages"] == "(ja)")
     }
 

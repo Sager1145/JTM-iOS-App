@@ -160,19 +160,7 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
   const twIndices = twTrains.map((train) => add("tw", projectTrain(train)));
   const overnightIndex = jpIndices[jpTrains.indexOf(overnight)];
 
-  // Projection 1: the `date` field dropped. Every id in both stores begins
-  // with its own YYYYMMDD, so this is the path where normalizeTrainDate falls
-  // through to inferDateFromTrainId — reachable in the real app whenever an
-  // import supplies ids but no dates.
-  const inferredIndices = [
-    ...jpTrains.slice(0, 6),
-    overnight,
-    ...twTrains.slice(0, 3),
-  ].map((train) =>
-    add("projection — date dropped, so it is inferred from the id", withoutDate(train)),
-  );
-
-  // Projection 2: neither date nor id. That is the only way a train reaches
+  // Projection 1: neither date nor id. That is the only way a train reaches
   // the UNDATED bucket, and it is the state a train is in the instant the
   // editor creates it, before anything has been typed.
   const undatedIndices = [jpTrains[0], overnight, twTrains[0]].map((train) => {
@@ -181,7 +169,7 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
     return add("projection — date and id dropped, falls through to UNDATED", copy);
   });
 
-  // Projection 3: the real overnight stop times carried onto other real store
+  // Projection 2: the real overnight stop times carried onto other real store
   // dates. 2026-07-31 is the one that matters — it makes the day span roll
   // over a month boundary, which no committed itinerary does, and a port that
   // adds a day by incrementing the day-of-month passes everything else and
@@ -195,7 +183,7 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
 
   // The fixture's own record of an input is what the JS is fed, so the two can
   // never end up describing different trains.
-  // Projection 4: the stops dropped. This is the ONLY way to reach the
+  // Projection 3: the stops dropped. This is the ONLY way to reach the
   // comparator's last branch. getTrainDepartureMinutes answers Infinity when
   // nothing parses, `Infinity !== Infinity` is false, so two such trains fall
   // through to String#localeCompare on their ids — and every train in both
@@ -255,7 +243,6 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
       manualDates: [ALL_DATES, "2026-13-01", "2026-06-31", "", "not-a-date"],
     },
     { trains: undatedIndices, manualDates: [] },
-    { trains: inferredIndices, manualDates: [] },
   ].map((item) => {
     js.setManualDates([...item.manualDates]);
     return { ...item, dates: js.getAvailableDates(item.trains.map(trainAt)) };
@@ -390,7 +377,6 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
     jpIndices[0],
     twIndices[0],
     undatedIndices[0],
-    inferredIndices[0],
   ])
     for (const date of [
       "2026-07-29",
@@ -511,8 +497,8 @@ export function build({ AppCore, RailNetwork, APP_DIR }) {
       "app-dates.js §6 (date buckets, ordering, cross-day spans) over the " +
       "app-core.js date primitives it is built on",
     contract:
-      "A train lives in exactly ONE date bucket — its own `date`, or the date " +
-      "inferred from its id, or UNDATED — and every per-day view is derived " +
+      "A train lives in exactly ONE date bucket — its own `date`, or " +
+      "UNDATED — and every per-day view is derived " +
       "from that, never stored beside it. An overnight train stays in one " +
       "bucket while physically covering several calendar days, so " +
       "getTrainDaySpan derives the days it touches from its own stop times " +
