@@ -6,6 +6,7 @@ import Testing
 /// and its kana/romaji readings table.
 enum SearchEngineFixture {
     static let root = URL(fileURLWithPath: #filePath)
+        .deletingLastPathComponent() // feature subfolder
         .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
         .deletingLastPathComponent().deletingLastPathComponent()
 

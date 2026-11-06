@@ -91,6 +91,7 @@ struct TimetableAppFlowTests {
 
     @Test func conflictingEditionRemainsQueryableButCannotReplaceDraft() throws {
         let packageRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent() // feature subfolder
             .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
         let source = packageRoot.appendingPathComponent(
             "Sources/RailCore/Resources/train-service-timetable.sqlite")

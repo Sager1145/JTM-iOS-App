@@ -81,7 +81,7 @@ struct NetworkVisibilityPolicyTests {
     @Test("Administrative pieces use their complete group length and appear together")
     func groupedLinePiecesShareClassification() throws {
         var root = URL(fileURLWithPath: #filePath)
-        for _ in 0..<5 { root.deleteLastPathComponent() }
+        for _ in 0..<6 { root.deleteLastPathComponent() }
         let package = try CompactPackage.load(contentsOf:
             root.appendingPathComponent("app/public/rail/jp-2025.json"))
         let pieceIDs = Set([
@@ -108,7 +108,7 @@ struct NetworkVisibilityPolicyTests {
     @Test("Every shipped railway has monotonic detail and the full high-speed network survives overview")
     func shippedPackages() throws {
         var root = URL(fileURLWithPath: #filePath)
-        for _ in 0..<5 { root.deleteLastPathComponent() }
+        for _ in 0..<6 { root.deleteLastPathComponent() }
         var backboneCounts: [String: Int] = [:]
         for region in ["jp", "tw", "hk", "mo", "kr"] {
             let package = try CompactPackage.load(contentsOf:

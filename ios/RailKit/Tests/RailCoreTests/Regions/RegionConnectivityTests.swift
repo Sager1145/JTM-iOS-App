@@ -134,6 +134,7 @@ struct RegionConnectivityTests {
     @Test("Hong Kong data carries no XRL or West Kowloon")
     func hkDataHasNoXrl() throws {
         let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent() // feature subfolder
             .deletingLastPathComponent().deletingLastPathComponent()
             .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
         let files = ["app/data/rail-sections-hk.json", "app/data/stations-hk.json",

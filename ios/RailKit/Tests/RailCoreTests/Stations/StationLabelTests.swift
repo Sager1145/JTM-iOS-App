@@ -7,6 +7,7 @@ struct StationLabelTests {
     @Test("station card status words")
     func stationCardStatusWords() throws {
         let url = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent() // feature subfolder
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()

@@ -93,6 +93,7 @@ struct ShortLinkJunctionTests {
     @Test("Real registry loads with no rejected entries")
     func realRegistry() throws {
         let url = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent() // feature subfolder
             .deletingLastPathComponent().deletingLastPathComponent()
             .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
             .appendingPathComponent("app/data/physical-rail-junctions.json")
