@@ -75,12 +75,20 @@ extension TripDraftModel {
     }
 
     func applyTimetableTrip(_ trip: TrainTimetableDatabase.Trip) {
-        let day = trip.serviceDate.isEmpty ? dayString(departure) : trip.serviceDate
-        let ridden = riddenOverride ?? prefillRidden(forDate: day)
-        guard let drafted = JourneyDraftWork.timetableDraft(
-            from: trip, appliedTo: timetableBase, ridden: ridden) else {
+        guard var drafted = JourneyDraftWork.timetableDraft(
+            from: trip, appliedTo: timetableBase, ridden: riddenOverride ?? true) else {
             timetableFailed = true
             return
+        }
+        // The timetable's own clocks decide the default, by the same rule
+        // that files the trip: one still ahead is not ridden yet.
+        var timed = drafted.train
+        timed.listByDate = nil
+        if riddenOverride == nil, TripListRules.initialMembership(
+            for: timed, clock: Region.resolved(timetableBase).clock, now: Date()) == .upcoming,
+           let unridden = JourneyDraftWork.timetableDraft(
+               from: trip, appliedTo: timetableBase, ridden: false) {
+            drafted = unridden
         }
         if acceptTimetable(drafted.train) {
             limitedExpressName = drafted.serviceName

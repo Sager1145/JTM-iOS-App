@@ -17,6 +17,11 @@ import RailCore
 /// Records written before the field existed carry no membership and keep the
 /// date rule: upcoming while their date is today or later in their region.
 ///
+/// A trip whose clocks nobody set (``RailCore/Train/listByDate``: the editor's
+/// placeholder time, not the reader's, a timetable's or a ticket's) is read as
+/// a date only: filed upcoming while its date is today or later, overdue only
+/// once its date has ended.
+///
 /// Times are the record's own clock strings read on the region's clock.
 /// `25:10` and `01:10+1` both mean the next day, exactly as
 /// ``RailCore/Dates/parseTimeToMinutes(_:)`` reads them for the map.
@@ -31,6 +36,18 @@ public enum TripListRules {
         for train: Train, clock: RegionClock, now: Date
     ) -> TripListMembership {
         guard let start = start(of: train, clock: clock) else { return .past }
+        return start > now ? .upcoming : .past
+    }
+
+    /// The list a trip with this date and first clock would be filed under at
+    /// `now` — the same rule as ``initialMembership(for:clock:now:)``, for a
+    /// draft that is not a record yet. A nil `startClock` is a date only.
+    public static func initialMembership(
+        date: String?, startClock: String?, clock: RegionClock, now: Date
+    ) -> TripListMembership {
+        guard let day = clock.startOfDay(date) else { return .past }
+        let start = Dates.parseTimeToMinutes(startClock).map { day.addingTimeInterval($0 * 60) }
+            ?? endOfDay(day, clock: clock)
         return start > now ? .upcoming : .past
     }
 
@@ -88,6 +105,7 @@ public enum TripListRules {
     // MARK: - clock strings
 
     private static func startMinutes(_ train: Train) -> Double? {
+        guard train.listByDate != true else { return nil }
         for stop in train.stops {
             if let minutes = Dates.parseTimeToMinutes(stop.departure) { return minutes }
         }
@@ -98,6 +116,7 @@ public enum TripListRules {
     }
 
     private static func endMinutes(_ train: Train) -> Double? {
+        guard train.listByDate != true else { return nil }
         for stop in train.stops.reversed() {
             if let minutes = Dates.parseTimeToMinutes(stop.arrival) { return minutes }
         }

@@ -635,6 +635,7 @@ extension StoreOperations {
         if let direction = train.direction { pairs.append(("direction", .string(direction))) }
         if let visible = train.visible { pairs.append(("visible", .bool(visible))) }
         if let list = train.listMembership { pairs.append(("list", .string(list.rawValue))) }
+        if let byDate = train.listByDate { pairs.append(("list_by_date", .bool(byDate))) }
         if let style = train.style { pairs.append(("style", json(style))) }
         if let policy = train.routePolicy { pairs.append(("route_policy", json(policy))) }
         if let sections = train.routeSections {

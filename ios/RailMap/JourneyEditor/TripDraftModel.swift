@@ -188,10 +188,13 @@ final class TripDraftModel {
     /// The draft's stops are the route: a saved journey, or a completion the
     /// reader applied. False only for a new trip still choosing its route.
     var hasRecordRoute: Bool
+    /// The editor was opened to add a trip, not to edit a saved one.
+    let isNewTrip: Bool
 
     init(train: Train, isNew: Bool) {
         draft = train
         hasRecordRoute = !isNew
+        isNewTrip = isNew
         // Collapsed until asked for: its lookups (the official English name
         // reads the timetable database) are work a route edit does not need.
         detailsExpanded = false
@@ -597,13 +600,26 @@ final class TripDraftModel {
     }
 
     var isRidden: Bool {
-        riddenOverride ?? (hasRecordRoute ? RideLedger.hasBeenRidden(draft) : prefillRidden(forDate: dayString(departure)))
+        riddenOverride ?? (hasRecordRoute ? RideLedger.hasBeenRidden(draft) : prefillRidden(
+            forDate: dayString(departure), startClock: clock(departure, extraDays: 0),
+            timeIsSet: headerTimeIsSet))
     }
 
-    func prefillRidden(forDate date: String?) -> Bool {
-        Dates.normalizeDateString(date).map {
-            $0 <= RecordDate.today(in: Region.resolved(timetableBase).clock)
-        } ?? true
+    /// The header's clocks came from the reader, a timetable or an adopted
+    /// completion. A new trip's untouched header shows only the moment the
+    /// editor opened, which is a date and not a time.
+    var headerTimeIsSet: Bool {
+        timetableTrain != nil || touched.contains(.departure) || touched.contains(.arrival)
+            || seed.departureKnown || seed.arrivalKnown
+    }
+
+    /// What Ridden defaults to: a trip that would be filed under past now is
+    /// ridden, one filed upcoming is not (``TripListRules``). An unset time
+    /// is read as its date only.
+    func prefillRidden(forDate date: String?, startClock: String?, timeIsSet: Bool) -> Bool {
+        TripListRules.initialMembership(
+            date: date, startClock: timeIsSet ? startClock : nil,
+            clock: Region.resolved(timetableBase).clock, now: Date()) == .past
     }
 
     // MARK: - direction
@@ -937,6 +953,7 @@ final class TripDraftModel {
             if train.region != nil || region != Region.resolved(train) { result.region = region.code }
             applyHeader(to: &result)
         }
+        fileByDateIfUntimed(&result)
         let blocking = RideDraftValidation.issues(
             for: result, originalID: train.id, existingIDs: existingIDs).blocking
         guard blocking.isEmpty else {
@@ -945,6 +962,21 @@ final class TripDraftModel {
         }
         saveIssues = []
         onSave(result)
+    }
+
+    /// A new trip whose time nobody set is filed by its date alone: its
+    /// clocks are a placeholder, so it is upcoming while its date is today or
+    /// later and overdue only once that date has ended. A time the reader, a
+    /// timetable or a completion set leaves filing to the store's exact-time
+    /// rule. Editing a date-only trip's time makes it a timed one.
+    func fileByDateIfUntimed(_ result: inout Train) {
+        if isNewTrip, !headerTimeIsSet {
+            result.listByDate = true
+            result.listMembership = TripListRules.initialMembership(
+                for: result, clock: Region.resolved(result).clock, now: Date())
+        } else if timetableTrain != nil || touched.contains(.departure) || touched.contains(.arrival) {
+            result.listByDate = nil
+        }
     }
 
     /// Header fields of a saved journey are written back only when the

@@ -133,6 +133,11 @@ public struct Train: Codable, Equatable, Sendable {
     /// The list this trip is filed under. Written only when set, so a store
     /// that never had one round-trips unchanged. See ``TripListMembership``.
     public var listMembership: TripListMembership?
+    /// The trip was filed by its date alone (`list_by_date`): its clocks are
+    /// the editor's placeholder, not a time the reader, a timetable or a
+    /// ticket gave, so the list rules read its date and never its clocks.
+    /// Written only when true.
+    public var listByDate: Bool?
     public var style: TrainStyle?
     public var routePolicy: RoutePolicy?
     public var routeSections: [RouteSection]?
@@ -222,6 +227,7 @@ public struct Train: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, date, number, origin, destination, direction, visible, style, stops
         case listMembership = "list"
+        case listByDate = "list_by_date"
         case numberEn = "number_en"
         case trainType = "train_type"
         case vehicleType = "vehicle_type"
@@ -262,6 +268,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(direction, forKey: .direction)
         try container.encodeIfPresent(visible, forKey: .visible)
         try container.encodeIfPresent(listMembership, forKey: .listMembership)
+        try container.encodeIfPresent(listByDate, forKey: .listByDate)
         try container.encodeIfPresent(style, forKey: .style)
         try container.encodeIfPresent(routePolicy, forKey: .routePolicy)
         try container.encodeIfPresent(routeSections, forKey: .routeSections)
@@ -1908,7 +1915,7 @@ public enum TrainValidation {
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
-                "list", "rolling_stock", "ticket",
+                "list", "list_by_date", "rolling_stock", "ticket",
             ],
             "Train")
 
@@ -1937,6 +1944,7 @@ public enum TrainValidation {
             explicitLatin.map { ServiceCaption(primary: caption, latinName: $0) }
             ?? ServiceCaption.split(caption)
         let listMembership = try normalizeImportedListMembership(train["list"])
+        let listByDate = try normalizeImportedListByDate(train["list_by_date"])
 
         var normalized = Train(
             id: id,
@@ -1975,7 +1983,16 @@ public enum TrainValidation {
             rollingStock: rollingStock(train["rolling_stock"]),
             ticket: ticket(train["ticket"]))
         normalized.listMembership = listMembership
+        normalized.listByDate = listByDate
         return normalized
+    }
+
+    private static func normalizeImportedListByDate(_ value: JSON?) throws -> Bool? {
+        guard let value, value != .null else { return nil }
+        guard case .bool(let flag) = value else {
+            throw fail("Journey list_by_date must be true or false.")
+        }
+        return flag ? true : nil
     }
 
     private static func normalizeImportedListMembership(_ value: JSON?) throws -> TripListMembership? {
@@ -2220,6 +2237,7 @@ public enum TrainValidation {
             ticket: train.ticket)
         // Carried for the same reason as `region`: the reader filed it.
         exported.listMembership = train.listMembership
+        exported.listByDate = train.listByDate
         return exported
     }
 

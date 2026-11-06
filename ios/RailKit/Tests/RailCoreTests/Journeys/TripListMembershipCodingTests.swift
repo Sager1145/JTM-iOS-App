@@ -69,4 +69,34 @@ struct TripListMembershipCodingTests {
             try TrainValidation.normalizeImportedTrain(json)
         }
     }
+
+    @Test("list_by_date survives native and canonical storage, and is absent when unset")
+    func listByDateRoundTrips() throws {
+        var train = Self.sample(list: .upcoming)
+        train.listByDate = true
+        let data = try JSONEncoder().encode(train)
+        #expect(try JSONDecoder().decode(Train.self, from: data).listByDate == true)
+        let exported = TrainValidation.normalizeExportTrain(
+            train, country: "jp", stations: TrainValidation.StationTable.empty)
+        let text = StoreOperations.stringify(StoreOperations.json(exported))
+        #expect(text.contains("\"list\":\"upcoming\",\"list_by_date\":true"))
+        let reimported = try TrainValidation.normalizeImportedTrain(try TrainValidation.JSON.parse(text))
+        #expect(reimported.listByDate == true)
+
+        let plain = Self.sample(list: .upcoming)
+        let plainText = try #require(String(data: JSONEncoder().encode(plain), encoding: .utf8))
+        #expect(!plainText.contains("list_by_date"))
+    }
+
+    @Test("a non-boolean list_by_date is refused on import")
+    func listByDateMustBeBoolean() throws {
+        let json = try TrainValidation.JSON.parse(
+            """
+            {"id":"x","number":"1","origin":"A","destination":"B","list_by_date":"yes",
+             "stops":[{"name":"A","ride_segment":true},{"name":"B","ride_segment":true}]}
+            """)
+        #expect(throws: (any Error).self) {
+            try TrainValidation.normalizeImportedTrain(json)
+        }
+    }
 }

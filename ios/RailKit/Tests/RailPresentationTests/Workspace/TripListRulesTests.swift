@@ -167,4 +167,52 @@ struct TripListRulesTests {
         #expect(!TripListRules.isOverdue(
             train(date: nil, list: .upcoming), clock: .japan, now: Self.tokyoMorning))
     }
+
+    // MARK: - an untouched placeholder time is a date only
+
+    private func byDate(_ train: Train) -> Train {
+        var train = train
+        train.listByDate = true
+        return train
+    }
+
+    @Test("a date-only trip later today is upcoming although its placeholder clock has passed")
+    func dateOnlyTodayIsUpcoming() {
+        let placeholder = byDate(train(departure: "09:00", arrival: "09:00"))
+        #expect(TripListRules.initialMembership(
+            for: placeholder, clock: .japan, now: Self.tokyoMorning) == .upcoming)
+        #expect(TripListRules.initialMembership(
+            date: "2026-09-07", startClock: nil, clock: .japan, now: Self.tokyoMorning) == .upcoming)
+    }
+
+    @Test("a date-only trip on an earlier date is past although its placeholder clock is late")
+    func dateOnlyYesterdayIsPast() {
+        let placeholder = byDate(train(date: "2026-09-06", departure: "23:00", arrival: "23:00"))
+        #expect(TripListRules.initialMembership(
+            for: placeholder, clock: .japan, now: Self.tokyoMorning) == .past)
+        #expect(TripListRules.initialMembership(
+            date: "2026-09-06", startClock: nil, clock: .japan, now: Self.tokyoMorning) == .past)
+    }
+
+    @Test("a time that was set keeps the exact-time rule")
+    func setTimeUsesExactRule() {
+        #expect(TripListRules.initialMembership(
+            date: "2026-09-07", startClock: "09:59", clock: .japan, now: Self.tokyoMorning) == .past)
+        #expect(TripListRules.initialMembership(
+            date: "2026-09-07", startClock: "10:01", clock: .japan, now: Self.tokyoMorning) == .upcoming)
+        #expect(TripListRules.initialMembership(
+            date: nil, startClock: "10:01", clock: .japan, now: Self.tokyoMorning) == .past)
+    }
+
+    @Test("a date-only upcoming trip is overdue only after its date ends")
+    func dateOnlyOverdueAtEndOfDate() {
+        let placeholder = byDate(train(departure: "09:00", arrival: "09:00", list: .upcoming))
+        #expect(!TripListRules.isOverdue(placeholder, clock: .japan, now: Self.tokyoMorning))
+        #expect(!TripListRules.isOverdue(placeholder, clock: .japan, now: minutes(14 * 60 - 1)))
+        #expect(TripListRules.isOverdue(placeholder, clock: .japan, now: minutes(14 * 60)))
+        // The same clocks, set by the reader, are overdue already.
+        #expect(TripListRules.isOverdue(
+            train(departure: "09:00", arrival: "09:00", list: .upcoming),
+            clock: .japan, now: Self.tokyoMorning))
+    }
 }
