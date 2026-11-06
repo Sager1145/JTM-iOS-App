@@ -31,16 +31,17 @@ struct TripScopeTests {
 
     // MARK: cap
 
-    @Test func capKeepsFiveHundredSelectedFirstThenMostRecent() {
-        let ids = (0..<600).map { "t\($0)" }
+    @Test func capKeepsLimitSelectedFirstThenMostRecent() {
+        let limit = MapTripCap.limit
+        let ids = (0..<(limit + 100)).map { "t\($0)" }
         var dates: [String: String] = [:]
         for (index, id) in ids.enumerated() {
             dates[id] = String(format: "2025-%02d-%02d", index % 12 + 1, index % 28 + 1)
         }
         let selected = "t0"
         let capped = MapTripCap.capped(ids, id: { $0 }, selectedID: selected, dates: dates)
-        #expect(MapTripCap.limit == 500)
-        #expect(capped.count == 500)
+        #expect(limit == ResourceProfile.current.mapTripLimit)
+        #expect(capped.count == limit)
         #expect(capped.contains(selected))
         // Every kept trip is at least as recent as every dropped one
         // (the selected trip aside).
@@ -53,7 +54,7 @@ struct TripScopeTests {
     }
 
     @Test func capLeavesSmallSetsUntouched() {
-        let ids = (0..<500).map { "t\($0)" }
+        let ids = (0..<MapTripCap.limit).map { "t\($0)" }
         #expect(MapTripCap.capped(ids, id: { $0 }, selectedID: nil, dates: [:]) == ids)
     }
 

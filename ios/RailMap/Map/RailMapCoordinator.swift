@@ -212,6 +212,10 @@ extension RailMapView.Surface {
             /// Last `NetworkLOD.select` inputs and answer; see ``networkSelection(zoom:buildRect:)``.
             private var networkSelectionMemo: (generation: Int, zoom: Double, buildRect: MKMapRect,
                 result: (lines: [RailNetworkStore.DrawnLine], culledOffScreen: Int))?
+            /// The last completed chain index and the line generation it was
+            /// built for. Kept across generations: the next run updates it
+            /// with `StrokeRide.Index.updated(chains:)` and re-matches only
+            /// the rides an added, removed or altered chain can affect.
             private var preparedStrokeIndex: (generation: Int, index: StrokeRide.Index)?
             /// One ride's own segments, matched against ``prepareStrokeReferences()``
             /// — see ``strokeRef(for:of:)``. Keyed by `ride.id`; a ride whose
@@ -787,9 +791,10 @@ extension RailMapView.Surface {
                 }
             }
 
-            /// Keep mounted layers while the camera moves. A cancellable settle
-            /// task coalesces gesture, inertia, resize and data-arrival rebuilds.
-            private var cameraRebuildTask: Task<Void, Never>?
+            /// Keep mounted layers while the camera moves. One deadline timer
+            /// coalesces gesture, inertia, resize and data-arrival rebuilds;
+            /// a camera frame only moves its deadline.
+            private let cameraRebuildTimer = MapDeadlineTimer(delay: .milliseconds(120))
             private var pendingViewUpdate: (@MainActor () -> Void)?
             private var lastCameraChange: ContinuousClock.Instant?
 
@@ -800,8 +805,7 @@ extension RailMapView.Surface {
             /// identify this coordinator or this exact map view.
             func tearDown(_ dismantledMapView: MKMapView) {
                 selectedStationSnapshots.tearDown()
-                cameraRebuildTask?.cancel()
-                cameraRebuildTask = nil
+                cameraRebuildTimer.cancel()
                 stationLabels.tearDown()
                 pendingViewUpdate = nil
                 viewportResizeTask?.cancel()
@@ -854,12 +858,8 @@ extension RailMapView.Surface {
             }
 
             private func scheduleCameraRebuild(on mapView: MKMapView) {
-                cameraRebuildTask?.cancel()
-                cameraRebuildTask = Task { @MainActor [weak self, weak mapView] in
-                    do { try await Task.sleep(for: .milliseconds(120)) }
-                    catch { return }
+                cameraRebuildTimer.schedule { [weak self, weak mapView] in
                     guard let self, let mapView else { return }
-                    self.cameraRebuildTask = nil
                     guard !self.isManipulating else {
                         self.rebuildDeferredByGesture = true
                         return
@@ -3161,11 +3161,12 @@ extension RailMapView.Surface {
 #if DEBUG
                 MapRenderProbe.matchingRuns += 1
 #endif
-                let readyIndex: @Sendable () async -> StrokeRide.Index? = { [weak self] in
+                // The last published index, of any generation: the same
+                // generation is reused as is, an older one is updated in place.
+                let priorIndex: @Sendable () async -> (generation: Int, index: StrokeRide.Index)? = { [weak self] in
                     await MainActor.run {
-                        guard let self, self.mapView != nil, self.linesGeneration == generation,
-                              self.preparedStrokeIndex?.generation == generation else { return nil }
-                        return self.preparedStrokeIndex?.index
+                        guard let self, self.mapView != nil, self.linesGeneration == generation else { return nil }
+                        return self.preparedStrokeIndex
                     }
                 }
                 let publishIndex: @Sendable (StrokeRide.Index) async -> Void = { [weak self] index in
@@ -3179,8 +3180,13 @@ extension RailMapView.Surface {
                 let worker = Task.detached(priority: .userInitiated) {
                     try await limiter.withPermit {
                         let index: StrokeRide.Index
-                        if let prepared = await readyIndex() {
-                            index = prepared
+                        // What moved since the prior index; nil when there is
+                        // no prior index to compare against.
+                        let change: StrokeRide.Index.Change?
+                        let prior = await priorIndex()
+                        if let prior, prior.generation == generation {
+                            index = prior.index
+                            change = nil
                         } else {
                             var anchors: [String: [Int]] = [:]
                             for station in stations {
@@ -3193,9 +3199,20 @@ extension RailMapView.Surface {
                                 try Task.checkCancellation()
                                 let chain = joinedChains.chain(of: line)
                                 chains.append(ChainRef(id: line.id, points: chain.points,
-                                    measures: chain.measures, anchors: anchors[line.id] ?? []))
+                                    measures: chain.measures, anchors: anchors[line.id] ?? [],
+                                    contentKey: line.contentID.uuidString))
                             }
-                            index = StrokeRide.Index(chains: chains)
+                            // A chunk arrival adds or drops a few chains; the
+                            // prepared entries of every other chain are kept.
+                            // Answers equal a full `Index(chains:)` rebuild.
+                            if let prior {
+                                let updated = prior.index.updated(chains: chains)
+                                index = updated.index
+                                change = updated.change
+                            } else {
+                                index = StrokeRide.Index(chains: chains)
+                                change = nil
+                            }
                             // Salvage a completed index through ride-only cancellation.
                             // Network/anchor changes and dismantled maps reject it.
                             await publishIndex(index)
@@ -3205,10 +3222,19 @@ extension RailMapView.Surface {
                         for ride in rides {
                             try Task.checkCancellation()
                             let key = "\(ride.id):\(ride.geometryDigest)"
-                            if let entry = cached[ride.id], entry.geometryKey == key,
-                                entry.linesGeneration == generation {
-                                results[ride.id] = entry
-                                continue
+                            if let entry = cached[ride.id], entry.geometryKey == key {
+                                if entry.linesGeneration == generation {
+                                    results[ride.id] = entry
+                                    continue
+                                }
+                                // Matched against the prior index, and no
+                                // added, removed or altered chain can hold
+                                // any of its segments: the answers stand.
+                                if let change, let prior, entry.linesGeneration == prior.generation,
+                                   !ride.segments.contains(where: { change.affects(segment: $0.coordinates) }) {
+                                    results[ride.id] = (key, generation, entry.refs)
+                                    continue
+                                }
                             }
                             var refs: [String: StrokeRef] = [:]
                             for segment in ride.segments {

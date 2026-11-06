@@ -6,18 +6,40 @@ import RailCore
 /// policy receives only their scalar outcomes so its boundaries remain
 /// testable without a map view.
 public struct MapRebuildPolicy: Equatable, Sendable {
-    public static let laneZoomDelta: Double = 0.125
+    /// The shipped stroke bucket width. The website's
+    /// `STROKE_REBUILD_ZOOM_STEP` stays 0.125; the app rebuilds every network
+    /// stroke on a bucket change, so it uses half as many buckets.
+    public static let defaultStrokeZoomStep: Double = 0.25
 
-    /// Stroke geometry is rebuilt when the camera crosses a bucket of this
-    /// width. Mirrors `STROKE_REBUILD_ZOOM_STEP` in `app/public/railmap.js`.
-    public static let strokeZoomStep: Double = 0.125
+    /// DEBUG builds read `RAILMAP_STROKE_ZOOM_STEP` from the launch
+    /// environment (a value in (0, 1]) to compare widths; release builds
+    /// always use ``defaultStrokeZoomStep``.
+    public static let strokeZoomStepEnvironmentKey = "RAILMAP_STROKE_ZOOM_STEP"
 
-    public static func strokeBucket(zoom: Double) -> Int {
-        Int((zoom / strokeZoomStep).rounded())
+    public static func configuredStrokeZoomStep(environment: [String: String]) -> Double {
+        #if DEBUG
+        if let raw = environment[strokeZoomStepEnvironmentKey], let step = Double(raw),
+           step > 0, step <= 1 {
+            return step
+        }
+        #endif
+        return defaultStrokeZoomStep
     }
 
-    public static func nominalZoom(bucket: Int) -> Double {
-        Double(bucket) * strokeZoomStep
+    /// Stroke geometry is rebuilt when the camera crosses a bucket of this
+    /// width. Resolved once per process.
+    public static let strokeZoomStep: Double =
+        configuredStrokeZoomStep(environment: ProcessInfo.processInfo.environment)
+
+    /// Lane offsets scale with the same bucket as the strokes they offset.
+    public static var laneZoomDelta: Double { strokeZoomStep }
+
+    public static func strokeBucket(zoom: Double, step: Double = strokeZoomStep) -> Int {
+        Int((zoom / step).rounded())
+    }
+
+    public static func nominalZoom(bucket: Int, step: Double = strokeZoomStep) -> Double {
+        Double(bucket) * step
     }
 
     public var zoom: Double
