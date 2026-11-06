@@ -2,7 +2,6 @@ import CoreGraphics
 import Foundation
 import ImageIO
 import RailCore
-import Vision
 
 // =========================================================================
 //  TransferGuideOCR.swift — running Vision over a screenshot that may be
@@ -98,7 +97,7 @@ enum TransferGuideOCR {
         _ pages: [Data], onProgress: @escaping @Sendable (Int, Int) -> Void
     ) async throws -> Reading {
         guard !pages.isEmpty else { throw Failure.undecodable }
-        guard supportsJapanese() else { throw Failure.unavailable }
+        guard TextRecognizer.supportsJapanese() else { throw Failure.unavailable }
 
         // Sizes come from each page's own metadata — a header read, not a
         // decode — so every page's tile plan and the pixel cap below are
@@ -330,18 +329,6 @@ enum TransferGuideOCR {
 
     // MARK: - the recogniser
 
-    /// Whether this OS can read Japanese at all.
-    ///
-    /// Asked rather than assumed: the language list is a property of the
-    /// recogniser's revision, and a device that cannot answer in Japanese
-    /// would otherwise return a page of confident Latin nonsense.
-    private static func supportsJapanese() -> Bool {
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        guard let languages = try? request.supportedRecognitionLanguages() else { return false }
-        return languages.contains { $0.hasPrefix("ja") }
-    }
-
     private struct Found {
         var text: String
         var box: CGRect  // tile pixels, top-left origin
@@ -372,39 +359,16 @@ enum TransferGuideOCR {
     }
 
     private static func recognize(_ image: CGImage, edges: Edges) throws -> [Found] {
-        let interval = RailSignpost.jobs.begin("ocr.recognize")
-        defer { RailSignpost.jobs.end("ocr.recognize", interval) }
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        request.recognitionLanguages = ["ja-JP", "en-US"]
-        // Off, deliberately. Language correction turns 尾久 into 御久 and
-        // 籠原 into 篭原 — plausible Japanese, and a station that then matches
-        // nothing. A raw misreading is at least visible as one.
-        request.usesLanguageCorrection = false
-        request.automaticallyDetectsLanguage = false
-
-        let handler = VNImageRequestHandler(cgImage: image, options: [:])
-        try handler.perform([request])
-        try Task.checkCancellation()
-        let results = request.results ?? []
-
-        let width = Double(image.width)
         let height = Double(image.height)
         // A reading within this much of a cut edge lost glyphs to it.
         let margin = max(height * 0.005, 2)
-        return results.compactMap { observation in
-            guard let candidate = observation.topCandidates(1).first else { return nil }
-            let box = observation.boundingBox
-            let top = (1 - box.maxY) * height
-            let bottom = (1 - box.minY) * height
-            return Found(
-                // Vision's normalised box has its origin at the BOTTOM left,
-                // and everything downstream reads a document downwards.
-                text: candidate.string,
-                box: CGRect(x: box.minX * width, y: top, width: box.width * width, height: bottom - top),
-                confidence: Double(candidate.confidence),
-                clipped: (edges.cutAtTop && top <= margin)
-                    || (edges.cutAtBottom && bottom >= height - margin))
+        return try TextRecognizer.recognize(image).map { observation in
+            Found(
+                text: observation.text,
+                box: observation.box,
+                confidence: observation.confidence,
+                clipped: (edges.cutAtTop && observation.box.minY <= margin)
+                    || (edges.cutAtBottom && observation.box.maxY >= height - margin))
         }
     }
 
