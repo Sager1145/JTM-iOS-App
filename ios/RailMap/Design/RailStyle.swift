@@ -126,6 +126,14 @@ nonisolated public enum RailStyle {
         max(minimumScreenCornerRadius, minCornerRadius * scale)
     }
 
+    /// How far rounding a SHARP surveyed corner may move the drawn line off
+    /// its vertex: half the rail width at this scale, so the stroke still
+    /// covers the surveyed corner. `ContinuousStroke` caps each such corner's
+    /// radius to it (`Options.hardCornerMaxDeviationPx`).
+    static func hardCornerMaxDeviation(atScale scale: CGFloat) -> CGFloat {
+        railWidth * scale / 2
+    }
+
 
     /// The radius a continuous stroke (`RailCore.ContinuousStroke`, the port of
     /// rail-stroke.js) rounds its corners to where the surveyed polyline turns

@@ -97,6 +97,9 @@ struct ContinuousStrokeParityTests {
             let CURVE_HARD_TURN_DEGREES: Double
             let CURVE_MAX_DEVIATION_PX: Double
             let CURVE_MAX_DEVIATION_METRES: Double
+            let HARD_CORNER_MAX_DEVIATION_PX: Double
+            let HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES: Double
+            let RAIL_WIDTH_PX: Double
             let JOIN_MAX_TANGENT_DEGREES: Double
             let JOIN_BLEND_METRES: Double
             let LANE_RAMP_HALF_WIDTH_METRES: Double
@@ -266,6 +269,12 @@ struct ContinuousStrokeParityTests {
         }
     }
 
+    /// A radius-0 build switches the curve pass off with the rounding, so it
+    /// is NOT the polyline the fillet sees. An infinitesimal radius keeps
+    /// every pass before the fillet and rounds nothing: no tangent survives
+    /// `degenerateEdge`.
+    static let preFilletRadiusPx = 1e-9
+
     /// A rounded corner is sampled at most ``filletStepDegrees`` of turn at a
     /// time — the promise the sample count has always made, and the one the
     /// quadratic Bézier this fillet used to draw could not keep: sampled
@@ -287,9 +296,9 @@ struct ContinuousStrokeParityTests {
             let stroke = Self.stroke(probe)
             guard stroke.points.count >= 3 else { continue }
             // The polyline the fillet pass actually saw: the identical build
-            // with the rounding switched off, which is exactly what
-            // `fillet` receives (it returns its input unchanged at radius 0).
-            let pre = Self.stroke(probe, floored: false, radiusPx: 0).points
+            // with an infinitesimal radius, which is exactly what `fillet`
+            // receives and returns unchanged (see ``preFilletRadiusPx``).
+            let pre = Self.stroke(probe, floored: false, radiusPx: Self.preFilletRadiusPx).points
             var exempt = stroke.anchors
             if pre.count >= 3 {
                 for at in 1..<(pre.count - 1)
@@ -317,6 +326,197 @@ struct ContinuousStrokeParityTests {
             #expect(
                 worst <= ceiling,
                 "case \(index): \(probe.note) — \(worst)° facet at vertex \(worstAt)")
+        }
+    }
+
+    static let tolerance = ContinuousStroke.hardCornerMaxDeviationPx
+
+    /// How far a vertex turning by `turn` radians, rounded at radius r, ends
+    /// up from the drawn polyline, per unit r: exact for the sample count the
+    /// fillet uses (an odd count passes the vertex at a chord's midpoint).
+    static func gapPerRadius(_ turn: Double) -> Double {
+        let n = max(2, Int((turn / (ContinuousStroke.filletStepDegrees * Double.pi / 180)).rounded(.up)))
+        return 1 / cos(turn / 2) - (n % 2 == 1 ? cos(turn / (2 * Double(n))) : 1)
+    }
+
+    /// The largest radius a lone sharp corner can take, and the floor the
+    /// waiver rule still holds it to.
+    static func sharpCornerReach(
+        _ points: [ContinuousStroke.Point], _ at: Int, _ probe: Fixture.Case
+    ) -> (reach: Double, required: Double, tangent: Double) {
+        let turn = turnDegrees(points, at) * Double.pi / 180
+        let la = hypot(points[at].x - points[at - 1].x, points[at].y - points[at - 1].y)
+        let lb = hypot(points[at + 1].x - points[at].x, points[at + 1].y - points[at].y)
+        let floor = probe.minCornerRadiusPx ?? 0
+        let strict = probe.enforceMinimumCornerRadius ?? false
+        let requested = strict ? max(probe.cornerRadiusPx, floor) : probe.cornerRadiusPx
+        let reach = min(requested, tolerance / gapPerRadius(turn),
+                        ContinuousStroke.filletMaxTangentShare * min(la, lb) / tan(turn / 2))
+        let gap = abs(probe.laneGapPx)
+        let waived = gap == 0 || gap < ContinuousStroke.defaultRailWidthPx
+            || gap >= ContinuousStroke.hardCornerFloorWaiverGapTolerances * tolerance
+        return (reach, strict && !waived ? floor : 0, reach * tan(turn / 2))
+    }
+
+    /// A SHARP surveyed corner is rounded, but only a little: its radius is
+    /// capped per corner so the drawn line stays within
+    /// ``ContinuousStroke/hardCornerMaxDeviationPx`` (screen pixels, half the
+    /// rail width) of the surveyed vertex. Every class is covered — lone,
+    /// localized, windowed, and runs merged into one corner — by comparing
+    /// against the same build at a zero tolerance, which leaves each of them
+    /// exactly as surveyed. A corner sharper than ``curveHardTurnDegrees``
+    /// left sharp must have been impossible to round. The JS twin in
+    /// `continuous-stroke-geometry.test.mjs` asserts the same.
+    @Test func sharpSurveyedCornersRoundWithinTheDeviationTolerance() throws {
+        var rounded = 0
+        var checked = 0
+        for (index, probe) in try Self.fixture().cases.enumerated() {
+            guard probe.cornerRadiusPx > 0 else { continue }
+            let stroke = Self.stroke(probe)
+            var zero = Self.options(probe)
+            zero.hardCornerMaxDeviationPx = 0
+            let kept = ContinuousStroke.buildStroke(Self.points(probe.points), options: zero)
+            let pre = Self.stroke(probe, floored: false, radiusPx: Self.preFilletRadiusPx).points
+            let where_ = "case \(index): \(probe.note)"
+            for vertex in pre where kept.points.contains(vertex) && !stroke.points.contains(vertex) {
+                let moved = ContinuousStroke.distanceToPolyline(vertex, stroke.points)
+                #expect(moved <= Self.tolerance + 1e-9, Comment(rawValue: "\(where_) — a sharp corner moved \(moved) px"))
+                rounded += 1
+            }
+            if kept.points.count >= 2 && stroke.points.count >= 2 {
+                for point in kept.points {
+                    #expect(ContinuousStroke.distanceToPolyline(point, stroke.points) <= Self.tolerance + 1e-9,
+                            Comment(rawValue: "\(where_) — ink moved"))
+                }
+                for point in stroke.points {
+                    #expect(ContinuousStroke.distanceToPolyline(point, kept.points) <= Self.tolerance + 1e-9,
+                            Comment(rawValue: "\(where_) — ink moved"))
+                }
+            }
+            guard pre.count >= 3 else { continue }
+            for at in 1..<(pre.count - 1) {
+                let turn = Self.turnDegrees(pre, at)
+                guard turn > ContinuousStroke.curveHardTurnDegrees, turn < ContinuousStroke.filletMaxTurnDegrees,
+                      !stroke.anchors.contains(pre[at]) else { continue }
+                checked += 1
+                guard stroke.points.contains(pre[at]) else { continue }
+                let reach = Self.sharpCornerReach(pre, at, probe)
+                #expect(reach.tangent <= 1e-6 || reach.reach < reach.required,
+                        Comment(rawValue: "\(where_) — vertex \(at) (\(turn)°) left sharp, reach \(reach.reach) px"))
+            }
+        }
+        #expect(rounded > 0, "the corpus holds no sharp surveyed corner")
+        // The left-sharp proof above must have had corners to judge.
+        #expect(checked > 0, "no corner sharper than curveHardTurnDegrees was examined")
+    }
+
+    static func corner(
+        _ degrees: Double, radius: Double = 3.6, tolerance: Double? = nil, floor: Double = 0,
+        strict: Bool = false, lane: Double = 0, gap: Double = 0
+    ) -> (points: [ContinuousStroke.Point], stroke: ContinuousStroke.Stroke) {
+        let a = degrees * Double.pi / 180
+        let points = [ContinuousStroke.Point(x: -100, y: 0), ContinuousStroke.Point(x: 0, y: 0),
+                      ContinuousStroke.Point(x: 100 * cos(a), y: 100 * sin(a))]
+        var options = ContinuousStroke.Options(
+            measures: [0, 100, 200], rows: [.init(from: 0, to: 200, lane: lane)], totalMetres: 200,
+            laneGapPx: gap, minRampPx: 24, cornerRadiusPx: radius, minCornerRadiusPx: floor,
+            anchors: [0, 2], enforceMinimumCornerRadius: strict)
+        if let tolerance { options.hardCornerMaxDeviationPx = tolerance }
+        return (points, ContinuousStroke.buildStroke(points, options: options))
+    }
+
+    /// One corner with long edges: the radius is the smallest of the request
+    /// and the tolerance cap, exactly — including 100°, sampled in nine (odd)
+    /// steps, where the drawn line passes the vertex at a chord's midpoint.
+    @Test func sharpCornerRadiusIsTheSmallestOfRequestShareAndTolerance() {
+        for degrees in [60.0, 90, 100, 120, 140] {
+            for tolerance in [0.25, 0.75, 3] {
+                let (points, stroke) = Self.corner(degrees, tolerance: tolerance)
+                let turn = degrees * Double.pi / 180
+                let expected = min(3.6, tolerance / Self.gapPerRadius(turn))
+                let moved = ContinuousStroke.distanceToPolyline(points[1], stroke.points)
+                #expect(stroke.points.count > points.count, "\(degrees)° at \(tolerance) px left sharp")
+                #expect(abs(moved - expected * Self.gapPerRadius(turn)) < 1e-9, "\(degrees)° at \(tolerance) px moved \(moved)")
+                #expect(moved <= tolerance + 1e-12)
+                for point in stroke.points {
+                    #expect(ContinuousStroke.distanceToPolyline(point, points) <= tolerance + 1e-12)
+                }
+            }
+        }
+    }
+
+    /// The strict floor is waived for a sharp corner only where no lane can be
+    /// crowded: no lane geometry, a lane gap under one rail width (the z9–12
+    /// half-gap lane LOD draws 1.35 px), or a gap of at least
+    /// ``ContinuousStroke/hardCornerFloorWaiverGapTolerances`` tolerances
+    /// (2.7 px from z12). Between those the floor binds.
+    @Test func sharpCornerGoesUnderAStrictFloorOnlyWhereNoLaneCanBeCrowded() {
+        let reach = Self.tolerance / Self.gapPerRadius(Double.pi / 2)
+        for gap in [0, 1.35, ContinuousStroke.hardCornerFloorWaiverGapTolerances * Self.tolerance, 2.7] {
+            let (points, stroke) = Self.corner(90, floor: 3, strict: true, lane: 1, gap: gap)
+            #expect(stroke.points.count > points.count, "gap \(gap): left sharp")
+            if stroke.points.count > 4 {
+                for at in 2..<(stroke.points.count - 2) {
+                    let a = stroke.points[at - 1], b = stroke.points[at], c = stroke.points[at + 1]
+                    let cross = (b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x)
+                    let r = hypot(b.x - a.x, b.y - a.y) * hypot(c.x - b.x, c.y - b.y)
+                        * hypot(c.x - a.x, c.y - a.y) / (2 * abs(cross))
+                    #expect(abs(r - reach) < 1e-6, "gap \(gap): radius \(r)")
+                }
+            }
+        }
+        for gap in [ContinuousStroke.defaultRailWidthPx, 2] {
+            #expect(Self.corner(90, floor: 3, strict: true, lane: 1, gap: gap).stroke.points.count == 3, "gap \(gap)")
+        }
+    }
+
+    /// The worst case the waiver allows: one lane left sharp (tolerance 0),
+    /// its neighbour rounded at the full tolerance. They close by at most one.
+    @Test func neighbouringLanesRoundedToDifferentRadiiKeepTheirSeparation() {
+        for degrees in [60.0, 90, 120, 140] {
+            for gap in [1.35, 2.7] {
+                for (sharpLane, roundLane) in [(0.0, 1.0), (0, -1), (1, 0), (-1, 0)] {
+                    let kept = Self.corner(degrees, tolerance: 0, floor: 3, strict: true, lane: sharpLane, gap: gap).stroke.points
+                    let (points, stroke) = Self.corner(degrees, floor: 3, strict: true, lane: roundLane, gap: gap)
+                    #expect(stroke.points.count > points.count, "\(degrees)° lane \(roundLane): left sharp")
+                    var separation = Double.infinity
+                    for point in stroke.points { separation = min(separation, ContinuousStroke.distanceToPolyline(point, kept)) }
+                    for point in kept { separation = min(separation, ContinuousStroke.distanceToPolyline(point, stroke.points)) }
+                    #expect(separation >= gap - Self.tolerance - 1e-9,
+                            "\(degrees)° gap \(gap), lanes \(sharpLane)/\(roundLane): \(separation) px apart")
+                }
+            }
+        }
+    }
+
+    /// Five vertices 0.3 px apart turn 70° in all — a windowed surveyed corner
+    /// — and the floor merges them into ONE corner, every vertex within the
+    /// tolerance of the drawn line.
+    @Test func splitSharpCornerRoundsAsOneWithinTheTolerance() {
+        var points = [ContinuousStroke.Point(x: 0, y: 0), ContinuousStroke.Point(x: 60, y: 0)]
+        var heading = 0.0
+        for _ in 0..<4 {
+            heading += 17.5 * Double.pi / 180
+            let last = points.last!
+            points.append(.init(x: last.x + 0.3 * cos(heading), y: last.y + 0.3 * sin(heading)))
+        }
+        let last = points.last!
+        points.append(.init(x: last.x + 60 * cos(heading), y: last.y + 60 * sin(heading)))
+        let metres = ContinuousStroke.cumulativeLengths(points)
+        for tolerance in [0.25, 0.75] {
+            let stroke = ContinuousStroke.buildStroke(points, options: .init(
+                measures: metres, rows: [], totalMetres: metres.last!, laneGapPx: 0, minRampPx: 24,
+                cornerRadiusPx: 3.6, minCornerRadiusPx: 1.5, anchors: [0, points.count - 1],
+                hardCornerMaxDeviationPx: tolerance))
+            for at in 1..<(points.count - 1) {
+                #expect(!stroke.points.contains(points[at]), "\(tolerance): vertex \(at) kept")
+            }
+            for point in points {
+                #expect(ContinuousStroke.distanceToPolyline(point, stroke.points) <= tolerance + 1e-9)
+            }
+            for at in 1..<(stroke.points.count - 1) {
+                #expect(Self.turnDegrees(stroke.points, at) <= ContinuousStroke.filletStepDegrees + 0.5)
+            }
         }
     }
 
@@ -431,6 +631,9 @@ struct ContinuousStrokeParityTests {
         #expect(ContinuousStroke.curveHardTurnDegrees == c.CURVE_HARD_TURN_DEGREES)
         #expect(ContinuousStroke.curveMaxDeviationPx == c.CURVE_MAX_DEVIATION_PX)
         #expect(ContinuousStroke.curveMaxDeviationMetres == c.CURVE_MAX_DEVIATION_METRES)
+        #expect(ContinuousStroke.hardCornerMaxDeviationPx == c.HARD_CORNER_MAX_DEVIATION_PX)
+        #expect(ContinuousStroke.hardCornerFloorWaiverGapTolerances == c.HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES)
+        #expect(ContinuousStroke.defaultRailWidthPx == c.RAIL_WIDTH_PX)
         #expect(ContinuousStroke.joinMaxTangentDegrees == c.JOIN_MAX_TANGENT_DEGREES)
         #expect(ContinuousStroke.joinBlendMetres == c.JOIN_BLEND_METRES)
     }
@@ -538,16 +741,14 @@ struct ContinuousStrokeParityTests {
     /// the corner the reader sees is a bare kink whatever radius was asked
     /// for. Rounded as ONE corner it reaches the full radius.
     ///
-    /// Two spacings, because `buildStroke` now decimates to
-    /// ``strokeSimplifyTolerancePx`` BEFORE it rounds anything:
-    ///
-    ///   * 0.03 px apart the four vertices are far under that tolerance and
-    ///     are removed outright — a split that fine is a survey artefact, not
-    ///     a corner, and the floored and unfloored answers are now the same
-    ///     one, both reaching the radius;
-    ///   * 0.3 px apart they survive decimation and still starve a per-vertex
-    ///     fillet (0.45 of 0.3 px is 0.135 px), which is the case that holds
-    ///     the run merge to its job.
+    /// Two spacings, 0.03 px and 0.3 px apart. Under the curve pass nothing
+    /// decimates them before the fillet (``strokeSimplifyTolerancePx`` is
+    /// spent only when the centreline is not splined), and both splits are
+    /// sharp surveyed corners, so their radius is also capped by
+    /// ``ContinuousStroke/hardCornerMaxDeviationPx``. In both, a per-vertex
+    /// fillet is starved by the tiny edges (0.45 of 0.3 px is 0.135 px), and
+    /// it is the floor that merges the run into ONE corner reaching it;
+    /// unfloored, each vertex is rounded in isolation and stays under it.
     ///
     /// Not a parity check — both ports could carry the same bug — so this
     /// measures the radius the OUTPUT actually presents, sampled ±0.5 px of
@@ -567,18 +768,21 @@ struct ContinuousStrokeParityTests {
         #expect(
             looseRadius < probe.minCornerRadiusPx ?? 0,
             Comment(rawValue: "the unfloored corner should still collapse; got \(looseRadius) px"))
-        // The sub-pixel spelling of the same corner: decimated away before the
-        // fillet, so the floor has nothing left to rescue and both answers
-        // reach the radius on their own.
+        // The sub-pixel spelling of the same corner. The curve pass keeps its
+        // sharp surveyed vertices (no pre-fillet decimation runs under it), so
+        // it is the floor that merges them into ONE corner reaching the
+        // radius; unfloored, each vertex is rounded in isolation — rounded,
+        // not left sharp, but too small to reach it — exactly like the coarse
+        // spelling above.
         let fine = try Self.find(
             "a corner split across near-coincident vertices is rounded as ONE corner to the minimum radius",
             in: fixture)
         let fineFloor = fine.minCornerRadiusPx ?? 0
         #expect(
             Self.minimumWindowedRadius(Self.stroke(fine).points, window: 0.5) >= fineFloor)
-        #expect(
-            Self.minimumWindowedRadius(Self.stroke(fine, floored: false).points, window: 0.5)
-                >= fineFloor)
+        let fineLoose = Self.stroke(fine, floored: false)
+        #expect(Self.minimumWindowedRadius(fineLoose.points, window: 0.5) < fineFloor)
+        #expect(fineLoose.points.count > fine.points.count, "the unfloored split corner was left sharp")
         // Bounded: nothing the run swallowed may end up further from the drawn
         // line than the radius the corner was given.
         let inputs = Self.points(probe.points)

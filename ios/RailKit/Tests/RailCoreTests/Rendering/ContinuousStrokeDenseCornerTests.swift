@@ -5,7 +5,7 @@ import Testing
 struct ContinuousStrokeDenseCornerTests {
     typealias Point = ContinuousStroke.Point
 
-    @Test func finalInkRetainsAnIsolatedSurveyedCorner() {
+    @Test func finalInkRoundsAnIsolatedSurveyedCornerWithinTolerance() {
         let source = [Point(x: -100, y: 0), Point(x: 0, y: 0),
                       Point(x: 0, y: 100), Point(x: 0, y: 200)]
         assertCorners(source, indices: [1])
@@ -33,22 +33,33 @@ struct ContinuousStrokeDenseCornerTests {
                        Point(x: 200 * cos(angle), y: 200 * sin(angle))], indices: [1])
     }
 
+    /// A sharp surveyed corner is no longer left as a kink: it is rounded,
+    /// but only within ``ContinuousStroke/hardCornerMaxDeviationPx`` (screen
+    /// pixels, half the rail width) of the survey, at every scale — and, with
+    /// no lane geometry to crowd, under a strict floor too. What these cases
+    /// protect is that the corner is not dissolved into a spline: the drawn
+    /// line still turns where the survey turns, and never strays further from
+    /// it than that tolerance.
     private func assertCorners(_ source: [Point], indices: [Int]) {
         for scale in [0.25, 1.0, 4.0] {
             let p = source.map { Point(x: $0.x * scale, y: $0.y * scale) }
             let metres = ContinuousStroke.cumulativeLengths(source)
+            let tolerance = ContinuousStroke.hardCornerMaxDeviationPx
             for minimum in [0.0, 3.0] {
                 let result = ContinuousStroke.buildStroke(p, options: .init(
                     measures: metres, rows: [], totalMetres: metres.last!, laneGapPx: 0,
                     minRampPx: 24, cornerRadiusPx: 3.6, minCornerRadiusPx: minimum,
                     anchors: [0, p.count - 1], enforceMinimumCornerRadius: minimum > 0))
                 for i in indices {
-                    #expect(result.points.contains(p[i]))
-                    if let at = result.points.firstIndex(of: p[i]), at > 0, at + 1 < result.points.count {
-                        #expect(abs(ContinuousStroke.turnAt(result.points, at)
-                            - ContinuousStroke.turnAt(p, i)) < 1e-9)
-                    }
+                    let moved = ContinuousStroke.distanceToPolyline(p[i], result.points)
+                    #expect(moved > 0, "scale \(scale): corner \(i) left sharp")
+                    #expect(moved <= tolerance + 1e-9, "scale \(scale): corner \(i) moved \(moved) px")
                 }
+                for point in result.points {
+                    #expect(ContinuousStroke.distanceToPolyline(point, p) <= tolerance + 1e-9)
+                }
+                // The approach and departure edges are kept as surveyed.
+                #expect(result.points.first == p.first && result.points.last == p.last)
                 #expect(zip(result.measures, result.measures.dropFirst()).allSatisfy { $0 <= $1 })
             }
         }

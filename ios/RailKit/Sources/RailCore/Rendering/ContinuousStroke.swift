@@ -87,6 +87,44 @@ public enum ContinuousStroke {
     public static let filletMaxTangentShare: Double = 0.45
     /// One curve vertex per this many degrees of turn.
     public static let filletStepDegrees: Double = 12
+    /// A SHARP surveyed corner — one ``surveyedCornerIndices(_:)`` classifies
+    /// as a corner rather than a spline facet — is rounded too, but only a
+    /// little: its radius is chosen per corner, the smallest of the requested
+    /// radius, what ``filletMaxTangentShare`` of its two edges can carry, and
+    /// what keeps the drawn line within this many SCREEN pixels of the
+    /// surveyed vertex.
+    ///
+    /// For an arc of radius r replacing a vertex that turns by θ, sampled in
+    /// n equal steps, the vertex ends up r·(1/cos(θ/2) − 1) from the arc's
+    /// midpoint, and r·(1/cos(θ/2) − cos(θ/2n)) from the drawn polyline when n
+    /// is odd (its nearest drawn point is then the middle chord's midpoint,
+    /// not a sample). Every arc point lies within r·(1 − cos(θ/2)) of the
+    /// edges, which is less. So the bound is r ≤ tol / (1/cos(θ/2) − c), with
+    /// c = 1 for even n and cos(θ/2n) for odd n.
+    ///
+    /// Half the rail width: the stroke keeps covering the surveyed vertex at
+    /// every zoom. Purely screen space: no metres-per-pixel term gates a
+    /// corner on or off, and in production the floor waiver (below) holds at
+    /// every lane LOD, so every zoom rounds every sharp corner; only the size
+    /// scales with the drawn weight. The default is half of a 1.5 px rail at scale 1; callers that
+    /// draw another width pass ``Options/hardCornerMaxDeviationPx``. Mirrors
+    /// rail-stroke.js's HARD_CORNER_MAX_DEVIATION_PX.
+    public static let hardCornerMaxDeviationPx: Double = 0.75
+    /// A sharp corner is rounded below a strict minimum radius only where no
+    /// neighbouring lane can be crowded by it. Every fillet cuts toward the
+    /// inside of its turn, so two neighbouring lanes, each within the
+    /// tolerance of its own offset polyline, close on each other by at most
+    /// ONE tolerance. A lane gap of at least this many tolerances keeps that
+    /// worst case a full rail width (two tolerances) apart: no ink overlap,
+    /// no reordering. A lane gap under one rail width is waived too: those
+    /// lanes already overlap (the half-gap lane LOD of z9–12 draws 1.35 px
+    /// centres under a 1.5 px rail), so a fillet cannot crowd them any
+    /// further. Between the two, the floor binds.
+    public static let hardCornerFloorWaiverGapTolerances: Double = 3
+    /// The drawn rail width that waiver compares a lane gap with, in screen
+    /// pixels; callers drawing another width pass ``Options/railWidthPx``.
+    /// Mirrors rail-stroke.js's RAIL_WIDTH_PX.
+    public static let defaultRailWidthPx: Double = 1.5
     /// The bisector offset factor 1/cos(θ/2) is clamped here.
     public static let miterLimit: Double = 2.5
     /// Two vertices closer than this, in pixels, are one vertex.
@@ -291,14 +329,26 @@ public enum ContinuousStroke {
         /// not sampled twice.
         public var curveCentreline: Bool
         public var literalSpans: [LiteralSpan]
+        /// How far, in screen pixels, rounding a sharp surveyed corner may
+        /// move the line off its vertex: half the drawn rail width. See
+        /// ``ContinuousStroke/hardCornerMaxDeviationPx``.
+        public var hardCornerMaxDeviationPx: Double
+        /// The drawn rail width, in screen pixels. A lane gap under it waives
+        /// the strict floor for sharp corners; see
+        /// ``ContinuousStroke/hardCornerFloorWaiverGapTolerances``.
+        public var railWidthPx: Double
         public init(
             measures: [Double] = [], rows: [LaneRow], totalMetres: Double, laneGapPx: Double,
             minRampPx: Double, cornerRadiusPx: Double, minCornerRadiusPx: Double = 0,
             anchors: [Int], follows: [Follow] = [], shapeBoundaryMeasures: [Double] = [],
             joinStart: Join? = nil, joinEnd: Join? = nil,
             enforceMinimumCornerRadius: Bool = false,
-            curveCentreline: Bool = true, literalSpans: [LiteralSpan] = []
+            curveCentreline: Bool = true, literalSpans: [LiteralSpan] = [],
+            hardCornerMaxDeviationPx: Double = ContinuousStroke.hardCornerMaxDeviationPx,
+            railWidthPx: Double = ContinuousStroke.defaultRailWidthPx
         ) {
+            self.hardCornerMaxDeviationPx = hardCornerMaxDeviationPx
+            self.railWidthPx = railWidthPx
             self.measures = measures
             self.rows = rows
             self.totalMetres = totalMetres
@@ -1088,9 +1138,9 @@ public enum ContinuousStroke {
         var followed = substituted
         removeSubstitutionFolds(substituted: substituted, clean: clean, anchorSet: protectedAnchorSet, followed: &followed)
         let curveEnabled = options.curveCentreline && options.cornerRadiusPx > 0
-        var cornerMeasures = (curveEnabled
-            ? surveyedCornerIndices(followed.points).map { followed.measures[$0] } : [])
-            + shapeBoundaryMeasures
+        let surveyedCornerMeasures = curveEnabled
+            ? surveyedCornerIndices(followed.points).map { followed.measures[$0] } : []
+        var cornerMeasures = surveyedCornerMeasures + shapeBoundaryMeasures
         // Pixel LOD may hide an offset; it cannot admit a semantic lane.
         let literals = curveEnabled && options.follows.isEmpty && !activeOffset
             ? options.literalSpans.filter { $0.mode == nil } + sourceCorners : []
@@ -1105,7 +1155,8 @@ public enum ContinuousStroke {
         var tapered = taperFollowedStroke(followed: followed, anchorSet: protectedAnchorSet, metresPerPx: metresPerPx, cornerMeasures: cornerMeasures)
         var result = finishTaperedStroke(
             tapered: &tapered, options: options, totalMetres: totalMetres, metresPerPx: metresPerPx,
-            gap: gap, anchorSet: protectedAnchorSet, curveEnabled: curveEnabled, cornerMeasures: cornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures)
+            gap: gap, anchorSet: protectedAnchorSet, curveEnabled: curveEnabled, cornerMeasures: cornerMeasures,
+            surveyedCornerMeasures: surveyedCornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures)
         if !protection.appliedEdges.isEmpty {
             guard preservesLiteralFootprints(points: result.points, measures: result.measures, footprints: protection.footprints) else {
                 var ordinary = options
@@ -1275,7 +1326,8 @@ public enum ContinuousStroke {
     private static func finishTaperedStroke(
         tapered: inout (points: [Point], measures: [Double], map: [Int]), options: Options,
         totalMetres: Double, metresPerPx: Double, gap: Double, anchorSet: Set<Int>,
-        curveEnabled: Bool, cornerMeasures: [Double], anchorMap: [Int], anchorMeasures: [Double]
+        curveEnabled: Bool, cornerMeasures: [Double], surveyedCornerMeasures: [Double],
+        anchorMap: [Int], anchorMeasures: [Double]
     ) -> Stroke {
         let width = max(laneRampHalfWidthMetres, options.minRampPx * metresPerPx)
         let resolved = inheritedLaneProfile(
@@ -1297,7 +1349,8 @@ public enum ContinuousStroke {
         return drawnStroke(
             tapered: tapered, cleaned: offsetStage.cleaned, cleanedMeasures: offsetStage.cleanedMeasures,
             taperedAnchors: offsetStage.taperedAnchors, offset: offsetStage.offset,
-            curveEnabled: curveEnabled, cornerMeasures: cornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures, options: options)
+            curveEnabled: curveEnabled, cornerMeasures: cornerMeasures, surveyedCornerMeasures: surveyedCornerMeasures,
+            anchorMap: anchorMap, anchorMeasures: anchorMeasures, options: options)
     }
 
     private static func offsetTaperedStroke(
@@ -1343,7 +1396,8 @@ public enum ContinuousStroke {
     private static func drawnStroke(
         tapered: (points: [Point], measures: [Double], map: [Int]), cleaned: (points: [Point], map: [Int]),
         cleanedMeasures: [Double], taperedAnchors: Set<Int>, offset: [Point],
-        curveEnabled: Bool, cornerMeasures: [Double], anchorMap: [Int], anchorMeasures: [Double], options: Options
+        curveEnabled: Bool, cornerMeasures: [Double], surveyedCornerMeasures: [Double],
+        anchorMap: [Int], anchorMeasures: [Double], options: Options
     ) -> Stroke {
         var finalAnchors = Set<Int>()
         for index in taperedAnchors where cleaned.map[index] >= 0 {
@@ -1367,11 +1421,25 @@ public enum ContinuousStroke {
                }))
             : simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
                                 tolerance: strokeSimplifyTolerancePx)
+        // Sharp surveyed corners are rounded within the deviation tolerance;
+        // shape boundaries and protected source corners stay exact.
+        let corners = classifyCornerMeasures(
+            drawn.measures, surveyed: surveyedCornerMeasures,
+            others: Array(cornerMeasures.dropFirst(surveyedCornerMeasures.count)))
+        let requestedTolerance = options.hardCornerMaxDeviationPx
+        let tolerance = requestedTolerance.isFinite && requestedTolerance >= 0
+            ? requestedTolerance : hardCornerMaxDeviationPx
+        let gap = options.laneGapPx
+        let width = options.railWidthPx.isFinite && options.railWidthPx >= 0
+            ? options.railWidthPx : defaultRailWidthPx
         let filleted = fillet(
             drawn.points, radius: options.cornerRadiusPx,
             floorRadius: options.minCornerRadiusPx, anchors: drawn.anchors,
             measures: drawn.measures, enforceMinimumRadius: options.enforceMinimumCornerRadius,
-            hardCorners: Set(drawn.measures.indices.filter { i in cornerMeasures.contains { abs($0 - drawn.measures[i]) < 1e-9 } }))
+            hardCorners: corners.hard, roundedCorners: corners.rounded,
+            hardCornerTolerancePx: tolerance,
+            waiveFloorForRounded: gap == 0 || abs(gap) < width
+                || abs(gap) >= hardCornerFloorWaiverGapTolerances * tolerance)
         let anchors = options.anchors.enumerated().map { anchorIndex, index -> Point in
             finalStrokeAnchor(
                 anchorIndex: anchorIndex, index: index, curveEnabled: curveEnabled,
@@ -2561,9 +2629,19 @@ public enum ContinuousStroke {
     /// unless every vertex it replaces ends up within `floorRadius` of it.
     /// With `floorRadius` 0 no run is ever formed and every corner is exactly
     /// the single-vertex fillet this function has always drawn.
+    ///
+    /// `roundedCorners` is the subset of `hardCorners` that are sharp surveyed
+    /// corners: those are not left as kinks but rounded with a radius capped
+    /// so the line stays within `hardCornerTolerancePx` of the survey (see
+    /// ``hardCornerMaxDeviationPx``). With `waiveFloorForRounded` they take
+    /// that radius even below a strict floor; without it a corner that cannot
+    /// reach the floor stays as surveyed. A run never mixes them with ordinary
+    /// vertices, so every gentle corner is drawn exactly as before.
     static func fillet(
         _ points: [Point], radius: Double, floorRadius: Double, anchors: Set<Int>,
-        measures: [Double], enforceMinimumRadius: Bool = false, hardCorners: Set<Int> = []
+        measures: [Double], enforceMinimumRadius: Bool = false, hardCorners: Set<Int> = [],
+        roundedCorners: Set<Int> = [], hardCornerTolerancePx: Double = hardCornerMaxDeviationPx,
+        waiveFloorForRounded: Bool = false
     ) -> (points: [Point], measures: [Double]) {
         let radius = enforceMinimumRadius ? max(radius, floorRadius) : radius
         let count = points.count
@@ -2577,7 +2655,10 @@ public enum ContinuousStroke {
         var turns = [Double](repeating: 0, count: count)
         var hard = [Bool](repeating: false, count: count)
         prepareFilletTurns(points: points, anchors: anchors, maxTurn: maxTurn, turns: &turns, hard: &hard)
-        for i in hardCorners where i > 0 && i + 1 < count { hard[i] = true }
+        var capped = [Bool](repeating: false, count: count)
+        for i in hardCorners where i > 0 && i + 1 < count {
+            if roundedCorners.contains(i) && !anchors.contains(i) { capped[i] = true } else { hard[i] = true }
+        }
         let cumulative = cumulativeLengths(points)
         var out: [Point] = [points[0]]
         var outMeasures: [Double] = [measures[0]]
@@ -2589,7 +2670,9 @@ public enum ContinuousStroke {
         var guardOffset = 0.0
 
         emitFilletInterior(
-            points: points, measures: measures, anchors: anchors.subtracting(hardCorners), turns: turns, hard: hard, cumulative: cumulative,
+            points: points, measures: measures, anchors: anchors.subtracting(hardCorners), turns: turns, hard: hard,
+            capped: capped, hardCornerTolerancePx: hardCornerTolerancePx,
+            waiveFloorForRounded: waiveFloorForRounded, cumulative: cumulative,
             radius: radius, floor: floor, minTurn: minTurn, maxTurn: maxTurn, step: step,
             enforceMinimumRadius: enforceMinimumRadius, guardEdge: &guardEdge, guardOffset: &guardOffset,
             out: &out, outMeasures: &outMeasures)
@@ -2652,7 +2735,7 @@ public enum ContinuousStroke {
     private static func filletRunCorner(
         _ first: Int, _ last: Int, points: [Point], measures: [Double], radius: Double, floor: Double,
         minTurn: Double, maxTurn: Double, step: Double, enforceMinimumRadius: Bool,
-        guardEdge: Int, guardOffset: Double
+        guardEdge: Int, guardOffset: Double, tolerance: Double = .infinity
     ) -> FilletCorner? {
         let before = points[first - 1]
         let after = points[last + 1]
@@ -2674,14 +2757,14 @@ public enum ContinuousStroke {
         return finishFilletRunCorner(
             first: first, last: last, points: points, measures: measures, after: after,
             radius: radius, floor: floor, step: step, enforceMinimumRadius: enforceMinimumRadius,
-            guardEdge: guardEdge, guardOffset: guardOffset,
+            guardEdge: guardEdge, guardOffset: guardOffset, tolerance: tolerance,
             t0x: t0x, t0y: t0y, t1x: t1x, t1y: t1y, la: la, lb: lb, turn: turn)
     }
 
     private static func finishFilletRunCorner(
         first: Int, last: Int, points: [Point], measures: [Double], after: Point,
         radius: Double, floor: Double, step: Double, enforceMinimumRadius: Bool,
-        guardEdge: Int, guardOffset: Double, t0x: Double, t0y: Double, t1x: Double, t1y: Double,
+        guardEdge: Int, guardOffset: Double, tolerance: Double, t0x: Double, t0y: Double, t1x: Double, t1y: Double,
         la: Double, lb: Double, turn: Double
     ) -> FilletCorner? {
         // The corner's apex: where the two tangent lines meet, given as
@@ -2709,6 +2792,14 @@ public enum ContinuousStroke {
         let half = tan(turn / 2)
         var tangent = min(
             radius * half, filletMaxTangentShare * back, filletMaxTangentShare * forward)
+        // A sharp surveyed corner gets only the radius that keeps the drawn
+        // line within the tolerance of its vertex (see
+        // ``hardCornerMaxDeviationPx``), exact for the sample count it will get.
+        if tolerance.isFinite {
+            let n = max(2, Int((turn / step).rounded(.up)))
+            let gapPerRadius = 1 / cos(turn / 2) - (n % 2 == 1 ? cos(turn / (2 * Double(n))) : 1)
+            if gapPerRadius > 0 { tangent = min(tangent, (tolerance / gapPerRadius) * half) }
+        }
         if guardEdge == first - 1, back - tangent < guardOffset {
             tangent = back - guardOffset
         }
@@ -2725,13 +2816,13 @@ public enum ContinuousStroke {
         }
         return sampleFilletRunCorner(
             first: first, last: last, points: points, measures: measures, floor: floor, step: step,
-            apex: apex, apexBack: apexBack, apexForward: apexForward, tangent: tangent, half: half,
+            tolerance: tolerance, apex: apex, apexBack: apexBack, apexForward: apexForward, tangent: tangent, half: half,
             t0x: t0x, t0y: t0y, t1x: t1x, t1y: t1y, la: la, lb: lb, turn: turn)
     }
 
     private static func sampleFilletRunCorner(
         first: Int, last: Int, points: [Point], measures: [Double], floor: Double, step: Double,
-        apex: Point, apexBack: Double, apexForward: Double, tangent: Double, half: Double,
+        tolerance: Double, apex: Point, apexBack: Double, apexForward: Double, tangent: Double, half: Double,
         t0x: Double, t0y: Double, t1x: Double, t1y: Double, la: Double, lb: Double, turn: Double
     ) -> FilletCorner? {
         let start = Point(x: apex.x - t0x * tangent, y: apex.y - t0y * tangent)
@@ -2780,6 +2871,21 @@ public enum ContinuousStroke {
         if last > first {
             for index in first...last
             where distanceToPolyline(points[index], curve) > floor {
+                return nil
+            }
+        }
+        // A merged run of sharp surveyed corners has its apex off the survey,
+        // so the analytic bound above does not cover it: measure it. Every
+        // swallowed vertex is held to the tolerance against the DRAWN
+        // polyline, exactly; the arc's own samples against the survey,
+        // allowing for the chord sagitta between them.
+        if tolerance.isFinite && last > first {
+            let slack = arcRadius * (1 - cos(turn / Double(samples) / 2)) + degenerateEdge
+            let survey = Array(points[(first - 1)...(last + 1)])
+            for index in first...last where distanceToPolyline(points[index], curve) > tolerance {
+                return nil
+            }
+            for point in curve where distanceToPolyline(point, survey) > tolerance + slack {
                 return nil
             }
         }
@@ -2938,24 +3044,26 @@ public enum ContinuousStroke {
     }
 
     private static func bestFilletRunCorner(
-        index: Int, points: [Point], measures: [Double], hard: [Bool], cumulative: [Double],
-        radius: Double, floor: Double, minTurn: Double, maxTurn: Double, step: Double,
+        index: Int, points: [Point], measures: [Double], hard: [Bool], capped: [Bool],
+        hardCornerTolerancePx: Double, cumulative: [Double], radius: Double, floor: Double, minTurn: Double, maxTurn: Double, step: Double,
         enforceMinimumRadius: Bool, guardEdge: Int, guardOffset: Double
     ) -> FilletCorner? {
         let count = points.count
         var best: FilletCorner? = nil
         var last = index
         while true {
+            let tolerance = capped[index] ? hardCornerTolerancePx : Double.infinity
             if let corner = filletRunCorner(
                 index, last, points: points, measures: measures, radius: radius, floor: floor,
                 minTurn: minTurn, maxTurn: maxTurn, step: step, enforceMinimumRadius: enforceMinimumRadius,
-                guardEdge: guardEdge, guardOffset: guardOffset),
+                guardEdge: guardEdge, guardOffset: guardOffset, tolerance: tolerance),
                best == nil || corner.achieved > best!.achieved {
                 best = corner
             }
             if let best, best.achieved >= radius - degenerateEdge { break }
             if !(floor > 0) { break }
             if last + 1 >= count - 1 || hard[last + 1] { break }
+            if capped[last + 1] != capped[index] { break }
             if cumulative[last + 1] - cumulative[index] > radius { break }
             last += 1
         }
@@ -2973,7 +3081,8 @@ public enum ContinuousStroke {
     }
 
     private static func emitFilletInterior(
-        points: [Point], measures: [Double], anchors: Set<Int>, turns: [Double], hard: [Bool], cumulative: [Double],
+        points: [Point], measures: [Double], anchors: Set<Int>, turns: [Double], hard: [Bool], capped: [Bool],
+        hardCornerTolerancePx: Double, waiveFloorForRounded: Bool, cumulative: [Double],
         radius: Double, floor: Double, minTurn: Double, maxTurn: Double, step: Double, enforceMinimumRadius: Bool,
         guardEdge: inout Int, guardOffset: inout Double, out: inout [Point], outMeasures: inout [Double]
     ) {
@@ -3020,11 +3129,17 @@ public enum ContinuousStroke {
             // other. An allowance many orders below any real geometric
             // radius removes the tie without weakening what "reaches" means.
             let best = bestFilletRunCorner(
-                index: index, points: points, measures: measures, hard: hard, cumulative: cumulative,
+                index: index, points: points, measures: measures, hard: hard, capped: capped,
+                hardCornerTolerancePx: hardCornerTolerancePx, cumulative: cumulative,
                 radius: radius, floor: floor, minTurn: minTurn, maxTurn: maxTurn, step: step,
                 enforceMinimumRadius: enforceMinimumRadius, guardEdge: guardEdge, guardOffset: guardOffset)
+            // A strict floor binds a sharp surveyed corner too, unless the
+            // caller waived it (see ``hardCornerFloorWaiverGapTolerances``):
+            // where the tolerance cannot carry the floor, the corner then
+            // stays as surveyed.
             guard let corner = best,
-                  !enforceMinimumRadius || corner.achieved >= floor - degenerateEdge else {
+                  !enforceMinimumRadius || (capped[index] && waiveFloorForRounded)
+                    || corner.achieved >= floor - degenerateEdge else {
                 emitFilletPoint(points[index], measures[index], out: &out, outMeasures: &outMeasures)
                 index += 1
                 continue
@@ -3034,6 +3149,39 @@ public enum ContinuousStroke {
             guardOffset = corner.endOffset
             index = corner.last + 1
         }
+    }
+
+    /// Which of `measures` (one per drawn vertex) sit within 1e-9 of a
+    /// surveyed corner measure, and which of an other (shape-boundary /
+    /// source-corner) one: `hard` is either, `rounded` is surveyed and not
+    /// other. The same answer as testing every pair, in one two-pointer pass
+    /// when the measures run forward (they do on every drawn stroke).
+    static func classifyCornerMeasures(
+        _ measures: [Double], surveyed: [Double], others: [Double]
+    ) -> (hard: Set<Int>, rounded: Set<Int>) {
+        func match(_ corners: [Double]) -> [Bool] {
+            var out = [Bool](repeating: false, count: measures.count)
+            guard !corners.isEmpty else { return out }
+            let monotonic = measures.count < 2 || (1..<measures.count).allSatisfy { measures[$0] >= measures[$0 - 1] }
+            guard monotonic else {
+                for (i, m) in measures.enumerated() { out[i] = corners.contains { abs($0 - m) < 1e-9 } }
+                return out
+            }
+            let sorted = corners.sorted()
+            var j = 0
+            for (i, m) in measures.enumerated() {
+                while j < sorted.count && !(sorted[j] > m - 1e-9) { j += 1 }
+                if j < sorted.count && abs(sorted[j] - m) < 1e-9 { out[i] = true }
+            }
+            return out
+        }
+        let surveyedAt = match(surveyed), otherAt = match(others)
+        var hard = Set<Int>(), rounded = Set<Int>()
+        for i in measures.indices {
+            if surveyedAt[i] || otherAt[i] { hard.insert(i) }
+            if surveyedAt[i] && !otherAt[i] { rounded.insert(i) }
+        }
+        return (hard, rounded)
     }
 
     /// The distance from a point to a polyline, in the same pixel space.

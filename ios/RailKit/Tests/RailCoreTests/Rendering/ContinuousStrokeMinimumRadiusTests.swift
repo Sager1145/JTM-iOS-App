@@ -50,7 +50,8 @@ struct ContinuousStrokeMinimumRadiusTests {
                     measures: [0, 1_000, 2_000],
                     rows: [.init(from: 0, to: 2_000, lane: lane)], totalMetres: 2_000,
                     laneGapPx: 3, minRampPx: 10, cornerRadiusPx: 8,
-                    minCornerRadiusPx: 4, anchors: [0, 2], enforceMinimumCornerRadius: true))
+                    minCornerRadiusPx: 4, anchors: [0, 2], enforceMinimumCornerRadius: true,
+                    hardCornerMaxDeviationPx: Self.crowdedTolerance))
                 #expect(result.points.allSatisfy { $0.x.isFinite && $0.y.isFinite })
                 #expect(zip(result.measures, result.measures.dropFirst()).allSatisfy { $0 <= $1 })
                 #expect(result.anchors == [result.points.first!, result.points.last!])
@@ -69,7 +70,23 @@ struct ContinuousStrokeMinimumRadiusTests {
         }
     }
 
+    /// A sharp surveyed corner may go under the strict floor only where a lane
+    /// gap of ``ContinuousStroke/hardCornerFloorWaiverGapTolerances``
+    /// tolerances leaves room for it. A 3 px gap with a 1.5 px tolerance does
+    /// not, so the floor binds exactly as it always has: every arc presents at
+    /// least the floor, or the corner stays sharp.
+    static let crowdedTolerance = 1.5
+
+    /// Sixteen lanes, each its own stroke, keep their order, their forward
+    /// direction and their gap. Under the floor (``crowdedTolerance``) every
+    /// arc presents at least 4 px. With the default tolerance the 3 px gap
+    /// waives the floor for sharp corners: the 90° and 140° corners then take
+    /// their capped radii, every lane within that tolerance of its own sharp
+    /// build, and the lanes STILL keep order and gap — the property the floor
+    /// was protecting.
     @Test func sixteenLanesKeepOrderAndForwardDirectionAcrossZoom() {
+        for tolerance in [Self.crowdedTolerance, ContinuousStroke.hardCornerMaxDeviationPx] {
+        let floored = tolerance == Self.crowdedTolerance
         for degrees in [30.0, 90, 140] {
             let angle = degrees * .pi / 180
             let forward = Point(x: cos(angle / 2), y: sin(angle / 2))
@@ -83,7 +100,8 @@ struct ContinuousStrokeMinimumRadiusTests {
                         measures: [0, 1_000, 2_000],
                         rows: [.init(from: 0, to: 2_000, lane: lane)], totalMetres: 2_000,
                         laneGapPx: 3, minRampPx: 10, cornerRadiusPx: 8,
-                        minCornerRadiusPx: 4, anchors: [0, 2], enforceMinimumCornerRadius: true))
+                        minCornerRadiusPx: 4, anchors: [0, 2], enforceMinimumCornerRadius: true,
+                        hardCornerMaxDeviationPx: tolerance))
                     #expect(result.points.allSatisfy { $0.x.isFinite && $0.y.isFinite })
                     for (a, b) in zip(result.points, result.points.dropFirst()) {
                         #expect((b.x-a.x)*forward.x + (b.y-a.y)*forward.y > 0)
@@ -93,7 +111,22 @@ struct ContinuousStrokeMinimumRadiusTests {
                         let cross = (b.x-a.x)*(c.y-b.y) - (b.y-a.y)*(c.x-b.x)
                         #expect(cross > 0)
                         let r = hypot(b.x-a.x,b.y-a.y)*hypot(c.x-b.x,c.y-b.y)*hypot(c.x-a.x,c.y-a.y)/(2*abs(cross))
-                        #expect(r >= 4 - 1e-7)
+                        if floored { #expect(r >= 4 - 1e-7) }
+                    }
+                    if !floored {
+                        var sharp = ContinuousStroke.Options(
+                            measures: [0, 1_000, 2_000],
+                            rows: [.init(from: 0, to: 2_000, lane: lane)], totalMetres: 2_000,
+                            laneGapPx: 3, minRampPx: 10, cornerRadiusPx: 8,
+                            minCornerRadiusPx: 4, anchors: [0, 2], enforceMinimumCornerRadius: true)
+                        sharp.hardCornerMaxDeviationPx = 0
+                        let kept = ContinuousStroke.buildStroke(input, options: sharp).points
+                        for point in kept {
+                            #expect(ContinuousStroke.distanceToPolyline(point, result.points) <= tolerance + 1e-9)
+                        }
+                        for point in result.points {
+                            #expect(ContinuousStroke.distanceToPolyline(point, kept) <= tolerance + 1e-9)
+                        }
                     }
                     if let previous {
                         // Equal, feasible fillets have corresponding
@@ -107,6 +140,7 @@ struct ContinuousStrokeMinimumRadiusTests {
                     previous = result
                 }
             }
+        }
         }
     }
 

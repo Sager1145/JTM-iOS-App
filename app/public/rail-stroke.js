@@ -166,6 +166,40 @@
   const FILLET_MAX_TANGENT_SHARE = 0.45;
   // Curve sampling: one vertex per this many degrees of turn.
   const FILLET_STEP_DEGREES = 12;
+  // A SHARP surveyed corner — one surveyedCornerIndices() classifies as a
+  // corner rather than a spline facet — is rounded too, but only a little:
+  // its radius is chosen per corner, the smallest of the requested radius,
+  // what FILLET_MAX_TANGENT_SHARE of its two edges can carry, and what keeps
+  // the drawn line within this many SCREEN pixels of the surveyed vertex.
+  //
+  // For an arc of radius r replacing a vertex that turns by θ, sampled in n
+  // equal steps, the vertex ends up r·(1/cos(θ/2) − 1) from the arc's
+  // midpoint, and r·(1/cos(θ/2) − cos(θ/2n)) from the drawn polyline when n
+  // is odd (its nearest drawn point is then the middle chord's midpoint, not
+  // a sample). Every arc point lies within r·(1 − cos(θ/2)) of the edges,
+  // which is less. So the bound is r ≤ tol / (1/cos(θ/2) − c), with c = 1
+  // for even n and cos(θ/2n) for odd n.
+  //
+  // Half the rail width: the stroke keeps covering the surveyed vertex at
+  // every zoom. Purely screen space: no metres-per-pixel term gates a corner
+  // on or off, and in production the floor waiver (below) holds at every
+  // lane LOD, so every zoom rounds every sharp corner; only the size scales
+  // with the drawn weight. The default is half of a 1.5 px rail at scale 1; callers that
+  // draw another width pass `hardCornerMaxDeviationPx`.
+  const HARD_CORNER_MAX_DEVIATION_PX = 0.75;
+  // A sharp corner is rounded below a strict minimum radius only where no
+  // neighbouring lane can be crowded by it. Every fillet cuts toward the
+  // inside of its turn, so two neighbouring lanes, each within the tolerance
+  // of its own offset polyline, close on each other by at most ONE tolerance.
+  // A lane gap of at least this many tolerances keeps that worst case a full
+  // rail width (two tolerances) apart: no ink overlap, no reordering. A lane
+  // gap under one rail width is waived too: those lanes already overlap (the
+  // half-gap lane LOD of z9–12 draws 1.35 px centres under a 1.5 px rail), so
+  // a fillet cannot crowd them any further. Between the two, the floor binds.
+  const HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES = 3;
+  // The drawn rail width that waiver compares a lane gap with, in screen
+  // pixels; callers drawing another width pass `railWidthPx`.
+  const RAIL_WIDTH_PX = 1.5;
   // Offsetting a vertex along its bisector scales the offset by 1/cos(θ/2).
   // Past this factor the corner is sharp enough that a mitre would spike;
   // the offset is clamped and the fillet pass rounds what is left.
@@ -1240,7 +1274,17 @@
   //     the corner is being given.
   // With `floor` 0 no run is ever formed and every corner is exactly the
   // single-vertex fillet this function has always drawn.
-  function filletPolyline(points, radius, floorRadius, anchorSet, measures, enforceMinimumRadius, hardCorners = new Set()) {
+  //
+  // `roundedCorners` is the subset of `hardCorners` that are sharp surveyed
+  // corners: those are not left as kinks but rounded with a radius capped so
+  // the line stays within `hardCornerTolerancePx` of the survey (see
+  // HARD_CORNER_MAX_DEVIATION_PX). With `waiveFloorForRounded` they take that
+  // radius even below a strict floor; without it a corner that cannot reach
+  // the floor stays as surveyed. A run never mixes them with ordinary
+  // vertices, so every gentle corner is drawn exactly as before.
+  function filletPolyline(points, radius, floorRadius, anchorSet, measures, enforceMinimumRadius,
+    hardCorners = new Set(), roundedCorners = new Set(),
+    hardCornerTolerancePx = HARD_CORNER_MAX_DEVIATION_PX, waiveFloorForRounded = false) {
     if (enforceMinimumRadius) radius = Math.max(radius, floorRadius);
     const count = points.length;
     if (!(radius > 0) || count < 3) return { points, measures };
@@ -1269,7 +1313,11 @@
     }
     for (const index of anchorSet)
       if (index > 0 && index + 1 < count) hard[index] = true;
-    for (const i of hardCorners) if (i > 0 && i + 1 < count) hard[i] = true;
+    const capped = new Array(count).fill(false);
+    for (const i of hardCorners) if (i > 0 && i + 1 < count) {
+      if (roundedCorners.has(i) && !anchorSet.has(i)) capped[i] = true;
+      else hard[i] = true;
+    }
     const cumulative = cumulativeLengths(points);
     const out = [points[0]];
     const outMeasures = [measures[0]];
@@ -1343,6 +1391,15 @@
         FILLET_MAX_TANGENT_SHARE * back,
         FILLET_MAX_TANGENT_SHARE * forward,
       );
+      // A sharp surveyed corner gets only the radius that keeps the drawn
+      // line within the tolerance of its vertex (see
+      // HARD_CORNER_MAX_DEVIATION_PX), exact for the sample count it will get.
+      const tolerance = capped[first] ? hardCornerTolerancePx : Infinity;
+      if (capped[first]) {
+        const n = Math.max(2, Math.ceil(turn / step));
+        const gapPerRadius = 1 / Math.cos(turn / 2) - (n % 2 === 1 ? Math.cos(turn / (2 * n)) : 1);
+        if (gapPerRadius > 0) tangent = Math.min(tangent, (tolerance / gapPerRadius) * half);
+      }
       if (guardEdge === first - 1 && back - tangent < guardOffset)
         tangent = back - guardOffset;
       if (!(tangent > DEGENERATE_EDGE_PX)) return null;
@@ -1398,6 +1455,19 @@
         for (let index = first; index <= last; index += 1) {
           if (distanceToPolyline(points[index], curve) > floor) return null;
         }
+      }
+      // A merged run of sharp surveyed corners has its apex off the survey,
+      // so the analytic bound above does not cover it: measure it. Every
+      // swallowed vertex is held to the tolerance against the DRAWN polyline,
+      // exactly; the arc's own samples against the survey, allowing for the
+      // chord sagitta between them.
+      if (capped[first] && last > first) {
+        const slack = arcRadius * (1 - Math.cos(turn / samples / 2)) + DEGENERATE_EDGE_PX;
+        const survey = points.slice(first - 1, last + 2);
+        for (let index = first; index <= last; index += 1)
+          if (distanceToPolyline(points[index], curve) > tolerance) return null;
+        for (const point of curve)
+          if (distanceToPolyline(point, survey) > tolerance + slack) return null;
       }
       const dStart = apexBack - tangent;
       const dEnd = apexForward + tangent;
@@ -1588,10 +1658,15 @@
         if (best && best.achieved >= radius - DEGENERATE_EDGE_PX) break;
         if (!(floor > 0)) break;
         if (last + 1 >= count - 1 || hard[last + 1]) break;
+        if (capped[last + 1] !== capped[index]) break;
         if (cumulative[last + 1] - cumulative[index] > radius) break;
         last += 1;
       }
-      if (!best || (enforceMinimumRadius && best.achieved < floor - DEGENERATE_EDGE_PX)) {
+      // A strict floor binds a sharp surveyed corner too, unless the caller
+      // waived it (see HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES): where the
+      // tolerance cannot carry the floor, the corner then stays as surveyed.
+      if (!best || (enforceMinimumRadius && !(capped[index] && waiveFloorForRounded)
+        && best.achieved < floor - DEGENERATE_EDGE_PX)) {
         emit(points[index], measures[index]);
         index += 1;
         continue;
@@ -1606,6 +1681,41 @@
     }
     emit(points[count - 1], measures[measures.length - 1]);
     return { points: out, measures: outMeasures };
+  }
+
+  // Which of `measures` (one per drawn vertex) sit within 1e-9 of a surveyed
+  // corner measure, and which of an other (shape-boundary / source-corner)
+  // one: `hard` is either, `rounded` is surveyed and not other. The same
+  // answer as testing every pair, in one two-pointer pass when the measures
+  // run forward (they do on every drawn stroke).
+  function classifyCornerMeasures(measures, surveyed, others) {
+    const match = (corners) => {
+      const out = new Array(measures.length).fill(false);
+      if (!corners.length) return out;
+      let monotonic = true;
+      for (let i = 1; i < measures.length; i += 1) if (!(measures[i] >= measures[i - 1])) { monotonic = false; break; }
+      if (!monotonic) {
+        measures.forEach((m, i) => { out[i] = corners.some(c => Math.abs(c - m) < 1e-9); });
+        return out;
+      }
+      const sorted = corners.slice().sort((a, b) => a - b);
+      let j = 0;
+      for (let i = 0; i < measures.length; i += 1) {
+        const m = measures[i];
+        while (j < sorted.length && !(sorted[j] > m - 1e-9)) j += 1;
+        if (j < sorted.length && Math.abs(sorted[j] - m) < 1e-9) out[i] = true;
+      }
+      return out;
+    };
+    const surveyedAt = match(surveyed);
+    const otherAt = match(others);
+    const hard = new Set();
+    const rounded = new Set();
+    for (let i = 0; i < measures.length; i += 1) {
+      if (surveyedAt[i] || otherAt[i]) hard.add(i);
+      if (surveyedAt[i] && !otherAt[i]) rounded.add(i);
+    }
+    return { hard, rounded };
   }
 
   // The distance from a point to a polyline, in the same pixel space.
@@ -1793,6 +1903,12 @@
    *                ramps, preserve surveyed bends and anchors during fold
    *                cleanup, and enforce minCornerRadiusPx on emitted arcs.
    *                false preserves the historical fixture geometry.
+   *   hardCornerMaxDeviationPx  how far, in screen pixels, rounding a sharp
+   *                surveyed corner may move the line off its vertex — half
+   *                the drawn rail width (default HARD_CORNER_MAX_DEVIATION_PX).
+   *   railWidthPx  the drawn rail width, in screen pixels (default
+   *                RAIL_WIDTH_PX); a lane gap under it waives the strict
+   *                floor for sharp corners (see HARD_CORNER_FLOOR_WAIVER_…).
    *   anchors      indices of station-platform vertices
    *   literalSpans reviewed `{edgeIndex, witnesses: [P,A,B,Q]}` footprints;
    *                unsupported or downstream-altered footprints stay ordinary.
@@ -2239,10 +2355,9 @@
       ? resolveLiteralSpans(clean, cleanMeasures, requestedLiterals.map(s => ({...s, edgeIndex:anchorMap[s.edgeIndex]}))) : [];
     let appliedLiterals = [], appliedSourceCorners = [], protectedFootprints = [];
     const ordinaryStroke = () => buildStroke(points, {...opts, literalSpans: []});
-    const cornerMeasures = [
-      ...(curveEnabled ? [...surveyedCornerIndices(followed.points)].map(i => followed.measures[i]) : []),
-      ...shapeBoundaryMeasures,
-    ];
+    const surveyedCornerMeasures = curveEnabled
+      ? [...surveyedCornerIndices(followed.points)].map(i => followed.measures[i]) : [];
+    const cornerMeasures = [...surveyedCornerMeasures, ...shapeBoundaryMeasures];
     if (curveEnabled) {
       // Interpolate surveyed supports; pixel decimation can erase a real
       // small curve before interpolation gets a chance to round its facets.
@@ -2347,6 +2462,17 @@
             anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
       : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
     if (protectedFootprints.length && !preservesLiteralFootprints(drawn, protectedFootprints)) return ordinaryStroke();
+    // Sharp surveyed corners are rounded within the deviation tolerance;
+    // shape boundaries and protected source corners stay exact.
+    const corners = classifyCornerMeasures(
+      drawn.measures, surveyedCornerMeasures, cornerMeasures.slice(surveyedCornerMeasures.length));
+    const requestedTolerance = Number(opts.hardCornerMaxDeviationPx);
+    const hardCornerTolerancePx = opts.hardCornerMaxDeviationPx !== undefined
+      && Number.isFinite(requestedTolerance) && requestedTolerance >= 0
+      ? requestedTolerance : HARD_CORNER_MAX_DEVIATION_PX;
+    const requestedWidth = Number(opts.railWidthPx);
+    const railWidthPx = opts.railWidthPx !== undefined && Number.isFinite(requestedWidth) && requestedWidth >= 0
+      ? requestedWidth : RAIL_WIDTH_PX;
     const filleted = filletPolyline(
       drawn.points,
       Number(opts.cornerRadiusPx) || 0,
@@ -2354,7 +2480,11 @@
       drawn.anchors,
       drawn.measures,
       enforceMinimumCornerRadius,
-      new Set(drawn.measures.map((_, i) => i).filter(i => cornerMeasures.some(m => Math.abs(m - drawn.measures[i]) < 1e-9))),
+      corners.hard,
+      corners.rounded,
+      hardCornerTolerancePx,
+      !gap || Math.abs(gap) < railWidthPx
+        || Math.abs(gap) >= HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES * hardCornerTolerancePx,
     );
     const anchors = (opts.anchors || []).map((index, anchorIndex) => {
       if (curveEnabled) {
@@ -2572,6 +2702,9 @@
     CURVE_HARD_TURN_DEGREES,
     CURVE_MAX_DEVIATION_PX,
     CURVE_MAX_DEVIATION_METRES,
+    HARD_CORNER_MAX_DEVIATION_PX,
+    HARD_CORNER_FLOOR_WAIVER_GAP_TOLERANCES,
+    RAIL_WIDTH_PX,
     CURVE_MERGE_METRES,
     CURVE_HARD_WINDOW_PX,
     CURVE_PROTECT_PX,

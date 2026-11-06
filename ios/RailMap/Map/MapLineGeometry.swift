@@ -642,7 +642,9 @@ func continuousStrokeBuild(
             joinEnd: continuousJoin(
                 of: line, at: true, neighbour: canonical, chains: chains, junctionCandidates: junctionCandidates),
             enforceMinimumCornerRadius: true,
-            literalSpans: literalSpans))
+            literalSpans: literalSpans,
+            hardCornerMaxDeviationPx: Double(RailStyle.hardCornerMaxDeviation(atScale: scale)),
+            railWidthPx: Double(RailStyle.railWidth * scale)))
     func mapPoint(_ point: ContinuousStroke.Point) -> MKMapPoint {
         MKMapPoint(x: point.x * mapPointsPerScreenPoint, y: point.y * mapPointsPerScreenPoint)
     }
@@ -800,7 +802,9 @@ func parallelLaneCoordinates(
         minRampPx: RailStyle.strokeMinRamp,
         cornerRadiusPx: Double(RailStyle.strokeCornerRadius * scale),
         minCornerRadiusPx: Double(RailStyle.minimumCornerRadius(atScale: scale)),
-        anchors: [0, pixels.count - 1], enforceMinimumCornerRadius: true, curveCentreline: !alreadyCurved))
+        anchors: [0, pixels.count - 1], enforceMinimumCornerRadius: true, curveCentreline: !alreadyCurved,
+        hardCornerMaxDeviationPx: Double(RailStyle.hardCornerMaxDeviation(atScale: scale)),
+        railWidthPx: Double(RailStyle.railWidth * scale)))
     return stroke.points.map {
         MKMapPoint(x: $0.x * mapPointsPerScreenPoint, y: $0.y * mapPointsPerScreenPoint).coordinate
     }
