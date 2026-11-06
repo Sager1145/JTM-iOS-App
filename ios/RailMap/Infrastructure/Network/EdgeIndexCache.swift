@@ -83,20 +83,15 @@ actor EdgeIndexCache {
     }
 
     /// The countries whose edges a ride set can match: each ride's own region
-    /// plus the regions whose track physically meets it (the Pearl River Delta
-    /// border). Every other country contributes only its denominator.
+    /// plus the regions connected to it in region-connectivity.json. Every other country contributes only its denominator.
     nonisolated static func matchableCountries(rideCountries: some Sequence<String>) -> Set<String> {
         var result = Set<String>()
         for country in rideCountries {
             result.insert(country)
-            result.formUnion(adjacentCountries[country] ?? [])
+            result.formUnion(RegionConnectivity.connectedRegions(of: country))
         }
         return result
     }
-
-    private nonisolated static let adjacentCountries: [String: Set<String>] = [
-        "cn": ["hk", "mo"], "hk": ["cn", "mo"], "mo": ["cn", "hk"],
-    ]
 
     /// `matchable` nil keeps every country's full index. Otherwise a country
     /// outside it is merged as its denominator alone: its N02 totals and line

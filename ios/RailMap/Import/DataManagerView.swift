@@ -341,8 +341,9 @@ struct DataManagerView: View {
     }
 
     /// Fold a sample in, or — from the long-press action — make it the whole
-    /// working set. Either way a recovery copy is written first, because both
-    /// can overwrite rides the reader edited.
+    /// working set. Only the second writes a recovery copy first: it discards
+    /// the reader's own rides, while a fold replaces only that sample's
+    /// example rides with their bundled copies.
     private func loadSample(_ sample: RideLibrary.Sample, replacingEverything: Bool) {
         // A `Task` because both doors now place the incoming rides in their
         // region before they are published, and that reads a shipped dataset
@@ -365,12 +366,15 @@ struct DataManagerView: View {
                     return
                 }
                 let incoming = try await library.sample(sample.resource)
-                if let store = itineraries.store, !store.trains.isEmpty {
-                    // Aborts into the catch below on failure, before either
-                    // door touches the working set — a sample load must not
-                    // overwrite rides a backup could not be taken of.
-                    try await library.snapshotBackup(
-                        store, reason: replacingEverything ? .beforeReplace : .beforeImport)
+                // Only replacing everything writes a recovery copy first: it
+                // discards the reader's own rides. Folding a sample in touches
+                // only that sample's example rides, which it puts back to the
+                // bundled copy by design (user decision 2026-11-05: an edited
+                // example ride is not kept and not backed up).
+                if replacingEverything, let store = itineraries.store, !store.trains.isEmpty {
+                    // Aborts into the catch below on failure, before the
+                    // working set is touched.
+                    try await library.snapshotBackup(store, reason: .beforeReplace)
                 }
                 // `forgetLoadedSamples`/`noteSampleLoaded` only follow a
                 // commit that actually landed: an import claiming the store
@@ -588,8 +592,16 @@ struct DataManagerView: View {
                         if let store = itineraries.store {
                             try await library.snapshotBackup(store, reason: .beforeDeleteAll)
                         }
-                        try await library.deleteSavedStore()
-                        itineraries.load(from: library)
+                        // Hidden trips in a disabled region (mainland China)
+                        // are kept: empty the visible rides and save, rather
+                        // than removing the file.
+                        if let store = itineraries.store,
+                           !ItineraryStore.disabledRegionTrips(store.trains).isEmpty {
+                            itineraries.deleteAll(clearing: library)
+                        } else {
+                            try await library.deleteSavedStore()
+                            itineraries.load(from: library)
+                        }
                     } catch {
                         operationError = OperationError(
                             titleKey: "data.loadFailedTitle",
@@ -645,7 +657,8 @@ struct DataManagerView: View {
             Text(
                 localization.text(
                     "data.deleteAllScope", params: ["region": .string(regionName), "count": .number(Double(trainCount))])
-                    + "\n" + localization.text("data.deleteAllRecovery"))
+                    + "\n" + localization.text("data.deleteAllRecovery")
+                    + (hasHiddenRegionTrips ? "\n" + localization.text("data.hiddenRegionKept") : ""))
         }
         // 重置示例, which now names WHICH sample rather than "the one this
         // region ships": the reader long-pressed a specific one, so the
@@ -678,7 +691,15 @@ struct DataManagerView: View {
 
     // MARK: - the sentences the hero says
 
-    private var trainCount: Int { itineraries.loaded?.trains.count ?? 0 }
+    /// Journeys the reader can see; hidden disabled-region journeys are kept by
+    /// every bulk operation and are not counted as replaced or deleted.
+    private var trainCount: Int {
+        itineraries.loaded?.trains.reduce(0) { $0 + (Region.resolved($1).isEnabled ? 1 : 0) } ?? 0
+    }
+
+    private var hasHiddenRegionTrips: Bool {
+        itineraries.loaded?.trains.contains { !Region.resolved($0).isEnabled } == true
+    }
 
     private func regionName(_ region: Region) -> String {
         StatisticsFormat.regionName(region, localization: localization)

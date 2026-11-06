@@ -47,7 +47,11 @@ private struct WorkspacePanelViewport<Content: View>: View {
                 // Keep the content mounted, including its scroll position.
                 // Compact leaves this viewport under the system tab bar.
                 .allowsHitTesting(showsContent)
-                .disabled(morph?.stage == .compact)
+                // Disabled only AT the compact stop, not whenever compact is
+                // the nearest stop: disabled rows draw at 0.35 opacity, and
+                // the nearest-stop test flipped at the compact/half midpoint,
+                // so a drag through it flashed the whole list dim and back.
+                .disabled((morph?.expansion ?? 1) <= 0)
                 .accessibilityHidden(!showsContent)
                 .accessibilityElement(children: .contain)
                 // Assistive focus follows the drawn viewport, including its glass overlap.

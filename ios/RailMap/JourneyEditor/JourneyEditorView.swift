@@ -620,6 +620,16 @@ struct JourneyEditorView: View {
                 ]))
                 .accessibilityIdentifier("newTripUnprovenNotice-\(gap.segmentIndex)")
         }
+        // region-connectivity.json: a section between regions whose rail
+        // networks do not connect is never planned or saved.
+        ForEach(regionConflicts, id: \.index) { conflict in
+            sectionNotice(
+                title: nil, warning: true,
+                message: localization.text("ios.editor.regionsNotConnected", params: [
+                    "from": .string(regionName(conflict.from)), "to": .string(regionName(conflict.to)),
+                ]))
+                .accessibilityIdentifier("newTripRegionNotice-\(conflict.index)")
+        }
         if repair.pause != nil {
             // The paused span is a section like any other: same rows, same map.
             sectionRows
@@ -2254,8 +2264,25 @@ struct JourneyEditorView: View {
         }
     }
 
+    /// Consecutive picked stops whose regions' rail networks do not connect,
+    /// one per section. A stop without a registry identity is in the
+    /// editor's region.
+    private var regionConflicts: [(index: Int, from: String, to: String)] {
+        let ids = [originStationID] + vias.map(\.stationID) + [destinationStationID]
+        let regions = ids.map { RegionConnectivity.region(ofStationID: $0) ?? region.code }
+        return regions.indices.dropLast().compactMap { i in
+            RegionConnectivity.areConnected(regions[i], regions[i + 1])
+                ? nil : (i, regions[i], regions[i + 1])
+        }
+    }
+
+    private func regionName(_ code: String) -> String {
+        guard let region = Region(rawValue: code) else { return code.uppercased() }
+        return localization.text(region.localizationKey, fallback: region.fallbackName)
+    }
+
     private var canSave: Bool {
-        guard draft.journeyGroup?.name.isEmpty != true, !repair.isRunning else { return false }
+        guard draft.journeyGroup?.name.isEmpty != true, !repair.isRunning, regionConflicts.isEmpty else { return false }
         if let timetableTrain { return timetableTrain.stops.count >= 2 && arrival >= departure }
         if !routeEdited { return hasRecordRoute && arrival >= departure }
         return origin != nil && destination != nil && arrival >= departure
@@ -3243,7 +3270,49 @@ extension JourneyEditorView {
                 return true
             },
             commit: { confirmed in commit(confirmedRemoval: confirmed) },
-            snapshot: { appControlSnapshot })
+            snapshot: { appControlSnapshot },
+            autofillProbe: { appControlAutofillProbe })
+    }
+
+    /// What `corridorDraft(for:)` hands `LocalJourneyAutofill.proposal` for the
+    /// selected corridor, rebuilt without side effects, for diagnosing a save
+    /// that ends in `autofillFailed`. Mirrors the endpoint replacement there.
+    private var appControlAutofillProbe: AppControlJSON {
+        func encode(_ value: some Encodable) -> AppControlJSON {
+            (try? JSONEncoder().encode(value)).flatMap { try? JSONDecoder().decode(AppControlJSON.self, from: $0) } ?? .null
+        }
+        guard let corridor = selectedCorridor, let origin, let destination else {
+            return ["selectedCorridor": .null, "hasRecordRoute": .bool(hasRecordRoute), "draft": encode(draft)]
+        }
+        var input = draft
+        input.region = region.code
+        let replaced = !hasRecordRoute || input.stops.count < 2
+        if replaced {
+            input.stops = [
+                endpointStop(origin, stationID: originStationID, stopType: "origin", ridden: isRidden),
+                endpointStop(destination, stationID: destinationStationID, stopType: "destination", ridden: isRidden),
+            ]
+        }
+        let proposal = LocalJourneyAutofill.proposal(train: input, choice: corridor.choice)
+        let sections = input.routeSections ?? []
+        return [
+            "hasRecordRoute": .bool(hasRecordRoute),
+            "region": .string(region.code),
+            "endpointsReplaced": .bool(replaced),
+            "corridorID": .string(corridor.id),
+            "corridorLineIDs": .array(corridor.choice.lineIDs.map { .string($0) }),
+            "corridorSectionCount": .number(Double(corridor.choice.sectionCodes.count)),
+            "draft": encode(draft),
+            "input": encode(input),
+            "inputRouteSectionCount": .number(Double(sections.count)),
+            "inputFirstSection": sections.first.map(encode) ?? .null,
+            "inputLastSection": sections.last.map(encode) ?? .null,
+            "inputRouteConfirmation": encode(input.routeConfirmation),
+            "proposalNil": .bool(proposal == nil),
+            "proposalStopCount": .number(Double(proposal?.train.stops.count ?? -1)),
+            "candidateTrainNil": .bool(candidateTrain(for: corridor) == nil),
+            "corridorDraftNil": .bool(corridorDraft(for: corridor) == nil),
+        ]
     }
 
     private var appControlSnapshot: AppControlEditorSnapshot {

@@ -111,12 +111,14 @@ public enum TripRoutePlanner {
         }
         // Share the connectivity memo between component discovery and route search.
         var memo: [String: TripConnectivity.Link] = [:]
+        let through = JapanThroughServices.ContinuationIndex(
+            patterns: patterns, connectors: connectors, on: rideDate)
         func link(_ from: CompactPackage.Line, _ to: CompactPackage.Line,
                   _ code: String) -> TripConnectivity.Link {
             let key = from.id + "\u{1F}" + to.id + "\u{1F}" + code + "\u{1F}" + (rideDate ?? "")
             if let known = memo[key] { return known }
-            let value = TripConnectivity.link(from: from, to: to, atStationCode: code,
-                                              on: rideDate, patterns: patterns, connectors: connectors,
+            let value = TripConnectivity.link(fromLineID: from.id, toLineID: to.id, atStationCode: code,
+                                              on: rideDate, through: through,
                                               junctions: physicalJunctions)
             memo[key] = value
             return value
@@ -164,7 +166,14 @@ public enum TripRoutePlanner {
                 && (request.destinationLineID == nil
                     || choice.routeSections.last?.lineIDs?.first == request.destinationLineID)
         }
-        let throughChoices = patterns.flatMap {
+        // A pattern yields a choice only when its legs' rows hold both
+        // endpoints, so skip building steps for every other pattern.
+        let originRows = Set(package.lines.filter { $0.stations.contains { $0.id == request.originCode } }.map(\.id))
+        let destinationRows = Set(package.lines.filter { $0.stations.contains { $0.id == request.destinationCode } }.map(\.id))
+        let throughChoices = patterns.filter { pattern in
+            let rows = pattern.legs(on: rideDate).flatMap { [$0.lineID] + ($0.reverseLineID.map { [$0] } ?? []) }
+            return rows.contains(where: originRows.contains) && rows.contains(where: destinationRows.contains)
+        }.flatMap {
             $0.choices(package: package, originCode: request.originCode,
                        destinationCode: request.destinationCode, on: rideDate,
                        connectors: connectors)
@@ -221,8 +230,7 @@ public enum TripRoutePlanner {
                     id: choice.id, choice: choice, lineNames: choice.lineNames,
                     operatorNames: choice.operatorNames,
                     junctions: junctions(for: choice, package: package, rideDate: rideDate,
-                                         patterns: patterns, connectors: connectors,
-                                         physicalJunctions: physicalJunctions),
+                                         through: through, physicalJunctions: physicalJunctions),
                     distanceKm: distance(for: choice, package: package),
                     passStationCount: max(0, choice.stations.count - 2))
                 let key = choice.lineIDs.joined(separator: "→") + "|"
@@ -303,8 +311,7 @@ public enum TripRoutePlanner {
             originLineIDs: originLineIDs, destinationLineIDs: destinationLineIDs, admissionContext: admissionContext)
         if let choice = unconstrained.choices.first(where: matchesHints) ?? unconstrained.choices.first {
             let all = junctions(for: choice, package: package, rideDate: rideDate,
-                                patterns: patterns, connectors: connectors,
-                                physicalJunctions: physicalJunctions)
+                                through: through, physicalJunctions: physicalJunctions)
             let disconnected = all.filter { $0.link == .none }
             return .disconnected(disconnected.isEmpty ? all : disconnected)
         }
@@ -345,8 +352,7 @@ public enum TripRoutePlanner {
 
     private static func junctions(for choice: RailwayRouteChoices.Choice,
                                   package: CompactPackage, rideDate: String?,
-                                  patterns: [JapanThroughServices.Pattern],
-                                  connectors: [JapanThroughServices.Connector],
+                                  through: JapanThroughServices.ContinuationIndex,
                                   physicalJunctions: TripConnectivity.Junctions) -> [Junction] {
         var result: [Junction] = []
         for index in choice.routeSections.indices {
@@ -363,9 +369,8 @@ public enum TripRoutePlanner {
                 stationName: "\(section.from ?? code)–\(section.to ?? code)",
                 fromLineID: from.id, fromLineName: from.name,
                 toLineID: to.id, toLineName: to.name,
-                link: TripConnectivity.link(from: from, to: to, atStationCode: code,
-                    on: rideDate, patterns: patterns, connectors: connectors,
-                    junctions: physicalJunctions)))
+                link: TripConnectivity.link(fromLineID: from.id, toLineID: to.id, atStationCode: code,
+                    on: rideDate, through: through, junctions: physicalJunctions)))
         }
         for (index, pair) in zip(choice.routeSections, choice.routeSections.dropFirst()).enumerated() {
             let (section, next) = pair
@@ -380,9 +385,9 @@ public enum TripRoutePlanner {
             result.append(Junction(stationCode: code, stationName: station.name,
                                    fromLineID: from.id, fromLineName: from.name,
                                    toLineID: to.id, toLineName: to.name,
-                                   link: TripConnectivity.link(from: from, to: to,
-                                       atStationCode: code, on: rideDate, patterns: patterns,
-                                       connectors: connectors, junctions: physicalJunctions)))
+                                   link: TripConnectivity.link(fromLineID: from.id, toLineID: to.id,
+                                       atStationCode: code, on: rideDate, through: through,
+                                       junctions: physicalJunctions)))
         }
         return result
     }

@@ -29,7 +29,7 @@ final class AppLocalization {
         didSet {
             engine?.setLanguage(language.rawValue)
             OperatorIdentity.displayLanguage = language.rawValue
-            for region in Region.allCases {
+            for region in Region.enabledOrdered {
                 namingEngines[region]?.setLanguage(language.rawValue)
             }
             UserDefaults.standard.set(language.rawValue, forKey: Self.preferenceKey)
@@ -87,7 +87,7 @@ final class AppLocalization {
         // which annotates rather than replaces — so a name drawn in the moment
         // before its table lands is the package's own spelling, never another
         // language's name.
-        for region in Region.allCases {
+        for region in Region.enabledOrdered {
             var naming = Localization(
                 catalog: catalog,
                 language: language,
@@ -144,7 +144,7 @@ final class AppLocalization {
     private(set) var readingsFailure: String?
 
     private func loadStationReadings() {
-        for region in Region.allCases {
+        for region in Region.enabledOrdered {
             Task { [weak self] in
                 let outcome = await StationReadingsStore.shared.availability(for: region.code)
                 guard let self else { return }
@@ -184,7 +184,7 @@ final class AppLocalization {
     /// the UI language.
     func setNameReadings(_ prefs: Localization.ReadingPrefs?) {
         engine?.setNameReadings(prefs)
-        for region in Region.allCases { namingEngines[region]?.setNameReadings(prefs) }
+        for region in Region.enabledOrdered { namingEngines[region]?.setNameReadings(prefs) }
     }
 
     /// What the display sites should actually annotate with right now.
@@ -214,7 +214,7 @@ final class AppLocalization {
     /// because a build that shipped without the Japanese package should say so
     /// rather than offer three switches that change nothing.
     var localizesEveryStationName: Bool {
-        Region.allCases.allSatisfy { localizesStationNames(in: $0) }
+        Region.enabledOrdered.allSatisfy { localizesStationNames(in: $0) }
     }
 
     /// Which engine answers for a name.

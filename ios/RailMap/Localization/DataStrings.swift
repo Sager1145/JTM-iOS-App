@@ -50,10 +50,10 @@ enum DataStrings {
             .en: "{count} journeys · bundled sample, never overwritten",
         ],
         "data.sampleFootnote": [
-            .zhHant: "編輯示例會另存成你自己的資料；內建示例永遠不會被覆寫。",
-            .zhHans: "编辑示例会另存成你自己的数据；内置示例永远不会被覆盖。",
-            .ja: "サンプルを編集すると自分のデータとして別に保存されます。内蔵サンプルが上書きされることはありません。",
-            .en: "Editing a sample saves a copy as your own data; bundled samples are never overwritten.",
+            .zhHant: "再次載入示例組會還原其內建行程；對示例行程的修改會被取代。你自己的行程永遠不會被更動。",
+            .zhHans: "再次载入示例组会还原其内置行程；对示例行程的修改会被替换。你自己的行程永远不会被更改。",
+            .ja: "サンプルセットを再度読み込むと、内蔵の旅程に戻ります。サンプル旅程への編集は置き換えられます。自分で追加した旅程が変更されることはありません。",
+            .en: "Loading a sample set again restores its bundled trips; edits to sample trips are replaced. Your own trips are never changed.",
         ],
         "data.readingJourneys": [
             .zhHant: "正在讀取行程…",
@@ -389,6 +389,10 @@ enum DataStrings {
             .zhHans: "会删除 {region} 的 {count} 趟行程，包含保存在此设备的副本。其他地区不受影响。",
             .ja: "{region} の {count} 本を、この端末の保存分も含めて削除します。他の地域には影響しません。",
             .en: "Deletes {region}'s {count} journeys, including the copy saved on this device. Other regions are untouched.",
+        ],
+        "data.hiddenRegionKept": [
+            .zhHant: "已隱藏的中國大陸行程會保留。", .zhHans: "已隐藏的中国大陆行程会保留。",
+            .ja: "非表示の中国本土の行程は保持されます。", .en: "Hidden Mainland China journeys are kept.",
         ],
         "data.deleteAllRecovery": [
             .zhHant: "刪除前會先寫一份備份，之後可以從「從備份恢復」還原。",

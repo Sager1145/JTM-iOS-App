@@ -66,7 +66,6 @@ struct StatisticsDashboardContent: View {
     /// other is asking a question a shared toggle cannot hold.
     @State private var operatorMetric: RankMetric = .count
     @State private var routeMetric: RankMetric = .count
-    @State private var selectedWidgetKind: StatisticsCardKind?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -189,10 +188,33 @@ struct StatisticsDashboardContent: View {
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
                         passportDataPage(loaded.trains)
                         pendingMileageNote(loaded)
-                        StatsWidgetGrid(
-                            items: widgetItems(
-                                loaded: loaded, stats: stats, passport: passport),
-                            openDetails: { selectedWidgetKind = $0 })
+                        // The original Stats page: every card at its full,
+                        // natural height in one column, in §5.7's order. The
+                        // fixed-size widget grid that replaced it scaled each
+                        // card into a square cell and cut its content off.
+                        if let daily = stats.daily {
+                            dailyTicket(daily, trains: loaded.trains)
+                        }
+                        if let passport {
+                            rhythmCard(passport)
+                            distanceCard(passport, distancePending: passport.measuredJourneys == 0)
+                            timeCard(passport)
+                        }
+                        coverageCard(stats)
+                        serviceCard(stats.overall, distancePending: loaded.trains.allSatisfy(\.requiresRouteConfirmation))
+                        if let passport {
+                            stationsCard(passport)
+                            operatorsCard(passport)
+                            routesCard(passport)
+                        }
+                        topSegmentsCard(stats.overall)
+                        // Only when there is more than one. Scoped to Japan,
+                        // this card would be the scope control's own answer
+                        // read back — a country list of length one (§5.1).
+                        if let passport, passport.regions.count > 1 {
+                            regionsCard(passport)
+                        }
+                        lineDetailCard(stats)
                     }
                 }
             } else {
@@ -206,28 +228,6 @@ struct StatisticsDashboardContent: View {
             // the 400 ms gate keeps the same clock it had on this group.
             StatisticsProgressGate(store: statistics, progressVisible: $progressVisible)
                 .allowsHitTesting(false)
-        }
-        .sheet(item: $selectedWidgetKind) { kind in
-            NavigationStack {
-                ScrollView {
-                    if let all = itineraries.loaded.map(visibleStore), let stats = statistics.view {
-                        let scope = scoped(all)
-                        let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
-                        detailCard(
-                            kind, loaded: scope.loaded, stats: stats, passport: passport)
-                            .padding(16)
-                    }
-                }
-                .navigationTitle(localization.text(kind.localizationKey))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button(localization.text("ios.done", fallback: "Done")) {
-                            selectedWidgetKind = nil
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -255,87 +255,6 @@ struct StatisticsDashboardContent: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-        }
-    }
-
-    /// Full, interactive details for a summary widget selected on the dashboard.
-    @ViewBuilder
-    private func detailCard(
-        _ kind: StatisticsCardKind, loaded: ItineraryStore.Loaded,
-        stats: Statistics.MileageStatsView, passport: PassportStatistics?
-    ) -> some View {
-        switch kind {
-        case .recordTicket:
-            passportDataPage(loaded.trains)
-        case .dailyTicket:
-            if let daily = stats.daily { dailyTicket(daily, trains: loaded.trains) }
-            else { emptyDashboardCard(kind) }
-        case .rhythm:
-            if let passport { rhythmCard(passport) } else { emptyDashboardCard(kind) }
-        case .distance:
-            if let passport { distanceCard(passport, distancePending: passport.measuredJourneys == 0) }
-            else { emptyDashboardCard(kind) }
-        case .time:
-            if let passport { timeCard(passport) } else { emptyDashboardCard(kind) }
-        case .rides:
-            if let data = statistics.widgetData(
-                kind, trains: loaded.trains, scopeName: scopeName ?? ticketScope,
-                region: region, localization: localization) {
-                StatsWidgetView(kind: kind, shape: .small, data: data)
-            }
-        case .coverage:
-            coverageCard(stats)
-        case .service:
-            serviceCard(stats.overall, distancePending: loaded.trains.allSatisfy(\.requiresRouteConfirmation))
-        case .stations:
-            if let passport { stationsCard(passport) } else { emptyDashboardCard(kind) }
-        case .operators:
-            if let passport { operatorsCard(passport) } else { emptyDashboardCard(kind) }
-        case .routes:
-            if let passport { routesCard(passport) } else { emptyDashboardCard(kind) }
-        case .topSegments:
-            topSegmentsCard(stats.overall)
-        case .regions:
-            if let passport, passport.regions.count > 1 { regionsCard(passport) }
-            else { emptyDashboardCard(kind) }
-        case .lineDetail:
-            lineDetailCard(stats)
-        }
-    }
-
-    private func emptyDashboardCard(_ kind: StatisticsCardKind) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label(localization.text(kind.localizationKey), systemImage: kind.systemImage)
-                .font(.headline)
-            Text(localization.text("ios.stats.shareNoData"))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .passportCard(.soft)
-    }
-
-    // MARK: - ticket-module widgets
-
-    private func widgetItems(
-        loaded: ItineraryStore.Loaded,
-        stats: Statistics.MileageStatsView,
-        passport: PassportStatistics?
-    ) -> [StatsWidgetGridItem] {
-        var specs: [(StatisticsCardKind, CardShape)] = [
-            (.coverage, .large), (.lineDetail, .large),
-            (.distance, .medium), (.rhythm, .medium),
-            (.stations, .tall), (.topSegments, .tall),
-            (.operators, .small), (.routes, .small), (.time, .small),
-            (.service, .medium),
-        ]
-        if stats.daily != nil { specs.append((.dailyTicket, .medium)) }
-        if let passport, passport.regions.count > 1 { specs.append((.regions, .medium)) }
-        return specs.compactMap { kind, shape in
-            guard let data = statistics.widgetData(
-                kind, trains: loaded.trains, scopeName: scopeName ?? ticketScope,
-                region: region, localization: localization) else { return nil }
-            return StatsWidgetGridItem(kind: kind, shape: shape, data: data)
         }
     }
 
@@ -1416,7 +1335,7 @@ struct StatisticsDashboardContent: View {
     /// The store minus hidden regions/months (same arrays until a choice or
     /// the store changes, so the memoised scope below keeps its key).
     private func visibleStore(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
-        guard let tripHide, tripHide.isActive else { return loaded }
+        guard let tripHide, tripHide.needsScoping(loaded) else { return loaded }
         let scoped = tripHide.scoped(loaded)
         var copy = loaded
         copy.trains = scoped.trains

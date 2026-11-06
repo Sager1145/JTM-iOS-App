@@ -71,6 +71,12 @@ final class AppControlHost: AppControlDriver {
     func startPollerIfRequested() {
         guard poller == nil,
               ProcessInfo.processInfo.environment[AppControl.pollEnvironmentKey] == "1" else { return }
+        // Requests left from before this launch (a CLI that gave up, a locked
+        // device) belong to a previous store and session: never run them now.
+        let inbox = Self.folder(AppControl.inboxFolder)
+        for name in (try? FileManager.default.contentsOfDirectory(atPath: inbox.path)) ?? [] {
+            try? FileManager.default.removeItem(at: inbox.appending(path: name))
+        }
         writeReadyMarker()
         poller = Task { [weak self] in
             while !Task.isCancelled {
@@ -448,7 +454,10 @@ final class AppControlHost: AppControlDriver {
         let recordID = state.recordID
         if !state.saving, state.open {
             let after = self.editor?.snapshot()
-            let state: AppControlJSON = ["editor": after?.json ?? before.json, "editorBefore": before.json]
+            let state: AppControlJSON = [
+                "editor": after?.json ?? before.json, "editorBefore": before.json,
+                "autofillProbe": (self.editor ?? editor).autofillProbe(),
+            ]
             if let pending = after?.removalPending {
                 throw AppControlError.failedWithState("not saved: removes recorded stops \(pending); pass confirmRemoval=true", state)
             }
@@ -547,6 +556,22 @@ final class AppControlHost: AppControlDriver {
                     ]
                 } ?? .null,
                 "networkLines": .number(Double(stores.network.lines.count)),
+                "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
+                    [
+                        "drawn": .number(Double(dots.drawn)), "stations": .number(Double(dots.stations)),
+                        "overlayStations": .number(Double(dots.overlayStations)),
+                    ]
+                } ?? .null,
+                "matching": [
+                    "runs": .number(Double(MapRenderProbe.matchingRuns)),
+                    "skipped": .number(Double(MapRenderProbe.matchingSkipped)),
+                    "deferred": .number(Double(MapRenderProbe.matchingDeferred)),
+                ],
+                "geometryWait": [
+                    "count": .number(Double(MapRenderProbe.geometryWaits)),
+                    "lastMs": .number(Double(MapRenderProbe.lastGeometryWaitMilliseconds)),
+                    "maxMs": .number(Double(MapRenderProbe.maxGeometryWaitMilliseconds)),
+                ],
             ],
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),

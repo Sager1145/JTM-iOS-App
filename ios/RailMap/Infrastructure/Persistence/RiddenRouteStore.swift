@@ -335,6 +335,9 @@ final class RiddenRouteStore {
         priority: TaskPriority = .userInitiated
     ) {
         bindPendingOwner()
+        // Trips in a disabled region stay in the store but are never cached,
+        // solved or drawn. Their route-cache files are left on disk.
+        let trains = trains.filter { Region.resolved($0).isEnabled }
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -559,7 +562,13 @@ final class RiddenRouteStore {
             ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
         try? FileManager.default.removeItem(at: base)
         await sharedJourneyWork.clear()
-        await releaseCachesForMemoryPressure()
+        // Only the memoised section solves are dropped; the ~26 MB of decoded
+        // inputs stay, so Reload all solves again without decoding again.
+        await SolverInputCache.shared.clearResolutionMemo()
+        // A failed history read is retried on reload, as before.
+        historyStateCache.withLock { states in
+            states = states.filter { if case .invalid = $0.value { false } else { true } }
+        }
     }
 
     private func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
@@ -833,12 +842,16 @@ final class RiddenRouteStore {
                 guard !missing.isEmpty else { return answers }
                 try Task.checkCancellation()
                 if graphStore == nil {
+                    async let displayNetworkResult = try? await DisplayNetworkCache.shared.network(scope: scope)
                     let inputs = try await SolverInputCache.shared.inputs(scope: scope)
+                    let displayNetwork = await displayNetworkResult
                     try Task.checkCancellation()
-                    let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
-                    try Task.checkCancellation()
+                    // Availability probes keep the small bound: this store is
+                    // built before the solve permit, so a full JP graph here
+                    // would coexist with the batch solve's.
                     graphStore = UncheckedGraphStoreBox(store: fallbackGraphStore(
-                        inputs: inputs, displayNetwork: displayNetwork))
+                        inputs: inputs, displayNetwork: displayNetwork,
+                        maximumNodes: 100_000))
                     providedInputs = inputs
                 }
                 guard let graphStore, let inputs = providedInputs else { return answers }
@@ -987,7 +1000,7 @@ final class RiddenRouteStore {
         // differently on every launch, and the order rides come back in is the
         // order the map is handed them in and therefore which line is drawn
         // over which.
-        for scope in RouteScope.ordered(byScope.keys) {
+        for scope in RouteScope.ordered(byScope.keys) where scope.home.isEnabled {
             guard let trains = byScope[scope] else { continue }
             let cached = try await loadCachedConcurrently(trains, country: scope.code)
             result += cached.rides
@@ -1013,8 +1026,9 @@ final class RiddenRouteStore {
            }),
            let preferred = unresolved[index].trains.first(where: { $0.id == preferredTrainID }) {
             let scope = unresolved[index].scope
+            async let displayNetworkResult = try? await DisplayNetworkCache.shared.network(scope: scope)
             let inputs = try await SolverInputCache.shared.inputs(scope: scope)
-            let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+            let displayNetwork = await displayNetworkResult
             let graphStore = fallbackGraphStore(inputs: inputs, displayNetwork: displayNetwork)
             unresolved[index].graphStore = graphStore
             unresolved[index].providedInputs = inputs
@@ -1034,8 +1048,9 @@ final class RiddenRouteStore {
             let scope = unresolved[index].scope
             let trains = unresolved[index].trains
             if unresolved[index].graphStore == nil {
+                async let displayNetworkResult = try? await DisplayNetworkCache.shared.network(scope: scope)
                 let inputs = try await SolverInputCache.shared.inputs(scope: scope)
-                let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+                let displayNetwork = await displayNetworkResult
                 unresolved[index].graphStore = fallbackGraphStore(
                     inputs: inputs, displayNetwork: displayNetwork)
                 unresolved[index].providedInputs = inputs
@@ -1445,6 +1460,14 @@ final class RiddenRouteStore {
 
         private func releaseCompleted() { completed = nil }
 
+        /// Forces fresh solves from the retained inputs without re-decoding.
+        func clearResolutionMemo() {
+            completed?.inputs.clearResolutionMemo()
+            // The network indexes carry the station-interval memo; they are
+            // cheap to rebuild next to the decoded inputs that stay.
+            indexes.removeAll()
+        }
+
         /// Drops the completed inputs and their derived indexes. In-flight
         /// decodes keep running, and their callers keep their own copies.
         func releaseForMemoryPressure() {
@@ -1591,7 +1614,9 @@ final class RiddenRouteStore {
             }
             return .standard
         }
-        guard let nodeValue else { return .bounded(maximumNodes: 100_000) }
+        guard let nodeValue else {
+            return .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget)
+        }
         guard let nodes = Int(nodeValue), (1...2_000_000).contains(nodes) else {
             throw invalid("\(nodesFlag) requires one integer between 1 and 2000000.")
         }
@@ -1600,15 +1625,21 @@ final class RiddenRouteStore {
     #endif
 
     private nonisolated static func fallbackGraphStore(
-        inputs: SolverInputs, displayNetwork: RouteNetwork?
+        inputs: SolverInputs, displayNetwork: RouteNetwork?,
+        maximumNodes: Int = RouteGraph.regionalGraphLoadNodeBudget
     ) -> RouteGraph.RouteGraphStore {
         let sections = inputs.sections
         #if RAIL_DIAGNOSTICS
         // Request admission reports malformed options before a route batch starts.
         let cachePolicy = (try? diagnosticGraphCacheConfiguration())?.policy
-            ?? .bounded(maximumNodes: 100_000)
+            ?? .bounded(maximumNodes: maximumNodes)
         #else
-        let cachePolicy = RouteGraph.GraphCachePolicy.bounded(maximumNodes: 100_000)
+        // Trade-off: the budget admits the full JP graph (~377k nodes, a few
+        // hundred MB) for the life of this batch store (one scope; it is
+        // dropped after the scope), raising transient peak memory in exchange
+        // for not rebuilding that graph on every full-graph fallback.
+        let cachePolicy = RouteGraph.GraphCachePolicy.bounded(
+            maximumNodes: maximumNodes)
         #endif
         let graphStore = RouteGraph.RouteGraphStore(
             sections: sections, policy: .physicalRailway, junctions: inputs.physicalJunctions,
@@ -1719,10 +1750,11 @@ final class RiddenRouteStore {
     ) async throws -> [DrawnRide] {
         guard trains.contains(where: { !$0.requiresRouteConfirmation }) else { return [] }
         let country = scope.code
-        let displayNetwork = try? await DisplayNetworkCache.shared.network(scope: scope)
+        async let displayNetworkResult = try? await DisplayNetworkCache.shared.network(scope: scope)
         let inputs: SolverInputs
         if let providedInputs { inputs = providedInputs }
         else { inputs = try await SolverInputCache.shared.inputs(scope: scope) }
+        let displayNetwork = await displayNetworkResult
         let preparedNetwork: RideRouteResolution.NetworkInputs?
         if let displayNetwork {
             preparedNetwork = await SolverInputCache.shared.networkIndexes(

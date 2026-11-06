@@ -3263,7 +3263,8 @@ public enum RouteSolver {
         // endpoints sit in regions with no connected rail network has no path.
         guard RegionConnectivity.isSupported(country),
               RegionConnectivity.firstUnconnectedPair(
-                stationIDs: [rawSection.fromStationID, rawSection.toStationID]) == nil
+                stationIDs: [rawSection.fromStationID, rawSection.toStationID,
+                             rawSection.fromN02StationCode, rawSection.toN02StationCode]) == nil
         else { return nil }
         var section = rawSection
         if section.from?.isEmpty != false {

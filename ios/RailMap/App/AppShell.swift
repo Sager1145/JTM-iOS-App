@@ -142,6 +142,8 @@ struct AppShell: View {
             Task.detached(priority: .utility) {
                 await RiddenRouteStore.releaseCachesForMemoryPressure()
                 await EdgeIndexCache.shared.releaseForMemoryPressure()
+                // Non-routing display networks go first; jp stays resident.
+                await DisplayNetworkCache.shared.releaseForMemoryPressure()
             }
         }
         .task {

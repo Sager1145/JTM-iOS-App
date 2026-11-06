@@ -30,6 +30,7 @@ struct SettingsView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display
     @Environment(RiddenRouteStore.self) private var riddenRoutes
+    @Environment(TripHideFilter.self) private var tripHide: TripHideFilter?
     @State private var confirmReloadAll = false
     @Binding var appearance: String
     @Bindable var network: RailNetworkStore
@@ -306,7 +307,7 @@ struct SettingsView: View {
                 fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            if itineraries.loaded?.trains.contains(where: { !Region.resolved($0).isEnabled }) == true {
+            if let trains = itineraries.loaded?.trains, tripHide?.hasDisabledRegionTrips(trains) == true {
                 Text(localization.text(
                     "ios.note.disabledRegionTrips",
                     fallback: "Mainland China trips are hidden. They stay saved and will reappear if support returns."))

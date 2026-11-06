@@ -231,6 +231,12 @@ public struct RideRouteResolution {
             return Result(disposition: .noSections, segments: [], physicalGaps: [],
                 expectedSections: [], requiresPrecomputedRejection: false)
         }
+        // A disabled region does no inference or solving at all.
+        guard RegionConnectivity.isSupported(country) else {
+            return Result(disposition: .unavailable, segments: [],
+                physicalGaps: sections.indices.map { PhysicalGap(segmentIndex: $0, isBoundary: false) },
+                expectedSections: sections, requiresPrecomputedRejection: false)
+        }
         let stationIndex = inputs.stationIndex
         let displayNetwork = network?.network
         let eligibility = network?.eligibility
@@ -273,9 +279,9 @@ public struct RideRouteResolution {
                 && RouteSolver.routeSectionBoundarySharesExplicitStop(sections[index - 1], section)
             let anchor = sharesBoundary ? continuity : nil
             let previousPhysicalKey = sharesBoundary ? physicalContinuationKey : nil
-            if !RegionConnectivity.isSupported(country)
-                || RegionConnectivity.firstUnconnectedPair(
-                    stationIDs: [section.fromStationID, section.toStationID]) != nil {
+            if RegionConnectivity.firstUnconnectedPair(
+                stationIDs: [section.fromStationID, section.toStationID,
+                             section.fromN02StationCode, section.toN02StationCode]) != nil {
                 // Endpoints in regions with no connected rail network: a
                 // flagged gap, never drawn track and never a straight chord.
                 physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
@@ -571,9 +577,13 @@ public struct RideRouteResolution {
             requiresPrecomputedRejection: rejectPrecomputed, sourcePhysicalPathKeys: sourcePhysicalPathKeys)
     }
 
+    // Trade-off: the budget admits the full JP graph (~377k nodes, a few
+    // hundred MB) for the life of the store, raising transient peak memory in
+    // exchange for not rebuilding it on every full-graph fallback.
     private static func graphStore(_ inputs: SourceInputs) -> RouteGraph.RouteGraphStore {
         RouteGraph.RouteGraphStore(sections: inputs.sections, policy: .physicalRailway,
-            junctions: inputs.physicalJunctions, cachePolicy: .bounded(maximumNodes: 100_000),
+            junctions: inputs.physicalJunctions,
+            cachePolicy: .bounded(maximumNodes: RouteGraph.regionalGraphLoadNodeBudget),
             identityPeriods: inputs.identityPeriods, sourceSnapshotID: inputs.snapshotID)
     }
 

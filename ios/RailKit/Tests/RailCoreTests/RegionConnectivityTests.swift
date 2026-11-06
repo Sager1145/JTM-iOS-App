@@ -104,12 +104,30 @@ struct RegionConnectivityTests {
         #expect(decoded.number == "G1")
     }
 
-    @Test("an imported trip spanning unconnected regions is flagged")
+    @Test("an imported trip spanning unconnected regions is kept and reported, not rejected")
     func importFlagsCrossRegion() throws {
         var train = StoreOperations.createBlankTrain(country: "jp")
+        train.number = "X1"
         train.routeSections = [section(from: "st:jp:o", to: "st:tw:t")]
-        #expect(throws: (any Error).self) {
-            try TrainValidation.normalizeImportedTrain(StoreOperations.json(train))
+        let json = StoreOperations.json(train)
+        let pair = try #require(TrainValidation.crossRegionPair(json))
+        #expect(pair.0 == "jp" && pair.1 == "tw")
+        _ = try TrainValidation.normalizeImportedTrain(json)
+        // Free-text keys are not inspected.
+        var named = StoreOperations.createBlankTrain(country: "jp")
+        named.origin = "st:tw:fake"
+        #expect(TrainValidation.crossRegionPair(StoreOperations.json(named)) == nil)
+    }
+
+    @Test("an hk trip with a CN-OSM source code is never one merged region set")
+    func sourceCodesDoNotMerge() {
+        #expect(RegionConnectivity.region(ofCode: "CN-OSM-N1") == "cn")
+        #expect(RegionConnectivity.region(ofCode: "123456") == "jp")
+        #expect(!RegionConnectivity.allConnected(["hk", "cn"]))
+        #expect(RegionConnectivity.allConnected(["hk"]))
+        RegionConnectivity.$supportedOverride.withValue(["hk", "cn"]) {
+            #expect(!RegionConnectivity.allConnected(["hk", "cn"]))  // link still disabled
+            #expect(RegionConnectivity.isSupported("CN"))
         }
     }
 
@@ -127,4 +145,19 @@ struct RegionConnectivityTests {
             }
         }
     }
+}
+
+/// Runs a test with mainland China treated as supported, so retained cn
+/// behaviour stays covered while the region is disabled in the shipped data.
+struct MainlandChinaEnabled: TestTrait, TestScoping {
+    func provideScope(
+        for test: Test, testCase: Test.Case?,
+        performing function: @Sendable () async throws -> Void
+    ) async throws {
+        try await RegionConnectivity.$supportedOverride.withValue(
+            ["jp", "tw", "hk", "mo", "kr", "cn"], operation: { try await function() })
+    }
+}
+extension Trait where Self == MainlandChinaEnabled {
+    static var mainlandChinaEnabled: Self { Self() }
 }

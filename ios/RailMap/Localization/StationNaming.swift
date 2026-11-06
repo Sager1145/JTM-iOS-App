@@ -289,7 +289,7 @@ extension AppLocalization {
     func regionNaming(_ name: String?) -> Region? {
         guard let name, !name.isEmpty else { return nil }
         var claimed: (region: Region, named: String)?
-        for region in Region.allCases {
+        for region in Region.enabledOrdered {
             let named = stationName(name, region: region)
             guard named != name else { continue }
             if let claimed, claimed.named != named { return nil }

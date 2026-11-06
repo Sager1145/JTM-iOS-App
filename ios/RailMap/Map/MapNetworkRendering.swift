@@ -119,7 +119,7 @@ final class MapNetworkGeometryCache {
         let builds: [FamilyRunBuild]
     }
 
-    private static let frameCapacity = 3
+    private static let frameCapacity = 5
 
     let joinedChains: JoinedChainCache
     let chainPixels: ChainPixelCache

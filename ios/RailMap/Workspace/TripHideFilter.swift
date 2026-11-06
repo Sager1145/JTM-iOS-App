@@ -176,6 +176,12 @@ final class TripHideFilter {
         return byYear.keys.sorted(by: >).map { ($0, byYear[$0]!.sorted()) }
     }
 
+    /// Whether `scoped(_:)` has anything to remove: an active filter, or trips
+    /// in a disabled region. Memoised through the trip index.
+    func needsScoping(_ loaded: ItineraryStore.Loaded) -> Bool {
+        isActive || hasDisabledRegionTrips(loaded.trains)
+    }
+
     /// Whether the store holds trips in a disabled region (hidden everywhere).
     func hasDisabledRegionTrips(_ trains: [Train]) -> Bool {
         index(trains).values.contains { !$0.region.isEnabled }

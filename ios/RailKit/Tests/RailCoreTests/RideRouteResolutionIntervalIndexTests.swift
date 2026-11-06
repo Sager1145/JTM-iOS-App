@@ -21,7 +21,7 @@ struct RideRouteResolutionIntervalIndexTests {
     }
 
     @Test("Official-interval countries still build the index on the legacy path",
-          arguments: ["tw", "hk", "mo", "cn"])
+          .mainlandChinaEnabled, arguments: ["tw", "hk", "mo", "cn"])
     func officialCountriesBuildIntervalIndex(country: String) throws {
         let source = inputs()
         var resolution = RideRouteResolution(inputs: source, country: country)
