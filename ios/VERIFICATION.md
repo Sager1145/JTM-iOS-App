@@ -379,3 +379,37 @@ rectangle holes, continuous line coverage and city-scoped supplement resolution.
 `ios/tools/capture-railway-hotspots.sh` was also retired: it launched a supplied
 simulator app at the declared high-error railway viewpoints and saved screenshots
 and metadata for manual review. Existing captures and the hotspot data remain.
+
+## Regression guards (run before every merge to main)
+
+```sh
+bash ios/tools/run-regression-guards.sh
+```
+
+One command, a few minutes, from any cwd. It runs every step, prints a timing
+summary and exits non-zero if any step failed. The swift step goes through
+`/private/tmp/jtm-heavy-job-run.sh` when that lock wrapper exists. This is a fixed,
+cheap set that does not widen the checks above: it excludes `RailHistoryPackageTests`,
+`JunctionApproachTests` and the slow or already-red fixtures. Details and the
+past failure each guard answers: `docs/maintenance/2026-11-06-regression-guards.md`.
+
+| Guard | Catches |
+|---|---|
+| `check-ui-test-identifiers.sh` | UI test ids that no longer exist in the app |
+| `RegressionGuardTopologyGaps` | new different-line seams with no junction row; bad registry station codes |
+| `RegressionGuardHistoryStamps` | history events losing or narrowing their `rail-history.json` stamps |
+| `RegressionGuardPairedTracks` | paired-track catalog drifting from `paired_alignment` rows; branches listed as pairs |
+| `RegressionGuardArtifactRevisions` | stale or unstamped port fixtures, sample parts, expectations |
+| `DataCountExpectations` (per-region counts) | one region's rows breaking counts; says "code regression" vs "data changed" |
+| `build-port-fixtures.mjs --check --only=<f>` (15 fast fixtures) | JS reference output drifting from its committed fixture |
+| Playback / RouteGraph / Localization / ContinuousStroke parity, `SamplePrecomputeProvenanceTests`, `TravelDirectionTests`, `DirectionalAlignmentSelectionTests` | Swift vs JS drift in route key, operator names, i18n, stroke; direction logic |
+
+Refreshing a baseline or expectation: the failing guard prints the exact command,
+for example
+`JTM_REGENERATE_EXPECTATIONS=1 swift test --package-path ios/RailKit --filter RegressionGuardHistoryStamps`
+(fixtures: `node app/scripts/build/build-port-fixtures.mjs --only=<name>.json`).
+Do this only for a reviewed data change, after reading the old to new diff. The guard
+says "code regression; do not regenerate" when the inputs are unchanged. Never
+regenerate to silence a code regression. Baselines are shrink-only: a fixed gap
+must be deleted from its baseline (the guard fails until it is); never add an entry
+to hide a new failure.
