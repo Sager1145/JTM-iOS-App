@@ -440,6 +440,8 @@ public enum AppControlError: Error, Equatable, CustomStringConvertible, Sendable
     case unavailable(String)
     case timeout(String)
     case failed(String)
+    /// A failure that carries the state needed to diagnose it (put in the result's `data`).
+    case failedWithState(String, AppControlJSON)
 
     public var description: String {
         switch self {
@@ -454,6 +456,7 @@ public enum AppControlError: Error, Equatable, CustomStringConvertible, Sendable
         case .unavailable(let what): "unavailable: \(what)"
         case .timeout(let what): "timed out: \(what)"
         case .failed(let detail): detail
+        case .failedWithState(let detail, _): detail
         }
     }
 
@@ -463,7 +466,7 @@ public enum AppControlError: Error, Equatable, CustomStringConvertible, Sendable
         case .invalidRequest, .unknownCommand, .missingArgument, .invalidArgument, .sharedStorage, .relaunchRequired:
             .rejected
         case .timeout: .timeout
-        case .notFound, .unavailable, .failed: .failed
+        case .notFound, .unavailable, .failed, .failedWithState: .failed
         }
     }
 }
@@ -590,6 +593,7 @@ public enum AppControlDispatcher {
         } catch let error as AppControlError {
             result.status = error.status
             result.error = error.description
+            if case .failedWithState(_, let state) = error { result.data = state }
         } catch {
             result.status = .failed
             result.error = String(describing: error)

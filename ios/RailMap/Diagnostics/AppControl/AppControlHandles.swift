@@ -56,9 +56,12 @@ struct AppControlEditorSnapshot {
     struct Station {
         var code: String
         var name: String
+        var stationID: String? = nil
+        var lineID: String? = nil
     }
     struct Candidate {
         var id: String
+        var lineIDs: [String] = []
         var lines: [String]
         var operators: [String]
         var distanceKm: Double
@@ -68,6 +71,7 @@ struct AppControlEditorSnapshot {
         var historical: Bool
     }
     struct Section {
+        var key: String = ""
         var index: Int
         var from: String
         var to: String
@@ -102,11 +106,19 @@ struct AppControlEditorSnapshot {
     var removalPending: [String]?
     var notices: [String]
     var saveIssues: [String]
+    var sectionChoices: [String: String] = [:]
+    var allowUnverifiedConnections = false
+    var physicallyResolvedCorridorIDs: [String] = []
+    var trainType = ""
+    var company = ""
 
     var json: AppControlJSON {
         func station(_ value: Station?) -> AppControlJSON {
             guard let value else { return .null }
-            return ["code": .string(value.code), "name": .string(value.name)]
+            var json: [String: AppControlJSON] = ["code": .string(value.code), "name": .string(value.name)]
+            if let id = value.stationID { json["stationID"] = .string(id) }
+            if let line = value.lineID { json["lineID"] = .string(line) }
+            return .object(json)
         }
         func strings(_ values: [String]) -> AppControlJSON { .array(values.map { .string($0) }) }
         func optional(_ value: String?) -> AppControlJSON { value.map { .string($0) } ?? .null }
@@ -119,6 +131,7 @@ struct AppControlEditorSnapshot {
             "sections": .array(sections.map { section in
                 [
                     "index": .number(Double(section.index)), "from": .string(section.from), "to": .string(section.to),
+                    "key": .string(section.key.replacingOccurrences(of: "\u{1f}", with: "|")),
                     "outcome": .string(section.outcome), "outcomeDetail": strings(section.outcomeDetail),
                     "chosen": optional(section.chosen),
                     "historicalNotice": optional(section.historicalNotice),
@@ -128,6 +141,7 @@ struct AppControlEditorSnapshot {
                     "candidates": .array(section.candidates.map { candidate in
                         [
                             "id": .string(candidate.id), "lines": strings(candidate.lines),
+                            "lineIDs": strings(candidate.lineIDs),
                             "operators": strings(candidate.operators),
                             "distanceKm": .number((candidate.distanceKm * 10).rounded() / 10),
                             "passStationCount": .number(Double(candidate.passStationCount)),
@@ -145,6 +159,10 @@ struct AppControlEditorSnapshot {
             "removalPending": removalPending.map(strings) ?? .null,
             "notices": strings(notices),
             "saveIssues": strings(saveIssues),
+            "sectionChoices": .object(sectionChoices.mapValues { .string($0) }),
+            "allowUnverifiedConnections": .bool(allowUnverifiedConnections),
+            "physicallyResolvedCorridorIDs": strings(physicallyResolvedCorridorIDs),
+            "trainType": .string(trainType), "company": .string(company),
         ]
     }
 
@@ -164,7 +182,7 @@ struct AppControlEditorSnapshot {
         _ corridor: TripRoutePlanner.Corridor, proven: Set<String>, historical: Set<String>
     ) -> Candidate {
         Candidate(
-            id: corridor.id, lines: corridor.lineNames, operators: corridor.operatorNames,
+            id: corridor.id, lineIDs: corridor.choice.lineIDs, lines: corridor.lineNames, operators: corridor.operatorNames,
             distanceKm: corridor.distanceKm, passStationCount: corridor.passStationCount,
             junctions: corridor.junctions.map { "\($0.stationName): \($0.fromLineName) → \($0.toLineName)" },
             proven: proven.contains(corridor.id), historical: historical.contains(corridor.id))

@@ -3239,7 +3239,7 @@ extension JourneyEditorView {
             case nil: nil
             }
             return Snapshot.Section(
-                index: index, from: section.fromName, to: section.toName, outcome: name, outcomeDetail: detail,
+                key: section.key, index: index, from: section.fromName, to: section.toName, outcome: name, outcomeDetail: detail,
                 candidates: section.candidates.map {
                     Snapshot.candidate($0, proven: section.proven, historical: section.historical)
                 },
@@ -3255,8 +3255,13 @@ extension JourneyEditorView {
             trainID: train.id, isNew: isNew, region: region.code,
             ready: catalog != nil && package != nil, searching: searching, planned: planned,
             routeEdited: routeEdited, canSave: canSave, date: dayString(departure),
-            origin: origin.map { Snapshot.Station(code: $0.key.sourceCode, name: $0.name) },
-            destination: destination.map { Snapshot.Station(code: $0.key.sourceCode, name: $0.name) },
+            origin: origin.map {
+                Snapshot.Station(code: $0.key.sourceCode, name: $0.name, stationID: originStationID, lineID: originLine?.id)
+            },
+            destination: destination.map {
+                Snapshot.Station(code: $0.key.sourceCode, name: $0.name, stationID: destinationStationID,
+                                 lineID: destinationLine?.id)
+            },
             vias: vias.map { Snapshot.Station(code: $0.station.key.sourceCode, name: $0.station.name) },
             sections: sectionList, pendingSections: pendingSections, selectedCorridorID: selectedCorridorID,
             joinedOutcome: outcome.map { Snapshot.outcomeName($0).0 },
@@ -3264,7 +3269,13 @@ extension JourneyEditorView {
             conflicts: corridor.map { corridorConflicts($0).map(\.name) } ?? [],
             removalPending: removalStations,
             notices: notices,
-            saveIssues: saveIssues.map { "\($0.severity):\($0.field):\($0.literal ?? $0.key)" })
+            saveIssues: saveIssues.map { "\($0.severity):\($0.field):\($0.literal ?? $0.key)" },
+            sectionChoices: sectionChoices.reduce(into: [:]) { result, item in
+                result[item.key.replacingOccurrences(of: "\u{1f}", with: "|")] = item.value
+            },
+            allowUnverifiedConnections: allowUnverifiedConnections,
+            physicallyResolvedCorridorIDs: physicallyResolvedCorridorIDs.sorted(),
+            trainType: trainType, company: companyName)
     }
 }
 

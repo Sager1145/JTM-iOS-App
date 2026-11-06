@@ -180,6 +180,11 @@ struct AppControlProtocolTests {
         #expect(await AppControlDispatcher.run(AppControlRequest(id: "e1", command: "state"), driver: driver).status == .timeout)
         driver.failure = AppControlError.notFound("trip x")
         #expect(await AppControlDispatcher.run(AppControlRequest(id: "e2", command: "state"), driver: driver).status == .failed)
+        driver.failure = AppControlError.failedWithState("not saved", ["editor": ["planned": true]])
+        let withState = await AppControlDispatcher.run(AppControlRequest(id: "e3", command: "state"), driver: driver)
+        #expect(withState.status == .failed)
+        #expect(withState.error == "not saved")
+        #expect(withState.data?.object?["editor"]?.object?["planned"] == true)
         let badID = await AppControlDispatcher.run(AppControlRequest(id: "a/b", command: "state"), driver: driver)
         #expect(badID.status == .rejected)
     }

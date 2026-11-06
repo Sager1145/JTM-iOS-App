@@ -414,7 +414,12 @@ final class AppControlHost: AppControlDriver {
                 // Keep the plan in the failure: it names the sections still to choose.
                 let pending = editor.snapshot().sections.filter { $0.candidates.count > 1 && $0.chosen == nil }
                 let hint = pending.map { "section \($0.index) \($0.from)→\($0.to): \($0.candidates.count) candidates" }
-                throw AppControlError.failed("\(error.description)\(hint.isEmpty ? "" : "; choose with sectionChoices (editTrip id=\(editor.trainID)): " + hint.joined(separator: ", "))")
+                var state = result
+                if case .failedWithState(_, let saveState) = error { state["saveState"] = saveState }
+                state["editor"] = editor.snapshot().json
+                throw AppControlError.failedWithState(
+                    "\(error.description)\(hint.isEmpty ? "" : "; choose with sectionChoices (editTrip id=\(editor.trainID)): " + hint.joined(separator: ", "))",
+                    .object(state))
             }
         }
         return .object(result)
@@ -434,7 +439,7 @@ final class AppControlHost: AppControlDriver {
         let editor = try requireEditor()
         let before = editor.snapshot()
         guard before.canSave else {
-            throw AppControlError.failed("not saved: the editor cannot save yet (\(Self.describe(before)))")
+            throw AppControlError.failedWithState("not saved: the editor cannot save yet (\(Self.describe(before)))", ["editor": before.json])
         }
         let started = ContinuousClock.now
         editor.commit(confirmRemoval)
@@ -443,13 +448,15 @@ final class AppControlHost: AppControlDriver {
         let recordID = state.recordID
         if !state.saving, state.open {
             let after = self.editor?.snapshot()
+            let state: AppControlJSON = ["editor": after?.json ?? before.json, "editorBefore": before.json]
             if let pending = after?.removalPending {
-                throw AppControlError.failed("not saved: removes recorded stops \(pending); pass confirmRemoval=true")
+                throw AppControlError.failedWithState("not saved: removes recorded stops \(pending); pass confirmRemoval=true", state)
             }
             if let issues = after?.saveIssues, !issues.isEmpty {
-                throw AppControlError.failed("not saved: validation \(issues)")
+                throw AppControlError.failedWithState("not saved: validation \(issues)", state)
             }
-            throw AppControlError.failed("not saved: the editor or the store refused the commit (\(after.map(Self.describe) ?? ""))")
+            throw AppControlError.failedWithState(
+                "not saved: the editor or the store refused the commit (\(after.map(Self.describe) ?? ""))", state)
         }
         try await until("save", timeoutMs: timeoutMs) {
             let state = workspace.editorState()
