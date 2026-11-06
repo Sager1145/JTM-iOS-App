@@ -18,5 +18,25 @@
     "agreement": 1.0,
     "downSign": -1,
     "votes": 134
+  },
+  "jp-東海旅客鉄道-飯田線": {
+    "downSign": 1,
+    "source": "起点 豊橋 (package 豊橋→辰野); 豊橋方面が上り. https://ja.wikipedia.org/wiki/飯田線"
+  },
+  "jp-東海旅客鉄道-身延線": {
+    "downSign": -1,
+    "source": "起点 富士 (package 甲府→富士); 富士方面が上り. https://ja.wikipedia.org/wiki/身延線"
+  },
+  "jp-東海旅客鉄道-高山線": {
+    "downSign": -1,
+    "source": "起点 岐阜 (package 猪谷→岐阜); 岐阜方面が上り. https://ja.wikipedia.org/wiki/高山本線"
+  },
+  "jp-東日本旅客鉄道-只見線": {
+    "downSign": 1,
+    "source": "起点 会津若松 (package 会津若松→小出); 会津若松発小出行きが下り. https://ja.wikipedia.org/wiki/只見線"
+  },
+  "jp-東日本旅客鉄道-武蔵野線": {
+    "downSign": 1,
+    "source": "起点 鶴見 (package 府中本町→西船橋); 府中本町行き上り, 西船橋方面下り. https://ja.wikipedia.org/wiki/武蔵野線"
   }
 }

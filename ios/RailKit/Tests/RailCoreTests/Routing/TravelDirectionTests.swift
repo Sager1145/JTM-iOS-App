@@ -264,6 +264,33 @@ struct TravelDirectionTests {
         }
     }
 
+    @Test("Bundled calibration puts 上り toward the 起点 on 飯田線, 身延線, 高山線 (JR東海), 只見線 and 武蔵野線")
+    func bundledCalibrationForOfficialOrigins() throws {
+        // (line id, operator, stations in package order, true when the package order runs toward the 起点)
+        let cases: [(String, String, [String], Bool)] = [
+            ("jp-東海旅客鉄道-飯田線", "東海旅客鉄道", ["豊橋", "中間", "辰野"], false),
+            ("jp-東海旅客鉄道-身延線", "東海旅客鉄道", ["甲府", "中間", "富士"], true),
+            ("jp-東海旅客鉄道-高山線", "東海旅客鉄道", ["猪谷", "中間", "岐阜"], true),
+            ("jp-東日本旅客鉄道-只見線", "東日本旅客鉄道", ["会津若松", "中間", "小出"], false),
+            ("jp-東日本旅客鉄道-武蔵野線", "東日本旅客鉄道", ["府中本町", "中間", "西船橋"], false),
+            // Regression: existing records are unchanged.
+            ("jp-九州旅客鉄道-久大線", "九州旅客鉄道", ["A", "B", "C"], true),
+            ("jp-東日本旅客鉄道-中央線", "東日本旅客鉄道", ["A", "B", "C"], true),
+            ("jp-東海旅客鉄道-中央線", "東海旅客鉄道", ["A", "B", "C"], true),
+            ("jp-四国旅客鉄道-予讃線", "四国旅客鉄道", ["A", "B", "C"], false),
+        ]
+        for (id, operatorName, stations, increasingIsUp) in cases {
+            // Coordinates would vote the opposite way for JR lines, so only calibration can pass.
+            let package = try fixture([line(
+                id, stations, kilometers: 10, operatorName: operatorName,
+                coordinates: [(130.0, 35.0), (135.0, 35.0), (139.7671, 35.6812)])])
+            let forward = try #require(try TravelDirection.infer(train: ride(stations), package: package))
+            #expect(forward.direction == (increasingIsUp ? .up : .down), "\(id) forward")
+            let reverse = try #require(try TravelDirection.infer(train: ride(stations.reversed()), package: package))
+            #expect(reverse.direction == (increasingIsUp ? .down : .up), "\(id) reverse")
+        }
+    }
+
     @Test("Each line of a trip gets its own direction and the terminal it runs toward")
     func legsPerLine() throws {
         // first: A→J increases (下り). second: J→C decreases its order (上り).
