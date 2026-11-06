@@ -122,6 +122,39 @@ struct TripRouteSectionsTests {
         #expect(viaX.stops.suffix(3).map(\.n02StationCode) == viaY.stops.suffix(3).map(\.n02StationCode))
     }
 
+    /// Review item 7 (ADR 0007 option B): the editor's closed-line check
+    /// (`TripRouteValidation.historicalOnlyIDs`, dated resolved and undated
+    /// not) would be fooled if an undated probe came back with only a
+    /// guard-rejected `.unproven` section. The guard fires only on a name-only
+    /// endpoint (`RouteSolver.endpointIsImplausible`), and the probe the editor
+    /// validates is this proposal of a coded two-stop scaffold. Every section
+    /// it produces names both ends by code, so the case cannot arise there.
+    @Test("Editor validation probes name every section end by code, so the endpoint guard cannot fire")
+    func validationProbeSectionsAreCoded() throws {
+        let package = try fixture([line("long", ["A", "X", "M"], distance: 3),
+                                   line("tail", ["M", "N", "B"])])
+        let request = TripRoutePlanner.Request(
+            originCode: "A", destinationCode: "B", allowUnverifiedConnections: true)
+        for corridor in try corridors(package, request) {
+            let first = try #require(corridor.choice.stations.first)
+            let last = try #require(corridor.choice.stations.last)
+            // The scaffold `JourneyEditorView.candidateTrain(for:)` builds.
+            var scaffold = Train(id: "draft", number: "check", origin: first.name, destination: last.name, stops: [
+                Stop(name: first.name, n02StationCode: first.code, stopType: "origin", rideSegment: true),
+                Stop(name: last.name, n02StationCode: last.code, stopType: "destination", rideSegment: true),
+            ])
+            scaffold.region = "jp"
+            scaffold.date = "2026-10-08"
+            let probe = try #require(LocalJourneyAutofill.proposal(train: scaffold, choice: corridor.choice)).train
+            let sections = try #require(probe.routeSections)
+            #expect(!sections.isEmpty)
+            for section in sections {
+                #expect(section.fromN02StationCode?.isEmpty == false)
+                #expect(section.toN02StationCode?.isEmpty == false)
+            }
+        }
+    }
+
     @Test("Geometry follows interval track in travel direction and merges one line")
     func geometryFollowsTrack() throws {
         let package = try fixture([bent("one", ["A", "M", "B"])])
