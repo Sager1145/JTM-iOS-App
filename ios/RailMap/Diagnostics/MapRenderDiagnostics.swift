@@ -315,17 +315,17 @@ final class MapRenderDiagnostics {
                 }.count
             } ?? 0
         let mounted = mapView.overlays.compactMap { $0 as? MKMultiPolyline }
-        let cores = mounted.filter { $0.title == "ride|\(id)" || $0.title == "ride-xday|\(id)" }
-        let casings = mounted.filter {
-            $0.title == "ride-casing|\(id)" || $0.title == "ride-xday-casing|\(id)"
-        }
+        let coreKeys = MapOverlayStyles.rideCoreKeys(for: id)
+        let casingKeys = MapOverlayStyles.rideCasingKeys(for: id)
+        let cores = mounted.filter { coreKeys.contains($0.title ?? "") }
+        let casings = mounted.filter { casingKeys.contains($0.title ?? "") }
         let parts = cores.reduce(0) { $0 + $1.polylines.count }
         let casingParts = casings.reduce(0) { $0 + $1.polylines.count }
         let coreRenderers = cores.compactMap { mapView.renderer(for: $0) }
         let casingRenderers = casings.compactMap { mapView.renderer(for: $0) }
         let nonemptyRides = rides.filter { $0.segments.contains { $0.coordinates.count > 1 } }.count
         let installedRideOverlays = mounted.filter {
-            $0.title?.hasPrefix("ride|") == true || $0.title?.hasPrefix("ride-xday|") == true
+            MapOverlayStyles.isRideCoreKey($0.title ?? "")
         }.count
         let settled =
             !cores.isEmpty && coreRenderers.count == cores.count
@@ -359,10 +359,7 @@ final class MapRenderDiagnostics {
                 }.count
             } ?? 0
         let installedParts = mapView.overlays.compactMap { $0 as? MKMultiPolyline }
-            .filter {
-                ($0.title ?? "") == "ride|\(targetID)"
-                    || ($0.title ?? "") == "ride-xday|\(targetID)"
-            }
+            .filter { MapOverlayStyles.rideCoreKeys(for: targetID).contains($0.title ?? "") }
             .reduce(0) { $0 + $1.polylines.count }
         return ";targetRideReady:\(ready ? 1 : 0);targetCategoryReady:\(classified ? 1 : 0)"
             + ";targetRouteParts:\(expectedParts);installedTargetRouteParts:\(installedParts)"

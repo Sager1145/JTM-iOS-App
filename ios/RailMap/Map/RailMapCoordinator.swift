@@ -1600,6 +1600,8 @@ extension RailMapView.Surface {
                     // own index and the flattened list has thrown it away.
                     var solid: [MKPolyline] = []
                     var crossDay: [MKPolyline] = []
+                    var unproven: [MKPolyline] = []
+                    let unprovenSections = ride.unprovenSegmentIndices
                     let riddenStops = ride.stops
                     for segment in ride.segments {
                         // 已乘路線顯示: a segment whose category the reader has
@@ -1653,7 +1655,9 @@ extension RailMapView.Surface {
                             polyline = MKPolyline(coordinates: points, count: points.count)
                             networkGeometry.storeRidePolyline(polyline, for: key)
                         }
-                        if let stopInterval = ride.stopInterval(forSectionIndex: segment.segmentIndex),
+                        if unprovenSections.contains(segment.segmentIndex) {
+                            unproven.append(polyline)
+                        } else if let stopInterval = ride.stopInterval(forSectionIndex: segment.segmentIndex),
                            MapDateScope.isCrossDayContinuation(
                             ride.daySpan, segmentIndex: stopInterval, scope: scope) {
                             crossDay.append(polyline)
@@ -1661,21 +1665,24 @@ extension RailMapView.Surface {
                             solid.append(polyline)
                         }
                     }
-                    guard !solid.isEmpty || !crossDay.isEmpty else { continue }
+                    guard !solid.isEmpty || !crossDay.isEmpty || !unproven.isEmpty else { continue }
                     let selected = ride.id == selectedTrainID
                     let color = UIColor(railHex: ride.colorHex) ?? .systemBlue
                     let width = rideWidthToken(selected: selected)
                     let alpha = rideAlpha(ride, selected: selected)
 
                     // Same source, same colour, same width — only the stroke
-                    // pattern says "not this day" (`TRAIN_XDAY_LAYER`).
-                    for (suffix, polylines, dashed) in [
-                        ("ride", solid, false), ("ride-xday", crossDay, true),
+                    // pattern says "not this day" (`TRAIN_XDAY_LAYER`), or
+                    // "unproven" (the historical dotted rhythm).
+                    for (suffix, polylines, dashed, historical) in [
+                        ("ride", solid, false, false), ("ride-xday", crossDay, true, false),
+                        ("ride-unproven", unproven, false, true),
                     ] where !polylines.isEmpty {
                         let styleKey = "\(suffix)|\(ride.id)"
                         let multi = overlayReconciliation.multiPolyline(polylines, key: styleKey)
                         overlayStyles[styleKey] = .init(
-                            color: color, widthToken: width, alpha: alpha, dashed: dashed)
+                            color: color, widthToken: width, alpha: alpha, dashed: dashed,
+                            historical: historical)
                         rideOverlays.append(multi)
                         if selected { selectedRideOverlays.append(multi) }
 
@@ -1696,7 +1703,8 @@ extension RailMapView.Surface {
                             color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
                             widthToken: width + RailStyle.selectionCasingEdge * 2,
                             alpha: 0.9,
-                            dashed: dashed
+                            dashed: dashed,
+                            historical: historical
                         )
                         if selectionNeedsHighlightTransition, playback?.isActive != true {
                             overlayStyles.animateOpacity(
@@ -2801,7 +2809,7 @@ extension RailMapView.Surface {
                 var playbackOverlays: [MKOverlay] = []
                 for overlay in base {
                     let key = (overlay.title ?? nil) ?? ""
-                    if (key.hasPrefix("ride|") || key.hasPrefix("ride-xday|")),
+                    if MapOverlayStyles.isRideCoreKey(key),
                        let separator = key.firstIndex(of: "|") {
                         strokes[String(key[key.index(after: separator)...]), default: []].append(overlay)
                     } else if key.hasPrefix("playback") {
@@ -3718,7 +3726,7 @@ extension RailMapView.Surface {
                 var playback: [MKOverlay] = []
                 for overlay in installed {
                     guard let key = overlay.title ?? nil else { others.append(overlay); continue }
-                    if key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|") {
+                    if MapOverlayStyles.isRideCasingKey(key) {
                         // Retain the new selection's casing. Old casings stay
                         // mounted separately until their exit fade completes.
                         if let separator = key.firstIndex(of: "|"),
@@ -3731,7 +3739,7 @@ extension RailMapView.Surface {
                             }
                             casings.append(multi)
                         }
-                    } else if key.hasPrefix("ride|") || key.hasPrefix("ride-xday|"),
+                    } else if MapOverlayStyles.isRideCoreKey(key),
                         let multi = overlay as? MKMultiPolyline {
                         if let separator = key.firstIndex(of: "|"),
                             String(key[key.index(after: separator)...]) == selectedTrainID {
@@ -3747,7 +3755,7 @@ extension RailMapView.Surface {
                 }
 
                 // The selected ride's casing, one per surviving core suffix
-                // (`ride` / `ride-xday`) — same style rule `rebuild` uses for
+                // (`ride` / `ride-xday` / `ride-unproven`) — same style rule `rebuild` uses for
                 // a newly selected ride's halo (§10.5): colour by theme,
                 // width from the CORE's own current token plus the casing
                 // edge on both sides, 0.9 alpha, the core's own dash.
@@ -3764,7 +3772,8 @@ extension RailMapView.Surface {
                             color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
                             widthToken: style.widthToken + RailStyle.selectionCasingEdge * 2,
                             alpha: 0.9,
-                            dashed: style.dashed
+                            dashed: style.dashed,
+                            historical: style.historical
                         )
                         overlayStyles.animateOpacity(
                             forKey: casingKey, duration: highlightDuration, fromAlpha: 0)
@@ -3818,7 +3827,7 @@ extension RailMapView.Surface {
                 var retired: [MKOverlay] = []
                 for overlay in overlays {
                     guard let key = overlay.title ?? nil,
-                        key.hasPrefix("ride-casing|") || key.hasPrefix("ride-xday-casing|"),
+                        MapOverlayStyles.isRideCasingKey(key),
                         let separator = key.firstIndex(of: "|"),
                         String(key[key.index(after: separator)...]) != selectedTrainID,
                         var style = overlayStyles[key], highlightExitDuration > 0 else { continue }
@@ -3851,7 +3860,7 @@ extension RailMapView.Surface {
                         continue
                     }
                     guard let key = overlay.title ?? nil,
-                        key.hasPrefix("ride|") || key.hasPrefix("ride-xday|"),
+                        MapOverlayStyles.isRideCoreKey(key),
                         let separator = key.firstIndex(of: "|"),
                         let ride = byID[String(key[key.index(after: separator)...])],
                         var style = overlayStyles[key] else { continue }

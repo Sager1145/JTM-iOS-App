@@ -766,7 +766,7 @@ final class MileageStatisticsStore {
                 segments = []
             } else {
                 let ride = ridesByID[train.id]
-                let uncertified = Set(ride?.physicalGaps.filter { !$0.isBoundary }.map(\.segmentIndex) ?? [])
+                let uncertified = RideRouteResolution.PhysicalGap.uncertifiedSections(ride?.physicalGaps ?? [])
                 segments = ride?.segments.filter { !uncertified.contains($0.segmentIndex) }.map {
                     MileageMatching.Segment(
                         sourceCoordinates: $0.sourceCoordinates, segmentIndex: $0.segmentIndex,
