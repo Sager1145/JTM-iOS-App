@@ -423,7 +423,8 @@ async function loadFixtureModules() {
   if (!fs.existsSync(dir)) return [];
   const files = fs
     .readdirSync(dir)
-    .filter((file) => file.endsWith(".mjs"))
+    // Skip Finder duplicates such as "name 2.mjs".
+    .filter((file) => file.endsWith(".mjs") && !file.includes(" "))
     .sort();
   const loaded = [];
   for (const file of files) {

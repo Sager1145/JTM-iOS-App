@@ -11,7 +11,7 @@
 
     },
     "inputs" : {
-      "port-fixtures/station-display.json" : "161b02b1a6eeb81dbe1f51901f26c87d2b24115cbeefbe8bf919e514f17cfb01"
+      "port-fixtures/station-display.json" : "c1652270d1c64ab6738beb974f187ae49537a1aa0eaa716acd1af47349838a36"
     },
     "regenerate" : "JTM_REGENERATE_EXPECTATIONS=1 swift test --package-path ios/RailKit --filter StationDisplayParityTests"
   }

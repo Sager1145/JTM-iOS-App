@@ -50,9 +50,10 @@ struct RegressionGuardArtifactRevisions {
         "visibility.json",
     ]
 
-    /// Swift-written expectation files (repo-relative) that predate stamping.
-    /// Shrink-only. A stamped one carries a top-level `provenance` object.
-    static let legacyUnstampedGenerated: Set<String> = [
+    /// Swift-written expectation files (repo-relative) outside
+    /// `DataCountExpectations.directory`. Each must carry a top-level
+    /// `provenance` object.
+    static let stampedGenerated: [String] = [
         "app/data/registry/jp/history-registry-differences.json"
     ]
 
@@ -363,25 +364,28 @@ struct RegressionGuardArtifactRevisions {
                     kind: .expectation, path: path, inputs: file.provenance.inputs.keys.sorted(),
                     differences: diffs, command: file.provenance.regenerate))
         }
-        for path in legacyUnstampedGenerated.sorted() {
-            let object = jsonObject(root.appending(path: path))
-            guard let object else {
+        for path in stampedGenerated {
+            guard let object = jsonObject(root.appending(path: path)) else {
                 out.append(
                     Artifact(
                         kind: .expectation, path: path, inputs: [],
-                        differences: ["remove \(path) from legacyUnstampedGenerated (file is gone)"], command: ""))
+                        differences: ["\(path) is missing or does not parse"], command: ""))
                 continue
             }
             guard let raw = object["provenance"],
                 let data = try? JSONSerialization.data(withJSONObject: raw),
                 let provenance = try? JSONDecoder().decode(ArtifactProvenance.self, from: data)
-            else { continue }  // still legacy: allowed until it is stamped
+            else {
+                out.append(
+                    Artifact(
+                        kind: .expectation, path: path, inputs: [],
+                        differences: ["\(path) has no decodable provenance"], command: ""))
+                continue
+            }
             out.append(
                 Artifact(
                     kind: .expectation, path: path, inputs: provenance.inputs.keys.sorted(),
-                    differences: ["remove \(path) from legacyUnstampedGenerated"]
-                        + provenance.differences(root: root),
-                    command: provenance.regenerate))
+                    differences: provenance.differences(root: root), command: provenance.regenerate))
         }
         return out
     }

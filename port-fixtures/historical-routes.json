@@ -1,5 +1,28 @@
 {
   "fixture": "historical-routes.json",
+  "provenance": {
+    "format": "jtm-artifact-provenance/1",
+    "generator": "app/scripts/build/port-fixtures/historical-routes.mjs",
+    "regenerate": "node app/scripts/build/build-port-fixtures.mjs --only=historical-routes.json",
+    "engine": {
+      "js_route_solver_cache_version": "28"
+    },
+    "history_revisions": {
+      "jp": "2026-10-11.3"
+    },
+    "inputs": {
+      "app/data/jp-history-sources/reviewed-mlit-row-selectors.json": "2a543d00c46f7e04f305b1429f20915ba728a2f8b276d958f7fc71e373e84bbc",
+      "app/data/jp-history-sources/reviewed-partial-opening-events.json": "a4244225ba570b1a38f96e56d64b9c0b2beaaed3ffdc12da08eb5621da58274a",
+      "app/data/jp-history-sources/reviewed-station-renames-2019.json": "c3582a87691ba71f8b0d5da5d67c84ae26cefbec01ad8dddeb9c8dd94d94667a",
+      "app/data/matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+      "app/data/matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+      "app/data/physical-rail-junctions.json": "1cae1b9b1a16411bb5633fb49d23c81fcb61c75130877f55713bc4fe42d965de",
+      "app/data/rail-history.json": "e2b1ed264b293e196a20bc7b43b8b3492bb9eb24ab9a29bb86d7a2ba6af1b672",
+      "app/data/rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
+      "app/data/stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
+      "app/scripts/railway/jp-rail-history-events.json": "96f7d6a355f77194feb5ddf96f1ed8259f093f71a88a4d16bee30462facbab19"
+    }
+  },
   "describes": "Rail-history-dependent Japan routes including reviewed openings, predecessor/successor transfers, surveyed station relocation and rename boundaries, and pinned historical dates",
   "contract": "Each answer was produced independently by the browser RouteService and Node PrecomputeAdapter, and generation failed unless the two answers were identical. path_digest is routeKeyDigest over features in segment order; each LineString coordinate is fixed to five decimals as lon,lat, coordinates are joined by semicolons, MultiLineString members by pipes, and features by newlines. segment_count is the emitted route feature count.",
   "cases": [
@@ -57,11 +80,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2ck0ec81yuu",
+        "solver_version": "28",
+        "route_cache_digest": "2gf1p48hht6",
         "ride_date": "2018-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -123,17 +146,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1lr02i1rwjb",
+        "solver_version": "28",
+        "route_cache_digest": "2cdtmvm2ra",
         "ride_date": "2015-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "10u7cq5elfo",
-      "physical_length_m": 66414.04
+      "path_digest": "22dui1f4wab",
+      "physical_length_m": 66608.25
     },
     {
       "id": "takachiho:historical",
@@ -189,17 +212,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1l3jv7u94ly",
+        "solver_version": "28",
+        "route_cache_digest": "1c3es3s3fwp",
         "ride_date": "2004-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "1pkj3wqn5u6",
-      "physical_length_m": 49546.32
+      "path_digest": "kfbwafygxu",
+      "physical_length_m": 49901.7
     },
     {
       "id": "ofunato:historical",
@@ -255,17 +278,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "ok6bge0b8c",
+        "solver_version": "28",
+        "route_cache_digest": "pif5p11ky3",
         "ride_date": "2010-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "1j6vf46ls41",
-      "physical_length_m": 43758.23
+      "path_digest": "udst056i5x",
+      "physical_length_m": 43719.63
     },
     {
       "id": "hidaka:historical",
@@ -321,11 +344,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "7rnm50wcgv",
+        "solver_version": "28",
+        "route_cache_digest": "20clnm9jcbb",
         "ride_date": "2014-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -387,11 +410,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "y3zdwvkeu4",
+        "solver_version": "28",
+        "route_cache_digest": "1xdnr3zcanp",
         "ride_date": "2010-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -453,11 +476,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1eog1az5fr6",
+        "solver_version": "28",
+        "route_cache_digest": "awbhdsvkyp",
         "ride_date": "1996-04-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -519,11 +542,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1m7ba1jblrn",
+        "solver_version": "28",
+        "route_cache_digest": "tppmv3b2td",
         "ride_date": "2004-02-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -585,11 +608,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1xfgwnmca9s",
+        "solver_version": "28",
+        "route_cache_digest": "121emy73r42",
         "ride_date": "2004-10-06",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -651,11 +674,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "24rkpmo2vxa",
+        "solver_version": "28",
+        "route_cache_digest": "268jly9vvxk",
         "ride_date": "2005-08-24",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -717,11 +740,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1yzvf9q5aj1",
+        "solver_version": "28",
+        "route_cache_digest": "1zt3nymknrx",
         "ride_date": "2008-03-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -783,11 +806,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1amwuolnu2r",
+        "solver_version": "28",
+        "route_cache_digest": "28n95u8mq7a",
         "ride_date": "1994-06-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -849,11 +872,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "17usvnjapf1",
+        "solver_version": "28",
+        "route_cache_digest": "1pax352zwlh",
         "ride_date": "1994-06-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -915,11 +938,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "7uez43ybfe",
+        "solver_version": "28",
+        "route_cache_digest": "28u4vmou0y3",
         "ride_date": "1994-12-03",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -981,11 +1004,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2274uy35m3t",
+        "solver_version": "28",
+        "route_cache_digest": "2fp4p1y7tm2",
         "ride_date": "1996-07-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1047,11 +1070,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "33ywcj9yh0",
+        "solver_version": "28",
+        "route_cache_digest": "je7q94ygdx",
         "ride_date": "1997-03-08",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1113,11 +1136,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "nc3muvt0bq",
+        "solver_version": "28",
+        "route_cache_digest": "27nolbeqo5k",
         "ride_date": "1997-03-22",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1179,11 +1202,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "bt2z1e3s4n",
+        "solver_version": "28",
+        "route_cache_digest": "bvg9oj18zm",
         "ride_date": "1997-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1245,17 +1268,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "utl9qo5jy5",
+        "solver_version": "28",
+        "route_cache_digest": "17hqy7y6182",
         "ride_date": "2001-03-23",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "3vuuliot6v",
-      "physical_length_m": 5734.65
+      "path_digest": "1tzxhncai5x",
+      "physical_length_m": 6511.47
     },
     {
       "id": "saitama-rapid:historical",
@@ -1311,11 +1334,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2azm4msy5da",
+        "solver_version": "28",
+        "route_cache_digest": "dffdh5df27",
         "ride_date": "2001-03-28",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1377,17 +1400,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1dtfbu44c",
+        "solver_version": "28",
+        "route_cache_digest": "f2xgotbkkj",
         "ride_date": "2001-07-07",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "k3otg7q3um",
-      "physical_length_m": 7508.28
+      "path_digest": "1qw3fzx3wsy",
+      "physical_length_m": 7937.89
     },
     {
       "id": "disney-resort:historical",
@@ -1443,11 +1466,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1el74jn1yef",
+        "solver_version": "28",
+        "route_cache_digest": "1cjo9hdggtc",
         "ride_date": "2001-07-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1509,11 +1532,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1yibi6jxfkt",
+        "solver_version": "28",
+        "route_cache_digest": "2eb1kdjhosy",
         "ride_date": "2002-10-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1575,11 +1598,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2crvl8i4ld4",
+        "solver_version": "28",
+        "route_cache_digest": "156huapgigy",
         "ride_date": "2003-03-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1641,11 +1664,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2fz3zpefmaw",
+        "solver_version": "28",
+        "route_cache_digest": "1bjwb1x8ufh",
         "ride_date": "2005-01-29",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1707,11 +1730,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "bi3fm8lhf",
+        "solver_version": "28",
+        "route_cache_digest": "23zyikkzps7",
         "ride_date": "2007-03-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1773,11 +1796,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "23n47rysvfs",
+        "solver_version": "28",
+        "route_cache_digest": "27vz82t2d2t",
         "ride_date": "2008-03-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1839,11 +1862,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2ahk9qqgnd2",
+        "solver_version": "28",
+        "route_cache_digest": "2fvaz623k4p",
         "ride_date": "2008-10-19",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1905,11 +1928,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1pd0j9s5u5z",
+        "solver_version": "28",
+        "route_cache_digest": "1ocs0h66kma",
         "ride_date": "2009-04-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -1971,17 +1994,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "168ztlzmw15",
+        "solver_version": "28",
+        "route_cache_digest": "q5xstu0p4p",
         "ride_date": "2015-12-06",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "112iamznzim",
-      "physical_length_m": 13439.52
+      "path_digest": "5t63z4qlps",
+      "physical_length_m": 13863.66
     },
     {
       "id": "west-kyushu-shinkansen:historical",
@@ -2037,11 +2060,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "12ro5ri4ak6",
+        "solver_version": "28",
+        "route_cache_digest": "ndab2226ou",
         "ride_date": "2022-09-23",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2103,11 +2126,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1f6fjnvxd6h",
+        "solver_version": "28",
+        "route_cache_digest": "1vw146tb0dm",
         "ride_date": "2023-03-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2169,17 +2192,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1jhulbx6qm3",
+        "solver_version": "28",
+        "route_cache_digest": "1whtj185rrk",
         "ride_date": "2023-08-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "28hvp9ns5r9",
-      "physical_length_m": 13971.71
+      "path_digest": "1onv8ejynow",
+      "physical_length_m": 14515.41
     },
     {
       "id": "toyama-city-loop:historical",
@@ -2235,17 +2258,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2coqgfwbw04",
+        "solver_version": "28",
+        "route_cache_digest": "f9paw3j53p",
         "ride_date": "2009-12-23",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "1k47s8a76uc",
-      "physical_length_m": 748.91
+      "path_digest": "1o8zpx4dbn4",
+      "physical_length_m": 978.11
     },
     {
       "id": "toyama-station-connection:historical",
@@ -2303,17 +2326,17 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1xnt5ke68fq",
+        "solver_version": "28",
+        "route_cache_digest": "27ia2gtlfvc",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "eme7wr7o16",
-      "physical_length_m": 304.85
+      "path_digest": "12yg13romks",
+      "physical_length_m": 304.76
     },
     {
       "id": "hokkaido-shinkansen:historical",
@@ -2369,11 +2392,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "148gfr79nr8",
+        "solver_version": "28",
+        "route_cache_digest": "26fmghvz3rv",
         "ride_date": "2016-03-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2435,11 +2458,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "d4dynjxno0",
+        "solver_version": "28",
+        "route_cache_digest": "19u2pqzlmva",
         "ride_date": "2005-03-06",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2505,11 +2528,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1x13eadh1ct",
+        "solver_version": "28",
+        "route_cache_digest": "25ibxoplpn9",
         "ride_date": "1993-08-12",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2575,11 +2598,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "t0cj3wiled",
+        "solver_version": "28",
+        "route_cache_digest": "1yliu8x98ov",
         "ride_date": "2001-03-31",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2645,17 +2668,17 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "7e917x7x2t",
+        "solver_version": "28",
+        "route_cache_digest": "1bv9yubsud1",
         "ride_date": "2002-12-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "25zcvl0vqd2",
-      "physical_length_m": 4354.37
+      "path_digest": "ahf94pqyhm",
+      "physical_length_m": 4569.98
     },
     {
       "id": "kyoto-tozai-rokujizo:historical",
@@ -2715,11 +2738,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1safhunuwts",
+        "solver_version": "28",
+        "route_cache_digest": "16ck7g31jdp",
         "ride_date": "2004-11-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2787,11 +2810,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1iukor0tj1w",
+        "solver_version": "28",
+        "route_cache_digest": "rnrf18l6cw",
         "ride_date": "1997-08-22",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2857,11 +2880,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "t8yvkuebii",
+        "solver_version": "28",
+        "route_cache_digest": "20wxd7wycal",
         "ride_date": "1997-06-03",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2927,11 +2950,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "10u0hxef8b7",
+        "solver_version": "28",
+        "route_cache_digest": "138aw7zy5w3",
         "ride_date": "2008-01-16",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -2997,11 +3020,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2ces9jhgzj4",
+        "solver_version": "28",
+        "route_cache_digest": "hme336bs1r",
         "ride_date": "1999-02-25",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3067,11 +3090,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "xo1achbpr8",
+        "solver_version": "28",
+        "route_cache_digest": "bz98n5m8e2",
         "ride_date": "1994-10-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3137,11 +3160,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "207r81h3t42",
+        "solver_version": "28",
+        "route_cache_digest": "1jcerh1ilt4",
         "ride_date": "2011-03-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3209,17 +3232,17 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "szj5jwbkz",
+        "solver_version": "28",
+        "route_cache_digest": "u574tugzrv",
         "ride_date": "2005-02-03",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "4n1c9c5890",
-      "physical_length_m": 11373.75
+      "path_digest": "1bdjsto53gp",
+      "physical_length_m": 11926.24
     },
     {
       "id": "jp-h2005-h1-portliner-kobe-airport:historical",
@@ -3279,11 +3302,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "26l47ckfrt5",
+        "solver_version": "28",
+        "route_cache_digest": "167av6lw57c",
         "ride_date": "2006-02-02",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3349,11 +3372,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "v4qyv0kafd",
+        "solver_version": "28",
+        "route_cache_digest": "1w6m01478s8",
         "ride_date": "2006-03-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3419,11 +3442,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1qcap19frai",
+        "solver_version": "28",
+        "route_cache_digest": "22mf7buae1c",
         "ride_date": "2006-03-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3493,11 +3516,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "lg0h78xgna",
+        "solver_version": "28",
+        "route_cache_digest": "17ym1t0vgg1",
         "ride_date": "2007-03-19",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3563,11 +3586,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "25xerwvntdw",
+        "solver_version": "28",
+        "route_cache_digest": "22zgqc4fzpt",
         "ride_date": "2008-03-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3635,11 +3658,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1i4lnxx6yiw",
+        "solver_version": "28",
+        "route_cache_digest": "19o7kj9qaob",
         "ride_date": "2008-06-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3705,11 +3728,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "kn9ztv9d2e",
+        "solver_version": "28",
+        "route_cache_digest": "xwycn1pb3t",
         "ride_date": "2009-03-20",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3775,11 +3798,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1wutu3iamyt",
+        "solver_version": "28",
+        "route_cache_digest": "pghanrih2n",
         "ride_date": "2010-07-17",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3845,11 +3868,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "9epirnjczp",
+        "solver_version": "28",
+        "route_cache_digest": "p7fyw8ukef",
         "ride_date": "2010-12-04",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3915,11 +3938,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "10679nll5g",
+        "solver_version": "28",
+        "route_cache_digest": "23bs1gqqx0u",
         "ride_date": "2011-03-12",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -3985,11 +4008,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2bsrlocr5k5",
+        "solver_version": "28",
+        "route_cache_digest": "1h9szn82mte",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4055,11 +4078,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "182je185g7w",
+        "solver_version": "28",
+        "route_cache_digest": "1yl9hitn5l3",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4125,11 +4148,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1r1mrnpf57b",
+        "solver_version": "28",
+        "route_cache_digest": "l7u4clxlnj",
         "ride_date": "2017-03-04",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4195,11 +4218,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "whohoanwbp",
+        "solver_version": "28",
+        "route_cache_digest": "1pd43uoywe1",
         "ride_date": "2019-03-16",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4265,17 +4288,17 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1a6j0zldetv",
+        "solver_version": "28",
+        "route_cache_digest": "zjupiyzei4",
         "ride_date": "2019-03-23",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "12fxfxbf4jc",
-      "physical_length_m": 55050
+      "path_digest": "11sxr5b1qrj",
+      "physical_length_m": 55297.07
     },
     {
       "id": "jp-h2005-h1-okinawa-shuri-urasoe:historical",
@@ -4335,17 +4358,17 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "3gk649zny6",
+        "solver_version": "28",
+        "route_cache_digest": "1uhem0ee17l",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "f7bxcev799",
-      "physical_length_m": 3896.45
+      "path_digest": "1hehc0cbcql",
+      "physical_length_m": 4151.58
     },
     {
       "id": "jp-h2005-h1-sotetsu-nishiya-hazawa:historical",
@@ -4405,11 +4428,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1yowzlvjmwg",
+        "solver_version": "28",
+        "route_cache_digest": "296atvmahkn",
         "ride_date": "2019-11-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4475,11 +4498,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "ge10vc1zvt",
+        "solver_version": "28",
+        "route_cache_digest": "20j6ykrdo8n",
         "ride_date": "2023-03-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4547,11 +4570,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "23domabnqvc",
+        "solver_version": "28",
+        "route_cache_digest": "ye38jbb6vg",
         "ride_date": "2023-03-27",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4617,11 +4640,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1vljcc2gai6",
+        "solver_version": "28",
+        "route_cache_digest": "2ev1jjskwe6",
         "ride_date": "2024-03-16",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4687,11 +4710,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "27vrlyangqh",
+        "solver_version": "28",
+        "route_cache_digest": "o60xl463mv",
         "ride_date": "2024-03-23",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4759,11 +4782,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2mb9fciuxh",
+        "solver_version": "28",
+        "route_cache_digest": "wej1qcfz1i",
         "ride_date": "2025-01-19",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4829,17 +4852,17 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "18jdyeag1ed",
+        "solver_version": "28",
+        "route_cache_digest": "1xkpufxuf2c",
         "ride_date": "2019-11-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
       "segment_count": 1,
-      "path_digest": "2uqjnvmri7",
-      "physical_length_m": 9615.03
+      "path_digest": "19zuwq74a3q",
+      "physical_length_m": 9631.62
     },
     {
       "id": "nagoya-tsurumai-kamiotai-shared-control:historical",
@@ -4899,11 +4922,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1zvf5i8bwt8",
+        "solver_version": "28",
+        "route_cache_digest": "3d2mwrcofk",
         "ride_date": "1993-08-11",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -4969,11 +4992,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "177p9otzwju",
+        "solver_version": "28",
+        "route_cache_digest": "vqf5se6qiv",
         "ride_date": "2001-03-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5039,11 +5062,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1txgwmkpgy7",
+        "solver_version": "28",
+        "route_cache_digest": "jpbrw28pw1",
         "ride_date": "2002-11-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5109,11 +5132,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1z49v1g8ym7",
+        "solver_version": "28",
+        "route_cache_digest": "7ujcp94opd",
         "ride_date": "2004-11-25",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5181,11 +5204,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2e1l7rwkpe",
+        "solver_version": "28",
+        "route_cache_digest": "256kra2z4f6",
         "ride_date": "1997-08-21",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5251,11 +5274,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "cz3wmkhijt",
+        "solver_version": "28",
+        "route_cache_digest": "xb9tu8r2dc",
         "ride_date": "1997-06-02",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5321,11 +5344,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2s6oyfi60b",
+        "solver_version": "28",
+        "route_cache_digest": "qxiyhbpcmr",
         "ride_date": "2008-01-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5391,11 +5414,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "23546w5v17h",
+        "solver_version": "28",
+        "route_cache_digest": "1pk1jxeid33",
         "ride_date": "1999-02-24",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5461,11 +5484,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "9tiq7r51hf",
+        "solver_version": "28",
+        "route_cache_digest": "14cnkd27mea",
         "ride_date": "1994-10-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5531,11 +5554,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1wejac3kunb",
+        "solver_version": "28",
+        "route_cache_digest": "fs7kf8deij",
         "ride_date": "2011-03-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5601,11 +5624,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1li4xr0ig73",
+        "solver_version": "28",
+        "route_cache_digest": "1g63ztm9d47",
         "ride_date": "2002-11-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5671,11 +5694,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "nvu9uvcab1",
+        "solver_version": "28",
+        "route_cache_digest": "21jxwu3skog",
         "ride_date": "2002-12-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5741,11 +5764,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1rcdqalaeot",
+        "solver_version": "28",
+        "route_cache_digest": "150b6f8jsu9",
         "ride_date": "2002-11-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5811,11 +5834,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "urcsw1etqq",
+        "solver_version": "28",
+        "route_cache_digest": "1x3fxbva4zh",
         "ride_date": "2002-12-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5881,11 +5904,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1el2vn0fk3c",
+        "solver_version": "28",
+        "route_cache_digest": "1c3zemmxe8p",
         "ride_date": "2010-12-03",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -5951,11 +5974,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "5ukuk3egs7",
+        "solver_version": "28",
+        "route_cache_digest": "161c5byzuoz",
         "ride_date": "2010-12-04",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6021,11 +6044,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "21am5kwzic2",
+        "solver_version": "28",
+        "route_cache_digest": "94w0eszpa0",
         "ride_date": "2016-03-25",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6091,11 +6114,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "hw2z254grz",
+        "solver_version": "28",
+        "route_cache_digest": "cc9vbc3j27",
         "ride_date": "2016-03-26",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6161,11 +6184,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1iu49st7cor",
+        "solver_version": "28",
+        "route_cache_digest": "1a9m2gyn6ov",
         "ride_date": "2015-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6231,11 +6254,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "w2tofksx2v",
+        "solver_version": "28",
+        "route_cache_digest": "1hz6uwh42d",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6301,11 +6324,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "7mz7017gvl",
+        "solver_version": "28",
+        "route_cache_digest": "26j20kiyvgn",
         "ride_date": "2015-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6371,11 +6394,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "121zuppkzqc",
+        "solver_version": "28",
+        "route_cache_digest": "1y2w9b6nsh9",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6441,11 +6464,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "17evx8udip",
+        "solver_version": "28",
+        "route_cache_digest": "8pj3l6habi",
         "ride_date": "2015-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6511,11 +6534,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2cpw1xmojlg",
+        "solver_version": "28",
+        "route_cache_digest": "nemef3u5q4",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6581,11 +6604,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "zbyf1ggt7b",
+        "solver_version": "28",
+        "route_cache_digest": "1mvctwqka0h",
         "ride_date": "2015-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6651,11 +6674,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "zrd2dvw6q3",
+        "solver_version": "28",
+        "route_cache_digest": "baq2gz3ui8",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6721,11 +6744,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1y4xy9p9z2s",
+        "solver_version": "28",
+        "route_cache_digest": "15bmas2dqph",
         "ride_date": "2024-03-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6791,11 +6814,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2dmdx773jpq",
+        "solver_version": "28",
+        "route_cache_digest": "q1g5z5e0ms",
         "ride_date": "2024-03-16",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6861,11 +6884,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "13tmhzz7wn5",
+        "solver_version": "28",
+        "route_cache_digest": "1omytzqk32e",
         "ride_date": "2024-03-15",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -6931,11 +6954,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1lkjumcnrjj",
+        "solver_version": "28",
+        "route_cache_digest": "1l50w0tv4av",
         "ride_date": "2024-03-16",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7001,11 +7024,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2xaf6oauj3",
+        "solver_version": "28",
+        "route_cache_digest": "qnimkv4bp0",
         "ride_date": "2015-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7071,11 +7094,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1o5a1qdatvv",
+        "solver_version": "28",
+        "route_cache_digest": "2dzpceljowh",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7141,11 +7164,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1ieg3d51pcs",
+        "solver_version": "28",
+        "route_cache_digest": "uk3rhirztt",
         "ride_date": "2021-03-13",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7211,11 +7234,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "ux7icbegjm",
+        "solver_version": "28",
+        "route_cache_digest": "2dwd4qkd14z",
         "ride_date": "2018-03-17",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7281,11 +7304,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "h66shnh22d",
+        "solver_version": "28",
+        "route_cache_digest": "15kknljh47e",
         "ride_date": "2022-03-12",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7351,11 +7374,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "4b5urflar7",
+        "solver_version": "28",
+        "route_cache_digest": "xc3oe7j1q2",
         "ride_date": "1999-04-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7421,11 +7444,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2bsleesuiv3",
+        "solver_version": "28",
+        "route_cache_digest": "1uuvoav9tnl",
         "ride_date": "2001-03-22",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7491,11 +7514,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1s3le9enzpq",
+        "solver_version": "28",
+        "route_cache_digest": "go0jgzhhss",
         "ride_date": "2002-03-29",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7561,11 +7584,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "q0sir1jz3p",
+        "solver_version": "28",
+        "route_cache_digest": "1okfs784015",
         "ride_date": "2009-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7631,11 +7654,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "10to3rqg8wf",
+        "solver_version": "28",
+        "route_cache_digest": "15ehpkrn9vv",
         "ride_date": "2006-03-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7701,11 +7724,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "f6y75luqb0",
+        "solver_version": "28",
+        "route_cache_digest": "17jp3ckv01a",
         "ride_date": "2019-09-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7771,11 +7794,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1tbs7rzqzkt",
+        "solver_version": "28",
+        "route_cache_digest": "1p9v1dnq5wh",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7841,11 +7864,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2exmemm89sf",
+        "solver_version": "28",
+        "route_cache_digest": "1x0nf09mi0l",
         "ride_date": "2019-09-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7911,11 +7934,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2aj39v7l5g4",
+        "solver_version": "28",
+        "route_cache_digest": "4q9pzdxs1a",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -7981,11 +8004,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1yjq2nvck90",
+        "solver_version": "28",
+        "route_cache_digest": "ciylcamumq",
         "ride_date": "2019-09-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8051,11 +8074,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1z5jcsf1jql",
+        "solver_version": "28",
+        "route_cache_digest": "wom0vnu1kx",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8121,11 +8144,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2ah0necngb8",
+        "solver_version": "28",
+        "route_cache_digest": "1qe1ac5w4vo",
         "ride_date": "2019-09-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8191,11 +8214,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "6tymjafl6t",
+        "solver_version": "28",
+        "route_cache_digest": "1lio6q5lkbq",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8261,11 +8284,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2vyqz25ilv",
+        "solver_version": "28",
+        "route_cache_digest": "1wkamujtqfu",
         "ride_date": "2019-09-30",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8331,11 +8354,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "wcvbxn6ztz",
+        "solver_version": "28",
+        "route_cache_digest": "2bele71f4av",
         "ride_date": "2019-10-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8401,11 +8424,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "t857ls17fc",
+        "solver_version": "28",
+        "route_cache_digest": "24ml05rayv0",
         "ride_date": "2014-10-18",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8471,11 +8494,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1g4wc0661ui",
+        "solver_version": "28",
+        "route_cache_digest": "1s22sygwgwi",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8541,11 +8564,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "mp6t2fq2dn",
+        "solver_version": "28",
+        "route_cache_digest": "rwc0eax1wx",
         "ride_date": "2020-04-17",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8611,11 +8634,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "hl922ig5bb",
+        "solver_version": "28",
+        "route_cache_digest": "fibvd8njcu",
         "ride_date": "2025-08-02",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8683,11 +8706,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "2fmnsliltd2",
+        "solver_version": "28",
+        "route_cache_digest": "1rlwh0t6rl4",
         "ride_date": "2025-08-03",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -8754,11 +8777,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "20c1ajq2liv",
+          "solver_version": "28",
+          "route_cache_digest": "1jih0850k8g",
           "ride_date": "2019-03-31",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -8820,11 +8843,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "bqrk7enhge",
+          "solver_version": "28",
+          "route_cache_digest": "1pdj9b3fn9j",
           "ride_date": "2019-04-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -8890,17 +8913,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2dl4wg07y8z",
+          "solver_version": "28",
+          "route_cache_digest": "16rz7hhi0og",
           "ride_date": "2016-12-04",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "10u7cq5elfo",
-        "physical_length_m": 66414.04
+        "path_digest": "22dui1f4wab",
+        "physical_length_m": 66608.25
       },
       "at": {
         "id": "mashike:at-event",
@@ -8956,11 +8979,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "9ci15kkq04",
+          "solver_version": "28",
+          "route_cache_digest": "18r3lj950od",
           "ride_date": "2016-12-05",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9026,17 +9049,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1evywyzy964",
+          "solver_version": "28",
+          "route_cache_digest": "1k4yz95lpve",
           "ride_date": "2005-09-05",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "1pkj3wqn5u6",
-        "physical_length_m": 49546.32
+        "path_digest": "kfbwafygxu",
+        "physical_length_m": 49901.7
       },
       "at": {
         "id": "takachiho:at-event",
@@ -9092,11 +9115,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "17piqy9fc5p",
+          "solver_version": "28",
+          "route_cache_digest": "l2gjgrg8h7",
           "ride_date": "2005-09-06",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9162,17 +9185,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "27v1tnx1xdt",
+          "solver_version": "28",
+          "route_cache_digest": "1z4h88i3ovd",
           "ride_date": "2011-03-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "1j6vf46ls41",
-        "physical_length_m": 43758.23
+        "path_digest": "udst056i5x",
+        "physical_length_m": 43719.63
       },
       "at": {
         "id": "ofunato:at-event",
@@ -9228,11 +9251,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "5ur2ebl2yo",
+          "solver_version": "28",
+          "route_cache_digest": "29epn0ztt3f",
           "ride_date": "2011-03-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9298,11 +9321,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "17e2w3hhc0y",
+          "solver_version": "28",
+          "route_cache_digest": "6f6lk9gvck",
           "ride_date": "2015-01-07",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -9364,11 +9387,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "fm930fmi6h",
+          "solver_version": "28",
+          "route_cache_digest": "1ploa9ewplc",
           "ride_date": "2015-01-08",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9434,11 +9457,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1eo24cms3mp",
+          "solver_version": "28",
+          "route_cache_digest": "9j2sta5smf",
           "ride_date": "2011-03-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -9500,11 +9523,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "29bzvssyxcv",
+          "solver_version": "28",
+          "route_cache_digest": "2b3xu4gsefb",
           "ride_date": "2011-03-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9570,11 +9593,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "24otvky0v22",
+          "solver_version": "28",
+          "route_cache_digest": "yxor4ixyi7",
           "ride_date": "1996-04-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9636,11 +9659,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1eog1az5fr6",
+          "solver_version": "28",
+          "route_cache_digest": "awbhdsvkyp",
           "ride_date": "1996-04-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -9706,11 +9729,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "8jiwit5n77",
+          "solver_version": "28",
+          "route_cache_digest": "189t8daidii",
           "ride_date": "2004-01-31",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9772,11 +9795,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1m7ba1jblrn",
+          "solver_version": "28",
+          "route_cache_digest": "tppmv3b2td",
           "ride_date": "2004-02-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -9842,11 +9865,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "x5tmh38fb9",
+          "solver_version": "28",
+          "route_cache_digest": "24zqexr0w4m",
           "ride_date": "2004-10-05",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -9908,11 +9931,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1xfgwnmca9s",
+          "solver_version": "28",
+          "route_cache_digest": "121emy73r42",
           "ride_date": "2004-10-06",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -9978,11 +10001,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "110om3v3ge9",
+          "solver_version": "28",
+          "route_cache_digest": "14f8ybsdw8f",
           "ride_date": "2005-08-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10044,11 +10067,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "24rkpmo2vxa",
+          "solver_version": "28",
+          "route_cache_digest": "268jly9vvxk",
           "ride_date": "2005-08-24",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10114,11 +10137,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "flmz132u4v",
+          "solver_version": "28",
+          "route_cache_digest": "23qjf7rss0f",
           "ride_date": "2008-03-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10180,11 +10203,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1yzvf9q5aj1",
+          "solver_version": "28",
+          "route_cache_digest": "1zt3nymknrx",
           "ride_date": "2008-03-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10250,11 +10273,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1fi97q77buh",
+          "solver_version": "28",
+          "route_cache_digest": "12f9u336i5m",
           "ride_date": "1994-06-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10316,11 +10339,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1amwuolnu2r",
+          "solver_version": "28",
+          "route_cache_digest": "28n95u8mq7a",
           "ride_date": "1994-06-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10386,11 +10409,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "d3g72wkt81",
+          "solver_version": "28",
+          "route_cache_digest": "ovlfgo3ld1",
           "ride_date": "1994-06-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10452,11 +10475,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "17usvnjapf1",
+          "solver_version": "28",
+          "route_cache_digest": "1pax352zwlh",
           "ride_date": "1994-06-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10522,11 +10545,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "14x10gz6pc2",
+          "solver_version": "28",
+          "route_cache_digest": "ztfbv4a0fv",
           "ride_date": "1994-12-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10588,11 +10611,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "7uez43ybfe",
+          "solver_version": "28",
+          "route_cache_digest": "28u4vmou0y3",
           "ride_date": "1994-12-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10658,11 +10681,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1nd6qrc704n",
+          "solver_version": "28",
+          "route_cache_digest": "16ozkm7dgcc",
           "ride_date": "1996-07-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10724,11 +10747,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2274uy35m3t",
+          "solver_version": "28",
+          "route_cache_digest": "2fp4p1y7tm2",
           "ride_date": "1996-07-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10794,11 +10817,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10yasdpc4yn",
+          "solver_version": "28",
+          "route_cache_digest": "ncbzjbhgtg",
           "ride_date": "1997-03-07",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10860,11 +10883,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "33ywcj9yh0",
+          "solver_version": "28",
+          "route_cache_digest": "je7q94ygdx",
           "ride_date": "1997-03-08",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -10930,11 +10953,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "20qvp0z6vdv",
+          "solver_version": "28",
+          "route_cache_digest": "1jq5t0ga991",
           "ride_date": "1997-03-21",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -10996,11 +11019,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "nc3muvt0bq",
+          "solver_version": "28",
+          "route_cache_digest": "27nolbeqo5k",
           "ride_date": "1997-03-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -11066,11 +11089,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "4my9mc9anu",
+          "solver_version": "28",
+          "route_cache_digest": "1pie8pfglec",
           "ride_date": "1997-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11132,11 +11155,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "bt2z1e3s4n",
+          "solver_version": "28",
+          "route_cache_digest": "bvg9oj18zm",
           "ride_date": "1997-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -11202,11 +11225,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1u31boazt13",
+          "solver_version": "28",
+          "route_cache_digest": "10d1pech238",
           "ride_date": "2001-03-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11268,17 +11291,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "utl9qo5jy5",
+          "solver_version": "28",
+          "route_cache_digest": "17hqy7y6182",
           "ride_date": "2001-03-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "3vuuliot6v",
-        "physical_length_m": 5734.65
+        "path_digest": "1tzxhncai5x",
+        "physical_length_m": 6511.47
       }
     },
     {
@@ -11338,11 +11361,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "20cni25lgr2",
+          "solver_version": "28",
+          "route_cache_digest": "s9462i3bvy",
           "ride_date": "2001-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11404,11 +11427,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2azm4msy5da",
+          "solver_version": "28",
+          "route_cache_digest": "dffdh5df27",
           "ride_date": "2001-03-28",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -11474,11 +11497,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1ndpywqucsm",
+          "solver_version": "28",
+          "route_cache_digest": "hxujhemqh9",
           "ride_date": "2001-07-06",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11540,17 +11563,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1dtfbu44c",
+          "solver_version": "28",
+          "route_cache_digest": "f2xgotbkkj",
           "ride_date": "2001-07-07",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "k3otg7q3um",
-        "physical_length_m": 7508.28
+        "path_digest": "1qw3fzx3wsy",
+        "physical_length_m": 7937.89
       }
     },
     {
@@ -11610,11 +11633,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "22i3vib9n9q",
+          "solver_version": "28",
+          "route_cache_digest": "1dh5xwuz1dm",
           "ride_date": "2001-07-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11676,11 +11699,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1el74jn1yef",
+          "solver_version": "28",
+          "route_cache_digest": "1cjo9hdggtc",
           "ride_date": "2001-07-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -11746,11 +11769,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1ifevtg0ka7",
+          "solver_version": "28",
+          "route_cache_digest": "1wrv4wwoai0",
           "ride_date": "2002-10-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11812,11 +11835,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1yibi6jxfkt",
+          "solver_version": "28",
+          "route_cache_digest": "2eb1kdjhosy",
           "ride_date": "2002-10-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -11882,11 +11905,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "63rzqituu0",
+          "solver_version": "28",
+          "route_cache_digest": "iccypepgil",
           "ride_date": "2003-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -11948,11 +11971,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2crvl8i4ld4",
+          "solver_version": "28",
+          "route_cache_digest": "156huapgigy",
           "ride_date": "2003-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12018,11 +12041,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "11ntdahbr2m",
+          "solver_version": "28",
+          "route_cache_digest": "1culoo811v4",
           "ride_date": "2005-01-28",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12084,11 +12107,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2fz3zpefmaw",
+          "solver_version": "28",
+          "route_cache_digest": "1bjwb1x8ufh",
           "ride_date": "2005-01-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12154,11 +12177,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2b2moxo5t6x",
+          "solver_version": "28",
+          "route_cache_digest": "3xrwsm5ksv",
           "ride_date": "2007-03-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12220,11 +12243,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "bi3fm8lhf",
+          "solver_version": "28",
+          "route_cache_digest": "23zyikkzps7",
           "ride_date": "2007-03-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12290,11 +12313,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2a8fklhl7bo",
+          "solver_version": "28",
+          "route_cache_digest": "1p7m68bvq9h",
           "ride_date": "2008-03-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12356,11 +12379,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "23n47rysvfs",
+          "solver_version": "28",
+          "route_cache_digest": "27vz82t2d2t",
           "ride_date": "2008-03-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12426,11 +12449,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "15fs2zijwuw",
+          "solver_version": "28",
+          "route_cache_digest": "uf5gngbl8j",
           "ride_date": "2008-10-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12492,11 +12515,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2ahk9qqgnd2",
+          "solver_version": "28",
+          "route_cache_digest": "2fvaz623k4p",
           "ride_date": "2008-10-19",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12562,11 +12585,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "td33x0rv5l",
+          "solver_version": "28",
+          "route_cache_digest": "mum5v3g7vi",
           "ride_date": "2009-04-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12628,11 +12651,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1pd0j9s5u5z",
+          "solver_version": "28",
+          "route_cache_digest": "1ocs0h66kma",
           "ride_date": "2009-04-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12698,11 +12721,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1gzs257e78k",
+          "solver_version": "28",
+          "route_cache_digest": "7rp0xqjtac",
           "ride_date": "2015-12-05",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12764,17 +12787,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "168ztlzmw15",
+          "solver_version": "28",
+          "route_cache_digest": "q5xstu0p4p",
           "ride_date": "2015-12-06",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "112iamznzim",
-        "physical_length_m": 13439.52
+        "path_digest": "5t63z4qlps",
+        "physical_length_m": 13863.66
       }
     },
     {
@@ -12834,11 +12857,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "cmxrztjg08",
+          "solver_version": "28",
+          "route_cache_digest": "pnqrtp7gd6",
           "ride_date": "2022-09-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -12900,11 +12923,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "12ro5ri4ak6",
+          "solver_version": "28",
+          "route_cache_digest": "ndab2226ou",
           "ride_date": "2022-09-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -12970,11 +12993,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1e8xo1yeo10",
+          "solver_version": "28",
+          "route_cache_digest": "2pg4n20uy5",
           "ride_date": "2023-03-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13036,11 +13059,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1f6fjnvxd6h",
+          "solver_version": "28",
+          "route_cache_digest": "1vw146tb0dm",
           "ride_date": "2023-03-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -13106,11 +13129,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "xu89xm1ujq",
+          "solver_version": "28",
+          "route_cache_digest": "25p50rlol1n",
           "ride_date": "2023-08-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13172,17 +13195,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1jhulbx6qm3",
+          "solver_version": "28",
+          "route_cache_digest": "1whtj185rrk",
           "ride_date": "2023-08-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "28hvp9ns5r9",
-        "physical_length_m": 13971.71
+        "path_digest": "1onv8ejynow",
+        "physical_length_m": 14515.41
       }
     },
     {
@@ -13242,11 +13265,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "8x8aa4quhd",
+          "solver_version": "28",
+          "route_cache_digest": "fza4rcseqg",
           "ride_date": "2009-12-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13308,17 +13331,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2coqgfwbw04",
+          "solver_version": "28",
+          "route_cache_digest": "f9paw3j53p",
           "ride_date": "2009-12-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "1k47s8a76uc",
-        "physical_length_m": 748.91
+        "path_digest": "1o8zpx4dbn4",
+        "physical_length_m": 978.11
       }
     },
     {
@@ -13380,11 +13403,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "21eg3xkn6yq",
+          "solver_version": "28",
+          "route_cache_digest": "1mbjefnjx6h",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13448,17 +13471,17 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1xnt5ke68fq",
+          "solver_version": "28",
+          "route_cache_digest": "27ia2gtlfvc",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "eme7wr7o16",
-        "physical_length_m": 304.85
+        "path_digest": "12yg13romks",
+        "physical_length_m": 304.76
       }
     },
     {
@@ -13518,11 +13541,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "22gpmqbtkh0",
+          "solver_version": "28",
+          "route_cache_digest": "m6edcdr3x8",
           "ride_date": "2016-03-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13584,11 +13607,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "148gfr79nr8",
+          "solver_version": "28",
+          "route_cache_digest": "26fmghvz3rv",
           "ride_date": "2016-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -13654,11 +13677,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "tjzrgmvspv",
+          "solver_version": "28",
+          "route_cache_digest": "1cufuhj024h",
           "ride_date": "2005-03-05",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13720,11 +13743,11 @@
           "operator_names": []
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "d4dynjxno0",
+          "solver_version": "28",
+          "route_cache_digest": "19u2pqzlmva",
           "ride_date": "2005-03-06",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -13794,11 +13817,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2yu0zx11zi",
+          "solver_version": "28",
+          "route_cache_digest": "1aoz0enzl6",
           "ride_date": "1993-08-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -13864,11 +13887,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1x13eadh1ct",
+          "solver_version": "28",
+          "route_cache_digest": "25ibxoplpn9",
           "ride_date": "1993-08-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -13938,11 +13961,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "16f3angkyuh",
+          "solver_version": "28",
+          "route_cache_digest": "idom0lte82",
           "ride_date": "2001-03-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14008,11 +14031,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "t0cj3wiled",
+          "solver_version": "28",
+          "route_cache_digest": "1yliu8x98ov",
           "ride_date": "2001-03-31",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14082,11 +14105,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1h3uvkmxw6z",
+          "solver_version": "28",
+          "route_cache_digest": "11blsdty0gv",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14152,17 +14175,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "7e917x7x2t",
+          "solver_version": "28",
+          "route_cache_digest": "1bv9yubsud1",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "25zcvl0vqd2",
-        "physical_length_m": 4354.37
+        "path_digest": "ahf94pqyhm",
+        "physical_length_m": 4569.98
       }
     },
     {
@@ -14226,11 +14249,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "26jj5tnnwha",
+          "solver_version": "28",
+          "route_cache_digest": "vujokrosv5",
           "ride_date": "2004-11-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14296,11 +14319,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1safhunuwts",
+          "solver_version": "28",
+          "route_cache_digest": "16ck7g31jdp",
           "ride_date": "2004-11-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14372,11 +14395,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1b66lfnpcqy",
+          "solver_version": "28",
+          "route_cache_digest": "1gwqoavzegk",
           "ride_date": "1997-08-21",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14444,11 +14467,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1iukor0tj1w",
+          "solver_version": "28",
+          "route_cache_digest": "rnrf18l6cw",
           "ride_date": "1997-08-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14518,11 +14541,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "7utwx3xfkw",
+          "solver_version": "28",
+          "route_cache_digest": "17yndk40yb",
           "ride_date": "1997-06-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14588,11 +14611,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "t8yvkuebii",
+          "solver_version": "28",
+          "route_cache_digest": "20wxd7wycal",
           "ride_date": "1997-06-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14662,11 +14685,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "m9hplihde",
+          "solver_version": "28",
+          "route_cache_digest": "20eka68hgu2",
           "ride_date": "2008-01-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14732,11 +14755,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10u0hxef8b7",
+          "solver_version": "28",
+          "route_cache_digest": "138aw7zy5w3",
           "ride_date": "2008-01-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14806,11 +14829,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "27rvrn3tgil",
+          "solver_version": "28",
+          "route_cache_digest": "16nd1efk5ut",
           "ride_date": "1999-02-24",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -14876,11 +14899,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2ces9jhgzj4",
+          "solver_version": "28",
+          "route_cache_digest": "hme336bs1r",
           "ride_date": "1999-02-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -14950,11 +14973,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1skj3992k9i",
+          "solver_version": "28",
+          "route_cache_digest": "f0sbne645z",
           "ride_date": "1994-10-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15020,11 +15043,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "xo1achbpr8",
+          "solver_version": "28",
+          "route_cache_digest": "bz98n5m8e2",
           "ride_date": "1994-10-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15094,11 +15117,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1q5p90fjfx9",
+          "solver_version": "28",
+          "route_cache_digest": "k7im4infef",
           "ride_date": "2011-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15164,11 +15187,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "207r81h3t42",
+          "solver_version": "28",
+          "route_cache_digest": "1jcerh1ilt4",
           "ride_date": "2011-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15240,11 +15263,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "vc0vba1jlz",
+          "solver_version": "28",
+          "route_cache_digest": "1605a1begzr",
           "ride_date": "2005-02-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15312,17 +15335,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "szj5jwbkz",
+          "solver_version": "28",
+          "route_cache_digest": "u574tugzrv",
           "ride_date": "2005-02-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "4n1c9c5890",
-        "physical_length_m": 11373.75
+        "path_digest": "1bdjsto53gp",
+        "physical_length_m": 11926.24
       }
     },
     {
@@ -15386,11 +15409,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1pjenc2kmpr",
+          "solver_version": "28",
+          "route_cache_digest": "27tfyzqnvhx",
           "ride_date": "2006-02-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15456,11 +15479,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "26l47ckfrt5",
+          "solver_version": "28",
+          "route_cache_digest": "167av6lw57c",
           "ride_date": "2006-02-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15530,11 +15553,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "26t79ciouvy",
+          "solver_version": "28",
+          "route_cache_digest": "283z43wwd8r",
           "ride_date": "2006-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15600,11 +15623,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "v4qyv0kafd",
+          "solver_version": "28",
+          "route_cache_digest": "1w6m01478s8",
           "ride_date": "2006-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15674,11 +15697,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2g01tavz40n",
+          "solver_version": "28",
+          "route_cache_digest": "17t2u1zdtqa",
           "ride_date": "2006-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15744,11 +15767,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1qcap19frai",
+          "solver_version": "28",
+          "route_cache_digest": "22mf7buae1c",
           "ride_date": "2006-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15822,11 +15845,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1z827w4lprc",
+          "solver_version": "28",
+          "route_cache_digest": "qkftukcsc7",
           "ride_date": "2007-03-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -15896,11 +15919,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "lg0h78xgna",
+          "solver_version": "28",
+          "route_cache_digest": "17ym1t0vgg1",
           "ride_date": "2007-03-19",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -15970,11 +15993,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "uspqj31sq",
+          "solver_version": "28",
+          "route_cache_digest": "w126ghdlov",
           "ride_date": "2008-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16040,11 +16063,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "25xerwvntdw",
+          "solver_version": "28",
+          "route_cache_digest": "22zgqc4fzpt",
           "ride_date": "2008-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16116,11 +16139,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "gk7pnldeyj",
+          "solver_version": "28",
+          "route_cache_digest": "19lm1lsmkt2",
           "ride_date": "2008-06-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16188,11 +16211,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1i4lnxx6yiw",
+          "solver_version": "28",
+          "route_cache_digest": "19o7kj9qaob",
           "ride_date": "2008-06-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16262,11 +16285,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "25jmd720grk",
+          "solver_version": "28",
+          "route_cache_digest": "ml0my2extk",
           "ride_date": "2009-03-19",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16332,11 +16355,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "kn9ztv9d2e",
+          "solver_version": "28",
+          "route_cache_digest": "xwycn1pb3t",
           "ride_date": "2009-03-20",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16406,11 +16429,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "ivfbtrh08o",
+          "solver_version": "28",
+          "route_cache_digest": "winv3ixtpx",
           "ride_date": "2010-07-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16476,11 +16499,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1wutu3iamyt",
+          "solver_version": "28",
+          "route_cache_digest": "pghanrih2n",
           "ride_date": "2010-07-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16550,11 +16573,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "w3rhaz1vna",
+          "solver_version": "28",
+          "route_cache_digest": "bltuikjlo3",
           "ride_date": "2010-12-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16620,11 +16643,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "9epirnjczp",
+          "solver_version": "28",
+          "route_cache_digest": "p7fyw8ukef",
           "ride_date": "2010-12-04",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16694,11 +16717,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "151wy2hxox",
+          "solver_version": "28",
+          "route_cache_digest": "198wounvzxd",
           "ride_date": "2011-03-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16764,11 +16787,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10679nll5g",
+          "solver_version": "28",
+          "route_cache_digest": "23bs1gqqx0u",
           "ride_date": "2011-03-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16838,11 +16861,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "vusp3lz19e",
+          "solver_version": "28",
+          "route_cache_digest": "h0ixfn69xw",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -16908,11 +16931,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2bsrlocr5k5",
+          "solver_version": "28",
+          "route_cache_digest": "1h9szn82mte",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -16982,11 +17005,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "trsipivi80",
+          "solver_version": "28",
+          "route_cache_digest": "8enhvbsyc3",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17052,11 +17075,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "182je185g7w",
+          "solver_version": "28",
+          "route_cache_digest": "1yl9hitn5l3",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -17126,11 +17149,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "26yfmjvcc1s",
+          "solver_version": "28",
+          "route_cache_digest": "y7jk46b53q",
           "ride_date": "2017-03-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17196,11 +17219,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1r1mrnpf57b",
+          "solver_version": "28",
+          "route_cache_digest": "l7u4clxlnj",
           "ride_date": "2017-03-04",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -17270,11 +17293,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1wxqapvdhws",
+          "solver_version": "28",
+          "route_cache_digest": "1qbgl8nzwmq",
           "ride_date": "2019-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17340,11 +17363,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "whohoanwbp",
+          "solver_version": "28",
+          "route_cache_digest": "1pd43uoywe1",
           "ride_date": "2019-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -17414,11 +17437,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "hz65zntwae",
+          "solver_version": "28",
+          "route_cache_digest": "267tx4tl4mx",
           "ride_date": "2019-03-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17484,17 +17507,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1a6j0zldetv",
+          "solver_version": "28",
+          "route_cache_digest": "zjupiyzei4",
           "ride_date": "2019-03-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "12fxfxbf4jc",
-        "physical_length_m": 55050
+        "path_digest": "11sxr5b1qrj",
+        "physical_length_m": 55297.07
       }
     },
     {
@@ -17558,11 +17581,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "a3gd556clz",
+          "solver_version": "28",
+          "route_cache_digest": "bmxv0yw9an",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17628,17 +17651,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "3gk649zny6",
+          "solver_version": "28",
+          "route_cache_digest": "1uhem0ee17l",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "f7bxcev799",
-        "physical_length_m": 3896.45
+        "path_digest": "1hehc0cbcql",
+        "physical_length_m": 4151.58
       }
     },
     {
@@ -17702,11 +17725,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1v22x5s7d0g",
+          "solver_version": "28",
+          "route_cache_digest": "fe0u77ehjf",
           "ride_date": "2019-11-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17772,11 +17795,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1yowzlvjmwg",
+          "solver_version": "28",
+          "route_cache_digest": "296atvmahkn",
           "ride_date": "2019-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -17846,11 +17869,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "21zmccd2mtm",
+          "solver_version": "28",
+          "route_cache_digest": "174qvjj9ye0",
           "ride_date": "2023-03-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -17916,11 +17939,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "ge10vc1zvt",
+          "solver_version": "28",
+          "route_cache_digest": "20j6ykrdo8n",
           "ride_date": "2023-03-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -17992,11 +18015,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "ro2hncx3xi",
+          "solver_version": "28",
+          "route_cache_digest": "5r9hwpb0u6",
           "ride_date": "2023-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -18064,11 +18087,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "23domabnqvc",
+          "solver_version": "28",
+          "route_cache_digest": "ye38jbb6vg",
           "ride_date": "2023-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18138,11 +18161,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "18lbtg2m5fk",
+          "solver_version": "28",
+          "route_cache_digest": "16oz7jonwd3",
           "ride_date": "2024-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -18208,11 +18231,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1vljcc2gai6",
+          "solver_version": "28",
+          "route_cache_digest": "2ev1jjskwe6",
           "ride_date": "2024-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18282,11 +18305,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "htdgfpjrou",
+          "solver_version": "28",
+          "route_cache_digest": "1ub6f7w5j9o",
           "ride_date": "2024-03-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -18352,11 +18375,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "27vrlyangqh",
+          "solver_version": "28",
+          "route_cache_digest": "o60xl463mv",
           "ride_date": "2024-03-23",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18428,11 +18451,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1xpd1np6qes",
+          "solver_version": "28",
+          "route_cache_digest": "7jcjh4x2nd",
           "ride_date": "2025-01-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -18500,11 +18523,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2mb9fciuxh",
+          "solver_version": "28",
+          "route_cache_digest": "wej1qcfz1i",
           "ride_date": "2025-01-19",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18574,11 +18597,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1cfl5dflyjo",
+          "solver_version": "28",
+          "route_cache_digest": "1aqe211ubot",
           "ride_date": "2019-11-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -18644,17 +18667,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "18jdyeag1ed",
+          "solver_version": "28",
+          "route_cache_digest": "1xkpufxuf2c",
           "ride_date": "2019-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "2uqjnvmri7",
-        "physical_length_m": 9615.03
+        "path_digest": "19zuwq74a3q",
+        "physical_length_m": 9631.62
       }
     },
     {
@@ -18718,11 +18741,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1zvf5i8bwt8",
+          "solver_version": "28",
+          "route_cache_digest": "3d2mwrcofk",
           "ride_date": "1993-08-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18788,11 +18811,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "11tnz7rlelx",
+          "solver_version": "28",
+          "route_cache_digest": "n866b0yes3",
           "ride_date": "1993-08-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18862,11 +18885,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "177p9otzwju",
+          "solver_version": "28",
+          "route_cache_digest": "vqf5se6qiv",
           "ride_date": "2001-03-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -18932,11 +18955,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "19sk06bb91g",
+          "solver_version": "28",
+          "route_cache_digest": "10z2qp52h2i",
           "ride_date": "2001-03-31",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19006,11 +19029,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1txgwmkpgy7",
+          "solver_version": "28",
+          "route_cache_digest": "jpbrw28pw1",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19076,11 +19099,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "69umr53smj",
+          "solver_version": "28",
+          "route_cache_digest": "14foy3f8vgo",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19150,11 +19173,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1z49v1g8ym7",
+          "solver_version": "28",
+          "route_cache_digest": "7ujcp94opd",
           "ride_date": "2004-11-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19220,11 +19243,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "gi6l8chn1m",
+          "solver_version": "28",
+          "route_cache_digest": "3zec2ljwbc",
           "ride_date": "2004-11-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19296,11 +19319,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2e1l7rwkpe",
+          "solver_version": "28",
+          "route_cache_digest": "256kra2z4f6",
           "ride_date": "1997-08-21",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19368,11 +19391,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "28orrmm7q1o",
+          "solver_version": "28",
+          "route_cache_digest": "24hfods38je",
           "ride_date": "1997-08-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19442,11 +19465,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "cz3wmkhijt",
+          "solver_version": "28",
+          "route_cache_digest": "xb9tu8r2dc",
           "ride_date": "1997-06-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19512,11 +19535,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "mhplh7lmb7",
+          "solver_version": "28",
+          "route_cache_digest": "k5uei3tmdq",
           "ride_date": "1997-06-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19586,11 +19609,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2s6oyfi60b",
+          "solver_version": "28",
+          "route_cache_digest": "qxiyhbpcmr",
           "ride_date": "2008-01-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19656,11 +19679,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1qzjuel7lpj",
+          "solver_version": "28",
+          "route_cache_digest": "azlr371rem",
           "ride_date": "2008-01-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19730,11 +19753,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "23546w5v17h",
+          "solver_version": "28",
+          "route_cache_digest": "1pk1jxeid33",
           "ride_date": "1999-02-24",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19800,11 +19823,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "v2pfh2wsb4",
+          "solver_version": "28",
+          "route_cache_digest": "znmraqd6rt",
           "ride_date": "1999-02-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19874,11 +19897,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "9tiq7r51hf",
+          "solver_version": "28",
+          "route_cache_digest": "14cnkd27mea",
           "ride_date": "1994-10-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -19944,11 +19967,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "dmefjihaqb",
+          "solver_version": "28",
+          "route_cache_digest": "de86cf0skz",
           "ride_date": "1994-10-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20018,11 +20041,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1wejac3kunb",
+          "solver_version": "28",
+          "route_cache_digest": "fs7kf8deij",
           "ride_date": "2011-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20088,11 +20111,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "v0npv2ozr2",
+          "solver_version": "28",
+          "route_cache_digest": "21fmnbqzncw",
           "ride_date": "2011-03-27",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20162,11 +20185,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1li4xr0ig73",
+          "solver_version": "28",
+          "route_cache_digest": "1g63ztm9d47",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20232,11 +20255,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1ujryx8ktqj",
+          "solver_version": "28",
+          "route_cache_digest": "s3mjm9el9j",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20306,11 +20329,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1mab41oxyuy",
+          "solver_version": "28",
+          "route_cache_digest": "27mkzdj4e8b",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20376,11 +20399,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "nvu9uvcab1",
+          "solver_version": "28",
+          "route_cache_digest": "21jxwu3skog",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20450,11 +20473,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1rcdqalaeot",
+          "solver_version": "28",
+          "route_cache_digest": "150b6f8jsu9",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20520,11 +20543,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "18u3ezcas8d",
+          "solver_version": "28",
+          "route_cache_digest": "254rxfv1aot",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20594,11 +20617,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1291cc19uwa",
+          "solver_version": "28",
+          "route_cache_digest": "268dwrgi9ge",
           "ride_date": "2002-11-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20664,11 +20687,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "urcsw1etqq",
+          "solver_version": "28",
+          "route_cache_digest": "1x3fxbva4zh",
           "ride_date": "2002-12-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20738,11 +20761,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1el2vn0fk3c",
+          "solver_version": "28",
+          "route_cache_digest": "1c3zemmxe8p",
           "ride_date": "2010-12-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -20808,11 +20831,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "k5baiuwr26",
+          "solver_version": "28",
+          "route_cache_digest": "1tnuhy338ii",
           "ride_date": "2010-12-04",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20882,11 +20905,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1e1nju13b58",
+          "solver_version": "28",
+          "route_cache_digest": "3uleu5kfyb",
           "ride_date": "2010-12-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -20952,11 +20975,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "5ukuk3egs7",
+          "solver_version": "28",
+          "route_cache_digest": "161c5byzuoz",
           "ride_date": "2010-12-04",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21026,11 +21049,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "21am5kwzic2",
+          "solver_version": "28",
+          "route_cache_digest": "94w0eszpa0",
           "ride_date": "2016-03-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21096,11 +21119,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "nfvmmdvvz8",
+          "solver_version": "28",
+          "route_cache_digest": "qbjb9elxlw",
           "ride_date": "2016-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21170,11 +21193,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "5075n4ss2l",
+          "solver_version": "28",
+          "route_cache_digest": "15onzfuq7hw",
           "ride_date": "2016-03-25",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21240,11 +21263,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "hw2z254grz",
+          "solver_version": "28",
+          "route_cache_digest": "cc9vbc3j27",
           "ride_date": "2016-03-26",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21314,11 +21337,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1iu49st7cor",
+          "solver_version": "28",
+          "route_cache_digest": "1a9m2gyn6ov",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21384,11 +21407,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "179shkafefb",
+          "solver_version": "28",
+          "route_cache_digest": "xntrhq0axj",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21458,11 +21481,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "3gy3yeryg2",
+          "solver_version": "28",
+          "route_cache_digest": "1jzx7q9w8yt",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21528,11 +21551,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "w2tofksx2v",
+          "solver_version": "28",
+          "route_cache_digest": "1hz6uwh42d",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21602,11 +21625,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "7mz7017gvl",
+          "solver_version": "28",
+          "route_cache_digest": "26j20kiyvgn",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21672,11 +21695,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "103q6nw5n28",
+          "solver_version": "28",
+          "route_cache_digest": "1fyuwl7kcpi",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21746,11 +21769,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1cn2408d84v",
+          "solver_version": "28",
+          "route_cache_digest": "hykpbbl8al",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -21816,11 +21839,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "121zuppkzqc",
+          "solver_version": "28",
+          "route_cache_digest": "1y2w9b6nsh9",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21890,11 +21913,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "17evx8udip",
+          "solver_version": "28",
+          "route_cache_digest": "8pj3l6habi",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -21960,11 +21983,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1cv48r9raa6",
+          "solver_version": "28",
+          "route_cache_digest": "pddrswauf3",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22034,11 +22057,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "18w1plgu8ce",
+          "solver_version": "28",
+          "route_cache_digest": "1uluojqeyhq",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22104,11 +22127,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2cpw1xmojlg",
+          "solver_version": "28",
+          "route_cache_digest": "nemef3u5q4",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22178,11 +22201,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "zbyf1ggt7b",
+          "solver_version": "28",
+          "route_cache_digest": "1mvctwqka0h",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22248,11 +22271,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "12rtehj4477",
+          "solver_version": "28",
+          "route_cache_digest": "211rl1hxijj",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22322,11 +22345,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10kj8va5zjj",
+          "solver_version": "28",
+          "route_cache_digest": "2eilsrvf31m",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22392,11 +22415,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "zrd2dvw6q3",
+          "solver_version": "28",
+          "route_cache_digest": "baq2gz3ui8",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22466,11 +22489,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1y4xy9p9z2s",
+          "solver_version": "28",
+          "route_cache_digest": "15bmas2dqph",
           "ride_date": "2024-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22536,11 +22559,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2acl8iv9ifh",
+          "solver_version": "28",
+          "route_cache_digest": "2da0ivu1kkd",
           "ride_date": "2024-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22610,11 +22633,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1i0eqk0yk1h",
+          "solver_version": "28",
+          "route_cache_digest": "1z2bhljjxfx",
           "ride_date": "2024-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22680,11 +22703,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2dmdx773jpq",
+          "solver_version": "28",
+          "route_cache_digest": "q1g5z5e0ms",
           "ride_date": "2024-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22754,11 +22777,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "13tmhzz7wn5",
+          "solver_version": "28",
+          "route_cache_digest": "1omytzqk32e",
           "ride_date": "2024-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -22824,11 +22847,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "15pk4r2e239",
+          "solver_version": "28",
+          "route_cache_digest": "10km1g4aqqt",
           "ride_date": "2024-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22898,11 +22921,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "jmd8chlx2k",
+          "solver_version": "28",
+          "route_cache_digest": "4p8gj0s3jq",
           "ride_date": "2024-03-15",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -22968,11 +22991,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1lkjumcnrjj",
+          "solver_version": "28",
+          "route_cache_digest": "1l50w0tv4av",
           "ride_date": "2024-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23042,11 +23065,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2xaf6oauj3",
+          "solver_version": "28",
+          "route_cache_digest": "qnimkv4bp0",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23112,11 +23135,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10rqcv6yzin",
+          "solver_version": "28",
+          "route_cache_digest": "1bszakofc3w",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23186,11 +23209,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "urzqca0osf",
+          "solver_version": "28",
+          "route_cache_digest": "i1d2lplnzp",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23256,11 +23279,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1o5a1qdatvv",
+          "solver_version": "28",
+          "route_cache_digest": "2dzpceljowh",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23330,11 +23353,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "qqlmrb0moc",
+          "solver_version": "28",
+          "route_cache_digest": "256ntnzev4g",
           "ride_date": "2021-03-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23400,11 +23423,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1ieg3d51pcs",
+          "solver_version": "28",
+          "route_cache_digest": "uk3rhirztt",
           "ride_date": "2021-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23474,11 +23497,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1k3wqtp3gpz",
+          "solver_version": "28",
+          "route_cache_digest": "2e0lgdy2r1x",
           "ride_date": "2018-03-16",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23544,11 +23567,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "ux7icbegjm",
+          "solver_version": "28",
+          "route_cache_digest": "2dwd4qkd14z",
           "ride_date": "2018-03-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23618,11 +23641,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1cnmvk4rxxe",
+          "solver_version": "28",
+          "route_cache_digest": "81bt9ay5td",
           "ride_date": "2022-03-11",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23688,11 +23711,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "h66shnh22d",
+          "solver_version": "28",
+          "route_cache_digest": "15kknljh47e",
           "ride_date": "2022-03-12",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23762,11 +23785,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "11yrg9jm30t",
+          "solver_version": "28",
+          "route_cache_digest": "27is8z320i4",
           "ride_date": "1999-03-31",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23832,11 +23855,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "4b5urflar7",
+          "solver_version": "28",
+          "route_cache_digest": "xc3oe7j1q2",
           "ride_date": "1999-04-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -23906,11 +23929,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1v0hhnuz61c",
+          "solver_version": "28",
+          "route_cache_digest": "1nt4b2ui19u",
           "ride_date": "2001-03-21",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -23976,11 +23999,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2bsleesuiv3",
+          "solver_version": "28",
+          "route_cache_digest": "1uuvoav9tnl",
           "ride_date": "2001-03-22",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24050,11 +24073,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "8xbu2kohei",
+          "solver_version": "28",
+          "route_cache_digest": "1puf8dqqlxd",
           "ride_date": "2002-03-28",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24120,11 +24143,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1s3le9enzpq",
+          "solver_version": "28",
+          "route_cache_digest": "go0jgzhhss",
           "ride_date": "2002-03-29",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24194,11 +24217,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "285zpw1com5",
+          "solver_version": "28",
+          "route_cache_digest": "29i705kbsba",
           "ride_date": "2009-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24264,11 +24287,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "q0sir1jz3p",
+          "solver_version": "28",
+          "route_cache_digest": "1okfs784015",
           "ride_date": "2009-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24338,11 +24361,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1eylnkpt1s2",
+          "solver_version": "28",
+          "route_cache_digest": "1ydvq967cod",
           "ride_date": "2006-03-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24408,11 +24431,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "10to3rqg8wf",
+          "solver_version": "28",
+          "route_cache_digest": "15ehpkrn9vv",
           "ride_date": "2006-03-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24482,11 +24505,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "f6y75luqb0",
+          "solver_version": "28",
+          "route_cache_digest": "17jp3ckv01a",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24552,11 +24575,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "5k2mttfezo",
+          "solver_version": "28",
+          "route_cache_digest": "b02r4p2an",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24626,11 +24649,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1zxyi0j07sd",
+          "solver_version": "28",
+          "route_cache_digest": "2d2b6tzytiv",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24696,11 +24719,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1tbs7rzqzkt",
+          "solver_version": "28",
+          "route_cache_digest": "1p9v1dnq5wh",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24770,11 +24793,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2exmemm89sf",
+          "solver_version": "28",
+          "route_cache_digest": "1x0nf09mi0l",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -24840,11 +24863,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "21rvrx1ztle",
+          "solver_version": "28",
+          "route_cache_digest": "mxxy6xz5uc",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24914,11 +24937,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1ifywc6cj3n",
+          "solver_version": "28",
+          "route_cache_digest": "xy3q7ss073",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -24984,11 +25007,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2aj39v7l5g4",
+          "solver_version": "28",
+          "route_cache_digest": "4q9pzdxs1a",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25058,11 +25081,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1yjq2nvck90",
+          "solver_version": "28",
+          "route_cache_digest": "ciylcamumq",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25128,11 +25151,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "hgdj6bv2g6",
+          "solver_version": "28",
+          "route_cache_digest": "k6d7xhu7o7",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25202,11 +25225,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "ssf4klgtag",
+          "solver_version": "28",
+          "route_cache_digest": "2bh9vk8d2nw",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25272,11 +25295,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1z5jcsf1jql",
+          "solver_version": "28",
+          "route_cache_digest": "wom0vnu1kx",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25346,11 +25369,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2ah0necngb8",
+          "solver_version": "28",
+          "route_cache_digest": "1qe1ac5w4vo",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25416,11 +25439,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1kg4rvymzxz",
+          "solver_version": "28",
+          "route_cache_digest": "7p4eerjoo5",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25490,11 +25513,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1gvjq2bevic",
+          "solver_version": "28",
+          "route_cache_digest": "2g4w9vpxkpy",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25560,11 +25583,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "6tymjafl6t",
+          "solver_version": "28",
+          "route_cache_digest": "1lio6q5lkbq",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25634,11 +25657,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2vyqz25ilv",
+          "solver_version": "28",
+          "route_cache_digest": "1wkamujtqfu",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25704,11 +25727,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1gtwsssyz8k",
+          "solver_version": "28",
+          "route_cache_digest": "zinbqu543i",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25778,11 +25801,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1yeufige0tp",
+          "solver_version": "28",
+          "route_cache_digest": "j9zfaygpa5",
           "ride_date": "2019-09-30",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -25848,11 +25871,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "wcvbxn6ztz",
+          "solver_version": "28",
+          "route_cache_digest": "2bele71f4av",
           "ride_date": "2019-10-01",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25922,11 +25945,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "t857ls17fc",
+          "solver_version": "28",
+          "route_cache_digest": "24ml05rayv0",
           "ride_date": "2014-10-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -25992,11 +26015,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "13ln9kwx4mv",
+          "solver_version": "28",
+          "route_cache_digest": "291j505hspy",
           "ride_date": "2014-10-19",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -26066,11 +26089,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "pgygoitw8c",
+          "solver_version": "28",
+          "route_cache_digest": "ym3k3ggqzj",
           "ride_date": "2015-03-13",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -26136,11 +26159,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1g4wc0661ui",
+          "solver_version": "28",
+          "route_cache_digest": "1s22sygwgwi",
           "ride_date": "2015-03-14",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -26210,11 +26233,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "mp6t2fq2dn",
+          "solver_version": "28",
+          "route_cache_digest": "rwc0eax1wx",
           "ride_date": "2020-04-17",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -26280,11 +26303,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "9de7c8gvu2",
+          "solver_version": "28",
+          "route_cache_digest": "ng8ghj04j",
           "ride_date": "2020-04-18",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -26354,11 +26377,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "hl922ig5bb",
+          "solver_version": "28",
+          "route_cache_digest": "fibvd8njcu",
           "ride_date": "2025-08-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -26424,17 +26447,17 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "vfblbwv25",
+          "solver_version": "28",
+          "route_cache_digest": "qizmhift7r",
           "ride_date": "2025-08-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
         "segment_count": 1,
-        "path_digest": "k8ve7fd5u0",
-        "physical_length_m": 452.06
+        "path_digest": "gdu09ur7zv",
+        "physical_length_m": 895.6
       }
     },
     {
@@ -26500,11 +26523,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "1kjwa9gmlmy",
+          "solver_version": "28",
+          "route_cache_digest": "w1d89wjdar",
           "ride_date": "2025-08-02",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "unsolvable",
@@ -26572,11 +26595,11 @@
           ]
         },
         "solver_context": {
-          "solver_version": "25",
-          "route_cache_digest": "2fmnsliltd2",
+          "solver_version": "28",
+          "route_cache_digest": "1rlwh0t6rl4",
           "ride_date": "2025-08-03",
           "history_revisions": {
-            "jp": "2026-10-10.2"
+            "jp": "2026-10-11.3"
           }
         },
         "outcome": "solved",
@@ -26641,11 +26664,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "bqrk7enhge",
+        "solver_version": "28",
+        "route_cache_digest": "1pdj9b3fn9j",
         "ride_date": "2019-04-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "unsolvable",
@@ -26707,11 +26730,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "kgdln8qg3m",
+        "solver_version": "28",
+        "route_cache_digest": "1jaxuhj5c3j",
         "ride_date": "2020-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "unsolvable",
@@ -26773,11 +26796,11 @@
         "operator_names": []
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "1o33a4gaxgo",
+        "solver_version": "28",
+        "route_cache_digest": "282yz6gfpxh",
         "ride_date": "2020-06-01",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "solved",
@@ -26843,11 +26866,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "12cj754gav1",
+        "solver_version": "28",
+        "route_cache_digest": "1etmy5qh1p7",
         "ride_date": "2015-03-14",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "unsolvable",
@@ -26913,11 +26936,11 @@
         ]
       },
       "solver_context": {
-        "solver_version": "25",
-        "route_cache_digest": "48sba2vlfd",
+        "solver_version": "28",
+        "route_cache_digest": "13i2ei35b7m",
         "ride_date": "2020-05-07",
         "history_revisions": {
-          "jp": "2026-10-10.2"
+          "jp": "2026-10-11.3"
         }
       },
       "outcome": "unsolvable",
