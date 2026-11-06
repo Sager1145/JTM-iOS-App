@@ -1016,7 +1016,7 @@ final class RiddenRouteStore {
             result += cached.rides
             if !cached.missing.isEmpty { unresolved.append((scope, cached.missing, nil, nil)) }
         }
-        RouteDigestIndexStore.shared.flush()
+        RouteDigestIndexStore.shared.flush(includeUsage: true)
 
         // Everything the on-disk cache could answer, on the map before a
         // single dataset is opened.

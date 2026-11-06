@@ -16,9 +16,18 @@ final class RouteDigestIndexStore: @unchecked Sendable {
     static let entryLimit = 4096
 
     private let lock = NSLock()
+    /// Serialises a flush's file write against ``clear()``, so a snapshot
+    /// taken before Reload all can never be written after it.
+    private let writeLock = NSLock()
     private var index = RouteDigestIndex()
     private var loaded = false
+    /// An entry was recorded or replaced since the last write.
     private var dirty = false
+    /// A lookup hit moved an entry's LRU stamp since the last write. Written
+    /// only by a flush that asks for it, at most once per load.
+    private var usageDirty = false
+    /// Bumped by ``clear()``; a flush whose snapshot predates it is dropped.
+    private var generation = 0
 
     private static var fileURL: URL {
         (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
@@ -30,7 +39,9 @@ final class RouteDigestIndexStore: @unchecked Sendable {
         lock.lock()
         defer { lock.unlock() }
         loadIfNeeded()
-        return index.lookup(key)
+        let entry = index.lookup(key)
+        if entry != nil { usageDirty = true }
+        return entry
     }
 
     func record(_ key: String, digest: String, expectedSections: [RouteSection]) {
@@ -40,27 +51,45 @@ final class RouteDigestIndexStore: @unchecked Sendable {
         if index.record(key, digest: digest, expectedSections: expectedSections) { dirty = true }
     }
 
-    /// Writes the index if anything was recorded since the last write.
-    func flush() {
+    /// Writes the index if anything was recorded since the last write, or,
+    /// with `includeUsage`, if a lookup hit refreshed an entry's LRU stamp.
+    /// A batch load passes `includeUsage` once at its end; a single-ride
+    /// resolve does not, so usage alone never costs a write per edit.
+    func flush(includeUsage: Bool = false) {
+        writeLock.lock()
+        defer { writeLock.unlock() }
         lock.lock()
-        guard dirty else { lock.unlock(); return }
+        guard dirty || (includeUsage && usageDirty) else { lock.unlock(); return }
         index.trim(to: Self.entryLimit)
         let snapshot = index
+        let snapshotGeneration = generation
         dirty = false
+        usageDirty = false
         lock.unlock()
         guard let data = try? JSONEncoder().encode(snapshot) else { return }
+        lock.lock()
+        let current = generation == snapshotGeneration
+        lock.unlock()
+        // Holding `writeLock` keeps `clear()` from bumping the generation
+        // between this check and the write.
+        guard current else { return }
         let url = Self.fileURL
         try? FileManager.default.createDirectory(
             at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
         try? data.write(to: url, options: .atomic)
     }
 
-    /// Forgets every entry in memory; the caller removes the file.
+    /// Forgets every entry in memory; the caller removes the file. Waits for
+    /// a write in progress, and drops any flush whose snapshot predates it.
     func clear() {
+        writeLock.lock()
+        defer { writeLock.unlock() }
         lock.lock()
         index = RouteDigestIndex()
         loaded = true
         dirty = false
+        usageDirty = false
+        generation &+= 1
         lock.unlock()
     }
 
@@ -135,10 +164,13 @@ enum RouteDigestIndexIdentity {
     private static let fileLock = NSLock()
     nonisolated(unsafe) private static var fileIdentities: [String: String] = [:]
 
-    /// Phase and bundled-file identity of each region's registry, or `nil`
-    /// while any is still decoding (the canonical train is not settled yet).
+    /// Whether a registry lookup is installed, then the phase and
+    /// bundled-file identity of each region's registry, or `nil` while any is
+    /// still decoding (the canonical train is not settled yet). The solver
+    /// canonicalises differently without an installed lookup, so a digest
+    /// recorded without one never answers a process that has one.
     static func registry(regions: [String]) -> String? {
-        var parts: [String] = []
+        var parts: [String] = [RegistryIdentityLookup.lookupInstalled ? "lookup:installed" : "lookup:none"]
         for code in Set(regions.map { $0.lowercased() }).sorted() where !code.isEmpty {
             let phase: String
             switch RegistryIdentityLookup.phase(forRegion: code) {
