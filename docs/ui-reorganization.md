@@ -617,6 +617,34 @@ Checked and kept:
 - **Save failure messages** come in five styles (audit A16). Several live in the editor and
   repair flows that this pass may not touch, so this is a follow-up.
 
+## Pass 3 verification (merged with main at `e2a59376b`, 2026-11-05)
+
+Focused runs on the shared iPhone 17 simulator, per `ios/VERIFICATION.md`:
+
+- `RailMapTests/TripScopeTests` (`-scheme RailMapTests`): 6/6 pass.
+- Pass: `AppTypographyPolicyTests` ×3, both `JourneySharingUITests`, `StatisticsCalendarUITests`,
+  `ConsoleSweepTests`, 12 of 15 `RailMapUITests`, and `NewTripUITests` Fujisan. That test now
+  opens Upcoming: search is per list, and its trip is dated 2030.
+- Screenshot harnesses: share, text-size cap and "Did you mean" (temporary, not committed).
+- Known failures, not caused by pass 3:
+  - **Stats never finish on the UI-test sample trips.** Stats stay on "Calculating statistics ·
+    Reading the rail network", so `IntegratedSharingUITests` and
+    `testMenuBottomContentScrollsAboveTabBar` time out. The statistics load path matches main
+    apart from the hidden-trip scope. Needs an A/B check on main.
+  - Editor tests, owned by the editor and not pass 3: NewTrip station search, Swap (a full-width
+    comma in its labels) and the long saved trip. Two RailMapUITests fail at the edit form on
+    the `train-store` sample.
+
+Screenshots (`docs/screenshots/ui-reorganization/`):
+- `pass3-before-share-*`: the old poster and composer.
+- `pass3-after-share-*` and `pass3-after-export-*`: the new card, and the system share sheet on
+  export.
+- `pass3-after-xl-*` and `pass3-after-ax5-*`: the same screens at XL and AX5. They are
+  identical, which shows the cap.
+- `pass3-after-didyoumean-*`: History suggests "Taipei"; Upcoming suggests nothing.
+
+The Stats share shots will be added once the Stats stall is fixed.
+
 ## Files changed in pass 3
 
 - New: `Sharing/ShareComposer.swift`, `Sharing/ShareArtifactWriter.swift`.
