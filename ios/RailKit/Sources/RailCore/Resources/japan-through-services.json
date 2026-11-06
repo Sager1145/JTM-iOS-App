@@ -7383,6 +7383,229 @@
         "https://www.jreast.co.jp/railway/train/local/sensekitohoku.html"
       ],
       "notes": "仙台から東北線を塩釜・松島方面へ走り、2015-05-30開業の接続線で仙石線高城町へ入り石巻まで直通する。"
+    },
+    {
+      "id": "tokaido-sanyo-shinkansen",
+      "serviceCode": "tokaido-sanyo-shinkansen",
+      "name": "東海道・山陽新幹線直通",
+      "aliases": [
+        "のぞみ",
+        "ひかり",
+        "Nozomi",
+        "Hikari",
+        "東海道山陽新幹線"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東海旅客鉄道-東海道新幹線",
+          "fromStationCode": "003766",
+          "toStationCode": "006911"
+        },
+        {
+          "lineID": "jp-西日本旅客鉄道-山陽新幹線",
+          "fromStationCode": "006911",
+          "toStationCode": "009033"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.kyotorailwaymuseum.jp/pdf/sanyo_shinkansen_50th.pdf",
+        "https://ja.wikipedia.org/wiki/%E5%B1%B1%E9%99%BD%E6%96%B0%E5%B9%B9%E7%B7%9A"
+      ],
+      "notes": "東京–新大阪–博多の東海道・山陽新幹線直通。1975-03-10の岡山–博多開業で博多まで直通する。物理接続は physical-rail-junctions.json の shin-osaka-tokaido-sanyo。停車パターンは未収録。",
+      "validFrom": "1975-03-10",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "山陽新幹線博多開業による東京–博多直通の開始。",
+        "sourceURL": "https://www.kyotorailwaymuseum.jp/pdf/sanyo_shinkansen_50th.pdf"
+      }
+    },
+    {
+      "id": "sanyo-kyushu-shinkansen",
+      "serviceCode": "sanyo-kyushu-shinkansen",
+      "name": "山陽・九州新幹線直通",
+      "aliases": [
+        "みずほ",
+        "さくら",
+        "Mizuho",
+        "Sakura"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-西日本旅客鉄道-山陽新幹線",
+          "fromStationCode": "006911",
+          "toStationCode": "009033"
+        },
+        {
+          "lineID": "jp-九州旅客鉄道-九州新幹線",
+          "fromStationCode": "009033",
+          "toStationCode": "010047"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jrkyushu.co.jp/company/info/history/history05.html",
+        "https://ja.wikipedia.org/wiki/%E4%B9%9D%E5%B7%9E%E6%96%B0%E5%B9%B9%E7%B7%9A"
+      ],
+      "notes": "新大阪–博多–鹿児島中央の山陽・九州新幹線直通。2011-03-12の九州新幹線全線開業から。物理接続は west-hakata。",
+      "validFrom": "2011-03-12",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "九州新幹線全線開業による直通の開始。",
+        "sourceURL": "https://www.jrkyushu.co.jp/company/info/history/history05.html"
+      }
+    },
+    {
+      "id": "joetsu-shinkansen-tokyo",
+      "serviceCode": "joetsu-shinkansen-tokyo",
+      "name": "上越新幹線東京発着",
+      "aliases": [
+        "とき",
+        "たにがわ",
+        "Toki",
+        "Tanigawa"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北新幹線",
+          "fromStationCode": "003766",
+          "toStationCode": "002914"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-上越新幹線",
+          "fromStationCode": "002914",
+          "toStationCode": "001296"
+        }
+      ],
+      "sourceURLs": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%8A%E8%B6%8A%E6%96%B0%E5%B9%B9%E7%B7%9A"
+      ],
+      "notes": "東京–大宮は東北新幹線の線路、大宮–新潟は上越新幹線。東京駅乗り入れは1991-06-20から（1985-03-14からの上野発着は上野–東京区間を含まないため別扱い）。物理接続は omiya-joetsu-tohoku。",
+      "validFrom": "1991-06-20",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "上越新幹線の東京駅発着開始。",
+        "sourceURL": "https://ja.wikipedia.org/wiki/%E4%B8%8A%E8%B6%8A%E6%96%B0%E5%B9%B9%E7%B7%9A"
+      }
+    },
+    {
+      "id": "hokuriku-shinkansen-tsuruga",
+      "serviceCode": "hokuriku-shinkansen-tsuruga",
+      "name": "北陸新幹線東京–敦賀",
+      "aliases": [
+        "かがやき",
+        "はくたか",
+        "あさま",
+        "つるぎ",
+        "Kagayaki",
+        "Hakutaka",
+        "Asama"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東日本旅客鉄道-東北新幹線",
+          "fromStationCode": "003766",
+          "toStationCode": "002914"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-上越新幹線",
+          "fromStationCode": "002914",
+          "toStationCode": "002389"
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-北陸新幹線",
+          "fromStationCode": "002389",
+          "toStationCode": "001643"
+        },
+        {
+          "lineID": "jp-西日本旅客鉄道-北陸新幹線",
+          "fromStationCode": "001643",
+          "toStationCode": "010186"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.jreast.co.jp/press/2024/20250228_ho03.pdf",
+        "https://ja.wikipedia.org/wiki/%E5%8C%97%E9%99%B8%E6%96%B0%E5%B9%B9%E7%B7%9A"
+      ],
+      "notes": "東京–大宮–高崎–上越妙高–敦賀。現在の敦賀端点は2024-03-16から。1997-10-01の長野開業、2015-03-14の金沢開業時の短い経路はこのレコードに含まない（物理接続 takasaki-joetsu-hokuriku、joetsu-myoko-hokuriku-east-hokuriku-west の日付で経路探索は可能）。",
+      "validFrom": "2024-03-16",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "金沢–敦賀延伸後の東京–敦賀直通。",
+        "sourceURL": "https://www.jreast.co.jp/press/2024/20250228_ho03.pdf"
+      }
+    },
+    {
+      "id": "toyoko-minatomirai",
+      "serviceCode": "toyoko-minatomirai",
+      "name": "東急東横線・みなとみらい線直通",
+      "aliases": [
+        "東横線",
+        "みなとみらい線",
+        "Toyoko",
+        "Minatomirai"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "fromStationCode": "003922",
+          "toStationCode": "004633"
+        },
+        {
+          "lineID": "jp-横浜高速鉄道-みなとみらい21線",
+          "fromStationCode": "004633",
+          "toStationCode": "004704"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyu.co.jp/railway/train-history/ty/",
+        "https://www.tokyu.co.jp/history/chapter07_2_2/"
+      ],
+      "notes": "渋谷–横浜–元町・中華街。2004-02-01のみなとみらい線開業と同時に相互直通運転を開始。副都心線経由の2013-03-16以降の経路は別レコード。",
+      "validFrom": "2004-02-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "東横線・みなとみらい線相互直通の開始。",
+        "sourceURL": "https://www.tokyu.co.jp/railway/train-history/ty/"
+      }
+    },
+    {
+      "id": "denentoshi-hanzomon",
+      "serviceCode": "denentoshi-hanzomon",
+      "name": "田園都市線・半蔵門線直通",
+      "aliases": [
+        "田園都市線",
+        "半蔵門線",
+        "新玉川線",
+        "Den-en-toshi",
+        "Hanzomon"
+      ],
+      "kind": "throughRunning",
+      "legs": [
+        {
+          "lineID": "jp-東急電鉄-田園都市線",
+          "fromStationCode": "004430",
+          "toStationCode": "003922"
+        },
+        {
+          "lineID": "jp-東京地下鉄-11号線半蔵門線",
+          "fromStationCode": "003922",
+          "toStationCode": "003812"
+        }
+      ],
+      "sourceURLs": [
+        "https://www.tokyu.co.jp/history/chapter05_2_1"
+      ],
+      "notes": "長津田–渋谷–青山一丁目。1978-08-01の田園都市線・新玉川線・半蔵門線3線相互直通開始から。外側端点は1978年時点で存在した区間に限定。中央林間・押上・東武方面は別レコード。",
+      "validFrom": "1978-08-01",
+      "historicalReview": {
+        "status": "onsetConstraintOnly",
+        "supportedScope": "田園都市線・新玉川線・半蔵門線の相互直通開始。",
+        "sourceURL": "https://www.tokyu.co.jp/history/chapter05_2_1"
+      }
     }
   ],
   "coverage": [
