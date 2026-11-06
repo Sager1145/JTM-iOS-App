@@ -56,6 +56,8 @@ enum AppleMapDatumProbe {
     /// cancelled and do not vote; it returns as soon as all have answered.
     static func run(within limit: Duration) async {
         var votes: [String: [Vote]] = [:]
+        // Disabled regions (RegionConnectivity) run no lookups.
+        let references = references.filter { RegionConnectivity.isSupported($0.country) }
         await withTaskGroup(of: (String, Vote?)?.self) { group in
             for reference in references {
                 group.addTask { (reference.country, await vote(for: reference)) }

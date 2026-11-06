@@ -488,6 +488,30 @@ enum ShellStrings {
             .en: "One country or area", .ja: "国・地域を指定",
             .zhHans: "国家地区", .zhHant: "國家地區",
         ],
+        "ios.note.disabledRegionTrips": [
+            .en: "Mainland China trips are hidden. They stay saved and will reappear if support returns.",
+            .ja: "中国本土の行程は非表示です。保存されたままで、対応が再開されると再び表示されます。",
+            .zhHans: "中国大陆的行程已隐藏。它们仍会保留，待恢复支持后将重新显示。",
+            .zhHant: "中國大陸的行程已隱藏。它們仍會保留，待恢復支援後將重新顯示。",
+        ],
+        "ios.route.regionsNotConnected": [
+            .en: "These stations are in regions whose rail networks are not connected.",
+            .ja: "これらの駅は、鉄道網がつながっていない地域にあります。",
+            .zhHans: "这些车站所在的地区，其铁路网并不相连。",
+            .zhHant: "這些車站所在的地區，其鐵路網並不相連。",
+        ],
+        "ios.import.regionsNotConnected": [
+            .en: "This journey spans regions whose rail networks are not connected.",
+            .ja: "この行程は、鉄道網がつながっていない地域にまたがっています。",
+            .zhHans: "此行程跨越了铁路网并不相连的地区。",
+            .zhHant: "此行程跨越了鐵路網並不相連的地區。",
+        ],
+        "ios.editor.regionsNotConnected": [
+            .en: "{from} and {to} rail networks are not connected — this section can't be saved.",
+            .ja: "{from} と {to} の鉄道網はつながっていません。この区間は保存できません。",
+            .zhHans: "{from} 与 {to} 的铁路网并不相连，无法保存此区间。",
+            .zhHant: "{from} 與 {to} 的鐵路網並不相連，無法儲存此區間。",
+        ],
         "ios.note.launchScope": [
             .en: "Where the map is framed when the app opens. Automatic uses the country of "
                 + "your first upcoming journey, or of the first journey in your log; with no "

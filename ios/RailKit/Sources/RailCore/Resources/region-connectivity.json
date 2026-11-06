@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "regions": [
+    { "code": "jp", "supported": true },
+    { "code": "tw", "supported": true },
+    { "code": "hk", "supported": true },
+    { "code": "mo", "supported": true },
+    { "code": "kr", "supported": true },
+    { "code": "cn", "supported": false, "note": "Mainland China disabled 2026-11; data kept. Owns the Guangzhou-Shenzhen-Hong Kong XRL including Hong Kong West Kowloon." }
+  ],
+  "links": [
+    { "regions": ["hk", "cn"], "enabled": false, "via": "XRL / East Rail Lo Wu-Lok Ma Chau border" },
+    { "regions": ["mo", "cn"], "enabled": false, "via": "Guangzhuhai intercity at Gongbei" }
+  ]
+}

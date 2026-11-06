@@ -867,7 +867,8 @@ final class RailNetworkStore {
         guard let manifest = displayManifest, let index = displayIndex else { return }
         var needed = RailDisplayNetwork.lines(
             intersecting: rect, cameraZoom: cameraZoom, in: index)
-        needed.removeAll { Region(rawValue: $0.region) == nil }
+        // Disabled regions (RegionConnectivity) keep their data but draw nothing.
+        needed.removeAll { Region(rawValue: $0.region)?.isEnabled != true }
         needed = withoutFailedHistory(needed)
         // Whole-region strategy (builder A1): once any of a small region's
         // entries is needed, its whole blob becomes one batch rather than a

@@ -257,7 +257,7 @@ final class ImportFlow {
     func prepareForPresentation() {
         guard !hasPreparedRegion else { return }
         hasPreparedRegion = true
-        for candidate in Region.ordered where candidate != .jp {
+        for candidate in Region.enabledOrdered where candidate != .jp {
             if text.contains("\"\(candidate.rawValue)-official-") {
                 region = candidate
                 detectedRegion = candidate

@@ -905,6 +905,21 @@ public enum TrainValidation {
             }
         }
         try inspect(train)
+        // A trip whose station identities span regions with no connected rail
+        // network is flagged through the same diagnostic path.
+        var stationIDs: [String] = []
+        func collect(_ value: JSON) {
+            switch value {
+            case .string(let text): if text.hasPrefix("st:") { stationIDs.append(text) }
+            case .array(let values): values.forEach(collect)
+            case .object(let values): for key in values.keys { if let item = values[key] { collect(item) } }
+            default: break
+            }
+        }
+        collect(train)
+        if let pair = RegionConnectivity.firstUnconnectedPair(stationIDs: stationIDs) {
+            throw fail("Regions \(pair.0) and \(pair.1) have no connected rail network.")
+        }
     }
 
     public static func validateSupportedRegions(_ train: Train) throws {

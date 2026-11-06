@@ -121,3 +121,28 @@ struct TripScopeTests {
         #expect(filter.scoped(store).trains.count == 2)
     }
 }
+
+/// Region support lives in `RailCore.RegionConnectivity`; a disabled region
+/// keeps its stored trips but offers no UI and draws nothing.
+@MainActor
+struct DisabledRegionScopeTests {
+    @Test("mainland China is absent from the enabled regions and its trips are hidden from the scoped list")
+    func chinaDisabled() {
+        #expect(!Region.enabledOrdered.contains(.cn))
+        #expect(Region.cn.isEnabled == false)
+        #expect(Region.enabledOrdered.contains(.hk))
+
+        var cn = StoreOperations.createBlankTrain(country: "cn")
+        cn.id = "cn-1"; cn.region = "cn"; cn.date = "2026-07-01"
+        var jp = StoreOperations.createBlankTrain(country: "jp")
+        jp.id = "jp-1"; jp.region = "jp"; jp.date = "2026-07-01"
+        let trains = [cn, jp]
+        let days = [ItineraryStore.Loaded.Day(date: "2026-07-01", trains: trains)]
+        let loaded = ItineraryStore.Loaded(regions: [], trains: trains, days: days, elapsed: .zero)
+        let defaults = UserDefaults(suiteName: "disabled-region-\(UUID().uuidString)")!
+        let filter = TripHideFilter(defaults: defaults, storageID: nil)
+        #expect(filter.scoped(loaded).trains.map(\.id) == ["jp-1"])
+        #expect(filter.scoped(loaded).hiddenIDs == ["cn-1"])
+        #expect(StatisticsScope.everything.regions.contains(.cn) == false)
+    }
+}

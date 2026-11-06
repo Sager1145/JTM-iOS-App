@@ -66,10 +66,12 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// first, which is also least to most demanding on the renderer.
     static let ordered: [Region] = [.mo, .hk, .tw, .kr, .jp, .cn]
 
-    /// All bundled regions are available to the interface.
-    var isEnabled: Bool { true }
+    /// Supported regions are listed in `RailCore`'s region-connectivity.json.
+    /// A disabled region keeps its data and stored trips but runs no work and
+    /// appears nowhere in the interface.
+    var isEnabled: Bool { RegionConnectivity.isSupported(code) }
 
-    static var enabledOrdered: [Region] { ordered }
+    static var enabledOrdered: [Region] { ordered.filter(\.isEnabled) }
 
     /// The catalog key for this region's name, so the interface reads in the
     /// reader's language rather than in Chinese for everybody.
