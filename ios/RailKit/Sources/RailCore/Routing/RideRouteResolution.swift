@@ -335,7 +335,8 @@ public struct RideRouteResolution {
                     let recordedKeys = try Self.verifiedSourcePath(
                         source.lines, graph: graph, context: context, section: section,
                         displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices,
-                        selectedLineIDs: certified.selectedLineIDs, memo: inputs.resolutionMemo)
+                        selectedLineIDs: certified.selectedLineIDs, seams: certified.seams,
+                        pairedTracks: displayNetwork?.pairedTracks ?? .empty, memo: inputs.resolutionMemo)
                     let verified = recordedKeys != nil
                     if let recordedKeys { sourcePhysicalPathKeys[index] = recordedKeys }
                     if !verified {
@@ -515,7 +516,9 @@ public struct RideRouteResolution {
                         context: context, section: section,
                         displayRowNames: matchedCertification?.rowNames ?? [],
                         anchorIndices: matchedCertification?.anchorIndices ?? [],
-                        selectedLineIDs: matchedCertification?.selectedLineIDs ?? [], memo: inputs.resolutionMemo)
+                        selectedLineIDs: matchedCertification?.selectedLineIDs ?? [],
+                        seams: matchedCertification?.seams ?? [],
+                        pairedTracks: displayNetwork?.pairedTracks ?? .empty, memo: inputs.resolutionMemo)
                     if keys == nil {
                         physicalGaps.append(PhysicalGap(segmentIndex: index, isBoundary: false))
                     }
@@ -682,14 +685,16 @@ public struct RideRouteResolution {
         _ lines: [[Coordinate]], graph: RouteGraph.Graph,
         context: RouteSolver.TrainContext, section: RouteSection,
         displayRowNames: [String] = [], anchorIndices: [Set<Int>] = [],
-        selectedLineIDs: [Set<String>] = [],
+        selectedLineIDs: [Set<String>] = [], seams: [RouteNetwork.SourceSeam] = [],
+        pairedTracks: PairedTracks.Catalog,
         memo: RouteResolutionMemo
     ) throws -> [String]? {
         try memo.proof(lines: lines, context: context, section: section,
             graphProvenance: graph.sourceProofProvenance, displayRowNames: displayRowNames,
             anchorIndices: anchorIndices, selectedLineIDs: selectedLineIDs) { RouteSolver.verifiedSourcePath(
             lines, graph: graph, context: context, section: section,
-            displayRowNames: displayRowNames, anchorIndices: anchorIndices, selectedLineIDs: selectedLineIDs) }
+            displayRowNames: displayRowNames, anchorIndices: anchorIndices, selectedLineIDs: selectedLineIDs,
+            seams: seams, pairedTracks: pairedTracks) }
     }
 
     private static func routeContext(_ train: Train) -> RouteSolver.TrainContext {

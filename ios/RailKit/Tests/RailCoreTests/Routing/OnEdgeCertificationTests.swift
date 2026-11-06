@@ -454,7 +454,9 @@ struct OnEdgeCertificationTests {
             let graph = pipeline.proofGraph(certified.geometry.lines.flatMap { $0 }, store: data.graphStore)
             keys = RouteSolver.verifiedSourcePath(
                 certified.geometry.lines, graph: graph, context: context, section: section,
-                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
+                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices,
+                selectedLineIDs: certified.selectedLineIDs, seams: certified.seams,
+                pairedTracks: data.network.pairedTracks)
         } else {
             let solved = try #require(RouteSolver.solveSectionOnDemand(
                 section, segmentIndex: index, train: context, country: "jp",
@@ -478,7 +480,9 @@ struct OnEdgeCertificationTests {
             let graph = pipeline.proofGraph(certified.geometry.lines.flatMap { $0 }, store: data.graphStore)
             keys = RouteSolver.verifiedSourcePath(
                 certified.geometry.lines, graph: graph, context: context, section: section,
-                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices)
+                displayRowNames: certified.rowNames, anchorIndices: certified.anchorIndices,
+                selectedLineIDs: certified.selectedLineIDs, seams: certified.seams,
+                pairedTracks: data.network.pairedTracks)
         }
         #expect(keys != nil, "useSource=\(useSource) 杵築→中津 census path")
     }

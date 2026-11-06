@@ -77,10 +77,14 @@ public struct CompactPackage: Sendable {
         /// likely to name the short way, so this is what lets a recorded ride
         /// find the package line that owns the route symbol.
         public let nameNorm: String?
-        /// Sourced direction of a paired alignment in package station order:
-        /// `down` is forward, `up` is reverse; absent/unassigned permits both.
+        /// Sourced physical direction (`up` or `down`) of the trains that use
+        /// this paired alignment. Whether that is forward or reverse in the
+        /// package's station order depends on `stationOrderDirection`: it is
+        /// forward exactly when the two are equal. Absent/unassigned permits both.
         public let alignmentDirection: String?
         public let alignmentOf: String?
+        /// `paired_alignment` marks a row that is the other track of its parent.
+        public let alignmentRole: String?
         public let stationOrderDirection: String?
         public let permittedTraversal: String?
         public let alignmentPairs: [AlignmentPair]
@@ -148,7 +152,7 @@ extension CompactPackage.Line: Decodable {
     enum CodingKeys: String, CodingKey {
         case id, name, nameRoma, `operator`, operatorShort, operatorLogo, kind, serviceStatus
         case rank, color, colorDark, logo, isLoop, lineCode
-        case nameNorm, alignmentDirection, alignmentOf, stationOrderDirection, permittedTraversal, alignmentPairs
+        case nameNorm, alignmentDirection, alignmentOf, alignmentRole, stationOrderDirection, permittedTraversal, alignmentPairs
         case stations, segments, displayStationCoordinates, displayIntervalCoordinates, displayBranchLeadIns, displayReversalBranches, stationCircleOwnerByCode
         case displaySourceAnchoredStationCodes
         case displayInterpolation
@@ -174,6 +178,7 @@ extension CompactPackage.Line: Decodable {
         nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
         alignmentDirection = try row.decodeIfPresent(String.self, forKey: .alignmentDirection)
         alignmentOf = try row.decodeIfPresent(String.self, forKey: .alignmentOf)
+        alignmentRole = try row.decodeIfPresent(String.self, forKey: .alignmentRole)
         stationOrderDirection = try row.decodeIfPresent(String.self, forKey: .stationOrderDirection)
         permittedTraversal = try row.decodeIfPresent(String.self, forKey: .permittedTraversal)
         alignmentPairs = try row.decodeIfPresent([CompactPackage.AlignmentPair].self, forKey: .alignmentPairs) ?? []

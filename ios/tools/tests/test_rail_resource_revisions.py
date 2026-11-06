@@ -64,6 +64,15 @@ class ResourceRevisionTests(unittest.TestCase):
                 path.write_bytes(path.read_bytes() + b"fix" if path.exists() else b'{"stations":[]}')
                 self.assertEqual(self.changed_regions(before), {region})
 
+    def test_paired_track_catalog_invalidates_only_japan_and_no_source_hash(self):
+        path = self.repo / "ios/RailKit/Sources/RailCore/Resources/japan-paired-tracks.json"
+        path.parent.mkdir(parents=True)
+        path.write_text('{"pairs":[]}')
+        before = self.manifest()
+        path.write_text('{"pairs":[{}]}')
+        self.assertEqual(self.changed_regions(before), {"jp"})
+        self.assertEqual(before["sourceHashes"], self.manifest()["sourceHashes"])
+
     def test_physical_connection_evidence_invalidates_all_route_caches(self):
         before = self.manifest()
         (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')

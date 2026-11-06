@@ -301,9 +301,9 @@ struct PhysicalEndpointTrimTests {
 
     enum ReferenceBranch { case automatic, source, legacy }
 
-    private func gapCounts(
+    func gapCounts(
         fixture: String, expectedID: String, branch: ReferenceBranch,
-        root: URL, data: RealData
+        root: URL, data: RealData, pairedTracks: PairedTracks.Catalog? = nil
     ) throws -> GapCounts {
         let part = try JSONDecoder().decode(PhysicalEndpointTrimPart.self, from: Data(contentsOf:
             root.appending(path: "app/data/sample-data/\(fixture).json")))
@@ -315,7 +315,7 @@ struct PhysicalEndpointTrimTests {
                 stations: TrainValidation.StationTable.empty))
         }
         try #require(train.id == expectedID)
-        return try gapCounts(train: train, branch: branch, data: data)
+        return try gapCounts(train: train, branch: branch, data: data, pairedTracks: pairedTracks)
     }
 
     func normalizedSampleTrain(_ train: Train) -> Train {
@@ -329,8 +329,10 @@ struct PhysicalEndpointTrimTests {
     }
 
     func gapCounts(
-        train: Train, branch: ReferenceBranch = .automatic, data: RealData
+        train: Train, branch: ReferenceBranch = .automatic, data: RealData,
+        pairedTracks suppliedTracks: PairedTracks.Catalog? = nil
     ) throws -> GapCounts {
+        let pairedTracks = suppliedTracks ?? data.network.pairedTracks
         let sections = train.routeSections ?? []
         try #require(sections.isEmpty == false)
         let isAutomatic: Bool
@@ -394,7 +396,8 @@ struct PhysicalEndpointTrimTests {
                     ?? hints.fromStationCode
                 hints.toStationCode = data.eligibility.stationCode(hints.toStationCode)
                     ?? hints.toStationCode
-                let sourceResult = data.network.sourceCertification(for: hints)?.geometry
+                let sourceCertified = data.network.sourceCertification(for: hints)
+                let sourceResult = sourceCertified?.geometry
                 let exactResult = data.network.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
                     continueFrom: sharesBoundary ? displayContinuity : nil,
@@ -403,7 +406,9 @@ struct PhysicalEndpointTrimTests {
                    source.lines.count == exact.geometry.lines.count {
                     let graph = proofGraph(source.lines.flatMap { $0 }, store: data.graphStore)
                     let keys = RouteSolver.verifiedSourcePath(
-                        source.lines, graph: graph, context: context, section: section)
+                        source.lines, graph: graph, context: context, section: section,
+                        selectedLineIDs: sourceCertified?.selectedLineIDs ?? [],
+                        seams: sourceCertified?.seams ?? [], pairedTracks: pairedTracks)
                     if keys == nil { counts.recordFailure("source-verification") }
                     if sharesBoundary,
                        RouteSolver.provenBoundaryContinuation(
@@ -501,16 +506,22 @@ struct PhysicalEndpointTrimTests {
                     continueFrom: sharesBoundary ? displayContinuity : nil, cache: &projectionCache)
                 : nil
             var matchedSource: RouteGeometry?
+            var matchedSelected: [Set<String>] = []
+            var matchedSeams: [RouteNetwork.SourceSeam] = []
             if let codes = canonical?.matchedSectionCodes, !codes.isEmpty {
                 var matchedHints = hints
                 matchedHints.sectionCodes = codes
                 matchedHints.requiredLineIDs = canonical?.displayLineIds ?? []
-                matchedSource = data.network.sourceCertification(for: matchedHints)?.geometry
+                let matchedCertified = data.network.sourceCertification(for: matchedHints)
+                matchedSource = matchedCertified?.geometry
+                matchedSelected = matchedCertified?.selectedLineIDs ?? []
+                matchedSeams = matchedCertified?.seams ?? []
             }
             if let matchedSource {
                 let matchedGraph = proofGraph(matchedSource.lines.flatMap { $0 }, store: data.graphStore)
                 let keys = RouteSolver.verifiedSourcePath(
-                    matchedSource.lines, graph: matchedGraph, context: context, section: section)
+                    matchedSource.lines, graph: matchedGraph, context: context, section: section,
+                    selectedLineIDs: matchedSelected, seams: matchedSeams, pairedTracks: pairedTracks)
                 if keys == nil { counts.recordFailure("matched-source-verification") }
                 if sharesBoundary,
                    RouteSolver.provenBoundaryContinuation(

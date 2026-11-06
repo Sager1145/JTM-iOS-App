@@ -114,6 +114,9 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
             datasets += ["new-year-grand-loop-data", "tokyo-limited-express-loop-data"]
             inputs += [(name, bundle / name) for name in
                        ("new-year-grand-loop.json", "tokyo-limited-express-loop.json")]
+            # The reviewed paired-track catalog decides which source paths certify.
+            inputs.append(("railcore/japan-paired-tracks.json",
+                           repo / "ios/RailKit/Sources/RailCore/Resources/japan-paired-tracks.json"))
         for dataset in datasets:
             directory = bundle / dataset
             inputs.append((dataset, directory / "manifest.json"))

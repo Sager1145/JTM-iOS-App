@@ -197,6 +197,21 @@ struct StationIntervalResolverTests {
         #expect(selected.sectionCodes.contains { $0.contains("003505:003766") })
     }
 
+    @Test func aBranchJoiningAParentWithPairedTracksIsNotPairedAlignment() throws {
+        // ガーラ湯沢 → 越後湯沢 → 上越線: the branch is unrelated to the parent's paired tracks.
+        var pairTrack = row("trunk-p1", ["N", "O"])
+        pairTrack["alignmentOf"] = "trunk"
+        pairTrack["alignmentDirection"] = "up"
+        var trunk = row("trunk", ["B", "M", "N", "O"])
+        trunk["alignmentPairs"] = [["with": "trunk-p1", "from": "N", "to": "O", "direction": "down"]]
+        let resolver = try fixture([row("branch", ["A", "B"]), trunk, pairTrack])
+        withKnownIssue("follow-up: narrow paired-join blocking; needs drawn-output diff") {
+            let selected = try resolved(resolver.resolve(
+                stationCodes: ["A", "B", "M"], requiredLineIDs: ["branch", "trunk"]))
+            #expect(selected.lineIDs == ["branch", "trunk"])
+        }
+    }
+
     private func resolved(_ result: StationIntervalResolver.Result) throws -> StationIntervalResolver.Selection {
         guard case .resolved(let selection) = result else {
             Issue.record("Expected unique physical intervals, got \(result)")

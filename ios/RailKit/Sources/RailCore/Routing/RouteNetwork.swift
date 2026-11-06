@@ -202,8 +202,13 @@ public struct RouteNetwork: Sendable {
     let familyLineIndices: [String: [Int]]
     let sourceMetrics: [[SourceMetric]]
 
+    /// The reviewed paired tracks the package itself backs. Rebuilt per network,
+    /// never shared between packages.
+    public let pairedTracks: PairedTracks.Catalog
+
     public init(lines: [Line]) {
         self.lines = lines
+        self.pairedTracks = PairedTracks.Catalog.bundled.validated(against: lines.compactMap(\.compactLine))
         var byName: [String: [Int]] = [:]
         var byOperator: [String: [Int]] = [:]
         for (index, line) in lines.enumerated() {
@@ -627,10 +632,12 @@ public struct RouteNetwork: Sendable {
                    (traversal == "forward" && start.measure > end.measure)
                     || (traversal == "reverse" && start.measure < end.measure) { continue }
                 if alignment == "up" || alignment == "down" {
-                    let order = lines[lineIndex].compactLine?.stationOrderDirection ?? "down"
-                    let rode = start.measure <= end.measure ? order : (order == "down" ? "up" : "down")
-                    if lines[lineIndex].compactLine?.stationOrderDirection != nil, alignment != rode { continue }
-                    bias = alignment == rode ? -Self.alignmentMatchBonus : Self.alignmentMatchBonus
+                    // A missing station order is unrestricted, as in RailwayDirection.
+                    if let order = lines[lineIndex].compactLine?.stationOrderDirection {
+                        let rode = start.measure <= end.measure ? order : (order == "down" ? "up" : "down")
+                        if alignment != rode { continue }
+                        bias = -Self.alignmentMatchBonus
+                    }
                 }
 
                 let candidate = Fit(
@@ -724,13 +731,31 @@ public struct RouteNetwork: Sendable {
         public var anchorIndices: [Set<Int>]
         public var rowNames: [String]
         public var selectedLineIDs: [Set<String>]
+        /// One per boundary between two parts, in order.
+        public var seams: [SourceSeam]
 
         public init(geometry: RouteGeometry, anchorIndices: [Set<Int>], rowNames: [String],
-                    selectedLineIDs: [Set<String>] = []) {
+                    selectedLineIDs: [Set<String>] = [], seams: [SourceSeam] = []) {
             self.geometry = geometry
             self.anchorIndices = anchorIndices
             self.rowNames = rowNames
             self.selectedLineIDs = selectedLineIDs
+            self.seams = seams
+        }
+    }
+
+    /// Where the hinted interval chain starts a new part: the station it
+    /// changes row at, the row of the last interval before it and the row of
+    /// the first interval after it.
+    public struct SourceSeam: Sendable, Equatable {
+        public let stationCode: String
+        public let fromLineID: String
+        public let toLineID: String
+
+        public init(stationCode: String, fromLineID: String, toLineID: String) {
+            self.stationCode = stationCode
+            self.fromLineID = fromLineID
+            self.toLineID = toLineID
         }
     }
 
@@ -742,6 +767,8 @@ public struct RouteNetwork: Sendable {
         var parts: [[Coordinate]] = []
         var anchors: [Set<Int>] = []
         var selectedLineIDs: [Set<String>] = []
+        var seams: [SourceSeam] = []
+        var lastLineID: String?
         var rowNames: [String] = []
         var seenRows = Set<String>()
         for code in hints.sectionCodes {
@@ -764,16 +791,19 @@ public struct RouteNetwork: Sendable {
                 selectedLineIDs[selectedLineIDs.count - 1].insert(interval.lineID)
                 parts[parts.count - 1] += path.dropFirst()
             } else {
+                if let lastLineID, let current { seams.append(SourceSeam(
+                    stationCode: current, fromLineID: lastLineID, toLineID: interval.lineID)) }
                 parts.append(path)
                 anchors.append([])
                 selectedLineIDs.append([interval.lineID])
             }
+            lastLineID = interval.lineID
             current = forward ? interval.toStationCode : interval.fromStationCode
         }
         guard !parts.isEmpty, hints.toStationCode == nil || current == hints.toStationCode else { return nil }
         let geometry: RouteGeometry = parts.count == 1 ? .lineString(parts[0]) : .multiLineString(parts)
         return SourceGeometryCertification(geometry: geometry, anchorIndices: anchors, rowNames: rowNames,
-            selectedLineIDs: selectedLineIDs)
+            selectedLineIDs: selectedLineIDs, seams: seams)
     }
 
     // MARK: - the function

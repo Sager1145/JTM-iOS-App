@@ -1729,6 +1729,110 @@ public enum RouteSolver {
             date: date, maxMeters: maxMeters) != nil
     }
 
+    /// A confirmed paired-track seam. The previous part ends on one track and
+    /// the next starts on the other, 35 m apart at 立石, and the plain bridge
+    /// would have to reverse through the loop's merge switch. Walk back along
+    /// the previous part and forward along the next one for a same-identity
+    /// path in which no consecutive pair of edges, from the edge entering the
+    /// source to the edge leaving the target, turns more than a right angle.
+    /// Identity, not distance, licenses the join (a confirmed pair of a row and
+    /// its own paired row, at one of their shared stations); the longest real
+    /// seam (土合) is 519.93 m, so distance is only a sanity bound.
+    struct PairedSeamSplice: Equatable {
+        /// Keys of the previous part that stay, including the source.
+        let keepPrevious: Int
+        /// Source through target, inclusive.
+        let path: [String]
+        /// First key of the next part that stays, the target.
+        let targetIndex: Int
+    }
+
+    static let pairedSeamSanityMeters = 1_000.0
+
+    private struct DirectedState: Hashable {
+        let node: String
+        let from: String
+    }
+
+    static func pairedSeamSplice(
+        previous: [String], next: [String], graph: RouteGraph.Graph, date: String?,
+        maxMeters: Double = pairedSeamSanityMeters
+    ) -> PairedSeamSplice? {
+        // Each part keeps at least one edge, so a seam never swallows a whole part.
+        guard previous.count >= 2, next.count >= 2 else { return nil }
+        func vector(_ from: String, _ to: String) -> (Double, Double)? {
+            guard let a = graph.nodes[from], let b = graph.nodes[to] else { return nil }
+            let east = cos((a.lat + b.lat) / 2 * .pi / 180)
+            let result = ((b.lon - a.lon) * east, b.lat - a.lat)
+            return result.0 == 0 && result.1 == 0 ? nil : result
+        }
+        /// Forward means a non-zero edge that turns at most a right angle.
+        func forward(_ incoming: (String, String), _ outgoing: (String, String)) -> Bool {
+            guard let a = vector(incoming.0, incoming.1), let b = vector(outgoing.0, outgoing.1) else { return false }
+            return a.0 * b.0 + a.1 * b.1 >= 0
+        }
+        func length(_ a: String, _ b: String) -> Double? {
+            guard let from = graph.nodes[a], let to = graph.nodes[b] else { return nil }
+            return Geometry.distanceMeters(from, to)
+        }
+        var sources: [Int] = [previous.count - 1]
+        var walked = 0.0
+        for index in stride(from: previous.count - 1, to: 1, by: -1) {
+            guard let step = length(previous[index - 1], previous[index]) else { break }
+            walked += step
+            guard walked <= maxMeters else { break }
+            sources.append(index - 1)
+        }
+        var targets: [Int] = [0]
+        walked = 0
+        for index in 1..<(next.count - 1) {
+            guard let step = length(next[index - 1], next[index]) else { break }
+            walked += step
+            guard walked <= maxMeters else { break }
+            targets.append(index)
+        }
+        for source in sources {
+            let identity = physicalIdentity(previous[source])
+            guard graph.nodes[previous[source]] != nil else { continue }
+            let discardedTail = Set(previous[(source + 1)...])
+            let start = DirectedState(node: previous[source], from: previous[source - 1])
+            var best: [DirectedState: Double] = [start: 0]
+            var parent: [DirectedState: DirectedState] = [:]
+            var pending: [(state: DirectedState, length: Double)] = [(start, 0)]
+            var settled = Set<DirectedState>()
+            while let index = pending.indices.min(by: { pending[$0].length < pending[$1].length }) {
+                guard !Task.isCancelled else { return nil }
+                let current = pending.remove(at: index)
+                guard settled.insert(current.state).inserted else { continue }
+                for edge in graph.adjacency[current.state.node] ?? [] {
+                    let total = current.length + edge.length
+                    let state = DirectedState(node: edge.to, from: current.state.node)
+                    guard edge.connector == nil, edge.physicalJunction == nil,
+                          graph.nodes[edge.to] != nil, physicalIdentity(edge.to) == identity,
+                          !discardedTail.contains(edge.to), total <= maxMeters,
+                          RouteGraph.RailValidity.isValid(validFrom: edge.validFrom, validTo: edge.validTo, on: date),
+                          forward((current.state.from, current.state.node), (current.state.node, edge.to)),
+                          total < best[state, default: .infinity] else { continue }
+                    best[state] = total
+                    parent[state] = current.state
+                    pending.append((state, total))
+                }
+            }
+            for target in targets {
+                guard physicalIdentity(next[target]) == identity else { continue }
+                let leaving = (next[target], next[target + 1])
+                let reached = best.filter { $0.key.node == next[target]
+                    && forward(($0.key.from, $0.key.node), leaving) }
+                guard let final = reached.min(by: { $0.value < $1.value })?.key else { continue }
+                var chain = [final]
+                while let step = parent[chain[0]] { chain.insert(step, at: 0) }
+                guard chain.first == start else { continue }
+                return PairedSeamSplice(keepPrevious: source + 1, path: chain.map(\.node), targetIndex: target)
+            }
+        }
+        return nil
+    }
+
     private static func sameIdentitySpanPath(
         from previousKey: String, to firstKey: String, graph: RouteGraph.Graph,
         date: String?, maxMeters: Double
@@ -2245,7 +2349,8 @@ public enum RouteSolver {
         _ lines: [[Coordinate]], graph: RouteGraph.Graph,
         context: TrainContext, section: RouteSection,
         displayRowNames: [String] = [], anchorIndices: [Set<Int>] = [],
-        selectedLineIDs: [Set<String>] = []
+        selectedLineIDs: [Set<String>] = [], seams: [RouteNetwork.SourceSeam] = [],
+        pairedTracks: PairedTracks.Catalog = .empty
     ) -> [String]? {
         guard !Task.isCancelled else { return nil }
         let request = RouteGraph.SourceProofRequest(lines: lines, rideDate: context.rideDate,
@@ -2253,6 +2358,10 @@ public enum RouteSolver {
             displayRowNames: displayRowNames, anchorIndices: anchorIndices, selectedLineIDs: selectedLineIDs)
         if let keys = graph.sourceProof(for: request) { return Task.isCancelled ? nil : keys }
         var result: [String] = []
+        // The previous part's own keys, as they sit at the end of `result`.
+        var partStart = 0
+        var partKeys: [String] = []
+        var spliced = false
         for (lineIndex, sourceLine) in lines.enumerated() {
             let selectedIDs = lineIndex < selectedLineIDs.count ? selectedLineIDs[lineIndex] : []
             let required = certificationHints(
@@ -2274,20 +2383,42 @@ public enum RouteSolver {
                 requiredLines: required.lines, requiredOperators: required.operators,
                 anchorIndices: anchors, selectedLineIDs: selectedIDs) else { return nil }
             if let previous = result.last, let first = keys.first {
-                guard let bridge = physicalContinuationPath(
+                if let bridge = physicalContinuationPath(
                     from: previous, to: first, graph: graph, rideDate: context.rideDate)
                     ?? sameIdentitySpanPath(from: previous, to: first, graph: graph,
-                        date: context.rideDate, maxMeters: 2 * RouteNetwork.endpointSnapMeters) else { return nil }
-                if !selectedIDs.isEmpty,
-                   !sourcePathMatchesHints(bridge, graph: graph, rideDate: context.rideDate,
-                    hints: .init(requiredLines: required.lines, requiredOperators: required.operators,
-                        selectedLineIDs: selectedIDs)) { return nil }
-                result += bridge.dropFirst()
+                        date: context.rideDate, maxMeters: 2 * RouteNetwork.endpointSnapMeters) {
+                    if !selectedIDs.isEmpty,
+                       !sourcePathMatchesHints(bridge, graph: graph, rideDate: context.rideDate,
+                        hints: .init(requiredLines: required.lines, requiredOperators: required.operators,
+                            selectedLineIDs: selectedIDs)) { return nil }
+                    result += bridge.dropFirst()
+                } else if lineIndex > 0, lineIndex - 1 < seams.count,
+                          pairedTracks.isSeam(fromLineID: seams[lineIndex - 1].fromLineID,
+                              toLineID: seams[lineIndex - 1].toLineID,
+                              stationCode: seams[lineIndex - 1].stationCode) != nil,
+                          let splice = pairedSeamSplice(
+                              previous: partKeys, next: keys, graph: graph, date: context.rideDate),
+                          sourcePathMatchesHints(splice.path, graph: graph, rideDate: context.rideDate,
+                              hints: .init(requiredLines: required.lines, requiredOperators: required.operators,
+                                  selectedLineIDs: selectedIDs)) {
+                    result.removeSubrange((partStart + splice.keepPrevious - 1)...)
+                    result += splice.path
+                    partStart = result.count - 1
+                    partKeys = Array(keys[splice.targetIndex...])
+                    result += partKeys.dropFirst()
+                    spliced = true
+                    continue
+                } else {
+                    return nil
+                }
             }
+            partStart = max(result.count - 1, 0)
+            partKeys = keys
             result += keys.dropFirst(result.isEmpty ? 0 : 1)
         }
         guard !result.isEmpty, !Task.isCancelled else { return nil }
-        graph.retainSourceProof(result, for: request)
+        // A spliced proof depends on the catalog, which the request does not name.
+        if !spliced { graph.retainSourceProof(result, for: request) }
         return result
     }
 

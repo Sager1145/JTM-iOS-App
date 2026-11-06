@@ -1,0 +1,394 @@
+{
+ "schemaVersion": 1,
+ "region": "jp",
+ "pairs": [
+  {
+   "pairedLineID": "jp-九州旅客鉄道-日豊線-p1",
+   "parentLineID": "jp-九州旅客鉄道-日豊線",
+   "line": "日豊線",
+   "operator": "九州旅客鉄道",
+   "from": {
+    "name": "西屋敷",
+    "code": "009241"
+   },
+   "to": {
+    "name": "立石",
+    "code": "009262"
+   },
+   "upTrack": "jp-九州旅客鉄道-日豊線-p1",
+   "downTrack": "jp-九州旅客鉄道-日豊線",
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/立石トンネル"
+   ],
+   "note": "Direction from the package (日豊線-p1 up, parent down); 立石トンネル source: the existing 立石トンネル is the up bore and 新立石トンネル the down bore."
+  },
+  {
+   "pairedLineID": "jp-東海旅客鉄道-東海道線-2-p1",
+   "parentLineID": "jp-東海旅客鉄道-東海道線-2",
+   "line": "東海道線",
+   "operator": "東海旅客鉄道",
+   "from": {
+    "name": "大垣",
+    "code": "004923"
+   },
+   "to": {
+    "name": "関ヶ原",
+    "code": "004934"
+   },
+   "upTrack": "jp-東海旅客鉄道-東海道線-2",
+   "downTrack": "jp-東海旅客鉄道-東海道線-2-p1",
+   "sharedTrack": "jp-東海旅客鉄道-東海道線-2",
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/新垂井駅"
+   ],
+   "note": "Data says p1=down. Only partly a 上下線分離: 新垂井線 is down-only, 垂井線 is a shared single track beside the up main. 垂井 station sits only on the parent part (between the ends). The through-services reverseLineID pair exists."
+  },
+  {
+   "pairedLineID": "jp-北海道旅客鉄道-函館線-p1",
+   "parentLineID": "jp-北海道旅客鉄道-函館線",
+   "line": "函館線",
+   "operator": "北海道旅客鉄道",
+   "from": {
+    "name": "七飯",
+    "code": "000431"
+   },
+   "to": {
+    "name": "大沼",
+    "code": "000427"
+   },
+   "upTrack": "jp-北海道旅客鉄道-函館線",
+   "downTrack": "jp-北海道旅客鉄道-函館線-p1",
+   "sharedTrack": "jp-北海道旅客鉄道-函館線",
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/七飯駅"
+   ],
+   "note": "Data says p1=down (藤城線). 新函館北斗 sits only on the parent part. Not a passenger branch; no 営業キロ. Separate from 函館線-2 (砂原支線 side) which is a real branch."
+  },
+  {
+   "pairedLineID": "jp-西日本旅客鉄道-北陸線-p1",
+   "parentLineID": "jp-西日本旅客鉄道-北陸線",
+   "line": "北陸線",
+   "operator": "西日本旅客鉄道",
+   "from": {
+    "name": "敦賀",
+    "code": "010186"
+   },
+   "to": {
+    "name": "新疋田",
+    "code": "004256"
+   },
+   "upTrack": "jp-西日本旅客鉄道-北陸線-p1",
+   "downTrack": "jp-西日本旅客鉄道-北陸線",
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/北陸本線"
+   ],
+   "note": "Data p1=up, consistent with Wikipedia (loop = up). Down reading is inferred by the page, not stated."
+  },
+  {
+   "pairedLineID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1",
+   "parentLineID": "jp-えちごトキめき鉄道-日本海ひすいライン",
+   "line": "日本海ひすいライン",
+   "operator": "えちごトキめき鉄道",
+   "from": {
+    "name": "青海",
+    "code": "001678"
+   },
+   "to": {
+    "name": "親不知",
+    "code": "001685"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/北陸本線"
+   ],
+   "note": "Data direction unassigned, but Wikipedia gives up=new tunnel, down=old line. Data could be upgraded; verify which geometry is p1."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-東北線-p2",
+   "parentLineID": "jp-東日本旅客鉄道-東北線",
+   "line": "東北線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "金谷川",
+    "code": "001397"
+   },
+   "to": {
+    "name": "南福島",
+    "code": "001382"
+   },
+   "upTrack": "jp-東日本旅客鉄道-東北線-p2",
+   "downTrack": "jp-東日本旅客鉄道-東北線",
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/金谷川駅"
+   ],
+   "note": "Wikipedia: up line newly built away from the existing line around 金谷川. Data p2 up, consistent."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-東北線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-東北線",
+   "line": "東北線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "松川",
+    "code": "001405"
+   },
+   "to": {
+    "name": "金谷川",
+    "code": "001397"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/金谷川駅"
+   ],
+   "note": "Same page covers the up line around 金谷川, direction unassigned in data. Direction likely up, not explicit for the 松川 side."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-奥羽線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-奥羽線",
+   "line": "奥羽線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "陣場",
+    "code": "000644"
+   },
+   "to": {
+    "name": "白沢",
+    "code": "000654"
+   },
+   "upTrack": "jp-東日本旅客鉄道-奥羽線",
+   "downTrack": "jp-東日本旅客鉄道-奥羽線-p1",
+   "sharedTrack": null,
+   "pairStatus": "confirmed",
+   "directionStatus": "confirmed",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/矢立峠",
+    "https://www.openstreetmap.org/way/487965538"
+   ],
+   "note": "p1 is the 松原トンネル down bore (user decision); the parent is the up line. Package direction (p1 up) is being changed to match."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-上越線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-上越線",
+   "line": "上越線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "土樽",
+    "code": "001739"
+   },
+   "to": {
+    "name": "越後中里",
+    "code": "001728"
+   },
+   "upTrack": "jp-東日本旅客鉄道-上越線-p1",
+   "downTrack": "jp-東日本旅客鉄道-上越線",
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unclear",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/上越線",
+    "https://ja.wikipedia.org/wiki/ループ線"
+   ],
+   "note": "Pair is real (清水トンネル vs 新清水トンネル doubling, 1967) but fetched pages do not say which bore is up or down. Data source cited is ループ線."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-上越線-p2",
+   "parentLineID": "jp-東日本旅客鉄道-上越線",
+   "line": "上越線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "水上",
+    "code": "001813"
+   },
+   "to": {
+    "name": "土樽",
+    "code": "001739"
+   },
+   "upTrack": "jp-東日本旅客鉄道-上越線-p2",
+   "downTrack": "jp-東日本旅客鉄道-上越線",
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unclear",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/湯檜曽駅",
+    "https://ja.wikipedia.org/wiki/上越線"
+   ],
+   "note": "Pair is real but direction not found in the sources I read. 湯檜曽 and 土合 each have up and down platforms; both are in p2 (4 stations)."
+  },
+  {
+   "pairedLineID": "jp-九州旅客鉄道-鹿児島線-p1",
+   "parentLineID": "jp-九州旅客鉄道-鹿児島線",
+   "line": "鹿児島線",
+   "operator": "九州旅客鉄道",
+   "from": {
+    "name": "植木",
+    "code": "009670"
+   },
+   "to": {
+    "name": "田原坂",
+    "code": "009664"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/鹿児島本線"
+   ],
+   "note": "Page text read did not describe this section. OSM oneway (way 190996407 parent tunnel southbound) suggests p1=上り; awaiting second source"
+  },
+  {
+   "pairedLineID": "jp-九州旅客鉄道-鹿児島線-2-p1",
+   "parentLineID": "jp-九州旅客鉄道-鹿児島線-2",
+   "line": "鹿児島線",
+   "operator": "九州旅客鉄道",
+   "from": {
+    "name": "上伊集院",
+    "code": "010038"
+   },
+   "to": {
+    "name": "広木",
+    "code": "010058"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/鹿児島本線"
+   ],
+   "note": "Not verified online."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-中央線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-中央線",
+   "line": "中央線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "鳥沢",
+    "code": "004192"
+   },
+   "to": {
+    "name": "梁川",
+    "code": "004213"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://plaza.rakuten.co.jp/wasabikuma322/diary/201506010000/"
+   ],
+   "note": "Data cites a blog. Wikipedia only says it is double track."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-羽越線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-羽越線",
+   "line": "羽越線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "村上",
+    "code": "001203"
+   },
+   "to": {
+    "name": "間島",
+    "code": "001164"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/羽越本線"
+   ],
+   "note": "Old line abandoned 1967; no direction source found."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-羽越線-p2",
+   "parentLineID": "jp-東日本旅客鉄道-羽越線",
+   "line": "羽越線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "小波渡",
+    "code": "001031"
+   },
+   "to": {
+    "name": "三瀬",
+    "code": "001030"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://ameblo.jp/aru-king/entry-12626902052.html"
+   ],
+   "note": "Data cites a blog; not verified."
+  },
+  {
+   "pairedLineID": "jp-東日本旅客鉄道-大崎支線-p1",
+   "parentLineID": "jp-東日本旅客鉄道-大崎支線",
+   "line": "大崎支線",
+   "operator": "東日本旅客鉄道",
+   "from": {
+    "name": "大崎",
+    "code": "004135"
+   },
+   "to": {
+    "name": "西大井",
+    "code": "004235"
+   },
+   "upTrack": null,
+   "downTrack": null,
+   "sharedTrack": null,
+   "pairStatus": "unclear",
+   "directionStatus": "unknown",
+   "sources": [
+    "https://www.jrtt.go.jp/construction/asset/constUtwr-2_03.pdf"
+   ],
+   "note": "japan-through-services.json uses 大崎支線 and -p1 as each other reverseLineID for 大崎→西大井 and back, so the project treats them as a direction pair. Public confirmation of which track serves which direction not found."
+  }
+ ],
+ "notPairs": [
+  {
+   "lineID": "jp-北海道旅客鉄道-函館線-2",
+   "reason": "函館線-2 (砂原支線方面 森–大沼) is a real branch via 渡島砂原 with its own stations and passenger service, not a paired track of 函館線-p1.",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/函館本線",
+    "https://ja.wikipedia.org/wiki/上越線"
+   ]
+  },
+  {
+   "lineID": "jp-東日本旅客鉄道-上越線-2",
+   "reason": "上越線-2 (ガーラ湯沢–越後湯沢) is a real seasonal passenger branch with a different terminal, not a paired track of 上越線-p1/p2.",
+   "sources": [
+    "https://ja.wikipedia.org/wiki/上越線"
+   ]
+  }
+ ]
+}
