@@ -479,9 +479,15 @@ final class RailNetworkStore {
         // and permanently miss the override, since nothing revisits `lines`/
         // `stations` once built. See ``decodeGeometry(_:)``.
         let startedEpoch = loadEpoch
+        // One read of the manifest, awaited by two readers: the display
+        // catalog below, and the badge index, which takes its line attributes
+        // from here rather than scanning the jp and cn packages (audit A7).
+        let manifestRead = Task(priority: .utility) {
+            try await Self.loadDisplayManifest()
+        }
         manifestLoadTask = Task(priority: .utility) {
             do {
-                let manifest = try await Self.loadDisplayManifest()
+                let manifest = try await manifestRead.value
                 guard startedEpoch == loadEpoch else { return }
                 displayManifest = manifest
                 let history = Self.loadDisplayHistories(manifest)
@@ -512,8 +518,12 @@ final class RailNetworkStore {
         // The complete network is context and starts hidden; route restoration
         // and interaction work should outrank reading five national packages.
         Task(priority: .utility) {
-            await indexRegions(Region.ordered(.compact))
-            await indexRegions(Region.ordered(.large))
+            // A manifest that fails to read leaves `nil`, and every region
+            // falls back to scanning its own package — the failure is the
+            // display catalog's to report, not the badges'.
+            let manifest = try? await manifestRead.value
+            await indexRegions(Region.ordered(.compact), manifest: manifest)
+            await indexRegions(Region.ordered(.large), manifest: manifest)
             isIndexing = false
             // Anything asked for while the indexes were still being built. The
             // ask is recorded rather than acted on during indexing, so that a
@@ -530,13 +540,18 @@ final class RailNetworkStore {
     /// Every region's badges are adopted as that region's read finishes rather
     /// than when the class does, so a journeys list settles country by country
     /// instead of in one step at the end.
-    private func indexRegions(_ regions: [Region]) async {
+    private func indexRegions(
+        _ regions: [Region], manifest: RailDisplayNetworkManifest?
+    ) async {
         guard !regions.isEmpty else { return }
         await withTaskGroup(of: (Region, RouteBadgeIndex?, String?).self) { group in
             for region in regions {
                 group.addTask {
                     do {
-                        return (region, try await Self.index(region: region), nil)
+                        return (
+                            region,
+                            try await Self.index(region: region, manifest: manifest),
+                            nil)
                     } catch {
                         return (region, nil, error.localizedDescription)
                     }
@@ -1616,6 +1631,12 @@ final class RailNetworkStore {
     /// trusting it.
     /// Phase one: which mark each of a region's railways wears.
     ///
+    /// Read from the display-network manifest when it carries the package's
+    /// badge attributes (``RailDisplayNetworkManifest/badgeSources(region:)``)
+    /// — a few KB per region out of a file launch decodes anyway, where the
+    /// scan below reads all 10 MB of jp and 25 MB of cn (audit A7). The scan
+    /// stays as the fallback for a manifest without them or one that failed.
+    ///
     /// The line ATTRIBUTES and nothing else. The index reads six strings per
     /// railway and not one coordinate, so it goes through
     /// `CompactPackage.Headers` — one scan of the same file that stops at the
@@ -1625,9 +1646,14 @@ final class RailNetworkStore {
     /// This attributes-only read avoids materializing geometry. Callers needing
     /// both package metadata and geometry use `DisplayParts.LoadedPackage`
     /// to obtain both from a single decode.
-    private nonisolated static func index(region: Region) async throws -> RouteBadgeIndex {
+    private nonisolated static func index(
+        region: Region, manifest: RailDisplayNetworkManifest?
+    ) async throws -> RouteBadgeIndex {
         let interval = RailSignpost.data.begin("data.package.index")
         defer { RailSignpost.data.end("data.package.index", interval) }
+        if let manifestSources = manifest?.badgeSources(region: region.code) {
+            return RouteBadgeIndex(region: region, lines: manifestSources)
+        }
         guard let url = Bundle.main.url(
             forResource: region.packageResource, withExtension: "json")
         else { throw LoadError.missingResource(region.code) }
