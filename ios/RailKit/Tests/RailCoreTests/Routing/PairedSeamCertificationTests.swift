@@ -26,12 +26,14 @@ struct PairedSeamCertificationTests {
     /// intervals, then prove the source path with the selected line ids.
     static func ride(
         _ from: String, _ to: String, pairedTracks: PairedTracks.Catalog? = nil,
+        trackPreference: TrackPreference? = nil,
         data: PhysicalEndpointTrimTests.RealData, pipeline: PhysicalEndpointTrimTests
     ) -> Ride? {
         guard let fromCode = stationCode(from, in: data.network),
               let toCode = stationCode(to, in: data.network) else { return nil }
         let section = RouteSection(from: from, to: to, fromN02StationCode: fromCode,
-            toN02StationCode: toCode, lineNames: ["日豊線"], operatorNames: ["九州旅客鉄道"])
+            toN02StationCode: toCode, lineNames: ["日豊線"], operatorNames: ["九州旅客鉄道"],
+            trackPreference: trackPreference)
         let context = RouteSolver.TrainContext(rideDate: date)
         guard let solved = RouteSolver.solveSectionOnDemand(
             section, segmentIndex: 0, train: context, country: "jp",
@@ -40,7 +42,8 @@ struct PairedSeamCertificationTests {
         let hints = RouteHints(
             requiredLineNames: ["日豊線"].map(Optional.some), preferredLineNames: [],
             requiredOperatorNames: ["九州旅客鉄道"].map(Optional.some), preferredOperatorNames: [],
-            requiredLineIDs: [], sectionCodes: [], fromStationCode: fromCode, toStationCode: toCode)
+            requiredLineIDs: [], sectionCodes: [], fromStationCode: fromCode, toStationCode: toCode,
+            trackPreference: trackPreference)
         guard let canonical = data.network.canonicalizeRouteFeature(
             RouteFeature(geometry: .lineString(solved.coordinates), hints: hints),
             continueFrom: nil, cache: &cache) else { return nil }

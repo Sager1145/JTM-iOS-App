@@ -59,11 +59,17 @@ public struct StationIntervalResolver: Sendable {
         let toCode: String
         let start: Coordinate
         let end: Coordinate
+        /// The override-capable pair whose span holds this interval. Both
+        /// travel directions exist as edges; `byDefault` marks the ones the
+        /// package allows without a forced track.
+        let pair: Int?
+        let byDefault: Bool
     }
     private let rows: [Row]
     private let rowsByID: [String: [Int]]
     private let adjacency: [String: [Edge]]
     private let incompleteFamilies: Set<Family>
+    private let pairedTracks: PairedTracks.Catalog
     // Copies of this resolver share only this immutable network's memo. A new
     // resource snapshot constructs a new resolver, so results cannot cross it.
     private let resolutionMemo = ResolutionMemo()
@@ -74,6 +80,7 @@ public struct StationIntervalResolver: Sendable {
         let lineNames: [String]
         let operators: [String]
         let maximumExaminedStates: Int
+        let trackPreference: TrackPreference?
     }
 
     private final class ResolutionMemo: @unchecked Sendable {
@@ -159,14 +166,16 @@ public struct StationIntervalResolver: Sendable {
                 }
                 let from = Occurrence(row: rowIndex, station: offset)
                 let to = Occurrence(row: rowIndex, station: next)
-                for direction in directions {
+                let pair = network.pairedIntervals[interval.code]
+                for direction in pair == nil ? directions : [-1, 1] {
                     let forward = direction == 1
                     let edge = Edge(
                         identity: DirectedInterval(lineID: line.lineId, code: interval.code, direction: direction),
                         family: family, from: forward ? from : to, to: forward ? to : from,
                         fromCode: forward ? interval.fromStationCode : interval.toStationCode,
                         toCode: forward ? interval.toStationCode : interval.fromStationCode,
-                        start: forward ? start : end, end: forward ? end : start)
+                        start: forward ? start : end, end: forward ? end : start,
+                        pair: pair, byDefault: directions.contains(direction))
                     adjacency[edge.fromCode, default: []].append(edge)
                 }
             }
@@ -175,6 +184,7 @@ public struct StationIntervalResolver: Sendable {
             for index in indices { incomplete.insert(rows[index].family) }
         }
         self.adjacency = adjacency
+        pairedTracks = network.pairedTracks
         incompleteFamilies = incomplete
     }
 
@@ -215,6 +225,7 @@ public struct StationIntervalResolver: Sendable {
         stationCodes: [String], requiredLineIDs: [String] = [],
         requiredLineNames: [String] = [], requiredOperatorNames: [String] = [],
         maximumExaminedStates: Int = 10_000,
+        trackPreference: TrackPreference? = nil,
         isCancelled: @Sendable () -> Bool = { Task.isCancelled }
     ) -> Result {
         guard !isCancelled() else { return .unsupported }
@@ -223,13 +234,14 @@ public struct StationIntervalResolver: Sendable {
         // the resolver's fixed station interval network and these constraints.
         let request = Request(stationCodes: stationCodes, lineIDs: requiredLineIDs,
             lineNames: requiredLineNames, operators: requiredOperatorNames,
-            maximumExaminedStates: maximumExaminedStates)
+            maximumExaminedStates: maximumExaminedStates, trackPreference: trackPreference)
         if let result = resolutionMemo.value(for: request) {
             return isCancelled() ? .unsupported : result
         }
         let result = resolveUncached(stationCodes: stationCodes, requiredLineIDs: requiredLineIDs,
             requiredLineNames: requiredLineNames, requiredOperatorNames: requiredOperatorNames,
-            maximumExaminedStates: maximumExaminedStates, isCancelled: isCancelled)
+            maximumExaminedStates: maximumExaminedStates, trackPreference: trackPreference,
+            isCancelled: isCancelled)
         guard !isCancelled() else { return .unsupported }
         resolutionMemo.insert(result, for: request)
         return result
@@ -238,7 +250,8 @@ public struct StationIntervalResolver: Sendable {
     private func resolveUncached(
         stationCodes: [String], requiredLineIDs: [String],
         requiredLineNames: [String], requiredOperatorNames: [String],
-        maximumExaminedStates: Int, isCancelled: @Sendable () -> Bool
+        maximumExaminedStates: Int, trackPreference: TrackPreference?,
+        isCancelled: @Sendable () -> Bool
     ) -> Result {
         guard stationCodes.count >= 2, stationCodes.allSatisfy({ !$0.isEmpty }),
               maximumExaminedStates > 0, !isCancelled(),
@@ -262,6 +275,17 @@ public struct StationIntervalResolver: Sendable {
         var selections: [Selection] = []
         var incompleteCandidate = false
         let permittedIDs = Set(requiredLineIDs)
+
+        /// Inside a confirmed pair's span a forced track is the only row, in
+        /// either travel direction; elsewhere the package's directions stand.
+        func permits(_ edge: Edge) -> Bool {
+            guard let pairIndex = edge.pair else { return true }
+            guard let trackPreference,
+                  let row = pairedTracks.forcedTrack(trackPreference, pair: pairedTracks.pairs[pairIndex]) else {
+                return edge.byDefault
+            }
+            return edge.identity.lineID == row
+        }
 
         func append(_ edge: Edge, after state: State?) {
             let stage = state?.stage ?? 1
@@ -306,7 +330,7 @@ public struct StationIntervalResolver: Sendable {
             examined += 1
             return true
         }
-        for edge in adjacency[stationCodes[0]] ?? [] where families.contains(edge.family)
+        for edge in adjacency[stationCodes[0]] ?? [] where families.contains(edge.family) && permits(edge)
             && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
             guard admitsAnotherState() else {
                 truncated = examined >= maximumExaminedStates
@@ -315,7 +339,7 @@ public struct StationIntervalResolver: Sendable {
             append(edge, after: nil)
         }
         search: while !truncated, !isCancelled(), let state = pending.popLast() {
-            for edge in adjacency[state.previous.toCode] ?? [] where edge.family == state.previous.family
+            for edge in adjacency[state.previous.toCode] ?? [] where edge.family == state.previous.family && permits(edge)
                 && (permittedIDs.isEmpty || permittedIDs.contains(edge.identity.lineID)) {
                 guard admitsAnotherState() else {
                     truncated = examined >= maximumExaminedStates

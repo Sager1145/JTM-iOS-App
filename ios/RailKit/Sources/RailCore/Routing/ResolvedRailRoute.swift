@@ -18,7 +18,8 @@ public struct ResolvedRailLine: Codable, Equatable, Sendable {
 extension RouteNetwork {
     /// Freeze travel direction separately from the interval's symmetric code.
     public func directedIntervals(
-        sectionCodes: [String], fromStationCode: String, toStationCode: String
+        sectionCodes: [String], fromStationCode: String, toStationCode: String,
+        trackPreference: TrackPreference? = nil
     ) -> [StationIntervalResolver.DirectedInterval]? {
         guard !sectionCodes.isEmpty else { return nil }
         var current = fromStationCode
@@ -30,7 +31,7 @@ extension RouteNetwork {
             if current == interval.fromStationCode { direction = 1; current = interval.toStationCode }
             else if current == interval.toStationCode { direction = -1; current = interval.fromStationCode }
             else { return nil }
-            guard allowedDirections(for: code).contains(direction) else { return nil }
+            guard allowedDirections(for: code, trackPreference: trackPreference).contains(direction) else { return nil }
             result.append(.init(lineID: interval.lineID, code: code, direction: direction))
         }
         return current == toStationCode ? result : nil

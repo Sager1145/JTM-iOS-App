@@ -179,7 +179,8 @@ extension RouteNetwork {
                 projections: &projections, best: &best) else { return nil }
         }
         guard let best,
-              let corrected = correctRouteIntervalDirections(best.sectionCodes, from: from, to: to) else { return nil }
+              let corrected = correctRouteIntervalDirections(
+                best.sectionCodes, from: from, to: to, trackPreference: hints.trackPreference) else { return nil }
         let IDs = uniqueLineIDs(corrected.codes)
         if !required.isEmpty && !IDs.allSatisfy(required.contains) { return nil }
         return IntervalMatch(sectionCodes: corrected.codes, lineIDs: IDs, score: best.score, corrected: corrected.changed)
@@ -316,6 +317,16 @@ extension RouteNetwork {
         return RailwayDirection.allowedDirections(for: line, intervalIndex: record.intervalIndex)
     }
 
+    /// Inside a confirmed pair's span a forced track is the only row allowed,
+    /// and in both travel directions; elsewhere the preference changes nothing.
+    func allowedDirections(for code: String, trackPreference: TrackPreference?) -> [Int] {
+        guard let trackPreference, let pairIndex = pairedIntervals[code],
+              case let pair = pairedTracks.pairs[pairIndex],
+              let row = pairedTracks.forcedTrack(trackPreference, pair: pair),
+              let lineID = intervalByCode[code]?.interval.lineID else { return allowedDirections(for: code) }
+        return lineID == row ? [-1, 1] : []
+    }
+
     func uniqueLineIDs(_ codes: [String]) -> [String] {
         var IDs: [String] = []
         for code in codes {
@@ -328,13 +339,13 @@ extension RouteNetwork {
     /// forbidden run between its known junctions, preserving the branch chosen
     /// by the solved geometry and the station visits on either side.
     func correctRouteIntervalDirections(
-        _ codes: [String], from: String, to: String
+        _ codes: [String], from: String, to: String, trackPreference: TrackPreference? = nil
     ) -> (codes: [String], changed: Bool)? {
-        guard let chain = directionVisitChain(codes, from: from),
+        guard let chain = directionVisitChain(codes, from: from, trackPreference: trackPreference),
               chain.last?.destination == to, !chain.isEmpty else { return nil }
         if chain.allSatisfy(\.permitted) { return (codes, false) }
         var result: [String] = []
-        guard appendCorrectedDirectionRuns(chain, result: &result) else { return nil }
+        guard appendCorrectedDirectionRuns(chain, trackPreference: trackPreference, result: &result) else { return nil }
         return verifyCorrectedDirectionChain(result, from: from, to: to)
     }
 
@@ -346,7 +357,9 @@ extension RouteNetwork {
         let permitted: Bool
     }
 
-    private func directionVisitChain(_ codes: [String], from: String) -> [VisitEdge]? {
+    private func directionVisitChain(
+        _ codes: [String], from: String, trackPreference: TrackPreference?
+    ) -> [VisitEdge]? {
         var chain: [VisitEdge] = []
         var current = from
         for code in codes {
@@ -355,13 +368,16 @@ extension RouteNetwork {
             let forward = current == interval.fromStationCode
             let destination = forward ? interval.toStationCode : interval.fromStationCode
             chain.append(VisitEdge(code: code, interval: interval, source: current, destination: destination,
-                                   permitted: allowedDirections(for: code).contains(forward ? 1 : -1)))
+                                   permitted: allowedDirections(for: code, trackPreference: trackPreference)
+                                       .contains(forward ? 1 : -1)))
             current = destination
         }
         return chain
     }
 
-    private func appendCorrectedDirectionRuns(_ chain: [VisitEdge], result: inout [String]) -> Bool {
+    private func appendCorrectedDirectionRuns(
+        _ chain: [VisitEdge], trackPreference: TrackPreference?, result: inout [String]
+    ) -> Bool {
         var index = 0
         while index < chain.count {
             if chain[index].permitted { result.append(chain[index].code); index += 1; continue }
@@ -371,7 +387,8 @@ extension RouteNetwork {
             while index < chain.count && !chain[index].permitted { index += 1 }
             let source = chain[start].source, destination = chain[index - 1].destination
             let blocked = Self.blockedDirectionStations(chain, preserving: start..<index, source: source, destination: destination)
-            let adjacency = directionReplacementAdjacency(firstLine: firstLine, blocked: blocked)
+            let adjacency = directionReplacementAdjacency(
+                firstLine: firstLine, blocked: blocked, trackPreference: trackPreference)
             guard let replacement = Self.shortestChain(adjacency: adjacency, from: source, to: destination) else { return false }
             result += replacement.edges.map { $0.interval.code }
         }
@@ -391,11 +408,13 @@ extension RouteNetwork {
         return blocked
     }
 
-    private func directionReplacementAdjacency(firstLine: Line, blocked: Set<String>) -> [String: [MatchedEdge]] {
+    private func directionReplacementAdjacency(
+        firstLine: Line, blocked: Set<String>, trackPreference: TrackPreference?
+    ) -> [String: [MatchedEdge]] {
         var adjacency: [String: [MatchedEdge]] = [:]
         for line in lines where line.name == firstLine.name && line.operator == firstLine.operator {
             for interval in line.intervals {
-                for direction in allowedDirections(for: interval.code) {
+                for direction in allowedDirections(for: interval.code, trackPreference: trackPreference) {
                     let from = direction == 1 ? interval.fromStationCode : interval.toStationCode
                     let to = direction == 1 ? interval.toStationCode : interval.fromStationCode
                     if blocked.contains(from) || blocked.contains(to) { continue }
@@ -442,9 +461,10 @@ extension RouteNetwork {
             let low = min(start, end), high = max(start, end)
             guard high <= line.intervals.count else { continue }
             var codes = line.intervals[low..<high].map(\.code)
-            guard codes.contains(where: { allowedDirections(for: $0).count != 2 }) else { continue }
+            guard codes.contains(where: { allowedDirections(for: $0, trackPreference: hints.trackPreference).count != 2 }) else { continue }
             if start > end { codes.reverse() }
-            guard let corrected = correctRouteIntervalDirections(codes, from: from, to: to) else { continue }
+            guard let corrected = correctRouteIntervalDirections(
+                codes, from: from, to: to, trackPreference: hints.trackPreference) else { continue }
             let IDs = uniqueLineIDs(corrected.codes)
             guard hints.requiredLineIDs.isEmpty || IDs.allSatisfy(hints.requiredLineIDs.contains) else { continue }
             return IntervalMatch(sectionCodes: corrected.codes, lineIDs: IDs, score: 0, corrected: corrected.changed)

@@ -33,6 +33,7 @@ public enum ResolvedRouteExport {
             let codes = selection.intervals.map(\.code)
             // The import format stores symmetric codes, so replay them to prove
             // that it reconstructs this exact ordered, directed selection.
+            // Test-only: it ignores a section's track preference.
             guard network.directedIntervals(sectionCodes: codes,
                 fromStationCode: selection.fromStationCode,
                 toStationCode: selection.toStationCode) == selection.intervals

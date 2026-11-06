@@ -447,6 +447,10 @@ public struct Stop: Codable, Equatable, Sendable {
 /// from the codes (§13.4), and the line/operator hints and the branch
 /// number/name are dropped when empty. 1 861 of the 2 303 sections in the
 /// committed Japanese store carry no `from`/`to` at all.
+/// Which track of a confirmed one-direction track pair a section rides, when
+/// the passenger overrides the automatic choice. Absent means automatic.
+public enum TrackPreference: String, Codable, Sendable { case up, down }
+
 public struct RouteSection: Codable, Hashable, Sendable {
     public var from: String?
     public var to: String?
@@ -468,6 +472,9 @@ public struct RouteSection: Codable, Hashable, Sendable {
     /// A branch portion run under a different 号 — はやぶさ↔こまち (§6.1b).
     public var number: String?
     public var name: String?
+    /// Forces the up or down track where this section runs over a confirmed
+    /// paired track. Nil keeps the automatic choice.
+    public var trackPreference: TrackPreference?
 
     public init(
         from: String? = nil,
@@ -482,7 +489,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         sectionCodes: [String]? = nil,
         sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin? = nil,
         number: String? = nil,
-        name: String? = nil
+        name: String? = nil,
+        trackPreference: TrackPreference? = nil
     ) {
         self.from = from
         self.to = to
@@ -497,10 +505,12 @@ public struct RouteSection: Codable, Hashable, Sendable {
         self.sectionCodesOrigin = sectionCodesOrigin
         self.number = number
         self.name = name
+        self.trackPreference = trackPreference
     }
 
     private enum CodingKeys: String, CodingKey {
         case from, to, number, name
+        case trackPreference = "track_preference"
         case fromN02StationCode = "from_n02_station_code"
         case toN02StationCode = "to_n02_station_code"
         case fromStationID = "from_station_id"
@@ -533,6 +543,9 @@ public struct RouteSection: Codable, Hashable, Sendable {
         sectionCodesOrigin = try container.decodeIfPresent(RecordedRouteAdmission.SectionCodesOrigin.self, forKey: .sectionCodesOrigin)
         number = try container.decodeIfPresent(String.self, forKey: .number)
         name = try container.decodeIfPresent(String.self, forKey: .name)
+        // Lenient: an unknown or mistyped value is the automatic choice.
+        trackPreference = (try? container.decodeIfPresent(String.self, forKey: .trackPreference))
+            .flatMap { $0 }.flatMap(TrackPreference.init(rawValue:))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -550,6 +563,7 @@ public struct RouteSection: Codable, Hashable, Sendable {
         try container.encodeIfPresent(sectionCodesOrigin, forKey: .sectionCodesOrigin)
         try container.encodeIfPresent(number, forKey: .number)
         try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(trackPreference, forKey: .trackPreference)
     }
 }
 
@@ -1841,6 +1855,7 @@ public enum TrainValidation {
                 "from", "to", "from_n02_station_code", "to_n02_station_code",
                 "from_station_id", "to_station_id",
                 "line_names", "operator_names", "line_ids", "section_codes", "section_codes_origin", "number", "name",
+                "track_preference",
             ],
             "Route section")
 
@@ -1876,6 +1891,13 @@ public enum TrainValidation {
         // しおかぜ↔いしづち).
         if let number = section["number"], number.isTruthy { normalized.number = jsToString(number) }
         if let name = section["name"], name.isTruthy { normalized.name = jsToString(name) }
+        if let preference = section["track_preference"], preference != .null {
+            guard let value = preference.stringOrNilIfNotString,
+                  let parsed = TrackPreference(rawValue: value) else {
+                throw fail("Route section track_preference must be up or down.")
+            }
+            normalized.trackPreference = parsed
+        }
         return normalized
     }
 
@@ -2436,6 +2458,7 @@ public enum TrainValidation {
         }
         if let number = section.number, !number.isEmpty { normalized.number = number }
         if let name = section.name, !name.isEmpty { normalized.name = name }
+        normalized.trackPreference = section.trackPreference
         return normalized
     }
 
@@ -2478,6 +2501,7 @@ public enum TrainValidation {
         }
         if let number = section.number, !number.isEmpty { out.number = number }
         if let name = section.name, !name.isEmpty { out.name = name }
+        out.trackPreference = section.trackPreference
         return out
     }
 

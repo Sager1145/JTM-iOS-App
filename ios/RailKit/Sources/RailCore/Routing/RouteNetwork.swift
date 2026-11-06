@@ -61,6 +61,8 @@ public struct RouteHints: Sendable, Equatable {
     public var sectionCodes: [String]
     public var fromStationCode: String?
     public var toStationCode: String?
+    /// Swift-only: forces one track where the hop runs over a confirmed paired track.
+    public var trackPreference: TrackPreference?
 
     public init(
         requiredLineNames: [String?] = [],
@@ -70,7 +72,8 @@ public struct RouteHints: Sendable, Equatable {
         preferredOperatorNames: [String?] = [],
         usedOperatorNames: [String] = [],
         requiredLineIDs: [String] = [], sectionCodes: [String] = [],
-        fromStationCode: String? = nil, toStationCode: String? = nil
+        fromStationCode: String? = nil, toStationCode: String? = nil,
+        trackPreference: TrackPreference? = nil
     ) {
         self.requiredLineNames = requiredLineNames
         self.preferredLineNames = preferredLineNames
@@ -82,6 +85,7 @@ public struct RouteHints: Sendable, Equatable {
         self.sectionCodes = sectionCodes
         self.fromStationCode = fromStationCode
         self.toStationCode = toStationCode
+        self.trackPreference = trackPreference
     }
 }
 
@@ -205,10 +209,19 @@ public struct RouteNetwork: Sendable {
     /// The reviewed paired tracks the package itself backs. Rebuilt per network,
     /// never shared between packages.
     public let pairedTracks: PairedTracks.Catalog
+    /// Interval code to the index (in `pairedTracks.pairs`) of the override-capable pair (confirmed pair, confirmed
+    /// directions) whose span holds it: every interval of the paired row, and
+    /// the parent's intervals between the pair's two stations.
+    let pairedIntervals: [String: Int]
+    /// The parent rows of those pairs, for span lookups by station code.
+    let pairParentRows: [CompactPackage.Line]
 
     public init(lines: [Line]) {
         self.lines = lines
-        self.pairedTracks = PairedTracks.Catalog.bundled.validated(against: lines.compactMap(\.compactLine))
+        let compactRows = lines.compactMap(\.compactLine)
+        let catalog = PairedTracks.Catalog.bundled.validated(against: compactRows)
+        self.pairedTracks = catalog
+        (pairedIntervals, pairParentRows) = Self.pairedIntervals(catalog, lines: lines)
         var byName: [String: [Int]] = [:]
         var byOperator: [String: [Int]] = [:]
         for (index, line) in lines.enumerated() {
@@ -555,6 +568,60 @@ public struct RouteNetwork: Sendable {
 
     // MARK: - fitting
 
+    private static func pairedIntervals(
+        _ catalog: PairedTracks.Catalog, lines: [Line]
+    ) -> ([String: Int], [CompactPackage.Line]) {
+        var result: [String: Int] = [:]
+        var parents: [CompactPackage.Line] = []
+        for (pairIndex, pair) in catalog.pairs.enumerated()
+        where pair.pairStatus == .confirmed && pair.directionStatus == .confirmed {
+            for line in lines {
+                if line.lineId == pair.pairedLineID {
+                    for interval in line.intervals { result[interval.code] = result[interval.code] ?? pairIndex }
+                } else if line.lineId == pair.parentLineID, let compact = line.compactLine {
+                    parents.append(compact)
+                    let ids = compact.stations.map(\.id)
+                    guard let a = ids.firstIndex(of: pair.from.code), let b = ids.firstIndex(of: pair.to.code) else { continue }
+                    for offset in min(a, b)..<max(a, b)
+                    where line.intervals.indices.contains(offset)
+                        && line.intervals[offset].fromStationCode == ids[offset] {
+                        let code = line.intervals[offset].code
+                        result[code] = result[code] ?? pairIndex
+                    }
+                }
+            }
+        }
+        return (result, parents)
+    }
+
+    /// The section with its track preference dropped unless a traversed
+    /// confirmed pair accepts the override (`PairedTracks.Catalog.overridablePairs`).
+    func applicableTrackPreference(_ section: RouteSection) -> RouteSection {
+        guard section.trackPreference != nil,
+              pairedTracks.overridablePairs(for: section, rows: pairParentRows).isEmpty else { return section }
+        var plain = section
+        plain.trackPreference = nil
+        return plain
+    }
+
+    /// How a forced track treats `lineIndex` on a hop between two stations:
+    /// `true` when the row is the forced track, `false` when the hop crosses a
+    /// confirmed pair's span and the row is its other track, `nil` when the
+    /// override does not touch this row.
+    func trackOverride(
+        lineIndex: Int, pairs: [PairedTracks.Pair], preference: TrackPreference?
+    ) -> Bool? {
+        guard let preference else { return nil }
+        let lineID = lines[lineIndex].lineId
+        var forced: Bool?
+        for pair in pairs where lineID == pair.pairedLineID || lineID == pair.parentLineID {
+            guard let row = pairedTracks.forcedTrack(preference, pair: pair) else { continue }
+            if lineID != row { return false }
+            forced = true
+        }
+        return forced
+    }
+
     /// A line's best offer for one hop: where both ends land, and what it costs.
     struct Fit {
         let lineIndex: Int
@@ -580,10 +647,18 @@ public struct RouteNetwork: Sendable {
         continueFrom: Coordinate?,
         fromStationCode: String? = nil,
         toStationCode: String? = nil,
+        trackPreference: TrackPreference? = nil,
         cache: inout RouteProjectionCache
     ) -> Fit? {
         var best: Fit?
+        // The pairs this hop crosses, once for every candidate row.
+        let crossed: [PairedTracks.Pair] = trackPreference != nil && fromStationCode != nil && toStationCode != nil
+            ? pairedTracks.traversedPairs(fromCode: fromStationCode!, toCode: toStationCode!, rows: pairParentRows) : []
         for lineIndex in lineIndices {
+            // A forced track: the other track of a confirmed pair is out, and
+            // the forced one rides in either direction.
+            let override = trackOverride(lineIndex: lineIndex, pairs: crossed, preference: trackPreference)
+            if override == false { continue }
             // A nearby trunk station does not belong to the branch. A hop
             // spanning package rows has no single-row slice; returning nil
             // lets the caller retain the solver's complete surveyed path.
@@ -628,14 +703,14 @@ public struct RouteNetwork: Sendable {
                 // states which bore is which.
                 var bias = 0.0
                 let alignment = lines[lineIndex].alignmentDirection
-                if let compact = lines[lineIndex].compactLine, let traversal = compact.permittedTraversal,
+                if override != true, let compact = lines[lineIndex].compactLine, let traversal = compact.permittedTraversal,
                    (traversal == "forward" && start.measure > end.measure)
                     || (traversal == "reverse" && start.measure < end.measure) { continue }
                 if alignment == "up" || alignment == "down" {
                     // A missing station order is unrestricted, as in RailwayDirection.
                     if let order = lines[lineIndex].compactLine?.stationOrderDirection {
                         let rode = start.measure <= end.measure ? order : (order == "down" ? "up" : "down")
-                        if alignment != rode { continue }
+                        if alignment != rode && override != true { continue }
                         bias = -Self.alignmentMatchBonus
                     }
                 }
@@ -671,7 +746,8 @@ public struct RouteNetwork: Sendable {
             if current == interval.fromStationCode { forward = true }
             else if current == interval.toStationCode { forward = false }
             else { return nil }
-            guard allowedDirections(for: code).contains(forward ? 1 : -1) else { return nil }
+            guard allowedDirections(for: code, trackPreference: feature.hints.trackPreference)
+                .contains(forward ? 1 : -1) else { return nil }
             if !feature.hints.requiredLineIDs.isEmpty,
                !feature.hints.requiredLineIDs.contains(interval.lineID) { return nil }
             let sourceStart = forward ? interval.from : interval.to
@@ -695,7 +771,9 @@ public struct RouteNetwork: Sendable {
                 slice[slice.count - 1] = end
             } else {
                 guard let best = bestFit(over: [lineIndex], rawStart: start, rawEnd: end,
-                                         continueFrom: coordinates.last, cache: &cache),
+                                         continueFrom: coordinates.last, fromStationCode: startCode,
+                                         toStationCode: endCode, trackPreference: feature.hints.trackPreference,
+                                         cache: &cache),
                       best.reach <= Self.endpointSnapMeters else { return nil }
                 slice = canonicalLineSlice(lineIndex: lineIndex, start: best.start,
                                                end: best.end, rawCoordinates: [start, end])
@@ -779,7 +857,8 @@ public struct RouteNetwork: Sendable {
             if current == interval.fromStationCode { forward = true }
             else if current == interval.toStationCode { forward = false }
             else { return nil }
-            guard allowedDirections(for: code).contains(forward ? 1 : -1) else { return nil }
+            guard allowedDirections(for: code, trackPreference: hints.trackPreference)
+                .contains(forward ? 1 : -1) else { return nil }
             let path = forward ? interval.coordinates : Array(interval.coordinates.reversed())
             guard path.count >= 2 else { return nil }
             if let name = lines[record.lineIndex].name, !name.isEmpty, seenRows.insert(name).inserted {
@@ -981,7 +1060,8 @@ public struct RouteNetwork: Sendable {
             over: candidates, rawStart: rawStart, rawEnd: rawEnd,
             continueFrom: continueFrom,
             fromStationCode: feature.hints.fromStationCode,
-            toStationCode: feature.hints.toStationCode, cache: &cache)
+            toStationCode: feature.hints.toStationCode,
+            trackPreference: feature.hints.trackPreference, cache: &cache)
 
         // The hint names the RAILWAY the solver rode; it cannot make a line
         // reach a platform it does not serve. Where the package draws that
@@ -1002,7 +1082,8 @@ public struct RouteNetwork: Sendable {
                 over: Array(lines.indices), rawStart: rawStart, rawEnd: rawEnd,
                 continueFrom: continueFrom,
                 fromStationCode: feature.hints.fromStationCode,
-                toStationCode: feature.hints.toStationCode, cache: &cache)
+                toStationCode: feature.hints.toStationCode,
+                trackPreference: feature.hints.trackPreference, cache: &cache)
             if (anywhere?.reach ?? .infinity) <= Self.replacementMaxReachMeters {
                 best = anywhere
             }

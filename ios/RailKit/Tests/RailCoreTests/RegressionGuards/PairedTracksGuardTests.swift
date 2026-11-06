@@ -225,4 +225,55 @@ struct RegressionGuardPairedTracks {
             #expect(backward != nil, "\(pair.pairedLineID) does not certify paired→parent")
         }
     }
+
+    // MARK: every override certifies
+
+    /// The interval codes of `row` between the pair's two stations, in travel
+    /// order from `from` to `to`.
+    private static func codes(
+        on row: String, from: String, to: String, network: RouteNetwork
+    ) -> [String]? {
+        guard let line = network.lines.first(where: { $0.lineId == row }),
+              let ids = line.compactLine?.stations.map(\.id),
+              let start = ids.firstIndex(of: from), let end = ids.firstIndex(of: to), start != end else { return nil }
+        let low = min(start, end), high = max(start, end)
+        guard line.intervals.indices.contains(high - 1) else { return nil }
+        let codes = line.intervals[low..<high].map(\.code)
+        return start < end ? Array(codes) : codes.reversed()
+    }
+
+    @Test("Every confirmed pair certifies with each forced track in both travel directions")
+    func everyOverrideCertifies() throws {
+        let data = try PhysicalEndpointTrimTests().loadRealData(root: try PortFixtures.repositoryRoot())
+        let network = data.network
+        let catalog = network.pairedTracks
+        let offered = catalog.pairs.filter { $0.pairStatus == .confirmed && $0.directionStatus == .confirmed }
+        #expect(!offered.isEmpty)
+        for pair in offered {
+            for preference in [TrackPreference.up, .down] {
+                guard let row = catalog.forcedTrack(preference, pair: pair) else {
+                    Issue.record("\(pair.pairedLineID): no row for \(preference.rawValue)"); continue
+                }
+                for (from, to) in [(pair.from.code, pair.to.code), (pair.to.code, pair.from.code)] {
+                    let name = "\(pair.pairedLineID) forced \(preference.rawValue) \(from)→\(to) on \(row)"
+                    guard let codes = Self.codes(on: row, from: from, to: to, network: network) else {
+                        Issue.record("\(name): the forced row does not run between the pair's stations"); continue
+                    }
+                    let hints = RouteHints(requiredLineIDs: [row], sectionCodes: codes,
+                        fromStationCode: from, toStationCode: to, trackPreference: preference)
+                    #expect(network.sourceCertification(for: hints) != nil, "\(name) does not certify")
+                    let drawn = network.canonicalizeRouteFeature(RouteFeature(geometry: nil, hints: hints))
+                    #expect(drawn?.displayLineIds == [row], "\(name) does not draw on the forced row")
+                    // The other track is refused under the override, whatever the direction.
+                    let other = [pair.parentLineID, pair.pairedLineID].first { $0 != row }
+                    if let other, let otherCodes = Self.codes(on: other, from: from, to: to, network: network) {
+                        let forcedOther = RouteHints(requiredLineIDs: [other], sectionCodes: otherCodes,
+                            fromStationCode: from, toStationCode: to, trackPreference: preference)
+                        #expect(network.sourceCertification(for: forcedOther) == nil,
+                            "\(name): the other track \(other) must be refused")
+                    }
+                }
+            }
+        }
+    }
 }

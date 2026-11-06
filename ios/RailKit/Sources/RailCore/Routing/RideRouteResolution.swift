@@ -214,7 +214,8 @@ public struct RideRouteResolution {
             allowedInstitutionTypeCodes: context.allowedInstitutionTypeCodes,
             institutionFilterMode: context.institutionFilterMode)
         return !RouteSolver.inferStationSections(
-            request.canonicalTrain.requiresRouteConfirmation ? [] : request.canonicalTrain.routeSections ?? [],
+            (request.canonicalTrain.requiresRouteConfirmation ? [] : request.canonicalTrain.routeSections ?? [])
+                .map { network?.network.applicableTrackPreference($0) ?? $0 },
             resolver: network?.resolver, network: network?.network, eligibility: network?.eligibility,
             allowedCodes: RouteGraph.allowedInstitutionTypeCodes(key, country: country),
             hard: context.institutionFilterMode == "hard", country: country).ambiguous.isEmpty
@@ -226,19 +227,22 @@ public struct RideRouteResolution {
             return Result(disposition: .awaitingConfirmation, segments: [], physicalGaps: [],
                 expectedSections: [], requiresPrecomputedRejection: false)
         }
-        let sections = request.canonicalTrain.requiresRouteConfirmation ? [] : request.canonicalTrain.routeSections ?? []
-        guard !sections.isEmpty else {
+        let recordedSections = request.canonicalTrain.requiresRouteConfirmation ? [] : request.canonicalTrain.routeSections ?? []
+        guard !recordedSections.isEmpty else {
             return Result(disposition: .noSections, segments: [], physicalGaps: [],
                 expectedSections: [], requiresPrecomputedRejection: false)
         }
         // A disabled region does no inference or solving at all.
         guard RegionConnectivity.isSupported(country) else {
             return Result(disposition: .unavailable, segments: [],
-                physicalGaps: sections.indices.map { PhysicalGap(segmentIndex: $0, isBoundary: false) },
-                expectedSections: sections, requiresPrecomputedRejection: false)
+                physicalGaps: recordedSections.indices.map { PhysicalGap(segmentIndex: $0, isBoundary: false) },
+                expectedSections: recordedSections, requiresPrecomputedRejection: false)
         }
         let stationIndex = inputs.stationIndex
         let displayNetwork = network?.network
+        // A preference that cannot work on its section (authored codes, a row
+        // excluded by line ids, an endpoint inside the bypassed span) is ignored.
+        let sections = recordedSections.map { displayNetwork?.applicableTrackPreference($0) ?? $0 }
         let eligibility = network?.eligibility
         let intervalResolver = network?.resolver
         var officialIntervals: RouteSolver.OfficialIntervalIndex?
@@ -315,6 +319,7 @@ public struct RideRouteResolution {
                 hints.toStationCode = SolverRegistryInput.hintedGraphStationCode(
                     stationID: section.toStationID, rawCode: hints.toStationCode,
                     region: country, eligibility: eligibility)
+                hints.trackPreference = section.trackPreference
                 if let certified = displayNetwork?.sourceCertification(for: hints),
                    let exact = displayNetwork?.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
@@ -464,7 +469,8 @@ public struct RideRouteResolution {
                     requiredLineIDs: section.lineIDs ?? [],
                     sectionCodes: section.sectionCodes ?? [],
                     fromStationCode: section.fromN02StationCode,
-                    toStationCode: section.toN02StationCode)
+                    toStationCode: section.toN02StationCode,
+                    trackPreference: section.trackPreference)
                 // Historical and relocated geometry is not on the current
                 // display network. Canonicalizing it would pull the stroke
                 // onto today's alignment.
@@ -579,7 +585,7 @@ public struct RideRouteResolution {
         }
         try Task.checkCancellation()
         return Result(disposition: unsupported && !allowLegacy ? .unsupported : (segments.isEmpty ? .unavailable : .geometry),
-            segments: segments, physicalGaps: physicalGaps, expectedSections: sections,
+            segments: segments, physicalGaps: physicalGaps, expectedSections: recordedSections,
             requiresPrecomputedRejection: rejectPrecomputed, sourcePhysicalPathKeys: sourcePhysicalPathKeys)
     }
 
@@ -598,7 +604,8 @@ public struct RideRouteResolution {
     ) -> PhysicalRouteSelection? {
         guard let network, let from = hints.fromStationCode, let to = hints.toStationCode,
               let intervals = network.directedIntervals(sectionCodes: hints.sectionCodes,
-                                                       fromStationCode: from, toStationCode: to),
+                                                       fromStationCode: from, toStationCode: to,
+                                                       trackPreference: hints.trackPreference),
               let lines = network.resolvedLines(sectionCodes: hints.sectionCodes) else { return nil }
         return PhysicalRouteSelection(fromStationCode: from, toStationCode: to,
                                       intervals: intervals, lines: lines, provenance: provenance)

@@ -10,7 +10,7 @@ import Foundation
 /// A row that is a real branch (函館線-2 via 渡島砂原, 上越線-2 ガーラ湯沢)
 /// is listed under `notPairs` so it can never be mistaken for a paired track.
 public enum PairedTracks {
-    public enum Direction: String, Sendable { case up, down }
+    public typealias Direction = TrackPreference
     public enum Status: String, Codable, Sendable { case confirmed, unclear }
     public enum DirectionStatus: String, Codable, Sendable { case confirmed, unclear, unknown }
 
@@ -92,11 +92,24 @@ public enum PairedTracks {
             direction == .up ? pair.upTrack : pair.downTrack
         }
 
+        /// The row a section must ride when the passenger forces `direction` on
+        /// `pair`: that direction's own track, else the shared one. Nil when the
+        /// pair offers no override: its direction is not confirmed, or the
+        /// catalog names no row for it.
+        public func forcedTrack(_ direction: Direction, pair: Pair) -> String? {
+            guard pair.pairStatus == .confirmed, pair.directionStatus == .confirmed else { return nil }
+            return track(for: direction, pair: pair) ?? pair.sharedTrack
+        }
+
         /// Pairs a ride between two stations of the parent row crosses, or the
-        /// pair whose own two stations the ride joins. Not used by the solver:
-        /// it is the lookup the track-override UI builds on.
+        /// pair whose own two stations the ride joins. It is the lookup the
+        /// track-override UI and the override's solver filters build on.
         public func traversedPairs(fromCode: String, toCode: String, package: CompactPackage) -> [Pair] {
-            let rows = Dictionary(package.lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+            traversedPairs(fromCode: fromCode, toCode: toCode, rows: package.lines)
+        }
+
+        public func traversedPairs(fromCode: String, toCode: String, rows lines: [CompactPackage.Line]) -> [Pair] {
+            let rows = Dictionary(lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             return pairs.filter { pair in
                 guard let parent = rows[pair.parentLineID] else { return false }
                 let ids = parent.stations.map(\.id)
@@ -106,6 +119,32 @@ public enum PairedTracks {
                 }
                 return Set([fromCode, toCode]) == Set([pair.from.code, pair.to.code])
             }
+        }
+
+        /// The confirmed pairs a section can force a track on. Empty when the
+        /// override cannot work, so a stale or imported preference is ignored:
+        /// the section has authored interval codes; its line ids exclude a row of
+        /// a traversed pair; or an endpoint lies strictly inside a pair's parent
+        /// span (the other row skips that station, e.g. 垂井, 新函館北斗). Pairs
+        /// whose direction is not confirmed are never offered.
+        public func overridablePairs(for section: RouteSection, rows lines: [CompactPackage.Line]) -> [Pair] {
+            guard section.sectionCodes?.isEmpty != false,
+                  let from = section.fromN02StationCode, let to = section.toN02StationCode else { return [] }
+            let traversed = traversedPairs(fromCode: from, toCode: to, rows: lines)
+                .filter { $0.pairStatus == .confirmed && $0.directionStatus == .confirmed }
+            guard !traversed.isEmpty else { return [] }
+            let rows = Dictionary(lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+            let ids = section.lineIDs ?? []
+            for pair in traversed {
+                if !ids.isEmpty, !(ids.contains(pair.pairedLineID) && ids.contains(pair.parentLineID)) { return [] }
+                guard let parent = rows[pair.parentLineID]?.stations.map(\.id),
+                      let a = parent.firstIndex(of: pair.from.code), let b = parent.firstIndex(of: pair.to.code)
+                else { return [] }
+                for endpoint in [from, to] {
+                    if let index = parent.firstIndex(of: endpoint), min(a, b) < index, index < max(a, b) { return [] }
+                }
+            }
+            return traversed
         }
 
         /// The entries the package itself backs. Never cached: it is cheap, and a

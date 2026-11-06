@@ -18,6 +18,8 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
     /// nothing needs review.
     let reviewGaps: [SectionGap]?
 
+    @State private var trackPairSections: [Int: String] = [:]
+
     /// Nil when nothing needs repair.
     private var repairGaps: [RouteRepair.Gap]? {
         reviewGaps?.map(RouteRepair.Gap.init)
@@ -56,6 +58,16 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         } header: {
             Text(text("route", fallback: "Route"))
         }
+        .task(id: trackPairKey) {
+            let key = trackPairKey
+            guard let package = model.package else { trackPairSections = [:]; return }
+            let sections = model.draft.routeSections ?? []
+            let offered = await Task.detached(priority: .utility) {
+                Self.pairSections(sections, package: package)
+            }.value
+            guard !Task.isCancelled, key == trackPairKey else { return }
+            trackPairSections = offered
+        }
     }
 
     @ViewBuilder private var recordRouteRows: some View {
@@ -78,6 +90,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("newTripSavedRoute")
+        trackPreferenceRows
         // ADR 0007 amendment 1: a section drawn from guard-rejected track, in
         // the same per-section notice row as the closed-line notices. The
         // Repair route button below covers it.
@@ -128,6 +141,59 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("newTripRepairSummary")
         }
+    }
+
+    /// What decides whether a saved section offers the track override.
+    private struct TrackPairKey: Equatable {
+        var sections: [[String?]]
+        var loaded: Bool
+    }
+
+    private var trackPairKey: TrackPairKey {
+        TrackPairKey(
+            sections: (model.draft.routeSections ?? []).map {
+                [$0.fromN02StationCode, $0.toN02StationCode, $0.lineIDs?.joined(separator: ","),
+                 $0.sectionCodes?.joined(separator: ",")]
+            },
+            loaded: model.package != nil)
+    }
+
+    /// Per saved section that accepts the override (`overridablePairs`), the
+    /// stretch it covers, so each picker is told apart.
+    nonisolated private static func pairSections(_ sections: [RouteSection], package: CompactPackage) -> [Int: String] {
+        let catalog = PairedTracks.Catalog.bundled.validated(against: package)
+        var result: [Int: String] = [:]
+        for (index, section) in sections.enumerated() {
+            let pairs = catalog.overridablePairs(for: section, rows: package.lines)
+            guard let first = pairs.first else { continue }
+            result[index] = "\(first.from.name)–\(first.to.name)"
+        }
+        return result
+    }
+
+    /// One picker per section over a confirmed track pair. Automatic writes nil.
+    @ViewBuilder private var trackPreferenceRows: some View {
+        let sections = model.draft.routeSections ?? []
+        ForEach(trackPairSections.keys.sorted().filter(sections.indices.contains), id: \.self) { index in
+            let label = "\(localization.text("ios.editor.track")) (\(trackPairSections[index] ?? ""))"
+            Picker(label, selection: trackPreference(at: index)) {
+                Text(localization.text("ios.editor.track.automatic")).tag(TrackPreference?.none)
+                Text(localization.text("ios.editor.track.up")).tag(TrackPreference?.some(.up))
+                Text(localization.text("ios.editor.track.down")).tag(TrackPreference?.some(.down))
+            }
+            .accessibilityLabel(label)
+            .accessibilityIdentifier("rideEditorTrackPreference-\(index)")
+        }
+    }
+
+    private func trackPreference(at index: Int) -> Binding<TrackPreference?> {
+        Binding(
+            get: { model.draft.routeSections?.indices.contains(index) == true
+                ? model.draft.routeSections?[index].trackPreference : nil },
+            set: { value in
+                guard model.draft.routeSections?.indices.contains(index) == true else { return }
+                model.draft.routeSections?[index].trackPreference = value
+            })
     }
 
     private func timetablePassStations(_ timetable: Train) -> some View {

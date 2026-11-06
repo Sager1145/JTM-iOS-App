@@ -1025,6 +1025,18 @@ enum EditorStrings {
             .zhHant: "第 {index} 段", .zhHans: "第 {index} 段", .ja: "第 {index} 区間",
             .en: "Section {index}",
         ],
+        "ios.editor.track": [
+            .zhHant: "軌道", .zhHans: "轨道", .ja: "線路", .en: "Track",
+        ],
+        "ios.editor.track.automatic": [
+            .zhHant: "自動", .zhHans: "自动", .ja: "自動", .en: "Automatic",
+        ],
+        "ios.editor.track.up": [
+            .zhHant: "上行線", .zhHans: "上行线", .ja: "上り線", .en: "Up line",
+        ],
+        "ios.editor.track.down": [
+            .zhHant: "下行線", .zhHans: "下行线", .ja: "下り線", .en: "Down line",
+        ],
         "ios.editor.station": [
             .zhHant: "車站", .zhHans: "车站", .ja: "駅", .en: "Station",
         ],

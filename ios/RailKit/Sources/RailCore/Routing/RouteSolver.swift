@@ -2238,6 +2238,7 @@ public enum RouteSolver {
                 guard next.sectionCodes?.isEmpty != false,
                       (next.lineIDs ?? []) == ids, (next.lineNames ?? []) == names,
                       (next.operatorNames ?? []) == operators,
+                      next.trackPreference == first.trackPreference,
                       routeSectionBoundarySharesExplicitStop(sections[end - 1], next) else { break }
                 end += 1
             }
@@ -2263,14 +2264,16 @@ public enum RouteSolver {
                   }) else { continue }
             switch resolver.resolve(
                 stationCodes: [from] + destinations, requiredLineIDs: ids,
-                requiredLineNames: names, requiredOperatorNames: operators) {
+                requiredLineNames: names, requiredOperatorNames: operators,
+                trackPreference: first.trackPreference) {
             case .resolved(let selection):
                 for offset in selection.legIntervals.indices {
                     let leg = selection.legIntervals[offset]
                     result.hints[index + offset] = RouteHints(
                         requiredLineIDs: Array(Set(leg.map(\.lineID))).sorted(), sectionCodes: leg.map(\.code),
                         fromStationCode: selection.stationCodes[offset],
-                        toStationCode: selection.stationCodes[offset + 1])
+                        toStationCode: selection.stationCodes[offset + 1],
+                        trackPreference: first.trackPreference)
                 }
             case .ambiguous: result.ambiguous.formUnion(index..<end)
             case .unsupported:
@@ -2281,12 +2284,14 @@ public enum RouteSolver {
                 for offset in 0..<(end - index) {
                     guard case .resolved(let selection) = resolver.resolve(
                         stationCodes: [stops[offset], stops[offset + 1]], requiredLineIDs: ids,
-                        requiredLineNames: names, requiredOperatorNames: operators),
+                        requiredLineNames: names, requiredOperatorNames: operators,
+                        trackPreference: first.trackPreference),
                           let leg = selection.legIntervals.first else { continue }
                     result.hints[index + offset] = RouteHints(
                         requiredLineIDs: Array(Set(leg.map(\.lineID))).sorted(), sectionCodes: leg.map(\.code),
                         fromStationCode: selection.stationCodes[0],
-                        toStationCode: selection.stationCodes[1])
+                        toStationCode: selection.stationCodes[1],
+                        trackPreference: first.trackPreference)
                 }
             }
         }

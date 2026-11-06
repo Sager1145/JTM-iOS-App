@@ -740,6 +740,9 @@ extension StoreOperations {
         }
         if let number = section.number { pairs.append(("number", .string(number))) }
         if let name = section.name { pairs.append(("name", .string(name))) }
+        if let preference = section.trackPreference {
+            pairs.append(("track_preference", .string(preference.rawValue)))
+        }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 

@@ -464,6 +464,8 @@ public enum RouteGraph {
         public var sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin?
         public var fromStationID: String?
         public var toStationID: String?
+        /// Swift-only: part of the key only when set, so existing keys are unchanged.
+        public var trackPreference: TrackPreference?
 
         public init(
             from: String? = nil,
@@ -475,7 +477,8 @@ public enum RouteGraph {
             lineIDs: [String] = [], sectionCodes: [String] = [],
             sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin? = nil,
             fromStationID: String? = nil,
-            toStationID: String? = nil
+            toStationID: String? = nil,
+            trackPreference: TrackPreference? = nil
         ) {
             self.from = from
             self.to = to
@@ -488,6 +491,7 @@ public enum RouteGraph {
             self.sectionCodesOrigin = sectionCodesOrigin
             self.fromStationID = fromStationID
             self.toStationID = toStationID
+            self.trackPreference = trackPreference
         }
 
         /// Recorded section fields shared by template, solver and playback cache keys.
@@ -500,7 +504,8 @@ public enum RouteGraph {
                 lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
                 sectionCodesOrigin: section.sectionCodesOrigin,
                 fromStationID: section.fromStationID,
-                toStationID: section.toStationID)
+                toStationID: section.toStationID,
+                trackPreference: section.trackPreference)
         }
     }
 
@@ -529,6 +534,7 @@ public enum RouteGraph {
             if let origin = section.sectionCodesOrigin { key += "|section_codes_origin:" + origin.rawValue }
             if let identifier = section.fromStationID, !identifier.isEmpty { key += "|from_st:" + identifier }
             if let identifier = section.toStationID, !identifier.isEmpty { key += "|to_st:" + identifier }
+            if let preference = section.trackPreference { key += "|track:" + preference.rawValue }
             return key
         }
         .joined(separator: "|")
