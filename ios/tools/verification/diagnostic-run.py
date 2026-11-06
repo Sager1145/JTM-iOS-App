@@ -171,15 +171,32 @@ def summarize(req_id, session, status, result):
 
 
 def launch_command(app, req_path, repo_root=None):
-    """The `open` invocation: a new instance with --args only when a repository root is passed."""
-    cmd = ["open"] + (["-n"] if repo_root else []) + ["-a", app]
+    """The `open` invocation. `--env` and `--args` only reach an instance this call
+    launches, so either one forces a new instance (`-n`); send_and_wait quits it after."""
     evidence = os.environ.get("RAILWAY_EVIDENCE_ROOT")
+    cmd = ["open"] + (["-n"] if (repo_root or evidence) else []) + ["-a", app]
     if evidence:
         cmd += ["--env", "RAILWAY_EVIDENCE_ROOT=" + evidence]
     cmd.append(str(req_path))
     if repo_root:
         cmd += ["--args", "--repo-root", str(Path(repo_root).resolve())]
     return cmd
+
+
+def quit_instance(pid):
+    """Quit the instance this call launched with `open -n` once its request settled,
+    so instances do not pile up (one native job at a time). Only a RailDiagnostics
+    process is signalled; anything else is left alone and reported."""
+    if not isinstance(pid, int) or pid <= 0:
+        return "unknown"
+    name = subprocess.run(["ps", "-p", str(pid), "-o", "comm="], capture_output=True, text=True).stdout.strip()
+    if "RailDiagnostics" not in name:
+        return "notRailDiagnostics" if name else "exited"
+    try:
+        os.kill(pid, 15)
+    except OSError:
+        return "exited"
+    return "terminated"
 
 
 def send_and_wait(req_path, req, timeout, app, repo_root=None):
@@ -195,7 +212,9 @@ def send_and_wait(req_path, req, timeout, app, repo_root=None):
     log = EVIDENCE / "diagnostics/inbox/rejections.jsonl"
     before = rejection_count(log)
     started = time.time()
-    r = subprocess.run(launch_command(app, req_path, repo_root), capture_output=True, text=True)
+    command = launch_command(app, req_path, repo_root)
+    launched_new = "-n" in command
+    r = subprocess.run(command, capture_output=True, text=True)
     if r.returncode != 0:
         out({"rejected": False, "state": "openFailed", "reason": r.stderr.strip()}, 4)
     deadline = started + timeout
@@ -222,6 +241,8 @@ def send_and_wait(req_path, req, timeout, app, repo_root=None):
             if res and res.get("requestID") != req_id:
                 res = None
             summary = summarize(req_id, session, st, res)
+            if launched_new:
+                summary["quitInstance"] = quit_instance(st.get("processID"))
             out(summary, 0 if st.get("state") in OK_STATES else 4)
         time.sleep(2)
     st = read_json(session / "run-status.json") or {}

@@ -115,7 +115,9 @@ public struct ProcessGuardCommandRunner: GuardCommandRunning {
     /// `shell` inside the machine-wide heavy-job lock, following
     /// /private/tmp/jtm-heavy-job-run.sh: the holder writes `pid` and `cmd`
     /// (the command comes from `$JTM_LOCK_CMD`); a waiter removes the lock only
-    /// when its pid file names a dead process (never one without a pid file)
+    /// when its pid file names a dead process (never one without a pid file),
+    /// under a `$LOCK.break` mutex with the pid re-checked so two waiters
+    /// cannot both clear it,
     /// and says once on stderr whom it waits for; the exit trap removes pid,
     /// cmd and the directory.
     public static func lockedScript(_ shell: String, lock: String = GuardRunner.heavyJobLock) -> String {
@@ -124,7 +126,11 @@ public struct ProcessGuardCommandRunner: GuardCommandRunning {
         while ! mkdir "$LOCK" 2>/dev/null; do
           holder=$(cat "$LOCK/pid" 2>/dev/null)
           if [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null; then
-            rm -f "$LOCK/pid" "$LOCK/cmd"; rmdir "$LOCK" 2>/dev/null; continue
+            if mkdir "$LOCK.break" 2>/dev/null; then
+              if [ "$(cat "$LOCK/pid" 2>/dev/null)" = "$holder" ]; then rm -f "$LOCK/pid" "$LOCK/cmd"; rmdir "$LOCK" 2>/dev/null; fi
+              rmdir "$LOCK.break" 2>/dev/null
+            fi
+            continue
           fi
           if [ "$announced" = 0 ]; then
             echo "jtm-area: waiting for heavy-job lock held by PID ${holder:-unknown} ($(cat "$LOCK/cmd" 2>/dev/null))" >&2; announced=1

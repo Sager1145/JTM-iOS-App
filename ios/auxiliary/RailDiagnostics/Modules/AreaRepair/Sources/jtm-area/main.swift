@@ -311,12 +311,11 @@ func captureData(_ options: Options, problemsOnly: Bool) throws -> Int32 {
                                       "rides": trains.count, "elapsed": seconds(clock.now - start)]
         if let propose = options.one("propose") {
             let ops = problems.compactMap(\.proposal)
-            guard !ops.isEmpty else {
-                var kinds: [String] = []
-                for kind in problems.map(\.kind.rawValue) where !kinds.contains(kind) { kinds.append(kind) }
-                emit(["proposed": 0, "note": "no problem in this area has an automatic proposal", "problems": kinds] as [String: Any])
-                return 0
-            }
+            if ops.isEmpty {
+                // Nothing to draft: report it, write no patch, keep the normal problem list and exit code.
+                summary["proposed"] = 0
+                summary["note"] = "no problem in this area has an automatic proposal"
+            } else {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
             formatter.dateFormat = "yyyyMMdd-HHmmss"
@@ -329,6 +328,7 @@ func captureData(_ options: Options, problemsOnly: Bool) throws -> Int32 {
             summary["patch"] = url.path
             summary["needsReview"] = "Every op has an empty reason and source; fill both before preview-to-write (write validates them)."
             summary["hints"] = ops.map { ["key": $0.key, "op": $0.op.rawValue, "proposedReason": $0.reason] as [String: String] }
+            }
         }
         emit(summary)
         return problems.contains { $0.severity == .error || $0.severity == .warning } ? 4 : 0

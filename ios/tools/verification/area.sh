@@ -41,7 +41,14 @@ if ! "$fresh"; then
   while ! mkdir "$lock" 2>/dev/null; do
     holder=$(cat "$lock/pid" 2>/dev/null || true)
     if [[ -n $holder ]] && ! kill -0 "$holder" 2>/dev/null; then
-      rm -f "$lock/pid" "$lock/cmd"; rmdir "$lock" 2>/dev/null || true
+      # Break a dead holder's lock under a breaker mutex, re-checking the pid,
+      # so two waiters can never both clear it (one would delete the other's).
+      if mkdir "$lock.break" 2>/dev/null; then
+        if [[ $(cat "$lock/pid" 2>/dev/null || true) == "$holder" ]]; then
+          rm -f "$lock/pid" "$lock/cmd"; rmdir "$lock" 2>/dev/null || true
+        fi
+        rmdir "$lock.break" 2>/dev/null || true
+      fi
       continue
     fi
     if ! "$announced"; then
