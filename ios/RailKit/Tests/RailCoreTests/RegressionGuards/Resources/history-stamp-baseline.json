@@ -1,0 +1,125 @@
+{
+  "entries": [
+    {
+      "count": 3,
+      "event": "jp.h2005.h1.hanshin-namba-extension",
+      "kind": "sections-uncovered",
+      "line": "阪神なんば線",
+      "of": 9,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.hanshin-namba-extension",
+      "kind": "stations-uncovered",
+      "line": "阪神なんば線",
+      "of": 4,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.hokuriku-shinkansen-kanazawa-tsuruga",
+      "kind": "sections-uncovered",
+      "line": "北陸新幹線",
+      "of": 13,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.hokuriku-shinkansen-nagano-joetsu",
+      "kind": "sections-uncovered",
+      "line": "北陸新幹線",
+      "of": 5,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.kitaosaka-senrichuo-minoh",
+      "kind": "sections-uncovered",
+      "line": "南北線",
+      "of": 5,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 2,
+      "event": "jp.h2005.h1.kyushu-shinkansen-hakata",
+      "kind": "sections-uncovered",
+      "line": "九州新幹線",
+      "of": 16,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.kyushu-shinkansen-hakata",
+      "kind": "stations-uncovered",
+      "line": "九州新幹線",
+      "of": 7,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 4,
+      "event": "jp.h2005.h1.narita-sky-access",
+      "kind": "sections-uncovered",
+      "line": "成田空港線",
+      "of": 7,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.narita-sky-access",
+      "kind": "stations-uncovered",
+      "line": "成田空港線",
+      "of": 2,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 3,
+      "event": "jp.h2005.h1.osaka-higashi-north",
+      "kind": "sections-uncovered",
+      "line": "おおさか東線",
+      "of": 12,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.osaka-higashi-north",
+      "kind": "stations-uncovered",
+      "line": "おおさか東線",
+      "of": 6,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 2,
+      "event": "jp.h2005.h1.osaka-higashi-south",
+      "kind": "sections-uncovered",
+      "line": "おおさか東線",
+      "of": 14,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.osaka-higashi-south",
+      "kind": "stations-uncovered",
+      "line": "おおさか東線",
+      "of": 6,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.sotetsu-hazawa-shinyokohama",
+      "kind": "sections-uncovered",
+      "line": "相鉄新横浜線",
+      "of": 3,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    },
+    {
+      "count": 1,
+      "event": "jp.h2005.h1.tohoku-shinkansen-shinaomori",
+      "kind": "sections-uncovered",
+      "line": "東北新幹線",
+      "of": 5,
+      "reason": "pre-existing since d44bdc5cd (earliest commit checked; no earlier revision stamped these features); needs N02-edition review (new_since_release may exclude pre-existing features)"
+    }
+  ],
+  "format": "jtm-history-stamp-baseline/1"
+}

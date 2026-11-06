@@ -1,0 +1,27 @@
+{
+ "_comment": "Minimal extract of app/data/rail-history.json at HEAD (revision 2026-10-11.1) before the Toyama station-connection stamps were restored: the .sections stamp bbox is narrowed to 1 of 4 features and the .stations stamp is missing. HistoryStampGuardTests must flag it.",
+ "revision": "2026-10-11.1",
+ "retirements": [
+  {
+   "history_id": "jp.opening.toyama-station-connection.current.sections",
+   "match": {
+    "line_name": "富山駅南北接続線",
+    "operator": "富山地方鉄道",
+    "bbox": [
+     137.21242539,
+     36.70074699,
+     137.21282461,
+     36.70147326
+    ],
+    "targets": [
+     "sections"
+    ]
+   },
+   "source": "https://www.mlit.go.jp/statistics/details/content/001884569.pdf",
+   "valid_from": "2015-03-14"
+  }
+ ],
+ "identity_periods": [],
+ "sections": [],
+ "stations": []
+}
