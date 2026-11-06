@@ -414,11 +414,15 @@ final class WorkspaceEditingTests: XCTestCase {
             }
             return false
         }
-        let vehicle = app.otherElements["rideEditorVehicleType"].textFields.firstMatch
-        guard revealServiceField(vehicle, stage: "vehicle") else {
-            XCTFail("The vehicle input must be fully inside the native Form viewport above the keyboard.")
+        let vehicleRow = app.buttons["newTripVehicleType"].firstMatch
+        guard revealServiceField(vehicleRow, stage: "vehicle") else {
+            XCTFail("The vehicle row must be fully inside the native Form viewport above the keyboard.")
             return
         }
+        // The vehicle row opens VehiclePickerView, whose text field takes the custom value.
+        EditorUITestSupport.tap(vehicleRow, in: app)
+        let vehicle = app.textFields["vehiclePickerField"].firstMatch
+        XCTAssertTrue(vehicle.waitForExistence(timeout: 8))
         EditorUITestSupport.tap(vehicle, in: app)
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
         if let initial = vehicle.value as? String,
