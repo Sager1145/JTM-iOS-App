@@ -326,6 +326,7 @@ final class MapRenderDiagnostics {
         let nonemptyRides = rides.filter { $0.segments.contains { $0.coordinates.count > 1 } }.count
         let installedRideOverlays = mounted.filter {
             MapOverlayStyles.isRideCoreKey($0.title ?? "")
+                || MapOverlayStyles.isRideBatchKey($0.title ?? "")
         }.count
         let settled =
             !cores.isEmpty && coreRenderers.count == cores.count
@@ -341,6 +342,7 @@ final class MapRenderDiagnostics {
     func targetRideReadiness(
         on mapView: MKMapView, rides: [RiddenRouteStore.DrawnRide],
         categoryCountries: Set<String>,
+        batchedParts: (String) -> Int = { _ in 0 },
         draws: (RiddenRouteStore.DrawnSegment, RiddenRouteStore.DrawnRide, [Stop]) -> Bool
     ) -> String {
         // A ride count includes entries whose geometry is still being
@@ -361,6 +363,9 @@ final class MapRenderDiagnostics {
         let installedParts = mapView.overlays.compactMap { $0 as? MKMultiPolyline }
             .filter { MapOverlayStyles.rideCoreKeys(for: targetID).contains($0.title ?? "") }
             .reduce(0) { $0 + $1.polylines.count }
+            // A non-selected ride is drawn inside a shared `rides|` batch,
+            // whose overlay no longer names it; the rebuild reports its parts.
+            + batchedParts(targetID)
         return ";targetRideReady:\(ready ? 1 : 0);targetCategoryReady:\(classified ? 1 : 0)"
             + ";targetRouteParts:\(expectedParts);installedTargetRouteParts:\(installedParts)"
     }

@@ -260,6 +260,7 @@
         "ios/RailMap/Map/RailMapCoordinator.swift",
         "ios/RailMap/Map/RailMapView.swift",
         "ios/RailMap/Map/RailwayLineCardView.swift",
+        "ios/RailMap/Map/RideOverlayBatching.swift",
         "ios/RailMap/Map/RideStationOverlay.swift",
         "ios/RailMap/Map/RideTapIndex.swift",
         "ios/RailMap/Map/StationAnnotationViews.swift",

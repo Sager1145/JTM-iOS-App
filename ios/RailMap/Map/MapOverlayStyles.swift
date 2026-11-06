@@ -55,6 +55,13 @@ final class MapOverlayStyles {
         rideSuffixes.contains { key.hasPrefix("\($0)-casing|") }
     }
 
+    /// A shared overlay of many non-selected rides (`RideOverlayBatching`).
+    /// Its `rides|` prefix is neither a core (`ride|`) nor a casing key, and
+    /// the text after it is a colour, never a ride id.
+    static func isRideBatchKey(_ key: String) -> Bool {
+        key.hasPrefix("rides|")
+    }
+
     /// Every core key a ride may be installed under.
     static func rideCoreKeys(for rideID: String) -> Set<String> {
         Set(rideSuffixes.map { "\($0)|\(rideID)" })

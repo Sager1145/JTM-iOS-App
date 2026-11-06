@@ -479,6 +479,7 @@ final class MapOverlayInstaller {
             }
             if alphaTransitionDuration != 0,
                (MapOverlayStyles.isRideCoreKey(key) || MapOverlayStyles.isRideCasingKey(key)
+                || MapOverlayStyles.isRideBatchKey(key)
                 || key.hasPrefix("network")),
                desiredKeys.contains(key), let multi = overlay as? MKMultiPolyline {
                 let exitKey = "handoff|\(UUID().uuidString)"

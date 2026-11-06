@@ -94,6 +94,11 @@ struct RideTapIndex: Sendable {
         let ids: [String]
         let strokes: [[[Coordinate]]]
 
+        init(ids: [String], strokes: [[[Coordinate]]]) {
+            self.ids = ids
+            self.strokes = strokes
+        }
+
         init(
             rides: [RiddenRouteStore.DrawnRide],
             drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]]
