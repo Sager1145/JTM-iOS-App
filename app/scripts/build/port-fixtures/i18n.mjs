@@ -56,7 +56,7 @@ const LANGUAGES = ["zh-Hant", "zh-Hans", "ja", "en"];
 // The countries I18N.setCountry accepts, plus a set it does not. The whitelist
 // has bitten before: a country outside it silently becomes "jp", so every
 // country-variant string reverts to the Japanese copy rather than failing.
-const WHITELISTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr"];
+const WHITELISTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr", "cn"];
 const REJECTED_COUNTRIES = ["mx", "", null, "JP", "TW", "jp ", "japan"];
 const PROBED_COUNTRIES = [...WHITELISTED_COUNTRIES, "mx"];
 
@@ -677,7 +677,7 @@ export function build({ APP_DIR, AppCore }) {
   // a legend naming the wrong railway.
   const variantBases = new Set();
   for (const key of keys) {
-    const m = /^(.*)\.(tw|hk|mo|kr)$/.exec(key);
+    const m = /^(.*)\.(tw|hk|mo|kr|cn)$/.exec(key);
     if (m) variantBases.add(m[1]);
   }
   const tcProbeKeys = [

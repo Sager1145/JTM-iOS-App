@@ -3829,6 +3829,64 @@
         }
       }
     },
+    "info.cnRailBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The China scope includes Hong Kong high-speed rail. Station and line records retain their source evidence."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国のデータ範囲には香港の高速鉄道を含みます。駅と路線の記録には出典を保持しています。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国铁路数据范围包含香港高速铁路。车站及路线依各項来源证据记录。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中國鐵路資料範圍包含香港高速鐵路。車站及路線依各項來源證據記錄。"
+          }
+        }
+      }
+    },
+    "info.cnRailTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "China railway network"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国鉄道網"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中国铁路网"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中國鐵路網"
+          }
+        }
+      }
+    },
     "info.hkRailBody" : {
       "extractionState" : "manual",
       "localizations" : {

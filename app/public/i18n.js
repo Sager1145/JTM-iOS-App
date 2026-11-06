@@ -98,6 +98,7 @@
     // Vocabulary, not orthography: these read as Taiwanese rather than wrong
     // once the character map has run, so they are replaced whole and BEFORE
     // it. Longest match first, as everywhere in this table.
+    "路面電車與輕軌": "有轨电车与轻轨",
     "無法復原": "无法撤销",
     "保持在前景": "保持在前台",
     "進階": "高级",
