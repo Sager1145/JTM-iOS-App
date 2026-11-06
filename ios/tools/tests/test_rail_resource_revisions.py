@@ -56,6 +56,14 @@ class ResourceRevisionTests(unittest.TestCase):
                     path.write_bytes(path.read_bytes() + b"changed" if path.exists() else b"added")
                     self.assertEqual(self.changed_regions(before), {region})
 
+    def test_registry_bundle_changes_only_its_region(self):
+        for region in resources.REGIONS:
+            with self.subTest(region=region):
+                path = self.bundle / f"registry-{region}.json"
+                before = self.manifest()
+                path.write_bytes(path.read_bytes() + b"fix" if path.exists() else b'{"stations":[]}')
+                self.assertEqual(self.changed_regions(before), {region})
+
     def test_physical_connection_evidence_invalidates_all_route_caches(self):
         before = self.manifest()
         (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')
