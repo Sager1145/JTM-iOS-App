@@ -241,6 +241,12 @@ extension RailMapView.Surface {
             private var retiringStationOverlays: [ObjectIdentifier: UUID] = [:]
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
+            /// What the last full rebuild reported, so a rides-only update
+            /// can report the same frame with its own ride counts and time.
+            private var lastRenderStats: RailMapView.RenderStats?
+#if DEBUG
+            private var lastDiagnosticSnapshot: MapRenderDiagnostics.Snapshot?
+#endif
             private var draftAnnotations: [MKAnnotation] = []
             private var draftSnapshot = DraftMapSnapshot(revision: 0, pins: [])
             private var draftLanguage: String?
@@ -1837,8 +1843,9 @@ extension RailMapView.Surface {
                     culledOffScreen: selection?.culledOffScreen ?? 0,
                     threshold: fitted.threshold
                 )
+                lastRenderStats = stats
 #if DEBUG
-                diagnostics.publish(.init(
+                let snapshot = MapRenderDiagnostics.Snapshot(
                     showsNetwork: showsNetwork, visibleLines: visible.count, networkOverlays: overlays.count,
                     threshold: fitted.threshold, totalLines: lines.count,
                     culledOffScreen: selection?.culledOffScreen ?? 0, totalOverlays: stats.overlays,
@@ -1861,7 +1868,9 @@ extension RailMapView.Surface {
                     annotationViews: mapView.annotations.count,
                     builtRect: networkBuildState.builtRect,
                     targetReadiness: targetRideReadiness(on: mapView),
-                    selectedTrainID: selectedTrainID, selectedDate: selectedDate), on: mapView)
+                    selectedTrainID: selectedTrainID, selectedDate: selectedDate)
+                lastDiagnosticSnapshot = snapshot
+                diagnostics.publish(snapshot, on: mapView)
 #endif
                 DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
@@ -2019,6 +2028,7 @@ extension RailMapView.Surface {
 
                 let interval = RailSignpost.map.begin("map.rides")
                 defer { RailSignpost.map.end("map.rides", interval) }
+                let started = ContinuousClock.now
                 let scope = dateScope
                 let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
                 let rideBuildRect = context.buildRect.insetBy(
@@ -2088,7 +2098,37 @@ extension RailMapView.Surface {
                 if !placed { desired.append(contentsOf: batchOverlays) }
                 buildMarkers(context, on: mapView, pendingOverlays: desired,
                              networkTransitionDuration: detailDuration)
+                publishRidesOnlyUpdate(
+                    overlays: desired.count, elapsed: ContinuousClock.now - started, on: mapView)
                 return true
+            }
+
+            /// Keeps the render status and the panel's stats current after a
+            /// rides-only update: the last full rebuild's frame, with this
+            /// update's ride counts, overlay count and time.
+            private func publishRidesOnlyUpdate(
+                overlays: Int, elapsed: Duration, on mapView: MKMapView
+            ) {
+                guard var stats = lastRenderStats else { return }
+                stats.overlays = overlays
+                stats.buildMilliseconds = elapsed.milliseconds
+                lastRenderStats = stats
+#if DEBUG
+                if var snapshot = lastDiagnosticSnapshot {
+                    snapshot.totalOverlays = overlays
+                    snapshot.rides = rides.count
+                    snapshot.rideDots = rideStationAnnotations.filter { $0 is RideStationAnnotation }.count
+                    snapshot.rideLabels = rideStationAnnotations.filter { $0 is RideLabelAnnotation }.count
+                    snapshot.buildMilliseconds = elapsed.milliseconds
+                    snapshot.annotationViews = mapView.annotations.count
+                    snapshot.targetReadiness = targetRideReadiness(on: mapView)
+                    snapshot.selectedTrainID = selectedTrainID
+                    snapshot.selectedDate = selectedDate
+                    lastDiagnosticSnapshot = snapshot
+                    diagnostics.publish(snapshot, on: mapView)
+                }
+#endif
+                DispatchQueue.main.async { [onRender] in onRender(stats) }
             }
 
 #if DEBUG
