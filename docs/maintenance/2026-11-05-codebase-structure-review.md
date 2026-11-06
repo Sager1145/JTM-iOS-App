@@ -150,7 +150,7 @@ This is the wave most likely to conflict with in-flight tooling work, so it land
 
 ## 4. Local-only duplicates (main checkout, git-ignored; not part of any commit)
 
-These Finder/iCloud copies exist only in `/Users/sager/Documents/GitHub/JTM-iOS-App` and are ignored by git. Deleting them is a plain `rm` that git cannot undo. A bug pass is also running in that checkout. **Removing them needs the coordinator's or the user's go-ahead.**
+These Finder/iCloud copies exist only in `/Users/sager/Documents/GitHub/JTM-iOS-App` and are ignored by git. Deleting them is a plain `rm` that git cannot undo. A bug pass is also running in that checkout. The user approved removal on 2026-11-05; see the removal record below.
 
 | Files | Diff result | Proposal |
 |---|---|---|
@@ -160,6 +160,152 @@ These Finder/iCloud copies exist only in `/Users/sager/Documents/GitHub/JTM-iOS-
 | `app/scripts/railway/repair-keikyu-airport-terminal-display 2.mjs` | Differs; the copy is older (Oct 20 vs Oct 31) | Remove |
 | 125 `* 3.*` files under `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/` | Byte-identical to originals that are themselves ignored | Remove |
 | `railway-sources/local/apple-maps/{metadata 2,network-cache 2}/` | **No un-suffixed sibling exists.** These may be the only copies. | **Keep.** Ask whether to rename them back. |
+
+### Removal record (2026-11-05)
+
+On 2026-11-05 the user approved removing these files (relayed by the coordinator). They were moved out of the main checkout into `~/.Trash/jtm-finder-duplicates-2026-11-05/` with their relative paths preserved, rather than `rm`'d, so they can be recovered until the Trash is emptied.
+
+Before each move the script checked that the original existed. For `app/data` it also checked that the original is tracked and the copy git-ignored. Every `* 3.*` copy was confirmed byte-identical to its original with `cmp`.
+
+That is 135 files, 229,794,497 bytes in all: 126 byte-identical and 9 older copies. `railway-sources/local/apple-maps/{metadata 2,network-cache 2}/` were kept.
+
+| File (relative to the main checkout) | Bytes | vs. original |
+|---|---:|---|
+| `app/data/stations-cn 2.json` | 12531851 | older-copy |
+| `app/data/station-names-coverage 2.json` | 13606041 | older-copy |
+| `app/data/station-english-coverage 2.json` | 14177560 | older-copy |
+| `app/data/rail-sections-cn 2.json` | 46280093 | older-copy |
+| `app/data/station-english-verified-cn 2.json` | 5077 | identical |
+| `app/data/station-readings-cn 2.json` | 28852433 | older-copy |
+| `app/data/station-english 2.json` | 53717757 | older-copy |
+| `app/data/physical-rail-junctions 2.json` | 9960395 | older-copy |
+| `app/data/station-names-cn 2.json` | 9447057 | older-copy |
+| `app/scripts/railway/repair-keikyu-airport-terminal-display 2.mjs` | 15079 | older-copy |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroden-m18/operator-home 3.html` | 36342 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroden-m18/validation 3.json` | 196 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroden-m18/station-english-verified-jp-hiroden-m18 3.json` | 11110 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroden-m18/m18 3.html` | 6031 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroden-m18/HANDOFF 3.md` | 936 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/reviewed-route-bindings 3.json` | 9711 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/en-review-2 3.png` | 63336 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/en-review-0 3.png` | 82131 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/visual-review 3.json` | 1111 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/station-english-verified-jp-keikyu-tail 3.json` | 199316 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/map-en-page 3.html` | 47724 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/map-en 3.gif` | 155753 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/fetch 3.py` | 1088 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/reviewed-en 3.tsv` | 1292 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/HANDOFF 3.md` | 1697 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/map-ja-extracted 3.txt` | 0 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/map-ja 3.png` | 127694 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/manifest 3.json` | 1507 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/map-ja 3.pdf` | 2505960 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/keikyu/directory-ja 3.html` | 119876 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-9.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-6.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-863.html.metadata 3.json` | 301 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/openapis-wideStation.html.metadata 3.json` | 377 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-3.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/station-english-evidence-delta 3.json` | 290051 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/proposed-identity-correction-ledger 3.json` | 246806 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-2.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-4 3.html` | 134115 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-8 3.html` | 132390 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-1446.html.metadata 3.json` | 304 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-8.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/openapis-station 3.html` | 11625 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/artifact-hashes 3.json` | 4153 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-6 3.html` | 134239 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-1612.html.metadata 3.json` | 304 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-3 3.html` | 134266 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/openapis-station.html.metadata 3.json` | 359 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/HANDOFF 3.md` | 5432 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-1612 3.html` | 97741 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-1.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-863 3.html` | 98124 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-4.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-1 3.html` | 132819 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-5 3.html` | 132694 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-9 3.html` | 130854 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/stationGuide 3.html` | 8412 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-7 3.html` | 133525 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-865.html.metadata 3.json` | 301 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korailretail-sub7-5.html.metadata 3.json` | 324 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/korail/korail-1400.html.metadata 3.json` | 304 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/railways-map-en 3.gif` | 104313 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/railways-map-ja 3.gif` | 93688 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/railways 3.html` | 20553 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/tram-current 3.html` | 41394 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/trams-map-en 3.gif` | 158704 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/trams-map-ja 3.gif` | 129405 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/source-limitations 3.json` | 2848 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/tram-km 3.png` | 259733 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/station-index 3.html` | 39397 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/trams-ja 3.html` | 13933 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/manifest 3.json` | 5805 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/c21-timetable 3.pdf` | 398287 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama/trams 3.html` | 13558 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-map-en 3.txt` | 1165 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-central 3.png` | 633535 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/reviewed-nagoya 3.tsv` | 5641 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-south 3.png` | 713870 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-en-north 3.png` | 252003 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/source-conflicts 3.json` | 1047 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-station-index 3.html` | 32150 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/reviewed-qualifiers 3.json` | 323 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/validation 3.json` | 4955 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-north 3.png` | 464139 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-map-en 3.png` | 578128 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-en-south 3.png` | 203872 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/visual-review 3.json` | 8183 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-map-en 3.pdf` | 532895 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-route-en 3.html` | 10503 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-en-central 3.png` | 276586 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-route-ja 3.html` | 13642 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/reviewed-sapporo 3.tsv` | 2996 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/sapporo-native-central-inspection 3.png` | 972068 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/handoff 3.md` | 4187 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-map 3.png` | 2016626 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-map 3.pdf` | 424994 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-east 3.png` | 305587 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/nagoya-map 3.txt` | 2358 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/nagoya-sapporo/crop-provenance 3.json` | 1912 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/route-bindings 3.json` | 21358 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-transcription 3.tsv` | 3027 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-stop-directory-a 3.html` | 25842 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-transcription 3.tsv` | 2566 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/visual-review 3.json` | 1459 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-en 3.png` | 1023181 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-ja 3.png` | 935046 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/handoff 3.json` | 1251 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-gomen 3.png` | 2208516 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/source-limitations 3.json` | 3972 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-asakura-current 3.pdf` | 171679 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-asakura-current 3.png` | 1399706 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/render_pdf 3.mjs` | 929 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-map-ja 3.pdf` | 566581 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-map-current 3.txt` | 0 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/station-english-verified-jp-hiroshima-tosaden-delta 3.json` | 309146 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-map-en 3.pdf` | 350897 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-map-en-old 3.pdf` | 1102339 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/fetch_sources 3.py` | 1218 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-ino 3.png` | 1607163 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/input-hashes 3.json` | 2345 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-index 3.html` | 3881 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-sambashi 3.png` | 692303 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-ja-pdfjs 3.png` | 1703655 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/manifest 3.json` | 3959 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-map-en-old 3.txt` | 0 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-map-ja 3.txt` | 3245 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-map-current 3.pdf` | 230933 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/hiroden-native-route 3.png` | 119974 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/hiroshima-tosaden/tosaden-index 3.html` | 23467 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/city-native-excerpt 3.txt` | 2944 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/station-english-verified-jp-toyama-c21 3.json` | 10355 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/toyama-city-merger-report 3.pdf` | 13834175 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/fetch 3.py` | 911 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/HANDOFF 3.md` | 1294 | identical |
+| `railway-sources/local/station-english/candidates/2026-10-01-tail/sources/toyama-c21/city-native-page37 3.png` | 881955 | identical |
 
 ## 5. Follow-ups (not moves or deletions)
 
