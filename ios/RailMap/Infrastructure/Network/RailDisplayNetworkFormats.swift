@@ -122,6 +122,28 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
                 operator: `operator`, name: name)
         }
         var logo: String?
+        /// The package attributes the journey-badge index needs that this line
+        /// does not already carry verbatim — `package_badge_fields` in
+        /// `build-display-network.py`. Absent from a manifest built before
+        /// the field existed, which sends the store back to scanning the
+        /// package (audit A7).
+        var badge: PackageBadge?
+
+        struct PackageBadge: Decodable, Sendable {
+            /// The line's index in its package's `lines`.
+            var order: Int
+            /// Present only where it differs from `name`.
+            var nameNorm: String?
+            /// The PACKAGE's value; the line's own `operatorShort` is the
+            /// label table's and is a different answer.
+            var operatorShort: String?
+            /// Present only where a render-group override or the grey
+            /// fallback replaced the package's own colour.
+            var color: String?
+            var colorDark: String?
+            /// `1` when the package gives the line no colour at all.
+            var uncolored: Int?
+        }
 
         /// This line's extent in projected map space — `.null` when
         /// `bounds` is absent. Same corner math as `RegionRecord.mapRect`.
@@ -946,3 +968,31 @@ struct RailDisplayHistoryFile: Decodable, Sendable {
     }
 }
 
+
+extension RailDisplayNetworkManifest {
+    /// One region's lines as the badge index reads them, in package order —
+    /// equal to `RouteBadgeIndex.Source(header:)` over the package's headers
+    /// (both canonical, see ``RouteBadgeIndex/Source``), taken from the
+    /// manifest the map already decodes instead of a scan of the package.
+    ///
+    /// `nil` when no line of the region carries ``Line/badge`` (a manifest
+    /// built before the field existed), so the caller can fall back.
+    func badgeSources(region: String) -> [RouteBadgeIndex.Source]? {
+        let rows = lines.values
+            .compactMap { line in
+                line.region == region ? line.badge.map { (line, $0) } : nil
+            }
+            .sorted { $0.1.order < $1.1.order }
+        guard !rows.isEmpty else { return nil }
+        return rows.map { line, badge in
+            let uncolored = (badge.uncolored ?? 0) != 0
+            return RouteBadgeIndex.Source(
+                id: line.id, name: line.name, nameNorm: badge.nameNorm,
+                operator: line.operator, operatorShort: badge.operatorShort,
+                operatorLogo: line.operatorLogo,
+                color: uncolored ? nil : (badge.color ?? line.color),
+                colorDark: uncolored ? nil : (badge.colorDark ?? line.colorDark),
+                hasLogo: line.logo != nil)
+        }
+    }
+}

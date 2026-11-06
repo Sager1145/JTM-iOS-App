@@ -66,6 +66,41 @@ OVERVIEW_STATION_MAX_ZOOM = 6
 OVERVIEW_QUALIFYING_OPERATORS = {"Amtrak", "Via Rail Canada"}
 
 
+def package_badge_fields(
+    line: dict, order: int, line_color: str, line_color_dark: str
+) -> dict:
+    """The package attributes the iOS journey-badge index reads that the
+    manifest line does not already carry verbatim (audit A7).
+
+    `RouteBadgeIndex` was built from a launch-time scan of every package's
+    line headers. Everything it reads except these is already on the line
+    (`id`, `name`, `operator`, `operatorLogo`, `logo`), so only the delta is
+    written: the package order (first writer wins there, and the manifest's
+    `lines` map is key-sorted), `nameNorm` where it differs from `name`, the
+    PACKAGE's `operatorShort` (the line's own is the label table's), and the
+    package colour where a render-group override or the grey fallback
+    replaced it — `uncolored` for a line the package gave no colour at all.
+    """
+    badge: dict = {"order": order}
+    name_norm = line.get("nameNorm")
+    if name_norm is not None and name_norm != line["name"]:
+        badge["nameNorm"] = name_norm
+    if line.get("operatorShort") is not None:
+        badge["operatorShort"] = line["operatorShort"]
+    package_color = line.get("color")
+    if package_color is None:
+        badge["uncolored"] = 1
+    else:
+        # `?? color`, not `or`: Swift keeps an empty string, so must this.
+        package_dark = line.get("colorDark")
+        if package_dark is None:
+            package_dark = package_color
+        if package_color != line_color or package_dark != line_color_dark:
+            badge["color"] = package_color
+            badge["colorDark"] = package_dark
+    return badge
+
+
 def line_qualifies_for_overview(entry: dict) -> bool:
     return (
         entry.get("rank", 0) == 0
@@ -3593,6 +3628,7 @@ def build(
                 "minZoomMapLibre": ported_min, "lodMinZoomMapLibre": lod_min,
                 "visibilityLengthKm": round(group_km, 3),
                 "logo": f"/rail/logos/{line['id']}.png" if line.get("logo") else None,
+                "badge": package_badge_fields(line, order, line_color, line_color_dark),
             }
             withheld = set(
                 (comparison.get(line["id"]) or {})
