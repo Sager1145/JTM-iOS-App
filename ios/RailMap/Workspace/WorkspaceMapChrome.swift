@@ -68,7 +68,13 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
             map
             playback
                 .frame(maxHeight: transportRoom, alignment: .bottom)
-                .opacity(stageExpanded ? 0 : 1)
+                // `stageExpanded` flips at the nearest-stop midpoint while the
+                // finger is still moving: fade across it rather than pop. The
+                // animation is scoped to the opacity alone so the bar's
+                // offset keeps following the sheet edge 1:1.
+                .animation(
+                    RailMotion.animation(RailMotion.spring, reduceMotion: reduceMotion)
+                ) { $0.opacity(stageExpanded ? 0 : 1) }
                 .allowsHitTesting(!stageExpanded)
                 .accessibilityHidden(stageExpanded)
                 .padding(.horizontal, 12)
@@ -76,10 +82,13 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
                 .railAnimation(
                     RailMotion.spring, value: showsPlaybackBar,
                     reduceMotion: reduceMotion)
-            Group {
-                if railPresent { controls }
-                else { controls.hidden() }
-            }
+            // One view for the whole drag. Branching between `controls` and
+            // `controls.hidden()` gave the rail two identities, so every
+            // crossing of a presence threshold tore down and remade its glass
+            // capsules (a flash, and a jump while the new ones laid out).
+            // Presence is opacity and hit testing only; the fade itself is
+            // continuous in the sheet height (see `ResidentMapChrome`).
+            controls
                 .padding(.trailing, 12)
                 .background {
                     GeometryReader { rail in
@@ -88,7 +97,7 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
                     }
                 }
                 .offset(y: -railLift)
-                .opacity(railPresent ? railFade : 0)
+                .opacity(railFade)
                 .allowsHitTesting(railPresent)
                 .accessibilityHidden(!railPresent)
         }
