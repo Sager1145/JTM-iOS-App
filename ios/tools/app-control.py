@@ -29,7 +29,7 @@ DEFAULT_DEVICE = "00008140-000575142288801C"
 DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData"))
 PLATFORM_SUFFIX = {"sim": "iphonesimulator", "mac": "maccatalyst", "device": "iphoneos"}
 DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=macOS,variant=Mac Catalyst",
-                "device": "platform=iOS,id={device}"}
+                "device": "generic/platform=iOS"}  # no unlocked device needed to build
 STATE_DIR = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control"))
 COMMANDS = ["loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
             "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
@@ -51,7 +51,11 @@ def run(cmd, check=True, capture=True, timeout=600, env=None):
     full_env = dict(os.environ, **DEV_ENV, **(env or {}))
     p = subprocess.run(cmd, capture_output=capture, text=True, timeout=timeout, env=full_env)
     if check and p.returncode != 0:
-        out({"error": "command failed", "cmd": cmd, "code": p.returncode,
+        text = (p.stderr or "") + (p.stdout or "")
+        hint = ("unlock the iPhone (iOS refuses launches while locked)" if "Locked" in text or "unlocked" in text
+                else "trust the developer certificate on the device (Settings > General > VPN & Device Management)"
+                if "invalid code signature" in text or "Untrusted" in text else None)
+        out({"error": "command failed", "hint": hint, "cmd": cmd, "code": p.returncode,
              "stderr": (p.stderr or "")[-2000:], "stdout": (p.stdout or "")[-1000:]}, 1)
     return p
 
@@ -227,7 +231,8 @@ def cmd_build(a):
     if a.dry_run:
         out({"cmd": cmd}, 0)
     p = run(cmd, check=False, timeout=3600)
-    tail = [l for l in (p.stdout or "").splitlines() if "error:" in l or "BUILD" in l][-20:]
+    lines = ((p.stdout or "") + "\n" + (p.stderr or "")).splitlines()
+    tail = [l for l in lines if "error:" in l or "error " in l.lower() and "xcodebuild" in l or "** BUILD" in l][-20:]
     out({"built": p.returncode == 0, "app": str(app_path(a)), "log": tail}, 0 if p.returncode == 0 else 4)
 
 
