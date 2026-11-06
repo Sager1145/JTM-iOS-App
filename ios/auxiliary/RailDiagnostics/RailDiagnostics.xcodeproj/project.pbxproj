@@ -85,7 +85,6 @@
 		4E81BE6FD4508D2163593B7D /* PresentationHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA830142F3FF00F10C75DA8 /* PresentationHost.swift */; };
 		4F744450DC0714F182D9A2EE /* ChatGPTSubscriptionAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFF5EEFDA075A28EF5505A2 /* ChatGPTSubscriptionAuth.swift */; };
 		501678F4FD4E32283A56DEF8 /* RideSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BC568D4B86ECCCEDB1141D /* RideSheet.swift */; };
-		51C68E3219AE128B869F767C /* Unifont.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39E5F7D44D7570CEF8B1A442 /* Unifont.otf */; };
 		51C6C2F3F4B3D296830F76FE /* MapLayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E92AA03203E46984391D85 /* MapLayersView.swift */; };
 		51E7FF6601DA7B21FB1FFEB9 /* PassportCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC2A7DF2EE5A8BD0581C87 /* PassportCardStyle.swift */; };
 		543DB9E8C4FBF1D3DC350DB9 /* VideoExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5CA922E32F752434E94EF4 /* VideoExportOptionsView.swift */; };
@@ -131,7 +130,7 @@
 		76F09DF509711184BE87D191 /* RegionCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE070076660019A73E6059FF /* RegionCatalog.swift */; };
 		78767713974560AF444D73BE /* ServiceRangeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E434A8A1F82EB1EB86B297 /* ServiceRangeEditorView.swift */; };
 		7BAD72A395B87CD758497122 /* StatisticsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BDF8B22C1170637A92A13 /* StatisticsComponents.swift */; };
-		7F17168687195295381A670A /* jp-area-grid.json in Resources */ = {isa = PBXBuildFile; fileRef = 549764514864304E4DEE88C0 /* jp-area-grid.json */; };
+		7E4BFBF1EC49E8D42F478A9D /* Unifont.otf in Resources */ = {isa = PBXBuildFile; fileRef = AED55969F5A507AA8B6D1427 /* Unifont.otf */; };
 		7F1C5099DB645066F3BACC7A /* EditorCatalogLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDE74EE8A4F12932E79AA3 /* EditorCatalogLoading.swift */; };
 		7FD202A0E97241C23A26F632 /* AppleMapDatumProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C27D1F81144DA10A3B2855A /* AppleMapDatumProbe.swift */; };
 		7FD51A06743734AF948ACC3F /* StationReadingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60AF9125E2A34070C57C3FF /* StationReadingsStore.swift */; };
@@ -161,7 +160,6 @@
 		9DED5658A0938326D19B6FA8 /* RailWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708A0488ABE255369EAC485 /* RailWorkspaceView.swift */; };
 		9E0DC930029D061AE83EFBD0 /* NewTripStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2225A38D962DAE085A10AB7D /* NewTripStrings.swift */; };
 		9E7AC0E67746157F21FB06C4 /* RouteStressHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF3EC847A54E6378B1F7889 /* RouteStressHarness.swift */; };
-		9EF860A675AA803812B7E6BC /* InspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD7747676A0C4AE24982604 /* InspectorApp.swift */; };
 		A11D9B2EC3D9853CED65D22C /* ClockStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D3961A4DC61FA3CCC5DF8E /* ClockStrings.swift */; };
 		A24D4DB88CFEDC7DEE536BCA /* StatisticsArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18900C74B31E7523C67E8045 /* StatisticsArea.swift */; };
 		A34EBCC575CE2968A253597C /* EdgeIndexCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412C3204B1B28C09165A353F /* EdgeIndexCache.swift */; };
@@ -199,6 +197,7 @@
 		C7416B83142E3FA75AFB1359 /* JourneyEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BA1698735BBD062668E90C /* JourneyEditing.swift */; };
 		CA037E723DAD94FBFB41EC69 /* AppControlHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F7C62370FA6EE21E749FBE /* AppControlHost.swift */; };
 		CA2A0489002F21AD43EECE49 /* TicketPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14175C4E58A4A4F4AEF9DE63 /* TicketPalette.swift */; };
+		CA58EBCC9E50158926EEA96D /* jp-area-grid.json in Resources */ = {isa = PBXBuildFile; fileRef = F986074E62D882919BE640EF /* jp-area-grid.json */; };
 		CBBBCA81AC88A00205418664 /* TransferGuideOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC740C801C266896EEC93A15 /* TransferGuideOCR.swift */; };
 		CBBF1219801779AAAFF287D8 /* MapAnnotationReconciler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83ABCDF7AB62F24C2A46E5D /* MapAnnotationReconciler.swift */; };
 		CF3F75B1D64774512DAEEB7D /* RideChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE62FE46B2A8002C4ECEC2D4 /* RideChooserView.swift */; };
@@ -240,6 +239,7 @@
 		EB67C98274518F774B306EC3 /* SampleLegacyRideIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBC93143DDE585C1FB4871A /* SampleLegacyRideIDs.swift */; };
 		EB8EC91BCCFA4FBC04AFE49A /* JourneyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6ACC44DB47A290DF7309C1C /* JourneyEditorView.swift */; };
 		EC7A37216EE85EDB0CE312A3 /* ManualDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4288F2FCEED3BAC98807C2 /* ManualDates.swift */; };
+		ED083771C0DA7277D2114843 /* InspectorViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A993B2DE60ABBE00932D8E5E /* InspectorViews.swift */; };
 		ED7EC81EA955E1FEC5638F81 /* RouteWorkbenchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC75263215445466B0701D /* RouteWorkbenchView.swift */; };
 		EDF1F11B956F8CC87FEB82DC /* TimetableQuickMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DB534E1906F2103F8B9FE0 /* TimetableQuickMatchView.swift */; };
 		EEB18AAD3DE8CD8AF5BED875 /* WorkbenchCore in Frameworks */ = {isa = PBXBuildFile; productRef = BC11C4DB74BABA0100F3F0C7 /* WorkbenchCore */; };
@@ -281,7 +281,6 @@
 		17FBF2702B09AC93BB8B5136 /* VideoExportSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExportSettings.swift; sourceTree = "<group>"; };
 		18900C74B31E7523C67E8045 /* StatisticsArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsArea.swift; sourceTree = "<group>"; };
 		18DA4AE48E99DC226B9C871E /* TripHideSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHideSheet.swift; sourceTree = "<group>"; };
-		1AD7747676A0C4AE24982604 /* InspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorApp.swift; sourceTree = "<group>"; };
 		1C9E8C352FB4B482381B5D0B /* JourneySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneySearch.swift; sourceTree = "<group>"; };
 		1DA3C1710F1F24ACEA2D0918 /* StopTimingStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimingStatus.swift; sourceTree = "<group>"; };
 		20A6E14921BFEE389A363AB2 /* InspectionEvidence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectionEvidence.swift; sourceTree = "<group>"; };
@@ -294,7 +293,7 @@
 		259F0FAB66958663B0A3CBE4 /* RailKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RailKit; path = ../../RailKit; sourceTree = SOURCE_ROOT; };
 		25B738B4170964E7BA2BDCD5 /* TrainStoreDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainStoreDocument.swift; sourceTree = "<group>"; };
 		280914B9CAC653C45C1EAA66 /* StatisticsYearBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsYearBar.swift; sourceTree = "<group>"; };
-		2863C959D67B0BE70B7C652D /* InspectionKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InspectionKit; path = ../RailAlignmentInspector/InspectionKit; sourceTree = SOURCE_ROOT; };
+		2863C959D67B0BE70B7C652D /* InspectionKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InspectionKit; path = Modules/RailAlignmentInspector/InspectionKit; sourceTree = SOURCE_ROOT; };
 		2886D2301E8AA3D63DB0D2F2 /* MapLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLayers.swift; sourceTree = "<group>"; };
 		29DD87A7E0BC158CD3968EDD /* UnifiedDiagnosticCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedDiagnosticCommands.swift; sourceTree = "<group>"; };
 		2B0EB050E48347704B9CADFE /* WorkspacePanelActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelActions.swift; sourceTree = "<group>"; };
@@ -309,8 +308,7 @@
 		364D4F34D1E12E1C55A28501 /* StationCardStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCardStrings.swift; sourceTree = "<group>"; };
 		393D82E85B02D210F9D17141 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		39DC9072A7D2FA25F72E5320 /* StatisticsScopePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScopePicker.swift; sourceTree = "<group>"; };
-		39E5F7D44D7570CEF8B1A442 /* Unifont.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Unifont.otf; sourceTree = "<group>"; };
-		3A96E0A6DF1F0E5F67B275A7 /* WorkbenchCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WorkbenchCore; path = ../ThroughWorkbench/WorkbenchCore; sourceTree = SOURCE_ROOT; };
+		3A96E0A6DF1F0E5F67B275A7 /* WorkbenchCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WorkbenchCore; path = Modules/ThroughWorkbench/WorkbenchCore; sourceTree = SOURCE_ROOT; };
 		3B086C40A5B15D428874113E /* RidePersistenceQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RidePersistenceQueue.swift; sourceTree = "<group>"; };
 		3C5185DD10291284E08FF728 /* EditorLineSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineSearchView.swift; sourceTree = "<group>"; };
 		3CA4189CC9B7527A3B615B20 /* MapStationLabelCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationLabelCoordinator.swift; sourceTree = "<group>"; };
@@ -344,7 +342,6 @@
 		52D359F79E542B3828E32F20 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		52F1EBF0E7333C9A27B795DB /* JourneyStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyStrings.swift; sourceTree = "<group>"; };
 		544E7C91AE1CC1064A87B04B /* GlassStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassStyle.swift; sourceTree = "<group>"; };
-		549764514864304E4DEE88C0 /* jp-area-grid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "jp-area-grid.json"; sourceTree = "<group>"; };
 		59890B719D0F1149F6B2D328 /* StatsWidgetShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWidgetShape.swift; sourceTree = "<group>"; };
 		5A30B8C7B8469A034DD5D639 /* TransferGuideStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferGuideStrings.swift; sourceTree = "<group>"; };
 		5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelPage.swift; sourceTree = "<group>"; };
@@ -423,10 +420,12 @@
 		A4D15F8308CEA166D6AD7332 /* PlaybackVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackVideoExporter.swift; sourceTree = "<group>"; };
 		A50C0C997F5B567E9C14B736 /* RideCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideCard.swift; sourceTree = "<group>"; };
 		A60DEC98580B467940BB89A9 /* StationNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationNaming.swift; sourceTree = "<group>"; };
+		A993B2DE60ABBE00932D8E5E /* InspectorViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorViews.swift; sourceTree = "<group>"; };
 		A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLOD.swift; sourceTree = "<group>"; };
 		AE3B2EF77AFFBB3F12468E61 /* ItineraryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryStore.swift; sourceTree = "<group>"; };
 		AE62FE46B2A8002C4ECEC2D4 /* RideChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideChooserView.swift; sourceTree = "<group>"; };
 		AEBC93143DDE585C1FB4871A /* SampleLegacyRideIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLegacyRideIDs.swift; sourceTree = "<group>"; };
+		AED55969F5A507AA8B6D1427 /* Unifont.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Unifont.otf; sourceTree = "<group>"; };
 		AEDAD40BB68A024D6BC532BB /* JourneyBranding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyBranding.swift; sourceTree = "<group>"; };
 		B056E422C7E53AF49AEECD8C /* MapRideMarkers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRideMarkers.swift; sourceTree = "<group>"; };
 		B125A964BE325BCCA8E792DE /* RouteRepairController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteRepairController.swift; sourceTree = "<group>"; };
@@ -502,6 +501,7 @@
 		F78AA3A5D156D8B0BF82C5FA /* JourneyCompletionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyCompletionRequest.swift; sourceTree = "<group>"; };
 		F82FF95B639DBB2B0111BFAD /* JourneyLabelAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyLabelAnnotations.swift; sourceTree = "<group>"; };
 		F8DB534E1906F2103F8B9FE0 /* TimetableQuickMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableQuickMatchView.swift; sourceTree = "<group>"; };
+		F986074E62D882919BE640EF /* jp-area-grid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "jp-area-grid.json"; sourceTree = "<group>"; };
 		F9BA3036E38A046B4C00C235 /* ChatGPTSubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTSubscriptionService.swift; sourceTree = "<group>"; };
 		FA0FB1033DC0A749BF1A6354 /* DataImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImportView.swift; sourceTree = "<group>"; };
 		FB75D3F9F830E75D3A694AE1 /* EditorFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFields.swift; sourceTree = "<group>"; };
@@ -537,7 +537,7 @@
 				E37B9868719AE8EB0C42E3ED /* WorkbenchView.swift */,
 			);
 			name = App;
-			path = ../ThroughWorkbench/App;
+			path = Modules/ThroughWorkbench/App;
 			sourceTree = "<group>";
 		};
 		162C2AFF225EAE8BC1D70184 /* Sources */ = {
@@ -572,8 +572,6 @@
 			children = (
 				52D359F79E542B3828E32F20 /* AppIcon.icon */,
 				EE1270C2F6F2C12D8A0CC57F /* Assets.xcassets */,
-				549764514864304E4DEE88C0 /* jp-area-grid.json */,
-				39E5F7D44D7570CEF8B1A442 /* Unifont.otf */,
 				23DB270595FC5AD76877A7B5 /* App */,
 				E5B3490B50E880FB4E1C0072 /* Design */,
 				982A5D3EF4338996FA8D5434 /* Diagnostics */,
@@ -687,13 +685,13 @@
 				3EB9AE1531B28D127E3BD588 /* BatchCaptureGeometry.swift */,
 				20A6E14921BFEE389A363AB2 /* InspectionEvidence.swift */,
 				A0480CC5AB53874842E7F666 /* InspectionViewpoints.swift */,
-				1AD7747676A0C4AE24982604 /* InspectorApp.swift */,
 				6397697865248E6D4DF39FDA /* InspectorMap.swift */,
 				2EFA194865498F4ADB2CCC36 /* InspectorModel.swift */,
 				4DD1280A19A0C20AA2DB5513 /* InspectorStrokeGeometry.swift */,
+				A993B2DE60ABBE00932D8E5E /* InspectorViews.swift */,
 			);
 			name = Sources;
-			path = ../RailAlignmentInspector/Sources;
+			path = Modules/RailAlignmentInspector/Sources;
 			sourceTree = "<group>";
 		};
 		7F16A96A7A1DFA6D342DE99B /* Journeys */ = {
@@ -727,7 +725,7 @@
 				6EFC75263215445466B0701D /* RouteWorkbenchView.swift */,
 			);
 			name = App;
-			path = ../RouteWorkbench/App;
+			path = Modules/RouteWorkbench/App;
 			sourceTree = "<group>";
 		};
 		836A36D3148224D71643C1E2 /* Import */ = {
@@ -880,7 +878,16 @@
 				4CCEC62379C3256F4EA4E1E8 /* tabata-reference.geojson */,
 			);
 			name = Resources;
-			path = ../RailAlignmentInspector/Resources;
+			path = Modules/RailAlignmentInspector/Resources;
+			sourceTree = "<group>";
+		};
+		D66FB11CE611C95DF181E8D1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F986074E62D882919BE640EF /* jp-area-grid.json */,
+				AED55969F5A507AA8B6D1427 /* Unifont.otf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D9E9D68D7604E677755F573D /* RailAlignmentInspector */ = {
@@ -889,7 +896,7 @@
 				22BF975B7E6FE8690A5E5BCA /* Assets.xcassets */,
 			);
 			name = RailAlignmentInspector;
-			path = ../RailAlignmentInspector;
+			path = Modules/RailAlignmentInspector;
 			sourceTree = "<group>";
 		};
 		DBF903F373D82EEDB36F28E8 /* Sharing */ = {
@@ -1013,6 +1020,7 @@
 				280914B9CAC653C45C1EAA66 /* StatisticsYearBar.swift */,
 				097871E7B684EA392B90634B /* TicketJimon.swift */,
 				14175C4E58A4A4F4AEF9DE63 /* TicketPalette.swift */,
+				D66FB11CE611C95DF181E8D1 /* Resources */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -1066,9 +1074,9 @@
 			mainGroup = 37AE23468E172F972B392CD9;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8E4FA8090F21A58D313C3334 /* XCLocalSwiftPackageReference "../RailAlignmentInspector/InspectionKit" */,
+				D11A2B4FA619C43FD9681564 /* XCLocalSwiftPackageReference "Modules/RailAlignmentInspector/InspectionKit" */,
 				0AA5A1D0D7AAAA5A847A96A3 /* XCLocalSwiftPackageReference "../../RailKit" */,
-				69842A6158CE76B38EBD75FA /* XCLocalSwiftPackageReference "../ThroughWorkbench/WorkbenchCore" */,
+				6639293FEA04D23C4743E0DB /* XCLocalSwiftPackageReference "Modules/ThroughWorkbench/WorkbenchCore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 43BD916D02A5CDDD237432B1 /* Products */;
@@ -1090,8 +1098,8 @@
 				96B02AF1CED445DD569CA0C4 /* Assets.xcassets in Resources */,
 				6D9F80BD5BAF85AC98F02390 /* Assets.xcassets in Resources */,
 				DDA46A3C37CC9998FBF5A2FF /* Assets.xcassets in Resources */,
-				51C68E3219AE128B869F767C /* Unifont.otf in Resources */,
-				7F17168687195295381A670A /* jp-area-grid.json in Resources */,
+				7E4BFBF1EC49E8D42F478A9D /* Unifont.otf in Resources */,
+				CA58EBCC9E50158926EEA96D /* jp-area-grid.json in Resources */,
 				96DE4706DCD6F4E135AF44E7 /* sample-legacy-ride-ids.json in Resources */,
 				A424C37D8D437FA3195AB48A /* tabata-reference.geojson in Resources */,
 			);
@@ -1182,10 +1190,10 @@
 				E36D2DDB56807DE021979E45 /* InspectionEvidence.swift in Sources */,
 				5C2739755648283E6D6D8DAC /* InspectionPlanView.swift in Sources */,
 				BE1F77B1CE4173C151A16F91 /* InspectionViewpoints.swift in Sources */,
-				9EF860A675AA803812B7E6BC /* InspectorApp.swift in Sources */,
 				49624AA264F7FEE7931AC6BA /* InspectorMap.swift in Sources */,
 				25672A729A74C727E4484375 /* InspectorModel.swift in Sources */,
 				59CB0E31281014D431CE76C0 /* InspectorStrokeGeometry.swift in Sources */,
+				ED083771C0DA7277D2114843 /* InspectorViews.swift in Sources */,
 				38D74E0761DF5E9AB887E31F /* ItineraryStore.swift in Sources */,
 				D1F2B3CFBE4421CA4362016C /* JourneyBranding.swift in Sources */,
 				1FA05DCFB121D455B4EA8070 /* JourneyCompletionRequest.swift in Sources */,
@@ -1566,13 +1574,13 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../RailKit;
 		};
-		69842A6158CE76B38EBD75FA /* XCLocalSwiftPackageReference "../ThroughWorkbench/WorkbenchCore" */ = {
+		6639293FEA04D23C4743E0DB /* XCLocalSwiftPackageReference "Modules/ThroughWorkbench/WorkbenchCore" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../ThroughWorkbench/WorkbenchCore;
+			relativePath = Modules/ThroughWorkbench/WorkbenchCore;
 		};
-		8E4FA8090F21A58D313C3334 /* XCLocalSwiftPackageReference "../RailAlignmentInspector/InspectionKit" */ = {
+		D11A2B4FA619C43FD9681564 /* XCLocalSwiftPackageReference "Modules/RailAlignmentInspector/InspectionKit" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../RailAlignmentInspector/InspectionKit;
+			relativePath = Modules/RailAlignmentInspector/InspectionKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 

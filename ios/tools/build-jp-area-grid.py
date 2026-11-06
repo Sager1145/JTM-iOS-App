@@ -21,7 +21,7 @@ library.  Download the boundary input separately, then run for example:
   python3 -I ios/tools/build-jp-area-grid.py \
     --boundaries /path/to/japan.geojson \
     --stations app/data/stations.json \
-    --out ios/RailMap/jp-area-grid.json
+    --out ios/RailMap/Statistics/Resources/jp-area-grid.json
 
 Pass ``--check`` with ``--stations`` and ``--out`` to independently decode and
 validate an existing output file.

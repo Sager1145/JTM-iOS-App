@@ -9,9 +9,9 @@
 | iOS 主应用 | `ios/RailMap/` | Swift/SwiftUI 页面、状态接入、原生地图和品牌资源；发布源码。 |
 | 共用 Swift 规则 | `ios/RailKit/Sources/` | RailCore 求解/身份/数据、RailPresentation 展示规则、RailApplication 状态；发布源码和包内必要资源。 |
 | 生产回归测试 | `ios/RailKit/Tests/`、`ios/RailMapUITests/`、`app/tests/` | 有实际生产行为契约的测试；保留，按具体变更选择运行。 |
-| 线路求解检查台 | `ios/auxiliary/RouteWorkbench/` | Mac Catalyst 诊断应用、Logo、详细报告和使用说明；独立容器。 |
-| 历史直通检查台 | `ios/auxiliary/ThroughWorkbench/` | 历史服务检查界面、WorkbenchCore、已有报告；报告注明日期和输入边界。 |
-| 显示轨道检查台 | `ios/auxiliary/RailAlignmentInspector/` | 几何/支轨/折返显示检查；归显示聊天负责，不能当作物理连接审批。 |
+| 线路求解检查台 | `ios/auxiliary/RailDiagnostics/Modules/RouteWorkbench/` | Mac Catalyst 诊断应用、Logo、详细报告和使用说明；独立容器。 |
+| 历史直通检查台 | `ios/auxiliary/RailDiagnostics/Modules/ThroughWorkbench/` | 历史服务检查界面、WorkbenchCore、已有报告；报告注明日期和输入边界。 |
+| 显示轨道检查台 | `ios/auxiliary/RailDiagnostics/Modules/RailAlignmentInspector/` | 几何/支轨/折返显示检查；归显示聊天负责，不能当作物理连接审批。 |
 | Xcode/SwiftPM 工程 | `ios/*.xcodeproj/`、各检查台工程、`ios/RailKit/Package.swift` | 目标成员、资源复制和共享 scheme；路径改变需要连同引用集成。 |
 | 原生打包资源 | `ios/Resources/` | 主应用需要的字体、品牌和本地资源；依赖 `ios/copy-rail-packages.sh` 的资源保持其合同。 |
 | Web 与 JS 对应逻辑 | `app/shared/`、`app/index.html`、`app/package*.json` | Web 入口、共享 JavaScript 和依赖锁；Swift/JS 共同行为改变时核对两端。 |

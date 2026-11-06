@@ -6,9 +6,9 @@ packages:
   RailKit:
     path: ../../RailKit
   InspectionKit:
-    path: ../RailAlignmentInspector/InspectionKit
+    path: Modules/RailAlignmentInspector/InspectionKit
   WorkbenchCore:
-    path: ../ThroughWorkbench/WorkbenchCore
+    path: Modules/ThroughWorkbench/WorkbenchCore
 targets:
   RailDiagnostics:
     type: application
@@ -37,13 +37,13 @@ targets:
     sources:
       - path: Sources
       - path: ../../RailMap
-      - path: ../RouteWorkbench/App
-      - path: ../RailAlignmentInspector/Sources
-      - path: ../RailAlignmentInspector/Resources
+      - path: Modules/RouteWorkbench/App
+      - path: Modules/RailAlignmentInspector/Sources
+      - path: Modules/RailAlignmentInspector/Resources
         buildPhase: resources
-      - path: ../RailAlignmentInspector/Assets.xcassets
-      - path: ../ThroughWorkbench/App/Assets.xcassets
-      - path: ../ThroughWorkbench/App
+      - path: Modules/RailAlignmentInspector/Assets.xcassets
+      - path: Modules/ThroughWorkbench/App/Assets.xcassets
+      - path: Modules/ThroughWorkbench/App
         excludes:
           - Assets.xcassets
     dependencies:

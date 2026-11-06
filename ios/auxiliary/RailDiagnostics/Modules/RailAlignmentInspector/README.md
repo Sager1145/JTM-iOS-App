@@ -2,7 +2,7 @@
 
 SwiftUI / MapKit workspace for manually comparing **Japan** railway geometry with the railway tracks drawn on Apple's basemap. Runs on macOS through **Mac Catalyst**. The inspector reads the bundled railway data and never edits it. Evidence-backed data repairs are applied separately at their owning source.
 
-This is now an internal workspace of **RailDiagnostics**, not a standalone app. Build the single unified target and create a task or pass a scoped request with the required zoom, viewport, appearance and output modes. See [the current request/result contract](../RailDiagnostics/README.md). Existing recorded app names below describe historical evidence.
+This is now an internal workspace of **RailDiagnostics**, not a standalone app. Build the single unified target and create a task or pass a scoped request with the required zoom, viewport, appearance and output modes. See [the current request/result contract](../../README.md). Existing recorded app names below describe historical evidence.
 
 Search by line/company/ID. In the **线路** tab, Return selects the line only when the filtered result is unique. `⇧⌘C` captures the complete current interval; `⌥⇧⌘C` captures the complete current line. Select a station, move to the next station or fit the next station interval. Switch modes without moving the camera; **只看底图** (⌘B) hides all custom geometry and the selected station marker. Opacity changes only the custom geometry. Drag and zoom the map for detailed bends and approaches; smoothing is recomputed at the new screen scale. The map remains north-up and flat.
 

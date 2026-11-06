@@ -2,7 +2,7 @@
 
 Mac Catalyst 辅助工作台，复用 Japan Train Map 的生产线路解析与打包数据库。
 
-这是 RailDiagnostics 内部工作区，不再有独立 app/工程。构建与请求入口见 [RailDiagnostics](../RailDiagnostics/README.md)。
+这是 RailDiagnostics 内部工作区，不再有独立 app/工程。构建与请求入口见 [RailDiagnostics](../../README.md)。
 
 导入标准行程 JSON，运行批量解析，选中行程查看部分结果和物理连接缺口。取消保留已经返回的结果。导出菜单提供行程文件与状态报告；不会覆盖导入文件。
 
@@ -14,7 +14,7 @@ Mac Catalyst 辅助工作台，复用 Japan Train Map 的生产线路解析与�
 
 2026-10-10 用户已授权执行检查和修复。已有 61 项针对性测试通过；批量失败报告修复后，17 项检查核心测试通过。Catalyst 增量构建和实际启动通过，原生工具栏崩溃已修复。完整 201 条 JP 行程批次约 408.8 秒；更新显示资源并修复 930 项提示的辅助功能遍历卡顿后，新批次约 392.1 秒。同一新进程的暖缓存复跑约 0.338 秒，201 条状态与 930 项提示完全一致，未新增共享求解任务。计时为线路加载，不包括导入和后续检查/导出；这不是优化前后首次求解的加速对照。197 条几何已解析、4 条部分解析，0 项一致性失败、930 项证据待审阅；几何解析不等于所有物理区段已被证明。
 
-设计与后续优化见 `../../../docs/superpowers/specs/2026-10-10-route-workbench-design.md` 和 `../../../docs/superpowers/specs/2026-10-10-route-resolution-rethink.md`（相对于仓库根目录的 `docs/`）。
+设计与后续优化见 `../../../../../docs/superpowers/specs/2026-10-10-route-workbench-design.md` 和 `../../../../../docs/superpowers/specs/2026-10-10-route-resolution-rethink.md`（相对于仓库根目录的 `docs/`）。
 
 ## 检查工具
 

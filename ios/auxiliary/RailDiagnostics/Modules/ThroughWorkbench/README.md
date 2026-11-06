@@ -2,7 +2,7 @@
 
 An internal SwiftUI workspace in RailDiagnostics for reviewing and repairing Japan through-service history. It targets review from **1996-12-31**, the oldest locally documented N02 observation, while retaining the imported catalog's separate **2005-01-01 coverage floor**. It does not certify national historical completeness. Production app code and railway resources are read-only inputs.
 
-Open the single **RailDiagnostics** scheme in `ios/JTM.xcworkspace` and select **Through history**. This module no longer has a standalone application or project. Build, human tasks and exact pattern/date agent requests are described in [RailDiagnostics](../RailDiagnostics/README.md). The local `WorkbenchCore` package remains available for focused tests.
+Open the single **RailDiagnostics** scheme in `ios/JTM.xcworkspace` and select **Through history**. This module no longer has a standalone application or project. Build, human tasks and exact pattern/date agent requests are described in [RailDiagnostics](../../README.md). The local `WorkbenchCore` package remains available for focused tests.
 
 The build copies the current `japan-through-services.json` and compact physical `jp-2025.json` into the app bundle. It includes `rail-history.json` when present. These inputs retain their existing identities and schema fields. No North American data is loaded. Historical geometry is retained as evidence; the corridor preview resolves the selected pattern against the imported physical package. A through-service relationship cannot establish a physical connection or prove routing solvability.
 
@@ -29,7 +29,7 @@ Working documents autosave atomically in the app's Application Support `ThroughW
 
 The app uses standard split navigation, forms, system colors and semantic controls. Dynamic Type is clamped to `.xSmall ... .xLarge`, iPhone supports portrait only, and iPad supports its own orientations. Keyboard shortcuts include Command-N for a new pattern, Command-1 for the overview and Command-S to save an open patch.
 
-Validation follows `../../VERIFICATION.md`: scoped code/data review, focused core tests and one coordinated Catalyst build when needed. Runtime, accessibility, pixel and performance claims require native observation. The workbench does not reconstruct missing endpoint variants automatically; source gaps, historical identities and completeness remain explicit review work.
+Validation follows `../../../../VERIFICATION.md`: scoped code/data review, focused core tests and one coordinated Catalyst build when needed. Runtime, accessibility, pixel and performance claims require native observation. The workbench does not reconstruct missing endpoint variants automatically; source gaps, historical identities and completeness remain explicit review work.
 
 ## Historical inspection plan
 

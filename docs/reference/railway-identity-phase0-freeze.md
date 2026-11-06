@@ -94,7 +94,7 @@
 
 §3.9：`serviceSpans` 由 `load.mjs:832` 与 `serviceSplitForLine`（`rail-network.js:2274`）消费；`CompactPackage.Line` 的 CodingKeys（`CompactPackage.swift:143–147`）不含 `serviceSpans`。`drawsContinuousStroke` `rail-network.js:3207`。`strokeExcludedByRegion` `build-display-lanes.mjs:3489`。`LineServiceCatalog` `LineServiceCatalog.swift:5`。`RailHistoryOverlay` `RailHistory.swift:102`。`RailHistoryStations` `RailHistoryStations.swift:39`。`RailDisplayHistoryFile` `RailDisplayNetworkFormats.swift:684`。`build_region_history` `build-display-network.py:2644`。`JapanThroughServices` `JapanThroughServices.swift:6`。
 
-§3.10：`DiagnosticRequest` `ios/auxiliary/RailAlignmentInspector/InspectionKit/Sources/RailInspection/DiagnosticRequest.swift:84`；`DiagnosticSession` `ios/auxiliary/RailDiagnostics/Sources/DiagnosticSession.swift:10`；`BatchInspectionIdentity` `BatchInspection.swift:41`；`evidenceSHA256` `DiagnosticReview.swift:7`（写入 `DiagnosticSession.swift:301`）；`pointOrdinal` 与 `BatchInspectionPlan` 见上。检出内没有名为 `identity-plan-*.json` 的文件。写入点是 `BatchCaptureController.swift:396` 与 `:536`。报告只引用库外路径，例如万叶准备文档第 11 行的 `identity-plan-4c6abd39….json`。
+§3.10：`DiagnosticRequest` `ios/auxiliary/RailDiagnostics/Modules/RailAlignmentInspector/InspectionKit/Sources/RailInspection/DiagnosticRequest.swift:84`；`DiagnosticSession` `ios/auxiliary/RailDiagnostics/Sources/DiagnosticSession.swift:10`；`BatchInspectionIdentity` `BatchInspection.swift:41`；`evidenceSHA256` `DiagnosticReview.swift:7`（写入 `DiagnosticSession.swift:301`）；`pointOrdinal` 与 `BatchInspectionPlan` 见上。检出内没有名为 `identity-plan-*.json` 的文件。写入点是 `BatchCaptureController.swift:396` 与 `:536`。报告只引用库外路径，例如万叶准备文档第 11 行的 `identity-plan-4c6abd39….json`。
 
 ## f. 修复 authority 与已否决候选
 

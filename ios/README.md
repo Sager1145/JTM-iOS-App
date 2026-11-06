@@ -26,12 +26,15 @@ ios/
     RailCore/                domain algorithms, grouped by feature
     RailPresentation/        portable presentation rules, grouped by feature
     RailApplication/         snapshot use cases, grouped by feature
-  RailKit/Tests/              module-level production regression tests
-  RailMapUITests/             native UI production regression tests
+  RailKit/Tests/              module-level production regression tests (mirror Sources)
+  RailMapTests/               native unit tests, by app feature folder
+  RailMapUITests/             native UI production regression tests, by app feature folder
   auxiliary/
-    RouteWorkbench/          route solver diagnostic app
-    ThroughWorkbench/        historical through-service diagnostic app
-    RailAlignmentInspector/  display geometry diagnostic app
+    RailDiagnostics/         unified Mac Catalyst diagnostics app (xcodegen project.yml)
+      Modules/
+        RouteWorkbench/          route solver module
+        ThroughWorkbench/        historical through-service module (+ WorkbenchCore)
+        RailAlignmentInspector/  display geometry module (+ InspectionKit)
   Resources/                 native packaging resources
   copy-rail-packages.sh       resource packaging build phase
   VERIFICATION.md            focused verification policy
