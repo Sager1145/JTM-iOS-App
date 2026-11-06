@@ -2787,17 +2787,18 @@ struct JourneyEditorView: View {
         scaffold.region = region.code
         scaffold.date = rideDate
         scaffold.routeConfirmation = .confirmed
+        guard let catalog,
+              let from = catalog.station(StationKey(regionCode: region.code, sourceCode: endpoints.from)),
+              let to = catalog.station(StationKey(regionCode: region.code, sourceCode: endpoints.to)) else { return }
+        // Dated only and near the two stations: the planner already found no
+        // route on today's network, and the national graph is never built.
         // A failed call stays uncached so the next plan retries it.
-        guard let status = try? await RiddenRouteStore.routeAvailabilities([scaffold]), status.count == 1 else { return }
-        let probe: PlannedSection.HistoricalProbe?
-        if status[0].datedResolved && !status[0].undatedResolved {
-            probe = .historicalOnly
-        } else if !status[0].datedResolved {
-            probe = PlannedSection.HistoricalProbe.none
-        } else {
-            probe = nil
-        }
-        guard !Task.isCancelled, let probe else { return }
+        guard let connected = try? await RiddenRouteStore.historicalConnection(
+            scaffold,
+            between: Coordinate(lon: from.longitude, lat: from.latitude),
+            and: Coordinate(lon: to.longitude, lat: to.latitude)) else { return }
+        guard !Task.isCancelled else { return }
+        let probe: PlannedSection.HistoricalProbe = connected ? .historicalOnly : .none
         historicalProbeCache[probeKey] = probe
         section.historicalProbe = probe
     }
