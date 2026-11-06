@@ -2,9 +2,9 @@
 
 Catalog check date 2026-10-02; targeted historical repairs 2026-10-10. Resource: `ios/RailKit/Sources/RailCore/Resources/japan-through-services.json`.
 
-This catalog contains 176 operational corridor records. It is partial. “Checked” describes the listed records in a region; it does not certify all operators, branches, endpoints or historical periods. Unlisted services and dates without sufficient evidence remain unknown. It has no timetable guarantee that a passenger can ride a particular departure without changing trains.
+This catalog contains 182 operational corridor records (176 before the 2026-11-05 feasibility audit below). It is partial. “Checked” describes the listed records in a region; it does not certify all operators, branches, endpoints or historical periods. Unlisted services and dates without sufficient evidence remain unknown. It has no timetable guarantee that a passenger can ride a particular departure without changing trains.
 
-Each record names physical line IDs from `app/public/rail/jp-2025.json` and station anchors. Operational records are display corridors, not physical search edges. Shared row membership, identical station codes or an ordinary interchange do not establish track connectivity. Current physical identities and geometry do not prove their historical operator identity.
+Each record names physical line IDs from `app/public/rail/jp-2025.json` and station anchors. Operational records are display corridors, not physical search edges. In the trip editor a dated record does let one train continue between its consecutive legs at their anchor station (see the feasibility rule below). Shared row membership, identical station codes or an ordinary interchange do not establish track connectivity. Current physical identities and geometry do not prove their historical operator identity.
 
 The oldest locally documented N02 observation is [1996-12-31](https://nlftp.mlit.go.jp/ksj/old/meta/N02/N02-07L/KS-META-N02-07L-2K.htm), despite the archive's H7 label. `historicalTargetFrom` records that review target; `coverageFrom: 2005-01-01` remains the separate inventory coverage floor. Neither field is a service opening date.
 
@@ -64,3 +64,38 @@ Four Osaka Loop display legs now carry a source-attributed forward traversal of 
 
 
 The additional regional packet records six named-service/operator opening constraints: Odoriko 1981-10-01, Super Hakuto 1994-12-03, Ibara 1999-01-11, Wakasa 1987-10-14 and Nishikigawa 1987-07-25. Their initial full outer endpoints remain explicitly unconfirmed. Super Inaba's erroneous 1994 opening assertion is replaced by the operator's month-precision predecessor (1997-11) and named-service (2003-10) chronology. Sunrise's competing official July 10/11 extracts and Hashidate's unresolved exact historical boundaries remain unknown. The current count is 76 explicit starts and 100 unspecified starts among 176 records; explicit starts include limited opening constraints and do not certify complete history. Evidence packets are retained in `ios/ThroughWorkbench/Reports/Evidence`.
+
+
+## Feasibility audit — 2026-11-05
+
+The trip editor uses one rule, `TripConnectivity.link` (`ios/RailKit/Sources/RailCore/Routing/TripConnectivity.swift`), for whole-trip plans and for line changes at a via. One train continues from row A onto row B at station S on the ride date only through:
+
+- a reviewed physical junction in `app/data/physical-rail-junctions.json` that names exactly A and B at S, cites evidence, and is valid on that date (a cross-identity `endJunction` also needs same-train evidence, as in the route graph), or
+- a dated record here whose consecutive legs continue from A onto B at S.
+
+Anything else is a transfer. That covers a shared N02 group code such as 浅草 003522 (Ginza, Asakusa and Tobu), a crossing without a station, a nearby station of another operator, and a shared name. A transfer is never planned as one train; the editor shows its existing "not connected" notice.
+
+Before this audit the editor planner did not read the junction registry. Real single-train trips across reviewed junctions were therefore refused, such as 東京→博多 at 新大阪 or 東京→金沢 at 大宮, 高崎 and 上越妙高.
+
+Records added in this audit (all `throughRunning`, onset constraint only, stopping patterns not modelled):
+
+| id | Corridor | validFrom | Sources |
+|---|---|---|---|
+| `tokaido-sanyo-shinkansen` | 東京–新大阪–博多 | 1975-03-10 (岡山–博多 opening) | [Kyoto Railway Museum, Sanyo Shinkansen 50th](https://www.kyotorailwaymuseum.jp/pdf/sanyo_shinkansen_50th.pdf); ja.wikipedia 山陽新幹線. Physical junction `shin-osaka-tokaido-sanyo`. |
+| `sanyo-kyushu-shinkansen` | 新大阪–博多–鹿児島中央 | 2011-03-12 | [JR Kyushu history](https://www.jrkyushu.co.jp/company/info/history/history05.html); junction `west-hakata` (2011-03-12). |
+| `joetsu-shinkansen-tokyo` | 東京–大宮–新潟 | 1991-06-20 (Tokyo terminal) | ja.wikipedia 上越新幹線 (secondary); junction `omiya-joetsu-tohoku`. The 1985–1991 Ueno terminal is outside the Tokyo–Ueno row and is not a record. |
+| `hokuriku-shinkansen-tsuruga` | 東京–大宮–高崎–上越妙高–敦賀 | 2024-03-16 (敦賀 extension) | [JR East/JR West 2025 press PDF](https://www.jreast.co.jp/press/2024/20250228_ho03.pdf) (search summary only); ja.wikipedia 北陸新幹線. For earlier rides the junction dates (`takasaki-joetsu-hokuriku` 1997-10-01, `joetsu-myoko-hokuriku-east-hokuriku-west` 2015-03-14) still let the planner route. |
+| `toyoko-minatomirai` | 渋谷–横浜–元町・中華街 | 2004-02-01 | [Tokyu Toyoko history](https://www.tokyu.co.jp/railway/train-history/ty/) (February 2004); [Tokyu 100-year history ch. 7](https://www.tokyu.co.jp/history/chapter07_2_2/). Before this audit only the post-2013 Fukutoshin corridors existed. |
+| `denentoshi-hanzomon` | 長津田–渋谷–青山一丁目 | 1978-08-01 | [Tokyu 100-year history ch. 5](https://www.tokyu.co.jp/history/chapter05_2_1): 「1978（昭和53）年8月1日に田園都市線・新玉川線・半蔵門線3線の相互直通運転が開始」. The outer endpoints are limited to the stations that existed in 1978. |
+
+Several operator sites refused the reader in this session (JR Central, JR East PDFs, Tokyo Metro history). Where a date comes from a secondary source, the table says so.
+
+Researched but not encoded:
+
+- Kaikyo and Hakucho via the Seikan conventional line (1988–2016): the line is not in the package.
+- Hokuso–Shin-Keisei (1991–1992): low confidence.
+- Asa Kaigan–Mugi, Matsuura–Sasebo and Aichi Loop–Chuo: low confidence.
+- Hokuetsu Express to Echigo-Yuzawa: the end with the 2023-03-18 revision is inferred, not stated, so `validTo` is unchanged.
+- Wakasa–Inbi to Tottori: still running. 2020-03-14 ended only JR rolling stock on the line, so no end was added.
+
+Other regions, for later: Korail ↔ Seoul Metro through running on lines 1, 3 and 4; the Hong Kong intercity through train (suspended 2020). Taiwan and Macau have no cross-operator through running.

@@ -26,6 +26,15 @@ public struct RideRouteResolution {
             self.identityPeriods = identityPeriods
             officialIntervals = OfficialIntervals(sections: sections)
         }
+
+        /// Drops every memoized section solve and source proof of this
+        /// snapshot, keeping the decoded inputs and the official-interval
+        /// index. The memo only caches pure results of this snapshot, so the
+        /// next resolve recomputes the same answers; use it when the caller
+        /// wants fresh solves (Reload all) without paying to decode again.
+        public func clearResolutionMemo() {
+            resolutionMemo.removeAll()
+        }
     }
 
     /// The app may retain this owner in its bounded revision-keyed cache.
@@ -44,7 +53,21 @@ public struct RideRouteResolution {
             ready = made
             return made
         }
+
+        /// Whether the index has been built. Focused tests use this to prove
+        /// that countries without official-interval solving never build it.
+        var isBuilt: Bool {
+            lock.lock()
+            defer { lock.unlock() }
+            return ready != nil
+        }
     }
+
+    /// Countries for which `RouteSolver.solveOfficialInterval` can return a
+    /// section. It returns nil for every other country before reading its
+    /// index, so building that index (all 21,935 JP features) is pure waste
+    /// there. Must match the guard at the top of `solveOfficialInterval`.
+    static let officialIntervalCountries: Set<String> = ["tw", "hk", "mo", "cn"]
 
     public struct NetworkInputs: Sendable {
         let network: RouteNetwork
@@ -343,16 +366,18 @@ public struct RideRouteResolution {
             if graphStore == nil {
                 graphStore = Self.graphStore(inputs)
             }
-            if officialIntervals == nil {
+            if officialIntervals == nil, Self.officialIntervalCountries.contains(country) {
                 officialIntervals = intervalSource.value()
             }
             var solved = try inputs.resolutionMemo.solve(section: section, segmentIndex: index,
                 context: context, country: country, stations: stationIndex,
                 continuityAnchor: anchor, physicalContinuationKey: previousPhysicalKey) {
-                RouteSolver.solveOfficialInterval(
-                section, segmentIndex: index, train: context, country: country,
-                allowedCodes: allowedCodes, intervalIndex: officialIntervals!,
-                stations: stationIndex, continuityAnchor: anchor)
+                officialIntervals.flatMap {
+                    RouteSolver.solveOfficialInterval(
+                        section, segmentIndex: index, train: context, country: country,
+                        allowedCodes: allowedCodes, intervalIndex: $0,
+                        stations: stationIndex, continuityAnchor: anchor)
+                }
                 ?? RouteSolver.solveSectionOnDemand(
                     section, segmentIndex: index, train: context, country: country,
                     graphStore: graphStore!, stations: stationIndex,
