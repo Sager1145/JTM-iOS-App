@@ -7,8 +7,9 @@ import SwiftUI
 ///
 /// One dictionary rather than a search, because the answer is asked for once
 /// per drawn row and a journeys list scrolls. It is built where the package is
-/// decoded (`RailNetworkStore.decode`) and off the main actor, which is also
-/// the only place the package's `logo` flag is in scope.
+/// read at launch (`RailNetworkStore.index(region:manifest:)`), off the main
+/// actor, from the display-network manifest's per-line `badge` attributes or,
+/// failing those, a scan of the package's line headers.
 ///
 /// The keys are deliberately redundant. A railway is named four ways between
 /// the package and an itinerary — the id's administrative operator (東京地下鉄)
@@ -16,9 +17,9 @@ import SwiftUI
 /// passenger one (銀座線) — and a record may carry any pairing of them. Storing
 /// all four costs about 2,600 entries for all five countries and removes the
 /// entire class of "the mark is right on one screen and wrong on the next".
-struct RouteBadgeIndex: Sendable {
+struct RouteBadgeIndex: Sendable, Equatable {
     private var pathByKey: [String: String] = [:]
-    private struct LineColors: Sendable {
+    private struct LineColors: Sendable, Equatable {
         let light: String
         let dark: String
     }
@@ -43,7 +44,61 @@ struct RouteBadgeIndex: Sendable {
     /// cheaper. `CompactPackage.headers` is the projection a caller that
     /// already holds a full package uses, so both reach this by one route.
     init(region: Region, headers: CompactPackage.Headers) {
-        for line in headers.lines {
+        self.init(region: region, lines: headers.lines.map(Source.init(header:)))
+    }
+
+    /// The nine line attributes this index reads, and nothing else.
+    ///
+    /// Two places supply them: a package's headers, and the display-network
+    /// manifest (``RailDisplayNetworkManifest/badgeSources(region:)``), which
+    /// launch reads instead of scanning the jp and cn packages (audit A7).
+    /// Naming the subset here is what lets the two be compared field by field.
+    ///
+    /// Stored canonically, so two spellings the index cannot tell apart are
+    /// one value: a `nameNorm` equal to `name` is `nil` (the index reads
+    /// `nameNorm ?? name`, and only a differing one is a passenger name);
+    /// `colorDark` is `colorDark ?? color`, or `nil` with no `color` (the only
+    /// way the index reads it); an empty `operatorShort` is `nil` (the index
+    /// skips empty operators). The package keeps `nameNorm` on every cn line
+    /// and leaves `colorDark` off them; the manifest writes neither.
+    struct Source: Sendable, Equatable {
+        var id: String
+        var name: String
+        var nameNorm: String?
+        var `operator`: String?
+        var operatorShort: String?
+        var operatorLogo: String?
+        var color: String?
+        var colorDark: String?
+        var hasLogo: Bool
+
+        init(
+            id: String, name: String, nameNorm: String?, operator operatorName: String?,
+            operatorShort: String?, operatorLogo: String?, color: String?,
+            colorDark: String?, hasLogo: Bool
+        ) {
+            self.id = id
+            self.name = name
+            self.nameNorm = nameNorm == name ? nil : nameNorm
+            self.operator = operatorName
+            self.operatorShort = operatorShort?.isEmpty == true ? nil : operatorShort
+            self.operatorLogo = operatorLogo
+            self.color = color
+            self.colorDark = color.map { colorDark ?? $0 }
+            self.hasLogo = hasLogo
+        }
+
+        init(header line: CompactPackage.Headers.Line) {
+            self.init(
+                id: line.id, name: line.name, nameNorm: line.nameNorm,
+                operator: line.operator, operatorShort: line.operatorShort,
+                operatorLogo: line.operatorLogo, color: line.color,
+                colorDark: line.colorDark, hasLogo: line.hasLogo)
+        }
+    }
+
+    init(region: Region, lines: [Source]) {
+        for line in lines {
             nameByLineID[line.id] = line.nameNorm ?? line.name
             guard let color = line.color else { continue }
             let colors = LineColors(light: color, dark: line.colorDark ?? color)
@@ -64,14 +119,14 @@ struct RouteBadgeIndex: Sendable {
         // its operator's company mark to it. 名城線 is in the package twice
         // (2号線 and 4号線) under one passenger name, and the reader should get
         // the route symbol from whichever of the two carries it.
-        add(headers: headers, region: region, withPackageArt: true)
-        add(headers: headers, region: region, withPackageArt: false)
+        add(lines: lines, region: region, withPackageArt: true)
+        add(lines: lines, region: region, withPackageArt: false)
     }
 
     private mutating func add(
-        headers: CompactPackage.Headers, region: Region, withPackageArt: Bool
+        lines: [Source], region: Region, withPackageArt: Bool
     ) {
-        for line in headers.lines where line.hasLogo == withPackageArt {
+        for line in lines where line.hasLogo == withPackageArt {
             let packageLogo = line.hasLogo
                 ? "/rail/logos/\(StationDisplay.Network.badgeIDForLine(line.id)).png"
                 : line.operatorLogo
