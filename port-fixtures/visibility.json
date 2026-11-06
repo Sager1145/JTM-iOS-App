@@ -1687,7 +1687,7 @@
       "country": "jp",
       "lineId": "jp-九州旅客鉄道-日豊線",
       "rank": 1,
-      "groupKm": 468.36100000000016,
+      "groupKm": 467.74300000000017,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -1695,7 +1695,7 @@
       "country": "jp",
       "lineId": "jp-九州旅客鉄道-日豊線-p1",
       "rank": 1,
-      "groupKm": 468.36100000000016,
+      "groupKm": 467.74300000000017,
       "minZoomForRank": 4,
       "minZoomForLength": 3
     },
@@ -3855,7 +3855,7 @@
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-京葉線",
       "rank": 2,
-      "groupKm": 45.129,
+      "groupKm": 54.215999999999994,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -3863,7 +3863,15 @@
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-京葉線-2",
       "rank": 2,
-      "groupKm": 45.129,
+      "groupKm": 54.215999999999994,
+      "minZoomForRank": 5,
+      "minZoomForLength": 5
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-京葉線-3",
+      "rank": 2,
+      "groupKm": 54.215999999999994,
       "minZoomForRank": 5,
       "minZoomForLength": 5
     },
@@ -4487,7 +4495,7 @@
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線",
       "rank": 2,
-      "groupKm": 9.602999999999998,
+      "groupKm": 9.783,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -4495,7 +4503,7 @@
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-2",
       "rank": 2,
-      "groupKm": 9.602999999999998,
+      "groupKm": 9.783,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },
@@ -4503,7 +4511,7 @@
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-3",
       "rank": 2,
-      "groupKm": 9.602999999999998,
+      "groupKm": 9.783,
       "minZoomForRank": 5,
       "minZoomForLength": 7
     },

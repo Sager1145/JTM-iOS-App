@@ -99663,38 +99663,38 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:19",
+          "departure": "13:24",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:36",
+          "departure": "13:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "13:53",
+          "departure": "13:58",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:08",
+          "departure": "14:10",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
+          "arrival": "14:23",
           "departure": "14:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:36",
+          "departure": "14:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -99774,14 +99774,14 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:24",
+          "departure": "20:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "20:35",
+          "departure": "20:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -102710,7 +102710,7 @@
         {
           "arrival": null,
           "departure": null,
-          "stop_type": "passenger_stop",
+          "stop_type": "pass_through",
           "ride_segment": true
         },
         {
@@ -105654,8 +105654,8 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:03",
+          "departure": "12:04",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -105774,14 +105774,14 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:40",
+          "departure": "14:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:52",
+          "departure": "14:53",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -106302,8 +106302,8 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:34",
+          "departure": "22:35",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -106395,31 +106395,31 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:33",
+          "departure": "11:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "11:46",
+          "departure": "11:48",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:02",
+          "departure": "12:07",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
+          "arrival": "12:42",
           "departure": "12:43",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
+          "arrival": "13:13",
           "departure": "13:17",
           "stop_type": "passenger_stop",
           "ride_segment": true
@@ -106515,14 +106515,14 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:24",
+          "departure": "14:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:35",
+          "departure": "14:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -106686,20 +106686,20 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:33",
+          "departure": "16:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:44",
+          "departure": "16:45",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:00",
+          "departure": "17:05",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107082,14 +107082,14 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:24",
+          "departure": "12:25",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "12:35",
+          "departure": "12:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107244,20 +107244,20 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:44",
+          "departure": "15:45",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:00",
+          "departure": "16:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:10",
+          "departure": "16:10",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107325,20 +107325,20 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:31",
+          "departure": "14:37",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "14:47",
+          "departure": "14:52",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:06",
+          "departure": "15:08",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107442,20 +107442,20 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:36",
+          "departure": "16:38",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:51",
+          "departure": "16:56",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:06",
+          "departure": "17:11",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107523,26 +107523,26 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:01",
+          "departure": "19:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:09",
+          "departure": "19:14",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:29",
+          "departure": "19:30",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "19:40",
+          "departure": "19:41",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107568,26 +107568,26 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "21:51",
+          "departure": "21:52",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:02",
+          "departure": "22:03",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:18",
+          "departure": "22:19",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "22:26",
+          "departure": "22:27",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -107805,38 +107805,38 @@
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:08",
+          "departure": "15:09",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:27",
+          "departure": "15:27",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "15:34",
+          "departure": "15:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "16:45",
+          "departure": "16:46",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:13",
+          "departure": "17:14",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
-          "arrival": null,
-          "departure": null,
+          "arrival": "17:35",
+          "departure": "17:36",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
@@ -108094,19 +108094,19 @@
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "06:34",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "07:00",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },
         {
           "arrival": null,
-          "departure": null,
+          "departure": "07:02",
           "stop_type": "passenger_stop",
           "ride_segment": true
         },

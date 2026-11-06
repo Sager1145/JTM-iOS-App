@@ -2532,20 +2532,20 @@
       "densityRaw": 9.980354511128967,
       "country": "jp",
       "lineId": "jp-九州旅客鉄道-日豊線",
-      "visibilityKm": 468.36100000000016,
+      "visibilityKm": 467.74300000000017,
       "stationMinZoom": 10
     },
     {
       "label": "jp:jp-九州旅客鉄道-日豊線-p1",
       "lineMinZoom": 3,
-      "totalKm": 6.375,
+      "totalKm": 5.757,
       "stationCount": 2,
-      "spacingKm": 6.375,
-      "densityRaw": 9.365218625529474,
+      "spacingKm": 5.757,
+      "densityRaw": 9.51232675524652,
       "country": "jp",
       "lineId": "jp-九州旅客鉄道-日豊線-p1",
-      "visibilityKm": 468.36100000000016,
-      "stationMinZoom": 9
+      "visibilityKm": 467.74300000000017,
+      "stationMinZoom": 10
     },
     {
       "label": "jp:jp-九州旅客鉄道-筑肥線",
@@ -5784,20 +5784,32 @@
       "densityRaw": 10.701562251745466,
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-京葉線",
-      "visibilityKm": 45.129,
+      "visibilityKm": 54.215999999999994,
       "stationMinZoom": 11
     },
     {
       "label": "jp:jp-東日本旅客鉄道-京葉線-2",
       "lineMinZoom": 5,
-      "totalKm": 2.21,
+      "totalKm": 5.401,
       "stationCount": 2,
-      "spacingKm": 2.21,
-      "densityRaw": 10.893597597884263,
+      "spacingKm": 5.401,
+      "densityRaw": 9.604417419211066,
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-京葉線-2",
-      "visibilityKm": 45.129,
-      "stationMinZoom": 11
+      "visibilityKm": 54.215999999999994,
+      "stationMinZoom": 10
+    },
+    {
+      "label": "jp:jp-東日本旅客鉄道-京葉線-3",
+      "lineMinZoom": 5,
+      "totalKm": 5.896,
+      "stationCount": 2,
+      "spacingKm": 5.896,
+      "densityRaw": 9.477907443067986,
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-京葉線-3",
+      "visibilityKm": 54.215999999999994,
+      "stationMinZoom": 9
     },
     {
       "label": "jp:jp-東日本旅客鉄道-仙山線",
@@ -6732,31 +6744,31 @@
       "densityRaw": 12.420972607052475,
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線",
-      "visibilityKm": 9.602999999999998,
+      "visibilityKm": 9.783,
       "stationMinZoom": 12
     },
     {
       "label": "jp:jp-東日本旅客鉄道-鶴見線-2",
       "lineMinZoom": 7,
-      "totalKm": 1.682,
+      "totalKm": 1.5270000000000001,
       "stationCount": 3,
-      "spacingKm": 0.841,
-      "densityRaw": 12.287466261907912,
+      "spacingKm": 0.7635000000000001,
+      "densityRaw": 12.426943905366205,
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-2",
-      "visibilityKm": 9.602999999999998,
+      "visibilityKm": 9.783,
       "stationMinZoom": 12
     },
     {
       "label": "jp:jp-東日本旅客鉄道-鶴見線-3",
       "lineMinZoom": 7,
-      "totalKm": 1.021,
+      "totalKm": 1.356,
       "stationCount": 2,
-      "spacingKm": 1.021,
-      "densityRaw": 12.007661101285255,
+      "spacingKm": 1.356,
+      "densityRaw": 11.598286789026712,
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-3",
-      "visibilityKm": 9.602999999999998,
+      "visibilityKm": 9.783,
       "stationMinZoom": 12
     },
     {

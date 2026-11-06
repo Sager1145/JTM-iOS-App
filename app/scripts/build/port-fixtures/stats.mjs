@@ -349,10 +349,18 @@ function sectionSignature(feature) {
   };
 }
 
+// app/data/matched-routes.json is a curated bundled iOS resource that still keys
+// these two Taiwan trains by their legacy ids; the fixture emits the journey_ ids.
+const LEGACY_MATCHED_TRAIN_IDS = {
+  journey_5C3C741549CF09E20FE4CC4F7389B758: "20260802_01_taoyuan_airport_mrt_express_t2_taipei",
+  journey_C929D1DB4BBEDD1ED71B9C4885026D78: "20260813_01_star_of_taiwan_round_island_loop",
+};
+
 /** Real solver output for one train, in segment order. */
 function matchedRouteFeatures(matched, trainId, ridePattern) {
+  const matchedId = LEGACY_MATCHED_TRAIN_IDS[trainId] ?? trainId;
   const found = matched.features
-    .filter((f) => (f.properties || {}).train_id === trainId)
+    .filter((f) => (f.properties || {}).train_id === matchedId)
     .sort((a, b) => Number(a.properties.segment_index ?? 0) - Number(b.properties.segment_index ?? 0));
   if (!found.length) throw new Error(`matched-routes.json has no train ${trainId}`);
   return found.map((f, i) => ({

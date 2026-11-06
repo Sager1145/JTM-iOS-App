@@ -1293,7 +1293,7 @@
     {
       "country": "jp",
       "lineId": "jp-九州旅客鉄道-日豊線-p1",
-      "medianSpacingMeters": 6375,
+      "medianSpacingMeters": 5757,
       "limitsIndex": 2
     },
     {
@@ -2919,7 +2919,13 @@
     {
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-京葉線-2",
-      "medianSpacingMeters": 2210,
+      "medianSpacingMeters": 5401,
+      "limitsIndex": 2
+    },
+    {
+      "country": "jp",
+      "lineId": "jp-東日本旅客鉄道-京葉線-3",
+      "medianSpacingMeters": 5896,
       "limitsIndex": 2
     },
     {
@@ -3393,13 +3399,13 @@
     {
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-2",
-      "medianSpacingMeters": 894,
+      "medianSpacingMeters": 789,
       "limitsIndex": 1
     },
     {
       "country": "jp",
       "lineId": "jp-東日本旅客鉄道-鶴見線-3",
-      "medianSpacingMeters": 1020.9999999999999,
+      "medianSpacingMeters": 1356,
       "limitsIndex": 1
     },
     {
