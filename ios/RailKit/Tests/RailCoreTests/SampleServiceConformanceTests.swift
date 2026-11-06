@@ -16,56 +16,50 @@ struct SampleServiceConformanceTests {
         let features: [Feature]
     }
 
-    /// The rides below are named by their former descriptive ids; the bundled
-    /// store carries the derived `journey_…` ids.
-    private static func bundledIDs(_ table: [String: String]) -> [String: String] {
-        Dictionary(uniqueKeysWithValues: table.map { (SampleRideID.current($0.key), $0.value) })
-    }
-
     // Class descriptions, not named services. These are deliberately individual rides.
-    private let classOnly = Self.bundledIDs([
-        "20260707_06_a_ltdexp": "A特急 is a service class, without a named service",
-        "20260711_05_seibu_ikebukuro_semiexp": "西武池袋線 急行 names a line and class",
-    ])
+    private let classOnly: [String: String] = [
+        "journey_3741AFAFFD9A67394E057294ACF48B00": "A特急 is a service class, without a named service",
+        "journey_8AD20CEBC2F4E010D786EA9CEE066ABE": "西武池袋線 急行 names a line and class",
+    ]
 
     // Recorded named conventional rides, pinned independently of the lookup
     // under test. Shinkansen rides remain required by their explicit class.
-    private let namedConventionalServices = Self.bundledIDs([
-        "20260703_01_haruka": "haruka",
-        "20260706_02_super_tsugaru2": "super-tsugaru",
-        "20260706_03_inaho14": "inaho",
-        "20260708_02_shirasagi2": "shirasagi",
-        "20260713_07_hokuto21": "hokuto",
-        "20260714_01_ozora3": "ozora",
-        "20260714_04_ozora12": "ozora",
-        "20260715_01_soya": "soya",
-        "20260715_02_soya": "soya",
-        "20260716_07_hokuto20": "hokuto",
-        "20260719_02_yakumo11": "yakumo",
-        "20260719_03_super_oki5": "super-oki",
-        "20260720_47_midori35_shintosu_arita": "midori",
-        "20260721_06_relay_kamome22": "relay-kamome",
-        "20260721_08_asoboy3": "asoboy",
-        "20260721_09_asoboy4": "asoboy",
-        "20260722_04_kirishima8": "kirishima",
-        "20260722_05_nichirin10": "nichirin",
-        "20260722_06_sonic44": "sonic",
-        "20260722_07_kirameki6": "kirameki",
-        "20260722_08_sonic54_kokura_kurosaki": "sonic",
-        "20260723_02_shiokaze5": "shiokaze",
-        "20260723_03_ishizuchi10": "ishizuchi",
-        "20260723_05_uzushio10": "uzushio",
-        "20260724_01_ishizuchi9": "ishizuchi",
-        "20260724_02_nanpu9": "nanpu",
-        "20260724_03_tsurugisan6": "tsurugisan",
-        "20260724_05_nanpu17": "nanpu",
-        "20260724_06_nanpu28": "nanpu",
-        "20260726_07_odoriko": "odoriko",
-        "20260727_08_narita_express": "narita-express",
-        "20260729_05_sunrise_izumo": "sunrise-izumo",
-        "20260730_03_yakumo22": "yakumo",
-        "20260731_02_rapit_alpha3": "rapit",
-    ])
+    private let namedConventionalServices: [String: String] = [
+        "journey_A9554752F257CDA52831A6C0EED248AF": "haruka",
+        "journey_290DDF7BAF84271A16574A1D9669181F": "super-tsugaru",
+        "journey_03F366E23A32B262DDDA6774510A20D4": "inaho",
+        "journey_65F43AE4739DB31208BF9295B6539472": "shirasagi",
+        "journey_7FDB2E2A33B27404C1C8198B3C2B29F8": "hokuto",
+        "journey_43D90DF84B5E40D6304EC290E8ED4E74": "ozora",
+        "journey_F6F27BD3CBEFAA23FC0956F049DED550": "ozora",
+        "journey_32E525B07148EE19DC4F3B99A36535ED": "soya",
+        "journey_10F4EC2286758F85D709118AAFA6260E": "soya",
+        "journey_8BADA44ED18197CDFA42A2D89B3028F1": "hokuto",
+        "journey_9B1957E8CA2CA62A34EEBFC519E64422": "yakumo",
+        "journey_55E89F3BE5BD16BC06291B252CFFA81B": "super-oki",
+        "journey_06EC08904789EE82E214ED3D28758DE5": "midori",
+        "journey_9E0FE255A29C5BBDEE31480F4AED2BE8": "relay-kamome",
+        "journey_02C494EB5E72DE2FE0D3E5BC7D303309": "asoboy",
+        "journey_71102CEF82BE99D98F5C7101CD080E07": "asoboy",
+        "journey_45E72A351DEC6512AF96B89578A93E9A": "kirishima",
+        "journey_E9C359F48C7CC40ABC70DBD05B606CFA": "nichirin",
+        "journey_6F379655E47131DD2F854B65A847B9F0": "sonic",
+        "journey_31C35A5D2E003443D5E26D7654555B25": "kirameki",
+        "journey_FEDC12334D0F270D498B929602534FA8": "sonic",
+        "journey_CECE2010BC0D2F1EB19C89BFD5900CAD": "shiokaze",
+        "journey_BEEF6E99345E6E5CD1F5B4AF369AC636": "ishizuchi",
+        "journey_771C696806C4705B412A265B953BD9A7": "uzushio",
+        "journey_07E6AD25D8057D28D08088C1D40C2491": "ishizuchi",
+        "journey_2A4BA95A7B92CB19921B27A2D3279C34": "nanpu",
+        "journey_510175D3C325909EF4C88C3A42E1108B": "tsurugisan",
+        "journey_D2D514AAEA06253635D51310E9C4C06B": "nanpu",
+        "journey_6322F5578A2F139890D3B028ADDAF45A": "nanpu",
+        "journey_1C77A10398A5B717F5372522CD764D5F": "odoriko",
+        "journey_680A26B9C2D06FDE49DABFF6A02DF17C": "narita-express",
+        "journey_F29762068C2DDB4CD79CF4AF30B29529": "sunrise-izumo",
+        "journey_BB3AD8FEF0D118561F7FC4FA6227A5A6": "yakumo",
+        "journey_0DCC26B17610DE9969C200D26CBA75DE": "rapit",
+    ]
 
     @Test func sampleServiceConformance() throws {
         let root = try PortFixtures.repositoryRoot()

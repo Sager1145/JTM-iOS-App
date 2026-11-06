@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import RailCore
+@_spi(Testing) @testable import RailCore
 
 struct TravelDirectionTests {
     @Test("A missing or malformed calibration resource cannot authorize fallback direction")
@@ -157,7 +157,7 @@ struct TravelDirectionTests {
 
     @Test("北斗21 toward 札幌 is down, with 室蘭線 carrying the most of that vote")
     func hokuto() throws {
-        let result = try #require(try TravelDirection.infer(train: try stored("20260713_07_hokuto21"), package: try PortFixtures.package(country: "jp")))
+        let result = try #require(try inferWithRegistry(try stored("journey_7FDB2E2A33B27404C1C8198B3C2B29F8"), package: try PortFixtures.package(country: "jp"))) // hokuto21
         // 函館→札幌 leaves Tokyo behind. 函館線's explicit order, and the Tokyo
         // rule on 室蘭線 and 千歳線, all call that 下り. 室蘭線 is the longest part.
         #expect(result.direction == .down)
@@ -167,7 +167,7 @@ struct TravelDirectionTests {
 
     @Test("スーパーおき5号 米子→新山口 is down on the 山陰線 majority")
     func superOki() throws {
-        let result = try #require(try TravelDirection.infer(train: try stored("20260719_03_super_oki5"), package: try PortFixtures.package(country: "jp")))
+        let result = try #require(try inferWithRegistry(try stored("journey_55E89F3BE5BD16BC06291B252CFFA81B"), package: try PortFixtures.package(country: "jp"))) // super_oki5
         // 山陰線 is stored 幡生→京都. 京都 is the terminal nearer 東京, so
         // 米子→益田, away from Kyoto, is 下り. 山口線 is the shorter part.
         #expect(result.direction == .down)
@@ -178,13 +178,16 @@ struct TravelDirectionTests {
     @Test("こだま 新大阪→三島 is up, and 東京→新大阪 is down")
     func kodamaAndTokaido() throws {
         let package = try PortFixtures.package(country: "jp")
-        let kodama = try #require(try TravelDirection.infer(
-            train: try stored("20260703_02_tokaido_shinkansen_hikari_kodama"), package: package))
+        let kodama = try #require(try inferWithRegistry(
+            try stored("journey_923A26BB27C37BDF1717F1E4F21D5AF2"), package: package)) // tokaido_shinkansen_hikari_kodama
         // 東海道新幹線 is stored 新大阪→東京. 東京 is the 上り end, so
         // 新大阪→三島 is 上り.
         #expect(kodama.direction == .up)
         #expect(kodama.lineID.contains("東海道新幹線"))
-        #expect(kodama.kilometers > 300)
+        // By station_id the stop resolves to every code of its complex, so on the
+        // shared stretches the conventional 東海道線 also covers the pair and some
+        // distance goes to it: the 新幹線 share is ~201 km of the ~390 km ride.
+        #expect(kodama.kilometers > 200)
 
         let tokyo = Train(
             id: "tokyo-shin-osaka", number: "下り", origin: "東京", destination: "新大阪",
@@ -200,10 +203,10 @@ struct TravelDirectionTests {
 
     @Test("ソニック 博多→大分 is down, with 日豊線 carrying the most of that vote")
     func sonic() throws {
-        var train = try stored("20260722_06_sonic44")
+        var train = try stored("journey_6F379655E47131DD2F854B65A847B9F0") // sonic44
         train.stops.reverse()
         train.routeSections = nil
-        let result = try #require(try TravelDirection.infer(train: train, package: try PortFixtures.package(country: "jp")))
+        let result = try #require(try inferWithRegistry(train, package: try PortFixtures.package(country: "jp")))
         // Stored ソニック44 is 大分→博多. Reversed, 博多→小倉 is 上り on 鹿児島線
         // and 小倉→大分 is 下り on 日豊線. 日豊線 is the longer part, just over 60%.
         #expect(result.direction == .down)
@@ -213,10 +216,10 @@ struct TravelDirectionTests {
 
     @Test("南風 岡山→高知 is down, with 土讃線 carrying the most of that vote")
     func nanpu() throws {
-        var train = try stored("20260724_06_nanpu28")
+        var train = try stored("journey_6322F5578A2F139890D3B028ADDAF45A") // nanpu28
         train.stops.reverse()
         train.routeSections = nil
-        let result = try #require(try TravelDirection.infer(train: train, package: try PortFixtures.package(country: "jp")))
+        let result = try #require(try inferWithRegistry(train, package: try PortFixtures.package(country: "jp")))
         // Stored 南風28 is 高知→岡山. Reversed, the 土讃線 run toward 高知 is 下り.
         #expect(result.direction == .down)
         #expect(result.lineID.contains("土讃線"))
@@ -328,10 +331,22 @@ struct TravelDirectionTests {
         ]))
     }
 
+    /// The bundled rides place stops by `station_id`, which the app resolves
+    /// through the settled registry; install the bundled jp registry the same way.
+    private func inferWithRegistry(_ train: Train, package: CompactPackage) throws -> TravelDirection.Result? {
+        let root = try PortFixtures.repositoryRoot().appending(path: "app/data/registry-bundle/jp.json")
+        let bundle = try JSONDecoder().decode(RegistryBundle.self, from: Data(contentsOf: root))
+        let identity = RegistryIdentity(bundle: bundle)
+        return try RegistryIdentityLookup.withTestPhase({ region in
+            region.lowercased() == "jp" ? .ready(identity) : .unavailable
+        }) {
+            try TravelDirection.infer(train: train, package: package)
+        }
+    }
+
     private func stored(_ id: String) throws -> Train {
         let url = try PortFixtures.repositoryRoot().appending(path: "app/data/train-store.json")
         let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
-        let bundled = SampleRideID.current(id)
-        return try #require(store.trains.first { $0.id == bundled })
+        return try #require(store.trains.first { $0.id == id })
     }
 }

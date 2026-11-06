@@ -4529,8 +4529,8 @@
           "groupKey": "139.7499,35.65468|139.74995,35.655",
           "curve": 0,
           "trainIds": [
-            "20260704_04_oedo_line",
-            "20260704_05_mita_line"
+            "journey_C07243F8AADDB594384BBF1CC16C13EA",
+            "journey_5C3BA9F2C1A8F58936EC22D01F4E22E2"
           ],
           "endpointNodeKeys": [
             "139.75021,35.6566",
@@ -4541,8 +4541,8 @@
           "groupKey": "near:139.76174,35.7011|139.76242,35.70065",
           "curve": 1,
           "trainIds": [
-            "20260704_06_marunouchi_line",
-            "20260705_03_chuo_line"
+            "journey_09AC64CFCEE12C93E83510873DD6FEC1",
+            "journey_DAE47A568594FC62E600A5F695EB7365"
           ],
           "endpointNodeKeys": [
             "139.76634,35.69926",
@@ -4553,8 +4553,8 @@
           "groupKey": "near:139.71109,35.73028|139.71134,35.7302",
           "curve": 2,
           "trainIds": [
-            "20260704_06_marunouchi_line",
-            "20260704_08_shonan_shinjuku_line"
+            "journey_09AC64CFCEE12C93E83510873DD6FEC1",
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302"
           ],
           "endpointNodeKeys": [
             "139.71196,35.73008",
@@ -4565,9 +4565,9 @@
           "groupKey": "near:139.71109,35.73028|139.71167,35.73152",
           "curve": 3,
           "trainIds": [
-            "20260704_07_saikyo_line",
-            "20260704_08_shonan_shinjuku_line",
-            "20260705_07_yamanote_line"
+            "journey_EAACE466C535944D58A31E97A124CF0C",
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_2421C1DE7244064D1E03E50A9E4A1707"
           ],
           "endpointNodeKeys": [
             "139.71134,35.7302",
@@ -4578,8 +4578,8 @@
           "groupKey": "139.71318,35.73365|139.71384,35.73484",
           "curve": 4,
           "trainIds": [
-            "20260704_07_saikyo_line",
-            "20260704_08_shonan_shinjuku_line"
+            "journey_EAACE466C535944D58A31E97A124CF0C",
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302"
           ],
           "endpointNodeKeys": [
             "139.71318,35.73365",
@@ -4590,8 +4590,8 @@
           "groupKey": "near:139.71718,35.78293|139.71749,35.78262",
           "curve": 5,
           "trainIds": [
-            "20260704_07_saikyo_line",
-            "20260704_08_shonan_shinjuku_line"
+            "journey_EAACE466C535944D58A31E97A124CF0C",
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302"
           ],
           "endpointNodeKeys": [
             "139.71791,35.78334",
@@ -4602,8 +4602,8 @@
           "groupKey": "near:139.6231,35.90617|139.62381,35.90445",
           "curve": 6,
           "trainIds": [
-            "20260704_07_saikyo_line",
-            "20260704_08_shonan_shinjuku_line"
+            "journey_EAACE466C535944D58A31E97A124CF0C",
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302"
           ],
           "endpointNodeKeys": [
             "139.62776,35.89896",
@@ -4614,9 +4614,9 @@
           "groupKey": "near:139.70014,35.69047|139.70024,35.68926",
           "curve": 7,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.70014,35.69047",
@@ -4627,9 +4627,9 @@
           "groupKey": "139.70221,35.6838|139.70239,35.68309",
           "curve": 8,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.70221,35.6838",
@@ -4640,8 +4640,8 @@
           "groupKey": "139.63317,35.47787|139.63393,35.47869",
           "curve": 9,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260704_12_yokohama_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_1BF192064CE880673A0BB314C77436DB"
           ],
           "endpointNodeKeys": [
             "139.64563,35.48511",
@@ -4652,8 +4652,8 @@
           "groupKey": "139.62335,35.46681|139.62376,35.46732",
           "curve": 10,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260704_11_keihin_tohoku_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_595FE5006ED23F7B331795A1C3A877E9"
           ],
           "endpointNodeKeys": [
             "139.63317,35.47787",
@@ -4664,9 +4664,9 @@
           "groupKey": "near:139.62195,35.466|139.62235,35.46643",
           "curve": 11,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260704_11_keihin_tohoku_line",
-            "20260704_10_minatomirai_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_595FE5006ED23F7B331795A1C3A877E9",
+            "journey_2840A4D4E48F45ECA2F36BE4ED5C5E2A"
           ],
           "endpointNodeKeys": [
             "139.62335,35.46681",
@@ -4677,8 +4677,8 @@
           "groupKey": "near:139.62115,35.46492|139.62125,35.46517",
           "curve": 12,
           "trainIds": [
-            "20260704_09_negishi_line",
-            "20260704_10_minatomirai_line"
+            "journey_9F1B97EDB6DCD7A4DB1908060F60E180",
+            "journey_2840A4D4E48F45ECA2F36BE4ED5C5E2A"
           ],
           "endpointNodeKeys": [
             "139.62225,35.46541",
@@ -4689,8 +4689,8 @@
           "groupKey": "139.70254,35.68286|139.70263,35.68273",
           "curve": 13,
           "trainIds": [
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.73532,35.69116",
@@ -4701,8 +4701,8 @@
           "groupKey": "139.70146,35.6865|139.70184,35.68575",
           "curve": 14,
           "trainIds": [
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.70184,35.68575",
@@ -4713,9 +4713,9 @@
           "groupKey": "near:139.70036,35.68882|139.70062,35.68792",
           "curve": 15,
           "trainIds": [
-            "20260704_08_shonan_shinjuku_line",
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_F3AE731354D1EAA0C06B45E04BE9F302",
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.70221,35.6838",
@@ -4726,8 +4726,8 @@
           "groupKey": "139.70063,35.68895|139.70064,35.68888",
           "curve": 16,
           "trainIds": [
-            "20260705_03_chuo_line",
-            "20260705_04_chuo_sobu_line"
+            "journey_DAE47A568594FC62E600A5F695EB7365",
+            "journey_588AB2A1A40723D13732520638875B90"
           ],
           "endpointNodeKeys": [
             "139.70068,35.68871",
@@ -61171,10 +61171,10 @@
           "groupKey": "120.61426,24.1098|120.61612,24.10961",
           "curve": 0,
           "trainIds": [
-            "20260805_02_tra_local_3262_xinwuri_taichung",
-            "20260806_01_tra_tze_chiang_3000_137_taichung_changhua",
-            "20260806_02_tra_local_2204_changhua_taichung",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_253013612D5701BF5895AD9C0FC1A850",
+            "journey_0A8EC92F75B878119658D0752A71E41F",
+            "journey_85C2F9F935C9A4701208C881737C7ADC",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.61426,24.1098",
@@ -61185,9 +61185,9 @@
           "groupKey": "120.53837,24.08182|120.53842,24.08202",
           "curve": 1,
           "trainIds": [
-            "20260806_01_tra_tze_chiang_3000_137_taichung_changhua",
-            "20260806_02_tra_local_2204_changhua_taichung",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_0A8EC92F75B878119658D0752A71E41F",
+            "journey_85C2F9F935C9A4701208C881737C7ADC",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.61426,24.1098",
@@ -61198,9 +61198,9 @@
           "groupKey": "120.30264,22.6397|120.30273,22.64074",
           "curve": 2,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260812_01_krtc_red_kaohsiung_zuoying"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_BCCC18D524113D54156C5874685CEE29"
           ],
           "endpointNodeKeys": [
             "120.30264,22.6397",
@@ -61211,8 +61211,8 @@
           "groupKey": "120.30227,22.71022|120.30229,22.71055",
           "curve": 3,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.30876,22.68826",
@@ -61223,9 +61223,9 @@
           "groupKey": "near:120.31651,22.7495|120.31732,22.74802",
           "curve": 4,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.31773,22.74723",
@@ -61236,8 +61236,8 @@
           "groupKey": "120.3139,22.75484|120.31417,22.75433",
           "curve": 5,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.31517,22.75251",
@@ -61248,9 +61248,9 @@
           "groupKey": "near:120.31105,22.75966|120.3118,22.75826",
           "curve": 6,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.31653,22.74994",
@@ -61261,8 +61261,8 @@
           "groupKey": "120.311,22.76026|120.31157,22.7591",
           "curve": 7,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.31157,22.7591",
@@ -61273,8 +61273,8 @@
           "groupKey": "120.30991,22.76225|120.31015,22.76172",
           "curve": 8,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.31032,22.76143",
@@ -61285,8 +61285,8 @@
           "groupKey": "120.30552,22.77132|120.30586,22.77046",
           "curve": 9,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.30714,22.76798",
@@ -61297,9 +61297,9 @@
           "groupKey": "near:120.30173,22.78058|120.30236,22.77908",
           "curve": 10,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.311,22.76026",
@@ -61310,9 +61310,9 @@
           "groupKey": "near:120.30032,22.78386|120.30053,22.78328",
           "curve": 11,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.30136,22.78456",
@@ -61323,8 +61323,8 @@
           "groupKey": "120.29907,22.79253|120.29926,22.7908",
           "curve": 12,
           "trainIds": [
-            "20260810_01_krtc_red_kaohsiung_gangshan_station",
-            "20260810_02_krtc_red_gangshan_station_siaogang"
+            "journey_2FDE3816A557FFFB50406D18A131A336",
+            "journey_F889D3193B98C1B436F80571170668AA"
           ],
           "endpointNodeKeys": [
             "120.30032,22.78386",
@@ -61335,8 +61335,8 @@
           "groupKey": "120.30104,22.6234|120.30106,22.62315",
           "curve": 13,
           "trainIds": [
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260810_06_krtc_red_kaisyuan_kaohsiung"
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_392AB4A925F885DE6CD17FA95C36040E"
           ],
           "endpointNodeKeys": [
             "120.30264,22.6397",
@@ -61347,10 +61347,10 @@
           "groupKey": "120.30451,22.61395|120.30511,22.61239",
           "curve": 14,
           "trainIds": [
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260810_03_krtc_red_siaogang_sanduo",
-            "20260810_04_krtc_red_sanduo_kaisyuan",
-            "20260810_06_krtc_red_kaisyuan_kaohsiung"
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_927016E22113A45080FBC58092D28EB0",
+            "journey_10253133B7525E17509D09650522E725",
+            "journey_392AB4A925F885DE6CD17FA95C36040E"
           ],
           "endpointNodeKeys": [
             "120.30451,22.61395",
@@ -61361,8 +61361,8 @@
           "groupKey": "120.31509,22.59674|120.31571,22.59595",
           "curve": 15,
           "trainIds": [
-            "20260810_02_krtc_red_gangshan_station_siaogang",
-            "20260810_03_krtc_red_siaogang_sanduo"
+            "journey_F889D3193B98C1B436F80571170668AA",
+            "journey_927016E22113A45080FBC58092D28EB0"
           ],
           "endpointNodeKeys": [
             "120.31509,22.59674",
@@ -61373,8 +61373,8 @@
           "groupKey": "near:120.28102,22.64481|120.28115,22.64645",
           "curve": 16,
           "trainIds": [
-            "20260810_05_klrt_c3_counterclockwise_loop",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_0960494E1EEF4CBDB6B1E4B1FE90BEB7",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.28194,22.6546",
@@ -61385,8 +61385,8 @@
           "groupKey": "near:120.28088,22.64257|120.28088,22.64317",
           "curve": 17,
           "trainIds": [
-            "20260810_05_klrt_c3_counterclockwise_loop",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_0960494E1EEF4CBDB6B1E4B1FE90BEB7",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.28141,22.6505",
@@ -61397,8 +61397,8 @@
           "groupKey": "near:120.2815,22.65185|120.28157,22.6531",
           "curve": 18,
           "trainIds": [
-            "20260810_05_klrt_c3_counterclockwise_loop",
-            "20260813_01_star_of_taiwan_round_island_loop"
+            "journey_0960494E1EEF4CBDB6B1E4B1FE90BEB7",
+            "journey_C929D1DB4BBEDD1ED71B9C4885026D78"
           ],
           "endpointNodeKeys": [
             "120.28172,22.65561",

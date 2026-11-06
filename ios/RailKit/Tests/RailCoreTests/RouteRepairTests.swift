@@ -116,7 +116,7 @@ struct RouteRepairTests {
     func sunriseIzumo() throws {
         let url = try PortFixtures.repositoryRoot().appending(path: "app/data/train-store.json")
         let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
-        let train = try #require(store.trains.first { $0.id == SampleRideID.current("20260729_05_sunrise_izumo") })
+        let train = try #require(store.trains.first { $0.id == "journey_F29762068C2DDB4CD79CF4AF30B29529" }) // sunrise_izumo
         let from = try #require(train.stops.firstIndex { $0.name == "新見" })
         let to = try #require(train.stops.firstIndex { $0.name == "米子" })
         #expect(to == from + 1)

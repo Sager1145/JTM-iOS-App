@@ -907,7 +907,7 @@ const selected = CASES.map((entry) => {
   return train;
 });
 
-const context = makeSandbox({ userAgent: "node-port-fixtures" });
+const context = makeSandbox({ userAgent: "node-port-fixtures", dataDir: DATA_DIR });
 evaluateAppScripts(context, readOrderedAppScripts());
 
 context.__host = {

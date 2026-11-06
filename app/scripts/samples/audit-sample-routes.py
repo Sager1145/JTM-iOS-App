@@ -7,7 +7,8 @@ user-journey path and drawn exactly like a reader's own trip. The route census
 SAMPLE_DISPLAY_CENSUS=1 SAMPLE_DISPLAY_CENSUS_OUTPUT=/abs/out.json) writes one JSON record
 per drawn part (plus segment:-1 records for rides with no drawn ride). This script reads
 that census (--census) and the 7 bundled stores, and reports per ride:
-  - Solved/legs and Projected/legs (legs = consecutive called stops, pass_through excluded),
+  - Solved/legs and Projected/legs (legs = route sections the resolver considered, census legCount;
+    called-stop pairs, pass_through excluded, when the census has none),
   - display lines drawn (census displayLines, in order),
   - an independent geometry check on the census's drawn coordinates: every drawn part is
     resampled every STEP metres and matched against the compact-v1 display package
@@ -166,6 +167,9 @@ def audit_ride(ride, records, idxs, geom):
     ride['solved_legs'] = len({r['segment'] for r in drawn})
     ride['projected_legs'] = len({r['segment'] for r in drawn if r.get('projected')})
     ride['has_census'] = bool(records)
+    # Legs = the route sections the resolver considered (census legCount), which can exceed
+    # the called-stop pairs; fall back to the called-stop pairs when the census has none.
+    ride['census_legs'] = max([r.get('legCount', 0) for r in records] or [0])
     ride['parts'] = []
     if ride['region'] not in idxs: idxs[ride['region']] = Index(ride['region'])
     idx = idxs[ride['region']]
@@ -199,7 +203,7 @@ def markdown(rides, notes):
         def mx(k): return max((p[k] for p in checked), default=0.0)
         net, off_line, off_op = mx('off_network_m'), mx('off_line_m'), mx('off_operator_m')
         dev = max((p['deviation_m'] for p in ride['parts']), default=0.0)
-        nlegs = len(ride['legs'])
+        nlegs = ride.get('census_legs') or len(ride['legs'])
         note = notes.get(ride['id'])
         all_solved = ride['has_census'] and not ride['unsolved_ride'] and ride['solved_legs'] >= nlegs
         if not all_solved: verdict = 'UNSOLVED'

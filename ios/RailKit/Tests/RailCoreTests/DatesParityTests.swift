@@ -5,8 +5,8 @@ import Testing
 
 /// `RailCore.Dates` against `app-dates.js`, over `port-fixtures/dates.json`.
 ///
-/// The inputs are the 229 real itineraries in the two committed train stores
-/// plus nineteen projections of them (a field dropped, or the one real
+/// The inputs are the real itineraries in the two committed train stores
+/// plus projections of them (a field dropped, or the one real
 /// overnight run carried onto another real store date), and every expected
 /// value is what the JavaScript answered when the fixture was generated. So a
 /// failure here says one thing only: this Swift disagrees with the app it was
@@ -194,17 +194,12 @@ struct DatesParityTests {
     }
 
     /// The projections are the reason the bucket test means anything: without
-    /// them every train carries an explicit `date` and the two fallbacks —
-    /// read the date out of the id, then give up and answer `undated` — are
-    /// never taken.
+    /// them every train carries an explicit `date` and the `undated` fallback
+    /// is never taken.
     @Test("the fixture actually reaches every bucket rule")
     func bucketRulesAreCovered() throws {
         let fixture = try Self.load()
-        let inferred = fixture.trains.filter {
-            $0.date == nil && $0.id != nil
-        }
         let undated = fixture.cases.filter { $0.trainDate == Dates.undated }
-        #expect(inferred.count >= 8, "no train exercises inferDateFromTrainId")
         #expect(undated.count >= 3, "no train reaches the UNDATED bucket")
     }
 

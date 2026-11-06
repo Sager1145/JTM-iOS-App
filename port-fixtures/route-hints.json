@@ -8,9 +8,9 @@
       "cases": [
         {
           "train": {
-            "id": "MO-SAMPLE-MLM-TAIPA",
-            "number": "氹仔線 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E155548B9C8291DA928D5426A9D0134B",
+            "number": "氹仔線",
+            "trainType": "輕軌",
             "company": "澳門輕軌",
             "origin": "媽閣",
             "destination": "機場",
@@ -26,16 +26,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "媽閣",
+            "to": "海洋",
             "from_n02_station_code": "MLM-BARRA",
             "to_n02_station_code": "MLM-OCEAN",
+            "from_station_id": "st:mo:1",
+            "to_station_id": "st:mo:2",
             "line_names": [
               "氹仔線"
             ],
             "operator_names": [
               "澳門輕軌"
-            ],
-            "from": "媽閣",
-            "to": "海洋"
+            ]
           },
           "fromStationIndices": [
             0
@@ -240,9 +242,9 @@
         },
         {
           "train": {
-            "id": "MO-SAMPLE-MLM-TAIPA",
-            "number": "氹仔線 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E155548B9C8291DA928D5426A9D0134B",
+            "number": "氹仔線",
+            "trainType": "輕軌",
             "company": "澳門輕軌",
             "origin": "媽閣",
             "destination": "機場",
@@ -258,16 +260,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "海洋",
+            "to": "馬會",
             "from_n02_station_code": "MLM-OCEAN",
             "to_n02_station_code": "MLM-JOCKEY",
+            "from_station_id": "st:mo:2",
+            "to_station_id": "st:mo:3",
             "line_names": [
               "氹仔線"
             ],
             "operator_names": [
               "澳門輕軌"
-            ],
-            "from": "海洋",
-            "to": "馬會"
+            ]
           },
           "fromStationIndices": [
             1
@@ -472,9 +476,9 @@
         },
         {
           "train": {
-            "id": "MO-SAMPLE-MLM-TAIPA",
-            "number": "氹仔線 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E155548B9C8291DA928D5426A9D0134B",
+            "number": "氹仔線",
+            "trainType": "輕軌",
             "company": "澳門輕軌",
             "origin": "媽閣",
             "destination": "機場",
@@ -490,16 +494,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "馬會",
+            "to": "運動場",
             "from_n02_station_code": "MLM-JOCKEY",
             "to_n02_station_code": "MLM-STADIUM",
+            "from_station_id": "st:mo:3",
+            "to_station_id": "st:mo:4",
             "line_names": [
               "氹仔線"
             ],
             "operator_names": [
               "澳門輕軌"
-            ],
-            "from": "馬會",
-            "to": "運動場"
+            ]
           },
           "fromStationIndices": [
             2
@@ -704,9 +710,9 @@
         },
         {
           "train": {
-            "id": "MO-SAMPLE-MLM-TAIPA",
-            "number": "氹仔線 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E155548B9C8291DA928D5426A9D0134B",
+            "number": "氹仔線",
+            "trainType": "輕軌",
             "company": "澳門輕軌",
             "origin": "媽閣",
             "destination": "機場",
@@ -722,16 +728,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "運動場",
+            "to": "排角",
             "from_n02_station_code": "MLM-STADIUM",
             "to_n02_station_code": "MLM-PAIKOK",
+            "from_station_id": "st:mo:4",
+            "to_station_id": "st:mo:5",
             "line_names": [
               "氹仔線"
             ],
             "operator_names": [
               "澳門輕軌"
-            ],
-            "from": "運動場",
-            "to": "排角"
+            ]
           },
           "fromStationIndices": [
             3
@@ -941,9 +949,9 @@
       "cases": [
         {
           "train": {
-            "id": "HK-SAMPLE-EAL-LOW",
-            "number": "東鐵綫 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E432976CF3960943D65E32F615830502",
+            "number": "東鐵綫",
+            "trainType": "港鐵",
             "company": "MTR",
             "origin": "金鐘",
             "destination": "上水",
@@ -959,16 +967,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "金鐘",
+            "to": "會展",
             "from_n02_station_code": "MTR-ADM",
             "to_n02_station_code": "MTR-EXC",
+            "from_station_id": "st:hk:10",
+            "to_station_id": "st:hk:11",
             "line_names": [
               "東鐵綫"
             ],
             "operator_names": [
               "MTR"
-            ],
-            "from": "金鐘",
-            "to": "會展"
+            ]
           },
           "fromStationIndices": [
             7,
@@ -1194,9 +1204,9 @@
         },
         {
           "train": {
-            "id": "HK-SAMPLE-EAL-LOW",
-            "number": "東鐵綫 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E432976CF3960943D65E32F615830502",
+            "number": "東鐵綫",
+            "trainType": "港鐵",
             "company": "MTR",
             "origin": "金鐘",
             "destination": "上水",
@@ -1212,16 +1222,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "會展",
+            "to": "紅磡",
             "from_n02_station_code": "MTR-EXC",
             "to_n02_station_code": "MTR-HUH",
+            "from_station_id": "st:hk:11",
+            "to_station_id": "st:hk:12",
             "line_names": [
               "東鐵綫"
             ],
             "operator_names": [
               "MTR"
-            ],
-            "from": "會展",
-            "to": "紅磡"
+            ]
           },
           "fromStationIndices": [
             8
@@ -1433,9 +1445,9 @@
         },
         {
           "train": {
-            "id": "HK-SAMPLE-EAL-LOW",
-            "number": "東鐵綫 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E432976CF3960943D65E32F615830502",
+            "number": "東鐵綫",
+            "trainType": "港鐵",
             "company": "MTR",
             "origin": "金鐘",
             "destination": "上水",
@@ -1451,16 +1463,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "紅磡",
+            "to": "旺角東",
             "from_n02_station_code": "MTR-HUH",
             "to_n02_station_code": "MTR-MKK",
+            "from_station_id": "st:hk:12",
+            "to_station_id": "st:hk:13",
             "line_names": [
               "東鐵綫"
             ],
             "operator_names": [
               "MTR"
-            ],
-            "from": "紅磡",
-            "to": "旺角東"
+            ]
           },
           "fromStationIndices": [
             9,
@@ -1672,9 +1686,9 @@
         },
         {
           "train": {
-            "id": "HK-SAMPLE-EAL-LOW",
-            "number": "東鐵綫 官方路線示例",
-            "trainType": "示例列車",
+            "id": "journey_E432976CF3960943D65E32F615830502",
+            "number": "東鐵綫",
+            "trainType": "港鐵",
             "company": "MTR",
             "origin": "金鐘",
             "destination": "上水",
@@ -1690,16 +1704,18 @@
             "institutionFilterMode": "hard"
           },
           "section": {
+            "from": "旺角東",
+            "to": "九龍塘",
             "from_n02_station_code": "MTR-MKK",
             "to_n02_station_code": "MTR-KOT",
+            "from_station_id": "st:hk:13",
+            "to_station_id": "st:hk:14",
             "line_names": [
               "東鐵綫"
             ],
             "operator_names": [
               "MTR"
-            ],
-            "from": "旺角東",
-            "to": "九龍塘"
+            ]
           },
           "fromStationIndices": [
             10
