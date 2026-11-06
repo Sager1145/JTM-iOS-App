@@ -81,9 +81,11 @@ extension TripRoutePlanner {
         patterns: [JapanThroughServices.Pattern], connectors: [JapanThroughServices.Connector],
         junctions: TripConnectivity.Junctions, lineName: (String) -> String?
     ) -> Outcome {
+        let through = JapanThroughServices.ContinuationIndex(
+            patterns: patterns, connectors: connectors, on: rideDate)
         func link(_ fromID: String, _ toID: String, _ code: String) -> TripConnectivity.Link {
             TripConnectivity.link(fromLineID: fromID, toLineID: toID, atStationCode: code, on: rideDate,
-                                  patterns: patterns, connectors: connectors, junctions: junctions)
+                                  through: through, junctions: junctions)
         }
         guard var route = sections.first else { return .noRoute }
         for next in sections.dropFirst() {

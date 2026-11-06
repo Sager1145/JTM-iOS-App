@@ -485,6 +485,53 @@ public enum JapanThroughServices {
             return nil
         })
     }
+    /// ``continuationCodes(fromLineID:toLineID:atStationCode:on:patterns:connectors:)``
+    /// for one ride date, precomputed. Each pattern's dated legs are resolved
+    /// once instead of on every row-change check, which dominated planning.
+    public struct ContinuationIndex: Sendable {
+        private let codesByKey: [String: Set<String>]
+
+        public init(patterns: [Pattern], connectors: [Connector], on date: String?) {
+            var index: [String: Set<String>] = [:]
+            for pattern in patterns {
+                let legs = pattern.legs(on: date)
+                for (a, b) in zip(legs, legs.dropFirst()) {
+                    let firstIDs = [a.lineID] + (a.reverseLineID.map { [$0] } ?? [])
+                    let secondIDs = [b.lineID] + (b.reverseLineID.map { [$0] } ?? [])
+                    let codes: [String]
+                    if a.toStationCode == b.fromStationCode {
+                        codes = [a.toStationCode]
+                    } else if connectors.contains(where: {
+                        $0.joins(firstIDs, at: a.toStationCode, to: secondIDs, at: b.fromStationCode, on: date)
+                    }) {
+                        codes = [a.toStationCode, b.fromStationCode]
+                    } else {
+                        codes = []
+                    }
+                    for code in codes {
+                        for first in firstIDs {
+                            for second in secondIDs where first != second {
+                                index[Self.key(first, second, code), default: []].insert(pattern.serviceCode)
+                                index[Self.key(second, first, code), default: []].insert(pattern.serviceCode)
+                            }
+                        }
+                    }
+                }
+            }
+            codesByKey = index
+        }
+
+        public func continuationCodes(fromLineID: String, toLineID: String,
+                                      atStationCode code: String) -> Set<String> {
+            guard fromLineID != toLineID else { return [] }
+            return codesByKey[Self.key(fromLineID, toLineID, code)] ?? []
+        }
+
+        private static func key(_ from: String, _ to: String, _ code: String) -> String {
+            from + "\u{1F}" + to + "\u{1F}" + code
+        }
+    }
+
     /// Exact directed interval membership within each anchored physical leg.
     /// Use the returned per-pattern identities across the whole candidate path;
     /// intersecting passenger aliases such as JS is insufficient at a branch.

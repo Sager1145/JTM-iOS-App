@@ -132,10 +132,20 @@ public enum TripConnectivity {
                             patterns: [JapanThroughServices.Pattern],
                             connectors: [JapanThroughServices.Connector],
                             junctions: Junctions = .empty) -> Link {
+        link(fromLineID: fromLineID, toLineID: toLineID, atStationCode: stationCode, on: date,
+             through: JapanThroughServices.ContinuationIndex(patterns: patterns, connectors: connectors, on: date),
+             junctions: junctions)
+    }
+
+    /// The same rule with the ride date's through services already indexed;
+    /// planners checking many row changes build the index once.
+    public static func link(fromLineID: String, toLineID: String,
+                            atStationCode stationCode: String, on date: String?,
+                            through: JapanThroughServices.ContinuationIndex,
+                            junctions: Junctions = .empty) -> Link {
         if fromLineID == toLineID { return .sameLine }
-        if !JapanThroughServices.continuationCodes(
-            fromLineID: fromLineID, toLineID: toLineID, atStationCode: stationCode,
-            on: date, patterns: patterns, connectors: connectors).isEmpty {
+        if !through.continuationCodes(fromLineID: fromLineID, toLineID: toLineID,
+                                      atStationCode: stationCode).isEmpty {
             return .throughService
         }
         if junctions.join(fromLineID, toLineID, at: stationCode, on: date) != nil {
