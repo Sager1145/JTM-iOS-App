@@ -14,7 +14,12 @@
         "ios/RailMap/App/AppShell.swift",
         "ios/RailMap/App/RailMapApp.swift",
         "ios/RailMap/Diagnostics/AppControl/AppControlHandles.swift",
-        "ios/RailMap/Diagnostics/AppControl/AppControlHost.swift"
+        "ios/RailMap/Diagnostics/AppControl/AppControlHost.swift",
+        "ios/RailMap/Diagnostics/DevTools/DevDiagnostics.swift",
+        "ios/RailMap/Diagnostics/DevTools/DevPerfSampler.swift",
+        "ios/RailMap/Diagnostics/DevTools/DevStorage.swift",
+        "ios/RailMap/Diagnostics/DevTools/DevToolsController.swift",
+        "ios/RailMap/Diagnostics/DevTools/DevToolsViews.swift"
       ]
     },
     {
@@ -481,7 +486,8 @@
         "ios/RailKit/Sources/RailCore/Utilities/JSMath.swift",
         "ios/RailKit/Sources/RailCore/Utilities/JSNumber.swift",
         "ios/RailKit/Sources/RailCore/Utilities/JSString.swift",
-        "ios/RailKit/Sources/RailCore/Utilities/SearchFold.swift"
+        "ios/RailKit/Sources/RailCore/Utilities/SearchFold.swift",
+        "ios/RailKit/Sources/RailCore/Utilities/SignpostRecorder.swift"
       ]
     },
     {

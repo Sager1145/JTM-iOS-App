@@ -31,6 +31,7 @@ struct AppControlProtocolTests {
             "useStorage": ["id": .string(storage)], "selectTrip": ["id": "t"], "focusTrip": ["id": "t"],
             "openEditor": ["id": "t"], "addTrip": ["from": "a", "to": "b"], "editTrip": ["id": "t"],
             "deleteTrip": ["id": "t"], "wait": ["condition": "idle"],
+            "devtools": ["action": "show"], "setLayer": ["name": "routes", "on": false],
         ]
         for name in AppControlCommand.names {
             let command = try parse(name, minimal[name] ?? [:])
@@ -59,8 +60,8 @@ struct AppControlProtocolTests {
         #expect(command == .addTrip(AppControlTripSpec(
             region: "jp", from: "東京", to: "新大阪", date: "2025-01-03", via: ["名古屋", "京都"],
             sectionChoices: [0: "c0", 2: "c2"], save: true)))
-        #expect(command.mutatesStore)
-        #expect(try !parse("addTrip", ["from": "a", "to": "b"]).mutatesStore)
+        #expect(!command.allowedOnSharedStore)
+        #expect(try !parse("addTrip", ["from": "a", "to": "b"]).allowedOnSharedStore)
     }
 
     @Test("editTrip accepts its edits flat or nested under changes")
@@ -130,6 +131,16 @@ struct AppControlProtocolTests {
         #expect(result.data?.object?["requestID"] == "ok-1")
     }
 
+    @Test("devtools export is the diagnostics export; layers need a name and a flag")
+    func devtoolsAndLayers() throws {
+        #expect(try parse("devtools", ["action": "export"]) == .exportDiagnostics)
+        #expect(try parse("devtools", ["action": "hide"]) == .devtools(action: "hide"))
+        #expect(throws: AppControlError.invalidArgument("action", "explode")) { try parse("devtools", ["action": "explode"]) }
+        #expect(try parse("setLayer", ["name": "metro", "on": "0"]) == .setLayer(name: "metro", on: false))
+        #expect(throws: AppControlError.missingArgument("on")) { try parse("setLayer", ["name": "metro"]) }
+        #expect(throws: AppControlError.invalidArgument("name", "rivers")) { try parse("setLayer", ["name": "rivers", "on": true]) }
+    }
+
     @Test("On the shared store, writes are refused and reads still run")
     @MainActor
     func sharedStoreGuard() async {
@@ -140,6 +151,9 @@ struct AppControlProtocolTests {
         let saving = await AppControlDispatcher.run(
             AppControlRequest(id: "w2", command: "addTrip", args: ["from": "a", "to": "b", "save": true]), driver: driver)
         #expect(saving.status == .rejected)
+        // A selection writes the last-viewed trip into the store's preferences.
+        let select = await AppControlDispatcher.run(AppControlRequest(id: "w3", command: "selectTrip", args: ["id": "t"]), driver: driver)
+        #expect(select.status == .rejected)
         let read = await AppControlDispatcher.run(AppControlRequest(id: "r", command: "state"), driver: driver)
         #expect(read.status == .ok)
         #expect(driver.performed == [.state(includeTrips: true)])

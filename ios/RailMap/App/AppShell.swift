@@ -23,8 +23,7 @@ struct AppShell: View {
     @State private var mileageStatistics = MileageStatisticsStore()
     /// Hidden regions, years and months: one scope for the map, the lists
     /// and Stats (see ``TripHideFilter``).
-    @State private var tripHide = TripHideFilter(
-        storageID: UITestLaunchConfiguration.current[.storageId])
+    @State private var tripHide = TripHideFilter(storageID: AppShell.launchStorageID)
     /// One transport for the whole app. See the type note above.
     @State private var playback = PlaybackController()
     /// Published into the environment rather than passed down: the two places
@@ -73,7 +72,9 @@ struct AppShell: View {
         let storage: RideStorage
         let preferences: UserDefaults
 #if DEBUG
-        if let value = UITestLaunchConfiguration.current[.storageId],
+        // The UI-test storage ID, or the developer panel's isolated store
+        // (`DevStorage`); otherwise the real store.
+        if let value = DevStorage.launchID,
             let id = UUID(uuidString: value)
         {
             // A UI case owns this store across its relaunches. Sample loading
@@ -97,6 +98,15 @@ struct AppShell: View {
     }
 
     @State private var presentationHost = PresentationHost()
+
+    /// The isolated store's ID the hidden-trips filter is keyed on.
+    private static var launchStorageID: String? {
+#if DEBUG
+        DevStorage.launchID
+#else
+        UITestLaunchConfiguration.current[.storageId]
+#endif
+    }
 
     var body: some View {
         // One map, and one resident sheet over it. The system TabView is inside

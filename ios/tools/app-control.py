@@ -27,13 +27,17 @@ CONTAINER_ROOT = "Library/Application Support/" + ROOT_NAME
 DEFAULT_SIM = "0DBE2488-0BEB-4932-9B55-091B3CC793B6"
 DEFAULT_DEVICE = "00008140-000575142288801C"
 DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData"))
-PRODUCTS = {"sim": "Debug-iphonesimulator", "mac": "Debug-maccatalyst", "device": "Debug-iphoneos"}
+PLATFORM_SUFFIX = {"sim": "iphonesimulator", "mac": "maccatalyst", "device": "iphoneos"}
 DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=macOS,variant=Mac Catalyst",
                 "device": "platform=iOS,id={device}"}
 STATE_DIR = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control"))
 COMMANDS = ["loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
             "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
-            "screenshot", "wait"]
+            "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer"]
+DEVTOOLS_ACTIONS = ["show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export"]
+# CLI wait (seconds) per command when no timeoutMs is passed: at least the app-side default.
+DEFAULT_WAIT = {"reloadAll": 660, "addTrip": 200, "editTrip": 200, "openEditor": 90, "saveEditor": 60,
+                "loadSamples": 240, "exportDiagnostics": 120, "wait": 90}
 EXIT = {"ok": 0, "rejected": 2, "timeout": 3, "failed": 4}
 DEV_ENV = {"DEVELOPER_DIR": os.environ.get("DEVELOPER_DIR", "/Applications/Xcode.app/Contents/Developer")}
 
@@ -59,7 +63,7 @@ def device_id(a):
 def app_path(a):
     if a.app:
         return Path(a.app)
-    return DERIVED / "Build/Products" / PRODUCTS[a.target] / "RailMap.app"
+    return DERIVED / "Build/Products" / "{}-{}".format(a.configuration, PLATFORM_SUFFIX[a.target]) / "RailMap.app"
 
 
 def state_file(a):
@@ -181,10 +185,12 @@ def send(a, request):
     if a.transport == "url" and len(encoded) < 3500:
         open_url(a, "{}://run?json={}".format(SCHEME, encoded))
     else:
-        write_container_file(a, "inbox/{}.json".format(rid), payload)
+        # On a device the copy is not atomic: write `.req`, which only the URL (not the poller) reads.
+        suffix = "req" if a.target == "device" and a.transport != "poll" else "json"
+        write_container_file(a, "inbox/{}.{}".format(rid, suffix), payload)
         if a.transport != "poll":
             open_url(a, "{}://run?request={}".format(SCHEME, rid))
-    timeout = a.timeout
+    timeout = a.timeout if a.timeout is not None else DEFAULT_WAIT.get(request["command"], 90)
     args_timeout = request["args"].get("timeoutMs")
     if isinstance(args_timeout, (int, float)):
         timeout = max(timeout, args_timeout / 1000 + 10)
@@ -212,10 +218,10 @@ def send(a, request):
 def cmd_build(a):
     dest = DESTINATIONS[a.target].format(device=device_id(a))
     cmd = ["xcodebuild", "-project", str(REPO / "ios/RailMap.xcodeproj"), "-scheme", "RailMap",
-           "-configuration", "Debug", "-destination", dest, "-derivedDataPath", str(DERIVED),
+           "-configuration", a.configuration, "-destination", dest, "-derivedDataPath", str(DERIVED),
            "-jobs", str(a.jobs), "build"]
     if a.target != "device":
-        cmd.append("CODE_SIGN_IDENTITY=-" if a.target == "mac" else "CODE_SIGNING_ALLOWED=NO")
+        cmd.append("CODE_SIGN_IDENTITY=-")  # ad-hoc: no team identity needed for sim or Catalyst
     else:
         cmd.append("-allowProvisioningUpdates")
     if a.dry_run:
@@ -223,6 +229,17 @@ def cmd_build(a):
     p = run(cmd, check=False, timeout=3600)
     tail = [l for l in (p.stdout or "").splitlines() if "error:" in l or "BUILD" in l][-20:]
     out({"built": p.returncode == 0, "app": str(app_path(a)), "log": tail}, 0 if p.returncode == 0 else 4)
+
+
+def cmd_check_release(a):
+    """Release build must carry no developer-tool code, strings or URL scheme."""
+    if a.configuration != "Release":
+        a.configuration = "Release"
+    app = app_path(a)
+    script = REPO / "ios/tools/app-control/check-release-clean.sh"
+    p = run(["bash", str(script), str(app)], check=False)
+    out({"clean": p.returncode == 0, "app": str(app), "report": (p.stdout + p.stderr).strip().splitlines()[-30:]},
+        0 if p.returncode == 0 else 4)
 
 
 def cmd_install(a):
@@ -241,7 +258,8 @@ def cmd_install(a):
 
 
 def launch_env(a, storage):
-    env = {"RAILMAP_UI_TEST_STORAGE_ID": storage, "RAILMAP_APP_CONTROL": "1"}
+    env = {"RAILMAP_UI_TEST_STORAGE_ID": storage, "RAILMAP_APP_CONTROL": "1",
+           "RAILMAP_SIGNPOST_RECORDER": "1", "RAILMAP_DEVTOOLS": "0" if a.no_devtools else "1"}
     for pair in a.env or []:
         key, _, value = pair.partition("=")
         env[key] = value
@@ -252,9 +270,16 @@ def terminate(a):
     if a.target == "sim":
         run(["xcrun", "simctl", "terminate", device_id(a), BUNDLE], check=False)
     elif a.target == "mac":
+        # Only this build's process: never `pkill -x RailMap`, which would also hit simulator apps
+        # and other copies. The pid comes from the app's own ready.json.
         app = app_path(a)
         run(["pkill", "-f", str(app / "Contents/MacOS/RailMap")], check=False)
-        run(["pkill", "-x", "RailMap"], check=False)
+        raw = read_container_file(a, "ready.json")
+        pid = (json.loads(raw).get("processID") if raw else None) or recall(a).get("processID")
+        if pid:
+            ps = run(["ps", "-o", "comm=", "-p", str(int(pid))], check=False)
+            if "maccatalyst" in ps.stdout or str(app) in ps.stdout:
+                run(["kill", str(int(pid))], check=False)
         time.sleep(0.8)
     else:
         pid = recall(a).get("processID")
@@ -266,7 +291,8 @@ def terminate(a):
 def cmd_launch(a):
     storage = a.storage
     if not storage or storage == "new":
-        storage = str(uuid.uuid4()).upper()
+        storage = str(uuid.uuid4())
+    storage = storage.upper()
     try:
         uuid.UUID(storage)
     except ValueError:
@@ -302,14 +328,16 @@ def cmd_launch(a):
     # Wait for the poller's ready marker from this launch (sim/mac; device is checked by `ready`).
     ready = None
     if a.target != "device":
-        deadline = time.time() + a.timeout
+        deadline = time.time() + (a.timeout or 60)
         while time.time() < deadline:
             raw = read_container_file(a, "ready.json")
             if raw and raw != before:
                 ready = json.loads(raw)
-                if ready.get("storageID", "").upper() == storage:
+                if (ready.get("storageID") or "").upper() == storage:
                     break
             time.sleep(0.25)
+    if ready and ready.get("processID"):
+        remember(a, processID=ready["processID"])
     out({"launched": True, "target": a.target, "device": device_id(a), "storageID": storage,
          "processID": pid, "ready": ready}, 0)
 
@@ -319,16 +347,33 @@ def cmd_ready(a):
     out({"ready": json.loads(raw) if raw else None, "remembered": recall(a)}, 0 if raw else 4)
 
 
-def cmd_pull(a):
-    name = a.name
-    rel = "screenshots/{}.png".format(name)
-    dest = Path(a.out or Path(tempfile.gettempdir()) / "railmap-{}-{}.png".format(a.target, name))
+def pull(a, rel, default_name):
+    dest = Path(a.out or Path(tempfile.gettempdir()) / default_name)
     data = read_container_file(a, rel)
     if data is None:
-        out({"error": "screenshot not found", "path": rel}, 4)
+        out({"error": "file not found in container", "path": rel}, 4)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_bytes(data)
-    out({"file": str(dest), "bytes": len(data)}, 0)
+    return {"file": str(dest), "bytes": len(data)}
+
+
+def cmd_pull(a):
+    out(pull(a, "screenshots/{}.png".format(a.name), "railmap-{}-{}.png".format(a.target, a.name)), 0)
+
+
+def cmd_devtools(a):
+    """devtools show|hide|expand|collapse|recorderOn|recorderOff|resetSignposts|export."""
+    if not a.rest or a.rest[0] not in DEVTOOLS_ACTIONS:
+        out({"error": "devtools ACTION", "actions": DEVTOOLS_ACTIONS}, 1)
+    action = a.rest[0]
+    command = "exportDiagnostics" if action == "export" else "devtools"
+    args = [] if action == "export" else ["action=" + action]
+    result = send(a, build_request(command, args, None))
+    code = EXIT.get(result.get("status"), 4)
+    if action == "export" and code == 0:
+        name = result["data"]["name"]
+        result["pulled"] = pull(a, "exports/" + name, "railmap-{}-{}".format(a.target, name))
+    out(result, code)
 
 
 def main():
@@ -336,22 +381,28 @@ def main():
     ap.add_argument("--target", choices=["sim", "mac", "device"], default="sim")
     ap.add_argument("--device", help="simulator or device UDID (defaults: iPhone 17 sim / iPhone 16 Pro)")
     ap.add_argument("--app", help="built RailMap.app (default: " + str(DERIVED) + "/Build/Products/<config>)")
-    ap.add_argument("--timeout", type=float, default=90, help="seconds to wait for a result")
+    ap.add_argument("--timeout", type=float, default=None,
+                    help="seconds to wait for a result (default per command, at least the app's own timeout)")
     ap.add_argument("--transport", choices=["url", "file", "poll"], default="url",
                     help="url: inline URL (file+URL when large); file: inbox file + URL; poll: inbox file only")
     ap.add_argument("--json", help="extra args as one JSON object")
     ap.add_argument("--storage", help="launch: isolated storage UUID or 'new' (default new)")
     ap.add_argument("--env", action="append", help="launch: extra KEY=VALUE for the app")
-    ap.add_argument("--out", help="pull-screenshot: destination file")
+    ap.add_argument("--no-devtools", action="store_true", help="launch: hide the developer ball (RAILMAP_DEVTOOLS=0)")
+    ap.add_argument("--out", help="pull-screenshot / devtools export: destination file")
     ap.add_argument("--jobs", type=int, default=2, help="build: xcodebuild -jobs")
+    ap.add_argument("--configuration", choices=["Debug", "Release"], default="Debug",
+                    help="build/install/launch: product configuration (Release only for check-release)")
     ap.add_argument("--dry-run", action="store_true", help="build: print the xcodebuild command")
     ap.add_argument("--data-only", action="store_true", help="print only the result's data on success")
-    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot")
+    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release")
     ap.add_argument("rest", nargs="*", help="key=value args (or the screenshot name for pull-screenshot)")
     a = ap.parse_args()
 
     if a.action == "build":
         cmd_build(a)
+    if a.action == "check-release":
+        cmd_check_release(a)
     if a.action == "install":
         cmd_install(a)
     if a.action == "launch":
@@ -366,6 +417,8 @@ def main():
             out({"error": "pull-screenshot NAME"}, 1)
         a.name = a.rest[0]
         cmd_pull(a)
+    if a.action == "devtools" and (not a.rest or "=" not in a.rest[0]):
+        cmd_devtools(a)
     if a.action not in COMMANDS:
         out({"error": "unknown action", "action": a.action, "commands": COMMANDS}, 1)
     result = send(a, build_request(a.action, a.rest, a.json))

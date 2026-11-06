@@ -1,3 +1,4 @@
+#if DEBUG
 import RailPresentation
 import XCTest
 
@@ -15,11 +16,14 @@ final class AppControlSmokeUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-interface-language", "en"]
         UITestLaunchSupport.launch(app)
+        // Results persist in the container across runs and a finished ID is
+        // never run twice, so every run uses fresh request IDs.
+        let run = UUID().uuidString.prefix(8)
 
-        try send(AppControlRequest(id: "smoke-state", command: "state", args: ["trips": false]), to: app)
-        try send(AppControlRequest(id: "smoke-load", command: "loadSamples",
+        try send(AppControlRequest(id: "smoke-state-\(run)", command: "state", args: ["trips": false]), to: app)
+        try send(AppControlRequest(id: "smoke-load-\(run)", command: "loadSamples",
                                    args: ["samples": "tokyo-limited-express-loop"]), to: app)
-        try send(AppControlRequest(id: "smoke-wait", command: "wait",
+        try send(AppControlRequest(id: "smoke-wait-\(run)", command: "wait",
                                    args: ["condition": "trips>=1", "timeoutMs": 30_000]), to: app)
         XCTAssertEqual(app.state, .runningForeground)
     }
@@ -35,3 +39,4 @@ final class AppControlSmokeUITests: XCTestCase {
         XCTAssertEqual(result.label, expected, "\(request.command) did not succeed")
     }
 }
+#endif

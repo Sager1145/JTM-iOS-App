@@ -214,13 +214,24 @@ public enum AppControlCommand: Equatable, Sendable {
     case setHideFilter(AppControlHideFilter)
     case screenshot(name: String?)
     case wait(condition: String, timeoutMs: Int)
+    /// The developer ball: show, hide, expand, collapse, recorderOn, recorderOff, resetSignposts.
+    case devtools(action: String)
+    case exportDiagnostics
+    case clearRouteCaches
+    case memoryWarning
+    case setLayer(name: String, on: Bool)
 
     /// Every command name the parser accepts, for the CLI's help and tests.
     public static let names = [
         "loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
         "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
-        "screenshot", "wait",
+        "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
     ]
+
+    public static let devtoolsActions = [
+        "show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export",
+    ]
+    public static let layerNames = ["routes", "stops", "terminals", "pass", "hsr", "jr", "metro", "priv", "network"]
 
     /// Conditions ``wait`` understands.
     public static let waitConditions = ["mapReady", "routesLoaded", "editorReady", "editorPlanned", "editorClosed", "idle"]
@@ -245,17 +256,29 @@ public enum AppControlCommand: Equatable, Sendable {
         case .setHideFilter: "setHideFilter"
         case .screenshot: "screenshot"
         case .wait: "wait"
+        case .devtools: "devtools"
+        case .exportDiagnostics: "exportDiagnostics"
+        case .clearRouteCaches: "clearRouteCaches"
+        case .memoryWarning: "memoryWarning"
+        case .setLayer: "setLayer"
         }
     }
 
-    /// Whether the command can write to the ride store or its preferences.
-    /// These are refused unless the app runs on an isolated (UUID) store.
-    public var mutatesStore: Bool {
+    /// Whether the command may run on the real (shared) ride store.
+    ///
+    /// Only commands that write nothing persistent: reads, screenshots,
+    /// waits, in-memory map layers, the camera, the Stats tab, the developer
+    /// panel and disposable caches. Everything else — the ride store, its
+    /// preferences (a selection writes the last-viewed trip), the editor —
+    /// needs an isolated UUID store.
+    public var allowedOnSharedStore: Bool {
         switch self {
-        case .loadSamples, .reloadAll, .saveEditor, .deleteTrip, .setHideFilter: true
-        case .addTrip(let spec), .editTrip(_, let spec): spec.save
-        case .useStorage, .state, .selectTrip, .focusTrip, .openEditor, .cancelEditor, .openStats,
-             .screenshot, .wait: false
+        case .state, .screenshot, .wait, .useStorage, .devtools, .exportDiagnostics, .memoryWarning,
+             .clearRouteCaches, .setLayer, .focusTrip, .openStats:
+            true
+        case .loadSamples, .reloadAll, .selectTrip, .openEditor, .addTrip, .editTrip, .saveEditor,
+             .cancelEditor, .deleteTrip, .setHideFilter:
+            false
         }
     }
 
@@ -359,6 +382,18 @@ public enum AppControlCommand: Equatable, Sendable {
                 throw AppControlError.invalidArgument("condition", condition)
             }
             return .wait(condition: condition, timeoutMs: try int("timeoutMs", default: 60_000))
+        case "devtools":
+            let action = try string("action")
+            guard Self.devtoolsActions.contains(action) else { throw AppControlError.invalidArgument("action", action) }
+            return action == "export" ? .exportDiagnostics : .devtools(action: action)
+        case "exportDiagnostics": return .exportDiagnostics
+        case "clearRouteCaches": return .clearRouteCaches
+        case "memoryWarning": return .memoryWarning
+        case "setLayer":
+            let name = try string("name")
+            guard Self.layerNames.contains(name) else { throw AppControlError.invalidArgument("name", name) }
+            guard let on = args["on"]?.bool else { throw AppControlError.missingArgument("on") }
+            return .setLayer(name: name, on: on)
         default:
             throw AppControlError.unknownCommand(request.command)
         }
@@ -413,7 +448,7 @@ public enum AppControlError: Error, Equatable, CustomStringConvertible, Sendable
         case .missingArgument(let key): "missing argument: \(key)"
         case .invalidArgument(let key, let detail): "invalid argument \(key): \(detail)"
         case .sharedStorage:
-            "refused: the app is on the shared ride store; relaunch with an isolated storage UUID"
+            "refused: the app is on the real ride store; relaunch with an isolated storage UUID"
         case .relaunchRequired(let detail): "relaunchRequired: \(detail)"
         case .notFound(let what): "not found: \(what)"
         case .unavailable(let what): "unavailable: \(what)"
@@ -533,7 +568,7 @@ public enum AppControlDispatcher {
                         "running storage is \(storage ?? "shared"); relaunch with RAILMAP_UI_TEST_STORAGE_ID=\(wanted)")
                 }
             }
-            if command.mutatesStore, storage == nil { throw AppControlError.sharedStorage }
+            if !command.allowedOnSharedStore, storage == nil { throw AppControlError.sharedStorage }
             result.data = try await driver.perform(command, requestID: request.id)
             result.status = .ok
         } catch let error as AppControlError {

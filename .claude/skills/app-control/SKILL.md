@@ -1,6 +1,6 @@
 ---
 name: app-control
-description: Drive the DEBUG RailMap app (com.JRM.RailMap) on the iOS simulator, on this Mac (Mac Catalyst) or on the connected iPhone without computer use. Read app state, load samples, add/edit/save/delete trips through the real editor, open Stats, hide filters, take screenshots and time each step. Use for bug and performance passes on the main app, especially on the real device.
+description: Drive the DEBUG RailMap app (com.JRM.RailMap) on the iOS simulator, on this Mac (Mac Catalyst) or on the connected iPhone without computer use, and use its floating developer ball (performance charts, signposts, triggers, state, tools, logs, diagnostics export). Read app state, load samples, add/edit/save/delete trips through the real editor, open Stats, hide filters, take screenshots and time each step. Use for bug and performance passes on the main app, especially on the real device.
 ---
 
 # App control (test-only channel)
@@ -17,11 +17,11 @@ Transport: the CLI opens `railmap-test://run?json=<base64url request>` (large re
 | `mac` | `open -g -a RailMap.app URL` | `~/Library/Application Support/RailMapAppControl` (the app is unsandboxed; the CLI also checks the sandbox container) |
 | `device` (default iPhone 16 Pro `00008140-000575142288801C`) | `devicectl device process openURL` | `devicectl device copy from --domain-type appDataContainer --domain-identifier com.JRM.RailMap`, about 1 s per poll |
 
-`--transport poll` writes only the inbox file. The app's poller picks it up (it runs when the app was started with `launch`) without opening a URL, so the app is not brought to the front.
+On a device, large requests are copied as `inbox/<id>.req`, which only the URL reads (the copy is not atomic). `--transport poll` writes only the inbox file. The app's poller picks it up (it runs when the app was started with `launch`) without opening a URL, so the app is not brought to the front.
 
 ## Safety rules
 
-- **Isolated storage only.** `launch` always passes `RAILMAP_UI_TEST_STORAGE_ID=<UUID>` (new by default, or `--storage UUID`). The app refuses every store-writing command (`loadSamples`, `reloadAll`, `saveEditor`, `deleteTrip`, `setHideFilter`, and `addTrip`/`editTrip` with `save=true`) with status `rejected` when it runs on the shared store. Never write to the real `com.JRM.RailMap` store. Do not launch the app any other way before sending write commands.
+- **Isolated storage only.** `launch` always passes `RAILMAP_UI_TEST_STORAGE_ID=<UUID>` (new by default, or `--storage UUID`). On the real store the app runs only commands that persist nothing: `state`, `screenshot`, `wait`, `useStorage`, `devtools`, `exportDiagnostics`, `memoryWarning`, `clearRouteCaches`, `setLayer`, `focusTrip` and `openStats`. Everything else, including `selectTrip` (it writes the last-viewed trip) and every editor command, is `rejected`. Never write to the real `com.JRM.RailMap` store. Do not launch the app any other way before sending write commands.
 - **One native job at a time, machine-wide.** That covers builds, simulator runs and device runs across all chats. Coordinate before building or launching.
 - **A single simulator:** iPhone 17 `0DBE2488-0BEB-4932-9B55-091B3CC793B6`. Don't boot or create others.
 - Follow `ios/VERIFICATION.md`: focused, incremental, reuse evidence. One request ID runs once (re-sending a finished ID is ignored).
@@ -39,7 +39,9 @@ python3 -I ios/tools/app-control.py --target device install && … --target devi
 python3 -I ios/tools/app-control.py --target device ready         # reads ready.json (pid, storageID, root)
 ```
 
-Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/Debug-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>.json`.
+`launch` also sets `RAILMAP_SIGNPOST_RECORDER=1` (signpost durations in `state`) and `RAILMAP_DEVTOOLS=1` (ball visible). Use `--no-devtools` to hide the ball. The CLI waits per command (`reloadAll` 660 s, `addTrip`/`editTrip` 200 s, `loadSamples` 240 s, otherwise 90 s), at least as long as the app's own default. `--timeout` overrides this.
+
+Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/<Debug|Release>-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>.json`.
 
 ## Commands
 
@@ -55,13 +57,18 @@ Values parse as JSON when they can, so `save=true`, `timeoutMs=5000`, `via='["�
 | `openEditor` | `id=` | editor snapshot, mount/ready ms |
 | `addTrip` | `from= to=` (station source code or exact name), `region=jp`, `date=YYYY-MM-DD`, `via=`, `sectionChoices=[id0,…]` or `{"1":"id"}`, `save=true`, `confirmRemoval=true`, `timeoutMs` | editor snapshot: sections (outcome, candidates with lines/operators/km/junctions/proven/historical, chosen, historicalNotice/probe), pendingSections, selectedCorridorID, passStations, conflicts, notices, saveIssues, canSave; timings (mountMs, readyMs, planMs, applyMs); `save` result if requested |
 | `editTrip` | `id=` plus the same fields as `addTrip` (flat or under `changes`) | same |
-| `saveEditor` | `confirmRemoval=true`, `timeoutMs` | `{saved, recordID, ms}`, or `{saved:false, reason: validation\|removal needs confirmRemoval\|persistence\|editor cannot save yet}` |
+| `saveEditor` | `confirmRemoval=true`, `timeoutMs` | `{saved, recordID, ms}`. Any non-save is `failed` (exit 4) with the reason: cannot save yet, validation, removal needs `confirmRemoval`, refused by the store, or persistence |
 | `cancelEditor` | | |
 | `deleteTrip` | `id=` | the store's delete plus its save |
 | `openStats` | | switches to the Stats tab |
 | `setHideFilter` | `mode=set\|add\|remove\|showAll`, `regions=tw,hk`, `years=2023`, `months=2024-05` | hidden sets |
 | `screenshot` | `name=` (default: request id) | PNG at `screenshots/<name>.png` (key window, `drawHierarchy`) |
 | `wait` | `condition=mapReady\|routesLoaded\|editorReady\|editorPlanned\|editorClosed\|idle\|trips>=N`, `timeoutMs` | waitedMs |
+| `devtools` | `action=show\|hide\|expand\|collapse\|recorderOn\|recorderOff\|resetSignposts\|export` | ball visible/expanded, recorder on |
+| `exportDiagnostics` | | `exports/diagnostics-<time>.json` (state, perf samples, signposts, last 1000 log lines, device) |
+| `clearRouteCaches` | | removed bytes (`Caches/RailMap/Routes` plus the solver/edge-index memos) |
+| `memoryWarning` | | memory before/after the app's memory-warning handler |
+| `setLayer` | `name=routes\|stops\|terminals\|pass\|hsr\|jr\|metro\|priv\|network`, `on=true\|false` | all layer flags |
 
 ```sh
 A="python3 -I ios/tools/app-control.py --target sim"
@@ -75,9 +82,35 @@ $A screenshot name=after-add && $A pull-screenshot after-add --out /private/tmp/
 
 When station names are ambiguous, the first catalog match is used. Pass the source code to be exact. `addTrip` returns once the editor's plan has settled (`planned && !searching`). If a section has several candidates, choose them with `sectionChoices` (or `editTrip id=<draft id> sectionChoices=…`) and then `saveEditor`.
 
+## Developer ball (DEBUG only)
+
+The ball is a draggable button that snaps to the nearer side edge. It lives in its own window above all app UI and sheets, and tapping it expands the panel. Its side, height, expanded state and page persist per device in UserDefaults. Its ring is **red on the real ride store** and green on an isolated one, and the panel shows a matching banner. The ball is hidden by `RAILMAP_DEVTOOLS=0` and, by default, for any UI-test launch (any `RAILMAP_UI_TEST_*` key) unless `RAILMAP_DEVTOOLS=1`. `screenshot` captures only the app's window, never the ball. Collapsed, it costs nothing beyond the ball: sampling and the signpost recorder run only while the Perf page (recorder: Perf or State) is open.
+
+- **Perf:** Swift Charts of FPS, footprint MB, CPU % and hitches per second (CADisplayLink, `task_info`, `task_threads`, 1 Hz, last 120 s). Below them, signposts by name (count, last, mean, max) and the most recent intervals. These come from `SignpostRecorder` (RailCore), which the same `RailSignpost` begin/end pairs and `graph.build` feed, so there is no second timing system.
+- **Triggers:** buttons that call `AppControlHost.submit`, so they go through the same queue, dispatcher, storage guard and result files as the URL channel: load samples (on the real store it offers to switch to a fresh UUID store, quit, and load on reopen), reload all, select or focus a random trip, open the editor, add a demo trip (東京 to 新大阪, today, saved), delete the last trip added there, open Stats, toggle the hide filter (the current year), and screenshot.
+- **State:** inventory, map render stats and layers, rebuild and tap-index counts (from the recorder), storage ID and source, memory, and cache sizes on disk (on demand).
+- **Tools:** switch to a new isolated store or back to the real one. This takes effect on the next launch (`DevStorage`). The launch environment always wins, and the override is ignored for UI-test launches. Also: clear route caches, simulate a memory warning, map layer toggles, export a diagnostics bundle, and hide the ball.
+- **Logs:** this process's OSLog entries for subsystem `com.jtm.railmap`, with a filter.
+
+```sh
+python3 -I ios/tools/app-control.py --target device devtools expand
+python3 -I ios/tools/app-control.py --target device devtools export --out /private/tmp/diag.json   # writes in the app, then pulls
+python3 -I ios/tools/app-control.py --target sim devtools hide
+```
+
+## Release check
+
+All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `RailSignpost` keeps the bare `OSSignpostIntervalState` in Release. The proof is `ios/tools/app-control/check-release-clean.sh RailMap.app`, which runs `strings` and demangled `nm` over the main binary and every embedded Mach-O, and checks the Info.plist, for 17 DEBUG-only markers. Its `--debug-sanity` mode checks that the markers really appear in a Debug build. The Release build is a heavy job, so coordinate it:
+
+```sh
+python3 -I ios/tools/app-control.py --target sim --configuration Release build
+python3 -I ios/tools/app-control.py --target sim check-release
+bash ios/tools/app-control/check-release-clean.sh --debug-sanity ~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/Debug-iphonesimulator/RailMap.app
+```
+
 ## Troubleshooting
 
 - `timeout` with `pickedUp:false`: the app isn't running a DEBUG build with the scheme. Re-`install` and `launch`. On Mac, `install` registers the build with LaunchServices.
 - `rejected` with `refused: … shared ride store`: the app was opened without `launch`. Relaunch with `launch`.
 - `unavailable: workspace not mounted`: send `wait condition=mapReady` first.
-- Smoke test: `RailMapUITests/AppControlSmokeUITests` (state, loadSamples and wait via `XCUIApplication.open`). Unit tests: `swift test --package-path ios/RailKit --filter AppControlProtocolTests`.
+- Smoke test: `RailMapUITests/AppControlSmokeUITests` (state, loadSamples and wait via `XCUIApplication.open`). Unit tests: `swift test --package-path ios/RailKit --filter 'AppControlProtocolTests|SignpostRecorderTests'`.

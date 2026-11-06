@@ -37,22 +37,21 @@ final class AppControlHost: AppControlDriver {
     @ObservationIgnored private(set) var editor: AppControlEditorHandle?
     /// `"<id>:<status>"` of the last finished request, for the UI smoke test.
     private(set) var lastResultSummary: String?
+    /// Newest first; the developer panel lists these.
+    private(set) var recentResults: [AppControlResult] = []
 
     @ObservationIgnored private var tail: Task<Void, Never>?
     @ObservationIgnored private var queued: Set<String> = []
     @ObservationIgnored private var poller: Task<Void, Never>?
     @ObservationIgnored private let log = Logger(subsystem: RailSignpost.subsystem, category: "app-control")
 
-    nonisolated var isolatedStorageID: String? {
-        guard let value = UITestLaunchConfiguration.current[.storageId], UUID(uuidString: value) != nil
-        else { return nil }
-        return value
-    }
+    /// The store this launch uses (`DevStorage`): `nil` is the real store.
+    nonisolated var isolatedStorageID: String? { DevStorage.launchID }
 
-    static var root: URL {
+    nonisolated static var root: URL {
         URL.applicationSupportDirectory.appending(path: AppControl.rootFolderName, directoryHint: .isDirectory)
     }
-    private static func folder(_ name: String) -> URL {
+    nonisolated private static func folder(_ name: String) -> URL {
         let url = root.appending(path: name, directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
@@ -124,9 +123,16 @@ final class AppControlHost: AppControlDriver {
 
     private func readInbox(id: String) {
         guard AppControl.isValidRequestID(id) else { return }
-        let file = Self.folder(AppControl.inboxFolder).appending(path: "\(id).json")
-        guard let data = try? Data(contentsOf: file) else {
-            if !queued.contains(id) {
+        let inbox = Self.folder(AppControl.inboxFolder)
+        // `.req` is what the CLI copies to a device: the poller only scans
+        // `.json`, so a copy still in progress is read only when its URL arrives.
+        let candidates = [inbox.appending(path: "\(id).json"), inbox.appending(path: "\(id).req")]
+        guard let file = candidates.first(where: { FileManager.default.fileExists(atPath: $0.path) }),
+              let data = try? Data(contentsOf: file) else {
+            // The poller usually takes the file before its URL arrives: a
+            // request already queued or answered is not missing.
+            let answered = FileManager.default.fileExists(atPath: resultURL(id).path)
+            if !queued.contains(id), !answered {
                 write(failure(id: id, command: "", .notFound("inbox/\(id).json")))
             }
             return
@@ -141,7 +147,27 @@ final class AppControlHost: AppControlDriver {
         }
     }
 
-    private func enqueue(_ request: AppControlRequest) {
+    /// The developer panel's entry point: the same queue, dispatcher and
+    /// result file as a URL request, with the result handed back as well.
+    func submit(_ command: String, args: [String: AppControlJSON] = [:],
+                completion: (@MainActor (AppControlResult) -> Void)? = nil) {
+        let id = "dev-\(Int(Date().timeIntervalSince1970 * 1000))-\(UUID().uuidString.prefix(6))"
+        enqueue(AppControlRequest(id: id, command: command, args: args), completion: completion)
+    }
+
+    /// A command the panel queued before relaunching onto a fresh store.
+    func runPendingCommand() {
+        guard let request = DevStorage.takePendingCommand() else { return }
+        Task { [weak self] in
+            for _ in 0..<600 {
+                if self?.stores?.controller.isMapReady == true { break }
+                try? await Task.sleep(for: .milliseconds(100))
+            }
+            self?.enqueue(request)
+        }
+    }
+
+    private func enqueue(_ request: AppControlRequest, completion: (@MainActor (AppControlResult) -> Void)? = nil) {
         guard AppControl.isValidRequestID(request.id), !queued.contains(request.id) else { return }
         // A request ID is run once: a re-sent URL for a finished request is ignored.
         if let data = try? Data(contentsOf: resultURL(request.id)),
@@ -162,6 +188,9 @@ final class AppControlHost: AppControlDriver {
             self.write(result)
             self.queued.remove(request.id)
             self.lastResultSummary = "\(result.id):\(result.status.rawValue)"
+            self.recentResults.insert(result, at: 0)
+            if self.recentResults.count > 20 { self.recentResults.removeLast() }
+            completion?(result)
             self.log.notice("app-control \(result.command, privacy: .public) \(result.status.rawValue, privacy: .public) ms=\(result.elapsedMs ?? -1, privacy: .public)")
         }
     }
@@ -230,7 +259,10 @@ final class AppControlHost: AppControlDriver {
         case .saveEditor(let confirmRemoval, let timeoutMs):
             return try await saveEditor(confirmRemoval: confirmRemoval, timeoutMs: timeoutMs, stores)
         case .cancelEditor:
-            try requireWorkspace().closeEditor()
+            let workspace = try requireWorkspace()
+            // The editor's own Cancel is disabled while a save is in flight.
+            guard !workspace.editorState().saving else { throw AppControlError.failed("a save is in flight") }
+            workspace.closeEditor()
             try await until("editorClosed", timeoutMs: 5000) { [weak self] in self?.workspace?.editorState().open != true }
             return ["editorOpen": false]
         case .deleteTrip(let id):
@@ -247,6 +279,32 @@ final class AppControlHost: AppControlDriver {
             return try setHideFilter(filter, stores)
         case .screenshot(let name):
             return try screenshot(name: name ?? requestID)
+        case .devtools(let action):
+            return devtools(action)
+        case .exportDiagnostics:
+            return try await DevDiagnostics.export(state: state(stores, includeTrips: true))
+        case .clearRouteCaches:
+            return await clearRouteCaches()
+        case .memoryWarning:
+            let before = Self.memory()
+            NotificationCenter.default.post(name: UIApplication.didReceiveMemoryWarningNotification, object: UIApplication.shared)
+            try await Task.sleep(for: .seconds(1))
+            return ["before": before, "after": Self.memory()]
+        case .setLayer(let name, let on):
+            let controller = stores.controller
+            switch name {
+            case "routes": controller.layers.routes = on
+            case "stops": controller.layers.stops = on
+            case "terminals": controller.layers.terminals = on
+            case "pass": controller.layers.passThrough = on
+            case "hsr": controller.layers.categories.hsr = on
+            case "jr": controller.layers.categories.jr = on
+            case "metro": controller.layers.categories.metro = on
+            case "priv": controller.layers.categories.priv = on
+            case "network": controller.showsNetwork = on
+            default: throw AppControlError.invalidArgument("name", name)
+            }
+            return ["layer": .string(name), "on": .bool(on), "layers": Self.layers(controller)]
         case .wait(let condition, let timeoutMs):
             let started = ContinuousClock.now
             try await until(condition, timeoutMs: timeoutMs) { [weak self] in
@@ -295,6 +353,7 @@ final class AppControlHost: AppControlDriver {
     private func openEditor(_ launch: JourneyEditorLaunch) async throws -> AppControlJSON {
         let workspace = try requireWorkspace()
         if workspace.editorState().open {
+            guard !workspace.editorState().saving else { throw AppControlError.failed("a save is in flight") }
             workspace.closeEditor()
             try await until("previous editor closed", timeoutMs: 5000) { [weak self] in self?.editor == nil }
         }
@@ -347,38 +406,49 @@ final class AppControlHost: AppControlDriver {
 
     private func editorPlanned() -> Bool {
         guard let snapshot = editor?.snapshot() else { return false }
-        return snapshot.ready && !snapshot.searching && (snapshot.planned || !snapshot.routeEdited
+        // A planner error ends the search without a plan; report it rather than wait.
+        let failed = snapshot.notices.contains { $0.hasPrefix("routeProofFailure") || $0 == "loadFailed" }
+        return snapshot.ready && !snapshot.searching && (snapshot.planned || failed || !snapshot.routeEdited
             || snapshot.origin == nil || snapshot.destination == nil)
     }
 
+    /// Every outcome that is not a save throws, so the CLI exits non-zero.
     private func saveEditor(confirmRemoval: Bool, timeoutMs: Int, _ stores: Stores) async throws -> AppControlJSON {
         let workspace = try requireWorkspace()
         let editor = try requireEditor()
         let before = editor.snapshot()
         guard before.canSave else {
-            return ["saved": false, "reason": "editor cannot save yet", "editor": before.json]
+            throw AppControlError.failed("not saved: the editor cannot save yet (\(Self.describe(before)))")
         }
         let started = ContinuousClock.now
         editor.commit(confirmRemoval)
-        // `onSave` runs synchronously: the record id is set before the save is awaited.
-        let recordID = workspace.editorState().recordID
-        let after = self.editor?.snapshot()
-        if let after, let pending = after.removalPending {
-            return ["saved": false, "reason": "removal needs confirmRemoval", "removalPending": .array(pending.map { .string($0) })]
-        }
-        if let after, !after.saveIssues.isEmpty, !workspace.editorState().saving {
-            return ["saved": false, "reason": "validation", "saveIssues": .array(after.saveIssues.map { .string($0) })]
+        // `onSave` runs synchronously: the record id and the save attempt are set before the save is awaited.
+        let state = workspace.editorState()
+        let recordID = state.recordID
+        if !state.saving, state.open {
+            let after = self.editor?.snapshot()
+            if let pending = after?.removalPending {
+                throw AppControlError.failed("not saved: removes recorded stops \(pending); pass confirmRemoval=true")
+            }
+            if let issues = after?.saveIssues, !issues.isEmpty {
+                throw AppControlError.failed("not saved: validation \(issues)")
+            }
+            throw AppControlError.failed("not saved: the editor or the store refused the commit (\(after.map(Self.describe) ?? ""))")
         }
         try await until("save", timeoutMs: timeoutMs) {
             let state = workspace.editorState()
             return !state.open || state.saveFailure != nil
         }
         if let failure = workspace.editorState().saveFailure {
-            return ["saved": false, "reason": "persistence", "error": .string(failure)]
+            throw AppControlError.failed("not saved: persistence failed: \(failure)")
         }
         return ["saved": true, "recordID": optional(recordID ?? stores.itineraries.selectedTrainID),
                 "ms": .number(Self.ms(since: started)),
                 "trips": .number(Double(stores.itineraries.loaded?.trains.count ?? 0))]
+    }
+
+    private static func describe(_ snapshot: AppControlEditorSnapshot) -> String {
+        "planned=\(snapshot.planned) searching=\(snapshot.searching) pending=\(snapshot.pendingSections) notices=\(snapshot.notices)"
     }
 
     private func setHideFilter(_ filter: AppControlHideFilter, _ stores: Stores) throws -> AppControlJSON {
@@ -421,7 +491,7 @@ final class AppControlHost: AppControlDriver {
 
     // MARK: state
 
-    private func state(_ stores: Stores, includeTrips: Bool) -> AppControlJSON {
+    func state(_ stores: Stores, includeTrips: Bool, includeCaches: Bool = true) -> AppControlJSON {
         let routes = stores.riddenRoutes
         let phase: String = switch routes.state {
         case .idle: "idle"
@@ -464,9 +534,16 @@ final class AppControlHost: AppControlDriver {
                 "months": .array(stores.tripHide.hiddenMonths.sorted().map { .string($0) }),
             ],
             "memory": Self.memory(),
-            // RailSignpost intervals go to Instruments only; nothing records them in-process.
-            "signposts": .null,
+            "storageSource": .string(DevStorage.launch.source.rawValue),
+            "layers": Self.layers(stores.controller),
+            // The in-process copy of RailSignpost intervals (SignpostRecorder);
+            // active when launched with RAILMAP_SIGNPOST_RECORDER=1, while the
+            // panel's Performance page is open, or after `devtools action=recorderOn`.
+            "signposts": Self.signposts(),
+            "devtools": ["visible": .bool(DevToolsController.shared.isVisible),
+                         "expanded": .bool(DevToolsController.shared.isExpanded)],
         ]
+        if includeCaches { result["caches"] = Self.caches() }
         if let state = workspace?.editorState() {
             var editorJSON: [String: AppControlJSON] = [
                 "open": .bool(state.open), "isNew": .bool(state.isNew), "trainID": optional(state.trainID),
@@ -509,6 +586,91 @@ final class AppControlHost: AppControlDriver {
         }
     }
 
+    private func devtools(_ action: String) -> AppControlJSON {
+        let tools = DevToolsController.shared
+        switch action {
+        case "show": tools.setVisible(true)
+        case "hide": tools.setVisible(false)
+        case "expand": tools.setVisible(true); tools.setExpanded(true)
+        case "collapse": tools.setExpanded(false)
+        case "recorderOn": tools.setRecorder(true)
+        case "recorderOff": tools.setRecorder(false)
+        case "resetSignposts": SignpostRecorder.shared.reset()
+        default: break
+        }
+        return ["visible": .bool(tools.isVisible), "expanded": .bool(tools.isExpanded),
+                "recorder": .bool(SignpostRecorder.shared.isActive)]
+    }
+
+    /// The solved-route cache on disk plus the process memos a memory warning
+    /// releases (the same calls `AppShell` makes then).
+    func clearRouteCaches() async -> AppControlJSON {
+        let routes = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        let bytes = Self.directorySize(routes)
+        try? FileManager.default.removeItem(at: routes)
+        await RiddenRouteStore.releaseCachesForMemoryPressure()
+        await EdgeIndexCache.shared.releaseForMemoryPressure()
+        return ["removedDiskBytes": .number(Double(bytes)), "memory": Self.memory()]
+    }
+
+    static func layers(_ controller: RailMapController) -> AppControlJSON {
+        let layers = controller.layers
+        return [
+            "routes": .bool(layers.routes), "stops": .bool(layers.stops), "terminals": .bool(layers.terminals),
+            "pass": .bool(layers.passThrough), "hsr": .bool(layers.categories.hsr), "jr": .bool(layers.categories.jr),
+            "metro": .bool(layers.categories.metro), "priv": .bool(layers.categories.priv),
+            "network": .bool(controller.showsNetwork),
+        ]
+    }
+
+    nonisolated static func signposts(recent: Int = 20) -> AppControlJSON {
+        let recorder = SignpostRecorder.shared
+        func round(_ value: Double) -> AppControlJSON { .number((value * 100).rounded() / 100) }
+        return [
+            "active": .bool(recorder.isActive),
+            "byName": .array(recorder.aggregates().prefix(40).map { item in
+                ["name": .string(item.name), "count": .number(Double(item.count)), "lastMs": round(item.lastMs),
+                 "maxMs": round(item.maxMs), "meanMs": round(item.meanMs)]
+            }),
+            "recent": .array(recorder.recent(recent).map { entry in
+                ["name": .string(entry.name), "ms": round(entry.milliseconds),
+                 "at": .string(entry.endedAt.formatted(.iso8601))]
+            }),
+        ]
+    }
+
+    /// Bytes on disk under the app's own folders (enumerated, so call it off the hot path).
+    nonisolated static func caches() -> AppControlJSON {
+        let fm = FileManager.default
+        var result: [String: AppControlJSON] = [:]
+        let roots: [(String, URL?)] = [
+            ("caches", fm.urls(for: .cachesDirectory, in: .userDomainMask).first),
+            ("routeCache", fm.urls(for: .cachesDirectory, in: .userDomainMask).first?
+                .appending(path: "RailMap/Routes", directoryHint: .isDirectory)),
+            ("applicationSupport", URL.applicationSupportDirectory),
+            ("documents", fm.urls(for: .documentDirectory, in: .userDomainMask).first),
+            ("tmp", URL.temporaryDirectory),
+            ("appControl", root),
+        ]
+        for (name, url) in roots {
+            guard let url else { continue }
+            result[name + "MB"] = .number((Double(directorySize(url)) / 1_048_576 * 10).rounded() / 10)
+        }
+        return .object(result)
+    }
+
+    nonisolated static func directorySize(_ url: URL) -> Int64 {
+        guard let walker = FileManager.default.enumerator(
+            at: url, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .isRegularFileKey]) else { return 0 }
+        var total: Int64 = 0
+        for case let file as URL in walker {
+            let values = try? file.resourceValues(forKeys: [.totalFileAllocatedSizeKey, .isRegularFileKey])
+            if values?.isRegularFile == true { total += Int64(values?.totalFileAllocatedSize ?? 0) }
+        }
+        return total
+    }
+
     // MARK: helpers
 
     private func requireWorkspace() throws -> AppControlWorkspaceHandle {
@@ -538,15 +700,17 @@ final class AppControlHost: AppControlDriver {
         }
     }
 
-    static func ms(since start: ContinuousClock.Instant) -> Double {
+    nonisolated static func ms(since start: ContinuousClock.Instant) -> Double {
         let elapsed = ContinuousClock.now - start
         let ms = Double(elapsed.components.seconds) * 1000 + Double(elapsed.components.attoseconds) / 1e15
         return (ms * 10).rounded() / 10
     }
 
     static func keyWindow() -> UIWindow? {
+        // The app's own window, never the developer ball's.
         let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
-        return scenes.flatMap(\.windows).first(where: \.isKeyWindow) ?? scenes.first?.windows.first
+        let windows = scenes.flatMap(\.windows).filter { !($0 is DevToolsWindow) }
+        return windows.first(where: \.isKeyWindow) ?? windows.first
     }
 
     /// The map's render-status label (`railMapRenderStatus`), read from the view tree.
@@ -561,7 +725,7 @@ final class AppControlHost: AppControlDriver {
         return nil
     }
 
-    static func memory() -> AppControlJSON {
+    nonisolated static func memory() -> AppControlJSON {
         var info = task_vm_info_data_t()
         var count = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<integer_t>.size)
         let status = withUnsafeMutablePointer(to: &info) {
@@ -588,6 +752,8 @@ struct AppControlRegistration: ViewModifier {
             .onAppear {
                 host.stores = stores
                 host.startPollerIfRequested()
+                DevToolsController.shared.installIfEnabled()
+                host.runPendingCommand()
             }
             .onOpenURL { url in
                 host.stores = host.stores ?? stores
