@@ -4,6 +4,7 @@ import RailCore
 import RailApplication
 import RailPresentation
 import SwiftUI
+import UniformTypeIdentifiers
 import UIKit
 
 /// Resident map workspace with a resizable panel in tall windows and a docked card in wide windows.
@@ -15,6 +16,7 @@ struct RailWorkspaceView: View {
     /// reserve a row for a line that is not drawn. See ``compactHeaderRows``.
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
+    @Environment(TripHideFilter.self) private var tripHide
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.colorScheme) private var colorScheme
 
@@ -48,13 +50,17 @@ struct RailWorkspaceView: View {
     @Binding var appearance: String
     @State private var render: RailMapView.RenderStats?
     @State private var query = ""
-    /// The Journeys tab's list mode when the search field is empty:
-    /// `.upcoming` or `.all`. `selection` holds `.search` while there is a
-    /// query, and returns to this when the field is cleared.
+    /// Which list the reader is on: `.upcoming` or `.all` (History).
+    /// `selection` holds `.search` while there is a query — a search over
+    /// THIS list — and returns to this when the field is cleared.
     @State private var journeyMode: PrimaryTab = .upcoming
     /// What the tab bar shows. Stored rather than derived so the system tab
     /// view always binds to a plain value; kept in step with `selection`.
-    @State private var tabSelection: WorkspaceTab = .journeys
+    @State private var tabSelection: WorkspaceTab = .upcoming
+    /// The tab bar's Add trip menu (pass 3): the one home for adding trips.
+    @State private var addTripMenuPresented = false
+    @State private var addTripFileImporter = false
+    @State private var addTripFile: URL?
     @State private var selectedDate = Dates.allDates
     /// Alerts and confirmations share one presentation slot. Independent
     /// booleans here can all become true during the same map/menu callback,
@@ -241,17 +247,28 @@ struct RailWorkspaceView: View {
             .onChange(of: selection, initial: true) { _, tab in
                 if tab == .stats { searchFocused = false }
                 if tab == .upcoming || tab == .all { journeyMode = tab }
-                if tabSelection != tab.workspaceTab { tabSelection = tab.workspaceTab }
+                let shown = listTab(for: tab)
+                if tabSelection != shown { tabSelection = shown }
             }
-            .onChange(of: tabSelection) { _, tab in
-                guard tab != selection.workspaceTab else { return }
+            .onChange(of: tabSelection) { previous, tab in
+                // Add trip is a button in a tab's clothing: it opens the add
+                // menu and the reader stays where they were.
+                if tab == .add {
+                    tabSelection = previous == .add ? listTab(for: selection) : previous
+                    presentAddTrip()
+                    return
+                }
+                guard tab != listTab(for: selection) else { return }
                 switch tab {
                 case .stats: selection = .stats
-                case .journeys: selection = currentJourneyPage
+                case .upcoming, .history:
+                    journeyMode = tab == .history ? .all : .upcoming
+                    selection = currentJourneyPage
+                case .add: break
                 }
             }
-            // Search is a state of the Journeys list, not a place: typing
-            // puts the list in `.search`, clearing it restores the list mode.
+            // Search is a state of a list, not a place: typing puts the list
+            // in `.search`, clearing it restores the list.
             .onChange(of: query) { _, text in
                 let empty = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 if !empty, selection == .upcoming || selection == .all { selection = .search }
@@ -297,6 +314,7 @@ struct RailWorkspaceView: View {
         .environment(itineraries)
         .environment(riddenRoutes)
         .environment(riddenRoutes.lineDetector)
+        .environment(\.openShare, OpenShareAction { AnyView(shareComposer($0)) })
         .focusedSceneValue(\.railCommandBridge, railCommands)
         .onChange(of: railCommandRefreshKey, initial: true) { _, _ in
             installRailCommands()
@@ -510,7 +528,7 @@ struct RailWorkspaceView: View {
             // nothing but a hand session ever opens.
             case "data": sheet = .utility(.data)
             case "settings": sheet = .utility(.settings)
-            case "video": sheet = .videoOptions
+            case "video": shareRequest = ShareRequest(scope: .list, format: .video)
             case "station":
                 // The station card replaced the map's callout, and a callout
                 // was already unreachable from a `simctl` harness — a tap on a
@@ -684,8 +702,29 @@ struct RailWorkspaceView: View {
             sheetContent: presentedSheet))
         // Canvas editing needs the entire window on iPad and expanded Duo too.
         // One presentation owner also keeps resizing from swapping modal hosts.
-        .fullScreenCover(isPresented: $statisticsComposerPresented) {
-            statisticsComposer
+        .fullScreenCover(item: $shareRequest) { request in
+            shareComposer(request)
+        }
+        // Add trip (pass 3): the tab bar's search-role button opens this.
+        .confirmationDialog(
+            localization.text("ios.tab.addTrip", fallback: "Add trip"),
+            isPresented: $addTripMenuPresented, titleVisibility: .visible
+        ) {
+            addTripActions
+        }
+        .fileImporter(isPresented: $addTripFileImporter, allowedContentTypes: [.json]) { result in
+            if case .success(let url) = result { addTripFile = url }
+        }
+        .task(id: addTripFile) {
+            guard let url = addTripFile else { return }
+            defer { if addTripFile == url { addTripFile = nil } }
+            guard let data = try? await ImportFileReader.read(url) else { return }
+            let text = await Task.detached(priority: .userInitiated) {
+                String(decoding: data, as: UTF8.self)
+            }.value
+            guard !Task.isCancelled else { return }
+            importFlow.load(text, origin: .file(url.lastPathComponent))
+            sheet = .importData
         }
         // §13.2's harmony rule: the tap has to arrive with the change, so it is
         // driven by the same state the view is drawn from rather than by a
@@ -718,24 +757,69 @@ struct RailWorkspaceView: View {
         }
     }
 
-    private var statisticsComposer: some View {
-        ShareComposerView(
+    private func shareComposer(_ request: ShareRequest) -> some View {
+        ShareComposer(
+            request: request,
             itineraries: itineraries, riddenRoutes: riddenRoutes, statistics: statistics,
-            region: regionScope, area: statisticsArea, colorScheme: colorScheme)
+            statisticsTitle: "\(regionScopeName) · \(statisticsScopeLabel)", colorScheme: colorScheme,
+            listTrains: shareListTrains, listTitle: shareListTitle,
+            video: ShareVideoInputs(
+                settings: videoExport.settings, sourceRect: playbackFilmedRect,
+                displayScale: PlaybackVideoExporter.displayScale(of: controller.mapView),
+                estimateSeconds: { trains in
+                    videoExport.plan(
+                        playback: playback, trains: trains, rides: riddenRoutes.rides,
+                        reducedMotion: reduceMotion)
+                    return videoExport.plannedSeconds
+                },
+                film: { trains in
+                    // The composer covers the map it would film: start once
+                    // it (and a card sheet it was opened over) has gone,
+                    // with the sheet lowered as Play lowers it.
+                    sheet = nil
+                    presentationHost.afterTeardown {
+                        journeyMenuSelection = nil
+                        stageSelection = .compact
+                        startVideoExport(trains)
+                    }
+                }))
+    }
+
+    /// Every Share entry goes through here. A card inside a sheet asks while
+    /// that sheet still holds the presenter, so the sheet goes first.
+    private func openShare(_ request: ShareRequest) {
+        guard sheet != nil else {
+            shareRequest = request
+            return
+        }
+        sheet = nil
+        presentationHost.afterTeardown { shareRequest = request }
+    }
+
+    /// The Journeys list as its search and filter currently show it — what
+    /// the composer's "Journey list" scope shares, and (minus hidden and
+    /// single-call journeys) what Play and a film play.
+    private var shareListTrains: [Train] {
+        guard let loaded = itineraries.loaded else { return [] }
+        let searchQuery = selection == .search ? query : ""
+        let list: WorkspaceTab = selection == .stats ? (journeyMode == .all ? .history : .upcoming)
+            : listTab(for: selection)
+        return partitioned(filteredDays(
+            loaded, region: selection == .search ? nil : regionScope,
+            query: searchQuery), for: list)
+            .flatMap(\.trains)
+    }
+
+    private var shareListTitle: String {
+        let journeys = panelTitle(for: selection == .stats ? journeyMode : selection)
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if selection == .search, !trimmed.isEmpty { return journeys + " · “" + trimmed + "”" }
+        return journeys + " · " + regionScopeName + ", " + dateBucketLabel(selectedDate)
     }
 
     private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
         Group {
             switch presented {
-            case .videoOptions:
-                VideoExportOptionsView(
-                    settings: videoExport.settings, sourceRect: playbackFilmedRect,
-                    displayScale: PlaybackVideoExporter.displayScale(of: controller.mapView),
-                    seconds: videoExport.plannedSeconds
-                ) {
-                    sheet = nil
-                    startVideoExport()
-                }
             case .detail(let id):
                 WorkspaceJourneyMenu(
                     trainID: id, itineraries: itineraries, library: library, controller: controller,
@@ -756,6 +840,10 @@ struct RailWorkspaceView: View {
                     })
             case .importData:
                 DataImportView(flow: importFlow, itineraries: itineraries, library: library)
+            case .transferGuide:
+                TransferGuideImportView(itineraries: itineraries, library: library)
+            case .hideTrips:
+                TripHideSheet(filter: tripHide, trains: itineraries.loaded?.trains ?? [])
             case .mapInfo:
                 MapInfoView()
             case .mapLayers:
@@ -1045,8 +1133,6 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// Selecting a journey presents its own sheet; this list stays mounted.
-    private func allJourneysPanel() -> some View { ridesList }
 
     /// §5.3's scope, and the same answer as a set of ids for the map filter.
     ///
@@ -1061,7 +1147,7 @@ struct RailWorkspaceView: View {
     /// numbers counted, and only those", and a line under a percentage that
     /// does not include it is the map contradicting the figure above it.
     private var statisticsScope: (trains: [Train], ids: Set<String>) {
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         let date = statistics.selectedDate
         let region = regionScope
         let areaScope = StatisticsScope(region: region, area: statisticsArea)
@@ -1104,7 +1190,8 @@ struct RailWorkspaceView: View {
     /// that the destinations are mutually exclusive — only the tab on screen
     /// can be trying to present.
     @State private var statisticsScopePresented = false
-    @State private var statisticsComposerPresented = false
+    /// The one share composer (pass 3): every Share entry sets this.
+    @State private var shareRequest: ShareRequest?
 
     private var statisticsPanel: some View {
         PassportWorkspaceView(
@@ -1120,6 +1207,7 @@ struct RailWorkspaceView: View {
             derived: derived,
             journeyPresentation: { presentation(for: $0) },
             openJourney: { sheet = .detail($0.id) },
+            openData: openData,
             openSettings: openSettings)
     }
 
@@ -1131,9 +1219,9 @@ struct RailWorkspaceView: View {
         case .stats:
             localization.text("nav.stats", fallback: "Stats")
         case .upcoming, .all, .search:
-            // One destination, one title; the list mode is the segmented
-            // control under the search field and the subtitle's summary.
-            localization.text("ios.tab.journeys", fallback: "Journeys")
+            localization.text(
+                listTab(for: tab) == .history ? "ios.tab.history" : "ios.tab.upcoming",
+                fallback: listTab(for: tab) == .history ? "History" : "Upcoming")
         }
     }
 
@@ -1157,7 +1245,7 @@ struct RailWorkspaceView: View {
             // journeys" over four search results would be describing a list
             // that is not on screen.
             guard let loaded = itineraries.loaded else { return nil }
-            let days = filteredDays(loaded, region: regionScope)
+            let days = partitioned(filteredDays(loaded, region: regionScope), for: .history)
             let journeys = days.reduce(0) { $0 + $1.trains.count }
             return selectedDate == Dates.allDates
                 ? localization.journeyText(
@@ -1174,7 +1262,8 @@ struct RailWorkspaceView: View {
         case .search:
             let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !needle.isEmpty, let loaded = itineraries.loaded else { return nil }
-            let journeys = filteredDays(loaded, region: nil, query: needle)
+            let journeys = partitioned(
+                filteredDays(loaded, region: nil, query: needle), for: listTab(for: tab))
                 .reduce(0) { $0 + $1.trains.count }
             return localization.journeyText(
                 "ios.journey.daySummary",
@@ -1207,15 +1296,14 @@ struct RailWorkspaceView: View {
     private func panelActions(for tab: PrimaryTab) -> some View {
         return WorkspacePanelActions(
             tab: tab,
-            newJourney: {
-                presentJourneyEditor(JourneyEditorLaunch(
-                    train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
-            },
+            showsPlayback: listTab(for: tab) == .history,
             playback: { playbackButton },
-            journeyFilter: { journeyFilterMenu },
-            region: { regionMenu },
-            statisticsDate: { statisticsDateMenu },
-            statisticsShare: { statisticsShareButton },
+            scopeFilter: {
+                if tab.isJourneyList { journeyFilterMenu } else { statisticsFilterMenu }
+            },
+            share: {
+                if tab.isJourneyList { journeysShareButton } else { statisticsShareButton }
+            },
             destinationMenu: { destinationMenu(for: tab) })
     }
 
@@ -1224,17 +1312,11 @@ struct RailWorkspaceView: View {
     /// card's own close button, and Save/Restore my rides are in Data Library.
     @ViewBuilder
     private func destinationMenu(for tab: PrimaryTab) -> some View {
+        // Legend and sources are map chrome on every layout now, the Duo
+        // toolbar included, so the gear holds the two utilities only.
         WorkspaceUtilityMenuItems(
             onOpenData: openData,
             onOpenSettings: openSettings)
-        if hasHingedDisplay {
-            Button {
-                sheet = .mapInfo
-            } label: {
-                Label(localization.countryText(
-                    "info.button", fallback: "Legend and sources"), systemImage: "info.circle")
-            }
-        }
     }
 
     /// The regions the globe menu offers: the ones this store has journeys in.
@@ -1246,7 +1328,7 @@ struct RailWorkspaceView: View {
     /// and the three destinations that share this control each answer a
     /// different question about that record.
     private var scopableRegions: [Region] {
-        derived.regions(in: itineraries.loaded?.trains ?? [])
+        derived.regions(in: scopedTrains)
     }
 
     /// What the scope control reads, 全部 included.
@@ -1274,13 +1356,33 @@ struct RailWorkspaceView: View {
     /// It changes the statistics only. §5.3.1: "Passport 的日期 Scope 独立于
     /// Journeys 筛选，切换后不扰动旅程列表" — ``journeyFilterMenu`` is the
     /// other tabs' filter and is a different value with a different owner.
-    private var statisticsDateMenu: some View {
-        Button {
-            statisticsScopePresented = true
+    ///
+    /// Pass 3: the period and the region are one control, the same filter
+    /// button Journeys has. The region value is shared with Journeys; the
+    /// period stays the statistics' own (§5.3.1), so it opens the existing
+    /// period and group picker from the menu.
+    private var statisticsFilterMenu: some View {
+        Menu {
+            Section(localization.countryText("country.label", fallback: "Region")) {
+                regionMenuItems
+            }
+            Section(localization.text("ios.stats.scope")) {
+                Button {
+                    presentationHost.afterTeardown { statisticsScopePresented = true }
+                } label: {
+                    Label(
+                        localization.text("ios.stats.periodItem", fallback: "Period and groups…"),
+                        systemImage: "calendar")
+                }
+                .accessibilityIdentifier("statisticsPeriodItem")
+            }
+            hideTripsSection
         } label: {
             SheetIconLabel(
-                systemImage: "calendar",
-                isActive: !statistics.dateSelection.isEmpty || statistics.selectedJourneyGroupID != nil)
+                systemImage: "line.3.horizontal.decrease",
+                isActive: regionScope != nil || !statistics.dateSelection.isEmpty
+                    || statistics.selectedJourneyGroupID != nil || tripHide.isActive,
+                badge: tripHide.activeCount)
         }
         .popover(isPresented: $statisticsScopePresented) {
             StatisticsScopePicker(
@@ -1293,9 +1395,9 @@ struct RailWorkspaceView: View {
                 })
                 .presentationCompactAdaptation(.sheet)
         }
-        .accessibilityLabel(Text(localization.text("ios.stats.scope")))
-        .accessibilityValue(Text(statisticsScopeLabel))
-        .accessibilityIdentifier("statisticsDateButton")
+        .accessibilityLabel(Text(localization.text("ios.stats.filter", fallback: "Statistics filter")))
+        .accessibilityValue(Text("\(regionScopeName), \(statisticsScopeLabel)"))
+        .accessibilityIdentifier("statisticsFilterButton")
     }
 
     private var statisticsJourneyGroups: [JourneyGroup] { itineraries.orderedJourneyGroups }
@@ -1313,23 +1415,72 @@ struct RailWorkspaceView: View {
     private var statisticsDates: [String] {
         guard let loaded = itineraries.loaded else { return [] }
         let scope = StatisticsScope(region: regionScope, area: statisticsArea)
+        let visible = scopedLoaded(loaded)
         let members = derived.memberIDs(
-            scope: scope, trains: loaded.trains, rides: riddenRoutes.rides)
+            scope: scope, trains: visible.trains, rides: riddenRoutes.rides)
         return derived.scopedDates(
-            trains: loaded.trains, days: loaded.days, region: regionScope,
+            trains: visible.trains, days: visible.days, region: regionScope,
             year: statistics.selectedYear,
             scopeKey: "\(scope.key)|\(members.key)",
             memberIDs: members.ids)
     }
 
-    /// §5.3.1's region scope, in the header rather than in a card — and now on
-    /// all three destinations that ask a question about one network.
-    ///
-    /// A globe, at the reader's own request, rather than the capsule that
-    /// spelled the region's name. What the round shape gives up is the value,
-    /// so the button is TINTED whenever the scope is narrowed: the reader can
-    /// still see at a glance that they are not looking at everything, and the
-    /// menu below says which region when they ask.
+    /// The Journeys list's one scope control: region and date in a single
+    /// menu. Stats has the same control (``statisticsFilterMenu``) with the
+    /// same region section; its period stays its own (§5.3.1). The region
+    /// section offers Japan's areas only on Stats: the list has no way to
+    /// place a journey in an island without its solved route.
+    private var journeyFilterMenu: some View {
+        Menu {
+            Section(localization.countryText("country.label", fallback: "Region")) {
+                regionMenuItems
+            }
+            if let loaded = itineraries.loaded {
+                Section(localization.journeyText("ios.journey.dateFilter", fallback: "Date filter")) {
+                    dateFilterMenuContent(loaded, dates: journeyDates(for: selection, in: loaded))
+                }
+            }
+            hideTripsSection
+        } label: {
+            SheetIconLabel(
+                systemImage: "line.3.horizontal.decrease",
+                isActive: regionScope != nil || selectedDate != Dates.allDates || tripHide.isActive,
+                badge: tripHide.activeCount)
+        }
+        .accessibilityLabel(Text(localization.text("ios.journey.filter", fallback: "Filter")))
+        .accessibilityValue(Text("\(regionScopeName), \(dateBucketLabel(selectedDate))"))
+        .accessibilityIdentifier("journeyFilterButton")
+    }
+
+    /// The filter's second half on every tab: hide whole regions, years or
+    /// months (``TripHideFilter``), and the one reset.
+    @ViewBuilder
+    private var hideTripsSection: some View {
+        Section {
+            Button {
+                presentationHost.afterTeardown { sheet = .hideTrips }
+            } label: {
+                Label(
+                    tripHide.isActive
+                        ? localization.text("ios.hide.menuActive", params: ["n": .number(Double(tripHide.activeCount))],
+                                            fallback: "Hide trips… (\(tripHide.activeCount) hidden)")
+                        : localization.text("ios.hide.menu", fallback: "Hide trips…"),
+                    systemImage: "eye.slash")
+            }
+            .accessibilityIdentifier("tripHideMenuItem")
+            if tripHide.isActive {
+                Button {
+                    tripHide.showAll()
+                } label: {
+                    Label(localization.text("ios.hide.showAll", fallback: "Show all"), systemImage: "eye")
+                }
+                .accessibilityIdentifier("tripHideShowAllMenuItem")
+            }
+        }
+    }
+
+    /// §5.3.1's region scope. It is the Region section of both destinations'
+    /// filter button, which is TINTED whenever the scope is narrowed.
     ///
     /// ## Only the regions the reader has been to
     ///
@@ -1345,41 +1496,6 @@ struct RailWorkspaceView: View {
     /// last journey in a region is deleted while scoped to it keeps that scope
     /// — the list says it is empty and 全部地區 is one tap away — rather than
     /// having the app silently move them somewhere they did not ask to be.
-    private var regionMenu: some View {
-        Menu {
-            regionMenuItems
-        } label: {
-            SheetIconLabel(
-                systemImage: "globe.asia.australia", isActive: regionScope != nil)
-        }
-        .accessibilityLabel(Text(localization.text("country.label", fallback: "Region")))
-        .accessibilityValue(Text(regionScopeName))
-        .accessibilityIdentifier("regionScopeButton")
-    }
-
-    /// The Journeys list's one scope control: region and date in a single
-    /// menu. Stats keeps its own date scope (§5.3.1 — the statistics period
-    /// is independent of the list filter) but shares the region value.
-    private var journeyFilterMenu: some View {
-        Menu {
-            Section(localization.countryText("country.label", fallback: "Region")) {
-                regionMenuItems
-            }
-            if let loaded = itineraries.loaded {
-                Section(localization.journeyText("ios.journey.dateFilter", fallback: "Date filter")) {
-                    dateFilterMenuContent(loaded, dates: journeyDates(for: selection, in: loaded))
-                }
-            }
-        } label: {
-            SheetIconLabel(
-                systemImage: "line.3.horizontal.decrease",
-                isActive: regionScope != nil || selectedDate != Dates.allDates)
-        }
-        .accessibilityLabel(Text(localization.text("ios.journey.filter", fallback: "Filter")))
-        .accessibilityValue(Text("\(regionScopeName), \(dateBucketLabel(selectedDate))"))
-        .accessibilityIdentifier("journeyFilterButton")
-    }
-
     @ViewBuilder
     private var regionMenuItems: some View {
             // 全部 first, and above a divider: it is not a sixth region, it is
@@ -1485,9 +1601,21 @@ struct RailWorkspaceView: View {
     ///
     /// The composer owns rendering and its independent date scope; this button
     /// only opens it once the current figures are available to seed it.
+    /// The Journeys list's Share: the composer on the filtered list, from
+    /// where the reader can also pick a film or the statistics.
+    private var journeysShareButton: some View {
+        Button {
+            openShare(ShareRequest(scope: .list))
+        } label: {
+            SheetIconLabel(systemImage: "square.and.arrow.up")
+        }
+        .accessibilityLabel(Text(localization.text("ios.share.listButton", fallback: "Share journeys")))
+        .accessibilityIdentifier("journeysShareButton")
+    }
+
     private var statisticsShareButton: some View {
         Button {
-            statisticsComposerPresented = true
+            openShare(ShareRequest(scope: .statistics))
         } label: {
             SheetIconLabel(systemImage: "square.and.arrow.up")
         }
@@ -1538,7 +1666,7 @@ struct RailWorkspaceView: View {
     /// map must not be able to disagree about what is still ahead.
     private var upcomingScope: (trains: [Train], ids: Set<String>) {
         let today = todayByRegion()
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         let region = regionScope
         let scopedDate = selectedDate
         return derived.upcoming(
@@ -1639,7 +1767,7 @@ struct RailWorkspaceView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                Button(localization.text("nav.allJourneys", fallback: "All journeys")) {
+                Button(localization.text("ios.tab.history", fallback: "History")) {
                     selection = .all
                 }
                 .buttonStyle(.bordered)
@@ -1714,6 +1842,7 @@ struct RailWorkspaceView: View {
                                  tab: pageTab(tab))
             }, controls: {
                 DuoMapToolbar(controller: controller, onLayers: { sheet = .mapLayers },
+                        onInfo: { sheet = .mapInfo },
                         isMenuHidden: sidebarMenuHidden,
                         onToggleMenu: expandedDisplay ? { sidebarMenuHidden.toggle() } : nil,
                         onSelectPage: !expandedDisplay && searchFocused ? { tab in
@@ -1831,7 +1960,7 @@ struct RailWorkspaceView: View {
     private func workspacePage(_ tab: PrimaryTab) -> WorkspacePage {
         switch tab {
         case .stats: page(tab) { statisticsPanel }
-        case .upcoming, .all, .search: page(tab) { journeysPanel }
+        case .upcoming, .all, .search: page(tab) { journeysPanel(tab) }
         }
     }
 
@@ -1843,15 +1972,142 @@ struct RailWorkspaceView: View {
         query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? journeyMode : .search
     }
 
-    /// The tab bar's two values; `tabSelection` and `selection` are kept in
-    /// step by the two `onChange` handlers on the workspace root.
+    /// The tab bar's value; `tabSelection` and `selection` are kept in step
+    /// by the two `onChange` handlers on the workspace root.
     private var workspaceTabSelection: Binding<WorkspaceTab> { $tabSelection }
 
+    /// The page each tab shows. Only the selected list can be searching; the
+    /// other list shows itself.
     private func pageTab(_ tab: WorkspaceTab) -> PrimaryTab {
         switch tab {
         case .stats: .stats
-        case .journeys: selection.isJourneyList ? selection : currentJourneyPage
+        case .upcoming: selection == .search && journeyMode == .upcoming ? .search : .upcoming
+        case .history: selection == .search && journeyMode == .all ? .search : .all
+        case .add: listTab(for: selection) == .history ? .all : .upcoming
         }
+    }
+
+    /// Which tab a page belongs to; a search belongs to the list it searches.
+    private func listTab(for page: PrimaryTab) -> WorkspaceTab {
+        switch page {
+        case .stats: .stats
+        case .upcoming: .upcoming
+        case .all: .history
+        case .search: journeyMode == .all ? .history : .upcoming
+        }
+    }
+
+    /// The store's trips minus hidden regions, years and months. The SAME
+    /// arrays until the store or a choice changes (``TripHideFilter``).
+    private var scopedTrains: [Train] {
+        itineraries.loaded.map { tripHide.scoped($0).trains } ?? []
+    }
+
+    private func scopedLoaded(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
+        guard tripHide.isActive else { return loaded }
+        let scoped = tripHide.scoped(loaded)
+        var copy = loaded
+        copy.trains = scoped.trains
+        copy.days = scoped.days
+        return copy
+    }
+
+    /// Every journey dated today or later on its own region's clock: the
+    /// line between Upcoming and History, whatever the filter says.
+    private var aheadIDs: Set<String> {
+        let trains = itineraries.loaded?.trains ?? []
+        let today = todayByRegion()
+        return derived.aheadIDs(trains: trains, today: today) {
+            Set(WorkspaceJourneyRules.upcomingScope(
+                trains: trains, regionCode: nil, selectedDate: Dates.allDates,
+                todayByRegion: Dictionary(uniqueKeysWithValues: today.map { ($0.key.code, $0.value) }),
+                rule: Region.scopeRule).map(\.id))
+        }
+    }
+
+    /// Keep only the days' journeys that belong to `list`.
+    private func partitioned(
+        _ days: [ItineraryStore.Loaded.Day], for list: WorkspaceTab
+    ) -> [ItineraryStore.Loaded.Day] {
+        guard list == .upcoming || list == .history else { return days }
+        let ahead = aheadIDs
+        let wantsAhead = list == .upcoming
+        return days.compactMap { day in
+            var day = day
+            day.trains = day.trains.filter { ahead.contains($0.id) == wantsAhead }
+            return day.trains.isEmpty ? nil : day
+        }
+    }
+
+    /// Whether the other list has a match for a query this list has none
+    /// for. Only asked once this list's search came back empty.
+    private func otherListMatches(_ query: String, in list: WorkspaceTab) -> Bool {
+        guard itineraries.loaded != nil else { return false }
+        let ahead = aheadIDs
+        return scopedTrains.contains { train in
+            ahead.contains(train.id) == (list == .upcoming)
+                && JourneySearchMatcher.matches(
+                    train, query: query, alsoNamed: localization.localizedStationNames(of:))
+        }
+    }
+
+    /// The engine's correction for a query this list has no match for,
+    /// drawn from this list's journeys only (see ``journeySearchRequest``).
+    @ViewBuilder
+    private var didYouMeanLine: some View {
+        if selection == .search, journeySearch.completed == journeySearchRequest,
+           journeySearch.days.isEmpty, let correction = journeySearch.didYouMean {
+            Button {
+                query = correction.text
+            } label: {
+                Text(localization.text(
+                    "ios.search.didYouMean", params: ["text": .string(correction.text)],
+                    fallback: "Did you mean “\(correction.text)”?"))
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.tint)
+            .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
+            .padding(.bottom, 6)
+            .accessibilityIdentifier("journeySearchDidYouMean")
+        }
+    }
+
+    // MARK: - Add trip (pass 3)
+
+    /// The tab bar's Add trip button. Its menu is the one home for adding
+    /// trips; the empty state and ⌘N are its shortcuts.
+    private func presentAddTrip() {
+        guard journeyEditor == nil else { return }
+        if sheet != nil {
+            sheet = nil
+            presentationHost.afterTeardown { addTripMenuPresented = true }
+        } else {
+            addTripMenuPresented = true
+        }
+    }
+
+    @ViewBuilder
+    private var addTripActions: some View {
+        Button(localization.text("ios.addTrip.new", fallback: "New trip")) {
+            presentJourneyEditor(JourneyEditorLaunch(
+                train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
+        }
+        .accessibilityIdentifier("addTripNew")
+        Button(localization.text("ios.addTrip.file", fallback: "Import from file")) {
+            presentationHost.afterTeardown { addTripFileImporter = true }
+        }
+        .accessibilityIdentifier("addTripFile")
+        Button(localization.text("ios.addTrip.paste", fallback: "Paste journey data")) {
+            importFlow.load("", origin: .pasted)
+            presentationHost.afterTeardown { sheet = .importData }
+        }
+        .accessibilityIdentifier("addTripPaste")
+        Button(localization.text("ios.guide.entry")) {
+            presentationHost.afterTeardown { sheet = .transferGuide }
+        }
+        .accessibilityIdentifier("addTripGuide")
     }
 
     private func syncDuoObstruction(trailing: CGFloat, bottom: CGFloat) {
@@ -2004,9 +2260,8 @@ struct RailWorkspaceView: View {
             ) {
                 settleDock(at: next, metrics: metrics)
             }
-            // Match the phone header's chrome glyph ceiling; reading text still
-            // follows the full accessibility size range.
-            .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+            // The app's one text-size cap (AppTypographyPolicy).
+            .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
             .railGlass(in: Circle(), interactive: true)
             .help(label)
             .accessibilityIdentifier("dockPanelToggle")
@@ -2092,9 +2347,9 @@ struct RailWorkspaceView: View {
     private var presentedEditorOwnsShortcuts: Bool {
         if journeyEditor != nil || dialog != nil { return true }
         switch sheet {
-        case .importData:
+        case .importData, .transferGuide:
             return true
-        case .detail, .videoOptions, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
             return false
         }
     }
@@ -2374,8 +2629,9 @@ struct RailWorkspaceView: View {
 
     /// All Journeys is deliberately unfiltered by the Search destination's
     /// query. A hidden query must never make this list silently incomplete.
-    private var ridesList: some View {
-        journeyListState(searchQuery: "", region: regionScope, groupsByDate: false)
+    /// History (pass 3): the filtered log minus what is still ahead.
+    private var historyList: some View {
+        journeyListState(searchQuery: "", region: regionScope, groupsByDate: false, partition: .history)
     }
 
     /// The Journeys destination: its own search field, the list mode and the list.
@@ -2395,18 +2651,19 @@ struct RailWorkspaceView: View {
     /// same `.searchable` had no field to give either. A destination whose
     /// whole job is a query cannot depend on machinery that only one OS
     /// version has and this app has disabled there.
-    private var journeysPanel: some View {
+    private func journeysPanel(_ page: PrimaryTab) -> some View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let list = listTab(for: page)
         return VStack(spacing: 0) {
             JourneySearchField(query: $query, isFocused: $searchFocused)
+            if page == .search { didYouMeanLine }
             Group {
-                if needle.isEmpty {
-                    VStack(spacing: 0) {
-                        journeyModePicker
-                        if journeyMode == .all { ridesList } else { upcomingPanel }
-                    }
+                if page == .search, !needle.isEmpty {
+                    journeyListState(searchQuery: needle, region: nil, partition: list)
+                } else if list == .history {
+                    historyList
                 } else {
-                    journeyListState(searchQuery: needle, region: nil)
+                    upcomingPanel
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -2414,30 +2671,10 @@ struct RailWorkspaceView: View {
         .background { keyboardShortcuts }
     }
 
-    /// Upcoming / All: which part of the log the list shows. This was two
-    /// tabs; it is one question about one list, so it is one control.
-    private var journeyModePicker: some View {
-        Picker(
-            localization.text("ios.journey.listScope", fallback: "Journeys to show"),
-            selection: Binding(
-                get: { journeyMode },
-                set: { selection = $0 })
-        ) {
-            Text(localization.text("ios.tab.upcoming", fallback: "Upcoming"))
-                .tag(PrimaryTab.upcoming)
-            Text(localization.text("ios.tab.all", fallback: "All"))
-                .tag(PrimaryTab.all)
-        }
-        .pickerStyle(.segmented)
-        .labelsHidden()
-        .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
-        .padding(.bottom, 8)
-        .accessibilityIdentifier("journeyListScope")
-    }
-
     @ViewBuilder
     private func journeyListState(
-        searchQuery: String, region: Region?, groupsByDate: Bool = true
+        searchQuery: String, region: Region?, groupsByDate: Bool = true,
+        partition: WorkspaceTab? = nil
     ) -> some View {
         switch itineraries.state {
         case .idle, .loading:
@@ -2446,6 +2683,18 @@ struct RailWorkspaceView: View {
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .failed(.load(message))),
                 systemImage: "exclamationmark.triangle")
+        case .loaded(let loaded) where !loaded.days.isEmpty && tripHide.isActive
+                && tripHide.scoped(loaded).days.isEmpty:
+            // Every trip is in a hidden region or month: say so, with the reset.
+            VStack(spacing: 10) {
+                Image(systemName: "eye.slash").font(.largeTitle).foregroundStyle(.tertiary)
+                Text(localization.text("ios.hide.allHidden", fallback: "All trips are hidden by the filter."))
+                    .font(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                Button(localization.text("ios.hide.showAll", fallback: "Show all")) { tripHide.showAll() }
+                    .buttonStyle(.bordered).railMinimumTouchTarget()
+                    .accessibilityIdentifier("tripHideEmptyShowAll")
+            }
+            .frame(maxWidth: .infinity).padding(.top, 24)
         case .loaded(let loaded) where loaded.days.isEmpty:
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .empty),
@@ -2454,7 +2703,8 @@ struct RailWorkspaceView: View {
                     "ios.journey.noRegionRecords",
                     fallback: "This region has a railway package, but no recorded journeys yet."))
         case .loaded(let loaded):
-            let days = filteredDays(loaded, region: region, query: searchQuery)
+            let filtered = filteredDays(loaded, region: region, query: searchQuery)
+            let days = partition.map { partitioned(filtered, for: $0) } ?? filtered
             List {
                 if groupsByDate {
                     ForEach(days) { day in
@@ -2483,6 +2733,23 @@ struct RailWorkspaceView: View {
                 if !searchQuery.isEmpty && days.isEmpty
                     && journeySearch.completed != journeySearchRequest {
                     ProgressView()
+                } else if days.isEmpty, !searchQuery.isEmpty,
+                          let partition, partition != .stats,
+                          case let other = (partition == .upcoming ? WorkspaceTab.history : WorkspaceTab.upcoming),
+                          otherListMatches(searchQuery, in: other) {
+                    // Pass 3: each list searches itself. When the other list
+                    // has the match, say so and offer it, keeping the query.
+                    VStack(spacing: 10) {
+                        Text(localization.text("ios.search.noneHere", fallback: "No matches in this list."))
+                            .font(.subheadline).foregroundStyle(.secondary)
+                        Button(localization.text(other.tabLocalizationKey, fallback: other.tabFallbackName)) {
+                            tabSelection = other
+                        }
+                        .buttonStyle(.bordered)
+                        .railMinimumTouchTarget()
+                        .accessibilityIdentifier("searchOtherList")
+                    }
+                    .padding(.top, 24)
                 } else if days.isEmpty {
                     // §13.1: three empty states, three different single primary
                     // actions — and the search text is kept, not cleared.
@@ -2595,7 +2862,6 @@ struct RailWorkspaceView: View {
             showsDate: showsDate ?? (selectedDate == Dates.allDates),
             editing: editing,
             select: { pick(train) },
-            play: { startPlayback([train]) },
             showDetail: { sheet = .detail(train.id) },
             setRidden: { setRidden(train, $0) },
             confirmDelete: { dialog = .delete(train) })
@@ -2645,7 +2911,9 @@ struct RailWorkspaceView: View {
             presentJourneyEditor(JourneyEditorLaunch(
                 train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
         case .importData:
-            sheet = .importData
+            // Pass 3: the empty state's Import opens the Add trip menu, the
+            // one home for every way of adding trips.
+            presentAddTrip()
         case .locate:
             guard yieldRun() else { return }
             journeyMenuSelection = nil
@@ -2713,7 +2981,9 @@ struct RailWorkspaceView: View {
         case .cancel:
             itineraries.selectedTrainID = nil
         case .importData:
-            sheet = .importData
+            // Pass 3: the empty state's Import opens the Add trip menu, the
+            // one home for every way of adding trips.
+            presentAddTrip()
         case .add:
             presentJourneyEditor(JourneyEditorLaunch(
                 train: newJourneyScaffold(in: defaultRegion), isNew: true, originalID: nil))
@@ -2741,6 +3011,8 @@ struct RailWorkspaceView: View {
         region: Region?,
         query searchQuery: String = ""
     ) -> [ItineraryStore.Loaded.Day] {
+        // Hidden regions and months are out of every list (TripHideFilter).
+        let loaded = scopedLoaded(loaded)
         if !searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             // `journeySearch.days` already holds exactly "the last completed
             // result": a cancelled search (superseded by a newer keystroke)
@@ -2775,8 +3047,14 @@ struct RailWorkspaceView: View {
             rule: Region.scopeRule)
     }
 
+    /// The search runs over the current LIST's journeys only, so its results
+    /// and its "Did you mean" suggestion never name a trip from the other one.
     private var journeySearchRequest: JourneySearch.Request {
-        .init(days: itineraries.loaded?.days ?? [], date: selectedDate,
+        let all = itineraries.loaded.map { tripHide.scoped($0).days } ?? []
+        let list = listTab(for: selection)
+        let days = list == .stats ? all
+            : derived.listDays(all, ahead: aheadIDs, wantsAhead: list == .upcoming)
+        return .init(days: days, date: selectedDate,
             query: selection == .search ? query.trimmingCharacters(in: .whitespacesAndNewlines) : "",
             naming: localization.stationNamingGeneration)
     }
@@ -2785,7 +3063,7 @@ struct RailWorkspaceView: View {
         for tab: PrimaryTab, in loaded: ItineraryStore.Loaded
     ) -> [String] {
         WorkspaceJourneyRules.journeyDates(
-            trains: loaded.trains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
+            trains: scopedTrains, regionCode: regionScope?.code, upcoming: tab == .upcoming,
             todayByRegion: tab == .upcoming
                 ? Dictionary(uniqueKeysWithValues: todayByRegion().map { ($0.key.code, $0.value) }) : [:],
             manualDates: manualDates.dates, rule: Region.scopeRule)
@@ -2973,6 +3251,8 @@ struct RailWorkspaceView: View {
         .accessibilityIdentifier("railwayMap")
         .accessibilityValue(Text(mapRouteLoadStatus))
         .ignoresSafeArea()
+        // The trip cap, said once and quietly: tap to narrow the scope.
+        .overlay(alignment: .top) { mapCapNotice }
         // The one place the setting crosses from SwiftUI into the controller.
         //
         // `RailMapController` is not a `View`, so it cannot read
@@ -3147,7 +3427,45 @@ struct RailWorkspaceView: View {
     ///     invites the reader to read the percentage as covering all of them.
     ///   - **All journeys**, and Search — everything on record, which is what
     ///     those two destinations list.
+    /// What the map draws: the scoped rides, through the one trip cap.
+    ///
+    /// THE single point where trips feed the map (``MapTripCap``). Data-perf
+    /// note: map update batching sits downstream of this; the cap is applied
+    /// here and nowhere per layer.
     private var mapRides: [RiddenRouteStore.DrawnRide] {
+        derived.cappedRides(
+            scopedMapRides, selectedID: itineraries.selectedTrainID,
+            trains: itineraries.loaded?.trains ?? [])
+    }
+
+    /// How many trips the scope would draw without the cap.
+    private var mapTripTotal: Int { scopedMapRides.count }
+
+    @ViewBuilder
+    private var mapCapNotice: some View {
+        let total = mapTripTotal
+        if total > MapTripCap.limit {
+            Button {
+                presentationHost.afterTeardown { sheet = .hideTrips }
+            } label: {
+                Label(localization.text(
+                    "ios.hide.capNotice",
+                    params: ["shown": .number(Double(MapTripCap.limit)), "total": .number(Double(total))],
+                    fallback: "Showing \(MapTripCap.limit) of \(total) trips. Narrow by country or month."),
+                      systemImage: "line.3.horizontal.decrease")
+                    .font(.footnote.weight(.medium))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(.regularMaterial, in: Capsule())
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 54)
+            .padding(.horizontal, 16)
+            .accessibilityIdentifier("mapTripCapNotice")
+        }
+    }
+
+    private var scopedMapRides: [RiddenRouteStore.DrawnRide] {
         // Pre-filtered by the store so ordinary sheet-height updates keep the
         // same Array buffer all the way into `RailMapView.updateUIView`; the
         // narrowed answers below are held by `WorkspaceDerived` for the same
@@ -3161,15 +3479,18 @@ struct RailWorkspaceView: View {
         case .all, .search:
             break
         }
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = scopedTrains
         var ids: Set<String>?
+        // Hidden regions and months leave the map like they leave the list.
+        if tripHide.isActive { ids = derived.ids(of: trains) }
         // All Journeys carries the same globe button the other two do, so the
         // map under it draws that region and not the other four. Search does
         // not scope by region — see ``filteredDays(_:region:query:)`` — and a
         // map that narrowed while its list did not would be the second half of
         // the same lie.
         if selection == .all, let region = regionScope {
-            ids = derived.trainIDs(inRegion: region, in: trains)
+            let inRegion = derived.trainIDs(inRegion: region, in: trains)
+            ids = ids.map { $0.intersection(inRegion) } ?? inRegion
         }
         if mapFollowsSelectedDate, selectedDate != Dates.allDates {
             let dated = derived.trainIDs(spanning: selectedDate, in: trains)
@@ -3195,12 +3516,10 @@ struct RailWorkspaceView: View {
            let train = loaded.trains.first(where: { $0.id == selected }) {
             return [train]
         }
-        let searchQuery = selection == .search ? query : ""
-        return filteredDays(
-            loaded, region: selection == .search ? nil : regionScope,
-            query: searchQuery)
-            .flatMap(\.trains)
-            .filter { $0.visible != false && $0.stops.count > 1 }
+        // The same cap as the map, memoised: a run never draws more routes
+        // than the map can, and the body's `isEmpty` checks never re-sort.
+        return derived.cappedQueue(
+            shareListTrains.filter { $0.visible != false && $0.stops.count > 1 })
     }
 
     /// Start a run, remembering what was selected before it.
@@ -3267,11 +3586,14 @@ struct RailWorkspaceView: View {
                 videoExporter: videoExport.exporter,
                 onStop: { stopPlayback() },
                 onRequestVideoOptions: {
-                    videoExport.plan(
-                        playback: playback,
-                        trains: playbackScope, rides: riddenRoutes.rides,
-                        reducedMotion: reduceMotion)
-                    sheet = .videoOptions
+                    // The same composer as every other Share, on Video. A run
+                    // started from one journey films that journey; otherwise
+                    // the list.
+                    let journey = playback.restoreSelectedTrainID.flatMap { id in
+                        itineraries.loaded?.trains.first { $0.id == id }
+                    }
+                    openShare(ShareRequest(
+                        scope: journey == nil ? .list : .journey, format: .video, journey: journey))
                 }
             )
             .background {
@@ -3284,11 +3606,11 @@ struct RailWorkspaceView: View {
     }
 
 
-    private func startVideoExport() {
+    private func startVideoExport(_ trains: [Train]) {
         guard let mapView = controller.mapView else { return }
         videoExport.start(
             playback: playback, mapView: mapView, filming: playbackFilmedRect,
-            trains: playbackScope, rides: riddenRoutes.rides,
+            trains: trains, rides: riddenRoutes.rides,
             reducedMotion: reduceMotion)
     }
 

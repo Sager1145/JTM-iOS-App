@@ -49,7 +49,8 @@ final class NewTripUITests: XCTestCase {
         // Reuse the existing save/relaunch test's asynchronous write window.
         Thread.sleep(forTimeInterval: 1)
         app.terminate()
-        app.uiTestLaunch[.tab] = "search"
+        // Search is per list (pass 3): a 2030 trip is in Upcoming.
+        app.uiTestLaunch[.tab] = "upcoming"
         app.uiTestLaunch[.query] = "FujisanPending"
         app.uiTestLaunch[.sheet] = ""
         UITestLaunchSupport.launch(app)

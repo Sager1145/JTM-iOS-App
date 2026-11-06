@@ -26,14 +26,13 @@ struct DataManagerView: View {
     @State private var rawPreviewExpanded = false
     @State private var rawPreview = ""
     @State private var copied = false
-    @State private var fileToImport: URL?
     @State private var exportAction: ExportAction?
     private enum ExportAction { case file, clipboard }
 
     /// The sample a long-press asked to replace EVERYTHING with, held while
     /// the confirmation is up so the dialog can name it.
     private enum Destination: Equatable {
-        case importJSON, importGuide, importFile, exportFile
+        case exportFile
         case deleteSaved, deleteAll, restore, replaceSample(RideLibrary.Sample)
     }
     @State private var destination: Destination?
@@ -65,7 +64,9 @@ struct DataManagerView: View {
         List {
             sourceSection
             blockingSections
-            importSection
+            // Pass 3: importing adds trips, so it lives in the tab bar's Add
+            // trip menu (file · paste · transfer guide); this library keeps
+            // what manages the data already here.
             exportSection
             samplesSection
             sampleRegionSections
@@ -74,33 +75,6 @@ struct DataManagerView: View {
             dangerSection
         }
         .navigationTitle(localization.text("nav.data", fallback: "Data"))
-        .sheet(isPresented: isPresented(.importJSON)) {
-            DataImportView(
-                flow: flow, itineraries: itineraries, library: library)
-        }
-        .sheet(isPresented: isPresented(.importGuide)) {
-            TransferGuideImportView(itineraries: itineraries, library: library)
-        }
-        .fileImporter(isPresented: isPresented(.importFile), allowedContentTypes: [.json]) { result in
-            switch result {
-            case .success(let url): fileToImport = url
-            case .failure(let error): showImportError(error)
-            }
-        }
-        .task(id: fileToImport) {
-            guard let url = fileToImport else { return }
-            defer { if fileToImport == url { fileToImport = nil } }
-            do {
-                let data = try await ImportFileReader.read(url)
-                let text = await Task.detached(priority: .userInitiated) {
-                    String(decoding: data, as: UTF8.self)
-                }.value
-                try Task.checkCancellation()
-                flow.load(text, origin: .file(url.lastPathComponent))
-                destination = .importJSON
-            } catch is CancellationError {
-            } catch { showImportError(error) }
-        }
         .task(id: exportAction) {
             guard let action = exportAction else { return }
             defer { exportAction = nil }
@@ -120,7 +94,7 @@ struct DataManagerView: View {
             catch { }
         }
         .overlay {
-            if fileToImport != nil || exportAction != nil { ProgressView().padding().background(.regularMaterial, in: Capsule()) }
+            if exportAction != nil { ProgressView().padding().background(.regularMaterial, in: Capsule()) }
         }
         .fileExporter(
             isPresented: isPresented(.exportFile),
@@ -141,11 +115,6 @@ struct DataManagerView: View {
                 !Task.isCancelled else { return }
             rawPreview = text
         }
-    }
-
-    private func showImportError(_ error: Error) {
-        operationError = OperationError(titleKey: "data.errorImportTitle",
-            detail: error.localizedDescription, keptKey: "data.errorNothingChanged")
     }
 
     // MARK: - §5.8 source hero
@@ -235,41 +204,6 @@ struct DataManagerView: View {
         }
     }
 
-    // MARK: - import
-
-    private var importSection: some View {
-        Section {
-            Button { destination = .importFile } label: {
-                Label(
-                    localization.text("btn.openLocal", fallback: "Open JSON"),
-                    systemImage: "folder")
-            }
-            Button {
-                flow.load("", origin: .pasted)
-                destination = .importJSON
-            } label: {
-                Label(
-                    localization.text("sec.importPaste", fallback: "Paste JSON text"),
-                    systemImage: "doc.on.clipboard")
-            }
-            // A third door, and the only one that does not start from a file
-            // this app wrote: a photograph of somebody else's route planner.
-            // It lands in the same store through the same `add`, so nothing
-            // downstream needs to know a journey arrived this way.
-            Button { destination = .importGuide } label: {
-                Label(
-                    localization.text("ios.guide.entry"),
-                    systemImage: "text.viewfinder")
-            }
-            .accessibilityIdentifier("guideImportButton")
-        } header: {
-            Text(localization.text("data.importGroup"))
-        } footer: {
-            Text(localization.text("data.preflightDateNote"))
-        }
-        .disabled(itineraries.isImporting || fileToImport != nil)
-    }
-
     // MARK: - export, in one task group with the raw preview
 
     private var exportSection: some View {
@@ -345,7 +279,7 @@ struct DataManagerView: View {
         } footer: {
             Text(localization.text("data.storageFootnote"))
         }
-        .disabled(itineraries.isImporting || fileToImport != nil)
+        .disabled(itineraries.isImporting)
     }
 
     /// The seven samples, grouped by the region each belongs to.
@@ -403,7 +337,7 @@ struct DataManagerView: View {
                 }
             }
         }
-        .disabled(itineraries.isImporting || fileToImport != nil)
+        .disabled(itineraries.isImporting)
     }
 
     /// Fold a sample in, or — from the long-press action — make it the whole
@@ -579,7 +513,7 @@ struct DataManagerView: View {
             } header: {
                 Text(localization.text("data.recovery"))
             }
-            .disabled(itineraries.isImporting || fileToImport != nil)
+            .disabled(itineraries.isImporting)
             .confirmationDialog(
                 localization.text("data.restoreBackup"),
                 isPresented: isPresented(.restore),
@@ -636,7 +570,7 @@ struct DataManagerView: View {
             }
         }
         .listSectionSpacing(.custom(44))
-        .disabled(itineraries.isImporting || fileToImport != nil)
+        .disabled(itineraries.isImporting)
         .confirmationDialog(
             localization.text("btn.clearStorage", fallback: "Delete saved rides"),
             isPresented: isPresented(.deleteSaved),

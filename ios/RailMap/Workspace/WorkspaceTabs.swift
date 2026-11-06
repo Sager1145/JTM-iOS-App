@@ -17,13 +17,16 @@ struct WorkspaceTabs: View {
     @available(iOS 18.0, *)
     private var modernTabs: some View {
         TabView(selection: $selection) {
-            Tab(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage,
-                value: WorkspaceTab.journeys) { page(.journeys) }
-            Tab(title(.stats), systemImage: WorkspaceTab.stats.systemImage,
-                value: WorkspaceTab.stats) { page(.stats) }
+            ForEach(WorkspaceTab.destinations) { tab in
+                Tab(title(tab), systemImage: tab.systemImage, value: tab) { page(tab) }
+            }
+            // The separate, prominent search-role button, used as Add trip:
+            // selecting it opens the add menu (the workspace puts the
+            // selection back). See `WorkspaceTab.add`.
+            Tab(title(.add), systemImage: WorkspaceTab.add.systemImage,
+                value: WorkspaceTab.add, role: .search) { Color.clear }
         }
-        // Two destinations: the journey log (with its own search field and
-        // list scope) and the statistics. See `WorkspaceTab`.
+        // Three destinations — Upcoming, History, Stats — and Add trip.
         .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()
         .modifier(SystemSheetTabSurface())
@@ -32,12 +35,14 @@ struct WorkspaceTabs: View {
 
     private var legacyTabs: some View {
         TabView(selection: $selection) {
-            page(.journeys)
-                .tabItem { Label(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage) }
-                .tag(WorkspaceTab.journeys)
-            page(.stats)
-                .tabItem { Label(title(.stats), systemImage: WorkspaceTab.stats.systemImage) }
-                .tag(WorkspaceTab.stats)
+            ForEach(WorkspaceTab.destinations) { tab in
+                page(tab)
+                    .tabItem { Label(title(tab), systemImage: tab.systemImage) }
+                    .tag(tab)
+            }
+            Color.clear
+                .tabItem { Label(title(.add), systemImage: WorkspaceTab.add.systemImage) }
+                .tag(WorkspaceTab.add)
         }
         .modifier(SystemSheetTabSurface())
         .environment(\.locale, localization.locale)
@@ -66,10 +71,11 @@ struct DuoWorkspaceShell<MapContent: View, Panel: View, Controls: ToolbarContent
 
     var body: some View {
         TabView(selection: $selection) {
-            Tab(title(.journeys), systemImage: WorkspaceTab.journeys.systemImage,
-                value: WorkspaceTab.journeys) { contentPage(.journeys) }
-            Tab(title(.stats), systemImage: WorkspaceTab.stats.systemImage,
-                value: WorkspaceTab.stats) { contentPage(.stats) }
+            ForEach(WorkspaceTab.destinations) { tab in
+                Tab(title(tab), systemImage: tab.systemImage, value: tab) { contentPage(tab) }
+            }
+            Tab(title(.add), systemImage: WorkspaceTab.add.systemImage,
+                value: WorkspaceTab.add, role: .search) { Color.clear }
         }
         .tabViewStyle(.tabBarOnly)
         .railPersistentTabBar()

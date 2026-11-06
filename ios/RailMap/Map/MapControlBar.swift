@@ -391,6 +391,9 @@ struct MapLocationRefusal: View {
 struct DuoMapToolbar: ToolbarContent {
     @Bindable var controller: RailMapController
     var onLayers: () -> Void
+    /// Legend and sources: the same map-chrome home the rail's info button
+    /// is on every other layout (pass 3 moved it out of the gear).
+    var onInfo: () -> Void
     var isMenuHidden = false
     var onToggleMenu: (() -> Void)? = nil
     /// Folded Search replaces the full tabs with a compact native menu.
@@ -495,6 +498,12 @@ struct DuoMapToolbar: ToolbarContent {
                 systemImage: "square.3.layers.3d")
         }
         .accessibilityIdentifier("mapLayersButton")
+
+        Button(action: onInfo) {
+            Label(localization.countryText("info.button", fallback: "Legend and sources"),
+                systemImage: "info.circle")
+        }
+        .accessibilityIdentifier("mapInfoButton")
     }
 
 }

@@ -56,7 +56,9 @@ struct RideCard: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(PanelMorph.self) private var morph: PanelMorph?
-    @State private var showsShare = false
+    /// Pass 3: the card's Share opens the one composer the workspace owns.
+    @Environment(\.openShare) private var openShare
+    @State private var shareRequest: ShareRequest?
 
     private var stage: SheetStage { morph?.stage ?? .expanded }
     /// Where the sheet is between its compact and half stops, 0…1.
@@ -243,15 +245,15 @@ struct RideCard: View {
         // interpolated values change on frames where `isCompact` did not, and
         // `animation(_:value:)` only animates the transaction that changed the
         // value it was given.
+        .fullScreenCover(item: $shareRequest) { request in
+            openShare?.composer(request)
+        }
         .transaction { transaction in
             if reduceMotion {
                 // Do not inherit the system sheet's movement transaction. The
                 // body subgroup above still supplies its own opacity-only fade.
                 transaction.animation = nil
             }
-        }
-        .sheet(isPresented: $showsShare) {
-            JourneyShareView(train: train)
         }
     }
 
@@ -371,12 +373,14 @@ struct RideCard: View {
             }
 
             HStack(spacing: 2) {
-                SheetIconButton(
-                    systemImage: "square.and.arrow.up",
-                    accessibilityLabel: Text(localization.text("ios.journeyShare.title")),
-                    action: { showsShare = true }
-                )
-                .accessibilityIdentifier("journeyShareButton")
+                if let openShare {
+                    SheetIconButton(
+                        systemImage: "square.and.arrow.up",
+                        accessibilityLabel: Text(localization.text("ios.journeyShare.title")),
+                        action: { shareRequest = ShareRequest(scope: .journey, journey: train) }
+                    )
+                    .accessibilityIdentifier("journeyShareButton")
+                }
                 // Compact offers the one action the resolver chose; open offers
                 // the whole group below. The close button is in the same place
                 // in both.

@@ -29,7 +29,7 @@ final class JourneySaveUITests: XCTestCase {
         save.tap()
         XCTAssertTrue(save.waitForNonExistence(timeout: 20))
 
-        app.tabBars.firstMatch.buttons.element(boundBy: 0).tap() // Journeys tab hosts search
+        app.tabBars.firstMatch.buttons.element(boundBy: 0).tap() // Upcoming tab hosts search
         let savedSearch = app.textFields["journeySearchField"]
         XCTAssertTrue(savedSearch.waitForExistence(timeout: 8))
         savedSearch.tap()

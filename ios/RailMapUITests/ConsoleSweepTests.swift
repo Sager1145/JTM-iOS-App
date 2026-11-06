@@ -78,31 +78,27 @@ final class ConsoleSweepTests: XCTestCase {
                 return
             }
             share.tap()
-            let composer = element("shareComposer", in: app)
+            let composer = element("shareComposerRoot", in: app)
             XCTAssertTrue(composer.waitForExistence(timeout: 8), "the share composer did not appear")
-            let appearanceControl = element("shareComposerAppearance", in: app)
-            XCTAssertTrue(appearanceControl.waitForExistence(timeout: 4))
-            let expectedAppearance = "Share in \(appearance) mode"
-            if appearanceControl.value as? String != expectedAppearance { appearanceControl.tap() }
-            XCTAssertEqual(appearanceControl.value as? String, expectedAppearance)
-            let export = element("shareComposerExport", in: app)
-            let exportReady = XCTNSPredicateExpectation(
-                predicate: NSPredicate { _, _ in export.exists && export.isEnabled }, object: nil)
-            XCTAssertEqual(XCTWaiter.wait(for: [exportReady], timeout: 90), .completed)
-            export.tap()
-            let preview = element("statisticsShareSheet", in: app)
-            XCTAssertTrue(preview.waitForExistence(timeout: 90),
-                          "the \(appearance) statistics preview did not appear from the composer")
-            XCTAssertTrue(app.images.firstMatch.exists,
-                          "the \(appearance) statistics preview has no rendered image")
-            let close = element("statisticsShareCloseButton", in: app)
+            let look = app.segmentedControls["shareLookPicker"]
+            XCTAssertTrue(look.waitForExistence(timeout: 4))
+            let lookChoice = look.buttons[appearance == "dark" ? "Dark" : "Light"]
+            XCTAssertTrue(lookChoice.exists)
+            lookChoice.tap()
+            XCTAssertTrue(lookChoice.isSelected)
+            let aspect = app.segmentedControls["shareAspectPicker"]
+            XCTAssertTrue(aspect.waitForExistence(timeout: 4))
+            for name in ["Story", "Portrait", "Square"] {
+                let segment = aspect.buttons[name]
+                XCTAssertTrue(segment.exists, "missing aspect segment \(name)")
+                segment.tap()
+                XCTAssertTrue(segment.isSelected)
+            }
+            XCTAssertTrue(element("sharePreview", in: app).waitForExistence(timeout: 30),
+                          "the \(appearance) statistics preview did not appear in the composer")
+            let close = element("shareCloseButton", in: app)
             XCTAssertTrue(close.waitForExistence(timeout: 4))
             close.tap()
-            XCTAssertTrue(close.waitForNonExistence(timeout: 8))
-            XCTAssertTrue(preview.waitForNonExistence(timeout: 8))
-            let cancel = app.buttons["Cancel"]
-            XCTAssertTrue(cancel.waitForExistence(timeout: 4))
-            cancel.tap()
             XCTAssertTrue(composer.waitForNonExistence(timeout: 8), "the share composer did not close")
             settle()
         }
@@ -118,7 +114,6 @@ final class ConsoleSweepTests: XCTestCase {
         let all = app.tabBars.buttons.element(boundBy: index(of: "all"))
         if all.waitForExistence(timeout: 6) {
             all.tap()
-            selectJourneyScope("All", in: app)
             settle()
         }
     }
@@ -133,24 +128,17 @@ final class ConsoleSweepTests: XCTestCase {
                 continue
             }
             button.tap()
-            // Upcoming and All are segments of the Journeys tab's scope control.
-            if tab == "upcoming" { selectJourneyScope("Upcoming", in: app) }
-            if tab == "all" { selectJourneyScope("All", in: app) }
             settle()
         }
     }
 
-    /// The tab bar now has two tabs: Journeys (0) and Stats (1). Upcoming, All
-    /// and Search are all modes of the Journeys tab.
+    /// The tab bar destinations are Upcoming (0), History (1) and Stats (2);
+    /// "all" maps to History and "search" to Upcoming's search field.
     private func index(of tab: String) -> Int {
-        tab == "stats" ? 1 : 0
-    }
-
-    /// Picks a segment of the Journeys tab's `journeyListScope` control.
-    private func selectJourneyScope(_ title: String, in app: XCUIApplication) {
-        let segment = app.segmentedControls["journeyListScope"].buttons[title]
-        if segment.waitForExistence(timeout: 6) {
-            segment.tap()
+        switch tab {
+        case "stats": return 2
+        case "all", "history": return 1
+        default: return 0
         }
     }
 
@@ -277,7 +265,6 @@ final class ConsoleSweepTests: XCTestCase {
 
     private func walkJourneyDetailAndEditor(_ app: XCUIApplication) {
         app.tabBars.buttons.element(boundBy: index(of: "all")).tap()
-        selectJourneyScope("All", in: app)
         settle()
 
         let rows = app.collectionViews.cells

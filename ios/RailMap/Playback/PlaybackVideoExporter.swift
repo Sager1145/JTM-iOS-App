@@ -163,8 +163,9 @@ final class PlaybackVideoExporter {
                 displayScale: Self.displayScale(of: mapView))
             let size = plan.size
             crop = plan.crop
-            let url = FileManager.default.temporaryDirectory
-                .appending(path: "RailMap-\(UUID().uuidString).mp4")
+            // Named (and earlier launches' films retired) by the one share
+            // file writer; AVAssetWriter writes it.
+            let url = ShareArtifactWriter.reserveURL(for: .video)
             let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
             self.writer = writer
             self.outputURL = url

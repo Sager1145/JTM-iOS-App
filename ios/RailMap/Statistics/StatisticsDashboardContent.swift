@@ -5,6 +5,8 @@ import SwiftUI
 /// Passport dashboard cards. The containing workspace owns scrolling and scope controls.
 struct StatisticsDashboardContent: View {
     @Environment(AppLocalization.self) private var localization
+    /// Hidden regions and months leave Stats like the map and the lists.
+    @Environment(TripHideFilter.self) private var tripHide: TripHideFilter?
     @Bindable var itineraries: ItineraryStore
     @Bindable var statistics: MileageStatisticsStore
     /// Which region's numbers these are.
@@ -143,7 +145,7 @@ struct StatisticsDashboardContent: View {
 
     var body: some View {
         Group {
-            if let all = itineraries.loaded {
+            if let all = itineraries.loaded.map(visibleStore) {
                 let scope = scoped(all)
                 let loaded = scope.loaded
                 // Journeys whose records do not say they were ridden. They are
@@ -208,7 +210,7 @@ struct StatisticsDashboardContent: View {
         .sheet(item: $selectedWidgetKind) { kind in
             NavigationStack {
                 ScrollView {
-                    if let all = itineraries.loaded, let stats = statistics.view {
+                    if let all = itineraries.loaded.map(visibleStore), let stats = statistics.view {
                         let scope = scoped(all)
                         let passport = statistics.passport.flatMap { $0.isEmpty ? nil : $0 }
                         detailCard(
@@ -1411,6 +1413,17 @@ struct StatisticsDashboardContent: View {
     /// is handed a list already filtered by ``RailCore/RideLedger``,
     /// and a card that said "8 journeys, 0 km" because two of them were never
     /// confirmed would be this screen disagreeing with itself.
+    /// The store minus hidden regions/months (same arrays until a choice or
+    /// the store changes, so the memoised scope below keeps its key).
+    private func visibleStore(_ loaded: ItineraryStore.Loaded) -> ItineraryStore.Loaded {
+        guard let tripHide, tripHide.isActive else { return loaded }
+        let scoped = tripHide.scoped(loaded)
+        var copy = loaded
+        copy.trains = scoped.trains
+        copy.days = scoped.days
+        return copy
+    }
+
     private func scoped(_ loaded: ItineraryStore.Loaded) -> Scope {
         // The region + ridden filter, memoised: this used to re-run over
         // every journey and rebuild every `days` bucket on every body

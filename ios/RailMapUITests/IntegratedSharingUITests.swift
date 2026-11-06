@@ -19,7 +19,7 @@ final class IntegratedSharingUITests: XCTestCase {
         XCTAssertTrue(share.waitForExistence(timeout: 120))
         // Select the scope under test before waiting for its figures. The
         // initial all-region load is unrelated to these Japan/day posters.
-        let region = element("regionScopeButton", in: app)
+        let region = element("statisticsFilterButton", in: app)
         region.tap()
         let japan = app.buttons["Japan"]
         XCTAssertTrue(japan.waitForExistence(timeout: 5), app.debugDescription)
@@ -28,10 +28,14 @@ final class IntegratedSharingUITests: XCTestCase {
         let wholeJapan = app.buttons["Japan (all)"]
         XCTAssertTrue(wholeJapan.waitForExistence(timeout: 5), app.debugDescription)
         wholeJapan.tap()
-        XCTAssertEqual(region.value as? String, "Japan")
+        XCTAssertTrue((region.value as? String ?? "").hasPrefix("Japan"), region.value as? String ?? "nil")
         waitUntilEnabled(share)
-        let date = element("statisticsDateButton", in: app)
+        let date = element("statisticsFilterButton", in: app)
         date.tap()
+        // Pass 3: the period picker is the Period item of the Stats filter.
+        let periodItem = app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch
+        XCTAssertTrue(periodItem.waitForExistence(timeout: 5), app.debugDescription)
+        periodItem.tap()
         let day = app.buttons["statisticsCalendarDay-2026-07-03"]
         // The calendar opens on its own month, independently of sample import.
         // Reach the intended recorded day using the native calendar controls.
@@ -55,19 +59,50 @@ final class IntegratedSharingUITests: XCTestCase {
 
         waitUntilEnabled(share)
         share.tap()
-        XCTAssertTrue(element("shareComposer", in: app).waitForExistence(timeout: 8))
-        let export = element("shareComposerExport", in: app)
-        waitUntilEnabled(export)
-        export.tap()
-        let close = element("statisticsShareCloseButton", in: app)
-        XCTAssertTrue(close.waitForExistence(timeout: 90), app.debugDescription)
-        XCTAssertTrue(app.images.firstMatch.exists, "The preview must contain a rendered image.")
+        XCTAssertTrue(element("shareComposerRoot", in: app).waitForExistence(timeout: 8))
+        let scope = app.segmentedControls["shareScopePicker"]
+        XCTAssertTrue(scope.waitForExistence(timeout: 8), app.debugDescription)
+        XCTAssertTrue(scope.buttons["Statistics"].isSelected,
+                      "Opening from the Stats header must preselect the Statistics scope.")
+        XCTAssertTrue(element("sharePreview", in: app).waitForExistence(timeout: 30), app.debugDescription)
+        XCTAssertTrue(exportAndExpectShareSheet(in: app), app.debugDescription)
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = "share-composer-Japan-2026-07-03"
         screenshot.lifetime = .keepAlways
         add(screenshot)
+        dismissShareSheet(in: app)
+        let close = element("shareCloseButton", in: app)
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 8))
+    }
+
+    /// Taps the composer's export button and waits for the system share sheet
+    /// (UIActivityViewController), tolerating the several shapes it takes
+    /// across iOS versions. Returns true once it is on screen.
+    private func exportAndExpectShareSheet(in app: XCUIApplication) -> Bool {
+        let export = element("shareImageButton", in: app)
+        waitUntilEnabled(export)
+        export.tap()
+        let sheet = NSPredicate { _, _ in
+            app.otherElements["ActivityListView"].exists
+                || app.buttons["Copy"].exists
+                || app.buttons["Save Image"].exists
+                || app.sheets.firstMatch.exists
+                || app.collectionViews.matching(identifier: "ActivityListView").firstMatch.exists
+        }
+        let shown = XCTNSPredicateExpectation(predicate: sheet, object: nil)
+        return XCTWaiter.wait(for: [shown], timeout: 90) == .completed
+    }
+
+    private func dismissShareSheet(in app: XCUIApplication) {
+        let close = app.buttons["Close"]
+        if close.waitForExistence(timeout: 3) {
+            close.tap()
+        } else {
+            app.swipeDown(velocity: .fast)
+        }
+        XCTAssertTrue(element("shareComposerRoot", in: app).waitForExistence(timeout: 10),
+                      "Dismissing the share sheet must return to the composer.")
     }
 
     private func waitUntilEnabled(_ element: XCUIElement) {

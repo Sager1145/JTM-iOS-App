@@ -14,6 +14,7 @@ struct RailDiagnosticsApp: App {
         WindowGroup {
             DiagnosticWorkspaceView()
                 .dynamicTypeSize(AppTypographyPolicy.supportedSizes)
+                .background { AppTypographyWindowCap().allowsHitTesting(false) }
         }
         .commands { UnifiedDiagnosticCommands() }
     }

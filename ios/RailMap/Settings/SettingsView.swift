@@ -560,51 +560,17 @@ struct SettingsView: View {
         }
     }
 
+    /// Pass 3: which packages loaded, which failed and the Retry button
+    /// live in Data Library's availability section, the one home for package
+    /// state. This page keeps only the read-out that section does not show.
     @ViewBuilder
     private var networkStatus: some View {
-        let packageLabel = localization.text("ios.package", fallback: "Package")
-        switch network.state {
-        case .idle:
-            LabeledContent(
-                packageLabel,
-                value: localization.text("ios.packageIdle", fallback: "Not loaded"))
-        case .loading(let pending):
-            HStack {
-                ProgressView()
-                Text(localization.text("ios.packageDecoding", fallback: "Decoding package…"))
-                Spacer()
-                Text(pending.map { $0.rawValue.uppercased() }.joined(separator: " "))
-                    .font(.footnote.monospaced())
-                    .foregroundStyle(.secondary)
-            }
-        case .loaded(let regions, let failures, let elapsed):
-            // One row per region, because five packages are five answers: a
-            // combined line count would hide a package that failed to load
-            // behind four that did not.
-            ForEach(regions) { load in
-                LabeledContent(
-                    packageLabel,
-                    value: localization.text(
-                        "ios.packageLines",
-                        params: [
-                            "code": .string(load.region.rawValue.uppercased()),
-                            "count": .number(Double(load.lineCount)),
-                        ],
-                        fallback: "\(load.region.rawValue.uppercased()) · \(load.lineCount) lines"))
-            }
-            ForEach(failures) { failure in
-                Label(
-                    "\(failure.region.rawValue.uppercased()) · \(failure.message)",
-                    systemImage: "exclamationmark.triangle")
-                    .foregroundStyle(.red)
-            }
+        if case .loaded(_, _, let elapsed) = network.state {
             LabeledContent(
                 localization.text("ios.decodeTime", fallback: "Decode time"),
                 value: "\(elapsed.milliseconds) ms")
         }
     }
-
-
 }
 
 // MARK: - Read-outs

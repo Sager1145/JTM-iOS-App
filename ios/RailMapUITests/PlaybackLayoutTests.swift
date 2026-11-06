@@ -187,6 +187,7 @@ final class PlaybackLayoutTests: XCTestCase {
         // System tabs can be hidden at a compact sheet detent. Check each
         // mounted on-screen tab rather than requiring hidden content to show.
         for (index, tab) in app.tabBars.buttons.allElementsBoundByIndex.enumerated() {
+            if tab.label == "Add trip" { continue } // system search-role button, not a destination
             let frame = tab.frame
             if !frame.isEmpty, viewport.intersects(frame) {
                 assertContained(frame, in: viewport, name: "workspace tab \(index)")

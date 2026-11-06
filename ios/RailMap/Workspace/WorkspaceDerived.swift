@@ -145,6 +145,107 @@ final class WorkspaceDerived {
         return (upcomingValue, upcomingIDs)
     }
 
+    // MARK: - the map's trip cap (MapTripCap)
+
+    private var idsKey: [Train]?
+    private var idsValue: Set<String> = []
+
+    /// The ids of these trains, once per array generation.
+    func ids(of trains: [Train]) -> Set<String> {
+        if let idsKey, ArrayGeneration.same(idsKey, trains) { return idsValue }
+        idsValue = Set(trains.map(\.id))
+        idsKey = trains
+        return idsValue
+    }
+
+    private var capKey: (rides: [RiddenRouteStore.DrawnRide], selected: String?)?
+    private var capValue: [RiddenRouteStore.DrawnRide] = []
+
+    /// At most ``MapTripCap/limit`` rides, the selected one first, then the
+    /// most recent. Recomputed only when the scoped rides or the selection
+    /// change; under the cap it is the input array itself.
+    func cappedRides(
+        _ rides: [RiddenRouteStore.DrawnRide], selectedID: String?, trains: [Train]
+    ) -> [RiddenRouteStore.DrawnRide] {
+        guard rides.count > MapTripCap.limit else { return rides }
+        if let capKey, ArrayGeneration.same(capKey.rides, rides) {
+            // A new selection that was already drawn changes nothing: keep the
+            // same array so the map stays on its identity fast path.
+            if capKey.selected == selectedID
+                || selectedID.map({ id in capValue.contains { $0.id == id } }) ?? true {
+                return capValue
+            }
+        }
+        let dates = MapTripCap.dates(trains)
+        capValue = MapTripCap.capped(rides, id: \.id, selectedID: selectedID, dates: dates)
+        capKey = (rides, selectedID)
+        return capValue
+    }
+
+    private var queueKey: [Train]?
+    private var queueValue: [Train] = []
+
+    /// Playback's queue through the same cap, once per queue generation.
+    func cappedQueue(_ queue: [Train]) -> [Train] {
+        guard queue.count > MapTripCap.limit else { return queue }
+        if let queueKey, ArrayGeneration.same(queueKey, queue) { return queueValue }
+        queueValue = MapTripCap.capped(queue, id: \.id, selectedID: nil, dates: MapTripCap.dates(queue))
+        queueKey = queue
+        return queueValue
+    }
+
+    // MARK: - Upcoming / History partition (UI reorganization pass 3)
+
+    private struct ListDaysKey {
+        let days: [ItineraryStore.Loaded.Day]
+        let ahead: Set<String>
+        let wantsAhead: Bool
+    }
+    private var listDaysKey: ListDaysKey?
+    private var listDaysValue: [ItineraryStore.Loaded.Day] = []
+
+    /// One list's days (Upcoming or History), held so the SAME array comes
+    /// back until the store or the today line changes — the journey search
+    /// compares its request's days by identity, and a fresh array on every
+    /// body evaluation would restart the search on each one.
+    func listDays(
+        _ days: [ItineraryStore.Loaded.Day], ahead: Set<String>, wantsAhead: Bool
+    ) -> [ItineraryStore.Loaded.Day] {
+        if let listDaysKey, listDaysKey.wantsAhead == wantsAhead, listDaysKey.ahead == ahead,
+           ArrayGeneration.same(listDaysKey.days, days) {
+            return listDaysValue
+        }
+        listDaysValue = days.compactMap { day in
+            var day = day
+            day.trains = day.trains.filter { ahead.contains($0.id) == wantsAhead }
+            return day.trains.isEmpty ? nil : day
+        }
+        listDaysKey = ListDaysKey(days: days, ahead: ahead, wantsAhead: wantsAhead)
+        return listDaysValue
+    }
+
+    private struct AheadKey {
+        let trains: [Train]
+        let today: [Region: String]
+    }
+    private var aheadKey: AheadKey?
+    private var aheadValue: Set<String> = []
+
+    /// The ids of every journey dated today or later on its own region's
+    /// clock, whatever the filter: the line between the Upcoming and History
+    /// tabs. Its own slot, so the filtered ``upcoming`` answer above is not
+    /// evicted by the unfiltered one on every body evaluation.
+    func aheadIDs(
+        trains: [Train], today: [Region: String], compute: () -> Set<String>
+    ) -> Set<String> {
+        if let aheadKey, aheadKey.today == today, ArrayGeneration.same(aheadKey.trains, trains) {
+            return aheadValue
+        }
+        aheadValue = compute()
+        aheadKey = AheadKey(trains: trains, today: today)
+        return aheadValue
+    }
+
     // MARK: - the statistics scope
 
     private struct ScopeKey {

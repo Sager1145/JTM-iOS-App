@@ -40,7 +40,7 @@ bash ios/verify.sh diagnostic --request /private/tmp/rail-diagnostic-request.jso
 
 The `RailMap` scheme builds the app and its Test action contains `RailMapUITests`
 only. It does not contain `RailMapTests`. Native tests, including
-`NativeImportPersistenceTests`, `ShareComposerLayoutTests` and
+`NativeImportPersistenceTests`, `TripScopeTests` and
 `ShareComposerScopeTests`, run with `-scheme RailMapTests`:
 
 ```sh

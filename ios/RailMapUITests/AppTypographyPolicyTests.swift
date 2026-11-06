@@ -36,6 +36,7 @@ final class AppTypographyPolicyTests: XCTestCase {
             let parts = field.split(separator: ":", maxSplits: 1)
             return parts.count == 2 ? (String(parts[0]), String(parts[1])) : nil
         }, uniquingKeysWith: { _, last in last })
+        // AppTypographyPolicy.maximumSize is .xLarge: nothing above it.
         XCTAssertTrue(["xSmall", "small", "medium", "large", "xLarge"].contains(values["size"] ?? ""),
                       "Every app surface must keep the permanent xSmall...xLarge limit: \(values).")
         if let expectedSize { XCTAssertEqual(values["size"], expectedSize) }
@@ -51,6 +52,10 @@ final class AppTypographyPolicyTests: XCTestCase {
                                  "Draft map pins must use the same UIKit font ceiling.")
         XCTAssertGreaterThan(Double(values["draftHeight"] ?? "") ?? 0, 0,
                              "The observed font must come from a configured, measured draft pin.")
+        // The one cap reaches UIKit too: the hosting window carries the same
+        // maximum content size category (sheets and covers live in it).
+        XCTAssertEqual(values["windowCap"], UIContentSizeCategory.extraLarge.rawValue,
+                       "The window must carry the app's single text-size cap: \(values).")
         let receipt = XCTAttachment(string: String(describing: values))
         receipt.name = "app-typography-observed-bounds"
         receipt.lifetime = .keepAlways

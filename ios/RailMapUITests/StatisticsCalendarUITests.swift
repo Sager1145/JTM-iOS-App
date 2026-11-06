@@ -13,10 +13,14 @@ final class StatisticsCalendarUITests: XCTestCase {
         app.uiTestLaunch[.statsRegion] = "jp"
         UITestLaunchSupport.launch(app)
 
-        let calendar = element("statisticsDateButton", in: app)
+        let calendar = element("statisticsFilterButton", in: app)
         XCTAssertTrue(calendar.waitForExistence(timeout: 120))
         assertRideCount(39, in: app)
         calendar.tap()
+        // Pass 3: the period picker is the Period item of the Stats filter.
+        let periodItem = app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch
+        XCTAssertTrue(periodItem.waitForExistence(timeout: 5), app.debugDescription)
+        periodItem.tap()
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 10))
 
         XCTAssertEqual(element("statisticsCalendarMonth", in: app).label, "January 2026")
@@ -35,6 +39,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         allTime.tap()
         assertRideCount(39, in: app)
         calendar.tap()
+        app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 5))
         XCTAssertFalse(january.isSelected)
         january.tap()
@@ -42,6 +47,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         assertRideCount(17, in: app)
 
         calendar.tap()
+        app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 5))
         element("statisticsCalendarPrevious", in: app).tap()
         XCTAssertEqual(element("statisticsCalendarMonth", in: app).label, "December 2025")
@@ -54,6 +60,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         app.buttons["Done"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
+        app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 5))
 
         // Removing an endpoint leaves the other date selected.
@@ -83,11 +90,13 @@ final class StatisticsCalendarUITests: XCTestCase {
         app.buttons["Done"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
+        app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(byGroup.waitForExistence(timeout: 5))
         element("statisticsClassification-date", in: app).tap()
         app.buttons["Done"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
+        app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 5))
 
         let screenshot = XCTAttachment(screenshot: app.screenshot())

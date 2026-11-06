@@ -55,6 +55,7 @@ struct PassportWorkspaceView: View {
     /// workspace's to supply rather than the statistics screen's to reach for.
     var journeyPresentation: (Train) -> JourneyPresentation
     var openJourney: (Train) -> Void
+    var openData: () -> Void
     var openSettings: () -> Void
 
     var body: some View {
@@ -97,9 +98,10 @@ struct PassportWorkspaceView: View {
                     journeyPresentation: journeyPresentation,
                     openJourney: openJourney)
 
-                // Pass 2: the "Replay and export" card is gone. Playback has
-                // one home (the Journeys header, scoped by its filter) and
-                // export has one (Data Library). See docs/ui-reorganization.md.
+                PassportShareCard(
+                    canReplay: !scopedTrains.isEmpty,
+                    onReplay: { replay(scopedTrains) },
+                    onExport: openData)
             }
             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
             .padding(.top, WorkspaceMenuMetrics.contentTopInset)
@@ -120,8 +122,18 @@ struct PassportWorkspaceView: View {
         itineraries.orderedJourneyGroups
     }
 
+    @Environment(TripHideFilter.self) private var tripHide: TripHideFilter?
+
+    /// The visible trips: the store minus hidden regions and months — the
+    /// same array the workspace's statistics scope uses, so the one-slot
+    /// memos below are not thrashed by two identities.
+    private var visibleTrains: [Train] {
+        guard let loaded = itineraries.loaded else { return [] }
+        return tripHide?.scoped(loaded).trains ?? loaded.trains
+    }
+
     private var availableYears: [Int] {
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = visibleTrains
         return derived.availableYears(
             trains: trains, regionCode: region?.code,
             groupID: statistics.selectedJourneyGroupID, memberIDs: areaMembership?.ids,
@@ -132,7 +144,7 @@ struct PassportWorkspaceView: View {
     /// The same geometry-aware area membership used by the map and loader.
     private var areaMembership: (ids: Set<String>, key: Int)? {
         guard area != nil else { return nil }
-        let trains = itineraries.loaded?.trains ?? []
+        let trains = visibleTrains
         return derived.memberIDs(
             scope: StatisticsScope(region: region, area: area),
             trains: trains, rides: riddenRoutes.rides)
@@ -147,4 +159,69 @@ struct PassportWorkspaceView: View {
     // ``RailCore/RideLedger``, date), so 回放 still can never play a
     // journey the numbers above it excluded, computed once per (trains
     // generation, region, date) instead of once per screen.
+
+    private func replay(_ trains: [Train]) {
+        guard !trains.isEmpty else { return }
+        _ = playback.start(
+            trains: trains, rides: riddenRoutes.rides, reducedMotion: reduceMotion,
+            restoringSelection: itineraries.selectedTrainID)
+    }
+}
+
+/// §5.3.5 Replay & Share — two entry points into flows that already exist: the
+/// transport Journeys uses, and the Data Library's export.
+private struct PassportShareCard: View {
+    @Environment(AppLocalization.self) private var localization
+    var canReplay: Bool
+    var onReplay: () -> Void
+    var onExport: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label(
+                localization.text("grp.passportShare", fallback: "Replay and export"),
+                systemImage: "square.and.arrow.up")
+                .font(.headline)
+
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) { replayButton; exportButton }
+                VStack(spacing: 10) { replayButton; exportButton }
+            }
+
+            // §2.3 / §2.4: the film is a recording, not a broadcast. Saying so
+            // plainly is what keeps Flighty's "Live Share" from being implied
+            // by a share button on a journey screen.
+            Text(localization.journeyText(
+                "ios.passport.shareNote",
+                fallback: "Playback is exported as a video file. Nothing is shared live."))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("passportShareNote")
+        }
+        .statisticsCard()
+    }
+
+    private var replayButton: some View {
+        Button(action: onReplay) {
+            Label(
+                localization.countryText("btn.play", fallback: "Play"),
+                systemImage: "play.fill")
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+        .railMinimumTouchTarget()
+        .disabled(!canReplay)
+    }
+
+    private var exportButton: some View {
+        Button(action: onExport) {
+            Label(
+                localization.countryText("btn.exportJson", fallback: "Export JSON"),
+                systemImage: "arrow.down.doc")
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.bordered)
+        .railMinimumTouchTarget()
+    }
 }

@@ -38,8 +38,119 @@ enum ShellStrings {
         "ios.tab.stats": [
             .en: "Stats", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
         ],
+        "ios.search.didYouMean": [
+            .en: "Did you mean “{text}”?", .ja: "もしかして「{text}」？", .zhHans: "你是不是要找“{text}”？", .zhHant: "你是不是要找「{text}」？",
+        ],
+        "ios.hide.title": [.en: "Hide trips", .ja: "旅程を非表示", .zhHans: "隐藏行程", .zhHant: "隱藏行程"],
+        "ios.hide.menu": [.en: "Hide trips…", .ja: "旅程を非表示…", .zhHans: "隐藏行程…", .zhHant: "隱藏行程…"],
+        "ios.hide.menuActive": [
+            .en: "Hide trips… ({n} hidden)", .ja: "旅程を非表示…（{n} 件）",
+            .zhHans: "隐藏行程…（已隐藏 {n} 项）", .zhHant: "隱藏行程…（已隱藏 {n} 項）",
+        ],
+        "ios.hide.regions": [.en: "Countries and regions", .ja: "国・地域", .zhHans: "国家和地区", .zhHant: "國家與地區"],
+        "ios.hide.months": [.en: "Months", .ja: "月", .zhHans: "月份", .zhHant: "月份"],
+        "ios.hide.allHidden": [
+            .en: "All trips are hidden by the filter.", .ja: "すべての旅程がフィルタで非表示になっています。",
+            .zhHans: "所有行程都已被筛选隐藏。", .zhHant: "所有行程都已被篩選隱藏。",
+        ],
+        "ios.hide.showAll": [.en: "Show all", .ja: "すべて表示", .zhHans: "全部显示", .zhHant: "全部顯示"],
+        "ios.hide.note": [
+            .en: "Hidden countries, years and months leave the map, the lists and Stats. A single trip's own Hide only takes that trip off the map.",
+            .ja: "非表示にした国・年・月は、地図・一覧・統計から外れます。旅程ごとの「非表示」は、その旅程を地図から外すだけです。",
+            .zhHans: "隐藏的国家、年份和月份会从地图、列表和统计中移除。单个行程的“隐藏”只会把该行程从地图上移除。",
+            .zhHant: "隱藏的國家、年份與月份會從地圖、列表和統計中移除。單一行程的「隱藏」只會把該行程從地圖上移除。",
+        ],
+        "ios.hide.capNotice": [
+            .en: "Showing {shown} of {total} trips. Narrow by country or month.",
+            .ja: "{total} 件中 {shown} 件を表示中。国や月で絞り込めます。",
+            .zhHans: "显示 {total} 段中的 {shown} 段。可按国家或月份缩小范围。",
+            .zhHant: "顯示 {total} 段中的 {shown} 段。可依國家或月份縮小範圍。",
+        ],
+        "ios.search.noneHere": [
+            .en: "No matches in this list. The other list has some:", .ja: "この一覧には該当がありません。もう一方の一覧にあります：",
+            .zhHans: "此列表中没有匹配项，另一个列表中有：", .zhHant: "此列表中沒有符合項目，另一個列表中有：",
+        ],
+        "ios.tab.history": [
+            .en: "History", .ja: "履歴", .zhHans: "历史", .zhHant: "歷史",
+        ],
+        "ios.tab.addTrip": [
+            .en: "Add trip", .ja: "旅程を追加", .zhHans: "添加行程", .zhHant: "新增行程",
+        ],
+        "ios.addTrip.new": [
+            .en: "New trip", .ja: "新しい旅程", .zhHans: "新建行程", .zhHant: "新增行程",
+        ],
+        "ios.addTrip.file": [
+            .en: "Import from file", .ja: "ファイルから読み込む", .zhHans: "从文件导入", .zhHant: "從檔案匯入",
+        ],
+        "ios.addTrip.paste": [
+            .en: "Paste journey data", .ja: "旅程データを貼り付け", .zhHans: "粘贴行程数据", .zhHant: "貼上行程資料",
+        ],
+        "ios.journey.noHistory": [
+            .en: "No past journeys.", .ja: "過去の旅程はありません。", .zhHans: "没有过去的行程。", .zhHant: "沒有過去的行程。",
+        ],
         "ios.tab.all": [
             .en: "All", .ja: "すべて", .zhHans: "全部", .zhHant: "全部",
+        ],
+        "ios.share.title": [
+            .en: "Share", .ja: "共有", .zhHans: "分享", .zhHant: "分享",
+        ],
+        "ios.share.shape": [.en: "Shape", .ja: "形", .zhHans: "尺寸", .zhHant: "尺寸"],
+        "ios.share.aspect.story": [.en: "Story", .ja: "ストーリー", .zhHans: "竖屏", .zhHant: "直式"],
+        "ios.share.aspect.portrait": [.en: "Portrait", .ja: "縦長", .zhHans: "纵向", .zhHant: "縱向"],
+        "ios.share.aspect.square": [.en: "Square", .ja: "正方形", .zhHans: "方形", .zhHant: "方形"],
+        "ios.share.look": [.en: "Look", .ja: "外観", .zhHans: "外观", .zhHant: "外觀"],
+        "ios.share.look.light": [.en: "Light", .ja: "ライト", .zhHans: "浅色", .zhHant: "淺色"],
+        "ios.share.look.dark": [.en: "Dark", .ja: "ダーク", .zhHans: "深色", .zhHant: "深色"],
+        "ios.share.stops": [.en: "Stops", .ja: "停車駅", .zhHans: "停靠站", .zhHant: "停靠站"],
+        "ios.share.stops.key": [.en: "Key stops", .ja: "主な駅", .zhHans: "主要车站", .zhHant: "主要車站"],
+        "ios.share.stops.all": [.en: "All stops", .ja: "全駅", .zhHans: "全部车站", .zhHant: "全部車站"],
+        "ios.share.shareImage": [.en: "Share image", .ja: "画像を共有", .zhHans: "分享图片", .zhHant: "分享圖片"],
+        "ios.share.fact.distance": [.en: "Distance", .ja: "距離", .zhHans: "距离", .zhHant: "距離"],
+        "ios.share.fact.time": [.en: "On board", .ja: "乗車時間", .zhHans: "乘车时间", .zhHant: "乘車時間"],
+        "ios.share.fact.stops": [.en: "Stops", .ja: "停車", .zhHans: "停靠", .zhHant: "停靠"],
+        "ios.share.fact.journeys": [.en: "Journeys", .ja: "旅程", .zhHans: "行程", .zhHant: "行程"],
+        "ios.share.fact.stations": [.en: "Stations", .ja: "駅", .zhHans: "车站", .zhHant: "車站"],
+        "ios.share.fact.operators": [.en: "Operators", .ja: "事業者", .zhHans: "运营商", .zhHant: "業者"],
+        "ios.share.fact.coverage": [.en: "Network", .ja: "路線網", .zhHans: "路网", .zhHant: "路網"],
+        "ios.share.rhythm": [.en: "Rides by month", .ja: "月別の乗車", .zhHans: "每月乘车", .zhHant: "每月乘車"],
+        "ios.share.busiest": [
+            .en: "Busiest: {month}", .ja: "最多：{month}", .zhHans: "最多：{month}", .zhHant: "最多：{month}",
+        ],
+        "ios.share.heroCaption": [
+            .en: "ridden on {n} journeys", .ja: "{n} 回の旅程で乗車", .zhHans: "共 {n} 段行程", .zhHant: "共 {n} 段行程",
+        ],
+        "ios.share.scope": [
+            .en: "What to share", .ja: "共有する内容", .zhHans: "分享内容", .zhHant: "分享內容",
+        ],
+        "ios.share.scope.journey": [
+            .en: "This journey", .ja: "この旅程", .zhHans: "此行程", .zhHant: "此行程",
+        ],
+        "ios.share.scope.list": [
+            .en: "Journey list", .ja: "旅程一覧", .zhHans: "行程列表", .zhHant: "行程列表",
+        ],
+        "ios.share.scope.statistics": [
+            .en: "Statistics", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
+        ],
+        "ios.share.format": [
+            .en: "Format", .ja: "形式", .zhHans: "格式", .zhHant: "格式",
+        ],
+        "ios.share.format.image": [
+            .en: "Image", .ja: "画像", .zhHans: "图片", .zhHant: "圖片",
+        ],
+        "ios.share.format.video": [
+            .en: "Video", .ja: "動画", .zhHans: "视频", .zhHant: "影片",
+        ],
+        "ios.share.listCount": [
+            .en: "{count} journeys", .ja: "{count} 件の旅程", .zhHans: "{count} 段行程", .zhHant: "{count} 段行程",
+        ],
+        "ios.share.listButton": [
+            .en: "Share journeys", .ja: "旅程を共有", .zhHans: "分享行程", .zhHant: "分享行程",
+        ],
+        "ios.stats.filter": [
+            .en: "Statistics filter", .ja: "統計の絞り込み", .zhHans: "统计筛选", .zhHant: "統計篩選",
+        ],
+        "ios.stats.periodItem": [
+            .en: "Period and groups…", .ja: "期間とグループ…", .zhHans: "时段与分组…", .zhHant: "時段與分組…",
         ],
         "ios.tab.journeys": [
             .en: "Journeys", .ja: "旅程", .zhHans: "行程", .zhHant: "行程",
