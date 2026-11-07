@@ -111,6 +111,23 @@ if args and args[0] == "--update":
         write(counts)
         print(f"baseline regenerated: {len(counts)} entries")
         sys.exit(0)
+    # Baseline keys are relative to ios/. Accept repo-relative ("ios/RailMap/…"),
+    # ios-relative ("RailMap/…") and absolute paths; refuse anything else, so a
+    # mistyped path can never "succeed" while lowering nothing.
+    norm = []
+    for p in paths:
+        a = os.path.abspath(p)
+        if a.startswith(ios + os.sep):
+            q = os.path.relpath(a, ios)
+        elif p.startswith("ios/"):
+            q = p[4:]
+        else:
+            q = p
+        if not os.path.isfile(os.path.join(ios, q)):
+            print(f"refusing --update: not a file under ios/: {p}")
+            sys.exit(2)
+        norm.append(q)
+    paths = norm
     base = load()
     grow = []
     for p in paths:
