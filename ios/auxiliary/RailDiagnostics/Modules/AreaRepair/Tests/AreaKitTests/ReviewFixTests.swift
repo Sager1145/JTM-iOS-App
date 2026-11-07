@@ -296,6 +296,8 @@ struct StrokeMetricTests {
             #expect(style.cornerRadius == stationDiameter * 0.6 * w)
             #expect(style.railWidth == stationDiameter * 0.25 * w)
             #expect(style.laneGap == (stationDiameter * 0.25 + 1.2) * w)
+            // RailStyle.hardCornerMaxDeviation(atScale:) = railWidth × scale / 2 (v8 sharp corners).
+            #expect(style.hardCornerMaxDeviation == stationDiameter * 0.25 * w / 2)
         }
     }
 }

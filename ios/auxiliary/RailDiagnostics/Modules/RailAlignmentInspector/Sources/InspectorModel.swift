@@ -243,8 +243,9 @@ final class InspectorModel {
             let weight = RailStyle.scale(atZoom: zoom)
             let expected = [Double(RailStyle.railWidth * weight), Double(RailStyle.parallelLaneCentreDistance * weight),
                             Double(RailStyle.strokeCornerRadius * weight), Double(RailStyle.minimumCornerRadius(atScale: weight)),
-                            RailStyle.strokeMinRamp]
-            let actual = [style.railWidth, style.laneGap, style.cornerRadius, style.minCornerRadius, style.minRamp]
+                            RailStyle.strokeMinRamp, Double(RailStyle.hardCornerMaxDeviation(atScale: weight))]
+            let actual = [style.railWidth, style.laneGap, style.cornerRadius, style.minCornerRadius, style.minRamp,
+                          style.hardCornerMaxDeviation]
             assert(expected == actual,
                    "StrokeStyle.diagnosticsDefault(zoom: \(zoom)) \(actual) diverged from RailStyle \(expected)")
         }

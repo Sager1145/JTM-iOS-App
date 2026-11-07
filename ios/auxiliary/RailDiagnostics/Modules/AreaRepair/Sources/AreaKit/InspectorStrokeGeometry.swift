@@ -7,7 +7,7 @@ import RailCore
 /// Exact shared survey vertices permit tangent inheritance; proximity alone
 /// never creates a join or changes railway connectivity.
 public enum AreaStrokeGeometry {
-    public static let revision = "inspector-centreline-v7-display-source-corners"
+    public static let revision = "inspector-centreline-v8-rounded-sharp-corners"
     public static var joinContract: String {
         "exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=\(ContinuousStroke.joinMaxTangentDegrees);blend=\(ContinuousStroke.joinBlendMetres);fraction=\(ContinuousStroke.joinBlendIntervalFraction);deviationPx=\(ContinuousStroke.joinBlendDeviationPx);deviationMetres=\(ContinuousStroke.joinBlendDeviationMetres)"
     }
@@ -100,7 +100,9 @@ public enum AreaStrokeGeometry {
                 minCornerRadiusPx: style.minCornerRadius,
                 anchors: anchors, joinStart: join(partIndex: partIndex, atEnd: false),
                 joinEnd: join(partIndex: partIndex, atEnd: true), enforceMinimumCornerRadius: true,
-                literalSpans: literals))
+                literalSpans: literals,
+                hardCornerMaxDeviationPx: style.hardCornerMaxDeviation,
+                railWidthPx: style.railWidth))
             applied[partIndex] = stroke.appliedLiteralSpanEdges
             appliedCorners[partIndex] = stroke.appliedSourceCornerEdges
             return stroke.points.map {

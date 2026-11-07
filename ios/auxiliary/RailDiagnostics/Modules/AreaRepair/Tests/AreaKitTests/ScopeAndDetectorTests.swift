@@ -1,4 +1,5 @@
 import Foundation
+import MapKit
 import Testing
 @testable import AreaKit
 import RailCore
@@ -137,8 +138,14 @@ struct DetectorTests {
         }
         print("CORNER deviation by zoom, 25°: \(gentle.sorted { $0.key < $1.key }) 90°: \(right.sorted { $0.key < $1.key })")
         var thresholds = AreaThresholds()
-        // The diagnostics smoother keeps a surveyed 90° corner hard at every zoom.
-        #expect(right.values.allSatisfy { $0 <= thresholds.cornerDeviationMetres })
+        // v8 (rounded sharp corners): a surveyed 90° corner may round, but no
+        // farther than RailStyle.hardCornerMaxDeviation (half the rail width)
+        // on screen at each zoom; 1 m of slack covers the densify step.
+        for (zoom, metres) in right {
+            let cap = StrokeStyle.diagnosticsDefault(zoom: zoom).hardCornerMaxDeviation
+                * StrokeStyle.mapPointsPerPoint(zoom: zoom) * MKMetersPerMapPointAtLatitude(35.0)
+            #expect(metres <= cap + 1, "90° corner at zoom \(zoom) strays \(metres) m, cap \(cap) m")
+        }
         thresholds.roundingZoom = try #require(gentle.filter { $0.value > thresholds.cornerDeviationMetres }.keys.max(),
                                                "no zoom over-rounds the 25° corner: \(gentle)")
         let problem = try #require(try Fixture.detect(.overRoundedCorner, data, thresholds: thresholds).first { $0.lineIDs == [Fixture.gentle] })

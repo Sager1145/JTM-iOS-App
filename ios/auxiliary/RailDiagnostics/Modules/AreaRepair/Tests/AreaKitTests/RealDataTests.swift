@@ -38,8 +38,11 @@ struct RealDataTests {
         print("REAL-AREA bbox: \(scope.bbox) junctions: \(scope.junctionIDs.count) history: \(scope.historyIDs)")
         for problem in problems { print("REAL-AREA problem: [\(problem.severity.rawValue)] \(problem.id) — \(problem.message)") }
         print("REAL-AREA crossing rides: \(trains.map(\.id))")
-        #expect(trains.contains { $0.id == "20260722_06_sonic44" })
-        for outcome in RideOutcome.resolve(trains, data: data, scope: scope) {
+        // The sonic 44 sample (id regenerated with the samples) rides 杵築→宇佐 through the area.
+        let outcomes = RideOutcome.resolve(trains, data: data, scope: scope)
+        let kitsukiUsa = outcomes.flatMap(\.sections).filter { $0.inArea && $0.from == "杵築" && $0.to == "宇佐" }
+        #expect(!kitsukiUsa.isEmpty, "no crossing ride rides 杵築→宇佐: \(trains.map(\.id))")
+        for outcome in outcomes {
             for section in outcome.sections where section.inArea {
                 print("REAL-AREA ride \(outcome.trainID) [\(outcome.disposition)] #\(section.index) \(section.from ?? "?")(\(section.fromCode ?? "?"))→\(section.to ?? "?")(\(section.toCode ?? "?")): "
                       + "\(section.certified ? "certified" : "UNCERTIFIED \(section.gaps)") provenance \(section.provenance ?? "none") lines \(section.lineIDs)")
