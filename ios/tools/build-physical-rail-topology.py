@@ -20,10 +20,14 @@ def build():
     assert registry["format"] == "jtm-physical-rail-junctions-v1"
     reviewed = defaultdict(list)
     for row in registry["junctions"]:
-        assert row["region"] in REGIONS
         assert row["evidence"] and all(row["evidence"])
-        assert row["from"]["coordinate"] == row["to"]["coordinate"]
-        reviewed[row["region"]].append(row)
+        # Only zeroLength rows (the default kind) join at one shared vertex;
+        # shortLink/osmConnector/osmTrack rows span a reviewed path.
+        if row.get("kind", "zeroLength") == "zeroLength":
+            assert row["from"]["coordinate"] == row["to"]["coordinate"], row["id"]
+        # Rows of regions this inventory does not survey (cn) are reviewed elsewhere.
+        if row["region"] in REGIONS:
+            reviewed[row["region"]].append(row)
     result = {"format": "jtm-physical-rail-topology-v1",
               "policy": "Coincidence, station transfer and through-service display never authorize track connectivity.",
               "registrySHA256": hashlib.sha256(registry_path.read_bytes()).hexdigest(), "regions": {}}

@@ -302221,6 +302221,2303 @@
       "validFrom": null,
       "validTo": null,
       "temporalEvidence": "Review and source snapshot dates are not opening dates. Opening and closing dates are unknown; no historical validity is inferred."
+    },
+    {
+      "id": "fukuiguchi-gap-002677",
+      "region": "jp",
+      "station": "福井口",
+      "stationCode": "002677",
+      "lineIDs": [
+        "jp-えちぜん鉄道-三国芦原線",
+        "jp-えちぜん鉄道-勝山永平寺線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "えちぜん鉄道",
+          "lineName": "三国芦原線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.23320361,
+          36.0713185
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "えちぜん鉄道",
+          "lineName": "勝山永平寺線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.23320361,
+          36.0713185
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E3%81%88%E3%81%A1%E3%81%9C%E3%82%93%E9%89%84%E9%81%93%E4%B8%89%E5%9B%BD%E8%8A%A6%E5%8E%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [136.23320361,36.0713185] is an identical existing surveyed vertex of both えちぜん鉄道 三国芦原線 (class 12) and 勝山永平寺線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R1 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E3%81%88%E3%81%A1%E3%81%9C%E3%82%93%E9%89%84%E9%81%93%E4%B8%89%E5%9B%BD%E8%8A%A6%E5%8E%9F%E7%B7%9A (the junction at 福井口). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "sangi-asake-gap-005982",
+      "region": "jp",
+      "station": "近鉄富田",
+      "stationCode": "005982",
+      "lineIDs": [
+        "jp-三岐鉄道-三岐線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "三岐鉄道",
+          "lineName": "三岐線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.64902,
+          35.01559
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "三岐鉄道",
+          "lineName": "近鉄連絡線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          136.64902,
+          35.01559
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%89%E5%B2%90%E9%89%84%E9%81%93%E4%B8%89%E5%B2%90%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [136.64902,35.01559] is an identical existing surveyed vertex of both 三岐鉄道 三岐線 (class 12) and 近鉄連絡線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R1 gap. The vertex is 三岐朝明信号場, where the MLIT 三岐線 identity ends and 近鉄連絡線 (to 近鉄富田, the row's station code) begins, about 1 km north of 近鉄富田. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%B8%89%E5%B2%90%E9%89%84%E9%81%93%E4%B8%89%E5%B2%90%E7%B7%9A (the junction at 三岐朝明信号場). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "dentetsu-toyama-gap-001929",
+      "region": "jp",
+      "station": "電鉄富山駅・エスタ前",
+      "stationCode": "001929",
+      "lineIDs": [
+        "jp-富山地方鉄道-富山駅南北接続線",
+        "jp-富山地方鉄道-支線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山駅南北接続線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21271266,
+          36.70038222
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "支線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21271266,
+          36.70038222
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.21271266,36.70038222] is an identical existing surveyed vertex of both 富山地方鉄道 富山駅南北接続線 (class 21) and 支線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R1 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A (the junction at 電鉄富山駅・エスタ前). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "matobacho-gap-008063",
+      "region": "jp",
+      "station": "的場町",
+      "stationCode": "008063",
+      "lineIDs": [
+        "jp-広島電鉄-循環線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "広島電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          132.47521,
+          34.39343
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "広島電鉄",
+          "lineName": "皆実線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          132.47521,
+          34.39343
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%BA%83%E5%B3%B6%E9%9B%BB%E9%89%84%E7%9A%86%E5%AE%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [132.47521,34.39343] is an identical existing surveyed vertex of both 広島電鉄 本線 (class 21) and 皆実線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R1 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%BA%83%E5%B3%B6%E9%9B%BB%E9%89%84%E7%9A%86%E5%AE%9F%E7%B7%9A (the junction at 的場町). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "miyako-gap-000814",
+      "region": "jp",
+      "station": "宮古",
+      "stationCode": "000814",
+      "lineIDs": [
+        "jp-三陸鉄道-リアス線",
+        "jp-三陸鉄道-北リアス線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "三陸鉄道",
+          "lineName": "リアス線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.94829,
+          39.63969
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "三陸鉄道",
+          "lineName": "北リアス線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.94829,
+          39.63969
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%89%E9%99%B8%E9%89%84%E9%81%93%E3%83%AA%E3%82%A2%E3%82%B9%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [141.94829,39.63969] is an identical existing surveyed vertex of both 三陸鉄道 リアス線 (class 12) and 北リアス線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%B8%89%E9%99%B8%E9%89%84%E9%81%93%E3%83%AA%E3%82%A2%E3%82%B9%E7%B7%9A (the junction at 宮古). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kamaishi-gap-000919",
+      "region": "jp",
+      "station": "釜石",
+      "stationCode": "000919",
+      "lineIDs": [
+        "jp-三陸鉄道-リアス線",
+        "jp-三陸鉄道-南リアス線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "三陸鉄道",
+          "lineName": "リアス線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.87324,
+          39.27304
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "三陸鉄道",
+          "lineName": "南リアス線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          141.87324,
+          39.27304
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%89%E9%99%B8%E9%89%84%E9%81%93%E3%83%AA%E3%82%A2%E3%82%B9%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [141.87324,39.27304] is an identical existing surveyed vertex of both 三陸鉄道 リアス線 (class 12) and 南リアス線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%B8%89%E9%99%B8%E9%89%84%E9%81%93%E3%83%AA%E3%82%A2%E3%82%B9%E7%B7%9A (the junction at 釜石). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "karatsu-gap-009278",
+      "region": "jp",
+      "station": "唐津",
+      "stationCode": "009278",
+      "lineIDs": [
+        "jp-九州旅客鉄道-唐津線",
+        "jp-九州旅客鉄道-筑肥線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "九州旅客鉄道",
+          "lineName": "唐津線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          129.96966,
+          33.44565
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "九州旅客鉄道",
+          "lineName": "筑肥線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          129.96966,
+          33.44565
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%AD%91%E8%82%A5%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [129.96966,33.44565] is an identical existing surveyed vertex of both 九州旅客鉄道 唐津線 (class 11) and 筑肥線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%AD%91%E8%82%A5%E7%B7%9A (the junction at 唐津). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "keisei-tsudanuma-gap-003747",
+      "region": "jp",
+      "station": "京成津田沼",
+      "stationCode": "003747",
+      "lineIDs": [
+        "jp-京成電鉄-千葉線",
+        "jp-京成電鉄-松戸線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京成電鉄",
+          "lineName": "千葉線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.02411,
+          35.68379
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京成電鉄",
+          "lineName": "松戸線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.02411,
+          35.68379
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%88%90%E6%9D%BE%E6%88%B8%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [140.02411,35.68379] is an identical existing surveyed vertex of both 京成電鉄 千葉線 (class 12) and 松戸線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%88%90%E6%9D%BE%E6%88%B8%E7%B7%9A (the junction at 京成津田沼). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "keisei-narita-gap-003166",
+      "region": "jp",
+      "station": "京成成田",
+      "stationCode": "003166",
+      "lineIDs": [
+        "jp-京成電鉄-本線",
+        "jp-京成電鉄-東成田線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京成電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.31612,
+          35.77671
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京成電鉄",
+          "lineName": "東成田線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          140.31612,
+          35.77671
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%88%90%E6%9D%B1%E6%88%90%E7%94%B0%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [140.31612,35.77671] is an identical existing surveyed vertex of both 京成電鉄 本線 (class 12) and 東成田線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%88%90%E6%9D%B1%E6%88%90%E7%94%B0%E7%B7%9A (the junction at 京成成田). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "horinouchi-gap-005199",
+      "region": "jp",
+      "station": "堀ノ内",
+      "stationCode": "005199",
+      "lineIDs": [
+        "jp-京浜急行電鉄-久里浜線",
+        "jp-京浜急行電鉄-本線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "久里浜線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.68635,
+          35.26351
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.68635,
+          35.26351
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E4%B9%85%E9%87%8C%E6%B5%9C%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.68635,35.26351] is an identical existing surveyed vertex of both 京浜急行電鉄 久里浜線 (class 12) and 本線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E4%B9%85%E9%87%8C%E6%B5%9C%E7%B7%9A (the junction at 堀ノ内). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "keikyu-kamata-gap-004331",
+      "region": "jp",
+      "station": "京急蒲田",
+      "stationCode": "004331",
+      "lineIDs": [
+        "jp-京浜急行電鉄-本線",
+        "jp-京浜急行電鉄-空港線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.72515659,
+          35.56286733
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "空港線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.72515659,
+          35.56286733
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E7%A9%BA%E6%B8%AF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.72515659,35.56286733] is an identical existing surveyed vertex of both 京浜急行電鉄 本線 (class 12) and 空港線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E7%A9%BA%E6%B8%AF%E7%B7%9A (the junction at 京急蒲田). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kanazawa-hakkei-gap-005020",
+      "region": "jp",
+      "station": "金沢八景",
+      "stationCode": "005020",
+      "lineIDs": [
+        "jp-京浜急行電鉄-本線",
+        "jp-京浜急行電鉄-逗子線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.62011,
+          35.33179
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京浜急行電鉄",
+          "lineName": "逗子線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.62011,
+          35.33179
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E9%80%97%E5%AD%90%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.62011,35.33179] is an identical existing surveyed vertex of both 京浜急行電鉄 本線 (class 12) and 逗子線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E6%80%A5%E9%80%97%E5%AD%90%E7%B7%9A (the junction at 金沢八景). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "chofu-gap-003966",
+      "region": "jp",
+      "station": "調布",
+      "stationCode": "003966",
+      "lineIDs": [
+        "jp-京王電鉄-京王線",
+        "jp-京王電鉄-相模原線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京王電鉄",
+          "lineName": "京王線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.54591,
+          35.65143
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京王電鉄",
+          "lineName": "相模原線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.54591,
+          35.65143
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E7%8E%8B%E7%9B%B8%E6%A8%A1%E5%8E%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.54591,35.65143] is an identical existing surveyed vertex of both 京王電鉄 京王線 (class 12) and 相模原線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E7%8E%8B%E7%9B%B8%E6%A8%A1%E5%8E%9F%E7%B7%9A (the junction at 調布). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kitano-gap-004007",
+      "region": "jp",
+      "station": "北野",
+      "stationCode": "004007",
+      "lineIDs": [
+        "jp-京王電鉄-京王線",
+        "jp-京王電鉄-高尾線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "京王電鉄",
+          "lineName": "京王線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.35528,
+          35.64402
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "京王電鉄",
+          "lineName": "高尾線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.35528,
+          35.64402
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%AC%E7%8E%8B%E9%AB%98%E5%B0%BE%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.35528,35.64402] is an identical existing surveyed vertex of both 京王電鉄 京王線 (class 12) and 高尾線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%AC%E7%8E%8B%E9%AB%98%E5%B0%BE%E7%B7%9A (the junction at 北野). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "soen-gap-000223",
+      "region": "jp",
+      "station": "桑園",
+      "stationCode": "000223",
+      "lineIDs": [
+        "jp-北海道旅客鉄道-函館線",
+        "jp-北海道旅客鉄道-札沼線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "北海道旅客鉄道",
+          "lineName": "函館線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          141.33099,
+          43.07116
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "北海道旅客鉄道",
+          "lineName": "札沼線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          141.33099,
+          43.07116
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%9C%AD%E6%B2%BC%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [141.33099,43.07116] is an identical existing surveyed vertex of both 北海道旅客鉄道 函館線 (class 11) and 札沼線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%9C%AD%E6%B2%BC%E7%B7%9A (the junction at 桑園). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "umetsubo-gap-005698",
+      "region": "jp",
+      "station": "梅坪",
+      "stationCode": "005698",
+      "lineIDs": [
+        "jp-名古屋鉄道-三河線",
+        "jp-名古屋鉄道-豊田線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "名古屋鉄道",
+          "lineName": "三河線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          137.16259,
+          35.10021
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "名古屋鉄道",
+          "lineName": "豊田線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          137.16259,
+          35.10021
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%90%8D%E9%89%84%E8%B1%8A%E7%94%B0%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.16259,35.10021] is an identical existing surveyed vertex of both 名古屋鉄道 三河線 (class 12) and 豊田線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%90%8D%E9%89%84%E8%B1%8A%E7%94%B0%E7%B7%9A (the junction at 梅坪). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "ikenotani-gap-008443",
+      "region": "jp",
+      "station": "池谷",
+      "stationCode": "008443",
+      "lineIDs": [
+        "jp-四国旅客鉄道-高徳線",
+        "jp-四国旅客鉄道-鳴門線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "高徳線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.52929,
+          34.15188
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "四国旅客鉄道",
+          "lineName": "鳴門線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          134.52929,
+          34.15188
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E9%B3%B4%E9%96%80%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [134.52929,34.15188] is an identical existing surveyed vertex of both 四国旅客鉄道 高徳線 (class 11) and 鳴門線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E9%B3%B4%E9%96%80%E7%B7%9A (the junction at 池谷). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "annoya-gap-001956",
+      "region": "jp",
+      "station": "安野屋",
+      "stationCode": "001956",
+      "lineIDs": [
+        "jp-富山地方鉄道-呉羽線",
+        "jp-富山地方鉄道-安野屋線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "呉羽線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20461614,
+          36.69246086
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "安野屋線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20461614,
+          36.69246086
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.20461614,36.69246086] is an identical existing surveyed vertex of both 富山地方鉄道 呉羽線 (class 21) and 安野屋線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A (the junction at 安野屋). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "marunouchi-toyama-gap-001953",
+      "region": "jp",
+      "station": "丸の内",
+      "stationCode": "001953",
+      "lineIDs": [
+        "jp-富山地方鉄道-安野屋線",
+        "jp-富山地方鉄道-支線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "安野屋線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20895,
+          36.69271
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "支線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20895,
+          36.69271
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.20895,36.69271] is an identical existing surveyed vertex of both 富山地方鉄道 安野屋線 (class 21) and 支線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A (the junction at 丸の内). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "toyama-eki-gap-001923",
+      "region": "jp",
+      "station": "富山駅",
+      "stationCode": "001923",
+      "lineIDs": [
+        "jp-富山地方鉄道-富山港線",
+        "jp-富山地方鉄道-富山駅南北接続線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山港線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21316954,
+          36.70203603
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山駅南北接続線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21316954,
+          36.70203603
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E6%B8%AF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.21316954,36.70203603] is an identical existing surveyed vertex of both 富山地方鉄道 富山港線 (class 21) and 富山駅南北接続線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E6%B8%AF%E7%B7%9A (the junction at 富山駅). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "marunouchi-toyama-gap-001953-toshin",
+      "region": "jp",
+      "station": "丸の内",
+      "stationCode": "001953",
+      "lineIDs": [
+        "jp-富山地方鉄道-富山都心線",
+        "jp-富山地方鉄道-支線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山都心線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20895,
+          36.69271
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "支線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.20895,
+          36.69271
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E9%83%BD%E5%BF%83%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.20895,36.69271] is an identical existing surveyed vertex of both 富山地方鉄道 富山都心線 (class 21) and 支線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E9%83%BD%E5%BF%83%E7%B7%9A (the junction at 丸の内). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "nishicho-toyama-gap-001964",
+      "region": "jp",
+      "station": "西町",
+      "stationCode": "001964",
+      "lineIDs": [
+        "jp-富山地方鉄道-富山都心線",
+        "jp-富山地方鉄道-本線-2"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "富山都心線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21568,
+          36.68899
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "本線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21568,
+          36.68899
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E9%83%BD%E5%BF%83%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.21568,36.68899] is an identical existing surveyed vertex of both 富山地方鉄道 富山都心線 (class 21) and 本線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E9%83%BD%E5%BF%83%E7%B7%9A (the junction at 西町). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "dentetsu-toyama-gap-001929-honsen",
+      "region": "jp",
+      "station": "電鉄富山駅・エスタ前",
+      "stationCode": "001929",
+      "lineIDs": [
+        "jp-富山地方鉄道-支線",
+        "jp-富山地方鉄道-本線-2"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "支線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21382,
+          36.70001
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "富山地方鉄道",
+          "lineName": "本線",
+          "railwayClassCode": "21"
+        },
+        "coordinate": [
+          137.21382,
+          36.70001
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [137.21382,36.70001] is an identical existing surveyed vertex of both 富山地方鉄道 支線 (class 21) and 本線 (class 21); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E5%9C%B0%E6%96%B9%E9%89%84%E9%81%93%E5%AF%8C%E5%B1%B1%E8%BB%8C%E9%81%93%E7%B7%9A (the junction at 電鉄富山駅・エスタ前). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "shin-yurigaoka-gap-004227",
+      "region": "jp",
+      "station": "新百合ヶ丘",
+      "stationCode": "004227",
+      "lineIDs": [
+        "jp-小田急電鉄-多摩線",
+        "jp-小田急電鉄-小田原線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "小田急電鉄",
+          "lineName": "多摩線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.50828,
+          35.60435
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "小田急電鉄",
+          "lineName": "小田原線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.50828,
+          35.60435
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%B0%8F%E7%94%B0%E6%80%A5%E5%A4%9A%E6%91%A9%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.50828,35.60435] is an identical existing surveyed vertex of both 小田急電鉄 多摩線 (class 12) and 小田原線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%B0%8F%E7%94%B0%E6%80%A5%E5%A4%9A%E6%91%A9%E7%B7%9A (the junction at 新百合ヶ丘). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "hiyoshi-gap-004351",
+      "region": "jp",
+      "station": "日吉",
+      "stationCode": "004351",
+      "lineIDs": [
+        "jp-東急電鉄-東急新横浜線",
+        "jp-東急電鉄-東横線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "東急新横浜線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.64669,
+          35.55282
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "東横線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.64669,
+          35.55282
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%80%A5%E6%96%B0%E6%A8%AA%E6%B5%9C%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.64669,35.55282] is an identical existing surveyed vertex of both 東急電鉄 東急新横浜線 (class 12) and 東横線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%80%A5%E6%96%B0%E6%A8%AA%E6%B5%9C%E7%B7%9A (the junction at 日吉). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "den-en-chofu-gap-004245",
+      "region": "jp",
+      "station": "田園調布",
+      "stationCode": "004245",
+      "lineIDs": [
+        "jp-東急電鉄-東横線",
+        "jp-東急電鉄-目黒線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "東横線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.66726,
+          35.59795
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東急電鉄",
+          "lineName": "目黒線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.66726,
+          35.59795
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%80%A5%E7%9B%AE%E9%BB%92%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.66726,35.59795] is an identical existing surveyed vertex of both 東急電鉄 東横線 (class 12) and 目黒線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%80%A5%E7%9B%AE%E9%BB%92%E7%B7%9A (the junction at 田園調布). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "shinjuku-gap-003700",
+      "region": "jp",
+      "station": "新宿",
+      "stationCode": "003700",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-山手線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "中央線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.70068,
+          35.69107
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "山手線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.70068,
+          35.69107
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%88%90%E7%94%B0%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%97%E3%83%AC%E3%82%B9"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.70068,35.69107] is an identical existing surveyed vertex of both 東日本旅客鉄道 中央線 (class 11) and 山手線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%88%90%E7%94%B0%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%97%E3%83%AC%E3%82%B9 (the junction at 新宿). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "ochanomizu-gap-003615",
+      "region": "jp",
+      "station": "御茶ノ水",
+      "stationCode": "003615",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-中央線",
+        "jp-東日本旅客鉄道-総武線-2"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "中央線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.76372,
+          35.69995
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "総武線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.76372,
+          35.69995
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%A4%AE%E3%83%BB%E7%B7%8F%E6%AD%A6%E7%B7%A9%E8%A1%8C%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.76372,35.69995] is an identical existing surveyed vertex of both 東日本旅客鉄道 中央線 (class 11) and 総武線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%A4%AE%E3%83%BB%E7%B7%8F%E6%AD%A6%E7%B7%A9%E8%A1%8C%E7%B7%9A (the junction at 御茶ノ水). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "haijima-gap-003462",
+      "region": "jp",
+      "station": "拝島",
+      "stationCode": "003462",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-五日市線",
+        "jp-東日本旅客鉄道-青梅線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "五日市線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.34409,
+          35.72037
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "青梅線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.34409,
+          35.72037
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BA%94%E6%97%A5%E5%B8%82%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.34409,35.72037] is an identical existing surveyed vertex of both 東日本旅客鉄道 五日市線 (class 11) and 青梅線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BA%94%E6%97%A5%E5%B8%82%E7%B7%9A (the junction at 拝島). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "nishi-funabashi-gap-003547",
+      "region": "jp",
+      "station": "西船橋",
+      "stationCode": "003547",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-武蔵野線",
+        "jp-東日本旅客鉄道-京葉線-2",
+        "jp-東日本旅客鉄道-京葉線-3"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "京葉線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.95989,
+          35.70775
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "武蔵野線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.95989,
+          35.70775
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%AD%A6%E8%94%B5%E9%87%8E%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.95989,35.70775] is an identical existing surveyed vertex of both 東日本旅客鉄道 京葉線 (class 11) and 武蔵野線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%AD%A6%E8%94%B5%E9%87%8E%E7%B7%9A (the junction at 西船橋). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "uzen-chitose-gap-001148",
+      "region": "jp",
+      "station": "羽前千歳",
+      "stationCode": "001148",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-仙山線",
+        "jp-東日本旅客鉄道-奥羽線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "仙山線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.34195,
+          38.28828
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "奥羽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.34195,
+          38.28828
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E4%BB%99%E5%B1%B1%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [140.34195,38.28828] is an identical existing surveyed vertex of both 東日本旅客鉄道 仙山線 (class 11) and 奥羽線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E4%BB%99%E5%B1%B1%E7%B7%9A (the junction at 羽前千歳). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "komagawa-gap-002927",
+      "region": "jp",
+      "station": "高麗川",
+      "stationCode": "002927",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-八高線",
+        "jp-東日本旅客鉄道-川越線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "八高線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.33842,
+          35.89586
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "川越線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.33842,
+          35.89586
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%B7%9D%E8%B6%8A%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.33842,35.89586] is an identical existing surveyed vertex of both 東日本旅客鉄道 八高線 (class 11) and 川越線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%B7%9D%E8%B6%8A%E7%B7%9A (the junction at 高麗川). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "soga-gap-004281",
+      "region": "jp",
+      "station": "蘇我",
+      "stationCode": "004281",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-内房線",
+        "jp-東日本旅客鉄道-外房線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "内房線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.13023,
+          35.58318
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "外房線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.13023,
+          35.58318
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%86%85%E6%88%BF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [140.13023,35.58318] is an identical existing surveyed vertex of both 東日本旅客鉄道 内房線 (class 11) and 外房線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%86%85%E6%88%BF%E7%B7%9A (the junction at 蘇我). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "omiya-gap-002914",
+      "region": "jp",
+      "station": "大宮",
+      "stationCode": "002914",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-川越線",
+        "jp-東日本旅客鉄道-東北線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "川越線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.62381,
+          35.90445
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.62381,
+          35.90445
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%B7%9D%E8%B6%8A%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.62381,35.90445] is an identical existing surveyed vertex of both 東日本旅客鉄道 川越線 (class 11) and 東北線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%B7%9D%E8%B6%8A%E7%B7%9A (the junction at 大宮). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "abiko-gap-002965",
+      "region": "jp",
+      "station": "我孫子",
+      "stationCode": "002965",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-常磐線",
+        "jp-東日本旅客鉄道-成田線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "常磐線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.01224,
+          35.87292
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "成田線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          140.01224,
+          35.87292
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%88%90%E7%94%B0%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [140.01224,35.87292] is an identical existing surveyed vertex of both 東日本旅客鉄道 常磐線 (class 11) and 成田線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%88%90%E7%94%B0%E7%B7%9A (the junction at 我孫子). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "hanamaki-gap-000866",
+      "region": "jp",
+      "station": "花巻",
+      "stationCode": "000866",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-釜石線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東北線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          141.10998,
+          39.3952
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "釜石線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          141.10998,
+          39.3952
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E9%87%9C%E7%9F%B3%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [141.10998,39.3952] is an identical existing surveyed vertex of both 東日本旅客鉄道 東北線 (class 11) and 釜石線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E9%87%9C%E7%9F%B3%E7%B7%9A (the junction at 花巻). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "yokohama-gap-004633",
+      "region": "jp",
+      "station": "横浜",
+      "stationCode": "004633",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-根岸線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.62335,
+          35.46681
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "根岸線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.62335,
+          35.46681
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%A0%B9%E5%B2%B8%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.62335,35.46681] is an identical existing surveyed vertex of both 東日本旅客鉄道 東海道線 (class 11) and 根岸線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%A0%B9%E5%B2%B8%E7%B7%9A (the junction at 横浜). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "taki-gap-007806",
+      "region": "jp",
+      "station": "多気",
+      "stationCode": "007806",
+      "lineIDs": [
+        "jp-東海旅客鉄道-参宮線",
+        "jp-東海旅客鉄道-紀勢線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "参宮線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.57264,
+          34.51706
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東海旅客鉄道",
+          "lineName": "紀勢線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          136.57264,
+          34.51706
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E5%8F%82%E5%AE%AE%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [136.57264,34.51706] is an identical existing surveyed vertex of both 東海旅客鉄道 参宮線 (class 11) and 紀勢線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E5%8F%82%E5%AE%AE%E7%B7%9A (the junction at 多気). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "futamatagawa-gap-004642",
+      "region": "jp",
+      "station": "二俣川",
+      "stationCode": "004642",
+      "lineIDs": [
+        "jp-相模鉄道-相鉄いずみ野線",
+        "jp-相模鉄道-相鉄本線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "相模鉄道",
+          "lineName": "相鉄いずみ野線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.53156,
+          35.46278
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "相模鉄道",
+          "lineName": "相鉄本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.53156,
+          35.46278
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%9B%B8%E9%89%84%E3%81%84%E3%81%9A%E3%81%BF%E9%87%8E%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.53156,35.46278] is an identical existing surveyed vertex of both 相模鉄道 相鉄いずみ野線 (class 12) and 相鉄本線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%9B%B8%E9%89%84%E3%81%84%E3%81%9A%E3%81%BF%E9%87%8E%E7%B7%9A (the junction at 二俣川). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "nishiya-gap-004594",
+      "region": "jp",
+      "station": "西谷",
+      "stationCode": "004594",
+      "lineIDs": [
+        "jp-相模鉄道-相鉄新横浜線",
+        "jp-相模鉄道-相鉄本線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "相模鉄道",
+          "lineName": "相鉄新横浜線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.56433123,
+          35.47811193
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "相模鉄道",
+          "lineName": "相鉄本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.56433123,
+          35.47811193
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%9B%B8%E9%89%84%E6%96%B0%E6%A8%AA%E6%B5%9C%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.56433123,35.47811193] is an identical existing surveyed vertex of both 相模鉄道 相鉄新横浜線 (class 12) and 相鉄本線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%9B%B8%E9%89%84%E6%96%B0%E6%A8%AA%E6%B5%9C%E7%B7%9A (the junction at 西谷). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "shin-kobe-gap-007054",
+      "region": "jp",
+      "station": "新神戸",
+      "stationCode": "007054",
+      "lineIDs": [
+        "jp-神戸市-北神線",
+        "jp-神戸市-山手線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "北神線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.19571,
+          34.70498
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "山手線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.19571,
+          34.70498
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E5%8C%97%E7%A5%9E%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.19571,34.70498] is an identical existing surveyed vertex of both 神戸市 北神線 (class 12) and 山手線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E5%8C%97%E7%A5%9E%E7%B7%9A (the junction at 新神戸). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "shin-nagata-gap-007386",
+      "region": "jp",
+      "station": "新長田",
+      "stationCode": "007386",
+      "lineIDs": [
+        "jp-神戸市-山手線",
+        "jp-神戸市-西神線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "山手線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.14601,
+          34.65849
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "西神線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.14601,
+          34.65849
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E8%A5%BF%E7%A5%9E%E3%83%BB%E5%B1%B1%E6%89%8B%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.14601,34.65849] is an identical existing surveyed vertex of both 神戸市 山手線 (class 12) and 西神線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E8%A5%BF%E7%A5%9E%E3%83%BB%E5%B1%B1%E6%89%8B%E7%B7%9A (the junction at 新長田). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "myodani-gap-007222",
+      "region": "jp",
+      "station": "名谷",
+      "stationCode": "007222",
+      "lineIDs": [
+        "jp-神戸市-西神延伸線",
+        "jp-神戸市-西神線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "西神延伸線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.09516,
+          34.67927
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "神戸市",
+          "lineName": "西神線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.09516,
+          34.67927
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E8%A5%BF%E7%A5%9E%E3%83%BB%E5%B1%B1%E6%89%8B%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.09516,34.67927] is an identical existing surveyed vertex of both 神戸市 西神延伸線 (class 12) and 西神線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E5%B8%82%E5%96%B6%E5%9C%B0%E4%B8%8B%E9%89%84%E8%A5%BF%E7%A5%9E%E3%83%BB%E5%B1%B1%E6%89%8B%E7%B7%9A (the junction at 名谷). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "yamashita-nose-gap-006325",
+      "region": "jp",
+      "station": "山下",
+      "stationCode": "006325",
+      "lineIDs": [
+        "jp-能勢電鉄-妙見線",
+        "jp-能勢電鉄-日生線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "能勢電鉄",
+          "lineName": "妙見線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.412,
+          34.89268
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "能勢電鉄",
+          "lineName": "日生線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.412,
+          34.89268
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E8%83%BD%E5%8B%A2%E9%9B%BB%E9%89%84%E6%97%A5%E7%94%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.412,34.89268] is an identical existing surveyed vertex of both 能勢電鉄 妙見線 (class 12) and 日生線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E8%83%BD%E5%8B%A2%E9%9B%BB%E9%89%84%E6%97%A5%E7%94%9F%E7%B7%9A (the junction at 山下). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "amagasaki-gap-006918",
+      "region": "jp",
+      "station": "尼崎",
+      "stationCode": "006918",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-JR東西線",
+        "jp-西日本旅客鉄道-東海道線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "JR東西線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.4329,
+          34.73167
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.4329,
+          34.73167
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.4329,34.73167] is an identical existing surveyed vertex of both 西日本旅客鉄道 JR東西線 (class 11) and 東海道線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A (the junction at 尼崎). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kyobashi-osaka-gap-007093",
+      "region": "jp",
+      "station": "京橋",
+      "stationCode": "007093",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-JR東西線",
+        "jp-西日本旅客鉄道-片町線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "JR東西線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.53483,
+          34.69624
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "片町線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.53483,
+          34.69624
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.53483,34.69624] is an identical existing surveyed vertex of both 西日本旅客鉄道 JR東西線 (class 11) and 片町線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A (the junction at 京橋). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "amagasaki-gap-006918-fukuchiyama",
+      "region": "jp",
+      "station": "尼崎",
+      "stationCode": "006918",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-JR東西線",
+        "jp-西日本旅客鉄道-福知山線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "JR東西線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.4329,
+          34.73167
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "福知山線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.4329,
+          34.73167
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.4329,34.73167] is an identical existing surveyed vertex of both 西日本旅客鉄道 JR東西線 (class 11) and 福知山線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/JR%E6%9D%B1%E8%A5%BF%E7%B7%9A (the junction at 尼崎). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kizu-gap-006896",
+      "region": "jp",
+      "station": "木津",
+      "stationCode": "006896",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-片町線",
+        "jp-西日本旅客鉄道-関西線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "片町線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.82465,
+          34.73433
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "関西線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          135.82465,
+          34.73433
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%89%87%E7%94%BA%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.82465,34.73433] is an identical existing surveyed vertex of both 西日本旅客鉄道 片町線 (class 11) and 関西線 (class 11); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%89%87%E7%94%BA%E7%B7%9A (the junction at 木津). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "nerima-gap-003328",
+      "region": "jp",
+      "station": "練馬",
+      "stationCode": "003328",
+      "lineIDs": [
+        "jp-西武鉄道-池袋線",
+        "jp-西武鉄道-西武有楽町線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西武鉄道",
+          "lineName": "池袋線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.65331,
+          35.73783
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西武鉄道",
+          "lineName": "西武有楽町線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          139.65331,
+          35.73783
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E8%A5%BF%E6%AD%A6%E6%9C%89%E6%A5%BD%E7%94%BA%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [139.65331,35.73783] is an identical existing surveyed vertex of both 西武鉄道 池袋線 (class 12) and 西武有楽町線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E8%A5%BF%E6%AD%A6%E6%9C%89%E6%A5%BD%E7%94%BA%E7%B7%9A (the junction at 練馬). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "fuse-gap-007347",
+      "region": "jp",
+      "station": "布施",
+      "stationCode": "007347",
+      "lineIDs": [
+        "jp-近畿日本鉄道-大阪線",
+        "jp-近畿日本鉄道-奈良線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "近畿日本鉄道",
+          "lineName": "大阪線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.56251,
+          34.66406
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "近畿日本鉄道",
+          "lineName": "奈良線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.56251,
+          34.66406
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E8%BF%91%E9%89%84%E5%A5%88%E8%89%AF%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.56251,34.66406] is an identical existing surveyed vertex of both 近畿日本鉄道 大阪線 (class 12) and 奈良線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E8%BF%91%E9%89%84%E5%A5%88%E8%89%AF%E7%B7%9A (the junction at 布施). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "awaji-gap-006876",
+      "region": "jp",
+      "station": "淡路",
+      "stationCode": "006876",
+      "lineIDs": [
+        "jp-阪急電鉄-京都線",
+        "jp-阪急電鉄-千里線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "阪急電鉄",
+          "lineName": "京都線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.5164,
+          34.7387
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "阪急電鉄",
+          "lineName": "千里線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.5164,
+          34.7387
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E9%98%AA%E6%80%A5%E5%8D%83%E9%87%8C%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.5164,34.7387] is an identical existing surveyed vertex of both 阪急電鉄 京都線 (class 12) and 千里線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E9%98%AA%E6%80%A5%E5%8D%83%E9%87%8C%E7%B7%9A (the junction at 淡路). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "kobe-sannomiya-gap-007120",
+      "region": "jp",
+      "station": "神戸三宮",
+      "stationCode": "007120",
+      "lineIDs": [
+        "jp-阪急電鉄-神戸線",
+        "jp-阪急電鉄-神戸高速線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "阪急電鉄",
+          "lineName": "神戸線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.19342,
+          34.69359
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "阪急電鉄",
+          "lineName": "神戸高速線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.19342,
+          34.69359
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E9%AB%98%E9%80%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.19342,34.69359] is an identical existing surveyed vertex of both 阪急電鉄 神戸線 (class 12) and 神戸高速線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E9%AB%98%E9%80%9F%E7%B7%9A (the junction at 神戸三宮). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "motomachi-kobe-gap-007160",
+      "region": "jp",
+      "station": "元町",
+      "stationCode": "007160",
+      "lineIDs": [
+        "jp-阪神電気鉄道-本線",
+        "jp-阪神電気鉄道-神戸高速線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "阪神電気鉄道",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.18728,
+          34.68904
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "阪神電気鉄道",
+          "lineName": "神戸高速線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.18728,
+          34.68904
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E9%AB%98%E9%80%9F%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.18728,34.68904] is an identical existing surveyed vertex of both 阪神電気鉄道 本線 (class 12) and 神戸高速線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E7%A5%9E%E6%88%B8%E9%AB%98%E9%80%9F%E7%B7%9A (the junction at 元町). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "amagasaki-gap-006981",
+      "region": "jp",
+      "station": "尼崎",
+      "stationCode": "006981",
+      "lineIDs": [
+        "jp-阪神電気鉄道-本線",
+        "jp-阪神電気鉄道-阪神なんば線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "阪神電気鉄道",
+          "lineName": "本線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.41675,
+          34.71865
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "阪神電気鉄道",
+          "lineName": "阪神なんば線",
+          "railwayClassCode": "12"
+        },
+        "coordinate": [
+          135.41675,
+          34.71865
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E9%98%AA%E7%A5%9E%E3%81%AA%E3%82%93%E3%81%B0%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [135.41675,34.71865] is an identical existing surveyed vertex of both 阪神電気鉄道 本線 (class 12) and 阪神なんば線 (class 12); it is the shared vertex RegressionGuardTopologyGaps reported for this R2 gap. This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E9%98%AA%E7%A5%9E%E3%81%AA%E3%82%93%E3%81%B0%E7%B7%9A (the junction at 尼崎). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "osaki-gap-004135-osaki-branch-yamanote",
+      "kind": "osmConnector",
+      "path": [
+        [
+          139.7279245,
+          35.6201521
+        ],
+        [
+          139.727802,
+          35.6203165
+        ],
+        [
+          139.7275169,
+          35.6207144
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          1327449183,
+          1327449181
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 35.96,
+        "to": 10.44
+      },
+      "region": "jp",
+      "station": "大崎",
+      "stationCode": "004135",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-大崎支線",
+        "jp-東日本旅客鉄道-大崎支線-p1",
+        "jp-東日本旅客鉄道-山手線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "大崎支線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.7280338341397,
+          35.61984111600728
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "山手線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.72761,
+          35.62077
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3",
+        "https://www.openstreetmap.org/way/1327449183",
+        "https://www.openstreetmap.org/way/1327449181"
+      ],
+      "geometryEvidence": "OSM ways 1327449183, 1327449181 in cache cell E139N35 (fetchedAt 2026-08-18T10:37:59.411Z). Path vertices are the cache geometry in traversal order, starting at the first vertex past the 大崎支線 endpoint so the from stub points along the direction of travel. path 72.57 m. from attach 35.96 m to the existing 大崎支線 endpoint in rail-sections.json; to attach 10.44 m to an existing 山手線 vertex. The MLIT 大崎支線 ends between two 山手線 vertices 110 m apart (the 山手線 segment passes 22 m away), so the link follows the 山手貨物線 track that 湘南新宿ライン trains take north of 大崎 and attaches to the northern vertex. Haversine R=6371000. Total stubs+path 118.98 m.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3. No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "nishi-oi-gap-004235-osaki-branch-tokaido",
+      "kind": "osmConnector",
+      "path": [
+        [
+          139.7214725,
+          35.6013806
+        ],
+        [
+          139.7214458,
+          35.6013208
+        ]
+      ],
+      "source": {
+        "provider": "OpenStreetMap",
+        "license": "ODbL-1.0",
+        "ways": [
+          365183513
+        ],
+        "retrieved": "2026-08-18",
+        "cache": "Japan-Train-Map/outputs/osm-basemap-cache"
+      },
+      "attachMeters": {
+        "from": 37.9,
+        "to": 0.53
+      },
+      "region": "jp",
+      "station": "西大井",
+      "stationCode": "004235",
+      "lineIDs": [
+        "jp-東日本旅客鉄道-大崎支線",
+        "jp-東日本旅客鉄道-大崎支線-p1",
+        "jp-東日本旅客鉄道-総武線-3"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "大崎支線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.7216189410469,
+          35.60169998665798
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "東日本旅客鉄道",
+          "lineName": "東海道線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          139.72144,
+          35.60132
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3",
+        "https://www.openstreetmap.org/way/365183513"
+      ],
+      "geometryEvidence": "OSM way 365183513 in cache cell E139N35 (fetchedAt 2026-08-18T10:37:59.411Z). Path vertices are the cache geometry in traversal order, starting at the first vertex past the 大崎支線 endpoint so the from stub points along the direction of travel. path 7.07 m. from attach 37.90 m to the existing 大崎支線 endpoint in rail-sections.json; to attach 0.53 m to an existing 東海道線 vertex. The MLIT 大崎支線 ends 1 m off a 東海道線 (品鶴線) segment whose vertices are 41 m and 43 m away, so the link follows the 品鶴線 track southward and attaches to the southern vertex, the direction 湘南新宿ライン trains continue. Haversine R=6371000. Total stubs+path 45.51 m.",
+      "reviewedAt": "2026-11-06",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3. No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
     }
   ]
 }

@@ -234,6 +234,7 @@ struct RegressionGuardTopologyGaps {
 
     private struct Joins {
         var points: [Pair: [Coordinate]] = [:]
+        var stationRows: [Pair: [(code: String, at: [Coordinate])]] = [:]
         init(_ rows: [RegistryRow], removing: Set<String>, coordinates: [String: [Coordinate]]) {
             func id(_ e: RegistryRow.Endpoint) -> Identity {
                 Identity(operatorName: e.identity.operatorName, line: e.identity.lineName,
@@ -241,10 +242,19 @@ struct RegressionGuardTopologyGaps {
             }
             for r in rows where r.region == "jp" && !removing.contains(r.id) {
                 points[Pair(id(r.from), id(r.to)), default: []] += coordinates[r.id] ?? []
+                if let code = r.stationCode {
+                    stationRows[Pair(id(r.from), id(r.to)), default: []].append((code, coordinates[r.id] ?? []))
+                }
             }
         }
         func joined(_ a: Identity, _ b: Identity, _ p: Coordinate, reach: Double) -> Bool {
             (points[Pair(a, b)] ?? []).contains { RegressionGuardTopologyGaps.meters($0, p) <= reach }
+        }
+        /// A row for the pair coded to this station and lying within `reach` of it.
+        func joined(_ a: Identity, _ b: Identity, atStation code: String, _ station: Coordinate, reach: Double) -> Bool {
+            (stationRows[Pair(a, b)] ?? []).contains { row in
+                row.code == code && row.at.contains { RegressionGuardTopologyGaps.meters($0, station) <= reach }
+            }
         }
     }
 
@@ -558,7 +568,11 @@ struct RegressionGuardTopologyGaps {
                         let d = meters(site, s.at)
                         guard d <= terminusRangeMeters else { continue }
                         let pair = Pair(a, t.other)
-                        if reviewed.contains(pair) || joins.joined(a, t.other, site, reach: junctionReachMeters) { continue }
+                        // R4 asks whether the pair meets at this terminus: a registry row for the
+                        // pair coded to this station and within the terminus range of it joins it,
+                        // so another coincident vertex of the same joined pair is not a new hit.
+                        if reviewed.contains(pair) || joins.joined(a, t.other, site, reach: junctionReachMeters)
+                            || joins.joined(a, t.other, atStation: s.code, s.at, reach: terminusRangeMeters) { continue }
                         let hit = Hit(rule: "R4", pair: pair, code: s.code, name: s.name, site: site,
                                       evidence: "row \(line.id) ends at \(s.code) \(s.name), coded under another line",
                                       locus: site, hint: String(format: "zeroLength at identical shared vertex (%.5f, %.5f), %.0f m from the station", site.lon, site.lat, d))

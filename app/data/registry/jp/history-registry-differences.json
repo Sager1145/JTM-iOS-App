@@ -167,12 +167,12 @@
       "jp" : "2026-10-11.3"
     },
     "inputs" : {
-      "app/data/physical-rail-junctions.json" : "1cae1b9b1a16411bb5633fb49d23c81fcb61c75130877f55713bc4fe42d965de",
+      "app/data/physical-rail-junctions.json" : "9284d65a8321c2b54c662db4db5a26dc9df1cde8cf74b482168ded6f90b04c9c",
       "app/data/rail-history.json" : "e2b1ed264b293e196a20bc7b43b8b3492bb9eb24ab9a29bb86d7a2ba6af1b672",
       "app/data/rail-sections.json" : "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
       "app/data/registry-bundle/jp.json" : "5872ca343cd1beb3521443c124ece41952cc271608db3b4073769ac49a22754c",
       "app/data/stations.json" : "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f",
-      "port-fixtures/historical-routes.json" : "d723c82618977b2bd6f7fc142909d4795857470c6c4d9c1216a40aaacdfaf2af"
+      "port-fixtures/historical-routes.json" : "66e32913a4e6c2f54e247925654e25990fe74d0f5a086b5710c8778c6a83df1d"
     },
     "regenerate" : "JTM_REGENERATE_HISTORY_REGISTRY_DIFFERENCES=1 swift test --package-path ios/RailKit --filter generatedBoundariesWithInstalledRegistryMatchExpectedDifferences"
   },
