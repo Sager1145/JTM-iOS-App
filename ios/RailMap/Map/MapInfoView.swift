@@ -192,7 +192,7 @@ private struct LegendRow: View {
     let entry: MapInfoView.LegendEntry
 
     var body: some View {
-        HStack(alignment: .top, spacing: RailSpacing.s12 {
+        HStack(alignment: .top, spacing: RailSpacing.s12) {
             LegendSymbolView(symbol: entry.symbol)
                 .frame(width: 34, height: 22)
                 .accessibilityHidden(true)

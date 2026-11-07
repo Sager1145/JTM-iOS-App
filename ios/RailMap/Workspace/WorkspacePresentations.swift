@@ -118,14 +118,18 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
 }
 
 private extension View {
-    /// D4 detents for the sheets this host presents. Map info/layers, the
-    /// chooser, the hide sheet, utility and the station card own theirs.
+    /// D4 detents for the sheets this host presents. The journey menu
+    /// (`.detail`), map info/layers, the chooser, the hide sheet, utility and
+    /// the station card own theirs.
     @ViewBuilder
     func workspaceSheetHeight(_ sheet: WorkspaceSheet) -> some View {
         switch sheet {
-        case .detail, .importData, .transferGuide:
+        case .importData, .transferGuide:
             railSheet(.full)
-        case .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility:
+        // `.detail` presents WorkspaceJourneyMenu, which owns hand-built
+        // detents (compact/medium/large, hidden grabber); a second detent set
+        // here would fight its `selection`.
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility:
             self
         }
     }

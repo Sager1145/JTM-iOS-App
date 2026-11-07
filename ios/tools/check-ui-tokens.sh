@@ -4,7 +4,8 @@
 # frozen in ios/tools/ui-token-baseline.txt, which only ever shrinks.
 #
 #   check-ui-tokens.sh                 check (exit 1 on growth or new entries)
-#   check-ui-tokens.sh --update        regenerate the whole baseline
+#   check-ui-tokens.sh --update        regenerate the whole baseline (refuses growth;
+#                                      --force only for a reviewed reset)
 #   check-ui-tokens.sh --update PATH.. rewrite entries for those paths only;
 #                                      refuses (exit 1) if any count would grow
 # Paths are relative to ios/ (e.g. RailMap/Foo/Bar.swift).
@@ -36,11 +37,11 @@ HINT = {
 }
 R_PAD = re.compile(r'\.padding\(\s*(?:\.[a-zA-Z]+\s*,\s*)?(\d+(?:\.\d+)?)')
 R_SPC = re.compile(r'spacing:\s*(\d+(?:\.\d+)?)')
-R_RAD = re.compile(r'cornerRadius:\s*(\d+(?:\.\d+)?)')
+R_RAD = re.compile(r'(?:cornerRadius:\s*|\.cornerRadius\(\s*)(\d+(?:\.\d+)?)')
 R_TOUCH = re.compile(r'\.frame\([^)]*\b(?:min)?(?:Width|Height|width|height):\s*44\b')
 R_BORD = re.compile(r'\.buttonStyle\(\.bordered(?:Prominent)?\)')
 R_FONT = re.compile(r'\.font\(\.system\(size:\s*\d')
-R_TB = re.compile(r'ToolbarItem\(placement:\s*\.(?:cancellationAction|confirmationAction)')
+R_TB = re.compile(r'ToolbarItem\(placement:\s*\.(?:cancellationAction|confirmationAction|topBarTrailing|topBarLeading)')
 R_DISMISS = re.compile(r'"(?:ios\.done|ios\.close|utility\.close|researchClose)"')
 
 def files():
@@ -76,7 +77,8 @@ def scan():
             if R_FONT.search(line): add("fixed-font", i)
             if R_TB.search(line):
                 nxt = "\n".join(lines[i + 1:i + 4])
-                if R_DISMISS.search(nxt): add("dismiss-text", i)
+                if R_DISMISS.search(nxt) and "RailSheetCloseButton" not in nxt:
+                    add("dismiss-text", i)
     return found
 
 def load():
@@ -106,8 +108,16 @@ found = scan()
 counts = {k: len(v) for k, v in found.items()}
 
 if args and args[0] == "--update":
-    paths = args[1:]
+    paths = [a for a in args[1:] if a != "--force"]
     if not paths:
+        # A whole-file rewrite must not be a way to raise counts silently.
+        grow = [f"{k[0]}: {k[1]} {c0} -> {counts.get(k, 0)}" for k, c0 in
+                ((k, load().get(k, 0)) for k in set(load()) | set(counts))
+                if counts.get(k, 0) > c0]
+        if grow and "--force" not in args:
+            print("refusing --update: counts would grow (pass --force only for a reviewed reset):\n  "
+                  + "\n  ".join(sorted(grow)))
+            sys.exit(1)
         write(counts)
         print(f"baseline regenerated: {len(counts)} entries")
         sys.exit(0)
@@ -116,13 +126,14 @@ if args and args[0] == "--update":
     # mistyped path can never "succeed" while lowering nothing.
     norm = []
     for p in paths:
-        a = os.path.abspath(p)
-        if a.startswith(ios + os.sep):
-            q = os.path.relpath(a, ios)
+        a = os.path.realpath(p)
+        if a.startswith(os.path.realpath(ios) + os.sep):
+            q = os.path.relpath(a, os.path.realpath(ios))
         elif p.startswith("ios/"):
             q = p[4:]
         else:
             q = p
+        q = os.path.normpath(q)
         if not os.path.isfile(os.path.join(ios, q)):
             print(f"refusing --update: not a file under ios/: {p}")
             sys.exit(2)

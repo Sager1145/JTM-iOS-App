@@ -63,6 +63,8 @@ struct StatisticsScopePicker: View {
             ) { dismiss() }
         }
         .frame(idealWidth: 390, maxWidth: 440, idealHeight: 640)
+        // D4: a picker. Applies when the popover adapts to a sheet on iPhone.
+        .railSheet(.half)
         .task {
             displayedMonth = date(statistics.dateSelection.start ?? availableDates.last ?? "") ?? Date()
         }
