@@ -32,11 +32,11 @@ struct StatisticsProgressSummary: View {
     let progress: MileageStatisticsStore.Progress
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
+            HStack(spacing: RailSpacing.s8) {
                 ProgressView().controlSize(.small)
                 Text(localization.text("ios.stats.calculating"))
-                    .font(.subheadline.weight(.semibold))
+                    .railText(.cardTitle)
                 Spacer(minLength: 0)
             }
             Text(localization.text(progress.stage.localizationKey))
@@ -98,7 +98,7 @@ struct StatisticsBar: View {
     let spoken: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             HStack(alignment: .firstTextBaseline) {
                 Text(label)
                     .font(.subheadline)
@@ -119,7 +119,7 @@ struct StatisticsBar: View {
                             .frame(width: geometry.size.width * clamped)
                     }
             }
-            .frame(height: 7)
+            .frame(height: RailSize.progressBar)
             // The bar and the figure above it are one statement, so they move
             // on one clock. The figures on this screen already roll — Passport's
             // metrics carry `contentTransition(.numericText())` on the same
@@ -235,7 +235,7 @@ struct StatisticsColumnChart: View {
 
     var body: some View {
         if dynamicTypeSize.isAccessibilitySize {
-            VStack(spacing: 12) {
+            VStack(spacing: RailSpacing.s12) {
                 ForEach(columns.filter { $0.count > 0 }) { column in
                     StatisticsBar(
                         label: column.name,
@@ -245,7 +245,7 @@ struct StatisticsColumnChart: View {
                 }
             }
         } else {
-            HStack(alignment: .bottom, spacing: 4) {
+            HStack(alignment: .bottom, spacing: RailSpacing.s4) {
                 ForEach(columns) { column in cell(column) }
             }
             .accessibilityElement(children: .contain)
@@ -253,7 +253,7 @@ struct StatisticsColumnChart: View {
     }
 
     private func cell(_ column: Column) -> some View {
-        VStack(spacing: 5) {
+        VStack(spacing: RailSpacing.s4) {
             Text(column.count > 0 ? column.count.formatted() : " ")
                 .font(.caption2.weight(.semibold))
                 .monospacedDigit()
@@ -358,8 +358,8 @@ struct StatisticsRankedRow: View {
     }
 
     private var inline: some View {
-        HStack(alignment: .center, spacing: 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 5) {
+        HStack(alignment: .center, spacing: RailSpacing.s8) {
+            HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s4) {
                 if let systemImage {
                     Image(systemName: systemImage)
                         .font(.caption)
@@ -394,7 +394,7 @@ struct StatisticsRankedRow: View {
                             .frame(width: geometry.size.width * clamped)
                     }
             }
-            .frame(height: 8)
+            .frame(height: RailSize.progressBar)
             // The bar and the figure beside it on one clock, and neither
             // degraded under Reduce Motion — ``StatisticsBar`` above carries
             // the argument: §9.4 keeps progress and numeric updates, because
@@ -579,7 +579,7 @@ struct StatisticsSuperlative: View {
 
     private var block: some View {
         VStack(alignment: .leading, spacing: ride == nil ? 4 : 10) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
+            HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
                 PassportEyebrow(eyebrow)
                 Spacer(minLength: 8)
                 Text(value)
@@ -601,7 +601,7 @@ struct StatisticsSuperlative: View {
                     surface: .inherited)
             } else {
                 Text(title)
-                    .font(.subheadline.weight(.semibold))
+                    .railText(.cardTitle)
                     .foregroundStyle(ink.title)
                     .fixedSize(horizontal: false, vertical: true)
                 Text(detail)

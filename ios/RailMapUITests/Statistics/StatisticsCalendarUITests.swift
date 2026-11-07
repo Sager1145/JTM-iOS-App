@@ -30,7 +30,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         XCTAssertFalse(element("statisticsCalendarDay-2026-01-02", in: app).isEnabled)
         january.tap()
         XCTAssertTrue(january.isSelected)
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         assertRideCount(17, in: app)
 
         // All Time is already selected, but tapping it must clear the calendar day.
@@ -43,7 +43,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         XCTAssertTrue(element("statisticsCalendar", in: app).waitForExistence(timeout: 5))
         XCTAssertFalse(january.isSelected)
         january.tap()
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         assertRideCount(17, in: app)
 
         calendar.tap()
@@ -57,7 +57,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         XCTAssertTrue(december.isSelected)
         XCTAssertEqual(element("statisticsCalendarSelection", in: app).label,
                        "2025-12-31 – 2026-01-01")
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
         app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
@@ -87,13 +87,13 @@ final class StatisticsCalendarUITests: XCTestCase {
 
         // Switching classification with no narrowed scope must still finish loading.
         byGroup.tap()
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
         app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(byGroup.waitForExistence(timeout: 5))
         element("statisticsClassification-date", in: app).tap()
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         assertRideCount(39, in: app)
         calendar.tap()
         app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()

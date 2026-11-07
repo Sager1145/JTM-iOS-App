@@ -155,7 +155,7 @@ struct StatisticsDashboardContent: View {
                 // A plain VStack, not Lazy: the caller is already a LazyVStack
                 // inside the workspace's one ScrollView, and nesting a second
                 // lazy container inside it defeats both.
-                VStack(spacing: 16) {
+                VStack(spacing: RailSpacing.s16) {
 #if DEBUG
                     statisticsDebug(loaded: loaded)
 #endif
@@ -220,7 +220,7 @@ struct StatisticsDashboardContent: View {
             } else {
                 ProgressView(localization.text("ios.stats.calculating"))
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 40)
+                    .padding(.vertical, RailSpacing.s32)
             }
         }
         .background {
@@ -496,7 +496,7 @@ struct StatisticsDashboardContent: View {
         let stats = view.overall
         let total = statistics.totalKm
         let overall = statistics.coverageReading(ridden: stats.networkKm, denominator: total, localization: localization)
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("stats.coverageTitle"),
                 systemImage: "chart.bar.xaxis")
@@ -564,7 +564,7 @@ struct StatisticsDashboardContent: View {
     private func serviceCard(_ stats: Statistics.MileageStats, distancePending: Bool = false) -> some View {
         let groups = StatisticsFormat.serviceRows(stats.services)
         let totalKm = groups.reduce(0) { $0 + $1.group.km }
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("stats.actualTitle"),
                 systemImage: "chart.bar.fill")
@@ -621,7 +621,7 @@ struct StatisticsDashboardContent: View {
         let overall = sections.first(where: { $0.key == "stat.allrail" })?.rows.first
         return Group {
             if !sections.isEmpty {
-                VStack(alignment: .leading, spacing: 14) {
+                VStack(alignment: .leading, spacing: RailSpacing.s16) {
                     PassportCardHeader(
                         localization.text("stats.topSegmentsTitle"),
                         systemImage: "list.number")
@@ -655,7 +655,7 @@ struct StatisticsDashboardContent: View {
         let best = rows[0]
         let count = localization.text(
             "stats.byCountCount", params: ["count": .number(Double(rows.count))])
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             if summarised {
                 adaptiveRow(
                     label: Text(localization.statsCategoryText(key)).font(.subheadline),
@@ -665,7 +665,7 @@ struct StatisticsDashboardContent: View {
             }
             if rows.count > 1 {
                 DisclosureGroup {
-                    VStack(spacing: 10) {
+                    VStack(spacing: RailSpacing.s8) {
                         ForEach(
                             Array(rows.prefix(Self.topSegmentLimit).enumerated()), id: \.offset
                         ) { _, row in
@@ -679,7 +679,7 @@ struct StatisticsDashboardContent: View {
                                 .accessibilityElement(children: .combine)
                         }
                     }
-                    .padding(.top, 8)
+                    .padding(.top, RailSpacing.s8)
                 } label: {
                     // The category names itself here when the row above was
                     // dropped, or the unfiltered list's disclosure would open
@@ -704,7 +704,7 @@ struct StatisticsDashboardContent: View {
         }
         return Group {
             if !sections.isEmpty {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: RailSpacing.s12) {
                     // The same head row every other card on this screen opens
                     // with. The card's SURFACE stays `.plain` — §6.1 keeps the
                     // dense lists off the Memory stationery — but a card that
@@ -715,14 +715,14 @@ struct StatisticsDashboardContent: View {
                         systemImage: "list.bullet.indent")
                     ForEach(sections) { section in
                         DisclosureGroup {
-                            VStack(spacing: 12) {
+                            VStack(spacing: RailSpacing.s12) {
                                 ForEach(section.rows) { row in lineRow(row) }
                             }
-                            .padding(.top, 8)
+                            .padding(.top, RailSpacing.s8)
                         } label: {
                             adaptiveRow(
                                 label: Text(localization.statsCategoryText(section.category.i18n))
-                                    .font(.subheadline.weight(.semibold)),
+                                    .railText(.cardTitle),
                                 value: Text(localization.text(
                                     "stats.byLineCount",
                                     params: ["count": .number(Double(section.rows.count))]))
@@ -737,7 +737,7 @@ struct StatisticsDashboardContent: View {
     }
 
     private func lineRow(_ line: StatisticsLineCoverage.Row) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s2) {
             adaptiveRow(
                 label: VStack(alignment: .leading, spacing: 1) {
                     if !line.company.isEmpty {
@@ -786,7 +786,7 @@ struct StatisticsDashboardContent: View {
     private func rhythmCard(_ passport: PassportStatistics) -> some View {
         let columns = rhythmColumns(passport)
         let best = columns.max { $0.count < $1.count }
-        return VStack(alignment: .leading, spacing: 14) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("ios.stats.rhythmTitle"),
                 systemImage: "chart.bar.xaxis")
@@ -877,7 +877,7 @@ struct StatisticsDashboardContent: View {
         let scales = scaleRows(passport.totalKm)
         let longest = passport.longestByDistance
         let shortest = passport.shortestByDistance
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("ios.stats.distanceTitle"),
                 systemImage: "ruler")
@@ -886,11 +886,11 @@ struct StatisticsDashboardContent: View {
                 value: distancePending ? localization.text("ios.routeGuide.unknownDistance")
                     : "\(StatisticsFormat.km(passport.averageKm)) km")
             if !scales.isEmpty {
-                VStack(spacing: 10) { ForEach(scales) { row in row.view } }
+                VStack(spacing: RailSpacing.s8) { ForEach(scales) { row in row.view } }
             }
             if longest != nil || shortest != nil {
                 PassportRule()
-                VStack(spacing: 14) {
+                VStack(spacing: RailSpacing.s12) {
                     if let longest {
                         superlative(
                             "ios.stats.longestByDistance", longest,
@@ -972,7 +972,7 @@ struct StatisticsDashboardContent: View {
         let minutes = passport.totalMinutes
         let longest = passport.longestByTime
         let shortest = passport.shortestByTime
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("ios.stats.timeTitle"),
                 systemImage: "clock")
@@ -987,7 +987,7 @@ struct StatisticsDashboardContent: View {
                 value: StatisticsFormat.duration(passport.averageMinutes, localization))
             if longest != nil || shortest != nil {
                 PassportRule()
-                VStack(spacing: 14) {
+                VStack(spacing: RailSpacing.s12) {
                     if let longest {
                         superlative(
                             "ios.stats.longestByTime", longest,
@@ -1083,7 +1083,7 @@ struct StatisticsDashboardContent: View {
         layout: StatisticsRankedRow.Layout = .inline
     ) -> some View {
         if !rows.isEmpty {
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: RailSpacing.s16) {
                 PassportCardHeader(title, systemImage: systemImage)
                 PassportHeadline(
                     label: title,
@@ -1167,7 +1167,7 @@ struct StatisticsDashboardContent: View {
     /// same row, and 「🇯🇵 日本」 read aloud is the country twice.
     private func regionsCard(_ passport: PassportStatistics) -> some View {
         let peak = Double(passport.regions.map(\.count).max() ?? 0)
-        return VStack(alignment: .leading, spacing: 14) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s16) {
             PassportCardHeader(
                 localization.text("ios.stats.regionsTitle"),
                 systemImage: "globe.asia.australia")
@@ -1178,7 +1178,7 @@ struct StatisticsDashboardContent: View {
                     + localization.text("ios.stats.unit.regions"),
                 unit: localization.text("ios.stats.unit.regions"),
                 prominence: .field)
-            VStack(spacing: 10) {
+            VStack(spacing: RailSpacing.s8) {
                 ForEach(passport.regions) { tally in
                     StatisticsRankedRow(
                         label: StatisticsFormat.regionName(tally.region, localization: localization),
@@ -1236,11 +1236,11 @@ struct StatisticsDashboardContent: View {
     // MARK: - states that are not numbers
 
     private func failureCard(_ message: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Label(
                 localization.text("ios.stats.failedTitle"),
                 systemImage: "exclamationmark.triangle")
-                .font(.headline)
+                .railText(.cardTitle)
                 .foregroundStyle(.primary)
             Text(message)
                 .font(.subheadline)
@@ -1262,7 +1262,7 @@ struct StatisticsDashboardContent: View {
     /// told they have ridden nothing, which is both true and useless. The
     /// second line is what makes the first one readable.
     private func emptyCard(unconfirmed: Int) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text(localization.text("stats.empty"))
             if unconfirmed > 0 {
                 Text(unconfirmedMessage(unconfirmed))
@@ -1293,7 +1293,7 @@ struct StatisticsDashboardContent: View {
                     .fixedSize(horizontal: true, vertical: false)
                     .multilineTextAlignment(.trailing)
             }
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 label
                 value
                     .multilineTextAlignment(.leading)

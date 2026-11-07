@@ -11,7 +11,7 @@ struct StatisticsYearBar: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal) {
-                HStack(spacing: 4) {
+                HStack(spacing: RailSpacing.s4) {
                     choice(allTimeLabel, year: nil)
                     ForEach(years, id: \.self) { year in
                         choice(String(year), year: year)
@@ -33,7 +33,7 @@ struct StatisticsYearBar: View {
             Text(label)
                 .font(.subheadline.weight(selected ? .semibold : .regular))
                 .foregroundStyle(selected ? .primary : .secondary)
-                .padding(.horizontal, 14)
+                .padding(.horizontal, RailSpacing.s12)
                 .frame(minHeight: WorkspaceMenuMetrics.buttonSide)
                 .background {
                     if selected {
