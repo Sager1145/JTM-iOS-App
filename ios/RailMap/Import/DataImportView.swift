@@ -81,22 +81,21 @@ struct DataImportView: View {
                         .textSelection(.enabled)
                     if flow.text.count > 4000 {
                         Text(localization.text("data.previewTruncated"))
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
                 }
             case .pasted:
                 TextEditor(text: $flow.text)
                     .accessibilityIdentifier("importText")
                     .font(.system(.footnote, design: .monospaced))
-                    .frame(minHeight: 140)
+                    .frame(minHeight: RailSize.textEditorMinHeight)
                     .disabled(flow.isRunning)
                     .overlay(alignment: .topLeading) {
                         if flow.text.isEmpty {
                             Text(localization.text("data.pasteHint"))
                                 .font(.footnote)
                                 .foregroundStyle(.tertiary)
-                                .padding(.top, 8)
+                                .padding(.top, RailSpacing.s8)
                                 .allowsHitTesting(false)
                         }
                     }
@@ -128,8 +127,7 @@ struct DataImportView: View {
                     localization.text(
                         "data.regionDetected", params: ["region": .string(regionName)])
                 )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
             }
 
             Picker(localization.text("data.importMode"), selection: $flow.mode) {
@@ -146,7 +144,7 @@ struct DataImportView: View {
                 }
             }
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 Text(
                     localization.text(
                         flow.mode.detailKey, params: [
@@ -183,8 +181,7 @@ struct DataImportView: View {
                 }
                 if case .importing = flow.phase {
                     Text(localization.text("data.stageInteractive"))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -193,7 +190,7 @@ struct DataImportView: View {
         case .finished(let outcome):
             Section {
                 Label {
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s4) {
                         Text(
                             localization.text(
                                 "data.importDone", params: ["count": .number(Double(outcome.imported))])
@@ -203,12 +200,10 @@ struct DataImportView: View {
                                 localization.text(
                                     "data.importDoneRenamed", params: ["count": .number(Double(outcome.renamed))])
                             )
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .railText(.secondary)
                         }
                         Text(localization.text("data.routesLater"))
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .railText(.secondary)
                     }
                     .fixedSize(horizontal: false, vertical: true)
                 } icon: {
@@ -254,12 +249,11 @@ struct DataImportView: View {
                     Text(schema).monospacedDigit()
                 }
             }
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 Text(localization.text("data.preflightRegionNote", params: ["region": .string(regionName)]))
                 Text(localization.text("data.preflightDateNote"))
             }
-            .font(.footnote)
-            .foregroundStyle(.secondary)
+            .railText(.secondary)
             .fixedSize(horizontal: false, vertical: true)
         } header: {
             Text(localization.text("data.preflight"))
@@ -310,8 +304,7 @@ struct DataImportView: View {
                         localization.text(
                             "data.moreIssues", params: ["count": .number(Double(report.issues.count - 12))])
                     )
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                 }
             } header: {
                 Text(localization.text("data.problems"))
@@ -342,7 +335,7 @@ struct DataImportView: View {
 
     @ViewBuilder
     private var actionBar: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: RailSpacing.s8) {
             switch flow.phase {
             case .editing:
                 Button {
@@ -351,8 +344,7 @@ struct DataImportView: View {
                     Text(localization.text("btn.validate", fallback: "Validate JSON"))
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railPrimary(fillsWidth: true))
                 .disabled(!itineraries.canReplace || flow.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .accessibilityIdentifier("importValidate")
             case .checking, .importing:
@@ -360,8 +352,7 @@ struct DataImportView: View {
                     Text(localization.text("ios.cancel", fallback: "Cancel"))
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railSecondary(fillsWidth: true))
                 .disabled(!flow.canCancel)
             case .checked(let report):
                 if report.isCommittable {
@@ -375,8 +366,7 @@ struct DataImportView: View {
                         )
                         .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .railMinimumTouchTarget()
+                    .buttonStyle(.railPrimary(fillsWidth: true))
                     .disabled(!itineraries.canReplace)
                     .accessibilityIdentifier("importCommit")
                 } else {
@@ -387,27 +377,24 @@ struct DataImportView: View {
                     } label: {
                         Text(localization.text("data.recheck")).frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.bordered)
-                    .railMinimumTouchTarget()
+                    .buttonStyle(.railSecondary(fillsWidth: true))
                 }
             case .finished:
                 Button { dismiss() } label: {
                     Text(localization.text("data.done"))
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railPrimary(fillsWidth: true))
             case .failed:
                 Button {
                     flow.reset()
                 } label: {
                     Text(localization.text("data.recheck")).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railSecondary(fillsWidth: true))
             }
         }
-        .padding()
+        .padding(RailSpacing.screenInset)
         .background(.bar)
     }
 
@@ -449,7 +436,7 @@ struct DataProgressSummaryView: View {
             // exists so the section does not resize when it appears.
             Color.clear.frame(height: 0)
         } else {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: RailSpacing.s8) {
                 HStack {
                     Text(stageText)
                         .font(.subheadline.weight(.medium))
@@ -467,8 +454,7 @@ struct DataProgressSummaryView: View {
                 }
                 if !summary.canInteract {
                     Text(localization.text("data.stageSaving"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 }
             }
             .accessibilityElement(children: .combine)
@@ -498,7 +484,7 @@ struct DataIssueRow: View {
     let issue: ImportPreflight.Issue
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s2) {
             Text(issue.detail)
                 .font(.footnote)
                 .fixedSize(horizontal: false, vertical: true)
@@ -535,15 +521,14 @@ struct DataErrorCard: View {
     let kept: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             Label(title, systemImage: "exclamationmark.triangle.fill")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.orange)
             Text(detail)
                 .font(.footnote)
             Text(kept)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
         }
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)

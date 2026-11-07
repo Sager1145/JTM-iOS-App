@@ -109,10 +109,10 @@ struct TrainResearchView: View {
                         .accessibilityIdentifier("trainResearchRemarks")
                     if !hasQuery {
                         Text(text("researchRequired", fallback: "Enter a train name, number or route and an operating date."))
-                            .font(.footnote).foregroundStyle(.secondary)
+                            .railText(.secondary)
                     }
                     Text(text("researchReview", fallback: "Check the official sources before editing your journey. The answer is a research suggestion."))
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .railText(.secondary)
                 }
                 .disabled(isWorking)
                 subscriptionSection
@@ -140,11 +140,8 @@ struct TrainResearchView: View {
             .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
                                   fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(text("researchClose", fallback: "Close")) { dismiss() }
-                }
-            }
+            .railSheetClose(Text(text("researchClose", fallback: "Close")),
+                            identifier: "researchClose") { dismiss() }
             .task { if auth.isSignedIn { run { try await loadModels() } } }
             .onDisappear { cancel() }
             .onChange(of: auth.isSignedIn) { _, signedIn in
@@ -156,7 +153,7 @@ struct TrainResearchView: View {
     private var subscriptionSection: some View {
         Section(text("subscription")) {
             Text(text("researchSubscriptionInfo", fallback: "Uses the experimental Codex subscription interface; authorization displays Codex. Models and limits depend on your account. Querying sends the displayed request and remarks to OpenAI."))
-                .font(.footnote).foregroundStyle(.secondary)
+                .railText(.secondary)
             if auth.isSignedIn {
                 LabeledContent(text("account"), value: auth.accountLabel ?? "ChatGPT")
                 if let plan = auth.planLabel { LabeledContent(text("plan"), value: plan) }
@@ -165,7 +162,7 @@ struct TrainResearchView: View {
                         ForEach(models) { model in Text(model.displayName).tag(model.id) }
                     }.disabled(isWorking)
                 } else if !isWorking {
-                    Text(text("noModels")).font(.footnote).foregroundStyle(.secondary)
+                    Text(text("noModels")).railText(.secondary)
                 }
                 Button(text("refreshModels")) { run { try await loadModels() } }
                     .disabled(isWorking)
