@@ -109,11 +109,11 @@ struct RailwayLineCardView: View {
     var body: some View {
         List {
             Section {
-                HStack(spacing: 12) {
-                    VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: RailSpacing.s12) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s4) {
                         Text(row.label).font(.title2.weight(.semibold))
                         Text(row.operatorName ?? row.company)
-                            .font(.subheadline).foregroundStyle(.secondary)
+                            .railText(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     RouteLogoSquare(path: row.logo, color: Color(hex: row.color) ?? .accentColor,
@@ -157,7 +157,7 @@ struct RailwayLineCardView: View {
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                SheetCloseButton(accessibilityLabel: Text(localization.text("ios.close", fallback: "Close"))) {
+                RailSheetCloseButton(label: Text(localization.text("ios.close", fallback: "Close"))) {
                     dismiss()
                 }
                 .accessibilityIdentifier("railwayLineClose")

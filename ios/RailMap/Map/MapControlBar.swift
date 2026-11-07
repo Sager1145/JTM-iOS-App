@@ -44,9 +44,8 @@ struct MapControlBar: View {
 
     /// Apple Maps-sized map chrome. Keep this independent of sheet/menu
     /// controls: both the glass surface and the non-overlapping hit band are
-    /// 50 pt, with no inset shrinking the visible control.
-    static let side: CGFloat = 50
-    fileprivate static let iconSize: CGFloat = 20
+    /// 48 pt (spec §7.7), with no inset shrinking the visible control.
+    static let side: CGFloat = RailSize.mapControl
     /// Clear drawing space around the rail for Liquid Glass's touch-down
     /// expansion. The workspace supplies it outside the resting button frame.
     static let interactionBleed: CGFloat = 8
@@ -297,7 +296,7 @@ private struct ControlButton: View {
                                     Circle().stroke(Color.primary, lineWidth: 2)
                                 }
                             }
-                            .padding(5)
+                            .padding(RailSpacing.s4)
                             .allowsHitTesting(false)
                     }
                 }
@@ -320,11 +319,11 @@ private struct ControlButton: View {
         switch glyph {
         case .symbol(let name):
             Image(systemName: name)
-                // The control's meaning and 50-point hit target stay stable at
+                // The control's meaning and 48-point hit target stay stable at
                 // every Dynamic Type size. SF Symbols inside map chrome do not
                 // represent reading text, so allowing them to grow past their
                 // capsule makes the control less usable rather than more.
-                .font(.system(size: MapControlBar.iconSize, weight: .medium))
+                .railGlyph(.mapControl)
                 .contentTransition(.symbolEffect(.replace))
         case .route(let filled):
             // No `contentTransition` — that is the symbol machinery, and this
@@ -371,7 +370,7 @@ struct MapLocationRefusal: View {
             Text(localization.text(refusal.key, fallback: refusal.fallback))
                 .font(.caption)
                 .multilineTextAlignment(.trailing)
-                .padding(10)
+                .padding(RailSpacing.s8)
                 .frame(maxWidth: 220)
                 .railGlass(in: RoundedRectangle(
                     cornerRadius: RailStyle.controlCornerRadius,

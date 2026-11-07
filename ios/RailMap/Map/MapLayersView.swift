@@ -132,7 +132,7 @@ struct MapLayersView: View {
                     Text(localization.text(
                         "ios.layers.riddenCategories", fallback: "Ridden line types"))
                 } footer: {
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s4) {
                         Text(
                             localization.text(
                                 "ios.note.riddenCategories",
@@ -141,7 +141,7 @@ struct MapLayersView: View {
                                     most of. Sections the network cannot identify stay visible.
                                     """))
                         if classifying {
-                            HStack(spacing: 6) {
+                            HStack(spacing: RailSpacing.s4) {
                                 ProgressView().controlSize(.mini)
                                 // The statistics screen's own stage name,
                                 // because it is the same stage: both are
@@ -166,15 +166,14 @@ struct MapLayersView: View {
             }
             .navigationTitle(localization.countryText("map.layers", fallback: "Map layers"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.text("ios.done", fallback: "Done")) { dismiss() }
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "mapLayersClose"
+            ) { dismiss() }
         }
         // §4.2: this sheet is ABOUT the map, so it must not cover all of it —
         // half by default, full when the reader pulls it up. Declared here
         // rather than at the presenter, the way `VideoExportOptionsView` does.
-        .railHalfSheetDetents()
+        .railSheet(.half)
     }
 }

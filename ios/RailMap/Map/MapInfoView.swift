@@ -57,16 +57,15 @@ struct MapInfoView: View {
             .navigationTitle(
                 localization.countryText("info.title", fallback: "Legend and sources"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.text("ios.done", fallback: "Done")) { dismiss() }
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "mapInfoClose"
+            ) { dismiss() }
         }
         // §4.2: this sheet is ABOUT the map, so it must not cover all of it —
         // half by default, full when the reader pulls it up. Declared here
         // rather than at the presenter, the way `VideoExportOptionsView` does.
-        .railHalfSheetDetents()
+        .railSheet(.half)
     }
 
     // MARK: - the legend
@@ -193,20 +192,19 @@ private struct LegendRow: View {
     let entry: MapInfoView.LegendEntry
 
     var body: some View {
-        HStack(alignment: .top, spacing: 14) {
+        HStack(alignment: .top, spacing: RailSpacing.s12 {
             LegendSymbolView(symbol: entry.symbol)
                 .frame(width: 34, height: 22)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(localization.countryText(entry.titleKey, fallback: entry.titleKey))
                     .font(.subheadline.weight(.semibold))
                 Text(localization.countryText(entry.detailKey, fallback: ""))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, RailSpacing.rowVertical)
         .accessibilityElement(children: .combine)
     }
 }
@@ -216,18 +214,17 @@ private struct SourceRow: View {
     let source: MapInfoView.Source
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text(localization.countryText(source.titleKey, fallback: source.titleFallback))
                 .font(.subheadline.weight(.semibold))
             Text(localization.countryText(source.bodyKey, fallback: source.bodyFallback))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             if !source.links.isEmpty {
                 // Wrapped rather than in one row: several of these are long,
                 // and a licence link that has been truncated to "Open Gov…" is
                 // a licence nobody can follow.
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     ForEach(source.links) { link in
                         if let url = URL(string: link.url) {
                             Link(destination: url) {
@@ -243,7 +240,7 @@ private struct SourceRow: View {
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, RailSpacing.rowVertical)
     }
 }
 

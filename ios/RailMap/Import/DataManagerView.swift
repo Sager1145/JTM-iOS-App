@@ -75,6 +75,7 @@ struct DataManagerView: View {
             dangerSection
         }
         .navigationTitle(localization.text("nav.data", fallback: "Data"))
+        .navigationBarTitleDisplayMode(.inline)
         .task(id: exportAction) {
             guard let action = exportAction else { return }
             defer { exportAction = nil }
@@ -121,19 +122,18 @@ struct DataManagerView: View {
 
     private var sourceSection: some View {
         Section {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: RailSpacing.s12) {
+                HStack(spacing: RailSpacing.s12) {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.title2)
                         .foregroundStyle(.tint)
-                        .frame(width: 44, height: 44)
+                        .frame(width: RailSize.touch, height: RailSize.touch)
                         .background(Color.accentColor.opacity(0.1), in: Circle())
                         .accessibilityHidden(true)
-                    VStack(alignment: .leading, spacing: 3) {
+                    VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                         Text(sourceTitle).font(.headline)
                         Text(sourceSubtitle)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .railText(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
@@ -145,7 +145,7 @@ struct DataManagerView: View {
                 // opened a dialog offering two of those three was a second,
                 // slower door to the same place.
             }
-            .padding(.vertical, 6)
+            .padding(.vertical, RailSpacing.rowVertical)
         } footer: {
             Text(localization.text("data.storageFootnote"))
         }
@@ -240,8 +240,7 @@ struct DataManagerView: View {
                             .textSelection(.enabled)
                         if rawPreview.count > 4000 {
                             Text(localization.text("data.previewTruncated"))
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
+                                .railText(.tertiary)
                         }
                     }
                 },
@@ -424,7 +423,7 @@ struct DataManagerView: View {
             Section {
                 switch network.state {
                 case .idle:
-                    HStack(spacing: 10) {
+                    HStack(spacing: RailSpacing.s8) {
                         ProgressView()
                         Text(
                             localization.text(
@@ -432,7 +431,7 @@ struct DataManagerView: View {
                                     Region.enabledOrdered.map(regionName).joined(separator: "・"))]))
                     }
                 case .loading(let pending):
-                    HStack(spacing: 10) {
+                    HStack(spacing: RailSpacing.s8) {
                         ProgressView()
                         // Named, because the five packages differ by three
                         // orders of magnitude and "still loading" says nothing
@@ -488,7 +487,7 @@ struct DataManagerView: View {
     private var recoverySection: some View {
         if let backup = library.backup {
             Section {
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     Text(
                         localization.text(
                             "data.backupAvailable", params: [
@@ -500,8 +499,7 @@ struct DataManagerView: View {
                             ])
                     )
                     Text(localization.text(backup.reason.localizationKey))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                 }
                 .accessibilityElement(children: .combine)
                 Button {

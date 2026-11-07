@@ -60,6 +60,7 @@ struct SettingsView: View {
             aboutSection
         }
         .navigationTitle(localization.text("ios.settings", fallback: "Settings"))
+        .navigationBarTitleDisplayMode(.inline)
         // The switch positions follow the interface language until the reader
         // pins them. `syncNameReadingDefaults` mutates observed state, so it
         // runs here and on change — never from `body`.
@@ -164,7 +165,7 @@ struct SettingsView: View {
 
     private var journeyNameSection: some View {
         Section(localization.journeyText("ios.journey.cardNames")) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 Toggle(
                     localization.journeyText("ios.journey.showTranslations"),
                     isOn: Binding(
@@ -172,10 +173,9 @@ struct SettingsView: View {
                         set: { display.showJourneyTranslations = $0; display.persist() }))
                 .accessibilityIdentifier("showJourneyTranslations")
                 Text(localization.journeyText("ios.journey.showTranslationsNote"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
-            .padding(.vertical, 2)
+            .padding(.vertical, RailSpacing.rowVertical)
         }
     }
 
@@ -197,8 +197,7 @@ struct SettingsView: View {
                             "This region's station names come straight from the operator's own official name in each language."
                     )
                 )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
             } else {
                 SettingToggleRow(
                     title: localization.countryText(
@@ -305,14 +304,12 @@ struct SettingsView: View {
             Text(localization.text(
                 "ios.note.launchScope",
                 fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
             if let trains = itineraries.loaded?.trains, tripHide?.hasDisabledRegionTrips(trains) == true {
                 Text(localization.text(
                     "ios.note.disabledRegionTrips",
                     fallback: "Mainland China trips are hidden. They stay saved and will reappear if support returns."))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             Picker(
                 localization.text("ios.networkEra", fallback: "Network era"),
@@ -501,13 +498,13 @@ struct SettingsView: View {
     private var reloadAllSection: some View {
         Section {
             if let progress = riddenRoutes.reloadProgress {
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     ProgressView(value: Double(progress.done), total: Double(max(progress.total, 1)))
                     Text(localization.text(
                         "ios.reloadAll.progress",
                         params: ["done": .number(Double(progress.done)), "total": .number(Double(progress.total))],
                         fallback: "\(progress.done) of \(progress.total)"))
-                        .font(.footnote).monospacedDigit().foregroundStyle(.secondary)
+                        .railText(.secondary).monospacedDigit()
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("reloadAllProgress")
@@ -615,14 +612,14 @@ private struct DisplaySliderRow: View {
     var onCommit: () -> Void = {}
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             ViewThatFits(in: .horizontal) {
-                HStack(alignment: .firstTextBaseline, spacing: 12) {
+                HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s12) {
                     Text(title)
                     Spacer(minLength: 8)
                     readout
                 }
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     Text(title)
                     readout
                 }
@@ -634,11 +631,10 @@ private struct DisplaySliderRow: View {
             .accessibilityValue(format(value))
             if let note {
                 Text(note)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, RailSpacing.rowVertical)
     }
 
     private var readout: some View {
@@ -656,12 +652,11 @@ private struct SettingToggleRow: View {
     @Binding var isOn: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Toggle(title, isOn: $isOn)
             Text(note)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, RailSpacing.rowVertical)
     }
 }
