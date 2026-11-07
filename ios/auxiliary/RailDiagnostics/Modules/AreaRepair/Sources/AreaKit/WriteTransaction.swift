@@ -109,7 +109,8 @@ public struct WriteTransaction: Sendable {
         for (op, disposition) in plan(patch) where disposition.status != .writable {
             throw AreaRepairError.refused("\(op.op.rawValue) \(op.key) \(disposition.note ?? disposition.status.rawValue).")
         }
-        try JunctionRowRules.validateLineIDs(patch.ops, packageURL: repo.appending(path: DataFile.package.relativePath))
+        try JunctionRowRules.validateLineIDs(patch.ops, packageURL: repo.appending(path: DataFile.package.relativePath),
+                                              historyURL: repo.appending(path: DataFile.history.relativePath))
     }
 
     /// Writes `patch`. Returns the receipt; `status == .reverted` means a

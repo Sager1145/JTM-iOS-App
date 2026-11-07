@@ -19,7 +19,8 @@ public enum ScratchOverlay {
             if fm.fileExists(atPath: target.path) { try fm.removeItem(at: target) }
         }
         let ops = patches.flatMap(\.ops)
-        try JunctionRowRules.validateLineIDs(ops, packageURL: repo.appending(path: DataFile.package.relativePath))
+        try JunctionRowRules.validateLineIDs(ops, packageURL: repo.appending(path: DataFile.package.relativePath),
+                                              historyURL: repo.appending(path: DataFile.history.relativePath))
         for file in DataFile.allCases {
             let fileOps = ops.filter { $0.op.file == file }
             guard !fileOps.isEmpty else { continue }

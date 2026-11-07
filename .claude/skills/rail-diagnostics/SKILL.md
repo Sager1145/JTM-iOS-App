@@ -93,6 +93,7 @@ bash ios/verify.sh area problems --stations 'jp-九州旅客鉄道-日豊線:西
 
 Rules:
 - Never pass `--confirm` (write or undo) without the user's explicit go-ahead in chat.
+- Junction rows are checked against the registry rules (≤30 m shortLink, evidence, geometryEvidence) and every jp `lineIDs` entry must be a line of `jp-2025.json`; a retired line absent from the package is accepted only when `rail-history.json` knows `jp-<operator>-<line>` (section, station or identity period) and the row's `validFrom`/`validTo` overlaps one of its periods (e.g. 江差線 yes, 海峡線 no).
 - Writable by default: `app/data/physical-rail-junctions.json` only. `rail-history.json` ops are report-only unless `--allow-generated --confirm`, then mirror the change into `app/scripts/railway/jp-rail-history-events.json` (code's reported mirror). `jp-2025.json` ops are always refused; report them as mirrors into `app/scripts/railway/jp-directional-alignment-overrides.json` / the builder (website pipeline owns it) and stop.
 - The app cannot run guards: its Export writes `patch.json` and shows the `write --patch ... --confirm` command; run it from the shell. The main app never reads overlays.
 - Reuse guards; no broad tests. Heavy jobs (build, swift, write) run one at a time machine-wide via the lock.

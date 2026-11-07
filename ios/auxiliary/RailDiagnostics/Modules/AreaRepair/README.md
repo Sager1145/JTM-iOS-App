@@ -15,6 +15,8 @@ Small-area capture and repair for Rail Diagnostics: select an area, collect evid
 
 ## Writes
 
+Junction rows are checked against the registry rules (≤30 m shortLink, evidence, geometryEvidence) and every jp `lineIDs` entry must be a line of `jp-2025.json`; a retired line absent from the package is accepted only when `rail-history.json` knows `jp-<operator>-<line>` (section, station or identity period) and the row's `validFrom`/`validTo` overlaps one of its periods (e.g. 江差線 yes, 海峡線 no).
+
 Default writable target: `app/data/physical-rail-junctions.json`. `rail-history.json` needs `--allow-generated --confirm`, and the result then lists `generatorFixNeeded` (mirror into `app/scripts/railway/jp-rail-history-events.json`); `jp-2025.json` is always refused. One decision (`OpDisposition`) drives both the dry-run plan and the write check. `write` without `--confirm` is a dry-run. Backups, the inverse patch and a `pending` receipt listing every file's hashes go under `<evidence root>/area-repairs/<id>/receipts/` before the first repository write; any failure restores the backups. `undo` accepts a `written` or `pending` (interrupted) receipt. Scratch overlays (`apply --scratch`, preview) refuse the repository root, its ancestors, its `app/` tree and any directory whose targets resolve to repository data files.
 
 ## Tests

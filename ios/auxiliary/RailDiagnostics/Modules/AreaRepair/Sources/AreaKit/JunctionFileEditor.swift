@@ -228,18 +228,69 @@ public enum JunctionRowRules {
 
     /// Every jp add/update row's lineIDs exist in the jp package at
     /// `packageURL` (rows of other regions name lines of their own packages).
-    public static func validateLineIDs(_ ops: [PatchOp], packageURL: URL) throws {
+    /// A line absent from the package (a retired line) is accepted only when
+    /// `rail-history.json` at `historyURL` knows it (`jp-<operator>-<line>`
+    /// from a section, station or identity period) and the row's
+    /// [validFrom, validTo) overlaps one of that line's known periods.
+    public static func validateLineIDs(_ ops: [PatchOp], packageURL: URL, historyURL: URL? = nil) throws {
         let rows = ops.filter { $0.op.file == .junctions }.compactMap { op in op.after.map { (op, $0) } }
             .filter { $0.1["region"]?.stringValue == "jp" }
         guard !rows.isEmpty else { return }
         struct Package: Decodable { struct Line: Decodable { let id: String }; let lines: [Line] }
         let known = Set(try JSONDecoder().decode(Package.self, from: Data(contentsOf: packageURL)).lines.map(\.id))
+        var history: [String: [HistoryPeriod]]?
         for (op, row) in rows {
             let missing = (row["lineIDs"]?.arrayValue ?? []).compactMap(\.stringValue).filter { !known.contains($0) }
-            guard missing.isEmpty else {
-                throw AreaRepairError.invalidPatch("\(op.op.rawValue) \(op.key): lineIDs \(missing) are not lines of \(DataFile.package.relativePath).")
+            guard !missing.isEmpty else { continue }
+            if history == nil { history = try historyURL.map(retiredLinePeriods(historyURL:)) ?? [:] }
+            let era = HistoryPeriod(from: row["validFrom"]?.stringValue, to: row["validTo"]?.stringValue)
+            let unknown = missing.filter { history?[$0] == nil }
+            guard unknown.isEmpty else {
+                throw AreaRepairError.invalidPatch("\(op.op.rawValue) \(op.key): lineIDs \(unknown) are not lines of \(DataFile.package.relativePath) and not retired lines known to \(DataFile.history.relativePath).")
+            }
+            let outside = missing.filter { line in !(history?[line] ?? []).contains { $0.overlaps(era) } }
+            guard outside.isEmpty else {
+                throw AreaRepairError.invalidPatch("\(op.op.rawValue) \(op.key): the row's era \(era) does not overlap the open years \(DataFile.history.relativePath) gives retired lines \(outside.map { "\($0) \(history?[$0] ?? [])" }).")
             }
         }
+    }
+
+    /// A half-open [from, to) day interval; nil bounds are open-ended.
+    public struct HistoryPeriod: Equatable, Sendable, CustomStringConvertible {
+        public var from: String?
+        public var to: String?
+        public init(from: String?, to: String?) { self.from = from; self.to = to }
+        public func overlaps(_ other: HistoryPeriod) -> Bool {
+            (from == nil || other.to == nil || from! < other.to!) && (other.from == nil || to == nil || other.from! < to!)
+        }
+        public var description: String { "[\(from ?? "…"), \(to ?? "…"))" }
+    }
+
+    /// Line id → the periods `rail-history.json` records for it: sections and
+    /// stations (by `N02_004`/`N02_003` or operator/line_name) and identity
+    /// periods (the identity a line had, `as`).
+    public static func retiredLinePeriods(historyURL: URL) throws -> [String: [HistoryPeriod]] {
+        guard let root = try JSONSerialization.jsonObject(with: Data(contentsOf: historyURL)) as? [String: Any] else {
+            throw AreaRepairError.invalidJSON("\(DataFile.history.relativePath) is not an object")
+        }
+        var periods: [String: [HistoryPeriod]] = [:]
+        func add(_ operatorName: Any?, _ lineName: Any?, _ entry: [String: Any]) {
+            guard let op = operatorName as? String, let line = lineName as? String, !op.isEmpty, !line.isEmpty else { return }
+            let period = HistoryPeriod(from: entry["valid_from"] as? String, to: entry["valid_to"] as? String)
+            let id = "jp-\(op)-\(line)"
+            if periods[id]?.contains(period) != true { periods[id, default: []].append(period) }
+        }
+        for key in ["sections", "stations"] {
+            for feature in root[key] as? [[String: Any]] ?? [] {
+                guard let p = feature["properties"] as? [String: Any] else { continue }
+                add(p["N02_004"] ?? p["operator"], p["N02_003"] ?? p["line_name"], p)
+            }
+        }
+        for entry in root["identity_periods"] as? [[String: Any]] ?? [] {
+            guard let identity = entry["as"] as? [String: Any] else { continue }
+            add(identity["N02_004"], identity["N02_003"], entry)
+        }
+        return periods
     }
 
     static func coordinate(_ value: AreaJSON?) -> Coordinate? {
