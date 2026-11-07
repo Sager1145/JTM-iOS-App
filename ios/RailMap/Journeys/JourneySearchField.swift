@@ -21,9 +21,9 @@ struct JourneySearchField: View {
     @Environment(PanelMorph.self) private var morph: PanelMorph?
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .regular))
+                .railGlyph(.inline)
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
             TextField(
@@ -62,7 +62,7 @@ struct JourneySearchField: View {
             isFocused = true
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .regular))
+                .railGlyph(.inline)
                 .foregroundStyle(.secondary)
                 // Hit at 44, drawn at the glyph's own size — the same
                 // two-numbers rule `SheetIconButton` states, and for the same
@@ -72,7 +72,7 @@ struct JourneySearchField: View {
                 // whose whole job is to be typed in and cleared. The
                 // `minHeight` on the row above binds the ROW, not the button
                 // in it.
-                .frame(width: WorkspaceMenuMetrics.touchSide, height: WorkspaceMenuMetrics.touchSide)
+                .frame(width: RailSize.touch, height: RailSize.touch)
                 .contentShape(.rect)
                 // The enlarged target reclaims the field's own trailing inset
                 // rather than pushing the glyph inward, so the mark stays

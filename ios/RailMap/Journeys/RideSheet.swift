@@ -179,18 +179,18 @@ struct SheetIconButton<Label: View>: View {
     var action: () -> Void
     @ViewBuilder var label: Label
 
-    static var visualSide: CGFloat { WorkspaceMenuMetrics.buttonSide }
+    static var visualSide: CGFloat { RailSize.compactControl }
 
     // Compact glyphs share the menu's visual size and 44-point hit target.
 
     var body: some View {
         Button(action: action) {
             label
-                .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
+                .railGlyph(.control)
                 .foregroundStyle(Color.primary)
                 .frame(width: Self.visualSide, height: Self.visualSide)
                 .railMenuControlSurface(in: Circle())
-                .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
+                .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
                 .contentShape(.rect)
                 .accessibilityHidden(true)
         }
@@ -242,14 +242,14 @@ struct SheetIconLabel: View {
 
     var body: some View {
         Image(systemName: systemImage)
-            .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
+            .railGlyph(.control)
             .foregroundStyle(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(Color.primary))
             .frame(width: SheetIconButton<Image>.visualSide, height: SheetIconButton<Image>.visualSide)
             .railMenuControlSurface(in: Circle(), isActive: isActive)
             .overlay(alignment: .bottomTrailing) {
                 if isActive {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: 14, weight: .semibold)) // ui-token-ok: status checkmark badge on a 32-pt circle
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(Color(.systemBackground), Color.accentColor)
                         .offset(x: 3, y: 3)
@@ -260,10 +260,10 @@ struct SheetIconLabel: View {
             .overlay(alignment: .topTrailing) {
                 if badge > 0 {
                     Text(badge, format: .number)
-                        .font(.system(size: 11, weight: .bold))
+                        .font(.system(size: 11, weight: .bold)) // ui-token-ok: numeric badge on a 32-pt circle
                         .monospacedDigit()
                         .foregroundStyle(.white)
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, RailSpacing.s4)
                         .frame(minWidth: 17, minHeight: 17)
                         .background(Color.accentColor, in: Capsule())
                         .offset(x: 4, y: -4)
@@ -271,7 +271,7 @@ struct SheetIconLabel: View {
                         .allowsHitTesting(false)
                 }
             }
-            .frame(minWidth: WorkspaceMenuMetrics.touchSide, minHeight: WorkspaceMenuMetrics.touchSide)
+            .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
             .contentShape(.rect)
     }
 }
@@ -292,7 +292,7 @@ struct PopupMenuHeader<Actions: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
                 if let subtitle, !subtitle.isEmpty {
-                    Text(subtitle).font(.footnote).foregroundStyle(.secondary)
+                    Text(subtitle).railText(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }

@@ -79,13 +79,9 @@ struct RideChooserView: View {
         // The station card's stops, and for the same reason: the answer is
         // short, the map it is about must stay visible above it, and `.large`
         // is still reachable for the tap that found six rides in one corridor.
-        .railHalfSheetDetents()
+        .railSheet(.half)
         .railMenuPresentationBackground()
         .railMenuPresentationCornerRadius()
-        // §9.5.6's no-Pull-Bar rule, next to `.resizes` — without that a sheet
-        // with no grabber and a scrolling list inside it cannot be dragged
-        // between its stops at all.
-        .presentationDragIndicator(.hidden)
         .presentationContentInteraction(.resizes)
     }
 
@@ -106,6 +102,6 @@ struct RideChooserView: View {
         .buttonStyle(RailRowPressStyle())
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
-        .listRowInsets(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
+        .listRowInsets(EdgeInsets(top: RailSpacing.rowVertical, leading: RailSpacing.screenInset, bottom: RailSpacing.rowVertical, trailing: RailSpacing.screenInset))
     }
 }

@@ -67,7 +67,7 @@ struct JourneyListRow: View {
     @State private var showsGroupAssignment = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             // The workspace highlights the route and presents a separate journey
             // menu. The source list retains its filters and scroll position.
             Button {
@@ -230,7 +230,7 @@ struct JourneyListRow: View {
     /// The overdue trip's inline choices: file it as past, edit it, or delete
     /// it through the workspace's usual confirmation.
     private var overduePrompt: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Label(
                 localization.text(
                     "ios.journey.overduePrompt", fallback: "This trip's time has passed."),
@@ -238,13 +238,12 @@ struct JourneyListRow: View {
                 .font(.caption)
                 .foregroundStyle(.orange)
             ViewThatFits(in: .horizontal) {
-                HStack(spacing: 8) { overdueActions }
-                VStack(alignment: .leading, spacing: 6) { overdueActions }
+                HStack(spacing: RailSpacing.s8) { overdueActions }
+                VStack(alignment: .leading, spacing: RailSpacing.s4) { overdueActions }
             }
-            .buttonStyle(.bordered)
-            .controlSize(.small)
+            .buttonStyle(.railSecondary)
         }
-        .padding(.horizontal, 4)
+        .padding(.horizontal, RailSpacing.s4)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("journeyOverdue-\(train.id)")
     }

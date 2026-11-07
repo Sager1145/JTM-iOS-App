@@ -41,8 +41,8 @@ struct JourneyStatusBadge: View {
         .lineLimit(compact ? (dynamicTypeSize.isAccessibilitySize ? nil : 1) : 3)
         .multilineTextAlignment(.leading)
         .foregroundStyle(status.tone.color)
-        .padding(.horizontal, 9)
-        .padding(.vertical, 5)
+        .padding(.horizontal, RailSpacing.s8)
+        .padding(.vertical, RailSpacing.s4)
         .background {
             if compact && dynamicTypeSize.isAccessibilitySize {
                 RoundedRectangle(
@@ -94,7 +94,7 @@ struct JourneyStateBlock: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 7) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             if let badge = presentation.heroStatus {
                 JourneyStatusBadge(status: badge)
             }
@@ -106,19 +106,17 @@ struct JourneyStateBlock: View {
             }
             if let status = presentation.status {
                 Text(localization.journeyText(status.title))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if let detail = status.detail {
                     Text(localization.journeyText(detail))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
+        .padding(RailSpacing.cardPadding)
         .background(
             (presentation.status?.tone ?? .neutral).color
                 .opacity((presentation.status?.tone ?? .neutral).fillOpacity * 0.55),
@@ -192,7 +190,7 @@ struct RouteTimingView: View {
     }
 
     private var sideBySide: some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .top, spacing: RailSpacing.s12) {
             endpoint(
                 origin, code: originCode, time: departure, platform: originPlatform,
                 alignment: .center)
@@ -204,7 +202,7 @@ struct RouteTimingView: View {
     }
 
     private var stacked: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             endpoint(
                 origin, code: originCode, time: departure, platform: originPlatform,
                 alignment: .leading)
@@ -257,7 +255,7 @@ struct RouteTimingView: View {
             // form exists because the row ran out of WIDTH, so it has width to
             // spare and no height to spare. No band either — there are no two
             // columns left to line up with.
-            HStack(spacing: 6) {
+            HStack(spacing: RailSpacing.s4) {
                 arrow(direction)
                 elapsedLabel(band: nil)
             }
@@ -418,7 +416,7 @@ struct JourneySummaryRow: View {
     var body: some View {
         rowLayout
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(surface == .card ? 12 : 0)
+        .padding(surface == .card ? RailSpacing.cardPadding : 0)
         .modifier(JourneyRowCardSurface(isCard: surface == .card, isSelected: isSelected))
         .overlay {
             if surface == .card {
@@ -440,8 +438,8 @@ struct JourneySummaryRow: View {
 
     /// Ticket identity above the endpoint pair, shared with the opened card.
     private var rowLayout: some View {
-        VStack(alignment: .leading, spacing: 9) {
-            HStack(alignment: .center, spacing: 12) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
+            HStack(alignment: .center, spacing: RailSpacing.s12) {
                 RouteLogoSquare(train: train)
                 headerLine
             }
@@ -473,7 +471,7 @@ struct JourneySummaryRow: View {
     /// keep their place and their size: 「根室本線 普通 (5625D) · 普通」 is
     /// still one line, read the same way it was.
     private var headerLine: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             // No line limit on either: the caption is the record's identity
             // and wraps rather than truncates, as it did in every narrow host
             // before the layouts were unified.
@@ -484,8 +482,7 @@ struct JourneySummaryRow: View {
 
             if let original = serviceName.original {
                 Text("(\(original))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                     .fixedSize(horizontal: false, vertical: true)
             }
 
@@ -611,7 +608,7 @@ struct QuietActionGroup: View {
     private func stackedControls(
         _ quiet: [SecondaryAction], more: [SecondaryAction]
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             if let primary = presentation.primaryAction {
                 primaryButton(primary)
             }
@@ -632,7 +629,7 @@ struct QuietActionGroup: View {
         _ quiet: [SecondaryAction], more: [SecondaryAction],
         labelsQuietActions: Bool, shortPrimary: Bool = false
     ) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             if let primary = presentation.primaryAction {
                 primaryButton(primary, short: shortPrimary)
                     .layoutPriority(1)
@@ -686,13 +683,13 @@ struct QuietActionGroup: View {
     @ViewBuilder
     private func quietRow(_ quiet: [SecondaryAction], more: [SecondaryAction]) -> some View {
         if dynamicTypeSize.isAccessibilitySize {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: RailSpacing.s8) {
                 ForEach(quiet, id: \.self) { quietButton($0, multiline: true) }
                 if !more.isEmpty { moreMenu(more) }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } else {
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 ForEach(quiet, id: \.self) { quietButton($0) }
                 if !more.isEmpty { moreMenu(more) }
             }
@@ -757,7 +754,7 @@ struct QuietActionGroup: View {
             // its own shape. `MapControlBar.ControlButton` fixes its glyph for
             // exactly this reason: a control's meaning and its 40-point frame
             // do not get clearer by doubling the mark inside it.
-            .font(.system(size: WorkspaceMenuMetrics.iconSize, weight: .semibold))
+            .railGlyph(.control)
             .foregroundStyle(.tint)
             .frame(
                 width: SheetIconButton<Image>.visualSide,

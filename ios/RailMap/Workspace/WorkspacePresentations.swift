@@ -60,6 +60,7 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
                 sheetContent(presented)
                     .environment(localization)
                     .environment(presentationHost)
+                    .workspaceSheetHeight(presented)
             }
     }
 
@@ -114,4 +115,18 @@ struct WorkspacePresentations<SheetContent: View>: ViewModifier {
         }
     }
 
+}
+
+private extension View {
+    /// D4 detents for the sheets this host presents. Map info/layers, the
+    /// chooser, the hide sheet, utility and the station card own theirs.
+    @ViewBuilder
+    func workspaceSheetHeight(_ sheet: WorkspaceSheet) -> some View {
+        switch sheet {
+        case .detail, .importData, .transferGuide:
+            railSheet(.full)
+        case .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility:
+            self
+        }
+    }
 }
