@@ -8,15 +8,15 @@ import VisionKit
 //  TicketScanView.swift — scan a paper ticket from the camera or a photo.
 //
 //  The picture is read on this device by ``TextRecognizer`` (Vision, no
-//  network), the rows go through ``TicketParser``, and the result is shown as a
-//  review card: every extracted field with a checkmark. "Apply" hands back the
-//  ticked fields only. Not wired into the editor yet — the caller supplies
-//  `onApply`.
+//  network) and the rows go through ``TicketParser``. One shot: a reading with
+//  anything in it is handed to `onApply` whole and the sheet closes; the
+//  editor fills every field the reader has not set and tags each with its
+//  source, so the review happens on the form itself.
 // =========================================================================
 
 struct TicketScanView: View {
     let region: TicketRegion
-    /// Called with the accepted fields only; unticked fields are `nil`.
+    /// Called once with everything the ticket gave.
     let onApply: (TicketReadingResult) -> Void
 
     @Environment(AppLocalization.self) private var localization
@@ -26,19 +26,14 @@ struct TicketScanView: View {
     @State private var showsCamera = false
     @State private var isReading = false
     @State private var message: String?
-    @State private var reading: TicketReadingResult?
-    @State private var accepted: Set<TicketScanField> = []
     @State private var readTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
             Form {
-                if let reading {
-                    reviewSection(reading)
-                } else {
-                    sourceSection
-                }
+                sourceSection
             }
+            .accessibilityIdentifier("ticketScanForm")
             .navigationTitle(localization.text("ios.ticket.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -76,6 +71,7 @@ struct TicketScanView: View {
                     Label(localization.text("ios.ticket.camera"), systemImage: "camera")
                 }
                 .disabled(isReading)
+                .accessibilityIdentifier("ticketScanCamera")
             } else {
                 Text(localization.text("ios.ticket.cameraUnavailable"))
                     .font(.footnote)
@@ -85,6 +81,7 @@ struct TicketScanView: View {
                 Label(localization.text("ios.ticket.photos"), systemImage: "photo.on.rectangle")
             }
             .disabled(isReading)
+            .accessibilityIdentifier("ticketScanPhotos")
             if isReading {
                 HStack(spacing: 8) {
                     ProgressView()
@@ -98,71 +95,6 @@ struct TicketScanView: View {
         } footer: {
             Text(localization.text("ios.ticket.privacy"))
         }
-    }
-
-    // MARK: review
-
-    private func reviewSection(_ reading: TicketReadingResult) -> some View {
-        Group {
-            Section {
-                ForEach(TicketScanField.allCases.filter { $0.value(in: reading, localization) != nil }) {
-                    field in
-                    row(field, reading)
-                }
-            } header: {
-                Text(localization.text("ios.ticket.review"))
-            } footer: {
-                Text(localization.text("ios.ticket.reviewHint"))
-            }
-            Section {
-                Button {
-                    var result = reading
-                    for field in TicketScanField.allCases where !accepted.contains(field) {
-                        field.clear(&result)
-                    }
-                    onApply(result)
-                    dismiss()
-                } label: {
-                    Text(localization.text("ios.ticket.apply")).frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(accepted.isEmpty)
-                Button(localization.text("ios.ticket.rescan")) {
-                    self.reading = nil
-                    accepted = []
-                }
-            }
-        }
-    }
-
-    private func row(_ field: TicketScanField, _ reading: TicketReadingResult) -> some View {
-        let isOn = accepted.contains(field)
-        let confidence = field.confidence(in: reading) ?? 0
-        return Button {
-            if isOn { accepted.remove(field) } else { accepted.insert(field) }
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: isOn ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(isOn ? Color.accentColor : .secondary)
-                    .imageScale(.large)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(localization.text(field.titleKey))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text(field.value(in: reading, localization) ?? "")
-                        .foregroundStyle(.primary)
-                    if confidence < TicketScanField.lowConfidence {
-                        Label(localization.text("ios.ticket.lowConfidence"), systemImage: "exclamationmark.triangle")
-                            .font(.caption2)
-                            .foregroundStyle(.orange)
-                    }
-                }
-                Spacer(minLength: 0)
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(isOn ? .isSelected : [])
     }
 
     // MARK: reading
@@ -209,97 +141,14 @@ struct TicketScanView: View {
         isReading = false
         switch outcome {
         case .success(let result) where !result.isEmpty:
-            reading = result
-            accepted = Set(
-                TicketScanField.allCases.filter {
-                    ($0.confidence(in: result) ?? 0) >= TicketScanField.lowConfidence
-                })
+            onApply(result)
+            dismiss()
         case .success:
             message = localization.text("ios.ticket.nothingFound")
         case .failure(let error):
             message = localization.text(
                 (error as? TextRecognizer.TicketFailure) == .unavailable
                     ? "ios.ticket.unavailable" : "ios.ticket.failed")
-        }
-    }
-}
-
-// MARK: - Fields
-
-/// The reviewable fields of a ``TicketReadingResult``. Currency is shown with
-/// the fare, so it has no row of its own.
-private enum TicketScanField: String, CaseIterable, Identifiable {
-    case origin, destination, date, departureTime, serviceName, serviceNumber, car, seat,
-        seatClass, fare, kind
-
-    var id: String { rawValue }
-    var titleKey: String { "ios.ticket.field.\(rawValue)" }
-
-    /// Below this a field starts unticked and is flagged.
-    static let lowConfidence = 0.4
-
-    func confidence(in r: TicketReadingResult) -> Double? {
-        switch self {
-        case .origin: r.origin?.confidence
-        case .destination: r.destination?.confidence
-        case .date: r.date?.confidence
-        case .departureTime: r.departureTime?.confidence
-        case .serviceName: r.serviceName?.confidence
-        case .serviceNumber: r.serviceNumber?.confidence
-        case .car: r.car?.confidence
-        case .seat: r.seat?.confidence
-        case .seatClass: r.seatClass?.confidence
-        case .fare: r.fare?.confidence
-        case .kind: r.kind?.confidence
-        }
-    }
-
-    /// Clears this field (and the currency, for the fare).
-    func clear(_ r: inout TicketReadingResult) {
-        switch self {
-        case .origin: r.origin = nil
-        case .destination: r.destination = nil
-        case .date: r.date = nil
-        case .departureTime: r.departureTime = nil
-        case .serviceName: r.serviceName = nil
-        case .serviceNumber: r.serviceNumber = nil
-        case .car: r.car = nil
-        case .seat: r.seat = nil
-        case .seatClass: r.seatClass = nil
-        case .fare:
-            r.fare = nil
-            r.currency = nil
-        case .kind: r.kind = nil
-        }
-    }
-
-    @MainActor func value(in r: TicketReadingResult, _ localization: AppLocalization) -> String? {
-        switch self {
-        case .origin: return r.origin?.value
-        case .destination: return r.destination?.value
-        case .date:
-            guard let date = r.date?.value else { return nil }
-            let md = String(format: "%02d-%02d", date.month, date.day)
-            return date.year.map { String(format: "%04d-", $0) + md } ?? md
-        case .departureTime:
-            guard let time = r.departureTime?.value else { return nil }
-            let text = String(format: "%02d:%02d", time.hour, time.minute)
-            return time.dayOffset > 0 ? "\(text) +\(time.dayOffset)" : text
-        case .serviceName: return r.serviceName?.value
-        case .serviceNumber: return r.serviceNumber?.value
-        case .car: return r.car?.value
-        case .seat: return r.seat?.value
-        case .seatClass: return r.seatClass?.value
-        case .fare:
-            guard let fare = r.fare?.value else { return nil }
-            let code = r.currency?.value ?? ""
-            let exponent = code == "TWD" ? 2 : 0
-            let amount = Decimal(fare) / pow(10, exponent)
-            guard !code.isEmpty else { return "\(amount)" }
-            return amount.formatted(.currency(code: code).precision(.fractionLength(0...2)))
-        case .kind:
-            guard let kind = r.kind?.value else { return nil }
-            return localization.text("ios.ticket.kind.\(kind.rawValue)")
         }
     }
 }

@@ -398,6 +398,7 @@ final class AppControlHost: AppControlDriver {
             return first
         }
         let started = ContinuousClock.now
+        let ticketFill = spec.ticket.map { editor.fillTicket($0) }
         let from = try spec.from.map { try resolve($0, "from") }
         let to = try spec.to.map { try resolve($0, "to") }
         let vias = try spec.via?.map { try resolve($0, "via") }
@@ -421,6 +422,7 @@ final class AppControlHost: AppControlDriver {
                 ["planMs": .number(planMs), "applyMs": .number(Self.ms(since: started))]) { _, new in new }),
         ]
         if !choiceErrors.isEmpty { result["choiceErrors"] = .array(choiceErrors) }
+        if let ticketFill { result["ticket"] = ticketFill }
         if spec.save {
             do {
                 result["save"] = try await saveEditor(confirmRemoval: spec.confirmRemoval, timeoutMs: 30_000, stores)

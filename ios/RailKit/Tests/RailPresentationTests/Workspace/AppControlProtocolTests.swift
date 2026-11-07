@@ -65,6 +65,16 @@ struct AppControlProtocolTests {
         #expect(try !parse("addTrip", ["from": "a", "to": "b"]).allowedOnSharedStore)
     }
 
+    @Test("addTrip takes ticket lines in place of endpoints")
+    func addTripTicket() throws {
+        let command = try parse("addTrip", ["region": "jp", "ticket": "東京 → 新大阪|¥14,720| 7号車 12番A席 "])
+        #expect(command == .addTrip(AppControlTripSpec(
+            region: "jp", ticket: ["東京 → 新大阪", "¥14,720", "7号車 12番A席"])))
+        let listed = try parse("addTrip", ["ticket": ["a, b", "c"]])
+        #expect(listed == .addTrip(AppControlTripSpec(ticket: ["a, b", "c"])))
+        #expect(throws: AppControlError.missingArgument("from")) { try parse("addTrip", ["ticket": ""]) }
+    }
+
     @Test("editTrip accepts its edits flat or nested under changes")
     func editTripChanges() throws {
         let nested = try parse("editTrip", [

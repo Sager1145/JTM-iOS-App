@@ -153,6 +153,8 @@
 		891FB0E02720590351AA4727 /* AppControlHandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF0B3A27371242413B9B75 /* AppControlHandles.swift */; };
 		89ACB296A7F253927BF2DF2C /* TimetableQuickMatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333379484BA2846479A6D978 /* TimetableQuickMatchController.swift */; };
 		8B46548573B2E04B8390778B /* StatisticsFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD85C98C65724669DCE47BBB /* StatisticsFormatting.swift */; };
+		922B6CCCA8D06DA97F25C499 /* EditorAutofill.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */; };
+		618E17B0B30DE5F4A0F1B5A9 /* EditorQuickFillSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */; };
 		8BFCBE0EDA69E83E849FDAEB /* EditorServiceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */; };
 		8CC67A2501557D2A80BD6A36 /* WorkspaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E89AF741F770E6C3A32E73 /* WorkspaceLayout.swift */; };
 		8CEC8DDDB95243AB97BD57D1 /* AppControlCameraRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD0F8E8ACB442C0530CD68E /* AppControlCameraRun.swift */; };
@@ -319,6 +321,8 @@
 		285F90EEA8855B98EE537CEF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2863C959D67B0BE70B7C652D /* InspectionKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InspectionKit; path = Modules/RailAlignmentInspector/InspectionKit; sourceTree = SOURCE_ROOT; };
 		2886D2301E8AA3D63DB0D2F2 /* MapLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLayers.swift; sourceTree = "<group>"; };
+		CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAutofill.swift; sourceTree = "<group>"; };
+		567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorQuickFillSection.swift; sourceTree = "<group>"; };
 		28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorServiceSection.swift; sourceTree = "<group>"; };
 		29DD87A7E0BC158CD3968EDD /* UnifiedDiagnosticCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedDiagnosticCommands.swift; sourceTree = "<group>"; };
 		2B0EB050E48347704B9CADFE /* WorkspacePanelActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelActions.swift; sourceTree = "<group>"; };
@@ -828,6 +832,8 @@
 				478563F733F564E262B3B3B9 /* EditorMapPanel.swift */,
 				CC6CC9B55C518CF84B935E46 /* EditorRoutePlanning.swift */,
 				519DDE62A619BF8F6CCD534A /* EditorRouteSection.swift */,
+				CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */,
+				567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */,
 				28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */,
 				822C8B556819AD4284B84465 /* EditorStationsSection.swift */,
 				7E86E67052CE58114E73F4FA /* EditorTimeSection.swift */,
@@ -1270,6 +1276,8 @@
 				E86FDCF8F3FD05733D6FF0D6 /* EditorMapPanel.swift in Sources */,
 				A106B5968A208DE619910C89 /* EditorRoutePlanning.swift in Sources */,
 				3CB69DECDB52B616EAA820E4 /* EditorRouteSection.swift in Sources */,
+				922B6CCCA8D06DA97F25C499 /* EditorAutofill.swift in Sources */,
+				618E17B0B30DE5F4A0F1B5A9 /* EditorQuickFillSection.swift in Sources */,
 				8BFCBE0EDA69E83E849FDAEB /* EditorServiceSection.swift in Sources */,
 				C366E589F1820BED5D5B7563 /* EditorStationsSection.swift in Sources */,
 				133A4183B28499A0A82B783B /* EditorStrings.swift in Sources */,

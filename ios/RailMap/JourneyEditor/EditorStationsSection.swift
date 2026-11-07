@@ -3,47 +3,61 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
-/// The region picker, shown when more than one region is enabled.
-struct EditorRegionSection: View, JourneyEditorLabelling {
+/// The region picker, a row of the Journey section when more than one
+/// region is enabled.
+struct EditorRegionRow: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
     @Bindable var model: TripDraftModel
 
     var body: some View {
-        Section {
-            Picker(text("region", fallback: "Region"), selection: $model.region) {
-                ForEach(Region.enabledOrdered) { region in
-                    Text(localization.text(region.localizationKey, fallback: region.fallbackName))
-                        .tag(region)
-                }
+        Picker(text("region", fallback: "Region"), selection: $model.region) {
+            ForEach(Region.enabledOrdered) { region in
+                Text(localization.text(region.localizationKey, fallback: region.fallbackName))
+                    .tag(region)
             }
-            .pickerStyle(.menu)
         }
+        .pickerStyle(.menu)
+        .accessibilityIdentifier("newTripRegion")
     }
 }
 
-/// From, the stops along the way, and To.
+/// Region, From, the stops along the way, and To. Swap sits beside the two
+/// ends instead of on a row of its own; stations near the reader are offered
+/// under an empty From.
 struct EditorStationsSection: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
     @Bindable var model: TripDraftModel
 
     var body: some View {
         Section {
+            if Region.enabledOrdered.count > 1 {
+                EditorRegionRow(model: model)
+            }
             if model.catalog == nil, !model.loadFailed {
                 ProgressView()
                     .frame(maxWidth: .infinity)
             }
-            stationButton(
-                title: text("from", fallback: "From"),
-                station: model.origin,
-                line: model.originLine,
-                identifier: "newTripOrigin") { model.picking = .origin }
-            Button(action: model.swapStations) {
-                Image(systemName: "arrow.up.arrow.down")
-                    .frame(maxWidth: .infinity, minHeight: 44)
+            HStack(spacing: 8) {
+                stationButton(
+                    title: text("from", fallback: "From"),
+                    station: model.origin,
+                    line: model.originLine,
+                    source: model.filledBy[.origin],
+                    identifier: "newTripOrigin") { model.picking = .origin }
+                Button(action: model.swapStations) {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .font(.body.weight(.semibold))
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.borderless)
+                .accessibilityIdentifier("newTripSwap")
+                .accessibilityLabel(text("swap", fallback: "Swap stations"))
+                .disabled(model.origin == nil && model.destination == nil)
             }
-            .accessibilityIdentifier("newTripSwap")
-            .accessibilityLabel(text("swap", fallback: "Swap stations"))
-            .disabled(model.origin == nil && model.destination == nil)
+            if model.origin == nil, !model.nearbyStations.isEmpty {
+                nearbyRow
+            }
             ForEach(Array(model.vias.enumerated()), id: \.element.id) { index, via in
                 viaRow(via, index: index)
             }
@@ -61,10 +75,38 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 title: text("to", fallback: "To"),
                 station: model.destination,
                 line: model.destinationLine,
+                source: model.filledBy[.destination],
                 identifier: "newTripDestination") { model.picking = .destination }
         } header: {
-            Text(text("stations", fallback: "Stations"))
+            Text(text("journey", fallback: "Journey"))
         }
+    }
+
+    /// Up to three stations near the reader's last known position.
+    private var nearbyRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                Image(systemName: "location")
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+                ForEach(Array(model.nearbyStations.enumerated()), id: \.element.id) { index, nearby in
+                    Button {
+                        model.assign(nearby.station, to: .origin, reduceMotion: true)
+                    } label: {
+                        Text(text("nearbyStation", fallback: "{station} · {distance} m",
+                                  ["station": .string(stationTitle(nearby.station)),
+                                   "distance": .string(String(Int(nearby.meters.rounded())))]))
+                            .font(.footnote)
+                            .lineLimit(1)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .accessibilityIdentifier("newTripNearby-\(index)")
+                }
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(text("nearby", fallback: "Stations near you"))
     }
 
     private func viaRow(_ via: TripDraftModel.ViaStop, index: Int) -> some View {
@@ -102,14 +144,18 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
         title: String,
         station: CatalogStation?,
         line: CatalogLine?,
+        source: TripDraftModel.FillSource? = nil,
         identifier: String,
         choose: @escaping () -> Void
     ) -> some View {
         Button(action: choose) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    Text(title)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    FillSourceBadge(source: source)
+                }
                 Text(stationTitle(station))
                     .font(.body)
                     .foregroundStyle(station == nil ? Color.secondary : Color.primary)

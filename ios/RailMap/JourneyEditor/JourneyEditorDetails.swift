@@ -16,6 +16,11 @@ struct JourneyEditorDetails: View {
     let suggestionTrains: [Train]
     let issues: [RideDraftIssue]
     @Binding var expanded: Bool
+    /// Which part this instance draws: the editor puts the stops beside the
+    /// route and the rest at the end of the form.
+    var part: Part = .all
+
+    enum Part { case all, stops, more }
 
     private enum OfficialEnglishName: Equatable {
         case loading
@@ -37,7 +42,11 @@ struct JourneyEditorDetails: View {
     @State private var officialEnglishName: OfficialEnglishName = .loading
 
     var body: some View {
-        if showsStops, !draft.stops.isEmpty { stopsSection }
+        if part != .more, showsStops, !draft.stops.isEmpty { stopsSection }
+        if part != .stops { moreDetails }
+    }
+
+    @ViewBuilder private var moreDetails: some View {
         Section {
             Button {
                 expanded.toggle()

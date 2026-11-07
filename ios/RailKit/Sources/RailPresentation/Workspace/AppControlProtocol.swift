@@ -164,11 +164,14 @@ public struct AppControlTripSpec: Equatable, Sendable {
     /// Accept a route that drops recorded stops (the editor's confirmation).
     public var confirmRemoval: Bool
     public var timeoutMs: Int
+    /// Text lines of a paper ticket, read through the ticket parser and filled
+    /// in one shot before any route is set, as a scan would.
+    public var ticket: [String]?
 
     public init(
         region: String? = nil, from: String? = nil, to: String? = nil, date: String? = nil,
         via: [String]? = nil, sectionChoices: [Int: String] = [:], save: Bool = false,
-        confirmRemoval: Bool = false, timeoutMs: Int = 60_000
+        confirmRemoval: Bool = false, timeoutMs: Int = 60_000, ticket: [String]? = nil
     ) {
         self.region = region
         self.from = from
@@ -179,6 +182,7 @@ public struct AppControlTripSpec: Equatable, Sendable {
         self.save = save
         self.confirmRemoval = confirmRemoval
         self.timeoutMs = timeoutMs
+        self.ticket = ticket
     }
 }
 
@@ -368,7 +372,14 @@ public enum AppControlCommand: Equatable, Sendable {
                 save: try bool("save", default: false),
                 confirmRemoval: try bool("confirmRemoval", default: false),
                 timeoutMs: try int("timeoutMs", default: 60_000))
-            if requiresEndpoints {
+            // Ticket lines contain commas (fares), so a string splits on "|" or newlines.
+            if let raw = args["ticket"] {
+                let lines = raw.array?.compactMap(\.string)
+                    ?? raw.string?.split(whereSeparator: { $0 == "|" || $0.isNewline }).map(String.init)
+                spec.ticket = lines?.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+            }
+            // A ticket names the stations itself.
+            if requiresEndpoints, spec.ticket?.isEmpty ?? true {
                 guard spec.from != nil else { throw AppControlError.missingArgument("from") }
                 guard spec.to != nil else { throw AppControlError.missingArgument("to") }
             }

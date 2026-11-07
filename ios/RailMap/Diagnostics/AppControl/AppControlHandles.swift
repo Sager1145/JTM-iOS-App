@@ -51,6 +51,9 @@ struct AppControlEditorHandle {
     var snapshot: () -> AppControlEditorSnapshot
     /// The `proposal` input for the selected corridor (see the editor's DEBUG extension).
     var autofillProbe: () -> AppControlJSON
+    /// Parses ticket text lines and fills the draft in one shot; returns the
+    /// number of fields written and the source of each filled field.
+    var fillTicket: ([String]) -> AppControlJSON
 }
 
 /// The editor's planning state, as the control channel reports it.

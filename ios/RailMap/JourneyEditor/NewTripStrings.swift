@@ -389,5 +389,121 @@ enum NewTripStrings {
             .en: "Did you mean {text}?", .ja: "もしかして：{text}",
             .zhHant: "您是不是要找：{text}", .zhHans: "您是不是要找：{text}",
         ],
+        "ios.newTrip.journey": [
+            .en: "Journey", .ja: "行程",
+            .zhHant: "行程", .zhHans: "行程",
+        ],
+        "ios.newTrip.scanTicket": [
+            .en: "Scan ticket", .ja: "きっぷを読み取る",
+            .zhHant: "掃描車票", .zhHans: "扫描车票",
+        ],
+        "ios.newTrip.findTrain": [
+            .en: "Find train", .ja: "列車を探す",
+            .zhHant: "尋找列車", .zhHans: "查找列车",
+        ],
+        "ios.newTrip.ticketFilled": [
+            .en: "Filled {count} fields from the ticket. Check them below.", .ja: "きっぷから{count}項目を入力しました。下で確認してください。",
+            .zhHant: "已從車票填入 {count} 個欄位，請在下方確認。", .zhHans: "已从车票填入 {count} 个字段，请在下方确认。",
+        ],
+        "ios.newTrip.ticketFilledNone": [
+            .en: "Nothing on the ticket could be used.", .ja: "きっぷから使える情報がありませんでした。",
+            .zhHant: "車票上沒有可用的資訊。", .zhHans: "车票上没有可用的信息。",
+        ],
+        "ios.newTrip.quickFillNote": [
+            .en: "A ticket or timetable fills what it knows. Fields you change are never overwritten.", .ja: "きっぷや時刻表で分かる項目を自動入力します。自分で変更した項目は上書きされません。",
+            .zhHant: "車票或時刻表會填入已知的欄位，您修改過的欄位不會被覆寫。", .zhHans: "车票或时刻表会填入已知的字段，您修改过的字段不会被覆盖。",
+        ],
+        "ios.newTrip.fillSource.ticket": [
+            .en: "Ticket", .ja: "きっぷ",
+            .zhHant: "車票", .zhHans: "车票",
+        ],
+        "ios.newTrip.fillSource.timetable": [
+            .en: "Timetable", .ja: "時刻表",
+            .zhHant: "時刻表", .zhHans: "时刻表",
+        ],
+        "ios.newTrip.fillSource.nearby": [
+            .en: "Nearby", .ja: "現在地",
+            .zhHant: "附近", .zhHans: "附近",
+        ],
+        "ios.newTrip.nearbyStation": [
+            .en: "{station} · {distance} m", .ja: "{station}・{distance} m",
+            .zhHant: "{station}・{distance} 公尺", .zhHans: "{station}・{distance} 米",
+        ],
+        "ios.newTrip.nearby": [
+            .en: "Stations near you", .ja: "近くの駅",
+            .zhHant: "附近車站", .zhHans: "附近车站",
+        ],
+        "ios.newTrip.timeFilled": [
+            .en: "Check the time; changing it keeps your value.", .ja: "時刻を確認してください。変更した値はそのまま保持されます。",
+            .zhHant: "請確認時間；修改後會保留您的設定。", .zhHans: "请确认时间；修改后会保留您的设置。",
+        ],
+        "ios.newTrip.trainNumberShort": [
+            .en: "Train", .ja: "列車",
+            .zhHant: "列車", .zhHans: "列车",
+        ],
+        "ios.newTrip.suggestionHint": [
+            .en: "Fills in this value", .ja: "この値を入力します",
+            .zhHant: "填入此值", .zhHans: "填入此值",
+        ],
+        "ios.newTrip.setNumber": [
+            .en: "Set", .ja: "編成",
+            .zhHant: "編組", .zhHans: "编组",
+        ],
+        "ios.newTrip.carCount": [
+            .en: "Cars", .ja: "両数",
+            .zhHant: "節數", .zhHans: "节数",
+        ],
+        "ios.newTrip.riddenCar": [
+            .en: "Car ridden", .ja: "乗車号車",
+            .zhHant: "搭乘車廂", .zhHans: "乘坐车厢",
+        ],
+        "ios.newTrip.carNumbers": [
+            .en: "Car numbers", .ja: "車両番号",
+            .zhHant: "車號", .zhHans: "车号",
+        ],
+        "ios.newTrip.livery": [
+            .en: "Livery", .ja: "塗装",
+            .zhHant: "塗裝", .zhHans: "涂装",
+        ],
+        "ios.newTrip.vehicle": [
+            .en: "Train and car", .ja: "車両",
+            .zhHant: "車輛", .zhHans: "车辆",
+        ],
+        "ios.newTrip.carRow": [
+            .en: "Car {n}", .ja: "{n}号車",
+            .zhHant: "第 {n} 車", .zhHans: "第 {n} 节",
+        ],
+        "ios.newTrip.carNumber": [
+            .en: "Number", .ja: "番号",
+            .zhHant: "號碼", .zhHans: "号码",
+        ],
+        "ios.newTrip.carNumbersNote": [
+            .en: "Set Cars first to list every car of the set.", .ja: "先に両数を入れると編成の全車両が並びます。",
+            .zhHant: "先填寫節數即可列出整組車廂。", .zhHans: "先填写节数即可列出整组车厢。",
+        ],
+        "ios.newTrip.seat": [
+            .en: "Seat", .ja: "座席",
+            .zhHant: "座位", .zhHans: "座位",
+        ],
+        "ios.newTrip.seatClass": [
+            .en: "Class", .ja: "設備",
+            .zhHant: "車廂等級", .zhHans: "车厢等级",
+        ],
+        "ios.newTrip.fare": [
+            .en: "Fare", .ja: "運賃・料金",
+            .zhHant: "票價", .zhHans: "票价",
+        ],
+        "ios.newTrip.ticketKind": [
+            .en: "Ticket", .ja: "券種",
+            .zhHant: "票種", .zhHans: "票种",
+        ],
+        "ios.newTrip.ticketKindNone": [
+            .en: "Not set", .ja: "未設定",
+            .zhHant: "未設定", .zhHans: "未设置",
+        ],
+        "ios.newTrip.ticket": [
+            .en: "Ticket", .ja: "きっぷ",
+            .zhHant: "車票", .zhHans: "车票",
+        ],
     ]
 }

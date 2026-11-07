@@ -18,11 +18,37 @@ final class TripDraftModel {
     static let repairRoutePrefix = "repair-"
     static let alternativePrefix = "alt"
 
-    /// A header value the reader set. A shift that follows the departure,
-    /// or a value a timetable filled, does not count.
-    enum Field: Hashable {
+    /// A value the reader set. A shift that follows the departure, or a
+    /// value a ticket, timetable or history filled, does not count: those
+    /// are in `filledBy`, and no fill ever writes a field in `touched`.
+    enum Field: Hashable, CaseIterable {
         case departure
         case arrival
+        /// The departure's day, from a ticket that printed no time.
+        case date
+        case origin
+        case destination
+        case trainType
+        case number
+        case company
+        case serviceName
+        case vehicleType
+        case setNumber
+        case carCount
+        case riddenCar
+        case carNumbers
+        case livery
+        case seat
+        case seatClass
+        case fare
+        case ticketKind
+    }
+
+    /// Where an automatic value came from, shown beside the field.
+    enum FillSource: String, Equatable {
+        case ticket
+        case timetable
+        case nearby
     }
 
     /// Where a change to the header comes from.
@@ -32,6 +58,8 @@ final class TripDraftModel {
         /// A timetable being applied: nothing becomes touched and the
         /// applied timetable is kept.
         case timetable
+        /// A ticket scan: nothing becomes touched.
+        case ticket
     }
 
     /// Header values to change together. A nil value is left as it is.
@@ -47,6 +75,7 @@ final class TripDraftModel {
         var arrival: Date
         var previousDeparture: Date
         var touched: Set<Field>
+        var filledBy: [Field: FillSource]
     }
 
     /// A route change that would drop recorded stops, waiting for the reader.
@@ -171,6 +200,26 @@ final class TripDraftModel {
     var showsCompletion = false
     /// Header fields the reader set (`apply(_:source:)` with `.reader`).
     var touched: Set<Field> = []
+    /// Fields an automatic source wrote, and which source. Cleared for a
+    /// field the moment the reader sets it.
+    var filledBy: [Field: FillSource] = [:]
+    /// The ticket scan sheet.
+    var showsTicketScan = false
+    /// What the last ticket scan filled, for the summary under Quick fill.
+    var ticketFillCount: Int?
+    /// A timetable lookup a ticket started.
+    var ticketMatchTask: Task<Void, Never>?
+    /// The timetable trip last applied, so a late formation lookup lands
+    /// only on the trip it was read for.
+    var appliedTimetableTripID: String?
+    /// Stations near the reader, offered under From on a new trip.
+    var nearbyStations: [NearbyStation] = []
+
+    struct NearbyStation: Identifiable, Equatable {
+        var station: CatalogStation
+        var meters: Double
+        var id: StationKey { station.key }
+    }
     /// Header values before a timetable was applied, restored by Remove.
     var headerBeforeTimetable: HeaderSnapshot?
     var removal: RemovalRequest?
@@ -216,6 +265,7 @@ final class TripDraftModel {
     func apply(_ patch: Patch, source: PatchSource) {
         if let value = patch.trainType {
             if source == .reader, timetableTrain != nil, value != trainType { timetableTrainTypeChanged = true }
+            if source == .reader { markTouched(.trainType) }
             trainType = value
         }
         if let value = patch.departure { setTime(value, field: .departure, source: source) }
@@ -227,11 +277,17 @@ final class TripDraftModel {
         let previous = isDeparture ? departure : arrival
         // Only the departure day identifies the service; overnight
         // arrivals legitimately fall on the next civil day.
-        if isDeparture, source == .reader, dayString(value) != dayString(previous),
-           let timetableTrain, dayString(value) != timetableTrain.date {
+        // A reader moving the day, or a ticket naming another day, replaces
+        // a timetable that ran on a different day.
+        if isDeparture, let timetableTrain, dayString(value) != timetableTrain.date,
+           source == .ticket || (source == .reader && dayString(value) != dayString(previous)) {
             clearTimetable()
         }
-        if source == .reader { touched.insert(field) }
+        if source == .reader {
+            touched.insert(field)
+            filledBy[field] = nil
+            if isDeparture { filledBy[.date] = nil }
+        }
         if isDeparture { departure = value } else { arrival = value }
     }
 
@@ -256,6 +312,7 @@ final class TripDraftModel {
             return
         }
         clearTimetable()
+        markStationTouched(field)
         switch field {
         case .origin:
             origin = station
@@ -275,6 +332,12 @@ final class TripDraftModel {
     func regionChanged() {
         draftGeneration += 1
         picking = nil
+        // Another network: its stations and any ticket's values start over.
+        ticketMatchTask?.cancel()
+        filledBy = [:]
+        touched.subtract([.origin, .destination, .serviceName])
+        nearbyStations = []
+        ticketFillCount = nil
         allowUnverifiedConnections = false
         clearTimetable()
         limitedExpressName = ""
@@ -395,6 +458,7 @@ final class TripDraftModel {
 
     func assign(_ station: CatalogStation, to field: StationField, reduceMotion: Bool) {
         clearTimetable()
+        markStationTouched(field)
         switch field {
         case .origin:
             origin = station
@@ -609,8 +673,13 @@ final class TripDraftModel {
     /// completion. A new trip's untouched header shows only the moment the
     /// editor opened, which is a date and not a time.
     var headerTimeIsSet: Bool {
-        timetableTrain != nil || touched.contains(.departure) || touched.contains(.arrival)
+        timetableTrain != nil || timeIsSet(.departure) || timeIsSet(.arrival)
             || seed.departureKnown || seed.arrivalKnown
+    }
+
+    /// The reader or a ticket gave this clock; the editor's placeholder did not.
+    func timeIsSet(_ field: Field) -> Bool {
+        touched.contains(field) || filledBy[field] == .ticket
     }
 
     /// What Ridden defaults to: a trip that would be filed under past now is
@@ -850,6 +919,8 @@ final class TripDraftModel {
 
     func swapStations() {
         clearTimetable()
+        markStationTouched(.origin)
+        markStationTouched(.destination)
         let previous = origin
         let previousLine = originLine
         origin = destination
@@ -954,6 +1025,7 @@ final class TripDraftModel {
             applyHeader(to: &result)
         }
         fileByDateIfUntimed(&result)
+        Self.trimDetails(&result)
         let blocking = RideDraftValidation.issues(
             for: result, originalID: train.id, existingIDs: existingIDs).blocking
         guard blocking.isEmpty else {
@@ -974,7 +1046,7 @@ final class TripDraftModel {
             result.listByDate = true
             result.listMembership = TripListRules.initialMembership(
                 for: result, clock: Region.resolved(result).clock, now: Date())
-        } else if timetableTrain != nil || touched.contains(.departure) || touched.contains(.arrival) {
+        } else if timetableTrain != nil || timeIsSet(.departure) || timeIsSet(.arrival) {
             result.listByDate = nil
         }
     }
@@ -985,7 +1057,7 @@ final class TripDraftModel {
     func applyHeader(to result: inout Train) {
         let last = result.stops.count - 1
         let serviceDate = headerServiceDate()
-        if touched.contains(.departure) {
+        if timeIsSet(.departure) || filledBy[.date] != nil {
             result.date = serviceDate
             if last >= 1, seed.departureKnown
                 || clock(departure, extraDays: 0) != clock(seed.departure, extraDays: 0) {
@@ -993,7 +1065,7 @@ final class TripDraftModel {
                     departure, extraDays: extraDays(from: serviceDate, to: departure))
             }
         }
-        if touched.contains(.arrival), last >= 1, seed.arrivalKnown
+        if timeIsSet(.arrival), last >= 1, seed.arrivalKnown
             || clock(arrival, extraDays: 0) != clock(seed.arrival, extraDays: 0) {
             result.stops[last].arrival = clock(
                 arrival, extraDays: extraDays(from: serviceDate, to: arrival))
@@ -1012,7 +1084,7 @@ final class TripDraftModel {
     /// day the service started, not on the calendar day it left.
     func headerServiceDate() -> String {
         let saved = Dates.normalizeDateString(draft.date)
-        guard touched.contains(.departure) else { return saved ?? dayString(departure) }
+        guard timeIsSet(.departure) || filledBy[.date] != nil else { return saved ?? dayString(departure) }
         let calendar = Calendar.current
         let moved = calendar.dateComponents(
             [.day], from: calendar.startOfDay(for: seed.departure),

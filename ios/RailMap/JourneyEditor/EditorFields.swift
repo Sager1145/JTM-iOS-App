@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// A form field that keeps its label visible once it has a value.
@@ -61,3 +62,95 @@ struct EditorTextField: View {
 }
 
 
+
+/// Where an automatic value came from, as a small tag beside its field. It
+/// disappears the moment the reader edits the value.
+struct FillSourceBadge: View {
+    @Environment(AppLocalization.self) private var localization
+    let source: TripDraftModel.FillSource?
+
+    var body: some View {
+        if let source {
+            // One capsule: a Label inside a LabeledContent label is split
+            // into separate icon and title pieces.
+            HStack(spacing: 3) {
+                Image(systemName: source.symbol)
+                Text(localization.text("ios.newTrip.fillSource.\(source.rawValue)",
+                                       fallback: source.rawValue.capitalized))
+            }
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(.tint)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(.tint.opacity(0.12), in: Capsule())
+                .fixedSize()
+                .accessibilityElement(children: .combine)
+        }
+    }
+}
+
+extension TripDraftModel.FillSource {
+    var symbol: String {
+        switch self {
+        case .ticket: "ticket"
+        case .timetable: "clock"
+        case .nearby: "location"
+        }
+    }
+}
+
+/// One compact row: the label and its source tag on the leading side, the
+/// value on the trailing side. Most detail fields are a single line.
+struct EditorCompactRow<Value: View>: View {
+    let title: String
+    var source: TripDraftModel.FillSource? = nil
+    @ViewBuilder var value: Value
+
+    var body: some View {
+        LabeledContent {
+            value
+        } label: {
+            HStack(spacing: 6) {
+                Text(title)
+                FillSourceBadge(source: source)
+            }
+        }
+        .frame(minHeight: 44)
+    }
+}
+
+/// A one-line text entry for `EditorCompactRow`, right-aligned like a
+/// Settings value.
+struct EditorInlineTextField: View {
+    let title: String
+    @Binding var text: String
+    var keyboard: UIKeyboardType = .default
+
+    var body: some View {
+        TextField(title, text: $text)
+            .multilineTextAlignment(.trailing)
+            .keyboardType(keyboard)
+            .autocorrectionDisabled()
+            .labelsHidden()
+    }
+}
+
+/// A value the reader has used before, offered under an empty field.
+struct EditorSuggestionChip: View {
+    @Environment(AppLocalization.self) private var localization
+    let value: String
+    let identifier: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Label(value, systemImage: "clock.arrow.circlepath")
+                .font(.footnote)
+                .lineLimit(1)
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.small)
+        .accessibilityHint(localization.text("ios.newTrip.suggestionHint", fallback: "Fills in this value"))
+        .accessibilityIdentifier(identifier)
+    }
+}

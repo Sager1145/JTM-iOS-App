@@ -36,6 +36,8 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
 
     @State var model: TripDraftModel
     @State private var showsDiscardConfirmation = false
+    /// The reader's usual values on this route, offered under empty fields.
+    @State private var historySuggestions: [TripDraftModel.Field: String] = [:]
 
     init(
         train: Train,
@@ -125,12 +127,18 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         .task(id: model.directionKey) { await model.loadDirections(original: train) }
         // Closing the editor stops a running repair search at once.
         .onDisappear { model.repair.cancel() }
+        .sheet(isPresented: $model.showsTicketScan) {
+            if let region = model.ticketRegion {
+                TicketScanView(region: region) { reading in model.fillFromTicket(reading) }
+            }
+        }
         .sheet(isPresented: $model.showsFillDetails) {
             EditorFillDetailsSheet(model: model, original: train)
         }
         .sheet(isPresented: $model.showsVehiclePicker) {
             VehiclePickerView(
-                vehicleType: $model.draft.vehicleType,
+                vehicleType: model.readerBinding(
+                    .vehicleType, get: { model.draft.vehicleType }, set: { model.draft.vehicleType = $0 }),
                 suggestions: model.vehicleSuggestions(among: suggestionTrains))
         }
         .sheet(item: $model.picking) { field in
@@ -201,8 +209,20 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         .onChange(of: model.outcome) { _, _ in model.refreshDrawnRoutes() }
         .onChange(of: model.timetableTrain != nil) { _, _ in model.refreshDrawnRoutes() }
         .task(id: model.region) { await model.loadRegion() }
+        .task(id: model.catalog != nil) { model.locateNearbyStations() }
+        .task(id: model.endpointIdentity) {
+            historySuggestions = model.historySuggestions(among: suggestionTrains)
+        }
+        .onDisappear { model.ticketMatchTask?.cancel() }
         .task(id: model.routeIdentity) { await model.planRoute() }
 #if DEBUG
+        // UI tests stand in for the camera: the lines a scan would read.
+        .task(id: model.catalog != nil) {
+            guard isNew, model.catalog != nil, model.ticketFillCount == nil, let region = model.ticketRegion,
+                  let raw = UITestLaunchConfiguration.current[.ticket], !raw.isEmpty else { return }
+            let lines = raw.split(separator: "|").map { RecognizedLine(text: String($0)) }
+            model.fillFromTicket(TicketParser.parse(lines: lines, region: region))
+        }
         // Test control channel: lend this editor's own actions (AppControlHost).
         .modifier(AppControlEditorRegistration(handle: appControlHandle))
 #endif
@@ -218,25 +238,26 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            if Region.enabledOrdered.count > 1 {
-                EditorRegionSection(model: model)
-            }
+            // Quick fill first, then the order a ticket reads: where, when,
+            // which train, then what was ridden and what it cost.
+            EditorQuickFillSection(model: model)
             EditorStationsSection(model: model)
-            EditorServiceSection(model: model)
             EditorTimeSection(model: model)
-            Section {
-                Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
-                    get: { model.isRidden }, set: { model.riddenOverride = $0 }))
-                    .accessibilityIdentifier("newTripRidden")
-            }
-            EditorTripDetailsSection(model: model)
+            EditorServiceSection(model: model, suggestions: historySuggestions)
             if model.timetableTrain != nil || model.hasRecordRoute || (model.origin != nil && model.destination != nil) {
                 EditorRouteSection(model: model, original: train, reviewGaps: reviewGaps)
             }
+            // A saved trip's stops belong with its route.
             JourneyEditorDetails(
                 draft: $model.draft, region: model.region, showsStops: model.showsRecordRoute,
                 suggestionTrains: suggestionTrains, issues: model.detailIssues,
-                expanded: $model.detailsExpanded)
+                expanded: $model.detailsExpanded, part: .stops)
+            EditorVehicleSection(model: model, suggestions: historySuggestions)
+            EditorTicketSection(model: model)
+            JourneyEditorDetails(
+                draft: $model.draft, region: model.region, showsStops: model.showsRecordRoute,
+                suggestionTrains: suggestionTrains, issues: model.detailIssues,
+                expanded: $model.detailsExpanded, part: .more)
             if !model.saveIssues.isEmpty {
                 Section {
                     ForEach(model.saveIssues) { issue in
@@ -251,6 +272,17 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         }
         .accessibilityIdentifier("newTripForm")
         .scrollDismissesKeyboard(.interactively)
+        // Number pads (cars, car ridden, fare) have no Return key.
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button(localization.text("ios.done", fallback: "Done")) {
+                    UIApplication.shared.sendAction(
+                        #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+                .accessibilityIdentifier("newTripKeyboardDone")
+            }
+        }
     }
 
     private var header: some View {
@@ -342,7 +374,21 @@ extension JourneyEditorView {
             },
             commit: { confirmed in commit(confirmedRemoval: confirmed) },
             snapshot: { appControlSnapshot },
-            autofillProbe: { appControlAutofillProbe })
+            autofillProbe: { appControlAutofillProbe },
+            fillTicket: { lines in
+                guard let region = model.ticketRegion else { return ["error": "no paper tickets in this region"] }
+                let reading = TicketParser.parse(lines: lines.map { RecognizedLine(text: $0) }, region: region)
+                let written = model.fillFromTicket(reading)
+                return [
+                    "written": .number(Double(written)),
+                    "filled": .object(model.filledBy.reduce(into: [:]) { result, item in
+                        result[String(describing: item.key)] = .string(item.value.rawValue)
+                    }),
+                    "trainNumber": .string(model.trainNumber), "trainType": .string(model.trainType),
+                    "origin": .string(model.origin?.name ?? ""), "destination": .string(model.destination?.name ?? ""),
+                    "departure": .string(model.dayString(model.departure) + " " + model.clock(model.departure, extraDays: 0)),
+                ]
+            })
     }
 
     /// What `corridorDraft(for:)` hands `LocalJourneyAutofill.proposal` for the

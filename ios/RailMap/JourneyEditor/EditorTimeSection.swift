@@ -3,7 +3,9 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
-/// Departure and arrival, typed or picked (`TypedDateTimeField`).
+/// Departure and arrival, typed or picked (`TypedDateTimeField`), and
+/// whether the ride is done. Ridden follows the time (`TripListRules`) until
+/// the reader sets it.
 struct EditorTimeSection: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
     let model: TripDraftModel
@@ -18,6 +20,17 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 title: text("arrival", fallback: "Arrival"),
                 value: model.timetableTimeSelection(isDeparture: false),
                 identifier: "newTripArrival")
+            if let source = timeSource {
+                HStack(spacing: 6) {
+                    FillSourceBadge(source: source)
+                    Text(text("timeFilled", fallback: "Check the time; changing it keeps your value."))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("newTripTimeSource")
+            }
             if model.arrival < model.departure {
                 Text(text(
                     "arrivalBeforeDeparture",
@@ -26,8 +39,16 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
+                get: { model.isRidden }, set: { model.riddenOverride = $0 }))
+                .accessibilityIdentifier("newTripRidden")
         } header: {
             Text(text("time", fallback: "Time"))
         }
+    }
+
+    /// The source of a clock or day the reader has not set themselves.
+    private var timeSource: TripDraftModel.FillSource? {
+        model.filledBy[.departure] ?? model.filledBy[.arrival] ?? model.filledBy[.date]
     }
 }

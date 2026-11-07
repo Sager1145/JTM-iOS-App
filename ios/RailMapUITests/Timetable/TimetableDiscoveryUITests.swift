@@ -71,8 +71,9 @@ final class TimetableDiscoveryUITests: XCTestCase {
         NewTripTimetableTestSupport.reveal(departure, in: app)
         let originalDate = departure.value as? String
         XCTAssertNotNil(originalDate)
-        // The timetable browser is in the one Fill in trip details sheet.
-        NewTripTimetableTestSupport.reveal(app.buttons["newTripFillDetails"], in: app)
+        // The timetable browser is in the Find train sheet, opened from the
+        // quick-fill row at the top of the form (above the departure).
+        NewTripTimetableTestSupport.reveal(app.buttons["newTripFillDetails"], in: app, upward: true)
         app.buttons["newTripFillDetails"].tap()
         XCTAssertTrue(app.buttons["newTripTimetableBrowse"].waitForExistence(timeout: 8))
         app.buttons["newTripTimetableBrowse"].tap()

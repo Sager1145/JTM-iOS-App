@@ -54,19 +54,33 @@ extension TripDraftModel {
     }
 
     /// Remove puts the header back as it was before the timetable filled it.
+    /// Only the header's own fields go back; whatever the reader set
+    /// elsewhere while the timetable was applied stays theirs.
     func removeTimetable() {
         if let header = headerBeforeTimetable {
             trainType = header.trainType
             departure = header.departure
             arrival = header.arrival
             previousDeparture = header.previousDeparture
-            touched = header.touched
+            let headerFields = Self.headerFields
+            touched = touched.subtracting(headerFields).union(header.touched.intersection(headerFields))
+            for field in headerFields { filledBy[field] = header.filledBy[field] }
+        }
+        if filledBy[.serviceName] == .timetable {
+            limitedExpressName = ""
+            filledBy[.serviceName] = nil
         }
         clearTimetable()
     }
 
+    /// The fields a timetable's header snapshot restores.
+    static let headerFields: Set<Field> = [.departure, .arrival, .date, .trainType]
+
+    /// A timetable no longer applies: the formation it filled goes with it.
     func clearTimetable() {
+        clearFormationFill()
         headerBeforeTimetable = nil
+        appliedTimetableTripID = nil
         timetableTrain = nil
         timetableRideSpan = nil
         timetableTrainTypeChanged = false
@@ -74,7 +88,9 @@ extension TripDraftModel {
         saveIssues = []
     }
 
-    func applyTimetableTrip(_ trip: TrainTimetableDatabase.Trip) {
+    /// `automatic` is a timetable a ticket scan found rather than one the
+    /// reader picked: it then writes no field the reader set.
+    func applyTimetableTrip(_ trip: TrainTimetableDatabase.Trip, automatic: Bool = false) {
         guard var drafted = JourneyDraftWork.timetableDraft(
             from: trip, appliedTo: timetableBase, ridden: riddenOverride ?? true) else {
             timetableFailed = true
@@ -90,11 +106,16 @@ extension TripDraftModel {
                from: trip, appliedTo: timetableBase, ridden: false) {
             drafted = unridden
         }
-        if acceptTimetable(drafted.train) {
-            limitedExpressName = drafted.serviceName
+        if acceptTimetable(drafted.train, automatic: automatic) {
+            if !(automatic && touched.contains(.serviceName)) {
+                limitedExpressName = drafted.serviceName
+                if !drafted.serviceName.isEmpty { filledBy[.serviceName] = .timetable }
+            }
             if let kept = timetableTrain {
                 TimetableRouteEvidence.rememberAppliedOccurrence(trip: trip, train: kept)
             }
+            appliedTimetableTripID = trip.id
+            fillFormation(of: trip)
         }
     }
 
@@ -104,7 +125,10 @@ extension TripDraftModel {
     }
 
     @discardableResult
-    func acceptTimetable(_ applied: Train) -> Bool {
+    func acceptTimetable(_ applied: Train, automatic: Bool = false) -> Bool {
+        // A formation still being read for an earlier trip must not land here.
+        appliedTimetableTripID = nil
+        clearFormationFill()
         guard applied.stops.count >= 2 else {
             timetableFailed = true
             return false
@@ -168,7 +192,7 @@ extension TripDraftModel {
             headerBeforeTimetable = HeaderSnapshot(
                 trainType: trainType, departure: departure, arrival: arrival,
                 previousDeparture: previousDeparture,
-                touched: touched)
+                touched: touched, filledBy: filledBy)
         }
         timetableTrain = applied
         timetableRideSpan = span
@@ -176,10 +200,15 @@ extension TripDraftModel {
         timetableFailed = false
         saveIssues = []
         let type = applied.trainType ?? ""
-        if type.contains("新幹線") { trainType = "highSpeed" }
-        else if type.contains("特急") { trainType = "limitedExpress" }
-        else if type.contains("急行") { trainType = "express" }
-        else if type.contains("快速") { trainType = "rapid" }
+        let publishedType: String? =
+            type.contains("新幹線") ? "highSpeed"
+            : type.contains("特急") ? "limitedExpress"
+            : type.contains("急行") ? "express"
+            : type.contains("快速") ? "rapid" : nil
+        if let publishedType, !(automatic && touched.contains(.trainType)) {
+            trainType = publishedType
+            filledBy[.trainType] = .timetable
+        }
         let day = applied.date ?? dayString(departure)
         var appliedDeparture: Date?
         var appliedArrival: Date?
@@ -192,7 +221,14 @@ extension TripDraftModel {
             appliedArrival = date
         }
         // The timetable's clocks are not the reader's: nothing becomes touched.
+        // A timetable a ticket found leaves a clock the reader set alone.
+        if automatic, touched.contains(.departure) { appliedDeparture = nil }
+        if automatic, touched.contains(.arrival) { appliedArrival = nil }
         apply(Patch(departure: appliedDeparture, arrival: appliedArrival), source: .timetable)
+        // A clock the ticket printed stays the ticket's: it is a real time
+        // even if this timetable is later removed.
+        if appliedDeparture != nil, filledBy[.departure] != .ticket { filledBy[.departure] = .timetable }
+        if appliedArrival != nil, filledBy[.arrival] != .ticket { filledBy[.arrival] = .timetable }
         if let appliedDeparture, appliedArrival != nil {
             previousDeparture = appliedDeparture
         }
@@ -215,7 +251,7 @@ extension TripDraftModel {
         result.region = region.code
         let serviceDate = result.date ?? dayString(departure)
         result.date = serviceDate
-        if timetableTrainTypeChanged { result.trainType = trainType }
+        if timetableTrainTypeChanged || touched.contains(.trainType) { result.trainType = trainType }
         let span = timetableRideSpan ?? 0...(result.stops.count - 1)
         for index in result.stops.indices {
             result.stops[index].rideSegment = span.contains(index) && isRidden
@@ -257,6 +293,10 @@ extension TripDraftModel {
         // when the reader typed them in this session.
         if source.numberEn != train.numberEn { result.numberEn = source.numberEn }
         if source.vehicleType != train.vehicleType { result.vehicleType = source.vehicleType }
+        // Set, cars, livery and ticket are the reader's or filled into the
+        // draft; the timetable's own record never carries them.
+        result.rollingStock = source.rollingStock
+        result.ticket = source.ticket
         if source.direction != train.direction { result.direction = source.direction }
     }
 }

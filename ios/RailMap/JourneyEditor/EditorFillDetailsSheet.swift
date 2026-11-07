@@ -16,11 +16,15 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
             Form {
                 if model.region == .jp {
                     Section {
-                        TextField(text("serviceName", fallback: "Service name"), text: $model.limitedExpressName)
+                        TextField(text("serviceName", fallback: "Service name"), text: model.readerBinding(
+                            .serviceName, get: { model.limitedExpressName }, set: { model.limitedExpressName = $0 }))
                             .accessibilityIdentifier("newTripLimitedExpressName")
                         Menu(text("serviceSuggestions", fallback: "Service suggestions")) {
                             ForEach(model.serviceSuggestions, id: \.self) { name in
-                                Button(name) { model.limitedExpressName = name }
+                                Button(name) {
+                                    model.markTouched(.serviceName)
+                                    model.limitedExpressName = name
+                                }
                             }
                         }
                         Button { model.showsTimetablePicker = true } label: {
@@ -41,7 +45,9 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                     if let package = model.package, !model.routeLineIDs.isEmpty {
                         LocalLineServicesSection(
                             package: package, lineIDs: model.routeLineIDs,
-                            serviceDate: model.dayString(model.departure), trainType: $model.trainType)
+                            serviceDate: model.dayString(model.departure), trainType: Binding(
+                                get: { model.trainType },
+                                set: { model.apply(TripDraftModel.Patch(trainType: $0), source: .reader) }))
                     }
                 }
                 Section {

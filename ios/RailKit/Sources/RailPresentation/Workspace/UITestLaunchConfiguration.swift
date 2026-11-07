@@ -42,6 +42,9 @@ public struct UITestLaunchConfiguration: Sendable, Equatable {
         case reloadAllStopAfterMilliseconds = "RAILMAP_UI_TEST_RELOAD_ALL_STOP_MS"
         case stress = "RAILMAP_UI_TEST_STRESS"
         case tab = "RAILMAP_UI_TEST_TAB"
+        /// Text lines of a paper ticket, "|"-separated, filled into a new trip
+        /// through the ticket parser once its catalog loads (one-shot scan).
+        case ticket = "RAILMAP_UI_TEST_TICKET"
         case tabBarProbe = "RAILMAP_UI_TEST_TAB_BAR_PROBE"
         case typography = "RAILMAP_UI_TEST_TYPOGRAPHY"
     }
