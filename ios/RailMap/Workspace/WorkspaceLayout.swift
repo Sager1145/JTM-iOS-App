@@ -12,14 +12,14 @@ struct PlaybackBarHeightKey: PreferenceKey {
 enum WorkspaceMenuMetrics {
     static let titleSize: CGFloat = 20
     static let titleRowHeight: CGFloat = 24
-    static let iconSize: CGFloat = 18
-    static let buttonSide: CGFloat = 32
-    static let touchSide: CGFloat = 44
-    static let horizontalInset: CGFloat = 16
+    static let iconSize: CGFloat = RailSize.glyph
+    static let buttonSide: CGFloat = RailSize.compactControl
+    static let touchSide: CGFloat = RailSize.touch
+    static let horizontalInset: CGFloat = RailSpacing.screenInset
     static let contentTopInset: CGFloat = 8
-    static let contentSpacing: CGFloat = 12
-    static let listRowVerticalInset: CGFloat = 6
-    static let fieldHorizontalInset: CGFloat = 12
+    static let contentSpacing: CGFloat = RailSpacing.s12
+    static let listRowVerticalInset: CGFloat = RailSpacing.rowVertical
+    static let fieldHorizontalInset: CGFloat = RailSpacing.s12
     static let compactButtonVerticalInset: CGFloat = 4
     static let topInset: CGFloat = 12
     static let bottomInset: CGFloat = 8
@@ -27,7 +27,7 @@ enum WorkspaceMenuMetrics {
     static let titleActionSpacing: CGFloat = 8
     static let stackedActionSpacing: CGFloat = 8
     static let subtitleSpacing: CGFloat = 2
-    static let cardCornerRadius: CGFloat = 28
+    static let sheetCornerRadius: CGFloat = RailRadius.sheet
     static let journeyHeaderHeight: CGFloat = 64
     static let journeyLogoSide: CGFloat = 28
     static let journeyActionWidth: CGFloat = 48
