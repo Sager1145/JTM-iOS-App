@@ -59,7 +59,8 @@ struct RideDetailView: View {
             onSetRidden: onSave.map { save in
                 { ridden in _ = save(RideLedger.setRidden(train, ridden)) }
             },
-            tripNoteFlow: onSave == nil ? nil : tripNoteFlow)
+            // Notes are offered only where their save can wait for the write.
+            tripNoteFlow: onSaveAwaitingPersistence == nil ? nil : tripNoteFlow)
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .tripNotesPresentation(
@@ -75,13 +76,15 @@ struct RideDetailView: View {
                 // Share is the journey card's header button — the one share
                 // entry for a journey (pass 2). The details sheet opens from
                 // that card, so a second share here was the same verb twice.
-                if onSave != nil {
+                if onSaveAwaitingPersistence != nil {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.tripNotes.add"), systemImage: "exclamationmark.bubble") {
                             tripNoteFlow.beginAdd(train: train)
                         }
                         .accessibilityIdentifier("tripNotesAdd")
                     }
+                }
+                if onSave != nil {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
                             beginEdit()

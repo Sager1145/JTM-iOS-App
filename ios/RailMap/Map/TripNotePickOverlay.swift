@@ -55,6 +55,8 @@ struct TripNotePickOverlay: View {
         }
         .ignoresSafeArea()
         .onChange(of: controller.readerCameraMoves) { _, _ in alertKey = nil }
+        // A new pick never inherits the last one's location message.
+        .onChange(of: controller.tripNotePickRevision) { _, _ in alertKey = nil }
     }
 
     // MARK: pieces
@@ -143,7 +145,6 @@ struct TripNotePickOverlay: View {
             }
         }
         .buttonStyle(.railSecondary)
-        .controlSize(.regular)
         .font(.subheadline)
         .lineLimit(1)
         .minimumScaleFactor(0.75)

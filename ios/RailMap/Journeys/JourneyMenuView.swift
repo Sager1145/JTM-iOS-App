@@ -217,13 +217,18 @@ struct WorkspaceJourneyMenu: View {
 
     private func save(_ edited: Train) -> Bool { startSave(edited) != nil }
 
-    /// Starts a save; nil when it was refused. The task answers whether the
-    /// write finally persisted.
+    /// A note save from a form that shows its own failure: waits for the write
+    /// and clears the journey-level failure alert, so one failure raises one
+    /// alert (the form's), not a second one behind the form's sheet.
     private func saveAwaitingPersistence(_ edited: Train) async -> Bool {
         guard let saving = startSave(edited) else { return false }
-        return await saving.value
+        let persisted = await saving.value
+        if !persisted { saveFailureDetail = nil }
+        return persisted
     }
 
+    /// Starts a save; nil when it was refused. The task answers whether the
+    /// write finally persisted.
     private func startSave(_ edited: Train) -> Task<Bool, Never>? {
         guard !isSaving else { return nil }
         let previousID = recordID

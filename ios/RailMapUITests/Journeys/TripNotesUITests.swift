@@ -34,6 +34,7 @@ final class TripNotesUITests: XCTestCase {
             format: "label == %@", "tripNotePickMode=on;visibleRides=1"), object: pickState)
         XCTAssertEqual(XCTWaiter.wait(for: [hidden], timeout: 20), .completed,
                        "Other rides are hidden while picking: \(pickState.label)")
+        snapshot("trip-notes-1-pick", app)
 
         chooseStation(named: "Tokyo", in: app)
         let form = element("tripNoteForm", in: app)
@@ -47,11 +48,13 @@ final class TripNotesUITests: XCTestCase {
         let text = app.textViews["tripNoteText"]
         text.tap()
         text.typeText("Driver swapped")
+        snapshot("trip-notes-2-form", app)
         app.buttons["tripNoteSave"].tap()
         XCTAssertFalse(form.waitForExistence(timeout: 1) && form.exists)
 
         let marker = element("tripNoteMarker", in: app)
         XCTAssertTrue(marker.waitForExistence(timeout: 15))
+        snapshot("trip-notes-3-marker", app)
         let markerBefore = marker.value as? String ?? ""
         let row = element("tripNoteRow", in: app)
         XCTAssertTrue(row.waitForExistence(timeout: 10), "The notes list must show the row.")
@@ -61,6 +64,7 @@ final class TripNotesUITests: XCTestCase {
         // Edit: change the place to another station and save.
         marker.tap()
         XCTAssertTrue(element("tripNoteReadCard", in: app).waitForExistence(timeout: 5))
+        snapshot("trip-notes-4-read-card", app)
         app.buttons["tripNoteEdit"].tap()
         XCTAssertTrue(form.waitForExistence(timeout: 5))
         app.buttons["tripNoteChangePlace"].tap()
@@ -142,6 +146,14 @@ final class TripNotesUITests: XCTestCase {
         let store: [String: Any] = ["schema_version": "1.3", "trains": [train, other]]
         return try! JSONSerialization.data(withJSONObject: store, options: [.sortedKeys])
             .base64EncodedString()
+    }
+
+    /// Kept in the result bundle so the review has pictures of each step.
+    private func snapshot(_ name: String, _ app: XCUIApplication) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {
