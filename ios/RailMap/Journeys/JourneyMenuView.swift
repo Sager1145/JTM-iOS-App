@@ -85,8 +85,7 @@ struct WorkspaceJourneyMenu: View {
                             // Answers only once persistence has: a failed write
                             // is rolled back by `startSave`, and the form, still
                             // holding its draft, offers another try.
-                            guard let saving = startSave(edited) else { return false }
-                            return await saving.value
+                            return await saveAwaitingPersistence(edited)
                         })
                     // The source panel's compact stage must not hide this card's body.
                     .environment(cardMorph)
@@ -94,7 +93,9 @@ struct WorkspaceJourneyMenu: View {
                     .sheet(isPresented: $showsDetails) {
                         NavigationStack {
                             RideDetailView(
-                                train: train, onSave: { save($0) }, onRebuild: { onRebuild(train) },
+                                train: train, onSave: { save($0) },
+                                onSaveAwaitingPersistence: { await saveAwaitingPersistence($0) },
+                                onRebuild: { onRebuild(train) },
                                 suggestionTrains: itineraries.loaded?.trains ?? [],
                                 onEditJourney: { train in
                                     showsDetails = false
@@ -141,7 +142,7 @@ struct WorkspaceJourneyMenu: View {
             controller.journeyMenuBottomObstruction = nil
             // A pick belongs to the menu that started it.
             tripNoteFlow.reset()
-            if controller.tripNotePickTrainID == recordID { controller.cancelTripNotePick() }
+            controller.cancelTripNotePickIfOwned(trainID: recordID)
             tripNoteFlow.pickPlace = nil
             if Self.hookOwner == hookToken {
                 controller.onTripNote = nil
@@ -218,6 +219,11 @@ struct WorkspaceJourneyMenu: View {
 
     /// Starts a save; nil when it was refused. The task answers whether the
     /// write finally persisted.
+    private func saveAwaitingPersistence(_ edited: Train) async -> Bool {
+        guard let saving = startSave(edited) else { return false }
+        return await saving.value
+    }
+
     private func startSave(_ edited: Train) -> Task<Bool, Never>? {
         guard !isSaving else { return nil }
         let previousID = recordID

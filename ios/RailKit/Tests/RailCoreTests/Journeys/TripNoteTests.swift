@@ -110,13 +110,27 @@ struct TripNoteTests {
         #expect(TripNotePlacement.resolve(notes[0].anchor, stops: Self.stops) == .unplaced)
     }
 
+    @Test("a trip with odd notes still loads from the native store")
+    func nativeStoreLossy() throws {
+        let json = """
+            {"id":"x","number":"1","origin":"A","destination":"B",
+             "stops":[{"name":"A","departure":"06:00","stop_type":"origin","ride_segment":true}],
+             "trip_notes":[7, {"text":"no id"}, {"id":"a","category":5,"anchor":"nope"},
+                           {"id":"a","text":"dup"}, {"id":"b","text":"ok","anchor":{"type":"coordinate","lat":1,"lon":2}}]}
+            """
+        let train = try JSONDecoder().decode(Train.self, from: Data(json.utf8))
+        #expect(train.tripNotes?.map(\.id) == ["a", "b"])
+        #expect(train.tripNotes?[0].category == "")
+        #expect(train.tripNotes?[0].anchor == .unknown(type: ""))
+    }
+
     @Test("the suggested time uses the clock it is given")
     func suggestionClock() throws {
         var train = Self.train(notes: nil)
         train.region = nil
         let instant = try #require(TripNoteTime.instant(serviceDate: "2026-08-28", time: "24:15", clock: .taiwan))
         #expect(TripNoteTime.suggested(for: train, stopIndex: nil, now: instant, clock: .taiwan) == "24:15")
-        #expect(TripNoteTime.suggested(for: train, stopIndex: nil, now: instant) == "25:15")
+        #expect(TripNoteTime.suggested(for: train, stopIndex: nil, now: instant, clock: .japan) == "25:15")
     }
 
     @Test("validation rejects a duplicate id and an unreadable time")
@@ -174,10 +188,10 @@ struct TripNoteTests {
     func suggestion() throws {
         let train = Self.train(notes: nil)
         let during = try #require(TripNoteTime.instant(serviceDate: "2026-08-28", time: "24:15", clock: .japan))
-        #expect(TripNoteTime.suggested(for: train, stopIndex: 1, now: during) == "24:15")
+        #expect(TripNoteTime.suggested(for: train, stopIndex: 1, now: during, clock: .japan) == "24:15")
         let later = during.addingTimeInterval(30 * 86_400)
-        #expect(TripNoteTime.suggested(for: train, stopIndex: 1, now: later) == "24:22")
-        #expect(TripNoteTime.suggested(for: train, stopIndex: nil, now: later) == "23:30")
+        #expect(TripNoteTime.suggested(for: train, stopIndex: 1, now: later, clock: .japan) == "24:22")
+        #expect(TripNoteTime.suggested(for: train, stopIndex: nil, now: later, clock: .japan) == "23:30")
     }
 
     @Test("stored and displayed values do not move with the phone's time zone")

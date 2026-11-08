@@ -193,8 +193,11 @@ struct TripNoteGeometryTests {
         #expect(ArrayGeneration.same(first, controller.tripNotePickRides(from: all) ?? []))
         // Not drawn yet: no ride, and the overlay falls back to the trip's stops.
         #expect(controller.tripNotePickRides(from: [Self.ride("other")])?.isEmpty == true)
-        // A second begin for the same trip is ignored; the first stays in charge.
-        controller.beginTripNotePick(trainID: "r1", initial: nil) { _ in Issue.record("second pick ran") }
+        // A second begin for the same trip is refused (its caller hears nil);
+        // the first pick stays in charge.
+        var second: [TripNoteAnchor?] = []
+        controller.beginTripNotePick(trainID: "r1", initial: nil) { second.append($0) }
+        #expect(second.count == 1 && second[0] == nil)
         #expect(finished.isEmpty)
         controller.cancelTripNotePickIfOwned(trainID: "other")
         #expect(controller.tripNotePickTrainID == "r1")

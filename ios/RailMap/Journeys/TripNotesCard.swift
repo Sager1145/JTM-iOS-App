@@ -189,7 +189,7 @@ struct TripNotesCard: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: RailSpacing.s12) {
             Text(localization.text("ios.tripNotes.title")).font(.headline)
             ForEach(notes) { note in row(note) }
             Button {
@@ -202,7 +202,7 @@ struct TripNotesCard: View {
             .accessibilityIdentifier("tripNotesListAdd")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(RailSpacing.s16)
         .background(
             surface,
             in: RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous))
@@ -216,7 +216,7 @@ struct TripNotesCard: View {
         return Button {
             flow.screen = .read(noteID: note.id)
         } label: {
-            HStack(alignment: .top, spacing: 12) {
+            HStack(alignment: .top, spacing: RailSpacing.s12) {
                 Text("!")
                     .font(.subheadline.weight(.heavy))
                     .foregroundStyle(Color.black.opacity(0.85))
@@ -297,7 +297,7 @@ private struct TripNoteReadCard: View {
                 if let note {
                     let describer = TripNoteDescriber(train: train, localization: localization)
                     ScrollView {
-                        VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: RailSpacing.s12) {
                             if !note.category.isEmpty {
                                 Text(note.category).font(.title3.weight(.semibold))
                             }
@@ -309,7 +309,7 @@ private struct TripNoteReadCard: View {
                                            ?? localization.text("ios.tripNotes.noTime"))
                             LabeledContent(localization.text("ios.tripNotes.place"),
                                            value: describer.place(note.anchor))
-                            HStack(spacing: 12) {
+                            HStack(spacing: RailSpacing.s12) {
                                 Button(localization.text("ios.tripNotes.edit"), systemImage: "pencil") {
                                     flow.beginEdit(note)
                                 }
@@ -331,7 +331,7 @@ private struct TripNoteReadCard: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(16)
+                        .padding(RailSpacing.s16)
                     }
                     .confirmationDialog(
                         localization.text("ios.tripNotes.deleteConfirm"),
@@ -349,11 +349,10 @@ private struct TripNoteReadCard: View {
             }
             .navigationTitle(localization.text("ios.tripNotes.title"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.close", fallback: "Close")) { flow.screen = nil }
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "tripNotesClose"
+            ) { flow.screen = nil }
             .alert(localization.text("ios.tripNotes.saveRefused"), isPresented: $flow.saveRefused) {
                 Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
             }
@@ -411,7 +410,7 @@ private struct TripNoteFormSheet: View {
                             if draft.wrappedValue.text.isEmpty {
                                 Text(localization.text("ios.tripNotes.textPlaceholder"))
                                     .foregroundStyle(.tertiary)
-                                    .padding(.top, 8).padding(.leading, 5)
+                                    .padding(.top, RailSpacing.s8).padding(.leading, RailSpacing.s4)
                                     .allowsHitTesting(false)
                             }
                         }
@@ -468,7 +467,7 @@ private struct TripNoteFormSheet: View {
             let chips = TripNoteEditing.filteredSuggestions(suggestions, typed: draft.wrappedValue.category)
             if !chips.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: RailSpacing.s8) {
                         ForEach(chips, id: \.self) { chip in
                             Button { flow.draft?.category = chip } label: { chipLabel(chip) }
                                 .buttonStyle(.plain)
@@ -491,8 +490,8 @@ private struct TripNoteFormSheet: View {
     private func chipLabel(_ title: String) -> some View {
         Text(title).lineLimit(1)
             .font(.subheadline)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 7)
+            .padding(.horizontal, RailSpacing.s12)
+            .padding(.vertical, RailSpacing.s8)
             .foregroundStyle(Color.primary)
             .background(Color(.tertiarySystemFill), in: Capsule())
             .frame(minHeight: RailStyle.minimumTouchTarget)
@@ -533,12 +532,13 @@ private struct TripNoteFormSheet: View {
                     if let range = TripNoteEditing.pickerRange(serviceDate: train.date, clock: clock) {
                         DatePicker(localization.text("ios.tripNotes.time"), selection: picked,
                                    in: range, displayedComponents: [.date, .hourAndMinute])
+                            .environment(\.timeZone, clock.timeZone)
                     } else {
                         DatePicker(localization.text("ios.tripNotes.time"), selection: picked,
                                    displayedComponents: [.hourAndMinute])
+                            .environment(\.timeZone, clock.timeZone)
                     }
                 }
-                .environment(\.timeZone, clock.timeZone)
                 .environment(\.calendar, clock.calendar)
                 .accessibilityIdentifier("tripNoteTime")
                 if let label = describer.time(draft.wrappedValue.time) {

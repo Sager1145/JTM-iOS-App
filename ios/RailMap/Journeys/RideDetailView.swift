@@ -27,6 +27,9 @@ private struct DetailActionSizing: ViewModifier {
 struct RideDetailView: View {
     let train: Train
     var onSave: ((Train) -> Bool)?
+    /// Answers only once the write has persisted (or failed), for the note
+    /// form, which keeps its draft until then.
+    var onSaveAwaitingPersistence: ((Train) async -> Bool)?
     var onRebuild: (() -> Int?)?
     var suggestionTrains: [Train] = []
     var onEditJourney: ((Train) -> Void)? = nil
@@ -61,11 +64,11 @@ struct RideDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .tripNotesPresentation(
                 flow: tripNoteFlow, train: train, trains: suggestionTrains,
-                onSet: onSave.map { save in
+                onSet: onSaveAwaitingPersistence.map { save in
                     { (notes: [TripNote]) async -> Bool in
                         var updated = train
                         updated.setTripNotes(notes)
-                        return save(updated)
+                        return await save(updated)
                     }
                 })
             .toolbar {

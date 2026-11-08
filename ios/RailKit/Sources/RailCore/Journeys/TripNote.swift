@@ -37,13 +37,13 @@ public struct TripNote: Codable, Equatable, Sendable, Identifiable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
-        category = try container.decodeIfPresent(String.self, forKey: .category) ?? ""
-        text = try container.decodeIfPresent(String.self, forKey: .text) ?? ""
+        category = (try? container.decodeIfPresent(String.self, forKey: .category)) ?? ""
+        text = (try? container.decodeIfPresent(String.self, forKey: .text)) ?? ""
         // An unreadable time is dropped, not fatal: one odd note must never
         // stop the whole library from loading.
         time = (try? container.decodeIfPresent(String.self, forKey: .time))
             .flatMap { TripNoteTime.minutes($0) == nil ? nil : $0 }
-        anchor = try container.decode(TripNoteAnchor.self, forKey: .anchor)
+        anchor = (try? container.decode(TripNoteAnchor.self, forKey: .anchor)) ?? .unknown(type: "")
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -271,11 +271,10 @@ public enum TripNoteTime {
     /// The time a new note starts with: now, when now falls on the trip's
     /// service window; otherwise the anchor stop's own time, then the trip's
     /// departure.
-    /// `clock` should be the trip's resolved region clock; the default reads
-    /// `train.region` and so falls back to Japan for an untagged record.
+    /// `clock` is the trip's resolved region clock. Required on purpose:
+    /// `train.region` is absent on legacy records and would fall back to Japan.
     public static func suggested(for train: Train, stopIndex: Int?, now: Date,
-                                 clock: RegionClock? = nil) -> String? {
-        let clock = clock ?? RegionClock.forRegionCode(train.region)
+                                 clock: RegionClock) -> String? {
         if let current = time(at: now, serviceDate: train.date, clock: clock) {
             if train.date != nil { return current }
         }
@@ -468,4 +467,32 @@ public enum TripNoteShareText {
         guard !trimmedBody.isEmpty else { return lines.joined(separator: "\n") }
         return lines.isEmpty ? trimmedBody : lines.joined(separator: "\n") + "\n\n" + trimmedBody
     }
+}
+
+// MARK: - lossy decoding of the native store
+
+/// `Train`'s synthesized decoder reads `trip_notes` through this overload, so
+/// a note that cannot be read at all (not an object, no id) is skipped and a
+/// repeated id keeps the first — instead of one bad element failing the trip
+/// and with it the whole store load. Mirrors `TrainValidation.tripNotes(_:)`.
+extension KeyedDecodingContainer {
+    func decodeIfPresent(_ type: [TripNote].Type, forKey key: Key) throws -> [TripNote]? {
+        guard contains(key), (try? decodeNil(forKey: key)) == false,
+              var list = try? nestedUnkeyedContainer(forKey: key) else { return nil }
+        var notes: [TripNote] = []
+        var seen = Set<String>()
+        while !list.isAtEnd {
+            if let note = try? list.decode(TripNote.self) {
+                if seen.insert(note.id).inserted { notes.append(note) }
+            } else if (try? list.decode(SkippedElement.self)) == nil {
+                break
+            }
+        }
+        return notes.isEmpty ? nil : notes
+    }
+}
+
+/// Consumes one element of any shape, so a failed note decode still advances.
+private struct SkippedElement: Decodable {
+    init(from decoder: Decoder) throws {}
 }

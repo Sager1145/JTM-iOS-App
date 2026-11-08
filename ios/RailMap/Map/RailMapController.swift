@@ -111,11 +111,14 @@ final class RailMapController {
     /// or nil when the pick is cancelled. A pick already waiting is cancelled
     /// first, so its caller hears nil rather than nothing.
     ///
-    /// A second call for the train already being picked is ignored: the first
-    /// pick and its `onFinish` stay in charge.
+    /// A second call for the train already being picked is refused: the first
+    /// pick and its `onFinish` stay in charge, and the new caller hears nil.
     func beginTripNotePick(trainID: String, initial: TripNoteAnchor?,
                            onFinish: @escaping (TripNoteAnchor?) -> Void) {
-        guard tripNotePickTrainID != trainID else { return }
+        guard tripNotePickTrainID != trainID else {
+            onFinish(nil)
+            return
+        }
         cancelTripNotePick()
         tripNotePickInitial = initial
         tripNotePickHandler = onFinish
@@ -156,7 +159,8 @@ final class RailMapController {
     }
 
     /// Counts the reader's own camera moves (a finger on the map).
-    @ObservationIgnored private var readerCameraMoves = 0
+    /// Observed so the pick overlay can clear its location message on a pan.
+    private(set) var readerCameraMoves = 0
 
     /// The rides the map draws during a pick: the picked trip's solved ride
     /// from `source` (every solved ride, whatever the list's scope), or none

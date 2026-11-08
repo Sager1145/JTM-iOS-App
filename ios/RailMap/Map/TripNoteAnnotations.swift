@@ -33,7 +33,7 @@ struct TripNoteMapSnapshot: Equatable {
             counts[train.id] = notes.count
         }
         self.init(selectedTrainID: selectedTrainID, selectedNotes: selected?.tripNotes ?? [],
-                  selectedStops: selected?.stops ?? [], selectedRegion: selected?.region, noteCounts: counts)
+                  selectedStops: selected?.stops ?? [], selectedRegion: selected.map { Region.resolved($0).code }, noteCounts: counts)
     }
 }
 

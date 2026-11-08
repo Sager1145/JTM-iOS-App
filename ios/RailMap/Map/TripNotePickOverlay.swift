@@ -23,6 +23,7 @@ struct TripNotePickOverlay: View {
     @Environment(AppLocalization.self) private var localization: AppLocalization?
     @State private var alertKey: String?
     @State private var locating = false
+    @ScaledMetric(relativeTo: .caption) private var bangSize: CGFloat = 14
 
     private static let amber = Color(red: 0.93, green: 0.56, blue: 0.00)
 
@@ -41,7 +42,7 @@ struct TripNotePickOverlay: View {
                 bar(feedback)
                     .padding(.bottom, feedback?.barBottom ?? 12)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, RailSpacing.s16)
 #if DEBUG
             Text("tripNotePickMode=on;visibleRides=\(visibleRideCount)")
                 .font(.caption)
@@ -53,10 +54,7 @@ struct TripNotePickOverlay: View {
 #endif
         }
         .ignoresSafeArea()
-        .alert(alertKey.map { text($0) } ?? "", isPresented: Binding(
-            get: { alertKey != nil }, set: { if !$0 { alertKey = nil } })) {
-            Button(text("ios.done", fallback: "OK")) { alertKey = nil }
-        }
+        .onChange(of: controller.readerCameraMoves) { _, _ in alertKey = nil }
     }
 
     // MARK: pieces
@@ -70,7 +68,7 @@ struct TripNotePickOverlay: View {
                 .fill(color)
                 .frame(width: 24, height: 24)
                 .overlay(Circle().stroke(.white, lineWidth: 2.5))
-                .overlay(Text("!").font(.system(size: 14, weight: .heavy)).foregroundStyle(.white))
+                .overlay(Text("!").font(.system(size: bangSize, weight: .heavy)).foregroundStyle(.white))
             Rectangle()
                 .fill(color)
                 .frame(width: 3, height: Self.pinHeight - 24)
@@ -91,18 +89,23 @@ struct TripNotePickOverlay: View {
                     ?? text("ios.tripNotes.pick.offLine", fallback: "Move the pin onto this trip's line"))
                 .font(.footnote)
                 .foregroundStyle(feedback?.anchor == nil ? .secondary : .primary)
+            if let alertKey {
+                Text(text(alertKey))
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.red)
+            }
         }
         .multilineTextAlignment(.center)
-        .padding(.horizontal, 14)
-        .padding(.vertical, 8)
+        .padding(.horizontal, RailSpacing.s12)
+        .padding(.vertical, RailSpacing.s8)
         .frame(maxWidth: 480)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("tripNotePickBanner")
     }
 
     private func bar(_ feedback: TripNotePickFeedback?) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             Button(text("ios.tripNotes.pick.cancel", fallback: "Cancel")) {
                 controller.cancelTripNotePick()
             }
@@ -133,19 +136,19 @@ struct TripNotePickOverlay: View {
                 Button(text("ios.tripNotes.pick.confirm", fallback: "Confirm")) {
                     if let anchor = feedback?.anchor { controller.finishTripNotePick(anchor) }
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.railPrimary)
                 .tint(Self.amber)
                 .disabled(feedback?.anchor == nil)
                 .accessibilityIdentifier("tripNotePickConfirm")
             }
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(.railSecondary)
         .controlSize(.regular)
         .font(.subheadline)
         .lineLimit(1)
         .minimumScaleFactor(0.75)
-        .padding(8)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .padding(RailSpacing.s8)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
     }
 
     // MARK: actions
@@ -165,6 +168,7 @@ struct TripNotePickOverlay: View {
 
     /// The only place the pick may ask for location permission.
     private func locate() {
+        alertKey = nil
         locating = true
         let token = controller.tripNotePickToken()
         Task { @MainActor in
@@ -201,7 +205,7 @@ struct TripNotePickOverlay: View {
 /// Title first, icon after: a "Station ▾" menu button.
 private struct TrailingIconLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: RailSpacing.s4) {
             configuration.title
             configuration.icon.imageScale(.small)
         }
