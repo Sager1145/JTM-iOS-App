@@ -423,23 +423,21 @@ Each one is correct today and is how the next drift starts.
 
 ## 3. Screens captured
 
-These are from the iPhone 17 simulator in an isolated store, with the
-`train-store` and `train-store-tw` samples loaded:
+These are from the iPhone 17 simulator through app-control `launch`, using an isolated UUID store loaded with the `train-store` and `train-store-tw` samples (229 trips). The **before** set is `main` at 3313613ab, built from a clean worktree. The **after** set is this branch after D10 steps 1–5. The files are under `docs/maintenance/screenshots/ui-consistency-audit/{before,after}/<name>.jpg`, downscaled to 600 px.
 
-| Screen | Light | Dark |
-|---|---|---|
-| Map, panel compact / medium | light-map-compact, light-map-medium | dark-map-medium |
-| Journeys, Upcoming (expanded) | light-upcoming-expanded | dark-upcoming-expanded |
-| Journeys, History (expanded) | light-history-expanded | dark-history-expanded |
-| Journeys, search "東京" | light-search | |
-| Selected trip (ride card) | light-selected | dark-selected |
-| Trip detail | light-detail | |
-| Editor, existing / new | light-editor-edit, light-editor-new | dark-editor-edit |
-| Stats | light-stats-expanded | dark-stats-expanded |
-| Settings | light-settings | dark-settings |
-| Data Library, Map Layers, Map Info, Station card, Video export | light-data, light-layers, light-info, light-station, light-video | |
+| Screen | Names |
+|---|---|
+| Map with the panel at medium | light-map-medium, dark-map-medium |
+| Journeys: Upcoming, History and search | light-upcoming-expanded, dark-upcoming-expanded, light-history-expanded, light-search |
+| Selected trip (ride card) | light-selected |
+| Stats | light-stats-expanded, dark-stats-expanded |
+| Settings, Data Library, Import | light-settings, dark-settings, light-data, light-import |
+| Map Layers, Map Info, video export, new trip | light-layers, light-info, light-video, light-editor-new |
 
-Runtime screenshots are pending: the simulator job is queued behind the shared heavy-job lock. They will be added under `docs/maintenance/screenshots/ui-consistency-audit/` in a follow-up commit, and until then the `[shot: …]` references above are placeholders.
+Two screens were not captured:
+
+- **Station card.** The `RAILMAP_UI_TEST_SHEET=station` hook did not open it in either build, so the before and after shots both show the map. This is a limit of the hook, not a regression.
+- **Stats cards.** Stats showed only the replay card in both builds, because statistics were still computing when the shot was taken.
 
 ## 4. Decisions, with options (for the user, through the main chat)
 
@@ -645,3 +643,26 @@ Breakdown of the `.buttonStyle` values:
 - **Skills:**
   - Used: `apple-design` and `emil-design-eng`.
   - Not installed, for the user to decide: Anthropic **Design** plugin, community **design-skills**. Neither is iOS-specific.
+
+## 7. Rollout status (D10)
+
+The user accepted every recommendation in §4. Steps 1–5 are on branch `claude/ui-consistency-audit`:
+
+| Step | Commit | Scope |
+|---|---|---|
+| 1 | 655ad421c | `RailSpacing` / `RailRadius` / `RailSize`; `.railPrimary` / `.railSecondary` / `.railTertiary`; `railSheetClose` (the system Close on iOS 26, `SheetCloseButton` fallback); `railSheet(.half/.full)`; `railText` / `railGlyph`. The old tokens alias the new ones. Guard `ios/tools/check-ui-tokens.sh` with a shrink-only baseline, wired into `run-regression-guards.sh`. |
+| fix | a1d286402 | `--update` path normalization |
+| 2 | 30f2e73bc | Map chrome (control 48 pt), Layers/Info/line/station cards, Settings, Data, playback |
+| 3 | 1a34cbbce | Stats/Passport (card padding 16, bar height 6), scope picker Close, share composer |
+| 4 | b71c0eb11 | Journey card padding 16, list rows, chooser, Hide trips, overdue actions, sheet heights |
+| 5 | d8cef8896 | Timetable sheets Close, Import action bars, Dynamic-Type-safe columns |
+| review | 7f2bf329a | Fixes from the independent review: a syntax error, a duplicate detent on the journey menu, two label-based UI tests, and a hardened guard |
+
+The token baseline went from 389 literal violations (112 entries) to 182 (53 entries), and the guard fails on any increase.
+
+**Step 6 is not started.** It waits for the add-trip and trip-notes branches to merge. It covers:
+
+- trip detail: `RideDetailView`, `RideCard`, `JourneyMenuView`
+- the trip editor (`JourneyEditor/**`): D3 system navigation bar, Cancel / 保存旅程, the shared editing chrome and Cancel-key unification
+- `RailWorkspaceView` (the trip-cap pill, empty states, a half sheet for the scope picker's popover)
+- `Localization/**`
