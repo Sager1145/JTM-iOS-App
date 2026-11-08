@@ -193,7 +193,9 @@ struct ShareComposer: View {
     }
 
     private var footer: String {
-        StatisticsFormat.ticketIssued(localization: localization)
+        StatisticsFormat.ticketIssued(
+            region: scope == .journey ? request.journey.map(Region.resolved) : nil,
+            localization: localization)
     }
 
     var body: some View {

@@ -407,7 +407,7 @@ struct StatisticsDashboardContent: View {
                 },
             span: localization.text(
                 "ios.ticket.spanDay", params: ["date": .string(StatisticsFormat.spelledDate(daily.date, localization: localization))]),
-            issued: StatisticsFormat.ticketIssued(localization: localization)
+            issued: StatisticsFormat.ticketIssued(region: region, localization: localization)
         )
         .passportCard(.feature)
     }
@@ -485,7 +485,7 @@ struct StatisticsDashboardContent: View {
             TicketFaceCard(
                 kind: localization.text("ios.ticket.kind.history"), scope: ticketScope,
                 displays: content.displays, fields: content.fields, span: content.span,
-                issued: StatisticsFormat.ticketIssued(localization: localization))
+                issued: StatisticsFormat.ticketIssued(region: region, localization: localization))
                 .passportCard(.feature)
         }
     }

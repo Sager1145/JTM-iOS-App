@@ -219,9 +219,11 @@ extension StatisticsFormat {
             ?? localization.text("ios.region.all", fallback: "All regions")
     }
 
-    static func ticketIssued(localization: AppLocalization) -> String {
+    /// `region` is the scope the ticket is for; `nil` (all regions) is dated on
+    /// Japan's clock, the statistics reference.
+    static func ticketIssued(region: Region?, localization: AppLocalization) -> String {
         localization.text("ios.ticket.issued", params: [
-            "date": .string(ticketDate(RecordDate.text(from: Date())))])
+            "date": .string(ticketDate(RecordDate.today(in: .forRegionCode(region?.code))))])
     }
 
     static func ticketSpoken(_ value: String, _ unit: String) -> String {
