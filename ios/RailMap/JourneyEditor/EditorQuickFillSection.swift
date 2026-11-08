@@ -12,7 +12,7 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
 
     var body: some View {
         Section {
-            HStack(spacing: 10) {
+            HStack(spacing: RailSpacing.s8) {
                 if model.ticketRegion != nil {
                     Button { model.showsTicketScan = true } label: {
                         Label(text("scanTicket", fallback: "Scan ticket"), systemImage: "ticket")

@@ -24,7 +24,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 value: model.timetableTimeSelection(isDeparture: false),
                 identifier: "newTripArrival")
             if let source = timeSource {
-                HStack(spacing: 6) {
+                HStack(spacing: RailSpacing.s8) {
                     FillSourceBadge(source: source)
                     Text(text("timeFilled", fallback: "Check the time; changing it keeps your value."))
                         .font(.caption)
@@ -42,7 +42,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                     model.showsActualTimes = true
                 } label: {
                     Label(text("addActualTimes", fallback: "Add actual times"), systemImage: "clock.arrow.2.circlepath")
-                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                 }
                 .buttonStyle(.borderless)
                 .accessibilityIdentifier("newTripAddActualTimes")
@@ -111,7 +111,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 Text(label)
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(.tint)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, RailSpacing.s12)
                     .frame(minHeight: 34)
                     .background(.tint.opacity(0.14), in: Capsule())
                     .contentShape(Capsule())
@@ -124,7 +124,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
             text("delayPlus", fallback: "+{minutes} min", ["minutes": .string(String(n))])
         }
         return ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 chip(text("delayOnTime", fallback: "On time"),
                      id: isDeparture ? "newTripActualDepartureOnTime" : "newTripActualArrivalOnTime", minutes: 0)
                 chip(plus(5), id: isDeparture ? "newTripActualDeparturePlus5" : "newTripActualArrivalPlus5", minutes: 5)

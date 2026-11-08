@@ -37,7 +37,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 ProgressView()
                     .frame(maxWidth: .infinity)
             }
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 stationButton(
                     title: text("from", fallback: "From"),
                     station: model.origin,
@@ -66,7 +66,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                     model.picking = .via
                 } label: {
                     Label(text("addVia", fallback: "Add a stop along the way"), systemImage: "plus.circle")
-                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                 }
                 .disabled(model.catalog == nil)
                 .accessibilityIdentifier("newTripAddVia")
@@ -85,7 +85,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
     /// Up to three stations near the reader's last known position.
     private var nearbyRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 Image(systemName: "location")
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
@@ -99,7 +99,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                             .font(.footnote)
                             .lineLimit(1)
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.railSecondary)
                     .controlSize(.small)
                     .accessibilityIdentifier("newTripNearby-\(index)")
                 }
@@ -110,7 +110,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
     }
 
     private func viaRow(_ via: TripDraftModel.ViaStop, index: Int) -> some View {
-        HStack(spacing: 12) {
+        HStack(spacing: RailSpacing.s12) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(text("viaTitle", fallback: "Via"))
                     .font(.subheadline)
@@ -123,7 +123,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                         .lineLimit(2)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
             Button {
                 model.clearTimetable()
                 model.vias.removeAll { $0.id == via.id }
@@ -150,7 +150,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
     ) -> some View {
         Button(action: choose) {
             VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 6) {
+                HStack(spacing: RailSpacing.s8) {
                     Text(title)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -167,7 +167,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

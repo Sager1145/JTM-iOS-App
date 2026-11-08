@@ -52,11 +52,9 @@ struct EditorSeed: Equatable {
     /// `now` as the region's wall clock, held in the device's calendar the
     /// way every editor date is (`dayString`, `clock`).
     static func wallClock(_ now: Date, in clock: RegionClock) -> Date {
-        let parts = clock.calendar.dateComponents(
-            [.year, .month, .day, .hour, .minute, .second], from: now)
-        var local = Calendar(identifier: .gregorian)
-        local.timeZone = .current
-        return local.date(from: parts) ?? now
+        let day = clock.civilDate(at: now)
+        guard let time = clock.serviceClock(of: now, serviceDate: day) else { return now }
+        return date(day: day, time: time) ?? now
     }
 
     /// A service day plus a clock that may run past 24:00.

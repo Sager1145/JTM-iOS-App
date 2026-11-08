@@ -17,14 +17,14 @@ struct EditorField<Content: View>: View {
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text(title)
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             content
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
         .accessibilityElement(children: .combine)
     }
 }
@@ -73,14 +73,14 @@ struct FillSourceBadge: View {
         if let source {
             // One capsule: a Label inside a LabeledContent label is split
             // into separate icon and title pieces.
-            HStack(spacing: 3) {
+            HStack(spacing: RailSpacing.s4) {
                 Image(systemName: source.symbol)
                 Text(localization.text("ios.newTrip.fillSource.\(source.rawValue)",
                                        fallback: source.rawValue.capitalized))
             }
                 .font(.caption2.weight(.medium))
                 .foregroundStyle(.tint)
-                .padding(.horizontal, 6)
+                .padding(.horizontal, RailSpacing.s8)
                 .padding(.vertical, 2)
                 .background(.tint.opacity(0.12), in: Capsule())
                 .fixedSize()
@@ -110,12 +110,12 @@ struct EditorCompactRow<Value: View>: View {
         LabeledContent {
             value
         } label: {
-            HStack(spacing: 6) {
+            HStack(spacing: RailSpacing.s8) {
                 Text(title)
                 FillSourceBadge(source: source)
             }
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
     }
 }
 
@@ -148,7 +148,7 @@ struct EditorSuggestionChip: View {
                 .font(.footnote)
                 .lineLimit(1)
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(.railSecondary)
         .controlSize(.small)
         .accessibilityHint(localization.text("ios.newTrip.suggestionHint", fallback: "Fills in this value"))
         .accessibilityIdentifier(identifier)

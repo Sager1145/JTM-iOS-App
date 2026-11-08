@@ -31,7 +31,7 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
                     model.optionalText(.vehicleType, \.vehicleType).wrappedValue = suggested
                 }
             }
-            HStack(spacing: 12) {
+            HStack(spacing: RailSpacing.s12) {
                 compactNumber(text("setNumber", fallback: "Set"), field: .setNumber,
                               binding: model.stockText(.setNumber, \.setNumber), keyboard: .asciiCapable,
                               identifier: "newTripSetNumber")
@@ -95,7 +95,7 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
         keyboard: UIKeyboardType, identifier: String
     ) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 4) {
+            HStack(spacing: RailSpacing.s4) {
                 Text(title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 if model.filledBy[field] != nil {
                     Image(systemName: model.filledBy[field]?.symbol ?? "")
@@ -111,7 +111,7 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
                 .textInputAutocapitalization(.characters)
                 .accessibilityIdentifier(identifier)
         }
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
     }
 
     private var carNumbersSummary: String {
@@ -155,7 +155,7 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
 
     var body: some View {
         Section {
-            HStack(spacing: 12) {
+            HStack(spacing: RailSpacing.s12) {
                 stacked(text("seat", fallback: "Seat"), field: .seat) {
                     TextField(text("seat", fallback: "Seat"), text: model.ticketText(.seat, \.seat))
                         .textInputAutocapitalization(.characters)
@@ -170,7 +170,7 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
                 }
             }
             EditorCompactRow(title: text("fare", fallback: "Fare"), source: model.filledBy[.fare]) {
-                HStack(spacing: 4) {
+                HStack(spacing: RailSpacing.s4) {
                     EditorInlineTextField(title: "0", text: model.fareText, keyboard: .numberPad)
                         .accessibilityIdentifier("newTripFare")
                     if let currency = model.draft.ticket?.currency ?? model.regionCurrency {
@@ -210,12 +210,12 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
         _ title: String, field: TripDraftModel.Field, @ViewBuilder content: () -> Content
     ) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 6) {
+            HStack(spacing: RailSpacing.s8) {
                 Text(title).font(.caption).foregroundStyle(.secondary)
                 FillSourceBadge(source: model.filledBy[field])
             }
             content()
         }
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
     }
 }

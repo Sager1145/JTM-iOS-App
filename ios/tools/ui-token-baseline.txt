@@ -8,8 +8,6 @@ RailMap/App/RailMapApp.swift	fixed-font	1
 RailMap/JourneyEditor/AutoFilledStationLabel.swift	padding-literal	2
 RailMap/JourneyEditor/EditorDateTimeFields.swift	spacing-literal	6
 RailMap/JourneyEditor/EditorDateTimeFields.swift	touch-literal	4
-RailMap/JourneyEditor/EditorFields.swift	spacing-literal	1
-RailMap/JourneyEditor/EditorFields.swift	touch-literal	1
 RailMap/JourneyEditor/EditorFillDetailsSheet.swift	dismiss-text	1
 RailMap/JourneyEditor/EditorFillDetailsSheet.swift	touch-literal	1
 RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1
@@ -21,10 +19,7 @@ RailMap/JourneyEditor/EditorMapPanel.swift	spacing-literal	2
 RailMap/JourneyEditor/EditorMapPanel.swift	stock-bordered	2
 RailMap/JourneyEditor/EditorRouteSection.swift	spacing-literal	7
 RailMap/JourneyEditor/EditorRouteSection.swift	touch-literal	4
-RailMap/JourneyEditor/EditorStationsSection.swift	spacing-literal	1
-RailMap/JourneyEditor/EditorStationsSection.swift	touch-literal	4
-RailMap/JourneyEditor/EditorTripDetailsSection.swift	spacing-literal	1
-RailMap/JourneyEditor/EditorTripDetailsSection.swift	touch-literal	2
+RailMap/JourneyEditor/EditorStationsSection.swift	touch-literal	1
 RailMap/JourneyEditor/JourneyCompletionView.swift	spacing-literal	3
 RailMap/JourneyEditor/JourneyCompletionView.swift	touch-literal	2
 RailMap/JourneyEditor/JourneyEditorDetails.swift	spacing-literal	3

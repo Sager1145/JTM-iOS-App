@@ -80,7 +80,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
     }
 
     private func timetableCard(_ timetableTrain: Train) -> some View {
-        HStack(alignment: .center, spacing: 10) {
+        HStack(alignment: .center, spacing: RailSpacing.s8) {
             Image(systemName: "clock.badge.checkmark")
                 .foregroundStyle(.tint)
                 .accessibilityHidden(true)
