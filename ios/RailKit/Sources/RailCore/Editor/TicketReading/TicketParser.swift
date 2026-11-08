@@ -109,6 +109,24 @@ enum TicketText {
         return TicketDate(year: year, month: month, day: day)
     }
 
+    /// The printed arrival: a clock next to one of `markers` (着, 抵達, 도착 …),
+    /// else the clock right of the route arrow (`10:30 → 12:15`).
+    static func arrival(in text: String, markers: [String]) -> (value: ServiceClockTime, strength: Double)? {
+        for pattern in markers {
+            if let g = groups(pattern, in: text), let time = clock(hour: g[1], minute: g[2]) {
+                return (time, 1.0)
+            }
+        }
+        if let parts = splitRoute(text),
+            groups("(\\d{1,2}):(\\d{2})", in: parts.left) != nil,
+            let g = groups("(\\d{1,2}):(\\d{2})", in: parts.right),
+            let time = clock(hour: g[1], minute: g[2])
+        {
+            return (time, 0.8)
+        }
+        return nil
+    }
+
     static func clock(hour: String, minute: String) -> ServiceClockTime? {
         guard let hour = Int(hour), let minute = Int(minute), hour < 30, minute < 60 else {
             return nil

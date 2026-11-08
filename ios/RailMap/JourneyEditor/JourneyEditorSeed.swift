@@ -21,8 +21,13 @@ struct EditorSeed: Equatable {
             trainType = JourneyDraftWork.serviceTypeIDs.contains(type) ? type : "local"
             number = ""
             company = ""
-            departure = now
-            arrival = now
+            // The editor's clocks are the trip region's wall clock, so the
+            // placeholder is "now" there. The device's own day can be a day
+            // behind it (New York evening is the next morning in Tokyo), and
+            // a date-only trip filed on that day would land in History.
+            let region = Region(rawValue: train.region ?? "") ?? Region.resolved(train)
+            departure = Self.wallClock(now, in: region.clock)
+            arrival = departure
             departureKnown = false
             arrivalKnown = false
             return
@@ -42,6 +47,16 @@ struct EditorSeed: Equatable {
         arrival = max(arriving ?? departure, departure)
         departureKnown = leaving != nil
         arrivalKnown = arriving != nil
+    }
+
+    /// `now` as the region's wall clock, held in the device's calendar the
+    /// way every editor date is (`dayString`, `clock`).
+    static func wallClock(_ now: Date, in clock: RegionClock) -> Date {
+        let parts = clock.calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second], from: now)
+        var local = Calendar(identifier: .gregorian)
+        local.timeZone = .current
+        return local.date(from: parts) ?? now
     }
 
     /// A service day plus a clock that may run past 24:00.

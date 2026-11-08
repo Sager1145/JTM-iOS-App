@@ -42,6 +42,9 @@ final class TripDraftModel {
         case seatClass
         case fare
         case ticketKind
+        /// Observed clocks. Only the reader writes them; no source fills them.
+        case actualDeparture
+        case actualArrival
     }
 
     /// Where an automatic value came from, shown beside the field.
@@ -214,6 +217,17 @@ final class TripDraftModel {
     var appliedTimetableTripID: String?
     /// Stations near the reader, offered under From on a new trip.
     var nearbyStations: [NearbyStation] = []
+    /// Observed clocks as typed (`actual_departure` on the boarding stop,
+    /// `actual_arrival` on the alighting stop). Stored on save.
+    var actualDeparture: String?
+    var actualArrival: String?
+    /// The Time section shows the two actual-time rows.
+    var showsActualTimes = false
+    /// Actual clocks a chip wrote and the reader has not typed over. A chip
+    /// replaces only these (or an empty field), never a typed value.
+    var chipSetActuals: Set<Field> = []
+    /// The record's own actual departure and arrival, for `isDirty`.
+    var seededActualTimes: [String?] = [nil, nil]
 
     struct NearbyStation: Identifiable, Equatable {
         var station: CatalogStation
@@ -256,6 +270,121 @@ final class TripDraftModel {
         departure = seeded.departure
         arrival = seeded.arrival
         previousDeparture = seeded.departure
+        if !isNew { seedActualTimes(from: train) }
+    }
+
+    // MARK: - actual times
+
+    /// The stop the reader boarded at and the one they left at: the stops a
+    /// timetable or the editor marked origin and destination, else the ends.
+    nonisolated static func boardingIndex(_ stops: [Stop]) -> Int? {
+        stops.firstIndex { $0.stopType == "origin" } ?? (stops.isEmpty ? nil : 0)
+    }
+
+    nonisolated static func alightingIndex(_ stops: [Stop]) -> Int? {
+        stops.lastIndex { $0.stopType == "destination" } ?? (stops.count >= 2 ? stops.count - 1 : nil)
+    }
+
+    func seedActualTimes(from train: Train) {
+        actualDeparture = Self.boardingIndex(train.stops).flatMap { train.stops[$0].actualDeparture }
+        actualArrival = Self.alightingIndex(train.stops).flatMap { train.stops[$0].actualArrival }
+        seededActualTimes = [actualDeparture, actualArrival]
+        showsActualTimes = actualDeparture != nil || actualArrival != nil
+    }
+
+    func seededActual(isDeparture: Bool) -> String? {
+        seededActualTimes[isDeparture ? 0 : 1]
+    }
+
+    /// The text field's binding. Typing is kept as typed (a half-typed clock
+    /// must not be rewritten); it is normalized on save.
+    func actualTimeText(isDeparture: Bool) -> Binding<String> {
+        Binding(
+            get: { (isDeparture ? self.actualDeparture : self.actualArrival) ?? "" },
+            set: { raw in
+                // Spaces carry no meaning in a clock, so they never reach the record.
+                let trimmed = raw.trimmingCharacters(in: .whitespaces)
+                let value = trimmed.isEmpty ? nil : trimmed
+                guard value != (isDeparture ? self.actualDeparture : self.actualArrival) else { return }
+                self.markTouched(isDeparture ? .actualDeparture : .actualArrival)
+                self.chipSetActuals.remove(isDeparture ? .actualDeparture : .actualArrival)
+                if isDeparture { self.actualDeparture = value } else { self.actualArrival = value }
+            })
+    }
+
+    /// A typed (not chip-set) actual clock is present: chips leave it alone.
+    func actualIsTyped(isDeparture: Bool) -> Bool {
+        let field: Field = isDeparture ? .actualDeparture : .actualArrival
+        return (isDeparture ? actualDeparture : actualArrival) != nil && !chipSetActuals.contains(field)
+    }
+
+    /// A chip: the actual clock is the scheduled clock plus `minutes`, done on
+    /// the clock text alone (no calendar, no time zone). A typed value stays.
+    func applyActualChip(minutes: Int, isDeparture: Bool) {
+        guard !actualIsTyped(isDeparture: isDeparture), scheduledIsSet(isDeparture: isDeparture),
+              case .valid(_, let planned) = EditorTime.parseTime(scheduledClock(isDeparture: isDeparture))
+        else { return }
+        let total = planned.serviceMinutes + minutes
+        let time = ServiceClockTime(dayOffset: total / 1440, hour: total % 1440 / 60, minute: total % 60)
+        let field: Field = isDeparture ? .actualDeparture : .actualArrival
+        markTouched(field)
+        chipSetActuals.insert(field)
+        if isDeparture { actualDeparture = EditorTime.canonical(time) } else { actualArrival = EditorTime.canonical(time) }
+    }
+
+    /// The scheduled clock an actual one is compared with, as stored.
+    func scheduledClock(isDeparture: Bool) -> String {
+        let date = isDeparture ? departure : arrival
+        return clock(date, extraDays: extraDays(from: headerServiceDate(), to: date))
+    }
+
+    /// The clock a typed one is read against: the scheduled clock when it is
+    /// real, else the actual departure for an arrival. Never a placeholder.
+    func plannedReference(isDeparture: Bool) -> String? {
+        if scheduledIsSet(isDeparture: isDeparture) { return scheduledClock(isDeparture: isDeparture) }
+        guard !isDeparture, case .valid(_, let left) = EditorTime.parseTime(actualDeparture) else { return nil }
+        return EditorTime.canonical(left)
+    }
+
+    /// A typed clock as stored: canonical, and read as past midnight when it
+    /// is more than twelve hours before its scheduled clock (`0:10` against
+    /// `23:55` is `24:10`). Nil for blank or unreadable text.
+    func normalizedActual(_ raw: String?, isDeparture: Bool) -> String? {
+        guard case .valid(_, var time) = EditorTime.parseTime(raw) else { return nil }
+        if case .valid(_, let planned) = EditorTime.parseTime(plannedReference(isDeparture: isDeparture)),
+           time.serviceMinutes - planned.serviceMinutes < -720 {
+            time.dayOffset += 1
+        }
+        return EditorTime.canonical(time)
+    }
+
+    /// Writes the observed clocks onto the ride's boarding and alighting
+    /// stops. Unreadable text is kept as typed, like a stop's own field.
+    func applyActualTimes(to result: inout Train) {
+        // Per side: the reader's Time-section change wins (normalized);
+        // otherwise the value the trip was saved with, as stored. A stop that
+        // already holds a value on an unchanged side keeps it (a stop-editor
+        // edit); a replaced stop that lost it gets the stored value back.
+        func resolve(_ current: String?, shown: String?, isDeparture: Bool) -> String?? {
+            let seeded = seededActual(isDeparture: isDeparture)
+            let changed = shown != seeded
+            let desired: String?
+            if changed {
+                desired = shown.map { normalizedActual($0, isDeparture: isDeparture) ?? $0 }
+            } else {
+                desired = seeded
+            }
+            if current == desired || (!changed && current != nil) { return nil }
+            return .some(desired)
+        }
+        if let index = Self.boardingIndex(result.stops),
+           let write = resolve(result.stops[index].actualDeparture, shown: actualDeparture, isDeparture: true) {
+            result.stops[index].actualDeparture = write
+        }
+        if let index = Self.alightingIndex(result.stops),
+           let write = resolve(result.stops[index].actualArrival, shown: actualArrival, isDeparture: false) {
+            result.stops[index].actualArrival = write
+        }
     }
 
     // MARK: - header changes
@@ -334,12 +463,20 @@ final class TripDraftModel {
         picking = nil
         // Another network: its stations and any ticket's values start over.
         ticketMatchTask?.cancel()
+        clearTimetable()
         filledBy = [:]
         touched.subtract([.origin, .destination, .serviceName])
         nearbyStations = []
         ticketFillCount = nil
         allowUnverifiedConnections = false
-        clearTimetable()
+        if isNewTrip {
+            // Each side separately: the reader's clock stays, the other
+            // starts over on the new region's wall clock.
+            let now = EditorSeed.wallClock(Date(), in: region.clock)
+            if !timeIsSet(.departure) { departure = now }
+            previousDeparture = departure
+            if !timeIsSet(.arrival) { arrival = now }
+        }
         limitedExpressName = ""
         origin = nil
         destination = nil
@@ -388,6 +525,9 @@ final class TripDraftModel {
     func isDirty(original train: Train) -> Bool {
         if draft != train || timetableTrain != nil || riddenOverride != nil
             || pendingDeparturePlatform != nil || pendingArrivalPlatform != nil { return true }
+        if actualDeparture != seededActual(isDeparture: true) || actualArrival != seededActual(isDeparture: false) {
+            return true
+        }
         if trainType != seed.trainType || trainNumber != seed.number || companyName != seed.company
             || departure != seed.departure || arrival != seed.arrival { return true }
         if hasRecordRoute { return routeEdited }
@@ -659,14 +799,16 @@ final class TripDraftModel {
         arrival = seeded.arrival
         previousDeparture = seeded.departure
         riddenOverride = nil
+        seedActualTimes(from: completed)
         seededStationIdentity = nil
         if let catalog { seedStations(from: catalog) }
     }
 
     var isRidden: Bool {
         riddenOverride ?? (hasRecordRoute ? RideLedger.hasBeenRidden(draft) : prefillRidden(
-            forDate: dayString(departure), startClock: clock(departure, extraDays: 0),
-            timeIsSet: headerTimeIsSet))
+            forDate: dayString(departure),
+            startClock: normalizedActual(actualDeparture, isDeparture: true) ?? clock(departure, extraDays: 0),
+            timeIsSet: headerTimeIsSet || normalizedActual(actualDeparture, isDeparture: true) != nil))
     }
 
     /// The header's clocks came from the reader, a timetable or an adopted
@@ -680,6 +822,46 @@ final class TripDraftModel {
     /// The reader or a ticket gave this clock; the editor's placeholder did not.
     func timeIsSet(_ field: Field) -> Bool {
         touched.contains(field) || filledBy[field] == .ticket
+    }
+
+    /// One scheduled clock is real: the reader or a ticket set it, a
+    /// timetable supplied it, or the saved journey had it. Anything else is
+    /// the editor's placeholder and is never written, compared or labelled.
+    func scheduledIsSet(isDeparture: Bool) -> Bool {
+        timetableTrain != nil || timeIsSet(isDeparture ? .departure : .arrival)
+            || (isDeparture ? seed.departureKnown : seed.arrivalKnown)
+    }
+
+    /// Both scheduled clocks are real and arrival is before departure.
+    var scheduledTimesConflict: Bool {
+        scheduledIsSet(isDeparture: true) && scheduledIsSet(isDeparture: false) && arrival < departure
+    }
+
+    /// Both actual clocks are readable and the actual arrival is before the
+    /// actual departure, in service minutes.
+    var actualTimesConflict: Bool {
+        guard case .valid(_, let left) = EditorTime.parseTime(normalizedActual(actualDeparture, isDeparture: true)),
+              case .valid(_, let arrived) = EditorTime.parseTime(normalizedActual(actualArrival, isDeparture: false))
+        else { return false }
+        return arrived.serviceMinutes < left.serviceMinutes
+    }
+
+    /// The time part of saving: only the date is required, and a clock the
+    /// reader never set cannot make the order wrong.
+    var timesAllowSave: Bool { !scheduledTimesConflict && !actualTimesConflict }
+
+    /// Writes only the scheduled clocks that are real onto a new trip's
+    /// boarding and alighting stops; an untouched one leaves the stop clockless.
+    /// `includingKnown` (the timetable query) also takes a saved journey's clocks.
+    func writeHeaderClocks(
+        into train: inout Train, departureIndex: Int, arrivalIndex: Int, includingKnown: Bool = false
+    ) {
+        if includingKnown ? scheduledIsSet(isDeparture: true) : timeIsSet(.departure) {
+            train.stops[departureIndex].departure = clock(departure, extraDays: 0)
+        }
+        if includingKnown ? scheduledIsSet(isDeparture: false) : timeIsSet(.arrival) {
+            train.stops[arrivalIndex].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+        }
     }
 
     /// What Ridden defaults to: a trip that would be filed under past now is
@@ -769,8 +951,7 @@ final class TripDraftModel {
         result.routeSections = nil
         result.routeConfirmation = .pending
         result.date = dayString(departure)
-        result.stops[0].departure = clock(departure, extraDays: 0)
-        result.stops[1].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+        writeHeaderClocks(into: &result, departureIndex: 0, arrivalIndex: 1)
         result.trainType = trainType
         let typedNumber = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
         result.number = typedNumber.isEmpty
@@ -795,9 +976,9 @@ final class TripDraftModel {
 
     var canSave: Bool {
         guard draft.journeyGroup?.name.isEmpty != true, !repair.isRunning, regionConflicts.isEmpty else { return false }
-        if let timetableTrain { return timetableTrain.stops.count >= 2 && arrival >= departure }
-        if !routeEdited { return hasRecordRoute && arrival >= departure }
-        return origin != nil && destination != nil && arrival >= departure
+        if let timetableTrain { return timetableTrain.stops.count >= 2 && timesAllowSave }
+        if !routeEdited { return hasRecordRoute && timesAllowSave }
+        return origin != nil && destination != nil && timesAllowSave
             && plannedIdentity == routeIdentity
             && (selectedCorridor != nil || historicalSaveAllowed) && !searching
     }
@@ -1024,6 +1205,7 @@ final class TripDraftModel {
             if train.region != nil || region != Region.resolved(train) { result.region = region.code }
             applyHeader(to: &result)
         }
+        applyActualTimes(to: &result)
         fileByDateIfUntimed(&result)
         Self.trimDetails(&result)
         let blocking = RideDraftValidation.issues(
@@ -1129,8 +1311,7 @@ final class TripDraftModel {
         }
         if !hasRecordRoute {
             result.date = dayString(departure)
-            result.stops[0].departure = clock(departure, extraDays: 0)
-            result.stops[last].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+            writeHeaderClocks(into: &result, departureIndex: 0, arrivalIndex: last)
             result.trainType = trainType
             let typedNumber = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
             result.number = typedNumber.isEmpty

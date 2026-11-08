@@ -63,6 +63,10 @@ public struct TicketReadingResult: Hashable, Sendable {
     public var date: TicketField<TicketDate>?
     /// Departure clock time; hours of 24 or more are folded into `dayOffset`.
     public var departureTime: TicketField<ServiceClockTime>?
+    /// Printed arrival clock (着 / 抵達 / 도착, or the time after the route
+    /// arrow). Its day offset is the hour's own (24:10 is +1); an arrival
+    /// before the departure is overnight, which the editor resolves.
+    public var arrivalTime: TicketField<ServiceClockTime>?
     /// のぞみ, 自強, KTX …
     public var serviceName: TicketField<String>?
     /// Printed number without the 号/次 suffix. Leading zeros are kept (`0123`).
@@ -86,7 +90,7 @@ public struct TicketReadingResult: Hashable, Sendable {
 
     /// True when nothing at all was extracted.
     public var isEmpty: Bool {
-        origin == nil && destination == nil && date == nil && departureTime == nil
+        origin == nil && destination == nil && date == nil && departureTime == nil && arrivalTime == nil
             && serviceName == nil && serviceNumber == nil && car == nil && seat == nil
             && seatClass == nil && fare == nil && currency == nil && kind == nil
     }

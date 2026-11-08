@@ -18,26 +18,35 @@ final class TimetableQuickMatchUITests: XCTestCase {
         NewTripTimetableTestSupport.setArrival(month: "September", day: 30, year: 2026, in: app)
         NewTripTimetableTestSupport.setTime(hour: 6, minute: 2, field: "newTripDeparture", in: app)
         NewTripTimetableTestSupport.setTime(hour: 9, minute: 47, field: "newTripArrival", in: app)
+        // The service name and the quick match live in the Find train sheet.
+        // Each opening of the sheet looks the train up again automatically.
+        openFillDetails(in: app)
         replaceServiceName(with: "北斗", in: app)
 
         let matches = app.buttons.matching(NSPredicate(
             format: "identifier BEGINSWITH %@", "rideEditorTimetableMatch-jr-hokkaido.hokuto.1."))
         showLookup(in: app)
         XCTAssertTrue(matches.firstMatch.waitForExistence(timeout: 30), app.debugDescription)
+        closeFillDetails(in: app)
         NewTripTimetableTestSupport.setDeparture(month: "January", day: 1, year: 1900, in: app)
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
         NewTripTimetableTestSupport.setDeparture(month: "January", day: 1, year: 1900, in: app)
         // Keep a same-day trip while changing the service date; leaving arrival
         // in 2026 produces an unparseable 126-year clock, disabling lookup.
         NewTripTimetableTestSupport.setArrival(month: "January", day: 1, year: 1900, in: app)
+        openFillDetails(in: app)
         showLookup(in: app)
         XCTAssertTrue(matches.firstMatch.waitForNonExistence(timeout: 15))
         let noMatch = app.staticTexts.matching(NSPredicate(
             format: "label BEGINSWITH %@", "No train matches both endpoint stations")).firstMatch
         XCTAssertTrue(noMatch.waitForExistence(timeout: 15), app.debugDescription)
-        // Move arrival first so advancing departure cannot clamp its 09:47 clock.
-        NewTripTimetableTestSupport.setArrival(month: "September", day: 30, year: 2026, in: app)
+        closeFillDetails(in: app)
+        // Move departure first: a departure change carries the arrival along
+        // by the same interval, so moving arrival to 2026 first would push it
+        // 126 years past the trip and leave an unparseable clock.
         NewTripTimetableTestSupport.setDeparture(month: "September", day: 30, year: 2026, in: app)
+        NewTripTimetableTestSupport.setArrival(month: "September", day: 30, year: 2026, in: app)
+        openFillDetails(in: app)
         showLookup(in: app)
         XCTAssertTrue(matches.firstMatch.waitForExistence(timeout: 30))
 
@@ -74,7 +83,7 @@ final class TimetableQuickMatchUITests: XCTestCase {
 
     private func replaceServiceName(with value: String, in app: XCUIApplication) {
         let name = app.textFields["newTripLimitedExpressName"]
-        NewTripTimetableTestSupport.reveal(name, in: app)
+        NewTripTimetableTestSupport.reveal(name, in: app, list: fillForm(in: app))
         name.tap()
         let old = name.value as? String ?? ""
         name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count) + value + "\n")
@@ -82,6 +91,24 @@ final class TimetableQuickMatchUITests: XCTestCase {
     }
 
     private func showLookup(in app: XCUIApplication) {
-        NewTripTimetableTestSupport.reveal(app.buttons["rideEditorTimetableMatch"], in: app)
+        NewTripTimetableTestSupport.reveal(app.buttons["rideEditorTimetableMatch"], in: app, list: fillForm(in: app))
+    }
+
+    private func fillForm(in app: XCUIApplication) -> XCUIElement {
+        app.collectionViews["newTripFillDetailsForm"]
+    }
+
+    /// The Find train button is the first row of the editor form.
+    private func openFillDetails(in app: XCUIApplication) {
+        let fill = app.buttons["newTripFillDetails"]
+        NewTripTimetableTestSupport.reveal(fill, in: app, upward: true)
+        fill.tap()
+        XCTAssertTrue(app.buttons["newTripFillDetailsDone"].waitForExistence(timeout: 8), app.debugDescription)
+    }
+
+    private func closeFillDetails(in app: XCUIApplication) {
+        let done = app.buttons["newTripFillDetailsDone"]
+        done.tap()
+        XCTAssertTrue(done.waitForNonExistence(timeout: 8))
     }
 }

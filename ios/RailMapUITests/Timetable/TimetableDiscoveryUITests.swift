@@ -11,11 +11,17 @@ final class TimetableDiscoveryUITests: XCTestCase {
         let ridden = app.switches["newTripRidden"]
         NewTripTimetableTestSupport.reveal(ridden, in: app)
         XCTAssertEqual(ridden.value as? String, "1")
-        ridden.tap()
-        NewTripTimetableTestSupport.reveal(app.buttons["newTripTimetableBrowse"], in: app)
+        // Tap the switch itself: the row's centre is its label, which does not toggle.
+        ridden.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+        XCTAssertEqual(ridden.value as? String, "0", "The trip must now be explicitly unridden.")
+        // The timetable browser is in the Find train sheet (first form row).
+        NewTripTimetableTestSupport.reveal(app.buttons["newTripFillDetails"], in: app, upward: true)
+        app.buttons["newTripFillDetails"].tap()
+        XCTAssertTrue(app.buttons["newTripTimetableBrowse"].waitForExistence(timeout: 8))
         app.buttons["newTripTimetableBrowse"].tap()
-        XCTAssertTrue(app.navigationBars["Choose a train pattern"].waitForExistence(timeout: 8))
-        XCTAssertTrue(app.buttons["Cancel"].exists)
+        let picker = app.navigationBars["Choose a train pattern"]
+        XCTAssertTrue(picker.waitForExistence(timeout: 8))
+        XCTAssertTrue(picker.buttons["Cancel"].exists)
         let search = app.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 8))
         search.tap()
@@ -35,6 +41,9 @@ final class TimetableDiscoveryUITests: XCTestCase {
             format: "identifier BEGINSWITH %@", "timetableUseDraft-jr-east.azusa")).firstMatch
         XCTAssertTrue(useDraft.waitForExistence(timeout: 8))
         useDraft.tap()
+        // Using the draft closes the picker and the Find train sheet. Wait for
+        // both, or the form scroll below snapshots a collection view mid-dismissal.
+        XCTAssertTrue(app.buttons["newTripFillDetailsDone"].waitForNonExistence(timeout: 10))
         // After import the summary sits just below the fold; scroll onto its Remove button.
         let remove = app.buttons["newTripTimetableRemove"]
         NewTripTimetableTestSupport.reveal(remove, in: app, upward: false)
@@ -61,7 +70,8 @@ final class TimetableDiscoveryUITests: XCTestCase {
         let debug = app.descendants(matching: .any)["statisticsDebug"].firstMatch
         XCTAssertTrue(debug.waitForExistence(timeout: 30))
         XCTAssertTrue((debug.value as? String ?? "").hasPrefix("journeys=0;"),
-                      "An explicitly unridden timetable draft must stay outside Passport after reload.")
+                      "An explicitly unridden timetable draft must stay outside Passport after reload: "
+                      + String(describing: debug.value))
     }
 
     func testCancellingLocalDateSearchKeepsDepartureDateUnchanged() {
@@ -85,10 +95,18 @@ final class TimetableDiscoveryUITests: XCTestCase {
         date.tap()
         let old = date.value as? String ?? ""
         date.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count) + "2026-10-12\n")
-        app.buttons["Cancel"].tap()
+        // The picker's own Cancel; the editor and the Find train sheet
+        // underneath have Cancel/Done buttons of their own.
+        let picker = app.navigationBars["Choose a train pattern"]
+        picker.buttons["Cancel"].tap()
+        XCTAssertTrue(picker.waitForNonExistence(timeout: 8))
+        let done = app.buttons["newTripFillDetailsDone"]
+        done.tap()
+        XCTAssertTrue(done.waitForNonExistence(timeout: 8))
         NewTripTimetableTestSupport.reveal(departure, in: app)
         XCTAssertEqual(departure.value as? String, originalDate)
-        NewTripTimetableTestSupport.reveal(app.buttons["newTripTimetableBrowse"], in: app)
+        // An applied timetable would show its summary in the Service section.
+        NewTripTimetableTestSupport.reveal(app.textFields["newTripNumber"], in: app)
         XCTAssertFalse(app.descendants(matching: .any)["newTripTimetableApplied"].firstMatch.exists)
     }
 }

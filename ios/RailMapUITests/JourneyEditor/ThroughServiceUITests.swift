@@ -14,11 +14,17 @@ final class ThroughServiceUITests: XCTestCase {
         XCTAssertTrue(form.waitForExistence(timeout: 30))
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         let destination = app.descendants(matching: .any)["rideEditorStop-3"].firstMatch
-        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app))
-        XCTAssertTrue(origin.label.contains("東京"))
-        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app))
-        XCTAssertTrue(destination.label.contains("八王子"))
+        // The stops sit below Quick fill, Journey, Time, Service and Route,
+        // further than the default budget reaches in the sheet's half detent.
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, maxDrags: 16, unmountedRowIsAbove: false))
+        XCTAssertTrue(origin.label.contains("東京"), origin.label)
+        XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app, maxDrags: 16, unmountedRowIsAbove: false))
+        XCTAssertTrue(destination.label.contains("八王子"), destination.label)
 
+        // Section services and notes are details, collapsed until asked for.
+        let more = app.buttons["newTripMoreDetails"]
+        XCTAssertTrue(EditorUITestSupport.reveal(more, in: app, maxDrags: 16, unmountedRowIsAbove: false), app.debugDescription)
+        more.tap()
         let notes = app.textFields["rideEditorNotes"]
         sectionEnter("Keep this through-service draft note", into: notes, in: form, app: app)
         let add = app.buttons["rideEditorAddServiceLeg"]

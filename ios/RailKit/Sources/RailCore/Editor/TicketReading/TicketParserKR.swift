@@ -23,6 +23,12 @@ enum TicketParserKR {
             if let time = departure(in: line.text) {
                 draft.offer(\.departureTime, time.value, line, strength: time.strength)
             }
+            if let time = TicketText.arrival(in: line.text, markers: [
+                "도착\\s*[:：]?\\s*(\\d{1,2}):(\\d{2})", "(\\d{1,2}):(\\d{2})\\s*도착",
+                "(\\d{1,2})\\s*시\\s*(\\d{1,2})\\s*분?\\s*도착",
+            ]) {
+                draft.offer(\.arrivalTime, time.value, line, strength: time.strength)
+            }
             service(line, &draft)
             seat(line, &draft)
             seatClass(line, &draft)

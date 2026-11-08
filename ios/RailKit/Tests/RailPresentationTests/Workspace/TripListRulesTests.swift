@@ -215,4 +215,57 @@ struct TripListRulesTests {
             train(departure: "09:00", arrival: "09:00", list: .upcoming),
             clock: .japan, now: Self.tokyoMorning))
     }
+
+    // MARK: - observed times
+
+    @Test("an actual departure outranks the scheduled one when filing")
+    func actualDepartureDecidesFiling() {
+        // Scheduled 11:00 is still ahead at 10:00, but the reader recorded leaving at 09:55.
+        var late = train()
+        late.stops[0].actualDeparture = "9:55"
+        #expect(TripListRules.initialMembership(for: late, clock: .japan, now: Self.tokyoMorning) == .past)
+    }
+
+    @Test("an actual arrival decides when an upcoming trip is overdue")
+    func actualArrivalDecidesOverdue() {
+        var delayed = train(departure: "9:00", arrival: "9:30", list: .upcoming)
+        #expect(TripListRules.isOverdue(delayed, clock: .japan, now: Self.tokyoMorning))
+        delayed.stops[1].actualArrival = "10:30"
+        #expect(!TripListRules.isOverdue(delayed, clock: .japan, now: Self.tokyoMorning))
+    }
+
+    @Test("observed clocks count on a trip filed by its date alone")
+    func actualTimesCountOnADateOnlyTrip() {
+        var dated = train(departure: "0:00", arrival: "0:00")
+        dated.listByDate = true
+        #expect(TripListRules.initialMembership(for: dated, clock: .japan, now: Self.tokyoMorning) == .upcoming)
+        dated.stops[0].actualDeparture = "9:00"
+        #expect(TripListRules.initialMembership(for: dated, clock: .japan, now: Self.tokyoMorning) == .past)
+    }
+
+    @Test("a late actual departure with a scheduled arrival does not wrap to the next day")
+    func lateActualDepartureKeepsTheEndOnTheSameDay() {
+        var late = train(departure: "10:00", arrival: "10:10", list: .upcoming)
+        late.stops[0].actualDeparture = "10:15"
+        #expect(TripListRules.end(of: late, clock: .japan) == minutes(15))
+        #expect(!TripListRules.isOverdue(late, clock: .japan, now: minutes(14)))
+        #expect(TripListRules.isOverdue(late, clock: .japan, now: minutes(20)))
+        #expect(TripListRules.isOverdue(late, clock: .japan, now: minutes(30)))
+    }
+
+    @Test("a mixed-kind end keeps the midnight wrap of its own kind")
+    func mixedKindEndWrapsPastMidnight() {
+        let day = RegionClock.japan.startOfDay("2026-09-06")!
+        var lateStart = train(date: "2026-09-06", departure: "23:40", arrival: "00:20", list: .upcoming)
+        lateStart.stops[0].actualDeparture = "23:45"
+        #expect(TripListRules.end(of: lateStart, clock: .japan) == day.addingTimeInterval((24 * 60 + 20) * 60))
+
+        var lateArrival = train(date: "2026-09-06", departure: "23:40", arrival: "00:20", list: .upcoming)
+        lateArrival.stops[1].actualArrival = "0:25"
+        #expect(TripListRules.end(of: lateArrival, clock: .japan) == day.addingTimeInterval((24 * 60 + 25) * 60))
+
+        var sameDay = train(date: "2026-09-06", departure: "10:00", arrival: "10:10", list: .upcoming)
+        sameDay.stops[0].actualDeparture = "10:15"
+        #expect(TripListRules.end(of: sameDay, clock: .japan) == day.addingTimeInterval(615 * 60))
+    }
 }

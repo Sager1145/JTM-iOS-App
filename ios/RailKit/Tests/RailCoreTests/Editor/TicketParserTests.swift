@@ -193,4 +193,45 @@ struct TicketParserTests {
         #expect(result.car?.value == "12")
         #expect(result.seat?.value == "5C")
     }
+
+    // MARK: arrival time
+
+    @Test func jpArrivalIsReadFromTheChakuMarker() {
+        let ticket = TicketParser.parse(
+            lines: lines(["東京 → 新大阪", "のぞみ 25号", "11月6日", "10:30発 12:55着", "5号車 12番A席"]),
+            region: .jp)
+        #expect(ticket.departureTime?.value == ServiceClockTime(dayOffset: 0, hour: 10, minute: 30))
+        #expect(ticket.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 12, minute: 55))
+        let labelled = TicketParser.parse(lines: lines(["東京 10:30発", "新大阪 12:55着"]), region: .jp)
+        #expect(labelled.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 12, minute: 55))
+        // An issue date or validity line is not an arrival.
+        let plain = TicketParser.parse(lines: lines(["名古屋→京都ゆき", "発売日 2026年10月6日 9:12"]), region: .jp)
+        #expect(plain.arrivalTime == nil)
+    }
+
+    @Test func twArrivalIsReadFromTheRouteOrTheArrivalLabel() {
+        let hsr = TicketParser.parse(lines: lines(["台北 → 左營", "10:30 → 12:15"]), region: .tw)
+        #expect(hsr.departureTime?.value == ServiceClockTime(dayOffset: 0, hour: 10, minute: 30))
+        #expect(hsr.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 12, minute: 15))
+        let tra = TicketParser.parse(
+            lines: lines(["臺北 至 臺中", "開車時間 10:30", "抵達時間 12:20"]), region: .tw)
+        #expect(tra.departureTime?.value == ServiceClockTime(dayOffset: 0, hour: 10, minute: 30))
+        #expect(tra.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 12, minute: 20))
+    }
+
+    @Test func twToMeaningDestinationIsNotAnArrivalMarker() {
+        let route = TicketParser.parse(lines: lines(["10:30 到 左營"]), region: .tw)
+        #expect(route.arrivalTime == nil)
+        let arrived = TicketParser.parse(lines: lines(["12:20抵達"]), region: .tw)
+        #expect(arrived.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 12, minute: 20))
+    }
+
+    @Test func krArrivalIsReadFromTheDochakMarker() {
+        let ticket = TicketParser.parse(
+            lines: lines(["서울 → 부산", "KTX 101", "출발 08:00", "도착 10:37"]), region: .kr)
+        #expect(ticket.departureTime?.value == ServiceClockTime(dayOffset: 0, hour: 8, minute: 0))
+        #expect(ticket.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 10, minute: 37))
+        let spoken = TicketParser.parse(lines: lines(["10시 37분 도착"]), region: .kr)
+        #expect(spoken.arrivalTime?.value == ServiceClockTime(dayOffset: 0, hour: 10, minute: 37))
+    }
 }

@@ -505,5 +505,21 @@ enum NewTripStrings {
             .en: "Ticket", .ja: "きっぷ",
             .zhHant: "車票", .zhHans: "车票",
         ],
+        "ios.newTrip.addActualTimes": [
+            .en: "Add actual times", .ja: "実際の時刻を追加",
+            .zhHant: "加入實際時間", .zhHans: "添加实际时间",
+        ],
+        "ios.newTrip.delayOnTime": [
+            .en: "On time", .ja: "定刻",
+            .zhHant: "準點", .zhHans: "准点",
+        ],
+        "ios.newTrip.delayPlus": [
+            .en: "+{minutes} min", .ja: "+{minutes}分",
+            .zhHant: "+{minutes} 分", .zhHans: "+{minutes} 分",
+        ],
+        "ios.newTrip.delayCustom": [
+            .en: "Custom", .ja: "その他",
+            .zhHant: "自訂", .zhHans: "自定义",
+        ],
     ]
 }

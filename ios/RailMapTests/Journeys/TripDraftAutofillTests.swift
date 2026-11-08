@@ -35,7 +35,12 @@ struct TripDraftAutofillTests {
         #expect(model.draft.rollingStock?.riddenCar == 5)
         #expect(model.dayString(model.departure) == "2026-11-06")
         #expect(model.clock(model.departure, extraDays: 0) == "10:30")
-        for field: TripDraftModel.Field in [.number, .trainType, .seat, .fare, .riddenCar, .departure] {
+        #expect(model.dayString(model.arrival) == "2026-11-06")
+        #expect(model.clock(model.arrival, extraDays: 0) == "12:55")
+        // The departure's onChange shift must not move the printed arrival.
+        model.departureChanged(to: model.departure)
+        #expect(model.clock(model.arrival, extraDays: 0) == "12:55")
+        for field: TripDraftModel.Field in [.number, .trainType, .seat, .fare, .riddenCar, .departure, .arrival] {
             #expect(model.filledBy[field] == .ticket, "\(field)")
         }
         // A ticket's clock is a real time: the trip is filed by it, not by date alone.
@@ -52,14 +57,20 @@ struct TripDraftAutofillTests {
         model.apply(TripDraftModel.Patch(trainType: "local"), source: .reader)
         let reader = Calendar.current.date(from: DateComponents(year: 2026, month: 11, day: 5, hour: 8))!
         model.apply(TripDraftModel.Patch(departure: reader), source: .reader)
+        // The editor's onChange, so the arrival below is set against this departure.
+        model.departureChanged(to: reader)
+        let readerArrival = reader.addingTimeInterval(3 * 3600)
+        model.apply(TripDraftModel.Patch(arrival: readerArrival), source: .reader)
 
         model.fillFromTicket(nozomi(), now: Date())
+        model.departureChanged(to: model.departure)
 
         #expect(model.trainNumber == "ひかり 500")
         #expect(model.draft.ticket?.seat == "3D")
         #expect(model.trainType == "local")
         #expect(model.departure == reader)
-        for field: TripDraftModel.Field in [.number, .seat, .trainType, .departure] {
+        #expect(model.arrival == readerArrival)
+        for field: TripDraftModel.Field in [.number, .seat, .trainType, .departure, .arrival] {
             #expect(model.filledBy[field] == nil, "\(field)")
             #expect(model.touched.contains(field), "\(field)")
         }
@@ -139,5 +150,149 @@ struct TripDraftAutofillTests {
         TripDraftModel.trimDetails(&train)
         #expect(train.rollingStock == RollingStock(setNumber: "X1"))
         #expect(train.ticket == Ticket(seat: "12A", seatClass: "グリーン車"))
+    }
+
+    @Test func anOvernightArrivalLandsOnTheNextDay() {
+        let model = newDraft()
+        let reading = TicketParser.parse(lines: [
+            "東京 → 出雲市", "サンライズ出雲", "11月6日", "21:50発 9:58着",
+        ].map { RecognizedLine(text: $0, confidence: 0.9) }, region: .jp)
+        model.fillFromTicket(reading, now: Date())
+        #expect(model.clock(model.departure, extraDays: 0) == "21:50")
+        #expect(model.clock(model.arrival, extraDays: 0) == "09:58")
+        #expect(model.extraDays(from: model.departure, to: model.arrival) == 1)
+    }
+
+    /// The recorded strings must not move with the phone's zone. The process
+    /// zone is one global, so every zone is looped inside this one test.
+    @Test func recordedClocksAreIdenticalInEveryPhoneZone() throws {
+        var tokyo = Calendar(identifier: .gregorian)
+        tokyo.timeZone = try #require(TimeZone(identifier: "Asia/Tokyo"))
+        let now = try #require(tokyo.date(from: DateComponents(year: 2026, month: 11, day: 6, hour: 12)))
+        let overnight = TicketParser.parse(lines: [
+            "東京 → 新大阪", "乗車券・新幹線特急券(指定席)", "のぞみ 25号", "2026年11月6日(金)",
+            "23:55発 0:10着",
+        ].map { RecognizedLine(text: $0, confidence: 0.9) }, region: .jp)
+
+        func collect() -> [String] {
+            var out: [String] = []
+            let day = newDraft()
+            day.fillFromTicket(nozomi(), now: now)
+            day.actualTimeText(isDeparture: true).wrappedValue = "10:35"
+            out += [day.dayString(day.departure), day.clock(day.departure, extraDays: 0),
+                    day.clock(day.arrival, extraDays: day.extraDays(from: day.departure, to: day.arrival)),
+                    day.normalizedActual("10:35", isDeparture: true) ?? "nil"]
+
+            let night = newDraft()
+            night.fillFromTicket(overnight, now: now)
+            night.actualTimeText(isDeparture: false).wrappedValue = "0:10"
+            out += [night.dayString(night.departure), night.clock(night.departure, extraDays: 0),
+                    night.clock(night.arrival, extraDays: night.extraDays(from: night.departure, to: night.arrival)),
+                    night.normalizedActual("0:10", isDeparture: false) ?? "nil"]
+
+            var train = StoreOperations.createBlankTrain(country: "jp")
+            train.stops = [
+                Stop(name: "東京", departure: "23:55", stopType: "origin"),
+                Stop(name: "新大阪", arrival: "24:10", stopType: "destination"),
+            ]
+            night.applyActualTimes(to: &train)
+            out += [train.stops[1].actualArrival ?? "nil"]
+            return out
+        }
+
+        let expected = ["2026-11-06", "10:30", "12:55", "10:35",
+                        "2026-11-06", "23:55", "24:10", "24:10", "24:10"]
+        for zone in ["Asia/Tokyo", "America/Los_Angeles", "Pacific/Kiritimati", "Europe/London"] {
+            let actual = withPhoneTimeZone(zone) { collect() }
+            #expect(actual == expected, "\(zone): \(actual)")
+        }
+    }
+
+    // MARK: - actual times
+
+    @Test func actualTimesAreTheReadersAndNoFillWritesThem() {
+        let model = newDraft()
+        model.actualTimeText(isDeparture: true).wrappedValue = "10:35"
+        model.fillFromTicket(nozomi(), now: Date())
+        #expect(model.actualDeparture == "10:35")
+        #expect(model.actualArrival == nil, "A ticket's arrival is the scheduled one, never the actual one.")
+        #expect(model.touched.contains(.actualDeparture))
+        #expect(model.filledBy[.actualDeparture] == nil)
+        #expect(model.scheduledClock(isDeparture: true) == "10:30")
+        #expect(model.normalizedActual(model.actualDeparture, isDeparture: true) == "10:35")
+    }
+
+    @Test func anActualClockLongBeforeTheScheduleIsAfterMidnight() {
+        let model = newDraft()
+        let late = Calendar.current.date(from: DateComponents(year: 2026, month: 11, day: 6, hour: 23, minute: 55))!
+        model.apply(TripDraftModel.Patch(departure: late, arrival: late), source: .reader)
+        #expect(model.normalizedActual("0:10", isDeparture: false) == "24:10")
+        #expect(model.normalizedActual("23:50", isDeparture: false) == "23:50")
+        #expect(model.normalizedActual("25:x", isDeparture: false) == nil)
+    }
+
+    @Test func savingWritesActualTimesOnTheBoardingAndAlightingStops() {
+        let model = newDraft()
+        model.actualTimeText(isDeparture: true).wrappedValue = " 9:07"
+        model.actualTimeText(isDeparture: false).wrappedValue = "12:58"
+        var train = StoreOperations.createBlankTrain(country: "jp")
+        train.stops = [
+            Stop(name: "前", departure: "9:00", stopType: "passenger_stop"),
+            Stop(name: "東京", departure: "9:05", stopType: "origin"),
+            Stop(name: "新大阪", arrival: "12:55", stopType: "destination"),
+            Stop(name: "後", arrival: "13:30", stopType: "passenger_stop"),
+        ]
+        model.applyActualTimes(to: &train)
+        #expect(train.stops[1].actualDeparture == "9:07")
+        #expect(train.stops[2].actualArrival == "12:58")
+        #expect(train.stops[0].actualDeparture == nil && train.stops[3].actualArrival == nil)
+        // Clearing them removes the fields; a record without them stays without them.
+        model.actualTimeText(isDeparture: true).wrappedValue = ""
+        model.actualTimeText(isDeparture: false).wrappedValue = ""
+        for index in train.stops.indices {
+            train.stops[index].actualDeparture = nil
+            train.stops[index].actualArrival = nil
+        }
+        model.applyActualTimes(to: &train)
+        #expect(train.stops.allSatisfy { $0.actualDeparture == nil && $0.actualArrival == nil })
+    }
+
+    @Test func aSavedTripOpensWithItsActualTimes() {
+        var train = StoreOperations.createBlankTrain(country: "jp")
+        train.region = "jp"
+        train.stops = [
+            Stop(name: "東京", departure: "9:05", actualDeparture: "9:07", stopType: "origin"),
+            Stop(name: "新大阪", arrival: "12:55", actualArrival: "13:01", stopType: "destination"),
+        ]
+        let model = TripDraftModel(train: train, isNew: false)
+        #expect(model.actualDeparture == "9:07")
+        #expect(model.actualArrival == "13:01")
+        #expect(model.showsActualTimes)
+        #expect(!model.isDirty(original: train))
+        model.actualTimeText(isDeparture: false).wrappedValue = "13:05"
+        #expect(model.isDirty(original: train))
+    }
+
+    private func reading(_ lines: [String]) -> TicketReadingResult {
+        TicketParser.parse(lines: lines.map { RecognizedLine(text: $0, confidence: 0.9) }, region: .jp)
+    }
+
+    @Test func anArrivalOnlyTicketLandsOnTheTicketDayNotTheNext() {
+        let model = newDraft()
+        model.departure = model.timetableDate("2026-11-06", time: "18:10")!
+        model.arrival = model.departure
+        model.fillFromTicket(reading(["東京 → 新大阪", "のぞみ 25号", "2026年11月6日(金)", "12:55着"]), now: Date())
+        #expect(!model.timeIsSet(.departure))
+        #expect(model.dayString(model.arrival) == "2026-11-06")
+        #expect(model.clock(model.arrival, extraDays: 0) == "12:55")
+    }
+
+    @Test func aLateNightServiceCountsFromItsServiceDay() {
+        let model = newDraft()
+        model.fillFromTicket(reading(["東京 → 新大阪", "のぞみ 25号", "2026年11月6日(金)", "24:30発 25:10着"]), now: Date())
+        #expect(model.dayString(model.departure) == "2026-11-07")
+        #expect(model.clock(model.departure, extraDays: 0) == "00:30")
+        #expect(model.dayString(model.arrival) == "2026-11-07")
+        #expect(model.clock(model.arrival, extraDays: 0) == "01:10")
     }
 }

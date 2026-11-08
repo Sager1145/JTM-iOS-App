@@ -4,24 +4,35 @@ import Testing
 
 @Suite("Ticket reading to editor values")
 struct TicketReadingDraftTests {
+    private let japan = RegionClock.forRegionCode("jp").calendar
+
     private func day(_ text: String) -> Date {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
+        let calendar = japan
         let parts = text.split(separator: "-").compactMap { Int($0) }
         return calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2], hour: 12))!
     }
 
     @Test func aYearlessDateIsTheLatestNotFarAhead() {
-        #expect(TicketDate(year: nil, month: 12, day: 30).dayString(near: day("2027-01-03")) == "2026-12-30")
-        #expect(TicketDate(year: nil, month: 1, day: 2).dayString(near: day("2026-12-30")) == "2027-01-02")
-        #expect(TicketDate(year: nil, month: 6, day: 1).dayString(near: day("2026-11-06")) == "2026-06-01")
+        #expect(TicketDate(year: nil, month: 12, day: 30).dayString(near: day("2027-01-03"), calendar: japan) == "2026-12-30")
+        #expect(TicketDate(year: nil, month: 1, day: 2).dayString(near: day("2026-12-30"), calendar: japan) == "2027-01-02")
+        #expect(TicketDate(year: nil, month: 6, day: 1).dayString(near: day("2026-11-06"), calendar: japan) == "2026-06-01")
         // A used ticket from six months back is not read as next year's.
-        #expect(TicketDate(year: nil, month: 5, day: 6).dayString(near: day("2026-11-06")) == "2026-05-06")
-        #expect(TicketDate(year: nil, month: 11, day: 20).dayString(near: day("2026-11-06")) == "2026-11-20")
+        #expect(TicketDate(year: nil, month: 5, day: 6).dayString(near: day("2026-11-06"), calendar: japan) == "2026-05-06")
+        #expect(TicketDate(year: nil, month: 11, day: 20).dayString(near: day("2026-11-06"), calendar: japan) == "2026-11-20")
         // No leap day within a year either side: nothing, rather than a guess.
-        #expect(TicketDate(year: nil, month: 2, day: 29).dayString(near: day("2026-11-06")) == nil)
-        #expect(TicketDate(year: 2024, month: 2, day: 29).dayString(near: day("2026-11-06")) == "2024-02-29")
-        #expect(TicketDate(year: 2025, month: 2, day: 30).dayString(near: day("2026-11-06")) == nil)
+        #expect(TicketDate(year: nil, month: 2, day: 29).dayString(near: day("2026-11-06"), calendar: japan) == nil)
+        #expect(TicketDate(year: 2024, month: 2, day: 29).dayString(near: day("2026-11-06"), calendar: japan) == "2024-02-29")
+        #expect(TicketDate(year: 2025, month: 2, day: 30).dayString(near: day("2026-11-06"), calendar: japan) == nil)
+    }
+
+    @Test func todayIsTheRegionsDayNotThePhones() {
+        // 2026-12-31 23:30 in Tokyo is 06:30 the same day in Los Angeles.
+        let now = japan.date(from: DateComponents(year: 2026, month: 12, day: 31, hour: 23, minute: 30))!
+        // The region's calendar is the only zone input; the phone's zone is never
+        // read (no global time zone is changed here: RailKit tests run in parallel).
+        let clock = RegionClock.forRegionCode("jp").calendar
+        #expect(TicketDate(year: nil, month: 1, day: 2).dayString(near: now, calendar: clock) == "2027-01-02")
+        #expect(TicketDate(year: nil, month: 12, day: 31).dayString(near: now, calendar: clock) == "2026-12-31")
     }
 
     @Test func faresAreStoredInWholePrintedUnits() throws {

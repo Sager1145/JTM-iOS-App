@@ -193,14 +193,16 @@ extension TripDraftModel {
             })
         }
 
-        let day = reading.date?.value.dayString(near: now)
+        let day = reading.date?.value.dayString(near: now, calendar: region.clock.calendar)
+        // The service day, before this fill moves the departure.
+        let serviceDay = day ?? dayString(departure)
         if let time = reading.departureTime?.value, !touched.contains(.departure),
            let base = day ?? Optional(dayString(departure)),
-           let date = timetableDate(base, time: String(format: "%02d:%02d", time.hour, time.minute)) {
-            let value = Calendar.current.date(byAdding: .day, value: time.dayOffset, to: date) ?? date
+           let date = timetableDate(Dates.addDays(base, time.dayOffset) ?? base,
+                                    time: String(format: "%02d:%02d", time.hour, time.minute)) {
             // An arrival the reader set does not follow the departure.
-            if touched.contains(.arrival) { previousDeparture = value }
-            apply(Patch(departure: value), source: .ticket)
+            if touched.contains(.arrival) { previousDeparture = date }
+            apply(Patch(departure: date), source: .ticket)
             filledBy[.departure] = .ticket
             filledBy[.date] = nil
             written += 1
@@ -209,6 +211,17 @@ extension TripDraftModel {
             if touched.contains(.arrival) { previousDeparture = date }
             apply(Patch(departure: date), source: .ticket)
             filledBy[.date] = .ticket
+            written += 1
+        }
+
+        // The printed arrival, on the service day; a clock before a set
+        // departure's is the next morning. Writing it also pins the
+        // departure the arrival follows, so the onChange shift adds nothing.
+        if let time = reading.arrivalTime?.value, !touched.contains(.arrival),
+           let value = ticketArrival(time, serviceDay: serviceDay) {
+            previousDeparture = departure
+            apply(Patch(arrival: value), source: .ticket)
+            filledBy[.arrival] = .ticket
             written += 1
         }
 
@@ -246,6 +259,22 @@ extension TripDraftModel {
         matchTicketTimetable(reading, day: dayString(departure),
                              minutes: timeIsSet(.departure) ? clockMinutes(departure) : nil)
         return written
+    }
+
+    /// A printed arrival clock as a date after the departure on screen.
+    /// Deliberately routed through the header helpers (`dayString`, `clock`,
+    /// `timetableDate`) on day strings, never `Calendar`: it follows the
+    /// header's zone until that is pinned to the region.
+    func ticketArrival(_ time: ServiceClockTime, serviceDay: String) -> Date? {
+        // Rolled one day only against a departure that is really set, both
+        // measured from the service day.
+        var later = 0
+        if timeIsSet(.departure) {
+            let left = clockMinutes(departure) + 1440 * extraDays(from: serviceDay, to: departure)
+            later = time.serviceMinutes < left ? 1 : 0
+        }
+        guard let day = Dates.addDays(serviceDay, time.dayOffset + later) else { return nil }
+        return timetableDate(day, time: String(format: "%02d:%02d", time.hour, time.minute))
     }
 
     /// The catalog station a printed name means: the name as printed, then
@@ -331,8 +360,7 @@ extension TripDraftModel {
     }
 
     func clockMinutes(_ date: Date) -> Int {
-        let parts = Calendar.current.dateComponents([.hour, .minute], from: date)
-        return (parts.hour ?? 0) * 60 + (parts.minute ?? 0)
+        Int(Dates.parseTimeToMinutes(clock(date, extraDays: 0)) ?? 0)
     }
 
     // MARK: - history and nearby

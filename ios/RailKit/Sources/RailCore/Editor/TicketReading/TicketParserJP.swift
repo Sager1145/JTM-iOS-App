@@ -32,6 +32,12 @@ enum TicketParserJP {
             if let time = departure(in: line.text) {
                 draft.offer(\.departureTime, time.value, line, strength: time.strength)
             }
+            if let time = TicketText.arrival(in: line.text, markers: [
+                "(\\d{1,2}):(\\d{2})\\s*着", "着\\s*[:：]?\\s*(\\d{1,2}):(\\d{2})",
+                "(\\d{1,2})時(\\d{1,2})分?\\s*着",
+            ]) {
+                draft.offer(\.arrivalTime, time.value, line, strength: time.strength)
+            }
             service(line, &draft)
             seat(line, &draft)
             seatClass(line, &draft)

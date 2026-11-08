@@ -95,6 +95,23 @@ final class AddTripLayoutUITests: XCTestCase {
         XCTAssertTrue(EditorUITestSupport.reveal(destination, in: app, unmountedRowIsAbove: false))
         XCTAssertTrue(destination.label.contains("新大阪"), destination.label)
 
+        // An actual departure is the reader's own, shown against the ticket's 10:30.
+        let addActual = app.buttons["newTripAddActualTimes"]
+        XCTAssertTrue(EditorUITestSupport.reveal(addActual, in: app, unmountedRowIsAbove: false))
+        addActual.tap()
+        let actual = app.textFields["newTripActualDeparture"]
+        XCTAssertTrue(actual.waitForExistence(timeout: 5))
+        XCTAssertTrue(EditorUITestSupport.reveal(actual, in: app, unmountedRowIsAbove: false))
+        actual.tap()
+        actual.typeText("10:35\n")
+        let status = app.staticTexts["newTripActualDepartureStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 5), app.debugDescription)
+        XCTAssertEqual(status.label, "5 min late")
+        let actualShot = XCTAttachment(screenshot: app.screenshot())
+        actualShot.name = "add-trip-actual-times"
+        actualShot.lifetime = .keepAlways
+        add(actualShot)
+
         let number = app.textFields["newTripNumber"]
         XCTAssertTrue(EditorUITestSupport.reveal(number, in: app, unmountedRowIsAbove: false))
         XCTAssertEqual(number.value as? String, "のぞみ25号")
@@ -118,7 +135,115 @@ final class AddTripLayoutUITests: XCTestCase {
         add(lower)
     }
 
+    /// A chip sets the actual clock from the ticket's schedule; an early
+    /// arrival is typed.
+    func testActualTimeChipsFillFromTheTicketAndEarlyIsTyped() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app, environment: [
+            UITestLaunchConfiguration.Key.ticket.rawValue:
+                "東京 → 新大阪|乗車券・新幹線特急券(指定席)|のぞみ 25号|2026年11月6日(金)|10:30発 12:55着"
+                + "|5号車 12番A席|普通車指定席|合計 ¥14,720",
+        ])
+        XCTAssertTrue(app.descendants(matching: .any)["newTripTicketFilled"].firstMatch.waitForExistence(timeout: 30))
+        let addActual = app.buttons["newTripAddActualTimes"]
+        XCTAssertTrue(EditorUITestSupport.reveal(addActual, in: app, unmountedRowIsAbove: false))
+        addActual.tap()
+        let plus5 = app.buttons["newTripActualDeparturePlus5"]
+        XCTAssertTrue(plus5.waitForExistence(timeout: 5))
+        XCTAssertTrue(EditorUITestSupport.reveal(plus5, in: app, unmountedRowIsAbove: false))
+        plus5.tap()
+        let departure = app.textFields["newTripActualDeparture"]
+        XCTAssertTrue(departure.waitForExistence(timeout: 5))
+        XCTAssertEqual(departure.value as? String, "10:35")
+        let status = app.staticTexts["newTripActualDepartureStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 5), app.debugDescription)
+        XCTAssertEqual(status.label, "5 min late")
+
+        let arrival = app.textFields["newTripActualArrival"]
+        XCTAssertTrue(EditorUITestSupport.reveal(arrival, in: app, unmountedRowIsAbove: false))
+        arrival.tap()
+        arrival.typeText("12:50\n")
+        let early = app.staticTexts["newTripActualArrivalStatus"]
+        XCTAssertTrue(early.waitForExistence(timeout: 5), app.debugDescription)
+        XCTAssertTrue(early.label.contains("5 min early"), early.label)
+    }
+
+    /// Only the date is required: a trip with no time, or only an actual
+    /// time, saves. With no scheduled time there is nothing to be late against.
+    func testDateOnlyAndActualOnlyTripsSave() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        pickShinagawaToOsaki(in: app)
+        let save = app.buttons["newTripSave"]
+        XCTAssertTrue(waitEnabled(save, timeout: 60), "A date-only trip must be savable. \(app.debugDescription)")
+        save.tap()
+        XCTAssertTrue(save.waitForNonExistence(timeout: 20), "Save must close the editor.")
+
+        app.terminate()
+        EditorLaunchSupport.launchNewTrip(app)
+        pickShinagawaToOsaki(in: app)
+        let addActual = app.buttons["newTripAddActualTimes"]
+        XCTAssertTrue(EditorUITestSupport.reveal(addActual, in: app, unmountedRowIsAbove: false))
+        addActual.tap()
+        let departure = app.textFields["newTripActualDeparture"]
+        XCTAssertTrue(departure.waitForExistence(timeout: 5))
+        XCTAssertTrue(EditorUITestSupport.reveal(departure, in: app, unmountedRowIsAbove: false))
+        departure.tap()
+        departure.typeText("10:07\n")
+        XCTAssertFalse(app.staticTexts["newTripActualDepartureStatus"].waitForExistence(timeout: 2),
+                       "No scheduled time, so no delay is shown.")
+        let saveActual = app.buttons["newTripSave"]
+        XCTAssertTrue(waitEnabled(saveActual, timeout: 60), app.debugDescription)
+        saveActual.tap()
+        XCTAssertTrue(saveActual.waitForNonExistence(timeout: 20), "Save must close the editor.")
+    }
+
     // MARK: - helpers
+
+    private func pickShinagawaToOsaki(in app: XCUIApplication) {
+        pickStation(field: "newTripOrigin", query: "品川", code: "004095",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+        pickStation(field: "newTripDestination", query: "大崎", code: "004135",
+                    lineID: "jp-東日本旅客鉄道-山手線", in: app)
+    }
+
+    private func waitEnabled(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let enabled = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "exists == true AND enabled == true"), object: element)
+        return XCTWaiter.wait(for: [enabled], timeout: timeout) == .completed
+    }
+
+    /// The station sheet: search, pick the row with this line and code.
+    private func pickStation(field: String, query: String, code: String, lineID: String, in app: XCUIApplication) {
+        let button = app.buttons[field]
+        XCTAssertTrue(EditorUITestSupport.reveal(button, in: app, maxDrags: 12, unmountedRowIsAbove: true),
+                      app.debugDescription)
+        XCTAssertTrue(waitEnabled(button, timeout: 40), "\(field) stays disabled until the catalog loads.")
+        let previous = button.label
+        button.tap()
+        let search = app.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 20))
+        search.tap()
+        search.typeText(query)
+        let row = app.buttons["newTripStation-\(lineID)-\(code)"]
+        var swipes = 0
+        while !row.waitForExistence(timeout: swipes == 0 ? 10 : 0.5), swipes < 40 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55)).press(
+                forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2)))
+            swipes += 1
+        }
+        XCTAssertTrue(row.exists, "No station row \(lineID)-\(code) for \(query).")
+        // A tap while the search keyboard is up only resigns the field.
+        if app.keyboards.firstMatch.exists {
+            search.typeText("\n")
+            _ = app.keyboards.firstMatch.waitForNonExistence(timeout: 2)
+        }
+        row.tap()
+        XCTAssertTrue(app.searchFields.firstMatch.waitForNonExistence(timeout: 8),
+                      "Choosing \(query) must close station search.")
+        let chosen = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label != %@", previous), object: button)
+        XCTAssertEqual(XCTWaiter.wait(for: [chosen], timeout: 8), .completed, button.label)
+    }
 
     /// A number pad has no Return key: the keyboard's Done closes it.
     private func type(_ value: String, into field: XCUIElement, in app: XCUIApplication, returns: Bool = true) {

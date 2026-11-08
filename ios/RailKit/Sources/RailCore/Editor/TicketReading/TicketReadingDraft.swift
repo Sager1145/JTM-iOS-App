@@ -6,11 +6,10 @@ extension TicketDate {
     /// tickets, and an advance ticket is bought at most a few weeks ahead
     /// (JR sells a month ahead). Last December's ticket scanned in January
     /// stays last year; a ticket for next week stays this year.
-    public func dayString(
-        near now: Date, aheadDays: Int = 45, calendar: Calendar = Calendar(identifier: .gregorian)
-    ) -> String? {
-        var calendar = calendar
-        calendar.timeZone = .current
+    ///
+    /// `calendar` is the region's pinned calendar (`RegionClock.calendar`), so
+    /// "today" is the ride's day, never the phone's.
+    public func dayString(near now: Date, aheadDays: Int = 45, calendar: Calendar) -> String? {
         let thisYear = calendar.component(.year, from: now)
         let years = year.map { [$0] } ?? [thisYear - 1, thisYear, thisYear + 1]
         let candidates = years.compactMap { year -> (Int, Date)? in

@@ -22,6 +22,10 @@ import RailCore
 /// a date only: filed upcoming while its date is today or later, overdue only
 /// once its date has ended.
 ///
+/// An observed clock (`actual_departure` / `actual_arrival`) outranks the
+/// scheduled one: it is when the ride really started or ended, and the reader
+/// typed it, so it counts even on a trip filed by its date alone.
+///
 /// Times are the record's own clock strings read on the region's clock.
 /// `25:10` and `01:10+1` both mean the next day, exactly as
 /// ``RailCore/Dates/parseTimeToMinutes(_:)`` reads them for the map.
@@ -79,32 +83,49 @@ public enum TripListRules {
         return end <= now
     }
 
-    /// The instant the trip starts: first departure, else first arrival, else
-    /// the end of its date.
+    /// The instant the trip starts: first actual departure, else first
+    /// departure, else first arrival, else the end of its date.
     public static func start(of train: Train, clock: RegionClock) -> Date? {
         guard let day = clock.startOfDay(train.date) else { return nil }
-        guard let minutes = startMinutes(train) else { return endOfDay(day, clock: clock) }
-        return day.addingTimeInterval(minutes * 60)
+        guard let start = actualStart(train) ?? scheduledStart(train) else { return endOfDay(day, clock: clock) }
+        return day.addingTimeInterval(start * 60)
     }
 
-    /// The instant the trip ends: last arrival, else last departure, else the
-    /// end of its date.
+    /// The instant the trip ends: last actual arrival, else last arrival,
+    /// else last departure, else the end of its date.
     ///
     /// A record whose last time reads earlier than its first without a
-    /// next-day spelling (`23:40` → `00:20`) is read as running past midnight,
-    /// so its end is never before its start.
+    /// next-day spelling (`23:40` to `00:20`) is read as running past midnight,
+    /// so its end is never before its start. Each kind's end wraps against
+    /// the same kind's start (an actual end falls back to the scheduled
+    /// start); the chosen end is then never before the chosen start.
     public static func end(of train: Train, clock: RegionClock) -> Date? {
         guard let day = clock.startOfDay(train.date) else { return nil }
-        guard var minutes = endMinutes(train) else { return endOfDay(day, clock: clock) }
-        if let start = startMinutes(train) {
-            while minutes < start { minutes += 1440 }
+        let scheduledFrom = scheduledStart(train)
+        let actualFrom = actualStart(train)
+        func wrapped(_ end: Double?, against start: Double?) -> Double? {
+            guard var end else { return nil }
+            if let start { while end < start { end += 1440 } }
+            return end
         }
+        guard var minutes = wrapped(actualEnd(train), against: actualFrom ?? scheduledFrom)
+            ?? wrapped(scheduledEnd(train), against: scheduledFrom) else {
+            return endOfDay(day, clock: clock)
+        }
+        if let start = actualFrom ?? scheduledFrom { minutes = max(minutes, start) }
         return day.addingTimeInterval(minutes * 60)
     }
 
     // MARK: - clock strings
 
-    private static func startMinutes(_ train: Train) -> Double? {
+    private static func actualStart(_ train: Train) -> Double? {
+        for stop in train.stops {
+            if let minutes = Dates.parseTimeToMinutes(stop.actualDeparture) { return minutes }
+        }
+        return nil
+    }
+
+    private static func scheduledStart(_ train: Train) -> Double? {
         guard train.listByDate != true else { return nil }
         for stop in train.stops {
             if let minutes = Dates.parseTimeToMinutes(stop.departure) { return minutes }
@@ -115,7 +136,14 @@ public enum TripListRules {
         return nil
     }
 
-    private static func endMinutes(_ train: Train) -> Double? {
+    private static func actualEnd(_ train: Train) -> Double? {
+        for stop in train.stops.reversed() {
+            if let minutes = Dates.parseTimeToMinutes(stop.actualArrival) { return minutes }
+        }
+        return nil
+    }
+
+    private static func scheduledEnd(_ train: Train) -> Double? {
         guard train.listByDate != true else { return nil }
         for stop in train.stops.reversed() {
             if let minutes = Dates.parseTimeToMinutes(stop.arrival) { return minutes }

@@ -37,8 +37,7 @@ extension TripDraftModel {
         _ = registryEpoch
         var query = timetableBase
         if query.stops.count == 2 {
-            query.stops[0].departure = clock(departure, extraDays: 0)
-            query.stops[1].arrival = clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+            writeHeaderClocks(into: &query, departureIndex: 0, arrivalIndex: 1, includingKnown: true)
         }
         return JourneyCompletion.resolvingUniqueStationNames(
             in: query, catalogs: catalog.map { [region.code: $0] } ?? [:])
@@ -57,20 +56,29 @@ extension TripDraftModel {
     /// Only the header's own fields go back; whatever the reader set
     /// elsewhere while the timetable was applied stays theirs.
     func removeTimetable() {
-        if let header = headerBeforeTimetable {
-            trainType = header.trainType
-            departure = header.departure
-            arrival = header.arrival
-            previousDeparture = header.previousDeparture
-            let headerFields = Self.headerFields
-            touched = touched.subtracting(headerFields).union(header.touched.intersection(headerFields))
-            for field in headerFields { filledBy[field] = header.filledBy[field] }
-        }
+        restoreHeaderBeforeTimetable()
         if filledBy[.serviceName] == .timetable {
             limitedExpressName = ""
             filledBy[.serviceName] = nil
         }
         clearTimetable()
+    }
+
+    /// Puts the header's fields back as the snapshot kept them. When
+    /// `keepingReaderEdits`, a field the reader set while the timetable was
+    /// applied keeps its value.
+    func restoreHeaderBeforeTimetable(keepingReaderEdits: Bool = false) {
+        guard let header = headerBeforeTimetable else { return }
+        let kept = keepingReaderEdits ? touched.subtracting(header.touched) : []
+        if !kept.contains(.trainType) { trainType = header.trainType }
+        if !kept.contains(.departure) {
+            departure = header.departure
+            previousDeparture = header.previousDeparture
+        }
+        if !kept.contains(.arrival) { arrival = header.arrival }
+        let restored = Self.headerFields.subtracting(kept)
+        touched = touched.subtracting(restored).union(header.touched.intersection(restored))
+        for field in restored { filledBy[field] = header.filledBy[field] }
     }
 
     /// The fields a timetable's header snapshot restores.
@@ -79,6 +87,7 @@ extension TripDraftModel {
     /// A timetable no longer applies: the formation it filled goes with it.
     func clearTimetable() {
         clearFormationFill()
+        restoreHeaderBeforeTimetable(keepingReaderEdits: true)
         headerBeforeTimetable = nil
         appliedTimetableTripID = nil
         timetableTrain = nil
@@ -258,12 +267,12 @@ extension TripDraftModel {
         }
         let pickerDeparture = clock(
             departure, extraDays: extraDays(from: serviceDate, to: departure))
-        if result.stops[span.lowerBound].departure != pickerDeparture {
+        if timeIsSet(.departure), result.stops[span.lowerBound].departure != pickerDeparture {
             result.stops[span.lowerBound].departure = pickerDeparture
         }
         let pickerArrival = clock(
             arrival, extraDays: extraDays(from: serviceDate, to: arrival))
-        if result.stops[span.upperBound].arrival != pickerArrival {
+        if timeIsSet(.arrival), result.stops[span.upperBound].arrival != pickerArrival {
             result.stops[span.upperBound].arrival = pickerArrival
         }
         // The header shows a saved journey's own number and operator. Only a
