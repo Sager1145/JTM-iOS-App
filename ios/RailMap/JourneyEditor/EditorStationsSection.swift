@@ -100,7 +100,6 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                             .lineLimit(1)
                     }
                     .buttonStyle(.railSecondary)
-                    .controlSize(.small)
                     .accessibilityIdentifier("newTripNearby-\(index)")
                 }
             }

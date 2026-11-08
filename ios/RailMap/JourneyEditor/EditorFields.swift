@@ -149,7 +149,6 @@ struct EditorSuggestionChip: View {
                 .lineLimit(1)
         }
         .buttonStyle(.railSecondary)
-        .controlSize(.small)
         .accessibilityHint(localization.text("ios.newTrip.suggestionHint", fallback: "Fills in this value"))
         .accessibilityIdentifier(identifier)
     }

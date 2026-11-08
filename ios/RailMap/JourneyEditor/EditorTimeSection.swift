@@ -114,7 +114,9 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                     .padding(.horizontal, RailSpacing.s12)
                     .frame(minHeight: 34)
                     .background(.tint.opacity(0.14), in: Capsule())
-                    .contentShape(Capsule())
+                    // The capsule stays compact; the tap area is a full touch target.
+                    .frame(minHeight: RailSize.touch)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.borderless)
             .disabled(typed && minutes != nil)
