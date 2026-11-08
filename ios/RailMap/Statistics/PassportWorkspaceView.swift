@@ -137,7 +137,7 @@ struct PassportWorkspaceView: View {
         return derived.availableYears(
             trains: trains, regionCode: region?.code,
             groupID: statistics.selectedJourneyGroupID, memberIDs: areaMembership?.ids,
-            currentYear: Calendar(identifier: .gregorian).component(.year, from: Date()),
+            currentYear: RecordDate.todayParts(in: .forRegionCode(region?.code)).year,
             selectedYear: statistics.selectedYear)
     }
 

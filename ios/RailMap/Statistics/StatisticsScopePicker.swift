@@ -10,6 +10,9 @@ struct StatisticsScopePicker: View {
     @Bindable var statistics: MileageStatisticsStore
     let availableDates: [String]
     let groups: [JourneyGroup]
+    /// The region the statistics are scoped to; `nil` (all regions) reads
+    /// "today" on Japan's clock, the same reference the statistics use.
+    let region: Region?
     var selectGroup: (String?) -> Void
 
     @State private var displayedMonth = Date()
@@ -22,6 +25,9 @@ struct StatisticsScopePicker: View {
         result.locale = localization.locale
         return result
     }
+
+    /// Today on the scoped region's clock, spelled as a record date.
+    private var today: String { RecordDate.today(in: .forRegionCode(region?.code)) }
 
     var body: some View {
         NavigationStack {
@@ -65,7 +71,7 @@ struct StatisticsScopePicker: View {
         }
         .frame(idealWidth: 390, maxWidth: 440, idealHeight: 640)
         .task {
-            displayedMonth = date(statistics.dateSelection.start ?? availableDates.last ?? "") ?? Date()
+            displayedMonth = date(statistics.dateSelection.start ?? availableDates.last ?? "") ?? date(today) ?? Date()
         }
         .onChange(of: availableDates) { previous, dates in
             // A sheet can open before the library has finished loading.
@@ -111,7 +117,7 @@ struct StatisticsScopePicker: View {
         // a Calendar and a FormatStyle for itself.
         let month = CalendarMonth(
             containing: displayedMonth, calendar: calendar,
-            selection: statistics.dateSelection, occupied: Set(availableDates))
+            selection: statistics.dateSelection, occupied: Set(availableDates), today: today)
         return VStack(spacing: 14) {
             VStack(spacing: 8) {
                 HStack {
@@ -235,7 +241,7 @@ struct StatisticsScopePicker: View {
         let calendar = calendar
         var years = Set(availableDates.compactMap { Int($0.prefix(4)) })
         years.insert(calendar.component(.year, from: displayedMonth))
-        years.insert(calendar.component(.year, from: Date()))
+        years.insert(Int(today.prefix(4)) ?? calendar.component(.year, from: displayedMonth))
         return years.sorted()
     }
 
@@ -297,7 +303,7 @@ private struct CalendarMonth {
     let weeks: [[Day?]]
 
     init(containing point: Date, calendar: Calendar,
-         selection: StatisticsDateSelection, occupied: Set<String>) {
+         selection: StatisticsDateSelection, occupied: Set<String>, today: String) {
         let parts = calendar.dateComponents([.year, .month], from: point)
         let year = parts.year ?? 1970, monthNumber = parts.month ?? 1
         let start = calendar.date(from: DateComponents(year: year, month: monthNumber, day: 1)) ?? point
@@ -305,13 +311,6 @@ private struct CalendarMonth {
         let count = calendar.range(of: .day, in: .month, for: start)?.count ?? 28
         let style = Date.FormatStyle(locale: calendar.locale ?? .current, calendar: calendar, timeZone: .gmt)
             .year().month().day()
-        // "Today" is the reader's local day, not the GMT day the keys are in.
-        // Gregorian by name: a device on the Japanese calendar would answer year 8.
-        var local = Calendar(identifier: .gregorian)
-        local.timeZone = .current
-        let now = local.dateComponents([.year, .month, .day], from: Date())
-        let today = String(format: "%04d-%02d-%02d", now.year ?? 0, now.month ?? 0, now.day ?? 0)
-
         var cells: [Day?] = Array(repeating: nil, count: padding)
         for number in 1...count {
             let key = String(format: "%04d-%02d-%02d", year, monthNumber, number)

@@ -1391,6 +1391,7 @@ struct RailWorkspaceView: View {
                 statistics: statistics,
                 availableDates: statisticsDates,
                 groups: statisticsJourneyGroups,
+                region: regionScope,
                 selectGroup: { groupID in
                     if groupID != nil { regionScope = nil }
                     statistics.selectJourneyGroup(groupID)

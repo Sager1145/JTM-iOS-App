@@ -402,6 +402,7 @@ past failure each guard answers: `docs/maintenance/2026-11-06-regression-guards.
 | `RegressionGuardHistoryStamps` | history events losing or narrowing their `rail-history.json` stamps |
 | `RegressionGuardPairedTracks` | paired-track catalog drifting from `paired_alignment` rows; branches listed as pairs |
 | `RegressionGuardArtifactRevisions` | stale or unstamped port fixtures, sample parts, expectations |
+| `RegressionGuardDeviceClock` | `Calendar.current` / `TimeZone.current` / unpinned `DatePicker` in app code (shrink-only baseline; recorded times must use `region.clock`) |
 | `DataCountExpectations` (per-region counts) | one region's rows breaking counts; says "code regression" vs "data changed" |
 | `build-port-fixtures.mjs --check --only=<f>` (15 fast fixtures) | JS reference output drifting from its committed fixture |
 | Playback / RouteGraph / Localization / ContinuousStroke parity, `SamplePrecomputeProvenanceTests`, `TravelDirectionTests`, `DirectionalAlignmentSelectionTests` | Swift vs JS drift in route key, operator names, i18n, stroke; direction logic |
