@@ -240,6 +240,8 @@ extension RailMapView.Surface {
             private lazy var playbackLayer = MapPlaybackLayer(overlayStyles: overlayStyles)
             private lazy var overlayInstaller = MapOverlayInstaller(styles: overlayStyles)
             private let annotationReconciler = MapAnnotationReconciler()
+            private let tripNoteLayer = MapTripNoteLayer()
+            private var tripNoteSnapshot = TripNoteMapSnapshot()
             private var retiringStationOverlays: [ObjectIdentifier: UUID] = [:]
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
@@ -312,6 +314,161 @@ extension RailMapView.Surface {
                 }
                 draftAnnotations = annotationReconciler.reconcile(
                     desired, replacing: draftAnnotations, on: mapView)
+            }
+
+            /// Trip-note marks follow the snapshot, the rides and the
+            /// selection; the layer returns at once when none of them moved.
+            func reconcileTripNotes(_ snapshot: TripNoteMapSnapshot, on mapView: MKMapView) {
+                tripNoteSnapshot = snapshot
+                renderTripNotes(on: mapView)
+            }
+
+            private func renderTripNotes(on mapView: MKMapView) {
+                tripNoteLayer.render(
+                    tripNoteSnapshot, rides: rides, selectedTrainID: selectedTrainID,
+                    routesDrawn: layers.routes, playbackActive: playback?.isActive == true,
+                    dateScope: dateScope, language: localization?.language.rawValue,
+                    text: tripNoteText, reconciler: annotationReconciler, on: mapView)
+            }
+
+            private func tripNoteText() -> MapTripNoteLayer.Text {
+                MapTripNoteLayer.Text(
+                    marker: { [self] note in
+                        let words = note.category.isEmpty ? note.text : note.category
+                        return localization?.text("ios.tripNotes.marker.accessibility",
+                                                  params: ["text": .string(words)],
+                                                  fallback: "Note: {text}") ?? words
+                    },
+                    place: { [self] note, ride in tripNotePlaceSummary(note.anchor, on: ride) },
+                    count: { [self] count in
+                        localization?.text("ios.tripNotes.count", params: ["n": .number(Double(count))],
+                                           fallback: "Notes: {n}") ?? "\(count)"
+                    })
+            }
+
+            private func tripNoteStopName(_ index: Int, of ride: RiddenRouteStore.DrawnRide) -> String {
+                guard ride.stops.indices.contains(index) else { return "" }
+                let stop = ride.stops[index]
+                return localized(stop.name, code: stop.n02StationCode, region: Region(rawValue: ride.country),
+                                 stationID: stop.stationID).display
+            }
+
+            /// "At A", "A → B", "Pinned on map" — the place a note names today.
+            private func tripNotePlaceSummary(_ anchor: TripNoteAnchor,
+                                              on ride: RiddenRouteStore.DrawnRide) -> String {
+                switch TripNotePlacement.resolve(anchor, stops: ride.stops) {
+                case .station(let index):
+                    return localization?.text(
+                        "ios.tripNotes.placeAtStation",
+                        params: ["station": .string(tripNoteStopName(index, of: ride))],
+                        fallback: "At {station}") ?? tripNoteStopName(index, of: ride)
+                case .interval(let from, let to, _):
+                    return localization?.text(
+                        "ios.tripNotes.placeBetween",
+                        params: ["from": .string(tripNoteStopName(from, of: ride)),
+                                 "to": .string(tripNoteStopName(to, of: ride))],
+                        fallback: "{from} → {to}")
+                        ?? "\(tripNoteStopName(from, of: ride)) → \(tripNoteStopName(to, of: ride))"
+                case .coordinate:
+                    return localization?.text("ios.tripNotes.placeOnMap", fallback: "Pinned on map") ?? ""
+                case .unplaced:
+                    return localization?.text("ios.tripNotes.placeUnplaced", fallback: "No place") ?? ""
+                }
+            }
+
+            // MARK: trip-note place picking
+
+            private var tripNotePickRevisionSeen = 0
+            /// Whether the current pick has been framed. A pick that starts
+            /// before its trip's ride is drawn is framed when the ride lands.
+            private var tripNotePickFramed = false
+            private var tripNotePickRefreshKey: [Double] = []
+            private var tripNotePickLastMovingRefresh = ContinuousClock.now
+
+            /// Called from every `updateUIView`. Frames a newly started pick
+            /// once, then keeps the pin's feedback current.
+            func syncTripNotePick(revision: Int, on mapView: MKMapView) {
+                guard let controller else { return }
+                guard let trainID = controller.tripNotePickTrainID else {
+                    tripNotePickRevisionSeen = revision
+                    tripNotePickFramed = false
+                    tripNotePickRefreshKey = []
+                    return
+                }
+                if revision != tripNotePickRevisionSeen {
+                    tripNotePickRevisionSeen = revision
+                    tripNotePickFramed = false
+                    tripNotePickRefreshKey = []
+                }
+                if !tripNotePickFramed, let ride = rides.first(where: { $0.id == trainID }) {
+                    tripNotePickFramed = true
+                    startTripNotePick(on: ride)
+                }
+                refreshTripNotePick(on: mapView)
+            }
+
+            /// The default framing: the picked trip's own line and stations,
+            /// then the note being moved, or the reader's position when
+            /// location is already allowed and lies on the line. Never prompts.
+            private func startTripNotePick(on ride: RiddenRouteStore.DrawnRide) {
+                guard let controller else { return }
+                let beads = Array(MapRideMarkers.stopPositions(of: ride).values)
+                if let region = MapProjection.region(covering: ride.strokes + [beads]) {
+                    controller.frameTripNotePick(region)
+                }
+                // An unreadable or unplaceable initial anchor frames like none.
+                if let initial = controller.tripNotePickInitial,
+                   let point = TripNoteGeometry.displayCoordinate(of: initial, on: ride) {
+                    controller.centerTripNotePick(on: point.clLocation, animated: false)
+                    return
+                }
+                guard controller.locationIsAuthorized else { return }
+                let token = controller.tripNotePickToken()
+                Task { @MainActor [weak controller] in
+                    guard let controller, case .success(let location) = await controller.currentLocationOnce(),
+                          // Stale: the pick ended or restarted, or the reader moved the map.
+                          controller.tripNotePickTokenIsCurrent(token),
+                          let anchor = TripNoteGeometry.anchor(
+                            forLocation: Coordinate(lon: location.coordinate.longitude,
+                                                    lat: location.coordinate.latitude), on: ride),
+                          let point = TripNoteGeometry.displayCoordinate(of: anchor, on: ride) else { return }
+                    controller.centerTripNotePick(on: point.clLocation, animated: true)
+                }
+            }
+
+            /// Project the point under the pin onto the picked ride. Gated on
+            /// the camera, the pin and the ride, so a SwiftUI pass that moved
+            /// none of them costs a comparison.
+            private func refreshTripNotePick(on mapView: MKMapView) {
+                guard let controller, let trainID = controller.tripNotePickTrainID,
+                      let ride = rides.first(where: { $0.id == trainID }),
+                      let pin = controller.tripNotePickPoint() else { return }
+                let visible = mapView.visibleMapRect
+                let center = mapView.convert(pin, toCoordinateFrom: mapView)
+                let barBottom = controller.tripNotePickBarBottom
+                let topInset = mapView.safeAreaInsets.top
+                let key = [center.latitude, center.longitude, visible.size.width, Double(pin.x), Double(pin.y),
+                           Double(barBottom), Double(topInset), Double(ride.geometryDigest)]
+                guard key != tripNotePickRefreshKey else { return }
+                tripNotePickRefreshKey = key
+                let metersPerPoint = MKMetersPerMapPointAtLatitude(center.latitude)
+                    * visible.size.width / max(Double(mapView.bounds.width), 1)
+                let pick = TripNoteGeometry.pick(
+                    at: Self.coordinate(center), on: ride,
+                    maxMeters: 40 * metersPerPoint, stationSnapMeters: max(60, 18 * metersPerPoint))
+                let feedback = TripNotePickFeedback(
+                    anchor: pick?.anchor,
+                    summary: pick.map { tripNotePlaceSummary($0.anchor, on: ride) },
+                    pinPoint: pin, barBottom: barBottom, topInset: topInset)
+                if controller.tripNotePickFeedback != feedback { controller.tripNotePickFeedback = feedback }
+            }
+
+            /// During a pan: at most ten projections a second.
+            private func refreshTripNotePickWhileMoving(on mapView: MKMapView) {
+                guard controller?.tripNotePickTrainID != nil,
+                      ContinuousClock.now - tripNotePickLastMovingRefresh > .milliseconds(100) else { return }
+                tripNotePickLastMovingRefresh = .now
+                refreshTripNotePick(on: mapView)
             }
 
             func update(
@@ -447,6 +604,7 @@ extension RailMapView.Surface {
                     rideDeck = deckUpdate.next
                     retainRidePolylines(changed: deckUpdate.change)
                 }
+                renderTripNotes(on: mapView)
                 prepareSelectedStationImportance(on: mapView)
                 // The tap cull's geometry moved. Dropped rather than rebuilt:
                 // `update` runs inside a SwiftUI pass, and a pass over every
@@ -933,6 +1091,7 @@ extension RailMapView.Surface {
                 // edge stayed clamped after a pan carried it into the middle.
                 layoutEndpointLabels(on: mapView)
                 restoreRideMarkerStacking()
+                refreshTripNotePickWhileMoving(on: mapView)
                 lastCameraChange = .now
                 let zoom = MapProjection.zoomLevel(of: mapView)
                 let preparationFrame = MapGeometryFrame(
@@ -991,6 +1150,7 @@ extension RailMapView.Surface {
 
 
             func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+                if controller?.tripNotePickTrainID != nil { refreshTripNotePick(on: mapView) }
                 // Not while the reader is still moving the map.
                 //
                 // This callback is documented as the SETTLED region, and during
@@ -3936,6 +4096,8 @@ extension RailMapView.Surface {
                 guard recognizer.state == .ended, let mapView,
                       !(playback?.isActive == true && playbackLayer.lastSnapshot != nil)
                 else { return }
+                // Picking a note's place: the map only pans; nothing selects.
+                if controller?.tripNotePickTrainID != nil { return }
                 // 列車経路 off takes the rides' HIT AREA with their ink.
                 //
                 // `RailMap.setVisible` moves `TRAIN_PICK_LAYER` and
@@ -4596,6 +4758,23 @@ extension RailMapView.Surface {
                     controller?.onDraftPin?(draft.occurrenceID)
                     return
                 }
+                // Picking a note's place: no mark, badge or station answers.
+                if controller?.tripNotePickTrainID != nil {
+                    mapView.deselectAnnotation(annotation, animated: false)
+                    return
+                }
+                if let note = annotation as? TripNoteAnnotation {
+                    mapView.deselectAnnotation(annotation, animated: false)
+                    guard !interaction.suppressesStationSelection else { return }
+                    controller?.onTripNote?(note.trainID, note.noteID)
+                    return
+                }
+                if let badge = annotation as? TripNoteBadgeAnnotation {
+                    mapView.deselectAnnotation(annotation, animated: false)
+                    guard !interaction.suppressesStationSelection else { return }
+                    onSelectRide([badge.rideID])
+                    return
+                }
                 guard let card = interaction.stationCard(for: annotation, named: { [self] name, code in
                     let named = localized(name, code: code)
                     return (named.display, localization == nil ? nil : named.readings.map(\.text))
@@ -4714,6 +4893,26 @@ extension RailMapView.Surface {
                         ?? DraftStopAnnotationView(annotation: draft, reuseIdentifier: identifier)
                     view.annotation = draft
                     view.configure(draft)
+                    annotationReconciler.prepare(view)
+                    return view
+                }
+                if let note = annotation as? TripNoteAnnotation {
+                    let identifier = "trip-note"
+                    let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+                        as? TripNoteMarkerView
+                        ?? TripNoteMarkerView(annotation: note, reuseIdentifier: identifier)
+                    view.annotation = note
+                    view.configure(note)
+                    annotationReconciler.prepare(view)
+                    return view
+                }
+                if let badge = annotation as? TripNoteBadgeAnnotation {
+                    let identifier = "trip-note-badge"
+                    let view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+                        as? TripNoteBadgeView
+                        ?? TripNoteBadgeView(annotation: badge, reuseIdentifier: identifier)
+                    view.annotation = badge
+                    view.configure(badge)
                     annotationReconciler.prepare(view)
                     return view
                 }

@@ -33,6 +33,7 @@ struct RideDetailView: View {
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
+    @State private var tripNoteFlow = TripNoteFlow()
 
     var body: some View {
         RideDetailContent(
@@ -54,14 +55,30 @@ struct RideDetailView: View {
             // through the one atomic save rather than a second write path.
             onSetRidden: onSave.map { save in
                 { ridden in _ = save(RideLedger.setRidden(train, ridden)) }
-            })
+            },
+            tripNoteFlow: onSave == nil ? nil : tripNoteFlow)
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
+            .tripNotesPresentation(
+                flow: tripNoteFlow, train: train, trains: suggestionTrains,
+                onSet: onSave.map { save in
+                    { (notes: [TripNote]) async -> Bool in
+                        var updated = train
+                        updated.setTripNotes(notes)
+                        return save(updated)
+                    }
+                })
             .toolbar {
                 // Share is the journey card's header button — the one share
                 // entry for a journey (pass 2). The details sheet opens from
                 // that card, so a second share here was the same verb twice.
                 if onSave != nil {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(localization.text("ios.tripNotes.add"), systemImage: "exclamationmark.bubble") {
+                            tripNoteFlow.beginAdd(train: train)
+                        }
+                        .accessibilityIdentifier("tripNotesAdd")
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.edit", fallback: "Edit"), systemImage: "pencil") {
                             beginEdit()
@@ -151,6 +168,9 @@ struct RideDetailContent: View {
     /// it — this is where they do. Absent on a read-only surface, where the
     /// state is still reported and simply cannot be changed.
     var onSetRidden: ((Bool) -> Void)?
+    /// Trip event notes: the presenter shared with the surface's own "Add
+    /// note" button. Nil on a read-only surface, which then shows no notes card.
+    var tripNoteFlow: TripNoteFlow?
     var actionButtonHeight: CGFloat? = nil
 
     @Environment(AppLocalization.self) private var localization
@@ -221,6 +241,9 @@ struct RideDetailContent: View {
             if includesIdentity { identityCard }
             if includesStationPair { stationPairCard }
             timelineCard(detail)
+            if let tripNoteFlow, !(train.tripNotes ?? []).isEmpty {
+                TripNotesCard(train: train, flow: tripNoteFlow, surface: surface)
+            }
             if confirmation == .notRidden { notRiddenCard }
             if train.visible == false { hiddenCard }
             if riddenRoutes != nil { routeStateCard }

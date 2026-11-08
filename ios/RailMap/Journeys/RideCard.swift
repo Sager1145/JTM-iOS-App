@@ -49,6 +49,9 @@ struct RideCard: View {
     /// record's own cards next to Visibility, and confirmed from the card that
     /// explains why the mileage is not being counted.
     var onSetRidden: ((Bool) -> Void)?
+    /// Trip event notes. The presenter belongs to the sheet that owns this
+    /// card; the card only starts an add and lists what exists.
+    var tripNoteFlow: TripNoteFlow?
 
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display: DisplaySettings?
@@ -184,6 +187,20 @@ struct RideCard: View {
                         )
                         .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
 
+                        if let tripNoteFlow {
+                            Button {
+                                tripNoteFlow.beginAdd(train: train)
+                            } label: {
+                                Label(localization.text("ios.tripNotes.add"),
+                                      systemImage: "exclamationmark.bubble")
+                            }
+                            .buttonStyle(RailCapsuleButtonStyle())
+                            .railMinimumTouchTarget()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
+                            .accessibilityIdentifier("tripNotesAdd")
+                        }
+
                         // The stop timeline and the service metadata — L3 and
                         // L4 (§3.1), below the Hero that answers L1 and L2.
                         //
@@ -204,6 +221,7 @@ struct RideCard: View {
                             surface: AnyShapeStyle(Color.primary.opacity(0.05)),
                             scrolls: false,
                             onSetRidden: onSetRidden,
+                            tripNoteFlow: tripNoteFlow,
                             actionButtonHeight: SheetIconButton<Image>.visualSide
                         )
                     }

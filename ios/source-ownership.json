@@ -83,7 +83,9 @@
         "ios/RailMap/Journeys/RideDetailView.swift",
         "ios/RailMap/Journeys/RideSheet.swift",
         "ios/RailMap/Journeys/RouteGlyph.swift",
-        "ios/RailMap/Journeys/StopTimingStatus.swift"
+        "ios/RailMap/Journeys/StopTimingStatus.swift",
+        "ios/RailMap/Journeys/TripNoteEditing.swift",
+        "ios/RailMap/Journeys/TripNotesCard.swift"
       ]
     },
     {
@@ -274,6 +276,7 @@
         "ios/RailMap/Map/MapRideStationImportance.swift",
         "ios/RailMap/Map/MapSelectedStationSnapshotController.swift",
         "ios/RailMap/Map/MapStationLabelCoordinator.swift",
+        "ios/RailMap/Map/MapTripNoteLayer.swift",
         "ios/RailMap/Map/NetworkLOD.swift",
         "ios/RailMap/Map/PlaybackAnnotations.swift",
         "ios/RailMap/Map/RailMapController.swift",
@@ -286,7 +289,11 @@
         "ios/RailMap/Map/RideTapIndex.swift",
         "ios/RailMap/Map/StationAnnotationViews.swift",
         "ios/RailMap/Map/StationAnnotations.swift",
-        "ios/RailMap/Map/StationCardView.swift"
+        "ios/RailMap/Map/StationCardView.swift",
+        "ios/RailMap/Map/TripNoteAnnotationViews.swift",
+        "ios/RailMap/Map/TripNoteAnnotations.swift",
+        "ios/RailMap/Map/TripNoteGeometry.swift",
+        "ios/RailMap/Map/TripNotePickOverlay.swift"
       ]
     },
     {
@@ -354,7 +361,8 @@
         "ios/RailMap/Localization/StationNaming.swift",
         "ios/RailMap/Localization/StatisticsStrings.swift",
         "ios/RailMap/Localization/TicketScanStrings.swift",
-        "ios/RailMap/Localization/TransferGuideStrings.swift"
+        "ios/RailMap/Localization/TransferGuideStrings.swift",
+        "ios/RailMap/Localization/TripNoteStrings.swift"
       ]
     },
     {
@@ -454,6 +462,8 @@
         "ios/RailKit/Sources/RailCore/Journeys/StoreOperations.swift",
         "ios/RailKit/Sources/RailCore/Journeys/Train.swift",
         "ios/RailKit/Sources/RailCore/Journeys/TripDetails.swift",
+        "ios/RailKit/Sources/RailCore/Journeys/TripNote.swift",
+        "ios/RailKit/Sources/RailCore/Journeys/TripNoteRoute.swift",
         "ios/RailKit/Sources/RailCore/Regions/RegionConnectivity.swift",
         "ios/RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift",
         "ios/RailKit/Sources/RailCore/Rendering/DisplayLiteralSpans.swift",

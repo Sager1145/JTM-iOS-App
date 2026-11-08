@@ -7,6 +7,10 @@ struct RailMapView: View {
     var lines: [RailNetworkStore.DrawnLine]
     var stations: [RailNetworkStore.DrawnStation]
     var rides: [RiddenRouteStore.DrawnRide]
+    /// Every solved ride, whatever the list's scope, visibility or cap. A
+    /// trip-note place pick draws its trip from here, so a trip that is
+    /// selected but scoped off the map can still be picked on.
+    var pickableRides: [RiddenRouteStore.DrawnRide]
     /// The union of the countries under the camera's last request, so a 定位 tap
     /// frames the countries being looked at rather than only what the byte
     /// budget currently keeps in `lines`. Nil until the store has seen a
@@ -160,21 +164,28 @@ struct RailMapView: View {
     /// as a plain value, exactly the way it already takes the lines and the
     /// rides.
     var body: some View {
+        // Picking a trip note's place: the map draws that trip alone, its
+        // stations shown, with no network under it. Only the Surface's inputs
+        // change, so ending the pick restores the reader's own map exactly.
+        let pickID = controller.tripNotePickTrainID
+        let pickRides = controller.tripNotePickRides(from: pickableRides)
         Surface(
             lines: lines,
             stations: stations,
-            rides: rides,
+            rides: pickRides ?? rides,
             networkExtent: networkExtent,
             selectedTrainID: selectedTrainID,
             selectedDate: selectedDate,
             networkRideDate: networkRideDate,
-            showsNetwork: showsNetwork,
+            showsNetwork: pickID == nil && showsNetwork,
             // Read HERE, in a body, for the same reason the 顯示調節 numbers
             // are: `updateUIView` is not a scope SwiftUI installs observation
             // tracking around, so a switch first read down there might never
             // schedule the update that redraws it.
-            layers: controller.layers,
+            layers: pickID == nil ? controller.layers : Self.pickLayers,
             draftMap: controller.draftMap,
+            tripNoteMap: controller.tripNoteMap,
+            tripNotePickRevision: controller.tripNotePickRevision,
             categoryIndexes: categoryIndexes,
             autoFocusRequest: controller.autoFocusRequest,
             isMapReady: controller.isMapReady,
@@ -188,7 +199,23 @@ struct RailMapView: View {
             onBuildRect: onBuildRect,
             onRender: onRender
         )
+        .overlay {
+            if let pickID {
+                let ride = pickRides?.first { $0.id == pickID }
+                let snapshot = controller.tripNoteMap
+                let fromTrip = snapshot.selectedTrainID == pickID && !snapshot.selectedStops.isEmpty
+                TripNotePickOverlay(
+                    controller: controller, ride: ride,
+                    stops: fromTrip ? snapshot.selectedStops : ride?.stops ?? [],
+                    region: fromTrip ? snapshot.selectedRegion ?? ride?.country : ride?.country,
+                    visibleRideCount: pickRides?.count ?? 0)
+            }
+        }
     }
+
+    /// The selected trip's line, beads and names, whatever the reader's own
+    /// layer switches say: the pick is about choosing a place on them.
+    private static let pickLayers = MapLayers()
 
     /// The `MKMapView` itself, and everything that draws into it.
     struct Surface: UIViewRepresentable {
@@ -202,6 +229,8 @@ struct RailMapView: View {
         var showsNetwork: Bool
         var layers: MapLayers
         var draftMap: DraftMapSnapshot
+        var tripNoteMap: TripNoteMapSnapshot
+        var tripNotePickRevision: Int
         var categoryIndexes: [String: Statistics.EdgeIndex]
         var autoFocusRequest: MapCameraPolicy.FocusRequest?
         var isMapReady: Bool
@@ -491,6 +520,8 @@ struct RailMapView: View {
                 naming: naming,
                 on: mapView
             )
+            context.coordinator.reconcileTripNotes(tripNoteMap, on: mapView)
+            context.coordinator.syncTripNotePick(revision: tripNotePickRevision, on: mapView)
         }
 
         static func dismantleUIView(_ mapView: MKMapView, coordinator: Coordinator) {

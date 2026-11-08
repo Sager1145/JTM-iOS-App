@@ -262,13 +262,13 @@ final class RiddenRouteStore {
         if case .failed = state { failed = true } else { failed = false }
         return trains.allSatisfy { train in
             !includes(train) || (resolutionTickets[train.id] == nil
-                && (completedInputs[train.id] == train || failed))
+                && (completedInputs[train.id] == Self.solverInput(train) || failed))
         }
     }
 
     /// Only diagnostics produced for the exact record currently displayed.
     func resourceWarnings(for train: Train) -> [String] {
-        guard completedInputs[train.id] == train else { return [] }
+        guard completedInputs[train.id] == Self.solverInput(train) else { return [] }
         return rides.first(where: { $0.id == train.id })?.resourceWarnings ?? []
     }
 
@@ -330,6 +330,16 @@ final class RiddenRouteStore {
     /// pipeline groups by it, and the per-region resources — the sections
     /// file, the station table, the package, the route cache — are loaded once
     /// per region that actually has rides rather than once per app.
+    /// A train as the solver sees it. Trip notes are not route inputs: they
+    /// are drawn from `RailMapController.tripNoteMap`, so adding, editing or
+    /// deleting one must not count as a changed trip and re-solve its route.
+    nonisolated static func solverInput(_ train: Train) -> Train {
+        guard train.tripNotes != nil else { return train }
+        var stripped = train
+        stripped.tripNotes = nil
+        return stripped
+    }
+
     func load(
         trains: [Train], preferredTrainID: String? = nil,
         priority: TaskPriority = .userInitiated
@@ -337,7 +347,7 @@ final class RiddenRouteStore {
         bindPendingOwner()
         // Trips in a disabled region stay in the store but are never cached,
         // solved or drawn. Their route-cache files are left on disk.
-        let trains = trains.filter { Region.resolved($0).isEnabled }
+        let trains = trains.filter { Region.resolved($0).isEnabled }.map(Self.solverInput)
         let wanted = Dictionary(trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let wantedIDs = trains.map(\.id)
         requestedOrder = wantedIDs
@@ -637,6 +647,7 @@ final class RiddenRouteStore {
     /// straight-lined: a journey whose new sections solve to nothing keeps its
     /// record and loses its strokes, which is what "unavailable" means.
     func resolve(_ train: Train) {
+        let train = Self.solverInput(train)
         let scope = RouteScope(train)
         let id = train.id
         let revision = loadRevision

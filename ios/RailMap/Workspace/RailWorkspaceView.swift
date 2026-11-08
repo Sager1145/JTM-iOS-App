@@ -3248,11 +3248,18 @@ struct RailWorkspaceView: View {
         return day == Dates.undated ? nil : day
     }
 
+    private func publishTripNoteMap() {
+        let next = TripNoteMapSnapshot(
+            trains: itineraries.loaded?.trains ?? [], selectedTrainID: itineraries.selectedTrainID)
+        if controller.tripNoteMap != next { controller.tripNoteMap = next }
+    }
+
     private var map: some View {
         RailMapView(
             lines: lines,
             stations: store.mapStations,
             rides: linePreview.map { mapRides + [$0.ride] } ?? mapRides,
+            pickableRides: riddenRoutes.rides,
             networkExtent: store.networkExtent,
             selectedTrainID: linePreview?.ride.id ?? itineraries.selectedTrainID,
             selectedDate: selectedDate,
@@ -3304,6 +3311,15 @@ struct RailWorkspaceView: View {
         // what covers a reader who already had the setting on at launch.
         .onChange(of: reduceMotion, initial: true) { _, reduced in
             controller.reduceMotion = reduced
+        }
+        // Trip notes for the map: counts for every trip, the notes of the
+        // selected one. `[Train]` compares by buffer first, so an unchanged
+        // store costs nothing here.
+        .onChange(of: itineraries.loaded?.trains, initial: true) { _, _ in
+            publishTripNoteMap()
+        }
+        .onChange(of: itineraries.selectedTrainID) { _, _ in
+            publishTripNoteMap()
         }
 #if DEBUG
         .overlay(alignment: .topLeading) {

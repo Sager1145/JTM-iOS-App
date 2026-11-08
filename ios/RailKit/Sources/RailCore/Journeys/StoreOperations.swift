@@ -658,6 +658,9 @@ extension StoreOperations {
         }
         if let stock = train.rollingStock { pairs.append(("rolling_stock", TrainValidation.json(stock))) }
         if let ticket = train.ticket { pairs.append(("ticket", TrainValidation.json(ticket))) }
+        if let notes = train.tripNotes, !notes.isEmpty {
+            pairs.append(("trip_notes", TrainValidation.json(notes)))
+        }
         return .object(TrainValidation.JSON.Object(pairs))
     }
 

@@ -251,6 +251,10 @@ final class MapAnnotationReconciler {
             return "endpoint|\(item.spec.key)"
         case let item as DraftStopAnnotation:
             return "draft|\(item.occurrenceID)"
+        case let item as TripNoteAnnotation:
+            return "tripnote|\(item.trainID)|\(item.noteID)"
+        case let item as TripNoteBadgeAnnotation:
+            return "tripbadge|\(item.rideID)"
         default:
             return "\(ObjectIdentifier(annotation))"
         }
@@ -308,6 +312,12 @@ final class MapAnnotationReconciler {
             return a.name == b.name && a.stopType == b.stopType && a.timeText == b.timeText
                 && a.index == b.index && a.stopTypeLabel == b.stopTypeLabel
                 && a.timeLabel == b.timeLabel && a.stackPosition == b.stackPosition
+        case let (a as TripNoteAnnotation, b as TripNoteAnnotation):
+            // `sameContent` adds the coordinate, so a moved note is replaced.
+            return a.isStation == b.isStation && a.stackPosition == b.stackPosition
+                && a.accessibilityText == b.accessibilityText && a.placeSummary == b.placeSummary
+        case let (a as TripNoteBadgeAnnotation, b as TripNoteBadgeAnnotation):
+            return a.count == b.count && a.accessibilityText == b.accessibilityText
         default:
             return false
         }

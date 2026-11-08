@@ -1206,6 +1206,9 @@ final class TripDraftModel {
             applyHeader(to: &result)
         }
         applyActualTimes(to: &result)
+        // Notes are edited from the trip card, never here: whatever path built
+        // the result (timetable, corridor, record), the trip keeps its notes.
+        result.tripNotes = train.tripNotes
         fileByDateIfUntimed(&result)
         Self.trimDetails(&result)
         let blocking = RideDraftValidation.issues(

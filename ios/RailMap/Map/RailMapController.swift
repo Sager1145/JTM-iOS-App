@@ -86,6 +86,159 @@ final class RailMapController {
     /// False after the editor closes, so a late publish cannot put pins back.
     @ObservationIgnored var acceptsDraftMap = false
 
+    /// Trip notes the map draws: counts for every trip, the notes of the
+    /// selected one. Written by the workspace; see ``TripNoteMapSnapshot``.
+    var tripNoteMap = TripNoteMapSnapshot()
+
+    /// A tap on a selected trip's "!": (trip id, note id).
+    @ObservationIgnored var onTripNote: ((String, String) -> Void)?
+
+    /// The trip a note place is being picked on, while the note editor waits
+    /// for it. Nil when no pick is in progress. While it is set the map draws
+    /// only that trip, holds its selection, and shows the centre pin.
+    private(set) var tripNotePickTrainID: String?
+    /// Bumped by each ``beginTripNotePick(trainID:initial:onFinish:)``, so the
+    /// map frames a new pick exactly once.
+    private(set) var tripNotePickRevision = 0
+    /// The place the pick starts on, when an existing note is being moved.
+    @ObservationIgnored private(set) var tripNotePickInitial: TripNoteAnchor?
+    @ObservationIgnored private var tripNotePickHandler: ((TripNoteAnchor?) -> Void)?
+    /// What the centre pin is over right now. Written by the map coordinator
+    /// as the camera moves; read by ``TripNotePickOverlay``.
+    var tripNotePickFeedback: TripNotePickFeedback?
+
+    /// Start picking a place on `trainID`'s line. `onFinish` hears the anchor,
+    /// or nil when the pick is cancelled. A pick already waiting is cancelled
+    /// first, so its caller hears nil rather than nothing.
+    ///
+    /// A second call for the train already being picked is ignored: the first
+    /// pick and its `onFinish` stay in charge.
+    func beginTripNotePick(trainID: String, initial: TripNoteAnchor?,
+                           onFinish: @escaping (TripNoteAnchor?) -> Void) {
+        guard tripNotePickTrainID != trainID else { return }
+        cancelTripNotePick()
+        tripNotePickInitial = initial
+        tripNotePickHandler = onFinish
+        tripNotePickRevision &+= 1
+        tripNotePickTrainID = trainID
+    }
+
+    /// Ends the pick with `anchor`.
+    func finishTripNotePick(_ anchor: TripNoteAnchor) { endTripNotePick(anchor) }
+
+    /// Safe when idle: nothing is written and nobody is called.
+    func cancelTripNotePick() {
+        guard tripNotePickTrainID != nil || tripNotePickHandler != nil else { return }
+        endTripNotePick(nil)
+    }
+
+    /// Cancel only a pick on `trainID`, for a screen that is going away and
+    /// must not end a pick another screen started.
+    func cancelTripNotePickIfOwned(trainID: String) {
+        guard tripNotePickTrainID == trainID else { return }
+        cancelTripNotePick()
+    }
+
+    /// The pick and the camera as they are now. A location fix that comes
+    /// back after either moved on is stale and must not move the map.
+    struct TripNotePickToken: Equatable {
+        fileprivate let revision: Int
+        fileprivate let readerMoves: Int
+    }
+
+    func tripNotePickToken() -> TripNotePickToken? {
+        guard tripNotePickTrainID != nil else { return nil }
+        return TripNotePickToken(revision: tripNotePickRevision, readerMoves: readerCameraMoves)
+    }
+
+    func tripNotePickTokenIsCurrent(_ token: TripNotePickToken?) -> Bool {
+        token != nil && tripNotePickToken() == token
+    }
+
+    /// Counts the reader's own camera moves (a finger on the map).
+    @ObservationIgnored private var readerCameraMoves = 0
+
+    /// The rides the map draws during a pick: the picked trip's solved ride
+    /// from `source` (every solved ride, whatever the list's scope), or none
+    /// while it has not been drawn yet. Kept by source buffer and pick id so
+    /// repeated SwiftUI passes hand the map the same array.
+    func tripNotePickRides(from source: [RiddenRouteStore.DrawnRide]) -> [RiddenRouteStore.DrawnRide]? {
+        guard let id = tripNotePickTrainID else {
+            tripNotePickRideCache = nil
+            return nil
+        }
+        if let cache = tripNotePickRideCache, cache.id == id, ArrayGeneration.same(cache.source, source) {
+            return cache.value
+        }
+        let value = source.first { $0.id == id }.map { [$0] } ?? []
+        tripNotePickRideCache = (source, id, value)
+        return value
+    }
+
+    @ObservationIgnored private var tripNotePickRideCache:
+        (source: [RiddenRouteStore.DrawnRide], id: String, value: [RiddenRouteStore.DrawnRide])?
+
+    private func endTripNotePick(_ anchor: TripNoteAnchor?) {
+        let handler = tripNotePickHandler
+        tripNotePickHandler = nil
+        tripNotePickInitial = nil
+        if tripNotePickTrainID != nil { tripNotePickTrainID = nil }
+        if tripNotePickFeedback != nil { tripNotePickFeedback = nil }
+        handler?(anchor)
+    }
+
+    /// Distance from the map's bottom edge to the pick's bottom bar: above
+    /// the sheet or menu covering the map, and above the home indicator.
+    var tripNotePickBarBottom: CGFloat {
+        max(journeyMenuBottomObstruction ?? bottomObstruction, mapView?.safeAreaInsets.bottom ?? 0) + 12
+    }
+
+    /// The part of the map the pick leaves open: below the banner, above the
+    /// bottom bar, clear of the docked cards at the sides.
+    var tripNotePickInsets: UIEdgeInsets {
+        let framing = framingInsets
+        return UIEdgeInsets(
+            top: (mapView?.safeAreaInsets.top ?? 0) + 110, left: framing.left,
+            bottom: tripNotePickBarBottom + 76, right: framing.right)
+    }
+
+    /// Where the centre pin's tip is, in the map view's coordinates.
+    func tripNotePickPoint() -> CGPoint? {
+        guard let mapView, mapView.bounds.width > 0, mapView.bounds.height > 0 else { return nil }
+        let open = mapView.bounds.inset(by: tripNotePickInsets)
+        guard open.width > 0, open.height > 0 else {
+            return CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
+        }
+        return CGPoint(x: open.midX, y: open.midY)
+    }
+
+    /// Frame the picked trip in the part of the map the pick leaves open.
+    func frameTripNotePick(_ region: MKCoordinateRegion) {
+        guard let mapView else { return }
+        let rect = MapProjection.mapRect(of: region)
+        guard !rect.isNull else { return }
+        claimCamera()
+        stopFollowingUser()
+        mapView.setVisibleMapRect(rect, edgePadding: tripNotePickInsets, animated: false)
+    }
+
+    /// Move the camera so the centre pin sits on `coordinate`, keeping zoom
+    /// and heading.
+    func centerTripNotePick(on coordinate: CLLocationCoordinate2D, animated: Bool) {
+        guard let mapView, let pin = tripNotePickPoint() else { return }
+        claimCamera()
+        stopFollowingUser()
+        // The map vector between the view's middle and the pin, read off the
+        // map itself so heading needs no arithmetic of its own.
+        let middle = MKMapPoint(mapView.convert(
+            CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY), toCoordinateFrom: mapView))
+        let atPin = MKMapPoint(mapView.convert(pin, toCoordinateFrom: mapView))
+        let target = MKMapPoint(coordinate)
+        let center = MKMapPoint(x: target.x + middle.x - atPin.x, y: target.y + middle.y - atPin.y)
+        mapView.setCenter(center.coordinate,
+                          animated: animated && RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+    }
+
     /// The rest of the layers menu: which of the reader's own route lines,
     /// station dots and ridden-line categories are drawn. See ``MapLayers``.
     var layers = MapLayers()
@@ -429,7 +582,10 @@ final class RailMapController {
 #endif
 
     /// Told by the map when a finger starts moving it.
-    func readerBeganManipulating() { claimCamera() }
+    func readerBeganManipulating() {
+        readerCameraMoves &+= 1
+        claimCamera()
+    }
 
     /// How much of the map's bottom edge the resident sheet is covering right
     /// now. Written by the workspace as the sheet moves.
@@ -610,6 +766,7 @@ final class RailMapController {
 
     fileprivate func authorizationChanged(_ status: CLAuthorizationStatus) {
         locationAuthorization = status
+        resumeOneShotAfterAuthorization(status)
         guard pendingFollow else { return }
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
@@ -620,6 +777,85 @@ final class RailMapController {
         default:
             break
         }
+    }
+
+    // MARK: - one-shot location (trip notes)
+
+    /// Why a one-shot location could not be had.
+    enum OneShotLocationFailure: Error, Equatable {
+        case refused(LocationRefusal)
+        /// No fix arrived, or CoreLocation reported an error, within the wait.
+        case unavailable
+    }
+
+    /// Whether location is already allowed, read without ever prompting.
+    var locationIsAuthorized: Bool {
+        switch locationManager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways: true
+        default: false
+        }
+    }
+
+    @ObservationIgnored private var oneShotWaiters: [CheckedContinuation<Result<CLLocation, OneShotLocationFailure>, Never>] = []
+    @ObservationIgnored private var oneShotAwaitingAuthorization = false
+    @ObservationIgnored private var oneShotTimeout: Task<Void, Never>?
+
+    /// The device's location once, for placing a trip note. Asks for
+    /// permission only when it has never been asked; never starts following.
+    func currentLocationOnce() async -> Result<CLLocation, OneShotLocationFailure> {
+        await withCheckedContinuation { continuation in
+            oneShotWaiters.append(continuation)
+            guard oneShotWaiters.count == 1 else { return }
+            switch locationManager.authorizationStatus {
+            case .notDetermined:
+                // No timeout while the system prompt is up: the reader may
+                // take as long as they like to answer it.
+                oneShotAwaitingAuthorization = true
+                locationManager.requestWhenInUseAuthorization()
+            case .restricted, .denied:
+                finishOneShot(.failure(.refused(.unavailable)))
+            default:
+                requestOneShotLocation()
+            }
+        }
+    }
+
+    private func resumeOneShotAfterAuthorization(_ status: CLAuthorizationStatus) {
+        guard oneShotAwaitingAuthorization else { return }
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            oneShotAwaitingAuthorization = false
+            requestOneShotLocation()
+        case .denied, .restricted:
+            finishOneShot(.failure(.refused(.declined)))
+        default:
+            break
+        }
+    }
+
+    /// The fix request and its 15 s limit start together.
+    private func requestOneShotLocation() {
+        oneShotTimeout?.cancel()
+        oneShotTimeout = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(15))
+            guard !Task.isCancelled else { return }
+            self?.finishOneShot(.failure(.unavailable))
+        }
+        locationManager.requestLocation()
+    }
+
+    fileprivate func oneShotLocationArrived(_ location: CLLocation?) {
+        guard !oneShotWaiters.isEmpty, !oneShotAwaitingAuthorization else { return }
+        finishOneShot(location.map { .success($0) } ?? .failure(.unavailable))
+    }
+
+    private func finishOneShot(_ result: Result<CLLocation, OneShotLocationFailure>) {
+        oneShotTimeout?.cancel()
+        oneShotTimeout = nil
+        oneShotAwaitingAuthorization = false
+        let waiters = oneShotWaiters
+        oneShotWaiters = []
+        for waiter in waiters { waiter.resume(returning: result) }
     }
 
     /// A separate object because `CLLocationManagerDelegate` conformance would
@@ -636,6 +872,19 @@ final class RailMapController {
             let status = manager.authorizationStatus
             Task { @MainActor [weak controller] in
                 controller?.authorizationChanged(status)
+            }
+        }
+
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            let location = locations.last
+            Task { @MainActor [weak controller] in
+                controller?.oneShotLocationArrived(location)
+            }
+        }
+
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
+            Task { @MainActor [weak controller] in
+                controller?.oneShotLocationArrived(nil)
             }
         }
     }

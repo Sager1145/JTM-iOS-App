@@ -173,6 +173,8 @@ public struct Train: Codable, Equatable, Sendable {
     public var rollingStock: RollingStock?
     /// Seat, class, fare and ticket kind. Written only when set (`ticket`).
     public var ticket: Ticket?
+    /// Reader event notes; see ``TripNote``. Nil, never empty.
+    public var tripNotes: [TripNote]?
 
     public init(
         id: String,
@@ -241,6 +243,7 @@ public struct Train: Codable, Equatable, Sendable {
         case routeConfirmation = "route_confirmation"
         case rollingStock = "rolling_stock"
         case ticket
+        case tripNotes = "trip_notes"
     }
 
     // Written out only when present, so that a store which omits a field
@@ -279,6 +282,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(routeConfirmation, forKey: .routeConfirmation)
         try container.encodeIfPresent(rollingStock, forKey: .rollingStock)
         try container.encodeIfPresent(ticket, forKey: .ticket)
+        try container.encodeIfPresent(tripNotes, forKey: .tripNotes)
     }
 }
 
@@ -1201,6 +1205,7 @@ public enum TrainValidation {
             issues.append(Diagnostic(path: "style.color", reason: "style.color must be #RRGGBB."))
         }
         issues.append(contentsOf: tripDetailDiagnostics(train))
+        issues.append(contentsOf: tripNoteDiagnostics(train))
         return issues
     }
 
@@ -1410,6 +1415,11 @@ public enum TrainValidation {
                 }
             }
         }
+        if let value = json["trip_notes"], value != .null {
+            guard case .array = value else {
+                return Diagnostic(path: "trip_notes", reason: "trip_notes must be an array when present.")
+            }
+        }
         _ = try normalizeImportedRouteConfirmation(json["route_confirmation"])
         if let value = json["operator_id"], value != .null {
             guard value.isString else {
@@ -1600,7 +1610,7 @@ public enum TrainValidation {
     /// Builds a train without the defaults `canonicalStopShape` and
     /// `canonicalRoutePolicy` would write over illegal input.
     private static func canonicalRecord(_ json: JSON) throws -> Train {
-        Train(
+        var record = Train(
             id: requiredText(json, "id"),
             date: dateText(json),
             number: requiredText(json, "number"),
@@ -1623,6 +1633,8 @@ public enum TrainValidation {
             operatorIDs: optionalOperatorIDs(json["operator_ids"]),
             rollingStock: rollingStock(json["rolling_stock"]),
             ticket: ticket(json["ticket"]))
+        record.tripNotes = tripNotes(json["trip_notes"])
+        return record
     }
 
     private static func optionalOperatorIDs(_ value: JSON?) -> [String]? {
@@ -1937,7 +1949,7 @@ public enum TrainValidation {
                 "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "operator_ids", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
-                "list", "list_by_date", "rolling_stock", "ticket",
+                "list", "list_by_date", "rolling_stock", "ticket", "trip_notes",
             ],
             "Train")
 
@@ -2006,6 +2018,7 @@ public enum TrainValidation {
             ticket: ticket(train["ticket"]))
         normalized.listMembership = listMembership
         normalized.listByDate = listByDate
+        normalized.tripNotes = tripNotes(train["trip_notes"])
         return normalized
     }
 
@@ -2260,6 +2273,7 @@ public enum TrainValidation {
         // Carried for the same reason as `region`: the reader filed it.
         exported.listMembership = train.listMembership
         exported.listByDate = train.listByDate
+        exported.tripNotes = train.tripNotes.flatMap { $0.isEmpty ? nil : $0 }
         return exported
     }
 

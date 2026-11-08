@@ -15,6 +15,11 @@ struct WorkspaceJourneyMenu: View {
     @State private var menuMeasurements = MenuMeasurements()
     @State private var focusRequested = false
     @State private var detent: PresentationDetent = .height(WorkspaceMenuMetrics.journeyCompactHeight)
+    @State private var tripNoteFlow = TripNoteFlow()
+    @State private var hookToken = UUID()
+    /// Which menu installed `controller.onTripNote` last, so a menu that is
+    /// leaving never clears the hook of the one replacing it.
+    @MainActor private static var hookOwner: UUID?
     @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
@@ -69,7 +74,20 @@ struct WorkspaceJourneyMenu: View {
                         default: onSecondary(action, train)
                         }
                     },
-                    onSetRidden: { _ = save(RideLedger.setRidden(train, $0)) })
+                    onSetRidden: { _ = save(RideLedger.setRidden(train, $0)) },
+                    tripNoteFlow: tripNoteFlow)
+                    .tripNotesPresentation(
+                        flow: tripNoteFlow, train: train,
+                        trains: itineraries.loaded?.trains ?? [],
+                        onSet: { notes in
+                            var edited = train
+                            edited.setTripNotes(notes)
+                            // Answers only once persistence has: a failed write
+                            // is rolled back by `startSave`, and the form, still
+                            // holding its draft, offers another try.
+                            guard let saving = startSave(edited) else { return false }
+                            return await saving.value
+                        })
                     // The source panel's compact stage must not hide this card's body.
                     .environment(cardMorph)
                     .padding(.top, 16)
@@ -113,12 +131,23 @@ struct WorkspaceJourneyMenu: View {
             focusIfReady()
         }
         .onAppear {
+            installTripNoteHooks()
             if menuMeasurements.height > 0 {
                 controller.journeyMenuBottomObstruction =
                     menuMeasurements.height + menuMeasurements.bottomInset
             }
         }
-        .onDisappear { controller.journeyMenuBottomObstruction = nil }
+        .onDisappear {
+            controller.journeyMenuBottomObstruction = nil
+            // A pick belongs to the menu that started it.
+            tripNoteFlow.reset()
+            if controller.tripNotePickTrainID == recordID { controller.cancelTripNotePick() }
+            tripNoteFlow.pickPlace = nil
+            if Self.hookOwner == hookToken {
+                controller.onTripNote = nil
+                Self.hookOwner = nil
+            }
+        }
         #if !targetEnvironment(macCatalyst)
         .presentationDetents(
             dynamicTypeSize.isAccessibilitySize
@@ -138,6 +167,27 @@ struct WorkspaceJourneyMenu: View {
         }
         .onChange(of: train == nil, initial: true) { _, missing in
             if missing { dismiss() }
+        }
+    }
+
+    /// The map's "!" opens the read card from here, the one presenter, and a
+    /// place pick lowers this sheet to its compact height until it finishes.
+    private func installTripNoteHooks() {
+        Self.hookOwner = hookToken
+        controller.onTripNote = { trainID, noteID in
+            guard trainID == recordID else { return }
+            tripNoteFlow.screen = .read(noteID: noteID)
+        }
+        tripNoteFlow.pickPlace = { initial, finish in
+            // One pick at a time: a second tap must not capture the lowered
+            // detent as the one to restore.
+            guard controller.tripNotePickTrainID == nil else { finish(nil); return }
+            let restored = detent
+            withAnimation(RailMotion.spring) { detent = lowestDetent }
+            controller.beginTripNotePick(trainID: recordID, initial: initial) { anchor in
+                withAnimation(RailMotion.spring) { detent = restored }
+                finish(anchor)
+            }
         }
     }
 
@@ -164,27 +214,31 @@ struct WorkspaceJourneyMenu: View {
         var bottomInset: CGFloat = 0
     }
 
-    private func save(_ edited: Train) -> Bool {
-        guard !isSaving else { return false }
+    private func save(_ edited: Train) -> Bool { startSave(edited) != nil }
+
+    /// Starts a save; nil when it was refused. The task answers whether the
+    /// write finally persisted.
+    private func startSave(_ edited: Train) -> Task<Bool, Never>? {
+        guard !isSaving else { return nil }
         let previousID = recordID
         let attempt = onSave(edited, previousID)
-        guard let persistence = attempt.persistence else { return false }
+        guard let persistence = attempt.persistence else { return nil }
         switch attempt.outcome {
         case .saved: recordID = edited.id
         case let .savedKeepingID(keptID, _): recordID = keptID
-        case .refusedImportRunning, .notFound, .unsupportedRegion: return false
+        case .refusedImportRunning, .notFound, .unsupportedRegion: return nil
         }
         isSaving = true
         saveFailureDetail = nil
-        Task { @MainActor in
+        return Task { @MainActor in
             let saved = await persistence.value
             isSaving = false
             guard saved.saved else {
                 if attempt.rollback?() == true { recordID = previousID }
                 saveFailureDetail = saved.error ?? ""
-                return
+                return false
             }
+            return true
         }
-        return true
     }
 }

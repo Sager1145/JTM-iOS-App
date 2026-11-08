@@ -53,6 +53,7 @@ enum AppStrings {
         ("StationCardStrings", StationCardStrings.table),
         ("LocalJourneyStrings", LocalJourneyStrings.table),
         ("TicketScanStrings", TicketScanStrings.table),
+        ("TripNoteStrings", TripNoteStrings.table),
     ]
 
     typealias Table = [String: [Localization.Language: String]]
