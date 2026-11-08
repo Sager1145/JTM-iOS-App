@@ -53,6 +53,8 @@ public enum TripConnectivity {
                 let region: String
                 let stationCode: String?
                 let lineIDs: [String]?
+                let fromLineIDs: [String]?
+                let toLineIDs: [String]?
                 let evidence: [String]
                 let validFrom: String?
                 let validTo: String?
@@ -62,25 +64,44 @@ public enum TripConnectivity {
             let junctions: [Record]
         }
 
-        /// The registry's row-to-row joins for one region. A record joins two
-        /// rows only when it names exactly two row IDs at a station code and
-        /// cites evidence; a cross-identity end stub also needs same-train
-        /// evidence, as the physical route graph requires.
+        /// The row pairs a record joins: its two row IDs, or, when it names more
+        /// (several package rows of one identity meet the junction vertex), every
+        /// pair across its `fromLineIDs` and `toLineIDs` sides. Rows on one side
+        /// are never joined to each other. A record with one row ID joins nothing
+        /// here (both ends are one package row: `.sameLine`); a record with more
+        /// than two IDs and no valid sides joins nothing, which
+        /// `RegressionGuardJunctionRowsRead` refuses.
+        static func linePairs(lineIDs: [String]?, fromLineIDs: [String]?,
+                              toLineIDs: [String]?) -> [Set<String>] {
+            let ids = Set(lineIDs ?? [])
+            if ids.count == 2 { return [ids] }
+            guard ids.count > 2, let from = fromLineIDs, let to = toLineIDs else { return [] }
+            let fromSet = Set(from), toSet = Set(to)
+            guard !fromSet.isEmpty, !toSet.isEmpty, fromSet.isDisjoint(with: toSet),
+                  fromSet.union(toSet) == ids else { return [] }
+            return from.flatMap { a in to.map { b in Set([a, b]) } }
+        }
+
+        /// The registry's row-to-row joins for one region. A record joins rows
+        /// only at a station code and with evidence (pairs: `linePairs`); a
+        /// cross-identity end stub also needs same-train evidence, as the
+        /// physical route graph requires.
         public init(registryData: Data, region: String) throws {
             let document = try JSONDecoder().decode(Document.self, from: registryData)
             guard document.format == "jtm-physical-rail-junctions-v1" else {
                 throw PhysicalRailJunctionRegistry.RegistryError.unsupportedFormat
             }
             let region = region.lowercased()
-            self.init(document.junctions.compactMap { record in
+            self.init(document.junctions.flatMap { record -> [Join] in
                 guard record.region == region, let code = record.stationCode,
-                      !record.evidence.isEmpty else { return nil }
-                let ids = Set(record.lineIDs ?? [])
-                guard ids.count == 2 else { return nil }
+                      !record.evidence.isEmpty else { return [] }
                 if record.endJunction != nil,
-                   !RouteGraph.PhysicalJunction.hasSameTrainEvidence(record.evidence) { return nil }
-                return Join(id: record.id, stationCode: code, lineIDs: ids,
-                            validFrom: record.validFrom, validTo: record.validTo)
+                   !RouteGraph.PhysicalJunction.hasSameTrainEvidence(record.evidence) { return [] }
+                return Self.linePairs(lineIDs: record.lineIDs, fromLineIDs: record.fromLineIDs,
+                                      toLineIDs: record.toLineIDs).map { ids in
+                    Join(id: record.id, stationCode: code, lineIDs: ids,
+                         validFrom: record.validFrom, validTo: record.validTo)
+                }
             })
         }
 

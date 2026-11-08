@@ -23,7 +23,14 @@ import Testing
 ///    - R4 structural terminus: a non-paired, non-loop row ends at a station
 ///      coded in stations.json under another line B of the same operator, and the
 ///      row's identity A and B share an exact vertex within 600 m.
-///    Paired alignments (alignmentOf != nil) are not read as rows in R1/R4.
+///    - R4b package-coded terminus: as R4, but line B is read from the package rows
+///      whose stations use the code, for the pairs R4 does not already ask about
+///      (stations.json codes the station only under A, or B under a code of its own:
+///      広島 008029 is 芸備線's code and 山陽線 runs through it in the package), and never
+///      a pair R4 already reports at that station from the other line's row end.
+///      Its own baseline section, seeded 2026-11-07; each entry carries a
+///      `likely` triage tag (junction / notJunction / unknown) that regeneration keeps.
+///    Paired alignments (alignmentOf != nil) are not read as rows in R1/R4/R4b.
 /// 3. Registry consistency: a junction row's stationCode must be a code used by
 ///    every row in its lineIDs or by the stations of both identities.
 ///    Exceptions are ratcheted in the baseline (`registryStationCodes`).
@@ -147,6 +154,8 @@ struct RegressionGuardTopologyGaps {
         var registryRows: [RegistryRow] = []
         var byLine: [Identity2: [StationRecord]] = [:]
         var linesOfCode: [String: Set<Identity2>] = [:]
+        /// Package rows' own lines by the station codes their stations use.
+        var packageLinesOfCode: [String: Set<Identity2>] = [:]
         var lines: [Line] = []
         var lineByID: [String: Line] = [:]
         var services: [ThroughServices.Pattern] = []
@@ -178,6 +187,9 @@ struct RegressionGuardTopologyGaps {
                 segments: row.segments.map(\.coordinates))
             ctx.lines.append(line)
             ctx.lineByID[row.id] = line
+            if let own = line.own, !line.paired {
+                for st in line.stations { ctx.packageLinesOfCode[st.code, default: []].insert(own) }
+            }
         }
         ctx.services = try JSONDecoder().decode(ThroughServices.self, from: Data(contentsOf:
             root.appending(path: "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"))).patterns
@@ -351,6 +363,8 @@ struct RegressionGuardTopologyGaps {
         let stationName: String
         let site: [Double]?
         let evidence: String
+        /// R4b triage only: junction, notJunction or unknown. Not part of the key.
+        var likely: String? = nil
         var key: String {
             var k = "\(rule)|\(operatorName)|\(a)|\(b)|\(stationCode)"
             if let site { k += String(format: "|%.5f,%.5f", site[0], site[1]) }
@@ -362,6 +376,7 @@ struct RegressionGuardTopologyGaps {
         var format: String
         var r1r2: [BaselineEntry]
         var r4: [BaselineEntry]
+        var r4b: [BaselineEntry]?
         var registryStationCodes: [String]
     }
 
@@ -387,6 +402,7 @@ struct RegressionGuardTopologyGaps {
         var sameLine: [(Gap, String)] = []
         var r1r2: [Hit] = []
         var r4: [Hit] = []
+        var r4b: [Hit] = []
         var registryCodes: [String] = []
     }
 
@@ -434,7 +450,12 @@ struct RegressionGuardTopologyGaps {
         var result = Scan()
         result.sameLine = sameLineGaps(ctx, joins, reviewed)
         result.r1r2 = r1Hits(ctx, net, joins, reviewed) + r2Hits(ctx, net, joins, reviewed)
-        result.r4 = r4Hits(ctx, net, joins, reviewed)
+        result.r4 = r4Hits(ctx, net, joins, reviewed, sharedCode: false)
+        // A pair R4 reports at a station (from either line's row end) is not reported again by R4b.
+        let r4Sites = Set(result.r4.map { "\($0.pair.a.operatorName)|\($0.pair.a.label)|\($0.pair.b.label)|\($0.code)" })
+        result.r4b = r4Hits(ctx, net, joins, reviewed, sharedCode: true).filter {
+            !r4Sites.contains("\($0.pair.a.operatorName)|\($0.pair.a.label)|\($0.pair.b.label)|\($0.code)")
+        }
         result.registryCodes = registryCodeIssues(ctx)
         return result
     }
@@ -552,16 +573,26 @@ struct RegressionGuardTopologyGaps {
 
     // MARK: R4
 
-    private static func r4Hits(_ ctx: Context, _ net: Network, _ joins: Joins, _ reviewed: Set<Pair>) -> [Hit] {
+    /// `sharedCode` false is R4 (line B from stations.json, only when it does not code the
+    /// station under the row's own line); true is R4b (line B from the package rows using
+    /// the code, minus every pair R4 asks about).
+    private static func r4Hits(_ ctx: Context, _ net: Network, _ joins: Joins, _ reviewed: Set<Pair>,
+                               sharedCode: Bool) -> [Hit] {
+        let rule = sharedCode ? "R4b" : "R4"
         var best: [String: (d: Double, hit: Hit)] = [:]
         for line in ctx.lines where !line.paired && !line.isLoop && !line.segments.isEmpty {
             for end in [0, line.stations.count - 1] where line.stations.indices.contains(end) {
                 let s = line.stations[end]
                 guard let run = carryRun(line.segments[end == 0 ? 0 : line.segments.count - 1], net) else { continue }
                 let owners = ctx.linesOfCode[s.code] ?? []
+                let packageOwners = ctx.packageLinesOfCode[s.code] ?? []
                 for a in end == 0 ? run.first : run.last {
-                    if owners.contains(Identity2(operatorName: a.operatorName, line: a.line)) { continue }
-                    let others = Set(owners.filter { $0.operatorName == a.operatorName && $0.line != a.line }.map(\.line))
+                    func otherLines(_ set: Set<Identity2>) -> Set<String> {
+                        Set(set.filter { $0.operatorName == a.operatorName && $0.line != a.line }.map(\.line))
+                    }
+                    let r4Others = owners.contains(Identity2(operatorName: a.operatorName, line: a.line))
+                        ? [] : otherLines(owners)
+                    let others = sharedCode ? otherLines(packageOwners).subtracting(r4Others) : r4Others
                     if others.isEmpty { continue }
                     for t in net.touchesOf[a] ?? [] where others.contains(t.other.line) {
                         let site = t.at.coordinate
@@ -573,8 +604,8 @@ struct RegressionGuardTopologyGaps {
                         // so another coincident vertex of the same joined pair is not a new hit.
                         if reviewed.contains(pair) || joins.joined(a, t.other, site, reach: junctionReachMeters)
                             || joins.joined(a, t.other, atStation: s.code, s.at, reach: terminusRangeMeters) { continue }
-                        let hit = Hit(rule: "R4", pair: pair, code: s.code, name: s.name, site: site,
-                                      evidence: "row \(line.id) ends at \(s.code) \(s.name), coded under another line",
+                        let hit = Hit(rule: rule, pair: pair, code: s.code, name: s.name, site: site,
+                                      evidence: "row \(line.id) ends at \(s.code) \(s.name), coded under another line" + (sharedCode ? " in the package" : ""),
                                       locus: site, hint: String(format: "zeroLength at identical shared vertex (%.5f, %.5f), %.0f m from the station", site.lon, site.lat, d))
                         // One hit per (pair, station): keep the unjoined shared vertex nearest the station.
                         let id = "\(pair.a.label)|\(pair.b.label)|\(pair.a.operatorName)|\(s.code)"
@@ -611,12 +642,24 @@ struct RegressionGuardTopologyGaps {
         switch h.rule {
         case "R1": what = "need a crossing inside one package row"
         case "R2": what = "are crossed by a through service"
+        case "R4b": what = "meet where a row terminates at a station another package row of the operator uses"
         default: what = "meet where a row terminates"
         }
         return "[\(h.rule)] \(h.pair.a.operatorName): \(h.pair.a.label) and \(h.pair.b.label) \(what) at \(h.code) \(h.name)"
             + (h.site.map { String(format: " (%.5f, %.5f)", $0.lon, $0.lat) } ?? "")
             + " without a junction (\(h.evidence)): add a junction row to \(registryPath) (pattern: astram-kencho-class16-class24)"
             + " or a reviewed mark to \(marksPath); a gap that was already known belongs in \(baselinePath)"
+    }
+
+    /// R4b entries for a regenerated baseline, keeping each surviving entry's triage tag
+    /// (a new entry is `unknown` until reviewed).
+    private static func triaged(_ hits: [Hit], previous: [BaselineEntry]) -> [BaselineEntry] {
+        let tags = Dictionary(previous.map { ($0.key, $0.likely) }, uniquingKeysWith: { a, _ in a })
+        return hits.map { h -> BaselineEntry in
+            var e = Self.entry(h)
+            e.likely = (tags[e.key] ?? nil) ?? "unknown"
+            return e
+        }.sorted { $0.key < $1.key }
     }
 
     private static func loadBaseline() throws -> Baseline? {
@@ -627,7 +670,8 @@ struct RegressionGuardTopologyGaps {
 
     // MARK: - maintenance document
 
-    private static func junctionGapsDocument(_ scan: Scan) -> String {
+    private static func junctionGapsDocument(_ scan: Scan, _ r4b: [BaselineEntry]) -> String {
+        func likely(_ tag: String) -> Int { r4b.filter { $0.likely == tag }.count }
         func section(_ hits: [Hit]) -> String {
             hits.map { h in
                 var lines = ["- **\(h.pair.a.operatorName)**: \(h.pair.a.label) / \(h.pair.b.label) at \(h.code) \(h.name)"]
@@ -672,6 +716,16 @@ struct RegressionGuardTopologyGaps {
 
             \(section(scan.r4))
 
+            ## 3. Package-coded branch-end sites (R4b, \(scan.r4b.count))
+
+            As R4, but the other line is a package row of the operator that uses the station's code,
+            where stations.json does not code it under that line (広島 芸備線/山陽線 was one: 008029 is
+            芸備線's code and the package's 山陽線 row runs through it). Seeded 2026-11-07 and triaged in the
+            baseline's `likely` field (junction \(likely("junction")), notJunction \(likely("notJunction")),
+            unknown \(likely("unknown"))). Each needs review before a row is added.
+
+            \(section(scan.r4b))
+
             """
     }
 
@@ -689,7 +743,7 @@ struct RegressionGuardTopologyGaps {
             """)
     }
 
-    @Test("Different-line gaps (R1, R2, R4) and registry station codes match the checked-in baseline")
+    @Test("Different-line gaps (R1, R2, R4, R4b) and registry station codes match the checked-in baseline")
     func differentLineGapsMatchBaseline() throws {
         let scan = try Self.scan()
         if ProcessInfo.processInfo.environment["JTM_REGENERATE_EXPECTATIONS"] == "1" {
@@ -697,6 +751,7 @@ struct RegressionGuardTopologyGaps {
                 format: "jtm-topology-gap-baseline/1",
                 r1r2: scan.r1r2.map(Self.entry).sorted { $0.key < $1.key },
                 r4: scan.r4.map(Self.entry).sorted { $0.key < $1.key },
+                r4b: Self.triaged(scan.r4b, previous: (try? Self.loadBaseline())?.r4b ?? []),
                 registryStationCodes: scan.registryCodes)
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
@@ -704,7 +759,7 @@ struct RegressionGuardTopologyGaps {
             data.append(0x0A)
             let root = try PortFixtures.repositoryRoot()
             try data.write(to: root.appending(path: Self.baselinePath))
-            try Self.junctionGapsDocument(scan).write(
+            try Self.junctionGapsDocument(scan, baseline.r4b ?? []).write(
                 to: root.appending(path: Self.documentPath), atomically: true, encoding: .utf8)
             return
         }
@@ -715,7 +770,7 @@ struct RegressionGuardTopologyGaps {
         print("""
             INFO topology gap baseline: R1+R2 \(baseline.r1r2.count) \
             (R1 \(baseline.r1r2.filter { $0.rule == "R1" }.count), R2 \(baseline.r1r2.filter { $0.rule == "R2" }.count)), \
-            R4 \(baseline.r4.count), registry station-code exceptions \(baseline.registryStationCodes.count)
+            R4 \(baseline.r4.count), R4b \(baseline.r4b?.count ?? 0), registry station-code exceptions \(baseline.registryStationCodes.count)
             """)
 
         var problems: [String] = []
@@ -728,6 +783,10 @@ struct RegressionGuardTopologyGaps {
         }
         ratchet(scan.r1r2, baseline.r1r2, "r1r2")
         ratchet(scan.r4, baseline.r4, "r4")
+        ratchet(scan.r4b, baseline.r4b ?? [], "r4b")
+        for e in baseline.r4b ?? [] where !["junction", "notJunction", "unknown"].contains(e.likely ?? "") {
+            problems.append("[R4b] baseline entry \(e.operatorName): \(e.a) / \(e.b) at \(e.stationCode) has likely '\(e.likely ?? "")'; use junction, notJunction or unknown")
+        }
         for id in scan.registryCodes where !baseline.registryStationCodes.contains(id) {
             problems.append("registry row \(id) has a stationCode that is not used by every row in its lineIDs nor by both identities' stations (TripConnectivity matches codes exactly): use the package code in \(Self.registryPath), or list the row in \(Self.baselinePath) registryStationCodes if the lines genuinely share no code")
         }
@@ -752,6 +811,23 @@ struct RegressionGuardTopologyGaps {
                 && Set([$0.pair.a.line, $0.pair.b.line]) == ["本線", "皆実線"] && !known.contains($0.key)
         }
         #expect(!fresh.isEmpty, "removing hiroden-inaricho-main-minami must add an R4 hit at 稲荷町 that is not in the baseline")
+    }
+
+    /// 芸備線 ends at 広島 008029, which stations.json codes only under 芸備線 (山陽線 is 008031),
+    /// so R4 skips it; the package's 山陽線 row uses 008029, so R4b must report the pair once the row is gone.
+    @Test("Without its junction row 広島 山陽線/芸備線 is a new R4b hit")
+    func hiroshimaWouldBeCaught() throws {
+        let baseline = try #require(try Self.loadBaseline(), "\(Self.baselinePath) is missing")
+        let known = Set((baseline.r4b ?? []).map(\.key))
+        func hits(_ scan: Scan) -> [Hit] {
+            scan.r4b.filter {
+                $0.pair.a.operatorName == "西日本旅客鉄道" && $0.code == "008029"
+                    && Set([$0.pair.a.line, $0.pair.b.line]) == ["山陽線", "芸備線"]
+            }
+        }
+        #expect(hits(try Self.scan()).isEmpty, "with hiroshima-sanyo-geibi present 広島 山陽線/芸備線 must not be an R4b hit")
+        let fresh = hits(try Self.scan(removingJunctionIDs: ["hiroshima-sanyo-geibi"])).filter { !known.contains($0.key) }
+        #expect(!fresh.isEmpty, "removing hiroshima-sanyo-geibi must add an R4b hit at 広島 that is not in the baseline")
     }
 
     @Test("稲荷町 本線@v and 皆実線@v are joined only by the registry row")

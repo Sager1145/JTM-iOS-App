@@ -475,6 +475,14 @@
         "jp-東日本旅客鉄道-東北線-5",
         "jp-東日本旅客鉄道-東北線-2"
       ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-赤羽線"
+      ],
+      "toLineIDs": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-東北線-2"
+      ],
       "from": {
         "identity": {
           "operatorName": "東日本旅客鉄道",
@@ -555,6 +563,13 @@
       "stationCode": "004135",
       "lineIDs": [
         "jp-東日本旅客鉄道-山手線",
+        "jp-東日本旅客鉄道-東海道線",
+        "jp-東日本旅客鉄道-東海道線-3"
+      ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-山手線"
+      ],
+      "toLineIDs": [
         "jp-東日本旅客鉄道-東海道線",
         "jp-東日本旅客鉄道-東海道線-3"
       ],
@@ -893,6 +908,13 @@
       "lineIDs": [
         "jp-北海道旅客鉄道-千歳線",
         "jp-北海道旅客鉄道-千歳線-2",
+        "jp-北海道旅客鉄道-石勝線"
+      ],
+      "fromLineIDs": [
+        "jp-北海道旅客鉄道-千歳線",
+        "jp-北海道旅客鉄道-千歳線-2"
+      ],
+      "toLineIDs": [
         "jp-北海道旅客鉄道-石勝線"
       ],
       "from": {
@@ -2257,6 +2279,13 @@
         "jp-東日本旅客鉄道-総武線",
         "jp-東日本旅客鉄道-総武線-3"
       ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-東海道線"
+      ],
+      "toLineIDs": [
+        "jp-東日本旅客鉄道-総武線",
+        "jp-東日本旅客鉄道-総武線-3"
+      ],
       "from": {
         "identity": {
           "operatorName": "東日本旅客鉄道",
@@ -2337,6 +2366,13 @@
       "lineIDs": [
         "jp-東日本旅客鉄道-東北線-2",
         "jp-東日本旅客鉄道-東北線-4",
+        "jp-東日本旅客鉄道-常磐線"
+      ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-東北線-2",
+        "jp-東日本旅客鉄道-東北線-4"
+      ],
+      "toLineIDs": [
         "jp-東日本旅客鉄道-常磐線"
       ],
       "from": {
@@ -6906,6 +6942,13 @@
       "lineIDs": [
         "jp-東日本旅客鉄道-東北線",
         "jp-東日本旅客鉄道-東北線-5",
+        "jp-東日本旅客鉄道-高崎線"
+      ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-東北線",
+        "jp-東日本旅客鉄道-東北線-5"
+      ],
+      "toLineIDs": [
         "jp-東日本旅客鉄道-高崎線"
       ],
       "from": {
@@ -303390,6 +303433,13 @@
         "jp-東日本旅客鉄道-京葉線-2",
         "jp-東日本旅客鉄道-京葉線-3"
       ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-京葉線-2",
+        "jp-東日本旅客鉄道-京葉線-3"
+      ],
+      "toLineIDs": [
+        "jp-東日本旅客鉄道-武蔵野線"
+      ],
       "from": {
         "identity": {
           "operatorName": "東日本旅客鉄道",
@@ -304420,6 +304470,13 @@
         "jp-東日本旅客鉄道-大崎支線-p1",
         "jp-東日本旅客鉄道-山手線"
       ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-大崎支線",
+        "jp-東日本旅客鉄道-大崎支線-p1"
+      ],
+      "toLineIDs": [
+        "jp-東日本旅客鉄道-山手線"
+      ],
       "from": {
         "identity": {
           "operatorName": "東日本旅客鉄道",
@@ -304487,6 +304544,13 @@
         "jp-東日本旅客鉄道-大崎支線-p1",
         "jp-東日本旅客鉄道-総武線-3"
       ],
+      "fromLineIDs": [
+        "jp-東日本旅客鉄道-大崎支線",
+        "jp-東日本旅客鉄道-大崎支線-p1"
+      ],
+      "toLineIDs": [
+        "jp-東日本旅客鉄道-総武線-3"
+      ],
       "from": {
         "identity": {
           "operatorName": "東日本旅客鉄道",
@@ -304518,6 +304582,46 @@
       "validFrom": null,
       "validTo": null,
       "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E6%B9%98%E5%8D%97%E6%96%B0%E5%AE%BF%E3%83%A9%E3%82%A4%E3%83%B3. No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
+    },
+    {
+      "id": "hiroshima-sanyo-geibi",
+      "region": "jp",
+      "station": "広島",
+      "stationCode": "008029",
+      "lineIDs": [
+        "jp-西日本旅客鉄道-山陽線",
+        "jp-西日本旅客鉄道-芸備線"
+      ],
+      "from": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "山陽線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.47397,
+          34.39816
+        ]
+      },
+      "to": {
+        "identity": {
+          "operatorName": "西日本旅客鉄道",
+          "lineName": "芸備線",
+          "railwayClassCode": "11"
+        },
+        "coordinate": [
+          132.47397,
+          34.39816
+        ]
+      },
+      "evidence": [
+        "https://ja.wikipedia.org/wiki/%E8%8A%B8%E5%82%99%E7%B7%9A"
+      ],
+      "geometryEvidence": "app/data/rail-sections.json MLIT N02: [132.47397,34.39816] is an identical existing surveyed vertex of both 西日本旅客鉄道 山陽線 (class 11) and 芸備線 (class 11) at 広島, where 芸備線 ends (jtm-area problems: missingJunction 008029, 0.0 m). This joins only these two identities at this vertex; it does not collapse other coincident identities or add passenger transfer edges.",
+      "reviewedAt": "2026-11-07",
+      "validFrom": null,
+      "validTo": null,
+      "temporalEvidence": "Physical connection documented by https://ja.wikipedia.org/wiki/%E8%8A%B8%E5%82%99%E7%B7%9A (芸備線 runs 備中神代–広島 and terminates at the 山陽本線 station 広島). No opening or closing bound is asserted here: every traversed edge keeps its own history validity, so this row does not widen the dates either line is routable."
     }
   ]
 }

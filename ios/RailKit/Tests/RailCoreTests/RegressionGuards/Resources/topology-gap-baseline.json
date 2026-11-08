@@ -2111,6 +2111,1716 @@
       "stationName" : "武之橋"
     }
   ],
+  "r4b" : [
+    {
+      "a" : "妙高はねうまライン[12]",
+      "b" : "日本海ひすいライン[12]",
+      "evidence" : "row jp-えちごトキめき鉄道-妙高はねうまライン ends at 001600 直江津, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "えちごトキめき鉄道",
+      "rule" : "R4b",
+      "site" : [
+        138.24087,
+        37.16945
+      ],
+      "stationCode" : "001600",
+      "stationName" : "直江津"
+    },
+    {
+      "a" : "桟橋線[21]",
+      "b" : "駅前線[21]",
+      "evidence" : "row jp-とさでん交通-桟橋線 ends at 009117 はりまや橋, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "とさでん交通",
+      "rule" : "R4b",
+      "site" : [
+        133.54276,
+        33.55888
+      ],
+      "stationCode" : "009117",
+      "stationName" : "はりまや橋"
+    },
+    {
+      "a" : "北松江線[12]",
+      "b" : "大社線[12]",
+      "evidence" : "row jp-一畑電車-大社線 ends at 004848 川跡, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "一畑電車",
+      "rule" : "R4b",
+      "site" : [
+        132.77669,
+        35.39541
+      ],
+      "stationCode" : "004848",
+      "stationName" : "川跡"
+    },
+    {
+      "a" : "吉都線[11]",
+      "b" : "日豊線[11]",
+      "evidence" : "row jp-九州旅客鉄道-吉都線 ends at 010009 都城, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.0731,
+        31.73664
+      ],
+      "stationCode" : "010009",
+      "stationName" : "都城"
+    },
+    {
+      "a" : "吉都線[11]",
+      "b" : "肥薩線[11]",
+      "evidence" : "row jp-九州旅客鉄道-吉都線 ends at 009944 吉松, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.73799,
+        32.01245
+      ],
+      "stationCode" : "009944",
+      "stationName" : "吉松"
+    },
+    {
+      "a" : "唐津線[11]",
+      "b" : "筑肥線[11]",
+      "evidence" : "row jp-九州旅客鉄道-筑肥線-2 ends at 009316 山本, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        129.98086,
+        33.39401
+      ],
+      "stationCode" : "009316",
+      "stationName" : "山本"
+    },
+    {
+      "a" : "後藤寺線[11]",
+      "b" : "日田彦山線[11]",
+      "evidence" : "row jp-九州旅客鉄道-後藤寺線 ends at 008969 田川後藤寺, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.79992,
+        33.63095
+      ],
+      "stationCode" : "008969",
+      "stationName" : "田川後藤寺"
+    },
+    {
+      "a" : "後藤寺線[11]",
+      "b" : "筑豊線[11]",
+      "evidence" : "row jp-九州旅客鉄道-後藤寺線 ends at 008955 新飯塚, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.69445,
+        33.64475
+      ],
+      "stationCode" : "008955",
+      "stationName" : "新飯塚"
+    },
+    {
+      "a" : "指宿枕崎線[11]",
+      "b" : "鹿児島線[11]",
+      "evidence" : "row jp-九州旅客鉄道-指宿枕崎線 ends at 010047 鹿児島中央, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.54181,
+        31.58288
+      ],
+      "stationCode" : "010047",
+      "stationName" : "鹿児島中央"
+    },
+    {
+      "a" : "日豊線[11]",
+      "b" : "豊肥線[11]",
+      "evidence" : "row jp-九州旅客鉄道-豊肥線 ends at 009479 大分, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "九州旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.60608,
+        33.23289
+      ],
+      "stationCode" : "009479",
+      "stationName" : "大分"
+    },
+    {
+      "a" : "千葉線[12]",
+      "b" : "本線[12]",
+      "evidence" : "row jp-京成電鉄-千葉線 ends at 003747 京成津田沼, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京成電鉄",
+      "rule" : "R4b",
+      "site" : [
+        140.02411,
+        35.68379
+      ],
+      "stationCode" : "003747",
+      "stationName" : "京成津田沼"
+    },
+    {
+      "a" : "成田空港線[12]",
+      "b" : "本線[12]",
+      "evidence" : "row jp-京成電鉄-成田空港線 ends at 003203 成田空港, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京成電鉄",
+      "rule" : "R4b",
+      "site" : [
+        140.3871,
+        35.76693
+      ],
+      "stationCode" : "003203",
+      "stationName" : "成田空港"
+    },
+    {
+      "a" : "本線[12]",
+      "b" : "松戸線[12]",
+      "evidence" : "row jp-京成電鉄-松戸線 ends at 003747 京成津田沼, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京成電鉄",
+      "rule" : "R4b",
+      "site" : [
+        140.02411,
+        35.68379
+      ],
+      "stationCode" : "003747",
+      "stationName" : "京成津田沼"
+    },
+    {
+      "a" : "本線[12]",
+      "b" : "金町線[12]",
+      "evidence" : "row jp-京成電鉄-金町線 ends at 003248 京成高砂, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京成電鉄",
+      "rule" : "R4b",
+      "site" : [
+        139.86746,
+        35.75091
+      ],
+      "stationCode" : "003248",
+      "stationName" : "京成高砂"
+    },
+    {
+      "a" : "大師線[12]",
+      "b" : "本線[12]",
+      "evidence" : "row jp-京浜急行電鉄-大師線 ends at 004424 京急川崎, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京浜急行電鉄",
+      "rule" : "R4b",
+      "site" : [
+        139.70132,
+        35.53338
+      ],
+      "stationCode" : "004424",
+      "stationName" : "京急川崎"
+    },
+    {
+      "a" : "北野線[21]",
+      "b" : "嵐山本線[21]",
+      "evidence" : "row jp-京福電気鉄道-北野線 ends at 005933 帷子ノ辻, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京福電気鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.70058,
+        35.01517
+      ],
+      "stationCode" : "005933",
+      "stationName" : "帷子ノ辻"
+    },
+    {
+      "a" : "京津線[21]",
+      "b" : "石山坂本線[21]",
+      "evidence" : "row jp-京阪電気鉄道-京津線 ends at 005954 びわ湖浜大津, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "京阪電気鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.86366,
+        35.01145
+      ],
+      "stationCode" : "005954",
+      "stationName" : "びわ湖浜大津"
+    },
+    {
+      "a" : "城北線[12]",
+      "b" : "大手町線[21]",
+      "evidence" : "row jp-伊予鉄道-城北線 ends at 008739 古町, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "伊予鉄道",
+      "rule" : "R4b",
+      "site" : [
+        132.75518,
+        33.84728
+      ],
+      "stationCode" : "008739",
+      "stationName" : "古町"
+    },
+    {
+      "a" : "城南線[21]",
+      "b" : "花園線[21]",
+      "evidence" : "row jp-伊予鉄道-花園線 ends at 008768 南堀端, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "伊予鉄道",
+      "rule" : "R4b",
+      "site" : [
+        132.76091,
+        33.83945
+      ],
+      "stationCode" : "008768",
+      "stationName" : "南堀端"
+    },
+    {
+      "a" : "郡中線[12]",
+      "b" : "高浜線[12]",
+      "evidence" : "row jp-伊予鉄道-郡中線 ends at 008773 松山市, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "伊予鉄道",
+      "rule" : "R4b",
+      "site" : [
+        132.76143,
+        33.8357
+      ],
+      "stationCode" : "008773",
+      "stationName" : "松山市"
+    },
+    {
+      "a" : "宝来・谷地頭線[21]",
+      "b" : "本線[21]",
+      "evidence" : "row jp-函館市-宝来・谷地頭線 ends at 000467 十字街, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "函館市",
+      "rule" : "R4b",
+      "site" : [
+        140.71897,
+        41.76415
+      ],
+      "stationCode" : "000467",
+      "stationName" : "十字街"
+    },
+    {
+      "a" : "函館線[11]",
+      "b" : "室蘭線[11]",
+      "evidence" : "row jp-北海道旅客鉄道-室蘭線 ends at 000153 岩見沢, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "北海道旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        141.76094,
+        43.20499
+      ],
+      "stationCode" : "000153",
+      "stationName" : "岩見沢"
+    },
+    {
+      "a" : "根室線[11]",
+      "b" : "釧網線[11]",
+      "evidence" : "row jp-北海道旅客鉄道-釧網線 ends at 000309 東釧路, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "北海道旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        144.41044,
+        42.99519
+      ],
+      "stationCode" : "000309",
+      "stationName" : "東釧路"
+    },
+    {
+      "a" : "加太線[12]",
+      "b" : "南海本線[12]",
+      "evidence" : "row jp-南海電気鉄道-加太線 ends at 008328 紀ノ川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "南海電気鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.16543,
+        34.25512
+      ],
+      "stationCode" : "008328",
+      "stationName" : "紀ノ川"
+    },
+    {
+      "a" : "南海本線[12]",
+      "b" : "多奈川線[12]",
+      "evidence" : "row jp-南海電気鉄道-多奈川線 ends at 008219 みさき公園, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "南海電気鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.16007,
+        34.32338
+      ],
+      "stationCode" : "008219",
+      "stationName" : "みさき公園"
+    },
+    {
+      "a" : "南海本線[12]",
+      "b" : "高師浜線[12]",
+      "evidence" : "row jp-南海電気鉄道-高師浜線 ends at 007764 羽衣, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "南海電気鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.44206,
+        34.5351
+      ],
+      "stationCode" : "007764",
+      "stationName" : "羽衣"
+    },
+    {
+      "a" : "叡山本線[12]",
+      "b" : "鞍馬線[12]",
+      "evidence" : "row jp-叡山電鉄-鞍馬線 ends at 005810 宝ヶ池, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "叡山電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.79225,
+        35.05655
+      ],
+      "stationCode" : "005810",
+      "stationName" : "宝ヶ池"
+    },
+    {
+      "a" : "2号線名城線[12]",
+      "b" : "2号線名港線[12]",
+      "evidence" : "row jp-名古屋市-2号線名城線 ends at 005551 金山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋市",
+      "rule" : "R4b",
+      "site" : [
+        136.90218,
+        35.14419
+      ],
+      "stationCode" : "005551",
+      "stationName" : "金山"
+    },
+    {
+      "a" : "2号線名城線[12]",
+      "b" : "4号線名城線[12]",
+      "evidence" : "row jp-名古屋市-2号線名城線 ends at 005387 大曽根, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋市",
+      "rule" : "R4b",
+      "site" : [
+        136.93582,
+        35.19291
+      ],
+      "stationCode" : "005387",
+      "stationName" : "大曽根"
+    },
+    {
+      "a" : "2号線名城線[12]",
+      "b" : "4号線名城線[12]",
+      "evidence" : "row jp-名古屋市-2号線名城線 ends at 005551 金山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋市",
+      "rule" : "R4b",
+      "site" : [
+        136.90218,
+        35.14419
+      ],
+      "stationCode" : "005551",
+      "stationName" : "金山"
+    },
+    {
+      "a" : "2号線名港線[12]",
+      "b" : "4号線名城線[12]",
+      "evidence" : "row jp-名古屋市-2号線名港線 ends at 005551 金山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋市",
+      "rule" : "R4b",
+      "site" : [
+        136.90218,
+        35.14419
+      ],
+      "stationCode" : "005551",
+      "stationName" : "金山"
+    },
+    {
+      "a" : "名古屋本線[12]",
+      "b" : "津島線[12]",
+      "evidence" : "row jp-名古屋鉄道-津島線 ends at 005352 須ヶ口, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.84497,
+        35.19937
+      ],
+      "stationCode" : "005352",
+      "stationName" : "須ヶ口"
+    },
+    {
+      "a" : "名古屋本線[12]",
+      "b" : "竹鼻線[12]",
+      "evidence" : "row jp-名古屋鉄道-竹鼻線 ends at 004902 笠松, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.7648,
+        35.37498
+      ],
+      "stationCode" : "004902",
+      "stationName" : "笠松"
+    },
+    {
+      "a" : "名古屋本線[12]",
+      "b" : "西尾線[12]",
+      "evidence" : "row jp-名古屋鉄道-西尾線 ends at 006072 新安城, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        137.0848,
+        34.98728
+      ],
+      "stationCode" : "006072",
+      "stationName" : "新安城"
+    },
+    {
+      "a" : "小牧線[12]",
+      "b" : "広見線[12]",
+      "evidence" : "row jp-名古屋鉄道-小牧線 ends at 004888 犬山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.94573,
+        35.38052
+      ],
+      "stationCode" : "004888",
+      "stationName" : "犬山"
+    },
+    {
+      "a" : "尾西線[12]",
+      "b" : "津島線[12]",
+      "evidence" : "row jp-名古屋鉄道-津島線 ends at 005420 津島, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.73101,
+        35.17845
+      ],
+      "stationCode" : "005420",
+      "stationName" : "津島"
+    },
+    {
+      "a" : "常滑線[12]",
+      "b" : "河和線[12]",
+      "evidence" : "row jp-名古屋鉄道-河和線 ends at 005911 太田川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "名古屋鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.89276,
+        35.02063
+      ],
+      "stationCode" : "005911",
+      "stationName" : "太田川"
+    },
+    {
+      "a" : "国際文化公園都市モノレール線(彩都線)[23]",
+      "b" : "大阪モノレール線[23]",
+      "evidence" : "row jp-大阪モノレール-国際文化公園都市モノレール線(彩都線) ends at 006601 万博記念公園, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "大阪モノレール",
+      "rule" : "R4b",
+      "site" : [
+        135.52962,
+        34.80679
+      ],
+      "stationCode" : "006601",
+      "stationName" : "万博記念公園"
+    },
+    {
+      "a" : "東山本線[21]",
+      "b" : "清輝橋線[21]",
+      "evidence" : "row jp-岡山電気軌道-清輝橋線 ends at 007333 柳川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "岡山電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        133.92506,
+        34.66554
+      ],
+      "stationCode" : "007333",
+      "stationName" : "柳川"
+    },
+    {
+      "a" : "伊田線[12]",
+      "b" : "田川線[12]",
+      "evidence" : "row jp-平成筑豊鉄道-伊田線 ends at 008959 田川伊田, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "平成筑豊鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.81916,
+        33.64232
+      ],
+      "stationCode" : "008959",
+      "stationName" : "田川伊田"
+    },
+    {
+      "a" : "宇品線[21]",
+      "b" : "本線[21]",
+      "evidence" : "row jp-広島電鉄-宇品線 ends at 008043 紙屋町西, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "広島電鉄",
+      "rule" : "R4b",
+      "site" : [
+        132.45664,
+        34.39539
+      ],
+      "stationCode" : "008043",
+      "stationName" : "紙屋町西"
+    },
+    {
+      "a" : "宇品線[21]",
+      "b" : "皆実線[21]",
+      "evidence" : "row jp-広島電鉄-皆実線 ends at 008116 皆実町六丁目, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "広島電鉄",
+      "rule" : "R4b",
+      "site" : [
+        132.46477,
+        34.37445
+      ],
+      "stationCode" : "008116",
+      "stationName" : "皆実町六丁目"
+    },
+    {
+      "a" : "本線[21]",
+      "b" : "江波線[21]",
+      "evidence" : "row jp-広島電鉄-江波線 ends at 008052 土橋, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "広島電鉄",
+      "rule" : "R4b",
+      "site" : [
+        132.44636,
+        34.39476
+      ],
+      "stationCode" : "008052",
+      "stationName" : "土橋"
+    },
+    {
+      "a" : "本線[21]",
+      "b" : "白島線[21]",
+      "evidence" : "row jp-広島電鉄-白島線 ends at 008047 八丁堀, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "広島電鉄",
+      "rule" : "R4b",
+      "site" : [
+        132.46337,
+        34.39375
+      ],
+      "stationCode" : "008047",
+      "stationName" : "八丁堀"
+    },
+    {
+      "a" : "大井町線[12]",
+      "b" : "田園都市線[12]",
+      "evidence" : "row jp-東急電鉄-大井町線 ends at 004177 二子玉川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東急電鉄",
+      "rule" : "R4b",
+      "site" : [
+        139.6255,
+        35.61036
+      ],
+      "stationCode" : "004177",
+      "stationName" : "二子玉川"
+    },
+    {
+      "a" : "東急多摩川線[12]",
+      "b" : "東横線[12]",
+      "evidence" : "row jp-東急電鉄-東急多摩川線 ends at 004261 多摩川, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "東急電鉄",
+      "rule" : "R4b",
+      "site" : [
+        139.6685,
+        35.59037
+      ],
+      "stationCode" : "004261",
+      "stationName" : "多摩川"
+    },
+    {
+      "a" : "上越新幹線[11]",
+      "b" : "上越線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-上越線-2 ends at 001717 越後湯沢, coded under another line in the package",
+      "likely" : "notJunction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        138.80824,
+        36.93694
+      ],
+      "stationCode" : "001717",
+      "stationName" : "越後湯沢"
+    },
+    {
+      "a" : "上越新幹線[11]",
+      "b" : "東北新幹線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-上越新幹線 ends at 002914 大宮, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.62235,
+        35.90806
+      ],
+      "stationCode" : "002914",
+      "stationName" : "大宮"
+    },
+    {
+      "a" : "上越線[11]",
+      "b" : "信越線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-上越線 ends at 001496 宮内, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        138.84078,
+        37.423
+      ],
+      "stationCode" : "001496",
+      "stationName" : "宮内"
+    },
+    {
+      "a" : "上越線[11]",
+      "b" : "信越線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-上越線 ends at 002389 高崎, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.01249,
+        36.32059
+      ],
+      "stationCode" : "002389",
+      "stationName" : "高崎"
+    },
+    {
+      "a" : "両毛線[11]",
+      "b" : "水戸線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-両毛線 ends at 002407 小山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.80593,
+        36.31138
+      ],
+      "stationCode" : "002407",
+      "stationName" : "小山"
+    },
+    {
+      "a" : "中央線[11]",
+      "b" : "小海線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-小海線 ends at 002981 小淵沢, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        138.31431,
+        35.86428
+      ],
+      "stationCode" : "002981",
+      "stationName" : "小淵沢"
+    },
+    {
+      "a" : "久留里線[11]",
+      "b" : "内房線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-久留里線 ends at 004882 木更津, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.92627,
+        35.38289
+      ],
+      "stationCode" : "004882",
+      "stationName" : "木更津"
+    },
+    {
+      "a" : "仙山線[11]",
+      "b" : "東北線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-仙山線 ends at 001177 仙台, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.88234,
+        38.25813
+      ],
+      "stationCode" : "001177",
+      "stationName" : "仙台"
+    },
+    {
+      "a" : "信越線[11]",
+      "b" : "白新線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-信越線 ends at 001296 新潟, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.05944,
+        37.91178
+      ],
+      "stationCode" : "001296",
+      "stationName" : "新潟"
+    },
+    {
+      "a" : "信越線[11]",
+      "b" : "磐越西線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-磐越西線 ends at 001349 新津, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.1212,
+        37.80168
+      ],
+      "stationCode" : "001349",
+      "stationName" : "新津"
+    },
+    {
+      "a" : "信越線[11]",
+      "b" : "越後線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-越後線 ends at 001523 柏崎, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        138.55804,
+        37.36378
+      ],
+      "stationCode" : "001523",
+      "stationName" : "柏崎"
+    },
+    {
+      "a" : "只見線[11]",
+      "b" : "磐越西線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-只見線 ends at 001456 会津若松, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.93035,
+        37.50984
+      ],
+      "stationCode" : "001456",
+      "stationName" : "会津若松"
+    },
+    {
+      "a" : "外房線[11]",
+      "b" : "東金線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-東金線 ends at 004450 大網, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.30833,
+        35.5236
+      ],
+      "stationCode" : "004450",
+      "stationName" : "大網"
+    },
+    {
+      "a" : "大船渡線[11]",
+      "b" : "東北線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-大船渡線 ends at 000975 一ノ関, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        141.13868,
+        38.92784
+      ],
+      "stationCode" : "000975",
+      "stationName" : "一ノ関"
+    },
+    {
+      "a" : "奥羽線[11]",
+      "b" : "東北線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-奥羽線 ends at 001373 福島, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.45972,
+        37.75341
+      ],
+      "stationCode" : "001373",
+      "stationName" : "福島"
+    },
+    {
+      "a" : "川越線[11]",
+      "b" : "東北新幹線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-川越線 ends at 002914 大宮, coded under another line in the package",
+      "likely" : "notJunction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.62235,
+        35.90806
+      ],
+      "stationCode" : "002914",
+      "stationName" : "大宮"
+    },
+    {
+      "a" : "成田線[11]",
+      "b" : "総武線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-成田線 ends at 003317 松岸, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.79442,
+        35.7397
+      ],
+      "stationCode" : "003317",
+      "stationName" : "松岸"
+    },
+    {
+      "a" : "東北新幹線[11]",
+      "b" : "東北線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-東北線-5 ends at 002914 大宮, coded under another line in the package",
+      "likely" : "notJunction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.62235,
+        35.90806
+      ],
+      "stationCode" : "002914",
+      "stationName" : "大宮"
+    },
+    {
+      "a" : "東北線[11]",
+      "b" : "水郡線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-水郡線 ends at 001528 安積永盛, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.36918,
+        37.35757
+      ],
+      "stationCode" : "001528",
+      "stationName" : "安積永盛"
+    },
+    {
+      "a" : "東北線[11]",
+      "b" : "烏山線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-烏山線 ends at 002046 宝積寺, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.97935,
+        36.63247
+      ],
+      "stationCode" : "002046",
+      "stationName" : "宝積寺"
+    },
+    {
+      "a" : "東北線[11]",
+      "b" : "石巻線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-石巻線 ends at 001060 小牛田, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        141.06434,
+        38.54147
+      ],
+      "stationCode" : "001060",
+      "stationName" : "小牛田"
+    },
+    {
+      "a" : "東北線[11]",
+      "b" : "陸羽東線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-陸羽東線 ends at 001060 小牛田, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        141.06434,
+        38.54147
+      ],
+      "stationCode" : "001060",
+      "stationName" : "小牛田"
+    },
+    {
+      "a" : "東海道線[11]",
+      "b" : "横浜線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-横浜線 ends at 004596 東神奈川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.63393,
+        35.47869
+      ],
+      "stationCode" : "004596",
+      "stationName" : "東神奈川"
+    },
+    {
+      "a" : "気仙沼線[11]",
+      "b" : "石巻線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-気仙沼線 ends at 001067 前谷地, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        141.19337,
+        38.51243
+      ],
+      "stationCode" : "001067",
+      "stationName" : "前谷地"
+    },
+    {
+      "a" : "磐越東線[11]",
+      "b" : "磐越西線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-磐越東線 ends at 001507 郡山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.38913,
+        37.39936
+      ],
+      "stationCode" : "001507",
+      "stationName" : "郡山"
+    },
+    {
+      "a" : "陸羽東線[11]",
+      "b" : "陸羽西線[11]",
+      "evidence" : "row jp-東日本旅客鉄道-陸羽東線 ends at 001004 新庄, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        140.3059,
+        38.76386
+      ],
+      "stationCode" : "001004",
+      "stationName" : "新庄"
+    },
+    {
+      "a" : "佐野線[12]",
+      "b" : "小泉線[12]",
+      "evidence" : "row jp-東武鉄道-佐野線 ends at 002493 館林, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東武鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.52802,
+        36.24573
+      ],
+      "stationCode" : "002493",
+      "stationName" : "館林"
+    },
+    {
+      "a" : "中央線[11]",
+      "b" : "太多線[11]",
+      "evidence" : "row jp-東海旅客鉄道-太多線 ends at 005009 多治見, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東海旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        137.12136,
+        35.33541
+      ],
+      "stationCode" : "005009",
+      "stationName" : "多治見"
+    },
+    {
+      "a" : "中央線[11]",
+      "b" : "東海道線[11]",
+      "evidence" : "row jp-東海旅客鉄道-中央線 ends at 005451 名古屋, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東海旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.88108,
+        35.17258
+      ],
+      "stationCode" : "005451",
+      "stationName" : "名古屋"
+    },
+    {
+      "a" : "東海道線[11]",
+      "b" : "関西線[11]",
+      "evidence" : "row jp-東海旅客鉄道-関西線 ends at 005451 名古屋, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "東海旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.88205,
+        35.16976
+      ],
+      "stationCode" : "005451",
+      "stationName" : "名古屋"
+    },
+    {
+      "a" : "三田線[12]",
+      "b" : "公園都市線[12]",
+      "evidence" : "row jp-神戸電鉄-公園都市線 ends at 006372 横山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "神戸電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.22042,
+        34.8774
+      ],
+      "stationCode" : "006372",
+      "stationName" : "横山"
+    },
+    {
+      "a" : "三田線[12]",
+      "b" : "有馬線[12]",
+      "evidence" : "row jp-神戸電鉄-三田線 ends at 006650 有馬口, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "神戸電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.22135,
+        34.79675
+      ],
+      "stationCode" : "006650",
+      "stationName" : "有馬口"
+    },
+    {
+      "a" : "有馬線[12]",
+      "b" : "粟生線[12]",
+      "evidence" : "row jp-神戸電鉄-粟生線 ends at 006957 鈴蘭台, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "神戸電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.14583,
+        34.7241
+      ],
+      "stationCode" : "006957",
+      "stationName" : "鈴蘭台"
+    },
+    {
+      "a" : "伯備線[11]",
+      "b" : "芸備線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-芸備線 ends at 006033 備中神代, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        133.40026,
+        34.99481
+      ],
+      "stationCode" : "006033",
+      "stationName" : "備中神代"
+    },
+    {
+      "a" : "加古川線[11]",
+      "b" : "福知山線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-加古川線 ends at 005735 谷川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.04907,
+        35.08323
+      ],
+      "stationCode" : "005735",
+      "stationName" : "谷川"
+    },
+    {
+      "a" : "北陸線[11]",
+      "b" : "小浜線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-北陸線 ends at 010186 敦賀, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.07788,
+        35.64582
+      ],
+      "stationCode" : "010186",
+      "stationName" : "敦賀"
+    },
+    {
+      "a" : "博多南線[11]",
+      "b" : "山陽新幹線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-博多南線 ends at 009033 博多, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.42127,
+        33.59139
+      ],
+      "stationCode" : "009033",
+      "stationName" : "博多"
+    },
+    {
+      "a" : "可部線[11]",
+      "b" : "山陽線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-可部線 ends at 007998 横川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        132.45151,
+        34.41055
+      ],
+      "stationCode" : "007998",
+      "stationName" : "横川"
+    },
+    {
+      "a" : "呉線[11]",
+      "b" : "山陽線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-呉線 ends at 008019 三原, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        133.08457,
+        34.40058
+      ],
+      "stationCode" : "008019",
+      "stationName" : "三原"
+    },
+    {
+      "a" : "和歌山線[11]",
+      "b" : "桜井線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-桜井線 ends at 007802 高田, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.74407,
+        34.517
+      ],
+      "stationCode" : "007802",
+      "stationName" : "高田"
+    },
+    {
+      "a" : "和歌山線[11]",
+      "b" : "阪和線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-和歌山線 ends at 008365 和歌山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.19123,
+        34.23334
+      ],
+      "stationCode" : "008365",
+      "stationName" : "和歌山"
+    },
+    {
+      "a" : "因美線[11]",
+      "b" : "姫新線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-因美線 ends at 005806 東津山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        134.03254,
+        35.05873
+      ],
+      "stationCode" : "005806",
+      "stationName" : "東津山"
+    },
+    {
+      "a" : "因美線[11]",
+      "b" : "山陰線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-因美線 ends at 004541 鳥取, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        134.22493,
+        35.4947
+      ],
+      "stationCode" : "004541",
+      "stationName" : "鳥取"
+    },
+    {
+      "a" : "境線[11]",
+      "b" : "山陰線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-境線 ends at 004758 米子, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        133.33743,
+        35.42427
+      ],
+      "stationCode" : "004758",
+      "stationName" : "米子"
+    },
+    {
+      "a" : "大阪環状線[11]",
+      "b" : "桜島線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-桜島線 ends at 007187 西九条, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.46765,
+        34.68342
+      ],
+      "stationCode" : "007187",
+      "stationName" : "西九条"
+    },
+    {
+      "a" : "奈良線[11]",
+      "b" : "東海道線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-奈良線 ends at 006079 京都, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.75412,
+        34.98546
+      ],
+      "stationCode" : "006079",
+      "stationName" : "京都"
+    },
+    {
+      "a" : "奈良線[11]",
+      "b" : "片町線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-奈良線 ends at 006896 木津, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.8249,
+        34.73686
+      ],
+      "stationCode" : "006896",
+      "stationName" : "木津"
+    },
+    {
+      "a" : "姫新線[11]",
+      "b" : "播但線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-姫新線 ends at 006509 姫路, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        134.69271,
+        34.8273
+      ],
+      "stationCode" : "006509",
+      "stationName" : "姫路"
+    },
+    {
+      "a" : "姫新線[11]",
+      "b" : "津山線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-津山線 ends at 005819 津山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        134.00445,
+        35.05464
+      ],
+      "stationCode" : "005819",
+      "stationName" : "津山"
+    },
+    {
+      "a" : "宇部線[11]",
+      "b" : "山陽線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-宇部線 ends at 008476 新山口, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.39506,
+        34.09325
+      ],
+      "stationCode" : "008476",
+      "stationName" : "新山口"
+    },
+    {
+      "a" : "宇部線[11]",
+      "b" : "山陽線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-宇部線 ends at 008582 宇部, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.22325,
+        34.00296
+      ],
+      "stationCode" : "008582",
+      "stationName" : "宇部"
+    },
+    {
+      "a" : "山口線[11]",
+      "b" : "山陽線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-山口線 ends at 008476 新山口, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.39506,
+        34.09325
+      ],
+      "stationCode" : "008476",
+      "stationName" : "新山口"
+    },
+    {
+      "a" : "山陰線[11]",
+      "b" : "東海道線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-山陰線 ends at 006079 京都, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.75601,
+        34.98557
+      ],
+      "stationCode" : "006079",
+      "stationName" : "京都"
+    },
+    {
+      "a" : "山陽線[11]",
+      "b" : "岩徳線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-岩徳線 ends at 008419 岩国, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        132.22632,
+        34.17345
+      ],
+      "stationCode" : "008419",
+      "stationName" : "岩国"
+    },
+    {
+      "a" : "山陽線[11]",
+      "b" : "岩徳線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-岩徳線 ends at 008557 櫛ヶ浜, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        131.82843,
+        34.03168
+      ],
+      "stationCode" : "008557",
+      "stationName" : "櫛ヶ浜"
+    },
+    {
+      "a" : "山陽線[11]",
+      "b" : "津山線[11]",
+      "evidence" : "row jp-西日本旅客鉄道-津山線 ends at 007310 岡山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本旅客鉄道",
+      "rule" : "R4b",
+      "site" : [
+        133.91978,
+        34.66939
+      ],
+      "stationCode" : "007310",
+      "stationName" : "岡山"
+    },
+    {
+      "a" : "天神大牟田線[12]",
+      "b" : "太宰府線[12]",
+      "evidence" : "row jp-西日本鉄道-太宰府線 ends at 009245 西鉄二日市, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        130.51754,
+        33.50269
+      ],
+      "stationCode" : "009245",
+      "stationName" : "西鉄二日市"
+    },
+    {
+      "a" : "国分寺線[12]",
+      "b" : "新宿線[12]",
+      "evidence" : "row jp-西武鉄道-国分寺線 ends at 003220 東村山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西武鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.46591,
+        35.7609
+      ],
+      "stationCode" : "003220",
+      "stationName" : "東村山"
+    },
+    {
+      "a" : "新宿線[12]",
+      "b" : "西武園線[12]",
+      "evidence" : "row jp-西武鉄道-西武園線 ends at 003220 東村山, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西武鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.46591,
+        35.7609
+      ],
+      "stationCode" : "003220",
+      "stationName" : "東村山"
+    },
+    {
+      "a" : "池袋線[12]",
+      "b" : "豊島線[12]",
+      "evidence" : "row jp-西武鉄道-豊島線 ends at 003328 練馬, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "西武鉄道",
+      "rule" : "R4b",
+      "site" : [
+        139.65557,
+        35.73804
+      ],
+      "stationCode" : "003328",
+      "stationName" : "練馬"
+    },
+    {
+      "a" : "八日市線[12]",
+      "b" : "本線[12]",
+      "evidence" : "row jp-近江鉄道-八日市線 ends at 005652 八日市, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近江鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.19465,
+        35.11449
+      ],
+      "stationCode" : "005652",
+      "stationName" : "八日市"
+    },
+    {
+      "a" : "多賀線[12]",
+      "b" : "本線[12]",
+      "evidence" : "row jp-近江鉄道-多賀線 ends at 005263 高宮, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近江鉄道",
+      "rule" : "R4b",
+      "site" : [
+        136.26049,
+        35.23777
+      ],
+      "stationCode" : "005263",
+      "stationName" : "高宮"
+    },
+    {
+      "a" : "信貴線[12]",
+      "b" : "大阪線[12]",
+      "evidence" : "row jp-近畿日本鉄道-信貴線 ends at 007520 河内山本, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.61835,
+        34.62804
+      ],
+      "stationCode" : "007520",
+      "stationName" : "河内山本"
+    },
+    {
+      "a" : "南大阪線[12]",
+      "b" : "御所線[12]",
+      "evidence" : "row jp-近畿日本鉄道-御所線 ends at 007825 尺土, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.72203,
+        34.50855
+      ],
+      "stationCode" : "007825",
+      "stationName" : "尺土"
+    },
+    {
+      "a" : "南大阪線[12]",
+      "b" : "道明寺線[12]",
+      "evidence" : "row jp-近畿日本鉄道-道明寺線 ends at 007688 道明寺, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.62035,
+        34.56909
+      ],
+      "stationCode" : "007688",
+      "stationName" : "道明寺"
+    },
+    {
+      "a" : "南大阪線[12]",
+      "b" : "長野線[12]",
+      "evidence" : "row jp-近畿日本鉄道-長野線 ends at 007718 古市, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.60974,
+        34.55487
+      ],
+      "stationCode" : "007718",
+      "stationName" : "古市"
+    },
+    {
+      "a" : "奈良線[12]",
+      "b" : "橿原線[12]",
+      "evidence" : "row jp-近畿日本鉄道-橿原線 ends at 007117 大和西大寺, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.78213,
+        34.69415
+      ],
+      "stationCode" : "007117",
+      "stationName" : "大和西大寺"
+    },
+    {
+      "a" : "奈良線[12]",
+      "b" : "生駒線[12]",
+      "evidence" : "row jp-近畿日本鉄道-生駒線 ends at 007122 生駒, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "近畿日本鉄道",
+      "rule" : "R4b",
+      "site" : [
+        135.69688,
+        34.69295
+      ],
+      "stationCode" : "007122",
+      "stationName" : "生駒"
+    },
+    {
+      "a" : "大浦支線[21]",
+      "b" : "本線[21]",
+      "evidence" : "row jp-長崎電気軌道-大浦支線 ends at 009839 新地中華街, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "長崎電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        129.8751,
+        32.74301
+      ],
+      "stationCode" : "009839",
+      "stationName" : "新地中華街"
+    },
+    {
+      "a" : "本線[21]",
+      "b" : "桜町支線[21]",
+      "evidence" : "row jp-長崎電気軌道-桜町支線 ends at 009819 長崎駅前, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "長崎電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        129.87168,
+        32.75282
+      ],
+      "stationCode" : "009819",
+      "stationName" : "長崎駅前"
+    },
+    {
+      "a" : "本線[21]",
+      "b" : "蛍茶屋支線[21]",
+      "evidence" : "row jp-長崎電気軌道-蛍茶屋支線 ends at 009835 西浜町, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "長崎電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        129.87624,
+        32.74385
+      ],
+      "stationCode" : "009835",
+      "stationName" : "西浜町"
+    },
+    {
+      "a" : "桜町支線[21]",
+      "b" : "蛍茶屋支線[21]",
+      "evidence" : "row jp-長崎電気軌道-桜町支線 ends at 009828 市役所, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "長崎電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        129.88064,
+        32.74943
+      ],
+      "stationCode" : "009828",
+      "stationName" : "市役所"
+    },
+    {
+      "a" : "上町線[21]",
+      "b" : "阪堺線[21]",
+      "evidence" : "row jp-阪堺電気軌道-上町線 ends at 007567 住吉, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "阪堺電気軌道",
+      "rule" : "R4b",
+      "site" : [
+        135.49181,
+        34.61414
+      ],
+      "stationCode" : "007567",
+      "stationName" : "住吉"
+    },
+    {
+      "a" : "今津線[12]",
+      "b" : "神戸線[12]",
+      "evidence" : "row jp-阪急電鉄-今津線 ends at 006852 西宮北口, coded under another line in the package",
+      "likely" : "unknown",
+      "operatorName" : "阪急電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.35684,
+        34.74597
+      ],
+      "stationCode" : "006852",
+      "stationName" : "西宮北口"
+    },
+    {
+      "a" : "伊丹線[12]",
+      "b" : "神戸線[12]",
+      "evidence" : "row jp-阪急電鉄-伊丹線 ends at 006820 塚口, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "阪急電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.41689,
+        34.7529
+      ],
+      "stationCode" : "006820",
+      "stationName" : "塚口"
+    },
+    {
+      "a" : "甲陽線[12]",
+      "b" : "神戸線[12]",
+      "evidence" : "row jp-阪急電鉄-甲陽線 ends at 006862 夙川, coded under another line in the package",
+      "likely" : "junction",
+      "operatorName" : "阪急電鉄",
+      "rule" : "R4b",
+      "site" : [
+        135.3281,
+        34.74226
+      ],
+      "stationCode" : "006862",
+      "stationName" : "夙川"
+    }
+  ],
   "registryStationCodes" : [
     "agano-ikebukuro-seibu-chichibu",
     "aomori-tohoku-tsugaru",

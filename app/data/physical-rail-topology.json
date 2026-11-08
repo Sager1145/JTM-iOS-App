@@ -1,7 +1,7 @@
 {
   "format": "jtm-physical-rail-topology-v1",
   "policy": "Coincidence, station transfer and through-service display never authorize track connectivity.",
-  "registrySHA256": "9284d65a8321c2b54c662db4db5a26dc9df1cde8cf74b482168ded6f90b04c9c",
+  "registrySHA256": "2d8067494e9cf547c86adca0deb9818ae6b8ef0f6e13581567942c8a7e2250e4",
   "regions": {
     "jp": {
       "sourceSHA256": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
@@ -280,7 +280,8 @@
         "motomachi-kobe-gap-007160",
         "amagasaki-gap-006981",
         "osaki-gap-004135-osaki-branch-yamanote",
-        "nishi-oi-gap-004235-osaki-branch-tokaido"
+        "nishi-oi-gap-004235-osaki-branch-tokaido",
+        "hiroshima-sanyo-geibi"
       ],
       "candidates": [
         {

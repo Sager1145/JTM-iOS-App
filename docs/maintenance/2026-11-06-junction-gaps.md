@@ -677,3 +677,500 @@ identities share a vertex within 600 m. Not every one is a missing through-servi
   - site: (130.55399, 31.57966)
   - evidence: row jp-鹿児島市-谷山線 ends at 010054 武之橋, coded under another line
   - suggested junction: zeroLength at identical shared vertex (130.55399, 31.57966), 22 m from the station
+
+## 3. Package-coded branch-end sites (R4b, 122)
+
+As R4, but the other line is a package row of the operator that uses the station's code,
+where stations.json does not code it under that line (広島 芸備線/山陽線 was one: 008029 is
+芸備線's code and the package's 山陽線 row runs through it). Seeded 2026-11-07 and triaged in the
+baseline's `likely` field (junction 112, notJunction 3,
+unknown 7). Each needs review before a row is added.
+
+- **えちごトキめき鉄道**: 妙高はねうまライン[12] / 日本海ひすいライン[12] at 001600 直江津
+  - site: (138.24087, 37.16945)
+  - evidence: row jp-えちごトキめき鉄道-妙高はねうまライン ends at 001600 直江津, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (138.24087, 37.16945), 150 m from the station
+- **とさでん交通**: 桟橋線[21] / 駅前線[21] at 009117 はりまや橋
+  - site: (133.54276, 33.55888)
+  - evidence: row jp-とさでん交通-桟橋線 ends at 009117 はりまや橋, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.54276, 33.55888), 24 m from the station
+- **一畑電車**: 北松江線[12] / 大社線[12] at 004848 川跡
+  - site: (132.77669, 35.39541)
+  - evidence: row jp-一畑電車-大社線 ends at 004848 川跡, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.77669, 35.39541), 39 m from the station
+- **九州旅客鉄道**: 吉都線[11] / 日豊線[11] at 010009 都城
+  - site: (131.07310, 31.73664)
+  - evidence: row jp-九州旅客鉄道-吉都線 ends at 010009 都城, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.07310, 31.73664), 86 m from the station
+- **九州旅客鉄道**: 吉都線[11] / 肥薩線[11] at 009944 吉松
+  - site: (130.73799, 32.01245)
+  - evidence: row jp-九州旅客鉄道-吉都線 ends at 009944 吉松, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.73799, 32.01245), 66 m from the station
+- **九州旅客鉄道**: 唐津線[11] / 筑肥線[11] at 009316 山本
+  - site: (129.98086, 33.39401)
+  - evidence: row jp-九州旅客鉄道-筑肥線-2 ends at 009316 山本, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (129.98086, 33.39401), 91 m from the station
+- **九州旅客鉄道**: 後藤寺線[11] / 日田彦山線[11] at 008969 田川後藤寺
+  - site: (130.79992, 33.63095)
+  - evidence: row jp-九州旅客鉄道-後藤寺線 ends at 008969 田川後藤寺, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.79992, 33.63095), 71 m from the station
+- **九州旅客鉄道**: 後藤寺線[11] / 筑豊線[11] at 008955 新飯塚
+  - site: (130.69445, 33.64475)
+  - evidence: row jp-九州旅客鉄道-後藤寺線 ends at 008955 新飯塚, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.69445, 33.64475), 54 m from the station
+- **九州旅客鉄道**: 指宿枕崎線[11] / 鹿児島線[11] at 010047 鹿児島中央
+  - site: (130.54181, 31.58288)
+  - evidence: row jp-九州旅客鉄道-指宿枕崎線 ends at 010047 鹿児島中央, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.54181, 31.58288), 125 m from the station
+- **九州旅客鉄道**: 日豊線[11] / 豊肥線[11] at 009479 大分
+  - site: (131.60608, 33.23289)
+  - evidence: row jp-九州旅客鉄道-豊肥線 ends at 009479 大分, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.60608, 33.23289), 66 m from the station
+- **京成電鉄**: 千葉線[12] / 本線[12] at 003747 京成津田沼
+  - site: (140.02411, 35.68379)
+  - evidence: row jp-京成電鉄-千葉線 ends at 003747 京成津田沼, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.02411, 35.68379), 68 m from the station
+- **京成電鉄**: 成田空港線[12] / 本線[12] at 003203 成田空港
+  - site: (140.38710, 35.76693)
+  - evidence: row jp-京成電鉄-成田空港線 ends at 003203 成田空港, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.38710, 35.76693), 151 m from the station
+- **京成電鉄**: 本線[12] / 松戸線[12] at 003747 京成津田沼
+  - site: (140.02411, 35.68379)
+  - evidence: row jp-京成電鉄-松戸線 ends at 003747 京成津田沼, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.02411, 35.68379), 68 m from the station
+- **京成電鉄**: 本線[12] / 金町線[12] at 003248 京成高砂
+  - site: (139.86746, 35.75091)
+  - evidence: row jp-京成電鉄-金町線 ends at 003248 京成高砂, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.86746, 35.75091), 79 m from the station
+- **京浜急行電鉄**: 大師線[12] / 本線[12] at 004424 京急川崎
+  - site: (139.70132, 35.53338)
+  - evidence: row jp-京浜急行電鉄-大師線 ends at 004424 京急川崎, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.70132, 35.53338), 53 m from the station
+- **京福電気鉄道**: 北野線[21] / 嵐山本線[21] at 005933 帷子ノ辻
+  - site: (135.70058, 35.01517)
+  - evidence: row jp-京福電気鉄道-北野線 ends at 005933 帷子ノ辻, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.70058, 35.01517), 24 m from the station
+- **京阪電気鉄道**: 京津線[21] / 石山坂本線[21] at 005954 びわ湖浜大津
+  - site: (135.86366, 35.01145)
+  - evidence: row jp-京阪電気鉄道-京津線 ends at 005954 びわ湖浜大津, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.86366, 35.01145), 36 m from the station
+- **伊予鉄道**: 城北線[12] / 大手町線[21] at 008739 古町
+  - site: (132.75518, 33.84728)
+  - evidence: row jp-伊予鉄道-城北線 ends at 008739 古町, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.75518, 33.84728), 38 m from the station
+- **伊予鉄道**: 城南線[21] / 花園線[21] at 008768 南堀端
+  - site: (132.76091, 33.83945)
+  - evidence: row jp-伊予鉄道-花園線 ends at 008768 南堀端, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.76091, 33.83945), 32 m from the station
+- **伊予鉄道**: 郡中線[12] / 高浜線[12] at 008773 松山市
+  - site: (132.76143, 33.83570)
+  - evidence: row jp-伊予鉄道-郡中線 ends at 008773 松山市, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.76143, 33.83570), 40 m from the station
+- **函館市**: 宝来・谷地頭線[21] / 本線[21] at 000467 十字街
+  - site: (140.71897, 41.76415)
+  - evidence: row jp-函館市-宝来・谷地頭線 ends at 000467 十字街, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.71897, 41.76415), 25 m from the station
+- **北海道旅客鉄道**: 函館線[11] / 室蘭線[11] at 000153 岩見沢
+  - site: (141.76094, 43.20499)
+  - evidence: row jp-北海道旅客鉄道-室蘭線 ends at 000153 岩見沢, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (141.76094, 43.20499), 169 m from the station
+- **北海道旅客鉄道**: 根室線[11] / 釧網線[11] at 000309 東釧路
+  - site: (144.41044, 42.99519)
+  - evidence: row jp-北海道旅客鉄道-釧網線 ends at 000309 東釧路, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (144.41044, 42.99519), 77 m from the station
+- **南海電気鉄道**: 加太線[12] / 南海本線[12] at 008328 紀ノ川
+  - site: (135.16543, 34.25512)
+  - evidence: row jp-南海電気鉄道-加太線 ends at 008328 紀ノ川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.16543, 34.25512), 48 m from the station
+- **南海電気鉄道**: 南海本線[12] / 多奈川線[12] at 008219 みさき公園
+  - site: (135.16007, 34.32338)
+  - evidence: row jp-南海電気鉄道-多奈川線 ends at 008219 みさき公園, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.16007, 34.32338), 110 m from the station
+- **南海電気鉄道**: 南海本線[12] / 高師浜線[12] at 007764 羽衣
+  - site: (135.44206, 34.53510)
+  - evidence: row jp-南海電気鉄道-高師浜線 ends at 007764 羽衣, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.44206, 34.53510), 93 m from the station
+- **叡山電鉄**: 叡山本線[12] / 鞍馬線[12] at 005810 宝ヶ池
+  - site: (135.79225, 35.05655)
+  - evidence: row jp-叡山電鉄-鞍馬線 ends at 005810 宝ヶ池, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.79225, 35.05655), 171 m from the station
+- **名古屋市**: 2号線名城線[12] / 2号線名港線[12] at 005551 金山
+  - site: (136.90218, 35.14419)
+  - evidence: row jp-名古屋市-2号線名城線 ends at 005551 金山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.90218, 35.14419), 41 m from the station
+- **名古屋市**: 2号線名城線[12] / 4号線名城線[12] at 005387 大曽根
+  - site: (136.93582, 35.19291)
+  - evidence: row jp-名古屋市-2号線名城線 ends at 005387 大曽根, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.93582, 35.19291), 37 m from the station
+- **名古屋市**: 2号線名城線[12] / 4号線名城線[12] at 005551 金山
+  - site: (136.90218, 35.14419)
+  - evidence: row jp-名古屋市-2号線名城線 ends at 005551 金山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.90218, 35.14419), 41 m from the station
+- **名古屋市**: 2号線名港線[12] / 4号線名城線[12] at 005551 金山
+  - site: (136.90218, 35.14419)
+  - evidence: row jp-名古屋市-2号線名港線 ends at 005551 金山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.90218, 35.14419), 41 m from the station
+- **名古屋鉄道**: 名古屋本線[12] / 津島線[12] at 005352 須ヶ口
+  - site: (136.84497, 35.19937)
+  - evidence: row jp-名古屋鉄道-津島線 ends at 005352 須ヶ口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.84497, 35.19937), 86 m from the station
+- **名古屋鉄道**: 名古屋本線[12] / 竹鼻線[12] at 004902 笠松
+  - site: (136.76480, 35.37498)
+  - evidence: row jp-名古屋鉄道-竹鼻線 ends at 004902 笠松, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.76480, 35.37498), 37 m from the station
+- **名古屋鉄道**: 名古屋本線[12] / 西尾線[12] at 006072 新安城
+  - site: (137.08480, 34.98728)
+  - evidence: row jp-名古屋鉄道-西尾線 ends at 006072 新安城, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (137.08480, 34.98728), 78 m from the station
+- **名古屋鉄道**: 小牧線[12] / 広見線[12] at 004888 犬山
+  - site: (136.94573, 35.38052)
+  - evidence: row jp-名古屋鉄道-小牧線 ends at 004888 犬山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.94573, 35.38052), 71 m from the station
+- **名古屋鉄道**: 尾西線[12] / 津島線[12] at 005420 津島
+  - site: (136.73101, 35.17845)
+  - evidence: row jp-名古屋鉄道-津島線 ends at 005420 津島, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.73101, 35.17845), 47 m from the station
+- **名古屋鉄道**: 常滑線[12] / 河和線[12] at 005911 太田川
+  - site: (136.89276, 35.02063)
+  - evidence: row jp-名古屋鉄道-河和線 ends at 005911 太田川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.89276, 35.02063), 40 m from the station
+- **大阪モノレール**: 国際文化公園都市モノレール線(彩都線)[23] / 大阪モノレール線[23] at 006601 万博記念公園
+  - site: (135.52962, 34.80679)
+  - evidence: row jp-大阪モノレール-国際文化公園都市モノレール線(彩都線) ends at 006601 万博記念公園, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.52962, 34.80679), 49 m from the station
+- **岡山電気軌道**: 東山本線[21] / 清輝橋線[21] at 007333 柳川
+  - site: (133.92506, 34.66554)
+  - evidence: row jp-岡山電気軌道-清輝橋線 ends at 007333 柳川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.92506, 34.66554), 25 m from the station
+- **平成筑豊鉄道**: 伊田線[12] / 田川線[12] at 008959 田川伊田
+  - site: (130.81916, 33.64232)
+  - evidence: row jp-平成筑豊鉄道-伊田線 ends at 008959 田川伊田, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.81916, 33.64232), 130 m from the station
+- **広島電鉄**: 宇品線[21] / 本線[21] at 008043 紙屋町西
+  - site: (132.45664, 34.39539)
+  - evidence: row jp-広島電鉄-宇品線 ends at 008043 紙屋町西, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.45664, 34.39539), 27 m from the station
+- **広島電鉄**: 宇品線[21] / 皆実線[21] at 008116 皆実町六丁目
+  - site: (132.46477, 34.37445)
+  - evidence: row jp-広島電鉄-皆実線 ends at 008116 皆実町六丁目, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.46477, 34.37445), 22 m from the station
+- **広島電鉄**: 本線[21] / 江波線[21] at 008052 土橋
+  - site: (132.44636, 34.39476)
+  - evidence: row jp-広島電鉄-江波線 ends at 008052 土橋, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.44636, 34.39476), 28 m from the station
+- **広島電鉄**: 本線[21] / 白島線[21] at 008047 八丁堀
+  - site: (132.46337, 34.39375)
+  - evidence: row jp-広島電鉄-白島線 ends at 008047 八丁堀, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.46337, 34.39375), 178 m from the station
+- **東急電鉄**: 大井町線[12] / 田園都市線[12] at 004177 二子玉川
+  - site: (139.62550, 35.61036)
+  - evidence: row jp-東急電鉄-大井町線 ends at 004177 二子玉川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.62550, 35.61036), 134 m from the station
+- **東急電鉄**: 東急多摩川線[12] / 東横線[12] at 004261 多摩川
+  - site: (139.66850, 35.59037)
+  - evidence: row jp-東急電鉄-東急多摩川線 ends at 004261 多摩川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.66850, 35.59037), 82 m from the station
+- **東日本旅客鉄道**: 上越新幹線[11] / 上越線[11] at 001717 越後湯沢
+  - site: (138.80824, 36.93694)
+  - evidence: row jp-東日本旅客鉄道-上越線-2 ends at 001717 越後湯沢, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (138.80824, 36.93694), 201 m from the station
+- **東日本旅客鉄道**: 上越新幹線[11] / 東北新幹線[11] at 002914 大宮
+  - site: (139.62235, 35.90806)
+  - evidence: row jp-東日本旅客鉄道-上越新幹線 ends at 002914 大宮, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.62235, 35.90806), 210 m from the station
+- **東日本旅客鉄道**: 上越線[11] / 信越線[11] at 001496 宮内
+  - site: (138.84078, 37.42300)
+  - evidence: row jp-東日本旅客鉄道-上越線 ends at 001496 宮内, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (138.84078, 37.42300), 112 m from the station
+- **東日本旅客鉄道**: 上越線[11] / 信越線[11] at 002389 高崎
+  - site: (139.01249, 36.32059)
+  - evidence: row jp-東日本旅客鉄道-上越線 ends at 002389 高崎, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.01249, 36.32059), 186 m from the station
+- **東日本旅客鉄道**: 両毛線[11] / 水戸線[11] at 002407 小山
+  - site: (139.80593, 36.31138)
+  - evidence: row jp-東日本旅客鉄道-両毛線 ends at 002407 小山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.80593, 36.31138), 103 m from the station
+- **東日本旅客鉄道**: 中央線[11] / 小海線[11] at 002981 小淵沢
+  - site: (138.31431, 35.86428)
+  - evidence: row jp-東日本旅客鉄道-小海線 ends at 002981 小淵沢, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (138.31431, 35.86428), 198 m from the station
+- **東日本旅客鉄道**: 久留里線[11] / 内房線[11] at 004882 木更津
+  - site: (139.92627, 35.38289)
+  - evidence: row jp-東日本旅客鉄道-久留里線 ends at 004882 木更津, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.92627, 35.38289), 140 m from the station
+- **東日本旅客鉄道**: 仙山線[11] / 東北線[11] at 001177 仙台
+  - site: (140.88234, 38.25813)
+  - evidence: row jp-東日本旅客鉄道-仙山線 ends at 001177 仙台, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.88234, 38.25813), 179 m from the station
+- **東日本旅客鉄道**: 信越線[11] / 白新線[11] at 001296 新潟
+  - site: (139.05944, 37.91178)
+  - evidence: row jp-東日本旅客鉄道-信越線 ends at 001296 新潟, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.05944, 37.91178), 141 m from the station
+- **東日本旅客鉄道**: 信越線[11] / 磐越西線[11] at 001349 新津
+  - site: (139.12120, 37.80168)
+  - evidence: row jp-東日本旅客鉄道-磐越西線 ends at 001349 新津, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.12120, 37.80168), 153 m from the station
+- **東日本旅客鉄道**: 信越線[11] / 越後線[11] at 001523 柏崎
+  - site: (138.55804, 37.36378)
+  - evidence: row jp-東日本旅客鉄道-越後線 ends at 001523 柏崎, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (138.55804, 37.36378), 145 m from the station
+- **東日本旅客鉄道**: 只見線[11] / 磐越西線[11] at 001456 会津若松
+  - site: (139.93035, 37.50984)
+  - evidence: row jp-東日本旅客鉄道-只見線 ends at 001456 会津若松, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.93035, 37.50984), 100 m from the station
+- **東日本旅客鉄道**: 外房線[11] / 東金線[11] at 004450 大網
+  - site: (140.30833, 35.52360)
+  - evidence: row jp-東日本旅客鉄道-東金線 ends at 004450 大網, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.30833, 35.52360), 288 m from the station
+- **東日本旅客鉄道**: 大船渡線[11] / 東北線[11] at 000975 一ノ関
+  - site: (141.13868, 38.92784)
+  - evidence: row jp-東日本旅客鉄道-大船渡線 ends at 000975 一ノ関, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (141.13868, 38.92784), 144 m from the station
+- **東日本旅客鉄道**: 奥羽線[11] / 東北線[11] at 001373 福島
+  - site: (140.45972, 37.75341)
+  - evidence: row jp-東日本旅客鉄道-奥羽線 ends at 001373 福島, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.45972, 37.75341), 100 m from the station
+- **東日本旅客鉄道**: 川越線[11] / 東北新幹線[11] at 002914 大宮
+  - site: (139.62235, 35.90806)
+  - evidence: row jp-東日本旅客鉄道-川越線 ends at 002914 大宮, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.62235, 35.90806), 210 m from the station
+- **東日本旅客鉄道**: 成田線[11] / 総武線[11] at 003317 松岸
+  - site: (140.79442, 35.73970)
+  - evidence: row jp-東日本旅客鉄道-成田線 ends at 003317 松岸, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.79442, 35.73970), 79 m from the station
+- **東日本旅客鉄道**: 東北新幹線[11] / 東北線[11] at 002914 大宮
+  - site: (139.62235, 35.90806)
+  - evidence: row jp-東日本旅客鉄道-東北線-5 ends at 002914 大宮, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.62235, 35.90806), 210 m from the station
+- **東日本旅客鉄道**: 東北線[11] / 水郡線[11] at 001528 安積永盛
+  - site: (140.36918, 37.35757)
+  - evidence: row jp-東日本旅客鉄道-水郡線 ends at 001528 安積永盛, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.36918, 37.35757), 113 m from the station
+- **東日本旅客鉄道**: 東北線[11] / 烏山線[11] at 002046 宝積寺
+  - site: (139.97935, 36.63247)
+  - evidence: row jp-東日本旅客鉄道-烏山線 ends at 002046 宝積寺, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.97935, 36.63247), 95 m from the station
+- **東日本旅客鉄道**: 東北線[11] / 石巻線[11] at 001060 小牛田
+  - site: (141.06434, 38.54147)
+  - evidence: row jp-東日本旅客鉄道-石巻線 ends at 001060 小牛田, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (141.06434, 38.54147), 90 m from the station
+- **東日本旅客鉄道**: 東北線[11] / 陸羽東線[11] at 001060 小牛田
+  - site: (141.06434, 38.54147)
+  - evidence: row jp-東日本旅客鉄道-陸羽東線 ends at 001060 小牛田, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (141.06434, 38.54147), 90 m from the station
+- **東日本旅客鉄道**: 東海道線[11] / 横浜線[11] at 004596 東神奈川
+  - site: (139.63393, 35.47869)
+  - evidence: row jp-東日本旅客鉄道-横浜線 ends at 004596 東神奈川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.63393, 35.47869), 114 m from the station
+- **東日本旅客鉄道**: 気仙沼線[11] / 石巻線[11] at 001067 前谷地
+  - site: (141.19337, 38.51243)
+  - evidence: row jp-東日本旅客鉄道-気仙沼線 ends at 001067 前谷地, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (141.19337, 38.51243), 96 m from the station
+- **東日本旅客鉄道**: 磐越東線[11] / 磐越西線[11] at 001507 郡山
+  - site: (140.38913, 37.39936)
+  - evidence: row jp-東日本旅客鉄道-磐越東線 ends at 001507 郡山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.38913, 37.39936), 136 m from the station
+- **東日本旅客鉄道**: 陸羽東線[11] / 陸羽西線[11] at 001004 新庄
+  - site: (140.30590, 38.76386)
+  - evidence: row jp-東日本旅客鉄道-陸羽東線 ends at 001004 新庄, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (140.30590, 38.76386), 150 m from the station
+- **東武鉄道**: 佐野線[12] / 小泉線[12] at 002493 館林
+  - site: (139.52802, 36.24573)
+  - evidence: row jp-東武鉄道-佐野線 ends at 002493 館林, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.52802, 36.24573), 97 m from the station
+- **東海旅客鉄道**: 中央線[11] / 太多線[11] at 005009 多治見
+  - site: (137.12136, 35.33541)
+  - evidence: row jp-東海旅客鉄道-太多線 ends at 005009 多治見, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (137.12136, 35.33541), 135 m from the station
+- **東海旅客鉄道**: 中央線[11] / 東海道線[11] at 005451 名古屋
+  - site: (136.88108, 35.17258)
+  - evidence: row jp-東海旅客鉄道-中央線 ends at 005451 名古屋, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.88108, 35.17258), 158 m from the station
+- **東海旅客鉄道**: 東海道線[11] / 関西線[11] at 005451 名古屋
+  - site: (136.88205, 35.16976)
+  - evidence: row jp-東海旅客鉄道-関西線 ends at 005451 名古屋, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.88205, 35.16976), 151 m from the station
+- **神戸電鉄**: 三田線[12] / 公園都市線[12] at 006372 横山
+  - site: (135.22042, 34.87740)
+  - evidence: row jp-神戸電鉄-公園都市線 ends at 006372 横山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.22042, 34.87740), 53 m from the station
+- **神戸電鉄**: 三田線[12] / 有馬線[12] at 006650 有馬口
+  - site: (135.22135, 34.79675)
+  - evidence: row jp-神戸電鉄-三田線 ends at 006650 有馬口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.22135, 34.79675), 45 m from the station
+- **神戸電鉄**: 有馬線[12] / 粟生線[12] at 006957 鈴蘭台
+  - site: (135.14583, 34.72410)
+  - evidence: row jp-神戸電鉄-粟生線 ends at 006957 鈴蘭台, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.14583, 34.72410), 52 m from the station
+- **西日本旅客鉄道**: 伯備線[11] / 芸備線[11] at 006033 備中神代
+  - site: (133.40026, 34.99481)
+  - evidence: row jp-西日本旅客鉄道-芸備線 ends at 006033 備中神代, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.40026, 34.99481), 37 m from the station
+- **西日本旅客鉄道**: 加古川線[11] / 福知山線[11] at 005735 谷川
+  - site: (135.04907, 35.08323)
+  - evidence: row jp-西日本旅客鉄道-加古川線 ends at 005735 谷川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.04907, 35.08323), 90 m from the station
+- **西日本旅客鉄道**: 北陸線[11] / 小浜線[11] at 010186 敦賀
+  - site: (136.07788, 35.64582)
+  - evidence: row jp-西日本旅客鉄道-北陸線 ends at 010186 敦賀, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.07788, 35.64582), 145 m from the station
+- **西日本旅客鉄道**: 博多南線[11] / 山陽新幹線[11] at 009033 博多
+  - site: (130.42127, 33.59139)
+  - evidence: row jp-西日本旅客鉄道-博多南線 ends at 009033 博多, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.42127, 33.59139), 201 m from the station
+- **西日本旅客鉄道**: 可部線[11] / 山陽線[11] at 007998 横川
+  - site: (132.45151, 34.41055)
+  - evidence: row jp-西日本旅客鉄道-可部線 ends at 007998 横川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.45151, 34.41055), 71 m from the station
+- **西日本旅客鉄道**: 呉線[11] / 山陽線[11] at 008019 三原
+  - site: (133.08457, 34.40058)
+  - evidence: row jp-西日本旅客鉄道-呉線 ends at 008019 三原, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.08457, 34.40058), 144 m from the station
+- **西日本旅客鉄道**: 和歌山線[11] / 桜井線[11] at 007802 高田
+  - site: (135.74407, 34.51700)
+  - evidence: row jp-西日本旅客鉄道-桜井線 ends at 007802 高田, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.74407, 34.51700), 90 m from the station
+- **西日本旅客鉄道**: 和歌山線[11] / 阪和線[11] at 008365 和歌山
+  - site: (135.19123, 34.23334)
+  - evidence: row jp-西日本旅客鉄道-和歌山線 ends at 008365 和歌山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.19123, 34.23334), 96 m from the station
+- **西日本旅客鉄道**: 因美線[11] / 姫新線[11] at 005806 東津山
+  - site: (134.03254, 35.05873)
+  - evidence: row jp-西日本旅客鉄道-因美線 ends at 005806 東津山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (134.03254, 35.05873), 66 m from the station
+- **西日本旅客鉄道**: 因美線[11] / 山陰線[11] at 004541 鳥取
+  - site: (134.22493, 35.49470)
+  - evidence: row jp-西日本旅客鉄道-因美線 ends at 004541 鳥取, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (134.22493, 35.49470), 117 m from the station
+- **西日本旅客鉄道**: 境線[11] / 山陰線[11] at 004758 米子
+  - site: (133.33743, 35.42427)
+  - evidence: row jp-西日本旅客鉄道-境線 ends at 004758 米子, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.33743, 35.42427), 124 m from the station
+- **西日本旅客鉄道**: 大阪環状線[11] / 桜島線[11] at 007187 西九条
+  - site: (135.46765, 34.68342)
+  - evidence: row jp-西日本旅客鉄道-桜島線 ends at 007187 西九条, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.46765, 34.68342), 95 m from the station
+- **西日本旅客鉄道**: 奈良線[11] / 東海道線[11] at 006079 京都
+  - site: (135.75412, 34.98546)
+  - evidence: row jp-西日本旅客鉄道-奈良線 ends at 006079 京都, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.75412, 34.98546), 475 m from the station
+- **西日本旅客鉄道**: 奈良線[11] / 片町線[11] at 006896 木津
+  - site: (135.82490, 34.73686)
+  - evidence: row jp-西日本旅客鉄道-奈良線 ends at 006896 木津, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.82490, 34.73686), 140 m from the station
+- **西日本旅客鉄道**: 姫新線[11] / 播但線[11] at 006509 姫路
+  - site: (134.69271, 34.82730)
+  - evidence: row jp-西日本旅客鉄道-姫新線 ends at 006509 姫路, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (134.69271, 34.82730), 200 m from the station
+- **西日本旅客鉄道**: 姫新線[11] / 津山線[11] at 005819 津山
+  - site: (134.00445, 35.05464)
+  - evidence: row jp-西日本旅客鉄道-津山線 ends at 005819 津山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (134.00445, 35.05464), 93 m from the station
+- **西日本旅客鉄道**: 宇部線[11] / 山陽線[11] at 008476 新山口
+  - site: (131.39506, 34.09325)
+  - evidence: row jp-西日本旅客鉄道-宇部線 ends at 008476 新山口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.39506, 34.09325), 138 m from the station
+- **西日本旅客鉄道**: 宇部線[11] / 山陽線[11] at 008582 宇部
+  - site: (131.22325, 34.00296)
+  - evidence: row jp-西日本旅客鉄道-宇部線 ends at 008582 宇部, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.22325, 34.00296), 118 m from the station
+- **西日本旅客鉄道**: 山口線[11] / 山陽線[11] at 008476 新山口
+  - site: (131.39506, 34.09325)
+  - evidence: row jp-西日本旅客鉄道-山口線 ends at 008476 新山口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.39506, 34.09325), 138 m from the station
+- **西日本旅客鉄道**: 山陰線[11] / 東海道線[11] at 006079 京都
+  - site: (135.75601, 34.98557)
+  - evidence: row jp-西日本旅客鉄道-山陰線 ends at 006079 京都, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.75601, 34.98557), 230 m from the station
+- **西日本旅客鉄道**: 山陽線[11] / 岩徳線[11] at 008419 岩国
+  - site: (132.22632, 34.17345)
+  - evidence: row jp-西日本旅客鉄道-岩徳線 ends at 008419 岩国, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (132.22632, 34.17345), 196 m from the station
+- **西日本旅客鉄道**: 山陽線[11] / 岩徳線[11] at 008557 櫛ヶ浜
+  - site: (131.82843, 34.03168)
+  - evidence: row jp-西日本旅客鉄道-岩徳線 ends at 008557 櫛ヶ浜, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (131.82843, 34.03168), 107 m from the station
+- **西日本旅客鉄道**: 山陽線[11] / 津山線[11] at 007310 岡山
+  - site: (133.91978, 34.66939)
+  - evidence: row jp-西日本旅客鉄道-津山線 ends at 007310 岡山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (133.91978, 34.66939), 312 m from the station
+- **西日本鉄道**: 天神大牟田線[12] / 太宰府線[12] at 009245 西鉄二日市
+  - site: (130.51754, 33.50269)
+  - evidence: row jp-西日本鉄道-太宰府線 ends at 009245 西鉄二日市, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (130.51754, 33.50269), 68 m from the station
+- **西武鉄道**: 国分寺線[12] / 新宿線[12] at 003220 東村山
+  - site: (139.46591, 35.76090)
+  - evidence: row jp-西武鉄道-国分寺線 ends at 003220 東村山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.46591, 35.76090), 103 m from the station
+- **西武鉄道**: 新宿線[12] / 西武園線[12] at 003220 東村山
+  - site: (139.46591, 35.76090)
+  - evidence: row jp-西武鉄道-西武園線 ends at 003220 東村山, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.46591, 35.76090), 103 m from the station
+- **西武鉄道**: 池袋線[12] / 豊島線[12] at 003328 練馬
+  - site: (139.65557, 35.73804)
+  - evidence: row jp-西武鉄道-豊島線 ends at 003328 練馬, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (139.65557, 35.73804), 103 m from the station
+- **近江鉄道**: 八日市線[12] / 本線[12] at 005652 八日市
+  - site: (136.19465, 35.11449)
+  - evidence: row jp-近江鉄道-八日市線 ends at 005652 八日市, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.19465, 35.11449), 36 m from the station
+- **近江鉄道**: 多賀線[12] / 本線[12] at 005263 高宮
+  - site: (136.26049, 35.23777)
+  - evidence: row jp-近江鉄道-多賀線 ends at 005263 高宮, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (136.26049, 35.23777), 163 m from the station
+- **近畿日本鉄道**: 信貴線[12] / 大阪線[12] at 007520 河内山本
+  - site: (135.61835, 34.62804)
+  - evidence: row jp-近畿日本鉄道-信貴線 ends at 007520 河内山本, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.61835, 34.62804), 76 m from the station
+- **近畿日本鉄道**: 南大阪線[12] / 御所線[12] at 007825 尺土
+  - site: (135.72203, 34.50855)
+  - evidence: row jp-近畿日本鉄道-御所線 ends at 007825 尺土, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.72203, 34.50855), 112 m from the station
+- **近畿日本鉄道**: 南大阪線[12] / 道明寺線[12] at 007688 道明寺
+  - site: (135.62035, 34.56909)
+  - evidence: row jp-近畿日本鉄道-道明寺線 ends at 007688 道明寺, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.62035, 34.56909), 80 m from the station
+- **近畿日本鉄道**: 南大阪線[12] / 長野線[12] at 007718 古市
+  - site: (135.60974, 34.55487)
+  - evidence: row jp-近畿日本鉄道-長野線 ends at 007718 古市, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.60974, 34.55487), 93 m from the station
+- **近畿日本鉄道**: 奈良線[12] / 橿原線[12] at 007117 大和西大寺
+  - site: (135.78213, 34.69415)
+  - evidence: row jp-近畿日本鉄道-橿原線 ends at 007117 大和西大寺, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.78213, 34.69415), 102 m from the station
+- **近畿日本鉄道**: 奈良線[12] / 生駒線[12] at 007122 生駒
+  - site: (135.69688, 34.69295)
+  - evidence: row jp-近畿日本鉄道-生駒線 ends at 007122 生駒, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.69688, 34.69295), 94 m from the station
+- **長崎電気軌道**: 大浦支線[21] / 本線[21] at 009839 新地中華街
+  - site: (129.87510, 32.74301)
+  - evidence: row jp-長崎電気軌道-大浦支線 ends at 009839 新地中華街, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (129.87510, 32.74301), 24 m from the station
+- **長崎電気軌道**: 本線[21] / 桜町支線[21] at 009819 長崎駅前
+  - site: (129.87168, 32.75282)
+  - evidence: row jp-長崎電気軌道-桜町支線 ends at 009819 長崎駅前, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (129.87168, 32.75282), 32 m from the station
+- **長崎電気軌道**: 本線[21] / 蛍茶屋支線[21] at 009835 西浜町
+  - site: (129.87624, 32.74385)
+  - evidence: row jp-長崎電気軌道-蛍茶屋支線 ends at 009835 西浜町, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (129.87624, 32.74385), 24 m from the station
+- **長崎電気軌道**: 桜町支線[21] / 蛍茶屋支線[21] at 009828 市役所
+  - site: (129.88064, 32.74943)
+  - evidence: row jp-長崎電気軌道-桜町支線 ends at 009828 市役所, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (129.88064, 32.74943), 18 m from the station
+- **阪堺電気軌道**: 上町線[21] / 阪堺線[21] at 007567 住吉
+  - site: (135.49181, 34.61414)
+  - evidence: row jp-阪堺電気軌道-上町線 ends at 007567 住吉, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.49181, 34.61414), 38 m from the station
+- **阪急電鉄**: 今津線[12] / 神戸線[12] at 006852 西宮北口
+  - site: (135.35684, 34.74597)
+  - evidence: row jp-阪急電鉄-今津線 ends at 006852 西宮北口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.35684, 34.74597), 65 m from the station
+- **阪急電鉄**: 伊丹線[12] / 神戸線[12] at 006820 塚口
+  - site: (135.41689, 34.75290)
+  - evidence: row jp-阪急電鉄-伊丹線 ends at 006820 塚口, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.41689, 34.75290), 60 m from the station
+- **阪急電鉄**: 甲陽線[12] / 神戸線[12] at 006862 夙川
+  - site: (135.32810, 34.74226)
+  - evidence: row jp-阪急電鉄-甲陽線 ends at 006862 夙川, coded under another line in the package
+  - suggested junction: zeroLength at identical shared vertex (135.32810, 34.74226), 45 m from the station
