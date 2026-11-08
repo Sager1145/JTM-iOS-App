@@ -124,7 +124,7 @@ struct TripDraftOptionalTimesTests {
         train.stops = []
         let model = newDraft()
         withPhoneTimeZone("America/New_York") {
-            let seed = EditorSeed(train: train, isNew: true, now: now)
+            let seed = EditorSeed(train: train, isNew: true, clock: Region.jp.clock, now: now)
             #expect(model.dayString(seed.departure) == "2026-11-08")
             #expect(model.clock(seed.departure, extraDays: 0) == "08:10")
             #expect(!seed.departureKnown && !seed.arrivalKnown)
@@ -213,42 +213,42 @@ struct TripDraftOptionalTimesTests {
 
     @Test func aRegionChangeReseedsAnUnsetPlaceholderToTheNewRegionsClock() {
         let model = newDraft()
-        let before = model.departure
+        let old = model.region
         model.region = .tw
-        model.regionChanged()
-        let expected = EditorSeed.wallClock(Date(), in: Region.tw.clock)
-        #expect(abs(model.departure.timeIntervalSince(expected)) < 120)
+        model.regionChanged(from: old)
+        // The placeholder is now itself, a real instant shown in the new zone.
+        #expect(abs(model.departure.timeIntervalSinceNow) < 120)
         #expect(model.arrival == model.departure)
         #expect(model.previousDeparture == model.departure)
-        let jp = EditorSeed.wallClock(Date(), in: Region.jp.clock)
-        #expect(abs(model.departure.timeIntervalSince(jp) + 3600) < 120 || before == model.departure)
 
+        // A time the reader set keeps its wall clock in the new region.
         let set = newDraft()
         set.apply(TripDraftModel.Patch(departure: at("10:30", set)), source: .reader)
-        let kept = set.departure
+        let before = set.region
         set.region = .tw
-        set.regionChanged()
-        #expect(set.departure == kept)
+        set.regionChanged(from: before)
+        #expect(set.dayString(set.departure) == "2026-11-06")
+        #expect(set.clock(set.departure, extraDays: 0) == "10:30")
+        #expect(set.previousDeparture == set.departure)
     }
 
     @Test func aRegionChangeReseedsEachSideIndependently() {
         let arrivalOnly = newDraft()
         arrivalOnly.apply(TripDraftModel.Patch(arrival: at("10:30", arrivalOnly)), source: .reader)
-        let kept = arrivalOnly.arrival
+        let old = arrivalOnly.region
         arrivalOnly.region = .tw
-        arrivalOnly.regionChanged()
-        let expected = EditorSeed.wallClock(Date(), in: Region.tw.clock)
-        #expect(arrivalOnly.arrival == kept)
-        #expect(abs(arrivalOnly.departure.timeIntervalSince(expected)) < 120)
+        arrivalOnly.regionChanged(from: old)
+        #expect(arrivalOnly.clock(arrivalOnly.arrival, extraDays: 0) == "10:30")
+        #expect(abs(arrivalOnly.departure.timeIntervalSinceNow) < 120)
         #expect(arrivalOnly.previousDeparture == arrivalOnly.departure)
 
         let departureOnly = newDraft()
         departureOnly.apply(TripDraftModel.Patch(departure: at("10:30", departureOnly)), source: .reader)
-        let keptDeparture = departureOnly.departure
+        let before = departureOnly.region
         departureOnly.region = .tw
-        departureOnly.regionChanged()
-        #expect(departureOnly.departure == keptDeparture)
-        #expect(departureOnly.previousDeparture == keptDeparture)
-        #expect(abs(departureOnly.arrival.timeIntervalSince(expected)) < 120)
+        departureOnly.regionChanged(from: before)
+        #expect(departureOnly.clock(departureOnly.departure, extraDays: 0) == "10:30")
+        #expect(departureOnly.previousDeparture == departureOnly.departure)
+        #expect(abs(departureOnly.arrival.timeIntervalSinceNow) < 120)
     }
 }

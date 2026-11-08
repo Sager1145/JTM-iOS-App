@@ -18,10 +18,12 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
             TypedDateTimeField(
                 title: text("departure", fallback: "Departure"),
                 value: model.timetableTimeSelection(isDeparture: true),
+                clock: model.region.clock,
                 identifier: "newTripDeparture")
             TypedDateTimeField(
                 title: text("arrival", fallback: "Arrival"),
                 value: model.timetableTimeSelection(isDeparture: false),
+                clock: model.region.clock,
                 identifier: "newTripArrival")
             if let source = timeSource {
                 HStack(spacing: RailSpacing.s8) {

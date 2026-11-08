@@ -123,8 +123,16 @@ extension StatisticsFormat {
     }
 
     static func dayLabel(_ date: String, localization: AppLocalization) -> String {
-        guard let point = RecordDate.date(from: date) else { return date }
-        return point.formatted(.dateTime.year().month(.abbreviated).day().locale(localization.locale))
+        // A civil day has no zone: build it and print it on one fixed calendar.
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .gmt
+        let parts = date.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3,
+              let point = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2]))
+        else { return date }
+        return point.formatted(
+            Date.FormatStyle(calendar: calendar, timeZone: .gmt)
+                .year().month(.abbreviated).day().locale(localization.locale))
     }
 
     private static func symbolCalendar(_ localization: AppLocalization) -> Calendar {

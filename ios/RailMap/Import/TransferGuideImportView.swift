@@ -318,6 +318,8 @@ struct TransferGuideImportView: View {
                     get: { draft.date },
                     set: { flow.setDate($0, existingIDs: existingIDs) }),
                 displayedComponents: .date)
+                .environment(\.timeZone, TransferGuideImport.clock.timeZone)
+                .environment(\.calendar, TransferGuideImport.clock.calendar)
         } header: {
             Text(localization.text("ios.guide.summary"))
         } footer: {

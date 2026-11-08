@@ -15,6 +15,8 @@ struct EditorDateField: View {
     var accessibilityID: String?
     @State private var pendingPickerDate: Date?
 
+    private var clock: RegionClock { region.clock }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             VStack(alignment: .leading, spacing: 3) {
@@ -26,8 +28,10 @@ struct EditorDateField: View {
             }
             .frame(minHeight: 44)
             DatePicker(title, selection: pickerSelection, displayedComponents: .date)
+                .environment(\.timeZone, clock.timeZone)
+                .environment(\.calendar, clock.calendar)
             Button(localization.text("ios.editor.useSelectedDate")) {
-                let formatted = RecordDate.text(from: pickerSelection.wrappedValue)
+                let formatted = RecordDate.text(from: pickerSelection.wrappedValue, in: clock)
                 if case .valid(_, _, _, let canonical) = EditorTime.parseDate(formatted) {
                     date = canonical
                 }
@@ -40,6 +44,7 @@ struct EditorDateField: View {
             }
         }
         .onChange(of: date) { _, _ in pendingPickerDate = nil }
+        .onChange(of: region) { _, _ in pendingPickerDate = nil }
     }
 
     @ViewBuilder private var dateTextField: some View {
@@ -58,7 +63,7 @@ struct EditorDateField: View {
             .accessibilityIdentifier(accessibilityID ?? "")
             // Short forms (1105, 11/5, 20261105) become the full date on Return.
             .onSubmit {
-                let year = Calendar.current.component(.year, from: pickerSelection.wrappedValue)
+                let year = clock.calendar.component(.year, from: pickerSelection.wrappedValue)
                 if case .valid(_, _, _, let canonical) = EditorTime.parseDateInput(date, defaultYear: year) {
                     date = canonical
                 }
@@ -81,17 +86,16 @@ struct EditorDateField: View {
         )
     }
 
-    /// Today is only the wheel's layout seed. `RecordDate` is the device
-    /// calendar the picker draws, so the civil day is not shifted into the
-    /// region zone.
+    /// Today is only the wheel's layout seed. The picker is pinned to the
+    /// region's calendar, the one `RecordDate` reads and writes.
     private var pickerSelection: Binding<Date> {
         Binding(
             get: {
                 if let pendingPickerDate { return pendingPickerDate }
                 if case .valid(let year, let month, let day, _) = EditorTime.parseDate(date) {
-                    return RecordDate.date(from: (year: year, month: month, day: day))
+                    return RecordDate.date(from: (year: year, month: month, day: day), in: clock)
                 }
-                return RecordDate.date(from: RecordDate.todayParts(in: region.clock))
+                return RecordDate.date(from: RecordDate.todayParts(in: clock), in: clock)
             },
             set: { pendingPickerDate = $0 }
         )
@@ -115,6 +119,8 @@ struct EditorTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
     @Binding var time: String?
+    /// The clock the journey's region keeps; pickers and dates are read on it.
+    let regionClock: RegionClock
     /// A journey has one service date. This picker presents the civil date at
     /// this stop, then stores it as the existing service-day clock offset.
     var serviceDate: String? = nil
@@ -138,6 +144,8 @@ struct EditorTimeField: View {
                     selection: pickerDateSelection,
                     in: dateBounds,
                     displayedComponents: .date)
+                    .environment(\.timeZone, regionClock.timeZone)
+                    .environment(\.calendar, regionClock.calendar)
                     .accessibilityIdentifier("\(accessibilityID ?? "rideEditorTime")Date")
             } else {
                 Picker(localization.text("ios.editor.serviceDay"), selection: pickerDay) {
@@ -156,8 +164,10 @@ struct EditorTimeField: View {
                 }
             }
             DatePicker(title, selection: pickerSelection, displayedComponents: .hourAndMinute)
+                .environment(\.timeZone, regionClock.timeZone)
+                .environment(\.calendar, regionClock.calendar)
             Button(localization.text("ios.editor.useSelectedTime")) {
-                let parts = Self.pickerCalendar.dateComponents(
+                let parts = regionClock.calendar.dateComponents(
                     [.hour, .minute], from: pickerSelection.wrappedValue)
                 let confirmed = EditorTime.confirmPicker(
                     dayOffset: pickerDayOffset.wrappedValue,
@@ -221,9 +231,9 @@ struct EditorTimeField: View {
         Binding(
             get: {
                 if let pendingPickerTime { return pendingPickerTime }
-                if case .valid(_, let clock) = EditorTime.parseTime(time),
-                   let date = Self.pickerCalendar.date(
-                    from: DateComponents(hour: clock.hour, minute: clock.minute)) {
+                if case .valid(_, let parsed) = EditorTime.parseTime(time),
+                   let date = regionClock.calendar.date(
+                    from: DateComponents(hour: parsed.hour, minute: parsed.minute)) {
                     return date
                 }
                 return Date()
@@ -270,9 +280,9 @@ struct EditorTimeField: View {
     private var dateBounds: ClosedRange<Date>? {
         guard let serviceDate,
               case .valid(_, _, _, let base) = EditorTime.parseDate(serviceDate),
-              let first = RecordDate.date(from: base),
+              let first = RecordDate.date(from: base, in: regionClock),
               let lastText = Dates.addDays(base, Self.maximumPickerDayOffset),
-              let last = RecordDate.date(from: lastText)
+              let last = RecordDate.date(from: lastText, in: regionClock)
         else { return nil }
         return first...last
     }
@@ -282,26 +292,19 @@ struct EditorTimeField: View {
             get: {
                 guard let serviceDate,
                       let date = Dates.addDays(serviceDate, pickerDayOffset.wrappedValue),
-                      let selection = RecordDate.date(from: date)
+                      let selection = RecordDate.date(from: date, in: regionClock)
                 else { return Date() }
                 return selection
             },
             set: { selected in
                 guard let serviceDate,
-                      let start = RecordDate.date(from: serviceDate)
+                      let start = RecordDate.date(from: serviceDate, in: regionClock)
                 else { return }
-                let offset = Self.pickerCalendar.dateComponents(
+                let offset = regionClock.calendar.dateComponents(
                     [.day], from: start, to: selected).day ?? 0
                 pendingPickerDayOffset = min(Self.maximumPickerDayOffset, max(0, offset))
             }
         )
-    }
-
-    /// The same Gregorian device calendar `RecordDate` uses for the date picker.
-    private static var pickerCalendar: Calendar {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-        return calendar
     }
 }
 
@@ -318,6 +321,7 @@ struct TypedDateTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
     @Binding var value: Date
+    let clock: RegionClock
     let identifier: String
     @State private var dateText = ""
     @State private var timeText = ""
@@ -326,7 +330,7 @@ struct TypedDateTimeField: View {
 
     private enum Part: Hashable { case date, time }
 
-    private var calendar: Calendar { Calendar.current }
+    private var calendar: Calendar { clock.calendar }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -365,6 +369,8 @@ struct TypedDateTimeField: View {
                 .accessibilityIdentifier(identifier)
                 .popover(isPresented: $showsCalendar) {
                     DatePicker(title, selection: $value, displayedComponents: [.date, .hourAndMinute])
+                        .environment(\.timeZone, clock.timeZone)
+                        .environment(\.calendar, clock.calendar)
                         .datePickerStyle(.graphical)
                         .padding()
                         .frame(minWidth: 320)
@@ -385,6 +391,7 @@ struct TypedDateTimeField: View {
         .frame(minHeight: 44)
         .onAppear(perform: refresh)
         .onChange(of: value) { _, _ in if focused == nil { refresh() } }
+        .onChange(of: clock) { _, _ in if focused == nil { refresh() } }
         .onChange(of: focused) { old, part in if old != nil, part == nil { normalize() } }
         // A complete form ("2027-09-30", "9:30") is applied as it is typed;
         // a half-typed one ("11/1" on the way to "11/15") never is.
@@ -438,7 +445,7 @@ struct TypedDateTimeField: View {
     }
 
     private func refresh() {
-        dateText = RecordDate.text(from: value)
+        dateText = RecordDate.text(from: value, in: clock)
         let parts = calendar.dateComponents([.hour, .minute], from: value)
         timeText = String(format: "%d:%02d", parts.hour ?? 0, parts.minute ?? 0)
     }
