@@ -32,15 +32,15 @@ struct StatisticsScopePicker: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: RailSpacing.s16) {
                     VStack(spacing: 0) {
                         classification(.date, text: localization.statisticsScopeText("byDate"))
                         Divider()
                         classification(.journeyGroup, text: localization.statisticsScopeText("byGroup"))
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, RailSpacing.s16)
                     .background(Color(.secondarySystemGroupedBackground),
-                                in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
                     if statistics.classification == .date {
                         dateCalendar
                     } else {
@@ -51,25 +51,26 @@ struct StatisticsScopePicker: View {
                                 groupChoice(group.id, name: group.name)
                             }
                         }
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, RailSpacing.s16)
                         .background(Color(.secondarySystemGroupedBackground),
-                                    in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                    in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier("statisticsJourneyGroupFilter")
                     }
                 }
-                .padding(16)
+                .padding(RailSpacing.screenInset)
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle(localization.text("ios.stats.scope"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.statisticsScopeText("done")) { dismiss() }
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "statisticsScopeClose"
+            ) { dismiss() }
         }
         .frame(idealWidth: 390, maxWidth: 440, idealHeight: 640)
+        // D4: a picker. Applies when the popover adapts to a sheet on iPhone.
+        .railSheet(.half)
         .task {
             displayedMonth = date(statistics.dateSelection.start ?? availableDates.last ?? "") ?? date(today) ?? Date()
         }
@@ -89,7 +90,7 @@ struct StatisticsScopePicker: View {
                 Spacer()
                 Image(systemName: statistics.classification == mode ? "checkmark.circle.fill" : "circle")
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, RailSpacing.s12)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -104,7 +105,7 @@ struct StatisticsScopePicker: View {
                 Spacer()
                 Image(systemName: statistics.selectedJourneyGroupID == id ? "checkmark.circle.fill" : "circle")
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, RailSpacing.s12)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -118,12 +119,12 @@ struct StatisticsScopePicker: View {
         let month = CalendarMonth(
             containing: displayedMonth, calendar: calendar,
             selection: statistics.dateSelection, occupied: Set(availableDates), today: today)
-        return VStack(spacing: 14) {
-            VStack(spacing: 8) {
+        return VStack(spacing: RailSpacing.s12) {
+            VStack(spacing: RailSpacing.s8) {
                 HStack {
                     Button { moveMonth(-1) } label: {
                         Image(systemName: "chevron.left").font(.body.weight(.semibold))
-                            .frame(width: 44, height: 44)
+                            .frame(width: RailSize.touch, height: RailSize.touch)
                             .contentShape(Rectangle())
                     }
                     .accessibilityLabel(localization.statisticsScopeText("previousMonth"))
@@ -133,7 +134,7 @@ struct StatisticsScopePicker: View {
                     Spacer(minLength: 0)
                     Button { moveMonth(1) } label: {
                         Image(systemName: "chevron.right").font(.body.weight(.semibold))
-                            .frame(width: 44, height: 44)
+                            .frame(width: RailSize.touch, height: RailSize.touch)
                             .contentShape(Rectangle())
                     }
                     .accessibilityLabel(localization.statisticsScopeText("nextMonth"))
@@ -142,7 +143,7 @@ struct StatisticsScopePicker: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(Color.accentColor)
 
-                VStack(spacing: 4) {
+                VStack(spacing: RailSpacing.s4) {
                     HStack(spacing: 0) {
                         ForEach(month.weekdaySymbols.indices, id: \.self) { index in
                             Text(month.weekdaySymbols[index])
@@ -163,9 +164,9 @@ struct StatisticsScopePicker: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("statisticsCalendar")
             }
-            .padding(12)
+            .padding(RailSpacing.s12)
             .background(Color(.secondarySystemGroupedBackground),
-                        in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
             .sensoryFeedback(.selection, trigger: statistics.dateSelection)
 
             HStack(alignment: .firstTextBaseline) {
@@ -176,16 +177,15 @@ struct StatisticsScopePicker: View {
                 Button(localization.countryText("date.all", fallback: "All dates")) {
                     statistics.clearDates()
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.small)
+                .buttonStyle(.railSecondary)
                 .accessibilityIdentifier("statisticsCalendarClear")
             }
-            .padding(.horizontal, 4)
+            .padding(.horizontal, RailSpacing.s4)
             Text(localization.statisticsScopeText("instructions"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, RailSpacing.s4)
         }
     }
 
@@ -231,7 +231,7 @@ struct StatisticsScopePicker: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
-                .frame(minHeight: 44)
+                .frame(minHeight: RailSize.touch)
         }
         .railMenuButtonStyle()
         .accessibilityIdentifier("statisticsCalendarMonth")

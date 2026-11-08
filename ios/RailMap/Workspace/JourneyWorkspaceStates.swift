@@ -15,14 +15,13 @@ struct WorkspaceStatusView: View {
     @Environment(AppLocalization.self) private var localization
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: RailSpacing.s8) {
             ProgressView()
             Text(localization.journeyText(presentation.title))
                 .font(.headline)
             if let status = presentation.status {
                 Text(localization.journeyText(status.title))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -56,7 +55,7 @@ struct WorkspaceUnavailableView: View {
         ContentUnavailableView {
             Label(localization.journeyText(presentation.title), systemImage: systemImage)
         } description: {
-            VStack(spacing: 8) {
+            VStack(spacing: RailSpacing.s8) {
                 if let subtitle = presentation.subtitle {
                     Text(localization.journeyText(subtitle))
                 }

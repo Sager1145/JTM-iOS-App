@@ -25,7 +25,7 @@ struct DockedCard<Content: View>: View {
     }
     private var shape: some Shape {
         RoundedRectangle(
-            cornerRadius: WorkspaceMenuMetrics.cardCornerRadius, style: .continuous)
+            cornerRadius: WorkspaceMenuMetrics.sheetCornerRadius, style: .continuous)
     }
 
     var body: some View {

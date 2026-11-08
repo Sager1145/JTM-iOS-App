@@ -260,7 +260,7 @@ private struct PassportCardSurface: ViewModifier {
             // its own 44 px margins inside the die-cut edge (see `TicketFace`),
             // and the 色帯 crosses the whole of it — both of which a card
             // inset would cut short.
-            .padding(tone == .feature ? 0 : 18)
+            .padding(tone == .feature ? 0 : RailSpacing.cardPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
             .modifier(CardSurface(glass: tone != .feature && !poster, shape: shape, fill: fill))
             .overlay { edge }
@@ -379,7 +379,7 @@ struct PassportCardHeader<Accessory: View>: View {
     @ViewBuilder var accessory: () -> Accessory
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
+        HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
             if let systemImage {
                 Image(systemName: systemImage)
                     .font(.caption.weight(.semibold))
@@ -428,8 +428,8 @@ struct PassportHeadline: View {
     var prominence: Prominence = .page
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(alignment: .firstTextBaseline, spacing: 5) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+            HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s4) {
                 Text(value)
                     .font(
                         .system(
@@ -483,8 +483,8 @@ private struct PassportBlockSurface: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
+            .padding(.horizontal, RailSpacing.s12)
+            .padding(.vertical, RailSpacing.s8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 ink.chip,
@@ -564,17 +564,17 @@ struct PassportMetricGrid: View {
     var body: some View {
         LazyVGrid(
             columns: [
-                GridItem(.adaptive(minimum: columnMinimum), spacing: 16, alignment: .topLeading)
+                GridItem(.adaptive(minimum: columnMinimum), spacing: RailSpacing.s16, alignment: .topLeading)
             ],
             alignment: .leading,
-            spacing: 18
+            spacing: RailSpacing.s16
         ) {
             ForEach(items) { item in cell(item) }
         }
     }
 
     private func cell(_ item: Item) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s2) {
             PassportEyebrow(item.label)
             Text(item.value)
                 .font(
@@ -601,7 +601,7 @@ struct PassportMetricGrid: View {
                                 .frame(width: geometry.size.width * Self.clamp(fraction))
                         }
                 }
-                .frame(height: 5)
+                .frame(height: RailSize.progressBar)
                 .padding(.top, 2)
                 // One clock for the cell: the figure above this bar already
                 // rolls on `replace`, and the proportion under it is the same
@@ -635,7 +635,7 @@ struct PassportHighlight: View {
     let detail: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             PassportEyebrow(eyebrow)
             Text(title)
                 .font(.system(.title3, design: .rounded).weight(.bold))

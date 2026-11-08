@@ -177,7 +177,7 @@ struct StationCardView: View {
                     } else if place == nil {
                         Text(localization.text("ios.station.coordinateLink",
                             fallback: "Place details are unavailable. This opens the station coordinates."))
-                            .font(.footnote).foregroundStyle(.secondary)
+                            .railText(.secondary)
                     }
                 }
 
@@ -325,8 +325,8 @@ struct StationCardView: View {
                 shareRequest = StationShareRequest(url: appleMapsURL, name: card.displayName)
             }
             .accessibilityIdentifier("stationCardShare")
-            SheetCloseButton(
-                accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
+            RailSheetCloseButton(
+                label: Text(localization.text("ios.close", fallback: "Close")),
                 action: { dismiss() })
                 .accessibilityIdentifier("stationCardClose")
         }
@@ -373,8 +373,7 @@ struct StationCardView: View {
                 .multilineTextAlignment(.trailing)
         } label: {
             Text(localization.text("ios.station.\(key)"))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
@@ -400,20 +399,18 @@ private struct StationCardLineRow: View {
     var row: StationDisplay.PopupRow
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             badge
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 Text(row.label)
                     .font(.callout)
                     .fixedSize(horizontal: false, vertical: true)
                 if let operatorName = row.operatorName, !operatorName.isEmpty {
                     Text(JourneyBranding.companyText(operatorName))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 } else if !row.company.isEmpty {
                     Text(JourneyBranding.companyText(row.company))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 }
             }
         }

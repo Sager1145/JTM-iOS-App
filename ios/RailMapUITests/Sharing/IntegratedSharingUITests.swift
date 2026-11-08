@@ -48,7 +48,7 @@ final class IntegratedSharingUITests: XCTestCase {
         }
         XCTAssertTrue(day.waitForExistence(timeout: 5), app.debugDescription)
         day.tap()
-        let done = app.buttons["Done"]
+        let done = app.buttons["statisticsScopeClose"]
         XCTAssertTrue(done.waitForExistence(timeout: 5))
         done.tap()
         let picker = element("statisticsScopePicker", in: app)

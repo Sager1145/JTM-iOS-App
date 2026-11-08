@@ -1,0 +1,59 @@
+# UI token baseline for ios/tools/check-ui-tokens.sh (spec §6.4-6.5, D9).
+# Format: relpath<TAB>rule<TAB>count -- existing literal debt per file per rule.
+# This file only ever SHRINKS: fix literals, then run
+#   bash ios/tools/check-ui-tokens.sh --update PATH...
+# which refuses to raise a count. New code uses RailSpacing/RailRadius/RailSize,
+# .railPrimary/.railSecondary, railText/railGlyph and railSheetClose.
+RailMap/App/RailMapApp.swift	fixed-font	1
+RailMap/JourneyEditor/AutoFilledStationLabel.swift	padding-literal	2
+RailMap/JourneyEditor/EditorDateTimeFields.swift	spacing-literal	6
+RailMap/JourneyEditor/EditorDateTimeFields.swift	touch-literal	4
+RailMap/JourneyEditor/EditorFields.swift	spacing-literal	1
+RailMap/JourneyEditor/EditorFields.swift	touch-literal	1
+RailMap/JourneyEditor/EditorFillDetailsSheet.swift	dismiss-text	1
+RailMap/JourneyEditor/EditorFillDetailsSheet.swift	touch-literal	1
+RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1
+RailMap/JourneyEditor/EditorLineSearchView.swift	spacing-literal	3
+RailMap/JourneyEditor/EditorLineSearchView.swift	touch-literal	2
+RailMap/JourneyEditor/EditorMapPanel.swift	padding-literal	8
+RailMap/JourneyEditor/EditorMapPanel.swift	radius-literal	2
+RailMap/JourneyEditor/EditorMapPanel.swift	spacing-literal	2
+RailMap/JourneyEditor/EditorMapPanel.swift	stock-bordered	2
+RailMap/JourneyEditor/EditorRouteSection.swift	spacing-literal	7
+RailMap/JourneyEditor/EditorRouteSection.swift	touch-literal	4
+RailMap/JourneyEditor/EditorStationsSection.swift	spacing-literal	1
+RailMap/JourneyEditor/EditorStationsSection.swift	touch-literal	4
+RailMap/JourneyEditor/EditorTripDetailsSection.swift	spacing-literal	1
+RailMap/JourneyEditor/EditorTripDetailsSection.swift	touch-literal	2
+RailMap/JourneyEditor/JourneyCompletionView.swift	spacing-literal	3
+RailMap/JourneyEditor/JourneyCompletionView.swift	touch-literal	2
+RailMap/JourneyEditor/JourneyEditorDetails.swift	spacing-literal	3
+RailMap/JourneyEditor/JourneyEditorDetails.swift	touch-literal	1
+RailMap/JourneyEditor/JourneyEditorManualEntry.swift	padding-literal	3
+RailMap/JourneyEditor/JourneyEditorManualEntry.swift	radius-literal	1
+RailMap/JourneyEditor/JourneyEditorManualEntry.swift	spacing-literal	4
+RailMap/JourneyEditor/JourneyEditorManualEntry.swift	touch-literal	3
+RailMap/JourneyEditor/JourneyEditorView.swift	padding-literal	2
+RailMap/JourneyEditor/JourneyEditorView.swift	spacing-literal	1
+RailMap/JourneyEditor/LocalLineServicesSection.swift	spacing-literal	2
+RailMap/JourneyEditor/StationPickerView.swift	padding-literal	8
+RailMap/JourneyEditor/StationPickerView.swift	spacing-literal	3
+RailMap/JourneyEditor/StationPickerView.swift	touch-literal	7
+RailMap/JourneyEditor/StopEditorView.swift	spacing-literal	3
+RailMap/JourneyEditor/StopEditorView.swift	touch-literal	1
+RailMap/JourneyEditor/TicketScanView.swift	spacing-literal	2
+RailMap/JourneyEditor/TicketScanView.swift	stock-bordered	1
+RailMap/Journeys/JourneyMenuView.swift	dismiss-text	1
+RailMap/Journeys/JourneyMenuView.swift	padding-literal	1
+RailMap/Journeys/RideCard.swift	padding-literal	1
+RailMap/Journeys/RideCard.swift	spacing-literal	4
+RailMap/Journeys/RideDetailView.swift	padding-literal	16
+RailMap/Journeys/RideDetailView.swift	spacing-literal	24
+RailMap/Journeys/RideDetailView.swift	stock-bordered	4
+RailMap/Journeys/RideDetailView.swift	touch-literal	5
+RailMap/Sharing/StatsWidgetGrid.swift	spacing-literal	1
+RailMap/Timetable/ServiceSectionSummary.swift	spacing-literal	1
+RailMap/Timetable/TimetableQuickMatchView.swift	spacing-literal	1
+RailMap/Workspace/RailWorkspaceView.swift	padding-literal	10
+RailMap/Workspace/RailWorkspaceView.swift	spacing-literal	4
+RailMap/Workspace/RailWorkspaceView.swift	stock-bordered	3

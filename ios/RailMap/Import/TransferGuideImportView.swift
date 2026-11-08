@@ -25,6 +25,7 @@ struct TransferGuideImportView: View {
     @Bindable var itineraries: ItineraryStore
     @Bindable var library: RideLibrary
     @State private var flow = TransferGuideImport()
+    @ScaledMetric(relativeTo: .caption) private var timeColumnWidth: CGFloat = 92
 
     @State private var picked: [PhotosPickerItem] = []
     @State private var choosesFiles = false
@@ -83,6 +84,7 @@ struct TransferGuideImportView: View {
                         context: draft.reading.rawRows.joined(separator: "\n")) { trains in
                         flow.applyCompletion(trains)
                     }
+                    .railSheet(.full)
                 }
             }
             .navigationTitle(localization.text("ios.guide.title"))
@@ -170,7 +172,7 @@ struct TransferGuideImportView: View {
                 }
             }
         } footer: {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 if !hasNetwork {
                     Text(localization.text("ios.guide.networkLoading"))
                         .foregroundStyle(.orange)
@@ -209,7 +211,7 @@ struct TransferGuideImportView: View {
                                 ]))
                     })
             } else {
-                HStack(spacing: 10) {
+                HStack(spacing: RailSpacing.s8) {
                     ProgressView()
                     Text(localization.text("ios.guide.readingPlain"))
                 }
@@ -221,11 +223,10 @@ struct TransferGuideImportView: View {
     private func failureSection(key: String, detail: String) -> some View {
         Section {
             Label {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Text(localization.text("ios.guide.readFailed")).font(.headline)
                     Text(localization.text(key, params: ["detail": .string(detail)]))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                 }
             } icon: {
                 Image(systemName: "exclamationmark.triangle").foregroundStyle(.orange)
@@ -280,9 +281,9 @@ struct TransferGuideImportView: View {
                 Text(
                     localization.text(
                         "ios.guide.duration", params: ["text": .string(duration(minutes))]))
-                .font(.footnote).foregroundStyle(.secondary)
+                .railText(.secondary)
             }
-            HStack(spacing: 12) {
+            HStack(spacing: RailSpacing.s12) {
                 if let yen = draft.route.header.fareYen {
                     Text(
                         localization.text(
@@ -297,8 +298,7 @@ struct TransferGuideImportView: View {
                     Text(localization.text("ios.guide.distance", params: ["km": .number(km)]))
                 }
             }
-            .font(.footnote)
-            .foregroundStyle(.secondary)
+            .railText(.secondary)
 
             Label {
                 Text(
@@ -307,12 +307,10 @@ struct TransferGuideImportView: View {
                         : localization.text(
                             "ios.guide.source", params: ["app": .string(draft.source.label)])
                 )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
             } icon: {
                 Image(systemName: "app.badge.checkmark")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             DatePicker(
                 localization.text("ios.guide.date"),
@@ -371,23 +369,22 @@ struct TransferGuideImportView: View {
         _ draft: TransferGuideImport.Draft, position: Int, leg: TransferGuide.Leg
     ) -> some View {
         let included = draft.included.indices.contains(position) ? draft.included[position] : true
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Toggle(
                 isOn: Binding(
                     get: { included },
                     set: { flow.setIncluded($0, at: position, existingIDs: existingIDs) })
             ) {
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: RailSpacing.s2) {
                     Text(record(draft, position: position)?.number ?? leg.service).font(.headline)
                     Text(legSummary(leg))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                         .monospacedDigit()
                     if let detail = legDetail(leg, train: record(draft, position: position)) {
-                        Text(detail).font(.caption).foregroundStyle(.secondary)
+                        Text(detail).railText(.tertiary)
                     }
                     if let lines = legLines(draft, position: position) {
-                        Text(lines).font(.caption).foregroundStyle(.secondary)
+                        Text(lines).railText(.tertiary)
                     }
                 }
             }
@@ -422,12 +419,12 @@ struct TransferGuideImportView: View {
     ) -> some View {
         let train = record(draft, position: position)
         let stop = train.flatMap { $0.stops.indices.contains(index) ? $0.stops[index] : nil }
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
             Text([stop?.arrival ?? call.arrival, stop?.departure ?? call.departure]
                 .compactMap { $0 }.joined(separator: " / "))
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
-                .frame(width: 92, alignment: .leading)
+                .frame(width: timeColumnWidth, alignment: .leading)
             VStack(alignment: .leading, spacing: 1) {
                 Text(call.name)
                     .font(.callout)
@@ -497,7 +494,7 @@ struct TransferGuideImportView: View {
                     .textSelection(.enabled)
                 if !draft.route.unclaimed.isEmpty {
                     Text(localization.text("ios.guide.unclaimed"))
-                        .font(.caption).foregroundStyle(.secondary)
+                        .railText(.tertiary)
                     Text(draft.route.unclaimed.joined(separator: " · "))
                         .font(.system(.caption2, design: .monospaced))
                         .foregroundStyle(.secondary)
@@ -512,7 +509,7 @@ struct TransferGuideImportView: View {
                                 "pages": .number(Double(draft.reading.pageCount)),
                                 "tiles": .number(Double(draft.reading.tileCount)),
                             ]))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 }
             }
         }
@@ -525,7 +522,7 @@ struct TransferGuideImportView: View {
         switch flow.phase {
         case .read:
             if let draft = flow.draft {
-                VStack(spacing: 6) {
+                VStack(spacing: RailSpacing.s4) {
                     Button {
                         Task {
                             let added = await flow.commit(
@@ -541,18 +538,16 @@ struct TransferGuideImportView: View {
                         )
                         .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .railMinimumTouchTarget()
+                    .buttonStyle(.railPrimary(fillsWidth: true))
                     .accessibilityIdentifier("guideImportCommit")
                     .disabled(draft.build.trains.isEmpty || itineraries.isImporting || flow.isCommitting)
                     if draft.build.trains.isEmpty {
                         Text(localization.text("ios.guide.nothing"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .padding(.horizontal, RailSpacing.screenInset)
+                .padding(.vertical, RailSpacing.s8)
                 .background(.bar)
             }
         case .imported(_, let saveError):
@@ -566,21 +561,19 @@ struct TransferGuideImportView: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railPrimary(fillsWidth: true))
                 .disabled(flow.isCommitting)
                 .accessibilityIdentifier("guideImportRetrySave")
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .padding(.horizontal, RailSpacing.screenInset)
+                .padding(.vertical, RailSpacing.s8)
                 .background(.bar)
             } else {
                 Button { dismiss() } label: {
                     Text(localization.text("ios.guide.done")).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .railMinimumTouchTarget()
-                .padding(.horizontal)
-                .padding(.vertical, 10)
+                .buttonStyle(.railPrimary(fillsWidth: true))
+                .padding(.horizontal, RailSpacing.screenInset)
+                .padding(.vertical, RailSpacing.s8)
                 .background(.bar)
             }
         default:

@@ -84,26 +84,20 @@ struct UtilityDestinationView: View {
                         library: library)
                 }
             }
-            .toolbar {
-                // §14.4: a modal must be closable without a swipe, or Switch
-                // Control and keyboard readers cannot leave it.
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Label(
-                            localization.text("utility.close", fallback: "Back"),
-                            systemImage: "xmark")
-                    }
-                    // The sweep's fallback for a sheet it cannot close by name
-                    // is a swipe, and a swipe over a Form scrolls the Form
-                    // instead — so a harness that misses this button does not
-                    // fail, it just carries the Data Library over every screen
-                    // it visits afterwards. See `utilityDataButton`.
-                    .accessibilityIdentifier("utilityCloseButton")
-                }
-            }
+            // §14.4: a modal must be closable without a swipe, or Switch
+            // Control and keyboard readers cannot leave it.
+            //
+            // The sweep's fallback for a sheet it cannot close by name
+            // is a swipe, and a swipe over a Form scrolls the Form
+            // instead — so a harness that misses this button does not
+            // fail, it just carries the Data Library over every screen
+            // it visits afterwards. See `utilityDataButton`.
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "utilityCloseButton"
+            ) { dismiss() }
         }
+        .railSheet(.full)
     }
 }
 

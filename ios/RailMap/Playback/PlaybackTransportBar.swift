@@ -47,7 +47,7 @@ struct PlaybackTransportBar: View {
                 .scrollBounceBehavior(.basedOnSize)
         }
         .buttonStyle(RailPressStyle(dims: false))
-        .padding(12)
+        .padding(RailSpacing.mapChromeInset)
         // The transport is a control floating over the map, so it takes the
         // same surface every other floating control does. It used to spell
         // `.regularMaterial` here, which made it the ONE piece of chrome that
@@ -74,11 +74,10 @@ struct PlaybackTransportBar: View {
         if playback.phase == .idle {
             exportResultLayout
         } else {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: RailSpacing.s8) {
                 if case .failed(let message) = videoExporter.state {
                     Text(message)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityIdentifier("playbackVideoError")
                 }
@@ -96,7 +95,7 @@ struct PlaybackTransportBar: View {
     }
 
     private var exportResultLayout: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: RailSpacing.s12) {
             Group {
                 switch videoExporter.state {
                 case .finishing:
@@ -119,7 +118,7 @@ struct PlaybackTransportBar: View {
             }
             Button { onStop() } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .disabled(videoExporter.state == .finishing)
@@ -129,21 +128,21 @@ struct PlaybackTransportBar: View {
     }
 
     private var compactLayout: some View {
-        VStack(alignment: .leading, spacing: 9) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             identity(titleLines: 2, stationLines: 1)
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 transportControls
                 Spacer(minLength: 0)
                 stopButton
             }
             progressBar
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 queueLabel
                 focusToggle
                 Spacer(minLength: 0)
                 videoControl
             }
-            HStack(spacing: 10) {
+            HStack(spacing: RailSpacing.s8) {
                 speedSlider
                 speedReadout.fixedSize(horizontal: true, vertical: false)
             }
@@ -152,8 +151,8 @@ struct PlaybackTransportBar: View {
 
     /// The compact transport used at ordinary text sizes.
     private var standardLayout: some View {
-        VStack(spacing: 9) {
-            HStack(spacing: 10) {
+        VStack(spacing: RailSpacing.s8) {
+            HStack(spacing: RailSpacing.s8) {
                 transportControls
                 identity(titleLines: 1, stationLines: 1)
                 Spacer(minLength: 4)
@@ -162,7 +161,7 @@ struct PlaybackTransportBar: View {
 
             progressBar
 
-            HStack(spacing: 10) {
+            HStack(spacing: RailSpacing.s8) {
                 queueLabel
                 focusToggle
                 Spacer()
@@ -176,10 +175,10 @@ struct PlaybackTransportBar: View {
     }
 
     private var transportControls: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             Button { playback.previous() } label: {
                 Image(systemName: "backward.end.fill")
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .disabled(!playback.canGoPrevious)
@@ -200,7 +199,7 @@ struct PlaybackTransportBar: View {
                     // two vocabularies for one kind of change.
                     .contentTransition(.symbolEffect(.replace))
                     .animation(RailMotion.replace, value: playback.isPlaying)
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .disabled(playback.phase == .ended)
@@ -219,7 +218,7 @@ struct PlaybackTransportBar: View {
 
             Button { playback.next() } label: {
                 Image(systemName: "forward.end.fill")
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .disabled(!playback.canGoNext)
@@ -230,7 +229,7 @@ struct PlaybackTransportBar: View {
     }
 
     private func identity(titleLines: Int, stationLines: Int) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             Text(playback.title)
                 .font(.caption.weight(.semibold))
                 .lineLimit(titleLines)
@@ -270,7 +269,7 @@ struct PlaybackTransportBar: View {
     private var stopButton: some View {
         Button { onStop() } label: {
             Image(systemName: "xmark.circle.fill")
-                .frame(width: 44, height: 44)
+                .frame(width: RailSize.touch, height: RailSize.touch)
                 .contentShape(.rect)
         }
         .accessibilityLabel(localization.countryText("play.stop", fallback: "Stop playback"))
@@ -310,7 +309,7 @@ struct PlaybackTransportBar: View {
         }
         .labelsHidden()
         .toggleStyle(.button)
-        .frame(minWidth: 44, minHeight: 44)
+        .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
         .accessibilityIdentifier("playbackFollow")
         .accessibilityLabel(
             localization.countryText("play.follow", fallback: "Follow the train"))
@@ -323,7 +322,7 @@ struct PlaybackTransportBar: View {
             step: Playback.Tuning.speedStep
         )
         .accessibilityLabel(localization.countryText("play.speed", fallback: "Playback speed"))
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
         .accessibilityIdentifier("playbackSpeedSlider")
     }
 
@@ -362,7 +361,7 @@ struct PlaybackTransportBar: View {
             Button { videoExporter.cancel(clearPlayback: false) } label: {
                 Image(systemName: "record.circle.fill")
                     .foregroundStyle(.red)
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .accessibilityLabel(
@@ -375,7 +374,7 @@ struct PlaybackTransportBar: View {
             // slider and its readout sideways beside it — twice, once on the
             // way in and once on the way out.
             ProgressView().controlSize(.small)
-                .frame(width: 44, height: 44)
+                .frame(width: RailSize.touch, height: RailSize.touch)
                 .accessibilityLabel(
                     localization.countryText("video.finishing", fallback: "Finishing video"))
         case .finished(let url, let partial):
@@ -384,7 +383,7 @@ struct PlaybackTransportBar: View {
                     // A cancelled run's film is offered like any other, and
                     // says so: `video.readyPartial` rather than `video.ready`.
                     .foregroundStyle(partial ? AnyShapeStyle(.secondary) : AnyShapeStyle(.tint))
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .accessibilityLabel(
@@ -394,7 +393,7 @@ struct PlaybackTransportBar: View {
         case .idle, .failed:
             Button { onRequestVideoOptions() } label: {
                 Image(systemName: "video.badge.plus")
-                    .frame(width: 44, height: 44)
+                    .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }
             .accessibilityLabel(

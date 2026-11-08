@@ -108,7 +108,7 @@ final class JourneyGroupUITests: XCTestCase {
         let choice = app.buttons[name]
         XCTAssertTrue(choice.waitForExistence(timeout: 5), "The saved group must survive relaunch.")
         choice.tap()
-        app.buttons["Done"].tap()
+        app.buttons["statisticsScopeClose"].tap()
         let scope = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "（" + name)).firstMatch
         XCTAssertTrue(scope.waitForExistence(timeout: 120), "The record ticket must name the selected group.")
         let screenshot = XCTAttachment(screenshot: app.screenshot())

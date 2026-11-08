@@ -53,7 +53,7 @@ extension View {
         if #available(iOS 26.0, *) {
             presentationCornerRadius(nil)
         } else {
-            presentationCornerRadius(WorkspaceMenuMetrics.cardCornerRadius)
+            presentationCornerRadius(WorkspaceMenuMetrics.sheetCornerRadius)
         }
     }
 

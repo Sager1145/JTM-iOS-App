@@ -131,3 +131,37 @@ private struct RailTypeBounds: ViewModifier {
             .fixedSize(horizontal: false, vertical: true)
     }
 }
+
+/// Text roles for secondary copy that is not bounded by ``RailType/Role``.
+enum RailTextRole {
+    case secondary
+    case tertiary
+    case cardTitle
+}
+
+/// SF Symbol sizes shared by controls and inline icons.
+enum RailGlyph {
+    case control
+    case mapControl
+    case inline
+}
+
+extension View {
+    @ViewBuilder
+    func railText(_ role: RailTextRole) -> some View {
+        switch role {
+        case .secondary: font(.subheadline).foregroundStyle(.secondary)
+        case .tertiary: font(.caption).foregroundStyle(.secondary)
+        case .cardTitle: font(.headline)
+        }
+    }
+
+    @ViewBuilder
+    func railGlyph(_ g: RailGlyph) -> some View {
+        switch g {
+        case .control: font(.system(size: RailSize.glyph, weight: .semibold))
+        case .mapControl: font(.system(size: RailSize.mapGlyph, weight: .semibold))
+        case .inline: font(.system(size: RailSize.glyph, weight: .regular))
+        }
+    }
+}

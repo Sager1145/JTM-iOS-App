@@ -106,7 +106,7 @@ struct PassportWorkspaceView: View {
             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
             .padding(.top, WorkspaceMenuMetrics.contentTopInset)
             // The shared menu viewport provides the tab bar's safe-area inset.
-            .padding(.bottom, 8)
+            .padding(.bottom, RailSpacing.s8)
         }
         .onChange(of: availableJourneyGroups.map(\.id), initial: true) { _, groupIDs in
             guard let selectedID = statistics.selectedJourneyGroupID,
@@ -177,15 +177,15 @@ private struct PassportShareCard: View {
     var onExport: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: RailSpacing.s12) {
             Label(
                 localization.text("grp.passportShare", fallback: "Replay and export"),
                 systemImage: "square.and.arrow.up")
-                .font(.headline)
+                .railText(.cardTitle)
 
             ViewThatFits(in: .horizontal) {
-                HStack(spacing: 10) { replayButton; exportButton }
-                VStack(spacing: 10) { replayButton; exportButton }
+                HStack(spacing: RailSpacing.s8) { replayButton; exportButton }
+                VStack(spacing: RailSpacing.s8) { replayButton; exportButton }
             }
 
             // §2.3 / §2.4: the film is a recording, not a broadcast. Saying so
@@ -209,7 +209,7 @@ private struct PassportShareCard: View {
                 systemImage: "play.fill")
                 .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(.railPrimary(fillsWidth: true))
         .railMinimumTouchTarget()
         .disabled(!canReplay)
     }
@@ -221,7 +221,7 @@ private struct PassportShareCard: View {
                 systemImage: "arrow.down.doc")
                 .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(.railSecondary(fillsWidth: true))
         .railMinimumTouchTarget()
     }
 }

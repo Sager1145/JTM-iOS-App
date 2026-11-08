@@ -157,13 +157,13 @@ nonisolated public enum RailStyle {
     ///
     /// Named rather than repeated, because a token spelled at each call site
     /// is a token until the next call site disagrees.
-    public static let cardCornerRadius: CGFloat = 20
+    public static let cardCornerRadius: CGFloat = RailRadius.card
 
     /// §6.4's `radius-control`: a small control, or a block nested INSIDE a
     /// card. The rule the pair exists to keep is that radius expresses depth —
     /// small control < content card < sheet — so a block inside a card must not
     /// match the card it sits in.
-    public static let controlCornerRadius: CGFloat = 12
+    public static let controlCornerRadius: CGFloat = RailRadius.control
 
     /// A floating chrome surface over the map: the control rail's capsules, the
     /// playback transport. Between the control and the card, because that is
@@ -172,7 +172,9 @@ nonisolated public enum RailStyle {
     /// The three surfaces this replaces were drawn at 22, 18 and 20 by three
     /// different call sites, which is §6.4's "同层组件只从 Token 取值,不临时
     /// 发明 13、17、19 等随机间距" in the corner-radius register.
-    public static let chromeCornerRadius: CGFloat = 20
+    ///
+    /// Kept as an alias of ``RailRadius/card`` (decision D7 folds chrome into card).
+    public static let chromeCornerRadius: CGFloat = RailRadius.card
 
     // MARK: - §14's minimum touch target
 
@@ -188,7 +190,7 @@ nonisolated public enum RailStyle {
     /// `MKMapView`, so `SheetIconButton`'s frame and every `contentShape` in
     /// the chrome are unavailable to it, and the alternative was the number
     /// written down a ninth time in a file that draws six-point circles.
-    public static let minimumTouchTarget: CGFloat = 44
+    public static let minimumTouchTarget: CGFloat = RailSize.touch
 
     // MARK: - the map-scale weight ramp
 

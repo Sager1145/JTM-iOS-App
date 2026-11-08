@@ -58,13 +58,12 @@ struct TripHideSheet: View {
             }
             .navigationTitle(localization.text("ios.hide.title", fallback: "Hide trips"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.text("ios.done", fallback: "Done")) { dismiss() }
-                        .accessibilityIdentifier("tripHideDone")
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "tripHideDone"
+            ) { dismiss() }
         }
+        .railSheet(.half)
         .accessibilityIdentifier("tripHideSheet")
     }
 

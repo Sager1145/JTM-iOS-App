@@ -259,7 +259,7 @@ struct ShareComposer: View {
 
     private var imageComposer: some View {
         ScrollView {
-            VStack(spacing: 18) {
+            VStack(spacing: RailSpacing.s16) {
                 if let content {
                     preview(content)
                 } else {
@@ -268,14 +268,14 @@ struct ShareComposer: View {
                 }
                 options
             }
-            .padding(16)
+            .padding(RailSpacing.s16)
         }
         .background(Color(.systemGroupedBackground))
         .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 6) {
+            VStack(spacing: RailSpacing.s4) {
                 if exportFailed {
                     Text(localization.text("ios.journeyShare.failed"))
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .railText(.secondary)
                 }
                 Button {
                     Task { await export() }
@@ -284,12 +284,11 @@ struct ShareComposer: View {
                           systemImage: "square.and.arrow.up")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+                .buttonStyle(.railPrimary(fillsWidth: true))
                 .disabled(content == nil || exporting)
                 .accessibilityIdentifier("shareImageButton")
             }
-            .padding(16)
+            .padding(RailSpacing.s16)
             .background(.bar)
         }
     }
@@ -307,7 +306,7 @@ struct ShareComposer: View {
                         .scaleEffect(proxy.size.width / size.width, anchor: .topLeading)
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: RailRadius.card, style: .continuous))
             .shadow(color: .black.opacity(0.14), radius: 14, y: 6)
             .animation(.smooth(duration: 0.25), value: aspect)
             .accessibilityElement(children: .ignore)
@@ -323,7 +322,7 @@ struct ShareComposer: View {
     }
 
     private var options: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: RailSpacing.s16) {
             optionRow(localization.text("ios.share.shape", fallback: "Shape")) {
                 Picker(localization.text("ios.share.shape", fallback: "Shape"), selection: $aspect) {
                     ForEach(ShareCardAspect.allCases) { aspect in
@@ -357,8 +356,8 @@ struct ShareComposer: View {
     }
 
     private func optionRow<Control: View>(_ title: String, @ViewBuilder control: () -> Control) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(.footnote.weight(.semibold)).foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+            Text(title).railText(.secondary).fontWeight(.semibold)
             control()
         }
     }
@@ -396,7 +395,7 @@ struct ShareComposer: View {
     }
 
     private var pickers: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: RailSpacing.s8) {
             if scopes.count > 1 {
                 Picker(localization.text("ios.share.scope"), selection: $scope) {
                     ForEach(scopes) { scope in
@@ -418,8 +417,8 @@ struct ShareComposer: View {
                 .accessibilityIdentifier("shareFormatPicker")
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.horizontal, RailSpacing.s16)
+        .padding(.vertical, RailSpacing.s8)
         .background(.bar)
     }
 }

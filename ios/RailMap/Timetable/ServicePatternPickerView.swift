@@ -142,7 +142,7 @@ struct ServicePatternPickerView: View {
                         Button(localization.text("ios.editor.timetableAnyDate")) { rideDate = nil }
                     }
                     Text(localization.text("ios.editor.timetableSearchHelp"))
-                        .font(.caption).foregroundStyle(.secondary)
+                        .railText(.tertiary)
                     if showsSearchLoading {
                         ProgressView(localization.text("ios.editor.timetableSearching"))
                     }
@@ -150,12 +150,10 @@ struct ServicePatternPickerView: View {
                         Toggle(pickerText("showHistory"), isOn: $showsAllHistory)
                             .accessibilityIdentifier("servicePatternHistoryFilter")
                         Text(pickerText("rideDate", ["date": .string(rideDate)]))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     } else {
                         Text(pickerText("dateHelp"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
 
                     if region != "jp" {
@@ -229,10 +227,10 @@ struct ServicePatternPickerView: View {
                     if !results.incompleteTrips.isEmpty {
                         Section(localization.text("ios.editor.timetablePublishedDraft")) {
                             ForEach(results.incompleteTrips) { trip in
-                                VStack(alignment: .leading, spacing: 8) {
+                                VStack(alignment: .leading, spacing: RailSpacing.s8) {
                                     tripRow(trip)
                                     Button(pickerText("reviewStops")) { inspectedTrip = trip }
-                                        .buttonStyle(.borderless)
+                                        .buttonStyle(.railTertiary)
                                         .disabled(!allowsResultSelection)
                                         .accessibilityIdentifier("timetableDetails-\(trip.id)")
                                 }
@@ -273,6 +271,7 @@ struct ServicePatternPickerView: View {
             .task(id: searchKey) { await updateSearchSnapshot() }
             .sheet(isPresented: $showsTrainResearch) {
                 TrainResearchView(region: region, query: query, rideDate: rideDate)
+                    .railSheet(.full)
             }
             .sheet(item: $inspectedTrip) { trip in
                 TimetableTripDetailView(trip: trip, onUseDraft: onSelectDraft == nil ? nil : { chosen in
@@ -281,6 +280,7 @@ struct ServicePatternPickerView: View {
                     inspectedTrip = nil
                     dismiss()
                 })
+                .railSheet(.half)
             }
             .confirmationDialog(
                 pickerText("outsideConfirm"),
@@ -306,12 +306,12 @@ struct ServicePatternPickerView: View {
             Button { select(pattern, reversed: false) } label: { row(for: pattern) }
             Button { select(pattern, reversed: true) } label: {
                 Image(systemName: "arrow.left.arrow.right")
-                    .frame(minWidth: 44, minHeight: 44)
+                    .railMinimumTouchTarget()
             }
             .buttonStyle(.borderless)
             .accessibilityLabel(pickerText("reverse", ["from": .string(pattern.destination), "to": .string(pattern.origin)]))
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
         .disabled(!allowsResultSelection)
     }
 
@@ -338,14 +338,14 @@ struct ServicePatternPickerView: View {
     }
 
     private func row(for pattern: TrainServicePatterns.Pattern) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s2) {
             HStack {
                 Text(pattern.label)
                 if pattern.confidence == "low" {
                     Text(pickerText("needsReview"))
                         .font(.caption2)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
+                        .padding(.horizontal, RailSpacing.s4)
+                        .padding(.vertical, RailSpacing.s2)
                         .background(Color.orange.opacity(0.2))
                         .clipShape(Capsule())
                 }
@@ -353,8 +353,8 @@ struct ServicePatternPickerView: View {
                    applicability != .applicable {
                     Text(applicability == .unknown ? pickerText("validityUnknown") : pickerText("notApplicable"))
                         .font(.caption2)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
+                        .padding(.horizontal, RailSpacing.s4)
+                        .padding(.vertical, RailSpacing.s2)
                         .background(Color.gray.opacity(0.2))
                         .clipShape(Capsule())
                 }
@@ -364,50 +364,46 @@ struct ServicePatternPickerView: View {
                 {
                     Text(pickerText("completeness", ["stops": .string(mark(pattern.completeness.stops)), "route": .string(mark(pattern.completeness.lines)), "dates": .string(mark(pattern.completeness.validity))]))
                         .font(.caption2)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
+                        .padding(.horizontal, RailSpacing.s4)
+                        .padding(.vertical, RailSpacing.s2)
                         .background(Color.gray.opacity(0.15))
                         .clipShape(Capsule())
                 }
             }
             Text(pickerText("stations", ["from": .string(pattern.origin), "to": .string(pattern.destination), "count": .number(Double(pattern.stops.count))]))
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .railText(.tertiary)
             if pattern.validFrom != nil || pattern.validUntil != nil {
                 Text(validityCaption(for: pattern))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
             }
             if !pattern.lines.isEmpty {
                 Text(pickerText("via", ["lines": .string(pattern.lines.joined(separator: "・"))]))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
             }
             if !pattern.optionalStops.isEmpty {
                 Text(pickerText("optionalStops", ["stations": .string(pattern.optionalStops.joined(separator: "、"))]))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
             }
         }
     }
 
     private func tripRow(_ trip: TrainTimetableDatabase.Trip) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s2) {
             Text([trip.service.canonicalName, trip.publicNumber ?? trip.trainNumber]
                 .filter { !$0.isEmpty }.joined(separator: " "))
             if let englishName = trip.service.englishName {
-                Text(englishName).font(.caption).foregroundStyle(.secondary)
+                Text(englishName).railText(.tertiary)
             }
             Text(pickerText(trip.factCompleteness["stops"] == .verified ? "stations" : "publishedStations", [
                 "from": .string(trip.origin?.station.name ?? "?"),
                 "to": .string(trip.destination?.station.name ?? "?"),
                 "count": .number(Double(trip.passengerStops.count)),
             ]))
-                .font(.caption).foregroundStyle(.secondary)
+                .railText(.tertiary)
             if let departure = trip.origin?.departureTime ?? trip.origin?.arrivalTime {
-                Text(pickerText("firstDeparture", ["time": .string(departure)])).font(.caption2).foregroundStyle(.secondary)
+                Text(pickerText("firstDeparture", ["time": .string(departure)])).railText(.tertiary)
             }
-            Text(trip.timetableEditionName).font(.caption2).foregroundStyle(.secondary)
+            Text(trip.timetableEditionName).railText(.tertiary)
             if !trip.canApplyToRouteEditor {
                 let missing = [
                     "operator", "validity_calendar", "stops", "times", "route_lines", "station_refs", "provenance",
@@ -418,7 +414,7 @@ struct ServicePatternPickerView: View {
                     .font(.caption2).foregroundStyle(.orange)
             } else if !trip.lineSegments.isEmpty {
                 Text(pickerText("via", ["lines": .string(trip.lineSegments.map(\.lineName).joined(separator: "・"))]))
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .railText(.tertiary)
             }
         }
         .accessibilityElement(children: .combine)
@@ -472,7 +468,7 @@ struct ServicePatternPickerView: View {
                     .font(.caption).foregroundStyle(.orange)
             } else if sources.isLegalZero {
                 Text(pickerText("noJRServices", ["date": .string(date)]))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .railText(.tertiary)
             } else {
                 if coverage == .partial || coverage == .unknown {
                     Text(pickerText("inventoryIncomplete", ["date": .string(date)]))
@@ -486,7 +482,7 @@ struct ServicePatternPickerView: View {
                 }
                 if coverage == .verified && incompleteCount == 0 && !sources.occurrences.isEmpty {
                     Text(pickerText("dailyNumbers", ["date": .string(date)]))
-                        .font(.caption).foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 }
             }
         }

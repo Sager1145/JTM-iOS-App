@@ -104,11 +104,10 @@ struct VideoExportOptionsView: View {
                     localization.countryText("video.start", fallback: "Start recording"),
                     systemImage: "record.circle"
                 ) { onStart() }
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity).railMinimumTouchTarget()
+                .buttonStyle(.railPrimary(fillsWidth: true))
                 .disabled(seconds <= 0)
                 .accessibilityIdentifier("videoExportStart")
-                .padding(16).background(.bar)
+                .padding(RailSpacing.screenInset).background(.bar)
             }
     }
 

@@ -77,7 +77,7 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
                 ) { $0.opacity(stageExpanded ? 0 : 1) }
                 .allowsHitTesting(!stageExpanded)
                 .accessibilityHidden(stageExpanded)
-                .padding(.horizontal, 12)
+                .padding(.horizontal, RailSpacing.mapChromeInset)
                 .offset(y: -lift)
                 .railAnimation(
                     RailMotion.spring, value: showsPlaybackBar,
@@ -89,7 +89,7 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
             // Presence is opacity and hit testing only; the fade itself is
             // continuous in the sheet height (see `ResidentMapChrome`).
             controls
-                .padding(.trailing, 12)
+                .padding(.trailing, RailSpacing.mapChromeInset)
                 .background {
                     GeometryReader { rail in
                         Color.clear.preference(
@@ -122,14 +122,14 @@ struct WorkspaceMapChrome<MapContent: View, PlaybackContent: View, Controls: Vie
                     }
                 }
                 .padding(.bottom, transportHeight)
-                .padding(12)
+                .padding(RailSpacing.mapChromeInset)
                 .opacity(railPresent ? 1 : 0)
                 .allowsHitTesting(railPresent)
                 .accessibilityHidden(!railPresent)
             playback
                 .frame(width: playbackWidth)
                 .frame(maxHeight: max(0, viewportHeight - 24), alignment: .bottom)
-                .padding(12)
+                .padding(RailSpacing.mapChromeInset)
                 .railAnimation(
                     RailMotion.spring, value: showsPlaybackBar,
                     reduceMotion: reduceMotion)

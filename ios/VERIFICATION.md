@@ -395,6 +395,8 @@ cheap set that does not widen the checks above: it excludes `RailHistoryPackageT
 `JunctionApproachTests` and the slow or already-red fixtures. Details and the
 past failure each guard answers: `docs/maintenance/2026-11-06-regression-guards.md`.
 
+**UI tokens.** `ios/tools/check-ui-tokens.sh` fails when a file gains literal paddings, spacings, radii, 44-pt frames, stock bordered buttons, fixed fonts or text dismiss buttons beyond `ios/tools/ui-token-baseline.txt`. The baseline only shrinks: after removing literals run `bash ios/tools/check-ui-tokens.sh --update PATH...` (refuses to grow a count).
+
 | Guard | Catches |
 |---|---|
 | `check-ui-test-identifiers.sh` | UI test ids that no longer exist in the app |
