@@ -471,10 +471,20 @@ final class NewTripUITests: XCTestCase {
         let save = app.buttons["newTripSave"]
         XCTAssertTrue(waitUntilSavable(app), "Save must enable once the route is planned. \(routeState(app))")
 
+        // Only the date is required: an arrival set against a departure nobody
+        // set is not a conflict, because the departure is not recorded.
         moveArrivalToPreviousDay(in: app)
         let error = app.staticTexts["Arrival is before departure."]
+        XCTAssertFalse(error.waitForExistence(timeout: 2), "An unset departure cannot conflict.")
+        XCTAssertTrue(save.isEnabled, "An arrival alone must not block Save.")
+
+        // Once the departure is really set, an earlier arrival blocks Save.
+        // Setting the departure carries the arrival along (never before it),
+        // so the arrival is moved back again afterwards.
+        NewTripTimetableTestSupport.setTime(hour: 10, minute: 0, field: "newTripDeparture", in: app)
+        moveArrivalToPreviousDay(in: app)
         XCTAssertTrue(reveal(error, in: app, timeout: 8))
-        XCTAssertFalse(save.isEnabled, "An arrival before departure must block Save.")
+        XCTAssertFalse(save.isEnabled, "An arrival before a set departure must block Save.")
     }
 
     func testSaveWithoutNumberUsesLineName() {

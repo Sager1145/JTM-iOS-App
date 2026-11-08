@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		00DFAEDC5BDF3EDA56BCA26B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927FCF7654F86A6CDEF4700A /* SettingsView.swift */; };
 		01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE68E0947AD261729EDC07C /* MileageStatisticsStore.swift */; };
+		6F3B05964C66C41E8D8CDDC5 /* RailSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */; };
+		60F0F1DB7290E29F394BCF7B /* RailSheetChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */; };
 		047416FC378551E250D9AEF2 /* ControlSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120479A5E14CB2416DCCD6C /* ControlSizing.swift */; };
 		04E42FE7F85CC954178C489C /* RailNetworkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61912458F249FE1872C23B /* RailNetworkStore.swift */; };
 		0B472D15EB446A3FFBB029BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1270C2F6F2C12D8A0CC57F /* Assets.xcassets */; };
@@ -502,6 +504,8 @@
 		D00A587DEB3B20815EF89798 /* LongJourneyDetailTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongJourneyDetailTestView.swift; sourceTree = "<group>"; };
 		D0BC5BEE01933F2C513461D7 /* RouteGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteGlyph.swift; sourceTree = "<group>"; };
 		D0DC2A7DF2EE5A8BD0581C87 /* PassportCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportCardStyle.swift; sourceTree = "<group>"; };
+		67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSpacing.swift; sourceTree = "<group>"; };
+		D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSheetChrome.swift; sourceTree = "<group>"; };
 		D120479A5E14CB2416DCCD6C /* ControlSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSizing.swift; sourceTree = "<group>"; };
 		D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapCoordinator.swift; sourceTree = "<group>"; };
 		D3F7C62370FA6EE21E749FBE /* AppControlHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlHost.swift; sourceTree = "<group>"; };
@@ -1046,6 +1050,8 @@
 			isa = PBXGroup;
 			children = (
 				A2402F4249CACA47DF190D52 /* AppTypographyPolicy.swift */,
+				67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */,
+				D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */,
 				D120479A5E14CB2416DCCD6C /* ControlSizing.swift */,
 				9658A973534B909966D2AC6F /* DockedCard.swift */,
 				544E7C91AE1CC1064A87B04B /* GlassStyle.swift */,
@@ -1246,6 +1252,8 @@
 				4F744450DC0714F182D9A2EE /* ChatGPTSubscriptionAuth.swift in Sources */,
 				889B090409BD1BB6AD355B57 /* ChatGPTSubscriptionService.swift in Sources */,
 				A11D9B2EC3D9853CED65D22C /* ClockStrings.swift in Sources */,
+				6F3B05964C66C41E8D8CDDC5 /* RailSpacing.swift in Sources */,
+				60F0F1DB7290E29F394BCF7B /* RailSheetChrome.swift in Sources */,
 				047416FC378551E250D9AEF2 /* ControlSizing.swift in Sources */,
 				E727939DA3A381D99681E83B /* Coordinate+MapKit.swift in Sources */,
 				3BFF4BD4559A34828182498E /* DataImportView.swift in Sources */,
