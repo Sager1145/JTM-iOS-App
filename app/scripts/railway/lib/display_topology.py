@@ -457,6 +457,7 @@ class LineSource:
     slots: dict                     # station code -> [chain, vertex] of the final station record
     stamps: dict                    # (draw id, part index) -> (validFrom ISO, validTo ISO)
     draw_ids: list[str]             # draw id of each final fragment
+    origins: list[tuple[int, int]]  # continuous: per final fragment (original chain index, first vertex in it)
 
 
 def _tuples(points: list) -> list[tuple]:
@@ -696,36 +697,20 @@ def _derive_continuous(source: LineSource, report: dict):
     is_loop = bool(line.get("isLoop"))
     fragments = source.fragments
     originals = [_rounded_tuples(chain["polyline"]) for chain in source.chains]
-    first_vertex: list[dict] = []
-    for polyline in originals:
-        index: dict[tuple, list[int]] = {}
-        for position, point in enumerate(polyline):
-            index.setdefault(point, []).append(position)
-        first_vertex.append(index)
-    used: list[list[tuple[int, int]]] = [[] for _ in originals]
-
     original_edges = _chain_spans(source, originals, report)
 
+    if len(source.origins) != len(fragments):
+        raise TopologyError(f"{source.key}: {len(source.origins)} fragment origins for {len(fragments)} fragments")
     placed = []               # per final fragment: (original index, offset, points, measures, anchors)
     for number, fragment in enumerate(fragments):
         points, _ = join_parts([_rounded_tuples(part) for part in fragment["parts"]])
-        found = None
-        for oi, polyline in enumerate(originals):
-            for k in first_vertex[oi].get(points[0], []):
-                if polyline[k:k + len(points)] != points:
-                    continue
-                if any(k < e and s < k + len(points) - 1 for s, e in used[oi]):
-                    continue
-                found = (oi, k)
-                break
-            if found:
-                break
-        if found is None:
+        oi, k = source.origins[number]
+        # The builder recorded where this fragment was cut from; the coordinates
+        # are only compared to prove that record.
+        if not 0 <= oi < len(originals) or originals[oi][k:k + len(points)] != points:
             raise TopologyError(
-                f"{source.key}: fragment {source.draw_ids[number]} is not a slice of any chain "
-                "the builder made for this line")
-        oi, k = found
-        used[oi].append((k, k + len(points) - 1))
+                f"{source.key}: fragment {source.draw_ids[number]} is not the slice of chain {oi} "
+                f"at vertex {k} that the builder recorded")
         anchors = {i: v - k for i, v in source.chains[oi]["anchorIndexByStation"].items()
                    if k <= v <= k + len(points) - 1}
         placed.append((oi, k, points, ruler(points), anchors))
@@ -894,20 +879,23 @@ def _edge(source: LineSource, interval: int, length_cm: int, cumulative: int,
         flags |= EDGE_REVERSE
     if interval in source.withheld:
         flags |= EDGE_WITHHELD
-    if not runs:
+    if not runs and not flags & EDGE_WITHHELD:
         report["edgesWithoutGeometry"].append(f"{source.key}#{interval}")
     stamped = [w for w in windows if w is not None]
     valid_from = valid_to = NO_DATE
     if stamped:
-        distinct = set(stamped)
-        if len(distinct) > 1 or len(stamped) != len(windows):
-            report["edgesWithMixedValidity"] += 1
-        froms = [optional_day(w[0]) for w in stamped]
-        tos = [optional_day(w[1]) for w in stamped]
-        valid_from = max(froms)
-        closing = [value for value in tos if value]
-        valid_to = min(closing) if closing else NO_DATE
+        # One edge can lie on track with different stamps. It is usable on a day
+        # when any of its track is, so the window is the hull of the runs' windows
+        # and an unstamped run (or a missing bound) leaves that side open.
+        froms = [NO_DATE if w is None else optional_day(w[0]) for w in windows]
+        tos = [NO_DATE if w is None else optional_day(w[1]) for w in windows]
+        valid_from = NO_DATE if NO_DATE in froms else min(froms)
+        valid_to = NO_DATE if NO_DATE in tos else max(tos)
         report["datedEdges"] += 1
+        if len(set(windows)) > 1:
+            report["edgesWithMixedValidity"] += 1
+            report["mixedValidityEdges"].append(
+                {"edge": f"{source.key}#{interval}", "validFrom": valid_from, "validTo": valid_to})
     return Edge(length_cm, cumulative, valid_from, valid_to, flags, runs)
 
 
@@ -1154,8 +1142,10 @@ def compile_through_links(document: dict, node_of) -> tuple[list[Link], list[dic
                             continue
                         node_a, node_b = node_of(first, code_a), node_of(second, code_b)
                         if node_a is None or node_b is None:
-                            skipped.append({"id": pattern["id"], "reason": "stationCodeNotOnLine",
-                                            "lines": [first, second], "codes": [code_a, code_b]})
+                            row = {"id": pattern["id"], "reason": "stationCodeNotOnLine",
+                                   "lines": [first, second], "codes": [code_a, code_b]}
+                            if row not in skipped:      # once per pair, not once per date segment
+                                skipped.append(row)
                             continue
                         low, high = sorted((node_a, node_b))
                         spans = windows.setdefault((low, high), [])
@@ -1226,10 +1216,105 @@ def _line_flags(source: LineSource) -> int:
     return flags
 
 
+# Edges whose drawn length is far from the surveyed one in the source data
+# itself (tram stations placed along the track differently from the stored
+# kilometres). A ledger that may only shrink.
+KNOWN_LENGTH_MISMATCHES = frozenset({
+    ("jp|jp-伊予鉄道-城北線", 4), ("jp|jp-伊予鉄道-城北線", 5), ("jp|jp-伊予鉄道-城北線", 6),
+    ("jp|jp-伊予鉄道-花園線", 0), ("jp|jp-万葉線-高岡軌道線", 5), ("jp|jp-万葉線-高岡軌道線", 12),
+})
+
+# Registry rows the builder cannot turn into a link: the row names a station
+# code one of its lines does not have, has one line only (nothing to join), or
+# has no station code or evidence. Reported, not guessed, until the reviewed
+# exception file turns each into a link, an intra-line row or an error. A
+# ledger that may only shrink; a row not listed here stops the build.
+KNOWN_UNPLACED_JUNCTION_ROWS = frozenset({
+    ('agano-ikebukuro-seibu-chichibu', 'stationCodeNotOnLine'),
+    ('akabane-tohoku-track', 'noTwoLinePair'),
+    ('aomori-tohoku-tsugaru', 'stationCodeNotOnLine'),
+    ('astram-kencho-class16-class24', 'noTwoLinePair'),
+    ('fukui-railway-fukubu-class12-class21-shokokaigisho-mae', 'noTwoLinePair'),
+    ('goryokaku-esashi-hakodate-kamiiso', 'noStationCodeOrEvidence'),
+    ('goryokaku-hakodate-esashi', 'stationCodeNotOnLine'),
+    ('higashi-kanagawa-tokaido-yokohama', 'stationCodeNotOnLine'),
+    ('kaifu-mugi-asato', 'stationCodeNotOnLine'),
+    ('kanazawa-ir-hokuriku', 'stationCodeNotOnLine'),
+    ('kanda-tohoku-track', 'noTwoLinePair'),
+    ('kikonai-esashi-kaikyo', 'noStationCodeOrEvidence'),
+    ('kikonai-kaikyo-isaribi', 'noTwoLinePair'),
+    ('kintetsu-keihanna-class21-class12-mid-tunnel', 'noStationCodeOrEvidence'),
+    ('kitaosaka-minoh-semba-class12-class21', 'noTwoLinePair'),
+    ('kobe-new-transit-port-island-class16-class24-minami-koen', 'noTwoLinePair'),
+    ('kobe-new-transit-port-island-class24-class16-port-terminal', 'noTwoLinePair'),
+    ('kobe-new-transit-rokko-island-class16-class24-minami-uozaki', 'noTwoLinePair'),
+    ('kobe-new-transit-rokko-island-class24-class16-island-kitaguchi', 'noTwoLinePair'),
+    ('matobacho-gap-008063', 'noTwoLinePair'),
+    ('matsuda-east-15', 'stationCodeNotOnLine'),
+    ('musashino-minami-fuchuhommachi-tsurumi', 'noStationCodeOrEvidence'),
+    ('nagoya-chuo-tokaido', 'stationCodeNotOnLine'),
+    ('naka-oguni-tsugaru-kaikyo', 'noTwoLinePair'),
+    ('naoetsu-shinetsu-hokuriku', 'stationCodeNotOnLine'),
+    ('niiya-yosan-uchiko', 'stationCodeNotOnLine'),
+    ('nippori-tohoku-main-approach', 'noTwoLinePair'),
+    ('nishi-biwajima-nagoya-inuyama', 'stationCodeNotOnLine'),
+    ('okutsugaru-imabetsu-kaikyo-osm', 'noTwoLinePair'),
+    ('osaka-metro-chuo-class12-class21-osakako', 'noTwoLinePair'),
+    ('osaka-metro-nankou-port-town-class16-class24-nakafuto', 'noTwoLinePair'),
+    ('osaka-metro-nankou-port-town-class16-class24-trade-center-mae', 'noTwoLinePair'),
+    ('osaka-metro-nankou-port-town-class24-class16-ferry-terminal', 'noTwoLinePair'),
+    ('osaki-yamanote-tokaido', 'stationCodeNotOnLine'),
+    ('sangi-asake-gap-005982', 'noTwoLinePair'),
+    ('seibu-chichibu-connector', 'stationCodeNotOnLine'),
+    ('sendai-kagoshima-hisatsu-orange', 'stationCodeNotOnLine'),
+    ('senseki-tohoku-connector', 'stationCodeNotOnLine'),
+    ('tokoname-tokoname-airport', 'stationCodeNotOnLine'),
+    ('tokyo-sobu-shin-nihonbashi', 'noTwoLinePair'),
+    ('tokyo-tohoku-kanda', 'noTwoLinePair'),
+    ('tokyo-tohoku-shinkansen-ueno', 'noTwoLinePair'),
+    ('tokyo-tokaido-shinkansen-shinagawa', 'noTwoLinePair'),
+    ('tokyo-tokaido-yurakucho', 'noTwoLinePair'),
+    ('toyama-chitetsu-toyamako-class12-class21-okuda-chugakko-mae', 'noTwoLinePair'),
+    ('tsubata-hokuriku-nanao', 'stationCodeNotOnLine'),
+    ('tsugaru-futamata-kaikyo-tsugaru', 'stationCodeNotOnLine'),
+    ('tsukuda-tokushima-dosan', 'stationCodeNotOnLine'),
+    ('uchiko-yosan-uchiko', 'stationCodeNotOnLine'),
+})
+
+
+def enforce_invariants(region: str, report: dict) -> None:
+    """Stop the build on what the file's consumers cannot work around: a station
+    with no position, an edge with no geometry, a slot or overview that does not
+    line up, an edge length or an unplaced link row outside the ledgers above.
+    Only jp has ledger entries; every other region must report none. Link rows
+    are only checked for a region that has lines."""
+    problems = []
+    for name in ("unanchoredStations", "slotMismatches", "edgesWithoutGeometry"):
+        if report[name]:
+            problems.append(f"{name}: {report[name][:5]}")
+    if report["overviewAlignFailures"]:
+        problems.append(f"overviewAlignFailures: {report['overviewAlignFailures']}")
+    known_lengths = KNOWN_LENGTH_MISMATCHES if region == "jp" else frozenset()
+    extra = [row for row in report["lengthMismatchEdges"]
+             if (row["line"], row["interval"]) not in known_lengths]
+    if extra:
+        problems.append(f"lengthMismatchEdges outside the ledger: {extra[:5]}")
+    if report["lines"]:     # a region with no lines has nothing to place the registry rows on
+        known_rows = KNOWN_UNPLACED_JUNCTION_ROWS if region == "jp" else frozenset()
+        rows = [row for row in report["unplacedJunctionRows"]
+                if (row["id"], row["reason"]) not in known_rows]
+        if rows:
+            problems.append(f"unplacedJunctionRows outside the ledger: {rows[:5]}")
+        if report["unplacedThroughServiceRows"]:
+            problems.append(f"unplacedThroughServiceRows: {report['unplacedThroughServiceRows'][:5]}")
+    if problems:
+        raise TopologyError(f"{region}: " + "; ".join(problems))
+
+
 def new_report() -> dict:
     return {
         "overviewAlignFailures": 0, "unanchoredStations": [], "slotMismatches": [],
-        "edgesWithoutGeometry": [], "edgesWithMixedValidity": 0, "datedEdges": 0,
+        "edgesWithoutGeometry": [], "edgesWithMixedValidity": 0, "mixedValidityEdges": [], "datedEdges": 0,
         "intervalsOnSeveralChains": 0, "routedEdges": [], "lengthMismatchEdges": [],
     }
 

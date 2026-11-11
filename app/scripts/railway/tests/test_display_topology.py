@@ -177,11 +177,13 @@ def package_line(line_id, stations, kms, loop=False, **extra):
 
 
 def source(key, line, continuous, fragments, overview=None, chains=(), pieces=(), withheld=(),
-           slots=None, stamps=None):
+           slots=None, stamps=None, origins=None):
+    if origins is None:     # unsplit fragments: fragment n is chain n, from its first vertex
+        origins = [(f.get("chain", 0), 0) for f in fragments] if continuous else []
     return topology.LineSource(
         key=key, line=line, continuous=continuous, fragments=fragments, overview=overview,
         chains=list(chains), pieces=list(pieces), withheld=set(withheld), slots=slots or {},
-        stamps=stamps or {},
+        stamps=stamps or {}, origins=list(origins),
         draw_ids=[f"{key}#{f.get('chain', 0)}" if f.get("continuous") else f"{key}@{f.get('lane', 0.0)}"
                   for f in fragments])
 
@@ -243,7 +245,8 @@ class DerivationTests(unittest.TestCase):
         line["stations"] = [station("S0", *joined[0]), station("S1", *joined[1]),
                             station("S2", *joined[3]), station("S3", *joined[4])]
         chain["anchorIndexByStation"] = {0: 0, 1: 1, 2: 3, 3: 4}
-        decoded, report, _ = build([source("jp|jp-c", line, True, [first, second], None, [chain])])
+        decoded, report, _ = build([source("jp|jp-c", line, True, [first, second], None, [chain],
+                                                  origins=[(0, 0), (0, 2)])])
         nodes = decoded["lines"][0]["nodes"]
         self.assertEqual([n["chain"] for n in nodes], [0, 0, 1, 1])
         edges = decoded["lines"][0]["edges"]
@@ -323,6 +326,42 @@ class DerivationTests(unittest.TestCase):
         self.assertEqual([(row["line"], row["interval"]) for row in report["lengthMismatchEdges"]],
                          [("jp|jp-n", 0), ("jp|jp-n", 2)])
 
+    def test_fragments_are_placed_by_their_recorded_origin_not_by_coordinates(self):
+        # Two chains that run over the same vertices: only the record says which
+        # chain each fragment is.
+        run = [(0.0, 0.0), (0.001, 0.0), (0.002, 0.0)]
+        stations = [station("S0", *run[0]), station("S1", *run[2])]
+        line = package_line("jp-d", stations, [0.2])
+        chains = [{"polyline": [list(p) for p in run], "firstInterval": None, "anchorIndexByStation": {0: 0}},
+                  {"polyline": [list(p) for p in run], "firstInterval": None, "anchorIndexByStation": {1: 2}}]
+        fragments = [{"lineKey": "jp|jp-d", "continuous": True, "chain": number, "lane": 0.0,
+                      "parts": [[list(p) for p in run]]} for number in (0, 1)]
+        decoded, _, _ = build([source("jp|jp-d", line, True, fragments, None, chains,
+                                      origins=[(0, 0), (1, 0)])])
+        self.assertEqual([n["chain"] for n in decoded["lines"][0]["nodes"]], [0, 1])
+        with self.assertRaises(topology.TopologyError):
+            build([source("jp|jp-d", line, True, fragments, None, chains, origins=[(0, 0), (1, 1)])])
+
+    def test_build_stops_on_what_the_ledgers_do_not_allow(self):
+        clean = topology.new_report()
+        clean.update({"lines": 1, "unplacedJunctionRows": [], "unplacedThroughServiceRows": []})
+        topology.enforce_invariants("jp", clean)
+        for name, value in (("unanchoredStations", ["jp|x:S"]), ("slotMismatches", ["jp|x:S"]),
+                            ("edgesWithoutGeometry", ["jp|x#0"]), ("overviewAlignFailures", 1),
+                            ("lengthMismatchEdges", [{"line": "jp|x", "interval": 0}]),
+                            ("unplacedJunctionRows", [{"id": "new-row", "reason": "noTwoLinePair"}]),
+                            ("unplacedThroughServiceRows", [{"id": "T"}])):
+            with self.subTest(name=name):
+                report = dict(clean, **{name: value})
+                with self.assertRaises(topology.TopologyError):
+                    topology.enforce_invariants("jp", report)
+        ledger = sorted(topology.KNOWN_LENGTH_MISMATCHES)[0]
+        row = next(iter(topology.KNOWN_UNPLACED_JUNCTION_ROWS))
+        topology.enforce_invariants("jp", dict(clean, lengthMismatchEdges=[{"line": ledger[0], "interval": ledger[1]}],
+                                               unplacedJunctionRows=[{"id": row[0], "reason": row[1]}]))
+        with self.assertRaises(topology.TopologyError):     # the ledgers belong to jp alone
+            topology.enforce_invariants("tw", dict(clean, lengthMismatchEdges=[{"line": ledger[0], "interval": ledger[1]}]))
+
     def test_fragment_that_is_not_a_slice_of_the_builders_chain_stops_the_build(self):
         line, chain, fragment, overview, _ = self.continuous_line()
         fragment["parts"][0][1] = [0.0015, 0.0]
@@ -395,6 +434,23 @@ class DerivationTests(unittest.TestCase):
         self.assertEqual((edges[1]["validFrom"], edges[1]["validTo"]), (0, topology.day_number("2020-01-01")))
         self.assertEqual((edges[2]["validFrom"], edges[2]["validTo"]), (0, 0))
         self.assertEqual(report["datedEdges"], 2)
+
+    def test_an_edge_on_stamped_and_unstamped_track_is_valid_while_any_of_it_is(self):
+        line, fragments, pieces = self.non_continuous_line(withheld_middle=False)
+        a = fragments[0]["parts"][0]
+        middle = [0.0005, 0.0]
+        fragments[0]["parts"][0:1] = [[a[0], middle], [middle, a[1]]]
+        pieces[0] = (0.0, 0, [tuple(a[0]), tuple(middle), tuple(a[1])])
+        stamps = {("jp|jp-n@0.0", 1): (None, "2020-01-01")}     # the second half closed, the first did not
+        decoded, report, _ = build([source("jp|jp-n", line, False, fragments, None, pieces=pieces,
+                                           stamps=stamps)])
+        edge = decoded["lines"][0]["edges"][0]
+        self.assertEqual((edge["validFrom"], edge["validTo"]), (0, 0))
+        self.assertEqual(report["mixedValidityEdges"], [{"edge": "jp|jp-n#0", "validFrom": 0, "validTo": 0}])
+        stamps[("jp|jp-n@0.0", 0)] = ("2010-01-01", "2030-01-01")      # both halves dated: the hull
+        decoded, _, _ = build([source("jp|jp-n", line, False, fragments, None, pieces=pieces, stamps=stamps)])
+        edge = decoded["lines"][0]["edges"][0]
+        self.assertEqual((edge["validFrom"], edge["validTo"]), (0, topology.day_number("2030-01-01")))
 
     def test_edge_with_zero_surveyed_length_stops_the_build(self):
         line, fragments, pieces = self.non_continuous_line()
@@ -491,6 +547,15 @@ class LinkTests(unittest.TestCase):
         self.assertTrue(self.on(link, topology.day_number("2005-01-01")))
         self.assertTrue(self.on(link, topology.day_number("2019-12-31")))
         self.assertFalse(self.on(link, topology.day_number("2020-01-01")))
+
+    def test_an_unplaced_through_service_pair_is_listed_once_however_many_date_segments(self):
+        legs = [{"lineID": "jp-a", "fromStationCode": "001", "toStationCode": "009"},
+                {"lineID": "jp-b", "fromStationCode": "009", "toStationCode": "003"}]
+        pattern = self.pattern(legs=legs, validFrom="2010-01-01", validTo="2020-01-01")
+        document = self.through([pattern], coverage="2005-01-01")
+        links, skipped = topology.compile_through_links(document, self.node_of)
+        self.assertEqual(links, [])
+        self.assertEqual(len(skipped), 1)
 
     def test_an_open_ended_through_service_is_valid_for_undated_rides(self):
         links, _ = topology.compile_through_links(self.through([self.pattern(validFrom="2010-06-01")]), self.node_of)
@@ -768,70 +833,8 @@ class FullBuildTests(unittest.TestCase):
     def setUp(self):
         self.directory = Path(os.environ["JTM_DISPLAY_BUILD_DIR"])
 
-    # Edges whose drawn length is far from the surveyed one in the source data
-    # itself (tram stations placed along the track differently from the stored
-    # kilometres). A list that may only shrink.
-    KNOWN_LENGTH_MISMATCHES = {
-        ("jp|jp-伊予鉄道-城北線", 4), ("jp|jp-伊予鉄道-城北線", 5), ("jp|jp-伊予鉄道-城北線", 6),
-        ("jp|jp-伊予鉄道-花園線", 0), ("jp|jp-万葉線-高岡軌道線", 5), ("jp|jp-万葉線-高岡軌道線", 12),
-    }
-
-    # Registry rows the builder cannot turn into a link: the row names a station
-    # code one of its lines does not have, has one line only (nothing to join), or
-    # has no station code or evidence. Reported, not guessed; the wave that adds
-    # the reviewed exception file turns each into a link, an intra-line row or an
-    # error. A ledger that may only shrink.
-    KNOWN_UNPLACED_JUNCTION_ROWS = {
-        ('agano-ikebukuro-seibu-chichibu', 'stationCodeNotOnLine'),
-        ('akabane-tohoku-track', 'noTwoLinePair'),
-        ('aomori-tohoku-tsugaru', 'stationCodeNotOnLine'),
-        ('astram-kencho-class16-class24', 'noTwoLinePair'),
-        ('fukui-railway-fukubu-class12-class21-shokokaigisho-mae', 'noTwoLinePair'),
-        ('goryokaku-esashi-hakodate-kamiiso', 'noStationCodeOrEvidence'),
-        ('goryokaku-hakodate-esashi', 'stationCodeNotOnLine'),
-        ('higashi-kanagawa-tokaido-yokohama', 'stationCodeNotOnLine'),
-        ('kaifu-mugi-asato', 'stationCodeNotOnLine'),
-        ('kanazawa-ir-hokuriku', 'stationCodeNotOnLine'),
-        ('kanda-tohoku-track', 'noTwoLinePair'),
-        ('kikonai-esashi-kaikyo', 'noStationCodeOrEvidence'),
-        ('kikonai-kaikyo-isaribi', 'noTwoLinePair'),
-        ('kintetsu-keihanna-class21-class12-mid-tunnel', 'noStationCodeOrEvidence'),
-        ('kitaosaka-minoh-semba-class12-class21', 'noTwoLinePair'),
-        ('kobe-new-transit-port-island-class16-class24-minami-koen', 'noTwoLinePair'),
-        ('kobe-new-transit-port-island-class24-class16-port-terminal', 'noTwoLinePair'),
-        ('kobe-new-transit-rokko-island-class16-class24-minami-uozaki', 'noTwoLinePair'),
-        ('kobe-new-transit-rokko-island-class24-class16-island-kitaguchi', 'noTwoLinePair'),
-        ('matobacho-gap-008063', 'noTwoLinePair'),
-        ('matsuda-east-15', 'stationCodeNotOnLine'),
-        ('musashino-minami-fuchuhommachi-tsurumi', 'noStationCodeOrEvidence'),
-        ('nagoya-chuo-tokaido', 'stationCodeNotOnLine'),
-        ('naka-oguni-tsugaru-kaikyo', 'noTwoLinePair'),
-        ('naoetsu-shinetsu-hokuriku', 'stationCodeNotOnLine'),
-        ('niiya-yosan-uchiko', 'stationCodeNotOnLine'),
-        ('nippori-tohoku-main-approach', 'noTwoLinePair'),
-        ('nishi-biwajima-nagoya-inuyama', 'stationCodeNotOnLine'),
-        ('okutsugaru-imabetsu-kaikyo-osm', 'noTwoLinePair'),
-        ('osaka-metro-chuo-class12-class21-osakako', 'noTwoLinePair'),
-        ('osaka-metro-nankou-port-town-class16-class24-nakafuto', 'noTwoLinePair'),
-        ('osaka-metro-nankou-port-town-class16-class24-trade-center-mae', 'noTwoLinePair'),
-        ('osaka-metro-nankou-port-town-class24-class16-ferry-terminal', 'noTwoLinePair'),
-        ('osaki-yamanote-tokaido', 'stationCodeNotOnLine'),
-        ('sangi-asake-gap-005982', 'noTwoLinePair'),
-        ('seibu-chichibu-connector', 'stationCodeNotOnLine'),
-        ('sendai-kagoshima-hisatsu-orange', 'stationCodeNotOnLine'),
-        ('senseki-tohoku-connector', 'stationCodeNotOnLine'),
-        ('tokoname-tokoname-airport', 'stationCodeNotOnLine'),
-        ('tokyo-sobu-shin-nihonbashi', 'noTwoLinePair'),
-        ('tokyo-tohoku-kanda', 'noTwoLinePair'),
-        ('tokyo-tohoku-shinkansen-ueno', 'noTwoLinePair'),
-        ('tokyo-tokaido-shinkansen-shinagawa', 'noTwoLinePair'),
-        ('tokyo-tokaido-yurakucho', 'noTwoLinePair'),
-        ('toyama-chitetsu-toyamako-class12-class21-okuda-chugakko-mae', 'noTwoLinePair'),
-        ('tsubata-hokuriku-nanao', 'stationCodeNotOnLine'),
-        ('tsugaru-futamata-kaikyo-tsugaru', 'stationCodeNotOnLine'),
-        ('tsukuda-tokushima-dosan', 'stationCodeNotOnLine'),
-        ('uchiko-yosan-uchiko', 'stationCodeNotOnLine'),
-    }
+    KNOWN_LENGTH_MISMATCHES = topology.KNOWN_LENGTH_MISMATCHES
+    KNOWN_UNPLACED_JUNCTION_ROWS = topology.KNOWN_UNPLACED_JUNCTION_ROWS
 
     def test_unplaced_junction_rows_may_only_shrink(self):
         report = json.loads((self.directory / "display-network-report.json").read_text())

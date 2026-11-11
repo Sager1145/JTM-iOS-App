@@ -44,6 +44,11 @@ bound being open. An undated query (a ride with no date) matches exactly the
 rows with `validTo == 0`, whatever `validFrom` is: the current network, as ADR
 0011 does.
 
+An edge can lie on track with different history stamps. Its window is the hull
+of its runs' windows: an unstamped run, or a run with no bound on one side,
+leaves that side open, so the edge is usable on a day while any of its track
+is. The builder lists such edges in the report as `mixedValidityEdges`.
+
 ## Layout
 
 ```

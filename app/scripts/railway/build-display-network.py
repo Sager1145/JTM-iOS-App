@@ -385,10 +385,19 @@ def _chain_provenance_rows(chain: dict) -> list[tuple]:
     return rows
 
 
+def _fragment_origins(fragments: list[dict]) -> dict[tuple[str, int], tuple[int, int]]:
+    """(line key, final chain) to (original chain, first vertex in it) for every
+    continuous fragment: where the topology file places the fragment. Read
+    before `_drop_memory_only_fragment_fields` removes the record."""
+    return {(fragment["lineKey"], int(fragment["chain"])): tuple(fragment["sourceChain"])
+            for fragment in fragments if fragment.get("continuous")}
+
+
 def _drop_memory_only_fragment_fields(fragments: list[dict]) -> None:
     for fragment in fragments:
         fragment.pop("preWeldParts", None)
         fragment.pop("partLengths", None)
+        fragment.pop("sourceChain", None)
 
 
 def decoded_intervals(line: dict) -> list[list[list[float]]]:
@@ -2257,6 +2266,8 @@ def _split_mixed_continuous_chains(
                 subs.append(_subchain_fragment(
                     fragment, parts[start:end], measure_start, measure_end,
                     chain, keep_join=(offset == 0)))
+                source_chain, source_vertex = fragment["sourceChain"]
+                subs[-1]["sourceChain"] = [source_chain, source_vertex + bounds[start][0]]
                 sub_stamps.append(part_stamps[start:end])
                 pieces.append({
                     "new_index": chain,
@@ -3178,6 +3189,12 @@ def load_topology_inputs(
         raw = Path(path).read_bytes()
         documents[name] = json.loads(raw)
         digests[label] = hashlib.sha256(raw).hexdigest()
+    if registry_dir is not None:
+        for region in sorted(TOPOLOGY_REGIONS):
+            registry_path = Path(registry_dir) / f"{region}.json"
+            if registry_path.is_file():
+                digests[f"topology/registry-bundle/{region}.json"] = hashlib.sha256(
+                    registry_path.read_bytes()).hexdigest()
     if junctions_path is not None and documents["junctions"].get("format") != "jtm-physical-rail-junctions-v1":
         raise RuntimeError(f"{junctions_path}: unsupported junction registry format")
     return documents, digests
@@ -3188,6 +3205,7 @@ def build_topology_file(
     topology_lines: dict[str, dict], fragments_by_key: dict[str, list[dict]],
     overview_by_key: dict[str, list[dict]], stations_by_key: dict[str, list[dict]],
     region_history: dict | None, inputs: dict,
+    fragment_origins: dict[tuple[str, int], tuple[int, int]],
 ) -> tuple[bytes, dict]:
     """`{region}.topology.bin` from this region's final display data (see
     `lib/display_topology.py` for what is derived and how)."""
@@ -3207,18 +3225,23 @@ def build_topology_file(
             fragments=fragments, overview=overview_by_key.get(key),
             chains=state["chains"], pieces=state["pieces"], withheld=state["withheld"],
             slots=slots, stamps=stamps,
-            draw_ids=[display_draw_id(fragment) for fragment in fragments]))
+            draw_ids=[display_draw_id(fragment) for fragment in fragments],
+            origins=([fragment_origins[(key, int(fragment["chain"]))] for fragment in fragments]
+                     if state["continuous"] else [])))
     registry = None
     registry_dir = inputs.get("registryDir")
     if registry_dir is not None:
         registry_path = Path(registry_dir) / f"{region}.json"
-        if registry_path.is_file():
-            registry = json.loads(registry_path.read_bytes())
+        if not registry_path.is_file():
+            raise RuntimeError(f"{registry_path}: registry bundle for topology region {region} is missing")
+        registry = json.loads(registry_path.read_bytes())
     junctions = inputs.get("junctions")
     through = inputs.get("throughServices")
-    return display_topology.build_region_topology(
+    data, report = display_topology.build_region_topology(
         region, sources, bytes.fromhex(package_sha256), bytes.fromhex(display_sha256),
         junctions, through if region == "jp" else None, registry)
+    display_topology.enforce_invariants(region, report)
+    return data, report
 
 
 def _history_line_style(
@@ -3828,6 +3851,7 @@ def build(
                             - chain["startMetres"], 1),
                         "withheld": chain.get("withheld") or [],
                         "familyWindows": family_windows,
+                        "sourceChain": [chain_index, 0],
                     }
                     if (line["id"], chain_index) in (
                             non_joining_previous_by_region.get(region) or set()):
@@ -3989,6 +4013,7 @@ def build(
             region, history_dir, region_fragments, region_stations, metadata,
             temporal_binding=temporal_binding if region == "jp" else None)
         _finalize_literal_display_spans(region_fragments)
+        fragment_origins = _fragment_origins(region_fragments)
         _drop_memory_only_fragment_fields(region_fragments)
         built_fragments += len(region_fragments) - fragments_before_history
 
@@ -4227,7 +4252,7 @@ def build(
             topology_bytes, topology_report = build_topology_file(
                 region, package_digests[region], record["sha256"], ordered_keys,
                 topology_lines, fragments_by_key, overview_by_key, stations_by_key,
-                region_history, topology_inputs)
+                region_history, topology_inputs, fragment_origins)
             topology_name = f"{region}{display_topology.FILE_SUFFIX}"
             (output / topology_name).write_bytes(topology_bytes)
             record["topologyFile"] = topology_name

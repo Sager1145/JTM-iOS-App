@@ -87,9 +87,6 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
         "build-display-network.py", "lib/display_identity.py", "lib/display_topology.py",
         "lib/na_geo.py",
     )]
-    # The topology file's through-service links are compiled from this catalog.
-    shared.append(("railcore/japan-through-services.json",
-                   repo / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"))
     # Legacy matched routes may cover any region; changes invalidate every region.
     shared += [(name, bundle / name) for name in ("matched-routes.json", "matched-stops.json", "physical-rail-junctions.json")]
     regions = {}
@@ -121,6 +118,9 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
             # The reviewed paired-track catalog decides which source paths certify.
             inputs.append(("railcore/japan-paired-tracks.json",
                            repo / "ios/RailKit/Sources/RailCore/Resources/japan-paired-tracks.json"))
+            # Only the jp topology file's through-service links are compiled from this catalog.
+            inputs.append(("railcore/japan-through-services.json",
+                           repo / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"))
         for dataset in datasets:
             directory = bundle / dataset
             inputs.append((dataset, directory / "manifest.json"))

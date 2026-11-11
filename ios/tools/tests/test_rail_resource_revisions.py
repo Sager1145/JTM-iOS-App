@@ -78,18 +78,23 @@ class ResourceRevisionTests(unittest.TestCase):
         (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')
         self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
 
-    def test_topology_builder_and_through_service_catalog_invalidate_all_regions(self):
-        # The topology file is compiled by the display builder from its library
-        # and from the through-service catalog; either changing re-solves everything.
-        for relative in ("app/scripts/railway/lib/display_topology.py",
-                         "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"):
-            with self.subTest(resource=relative):
-                path = self.repo / relative
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text("one")
-                before = self.manifest()
-                path.write_text("two")
-                self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+    def test_topology_builder_invalidates_all_regions(self):
+        # The topology file is compiled by the display builder from its library.
+        path = self.repo / "app/scripts/railway/lib/display_topology.py"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("one")
+        before = self.manifest()
+        path.write_text("two")
+        self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+
+    def test_through_service_catalog_invalidates_only_japan(self):
+        # Only the jp topology file's links are compiled from the catalog.
+        path = self.repo / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("one")
+        before = self.manifest()
+        path.write_text("two")
+        self.assertEqual(self.changed_regions(before), {"jp"})
 
     def test_removed_optional_history_invalidates_revision(self):
         history = self.bundle / "rail-history-tw.json"
