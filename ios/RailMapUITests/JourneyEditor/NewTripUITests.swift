@@ -555,7 +555,7 @@ final class NewTripUITests: XCTestCase {
 
         let origin = app.buttons["newTripOrigin"]
         let destination = app.buttons["newTripDestination"]
-        XCTAssertTrue(reveal(origin, in: app, timeout: 8, upward: true))
+        XCTAssertTrue(reveal(origin, in: app, upward: true))
         XCTAssertTrue(origin.label.contains("品川"), origin.label)
         XCTAssertTrue(destination.label.contains("大崎"), destination.label)
         let number = app.textFields["newTripNumber"]
@@ -939,11 +939,18 @@ final class NewTripUITests: XCTestCase {
     private func frameInBand(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
         let frame = element.frame
         guard frame.width > 1, frame.height > 1 else { return false }
-        return app.frame.insetBy(dx: 0, dy: 120).contains(frame)
+        var band = app.frame.insetBy(dx: 0, dy: 120)
+        // A half-height sheet starts the form low on screen: a field above
+        // the form's own top sits under the sheet header, where taps miss it.
+        let form = app.collectionViews["newTripForm"]
+        if form.exists, form.frame.height > 40 {
+            band = band.intersection(form.frame.insetBy(dx: 0, dy: 4))
+        }
+        return !band.isNull && band.contains(frame)
     }
 
-    /// Cheap scroll anchor: identity and position of the form's first and last
-    /// mounted cells. It stops changing once a nudge no longer moves the form.
+    /// Cheap scroll anchor: identity and position of the form's first mounted
+    /// cell. It stops changing once a nudge no longer moves the form.
     private func formScrollAnchor(in app: XCUIApplication) -> String {
         // One cheap query: every XCUI query costs ~0.3 s over the busy map,
         // and the form has stopped moving when its first mounted row has.
