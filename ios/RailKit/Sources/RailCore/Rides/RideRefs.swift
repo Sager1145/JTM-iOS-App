@@ -14,7 +14,7 @@ import Foundation
 public struct RideRefs: Sendable, Equatable {
     /// Hash of the route input (stops, sections, date, policy, train type,
     /// company). Excludes notes and the app build identity, so a note edit or
-    /// an app update does not invalidate it. U3 defines the hashing.
+    /// an app update does not invalidate it. Computed by `RideKey.make(for:)`.
     public struct Key: Sendable, Hashable {
         public var high: UInt64
         public var low: UInt64
