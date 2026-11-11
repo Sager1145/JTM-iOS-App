@@ -80,6 +80,75 @@ struct LocalJourneyAutofillTests {
         #expect(proposal.train.routeSections?.flatMap { $0.sectionCodes ?? [] } == route.sectionCodes)
     }
 
+    @Test("A span fill inserts untimed passes only inside the span and keeps every call as it was")
+    func spanFill() throws {
+        var train = ride(["A", "C", "E", "G"])
+        train.date = "2026-11-11"
+        train.routeConfirmation = .pending
+        train.stops[0].departure = "09:00"
+        train.stops[1].arrival = "09:10"
+        train.stops[1].departure = "09:11"
+        train.stops[1].platformNumber = 5
+        train.stops[2].arrival = "09:30"
+        train.stops[3].arrival = "10:00"
+        // A and G are outside the span; only C to E is filled.
+        let proposal = try #require(LocalJourneyAutofill.proposal(
+            train: train, choice: choice(["C", "D", "E"]), span: 1...2))
+        #expect(!proposal.requiresConfirmation)
+        let stops = proposal.train.stops
+        #expect(stops.map(\.n02StationCode) == ["A", "C", "D", "E", "G"])
+        #expect(stops[2].stopType == "pass_through")
+        #expect(stops[2].arrival == nil && stops[2].departure == nil)
+        for (before, after) in [(0, 0), (1, 1), (2, 3), (3, 4)] {
+            var old = train.stops[before]
+            var new = stops[after]
+            old.routeEditing = nil
+            new.routeEditing = nil
+            #expect(old == new, "call \(train.stops[before].name) changed")
+        }
+        #expect(proposal.train.routeConfirmation == .pending)
+        #expect(proposal.train.origin == "A" && proposal.train.destination == "G")
+        #expect(proposal.train.routeSections?.count == 4)
+    }
+
+    @Test("A span fill never changes routeConfirmation, even when the choice would confirm")
+    func spanFillLeavesConfirmation() throws {
+        for state in [RouteConfirmation?.none, .pending, .confirmed] {
+            var train = ride(["A", "D"])
+            train.routeConfirmation = state
+            let proposal = try #require(LocalJourneyAutofill.proposal(
+                train: train, choice: choice(["A", "B", "C", "D"]), span: 0...1))
+            #expect(proposal.train.routeConfirmation == state)
+        }
+    }
+
+    @Test("A span fill refuses rather than drop a call or fill the wrong ends")
+    func spanFillRefuses() {
+        let train = ride(["A", "C", "E"])
+        // C is a call inside the span but the route does not pass it.
+        #expect(LocalJourneyAutofill.proposal(train: train, choice: choice(["A", "B", "E"]), span: 0...2) == nil)
+        // The route ends somewhere other than the span's calls.
+        #expect(LocalJourneyAutofill.proposal(train: train, choice: choice(["A", "B", "C"]), span: 0...2) == nil)
+        #expect(LocalJourneyAutofill.proposal(train: train, choice: choice(["C", "D", "E"]), span: 0...1) == nil)
+        // Bad spans.
+        #expect(LocalJourneyAutofill.proposal(train: train, choice: choice(["A", "B", "C"]), span: 0...5) == nil)
+        #expect(LocalJourneyAutofill.proposal(train: train, choice: choice(["A", "B", "C"]), span: 1...1) == nil)
+    }
+
+    @Test("A span fill keeps a timed call that the route passes between the span ends")
+    func spanFillKeepsInteriorCall() throws {
+        var train = ride(["A", "C", "E"])
+        train.stops[1].arrival = "09:10"
+        train.stops[1].departure = "09:11"
+        let proposal = try #require(LocalJourneyAutofill.proposal(
+            train: train, choice: choice(["A", "B", "C", "D", "E"]), span: 0...2))
+        #expect(proposal.train.stops.map(\.n02StationCode) == ["A", "B", "C", "D", "E"])
+        #expect(proposal.train.stops[2].stopType == "passenger_stop")
+        #expect(proposal.train.stops[2].arrival == "09:10")
+        #expect(proposal.train.stops[2].departure == "09:11")
+        #expect(proposal.train.stops.filter { $0.stopType == "pass_through" }.count == 2)
+    }
+
     private func ride(_ codes: [String]) -> Train {
         Train(id: "ride", number: "", origin: codes[0], destination: codes.last!, stops: codes.enumerated().map {
             Stop(name: $0.element, n02StationCode: $0.element,
