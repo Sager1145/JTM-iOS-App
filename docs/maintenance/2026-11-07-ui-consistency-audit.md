@@ -640,8 +640,15 @@ Breakdown of the `.buttonStyle` values:
   - [Kickstarter ios-oss](https://github.com/kickstarter/ios-oss): `Spacing.unit_01…` on a 4-pt step, plus semantic radius aliases, and no lint.
   - [Adevinta Spark iOS](https://github.com/adevinta/spark-ios): semantic theme spacing.
   - [SwiftLint custom rules](https://realm.github.io/SwiftLint/custom_rules.html), with baseline support since 0.55.
-- **Skills:**
-  - Used: `apple-design` and `emil-design-eng`.
+- **Skills: what was actually invoked.** All of these were Skill-tool invocations in the audit session (claude/ui-consistency-audit, 2026-11-07), plus catalog searches.
+  - `anthropic-skills:apple-design` was loaded before the static pass. This audit uses its §16 design foundations: Familiarity ("things that look the same must behave the same and live in the same place") and Craft (every spacing value is deliberate). It also uses §12 materials and §15 Dynamic Type/typography as review criteria.
+  - `anthropic-skills:emil-design-eng` was loaded for the review format. The Before/After/Why table in §4 follows its required format. Its animation guidance was not applicable, because no motion changed.
+  - `app-control` (project skill) drove the simulator for every screenshot (`launch` with isolated storage, `loadSamples`, `screenshot`/`pull-screenshot`).
+  - `route` (user skill) split the static pass, the research and the step 1–6 rollout into parallel subagent waves, with an architect pass for the D1–D10 options.
+  - **Catalog searches (SearchSkills/SearchPlugins):**
+    - Queries: swiftui, ios design, human interface guidelines, ui audit, design tokens, accessibility, ios hig, design system, accessibility audit.
+    - Skill results: only the two skills already enabled.
+    - Plugin results: no iOS/SwiftUI HIG audit plugin. The nearest are Anthropic's **Design** plugin (design-critique, design-system, accessibility-review) and the community **design-skills** plugin. Both are web/Figma-oriented, so they were offered to the user rather than installed.
   - Not installed, for the user to decide: Anthropic **Design** plugin, community **design-skills**. Neither is iOS-specific.
 
 ## 7. Rollout status (D10)
