@@ -280,7 +280,11 @@ public enum TripNoteTime {
             let parts = clock.calendar.dateComponents([.hour, .minute], from: instant)
             return text(minutes: (parts.hour ?? 0) * 60 + (parts.minute ?? 0))
         }
-        return clock.serviceClock(of: instant, serviceDate: serviceDate)
+        // Notes keep the two-day window even though the shared clock now
+        // counts further: a time past 47:59 is outside the trip.
+        guard let time = clock.serviceClock(of: instant, serviceDate: serviceDate),
+              minutes(time) != nil else { return nil }
+        return time
     }
 
     /// The time a new note starts with: now, when now falls on the trip's

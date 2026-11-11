@@ -251,6 +251,8 @@ final class TripNotesUITests: XCTestCase {
         XCTAssertTrue(waitForPickCount(in: app))
         let cancel = element("tripNotePickCancel", in: app)
         XCTAssertTrue(cancel.waitForExistence(timeout: 10))
+        XCTAssertTrue(element("tripNotePickBanner", in: app).exists, "The pick runs on the main map.")
+        XCTAssertFalse(element("rideDetailClose", in: app).exists, "Details stepped aside for the pick.")
         cancel.tap()
         XCTAssertTrue(element("rideDetailClose", in: app).waitForExistence(timeout: 15),
                       "Details are back after Cancel.")
@@ -339,15 +341,19 @@ final class TripNotesUITests: XCTestCase {
         return XCTWaiter.wait(for: [one], timeout: 20) == .completed
     }
 
-    /// Details sits in the card's More menu; the menu item carries `journeySecondary-inspectDetails`.
+    /// Details sits in the card's More menu during playback.
     private func openDetails(in app: XCUIApplication) {
-        let details = app.buttons["journeySecondary-inspectDetails"]
-        if !details.waitForExistence(timeout: 20) {
-            let more = app.buttons.matching(
-                NSPredicate(format: "label CONTAINS[c] 'More'")).firstMatch
-            XCTAssertTrue(more.waitForExistence(timeout: 10), "More menu missing.")
-            more.tap()
-        }
+        // A settled trip offers no Details; playback does (Stop, then More →
+        // Details). System menu items drop SwiftUI identifiers, so the item
+        // is found by its label once More is open (as WorkspaceEditingTests does).
+        let play = app.buttons["journeySecondary-play"]
+        XCTAssertTrue(play.waitForExistence(timeout: 20), "Play missing.")
+        play.tap()
+        XCTAssertTrue(app.buttons["journeySecondary-stop"].waitForExistence(timeout: 10), "Playback did not start.")
+        let more = app.buttons["journeyMoreActions"].firstMatch
+        XCTAssertTrue(more.waitForExistence(timeout: 20), "More menu missing.")
+        more.tap()
+        let details = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'detail'")).firstMatch
         let found = details.waitForExistence(timeout: 10)
         if !found { snapshot("details-missing", app) }
         let tree = found ? "" : app.debugDescription.split(separator: "\n")
