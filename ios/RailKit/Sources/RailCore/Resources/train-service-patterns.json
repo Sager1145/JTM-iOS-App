@@ -22965,6 +22965,14 @@
     "sourceCode": "003766"
    },
    {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
     "name": "名古屋",
     "sourceCode": "005451"
    },
@@ -22978,14 +22986,6 @@
    }
   ],
   "optionalStops": [
-   {
-    "name": "品川",
-    "sourceCode": "004095"
-   },
-   {
-    "name": "新横浜",
-    "sourceCode": "004501"
-   },
    {
     "name": "静岡",
     "sourceCode": "006128"
@@ -23006,7 +23006,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道完結。小田原・熱海・三島・新富士・掛川・豊橋・三河安城・岐阜羽島・米原は定期のぞみ停車が未確認のため未収録。",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道完結。小田原・熱海・三島・新富士・掛川・豊橋・三河安城・岐阜羽島・米原は定期のぞみ停車が未確認のため未収録。 品川・新横浜は全列車停車のため必須停車駅とする。",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -23022,6 +23022,14 @@
    {
     "name": "東京",
     "sourceCode": "003766"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
    },
    {
     "name": "名古屋",
@@ -23041,14 +23049,6 @@
    }
   ],
   "optionalStops": [
-   {
-    "name": "品川",
-    "sourceCode": "004095"
-   },
-   {
-    "name": "新横浜",
-    "sourceCode": "004501"
-   },
    {
     "name": "静岡",
     "sourceCode": "006128"
@@ -23090,7 +23090,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。新大阪〜博多のみの列車も同じ山陽停車の部分集合。博多は山陽新幹線の 009034。",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。新大阪〜博多のみの列車も同じ山陽停車の部分集合。博多は山陽新幹線の 009034。 品川・新横浜は全列車停車のため必須停車駅とする。",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -23108,6 +23108,14 @@
     "sourceCode": "003766"
    },
    {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
+   },
+   {
     "name": "名古屋",
     "sourceCode": "005451"
    },
@@ -23121,14 +23129,6 @@
    }
   ],
   "optionalStops": [
-   {
-    "name": "品川",
-    "sourceCode": "004095"
-   },
-   {
-    "name": "新横浜",
-    "sourceCode": "004501"
-   },
    {
     "name": "小田原",
     "sourceCode": "005215"
@@ -23173,7 +23173,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 新富士・掛川・三河安城はこだま専用に近く、ひかりの一部停車が未確認のため未収録。名古屋・京都は全列車停車として required。",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 新富士・掛川・三河安城はこだま専用に近く、ひかりの一部停車が未確認のため未収録。名古屋・京都は全列車停車として required。 品川・新横浜は全列車停車のため必須停車駅とする。",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -23189,6 +23189,14 @@
    {
     "name": "東京",
     "sourceCode": "003766"
+   },
+   {
+    "name": "品川",
+    "sourceCode": "004095"
+   },
+   {
+    "name": "新横浜",
+    "sourceCode": "004501"
    },
    {
     "name": "名古屋",
@@ -23208,14 +23216,6 @@
    }
   ],
   "optionalStops": [
-   {
-    "name": "品川",
-    "sourceCode": "004095"
-   },
-   {
-    "name": "新横浜",
-    "sourceCode": "004501"
-   },
    {
     "name": "三島",
     "sourceCode": "005601"
@@ -23265,7 +23265,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 博多直通の定期ひかりはひかりレールスター（2011-03-11 まで）とさくら側に分け、この pattern の終点は広島。岡山止めは途中駅。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/315221?date=20260514",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 博多直通の定期ひかりはひかりレールスター（2011-03-11 まで）とさくら側に分け、この pattern の終点は広島。岡山止めは途中駅。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/315221?date=20260514 品川・新横浜は全列車停車のため必須停車駅とする。",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -25359,18 +25359,12 @@
     "sourceCode": "001925"
    },
    {
-    "name": "金沢",
-    "sourceCode": "002093"
-   },
-   {
-    "name": "敦賀",
-    "sourceCode": "010186"
-   }
-  ],
-  "optionalStops": [
-   {
     "name": "新高岡",
     "sourceCode": "001886"
+   },
+   {
+    "name": "金沢",
+    "sourceCode": "002093"
    },
    {
     "name": "小松",
@@ -25391,8 +25385,13 @@
    {
     "name": "越前たけふ",
     "sourceCode": "010180"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
    }
   ],
+  "optionalStops": [],
   "via": [],
   "lines": [
    "北陸新幹線"
@@ -25404,7 +25403,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡と敦賀までの各駅を全列車が停まるかは未照合のため optional。",
+  "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡と敦賀までの各駅を全列車が停まるかは未照合のため optional。 つるぎは各駅停車タイプのため経路上の全駅を必須停車駅とする。",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  }

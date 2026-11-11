@@ -330,6 +330,48 @@ struct TrainServicePatternsTests {
         #expect(harukaHiragana.count == 2)
     }
 
+    // MARK: - Shinkansen always-served stops
+
+    /// Stops every train of the service calls at. Applying a pattern copies only
+    /// these, and a partial ride needs both endpoints among them, so a station
+    /// every train serves must never be filed under optionalStops.
+    private static let shinkansenAlwaysServed: [String: [String]] = [
+        "nozomi-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
+        "nozomi-tokyo-hakata": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "博多"],
+        "hikari-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
+        "hikari-tokyo-hiroshima": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "広島"],
+        "tsurugi-toyama-tsuruga": [
+            "富山", "新高岡", "金沢", "小松", "加賀温泉", "芦原温泉", "福井", "越前たけふ", "敦賀",
+        ],
+    ]
+
+    @Test("Shinkansen always-served stops are pinned in line order and never optional")
+    func shinkansenAlwaysServedStopsArePinned() throws {
+        for (id, expected) in Self.shinkansenAlwaysServed {
+            let pattern = try #require(TrainServicePatterns.patterns.first { $0.id == id }, "\(id)")
+            #expect(pattern.stops == expected, "\(id)")
+            #expect(Set(pattern.optionalStops).isDisjoint(with: expected), "\(id)")
+        }
+    }
+
+    @Test("applying a Shinkansen pattern resolves between every pair of its always-served stops")
+    func shinkansenPatternsApplyFromEveryAlwaysServedStop() {
+        let shinkansen = TrainServicePatterns.patterns.filter { $0.lines.contains { $0.contains("新幹線") } }
+        #expect(shinkansen.count >= 30)
+        for pattern in shinkansen {
+            let empty = Train(id: "t", number: "", origin: "", destination: "", stops: [])
+            let codes = TrainServicePatterns.apply(pattern, to: empty).stops.compactMap(\.n02StationCode)
+            #expect(codes.count == pattern.stopRefs.count, "\(pattern.id)")
+            for (from, start) in pattern.stopRefs.enumerated() {
+                for end in pattern.stopRefs.dropFirst(from + 1) {
+                    let first = codes.firstIndex(of: start.sourceCode)
+                    let last = first.flatMap { f in codes.indices.first { $0 > f && codes[$0] == end.sourceCode } }
+                    #expect(last != nil, "\(pattern.id): \(start.name) to \(end.name)")
+                }
+            }
+        }
+    }
+
     // MARK: - v3 schema and date semantics
 
     @Test("every line named in a pattern exists in the shipped rail-sections table, canonically")
