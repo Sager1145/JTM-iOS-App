@@ -6,8 +6,7 @@ import SwiftUI
 struct WorkspacePanelActions<Playback: View, ScopeFilter: View, Share: View,
                              DestinationMenu: View>: View {
     let tab: PrimaryTab
-    /// Playback belongs to History and Stats (B4), the two destinations that
-    /// replay the trips in their own scope.
+    /// Playback belongs to History (pass 3), the list of runs that happened.
     let showsPlayback: Bool
     @ViewBuilder var playback: () -> Playback
     /// The tab's one scope control (region, plus its date or period).
@@ -21,7 +20,7 @@ struct WorkspacePanelActions<Playback: View, ScopeFilter: View, Share: View,
         // Pass 3: every destination has the same shape — its own action,
         // then Share, then the one scope filter, then the gear. Adding a trip
         // is the tab bar's Add trip button, not a header action.
-        // History and Stats: ▶ share filter ⚙︎. Upcoming: share filter ⚙︎.
+        // History: ▶ share filter ⚙︎. Upcoming and Stats: share filter ⚙︎.
         if showsPlayback {
             playback()
         }

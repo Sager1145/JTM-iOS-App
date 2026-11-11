@@ -299,6 +299,10 @@ enum StatisticsStrings {
             .zhHans: "尚未确认乘坐的行程：{n} 趟。确认后即计入统计。",
             .zhHant: "尚未確認乘坐的行程：{n} 趟。確認後即計入統計。",
         ],
+        "ios.stats.showUnconfirmed": [
+            .en: "Show {n} trips", .ja: "{n}件の旅程を表示",
+            .zhHans: "显示 {n} 个行程", .zhHant: "顯示 {n} 個行程",
+        ],
         "ios.stats.totalRiddenKm": [
             .en: "Total ridden km", .ja: "乗車した全区間",
             .zhHans: "已乘总里程", .zhHant: "已乘總里程",

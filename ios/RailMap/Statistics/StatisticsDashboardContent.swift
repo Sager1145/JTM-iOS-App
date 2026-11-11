@@ -47,6 +47,9 @@ struct StatisticsDashboardContent: View {
     /// destination of its own, so tapping a journey here opens the record
     /// rather than silently changing what the map behind the panel draws.
     var openJourney: (Train) -> Void
+    /// A12: reveals the unconfirmed trips (History, ridden filter). `nil`
+    /// leaves the note without the action.
+    var showUnconfirmed: (() -> Void)?
 
     /// §13.2: work under about 400 ms must not flash progress UI at the
     /// reader. Held here rather than inside the summary because the summary is
@@ -1264,6 +1267,14 @@ struct StatisticsDashboardContent: View {
             Text(localization.text("stats.empty"))
             if unconfirmed > 0 {
                 Text(unconfirmedMessage(unconfirmed))
+                if let showUnconfirmed {
+                    Button(action: showUnconfirmed) {
+                        Text(localization.text(
+                            "ios.stats.showUnconfirmed", params: ["n": .number(Double(unconfirmed))]))
+                    }
+                    .buttonStyle(.railTertiary)
+                    .accessibilityIdentifier("statisticsShowUnconfirmed")
+                }
             }
         }
         .font(.subheadline)

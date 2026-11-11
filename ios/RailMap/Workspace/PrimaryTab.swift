@@ -28,11 +28,12 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
 
     var headerActionCount: Int {
         switch self {
-        // Mirrors `WorkspacePanelActions` (pass 3). History and Stats: play,
-        // share, filter, utilities. Upcoming: share, filter, utilities.
-        // A search reserves History's width.
-        case .all, .search, .stats: 4
-        case .upcoming: 3
+        // Mirrors `WorkspacePanelActions` (pass 3). History: play, share,
+        // filter, utilities. Upcoming and Stats: share, filter, utilities.
+        // A search reserves History's width. Stats gains Play (B4) together
+        // with the `RailWorkspaceView` change that shows it; keep 3 until then.
+        case .all, .search: 4
+        case .upcoming, .stats: 3
         }
     }
 

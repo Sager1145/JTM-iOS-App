@@ -27,14 +27,13 @@ import SwiftUI
 /// All cards, map coverage, and sharing use that same year scope.
 struct PassportWorkspaceView: View {
     @Environment(AppLocalization.self) private var localization
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @Bindable var itineraries: ItineraryStore
     @Bindable var statistics: MileageStatisticsStore
     @Bindable var riddenRoutes: RiddenRouteStore
     @Bindable var network: RailNetworkStore
     @Bindable var controller: RailMapController
-    /// Unused here since Play moved to the header (B4); `RailWorkspaceView`
-    /// still passes it. Delete with that argument.
     @Bindable var playback: PlaybackController
     /// `nil` is 全部 — see `StatisticsView.region`.
     @Binding var region: Region?
@@ -59,6 +58,9 @@ struct PassportWorkspaceView: View {
     /// Unused since the Export JSON button was removed (export lives only in
     /// the Data Library); delete with the argument in `RailWorkspaceView`.
     var openData: () -> Void
+    /// A12: the unconfirmed-trips note's "Show trips" action. `nil` hides the
+    /// button until `RailWorkspaceView` supplies it.
+    var showUnconfirmed: (() -> Void)?
     var openSettings: () -> Void
 
     var body: some View {
@@ -99,7 +101,12 @@ struct PassportWorkspaceView: View {
                     },
                     derived: derived,
                     journeyPresentation: journeyPresentation,
-                    openJourney: openJourney)
+                    openJourney: openJourney,
+                    showUnconfirmed: showUnconfirmed)
+
+                PassportReplayCard(
+                    canReplay: !scopedTrains.isEmpty,
+                    onReplay: { replay(scopedTrains) })
             }
             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
             .padding(.top, WorkspaceMenuMetrics.contentTopInset)
@@ -146,5 +153,34 @@ struct PassportWorkspaceView: View {
         return derived.memberIDs(
             scope: StatisticsScope(region: region, area: area),
             trains: trains, rides: riddenRoutes.rides)
+    }
+
+    private func replay(_ trains: [Train]) {
+        guard !trains.isEmpty else { return }
+        _ = playback.start(
+            trains: trains, rides: riddenRoutes.rides, reducedMotion: reduceMotion,
+            restoringSelection: itineraries.selectedTrainID)
+    }
+}
+
+/// Play for the trips in scope. Interim home until the header Play (B4) is
+/// wired in `RailWorkspaceView`; delete this with that change. Export is not
+/// offered here: it lives only in the Data Library.
+private struct PassportReplayCard: View {
+    @Environment(AppLocalization.self) private var localization
+    var canReplay: Bool
+    var onReplay: () -> Void
+
+    var body: some View {
+        Button(action: onReplay) {
+            Label(
+                localization.countryText("btn.play", fallback: "Play"),
+                systemImage: "play.fill")
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.railPrimary(fillsWidth: true))
+        .railMinimumTouchTarget()
+        .disabled(!canReplay)
+        .accessibilityIdentifier("statisticsPlay")
     }
 }
