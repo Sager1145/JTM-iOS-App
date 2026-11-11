@@ -18,7 +18,7 @@ public struct TimetableSearch: Sendable {
     /// stop patterns, which name a service but carry no train number. Nil when the
     /// query has no number. Matched by the shared search engine, so kana, katakana,
     /// romaji and full or half width all find the same service.
-    private let serviceNameQuery: SearchTextQuery?
+    private let numberlessQuery: SearchFold.PreparedQuery?
 
     public init(_ text: String, region: String = "jp") {
         let normalized = text.precomposedStringWithCompatibilityMapping.replacingOccurrences(of: "->", with: "→")
@@ -31,7 +31,7 @@ public struct TimetableSearch: Sendable {
         preparedRoute = route.map(SearchFold.PreparedQuery.init)
         self.region = region
         terms = normalized.split(whereSeparator: { $0.isWhitespace }).map(String.init)
-        serviceNameQuery = route.isEmpty ? Self.withoutTrainNumber(normalized).map(SearchTextQuery.init) : nil
+        numberlessQuery = route.isEmpty ? Self.withoutTrainNumber(normalized).map(SearchFold.PreparedQuery.init) : nil
         if route.isEmpty, let identity = RegistryIdentityCache.identity(forRegion: region) {
             let wanted = identity.operatorIDs(matchingQuery: normalized)
             operatorQuery = wanted.isEmpty ? nil : wanted
@@ -91,11 +91,12 @@ public struct TimetableSearch: Sendable {
             return !Set(identity.operatorIDs(forCatalogName: pattern.company)).isDisjoint(with: wanted)
         }
         let serviceNames = [pattern.name] + (Self.serviceNamesByID[pattern.serviceId] ?? [])
-        if matches(fields: [pattern.name, pattern.label,
-                         pattern.origin, pattern.destination] + pattern.lines + serviceNames,
-                stops: pattern.stops) { return true }
-        guard let nameQuery = serviceNameQuery else { return false }
-        return serviceNames.contains { nameQuery.match($0, allowFuzzy: false) != nil }
+        let fields = [pattern.name, pattern.label, pattern.origin, pattern.destination] + pattern.lines + serviceNames
+        if matches(fields: fields, stops: pattern.stops) { return true }
+        // Patterns carry no train number, so retry without it, keeping any other terms
+        // ("東京 のぞみ 23" matches a Tokyo stop and the のぞみ name).
+        guard let numberless = numberlessQuery else { return false }
+        return numberless.matches(fields: fields + pattern.stops)
     }
 
 }

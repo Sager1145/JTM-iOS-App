@@ -36,12 +36,16 @@ public enum ServicePatternBrowsePolicy {
         case jrLimitedExpress
         case privateLimitedExpress
 
-        /// A pattern is Shinkansen when it runs on a 新幹線 line, JR when any of its
-        /// operators is a passenger JR company, and private otherwise.
-        public static func of(_ pattern: TrainServicePatterns.Pattern, region: String = "jp") -> ServiceClass {
-            if pattern.lines.contains(where: { $0.hasSuffix("新幹線") }) { return .shinkansen }
-            return ServicePatternBrowsePolicy.isJROrNationalRailway(pattern, region: region)
-                ? .jrLimitedExpress : .privateLimitedExpress
+        /// A pattern is Shinkansen when it runs on a 新幹線 line. Otherwise it is JR when any
+        /// operator is a passenger JR company and private when any operator is not, so a
+        /// jointly run service (ふじさん, スペーシア日光) belongs to both filters.
+        public static func classes(of pattern: TrainServicePatterns.Pattern, region: String = "jp") -> Set<ServiceClass> {
+            if pattern.lines.contains(where: { $0.hasSuffix("新幹線") }) { return [.shinkansen] }
+            let operators = ServicePatternBrowsePolicy.operatorsAreJR(pattern, region: region)
+            var result: Set<ServiceClass> = []
+            if operators.contains(true) { result.insert(.jrLimitedExpress) }
+            if operators.contains(false) || operators.isEmpty { result.insert(.privateLimitedExpress) }
+            return result
         }
 
         public static func of(_ trip: TrainTimetableDatabase.Trip) -> ServiceClass {
@@ -164,7 +168,7 @@ public enum ServicePatternBrowsePolicy {
         let sources = input.sources
         let patternMatches = sources.patterns.filter { pattern in
             matchesFilters(companies: [pattern.company], lines: pattern.lines, input: input)
-                && matchesClass(ServiceClass.of(pattern, region: input.region), input: input)
+                && (input.classFilter.map { ServiceClass.classes(of: pattern, region: input.region).contains($0) } ?? true)
                 && search.matches(pattern)
         }.sorted {
             if let day = input.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
@@ -182,7 +186,7 @@ public enum ServicePatternBrowsePolicy {
             hasIncompleteOccurrences = hasIncompleteOccurrences || !canApply
             guard matchesFilters(companies: trip.operatorSegments.map(\.displayName),
                                  lines: trip.lineSegments.map(\.lineName), input: input),
-                  matchesClass(ServiceClass.of(trip), input: input),
+                  input.classFilter.map({ $0 == ServiceClass.of(trip) }) ?? true,
                   search.matches(trip) else { continue }
             if canApply { completeMatches.append(trip) }
             else { incompleteMatches.append(trip) }
@@ -276,10 +280,6 @@ public enum ServicePatternBrowsePolicy {
             primaryRowsArePatterns: primaryRowsArePatterns)
     }
 
-    private static func matchesClass(_ serviceClass: ServiceClass, input: SearchInput) -> Bool {
-        input.classFilter.map { $0 == serviceClass } ?? true
-    }
-
     private static func matchesFilters(companies: [String], lines: [String], input: SearchInput) -> Bool {
         if let companyFilter = input.companyFilter {
             guard let identity = RegistryIdentityCache.identity(forRegion: input.region) else { return false }
@@ -309,22 +309,27 @@ public enum ServicePatternBrowsePolicy {
         return identity.operatorLabel(identifier) ?? identifier
     }
 
-    fileprivate static func isJROrNationalRailway(
+    /// One entry per listed operator: true when it is a passenger JR company. Empty when
+    /// the company string or registry is unavailable or no part resolves.
+    fileprivate static func operatorsAreJR(
         _ pattern: TrainServicePatterns.Pattern, region: String
-    ) -> Bool {
+    ) -> [Bool] {
         let parts = pattern.company.components(separatedBy: CharacterSet(charactersIn: "/／"))
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
-        guard !parts.isEmpty else { return false }
-        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return false }
-        return parts.contains { part in
-            let identifiers = identity.operatorIDs(forCatalogName: part)
-            guard !identifiers.isEmpty else { return false }
-            return identifiers.contains { identifier in
+        guard !parts.isEmpty, let identity = RegistryIdentityCache.identity(forRegion: region) else { return [] }
+        return parts.map { part in
+            identity.operatorIDs(forCatalogName: part).contains { identifier in
                 guard let code = identity.operator(for: identifier)?.identity else { return false }
                 return jrIdentityCodes.contains(code)
             }
         }
+    }
+
+    fileprivate static func isJROrNationalRailway(
+        _ pattern: TrainServicePatterns.Pattern, region: String
+    ) -> Bool {
+        operatorsAreJR(pattern, region: region).contains(true)
     }
 
     /// Facade label for each part that converts. A part that does not convert stays as written.

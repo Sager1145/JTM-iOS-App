@@ -183,9 +183,25 @@ struct ServicePatternBrowsePolicyTests {
         #expect(shinkansen.contains("pattern:nozomi-tokyo-shin-osaka"))
         #expect(!jr.contains("pattern:nozomi-tokyo-shin-osaka"))
         #expect(jr.contains { $0.hasPrefix("pattern:azusa") })
-        #expect(shinkansen.isDisjoint(with: jr) && shinkansen.isDisjoint(with: priv) && jr.isDisjoint(with: priv))
+        #expect(shinkansen.isDisjoint(with: jr) && shinkansen.isDisjoint(with: priv))
+        // Jointly run services (JR plus a private railway) belong to both filters.
+        for id in ["pattern:fujisan", "pattern:spacia-nikko"] where all.contains(id) {
+            #expect(jr.contains(id) && priv.contains(id), "\(id)")
+        }
         #expect(shinkansen.union(jr).union(priv) == all)
         #expect(!shinkansen.isEmpty && !jr.isEmpty && !priv.isEmpty)
+    }
+
+    @Test func jointJRAndPrivateServicesMatchBothFilters() throws {
+        let joint = try #require(TrainServicePatterns.patterns.filter {
+            $0.name == "ふじさん" || $0.name == "スペーシア日光" })
+        #expect(joint.count >= 2)
+        RegistryIdentityTestGate.withProvider(Self.passengerJR) {
+            for pattern in joint {
+                let classes = ServicePatternBrowsePolicy.ServiceClass.classes(of: pattern)
+                #expect(classes == [.jrLimitedExpress, .privateLimitedExpress], "\(pattern.name)")
+            }
+        }
     }
 
     @Test func classFilterAlsoNarrowsTimedTrips() throws {
@@ -203,6 +219,13 @@ struct ServicePatternBrowsePolicyTests {
                 showsAllHistory: false, language: "en", sources: sources, generation: 1, classFilter: filter))
             let count = result.groups.flatMap(\.rows).count + result.incompleteTrips.count
             #expect((count > 0) == (filter == expected))
+        }
+    }
+
+    @Test func numberWithAnotherTermStillFindsTheService() {
+        for query in ["東京 のぞみ 23", "新幹線 のぞみ 23"] {
+            let result = ServicePatternBrowsePolicy.makeSearchSnapshot(realInput(query: query))
+            #expect(result.groups.flatMap(\.rows).map(\.id).contains("pattern:nozomi-tokyo-shin-osaka"), "\(query)")
         }
     }
 
