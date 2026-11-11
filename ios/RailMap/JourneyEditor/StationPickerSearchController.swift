@@ -152,6 +152,26 @@ final class StationPickerSearchController {
         }
     }
 
+    /// The picker's one Clear: forget this region's recent queries and recent
+    /// picks (no other region's), then re-rank the empty box without them.
+    func clearRecents(regionCode: String, defaults: UserDefaults = .standard) {
+        RecentSearchStore.clear(.stationPicker, regionCode: regionCode, defaults: defaults)
+        defaults.removeObject(forKey: StationPickerRecents.key(regionCode))
+        recentPicks = []
+        refreshEmptyBoxNow()
+    }
+
+    /// Long-press "Remove" on one recent query chip. Returns the remaining queries.
+    @discardableResult
+    func removeRecentQuery(_ query: String, regionCode: String, defaults: UserDefaults = .standard) -> [String] {
+        RecentSearchStore.remove(query, box: .stationPicker, regionCode: regionCode, defaults: defaults)
+    }
+
+    private func refreshEmptyBoxNow() {
+        guard index != nil, lastNeedle.isEmpty else { return }
+        apply(query: "", companyName: request.companyName)
+    }
+
     func cancel() {
         filterTask?.cancel()
         emptyBoxTask?.cancel()

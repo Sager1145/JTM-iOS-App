@@ -44,6 +44,12 @@ enum ShellStrings {
         "ios.search.recentLabel": [
             .en: "Recent", .ja: "最近の検索", .zhHans: "最近搜索", .zhHant: "最近搜尋",
         ],
+        "ios.search.clearRecent": [
+            .en: "Clear", .ja: "消去", .zhHans: "清除", .zhHant: "清除",
+        ],
+        "ios.search.removeRecent": [
+            .en: "Remove", .ja: "削除", .zhHans: "移除", .zhHant: "移除",
+        ],
         "ios.search.suggestedStations": [
             .en: "Suggested stations", .ja: "おすすめの駅", .zhHans: "推荐车站", .zhHant: "推薦車站",
         ],

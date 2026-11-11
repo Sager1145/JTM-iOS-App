@@ -20,6 +20,11 @@ struct SearchSuggestionChips: View {
     let chips: [Chip]
     let identifierPrefix: String
     let action: (Chip) -> Void
+    /// Long-press "Remove" on a recent chip. Nil leaves the chips without the menu.
+    var onRemove: ((Chip) -> Void)? = nil
+    /// The one Clear, pinned at the trailing edge of a Recent row. Nil hides it.
+    var onClear: (() -> Void)? = nil
+    var clearIdentifier = "searchRecentClear"
 
     static func chips(corrections: [SearchCorrection]) -> [Chip] {
         corrections.prefix(3).map { Chip(kind: .didYouMean, label: $0.displayText, text: $0.text) }
@@ -38,29 +43,49 @@ struct SearchSuggestionChips: View {
 
     var body: some View {
         if !chips.isEmpty {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: RailSpacing.s8) {
-                    if let lead { Text(lead).railText(.secondary) }
-                    ForEach(chips) { chip in
-                        Button { action(chip) } label: {
-                            HStack(spacing: RailSpacing.s4) {
-                                if chip.kind == .completion { Image(systemName: "arrow.turn.down.right") }
-                                Text(chip.label).lineLimit(1)
-                            }
-                            .railText(.secondary)
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, RailSpacing.s12)
-                            .padding(.vertical, RailSpacing.s8)
-                            .background(Color(.tertiarySystemFill), in: Capsule())
-                            .frame(minHeight: RailSize.touch)
-                            .contentShape(.rect)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("\(identifierPrefix)-\(chip.id)")
+            HStack(spacing: RailSpacing.s8) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: RailSpacing.s8) {
+                        if let lead { Text(lead).railText(.secondary) }
+                        ForEach(chips) { chip in chipButton(chip) }
                     }
+                    .padding(.leading, RailSpacing.screenInset)
+                    .padding(.trailing, onClear == nil ? RailSpacing.screenInset : 0)
                 }
-                .padding(.horizontal, RailSpacing.screenInset)
+                if let onClear, chips.contains(where: { $0.kind == .recent }) {
+                    Button(localization.text("ios.search.clearRecent", fallback: "Clear"), action: onClear)
+                        .railText(.secondary)
+                        .foregroundStyle(.tint)
+                        .frame(minHeight: RailSize.touch)
+                        .padding(.trailing, RailSpacing.screenInset)
+                        .accessibilityIdentifier(clearIdentifier)
+                }
             }
         }
+    }
+
+    private func chipButton(_ chip: Chip) -> some View {
+        Button { action(chip) } label: {
+            HStack(spacing: RailSpacing.s4) {
+                if chip.kind == .completion { Image(systemName: "arrow.turn.down.right") }
+                Text(chip.label).lineLimit(1)
+            }
+            .railText(.secondary)
+            .foregroundStyle(.primary)
+            .padding(.horizontal, RailSpacing.s12)
+            .padding(.vertical, RailSpacing.s8)
+            .background(Color(.tertiarySystemFill), in: Capsule())
+            .frame(minHeight: RailSize.touch)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            if chip.kind == .recent, let onRemove {
+                Button(localization.text("ios.search.removeRecent", fallback: "Remove"), role: .destructive) {
+                    onRemove(chip)
+                }
+            }
+        }
+        .accessibilityIdentifier("\(identifierPrefix)-\(chip.id)")
     }
 }

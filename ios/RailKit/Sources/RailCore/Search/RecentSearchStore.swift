@@ -37,4 +37,16 @@ public enum RecentSearchStore {
     public static func clear(_ box: Box, regionCode: String, defaults: UserDefaults = .standard) {
         defaults.removeObject(forKey: key(box, regionCode: regionCode))
     }
+
+    /// Drop one remembered query (any equal spelling). Returns the new list.
+    @discardableResult
+    public static func remove(
+        _ query: String, box: Box, regionCode: String, defaults: UserDefaults = .standard
+    ) -> [String] {
+        let canonical = SearchNormalizer.canonical(query.trimmingCharacters(in: .whitespacesAndNewlines))
+        var list = load(box, regionCode: regionCode, defaults: defaults)
+        list.removeAll { SearchNormalizer.canonical($0) == canonical }
+        defaults.set(list, forKey: key(box, regionCode: regionCode))
+        return list
+    }
 }
