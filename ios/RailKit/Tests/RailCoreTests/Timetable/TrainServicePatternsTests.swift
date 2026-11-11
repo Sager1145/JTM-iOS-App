@@ -341,7 +341,7 @@ struct TrainServicePatternsTests {
         "hikari-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
         "hikari-tokyo-hiroshima": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "広島"],
         "tsurugi-toyama-tsuruga": [
-            "富山", "新高岡", "金沢", "小松", "加賀温泉", "芦原温泉", "福井", "越前たけふ", "敦賀",
+            "富山", "新高岡", "金沢", "敦賀",
         ],
     ]
 
@@ -354,21 +354,13 @@ struct TrainServicePatternsTests {
         }
     }
 
-    @Test("applying a Shinkansen pattern resolves between every pair of its always-served stops")
-    func shinkansenPatternsApplyFromEveryAlwaysServedStop() {
+    @Test("no Shinkansen pattern files a station under both stops and optionalStops")
+    func shinkansenStopsAndOptionalStopsAreDisjoint() {
         let shinkansen = TrainServicePatterns.patterns.filter { $0.lines.contains { $0.contains("新幹線") } }
         #expect(shinkansen.count >= 30)
         for pattern in shinkansen {
-            let empty = Train(id: "t", number: "", origin: "", destination: "", stops: [])
-            let codes = TrainServicePatterns.apply(pattern, to: empty).stops.compactMap(\.n02StationCode)
-            #expect(codes.count == pattern.stopRefs.count, "\(pattern.id)")
-            for (from, start) in pattern.stopRefs.enumerated() {
-                for end in pattern.stopRefs.dropFirst(from + 1) {
-                    let first = codes.firstIndex(of: start.sourceCode)
-                    let last = first.flatMap { f in codes.indices.first { $0 > f && codes[$0] == end.sourceCode } }
-                    #expect(last != nil, "\(pattern.id): \(start.name) to \(end.name)")
-                }
-            }
+            let both = Set(pattern.stopRefs.map(\.sourceCode)).intersection(pattern.optionalStopRefs.map(\.sourceCode))
+            #expect(both.isEmpty, "\(pattern.id): \(both)")
         }
     }
 

@@ -24975,25 +24975,8 @@
       "北陸新幹線"
     ],
     "name": "つるぎ",
-    "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡と敦賀までの各駅を全列車が停まるかは未照合のため optional。 つるぎは各駅停車タイプのため経路上の全駅を必須停車駅とする。",
-    "optionalStops": [],
-    "origin": "富山",
-    "patternId": "tsurugi-toyama-tsuruga",
-    "serviceId": "tsurugi",
-    "source": "w3-fragment; not a single-timetable transcription",
-    "stops": [
-      {
-        "name": "富山",
-        "sourceCode": "001925"
-      },
-      {
-        "name": "新高岡",
-        "sourceCode": "001886"
-      },
-      {
-        "name": "金沢",
-        "sourceCode": "002093"
-      },
+    "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡は富山〜金沢のつるぎ pattern でも必須停車駅のため必須。金沢〜敦賀の小松・加賀温泉・芦原温泉・福井・越前たけふは全列車が停まるかを公式時刻表で未照合のため optional。",
+    "optionalStops": [
       {
         "name": "小松",
         "sourceCode": "002267"
@@ -25013,6 +24996,24 @@
       {
         "name": "越前たけふ",
         "sourceCode": "010180"
+      }
+    ],
+    "origin": "富山",
+    "patternId": "tsurugi-toyama-tsuruga",
+    "serviceId": "tsurugi",
+    "source": "w3-fragment; not a single-timetable transcription",
+    "stops": [
+      {
+        "name": "富山",
+        "sourceCode": "001925"
+      },
+      {
+        "name": "新高岡",
+        "sourceCode": "001886"
+      },
+      {
+        "name": "金沢",
+        "sourceCode": "002093"
       },
       {
         "name": "敦賀",
