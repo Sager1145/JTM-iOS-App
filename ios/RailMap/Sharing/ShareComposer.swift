@@ -218,10 +218,10 @@ struct ShareComposer: View {
             .navigationTitle(localization.text("ios.share.title", fallback: "Share"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                        .accessibilityIdentifier("shareCloseButton")
-                }
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "shareCloseButton",
+                    onCancel: { dismiss() })
             }
         }
         .accessibilityIdentifier("shareComposerRoot")

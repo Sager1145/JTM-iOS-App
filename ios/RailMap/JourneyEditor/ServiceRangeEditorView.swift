@@ -130,15 +130,16 @@ struct ServiceRangeEditorView: View {
         .navigationTitle(localization.text("ios.editor.sectionService"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button(localization.text("ios.editor.applySectionService")) {
+            RailEditingToolbar(
+                cancelTitle: nil,
+                confirmTitle: Text(localization.text("ios.editor.applySectionService")),
+                confirmID: "rideEditorApplyServiceLeg",
+                onConfirm: {
                     apply(
                         RouteSectionServiceInfo(lineNames: lines, operatorNames: operators,
                                                 number: number, name: name))
                     dismiss()
-                }
-                .accessibilityIdentifier("rideEditorApplyServiceLeg")
-            }
+                })
         }
     }
 

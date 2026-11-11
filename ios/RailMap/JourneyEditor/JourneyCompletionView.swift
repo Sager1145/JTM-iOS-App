@@ -78,9 +78,7 @@ struct JourneyCompletionView: View {
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .task {
                 let region = initialTrains.first.map { Region.resolved($0).code } ?? Region.jp.code

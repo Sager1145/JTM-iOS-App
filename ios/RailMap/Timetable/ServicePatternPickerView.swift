@@ -263,9 +263,7 @@ struct ServicePatternPickerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: Text(localization.text("ios.editor.timetableSearchPrompt")))
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(pickerText("cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
             .task(id: searchKey) { await updateSearchSnapshot() }

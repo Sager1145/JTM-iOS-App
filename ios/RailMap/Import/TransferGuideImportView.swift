@@ -90,13 +90,13 @@ struct TransferGuideImportView: View {
             .navigationTitle(localization.text("ios.guide.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    onCancel: {
                         loadTask?.cancel()
                         flow.cancel()
                         dismiss()
-                    }
-                }
+                    })
             }
             .safeAreaInset(edge: .bottom) { actionBar }
             // This screen reads Japanese screenshots against the Japanese

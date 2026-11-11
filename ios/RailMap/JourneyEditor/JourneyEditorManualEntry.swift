@@ -176,9 +176,7 @@ struct VehiclePickerView: View {
             .navigationTitle(localization.text("ios.editor.vehicleType"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .onAppear { typed = vehicleType ?? "" }
         }

@@ -27,14 +27,14 @@ struct DataImportView: View {
             .navigationTitle(localization.text("sec.import", fallback: "Import"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "importCancel",
+                    cancelDisabled: !flow.canCancel,
+                    onCancel: {
                         flow.cancel()
                         dismiss()
-                    }
-                    .disabled(!flow.canCancel)
-                    .accessibilityIdentifier("importCancel")
-                }
+                    })
             }
             .safeAreaInset(edge: .bottom) { actionBar }
             // §10.2: an import finishes on a screen the reader may not be

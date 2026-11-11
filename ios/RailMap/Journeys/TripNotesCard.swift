@@ -426,17 +426,14 @@ private struct TripNoteFormSheet: View {
                                                ? "ios.tripNotes.add" : "ios.tripNotes.edit"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.tripNotes.cancel")) {
-                        if flow.isEdited { confirmsDiscard = true } else { flow.screen = nil }
-                    }
-                    .accessibilityIdentifier("tripNoteCancel")
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.text("ios.tripNotes.save")) { save() }
-                        .disabled(!canSave || flow.isSaving)
-                        .accessibilityIdentifier("tripNoteSave")
-                }
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "tripNoteCancel",
+                    onCancel: { if flow.isEdited { confirmsDiscard = true } else { flow.screen = nil } },
+                    confirmTitle: Text(localization.text("ios.tripNotes.save")),
+                    confirmID: "tripNoteSave",
+                    canConfirm: !(!canSave || flow.isSaving),
+                    onConfirm: { save() })
             }
             .confirmationDialog(
                 localization.text("ios.tripNotes.discardConfirm"),

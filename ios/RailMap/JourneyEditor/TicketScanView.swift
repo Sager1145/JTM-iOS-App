@@ -37,9 +37,7 @@ struct TicketScanView: View {
             .navigationTitle(localization.text("ios.ticket.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.ticket.cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .fullScreenCover(isPresented: $showsCamera) {
                 DocumentCameraPicker(

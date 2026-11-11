@@ -69,15 +69,18 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(text("cancel", fallback: "Cancel")) {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "newTripCancel",
+                    onCancel: {
                         if model.isDirty(original: train) { showsDiscardConfirmation = true } else { onCancel() }
-                    }
-                    .accessibilityIdentifier("newTripCancel")
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    saveButton
-                }
+                    },
+                    confirmTitle: Text(text("save", fallback: "Save")),
+                    confirmID: "newTripSave",
+                    canConfirm: model.canSave,
+                    // ⌘S is disabled by the same condition as the button.
+                    confirmShortcut: KeyboardShortcut("s", modifiers: .command),
+                    onConfirm: { commit(confirmedRemoval: false) })
             }
         }
         .confirmationDialog(
@@ -297,19 +300,6 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 }
                 .accessibilityIdentifier("newTripKeyboardDone")
             }
-        }
-    }
-
-    @ViewBuilder private var saveButton: some View {
-        let button = Button(text("save", fallback: "Save")) { commit(confirmedRemoval: false) }
-            .disabled(!model.canSave)
-            // ⌘S is disabled by the same condition as the button.
-            .keyboardShortcut("s", modifiers: .command)
-            .accessibilityIdentifier("newTripSave")
-        if #available(iOS 26.0, *) {
-            button.buttonStyle(.glassProminent)
-        } else {
-            button.fontWeight(.semibold)
         }
     }
 
