@@ -101,9 +101,6 @@ enum TransferGuideStrings {
             .ja: "鉄道データを読み込み中です。読み込みが終わると駅を照合できます。",
             .en: "The rail data is still loading; stations can be matched once it has.",
         ],
-        "ios.guide.done": [
-            .zhHant: "完成", .zhHans: "完成", .ja: "完了", .en: "Done",
-        ],
         "ios.guide.retry": [
             .zhHant: "重新選擇", .zhHans: "重新选择", .ja: "選び直す", .en: "Choose again",
         ],

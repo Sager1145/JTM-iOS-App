@@ -124,7 +124,7 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                         .railMinimumTouchTarget()
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(text("close", fallback: "Close"))
+                .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
                 .accessibilityIdentifier("newTripMapStationClose")
             }
             HStack(spacing: RailSpacing.s8) {

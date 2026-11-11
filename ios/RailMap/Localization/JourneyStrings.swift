@@ -562,7 +562,7 @@ enum JourneyStrings {
         "play.focus": [
             .zhHant: "自動跟隨", .zhHans: "自动跟随", .ja: "自動追従", .en: "Auto focus",
         ],
-        "video.cancel": [
+        "video.cancel": [ // ui-token-ok: distinct verb phrase "Cancel video export"
             .zhHant: "取消影片輸出",
             .zhHans: "取消视频导出",
             .ja: "動画の書き出しを中止",

@@ -149,9 +149,6 @@ enum StatisticsStrings {
         "ios.stats.shareMotion.edit": [
             .en: "Edit", .ja: "編集", .zhHans: "编辑", .zhHant: "編輯",
         ],
-        "ios.stats.shareMotion.done": [
-            .en: "Done", .ja: "完了", .zhHans: "完成", .zhHant: "完成",
-        ],
         "ios.stats.shareMotion.moveEarlier": [
             .en: "Move earlier", .ja: "前へ移動", .zhHans: "前移", .zhHant: "往前移",
         ],

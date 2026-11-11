@@ -380,7 +380,7 @@ struct DataImportView: View {
                 }
             case .finished:
                 Button { dismiss() } label: {
-                    Text(localization.text("data.done"))
+                    Text(localization.text("ios.done", fallback: "Done"))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.railPrimary(fillsWidth: true))

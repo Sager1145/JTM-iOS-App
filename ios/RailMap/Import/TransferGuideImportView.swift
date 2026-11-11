@@ -571,7 +571,7 @@ struct TransferGuideImportView: View {
                 .background(.bar)
             } else {
                 Button { dismiss() } label: {
-                    Text(localization.text("ios.guide.done")).frame(maxWidth: .infinity)
+                    Text(localization.text("ios.done", fallback: "Done")).frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.railPrimary(fillsWidth: true))
                 .padding(.horizontal, RailSpacing.screenInset)
