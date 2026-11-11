@@ -413,6 +413,10 @@ enum NewTripStrings {
             .en: "A ticket or timetable fills what it knows. Fields you change are never overwritten.", .ja: "きっぷや時刻表で分かる項目を自動入力します。自分で変更した項目は上書きされません。",
             .zhHant: "車票或時刻表會填入已知的欄位，您修改過的欄位不會被覆寫。", .zhHans: "车票或时刻表会填入已知的字段，您修改过的字段不会被覆盖。",
         ],
+        "ios.newTrip.timetableJapanOnly": [
+            .en: "Timetable autofill is available for Japan only for now.", .ja: "時刻表の自動入力は、今のところ日本のみ対応しています。",
+            .zhHant: "時刻表自動填入目前僅支援日本。", .zhHans: "时刻表自动填入目前仅支持日本。",
+        ],
         "ios.newTrip.fillSource.ticket": [
             .en: "Ticket", .ja: "きっぷ",
             .zhHant: "車票", .zhHans: "车票",
