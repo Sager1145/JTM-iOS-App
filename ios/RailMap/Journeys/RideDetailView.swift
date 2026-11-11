@@ -802,9 +802,7 @@ struct RideDetailContent: View {
                 Text("\(title) \(actual)")
                 if let status = StopTimingStatus.localizedLabel(
                     scheduled: scheduled, actual: actual, localization: localization) {
-                    Text(status).foregroundStyle(
-                        status == localization.text("ios.editor.actualOnTime")
-                            ? Color.secondary : Color.orange)
+                    Text(status).foregroundStyle(.secondary)
                 }
             }
             .font(.caption2.monospacedDigit())
@@ -1232,7 +1230,6 @@ private struct RideRouteStateCard: View {
             }
             Text(title)
                 .railText(.cardTitle)
-                .foregroundStyle(tint)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
         }
@@ -1442,8 +1439,8 @@ private struct RideRouteStateCard: View {
     /// beside it already says the state in words.
     private var tint: Color {
         switch status {
-        case .needsReview: .orange
-        case .unavailable: .red
+        case .needsReview: RailStatusKind.warning.tint
+        case .unavailable: RailStatusKind.error.tint
         default: .primary
         }
     }

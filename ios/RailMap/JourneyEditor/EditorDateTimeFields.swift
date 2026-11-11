@@ -37,10 +37,7 @@ struct EditorDateField: View {
                 }
             }
             if case .invalid = EditorTime.parseDate(date) {
-                Text(localization.text("ios.editor.dateRule"))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
+                RailStatusLabel(kind: .error, text: localization.text("ios.editor.dateRule"))
             }
         }
         .onChange(of: date) { _, _ in pendingPickerDate = nil }
@@ -178,10 +175,7 @@ struct EditorTimeField: View {
                 }
             }
             if case .invalid = EditorTime.parseTime(time) {
-                Text(localization.text("ios.editor.invalidClock"))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
+                RailStatusLabel(kind: .error, text: localization.text("ios.editor.invalidClock"))
             }
             if let serviceDate,
                case .valid(_, let clock) = EditorTime.parseTime(time),
@@ -393,10 +387,7 @@ struct TypedDateTimeField: View {
                 }
             }
             if let problem {
-                Text(problem)
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
+                RailStatusLabel(kind: .error, text: problem)
             } else if focused == .date {
                 Text(localization.text("ios.newTrip.dateForms", fallback: "e.g. 2026-11-05, 11/05 or 1105"))
                     .railText(.secondary)

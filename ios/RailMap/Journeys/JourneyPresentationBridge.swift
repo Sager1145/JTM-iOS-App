@@ -243,6 +243,18 @@ extension StatusPresentation.Tone {
         }
     }
 
+    /// Tint for the badge icon and its fill only. Never use it as a TEXT colour:
+    /// system orange on its own 13% fill is about 2:1. Text on a tone is `.primary`
+    /// (check-ui-tokens.sh rule status-color rejects `tone.color` as a foreground).
+    var iconColor: Color {
+        switch self {
+        case .neutral: .secondary
+        case .positive: .green
+        case .caution: RailStatusKind.warning.tint
+        case .critical: RailStatusKind.error.tint
+        }
+    }
+
     /// §7.5: "背景使用语义色 10–14% 强度".
     var fillOpacity: Double {
         switch self {

@@ -67,9 +67,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
                 }
             }
             if model.timetableFailed {
-                Text(text("timetableFailed", fallback: "This timetable could not be applied."))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: text("timetableFailed", fallback: "This timetable could not be applied."))
             }
             if let timetableTrain = model.timetableTrain {
                 timetableCard(timetableTrain)

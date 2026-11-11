@@ -48,10 +48,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     .fixedSize(horizontal: false, vertical: true)
             }
             if model.autofillFailed {
-                Text(text("autofillFailed", fallback: "This route could not be applied."))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
+                RailStatusLabel(kind: .error, text: text("autofillFailed", fallback: "This route could not be applied."))
             }
             directionRows
         } header: {
@@ -361,15 +358,18 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                 Text(title)
                     .font(.footnote.weight(.semibold)) // ui-token-ok: notice title
             }
-            Label {
-                Text(message)
-                    .font(.footnote) // ui-token-ok: notice text, colour set by label
-                    .fixedSize(horizontal: false, vertical: true)
-            } icon: {
-                Image(systemName: warning ? "exclamationmark.triangle" : "clock.arrow.circlepath")
-                    .foregroundStyle(warning ? Color.orange : Color.secondary)
+            if warning {
+                RailStatusLabel(kind: .warning, text: message)
+            } else {
+                Label {
+                    Text(message)
+                        .font(.footnote) // ui-token-ok: notice text, colour set by label
+                        .fixedSize(horizontal: false, vertical: true)
+                } icon: {
+                    Image(systemName: "clock.arrow.circlepath")
+                }
+                .foregroundStyle(.secondary)
             }
-            .foregroundStyle(warning ? Color.orange : Color.secondary)
             if let detail {
                 Text(detail)
                     .font(.footnote) // ui-token-ok: notice detail stays at the notice's own text size
@@ -428,7 +428,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     HStack(spacing: RailSpacing.s8) {
                         Image(systemName: model.choice(for: section) != nil ? "checkmark.circle.fill"
                               : section.candidates.count > 1 ? "questionmark.circle.fill" : "exclamationmark.circle")
-                            .foregroundStyle(model.choice(for: section) != nil ? Color.accentColor : Color.orange)
+                            .foregroundStyle(model.choice(for: section) != nil ? Color.accentColor : Color.orange) // status-color-ok: row icon; the state is also written in the row text
                             .accessibilityHidden(true)
                         VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                             Text(text("sectionTitle", fallback: "Section {n} of {count}: {from} → {to}", [
@@ -470,10 +470,8 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             }
         }
         if !model.pendingSections.isEmpty, shownSections.count > 1 {
-            Text(text("sectionsToChoose", fallback: "{count} sections still to choose before the stations are filled in",
+            RailStatusLabel(kind: .warning, text: text("sectionsToChoose", fallback: "{count} sections still to choose before the stations are filled in",
                       ["count": .string(String(model.pendingSections.count))]))
-                .font(.footnote) // ui-token-ok: warning text
-                .foregroundStyle(.orange)
                 .accessibilityIdentifier("newTripSectionsPending")
         }
     }
@@ -509,17 +507,10 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                         .railText(.tertiary)
                     ForEach(Array(corridor.junctions.enumerated()), id: \.offset) { _, junction in
                         if let badge = junctionBadge(junction) {
-                            if junction.link == .none {
-                                Label(badge, systemImage: "exclamationmark.triangle")
-                                    .font(.caption2)
-                                    .foregroundStyle(.orange)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            } else {
-                                Text(badge)
-                                    .font(.caption2)
-                                    .foregroundStyle(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
+                            Text(badge)
+                                .font(.caption2)
+                                .foregroundStyle(junction.link == .none ? Color.primary : Color.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                 }
@@ -584,11 +575,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
     }
 
     private func routeError(_ message: String) -> some View {
-        Text(message)
-            .font(.footnote) // ui-token-ok: error text
-            .foregroundStyle(.red)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        RailStatusLabel(kind: .error, text: message)
             .accessibilityIdentifier("newTripRouteError")
     }
 

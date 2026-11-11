@@ -277,13 +277,10 @@ struct DataImportView: View {
                 }
             }
             if !report.crossRegionRows.isEmpty {
-                Label(
-                    localization.text("ios.import.regionsNotConnected")
-                        + " (\(report.crossRegionRows.count))",
-                    systemImage: "exclamationmark.triangle"
-                )
-                .font(.footnote) // ui-token-ok: warning text with its own colour
-                .foregroundStyle(.orange)
+                RailStatusLabel(
+                    kind: .warning,
+                    text: localization.text("ios.import.regionsNotConnected")
+                        + " (\(report.crossRegionRows.count))")
                 .accessibilityIdentifier("importCrossRegionWarning")
             }
         }
@@ -522,9 +519,9 @@ struct DataErrorCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
-            Label(title, systemImage: "exclamationmark.triangle.fill")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.orange)
+            RailStatusLabel(kind: .warning, font: .subheadline.weight(.semibold)) {
+                Text(title)
+            }
             Text(detail)
                 .font(.subheadline)
             Text(kept)

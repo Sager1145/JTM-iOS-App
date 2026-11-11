@@ -92,9 +92,7 @@ struct TripNotePickOverlay: View {
                 .font(.footnote) // ui-token-ok: conditional colour
                 .foregroundStyle(feedback?.anchor == nil ? .secondary : .primary)
             if let alertKey {
-                Text(text(alertKey))
-                    .font(.footnote.weight(.semibold)) // ui-token-ok: error text
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: text(alertKey))
             }
         }
         .multilineTextAlignment(.center)

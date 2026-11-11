@@ -228,6 +228,9 @@ enum ShellStrings {
         // 「乗車記録…」 — a heading truncated to a stub (§14.5). The two
         // buttons already carry the verbs; this only has to name the surface.
         "ios.editorTitleNew": [.en: "New", .ja: "新規", .zhHans: "新建", .zhHant: "新增"],
+        // Spoken label of the status symbol in RailStatusLabel (warning/error messages).
+        "ios.status.warning": [.en: "Warning", .ja: "警告", .zhHans: "警告", .zhHant: "警告"],
+        "ios.status.error": [.en: "Error", .ja: "エラー", .zhHans: "错误", .zhHant: "錯誤"],
         "ios.save": [.en: "Save", .ja: "保存", .zhHans: "保存", .zhHant: "儲存"],
         "ios.cancel": [.en: "Cancel", .ja: "キャンセル", .zhHans: "取消", .zhHant: "取消"],
         // The search field's own clear button. Spoken, not drawn: the glyph is

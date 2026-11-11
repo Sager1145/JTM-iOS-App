@@ -46,15 +46,21 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
                     .accessibilityIdentifier("newTripTimetableJapanOnly")
             }
             if let count = model.ticketFillCount {
-                Label(count == 0
-                      ? text("ticketFilledNone", fallback: "Nothing on the ticket could be used.")
-                      : text("ticketFilled", fallback: "Filled {count} fields from the ticket. Check them below.",
-                             ["count": .string(String(count))]),
-                      systemImage: count == 0 ? "exclamationmark.triangle" : "checkmark.circle")
-                    .font(.subheadline)
-                    .foregroundStyle(count == 0 ? Color.orange : Color.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityElement(children: .combine)
+                Group {
+                    if count == 0 {
+                        RailStatusLabel(
+                            kind: .warning,
+                            text: text("ticketFilledNone", fallback: "Nothing on the ticket could be used."))
+                    } else {
+                        Label(text("ticketFilled", fallback: "Filled {count} fields from the ticket. Check them below.",
+                                   ["count": .string(String(count))]),
+                              systemImage: "checkmark.circle")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .accessibilityElement(children: .combine)
                     .accessibilityIdentifier("newTripTicketFilled")
             }
         } footer: {

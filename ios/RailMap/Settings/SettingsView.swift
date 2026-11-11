@@ -505,16 +505,13 @@ struct SettingsView: View {
                         "\(network.activeRegionCount)/\(network.requestedRegionCount) · "
                         + "\(network.activeNetworkBytes / 1024) KB"))
             if let failure = controller.selectedStationFailure {
-                Label(failure, systemImage: "exclamationmark.triangle")
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: failure)
             }
             if let failure = network.networkFailure {
-                Label(failure, systemImage: "exclamationmark.triangle")
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: failure)
             }
             if let failure = localization.readingsFailure {
-                Label(failure, systemImage: "exclamationmark.triangle")
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: failure)
             }
             networkStatus
         }

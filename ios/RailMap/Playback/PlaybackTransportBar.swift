@@ -360,7 +360,7 @@ struct PlaybackTransportBar: View {
         case .recording:
             Button { videoExporter.cancel(clearPlayback: false) } label: {
                 Image(systemName: "record.circle.fill")
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.red) // status-color-ok: record indicator glyph, not a message
                     .frame(width: RailSize.touch, height: RailSize.touch)
                     .contentShape(.rect)
             }

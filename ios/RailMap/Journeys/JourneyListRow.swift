@@ -231,12 +231,10 @@ struct JourneyListRow: View {
     /// it through the workspace's usual confirmation.
     private var overduePrompt: some View {
         VStack(alignment: .leading, spacing: RailSpacing.s4) {
-            Label(
-                localization.text(
-                    "ios.journey.overduePrompt", fallback: "This trip's time has passed."),
-                systemImage: "clock.badge.exclamationmark")
-                .font(.caption)
-                .foregroundStyle(.orange)
+            RailStatusLabel(
+                kind: .warning,
+                text: localization.text(
+                    "ios.journey.overduePrompt", fallback: "This trip's time has passed."))
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: RailSpacing.s8) { overdueActions }
                 VStack(alignment: .leading, spacing: RailSpacing.s4) { overdueActions }

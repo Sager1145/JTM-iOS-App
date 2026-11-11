@@ -107,8 +107,7 @@ struct JourneyGroupAssignmentView: View {
                     Text(localization.text("ios.journeyGroup.crossRegion"))
                 }
                 if failed {
-                    Text(localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"))
-                        .foregroundStyle(.red)
+                    RailStatusLabel(kind: .error, text: localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"))
                 }
             }
             .navigationTitle(localization.text("ios.journeyGroup.title"))
