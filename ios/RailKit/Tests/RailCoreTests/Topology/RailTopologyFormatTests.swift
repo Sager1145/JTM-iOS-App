@@ -21,7 +21,7 @@ struct RailTopologyFormatTests {
         if ref == F.noString { return nil }
         let base = header.offset(.strings) + Int(ref)
         let length = Int(data.u16(base))
-        return String(decoding: data.bytes(base + 2, length), as: UTF8.self)
+        return String(decoding: data.rawBytes(base + 2, length), as: UTF8.self)
     }
 
     @Test("record sizes and field offsets are tight and in range")
@@ -37,21 +37,20 @@ struct RailTopologyFormatTests {
         }
         check(F.Line.size, [(F.Line.id, 4), (F.Line.family, 4), (F.Line.name, 4), (F.Line.aliases, 4),
             (F.Line.institution, 2), (F.Line.categoryMask, 2), (F.Line.flags, 2), (F.Line.chainCount, 2),
-            (F.Line.validFrom, 2), (F.Line.validTo, 2), (F.Line.firstNode, 4), (F.Line.nodeCount, 4),
+            (F.Line.validFrom, 4), (F.Line.validTo, 4), (F.Line.firstNode, 4), (F.Line.nodeCount, 4),
             (F.Line.firstEdge, 4), (F.Line.edgeCount, 4), (F.Line.firstIdentity, 4),
             (F.Line.identityCount, 2), (F.Line.reserved, 2)], "line")
         check(F.Node.size, [(F.Node.stationCode, 4), (F.Node.fullMetres, 4), (F.Node.overviewMetres, 4),
             (F.Node.longitude, 4), (F.Node.latitude, 4), (F.Node.line, 2), (F.Node.chain, 2),
             (F.Node.flags, 2), (F.Node.reserved, 2)], "node")
-        check(F.Edge.size, [(F.Edge.lengthCm, 4), (F.Edge.cumulativeCm, 4), (F.Edge.validFrom, 2),
-            (F.Edge.validTo, 2), (F.Edge.flags, 2), (F.Edge.runCount, 2), (F.Edge.firstRun, 4),
-            (F.Edge.reserved, 4)], "edge")
+        check(F.Edge.size, [(F.Edge.lengthCm, 4), (F.Edge.cumulativeCm, 4), (F.Edge.validFrom, 4),
+            (F.Edge.validTo, 4), (F.Edge.flags, 2), (F.Edge.runCount, 2), (F.Edge.firstRun, 4)], "edge")
         check(F.Run.size, [(F.Run.chain, 2), (F.Run.reserved, 2), (F.Run.fullFromCm, 4),
             (F.Run.fullToCm, 4), (F.Run.overviewFromCm, 4), (F.Run.overviewToCm, 4)], "run")
         check(F.Link.size, [(F.Link.nodeA, 4), (F.Link.nodeB, 4), (F.Link.kind, 1), (F.Link.flags, 1),
-            (F.Link.validFrom, 2), (F.Link.validTo, 2), (F.Link.reserved, 2), (F.Link.registryID, 4)], "link")
+            (F.Link.reserved, 2), (F.Link.validFrom, 4), (F.Link.validTo, 4), (F.Link.registryID, 4)], "link")
         check(F.Identity.size, [(F.Identity.line, 4), (F.Identity.name, 4), (F.Identity.family, 4),
-            (F.Identity.validFrom, 2), (F.Identity.validTo, 2)], "identity")
+            (F.Identity.validFrom, 4), (F.Identity.validTo, 4)], "identity")
         check(F.Stop.size, [(F.Stop.key, 4), (F.Stop.keyLength, 2), (F.Stop.kind, 1), (F.Stop.reserved, 1),
             (F.Stop.firstNode, 4), (F.Stop.nodeCount, 4)], "stop")
         check(F.Header.size, [(F.Header.magicOffset, 4), (F.Header.versionOffset, 2),
@@ -69,8 +68,8 @@ struct RailTopologyFormatTests {
         #expect(header.version == 1 && header.flags == 0)
         #expect(header.packageSHA256 == Array(repeating: 0x11, count: 32))
         #expect(header.displaySHA256 == Array(repeating: 0x22, count: 32))
-        #expect(Int(header.fileLength) == data.count && data.count == 940)
-        #expect(F.Table.allCases.map { header.count($0) } == [2, 6, 5, 4, 2, 1, 3, 4, 188])
+        #expect(Int(header.fileLength) == data.count && data.count == 972)
+        #expect(F.Table.allCases.map { header.count($0) } == [2, 6, 5, 4, 2, 1, 3, 4, 199])
         // Tables are contiguous, 4-aligned, in directory order, and the file ends with the padded strings.
         var cursor = F.Header.size
         for table in F.Table.allCases {
@@ -99,8 +98,8 @@ struct RailTopologyFormatTests {
         #expect(str(data.u32(b + F.Line.id)) == "jp.test-b")
         let bFlags = F.LineFlag(rawValue: data.u16(b + F.Line.flags))
         #expect(bFlags == [.loop, .retired, .nonContinuous])
-        #expect(data.u16(b + F.Line.validFrom) == F.dayNumber(ofISODate: "2010-01-01"))
-        #expect(data.u16(b + F.Line.validTo) == F.dayNumber(ofISODate: "2019-12-31"))
+        #expect(data.u32(b + F.Line.validFrom) == F.dayNumber(ofISODate: "2010-01-01"))
+        #expect(data.u32(b + F.Line.validTo) == F.dayNumber(ofISODate: "2020-01-01"))
         #expect(data.u32(b + F.Line.firstNode) == 3 && data.u32(b + F.Line.nodeCount) == 3)
         // A loop line has as many edges as nodes.
         #expect(data.u32(b + F.Line.edgeCount) == 3 && data.u32(b + F.Line.firstEdge) == 2)
@@ -109,6 +108,7 @@ struct RailTopologyFormatTests {
         let n2 = rec(.nodes, 2), n4 = rec(.nodes, 4), n5 = rec(.nodes, 5)
         #expect(str(data.u32(n2 + F.Node.stationCode)) == "A03")
         #expect(data.u32(n2 + F.Node.fullMetres) == 400_050)
+        // Unset is legal per node (this one cannot be projected onto the overview chain).
         #expect(data.u32(n2 + F.Node.overviewMetres) == F.unsetMetres)
         #expect(data.f32(n2 + F.Node.longitude) == 139.03)
         #expect(data.u32(n4 + F.Node.stationCode) == F.noString)
@@ -119,7 +119,7 @@ struct RailTopologyFormatTests {
         let e0 = rec(.edges, 0), e1 = rec(.edges, 1), e3 = rec(.edges, 3)
         #expect(data.u32(e1 + F.Edge.cumulativeCm) == data.u32(e0 + F.Edge.lengthCm))
         #expect(F.EdgeFlag(rawValue: data.u16(e1 + F.Edge.flags)) == [.forward, .withheld])
-        #expect(data.u16(e1 + F.Edge.validFrom) == F.dayNumber(ofISODate: "2010-01-01"))
+        #expect(data.u32(e1 + F.Edge.validFrom) == F.dayNumber(ofISODate: "2010-01-01"))
         #expect(F.EdgeFlag(rawValue: data.u16(e3 + F.Edge.flags)) == [.forward, .reverse, .hasRuns])
         #expect(data.u16(e3 + F.Edge.runCount) == 2 && data.u32(e3 + F.Edge.firstRun) == 1)
         // Edge lengths of a line sum to its closing cumulative position.
@@ -135,13 +135,16 @@ struct RailTopologyFormatTests {
         #expect(data.u32(l0 + F.Link.nodeA) == 1 && data.u32(l0 + F.Link.nodeB) == 3)
         #expect(F.LinkKind(rawValue: data.u8(l0 + F.Link.kind)) == .physicalJunction)
         #expect(str(data.u32(l0 + F.Link.registryID)) == "jct-test-1")
+        #expect(str(data.u32(l1 + F.Link.registryID)) == "ts-test-1")
         #expect(F.LinkKind(rawValue: data.u8(l1 + F.Link.kind)) == .throughService)
         #expect(data.u8(l1 + F.Link.flags) == 1)
 
         // Identity row.
         let i0 = rec(.identities, 0)
         #expect(str(data.u32(i0 + F.Identity.name)) == "旧テストA線")
-        #expect(data.u16(i0 + F.Identity.validTo) == F.dayNumber(ofISODate: "2009-12-31"))
+        // A pre-2000 bound survives (the data reaches back to 1872), and validTo is exclusive.
+        #expect(data.u32(i0 + F.Identity.validFrom) == F.dayNumber(ofISODate: "1987-04-01"))
+        #expect(data.u32(i0 + F.Identity.validTo) == F.dayNumber(ofISODate: "2010-01-01"))
 
         // Stops are sorted by key bytes and point into stopNodes.
         var keys: [[UInt8]] = []
@@ -168,26 +171,36 @@ struct RailTopologyFormatTests {
         #expect(topology.header.region == "jp")
     }
 
-    @Test("day numbers count from 2000-01-01 and reject nonsense")
+    @Test("day numbers count from 1800-01-01, cover the 1870s data and reject nonsense")
     func dayNumbers() {
-        #expect(F.dayNumber(ofISODate: "2000-01-01") == 1)
-        #expect(F.dayNumber(ofISODate: "2000-12-31") == 366)
-        #expect(F.dayNumber(ofISODate: "2010-01-01") == 3654)
-        #expect(F.dayNumber(ofISODate: "1999-12-31") == nil)
+        #expect(F.dayNumber(ofISODate: "1800-01-01") == 1)
+        #expect(F.dayNumber(ofISODate: "1800-12-31") == 365)
+        #expect(F.dayNumber(ofISODate: "2000-01-01") == 73_049)
+        #expect(F.dayNumber(ofISODate: "1872-10-14")! < F.dayNumber(ofISODate: "1993-03-01")!)
+        #expect(F.dayNumber(ofISODate: "1993-03-01")! < F.dayNumber(ofISODate: "2000-01-01")!)
+        #expect(F.dayNumber(ofISODate: "2010-01-01")! - F.dayNumber(ofISODate: "2009-12-31")! == 1)
+        #expect(F.dayNumber(ofISODate: "1799-12-31") == nil)
         #expect(F.dayNumber(ofISODate: "2023-02-29") == nil)
         #expect(F.dayNumber(ofISODate: "2024-02-29") != nil)
         #expect(F.dayNumber(ofISODate: "2024-2-9") == nil)
-        #expect(F.dayNumber(ofISODate: "2200-01-01") == nil)
+        #expect(F.dayNumber(ofISODate: "2200-01-01") != nil)
     }
 
-    @Test("validity is inclusive on both ends and 0 is unbounded")
+    @Test("validity is half-open like the sources, 0 is open, undated means no validTo")
     func validity() {
         #expect(F.isValid(on: 100, from: 0, to: 0))
-        #expect(F.isValid(on: 100, from: 100, to: 100))
+        #expect(F.isValid(on: 100, from: 100, to: 0))
         #expect(!F.isValid(on: 99, from: 100, to: 0))
+        // validTo is the first day the row no longer applies: the day before a closure
+        // resolves differently from the day of it.
+        #expect(F.isValid(on: 99, from: 0, to: 100))
+        #expect(!F.isValid(on: 100, from: 0, to: 100))
         #expect(!F.isValid(on: 101, from: 0, to: 100))
-        #expect(!F.isValid(on: nil, from: 100, to: 0))
+        // Undated: exactly the rows with no validTo, whatever validFrom is (ADR 0011).
+        #expect(F.isValid(on: nil, from: 100, to: 0))
         #expect(F.isValid(on: nil, from: 0, to: 0))
+        #expect(!F.isValid(on: nil, from: 0, to: 100))
+        #expect(!F.isValid(on: nil, from: 50, to: 100))
     }
 
     @Test("a truncated, mislabelled or inconsistent header is rejected")
@@ -198,7 +211,7 @@ struct RailTopologyFormatTests {
         #expect(throws: F.FormatError.badMagic) { try F.parseHeader(bad) }
         bad = good; bad[4] = 2
         #expect(throws: F.FormatError.unsupportedVersion(2)) { try F.parseHeader(bad) }
-        #expect(throws: F.FormatError.lengthMismatch(declared: 940, actual: 939)) {
+        #expect(throws: F.FormatError.lengthMismatch(declared: 972, actual: 971)) {
             try F.parseHeader(good.dropLast())
         }
         bad = good; bad[F.Header.directoryOffset + 8 + 4] = 0xFF  // nodes count far past the file
@@ -215,6 +228,16 @@ struct RailTopologyFormatTests {
         #expect(span.bytes == [0x01, 0x02, 0x07, 0x00, 0x03, 0x00, 0x34, 0xD2])
         #expect(RideRefs.Span(bytes: span.bytes) == span)
         #expect(RideRefs.Span(bytes: [1, 2, 3]) == nil)
+    }
+
+    @Test("a full circuit is two spans of one section split at an intermediate node")
+    func fullCircuitIsTwoSpans() {
+        // Yamanote-style loop of 6 nodes, from node 2 round to node 2: 2 -> 5, then 5 -> 2.
+        let first = RideRefs.Span(span: RailTopology.Span(line: 4, fromNode: 2, toNode: 5), section: 3)
+        let second = RideRefs.Span(span: RailTopology.Span(line: 4, fromNode: 5, toNode: 2, wraps: true), section: 3)
+        #expect(first.span.fromNode != first.span.toNode && second.span.fromNode != second.span.toNode)
+        #expect(first.section == second.section)
+        #expect(RideRefs.Span(bytes: second.bytes) == second)
     }
 }
 
@@ -252,19 +275,19 @@ private enum MiniTopologyEncoder {
         }
         _ = s("")
         let d2010 = F.dayNumber(ofISODate: "2010-01-01")!
-        let d2009 = F.dayNumber(ofISODate: "2009-12-31")!
-        let d2019 = F.dayNumber(ofISODate: "2019-12-31")!
+        let d1987 = F.dayNumber(ofISODate: "1987-04-01")!
+        let d2020 = F.dayNumber(ofISODate: "2020-01-01")!
         let both: UInt16 = F.EdgeFlag([.forward, .reverse]).rawValue
         let runEdge: UInt16 = F.EdgeFlag([.forward, .reverse, .hasRuns]).rawValue
 
         func line(_ id: String, _ fam: String, _ name: String, _ alias: String, _ inst: UInt16,
-                  _ cat: UInt16, _ flags: F.LineFlag, _ chains: UInt16, _ vf: UInt16, _ vt: UInt16,
+                  _ cat: UInt16, _ flags: F.LineFlag, _ chains: UInt16, _ vf: UInt32, _ vt: UInt32,
                   _ fn: UInt32, _ nn: UInt32, _ fe: UInt32, _ ne: UInt32, _ fi: UInt32, _ ni: UInt16) -> [UInt8] {
             var o = Out(size: F.Line.size)
             o.u32(F.Line.id, s(id)); o.u32(F.Line.family, s(fam)); o.u32(F.Line.name, s(name))
             o.u32(F.Line.aliases, s(alias))
             o.u16(F.Line.institution, inst); o.u16(F.Line.categoryMask, cat); o.u16(F.Line.flags, flags.rawValue)
-            o.u16(F.Line.chainCount, chains); o.u16(F.Line.validFrom, vf); o.u16(F.Line.validTo, vt)
+            o.u16(F.Line.chainCount, chains); o.u32(F.Line.validFrom, vf); o.u32(F.Line.validTo, vt)
             o.u32(F.Line.firstNode, fn); o.u32(F.Line.nodeCount, nn)
             o.u32(F.Line.firstEdge, fe); o.u32(F.Line.edgeCount, ne)
             o.u32(F.Line.firstIdentity, fi); o.u16(F.Line.identityCount, ni)
@@ -273,7 +296,7 @@ private enum MiniTopologyEncoder {
         let lines = [
             line("jp.test-a", "test-op/test-a", "テストA線", "A線\u{1F}Test A", 1, 1, [], 1, 0, 0, 0, 3, 0, 2, 0, 1),
             line("jp.test-b", "test-op/test-b", "テストB環状線", "", 2, 2, [.loop, .retired, .nonContinuous],
-                 2, d2010, d2019, 3, 3, 2, 3, 1, 0),
+                 2, d2010, d2020, 3, 3, 2, 3, 1, 0),
         ]
 
         func node(_ code: String?, _ full: UInt32, _ ov: UInt32, _ lon: Float, _ lat: Float,
@@ -294,11 +317,11 @@ private enum MiniTopologyEncoder {
             node("B03", 20_000, 19_000, 139.02, 35.02, 1, 1, []),
         ]
 
-        func edge(_ len: UInt32, _ cum: UInt32, _ vf: UInt16, _ vt: UInt16, _ flags: UInt16,
+        func edge(_ len: UInt32, _ cum: UInt32, _ vf: UInt32, _ vt: UInt32, _ flags: UInt16,
                   _ runs: UInt16, _ first: UInt32) -> [UInt8] {
             var o = Out(size: F.Edge.size)
             o.u32(F.Edge.lengthCm, len); o.u32(F.Edge.cumulativeCm, cum)
-            o.u16(F.Edge.validFrom, vf); o.u16(F.Edge.validTo, vt); o.u16(F.Edge.flags, flags)
+            o.u32(F.Edge.validFrom, vf); o.u32(F.Edge.validTo, vt); o.u16(F.Edge.flags, flags)
             o.u16(F.Edge.runCount, runs); o.u32(F.Edge.firstRun, first)
             return o.bytes
         }
@@ -319,21 +342,21 @@ private enum MiniTopologyEncoder {
         let runs = [run(0, 0, 50_000, 0, 48_000), run(0, 50_000, 80_000, 48_000, 76_000),
                     run(1, 0, 20_000, 0, 19_000), run(1, 20_000, 50_000, 19_000, 47_000)]
 
-        func link(_ a: UInt32, _ b: UInt32, _ kind: F.LinkKind, _ flags: UInt8, _ vf: UInt16, _ vt: UInt16,
+        func link(_ a: UInt32, _ b: UInt32, _ kind: F.LinkKind, _ flags: UInt8, _ vf: UInt32, _ vt: UInt32,
                   _ registry: String) -> [UInt8] {
             var o = Out(size: F.Link.size)
             o.u32(F.Link.nodeA, a); o.u32(F.Link.nodeB, b); o.u8(F.Link.kind, kind.rawValue)
-            o.u8(F.Link.flags, flags); o.u16(F.Link.validFrom, vf); o.u16(F.Link.validTo, vt)
+            o.u8(F.Link.flags, flags); o.u32(F.Link.validFrom, vf); o.u32(F.Link.validTo, vt)
             o.u32(F.Link.registryID, s(registry))
             return o.bytes
         }
         let links = [link(1, 3, .physicalJunction, 0, d2010, 0, "jct-test-1"),
-                     link(2, 5, .throughService, 1, 0, 0, "")]
+                     link(2, 5, .throughService, 1, 0, 0, "ts-test-1")]
 
         var identity = Out(size: F.Identity.size)
         identity.u32(F.Identity.line, 0); identity.u32(F.Identity.name, s("旧テストA線"))
-        identity.u32(F.Identity.family, s("test-op/old-a")); identity.u16(F.Identity.validFrom, 0)
-        identity.u16(F.Identity.validTo, d2009)
+        identity.u32(F.Identity.family, s("test-op/old-a")); identity.u32(F.Identity.validFrom, d1987)
+        identity.u32(F.Identity.validTo, d2010)
 
         func stop(_ key: String, _ kind: F.StopKind, _ first: UInt32, _ count: UInt32) -> [UInt8] {
             var o = Out(size: F.Stop.size)

@@ -32,22 +32,28 @@ in place; there is no decode step and no resident copy.
 | Length, chain position | `UInt32` | centimetres (0.01 m). `StrokeRef` measures are metres: divide by 100 |
 | Unset position | `UInt32` | `0xFFFFFFFF` (`unsetMetres`) |
 | Coordinate | `Float32` | degrees WGS84, coarse use only |
-| Date | `UInt16` | day number, 1 = 2000-01-01, 0 = no bound, up to 2179-06-06 |
+| Date | `UInt32` | day number, 1 = 1800-01-01, 0 = no bound (the data reaches back to 1872) |
 
-`validFrom` is the first day a row applies and `validTo` the last day,
-inclusive. Both 0 means always. A query without a date matches only rows with
-both 0.
+Validity is half-open `[validFrom, validTo)`, the convention of the source
+data: `validFrom` is the first day a row applies and `validTo` the first day it
+no longer applies. The builder copies a source `valid_to` unchanged (converted
+with the day-number function) and never subtracts a day; a source bound of
+"none" is written as 0, and a source date before 1800-01-01 is a builder error.
+Both 0 means always. A dated query matches `validFrom <= day < validTo`, a 0
+bound being open. An undated query (a ride with no date) matches exactly the
+rows with `validTo == 0`, whatever `validFrom` is: the current network, as ADR
+0011 does.
 
 ## Layout
 
 ```
 0     header (160 bytes)
-160   lines       N x 52
+160   lines       N x 56
       nodes       N x 28
       edges       N x 24
       runs        N x 20
-      links       N x 20
-      identities  N x 16
+      links       N x 24
+      identities  N x 20
       stops       N x 16
       stopNodes   N x 4
       strings     bytes, zero-padded to a multiple of 4
@@ -75,7 +81,7 @@ aligned, without overflow. It also rejects the file when the display blob's
 SHA-256 differs from the header's (the manifest's `topologySHA256` is checked
 before the file is opened).
 
-### lines (52 bytes), manifest blob order, retired lines included
+### lines (56 bytes), manifest blob order, retired lines included
 
 | Offset | Size | Field |
 |---|---|---|
@@ -87,15 +93,15 @@ before the file is opened).
 | 18 | 2 | category mask (statistics categories) |
 | 20 | 2 | flags: bit 0 loop, 1 highSpeed, 2 pairedUpDown, 3 retired, 4 nonContinuous |
 | 22 | 2 | chainCount (chains, or parts when nonContinuous) |
-| 24 | 2 | validFrom |
-| 26 | 2 | validTo |
-| 28 | 4 | firstNode (global index) |
-| 32 | 4 | nodeCount (at most 65,535) |
-| 36 | 4 | firstEdge (global index) |
-| 40 | 4 | edgeCount |
-| 44 | 4 | firstIdentity (index into identities) |
-| 48 | 2 | identityCount |
-| 50 | 2 | reserved |
+| 24 | 4 | validFrom |
+| 28 | 4 | validTo (exclusive) |
+| 32 | 4 | firstNode (global index) |
+| 36 | 4 | nodeCount (at most 65,535) |
+| 40 | 4 | firstEdge (global index) |
+| 44 | 4 | edgeCount |
+| 48 | 4 | firstIdentity (index into identities) |
+| 52 | 2 | identityCount |
+| 54 | 2 | reserved |
 
 ### nodes (28 bytes), grouped per line in station order
 
@@ -103,7 +109,7 @@ before the file is opened).
 |---|---|---|
 | 0 | 4 | stationCode (string), `noString` for a junction point |
 | 4 | 4 | fullMetres: cm on the full chunk's chain ruler |
-| 8 | 4 | overviewMetres: cm on the overview chunk's ruler for the same chain index, or unset |
+| 8 | 4 | overviewMetres: cm on the overview chunk's ruler for the same chain index, or unset (no overview chunk, or the node cannot be projected) |
 | 12 | 4 | longitude `Float32` |
 | 16 | 4 | latitude `Float32` |
 | 20 | 2 | line index |
@@ -120,18 +126,17 @@ stations); the span cannot be drawn and the caller treats it as undrawable.
 | Offset | Size | Field |
 |---|---|---|
 | 0 | 4 | lengthCm, surveyed, above zero |
-| 4 | 4 | cumulativeCm: length from the line's first node to this edge's first node |
-| 8 | 2 | validFrom |
-| 10 | 2 | validTo |
-| 12 | 2 | flags: bit 0 forward, 1 reverse, 2 withheld, 3 hasRuns |
-| 14 | 2 | runCount |
-| 16 | 4 | firstRun (index into runs) |
-| 20 | 4 | reserved |
+| 4 | 4 | cumulativeCm: length of every edge (withheld ones included) from the line's first node to this edge's first node |
+| 8 | 4 | validFrom |
+| 12 | 4 | validTo (exclusive) |
+| 16 | 2 | flags: bit 0 forward, 1 reverse, 2 withheld, 3 hasRuns |
+| 18 | 2 | runCount |
+| 20 | 4 | firstRun (index into runs) |
 
 Edge `k` of a line joins node ordinals `k` and `(k + 1) mod nodeCount`. A loop
 line has `nodeCount` edges, the last one closing the loop; other lines have
 `nodeCount - 1`. `forward` allows travel first node to second, `reverse` the
-other way. A `withheld` edge is drawn dashed and counts for no distance.
+other way. A `withheld` edge is drawn dashed and counts for no distance: its `lengthCm` is subtracted from a span's cumulative difference.
 
 ### runs (20 bytes)
 
@@ -148,7 +153,7 @@ Runs are the pieces of one edge on one chain or part each, in the edge's travel
 order. From greater than to means the piece runs against the chain's own
 direction.
 
-### links (20 bytes), the only way to change lines
+### links (24 bytes), the only way to change lines
 
 | Offset | Size | Field |
 |---|---|---|
@@ -156,20 +161,20 @@ direction.
 | 4 | 4 | nodeB (global index) |
 | 8 | 1 | kind: 1 physicalJunction, 2 throughService |
 | 9 | 1 | flags: bit 0 directed (A to B only) |
-| 10 | 2 | validFrom |
-| 12 | 2 | validTo |
-| 14 | 2 | reserved |
-| 16 | 4 | registryID (string): the junction or through-service row it was compiled from |
+| 10 | 2 | reserved |
+| 12 | 4 | validFrom |
+| 16 | 4 | validTo (exclusive) |
+| 20 | 4 | registryID (string): the junction or through-service row it was compiled from, never empty |
 
 A link exists only for a reviewed physical junction or a dated through service.
 Equal station codes, equal names, station complexes, shared display points and
 operator families never create one (`TripConnectivity` grants nothing for
 them). Nodes of the same line need no link.
 
-### identities (16 bytes)
+### identities (20 bytes)
 
 Dated former names of a renamed or transferred line: line index `UInt32`,
-name (string), family (string), validFrom, validTo. Listed under the line via
+name (string), family (string), validFrom `UInt32`, validTo `UInt32` (exclusive). Listed under the line via
 `firstIdentity`/`identityCount`.
 
 ### stops (16 bytes), sorted ascending by (key UTF-8 bytes, kind)
@@ -188,7 +193,8 @@ trip resolves without waiting for the registry decode.
   `line.firstNode + ordinal`. A `NodeRef` is (line index, ordinal).
 - Edge ordinal and global edge index: same scheme with `firstEdge`.
 - Chain index: names a chain of the line's display chunk; the stroke chain id
-  is `"{region}|{lineID}#{chain}"`.
+  is `"{region}|{lineID}#{chain}"`. For `nonContinuous` lines it is a flat part
+  number, see "Part-range rule".
 - Line indices, ordinals and metres are valid for one topology file only. Any
   cache of them (the ride record file) is keyed by the file's SHA-256.
 
@@ -201,10 +207,32 @@ network layer holds. Each node stores its position twice:
 - `overviewMetres` on the overview chunk's ruler for the same chain index.
 
 Overview chunks keep fewer vertices (861 of 8,782 stations on the continuous
-Japanese lines) but every node has a position on them: the builder projects
-the node onto the overview chain. The builder copies the value of the chunk's
-own `measures` at the node's position, so a `StrokeRef` built from a node uses
-exactly the ruler `ChainRef.measures` uses.
+Japanese lines), so the builder projects each node onto the overview chain.
+`overviewMetres` is unset when the line has no overview chunk or a node cannot
+be projected; unset is legal per node. A span that needs an unset overview
+position produces no `StrokeRef`s at overview detail and the caller draws it at
+full detail.
+
+### Ruler formula (normative)
+
+Both rulers are the ruler the device computes in `joinedChainCoordinates`
+(`ios/RailMap/Map/MapLineGeometry.swift`), so a `StrokeRef` built from a node
+matches `ChainRef.measures`:
+
+- the chain's intervals are joined in order, every interval after the first
+  dropping its first vertex;
+- coordinates are the display-datum coordinates of the display chunk, not raw
+  WGS84;
+- vertex 0 is 0 m; each step adds
+  `hypot((b.lon - a.lon) * 111320 * cos(lat), (b.lat - a.lat) * 111320)` where
+  `lat` is the mean of the two latitudes in radians, in 64-bit floating point;
+- a node's position is the ruler at its vertex (or the projected point for an
+  overview chain); centimetres are metres times 100 rounded to nearest;
+- parts of non-continuous lines use the same formula over the part's own
+  joined vertices, starting at 0 m at the part's first vertex.
+
+U1's test compares the builder's values against measures generated by the
+Swift function.
 
 A span `(line, fromNode, toNode)` becomes `StrokeRef`s as follows:
 
@@ -226,13 +254,24 @@ and kr) have no single chain. Their display data is separate fragments called
 parts, each with its own ruler starting at 0 m at the fragment's first vertex.
 For these lines:
 
-- `chain` is the part index, and a node's metres are measured on its part;
+- `chain` is the flat part number, and a node's metres are measured on its part;
 - every edge carries runs (`hasRuns`), because its end nodes may sit on
   different parts and the track between them may use several;
 - the runs, not the end nodes' own positions, are authoritative for the
   edge's geometry;
-- overview chunks preserve part indices, so the same index addresses the part
+- overview chunks preserve part numbers, so the same number addresses the part
   at either detail.
+
+Part addressing, exactly: the display data lists, per line, lane fragments
+(`lineKey@lane`), each holding one part per interval. The parts are numbered
+from 0 across the line's fragments in the order the display chunk lists the
+fragments, and within a fragment in the order of its `parts`. That flat number
+is what `Node.chain`, `Run.chain` and `Line.chainCount` hold. The file stores no
+lane ids: the reader recovers (fragment, part within fragment) by counting
+parts in the display chunk, and the drawn id is
+`"{region}|{lineKey}@{lane}#{part within fragment}"`. No resident chain exists
+for these parts today (`ChainRef`s are built for continuous lines only), so U10
+must build a slicable ruler per part.
 
 Continuous lines use runs only for the 163 intervals split across lane
 pieces.
@@ -256,8 +295,13 @@ A path that changes lines is several spans with the same section index in
 travel order. The join is a link and is not stored.
 
 Distance of a span is one subtraction of `cumulativeCm` values (plus the
-closing edge for a wrapping span). Withheld edges and `unproven` spans are
+closing edge for a wrapping span), minus the `lengthCm` of each withheld edge
+inside the span (`cumulativeCm` counts every edge). `unproven` spans are
 excluded from distance.
+
+A full circuit of a loop line from a station back to itself cannot be one span
+(`fromNode == toNode` never occurs). It is two spans with the same section
+index, split at any intermediate node.
 
 ## Unresolved and historical sections
 
@@ -270,18 +314,20 @@ excluded from distance.
 - Historical track is ordinary data. Retired and renamed lines are lines
   flagged `retired` with `validFrom`/`validTo`; their stations are nodes with
   codes; closed intervals carry `validTo` on the edge. The ride's date selects
-  the edges and links valid on that day; the same section resolves differently
-  the day before and the day of a closure. Dated former names are in
-  `identities`.
-- A date-less ride matches only rows with both bounds 0.
+  the edges and links valid on that day; because `validTo` is exclusive the
+  same section resolves differently the day before and the day of a closure.
+  Dated former names are in `identities`.
+- A date-less ride matches exactly the rows with `validTo == 0`, whatever
+  `validFrom` is (the current network, ADR 0011).
 
 ## Fixture
 
-`topology-mini.bin` (940 bytes, region `jp`) is hand-built with literal
+`topology-mini.bin` (972 bytes, region `jp`) is hand-built with literal
 offsets. It has two lines. `jp.test-a` has 3 nodes, 2 edges (the second
 one-way, withheld and dated), an alias pair and one former-name row.
 `jp.test-b` is a retired, dated, non-continuous loop with 3 nodes (one a
 junction point on part 0, one on part 1), 3 edges with 4 runs (one lane-split
 edge crossing parts), a dated physical-junction link to line A and a directed
-through-service link. Three stop keys, one mapping to two nodes. One node has
-no overview position.
+through-service link (registry id `ts-test-1`). Three stop keys, one mapping to
+two nodes. One node has no overview position (legal per node). The former-name
+row starts in 1987, a pre-2000 date.
