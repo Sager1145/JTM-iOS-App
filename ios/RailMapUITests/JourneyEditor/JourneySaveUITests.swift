@@ -84,7 +84,7 @@ final class JourneySaveUITests: XCTestCase {
         EditorLaunchSupport.launchEditing(app, journey: seededJourney(number: "Group test"))
         // The group is one of the details, collapsed until asked for.
         let more = app.buttons["newTripMoreDetails"]
-        XCTAssertTrue(EditorUITestSupport.reveal(more, in: app, unmountedRowIsAbove: false), app.debugDescription)
+        XCTAssertTrue(EditorUITestSupport.reveal(more, in: app, maxDrags: 16, unmountedRowIsAbove: false), app.debugDescription)
         more.tap()
         let create = app.buttons["createJourneyGroup"]
         XCTAssertTrue(EditorUITestSupport.reveal(create, in: app), app.debugDescription)
