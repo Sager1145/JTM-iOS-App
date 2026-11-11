@@ -340,7 +340,7 @@ private struct AppTypographyUITestProbe: View {
         pin.configure(item)
         let draftFont = pin.subviews.compactMap { ($0 as? UILabel)?.font.pointSize }.first ?? 0
         return Text(" ")
-            .font(.system(size: 1))
+            .font(.system(size: 1)) // ui-token-ok: hidden probe
             .foregroundStyle(.clear)
             .frame(width: 1, height: 1)
             .allowsHitTesting(false)

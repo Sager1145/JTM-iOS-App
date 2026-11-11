@@ -1763,7 +1763,7 @@ struct RailWorkspaceView: View {
             // §13.1: an empty upcoming list is not a failure and not an empty
             // app — there is a whole log behind the next tab. Say which of the
             // two this is rather than showing a bare "nothing here".
-            VStack(spacing: 10) {
+            VStack(spacing: RailSpacing.s8) {
                 Image(systemName: "calendar")
                     .font(.largeTitle)
                     .foregroundStyle(.tertiary)
@@ -1775,12 +1775,11 @@ struct RailWorkspaceView: View {
                 Button(localization.text("ios.tab.history", fallback: "History")) {
                     selection = .all
                 }
-                .buttonStyle(.bordered)
-                .railMinimumTouchTarget()
+                .buttonStyle(.railSecondary)
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 24)
-            .padding(.top, 24)
+            .padding(.horizontal, RailSpacing.s24)
+            .padding(.top, RailSpacing.s24)
             // Scrollable so it survives the compact stop and an accessibility
             // text size, where an empty state can be taller than the panel.
             .modifier(ScrollableIfNeeded())
@@ -1862,7 +1861,7 @@ struct RailWorkspaceView: View {
                         } : nil)
             }))
             .overlay(alignment: .topTrailing) {
-                MapLocationRefusal(controller: controller).padding(12)
+                MapLocationRefusal(controller: controller).padding(RailSpacing.mapChromeInset)
             }
             .railAnimation(RailMotion.enter, value: controller.locationRefusal, reduceMotion: reduceMotion)
             .onChange(of: expandedDisplay) { _, expanded in
@@ -2080,7 +2079,7 @@ struct RailWorkspaceView: View {
             .buttonStyle(.plain)
             .foregroundStyle(.tint)
             .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
-            .padding(.bottom, 6)
+            .padding(.bottom, RailSpacing.rowVertical)
             .accessibilityIdentifier("journeySearchDidYouMean")
         }
     }
@@ -2146,7 +2145,7 @@ struct RailWorkspaceView: View {
             isAccessibilitySize: dynamicTypeSize.isAccessibilitySize)
         return ZStack(alignment: .bottomLeading) {
             wideMapSurface(in: geometry, panelWidth: panelWidth)
-            HStack(alignment: .top, spacing: 8) {
+            HStack(alignment: .top, spacing: RailSpacing.s8) {
                 DockedCard(
                     content: dockedMenuContent(metrics: metrics),
                     width: panelWidth,
@@ -2512,7 +2511,7 @@ struct RailWorkspaceView: View {
     /// its layout margin from the safe area, and the logo's glyphs sit 11 pt
     /// above that margin.
     private func applyDockLogoMargin(bottomGap: CGFloat, safeAreaBottom: CGFloat) {
-        let barBottom = bottomGap + 12
+        let barBottom = bottomGap + RailSpacing.s12
         let logoGlyphPadding: CGFloat = 11
         controller.dockedBottomMargin = max(0, barBottom - safeAreaBottom - logoGlyphPadding)
     }
@@ -2532,10 +2531,10 @@ struct RailWorkspaceView: View {
     private func wideMapSurface(in geometry: GeometryProxy, panelWidth: CGFloat) -> some View {
         // The toggle beside the dock owns its own 44 pt column. Playback must
         // clear both that column and the menu, even on a landscape phone.
-        let leading = panelWidth + Self.dockInset + 8 + WorkspaceMenuMetrics.touchSide + 12
-        let width = max(0, geometry.size.width - leading - 12)
-        let transportHeight = showsPlaybackBar ? playbackBarHeight + 12 : 0
-        let railPresent = geometry.size.height >= railHeight + transportHeight + 24
+        let leading = panelWidth + Self.dockInset + RailSpacing.s8 + WorkspaceMenuMetrics.touchSide + RailSpacing.s12
+        let width = max(0, geometry.size.width - leading - RailSpacing.s12)
+        let transportHeight = showsPlaybackBar ? playbackBarHeight + RailSpacing.s12 : 0
+        let railPresent = geometry.size.height >= railHeight + transportHeight + RailSpacing.s24
         return WorkspaceMapChrome(
             placement: .sideBySide(
                 playbackWidth: min(540, width),
@@ -2697,15 +2696,15 @@ struct RailWorkspaceView: View {
         case .loaded(let loaded) where !loaded.days.isEmpty && tripHide.needsScoping(loaded)
                 && tripHide.scoped(loaded).days.isEmpty:
             // Every trip is in a hidden region or month: say so, with the reset.
-            VStack(spacing: 10) {
+            VStack(spacing: RailSpacing.s8) {
                 Image(systemName: "eye.slash").font(.largeTitle).foregroundStyle(.tertiary)
                 Text(localization.text("ios.hide.allHidden", fallback: "All trips are hidden by the filter."))
                     .font(.subheadline).foregroundStyle(.secondary).multilineTextAlignment(.center)
                 Button(localization.text("ios.hide.showAll", fallback: "Show all")) { tripHide.showAll() }
-                    .buttonStyle(.bordered).railMinimumTouchTarget()
+                    .buttonStyle(.railSecondary)
                     .accessibilityIdentifier("tripHideEmptyShowAll")
             }
-            .frame(maxWidth: .infinity).padding(.top, 24)
+            .frame(maxWidth: .infinity).padding(.top, RailSpacing.s24)
         case .loaded(let loaded) where loaded.days.isEmpty:
             workspaceUnavailable(
                 JourneyPresentationResolver.workspace(phase: .empty),
@@ -2750,17 +2749,16 @@ struct RailWorkspaceView: View {
                           otherListMatches(searchQuery, in: other) {
                     // Pass 3: each list searches itself. When the other list
                     // has the match, say so and offer it, keeping the query.
-                    VStack(spacing: 10) {
+                    VStack(spacing: RailSpacing.s8) {
                         Text(localization.text("ios.search.noneHere", fallback: "No matches in this list."))
                             .font(.subheadline).foregroundStyle(.secondary)
                         Button(localization.text(other.tabLocalizationKey, fallback: other.tabFallbackName)) {
                             tabSelection = other
                         }
-                        .buttonStyle(.bordered)
-                        .railMinimumTouchTarget()
+                        .buttonStyle(.railSecondary)
                         .accessibilityIdentifier("searchOtherList")
                     }
-                    .padding(.top, 24)
+                    .padding(.top, RailSpacing.s24)
                 } else if days.isEmpty {
                     // §13.1: three empty states, three different single primary
                     // actions — and the search text is kept, not cleared.
@@ -3505,13 +3503,14 @@ struct RailWorkspaceView: View {
                     fallback: "Showing \(MapTripCap.limit) of \(total) trips. Narrow by country or month."),
                       systemImage: "line.3.horizontal.decrease")
                     .font(.footnote.weight(.medium))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
+                    .padding(.horizontal, RailSpacing.s12)
+                    .padding(.vertical, RailSpacing.s8)
                     .background(.regularMaterial, in: Capsule())
             }
             .buttonStyle(.plain)
-            .padding(.top, 54)
-            .padding(.horizontal, 16)
+            .railMinimumTouchTarget()
+            .padding(.top, 54) // ui-token-ok: below status bar and map controls
+            .padding(.horizontal, RailSpacing.screenInset)
             .accessibilityIdentifier("mapTripCapNotice")
         }
     }
