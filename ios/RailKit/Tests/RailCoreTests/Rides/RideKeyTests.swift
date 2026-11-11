@@ -28,16 +28,13 @@ struct RideKeyTests {
         t.id = "other-id"
         t.notes = "window seat"
         t.visible = false
-        t.vehicleType = "N700S"
-        t.direction = "下り"
-        t.numberEn = "Nozomi"
-        t.stops[0].arrival = "10:00"
+        t.stops[0].actualArrival = "10:00"
         t.stops[0].actualDeparture = "10:05"
         t.stops[0].routeEditing = Stop.RouteEditingMetadata()
         #expect(RideKey.make(for: t) == key)
     }
 
-    @Test("every route field changes the key", arguments: Array(0..<30))
+    @Test("every route field changes the key", arguments: Array(0..<35))
     func routeFieldChangesKey(_ index: Int) {
         let key = RideKey.make(for: Self.base())
         var t = Self.base()
@@ -71,6 +68,11 @@ struct RideKeyTests {
         case 26: t.routePolicy?.jrOnly = false
         case 27: t.routePolicy?.allowedInstitutionTypeCodes = ["3"]
         case 28: t.routePolicy = nil
+        case 29: t.numberEn = "Nozomi"
+        case 30: t.direction = "下り"
+        case 31: t.vehicleType = "N700S"
+        case 32: t.stops[0].arrival = "10:00"
+        case 33: t.stops[0].departure = "10:30"
         default: t.routeSections?.append(RouteSection(from: "新大阪", to: "博多"))
         }
         #expect(RideKey.make(for: t) != key, "route field case \(index) did not change the key")
@@ -97,7 +99,7 @@ struct RideKeyTests {
         #expect(hex == Self.pinned, "actual \(hex)")
     }
 
-    static let pinned = "df03d9abb3d474187702aed688216375"
+    static let pinned = "fef9d6b191ccb40362cdf0247bcac919"
 }
 
 extension Train {

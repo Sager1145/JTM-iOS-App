@@ -10,14 +10,18 @@ import Foundation
 //
 // Included (anything that can change which track the trip resolves to):
 // region, date, number, train type, company, operator ids, origin and
-// destination, confirmation state, every stop's name, codes, platform, stop
+// destination, confirmation state, the timetable-evidence facts (English
+// number, direction, vehicle type and each stop's scheduled arrival and
+// departure: the same facts `TimetablePhysicalRouteMatch.MatchRequestIdentity`
+// reads, so an edit that selects another timetable train or switches
+// evidence off changes the key), every stop's name, codes, platform, stop
 // type and ride-segment flag, every field of every route section, and every
 // field of the route policy.
 //
 // Excluded on purpose: id, notes, visibility, style, list and group
-// membership, rolling stock, ticket, trip notes, vehicle type, direction text,
-// stop clocks (scheduled and actual) and the editor's visit ids. None of them
-// changes the route input. The app's build identity is also excluded, so an
+// membership, rolling stock, ticket, trip notes, the observed (`actual*`)
+// stop clocks and the editor's visit ids. None of them changes the route
+// input. The app's build identity is also excluded, so an
 // app update never invalidates the cache; only `RideKey.version` (the hashing
 // layout) and the file's semantics version (`RideRecordFile`) do.
 public enum RideKey {
@@ -31,6 +35,9 @@ public enum RideKey {
         h.string(train.region)
         h.string(train.date)
         h.string(train.number)
+        h.string(train.numberEn)
+        h.string(train.direction)
+        h.string(train.vehicleType)
         h.string(train.trainType)
         h.string(train.company)
         h.string(train.operatorID)
@@ -45,6 +52,8 @@ public enum RideKey {
             h.string(stop.stationID)
             h.int(stop.platformNumber)
             h.string(stop.stopType)
+            h.string(stop.arrival)
+            h.string(stop.departure)
             h.bool(stop.rideSegment)
         }
         if let sections = train.routeSections {
