@@ -211,7 +211,7 @@ private struct TriggersPage: View {
                     }
                 }
                 trigger("Add demo trip", "plus.circle") {
-                    run("addTrip", ["from": "東京", "to": "新大阪", "date": .string(RecordDate.text(from: Date())),
+                    run("addTrip", ["from": "東京", "to": "新大阪", "date": .string(RecordDate.today(in: .japan)),
                                     "save": true]) { result in
                         if let id = result.data?.object?["save"]?.object?["recordID"]?.string { remember(id) }
                     }

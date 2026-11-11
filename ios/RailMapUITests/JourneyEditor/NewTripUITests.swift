@@ -838,8 +838,11 @@ final class NewTripUITests: XCTestCase {
     private func moveArrivalToPreviousDay(in app: XCUIApplication) {
         let arrival = app.textFields["newTripArrivalDate"]
         XCTAssertTrue(reveal(arrival, in: app, timeout: 8))
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let parts = Calendar.current.dateComponents([.year, .month, .day], from: yesterday)
+        // The editor's day is the trip region's (Japan), not the simulator's.
+        var japan = Calendar(identifier: .gregorian)
+        japan.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+        let yesterday = japan.date(byAdding: .day, value: -1, to: Date())!
+        let parts = japan.dateComponents([.year, .month, .day], from: yesterday)
         arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
         if let current = arrival.value as? String, !current.isEmpty {
             arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))

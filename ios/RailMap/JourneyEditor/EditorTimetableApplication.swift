@@ -245,7 +245,7 @@ extension TripDraftModel {
     }
 
     func timetableDate(_ day: String, time: String) -> Date? {
-        EditorSeed.date(day: day, time: time)
+        region.clock.instant(serviceDate: day, clock: time)
     }
 
     func timetableTimes(_ timetable: Train) -> String {

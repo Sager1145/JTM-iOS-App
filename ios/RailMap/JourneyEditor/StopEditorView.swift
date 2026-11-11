@@ -286,23 +286,27 @@ struct StopEditorView: View {
                     EditorTimeField(
                         title: localization.text("ios.editor.passTime"),
                         time: $stop.departure,
+                        regionClock: region.clock,
                         serviceDate: journeyDate,
                         accessibilityID: "rideEditorStopDeparture")
                     if let arrival = stop.arrival, arrival.isEmpty == false {
                         EditorTimeField(
                             title: localization.countryText("popup.arrival", fallback: "Arrival"),
                             time: $stop.arrival,
+                            regionClock: region.clock,
                             serviceDate: journeyDate)
                     }
                 } else {
                     EditorTimeField(
                         title: localization.countryText("popup.arrival", fallback: "Arrival"),
                         time: $stop.arrival,
+                        regionClock: region.clock,
                         serviceDate: journeyDate,
                         accessibilityID: "rideEditorStopArrival")
                     EditorTimeField(
                         title: localization.countryText("popup.departure", fallback: "Departure"),
                         time: $stop.departure,
+                        regionClock: region.clock,
                         serviceDate: journeyDate,
                         accessibilityID: "rideEditorStopDeparture")
                 }
@@ -316,6 +320,7 @@ struct StopEditorView: View {
             Section {
                 EditorTimeField(title: localization.text("ios.editor.actualArrival"),
                                 time: $stop.actualArrival,
+                                regionClock: region.clock,
                                 serviceDate: journeyDate,
                                 accessibilityID: "rideEditorStopActualArrival")
                 if let status = StopTimingStatus.localizedLabel(
@@ -325,6 +330,7 @@ struct StopEditorView: View {
                 }
                 EditorTimeField(title: localization.text("ios.editor.actualDeparture"),
                                 time: $stop.actualDeparture,
+                                regionClock: region.clock,
                                 serviceDate: journeyDate,
                                 accessibilityID: "rideEditorStopActualDeparture")
                 if let status = StopTimingStatus.localizedLabel(

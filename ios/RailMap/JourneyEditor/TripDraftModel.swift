@@ -261,8 +261,9 @@ final class TripDraftModel {
         // Collapsed until asked for: its lookups (the official English name
         // reads the timetable database) are work a route edit does not need.
         detailsExpanded = false
-        region = Region(rawValue: train.region ?? "") ?? Region.resolved(train)
-        let seeded = EditorSeed(train: train, isNew: isNew)
+        let initialRegion = Region(rawValue: train.region ?? "") ?? Region.resolved(train)
+        region = initialRegion
+        let seeded = EditorSeed(train: train, isNew: isNew, clock: initialRegion.clock)
         seed = seeded
         trainType = seeded.trainType
         trainNumber = seeded.number
@@ -424,8 +425,10 @@ final class TripDraftModel {
 
     /// The departure moved: the arrival follows by the same amount.
     func departureChanged(to newValue: Date) {
-        let shiftedArrival = arrival.addingTimeInterval(
-            newValue.timeIntervalSince(previousDeparture))
+        // Wall-clock minutes on the region's calendar, not a raw interval.
+        let calendar = region.clock.calendar
+        let moved = calendar.dateComponents([.minute], from: previousDeparture, to: newValue).minute ?? 0
+        let shiftedArrival = calendar.date(byAdding: .minute, value: moved, to: arrival) ?? arrival
         arrival = max(shiftedArrival, newValue)
         previousDeparture = newValue
         saveIssues = []
@@ -457,13 +460,35 @@ final class TripDraftModel {
         picking = nil
     }
 
+    /// Re-reads every held `Date` on the current region's calendar with the
+    /// wall clock it had on `old`.
+    private func keepWallClock(from old: RegionClock) {
+        let parts: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
+        func moved(_ date: Date) -> Date {
+            region.clock.calendar.date(from: old.calendar.dateComponents(parts, from: date)) ?? date
+        }
+        departure = moved(departure)
+        arrival = moved(arrival)
+        previousDeparture = moved(previousDeparture)
+        seed.departure = moved(seed.departure)
+        seed.arrival = moved(seed.arrival)
+    }
+
     /// A new region starts the route over in that region's network.
-    func regionChanged() {
+    ///
+    /// The clocks the reader set keep their wall clock: every held `Date` is
+    /// read on the region's calendar, so each is re-expressed from the old
+    /// region's calendar to the new one (09:30 stays 09:30).
+    func regionChanged(from old: Region) {
         draftGeneration += 1
         picking = nil
         // Another network: its stations and any ticket's values start over.
         ticketMatchTask?.cancel()
+        // First: undoing a timetable restores header instants captured on
+        // the OLD region's clock, so the wall-clock move must come after it
+        // or a restored 10:30 JST would read 09:30 in Taipei.
         clearTimetable()
+        keepWallClock(from: old.clock)
         filledBy = [:]
         touched.subtract([.origin, .destination, .serviceName])
         nearbyStations = []
@@ -472,7 +497,7 @@ final class TripDraftModel {
         if isNewTrip {
             // Each side separately: the reader's clock stays, the other
             // starts over on the new region's wall clock.
-            let now = EditorSeed.wallClock(Date(), in: region.clock)
+            let now = Date()
             if !timeIsSet(.departure) { departure = now }
             previousDeparture = departure
             if !timeIsSet(.arrival) { arrival = now }
@@ -790,7 +815,7 @@ final class TripDraftModel {
         vias = []
         draft = completed
         hasRecordRoute = completed.stops.count >= 2
-        let seeded = EditorSeed(train: completed, isNew: false)
+        let seeded = EditorSeed(train: completed, isNew: false, clock: region.clock)
         seed = seeded
         trainType = seeded.trainType
         trainNumber = seeded.number
@@ -1270,7 +1295,7 @@ final class TripDraftModel {
     func headerServiceDate() -> String {
         let saved = Dates.normalizeDateString(draft.date)
         guard timeIsSet(.departure) || filledBy[.date] != nil else { return saved ?? dayString(departure) }
-        let calendar = Calendar.current
+        let calendar = region.clock.calendar
         let moved = calendar.dateComponents(
             [.day], from: calendar.startOfDay(for: seed.departure),
             to: calendar.startOfDay(for: departure)).day ?? 0
@@ -1338,19 +1363,19 @@ final class TripDraftModel {
     }
 
     func dayString(_ date: Date) -> String {
-        RecordDate.text(from: date)
+        RecordDate.text(from: date, in: region.clock)
     }
 
     /// Hours run past 24 when arrival falls on a later calendar day (`25:10`).
     func clock(_ date: Date, extraDays: Int) -> String {
-        let calendar = Calendar.current
+        let calendar = region.clock.calendar
         let hour = calendar.component(.hour, from: date) + extraDays * 24
         let minute = calendar.component(.minute, from: date)
         return String(format: "%02d:%02d", hour, minute)
     }
 
     func extraDays(from departure: Date, to arrival: Date) -> Int {
-        let calendar = Calendar.current
+        let calendar = region.clock.calendar
         let start = calendar.startOfDay(for: departure)
         let end = calendar.startOfDay(for: arrival)
         return max(0, calendar.dateComponents([.day], from: start, to: end).day ?? 0)

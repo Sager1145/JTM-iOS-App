@@ -178,8 +178,8 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
             await SolverRegistryInput.awaitReady(region: model.region.code)
             model.registryEpoch += 1
         }
-        .onChange(of: model.region) { _, _ in
-            model.regionChanged()
+        .onChange(of: model.region) { old, _ in
+            model.regionChanged(from: old)
         }
         .onChange(of: model.origin) { _, _ in
             model.allowUnverifiedConnections = false
@@ -362,9 +362,11 @@ extension JourneyEditorView {
                 }
             },
             setDay: { day in
-                guard let target = RecordDate.date(from: day),
-                      let current = RecordDate.date(from: model.dayString(model.departure)) else { return }
-                model.departure = target.addingTimeInterval(model.departure.timeIntervalSince(current))
+                let clock = model.region.clock
+                guard let target = RecordDate.date(from: day, in: clock),
+                      let current = RecordDate.date(from: model.dayString(model.departure), in: clock) else { return }
+                let moved = clock.calendar.dateComponents([.day], from: current, to: target).day ?? 0
+                model.departure = clock.calendar.date(byAdding: .day, value: moved, to: model.departure) ?? model.departure
             },
             choose: { id, index in
                 guard model.sections.indices.contains(index),

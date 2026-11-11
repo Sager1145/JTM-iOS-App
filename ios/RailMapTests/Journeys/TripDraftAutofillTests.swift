@@ -55,7 +55,7 @@ struct TripDraftAutofillTests {
             .wrappedValue = "ひかり 500"
         model.ticketText(.seat, \.seat).wrappedValue = "3D"
         model.apply(TripDraftModel.Patch(trainType: "local"), source: .reader)
-        let reader = Calendar.current.date(from: DateComponents(year: 2026, month: 11, day: 5, hour: 8))!
+        let reader = model.region.clock.calendar.date(from: DateComponents(year: 2026, month: 11, day: 5, hour: 8))!
         model.apply(TripDraftModel.Patch(departure: reader), source: .reader)
         // The editor's onChange, so the arrival below is set against this departure.
         model.departureChanged(to: reader)
@@ -224,7 +224,7 @@ struct TripDraftAutofillTests {
 
     @Test func anActualClockLongBeforeTheScheduleIsAfterMidnight() {
         let model = newDraft()
-        let late = Calendar.current.date(from: DateComponents(year: 2026, month: 11, day: 6, hour: 23, minute: 55))!
+        let late = model.region.clock.calendar.date(from: DateComponents(year: 2026, month: 11, day: 6, hour: 23, minute: 55))!
         model.apply(TripDraftModel.Patch(departure: late, arrival: late), source: .reader)
         #expect(model.normalizedActual("0:10", isDeparture: false) == "24:10")
         #expect(model.normalizedActual("23:50", isDeparture: false) == "23:50")

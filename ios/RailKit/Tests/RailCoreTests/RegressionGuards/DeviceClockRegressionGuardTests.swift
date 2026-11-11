@@ -33,18 +33,11 @@ import Testing
 @Suite("RegressionGuardDeviceClock")
 struct RegressionGuardDeviceClock {
     /// Shrink-only. Path is relative to `ios/`.
-    static let baseline: [String: Int] = [
-        "RailMap/Import/TransferGuideImportView.swift": 2,
-        "RailMap/JourneyEditor/EditorDateTimeFields.swift": 8,
-        "RailMap/JourneyEditor/JourneyEditorSeed.swift": 2,
-        "RailMap/JourneyEditor/TripDraftModel.swift": 3,
-        "RailMap/Journeys/RecordDate.swift": 1,
-    ]
+    static let baseline: [String: Int] = [:]
 
     /// Permanent exemptions (path prefix relative to `ios/`, reason).
     static let allowlist: [(prefix: String, reason: String)] = [
         ("RailMap/Diagnostics/", "developer tooling; reads the device year for a debug filter, never records journey times"),
-        ("RailMap/Statistics/StatisticsFormatting.swift", "symbolCalendar only reads locale month/weekday names, no date or zone arithmetic (flagged by the Calendar(identifier:) rule)"),
     ]
 
     private static let forbidden = [

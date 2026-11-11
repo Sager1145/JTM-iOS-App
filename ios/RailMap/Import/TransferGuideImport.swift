@@ -199,12 +199,12 @@ final class TransferGuideImport {
         let route = read.route
         let now = Date()
         let today = RecordDate.todayParts(in: Self.clock, at: now)
-        var date = RecordDate.date(from: today)
+        var date = RecordDate.date(from: today, in: Self.clock)
         var wasRead = false
         if let month = route.header.month, let day = route.header.day,
             let text = TransferGuide.calendarDate(
                 month: month, day: day, year: route.header.year, today: today),
-            let parsed = RecordDate.date(from: text)
+            let parsed = RecordDate.date(from: text, in: Self.clock)
         {
             date = parsed
             wasRead = true
@@ -226,7 +226,7 @@ final class TransferGuideImport {
             // at 19:00 is looking at a journey whose day in Japan has already
             // turned, and comparing the picker's midnight against `Date()`
             // would have called it a plan.
-            ridden: Self.clock.isTodayOrEarlier(RecordDate.text(from: date), at: now),
+            ridden: Self.clock.isTodayOrEarlier(RecordDate.text(from: date, in: Self.clock), at: now),
             included: route.ridableLegs.map { _ in true },
             build: TransferGuide.BuildResult())
         rebuild(&draft, existingIDs: existingIDs)
@@ -293,7 +293,7 @@ final class TransferGuideImport {
         }
         route.legs = kept
         draft.recordByLeg = recordByLeg
-        let isoDate = RecordDate.text(from: draft.date)
+        let isoDate = RecordDate.text(from: draft.date, in: Self.clock)
         draft.build = TransferGuide.build(
             route: route,
             options: TransferGuide.BuildOptions(
