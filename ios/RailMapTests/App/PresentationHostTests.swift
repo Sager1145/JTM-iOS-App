@@ -4,6 +4,28 @@ import UIKit
 
 @MainActor
 struct PresentationHostTests {
+    @Test func presentClosesAnOpenSheetBeforeTheDialogIsPublished() async throws {
+        let window = UIWindow()
+        window.rootViewController = UIViewController()
+        let host = PresentationHost()
+        host.attach(to: window)
+        var sheetOpen = true
+        var delivered = false
+        host.present(closing: { sheetOpen = false }) {
+            #expect(!sheetOpen)
+            delivered = true
+        }
+        #expect(!sheetOpen)
+        #expect(!delivered)
+        host.cancel()
+        // Without an open sheet nothing is closed.
+        var closed = false
+        host.present(closing: nil) { delivered = true }
+        #expect(!closed)
+        closed = true
+        host.cancel()
+    }
+
     @Test func requestsInDifferentWindowsDoNotCancelEachOther() async throws {
         let firstWindow = UIWindow()
         firstWindow.rootViewController = UIViewController()

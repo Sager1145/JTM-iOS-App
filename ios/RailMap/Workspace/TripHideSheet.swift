@@ -1,7 +1,7 @@
 import RailCore
 import SwiftUI
 
-/// Hide whole regions, years or months — opened from the scope filter on
+/// Choose which whole regions, years or months — opened from the scope filter on
 /// every tab and from the map's "Showing 500 of N" notice.
 struct TripHideSheet: View {
     @Bindable var filter: TripHideFilter
@@ -24,7 +24,7 @@ struct TripHideSheet: View {
                             .accessibilityIdentifier("tripHideRegion-\(region.code)")
                         }
                     } header: {
-                        Text(localization.text("ios.hide.regions", fallback: "Countries and regions"))
+                        Text(localization.text("ios.hide.regions", fallback: "Show trips from"))
                     }
                 }
                 ForEach(calendar, id: \.year) { entry in
@@ -56,14 +56,14 @@ struct TripHideSheet: View {
                         fallback: "Hidden regions and months leave the map, the lists and Stats. A single trip's own Hide only takes that trip off the map."))
                 }
             }
-            .navigationTitle(localization.text("ios.hide.title", fallback: "Hide trips"))
+            .navigationTitle(localization.text("ios.hide.title", fallback: "Regions and months shown"))
             .navigationBarTitleDisplayMode(.inline)
             .railSheetClose(
                 Text(localization.text("ios.close", fallback: "Close")),
                 identifier: "tripHideDone"
             ) { dismiss() }
         }
-        .railSheet(.half)
+        .railSheet(.halfNonModal)
         .accessibilityIdentifier("tripHideSheet")
     }
 

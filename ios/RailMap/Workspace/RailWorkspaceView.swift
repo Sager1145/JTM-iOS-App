@@ -1471,9 +1471,9 @@ struct RailWorkspaceView: View {
                 Label(
                     tripHide.isActive
                         ? localization.text("ios.hide.menuActive", params: ["n": .number(Double(tripHide.activeCount))],
-                                            fallback: "Hide trips… (\(tripHide.activeCount) hidden)")
-                        : localization.text("ios.hide.menu", fallback: "Hide trips…"),
-                    systemImage: "eye.slash")
+                                            fallback: "Show regions and months… (\(tripHide.activeCount) hidden)")
+                        : localization.text("ios.hide.menu", fallback: "Show regions and months…"),
+                    systemImage: tripHide.isActive ? "eye.slash" : "eye")
             }
             .accessibilityIdentifier("tripHideMenuItem")
             if tripHide.isActive {
@@ -2917,7 +2917,11 @@ struct RailWorkspaceView: View {
             select: { pick(train) },
             showDetail: { sheet = .detail(train.id) },
             setRidden: { setRidden(train, $0) },
-            confirmDelete: { dialog = .delete(train) },
+            confirmDelete: {
+                presentationHost.present(closing: sheet == nil ? nil : { sheet = nil }) {
+                    dialog = .delete(train)
+                }
+            },
             isUpcoming: TripListRules.isUpcoming(
                 train, today: todayByRegion()[Region.resolved(train)]),
             isOverdue: now.map { TripListRules.isOverdue(train, clock: clock, now: $0) } ?? false,
@@ -3040,7 +3044,9 @@ struct RailWorkspaceView: View {
             _ = itineraries.toggleVisibility(train.id)
         case .delete:
             if let train {
-                presentationHost.afterTeardown { dialog = .delete(train) }
+                presentationHost.present(closing: sheet == nil ? nil : { sheet = nil }) {
+                    dialog = .delete(train)
+                }
             }
         case .inspectDetails:
             if let train { sheet = .detail(train.id) }
@@ -3168,7 +3174,9 @@ struct RailWorkspaceView: View {
         Group {
             Divider()
             Button {
-                presentationHost.afterTeardown { dialog = .addDate }
+                presentationHost.present(closing: sheet == nil ? nil : { sheet = nil }) {
+                    dialog = .addDate
+                }
             } label: {
                 Label(
                     localization.countryText("btn.addDate", fallback: "Add date"),

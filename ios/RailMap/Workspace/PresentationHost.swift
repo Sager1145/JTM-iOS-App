@@ -69,6 +69,19 @@ final class PresentationHost {
         }
     }
 
+    /// Publishes state that starts an alert or dialog, first closing a sheet
+    /// that is open. Sheets that leave the map live (layers, trip filter,
+    /// station card) stay up while the reader acts on the panel behind them,
+    /// and SwiftUI refuses a presentation made over one, which leaves the
+    /// state set and the surface never shown.
+    func present(
+        closing close: (() -> Void)?,
+        _ action: @escaping @MainActor () -> Void
+    ) {
+        close?()
+        afterTeardown(action)
+    }
+
     /// Whether the host can present right now.
     ///
     /// An alert — `UIAlertController`, which is what SwiftUI's `.alert` and
