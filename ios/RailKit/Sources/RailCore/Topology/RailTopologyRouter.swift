@@ -16,9 +16,10 @@ import Foundation
 //    second-to-first only with `reverse`; a directed link only A to B;
 //  - withheld edges are not used unless asked for;
 //  - length: edge `lengthCm` (a preferred line's edges cost 20% less); links cost nothing;
-//  - ties: the first path found in settle order, which is ordered by
-//    (cost, global node index): a pure function of the file and the query,
-//    independent of the order of `from` and `to`;
+//  - ties: among equal lengths the path with the fewest row changes (links taken) wins,
+//    then the first path found in settle order, ordered by (cost, row changes, global
+//    node index): a pure function of the file and the query, independent of the
+//    order of `from` and `to`;
 //  - no path under the line filter: the same search without `lineIDs`
 //    (institutions still apply), reported `unproven`.
 
@@ -43,18 +44,20 @@ extension RailTopology {
     }
 }
 
-/// Binary min-heap of (cost, node), ordered by cost then node.
+/// Binary min-heap of (cost, row changes, node), ordered lexicographically.
 private struct NodeHeap {
-    private var items: [(cost: UInt64, node: UInt32)] = []
+    typealias Item = (cost: UInt64, changes: UInt32, node: UInt32)
+    private var items: [Item] = []
     var isEmpty: Bool { items.isEmpty }
 
     @inline(__always)
-    private static func less(_ a: (cost: UInt64, node: UInt32), _ b: (cost: UInt64, node: UInt32)) -> Bool {
-        a.cost != b.cost ? a.cost < b.cost : a.node < b.node
+    private static func less(_ a: Item, _ b: Item) -> Bool {
+        if a.cost != b.cost { return a.cost < b.cost }
+        return a.changes != b.changes ? a.changes < b.changes : a.node < b.node
     }
 
-    mutating func push(_ cost: UInt64, _ node: UInt32) {
-        items.append((cost, node))
+    mutating func push(_ cost: UInt64, _ changes: UInt32, _ node: UInt32) {
+        items.append((cost, changes, node))
         var i = items.count - 1
         while i > 0 {
             let parent = (i - 1) / 2
@@ -64,7 +67,7 @@ private struct NodeHeap {
         }
     }
 
-    mutating func pop() -> (cost: UInt64, node: UInt32)? {
+    mutating func pop() -> Item? {
         guard let top = items.first else { return nil }
         let last = items.removeLast()
         if !items.isEmpty {
@@ -123,23 +126,24 @@ extension TopologyView {
         var dist = [UInt64](repeating: .max, count: nodeTotal)
         var prev = [UInt32](repeating: .max, count: nodeTotal)
         var prevEdge = [UInt32](repeating: Self.noEdge, count: nodeTotal)
+        var changes = [UInt32](repeating: 0, count: nodeTotal)
         var settled = [Bool](repeating: false, count: nodeTotal)
         var heap = NodeHeap()
         for ref in query.from {
             guard let g = global(ref), usable(Int(ref.line)), dist[g] != 0 else { continue }
             dist[g] = 0
-            heap.push(0, UInt32(g))
+            heap.push(0, 0, UInt32(g))
         }
 
-        func relax(_ u: Int, _ v: Int, cost: UInt64, edge: UInt32) {
-            let nd = dist[u] + cost
-            if nd < dist[v] {
-                dist[v] = nd; prev[v] = UInt32(u); prevEdge[v] = edge
-                heap.push(nd, UInt32(v))
+        func relax(_ u: Int, _ v: Int, cost: UInt64, rowChange: UInt32, edge: UInt32) {
+            let nd = dist[u] + cost, nc = changes[u] + rowChange
+            if nd < dist[v] || (nd == dist[v] && nc < changes[v]) {
+                dist[v] = nd; changes[v] = nc; prev[v] = UInt32(u); prevEdge[v] = edge
+                heap.push(nd, nc, UInt32(v))
             }
         }
 
-        while let (_, node) = heap.pop() {
+        while let (_, _, node) = heap.pop() {
             let u = Int(node)
             if settled[u] { continue }
             settled[u] = true
@@ -160,7 +164,7 @@ extension TopologyView {
                       includeWithheld || !edgeFlags.contains(.withheld),
                       F.isValid(on: query.day, from: u32(eb + F.Edge.validFrom), to: u32(eb + F.Edge.validTo))
                 else { return }
-                relax(u, v, cost: UInt64(u32(eb + F.Edge.lengthCm)) * weight, edge: UInt32(k))
+                relax(u, v, cost: UInt64(u32(eb + F.Edge.lengthCm)) * weight, rowChange: 0, edge: UInt32(k))
             }
             // Towards higher ordinals over edge `ordinal`.
             if loop { step(edge: ordinal, to: (ordinal + 1) % n, needs: .forward) }
@@ -185,7 +189,7 @@ extension TopologyView {
                 guard usable(otherLine),
                       F.isValid(on: query.day, from: u32(lb + F.Link.validFrom), to: u32(lb + F.Link.validTo))
                 else { continue }
-                relax(u, v, cost: 0, edge: Self.viaLink)
+                relax(u, v, cost: 0, rowChange: 1, edge: Self.viaLink)
             }
         }
         return nil

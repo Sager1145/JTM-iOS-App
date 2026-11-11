@@ -331,6 +331,9 @@ struct TopologyView {
         func fail(_ table: F.Table) -> Error { F.FormatError.badTable(table) }
         func stringOK(_ ref: UInt32) -> Bool { ref == F.noString || stringBytes(ref) != nil }
 
+        // Lines tile the node and edge tables exactly, so every node and edge belongs to
+        // one validated line and no query can reach a record outside its line's range.
+        var expectedNode = 0, expectedEdge = 0
         for line in 0..<lineCount {
             let b = lineBase(line)
             let firstNode = Int(u32(b + F.Line.firstNode)), nodeCount = Int(u32(b + F.Line.nodeCount))
@@ -344,20 +347,27 @@ struct TopologyView {
                   stringBytes(u32(b + F.Line.id)) != nil, stringOK(u32(b + F.Line.family)),
                   stringOK(u32(b + F.Line.name)), stringOK(u32(b + F.Line.aliases))
             else { throw fail(.lines) }
+            guard firstNode == expectedNode, firstEdge == expectedEdge else { throw fail(.lines) }
+            expectedNode += nodeCount; expectedEdge += edgeCount
             let chainCount = Int(u16(b + F.Line.chainCount))
             for n in firstNode..<(firstNode + nodeCount) {
                 let nb = nodeBase(n)
                 guard Int(u16(nb + F.Node.line)) == line, Int(u16(nb + F.Node.chain)) < max(chainCount, 1),
                       stringOK(u32(nb + F.Node.stationCode)) else { throw fail(.nodes) }
             }
+            var cumulative: UInt64 = 0
             for e in firstEdge..<(firstEdge + edgeCount) {
                 let eb = edgeBase(e)
+                guard UInt64(u32(eb + F.Edge.cumulativeCm)) == cumulative else { throw fail(.edges) }
+                cumulative += UInt64(u32(eb + F.Edge.lengthCm))
                 let flagBits = F.EdgeFlag(rawValue: u16(eb + F.Edge.flags))
                 let runCount = Int(u16(eb + F.Edge.runCount)), firstRun = Int(u32(eb + F.Edge.firstRun))
                 guard !flagBits.contains(.hasRuns) || (runCount > 0 && firstRun + runCount <= runTotal)
                 else { throw fail(.edges) }
             }
         }
+        guard expectedNode == nodeTotal else { throw fail(.nodes) }
+        guard expectedEdge == edgeTotal else { throw fail(.edges) }
         for link in 0..<linkTotal {
             let b = linkBase(link)
             guard Int(u32(b + F.Link.nodeA)) < nodeTotal, Int(u32(b + F.Link.nodeB)) < nodeTotal,

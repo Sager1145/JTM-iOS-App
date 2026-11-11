@@ -162,7 +162,12 @@ struct RailTopologyRouterBenchmarkTests {
         return Timing(name: name, millis: samples)
     }
 
-    @Test("route calculation is fast on a Japan-sized network: median and worst case per scenario")
+    /// Wall-clock budgets depend on the machine's load, so the timing run is opt-in:
+    /// `JTM_ROUTER_BENCHMARK=1 swift test --filter routeTimings`.
+    static let benchmarkEnabled = ProcessInfo.processInfo.environment["JTM_ROUTER_BENCHMARK"] == "1"
+
+    @Test("route calculation is fast on a Japan-sized network: median and worst case per scenario",
+          .enabled(if: RailTopologyRouterBenchmarkTests.benchmarkEnabled))
     func routeTimings() throws {
         let (net, trunks, branches) = Self.japanSized()
         let data = net.encode()

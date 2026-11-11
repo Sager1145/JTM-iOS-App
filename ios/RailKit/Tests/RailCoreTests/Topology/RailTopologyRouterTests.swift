@@ -283,7 +283,7 @@ struct RailTopologyRouterTests {
     func deterministicTies() throws {
         let t = try Self.parallelNetwork(p: 100_000, q: 100_000).topology()
         let first = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)])))
-        // Documented rule: equal cost keeps the first path found in (cost, node index) settle order, here line p.
+        // Documented rule: equal cost and equal row changes keep the first path found in (cost, changes, node index) settle order, here line p.
         #expect(first.spans[1].line == t.lineIndex(forID: "p"))
         for _ in 0..<20 {
             let again = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)])))
@@ -294,6 +294,48 @@ struct RailTopologyRouterTests {
         reversed.from.reverse(); reversed.to.reverse()
         let a = try #require(t.route(multi)), b = try #require(t.route(reversed))
         #expect(a.spans == b.spans && a.lengthCm == b.lengthCm)
+    }
+
+    @Test("equal lengths prefer the path with fewer row changes, even when another row settles first")
+    func fewerRowChangesWinTies() throws {
+        // Rows a and b run side by side with equal intervals and are linked at every station.
+        // Row a has the lower node indices, so it settles first at every equal cost.
+        var net = Net()
+        let codes = ["R0", "R1", "R2", "R3"]
+        net.lines = [.chain("a", codes.map { "a" + $0 }, lengths: [10_000, 10_000, 10_000]),
+                     .chain("b", codes.map { "b" + $0 }, lengths: [10_000, 10_000, 10_000])]
+        net.links = (0..<4).map { .init(a: (0, $0), b: (1, $0)) }
+        let t = try net.topology()
+        let ride = try #require(t.route(Self.query(t, [("b", 0)], [("b", 3)])))
+        #expect(ride.spans == [t.span("b", 0, 3)] && ride.lengthCm == 30_000)
+        let back = try #require(t.route(Self.query(t, [("a", 3)], [("a", 0)])))
+        #expect(back.spans == [t.span("a", 3, 0)])
+        // A real change is still taken when it is shorter or the only way.
+        let across = try #require(t.route(Self.query(t, [("a", 0)], [("b", 3)])))
+        #expect(across.lengthCm == 30_000 && across.spans.count == 1)
+    }
+
+    @Test("the router over the hand-built mini fixture bytes: dated link, loop wrap, withheld and one-way edges")
+    func miniFixtureRoutes() throws {
+        let t = try RailTopology(data: RailTopologyFormatTests.fixture())
+        let a = "jp.test-a", b = "jp.test-b"
+        // A01 to B03 over the 2010 junction, then the short way round the loop (backwards over its closing edge).
+        let q = Self.query(t, [(a, 0)], [(b, 2)], day: "2015-06-01")
+        let path = try #require(t.route(q))
+        #expect(path.spans == [t.span(a, 0, 1), t.span(b, 0, 2, wraps: true)] && path.lengthCm == 150_000 + 30_000)
+        // Undated queries cannot use line B (it ends in 2020).
+        #expect(t.route(Self.query(t, [(a, 0)], [(b, 2)])) == nil)
+        // Before the junction opened the same trip has no path.
+        #expect(t.route(Self.query(t, [(a, 0)], [(b, 2)], day: "2005-01-01")) == nil)
+        // The withheld one-way edge A02 to A03 is only used when asked for.
+        let toThird = Self.query(t, [(a, 0)], [(a, 2)], day: "2015-06-01")
+        #expect(t.route(toThird) == nil)
+        let withheld = try #require(t.route(toThird, includeWithheld: true))
+        #expect(withheld.spans == [t.span(a, 0, 2)] && withheld.lengthCm == 150_000)  // withheld edges count for no distance
+        // The directed through service goes A03 to B03 at no length, and not back.
+        let through = try #require(t.route(Self.query(t, [(a, 2)], [(b, 2)], day: "2015-06-01")))
+        #expect(through.spans.isEmpty && through.lengthCm == 0)
+        #expect(t.route(Self.query(t, [(b, 2)], [(a, 2)], day: "2015-06-01")) == nil)
     }
 
     @Test("several candidate nodes per end pick the best pair")

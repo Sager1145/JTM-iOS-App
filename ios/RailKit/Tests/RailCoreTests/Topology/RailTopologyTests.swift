@@ -61,10 +61,43 @@ struct RailTopologyTests {
         let a = h.offset(.stops), b = a + F.Stop.size
         for i in 0..<F.Stop.size { swapped.swapAt(a + i, b + i) }
         #expect(throws: F.FormatError.badTable(.stops)) { try RailTopology(data: swapped) }
+        // Lines must tile the node and edge tables: a gap leaves nodes no line vouches for.
+        #expect(throws: F.FormatError.badTable(.lines)) {
+            try RailTopology(data: corrupted(.lines, record: 0, field: F.Line.firstNode, to: 1))
+        }
+        #expect(throws: F.FormatError.badTable(.lines)) {
+            try RailTopology(data: corrupted(.lines, record: 1, field: F.Line.firstEdge, to: 3))
+        }
+        // Cumulative lengths must be the running sum of edge lengths.
+        #expect(throws: F.FormatError.badTable(.edges)) {
+            try RailTopology(data: corrupted(.edges, record: 1, field: F.Edge.cumulativeCm, to: 10))
+        }
+        #expect(throws: F.FormatError.badTable(.edges)) {
+            try RailTopology(data: corrupted(.edges, record: 0, field: F.Edge.lengthCm, to: 1))
+        }
         // A stop node outside the nodes table.
         #expect(throws: F.FormatError.badTable(.stopNodes)) {
             try RailTopology(data: corrupted(.stopNodes, record: 0, field: 0, to: 77))
         }
+    }
+
+    @Test("a node, link or stop that no line covers is refused at open")
+    func uncoveredNodesRefused() throws {
+        // Two chains of two stations; shrink the last line's node count so its last node is uncovered,
+        // and point a link and a stop node at it.
+        var net = TestNetwork()
+        net.lines = [.chain("p", ["P0", "P1"], lengths: [10_000]), .chain("q", ["Q0", "Q1", "Q2"], lengths: [10_000, 10_000])]
+        net.links = [.init(a: (0, 1), b: (1, 2))]
+        let good = net.encode()
+        let h = try F.parseHeader(good)
+        // q's node count 3 -> 2 with one edge fewer: node 4 is then in no line, yet the link names it.
+        var bad = good
+        func put(_ table: F.Table, _ record: Int, _ field: Int, _ value: UInt32) {
+            let at = h.offset(table) + record * table.recordSize + field
+            for i in 0..<4 { bad[at + i] = UInt8((value >> (8 * UInt32(i))) & 0xFF) }
+        }
+        put(.lines, 1, F.Line.nodeCount, 2); put(.lines, 1, F.Line.edgeCount, 1)
+        #expect(throws: F.FormatError.badTable(.nodes)) { try RailTopology(data: bad) }
     }
 
     @Test("a display blob SHA-256 mismatch is rejected, a match is accepted")
