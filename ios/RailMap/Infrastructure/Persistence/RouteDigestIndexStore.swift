@@ -5,7 +5,7 @@ import RailCore
 /// The persisted ``RouteDigestIndex``: one file beside the route cache, read
 /// once per process and written back after the loads that changed it.
 ///
-/// It lives under `RailMap/Routes/index/`, so ``RiddenRouteStore`` Reload all
+/// It lives under `RailMap/Routes/index/`, so ``RiddenRouteStore``'s rebuild
 /// (which removes `RailMap/Routes`) wipes it with the routes, and the
 /// per-region sweep (which lists only `RailMap/Routes/<region>`) never sees it.
 final class RouteDigestIndexStore: @unchecked Sendable {
@@ -17,7 +17,7 @@ final class RouteDigestIndexStore: @unchecked Sendable {
 
     private let lock = NSLock()
     /// Serialises a flush's file write against ``clear()``, so a snapshot
-    /// taken before Reload all can never be written after it.
+    /// taken before a rebuild can never be written after it.
     private let writeLock = NSLock()
     private var index = RouteDigestIndex()
     private var loaded = false
@@ -30,8 +30,7 @@ final class RouteDigestIndexStore: @unchecked Sendable {
     private var generation = 0
 
     private static var fileURL: URL {
-        (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-            ?? URL.temporaryDirectory)
+        RiddenRouteStore.cachesBase
             .appending(path: "RailMap/Routes/index/route-digests.json")
     }
 
