@@ -466,6 +466,8 @@ final class RailNetworkStore {
         lastDisplayRequest = nil
         lastRequestedDisplayLine = [:]
         requestSerial = 0
+        topologies = [:]
+        topologyFailures = []
         currentBatchWave = nil
         currentBatchIDs = []
         currentBatchRect = nil
@@ -490,26 +492,7 @@ final class RailNetworkStore {
             do {
                 let manifest = try await manifestRead.value
                 guard startedEpoch == loadEpoch else { return }
-                displayManifest = manifest
-                let history = Self.loadDisplayHistories(manifest)
-                guard startedEpoch == loadEpoch else { return }
-                displayHistoryByRegion = history.files
-                displayHistoryFullLineIDs = history.fullDetailLineIDs
-                displayHistoryOverlayLines = history.overlayLines
-                displayHistoryOverlayStations = history.overlayStations
-                displayHistoryFailures = history.failures
-                refreshNetworkFailure()
-                let index = RailDisplayNetworkIndex.lineIndex(for: manifest)
-                guard startedEpoch == loadEpoch else { return }
-                displayIndex = index
-                // Start the requested viewport immediately. Debug integrity is
-                // checked by chunk(...) when each requested line is decoded;
-                // unrelated regions must not delay the first visible batch.
-                if let lastDisplayRequest {
-                    activateDisplayLines(
-                        intersecting: lastDisplayRequest.rect,
-                        cameraZoom: lastDisplayRequest.cameraZoom)
-                }
+                installDisplayManifest(manifest)
             } catch {
                 guard startedEpoch == loadEpoch else { return }
                 manifestFailure = error.localizedDescription
@@ -534,6 +517,25 @@ final class RailNetworkStore {
                 decodeGeometry(region)
             }
         }
+    }
+
+    /// Adopts a validated display manifest: its history side files, its line
+    /// index, then serves whatever was asked for while it was loading (the
+    /// requested viewport and any held lines). Debug integrity is checked by
+    /// `chunk(...)` when each requested line is decoded; unrelated regions
+    /// must not delay the first visible batch. Internal so a focused test can
+    /// install the bundled manifest without indexing every region.
+    func installDisplayManifest(_ manifest: RailDisplayNetworkManifest) {
+        displayManifest = manifest
+        let history = Self.loadDisplayHistories(manifest)
+        displayHistoryByRegion = history.files
+        displayHistoryFullLineIDs = history.fullDetailLineIDs
+        displayHistoryOverlayLines = history.overlayLines
+        displayHistoryOverlayStations = history.overlayStations
+        displayHistoryFailures = history.failures
+        refreshNetworkFailure()
+        displayIndex = RailDisplayNetworkIndex.lineIndex(for: manifest)
+        serveLatestDisplayRequest()
     }
 
     /// Index one weight class, concurrently within it.
@@ -844,12 +846,30 @@ final class RailNetworkStore {
     /// prefetched it, same as a padded or urgent one.
     @ObservationIgnored private var lastRequestedDisplayLine: [String: Int] = [:]
     @ObservationIgnored private var requestSerial = 0
+    /// Lines held by id, per owner (a ridden-line set, the selected trip, ...).
+    /// A held line, and the `dependsOn` closure it needs to draw, is requested
+    /// whatever the camera shows and is never evicted until its last holder
+    /// releases it. See ``ensure(lineIDs:owner:cameraZoom:fullDetail:)``.
+    @ObservationIgnored private var heldLineIDs: [String: Set<String>] = [:]
+    /// Owners whose held lines are wanted at full detail whatever the zoom
+    /// (the selected or playing trip).
+    @ObservationIgnored private var fullDetailOwners: Set<String> = []
+    /// The zoom the most recent by-id request was made at; used to choose the
+    /// detail when no camera request has been made yet.
+    @ObservationIgnored private var heldRequestZoom: Double = 0
+    /// Mapped topology files, opened on first ask per region. A region with no
+    /// topology file (or a file that fails to open) stays absent.
+    @ObservationIgnored private var topologies: [String: RailTopology] = [:]
+    @ObservationIgnored private var topologyFailures: Set<String> = []
 
     private static let displayAttemptLimit = 3
     /// Resident chunk bytes the store keeps before eviction starts trimming
     /// the least-recently-requested lines. Same unit as ``activeNetworkBytes``.
     /// Per device: 16 MB compact, 48 MB large, 128 MB desktop.
-    private static let residentByteBudget = ResourceProfile.current.displayResidentByteBudget
+    ///
+    /// An instance property so a focused test can shrink it; production never
+    /// sets it.
+    @ObservationIgnored var residentByteBudget = ResourceProfile.current.displayResidentByteBudget
     /// How many chunks a batch decodes at once. Bounded by the device's own
     /// core count rather than a flat constant — a chunk is kilobytes, so the
     /// limiting resource is CPU for JSON decode and geometry, not memory.
@@ -864,6 +884,7 @@ final class RailNetworkStore {
         for entry: RailDisplayNetworkIndex.Entry, cameraZoom: Double
     ) -> DisplayDetail {
         if displayHistoryFullLineIDs.contains(entry.id) { return .full }
+        if heldFullDetailClosure.contains(entry.id) { return .full }
         return cameraZoom <= Self.overviewDetailMaxZoom && entry.overview != nil ? .overview : .full
     }
 
@@ -873,6 +894,13 @@ final class RailNetworkStore {
             intersecting: rect, cameraZoom: cameraZoom, in: index)
         // Disabled regions (RegionConnectivity) keep their data but draw nothing.
         needed.removeAll { Region(rawValue: $0.region)?.isEnabled != true }
+        // Held lines (ridden lines, the selected trip) are wanted whatever the
+        // camera shows; their closure is already `dependsOn`-closed.
+        let held = heldEntries(in: index)
+        if !held.isEmpty {
+            let existingIDs = Set(needed.map(\.id))
+            needed.append(contentsOf: held.filter { !existingIDs.contains($0.id) })
+        }
         needed = withoutFailedHistory(needed)
         // Whole-region strategy (builder A1): once any of a small region's
         // entries is needed, its whole blob becomes one batch rather than a
@@ -948,6 +976,9 @@ final class RailNetworkStore {
                 urgentBase.append(entry)
             }
         }
+        // Held lines load in the first wave: a ride is waiting on them.
+        let urgentIDs = Set(urgentBase.map(\.id))
+        urgentBase.append(contentsOf: held.filter { !urgentIDs.contains($0.id) })
         let urgent = RailDisplayNetwork.closure(of: urgentBase, in: index)
 
         let wave: DisplayLoadWave
@@ -997,7 +1028,7 @@ final class RailNetworkStore {
                         ? (entry.overview?.length ?? entry.chunk.length) : entry.chunk.length
                     return sum + length
                 }
-                guard bytes + groupBytes <= Self.residentByteBudget else { break }
+                guard bytes + groupBytes <= residentByteBudget else { break }
                 bytes += groupBytes
                 selected.formUnion(groupIDs)
             }
@@ -1088,11 +1119,117 @@ final class RailNetworkStore {
             // A line that arrived while the camera kept moving may have
             // brought a neighbour into range. Ask again from where the map is
             // now rather than from the rect this batch started for.
-            if let lastDisplayRequest {
-                activateDisplayLines(
-                    intersecting: lastDisplayRequest.rect,
-                    cameraZoom: lastDisplayRequest.cameraZoom)
-            }
+            serveLatestDisplayRequest()
+        }
+    }
+
+    /// Asks again from where the map is now (or, before any camera request,
+    /// for the held lines alone).
+    private func serveLatestDisplayRequest() {
+        if let lastDisplayRequest {
+            activateDisplayLines(
+                intersecting: lastDisplayRequest.rect,
+                cameraZoom: lastDisplayRequest.cameraZoom)
+        } else if !heldLineIDs.isEmpty {
+            activateDisplayLines(intersecting: .null, cameraZoom: heldRequestZoom)
+        }
+    }
+
+    // MARK: - Residency by line id
+
+    /// Holds the railway lines `lineIDs` (bare display line ids, as the
+    /// manifest names them) for `owner`, replacing whatever that owner held
+    /// before. The held set is closed over `dependsOn`, requested at the
+    /// detail the current zoom uses (`fullDetail` asks for full whatever the
+    /// zoom, for the selected or playing trip), and kept from eviction until
+    /// every owner has released it. Unknown ids and disabled regions are
+    /// ignored. The viewport path is untouched: held lines are simply added
+    /// to what each camera request needs. Over the byte budget, held lines
+    /// win; only unheld lines are evicted.
+    func ensure(
+        lineIDs: Set<String>, owner: String, cameraZoom: Double, fullDetail: Bool = false
+    ) {
+        if lineIDs.isEmpty {
+            release(owner: owner)
+            return
+        }
+        heldLineIDs[owner] = lineIDs
+        if fullDetail { fullDetailOwners.insert(owner) } else { fullDetailOwners.remove(owner) }
+        heldRequestZoom = cameraZoom
+        guard displayIndex != nil else { return }
+        requestSerial += 1
+        if let lastDisplayRequest {
+            // The camera's own rect and zoom, so a batch already running for
+            // it is not preempted and the detail is the current zoom's.
+            activateDisplayLines(
+                intersecting: lastDisplayRequest.rect,
+                cameraZoom: lastDisplayRequest.cameraZoom)
+        } else {
+            activateDisplayLines(intersecting: .null, cameraZoom: cameraZoom)
+        }
+    }
+
+    /// Drops everything `owner` held. A line no other owner holds becomes
+    /// evictable again, and is evicted now if the store is over budget.
+    func release(owner: String) {
+        guard heldLineIDs.removeValue(forKey: owner) != nil else { return }
+        fullDetailOwners.remove(owner)
+        guard let index = displayIndex else { return }
+        let before = loadedDisplayLines.count
+        evictIfNeeded(index: index)
+        if loadedDisplayLines.count != before { publishDisplayNetwork() }
+    }
+
+    /// Ids of the lines whose geometry is resident right now.
+    var residentDisplayLineIDs: Set<String> { Set(loadedDisplayLines.keys) }
+
+    /// The detail a resident line was loaded at, nil when not resident.
+    func residentDisplayDetail(lineID: String) -> DisplayDetail? {
+        loadedDisplayLines[lineID]?.detail
+    }
+
+    /// Resolves when no display batch is in flight (and the chain of batches
+    /// the last one started has settled). For tests and measurement.
+    func waitForDisplayIdle() async {
+        while let task = displayLoadTask { await task.value }
+    }
+
+    /// Every entry any owner holds, plus the `dependsOn` lines they need,
+    /// restricted to enabled regions.
+    private func heldEntries(in index: RailDisplayNetworkIndex) -> [RailDisplayNetworkIndex.Entry] {
+        guard !heldLineIDs.isEmpty else { return [] }
+        let roots = heldLineIDs.values.reduce(into: Set<String>()) { $0.formUnion($1) }
+        let entries = roots.compactMap { index.entryByID[$0] }
+            .filter { Region(rawValue: $0.region)?.isEnabled == true }
+        return RailDisplayNetwork.closure(of: entries, in: index)
+    }
+
+    /// Held lines, closure included, of owners that want full detail.
+    private var heldFullDetailClosure: Set<String> {
+        guard !fullDetailOwners.isEmpty, let index = displayIndex else { return [] }
+        let roots = fullDetailOwners.reduce(into: Set<String>()) {
+            $0.formUnion(heldLineIDs[$1] ?? [])
+        }
+        return Set(RailDisplayNetwork.closure(
+            of: roots.compactMap { index.entryByID[$0] }, in: index).map(\.id))
+    }
+
+    /// The region's mapped topology file, opened on first use; nil when the
+    /// bundle has none for it or it fails validation (the failure is logged
+    /// once and not retried).
+    func topology(for region: Region) -> RailTopology? {
+        if let existing = topologies[region.rawValue] { return existing }
+        guard let record = displayIndex?.recordsByRegion[region.rawValue],
+              !topologyFailures.contains(region.rawValue) else { return nil }
+        do {
+            guard let opened = try RailDisplayNetwork.topology(record) else { return nil }
+            topologies[region.rawValue] = opened
+            return opened
+        } catch {
+            topologyFailures.insert(region.rawValue)
+            Logger(subsystem: "com.JRM.RailMap", category: "display").error(
+                "topology \(region.rawValue, privacy: .public) rejected: \(String(describing: error), privacy: .public)")
+            return nil
         }
     }
 
@@ -1105,11 +1242,11 @@ final class RailNetworkStore {
     /// worse failure than staying over budget.
     private func evictIfNeeded(index: RailDisplayNetworkIndex) {
         let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
-        guard residentBytes > Self.residentByteBudget else { return }
+        guard residentBytes > residentByteBudget else { return }
         let protectedEntries = lastDisplayRequest.map {
             RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
         } ?? []
-        let protected = Set(protectedEntries.map(\.id))
+        let protected = Set(protectedEntries.map(\.id)).union(heldEntries(in: index).map(\.id))
         let candidates = loadedDisplayLines.keys.filter { !protected.contains($0) }
             .sorted { a, b in
                 let la = lastRequestedDisplayLine[a] ?? 0
@@ -1118,7 +1255,7 @@ final class RailNetworkStore {
             }
         var bytes = residentBytes
         for id in candidates {
-            guard bytes > Self.residentByteBudget else { break }
+            guard bytes > residentByteBudget else { break }
             let hasSurvivingDependent = loadedDisplayLines.keys.contains { survivorID in
                 survivorID != id && index.entryByID[survivorID]?.dependsOn.contains(id) == true
             }
