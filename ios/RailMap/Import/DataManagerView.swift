@@ -639,6 +639,7 @@ struct DataManagerView: View {
                 .disabled(trainCount == 0)
 
             }
+            .accessibilityIdentifier("dangerZoneDisclosure")
         }
         .listSectionSpacing(.custom(44))
         .disabled(itineraries.isImporting)

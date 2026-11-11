@@ -434,10 +434,10 @@ enum DataStrings {
             .zhHant: "刪除備份", .zhHans: "删除备份", .ja: "バックアップを削除", .en: "Delete the backup",
         ],
         "data.discardBackupDetail": [
-            .zhHant: "將刪除包含 {count} 趟行程的備份檔案，刪除後無法復原。",
-            .zhHans: "将删除包含 {count} 趟行程的备份文件，删除后无法恢复。",
-            .ja: "{count} 本の乗車記録を含むバックアップファイルを削除します。削除後は元に戻せません。",
-            .en: "The backup file with {count} journeys is deleted. It cannot be restored afterwards.",
+            .zhHant: "將刪除 {count} 趟行程的備份，此操作無法復原。",
+            .zhHans: "将删除 {count} 趟行程的备份，此操作无法恢复。",
+            .ja: "{count} 件の旅程のバックアップを削除します。元に戻すことはできません。",
+            .en: "Deletes the backup of {count} trips. This can't be undone.",
         ],
         "data.noBackup": [
             .zhHant: "目前沒有備份。",

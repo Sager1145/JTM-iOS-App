@@ -28,7 +28,7 @@ final class DiscardBackupUITests: XCTestCase {
         data.tap()
 
         // Delete every journey: that writes the backup this test deletes.
-        let danger = app.buttons["Danger zone"]
+        let danger = app.descendants(matching: .any)["dangerZoneDisclosure"].firstMatch
         for _ in 0..<8 where !(danger.exists && danger.isHittable) { app.swipeUp() }
         XCTAssertTrue(danger.waitForExistence(timeout: 8))
         danger.tap()

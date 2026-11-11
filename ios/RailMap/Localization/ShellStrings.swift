@@ -224,7 +224,7 @@ enum ShellStrings {
             .zhHans: "当前", .zhHant: "目前",
         ],
         "ios.networkEra.rideDate": [
-            .en: "Selected ride's date", .ja: "選択中の乗車日",
+            .en: "Selected trip's date", .ja: "選択中の旅程の日付",
             .zhHans: "所选行程的日期", .zhHant: "所選行程的日期",
         ],
         "ios.networkEra.overlay": [
@@ -242,7 +242,7 @@ enum ShellStrings {
         ],
         // Keyboard-shortcut titles (hardware keyboard / iPad menu bar).
         "ios.network.toggle": [
-            .en: "Toggle railway network", .ja: "鉄道路線網を切り替え",
+            .en: "Toggle railway network", .ja: "路線網の表示を切り替え",
             .zhHans: "切换铁路路网", .zhHant: "切換鐵路路網",
         ],
         "ios.date.previous": [

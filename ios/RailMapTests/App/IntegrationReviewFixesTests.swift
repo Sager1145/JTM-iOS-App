@@ -107,6 +107,18 @@ struct IntegrationReviewFixesTests {
         #expect(Statistics.sumRideMinutes([train]) == expected)
     }
 
+    @Test("a share-card stop row spells its platform with the shared word-order string")
+    func shareCardPlatformUsesSharedString() throws {
+        var train = Self.ride("platform")
+        train.stops[0].platformNumber = 3
+        let l = AppLocalization()
+        let card = ShareCardBuilder(localization: l, passport: nil).journey(train, stops: .key)
+        let row = try #require(card.rows.first)
+        // Japanese is "3番線", not "番線 3": the number sits inside the string.
+        #expect(row.trailing == l.platformText(3))
+        #expect(row.trailing?.contains("3") == true)
+    }
+
     // MARK: 4. editor: one message per failed section
 
     private static func section(
