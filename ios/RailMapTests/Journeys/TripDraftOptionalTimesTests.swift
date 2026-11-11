@@ -325,6 +325,51 @@ struct TripDraftOptionalTimesTests {
         #expect(lateResult.stops[1].arrival == "25:10")
     }
 
+    @Test func anUntouchedSavedClockIsWrittenBackVerbatimWhenOnlyTheDateMoves() {
+        for (stored, arrivalStored) in [("10:30:15", "12:55:30"), ("10:00+1", "11:00+1"), ("24:30", "25:10")] {
+            let train = savedTrip(departure: stored, arrival: arrivalStored)
+            let model = TripDraftModel(train: train, isNew: false)
+            model.setDay(at("00:00", day: "2026-11-08", model), isDeparture: true)
+            model.departureChanged(to: model.departure)
+            let result = saved(model, train)
+            #expect(result.stops[0].departure == stored)
+            #expect(result.stops[1].arrival == arrivalStored)
+            #expect(result.date != train.date)
+        }
+    }
+
+    /// The arrival branch: the reader also touched the arrival's date, moving
+    /// it by the same days as the departure, so its stored text stays as is.
+    @Test func anUntouchedArrivalWhoseDateWasTouchedIsWrittenBackVerbatim() {
+        for (stored, arrivalStored) in [("10:30:15", "12:55:30"), ("10:00+1", "11:00+1"), ("24:30", "25:10")] {
+            let train = savedTrip(departure: stored, arrival: arrivalStored)
+            let model = TripDraftModel(train: train, isNew: false)
+            model.setDay(at("00:00", day: "2026-11-08", model), isDeparture: true)
+            model.departureChanged(to: model.departure)
+            model.setDay(model.arrival, isDeparture: false)
+            #expect(model.touched.contains(.arrivalDate))
+            let result = saved(model, train)
+            #expect(result.stops[0].departure == stored)
+            #expect(result.stops[1].arrival == arrivalStored, "\(result.stops[1].arrival ?? "nil")")
+        }
+    }
+
+    @Test func typingANewClockStillWritesTheCanonicalClock() {
+        let train = savedTrip(departure: "10:30:15", arrival: "11:00")
+        let model = TripDraftModel(train: train, isNew: false)
+        model.apply(TripDraftModel.Patch(departure: at("10:35", model)), source: .reader)
+        model.departureChanged(to: model.departure)
+        #expect(saved(model, train).stops[0].departure == "10:35")
+    }
+
+    @Test func secondsInASavedClockDoNotSkewTheArrivalShift() {
+        let train = savedTrip(departure: "10:30:15", arrival: "11:00")
+        let model = TripDraftModel(train: train, isNew: false)
+        model.apply(TripDraftModel.Patch(departure: at("10:35", model)), source: .reader)
+        model.departureChanged(to: model.departure)
+        #expect(model.scheduledClock(isDeparture: false) == "11:05")
+    }
+
     @Test func aClocklessSavedTripsDateMoveWritesNoClock() {
         let train = savedTrip()
         let model = TripDraftModel(train: train, isNew: false)
