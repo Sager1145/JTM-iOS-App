@@ -262,9 +262,10 @@ public struct RegionClock: Sendable, Hashable {
 
     /// The instant a printed stop time names on a record's service date, here.
     ///
-    /// `clock` is the record's own spelling — `H:MM` or `HH:MM`, where the hour
-    /// may run past 23 for a train still running after midnight (`25:10` is
-    /// 01:10 on the following calendar day). The overflow is folded into whole
+    /// `clock` is any spelling the app stores or receives (see
+    /// ``parseServiceTime(_:)``): `H:MM`, `HH:MM`, `HH:MM:SS`, an hour past 23
+    /// for a train still running after midnight (`25:10` is 01:10 on the
+    /// following calendar day), or the legacy `H:MM+N` day suffix. The overflow is folded into whole
     /// days on this region's calendar, never added as a raw interval, so the
     /// answer cannot depend on the device's zone or on a summer-time night
     /// anywhere else.
@@ -275,8 +276,9 @@ public struct RegionClock: Sendable, Hashable {
     /// `nil` when either string is not a date or a time.
     public func instant(serviceDate: String?, clock: String?) -> Date? {
         guard let start = startOfDay(serviceDate),
-            let (hours, minutes) = Self.parseServiceClock(clock)
+            let time = Self.parseServiceTime(clock)
         else { return nil }
+        let hours = time.hours
         guard
             let day = calendar.date(byAdding: .day, value: hours / 24, to: start)
         else { return nil }
@@ -284,27 +286,29 @@ public struct RegionClock: Sendable, Hashable {
         return calendar.date(
             from: DateComponents(
                 year: parts.year, month: parts.month, day: parts.day,
-                hour: hours % 24, minute: minutes))
+                hour: hours % 24, minute: time.minutes, second: time.seconds))
     }
 
     /// The printed stop time `instant` reads as on a record's service date,
     /// here — the inverse of ``instant(serviceDate:clock:)`` up to the
-    /// canonical zero-padded `HH:MM` spelling (`7:05` reads back as `07:05`).
+    /// canonical zero-padded `HH:MM` spelling (`7:05` reads back as `07:05`;
+    /// seconds are dropped).
     ///
-    /// An instant on the next calendar day keeps counting hours past 24, the
+    /// An instant on a later calendar day keeps counting hours past 24, the
     /// way a timetable prints it: 01:10 the next day is `25:10`. `nil` for an
-    /// instant before the service date begins, more than one calendar day
-    /// after it (the result would not be valid ``instant`` input, whose hours
-    /// run 0–47), or when the service date is not a date.
+    /// instant before the service date begins, one whose hour count passes 99
+    /// (the grammar's two-digit hour, which the port's reader needs), or when
+    /// the service date is not a date.
     public func serviceClock(of instant: Date, serviceDate: String?) -> String? {
         guard let start = startOfDay(serviceDate) else { return nil }
         let day = calendar.startOfDay(for: instant)
         guard
             let offset = calendar.dateComponents([.day], from: start, to: day).day,
-            offset >= 0, offset <= 1
+            offset >= 0
         else { return nil }
         let parts = calendar.dateComponents([.hour, .minute], from: instant)
         let hours = offset * 24 + (parts.hour ?? 0)
+        guard hours <= Self.maxServiceHour else { return nil }
         return String(format: "%02d:%02d", hours, parts.minute ?? 0)
     }
 
@@ -328,18 +332,67 @@ public struct RegionClock: Sendable, Hashable {
         return formatter
     }
 
-    /// `H:MM` / `HH:MM` with any hour from 0 to 47 and minutes 0–59.
-    public static func parseServiceClock(_ clock: String?) -> (Int, Int)? {
+    /// The largest hour a printed stop time may name before a `+N` suffix —
+    /// two digits, the same as `Dates.parseTimeToMinutes`.
+    static let maxServiceHour = 99
+
+    /// A printed stop time: total hours since the service date's midnight
+    /// (any `+N` day suffix already folded in, so `1:05+1` is hour 25), plus
+    /// minutes and seconds.
+    public struct ServiceTime: Equatable, Sendable {
+        public var hours: Int
+        public var minutes: Int
+        public var seconds: Int
+
+        public init(hours: Int, minutes: Int, seconds: Int) {
+            self.hours = hours
+            self.minutes = minutes
+            self.seconds = seconds
+        }
+    }
+
+    /// Every spelling the app stores or receives for a stop time, strictly
+    /// (whole string, ASCII digits, surrounding whitespace ignored):
+    /// `H:MM`, `HH:MM`, `HH:MM:SS`, each optionally followed by `+N` (spaces
+    /// allowed around the `+`, N of 1–3 digits and at most 366 — the bounds
+    /// `Dates.parseTimeToMinutes` and `EditorTime` use, though both of those
+    /// are looser about trailing text and leading zeros). Hour 0–99 before the
+    /// suffix, minutes and seconds 0–59; the suffix adds `24 * N` hours. `25:30`, `49:10` and `1:05+1` are all valid.
+    /// Garbage, fullwidth digits and out-of-range fields are `nil`.
+    public static func parseServiceTime(_ clock: String?) -> ServiceTime? {
         guard let clock else { return nil }
-        let parts = clock.trimmingCharacters(in: .whitespaces)
+        let trimmed = clock.trimmingCharacters(in: .whitespacesAndNewlines)
+        let sides = trimmed.split(separator: "+", maxSplits: 1, omittingEmptySubsequences: false)
+        guard (1...2).contains(sides.count) else { return nil }
+        func digits(_ part: Substring, lengths: ClosedRange<Int>) -> Int? {
+            guard lengths.contains(part.count),
+                part.allSatisfy({ $0.isASCII && $0.isNumber })
+            else { return nil }
+            return Int(part)
+        }
+        let fields = sides[0].trimmingCharacters(in: .whitespaces)
             .split(separator: ":", omittingEmptySubsequences: false)
-        guard parts.count == 2, (1...2).contains(parts[0].count),
-            parts[1].count == 2,
-            parts.allSatisfy({ $0.allSatisfy(\.isASCII) && $0.allSatisfy(\.isNumber) }),
-            let hours = Int(parts[0]), let minutes = Int(parts[1]),
-            (0..<48).contains(hours), (0..<60).contains(minutes)
+        guard (2...3).contains(fields.count),
+            let hours = digits(fields[0], lengths: 1...2), hours <= maxServiceHour,
+            let minutes = digits(fields[1], lengths: 2...2), minutes < 60
         else { return nil }
-        return (hours, minutes)
+        var seconds = 0
+        if fields.count == 3 {
+            guard let value = digits(fields[2], lengths: 2...2), value < 60 else { return nil }
+            seconds = value
+        }
+        var days = 0
+        if sides.count == 2 {
+            let suffix = Substring(sides[1].trimmingCharacters(in: .whitespaces))
+            guard let value = digits(suffix, lengths: 1...3), value <= 366 else { return nil }
+            days = value
+        }
+        return ServiceTime(hours: hours + 24 * days, minutes: minutes, seconds: seconds)
+    }
+
+    /// ``parseServiceTime(_:)`` without the seconds: total hours and minutes.
+    public static func parseServiceClock(_ clock: String?) -> (Int, Int)? {
+        parseServiceTime(clock).map { ($0.hours, $0.minutes) }
     }
 
     // MARK: - saying so

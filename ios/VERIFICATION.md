@@ -395,6 +395,11 @@ cheap set that does not widen the checks above: it excludes `RailHistoryPackageT
 `JunctionApproachTests` and the slow or already-red fixtures. Details and the
 past failure each guard answers: `docs/maintenance/2026-11-06-regression-guards.md`.
 
+**Editor time zones.** Changes to `JourneyEditor/`, `RecordDate` or region-clock code
+must also run `JTM_NATIVE_GUARDS=1 bash ios/tools/run-regression-guards.sh`, which adds
+the simulator suites `TripDraftDeviceZoneTests` and `TripDraftStoredFormatsTests` (the
+editor's draft model is app code, so they cannot run in the RailKit package).
+
 **UI tokens.** `ios/tools/check-ui-tokens.sh` fails when a file gains, beyond `ios/tools/ui-token-baseline.txt`: `padding-literal` / `spacing-literal` (any bare numeric literal other than 0/1/2 anywhere in the argument, including ternaries and arithmetic; `RailSpacing.s12`-style tokens do not count), `edgeinsets-literal` (SwiftUI `EdgeInsets(`), `radius-literal`, `touch-literal` (44-pt frames), `small-touch` (`minHeight`/`minWidth` of 20-43), `stock-bordered`, `fixed-font` (`.system(size: N` anywhere), `footnote-font` (`.font(.footnote`), `raw-detents` (`.presentationDetents(` outside `Design/`; use `railSheet(.half/.full)`), `direct-capsule` (`RailCapsuleButtonStyle(` outside `Design/`; use `.railPrimary`/`.railSecondary`), `dismiss-text` and `feature-dismiss-key` (a per-feature `cancel`/`close`/`done` string key or `text("...")` call site instead of the shared `ios.cancel`/`ios.close`/`ios.done`). A deliberate exception carries a trailing `// ui-token-ok: reason`. `bash ios/tools/check-ui-tokens.sh --self-test` checks synthetic positive and negative snippets for every rule and also runs before each normal check, so the guard cannot rot silently. The baseline only shrinks: after removing violations run `bash ios/tools/check-ui-tokens.sh --update PATH...` (refuses to grow a count).
 
 | Guard | Catches |
@@ -404,7 +409,8 @@ past failure each guard answers: `docs/maintenance/2026-11-06-regression-guards.
 | `RegressionGuardHistoryStamps` | history events losing or narrowing their `rail-history.json` stamps |
 | `RegressionGuardPairedTracks` | paired-track catalog drifting from `paired_alignment` rows; branches listed as pairs |
 | `RegressionGuardArtifactRevisions` | stale or unstamped port fixtures, sample parts, expectations |
-| `RegressionGuardDeviceClock` | `Calendar.current` / `TimeZone.current` / unpinned `DatePicker` in app code (shrink-only baseline; recorded times must use `region.clock`) |
+| `RegressionGuardDeviceClock` | per-site device zone/calendar/locale use (`Calendar.current`, zone-less `Calendar`/`DateFormatter`, `.formatted`, unpinned `DatePicker`) across RailMap, RailKit/Sources and auxiliary (shrink-only baseline; recorded times must use `region.clock`) |
+| `TripDraftDeviceZoneTests`, `TripDraftStoredFormatsTests` (native, `JTM_NATIVE_GUARDS=1`) | a phone time zone or calendar changing recorded or edited times; stored time spellings opening as unknown |
 | `DataCountExpectations` (per-region counts) | one region's rows breaking counts; says "code regression" vs "data changed" |
 | `build-port-fixtures.mjs --check --only=<f>` (15 fast fixtures) | JS reference output drifting from its committed fixture |
 | Playback / RouteGraph / Localization / ContinuousStroke parity, `SamplePrecomputeProvenanceTests`, `TravelDirectionTests`, `DirectionalAlignmentSelectionTests` | Swift vs JS drift in route key, operator names, i18n, stroke; direction logic |
