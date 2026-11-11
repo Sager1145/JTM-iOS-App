@@ -38,18 +38,22 @@ final class TripNoteFlow {
     var saveRefused = false
     /// True from Save until persistence answers, so a second tap cannot race it.
     var isSaving = false
+    /// True once the reader taps Day 1 / Day 2 in this edit: the day then
+    /// stays theirs. Reset whenever a form opens.
+    var dayChosenByHand = false
 
     /// Pick a place on the map: the anchor to start from (nil for a new
     /// note), and a callback that hears the confirmed anchor, or nil when the
     /// pick was cancelled. Nil here means the surface has no map, and the form
-    /// offers the trip's stations instead.
+    /// offers the trip's stations instead of a map pick for Change place.
     @ObservationIgnored var pickPlace: ((TripNoteAnchor?, @escaping (TripNoteAnchor?) -> Void) -> Void)?
 
     var isEdited: Bool { draft != original }
 
     /// "Add note": the place comes first, the form only after it.
     func beginAdd(train: Train, now: Date = Date()) {
-        let open: (TripNoteAnchor) -> Void = { [weak self] anchor in
+        pickPlace?(nil) { [weak self] anchor in
+            guard let anchor else { return }
             self?.openForm(TripNoteDraft(
                 id: UUID().uuidString.lowercased(), isNew: true, category: "", text: "",
                 time: TripNoteTime.suggested(
@@ -57,19 +61,17 @@ final class TripNoteFlow {
                     clock: Region.resolved(train).clock),
                 anchor: anchor))
         }
-        if let pickPlace {
-            pickPlace(nil) { anchor in
-                if let anchor { open(anchor) }
-            }
-        } else if let first = train.stops.first {
-            open(.station(TripNoteStation(stop: first), fallback: nil))
-        }
     }
 
-    func beginEdit(_ note: TripNote) {
+    func beginEdit(_ note: TripNote, train: Train) {
         openForm(TripNoteDraft(
             id: note.id, isNew: false, category: note.category, text: note.text,
             time: note.time, anchor: note.anchor))
+        // A stored day that a fresh pick of the same clock would not give was
+        // the reader's choice; a nudge of the time must keep it.
+        dayChosenByHand = TripNoteEditing.dayWasChosen(
+            time: note.time, serviceDate: train.date, clock: Region.resolved(train).clock,
+            departureMinutes: TripNoteEditing.departureMinutes(of: train))
     }
 
     /// Change place from the form: close it, pick, and bring it back with
@@ -87,6 +89,23 @@ final class TripNoteFlow {
         }
     }
 
+    /// Writes `notes` and closes the surface only once persistence says yes. A
+    /// list equal to what the trip already has is a success without a write: an
+    /// untouched Save must not read as a refusal. A failure keeps the draft and
+    /// form open and raises `saveRefused`.
+    func persist(_ notes: [TripNote], replacing current: [TripNote]?,
+                 onSet: (([TripNote]) async -> Bool)?) async {
+        guard !isSaving else { return }
+        if notes == (current ?? []) {
+            screen = nil
+            return
+        }
+        isSaving = true
+        let saved = await onSet?(notes) == true
+        isSaving = false
+        if saved { screen = nil } else { saveRefused = true }
+    }
+
     /// The owner is going away: drop whatever is open or half-edited.
     func reset() {
         screen = nil
@@ -98,6 +117,7 @@ final class TripNoteFlow {
     private func openForm(_ draft: TripNoteDraft) {
         self.draft = draft
         original = draft
+        dayChosenByHand = false
         screen = .form
     }
 
@@ -120,25 +140,20 @@ struct TripNoteDescriber {
     let localization: AppLocalization
 
     private var region: Region { Region.resolved(train) }
-    var clock: RegionClock { region.clock }
+    let clock: RegionClock
+
+    init(train: Train, localization: AppLocalization, clock: RegionClock? = nil) {
+        self.train = train
+        self.localization = localization
+        self.clock = clock ?? Region.resolved(train).clock
+    }
 
     func place(_ anchor: TripNoteAnchor) -> String {
-        switch TripNotePlacement.resolve(anchor, stops: train.stops) {
-        case .station(let index):
-            return localization.text("ios.tripNotes.placeAtStation",
-                                     params: ["station": .string(stationName(index))])
-        case .interval(let from, let to, _):
-            return localization.text("ios.tripNotes.placeBetween", params: [
-                "from": .string(stationName(from)), "to": .string(stationName(to)),
-            ])
-        case .coordinate: return localization.text("ios.tripNotes.placeOnMap")
-        case .unplaced: return localization.text("ios.tripNotes.placeUnplaced")
-        }
+        TripNotePlaceNaming.place(anchor, stops: train.stops, region: region, localization: localization)
     }
 
     func stationName(_ index: Int) -> String {
-        let stop = train.stops[index]
-        return localization.stationName(stop.name, code: stop.n02StationCode, region: region)
+        TripNotePlaceNaming.stationName(train.stops[index], region: region, localization: localization)
     }
 
     /// "01:10 (+1) UTC+9", or nil without a time.
@@ -149,7 +164,16 @@ struct TripNoteDescriber {
             text += " (" + localization.text("ios.tripNotes.nextDay",
                                              params: ["n": .number(Double(shown.dayOffset))]) + ")"
         }
-        return text + " " + clock.utcOffsetText(at: Date())
+        return text + " " + clock.utcOffsetText(at: offsetInstant(time))
+    }
+
+    /// The instant whose UTC offset labels a note's time: the note's own
+    /// moment, else the trip date's start, and only an undated trip falls back
+    /// to now.
+    func offsetInstant(_ time: String?) -> Date {
+        clock.instant(serviceDate: train.date, clock: time)
+            ?? clock.startOfDay(train.date)
+            ?? Date()
     }
 
     /// "Notes 1 · 2026-10-12": the trip as its card header names it.
@@ -310,7 +334,7 @@ private struct TripNoteReadCard: View {
                                            value: describer.place(note.anchor))
                             HStack(spacing: RailSpacing.s12) {
                                 Button(localization.text("ios.tripNotes.edit"), systemImage: "pencil") {
-                                    flow.beginEdit(note)
+                                    flow.beginEdit(note, train: train)
                                 }
                                 .buttonStyle(.railSecondary)
                                 .accessibilityIdentifier("tripNoteEdit")
@@ -359,12 +383,8 @@ private struct TripNoteReadCard: View {
 
     private func delete(_ note: TripNote) {
         let remaining = (train.tripNotes ?? []).filter { $0.id != note.id }
-        guard !flow.isSaving else { return }
-        flow.isSaving = true
         Task { @MainActor in
-            let saved = await onSet?(remaining) == true
-            flow.isSaving = false
-            if saved { flow.screen = nil } else { flow.saveRefused = true }
+            await flow.persist(remaining, replacing: train.tripNotes, onSet: onSet)
         }
     }
 }
@@ -495,13 +515,23 @@ private struct TripNoteFormSheet: View {
 
     private var timeSection: some View {
         let clock = describer.clock
+        let departureMinutes = TripNoteEditing.departureMinutes(of: train)
+        let isUndated = TripNoteEditing.pickerRange(serviceDate: train.date, clock: clock) == nil
+        let day = Binding<Int>(
+            get: { TripNoteEditing.day(of: draft.wrappedValue.time) },
+            set: { chosen in
+                flow.dayChosenByHand = true
+                flow.draft?.time = TripNoteEditing.withDay(chosen, of: draft.wrappedValue.time)
+            })
         let hasTime = Binding(
             get: { draft.wrappedValue.time != nil },
             set: { on in
-                flow.draft?.time = on
-                    ? (TripNoteTime.suggested(for: train, stopIndex: nil, now: Date(),
-                                              clock: clock) ?? "00:00")
-                    : nil
+                guard on else { flow.draft?.time = nil; return }
+                let suggested = TripNoteTime.suggested(for: train, stopIndex: nil, now: Date(),
+                                                       clock: clock) ?? "00:00"
+                flow.draft?.time = TripNoteEditing.undatedAware(
+                    suggested, serviceDate: train.date, clock: clock,
+                    dayChosenByHand: flow.dayChosenByHand, departureMinutes: departureMinutes)
             })
         let picked = Binding<Date>(
             get: {
@@ -512,7 +542,8 @@ private struct TripNoteFormSheet: View {
             set: { instant in
                 if let time = TripNoteEditing.time(
                     forPicked: instant, serviceDate: train.date, clock: clock,
-                    carryingDayOf: draft.wrappedValue.time) {
+                    current: draft.wrappedValue.time, dayChosenByHand: flow.dayChosenByHand,
+                    departureMinutes: departureMinutes) {
                     flow.draft?.time = time
                 }
             })
@@ -525,15 +556,24 @@ private struct TripNoteFormSheet: View {
                     if let range = TripNoteEditing.pickerRange(serviceDate: train.date, clock: clock) {
                         DatePicker(localization.text("ios.tripNotes.time"), selection: picked,
                                    in: range, displayedComponents: [.date, .hourAndMinute])
+                            .environment(\.calendar, clock.calendar)
                             .environment(\.timeZone, clock.timeZone)
                     } else {
                         DatePicker(localization.text("ios.tripNotes.time"), selection: picked,
                                    displayedComponents: [.hourAndMinute])
+                            .environment(\.calendar, clock.calendar)
                             .environment(\.timeZone, clock.timeZone)
                     }
                 }
-                .environment(\.calendar, clock.calendar)
                 .accessibilityIdentifier("tripNoteTime")
+                if isUndated {
+                    Picker(localization.text("ios.tripNotes.time"), selection: day) {
+                        Text(localization.text("ios.tripNotes.day1")).tag(0)
+                        Text(localization.text("ios.tripNotes.day2")).tag(1)
+                    }
+                    .pickerStyle(.segmented)
+                    .accessibilityIdentifier("tripNoteDay")
+                }
                 if let label = describer.time(draft.wrappedValue.time) {
                     Text(label).railText(.tertiary).monospacedDigit()
                 }
@@ -589,12 +629,8 @@ private struct TripNoteFormSheet: View {
         }
         // The draft stays in the flow until persistence confirms, so a failed
         // save leaves the form open for another try.
-        guard !flow.isSaving else { return }
-        flow.isSaving = true
         Task { @MainActor in
-            let saved = await onSet?(notes) == true
-            flow.isSaving = false
-            if saved { flow.screen = nil } else { flow.saveRefused = true }
+            await flow.persist(notes, replacing: train.tripNotes, onSet: onSet)
         }
     }
 }

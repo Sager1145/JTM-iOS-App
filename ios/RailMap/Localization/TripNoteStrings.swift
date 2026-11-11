@@ -52,6 +52,12 @@ enum TripNoteStrings {
         "ios.tripNotes.noTime": [
             .en: "No time", .ja: "時刻なし", .zhHant: "不指定時間", .zhHans: "不指定时间",
         ],
+        "ios.tripNotes.day1": [
+            .en: "Day 1", .ja: "1日目", .zhHant: "第1天", .zhHans: "第1天",
+        ],
+        "ios.tripNotes.day2": [
+            .en: "Day 2", .ja: "2日目", .zhHant: "第2天", .zhHans: "第2天",
+        ],
         "ios.tripNotes.nextDay": [
             .en: "+{n}", .ja: "+{n}", .zhHant: "+{n}", .zhHans: "+{n}",
         ],

@@ -839,6 +839,7 @@ struct QuietActionGroup: View {
         } label: {
             Label(appearance.label, systemImage: appearance.systemImage)
         }
+        .accessibilityIdentifier("journeySecondary-\(action)")
     }
 }
 

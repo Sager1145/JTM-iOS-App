@@ -4,16 +4,40 @@ import XCTest
 @MainActor
 final class TripNotesUITests: XCTestCase {
     private let tripID = "uitest_tripnotes"
+    private let undatedID = "uitest_tripnotes_undated"
 
     override func setUp() { continueAfterFailure = false }
 
-    func testNoNotesMeansNoMarkerAndNoBadge() {
-        let app = launch(selecting: false)
-        XCTAssertTrue(element("journeyLoadInventory", in: app).waitForExistence(timeout: 5)
-                      || app.wait(for: .runningForeground, timeout: 10))
-        sleep(3)
-        XCTAssertFalse(element("tripNoteMarker", in: app).exists)
-        XCTAssertFalse(element("tripNoteBadge", in: app).exists)
+    func testNoNotesMeansNoBadgeAndANoteShowsExactlyOneOverviewBadge() {
+        let overview = launch(selecting: false)
+        waitForRoutes(in: overview)
+        XCTAssertFalse(element("tripNoteMarker", in: overview).exists)
+        XCTAssertFalse(element("tripNoteBadge", in: overview).exists, "No notes: no badge.")
+        overview.terminate()
+
+        let app = launch(selecting: true)
+        waitForRoutes(in: app)
+        let add = app.buttons["tripNotesAdd"]
+        XCTAssertTrue(add.waitForExistence(timeout: 30))
+        add.tap()
+        XCTAssertTrue(waitForPickCount(in: app))
+        chooseStation(named: "Tokyo", in: app)
+        XCTAssertTrue(element("tripNoteForm", in: app).waitForExistence(timeout: 10))
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        XCTAssertTrue(element("tripNoteMarker", in: app).waitForExistence(timeout: 15))
+
+        // Back to the overview: the trip card closes and the markers give way to a badge.
+        let back = app.buttons["journeyBackToList"]
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        back.tap()
+        let badges = app.descendants(matching: .any).matching(identifier: "tripNoteBadge")
+        let one = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in badges.count == 1 }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [one], timeout: 20), .completed,
+                       "Exactly one overview badge expected, found \(badges.count).")
+        XCTAssertTrue(badges.firstMatch.label.contains("1"), badges.firstMatch.label)
+        snapshot("trip-notes-overview-badge", app)
     }
 
     func testAddingAPickShowsBannerBeforeFormThenFullNoteLifecycle() {
@@ -87,15 +111,180 @@ final class TripNotesUITests: XCTestCase {
         // Read card, delete.
         marker.tap()
         XCTAssertTrue(element("tripNoteReadCard", in: app).waitForExistence(timeout: 5))
-        app.buttons["tripNoteDelete"].tap()
+        let readCard = element("tripNoteReadCard", in: app)
+        let delete = readCard.descendants(matching: .button)
+            .matching(identifier: "tripNoteDelete").firstMatch
+        XCTAssertTrue(delete.waitForExistence(timeout: 5), "Delete belongs to the read card.")
+        delete.tap()
         let confirm = app.buttons.matching(identifier: "tripNoteDeleteConfirm").firstMatch
-        if confirm.waitForExistence(timeout: 3) { confirm.tap() }
-        else { app.buttons.matching(identifier: "Delete").lastMatch.tap() }
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+        confirm.tap()
         let gone = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "exists == false"), object: row)
         XCTAssertEqual(XCTWaiter.wait(for: [gone], timeout: 10), .completed)
         XCTAssertFalse(element("tripNoteMarker", in: app).waitForExistence(timeout: 3),
                        "Deleting the last note removes its marker.")
+    }
+
+    /// Centre pin Confirm: the camera frames the trip, so nudge the map until the pin snaps to the interval.
+    func testCentrePinConfirmPlacesAnIntervalNote() {
+        let app = launch(selecting: true)
+        waitForRoutes(in: app)
+        app.buttons["tripNotesAdd"].tap()
+        XCTAssertTrue(waitForPickCount(in: app))
+        let banner = element("tripNotePickBanner", in: app)
+        let confirm = element("tripNotePickConfirm", in: app)
+        let interval = NSPredicate(format: "label CONTAINS %@", "Tokyo → Shinagawa")
+        func snapped() -> Bool {
+            let expectation = XCTNSPredicateExpectation(predicate: interval, object: banner)
+            return XCTWaiter.wait(for: [expectation], timeout: 4) == .completed && confirm.isEnabled
+        }
+        let map = app.maps.firstMatch
+        var attempts = 0
+        while !snapped(), attempts < 6 {
+            // Alternate along the line so one of the nudges lands between the stations.
+            let dy = attempts % 2 == 0 ? 0.04 : -0.08
+            let from = map.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            from.press(forDuration: 0.1, thenDragTo: map.coordinate(
+                withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 + dy)))
+            attempts += 1
+        }
+        XCTAssertTrue(interval.evaluate(with: banner), "Banner: \(banner.label)")
+        XCTAssertTrue(confirm.isEnabled)
+        snapshot("trip-notes-centre-pin", app)
+        confirm.tap()
+        let form = element("tripNoteForm", in: app)
+        XCTAssertTrue(form.waitForExistence(timeout: 10))
+        XCTAssertTrue(element("tripNotePlace", in: app).label.contains("Tokyo → Shinagawa"),
+                      element("tripNotePlace", in: app).label)
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        let marker = element("tripNoteMarker", in: app)
+        XCTAssertTrue(marker.waitForExistence(timeout: 15))
+        XCTAssertEqual(marker.value as? String, "Tokyo → Shinagawa")
+    }
+
+    /// My location, with CoreLocation stubbed to Yurakucho (on the line).
+    func testMyLocationPlacesANote() {
+        let app = launch(selecting: true, location: "35.6750,139.7630")
+        waitForRoutes(in: app)
+        app.buttons["tripNotesAdd"].tap()
+        XCTAssertTrue(waitForPickCount(in: app))
+        let mine = element("tripNotePickMyLocation", in: app)
+        XCTAssertTrue(mine.waitForExistence(timeout: 10))
+        mine.tap()
+        let banner = element("tripNotePickBanner", in: app)
+        let confirm = element("tripNotePickConfirm", in: app)
+        let enabled = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "isEnabled == true"), object: confirm)
+        XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 15), .completed, banner.label)
+        let label = banner.label
+        XCTAssertTrue(label.contains("→") || label.contains("At "), "Banner: \(label)")
+        snapshot("trip-notes-my-location", app)
+        confirm.tap()
+        XCTAssertTrue(element("tripNoteForm", in: app).waitForExistence(timeout: 10))
+        let place = element("tripNotePlace", in: app).label
+        XCTAssertTrue(place.contains("→") || place.contains("At "), place)
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        XCTAssertTrue(element("tripNoteMarker", in: app).waitForExistence(timeout: 15))
+    }
+
+    func testTimePickerExistsHidesWithNoTimeAndDefaultSurvivesSave() {
+        let app = launch(selecting: true)
+        waitForRoutes(in: app)
+        app.buttons["tripNotesAdd"].tap()
+        XCTAssertTrue(waitForPickCount(in: app))
+        chooseStation(named: "Tokyo", in: app)
+        XCTAssertTrue(element("tripNoteForm", in: app).waitForExistence(timeout: 10))
+        let time = element("tripNoteTime", in: app)
+        let noTime = app.switches["tripNoteNoTime"]
+        XCTAssertTrue(time.waitForExistence(timeout: 5), "A fresh note carries a default time.")
+        XCTAssertTrue(noTime.exists)
+        flip(noTime)
+        snapshot("trip-notes-no-time", app)
+        let hidden = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "exists == false"), object: time)
+        XCTAssertEqual(XCTWaiter.wait(for: [hidden], timeout: 5), .completed,
+                       "No time hides the picker (switch value \(noTime.value as? String ?? "nil")).")
+        flip(noTime)
+        XCTAssertTrue(time.waitForExistence(timeout: 5))
+        snapshot("trip-notes-time", app)
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        let row = element("tripNoteRow", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 15))
+        XCTAssertNotNil(row.label.range(of: #"\d{1,2}:\d{2}"#, options: .regularExpression),
+                        "The saved default time shows on the row: \(row.label)")
+    }
+
+    /// Add note closes the details sheet, picks on the main map, then reopens details with the form.
+    func testAddNoteFromDetailsSheetRunsMainMapPick() {
+        let app = launch(selecting: true)
+        waitForRoutes(in: app)
+        openDetails(in: app)
+        let close = element("rideDetailClose", in: app)
+        XCTAssertTrue(close.waitForExistence(timeout: 10), "Details are open.")
+        tapDetailsAdd(in: app)
+        let banner = element("tripNotePickBanner", in: app)
+        XCTAssertTrue(banner.waitForExistence(timeout: 15), "Details Add note runs the main-map pick.")
+        XCTAssertFalse(element("rideDetailClose", in: app).exists, "Details step aside during the pick.")
+        XCTAssertTrue(waitForPickCount(in: app))
+        chooseStation(named: "Tokyo", in: app)
+        XCTAssertTrue(element("tripNoteForm", in: app).waitForExistence(timeout: 15))
+        XCTAssertTrue(element("tripNotePlace", in: app).label.contains("Tokyo"))
+        snapshot("trip-notes-details-form", app)
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        XCTAssertTrue(element("tripNoteRow", in: app).waitForExistence(timeout: 15),
+                      "Confirm reopens details; the saved note is a row there.")
+        XCTAssertTrue(element("rideDetailClose", in: app).exists, "The form was over the details sheet.")
+    }
+
+    /// Cancelling the pick brings details back where they were, with no form.
+    func testCancelledPickFromDetailsReturnsToDetailsWithoutAForm() {
+        let app = launch(selecting: true)
+        waitForRoutes(in: app)
+        openDetails(in: app)
+        XCTAssertTrue(element("rideDetailClose", in: app).waitForExistence(timeout: 10))
+        tapDetailsAdd(in: app)
+        XCTAssertTrue(waitForPickCount(in: app))
+        let cancel = element("tripNotePickCancel", in: app)
+        XCTAssertTrue(cancel.waitForExistence(timeout: 10))
+        cancel.tap()
+        XCTAssertTrue(element("rideDetailClose", in: app).waitForExistence(timeout: 15),
+                      "Details are back after Cancel.")
+        XCTAssertFalse(element("tripNoteForm", in: app).exists)
+        XCTAssertFalse(element("tripNotePickBanner", in: app).exists)
+    }
+
+    func testUndatedTripPastMidnightNoteGetsDay2() {
+        let app = launch(selecting: true, selectID: undatedID)
+        waitForRoutes(in: app)
+        let add = app.buttons["tripNotesAdd"]
+        XCTAssertTrue(add.waitForExistence(timeout: 30))
+        add.tap()
+        XCTAssertTrue(waitForPickCount(in: app))
+        chooseStation(named: "Tokyo", in: app)
+        XCTAssertTrue(element("tripNoteForm", in: app).waitForExistence(timeout: 10))
+        let day = element("tripNoteDay", in: app)
+        XCTAssertTrue(day.waitForExistence(timeout: 5), "An undated trip's time has a Day 1 / Day 2 control.")
+        // Set 12:20 AM through the picker's wheels.
+        element("tripNoteTime", in: app).tap()
+        let wheels = app.pickerWheels
+        XCTAssertTrue(wheels.firstMatch.waitForExistence(timeout: 5))
+        wheels.element(boundBy: 0).adjust(toPickerWheelValue: "12")
+        wheels.element(boundBy: 1).adjust(toPickerWheelValue: "20")
+        if wheels.count > 2 { wheels.element(boundBy: 2).adjust(toPickerWheelValue: "AM") }
+        XCTAssertTrue(day.buttons.matching(NSPredicate(format: "label CONTAINS 'Day 2' AND isSelected == true"))
+            .firstMatch.waitForExistence(timeout: 5), "Day 2 is selected for 00:20.")
+        // Close the time popover (tap the title bar) so the note field can take focus.
+        app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        fillNote(in: app)
+        app.buttons["tripNoteSave"].tap()
+        let row = element("tripNoteRow", in: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 15))
+        XCTAssertTrue(row.label.contains("+1"), row.label)
     }
 
     // MARK: -
@@ -112,16 +301,74 @@ final class TripNotesUITests: XCTestCase {
         if confirm.waitForExistence(timeout: 3) { confirm.tap() }
     }
 
-    private func launch(selecting: Bool) -> XCUIApplication {
+    /// The details sheet's own toolbar button; the trip card behind it has one with the same id.
+    private func tapDetailsAdd(in app: XCUIApplication) {
+        let add = app.navigationBars.buttons.matching(identifier: "tripNotesAdd").firstMatch
+        XCTAssertTrue(add.waitForExistence(timeout: 10), "Details toolbar has Add note.")
+        add.tap()
+    }
+
+    /// A Form switch: tapping its centre can land on the label, so hit the knob's side.
+    private func flip(_ toggle: XCUIElement) {
+        toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+    }
+
+    /// A note needs a category or text to be saved.
+    private func fillNote(in app: XCUIApplication) {
+        let text = app.textViews["tripNoteText"]
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        text.tap()
+        text.typeText("Noted")
+    }
+
+    private func waitForRoutes(in app: XCUIApplication) {
+        let map = app.descendants(matching: .any)["railwayMap"]
+        XCTAssertTrue(map.waitForExistence(timeout: 60), app.debugDescription)
+        let loaded = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            map.exists && map.value as? String == "Routes loaded"
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [loaded], timeout: 90), .completed, "Routes never loaded.")
+    }
+
+    /// Pick mode is up and only this trip's ride is visible.
+    private func waitForPickCount(in app: XCUIApplication) -> Bool {
+        let state = element("tripNotePickState", in: app)
+        guard state.waitForExistence(timeout: 10) else { return false }
+        let one = XCTNSPredicateExpectation(predicate: NSPredicate(
+            format: "label == %@", "tripNotePickMode=on;visibleRides=1"), object: state)
+        return XCTWaiter.wait(for: [one], timeout: 20) == .completed
+    }
+
+    /// Details sits in the card's More menu; the menu item carries `journeySecondary-inspectDetails`.
+    private func openDetails(in app: XCUIApplication) {
+        let details = app.buttons["journeySecondary-inspectDetails"]
+        if !details.waitForExistence(timeout: 20) {
+            let more = app.buttons.matching(
+                NSPredicate(format: "label CONTAINS[c] 'More'")).firstMatch
+            XCTAssertTrue(more.waitForExistence(timeout: 10), "More menu missing.")
+            more.tap()
+        }
+        let found = details.waitForExistence(timeout: 10)
+        if !found { snapshot("details-missing", app) }
+        let tree = found ? "" : app.debugDescription.split(separator: "\n")
+            .filter { $0.contains("Button") || $0.contains("Menu") || $0.contains("Other, ") }
+            .prefix(80).joined(separator: "\n")
+        XCTAssertTrue(found, "Details button missing. \(tree)")
+        details.tap()
+    }
+
+    private func launch(selecting: Bool, location: String? = nil,
+                        selectID: String? = nil) -> XCUIApplication {
         let app = XCUIApplication()
         app.uiTestLaunch[.storageId] = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
         app.uiTestLaunch[.storeBase64] = seededStore()
         if selecting {
-            app.uiTestLaunch[.select] = tripID
+            app.uiTestLaunch[.select] = selectID ?? tripID
             app.uiTestLaunch[.stage] = "expanded"
         }
+        if let location { app.launchEnvironment["RAILMAP_UI_TEST_LOCATION"] = location }
         UITestLaunchSupport.launch(app)
         return app
     }
@@ -143,7 +390,16 @@ final class TripNotesUITests: XCTestCase {
                 EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "09:20"),
             ],
         ]
-        let store: [String: Any] = ["schema_version": "1.3", "trains": [train, other]]
+        // No "date": departs 23:30, arrives 00:40 the next day (24:40).
+        let undated: [String: Any] = [
+            "id": undatedID, "number": "Undated 3",
+            "origin": "Tokyo", "destination": "Shinagawa", "region": "jp",
+            "stops": [
+                EditorLaunchSupport.stop("Tokyo", code: "003768", type: "origin", departure: "23:30"),
+                EditorLaunchSupport.stop("Shinagawa", code: "004092", type: "destination", arrival: "24:40"),
+            ],
+        ]
+        let store: [String: Any] = ["schema_version": "1.3", "trains": [train, other, undated]]
         return try! JSONSerialization.data(withJSONObject: store, options: [.sortedKeys])
             .base64EncodedString()
     }

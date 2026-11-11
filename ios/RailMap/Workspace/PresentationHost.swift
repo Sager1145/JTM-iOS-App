@@ -24,7 +24,7 @@ final class PresentationHost {
     /// The delay every menu, context-menu and alert action callback needs
     /// before it may publish state that starts a presentation: they all run
     /// while UIKit is still tearing their own controller down.
-    private let teardown = Duration.milliseconds(350)
+    let teardown = Duration.milliseconds(350)
 
     /// The one request still waiting for the host. Only one surface can take
     /// the slot, so a newer request replaces an older one the reader has
