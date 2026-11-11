@@ -15,8 +15,10 @@ import Testing
 ///  - and when all sections are single, does the joined route fill the span
 ///    without dropping a call.
 ///
-/// Planning is cached per station pair, so the full run stays well under the
-/// two-minute budget; the summary lines carry the measured time. Patterns are
+/// Planning is cached per station pair. The default run plans a fixed sample
+/// (every 8th pattern, every 16th distinct call list) to stay near a minute in a
+/// debug build; the full run (`JTM_FULL_CENSUS=1`) takes about 290 s. The summary
+/// lines carry the measured time. Patterns are
 /// planned forward only and on 2026-11-11; timed trips on 2026-09-30 (the last
 /// bundled service date) whatever their own date, because the census asks
 /// about the call lists and the current network, not history.
@@ -186,13 +188,13 @@ struct PatternPassFillCensusTests {
         }
     }
 
-    /// The default run plans every `stride`-th entry in a fixed order (about 100 s
-    /// in a debug build instead of about 290 s; measured full run: patterns 224 services
+    /// The default run plans every `stride`-th entry in a fixed order (about a
+    /// minute in a debug build instead of about 290 s; measured full run: patterns 224 services
     /// fills 92, needsChoice 118, noRoute 6, joinRefused/spanRefused 8; trips 888 services
     /// fills 241, needsChoice 577, noRoute 34, refused 36). `JTM_FULL_CENSUS=1` plans all.
     static var fullRun: Bool { ProcessInfo.processInfo.environment["JTM_FULL_CENSUS"] == "1" }
-    static var patternStride: Int { fullRun ? 1 : 4 }
-    static var tripStride: Int { fullRun ? 1 : 8 }
+    static var patternStride: Int { fullRun ? 1 : 8 }
+    static var tripStride: Int { fullRun ? 1 : 16 }
     static func sample<T>(_ items: [T], stride: Int) -> [T] {
         items.enumerated().filter { $0.offset % stride == 0 }.map(\.element)
     }
@@ -223,9 +225,25 @@ struct PatternPassFillCensusTests {
         #expect(current.count >= 200)
         // Floors, well under the measured counts, so a planner regression shows
         // but a data refresh does not fail the build.
-        #expect(tally.count(.fills) >= (Self.fullRun ? 40 : 8), "\(tally.summary("patterns", seconds: 0))")
+        #expect(tally.count(.fills) >= (Self.fullRun ? 40 : 4), "\(tally.summary("patterns", seconds: 0))")
         #expect(tally.count(.callWithoutCode) == 0)
         #expect(tally.endpointCodeMismatches == 0, "planner codes differ from pattern codes")
+        // The one rule unit 1 promises: a span fill never refuses.
+        #expect(tally.count(.spanRefused) == 0, "\(tally.summary("patterns", seconds: 0))")
+        #expect(tally.count(.noRoute) <= 15, "\(tally.summary("patterns", seconds: 0))")
+        #expect(tally.count(.joinRefused) <= 20, "\(tally.summary("patterns", seconds: 0))")
+    }
+
+    @Test("Patterns with no corridor stay recorded as no route")
+    func noRoutePatterns() throws {
+        let planner = try Planner()
+        for id in ["tsubasa-tokyo-shinjo", "komachi-tokyo-akita"] {
+            let pattern = try #require(TrainServicePatterns.patterns.first { $0.id == id })
+            var tally = Tally()
+            let verdict = try planner.classify(train: Self.patternTrain(pattern), day: "2026-11-11",
+                                               tally: &tally, weight: 1, label: id)
+            #expect(verdict == .noRoute, "\(id) \(verdict)")
+        }
     }
 
     @Test("のぞみ, ひかり and こだま 東京 to 新大阪 fill to the 17 Tokaido Shinkansen stations")
@@ -257,15 +275,19 @@ struct PatternPassFillCensusTests {
             #expect(proposal.train.stops.first?.name == "東京")
             #expect(proposal.train.stops.last?.name == "新大阪")
             for name in ["小田原", "熱海", "三島", "新富士", "静岡", "掛川", "浜松", "豊橋", "三河安城", "岐阜羽島", "米原"] {
-                #expect(proposal.train.stops.contains { $0.name == name && $0.stopType == "pass_through" }
-                        || proposal.train.stops.contains { $0.name == name && $0.stopType == "passenger_stop" },
-                        "\(id) lacks \(name)")
+                let found = proposal.train.stops.first { $0.name == name }
+                if id.hasPrefix("kodama") {
+                    #expect(found?.stopType == "passenger_stop", "\(id) \(name)")
+                } else {
+                    #expect(found?.stopType == "pass_through" && found?.arrival == nil && found?.departure == nil,
+                            "\(id) \(name) should be an untimed pass_through")
+                }
             }
         }
     }
 
     /// First service date of each bundled trip, read from the calendar rows.
-    private static func firstServiceDates() throws -> [(tripID: String, date: String)] {
+    private static func firstServiceDates() throws -> (rows: [(tripID: String, date: String)], tripCount: Int) {
         let url = try #require(TrainTimetableDatabase.bundledURL(in: .module))
         var handle: OpaquePointer?
         guard sqlite3_open_v2(url.path, &handle, SQLITE_OPEN_READONLY, nil) == SQLITE_OK, let db = handle
@@ -286,7 +308,11 @@ struct PatternPassFillCensusTests {
             rows.append((String(cString: sqlite3_column_text(statement, 0)),
                          String(cString: sqlite3_column_text(statement, 1))))
         }
-        return rows
+        var countStatement: OpaquePointer?
+        guard sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM trips", -1, &countStatement, nil) == SQLITE_OK,
+              sqlite3_step(countStatement) == SQLITE_ROW else { throw CocoaError(.fileReadUnknown) }
+        defer { sqlite3_finalize(countStatement) }
+        return (rows, Int(sqlite3_column_int64(countStatement, 0)))
     }
 
     @Test("Bundled timed trips: planner codes against timetable codes, and how many fill")
@@ -294,7 +320,7 @@ struct PatternPassFillCensusTests {
         let started = Date()
         let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let planner = try Planner()
-        let dates = try Self.firstServiceDates()
+        let (dates, tripCount) = try Self.firstServiceDates()
         var tally = Tally()
         var loaded = 0
         var unreadable = 0
@@ -322,10 +348,18 @@ struct PatternPassFillCensusTests {
         for (verdict, labels) in tally.examples.sorted(by: { $0.key.rawValue < $1.key.rawValue }) {
             print("CENSUS trips \(verdict.rawValue) e.g. \(labels.joined(separator: ", "))")
         }
+        // Every bundled trip has an 'add' calendar date, so none dropped out of the join.
+        #expect(dates.count == tripCount, "trips without an add exception: \(tripCount - dates.count)")
         #expect(loaded + unreadable == dates.count)
         #expect(loaded >= 800)
         print("CENSUS trips: planned \(planned.count) of \(signatures.count) distinct call lists (stride \(Self.tripStride)), \(tally.total) trips")
         #expect(tally.total >= loaded / (Self.tripStride * 3))
-        #expect(tally.count(.fills) > 0, "\(tally.summary("trips", seconds: 0))")
+        let full = Self.fullRun
+        #expect(tally.count(.fills) >= (full ? 100 : 4), "\(tally.summary("trips", seconds: 0))")
+        #expect(tally.endpointCodeMismatches == 0, "planner codes differ from timetable codes")
+        #expect(tally.count(.callWithoutCode) == 0)
+        #expect(tally.count(.spanRefused) == 0, "\(tally.summary("trips", seconds: 0))")
+        #expect(tally.count(.noRoute) <= (full ? 80 : 20), "\(tally.summary("trips", seconds: 0))")
+        #expect(tally.count(.joinRefused) <= (full ? 80 : 20), "\(tally.summary("trips", seconds: 0))")
     }
 }
