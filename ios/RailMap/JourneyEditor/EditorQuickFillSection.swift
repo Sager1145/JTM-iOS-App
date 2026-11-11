@@ -10,6 +10,10 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
     @Bindable var model: TripDraftModel
 
+    /// Timetable autofill reads Japan's published timetables only; every
+    /// other region says so instead of silently offering nothing.
+    static func showsJapanOnlyTimetableNote(region: Region) -> Bool { region != .jp }
+
     var body: some View {
         Section {
             HStack(spacing: RailSpacing.s8) {
@@ -34,6 +38,14 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
             .labelStyle(.titleAndIcon)
             .lineLimit(1)
             .minimumScaleFactor(0.8)
+            if Self.showsJapanOnlyTimetableNote(region: model.region) {
+                Text(text("timetableJapanOnly",
+                          fallback: "Timetable autofill is available for Japan only for now."))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("newTripTimetableJapanOnly")
+            }
             if let count = model.ticketFillCount {
                 Label(count == 0
                       ? text("ticketFilledNone", fallback: "Nothing on the ticket could be used.")
