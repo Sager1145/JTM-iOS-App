@@ -309,6 +309,16 @@ enum DataStrings {
         "data.retryLoad": [
             .zhHant: "重新讀取", .zhHans: "重新读取", .ja: "再読み込み", .en: "Read again",
         ],
+        "data.deleteUnreadable": [
+            .zhHant: "刪除無法讀取的檔案", .zhHans: "删除无法读取的文件",
+            .ja: "読み込めないファイルを削除", .en: "Delete the saved file",
+        ],
+        "data.deleteUnreadableDetail": [
+            .zhHant: "已儲存的行程檔案無法讀取，刪除後會從空白開始。這無法復原。",
+            .zhHans: "已保存的行程文件无法读取，删除后会从空白开始。这无法撤销。",
+            .ja: "保存された旅程ファイルを読み込めません。削除すると空の状態から始まります。この操作は取り消せません。",
+            .en: "The saved trips file cannot be read. Deleting it starts from an empty list. This cannot be undone.",
+        ],
 
         // MARK: degradation
 
@@ -352,7 +362,7 @@ enum DataStrings {
         // MARK: export
 
         "data.exportGroup": [
-            .zhHant: "匯出與備份", .zhHans: "导出与备份", .ja: "書き出しとバックアップ", .en: "Export and backup",
+            .zhHant: "匯出", .zhHans: "导出", .ja: "書き出し", .en: "Export",
         ],
         "data.copyJSON": [
             .zhHant: "複製 JSON", .zhHans: "复制 JSON", .ja: "JSON をコピー", .en: "Copy JSON",
@@ -382,10 +392,10 @@ enum DataStrings {
             .zhHant: "刪除全部行程", .zhHans: "删除全部行程", .ja: "すべての乗車記録を削除", .en: "Delete every journey",
         ],
         "data.deleteAllScope": [
-            .zhHant: "會刪除 {region} 的 {count} 趟行程，包含儲存在此裝置的副本。其他地區不受影響。",
-            .zhHans: "会删除 {region} 的 {count} 趟行程，包含保存在此设备的副本。其他地区不受影响。",
-            .ja: "{region} の {count} 本を、この端末の保存分も含めて削除します。他の地域には影響しません。",
-            .en: "Deletes {region}'s {count} journeys, including the copy saved on this device. Other regions are untouched.",
+            .zhHant: "會刪除全部 {count} 趟行程（{region}），包含儲存在此裝置的副本。",
+            .zhHans: "会删除全部 {count} 趟行程（{region}），包含保存在此设备的副本。",
+            .ja: "{region} の旅程 {count} 件を、この端末の保存分も含めてすべて削除します。",
+            .en: "Deletes all {count} trips ({region}), including the copy saved on this device.",
         ],
         "data.hiddenRegionKept": [
             .zhHant: "已隱藏的中國大陸行程會保留。", .zhHans: "已隐藏的中国大陆行程会保留。",
@@ -397,14 +407,8 @@ enum DataStrings {
             .ja: "削除前にバックアップを作成するので、「バックアップから復元」で戻せます。",
             .en: "A backup is written first, so this can be undone from “Restore from backup”.",
         ],
-        "data.deleteSavedScope": [
-            .zhHant: "會刪除儲存在此裝置上的 {region} 副本。畫面上的行程會換回內建示例。",
-            .zhHans: "会删除保存在此设备上的 {region} 副本。画面上的行程会换回内置示例。",
-            .ja: "この端末に保存された {region} のコピーを削除します。画面は内蔵サンプルに戻ります。",
-            .en: "Deletes the {region} copy saved on this device. The screen falls back to the bundled sample.",
-        ],
         "data.recovery": [
-            .zhHant: "恢復", .zhHans: "恢复", .ja: "復元", .en: "Recovery",
+            .zhHant: "備份", .zhHans: "备份", .ja: "バックアップ", .en: "Backup",
         ],
         "data.backupAvailable": [
             .zhHant: "備份：{count} 趟行程 · {time}",
@@ -444,6 +448,62 @@ enum DataStrings {
             .zhHans: "当前没有备份。",
             .ja: "バックアップはありません。",
             .en: "There is no backup right now.",
+        ],
+
+        // MARK: Data Library order, signpost and Sample trips page
+
+        "data.importSignpost": [
+            .zhHant: "要匯入檔案，請使用「新增行程」。",
+            .zhHans: "要导入文件，请使用“添加行程”。",
+            .ja: "ファイルを読み込むには、「旅程を追加」を使います。",
+            .en: "To import a file, use Add trip.",
+        ],
+        "data.routesGroup": [
+            .zhHant: "路線", .zhHans: "线路", .ja: "経路", .en: "Routes",
+        ],
+        "data.backupReasonRemoveSamples": [
+            .zhHant: "移除示例行程前自動備份", .zhHans: "移除示例行程前自动备份",
+            .ja: "サンプル旅程の削除前の自動バックアップ", .en: "Taken before removing sample trips",
+        ],
+        "data.sampleTrips": [
+            .zhHant: "示例行程", .zhHans: "示例行程", .ja: "サンプル旅程", .en: "Sample trips",
+        ],
+        "data.sampleAdd": [
+            .zhHant: "加入我的行程", .zhHans: "加入我的行程", .ja: "自分の旅程に追加", .en: "Add to my trips",
+        ],
+        "data.sampleAddDetail": [
+            .zhHant: "示例行程會加入你的行程、地圖與統計。你自己的行程不會被更動。",
+            .zhHans: "示例行程会加入你的行程、地图与统计。你自己的行程不会被更改。",
+            .ja: "サンプルの旅程があなたの旅程・地図・統計に加わります。自分で追加した旅程は変更されません。",
+            .en: "The sample's trips join your trips, map and statistics. Your own trips are not changed.",
+        ],
+        "data.sampleReplaceAll": [
+            .zhHant: "取代全部行程", .zhHans: "替换全部行程", .ja: "すべての旅程を置き換え", .en: "Replace all trips",
+        ],
+        "data.sampleReplaceAllNote": [
+            .zhHant: "把你目前所有行程換成一組示例。取代前會先寫一份備份。",
+            .zhHans: "把你当前所有行程换成一组示例。替换前会先写一份备份。",
+            .ja: "現在のすべての旅程を、選んだサンプルに置き換えます。置き換える前にバックアップを作成します。",
+            .en: "Swaps every trip you have for one sample. A backup is written first.",
+        ],
+        "data.sampleRemove": [
+            .zhHant: "移除示例行程", .zhHans: "移除示例行程", .ja: "サンプル旅程を削除", .en: "Remove sample trips",
+        ],
+        "data.sampleRemoveDetail": [
+            .zhHant: "會移除示例加入的 {count} 趟行程。你自己新增的行程會保留；若你編輯過示例行程，也會一併移除。",
+            .zhHans: "会移除示例加入的 {count} 趟行程。你自己新增的行程会保留；若你编辑过示例行程，也会一并移除。",
+            .ja: "サンプルが追加した旅程 {count} 件を削除します。自分で追加した旅程は残ります。サンプルの旅程を編集していた場合、その旅程も削除されます。",
+            .en: "Removes the {count} trips the samples added. Trips you added yourself are kept; sample trips you edited are removed too.",
+        ],
+        "data.sampleRemoveNote": [
+            .zhHant: "只移除示例加入的行程，不會動到你自己的行程。",
+            .zhHans: "只移除示例加入的行程，不会动到你自己的行程。",
+            .ja: "サンプルが追加した旅程だけを削除します。自分の旅程には触れません。",
+            .en: "Removes only the trips the samples added. Your own trips are not touched.",
+        ],
+        "data.pasteCheck": [
+            .zhHant: "貼上後會自動檢查。", .zhHans: "粘贴后会自动检查。",
+            .ja: "貼り付けると自動でチェックします。", .en: "Pasted text is checked automatically.",
         ],
     ]
 }

@@ -85,6 +85,19 @@ struct DataImportView: View {
                     }
                 }
             case .pasted:
+                // A system paste control, so "Paste journey data" pastes: the
+                // text arrives and the check starts, as it does for a chosen
+                // file. Typing still waits for "Validate JSON" (audit A20).
+                PasteButton(payloadType: String.self) { strings in
+                    guard let pasted = strings.first, !pasted.isEmpty else { return }
+                    // `load` resets the region and detection first, so the
+                    // check below runs against the region the text names.
+                    flow.load(pasted, origin: .pasted)
+                    flow.prepareForPresentation()
+                    flow.check(itineraries: itineraries)
+                }
+                .disabled(flow.isRunning)
+                .accessibilityIdentifier("importPasteButton")
                 TextEditor(text: $flow.text)
                     .accessibilityIdentifier("importText")
                     .font(.system(.footnote, design: .monospaced))
@@ -102,6 +115,10 @@ struct DataImportView: View {
             }
         } header: {
             Text(localization.text("sec.importPaste", fallback: "JSON"))
+        } footer: {
+            if case .pasted = flow.origin {
+                Text(localization.text("data.pasteCheck"))
+            }
         }
     }
 

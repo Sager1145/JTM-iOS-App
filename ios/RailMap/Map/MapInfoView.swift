@@ -144,10 +144,10 @@ struct MapInfoView: View {
             bodyFallback: "Processed from MTR's official journey planner and open data.",
             links: [
                 .init(
-                    label: "MTR Journey Planner",
+                    label: "MTR Journey Planner", labelKey: "ios.info.hkJourneyPlanner",
                     url: "https://www.mtr.com.hk/en/customer/jp/index.php"),
                 .init(
-                    label: "MTR Open Data",
+                    label: "MTR Open Data", labelKey: "ios.info.hkOpenData",
                     url:
                         "https://data.gov.hk/en-data/dataset/mtr-data-routes-fares-barrier-free-facilities"
                 ),
@@ -156,7 +156,7 @@ struct MapInfoView: View {
             titleKey: "info.moRailTitle", titleFallback: "Macao LRT network",
             bodyKey: "info.moRailBody",
             bodyFallback: "Processed from the Macao LRT's official line and station data.",
-            links: [.init(label: "Macao LRT Lines", url: "https://www.mlm.com.mo/en/route.html")]),
+            links: [.init(label: "Macao LRT Lines", labelKey: "ios.info.moLrtLines", url: "https://www.mlm.com.mo/en/route.html")]),
         // Korea's article has no web counterpart — see the type's note.
         Source(
             titleKey: "ios.info.krRailTitle", titleFallback: "Korean rail network",
