@@ -286,7 +286,7 @@ struct StationCardView: View {
             isResolvingPlace = false
         }
         #if !targetEnvironment(macCatalyst)
-        .presentationDetents(
+        .presentationDetents( // ui-token-ok: hand-built detents (spec §0.1 resident surfaces)
             lineIsShown && !dynamicTypeSize.isAccessibilitySize
                 ? [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large]
                 : [.medium, .large], selection: $detailDetent)

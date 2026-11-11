@@ -233,7 +233,7 @@ private struct SourceRow: View {
                                         localization.countryText($0, fallback: link.label)
                                     } ?? link.label,
                                     systemImage: "arrow.up.right.square")
-                                    .font(.footnote)
+                                    .font(.footnote) // ui-token-ok: link label
                             }
                         }
                     }

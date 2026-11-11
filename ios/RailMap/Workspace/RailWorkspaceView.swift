@@ -3502,7 +3502,7 @@ struct RailWorkspaceView: View {
                     params: ["shown": .number(Double(MapTripCap.limit)), "total": .number(Double(total))],
                     fallback: "Showing \(MapTripCap.limit) of \(total) trips. Narrow by country or month."),
                       systemImage: "line.3.horizontal.decrease")
-                    .font(.footnote.weight(.medium))
+                    .font(.footnote.weight(.medium)) // ui-token-ok: floating notice capsule
                     .padding(.horizontal, RailSpacing.s12)
                     .padding(.vertical, RailSpacing.s8)
                     .background(.regularMaterial, in: Capsule())

@@ -640,7 +640,7 @@ struct RideDetailContent: View {
             Spacer(minLength: 8)
             timeColumn(stop)
         }
-        .frame(minHeight: 44, alignment: .top)
+        .frame(minHeight: RailSize.touch, alignment: .top)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(([accessibilityLabel(for: stop, stationSpoken: stationSpoken(identity))]
             + (showsLineNames ? lines.map(\.name) : [])).joined(separator: ", "))
@@ -1178,7 +1178,7 @@ private struct RideRouteStateCard: View {
                     Label(localization.text("ios.route.resourceSupplementFailed"), systemImage: "exclamationmark.triangle")
                         .font(.subheadline.weight(.semibold))
                     ForEach(resourceWarnings, id: \.self) { message in
-                        Text(message).font(.footnote)
+                        Text(message).railText(.secondary)
                     }
                 }
                 .foregroundStyle(.secondary)
@@ -1250,7 +1250,7 @@ private struct RideRouteStateCard: View {
                             "to": .string(name(gap.to, stopIndex: gap.segmentIndex + 1)),
                         ])
                 )
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: monospaced data
                 .monospacedDigit()
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -5,4 +5,3 @@
 # which refuses to raise a count. New code uses RailSpacing/RailRadius/RailSize,
 # .railPrimary/.railSecondary, railText/railGlyph and railSheetClose.
 RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1
-RailMap/Journeys/RideDetailView.swift	touch-literal	1

@@ -150,7 +150,7 @@ struct WorkspaceJourneyMenu: View {
             }
         }
         #if !targetEnvironment(macCatalyst)
-        .presentationDetents(
+        .presentationDetents( // ui-token-ok: hand-built detents (spec §0.1 resident surfaces)
             dynamicTypeSize.isAccessibilitySize
                 ? [.large] : [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large],
             selection: $detent)

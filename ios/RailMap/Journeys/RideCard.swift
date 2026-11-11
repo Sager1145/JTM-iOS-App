@@ -143,7 +143,7 @@ struct RideCard: View {
             if !scrollsHeader {
                 header
                     .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
-                    .padding(.bottom, interpolated(12, 8))
+                    .padding(.bottom, interpolated(12, 8)) // ui-token-ok: animated geometry
             }
 
             Group {
@@ -381,7 +381,7 @@ struct RideCard: View {
                 // Only the compact identity needs separation from the title.
                 // At the expanded stop its height and its spacing both become
                 // zero, so it leaves no invisible gap below the heading.
-                .padding(.top, interpolated(2, 0))
+                .padding(.top, interpolated(2, 0)) // ui-token-ok: animated geometry
                 .opacity(1 - progress)
                 .frame(height: collapsedIdentityHeight * (1 - progress), alignment: .top)
                 .clipped()

@@ -197,8 +197,7 @@ struct TripNotesCard: View {
             } label: {
                 Label(localization.text("ios.tripNotes.add"), systemImage: "plus")
             }
-            .buttonStyle(RailCapsuleButtonStyle())
-            .railMinimumTouchTarget()
+            .buttonStyle(.railSecondary)
             .accessibilityIdentifier("tripNotesListAdd")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -228,11 +227,11 @@ struct TripNotesCard: View {
                         Text(note.category).font(.subheadline.weight(.semibold))
                     }
                     if let time = describer.time(note.time) {
-                        Text(time).font(.footnote).monospacedDigit().foregroundStyle(.secondary)
+                        Text(time).railText(.tertiary).monospacedDigit()
                     }
-                    Text(describer.place(note.anchor)).font(.footnote).foregroundStyle(.secondary)
+                    Text(describer.place(note.anchor)).railText(.secondary)
                     if !note.text.isEmpty {
-                        Text(note.text).font(.footnote).lineLimit(1)
+                        Text(note.text).font(.footnote).lineLimit(1) // ui-token-ok: primary-colour excerpt, not a role line
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -313,20 +312,17 @@ private struct TripNoteReadCard: View {
                                 Button(localization.text("ios.tripNotes.edit"), systemImage: "pencil") {
                                     flow.beginEdit(note)
                                 }
-                                .buttonStyle(RailCapsuleButtonStyle())
-                                .railMinimumTouchTarget()
+                                .buttonStyle(.railSecondary)
                                 .accessibilityIdentifier("tripNoteEdit")
                                 ShareLink(item: describer.shareText(note)) {
                                     Label(localization.text("ios.tripNotes.share"),
                                           systemImage: "square.and.arrow.up")
                                 }
-                                .buttonStyle(RailCapsuleButtonStyle())
-                                .railMinimumTouchTarget()
+                                .buttonStyle(.railSecondary)
                                 .accessibilityIdentifier("tripNoteShare")
                                 Button(localization.text("ios.tripNotes.delete"), systemImage: "trash",
                                        role: .destructive) { confirmsDelete = true }
-                                    .buttonStyle(RailCapsuleButtonStyle())
-                                    .railMinimumTouchTarget()
+                                    .buttonStyle(.railSecondary)
                                     .accessibilityIdentifier("tripNoteDelete")
                             }
                         }
@@ -472,7 +468,7 @@ private struct TripNoteFormSheet: View {
                         }
                     }
                 }
-                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowInsets(EdgeInsets(top: 0, leading: RailSpacing.screenInset, bottom: 0, trailing: RailSpacing.screenInset))
             }
         } header: {
             Text(localization.text("ios.tripNotes.category"))
@@ -539,7 +535,7 @@ private struct TripNoteFormSheet: View {
                 .environment(\.calendar, clock.calendar)
                 .accessibilityIdentifier("tripNoteTime")
                 if let label = describer.time(draft.wrappedValue.time) {
-                    Text(label).font(.footnote).monospacedDigit().foregroundStyle(.secondary)
+                    Text(label).railText(.tertiary).monospacedDigit()
                 }
             }
         } header: {

@@ -48,8 +48,7 @@ struct JourneyGroupChoiceFields: View {
                 .submitLabel(.done)
                 .accessibilityIdentifier("journeyGroupName")
             Text("\(name.count)/\(JourneyGroup.maxNameLength) · \(localization.text("ios.journeyGroup.limit"))")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.tertiary)
                 .accessibilityIdentifier("journeyGroupNameLimit")
         }
     }

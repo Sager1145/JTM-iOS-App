@@ -122,7 +122,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .disabled(videoExporter.state == .finishing)
-            .accessibilityLabel(localization.countryText("common.close", fallback: "Close"))
+            .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
             .accessibilityIdentifier("playbackExportDismiss")
         }
     }

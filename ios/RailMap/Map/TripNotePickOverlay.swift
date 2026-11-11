@@ -37,10 +37,10 @@ struct TripNotePickOverlay: View {
             }
             VStack(spacing: 0) {
                 banner(feedback)
-                    .padding(.top, (feedback?.topInset ?? 0) + 8)
+                    .padding(.top, (feedback?.topInset ?? 0) + RailSpacing.s8)
                 Spacer(minLength: 0)
                 bar(feedback)
-                    .padding(.bottom, feedback?.barBottom ?? 12)
+                    .padding(.bottom, feedback?.barBottom ?? RailSpacing.mapChromeInset)
             }
             .padding(.horizontal, RailSpacing.s16)
 #if DEBUG
@@ -89,11 +89,11 @@ struct TripNotePickOverlay: View {
                         fallback: "This trip's route isn't drawn yet. Choose a station.")
                  : feedback?.summary
                     ?? text("ios.tripNotes.pick.offLine", fallback: "Move the pin onto this trip's line"))
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: conditional colour
                 .foregroundStyle(feedback?.anchor == nil ? .secondary : .primary)
             if let alertKey {
                 Text(text(alertKey))
-                    .font(.footnote.weight(.semibold))
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: error text
                     .foregroundStyle(.red)
             }
         }
