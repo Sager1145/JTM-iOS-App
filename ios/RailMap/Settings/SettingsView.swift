@@ -29,9 +29,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display
-    @Environment(RiddenRouteStore.self) private var riddenRoutes
     @Environment(TripHideFilter.self) private var tripHide: TripHideFilter?
-    @State private var confirmReloadAll = false
     @Binding var appearance: String
     @Bindable var network: RailNetworkStore
     @Bindable var controller: RailMapController
@@ -104,7 +102,6 @@ struct SettingsView: View {
                         Text(verbatim: "Apple Maps")
                     }
                     diagnosticsSection
-                    reloadAllSection
                 }
                 .navigationTitle(localization.text(
                     "ios.aboutDiagnostics", fallback: "About & diagnostics"))
@@ -492,48 +489,6 @@ struct SettingsView: View {
     }
 
     // MARK: - Diagnostics
-
-    /// Clears every solved route and resolves all trips again, with progress
-    /// and a way to stop. The work itself is `RiddenRouteStore.reloadAll`.
-    private var reloadAllSection: some View {
-        Section {
-            if let progress = riddenRoutes.reloadProgress {
-                VStack(alignment: .leading, spacing: RailSpacing.s4) {
-                    ProgressView(value: Double(progress.done), total: Double(max(progress.total, 1)))
-                    Text(localization.text(
-                        "ios.reloadAll.progress",
-                        params: ["done": .number(Double(progress.done)), "total": .number(Double(progress.total))],
-                        fallback: "\(progress.done) of \(progress.total)"))
-                        .railText(.secondary).monospacedDigit()
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("reloadAllProgress")
-                Button(localization.text("ios.reloadAll.stop", fallback: "Stop reloading"), role: .cancel) {
-                    riddenRoutes.cancelReloadAll()
-                }
-                .accessibilityIdentifier("reloadAllStop")
-            } else {
-                Button(localization.text("ios.reloadAll", fallback: "Reload all trips")) {
-                    confirmReloadAll = true
-                }
-                .disabled(!riddenRoutes.canReloadAll)
-                .accessibilityIdentifier("reloadAllButton")
-            }
-        } footer: {
-            Text(localization.text("ios.note.reloadAll", fallback: "Solves every trip's route again."))
-        }
-        .confirmationDialog(
-            localization.text("ios.reloadAll.confirmTitle", fallback: "Reload all trips?"),
-            isPresented: $confirmReloadAll, titleVisibility: .visible
-        ) {
-            Button(localization.text("ios.reloadAll.confirm", fallback: "Reload all")) {
-                Task { await riddenRoutes.reloadAll() }
-            }
-            .accessibilityIdentifier("reloadAllConfirm")
-        } message: {
-            Text(localization.text("ios.note.reloadAll", fallback: "Solves every trip's route again."))
-        }
-    }
 
     private var diagnosticsSection: some View {
         Section(localization.text("ios.diagnostics", fallback: "Diagnostics")) {

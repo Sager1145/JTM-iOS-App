@@ -8,7 +8,8 @@ import Testing
 /// the load's later publishes: ride, status entry and completed input.
 @MainActor
 struct RiddenRouteStoreLandingTests {
-    /// A region with no data: every solve ends as a deterministic non-ride outcome.
+    /// A Tokyo journey whose solve ends as a deterministic outcome with no drawn
+    /// segments (an `.unavailable` ride); it is never written to the route cache.
     private func train(_ id: String) -> Train {
         Train(
             id: id, number: id, company: "JR東日本",

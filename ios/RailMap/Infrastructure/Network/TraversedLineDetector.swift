@@ -191,6 +191,11 @@ final class TraversedLineDetector {
         return lines
     }
 
+    #if DEBUG
+    /// Test seam: how many times ``update(rides:)`` ran.
+    @ObservationIgnored private(set) var updateCallCount = 0
+    #endif
+
     /// Re-detect whatever changed in `rides` and publish lines for that set.
     ///
     /// Unchanged rides (same id, same `geometryDigest`) are served from
@@ -199,6 +204,9 @@ final class TraversedLineDetector {
     /// routes retain only their explicit physical selections until detection
     /// finishes, and a cancelled walk returns without writing.
     func update(rides: [RiddenRouteStore.DrawnRide]) {
+        #if DEBUG
+        updateCallCount += 1
+        #endif
         RailSignpost.ui.mark("derived.lines.detect", rides.count)
         generation &+= 1
         let snapshot = generation

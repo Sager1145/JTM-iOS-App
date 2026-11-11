@@ -234,6 +234,20 @@ final class RiddenRouteStore {
     private var lastRequestedInputs: [String: Train] = [:]
     /// True from `reloadAll` until its load finishes, fails or is stopped.
     private var reloadingAll = false
+    /// Repair empties `completedInputs` so every trip is read again, which
+    /// would also forget what the drawn rides were solved for. This keeps the
+    /// inputs of the rides on the map when the repair began, until the load
+    /// that settles it finishes, so a placeholder is only ever kept for a trip
+    /// that has not changed.
+    private var drawnBaseline: [String: Train] = [:]
+    /// How the reload that is running (or ran last) was started; Stop on a
+    /// repair settles from the cache alone, Stop on a rebuild solves the rest.
+    private var reloadMode: ReloadMode = .repair
+    /// Bumped each time a reload finishes, fails or is stopped. Not for the
+    /// store's own logic: the data manager exposes it as an accessibility
+    /// value so a UI test can tell a finished reload from one that has not
+    /// started, even when a warm-cache repair is too quick to show progress.
+    private(set) var reloadsFinished = 0
     /// Set while `reloadAll` waits for the previous work to stop and the
     /// cache to be discarded, so a second confirm cannot start it twice.
     private var reloadStarting = false
@@ -340,9 +354,22 @@ final class RiddenRouteStore {
         return stripped
     }
 
+    /// - Parameter keepDrawn: keep the rides already on the map, as
+    ///   placeholders, for trips this load still has to read; they are replaced
+    ///   as each trip lands and dropped by the final merge. A placeholder
+    ///   stands in only for a trip whose solver input is unchanged from the
+    ///   one it was drawn for, so an edit never keeps its old route on screen.
+    ///   Also applies, without being asked, while a repair is still settling
+    ///   (`drawnBaseline` is not empty): a load that supersedes it must not
+    ///   blank the map either.
+    /// - Parameter solveMisses: false settles from the route cache alone. A
+    ///   trip the cache cannot answer is neither solved nor marked completed,
+    ///   so the next ordinary load solves it.
     func load(
         trains: [Train], preferredTrainID: String? = nil,
-        priority: TaskPriority = .userInitiated
+        priority: TaskPriority = .userInitiated,
+        keepDrawn: Bool = false,
+        solveMisses: Bool = true
     ) {
         bindPendingOwner()
         // Trips in a disabled region stay in the store but are never cached,
@@ -378,14 +405,26 @@ final class RiddenRouteStore {
         })
         let retained = rides.filter { unchanged.contains($0.id) }
         let pending = wanted.filter { !unchanged.contains($0.key) }
+        // What the map shows now for trips this load must still read. The
+        // input each was drawn for is `completedInputs` (landed since the
+        // repair began) or `drawnBaseline` (drawn when it began).
+        let drawnFor = drawnBaseline.merging(completedInputs) { _, current in current }
+        let keep = keepDrawn || !drawnBaseline.isEmpty
+        let placeholders = keep
+            ? rides.filter { ride in
+                pending[ride.id] != nil && drawnFor[ride.id] == pending[ride.id] }
+            : []
         completedInputs = completedInputs.filter { unchanged.contains($0.key) }
+        let standIns = Dictionary(placeholders.map { ($0.id, $0) }, uniquingKeysWith: { _, last in last })
+        let fresh = FreshSolves()
 
-        rides = ordered(retained)
+        rides = ordered(retained + placeholders)
         visibleRides = rides.filter(\.visible)
         lineDetector.publishSelected(rides: rides)
         if pending.isEmpty {
             loadingInputs = nil
             loadTask = nil
+            drawnBaseline = [:]
             state = .loaded(rides: rides)
             noteRouteEntries(for: rides, wanted: wantedIDs)
             detectTraversedLines()
@@ -409,15 +448,23 @@ final class RiddenRouteStore {
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 if let primed {
-                    rides = mergedRides(retained: retained, batch: [primed], since: landingMark)
+                    rides = mergedRides(retained: retained + placeholders, batch: Self.keepingStandIns([primed], standIns, solved: fresh.all), since: landingMark)
                     visibleRides = rides.filter(\.visible)
                     if !landedSince(landingMark).contains(primed.id) { completedInputs[primed.id] = wanted[primed.id] }
                     noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
                     lineDetector.publishSelected(rides: rides)
                 }
-                let decoded = try await Self.decode(
+                #if DEBUG
+                if Self.consumeInjectedLoadFailure() { throw InjectedLoadFailure() }
+                #endif
+                let decoded: [DrawnRide]
+                if !solveMisses {
+                    decoded = try await Self.decodeCachedOnly(wanted: pending, requestedOrder: wantedIDs)
+                } else {
+                decoded = try await Self.decode(
                     wanted: pending, requestedOrder: wantedIDs,
-                    preferredTrainID: preferredTrainID, primed: primed, preread: preread
+                    preferredTrainID: preferredTrainID, primed: primed, preread: preread,
+                    fresh: fresh
                 ) { partial in
                     if inbox.post(partial) {
                         Task { @MainActor in
@@ -425,7 +472,10 @@ final class RiddenRouteStore {
                                   self.loadRevision == revision else { return }
                             partials.submit(p) { partial in
                                 guard self.loadRevision == revision else { return }
-                                self.rides = self.mergedRides(retained: retained, batch: partial, since: landingMark)
+                                self.rides = self.mergedRides(
+                                    retained: retained + placeholders,
+                                    batch: Self.keepingStandIns(partial, standIns, solved: fresh.all),
+                                    since: landingMark)
                                 self.visibleRides = self.rides.filter(\.visible)
                                 let landed = self.landedSince(landingMark)
                                 for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
@@ -439,19 +489,34 @@ final class RiddenRouteStore {
                         }
                     }
                 }
+                }
                 inbox.close()
                 partials.cancel()
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 let landed = landedSince(landingMark)
-                rides = mergedRides(retained: retained, batch: decoded, since: landingMark)
+                // A cache-only pass cannot redraw a trip whose cache file is gone,
+                // so a stand-in with geometry stays on the map (still not
+                // completed: the next ordinary load solves it).
+                let kept = solveMisses ? [] : placeholders.filter { !$0.segments.isEmpty }
+                rides = mergedRides(
+                    retained: retained + kept,
+                    batch: Self.keepingStandIns(decoded, standIns, solved: fresh.all),
+                    since: landingMark)
                 visibleRides = rides.filter(\.visible)
                 var finalInputs = wanted
+                if !solveMisses {
+                    let answered = Set(decoded.map(\.id))
+                    finalInputs = wanted.filter { id, train in
+                        unchanged.contains(id) || answered.contains(id) || train.requiresRouteConfirmation }
+                }
                 for id in landed { if let latest = completedInputs[id] { finalInputs[id] = latest } }
                 completedInputs = finalInputs
                 loadingInputs = nil
                 loadTask = nil
+                if reloadingAll { reloadsFinished += 1 }
                 reloadingAll = false
+                drawnBaseline = [:]
                 state = .loaded(rides: rides)
                 noteRouteEntries(for: rides, wanted: wantedIDs, keeping: landed)
                 detectTraversedLines()
@@ -466,7 +531,10 @@ final class RiddenRouteStore {
                 if let pending = inbox.take() {
                     partials.submit(pending) { partial in
                         guard self.loadRevision == revision else { return }
-                        self.rides = self.mergedRides(retained: retained, batch: partial, since: landingMark)
+                        self.rides = self.mergedRides(
+                            retained: retained + placeholders,
+                            batch: Self.keepingStandIns(partial, standIns, solved: fresh.all),
+                            since: landingMark)
                         self.visibleRides = self.rides.filter(\.visible)
                         let landed = self.landedSince(landingMark)
                         for ride in partial where !landed.contains(ride.id) { self.completedInputs[ride.id] = wanted[ride.id] }
@@ -477,9 +545,17 @@ final class RiddenRouteStore {
                 inbox.close()
                 partials.applyPending()
                 guard loadRevision == revision else { return }
+                // The stand-ins stay on the map, so they stay completed for the
+                // input they were drawn for: the next ordinary load keeps them
+                // instead of removing them and drawing them again.
+                let drawn = Set(rides.map(\.id))
+                for (id, input) in drawnFor where drawn.contains(id) && completedInputs[id] == nil
+                    && wanted[id] == input { completedInputs[id] = input }
                 loadingInputs = nil
                 loadTask = nil
+                if reloadingAll { reloadsFinished += 1 }
                 reloadingAll = false
+                drawnBaseline = [:]
                 state = .failed(error.localizedDescription)
                 noteRouteEntries(for: rides, wanted: [], keeping: landedSince(landingMark))
             }
@@ -515,16 +591,55 @@ final class RiddenRouteStore {
     /// Whether there is anything to reload.
     var canReloadAll: Bool { !requestedOrder.isEmpty && !reloadingAll && !reloadStarting }
 
-    /// Forget every solved route and resolve the current set again.
+    enum ReloadMode: Sendable {
+        /// What the reader asks for: read every trip's cached route again and
+        /// solve only the trips the cache cannot answer. The map keeps what it
+        /// shows while it runs.
+        case repair
+        /// Forget every solved route, on disk and in memory, and solve the
+        /// whole set again. Developer tools and the app-control channel only.
+        case rebuild
+    }
+
+    /// Resolve the current set again, as `mode` says.
     ///
-    /// Runs through `load`, so it is the same path, the same single solve
-    /// permit and the same coalesced map updates as any load — at `.utility`
-    /// priority, so the reader can keep using the app while it runs. The disk
-    /// cache is removed first and each entry is rewritten atomically as its
-    /// journey lands, so stopping or restarting midway leaves only complete
-    /// entries; whatever was not reached is solved by the next load.
-    func reloadAll() async {
+    /// Both modes run through `load`, so it is the same path, the same single
+    /// solve permit and the same coalesced map updates as any load — at
+    /// `.utility` priority, so the reader can keep using the app while it
+    /// runs. Each entry is rewritten atomically as its journey lands, so
+    /// stopping or restarting midway leaves only complete entries; whatever
+    /// was not reached is read or solved by the next load.
+    func reloadAll(mode: ReloadMode = .repair) async {
         guard !reloadStarting, !reloadingAll, !requestedOrder.isEmpty else { return }
+        switch mode {
+        case .repair: repairAll()
+        case .rebuild: await rebuildAll()
+        }
+    }
+
+    /// Cached routes are not stale — the cache rejects an entry itself when
+    /// its version, semantics, digest or resource revision no longer match —
+    /// so repair keeps the cache and the memos of what succeeded. It forgets
+    /// only what failed, reads every trip back from its cache file, and
+    /// solves the trips that have none.
+    private func repairAll() {
+        if case .loading = state, loadingInputs != nil, loadingInputs == lastRequestedInputs {
+            // A load for exactly this set is already running; it is the repair.
+            reloadMode = .repair
+            reloadingAll = true
+            return
+        }
+        let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
+        guard !trains.isEmpty else { return }
+        Self.clearFailureMemos()
+        reloadMode = .repair
+        drawnBaseline = completedInputs
+        completedInputs = [:]
+        load(trains: trains, priority: .utility, keepDrawn: true)
+        if case .loading = state { reloadingAll = true } else { reloadsFinished += 1 }
+    }
+
+    private func rebuildAll() async {
         reloadStarting = true
         defer { reloadStarting = false }
         // Stop everything that could still publish or write a route, and wait
@@ -537,6 +652,7 @@ final class RiddenRouteStore {
         cancelResolutions()
         loadTask = nil
         loadingInputs = nil
+        drawnBaseline = [:]
         await previousLoad?.value
         for task in previousResolutions { await task.value }
         completedInputs = [:]
@@ -546,13 +662,20 @@ final class RiddenRouteStore {
         // edit) is the set to reload, not the one this call started with.
         let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
         guard !trains.isEmpty else { return }
+        reloadMode = .rebuild
         load(trains: trains, priority: .utility)
-        if case .loading = state { reloadingAll = true }
+        if case .loading = state { reloadingAll = true } else { reloadsFinished += 1 }
     }
 
-    /// Stop a forced reload. What it already solved stays; the rest of the
-    /// set goes back to an ordinary load — cached routes replay, missing ones
-    /// solve — so no trip is left without a route or a status.
+    /// Stop a reload. What it already read or solved stays; the rest of the
+    /// set is settled so no trip is left without a route or a status, and
+    /// trips not yet reached keep the route they were drawn with meanwhile.
+    ///
+    /// After a repair that is a cache-only pass: cached routes are read back
+    /// and trips with no cache entry are left unsolved, with the status the
+    /// store gives a trip it has no route for, until the next ordinary load
+    /// solves them. After a rebuild the cache was wiped, so the rest is an
+    /// ordinary load that solves.
     func cancelReloadAll() {
         guard reloadingAll else { return }
         let trains = requestedOrder.compactMap { lastRequestedInputs[$0] }
@@ -562,25 +685,32 @@ final class RiddenRouteStore {
         loadTask?.cancel()
         loadTask = nil
         loadingInputs = nil
-        load(trains: trains, priority: .utility)
+        load(trains: trains, priority: .utility, keepDrawn: true,
+             solveMisses: reloadMode == .rebuild)
+        reloadsFinished += 1
         reloadingAll = false
     }
 
-    /// The route cache on disk plus every in-memory memo of a solve, so a
-    /// reload solves rather than replays.
-    @concurrent nonisolated static func discardSolvedRoutes() async {
-        let base = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-            ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
-        RouteDigestIndexStore.shared.clear()
-        try? FileManager.default.removeItem(at: base)
-        await sharedJourneyWork.clear()
-        // Only the memoised section solves are dropped; the ~26 MB of decoded
-        // inputs stay, so Reload all solves again without decoding again.
-        await SolverInputCache.shared.clearResolutionMemo()
+    /// In-memory memos of a failure, so the next load tries again instead of
+    /// replaying it. Successful solves and their cache files are untouched.
+    nonisolated static func clearFailureMemos() {
         // A failed history read is retried on reload, as before.
         historyStateCache.withLock { states in
             states = states.filter { if case .invalid = $0.value { false } else { true } }
         }
+    }
+
+    /// The route cache on disk plus every in-memory memo of a solve, so a
+    /// rebuild solves rather than replays.
+    @concurrent nonisolated static func discardSolvedRoutes() async {
+        let base = cachesBase.appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        RouteDigestIndexStore.shared.clear()
+        try? FileManager.default.removeItem(at: base)
+        await sharedJourneyWork.clear()
+        // Only the memoised section solves are dropped; the ~26 MB of decoded
+        // inputs stay, so a rebuild solves again without decoding again.
+        await SolverInputCache.shared.clearResolutionMemo()
+        clearFailureMemos()
     }
 
     private func ordered(_ values: [DrawnRide]) -> [DrawnRide] {
@@ -601,6 +731,7 @@ final class RiddenRouteStore {
 
     func clear() {
         reloadingAll = false
+        drawnBaseline = [:]
         loadingInputs = nil
         requestedOrder = []
         loadRevision += 1
@@ -929,6 +1060,7 @@ final class RiddenRouteStore {
         cached.noteCurrentDigests()
         RouteDigestIndexStore.shared.flush()
         if let ride = cached.rides.first { return ride }
+        noteSolveAttempt(cached.missing)
         return try await solveMissing(cached.missing, scope: scope, prepared: cached.prepared).first
     }
 
@@ -988,6 +1120,7 @@ final class RiddenRouteStore {
     @concurrent private nonisolated static func decode(
         wanted: [String: Train], requestedOrder: [String],
         preferredTrainID: String?, primed: DrawnRide? = nil, preread: CacheBatch = CacheBatch(),
+        fresh: FreshSolves? = nil,
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
@@ -1057,7 +1190,7 @@ final class RiddenRouteStore {
             result = try await decodeUncached(
                 [preferred], scope: scope, previous: result, graphStore: graphStore,
                 providedInputs: inputs, prepared: prepared,
-                publish: publish)
+                fresh: fresh, publish: publish)
             unresolved[index].trains.removeAll { $0.id == preferredTrainID }
             if unresolved[index].trains.isEmpty {
                 unresolved[index].graphStore = nil
@@ -1080,10 +1213,67 @@ final class RiddenRouteStore {
             result = try await decodeUncached(
                 trains, scope: scope, previous: result,
                 graphStore: unresolved[index].graphStore,
-                providedInputs: unresolved[index].providedInputs, prepared: prepared, publish: publish)
+                providedInputs: unresolved[index].providedInputs, prepared: prepared,
+                fresh: fresh, publish: publish)
             unresolved[index].graphStore = nil
             unresolved[index].providedInputs = nil
         }
+        return result
+    }
+
+    /// Ids whose route this load solved rather than read from the cache.
+    /// A cache-decoded copy can differ from a ride solved in this session in
+    /// ways the geometry digest sees (segments under two points are dropped,
+    /// `partIndex` is reassigned), so a stand-in is replaced only by a fresh
+    /// solve, never by its own cache copy.
+    final class FreshSolves: @unchecked Sendable {
+        private let lock = NSLock()
+        private var ids: Set<String> = []
+        func note(_ more: [String]) {
+            lock.lock(); ids.formUnion(more); lock.unlock()
+        }
+        var all: Set<String> {
+            lock.lock(); defer { lock.unlock() }
+            return ids
+        }
+    }
+
+    /// `batch`, except that a ride read from the cache (not solved) for a trip
+    /// that has a stand-in keeps the stand-in: same input, same route, same
+    /// `geometryDigest`, so the key line detection and statistics are cached
+    /// under does not move.
+    nonisolated static func keepingStandIns(
+        _ batch: [DrawnRide], _ standIns: [String: DrawnRide], solved: Set<String>
+    ) -> [DrawnRide] {
+        guard !standIns.isEmpty else { return batch }
+        return batch.map { ride in
+            guard !solved.contains(ride.id), let standIn = standIns[ride.id] else { return ride }
+            return standIn
+        }
+    }
+
+    /// Cache reads only, for Stop on a repair: no dataset is opened and nothing
+    /// is solved.
+    @concurrent private nonisolated static func decodeCachedOnly(
+        wanted: [String: Train], requestedOrder: [String]
+    ) async throws -> [DrawnRide] {
+        var seen: Set<String> = []
+        let remaining = requestedOrder.compactMap { id -> Train? in
+            guard seen.insert(id).inserted, let train = wanted[id],
+                  !train.requiresRouteConfirmation else { return nil }
+            return train
+        }
+        let byScope = Dictionary(grouping: remaining, by: RouteScope.init)
+        var prepared: [String: PreparedRoute] = [:]
+        var result: [DrawnRide] = []
+        for scope in RouteScope.ordered(byScope.keys) where scope.home.isEnabled {
+            guard let trains = byScope[scope] else { continue }
+            let cached = try await loadCachedConcurrently(trains, country: scope.code, prepared: prepared)
+            cached.noteCurrentDigests()
+            prepared.merge(cached.prepared) { _, new in new }
+            result += cached.rides
+        }
+        RouteDigestIndexStore.shared.flush(includeUsage: true)
         return result
     }
 
@@ -1093,9 +1283,17 @@ final class RiddenRouteStore {
         graphStore: RouteGraph.RouteGraphStore? = nil,
         providedInputs: SolverInputs? = nil,
         prepared: [String: PreparedRoute] = [:],
+        fresh: FreshSolves? = nil,
         publish: @Sendable ([DrawnRide]) async -> Void
     ) async throws -> [DrawnRide] {
         try Task.checkCancellation()
+        noteSolveAttempt(trains)
+        #if DEBUG
+        while solveHold.withLock({ $0 }) && !Task.isCancelled {
+            try? await Task.sleep(for: .milliseconds(5))
+        }
+        try Task.checkCancellation()
+        #endif
         var result = previous
         var missing = Dictionary(
             trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
@@ -1107,17 +1305,22 @@ final class RiddenRouteStore {
         let inferred = try await solveMissing(
             trains, scope: scope, allowLegacy: false, graphStore: graphStore,
             providedInputs: providedInputs, prepared: prepared) { partial in
+                fresh?.note(partial.map(\.id))
                 await publish(previous + partial)
             }
+        fresh?.note(inferred.map(\.id))
         for ride in inferred { missing.removeValue(forKey: ride.id) }
         result += inferred
         if !missing.isEmpty {
             let previous = result
-            result += try await solveMissing(
+            let legacy = try await solveMissing(
                 trains.filter { missing[$0.id] != nil }, scope: scope,
                 graphStore: graphStore, providedInputs: providedInputs, prepared: prepared, publish: { partial in
+                    fresh?.note(partial.map(\.id))
                     await publish(previous + partial)
                 })
+            fresh?.note(legacy.map(\.id))
+            result += legacy
         }
         return result
     }
@@ -2482,9 +2685,71 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func cacheDirectory(country: String) -> URL {
-        let base = FileManager.default.urls(
-            for: .cachesDirectory, in: .userDomainMask).first ?? URL.temporaryDirectory
-        return base.appending(path: "RailMap/Routes/\(country)", directoryHint: .isDirectory)
+        cachesBase.appending(path: "RailMap/Routes/\(country)", directoryHint: .isDirectory)
+    }
+
+    /// The folder the route cache and its digest index live under: the app's
+    /// Caches directory, or in a DEBUG build a folder a test chose, so a test
+    /// never reads or wipes the real cache.
+    nonisolated static var cachesBase: URL {
+        #if DEBUG
+        if let override = cacheRootOverride.withLock({ $0 }) { return override }
+        #endif
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? URL.temporaryDirectory
+    }
+
+    #if DEBUG
+    private nonisolated static let cacheRootOverride = OSAllocatedUnfairLock<URL?>(initialState: nil)
+
+    /// Test seam: point the route cache (and the digest index) at `url`, or
+    /// back at the Caches directory with `nil`.
+    nonisolated static func setCacheRootForTesting(_ url: URL?) {
+        cacheRootOverride.withLock { $0 = url }
+    }
+
+    private nonisolated static let solveAttemptLog = OSAllocatedUnfairLock(
+        initialState: [String: Int]())
+
+    /// Test seam: how many times each trip's route went to the solver (the
+    /// station-inference pass and the legacy pass of one attempt count once),
+    /// as opposed to being read from the route cache.
+    nonisolated static var solveAttempts: [String: Int] { solveAttemptLog.withLock { $0 } }
+
+    nonisolated static func resetSolveAttemptsForTesting() {
+        solveAttemptLog.withLock { $0 = [:] }
+    }
+
+    private nonisolated static let solveHold = OSAllocatedUnfairLock(initialState: false)
+
+    /// Test seam: while on, a load that reaches the solver waits there (after
+    /// the cache reads and their partial publication, before any solve).
+    nonisolated static func holdSolvesForTesting(_ on: Bool) {
+        solveHold.withLock { $0 = on }
+    }
+
+    private struct InjectedLoadFailure: Error {}
+    private nonisolated static let loadFailureInjection = OSAllocatedUnfairLock(initialState: false)
+
+    /// Test seam: the next load that reaches its decode step fails there.
+    nonisolated static func injectLoadFailureForTesting() {
+        loadFailureInjection.withLock { $0 = true }
+    }
+
+    private nonisolated static func consumeInjectedLoadFailure() -> Bool {
+        loadFailureInjection.withLock { armed in
+            defer { armed = false }
+            return armed
+        }
+    }
+    #endif
+
+    private nonisolated static func noteSolveAttempt(_ trains: [Train]) {
+        #if DEBUG
+        solveAttemptLog.withLock { log in
+            for train in trains where !train.requiresRouteConfirmation { log[train.id, default: 0] += 1 }
+        }
+        #endif
     }
 
     /// How many solved routes one region's cache may keep.
@@ -2509,6 +2774,11 @@ final class RiddenRouteStore {
     /// twenty times over. A cancelled load never reaches here, so the flag is
     /// only ever spent on a load that finished.
     private static func sweepRouteCacheOnce(protecting ids: Set<String>) {
+        #if DEBUG
+        // A test's private cache root is not the one the sweep is for, and the
+        // detached sweep could outlive the root and reach the real Caches.
+        guard cacheRootOverride.withLock({ $0 }) == nil else { return }
+        #endif
         guard !didSweepRouteCache else { return }
         didSweepRouteCache = true
         // Detached and low priority: nothing waits on the answer, and the

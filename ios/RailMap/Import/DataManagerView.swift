@@ -14,6 +14,7 @@ import UniformTypeIdentifiers
 struct DataManagerView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
+    @Environment(RiddenRouteStore.self) private var riddenRoutes
     /// Optional so this view can be previewed and hosted outside the shell
     /// that publishes the network store; the availability section simply has
     /// nothing to report when it is absent.
@@ -22,6 +23,7 @@ struct DataManagerView: View {
     @Bindable var library: RideLibrary
 
     @State private var flow = ImportFlow()
+    @State private var confirmReloadAll = false
     @State private var exportDocument = TrainStoreDocument()
     @State private var rawPreviewExpanded = false
     @State private var rawPreview = ""
@@ -69,6 +71,7 @@ struct DataManagerView: View {
             // what manages the data already here.
             exportSection
             samplesSection
+            reloadAllSection
             sampleRegionSections
             availabilitySection
             recoverySection
@@ -279,6 +282,50 @@ struct DataManagerView: View {
             Text(localization.text("data.storageFootnote"))
         }
         .disabled(itineraries.isImporting)
+    }
+
+    /// Reads every trip's saved route again and solves only what is missing,
+    /// with progress and a way to stop. The work itself is
+    /// `RiddenRouteStore.reloadAll(mode: .repair)`.
+    private var reloadAllSection: some View {
+        Section {
+            if let progress = riddenRoutes.reloadProgress {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
+                    ProgressView(value: Double(progress.done), total: Double(max(progress.total, 1)))
+                    Text(localization.text(
+                        "ios.reloadAll.progress",
+                        params: ["done": .number(Double(progress.done)), "total": .number(Double(progress.total))],
+                        fallback: "\(progress.done) of \(progress.total)"))
+                        .railText(.secondary).monospacedDigit()
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("reloadAllProgress")
+                Button(localization.text("ios.reloadAll.stop", fallback: "Stop repairing"), role: .cancel) {
+                    riddenRoutes.cancelReloadAll()
+                }
+                .accessibilityIdentifier("reloadAllStop")
+            } else {
+                Button(localization.text("ios.reloadAll", fallback: "Repair routes")) {
+                    confirmReloadAll = true
+                }
+                .disabled(!riddenRoutes.canReloadAll)
+                .accessibilityIdentifier("reloadAllButton")
+                .accessibilityValue(Text(verbatim: "\(riddenRoutes.reloadsFinished)"))
+            }
+        } footer: {
+            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time."))
+        }
+        .confirmationDialog(
+            localization.text("ios.reloadAll.confirmTitle", fallback: "Repair routes?"),
+            isPresented: $confirmReloadAll, titleVisibility: .visible
+        ) {
+            Button(localization.text("ios.reloadAll.confirm", fallback: "Repair")) {
+                Task { await riddenRoutes.reloadAll(mode: .repair) }
+            }
+            .accessibilityIdentifier("reloadAllConfirm")
+        } message: {
+            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time."))
+        }
     }
 
     /// The seven samples, grouped by the region each belongs to.

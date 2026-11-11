@@ -198,7 +198,7 @@ private struct TriggersPage: View {
                 trigger("Load samples (fresh store)", "tray.and.arrow.down") {
                     if DevStorage.isReal { confirmFreshStore = true } else { run("loadSamples") }
                 }
-                trigger("Reload all routes", "arrow.clockwise") { run("reloadAll", ["wait": false]) }
+                trigger("Rebuild all routes", "arrow.clockwise") { run("reloadAll", ["wait": false, "force": true]) }
                 trigger("Select random trip", "hand.tap") {
                     if let id = randomTripID() { run("selectTrip", ["id": .string(id)]) }
                 }

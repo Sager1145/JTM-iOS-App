@@ -29,6 +29,15 @@ markers=(
   DevToolsWindow
   DevPerfSampler
   DevStorage
+  setCacheRootForTesting
+  resetSolveAttemptsForTesting
+  injectLoadFailureForTesting
+  solveAttemptLog
+  cacheRootOverride
+  loadFailureInjection
+  holdSolvesForTesting
+  solveHold
+  updateCallCount
   SignpostRecorder
   RAILMAP_APP_CONTROL
   RAILMAP_DEVTOOLS
