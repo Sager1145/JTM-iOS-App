@@ -11,7 +11,7 @@ import SwiftUI
 /// panel chrome and persists the result of `onSave`.
 ///
 /// The draft and its planning live in `TripDraftModel`; this view is the
-/// shell: header, map, the form's sections, the sheets, and the events
+/// shell: navigation bar, map, the form's sections, the sheets, and the events
 /// that keep the model's derived state current.
 struct JourneyEditorView: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
@@ -63,11 +63,22 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                header
                 EditorMapPanel(model: model)
                 form
             }
-            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(text("cancel", fallback: "Cancel")) {
+                        if model.isDirty(original: train) { showsDiscardConfirmation = true } else { onCancel() }
+                    }
+                    .accessibilityIdentifier("newTripCancel")
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    saveButton
+                }
+            }
         }
         .confirmationDialog(
             localization.text("ios.editor.discardTitle"),
@@ -130,16 +141,19 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         .sheet(isPresented: $model.showsTicketScan) {
             if let region = model.ticketRegion {
                 TicketScanView(region: region) { reading in model.fillFromTicket(reading) }
+                    .railSheet(.full)
             }
         }
         .sheet(isPresented: $model.showsFillDetails) {
             EditorFillDetailsSheet(model: model, original: train)
+                .railSheet(.full)
         }
         .sheet(isPresented: $model.showsVehiclePicker) {
             VehiclePickerView(
                 vehicleType: model.readerBinding(
                     .vehicleType, get: { model.draft.vehicleType }, set: { model.draft.vehicleType = $0 }),
                 suggestions: model.vehicleSuggestions(among: suggestionTrains))
+                .railSheet(.half)
         }
         .sheet(item: $model.picking) { field in
             if let catalog = model.catalog {
@@ -152,6 +166,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                             model.pick(station, line: line, stationID: stationID, for: field, generation: generation)
                         })
                 }
+                .railSheet(.full)
             }
         }
         .onChange(of: model.departure) { _, newValue in
@@ -285,28 +300,17 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         }
     }
 
-    private var header: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 12) {
-            Button(text("cancel", fallback: "Cancel")) {
-                if model.isDirty(original: train) { showsDiscardConfirmation = true } else { onCancel() }
-            }
-            .accessibilityIdentifier("newTripCancel")
-            Spacer(minLength: 8)
-            Text(title)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-            Spacer(minLength: 8)
-            Button(text("save", fallback: "Save")) { commit(confirmedRemoval: false) }
-                .fontWeight(.semibold)
-                .disabled(!model.canSave)
-                // ⌘S is disabled by the same condition as the button.
-                .keyboardShortcut("s", modifiers: .command)
-                .accessibilityIdentifier("newTripSave")
+    @ViewBuilder private var saveButton: some View {
+        let button = Button(text("save", fallback: "Save")) { commit(confirmedRemoval: false) }
+            .disabled(!model.canSave)
+            // ⌘S is disabled by the same condition as the button.
+            .keyboardShortcut("s", modifiers: .command)
+            .accessibilityIdentifier("newTripSave")
+        if #available(iOS 26.0, *) {
+            button.buttonStyle(.glassProminent)
+        } else {
+            button.fontWeight(.semibold)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
     }
 
     private func commit(confirmedRemoval: Bool) {

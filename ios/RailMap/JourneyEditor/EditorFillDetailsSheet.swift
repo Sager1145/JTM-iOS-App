@@ -54,7 +54,7 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                     Button { model.showsCompletion = true } label: {
                         Label(text("completeWithText", fallback: "ChatGPT or pasted text"),
                               systemImage: "sparkles")
-                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                     }
                     .accessibilityIdentifier("rideEditorAICompletion")
                 } footer: {
@@ -65,7 +65,7 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                 let missing = model.missingDetails
                 if !missing.isEmpty {
                     Section {
-                        Text(missingText(missing)).font(.footnote)
+                        Text(missingText(missing)).railText(.secondary)
                         Button(text("enterByHand", fallback: "Enter the rest by hand")) {
                             model.showsFillDetails = false
                         }
@@ -75,12 +75,10 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
             }
             .navigationTitle(text("fillDetails", fallback: "Fill in trip details"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.done", fallback: "Done")) { model.showsFillDetails = false }
-                        .accessibilityIdentifier("newTripFillDetailsDone")
-                }
-            }
+            .railSheetClose(
+                Text(localization.text("ios.close", fallback: "Close")),
+                identifier: "newTripFillDetailsDone"
+            ) { model.showsFillDetails = false }
             .accessibilityIdentifier("newTripFillDetailsForm")
         }
         .sheet(isPresented: $model.showsTimetablePicker) {
@@ -98,6 +96,7 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                 model.applyPattern(pattern, reversed: reversed)
                 model.showsFillDetails = false
             }
+            .railSheet(.full)
         }
         .sheet(isPresented: $model.showsCompletion) {
             JourneyCompletionView(
@@ -110,6 +109,7 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                     model.adoptCompletedRecord(completed)
                     model.showsFillDetails = false
                 })
+                .railSheet(.full)
         }
     }
 }

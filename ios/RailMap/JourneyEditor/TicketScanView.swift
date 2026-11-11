@@ -74,8 +74,7 @@ struct TicketScanView: View {
                 .accessibilityIdentifier("ticketScanCamera")
             } else {
                 Text(localization.text("ios.ticket.cameraUnavailable"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             PhotosPicker(selection: $photo, matching: .images) {
                 Label(localization.text("ios.ticket.photos"), systemImage: "photo.on.rectangle")
@@ -83,7 +82,7 @@ struct TicketScanView: View {
             .disabled(isReading)
             .accessibilityIdentifier("ticketScanPhotos")
             if isReading {
-                HStack(spacing: 8) {
+                HStack(spacing: RailSpacing.s8) {
                     ProgressView()
                     Text(localization.text("ios.ticket.reading"))
                         .foregroundStyle(.secondary)

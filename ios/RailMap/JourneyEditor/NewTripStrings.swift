@@ -32,7 +32,7 @@ enum NewTripStrings {
             .zhHans: "取消", .zhHant: "取消", .ja: "キャンセル", .en: "Cancel",
         ],
         "ios.newTrip.save": [
-            .zhHans: "保存", .zhHant: "儲存", .ja: "保存", .en: "Save",
+            .zhHans: "保存旅程", .zhHant: "儲存旅程", .ja: "旅程を保存", .en: "Save Trip",
         ],
         "ios.newTrip.region": [
             .zhHans: "地区", .zhHant: "地區", .ja: "地域", .en: "Region",
