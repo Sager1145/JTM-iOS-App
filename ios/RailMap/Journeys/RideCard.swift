@@ -194,8 +194,7 @@ struct RideCard: View {
                                 Label(localization.text("ios.tripNotes.add"),
                                       systemImage: "exclamationmark.bubble")
                             }
-                            .buttonStyle(RailCapsuleButtonStyle())
-                            .railMinimumTouchTarget()
+                            .buttonStyle(.railSecondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
                             .accessibilityIdentifier("tripNotesAdd")

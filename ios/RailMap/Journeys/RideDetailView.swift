@@ -9,10 +9,11 @@ private struct DetailActionSizing: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if let visualHeight {
-            content
-                .buttonStyle(RailCapsuleButtonStyle(
-                    prominent: prominent, visualHeight: visualHeight))
-                .railMinimumTouchTarget()
+            if prominent {
+                content.buttonStyle(.railPrimary(visualHeight: visualHeight))
+            } else {
+                content.buttonStyle(.railSecondary(visualHeight: visualHeight))
+            }
         } else if prominent {
             content.buttonStyle(.railPrimary)
         } else {

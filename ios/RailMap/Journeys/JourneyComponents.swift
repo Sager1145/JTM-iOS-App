@@ -665,11 +665,10 @@ struct QuietActionGroup: View {
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 2)
         }
-        .buttonStyle(RailCapsuleButtonStyle(prominent: true, visualHeight: actionButtonHeight))
-        // A compact visual button with a 44-point landing area.
+        // A compact visual button with a 44-point landing area (built into the style).
         // The action stays easy to hit without reading as a
         // full-width call-to-action that overwhelms the journey itself.
-        .railMinimumTouchTarget()
+        .buttonStyle(.railPrimary(visualHeight: actionButtonHeight))
         .accessibilityLabel(Text(appearance.label))
         // Which action this IS varies by state — 経路 / 播放 / 聚焦 — and its
         // label is the reader's language on top of that, so a harness has no
@@ -710,8 +709,7 @@ struct QuietActionGroup: View {
                 .padding(.horizontal, expands ? 0 : 2)
                 .frame(maxWidth: expands ? .infinity : nil)
         }
-        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
-        .railMinimumTouchTarget()
+        .buttonStyle(.railSecondary(visualHeight: actionButtonHeight))
         .accessibilityLabel(Text(appearance.label))
     }
 
