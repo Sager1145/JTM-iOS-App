@@ -14,6 +14,11 @@ public struct TimetableSearch: Sendable {
     /// Operator ids the whole query names. Computed once. Nil when the query is not an operator,
     /// or when the registry was not ready at init.
     private let operatorQuery: Set<String>?
+    /// The query with a trailing train number ("のぞみ 23", "nozomi23号") removed, for
+    /// stop patterns, which name a service but carry no train number. Nil when the
+    /// query has no number. Matched by the shared search engine, so kana, katakana,
+    /// romaji and full or half width all find the same service.
+    private let numberlessQuery: SearchFold.PreparedQuery?
 
     public init(_ text: String, region: String = "jp") {
         let normalized = text.precomposedStringWithCompatibilityMapping.replacingOccurrences(of: "->", with: "→")
@@ -26,12 +31,23 @@ public struct TimetableSearch: Sendable {
         preparedRoute = route.map(SearchFold.PreparedQuery.init)
         self.region = region
         terms = normalized.split(whereSeparator: { $0.isWhitespace }).map(String.init)
+        numberlessQuery = route.isEmpty ? Self.withoutTrainNumber(normalized).map(SearchFold.PreparedQuery.init) : nil
         if route.isEmpty, let identity = RegistryIdentityCache.identity(forRegion: region) {
             let wanted = identity.operatorIDs(matchingQuery: normalized)
             operatorQuery = wanted.isEmpty ? nil : wanted
         } else {
             operatorQuery = nil
         }
+    }
+
+    /// The name part of "<name> <number>[号]". Needs at least two characters of name.
+    static func withoutTrainNumber(_ text: String) -> String? {
+        var rest = Substring(text.trimmingCharacters(in: .whitespacesAndNewlines))
+        for suffix in ["号", "ごう"] where rest.hasSuffix(suffix) { rest = rest.dropLast(suffix.count) }
+        let digits = rest.reversed().prefix(while: { $0.isASCII && $0.isNumber }).count
+        guard (1...4).contains(digits) else { return nil }
+        let name = rest.dropLast(digits).trimmingCharacters(in: .whitespacesAndNewlines)
+        return name.count >= 2 ? name : nil
     }
 
     public func matches(fields: [String], stops: [String], plainFields: [String] = []) -> Bool {
@@ -74,10 +90,13 @@ public struct TimetableSearch: Sendable {
         if let wanted = operatorQuery, let identity = RegistryIdentityCache.identity(forRegion: region) {
             return !Set(identity.operatorIDs(forCatalogName: pattern.company)).isDisjoint(with: wanted)
         }
-        return matches(fields: [pattern.name, pattern.label,
-                         pattern.origin, pattern.destination] + pattern.lines
-                + (Self.serviceNamesByID[pattern.serviceId] ?? []),
-                stops: pattern.stops)
+        let serviceNames = [pattern.name] + (Self.serviceNamesByID[pattern.serviceId] ?? [])
+        let fields = [pattern.name, pattern.label, pattern.origin, pattern.destination] + pattern.lines + serviceNames
+        if matches(fields: fields, stops: pattern.stops) { return true }
+        // Patterns carry no train number, so retry without it, keeping any other terms
+        // ("東京 のぞみ 23" matches a Tokyo stop and the のぞみ name).
+        guard let numberless = numberlessQuery else { return false }
+        return numberless.matches(fields: fields + pattern.stops)
     }
 
 }

@@ -29,6 +29,19 @@ struct TimetableSearchTests {
         #expect(TimetableSearch("アズサ").matches(azusa))
     }
 
+    @Test func trainNumberIsIgnoredForPatternsAndKanaRomajiWidthAgree() throws {
+        let nozomi = try #require(TrainServicePatterns.patterns.first { $0.id == "nozomi-tokyo-shin-osaka" })
+        let hikari = try #require(TrainServicePatterns.patterns.first { $0.id == "hikari-tokyo-shin-osaka" })
+        for query in ["のぞみ 23", "のぞみ23号", "のぞみ　２３号", "ノゾミ 23", "nozomi 23", "NOZOMI23", "nozomi", "ｎｏｚｏｍｉ", "shinkansen", "新幹線"] {
+            #expect(TimetableSearch(query).matches(nozomi), "\(query)")
+        }
+        #expect(!TimetableSearch("のぞみ 23").matches(hikari))
+        #expect(!TimetableSearch("ひかり 23").matches(nozomi))
+        #expect(TimetableSearch.withoutTrainNumber("のぞみ 23") == "のぞみ")
+        #expect(TimetableSearch.withoutTrainNumber("N700") == nil)
+        #expect(TimetableSearch.withoutTrainNumber("23") == nil)
+    }
+
     @Test func bundledEnglishNameTimeAndRouteDiscovery() throws {
         let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(on: "2026-09-30")
