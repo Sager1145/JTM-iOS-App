@@ -760,8 +760,12 @@ struct StationPickerView: View {
                     ? try await SharedSearchEngine.shared.stationIndex(regionCode: regionCode, catalog: catalog)
                     : catalog.stationSearchIndex(regionCode: regionCode, extraNames: readings)
                 let directory = includesRetired ? RiddenRouteStore.retiredStations(region: regionCode) : []
-                let output = index.search(StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
-                    eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs), retired: directory)
+                // The signals already in hand, so the empty box opens in its final order.
+                var first = StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
+                    eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs)
+                first.recentPicks = recent
+                first.rideCounts = rideCounts
+                let output = index.search(first, retired: directory)
                 let labels = StationLabel.lineLabels(in: catalog, regionCode: regionCode)
                 var qualifiers: [String: String] = [:]
                 for station in catalog.stations(in: regionCode) {
@@ -783,8 +787,7 @@ struct StationPickerView: View {
             didLoad = true
             prepareFilters(catalog: loaded.0)
             refreshFilterState()
-            // Always: an empty box asks the engine for suggestions with the signals set above.
-            search.apply(query: searchText, companyName: nil)
+            if isSearching { search.apply(query: searchText, companyName: nil) }
         } catch {
             guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
             loadError = error.localizedDescription

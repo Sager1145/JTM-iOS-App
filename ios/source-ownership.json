@@ -508,6 +508,7 @@
         "ios/RailKit/Sources/RailCore/Routing/TripRouteGeometry.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRoutePlanner.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRouteSections.swift",
+        "ios/RailKit/Sources/RailCore/Search/RecentSearchRecordGate.swift",
         "ios/RailKit/Sources/RailCore/Search/RecentSearchStore.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchAPI.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchChipKind.swift",

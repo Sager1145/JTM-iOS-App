@@ -71,6 +71,8 @@ struct RailWorkspaceView: View {
     @Environment(\.searchPreferences) private var searchPreferences
     /// Recent journey searches of the current region scope, refreshed when one is recorded.
     @State private var recentJourneySearches: [String] = []
+    /// Decides when a journey search counts as recent (see `RecentSearchRecordGate`).
+    @State private var recordGate = RecentSearchRecordGate()
     @State private var sheet: WorkspaceSheet?
     @State private var linePreview: RailwayLinePreview?
     /// The selection a journey card took over, and what it replaced. The card
@@ -2095,13 +2097,21 @@ struct RailWorkspaceView: View {
 
     private var journeySearchRegionCode: String { regionScope?.code ?? "all" }
 
-    /// A search the reader submitted or opened a result from counts as a recent search.
-    private func recordJourneySearch() {
-        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard selection == .search, !needle.isEmpty, journeySearch.completed == journeySearchRequest,
-              !journeySearch.days.isEmpty else { return }
+    private var recordGateState: RecentSearchRecordGate.State {
+        .init(query: query, isSearchTab: selection == .search,
+              isCurrent: journeySearch.completed == journeySearchRequest,
+              hasResults: !journeySearch.days.isEmpty)
+    }
+
+    private func commitRecentJourneySearch() {
         recentJourneySearches = RecentSearchStore.record(
-            needle, box: .journeys, regionCode: journeySearchRegionCode, defaults: searchPreferences)
+            query.trimmingCharacters(in: .whitespacesAndNewlines), box: .journeys,
+            regionCode: journeySearchRegionCode, defaults: searchPreferences)
+    }
+
+    /// Return pressed: records now, or as soon as the debounced search catches up.
+    private func submitJourneySearch() {
+        if recordGate.submit(recordGateState) { commitRecentJourneySearch() }
     }
 
     // MARK: - Add trip (pass 3)
@@ -2685,7 +2695,7 @@ struct RailWorkspaceView: View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         let list = listTab(for: page)
         return VStack(spacing: 0) {
-            JourneySearchField(query: $query, onSubmit: recordJourneySearch, isFocused: $searchFocused)
+            JourneySearchField(query: $query, onSubmit: submitJourneySearch, isFocused: $searchFocused)
             if page == .search { journeySuggestionLines }
             Group {
                 if page == .search, !needle.isEmpty {
@@ -2703,7 +2713,10 @@ struct RailWorkspaceView: View {
             recentJourneySearches = RecentSearchStore.load(
                 .journeys, regionCode: journeySearchRegionCode, defaults: searchPreferences)
         }
-        .onChange(of: itineraries.selectedTrainID) { _, id in if id != nil { recordJourneySearch() } }
+        .onChange(of: journeySearch.completed) { _, _ in
+            if recordGate.completed(recordGateState) { commitRecentJourneySearch() }
+        }
+        .onChange(of: query) { _, _ in recordGate.queryChanged() }
     }
 
     @ViewBuilder
@@ -3425,6 +3438,7 @@ struct RailWorkspaceView: View {
     /// destination, filters and panel size are retained while it slides away.
     private func pick(_ train: Train) {
         guard yieldRun() else { return }
+        if RecentSearchRecordGate.recordsOnPick(recordGateState) { commitRecentJourneySearch() }
         let previous: String?
         if let lease = journeyMenuSelection, itineraries.selectionRevision == lease.revision {
             previous = lease.previous
