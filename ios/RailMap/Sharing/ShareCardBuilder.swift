@@ -92,7 +92,7 @@ struct ShareCardBuilder {
                 id: "\(index)",
                 leading: time,
                 title: l.stationName(stop.name, in: train, code: stop.n02StationCode),
-                trailing: stop.platformNumber.map { l.countryText("table.platform", fallback: "Platform") + " \($0)" },
+                trailing: stop.platformNumber.map { l.countryText("th.platform", fallback: "Platform") + " \($0)" },
                 emphasised: index == 0 || index == last || changes.contains(index))
         }
     }

@@ -64,6 +64,10 @@ enum ClockStrings {
             .ja: "時刻はすべて現地時間（{zone}・{offset}）です",
             .en: "All times are local ({zone}, {offset})",
         ],
+        "ios.clock.localTimesCrossing": [
+            .en: "Times are local to each stop ({fromZone} at the start, {toZone} at the end)", .ja: "時刻は各駅の現地時間です（出発は{fromZone}、到着は{toZone}）",
+            .zhHans: "时刻均为各站当地时间（出发为{fromZone}，到达为{toZone}）", .zhHant: "時刻皆為各站當地時間（出發為{fromZone}，到達為{toZone}）",
+        ],
 
     ]
 }

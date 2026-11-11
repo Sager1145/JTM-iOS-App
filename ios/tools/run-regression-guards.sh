@@ -33,6 +33,7 @@ step() { # step <label> <command...>
 
 step "ui-test identifiers" bash "$ROOT/ios/tools/check-ui-test-identifiers.sh"
 step "ui tokens" bash "$ROOT/ios/tools/check-ui-tokens.sh"
+step "string keys" bash "$ROOT/ios/tools/check-string-keys.sh"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"

@@ -27,6 +27,42 @@ enum NewTripStrings {
         "ios.newTrip.timetableRemove": [
             .en: "Remove", .ja: "削除", .zhHant: "移除", .zhHans: "移除",
         ],
+        "ios.newTrip.mapZoomHint": [
+            .en: "Zoom in to tap stations, or search below", .ja: "拡大して駅をタップするか、下で検索してください",
+            .zhHans: "放大后点按车站，或在下方搜索", .zhHant: "放大後點按車站，或在下方搜尋",
+        ],
+        "ios.newTrip.mapOriginHint": [
+            .en: "Tap a station to start from", .ja: "出発駅をタップしてください",
+            .zhHans: "点按出发车站", .zhHant: "點按出發車站",
+        ],
+        "ios.newTrip.mapDestinationHint": [
+            .en: "Tap where the trip ends", .ja: "到着駅をタップしてください",
+            .zhHans: "点按到达车站", .zhHant: "點按到達車站",
+        ],
+        "ios.newTrip.mapAlternativesHint": [
+            .en: "{count} routes · tap a grey line, or add a stop", .ja: "経路が {count} 件あります · グレーの線をタップするか、経由駅を追加してください",
+            .zhHans: "共 {count} 条路线 · 点按灰色线路，或添加途经站", .zhHant: "共 {count} 條路線 · 點按灰色路線，或新增途經站",
+        ],
+        "ios.newTrip.mapRemove": [
+            .en: "Remove", .ja: "削除",
+            .zhHans: "移除", .zhHant: "移除",
+        ],
+        "ios.newTrip.mapVia": [
+            .en: "Via", .ja: "経由",
+            .zhHans: "途经", .zhHant: "途經",
+        ],
+        "ios.newTrip.addVia": [
+            .en: "Add a stop along the way", .ja: "途中の経由駅を追加",
+            .zhHans: "添加途经站", .zhHant: "新增途經站",
+        ],
+        "ios.newTrip.viaTitle": [
+            .en: "Via", .ja: "経由",
+            .zhHans: "途经", .zhHant: "途經",
+        ],
+        "ios.newTrip.removeVia": [
+            .en: "Remove stop", .ja: "経由駅を削除",
+            .zhHans: "移除途经站", .zhHant: "移除途經站",
+        ],
 
         "ios.newTrip.save": [
             .zhHans: "保存旅程", .zhHant: "儲存旅程", .ja: "旅程を保存", .en: "Save Trip",

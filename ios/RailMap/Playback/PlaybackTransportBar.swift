@@ -304,7 +304,7 @@ struct PlaybackTransportBar: View {
     private var focusToggle: some View {
         Toggle(isOn: $playback.autoFocus) {
             Label(
-                localization.countryText("play.follow", fallback: "Follow"),
+                localization.text("ios.play.follow", fallback: "Follow"),
                 systemImage: "scope")
         }
         .labelsHidden()
@@ -312,7 +312,7 @@ struct PlaybackTransportBar: View {
         .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
         .accessibilityIdentifier("playbackFollow")
         .accessibilityLabel(
-            localization.countryText("play.follow", fallback: "Follow the train"))
+            localization.text("ios.play.followTrain", fallback: "Follow the train"))
     }
 
     private var speedSlider: some View {
