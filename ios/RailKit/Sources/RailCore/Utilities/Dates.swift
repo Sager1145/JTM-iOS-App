@@ -562,9 +562,13 @@ public enum Dates {
     ///
     /// An observed clock outranks the scheduled one: the boarding stop's
     /// `actualDeparture` (``Train/boardingStopIndex``) sorts first when it
-    /// parses. This diverges from `app/public/app-dates.js`, which has no
-    /// actual times; mirroring it is a website-repo follow-up. The port
-    /// fixtures carry no `actual_*` fields, so parity stays green.
+    /// parses, then the boarding stop's scheduled departure, so a ride
+    /// boarded mid-train sorts by the time its card shows. Both diverge from
+    /// `app/public/app-dates.js`, which has no actual times and reads
+    /// `stops[0].departure` before the `origin` stop; mirroring them is a
+    /// website-repo follow-up. The port fixtures carry no `actual_*` fields
+    /// and every fixture train has its `origin` at index 0, so parity stays
+    /// green.
     public static func departureMinutes(of train: Train) -> Double {
         guard let first = train.stops.first else { return .infinity }
         if let boarding = train.boardingStopIndex,

@@ -861,7 +861,13 @@ final class NewTripUITests: XCTestCase {
         japan.timeZone = TimeZone(identifier: "Asia/Tokyo")!
         let yesterday = japan.date(byAdding: .day, value: -1, to: Date())!
         let parts = japan.dateComponents([.year, .month, .day], from: yesterday)
-        arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+        // A tap right after a scroll can land before the field takes focus.
+        for _ in 0..<4 {
+            arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+            if (arrival.value(forKey: "hasKeyboardFocus") as? Bool) == true { break }
+            _ = app.keyboards.firstMatch.waitForExistence(timeout: 1)
+            if (arrival.value(forKey: "hasKeyboardFocus") as? Bool) == true { break }
+        }
         if let current = arrival.value as? String, !current.isEmpty {
             arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }

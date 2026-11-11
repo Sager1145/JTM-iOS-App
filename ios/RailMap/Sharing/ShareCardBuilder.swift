@@ -28,8 +28,9 @@ struct ShareCardBuilder {
     // MARK: journey
 
     func journey(_ train: Train, stops mode: ShareStopsMode) -> ShareCardContent {
-        let first = train.stops.first(where: { $0.stopType == "origin" }) ?? train.stops.first
-        let last = train.stops.last(where: { $0.stopType == "destination" }) ?? train.stops.last
+        // The same boarding and alighting stops as the card, detail and sort.
+        let first = train.stops.boardingStopIndex.map { train.stops[$0] }
+        let last = train.stops.alightingStopIndex.map { train.stops[$0] }
         let origin = l.stationName(train.origin, in: train, code: train.originStationCode)
         let destination = l.stationName(train.destination, in: train, code: train.destinationStationCode)
         // main: operator names through companyText (English operator names).

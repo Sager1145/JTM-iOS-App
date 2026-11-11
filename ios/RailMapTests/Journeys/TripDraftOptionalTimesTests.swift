@@ -497,16 +497,26 @@ struct TripDraftOptionalTimesTests {
 // MARK: - day moves and day-only edits
 
 extension TripDraftOptionalTimesTests {
-    @Test func aDayMoveWithABlankDepartureNeverDragsATypedArrival() {
-        for offset in ["2026-11-07", "2026-11-08", "2027-03-04"] {
+    /// A typed arrival follows a day move by whole days and keeps its clock,
+    /// forward or back; it is never clamped onto the placeholder departure,
+    /// and the saved arrival stays on the departure's day.
+    @Test func aDayMoveWithABlankDepartureMovesATypedArrivalByWholeDays() {
+        for day in ["2026-11-07", "2026-11-08", "2027-03-04", "2026-11-03", "2026-10-06"] {
             let model = newDraft()
-            model.apply(TripDraftModel.Patch(arrival: at("10:00", model)), source: .reader)
-            let arrivalBefore = model.arrival
-            model.setDay(at("00:00", day: offset, model), isDeparture: true)
+            // A new draft opens on today: put both ends on 2026-11-06 first.
+            model.setDay(at("00:00", model), isDeparture: true)
             model.departureChanged(to: model.departure)
-            #expect(model.arrival == arrivalBefore)
-            #expect(model.scheduledClock(isDeparture: false) == "10:00")
+            model.apply(TripDraftModel.Patch(arrival: at("10:00", model)), source: .reader)
+            #expect(model.dayString(model.departure) == "2026-11-06")
+            model.setDay(at("00:00", day: day, model), isDeparture: true)
+            model.departureChanged(to: model.departure)
+            #expect(model.dayString(model.arrival) == day, "\(day)")
+            #expect(model.scheduledClock(isDeparture: false) == "10:00", "\(day)")
             #expect(model.timeIsSet(.arrival) && !model.timeIsSet(.departure))
+            let train = saved(model, savedTrip(date: "2026-11-06"))
+            #expect(train.date == day)
+            #expect(train.stops[0].departure == nil)
+            #expect(train.stops[1].arrival == "10:00", "\(day): \(train.stops[1].arrival ?? "nil")")
         }
     }
 

@@ -38,15 +38,10 @@ final class DelayDisplayUITests: XCTestCase {
         XCTAssertTrue(timing.label.contains("10:35"), timing.label)
         XCTAssertTrue(timing.label.contains("5 min late"), timing.label)
         XCTAssertTrue(timing.label.contains("3 min late"), timing.label)
-        let departure = element("rideDetailDeparture", in: app)
-        if !departure.exists {
-            let scroll = app.scrollViews.firstMatch
-            for _ in 0..<6 where !departure.exists { scroll.swipeUp() }
-        }
-        XCTAssertTrue(departure.waitForExistence(timeout: 10), app.debugDescription)
-        XCTAssertTrue(departure.label.contains("10:35"), departure.label)
-        XCTAssertTrue(departure.label.contains("scheduled 10:30"), departure.label)
-        XCTAssertTrue(departure.label.contains("5 min late"), departure.label)
+        // The ride panel drops the detail's own station pair (the summary
+        // above already shows it), so the summary carries both clocks.
+        XCTAssertTrue(timing.label.contains("scheduled 10:30"), timing.label)
+        XCTAssertTrue(timing.label.contains("12:58"), timing.label)
         snapshot("delay-detail-\(suffix)", app)
         app.terminate()
     }

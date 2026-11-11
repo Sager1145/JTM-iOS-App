@@ -472,8 +472,13 @@ final class TripDraftModel {
         // Wall-clock minutes on the region's calendar, not a raw interval.
         let calendar = region.clock.calendar
         // A blank departure clock shows a placeholder hour. A typed arrival
-        // must not be dragged onto it by a day move.
+        // follows a day move by whole days, keeping its own clock, and is
+        // never clamped onto that placeholder.
         if !scheduledIsSet(isDeparture: true), timeIsSet(.arrival) {
+            let days = calendar.dateComponents(
+                [.day], from: calendar.startOfDay(for: previousDeparture),
+                to: calendar.startOfDay(for: newValue)).day ?? 0
+            arrival = calendar.date(byAdding: .day, value: days, to: arrival) ?? arrival
             previousDeparture = newValue
             saveIssues = []
             return
