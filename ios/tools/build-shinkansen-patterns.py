@@ -16,10 +16,9 @@ the same inputs give the same bytes (records keep their order; `variants` is the
 record's last key; the file keeps the layout of build-train-service-station-refs.py).
 
 Ground rule (user requirement): no rule maps a train number to a stop pattern.
-Every number is listed explicitly under its pattern, per direction. A range
-("101-105") is shorthand for consecutive numbers that were each checked and is
-expanded to explicit numbers in the bundled file. The odd/even convention is only
-ever a warning here; lookup (in RailCore) never uses it.
+Every number is listed explicitly under its pattern, per direction, one number per
+entry (ranges are not accepted: a range invites parity mistakes). The odd/even
+convention is only ever a warning here; lookup (in RailCore) never uses it.
 
 Rule groups
   new-key rules (always errors): everything about `allStations`, `variants`,
@@ -35,6 +34,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from datetime import date
 from pathlib import Path
 
@@ -45,11 +45,12 @@ THROUGH = ROOT / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.
 SOURCES = ROOT / "app/data/shinkansen-patterns"
 
 SCHEMA = 1
-MAX_RANGE = 1000
 RUNS = ("daily", "weekdays", "holidays", "extra")
+WEEKDAYS = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
 DIRECTIONS = ("down", "up")
 SOURCE_TYPES = ("operator_timetable", "printed_timetable")  # may be verified
 SOURCE_FIELDS = ("type", "publisher", "title", "locator", "accessedAt")
+SOURCE_KEYS = SOURCE_FIELDS + ("license", "verifiedBy")
 
 
 class Findings:
@@ -169,8 +170,8 @@ def contains_run(haystack, needle):
 
 # ---------------------------------------------------------------- numbers
 
-def expand_numbers(items, where, findings):
-    """Explicit numbers from `numbers`: ints, "23", or consecutive "101-105"."""
+def read_numbers(items, where, findings):
+    """The numbers of a group: a non-empty list of positive integers, one per entry."""
     out = []
     if not isinstance(items, list) or not items:
         findings.error("emptyNumbers", where, "a group lists no train numbers")
@@ -178,22 +179,30 @@ def expand_numbers(items, where, findings):
     for item in items:
         if isinstance(item, int) and not isinstance(item, bool):
             out.append(item)
-            continue
-        match = re.fullmatch(r"\s*(\d+)\s*(?:-\s*(\d+)\s*)?", item) if isinstance(item, str) else None
-        if not match:
-            findings.error("badNumber", where, f"{item!r} is not a number or a range of consecutive numbers")
-            continue
-        low = int(match.group(1))
-        high = int(match.group(2)) if match.group(2) else low
-        if low > high or high - low >= MAX_RANGE:
-            findings.error("badNumber", where, f"range {item!r} runs backwards or is longer than {MAX_RANGE}")
-            continue
-        out.extend(range(low, high + 1))
+        else:
+            findings.error("badNumber", where, f"{item!r} is not a number (list each train number on its own; ranges are not accepted)")
     if any(n <= 0 for n in out):
         findings.error("nonPositiveNumber", where, "train numbers must be positive")
     if len(set(out)) != len(out):
         findings.error("duplicateNumber", where, "a number is listed twice in one group")
     return out
+
+
+def service_key(text):
+    """Comparison key of a service name, as RailCore's normalizedServiceName."""
+    out = []
+    for ch in unicodedata.normalize("NFKC", text).lower():
+        if ch.isspace() or ch in "-_":
+            continue
+        if "\u30a1" <= ch <= "\u30f6":
+            ch = chr(ord(ch) - 0x60)
+        out.append(ch)
+    return "".join(out)
+
+
+def service_keys(record):
+    """Every key a lookup by service name can match this record on."""
+    return {service_key(record["name"]), service_key(record["serviceId"])}
 
 
 # ---------------------------------------------------------------- building
@@ -262,19 +271,16 @@ def generate_revision(source, base, corridor, findings, label):
             entry["to"] = last
         entry["calls"] = [c for c in stop_codes if c in optional]
         entry["trains"] = build_groups(spec.get("trains"), source, where, findings)
-        if "coupled" in spec:
-            entry["coupled"] = spec["coupled"]
         patterns.append(entry)
     if not ok:
         return None
-    citation = citation_text(source["source"])
     revision = {
         "revision": source["revision"],
         "validFrom": source["validFrom"],
         "validUntil": source.get("validUntil"),
         "checkedOn": source.get("checkedOn"),
         "status": source["status"],
-        "citation": citation,
+        "source": build_source(source),
         "patterns": patterns,
     }
     return revision
@@ -286,30 +292,69 @@ def build_groups(groups, source, where, findings):
         findings.error("emptyNumbers", where, "pattern has no train groups")
         return out
     for group in groups:
+        if not isinstance(group, dict):
+            findings.error("badGroup", where, "a train group must be an object")
+            continue
         direction = group.get("direction")
         if direction not in DIRECTIONS:
             findings.error("badDirection", where, f"direction must be one of {DIRECTIONS}, stored explicitly per group")
         runs = group.get("runs", "daily")
         if runs not in RUNS:
             findings.error("badRuns", where, f"runs must be one of {RUNS}")
-        entry = {"direction": direction, "numbers": expand_numbers(group.get("numbers"), where, findings)}
+        entry = {"direction": direction, "numbers": read_numbers(group.get("numbers"), where, findings)}
         if runs != "daily":
             entry["runs"] = runs
         for key in ("validFrom", "validUntil"):
             if key in group:
                 entry[key] = group[key]
+        if "daysOfWeek" in group:
+            days = group["daysOfWeek"]
+            if (not isinstance(days, list) or not days or len(set(map(str, days))) != len(days)
+                    or any(d not in WEEKDAYS for d in days)):
+                findings.error("badDaysOfWeek", where, f"daysOfWeek lists each of {WEEKDAYS} at most once")
+            else:
+                entry["daysOfWeek"] = days
+        if "dates" in group:
+            entry["dates"] = group["dates"]
+        if "coupled" in group:
+            entry["coupled"] = group["coupled"]
+            check_coupling_shape(group["coupled"], entry["numbers"], where, findings)
         out.append(entry)
     return out
 
 
-def citation_text(src):
-    if not isinstance(src, dict):
-        return ""
-    parts = [src.get(k, "") for k in ("publisher", "title", "locator")]
-    text = ", ".join(p for p in parts if p)
-    if src.get("accessedAt"):
-        text += f" (accessed {src['accessedAt']})"
-    return text
+def check_coupling_shape(coupled, numbers, where, findings):
+    """`coupled` must decode in Swift: string service/from/to, number "same" or absent,
+    partnerNumbers a map from a number of this group to a positive integer."""
+    def bad(why):
+        findings.error("badCoupling", where, why)
+    if not isinstance(coupled, dict):
+        return bad("coupled must be an object")
+    for key in ("service", "from", "to"):
+        if not isinstance(coupled.get(key), str) or not coupled[key]:
+            bad(f"coupled.{key} must be a non-empty string")
+    if set(coupled) - {"service", "from", "to", "number", "partnerNumbers"}:
+        bad("coupled has unknown keys")
+    number, partner = coupled.get("number"), coupled.get("partnerNumbers")
+    if number is not None and (number != "same" or partner is not None):
+        bad('coupled.number must be "same" (and then no partnerNumbers); write other partner numbers under partnerNumbers')
+    if partner is not None:
+        if not isinstance(partner, dict) or any(
+                not isinstance(k, str) or k not in {str(n) for n in numbers}
+                or not isinstance(v, int) or isinstance(v, bool) or v <= 0
+                for k, v in partner.items()):
+            bad("coupled.partnerNumbers must map numbers of this group (as strings) to positive integers")
+
+
+def build_source(source):
+    """The structured source kept in the revision; verifiedBy (the second reader) moves in."""
+    src = source["source"]
+    out = {key: src[key] for key in SOURCE_FIELDS}
+    if src.get("license"):
+        out["license"] = src["license"]
+    if str(source.get("verifiedBy", "")).strip():
+        out["verifiedBy"] = source["verifiedBy"]
+    return out
 
 
 # ---------------------------------------------------------------- source files
@@ -347,8 +392,12 @@ def check_source_header(name, source, findings):
         findings.error("missingRevision", name, "revision id missing")
         ok = False
     src = source.get("source")
-    if not isinstance(src, dict) or any(not str(src.get(f, "")).strip() for f in SOURCE_FIELDS):
-        findings.error("missingCitation", name, f"source needs {', '.join(SOURCE_FIELDS)}")
+    if (not isinstance(src, dict) or any(not isinstance(src.get(f), str) or not src[f].strip() for f in SOURCE_FIELDS)
+            or not isinstance(src.get("license", ""), str)):
+        findings.error("missingCitation", name, f"source needs {', '.join(SOURCE_FIELDS)} as text")
+        ok = False
+    if "verifiedBy" in source and not isinstance(source["verifiedBy"], str):
+        findings.error("missingCitation", name, "verifiedBy must be text")
         ok = False
     status = source.get("status")
     if status not in ("verified", "unverified"):
@@ -500,10 +549,7 @@ def check_variants(record, corridor, services, findings):
     windows = []
     for rev in variants.get("revisions", []):
         label = f"{pid} revision {rev.get('revision')}"
-        if not str(rev.get("citation", "")).strip():
-            findings.error("missingCitation", label, "revision has no citation")
-        if rev.get("status") not in ("verified", "unverified"):
-            findings.error("missingStatus", label, "status must be 'verified' or 'unverified'")
+        check_revision_source(rev, label, findings)
         start, end = parse_day(rev.get("validFrom")), parse_day(rev.get("validUntil"))
         bad_end = rev.get("validUntil") is not None and end is None
         bad_checked = rev.get("checkedOn") is not None and parse_day(rev["checkedOn"]) is None
@@ -515,15 +561,43 @@ def check_variants(record, corridor, services, findings):
             findings.error("revisionOutsideRecordDates", label, "starts before the record")
         if rec_until and (end is None or end > rec_until):
             findings.error("revisionOutsideRecordDates", label, "runs past the record")
-        seen = set()
+        seen, stop_lists = set(), {}
         for pat in rev.get("patterns", []):
             check_pattern(record, rev, pat, order, required, optional, corridor, services, seen, findings, label)
+            key = effective_stop_list(record, pat, order)
+            if key is not None and stop_lists.setdefault(key, pat.get("id")) != pat.get("id"):
+                findings.error("duplicateStopList", f"{label} pattern {pat.get('id')}",
+                               f"same stop list as pattern {stop_lists[key]}; list its trains as groups of one pattern")
     windows.sort(key=lambda w: w[0])
     for (s1, e1, n1), (s2, _e2, n2) in zip(windows, windows[1:]):
         if e1 is None:
             findings.error("openEndedRevisionNotLast", pid, f"revision {n1} is open-ended but not the last")
         elif s2 < e1:
             findings.error("revisionOverlap", pid, f"revisions {n1} and {n2} overlap")
+
+
+def check_revision_source(rev, label, findings):
+    """The structured source of a bundled revision, and the verified-status rules on it."""
+    src = rev.get("source")
+    if (not isinstance(src, dict) or any(not isinstance(src.get(f), str) or not src[f].strip() for f in SOURCE_FIELDS)
+            or any(src.get(k) is not None and not isinstance(src[k], str) for k in ("license", "verifiedBy"))):
+        findings.error("missingCitation", label, f"revision source needs {', '.join(SOURCE_FIELDS)} as text")
+        src = None
+    if rev.get("status") not in ("verified", "unverified"):
+        findings.error("missingStatus", label, "status must be 'verified' or 'unverified'")
+    elif rev["status"] == "verified" and src is not None:
+        if src["type"] not in SOURCE_TYPES:
+            findings.error("verifiedWithoutOfficialSource", label, f"verified needs source.type in {SOURCE_TYPES}")
+        if not str(src.get("verifiedBy") or "").strip():
+            findings.error("verifiedWithoutSecondReader", label, "verified needs source.verifiedBy")
+
+
+def effective_stop_list(record, pat, order):
+    """(first, last, calls) of a pattern with the record's ends filled in, or None."""
+    ends = [pat.get("from") or order_end(record, order, "origin"), pat.get("to") or order_end(record, order, "destination")]
+    if any(e not in order for e in ends) or not isinstance(pat.get("calls"), list):
+        return None
+    return (ends[0], ends[1], tuple(sorted(map(str, pat["calls"]))))
 
 
 def check_pattern(record, rev, pat, order, required, optional, corridor, services, seen, findings, label):
@@ -558,6 +632,7 @@ def check_pattern(record, rev, pat, order, required, optional, corridor, service
             findings.error("badDirection", where, "direction is stored explicitly: down or up")
         if group.get("runs", "daily") not in RUNS:
             findings.error("badRuns", where, f"runs must be one of {RUNS}")
+        check_group_days(group, rev, where, findings)
         rs, re_ = parse_day(rev.get("validFrom")), parse_day(rev.get("validUntil"))
         gs, ge = parse_day(group.get("validFrom")), parse_day(group.get("validUntil"))
         if (group.get("validFrom") and gs is None) or (group.get("validUntil") and ge is None):
@@ -572,17 +647,49 @@ def check_pattern(record, rev, pat, order, required, optional, corridor, service
         if any(isinstance(n, int) and (n % 2 == 1) != want_odd for n in numbers):
             findings.warn("parityConvention", where,
                           f"some {group.get('direction')} numbers break the odd/even convention (warning only)")
-    coupled = pat.get("coupled")
-    if coupled:
-        partners = services.get(coupled.get("service"), [])
+    for group in groups:
+        coupled = group.get("coupled")
+        if coupled is None:
+            continue
+        before = len(findings.errors)
+        check_coupling_shape(coupled, group.get("numbers", []), where, findings)
+        if len(findings.errors) > before:
+            continue
+        partners = services.get(coupled["service"], [])
         codes = {s["sourceCode"] for p in partners for s in p["stops"] + p["optionalStops"]}
-        if not partners or coupled.get("from") not in codes or coupled.get("to") not in codes:
+        if not partners or coupled["from"] not in codes or coupled["to"] not in codes:
             findings.error("coupledPartnerMissing", where,
-                           f"coupled partner {coupled.get('service')!r} or its stations do not exist")
-        elif not any(c.get("coupled", {}).get("service") == record["serviceId"]
+                           f"coupled partner {coupled['service']!r} or its stations do not exist")
+        elif not any(g.get("coupled", {}).get("service") == record["serviceId"]
                      for p in partners for r in p.get("variants", {}).get("revisions", [])
-                     for c in r.get("patterns", []) if c.get("coupled")):
+                     for c in r.get("patterns", []) for g in c.get("trains", [])):
             findings.warn("coupledNotReciprocal", where, f"{coupled['service']} does not couple back")
+
+
+def check_group_days(group, rev, where, findings):
+    """dates (extra groups), daysOfWeek and runs, as RailCore decodes them."""
+    runs = group.get("runs", "daily")
+    dates = group.get("dates")
+    if runs == "extra":
+        parsed = [parse_day(d) for d in dates] if isinstance(dates, list) else []
+        if not parsed:
+            findings.error("extraDates", where, "an extra group must list the exact dates it runs")
+        if any(d is None for d in parsed):
+            findings.error("invalidDate", where, "an extra date is malformed")
+        days = [d for d in parsed if d is not None]
+        if len(set(days)) != len(days):
+            findings.error("extraDates", where, "an extra date is listed twice")
+        rs, re_ = parse_day(rev.get("validFrom")), parse_day(rev.get("validUntil"))
+        gs, ge = parse_day(group.get("validFrom")), parse_day(group.get("validUntil"))
+        if any((rs and d < rs) or (re_ and d >= re_) or (gs and d < gs) or (ge and d >= ge) for d in days):
+            findings.error("groupOutsideRevision", where, "an extra date lies outside its revision or window")
+    elif dates is not None:
+        findings.error("extraDates", where, "dates are only for extra groups")
+    days_of_week = group.get("daysOfWeek")
+    if days_of_week is not None and (
+            not isinstance(days_of_week, list) or not days_of_week
+            or len(set(map(str, days_of_week))) != len(days_of_week) or any(d not in WEEKDAYS for d in days_of_week)):
+        findings.error("badDaysOfWeek", where, f"daysOfWeek lists each of {WEEKDAYS} at most once")
 
 
 def order_end(record, order, which):
@@ -596,33 +703,68 @@ def day_interval(rev, group):
     return start, (min(ends) if ends else None)
 
 
+def could_run(rev, group, day):
+    """Could `group` of `rev` run on `day` for some day type (as RailCore's applies != no)?"""
+    start, end = parse_day(rev["validFrom"]), parse_day(rev.get("validUntil"))
+    if day < start or (end and day >= end):
+        return False
+    gs, ge = parse_day(group.get("validFrom")), parse_day(group.get("validUntil"))
+    if (gs and day < gs) or (ge and day >= ge):
+        return False
+    if group.get("daysOfWeek") and WEEKDAYS[day.weekday()] not in group["daysOfWeek"]:
+        return False
+    if group.get("runs", "daily") == "extra":
+        return day.isoformat() in (group.get("dates") or [])
+    return True
+
+
 def disjoint(rev_a, grp_a, rev_b, grp_b):
     if {grp_a.get("runs", "daily"), grp_b.get("runs", "daily")} == {"weekdays", "holidays"}:
         return True
     if parse_day(rev_a.get("validFrom")) is None or parse_day(rev_b.get("validFrom")) is None:
         return False
+    da, db = grp_a.get("daysOfWeek"), grp_b.get("daysOfWeek")
+    if da and db and not set(da) & set(db):
+        return True
+    for dated, other, other_rev in ((grp_a, grp_b, rev_b), (grp_b, grp_a, rev_a)):
+        if dated.get("runs") == "extra":
+            days = [d for d in map(parse_day, dated.get("dates") or []) if d]
+            if not any(could_run(other_rev, other, d) for d in days):
+                return True
     (sa, ea), (sb, eb) = day_interval(rev_a, grp_a), day_interval(rev_b, grp_b)
     return (ea is not None and ea <= sb) or (eb is not None and eb <= sa)
 
 
 def check_number_conflicts(bundled, findings):
-    """The same number in two patterns of a service is legal only on provably disjoint days."""
+    """The same number in two patterns is legal only on provably disjoint days.
+
+    Records are grouped by every key a lookup can match (name and service id), so two
+    services that share a service id are compared as well. Two groups of one pattern
+    (same record, revision, pattern and direction) give one answer and never conflict."""
     entries = {}
     for record in bundled:
         for rev in record.get("variants", {}).get("revisions", []):
             for pat in rev.get("patterns", []):
                 for group in pat.get("trains", []):
+                    identity = (record["patternId"], rev.get("revision"), pat.get("id"), group.get("direction"))
                     for number in set(group.get("numbers", [])):
-                        entries.setdefault((record["name"], number), []).append(
-                            (record["patternId"], rev, pat.get("id"), group))
-    for (name, number), items in sorted(entries.items()):
+                        for key in service_keys(record):
+                            entries.setdefault((key, number), []).append(
+                                (record["patternId"], rev, pat.get("id"), group, identity, record["name"]))
+    reported = set()
+    for (key, number), items in sorted(entries.items(), key=lambda kv: kv[0]):
         for i, a in enumerate(items):
             for b in items[i + 1:]:
-                if not disjoint(a[1], a[3], b[1], b[3]):
-                    findings.error(
-                        "numberInTwoPatterns", f"{a[0]}",
-                        f"{name} {number} is in {a[0]}/{a[1].get('revision')}/{a[2]} and "
-                        f"{b[0]}/{b[1].get('revision')}/{b[2]} on overlapping days")
+                if a[4] == b[4] or disjoint(a[1], a[3], b[1], b[3]):
+                    continue
+                signature = (number,) + tuple(sorted((a[4], b[4]), key=str))
+                if signature in reported:
+                    continue
+                reported.add(signature)
+                findings.error(
+                    "numberInTwoPatterns", f"{a[0]}",
+                    f"{key} {number} is in {a[0]}/{a[1].get('revision')}/{a[2]} and "
+                    f"{b[0]}/{b[1].get('revision')}/{b[2]} on overlapping days")
 
 
 # ---------------------------------------------------------------- main

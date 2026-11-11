@@ -10,12 +10,11 @@ import Foundation
 // Ground rule (user requirement): no rule maps a train number to a stop pattern.
 // Same-named trains can have different patterns, and numbers need not follow any
 // block, parity or neighbour logic. So:
-// - every pattern lists its train numbers explicitly; a range in the JSON
-//   ("101-105") is shorthand for consecutive numbers that were each checked and
-//   is expanded to an explicit list when decoded (never by parity);
+// - every pattern lists its train numbers explicitly, one by one (no ranges);
 // - direction is stored per group of numbers, never derived from odd or even;
 // - the same number may appear in different patterns on different days or in
-//   different revisions (validity windows and `runs` store that explicitly).
+//   different revisions (validity windows, `runs`, `daysOfWeek` and explicit
+//   `dates` store that); an extra train lists the exact dates it runs.
 
 extension TrainServicePatterns {
 
@@ -67,6 +66,34 @@ extension TrainServicePatterns {
             }
         }
 
+        /// Citation of a revision's table. `verifiedBy` is the second reader and is
+        /// required for a verified status (see the validator).
+        public struct Source: Codable, Sendable, Hashable {
+            public let type: String
+            public let publisher: String
+            public let title: String
+            public let locator: String
+            public let accessedAt: String
+            public let license: String?
+            public let verifiedBy: String?
+
+            public init(
+                type: String, publisher: String, title: String, locator: String,
+                accessedAt: String, license: String? = nil, verifiedBy: String? = nil
+            ) {
+                self.type = type
+                self.publisher = publisher
+                self.title = title
+                self.locator = locator
+                self.accessedAt = accessedAt
+                self.license = license
+                self.verifiedBy = verifiedBy
+            }
+
+            /// Source types an operator or printed timetable may carry a verified status.
+            public static let officialTypes: Set<String> = ["operator_timetable", "printed_timetable"]
+        }
+
         /// One timetable revision of a base record. Numbers of one revision are
         /// never read for a date outside `[validFrom, validUntil)`.
         public struct Revision: Codable, Sendable, Hashable {
@@ -77,20 +104,21 @@ extension TrainServicePatterns {
             /// Last date the source was confirmed to be in force.
             public let checkedOn: String?
             public let status: Status
-            /// One citation string: publisher, title, locator, access date.
-            public let citation: String
+            /// Where the table was read: kept structured so a verified status can
+            /// be re-checked from the bundled file alone.
+            public let source: Source
             public let patterns: [Variant]
 
             public init(
                 revision: String, validFrom: String, validUntil: String?, checkedOn: String?,
-                status: Status, citation: String, patterns: [Variant]
+                status: Status, source: Source, patterns: [Variant]
             ) {
                 self.revision = revision
                 self.validFrom = validFrom
                 self.validUntil = validUntil
                 self.checkedOn = checkedOn
                 self.status = status
-                self.citation = citation
+                self.source = source
                 self.patterns = patterns
             }
 
@@ -120,19 +148,22 @@ extension TrainServicePatterns {
             /// between its ends are implied.
             public let calls: [String]
             public let trains: [TrainGroup]
-            public let coupled: Coupling?
 
             public init(
                 id: String, from: String? = nil, to: String? = nil, calls: [String],
-                trains: [TrainGroup], coupled: Coupling? = nil
+                trains: [TrainGroup]
             ) {
                 self.id = id
                 self.from = from
                 self.to = to
                 self.calls = calls
                 self.trains = trains
-                self.coupled = coupled
             }
+        }
+
+        /// Day of the week, for `daysOfWeek`.
+        public enum Weekday: String, Codable, Sendable, Hashable, CaseIterable {
+            case mon, tue, wed, thu, fri, sat, sun
         }
 
         /// Train numbers of one pattern, each listed explicitly, with their
@@ -140,49 +171,52 @@ extension TrainServicePatterns {
         /// implied by their value.
         public struct TrainGroup: Codable, Sendable, Hashable {
             public let direction: Direction
-            /// Every number individually (ranges are expanded at decode time).
+            /// Every number individually.
             public let numbers: [Int]
             public let runs: RunDay
             /// Optional seasonal window inside the revision; `validUntil` exclusive.
             public let validFrom: String?
             public let validUntil: String?
+            /// Optional weekday filter ("fri" for a Friday-only train, all but
+            /// "sun" for a train not running on Sundays). Nil means every weekday.
+            public let daysOfWeek: [Weekday]?
+            /// The exact dates (`YYYY-MM-DD`) of an `extra` group. Required for
+            /// `extra` and not allowed otherwise: an announced extra train runs on
+            /// those dates only, and on none other.
+            public let dates: [String]?
+            /// Coupled running of these trains. A pattern shared by coupled and
+            /// uncoupled trains lists them as separate groups.
+            public let coupled: Coupling?
 
             public init(
                 direction: Direction, numbers: [Int], runs: RunDay = .daily,
-                validFrom: String? = nil, validUntil: String? = nil
+                validFrom: String? = nil, validUntil: String? = nil,
+                daysOfWeek: [Weekday]? = nil, dates: [String]? = nil, coupled: Coupling? = nil
             ) {
                 self.direction = direction
                 self.numbers = numbers
                 self.runs = runs
                 self.validFrom = validFrom
                 self.validUntil = validUntil
+                self.daysOfWeek = daysOfWeek
+                self.dates = dates
+                self.coupled = coupled
             }
 
             private enum CodingKeys: String, CodingKey {
-                case direction, numbers, runs, validFrom, validUntil
+                case direction, numbers, runs, validFrom, validUntil, daysOfWeek, dates, coupled
             }
-
-            /// Largest range accepted as shorthand. A range is consecutive numbers
-            /// that were each checked; a huge one is almost certainly a mistake.
-            static let maximumRangeLength = 1000
 
             public init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 direction = try container.decode(Direction.self, forKey: .direction)
+                numbers = try container.decode([Int].self, forKey: .numbers)
                 runs = try container.decodeIfPresent(RunDay.self, forKey: .runs) ?? .daily
                 validFrom = try container.decodeIfPresent(String.self, forKey: .validFrom)
                 validUntil = try container.decodeIfPresent(String.self, forKey: .validUntil)
-                var list = try container.nestedUnkeyedContainer(forKey: .numbers)
-                var expanded: [Int] = []
-                while !list.isAtEnd {
-                    if let single = try? list.decode(Int.self) {
-                        expanded.append(single)
-                        continue
-                    }
-                    let token = try list.decode(String.self)
-                    expanded.append(contentsOf: try Self.expand(token, codingPath: list.codingPath))
-                }
-                numbers = expanded
+                daysOfWeek = try container.decodeIfPresent([Weekday].self, forKey: .daysOfWeek)
+                dates = try container.decodeIfPresent([String].self, forKey: .dates)
+                coupled = try container.decodeIfPresent(Coupling.self, forKey: .coupled)
             }
 
             public func encode(to encoder: Encoder) throws {
@@ -192,32 +226,9 @@ extension TrainServicePatterns {
                 if runs != .daily { try container.encode(runs, forKey: .runs) }
                 try container.encodeIfPresent(validFrom, forKey: .validFrom)
                 try container.encodeIfPresent(validUntil, forKey: .validUntil)
-            }
-
-            /// "23" is one number; "101-105" is 101, 102, 103, 104, 105.
-            static func expand(_ token: String, codingPath: [any CodingKey]) throws -> [Int] {
-                let parts = token.split(separator: "-", omittingEmptySubsequences: false)
-                    .map { $0.trimmingCharacters(in: .whitespaces) }
-                func fail(_ why: String) -> DecodingError {
-                    .dataCorrupted(.init(codingPath: codingPath, debugDescription: "train number \"\(token)\": \(why)"))
-                }
-                func integer(_ text: String) -> Int? {
-                    text.isEmpty || !text.allSatisfy({ $0.isASCII && $0.isNumber }) ? nil : Int(text)
-                }
-                switch parts.count {
-                case 1:
-                    guard let value = integer(parts[0]) else { throw fail("not a number") }
-                    return [value]
-                case 2:
-                    guard let low = integer(parts[0]), let high = integer(parts[1]) else {
-                        throw fail("not a number range")
-                    }
-                    guard low <= high else { throw fail("range runs backwards") }
-                    guard high - low < maximumRangeLength else { throw fail("range too long") }
-                    return Array(low...high)
-                default:
-                    throw fail("not a number or a range")
-                }
+                try container.encodeIfPresent(daysOfWeek, forKey: .daysOfWeek)
+                try container.encodeIfPresent(dates, forKey: .dates)
+                try container.encodeIfPresent(coupled, forKey: .coupled)
             }
 
             /// Whether the group's own seasonal window (if any) covers `day`.
@@ -230,6 +241,29 @@ extension TrainServicePatterns {
                 }
                 return true
             }
+
+            enum Applies: Sendable, Hashable {
+                case yes, no
+                /// Runs on weekdays only or holidays only and the caller gave no day type.
+                case needsDayKind
+            }
+
+            /// Whether the group runs on `day` (inside its revision, which the
+            /// caller has checked). Exact: `extra` groups run on their listed
+            /// dates only.
+            func applies(on day: Pattern.GregorianDay, dayKind: DayKind?) -> Applies {
+                guard windowCovers(day) else { return .no }
+                if let daysOfWeek, !daysOfWeek.contains(day.weekday) { return .no }
+                switch runs {
+                case .extra:
+                    return dates?.contains(day.rawValue) == true ? .yes : .no
+                case .daily:
+                    return .yes
+                case .weekdays, .holidays:
+                    guard let dayKind else { return .needsDayKind }
+                    return (runs == .weekdays) == (dayKind == .weekday) ? .yes : .no
+                }
+            }
         }
 
         /// Coupled running with another service over a station range.
@@ -237,14 +271,28 @@ extension TrainServicePatterns {
             public let service: String
             public let from: String
             public let to: String
-            /// "same" only when the source shows the partner with the same number.
+            /// "same" only when the source shows the partner with the same number
+            /// for every train of the group.
             public let number: String?
+            /// The partner's number for each train of the group that has a
+            /// different one, keyed by this train's number ("23": 1023).
+            public let partnerNumbers: [String: Int]?
 
-            public init(service: String, from: String, to: String, number: String? = nil) {
+            public init(
+                service: String, from: String, to: String, number: String? = nil,
+                partnerNumbers: [String: Int]? = nil
+            ) {
                 self.service = service
                 self.from = from
                 self.to = to
                 self.number = number
+                self.partnerNumbers = partnerNumbers
+            }
+
+            /// The partner's number for `trainNumber`, nil when the source gives none.
+            public func partnerNumber(for trainNumber: Int) -> Int? {
+                if number == "same" { return trainNumber }
+                return partnerNumbers?[String(trainNumber)]
             }
         }
 
@@ -296,5 +344,21 @@ extension TrainServicePatterns.Variants {
         let always = Set(base.stopRefs.map(\.sourceCode))
         let calls = Set(variant.calls)
         return order[low...high].filter { always.contains($0) || calls.contains($0) }
+    }
+}
+
+// MARK: - Weekday of a date
+
+extension TrainServicePatterns.Pattern.GregorianDay {
+    /// Day of the week of a valid proleptic Gregorian date.
+    var weekday: TrainServicePatterns.Variants.Weekday {
+        let parts = rawValue.split(separator: "-").compactMap { Int($0) }
+        var year = parts[0]
+        let month = parts[1], day = parts[2]
+        // Sakamoto's algorithm: 0 = Sunday.
+        let table = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+        if month < 3 { year -= 1 }
+        let index = (year + year / 4 - year / 100 + year / 400 + table[month - 1] + day) % 7
+        return [.sun, .mon, .tue, .wed, .thu, .fri, .sat][index]
     }
 }

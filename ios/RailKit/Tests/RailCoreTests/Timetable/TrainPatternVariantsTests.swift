@@ -22,15 +22,18 @@ private enum Sample {
 
     /// Revision 1 (2030-03-01 to 2031-03-01, verified) and revision 2 (open,
     /// unverified). Deliberately not following any parity or block logic:
-    /// 9004 is a down train, 9003-9005 is a consecutive range, 9001 is a
-    /// different pattern in revision 2, 9021 differs between weekdays and holidays.
+    /// 9004 is a down train, 9001 is a different pattern in revision 2, 9021
+    /// differs between weekdays and holidays, 9031 is an extra train on two
+    /// announced dates, 9041 runs Fridays only.
     static let revisions = #"""
     [
       {"revision": "2030-03-01", "validFrom": "2030-03-01", "validUntil": "2031-03-01",
-       "checkedOn": "2030-06-01", "status": "verified", "citation": "SAMPLE citation one",
+       "checkedOn": "2030-06-01", "status": "verified",
+       "source": {"type": "operator_timetable", "publisher": "SAMPLE", "title": "SAMPLE citation one",
+                  "locator": "none", "accessedAt": "2030-06-01", "verifiedBy": "SAMPLE reader"},
        "patterns": [
          {"id": "a", "calls": ["S04"], "trains": [
-            {"direction": "down", "numbers": [9001, "9003-9005"]},
+            {"direction": "down", "numbers": [9001, 9003, 9004, 9005]},
             {"direction": "up", "numbers": [9002]}]},
          {"id": "b", "to": "S06", "calls": ["S02"], "trains": [
             {"direction": "down", "numbers": [9011]},
@@ -38,10 +41,16 @@ private enum Sample {
          {"id": "c", "calls": [], "trains": [
             {"direction": "down", "numbers": [9021], "runs": "weekdays"}]},
          {"id": "d", "calls": ["S05"], "trains": [
-            {"direction": "down", "numbers": [9021], "runs": "holidays"}]}
+            {"direction": "down", "numbers": [9021], "runs": "holidays"}]},
+         {"id": "e", "calls": ["S07"], "trains": [
+            {"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2030-08-10", "2030-08-14"]},
+            {"direction": "down", "numbers": [9041], "daysOfWeek": ["fri"]},
+            {"direction": "down", "numbers": [9041], "runs": "holidays"}]}
        ]},
       {"revision": "2031-03-01", "validFrom": "2031-03-01", "validUntil": null,
-       "checkedOn": "2031-04-01", "status": "unverified", "citation": "SAMPLE citation two",
+       "checkedOn": "2031-04-01", "status": "unverified",
+       "source": {"type": "sample_fixture", "publisher": "SAMPLE", "title": "SAMPLE citation two",
+                  "locator": "none", "accessedAt": "2031-04-01"},
        "patterns": [
          {"id": "a", "calls": ["S05"], "trains": [{"direction": "down", "numbers": [9001]}]}
        ]}
@@ -86,8 +95,7 @@ struct TrainPatternVariantsTests {
         let again = try JSONDecoder().decode([Pattern].self, from: data)
         #expect(again == original)
         let text = String(decoding: data, as: UTF8.self)
-        #expect(text.contains("9003,9004,9005"), "the range is stored as explicit numbers")
-        #expect(!text.contains("9003-9005"))
+        #expect(text.contains("9003,9004,9005"), "numbers are stored explicitly")
         #expect(again[1].allStations)
         #expect(again[0].variants?.revisions.count == 2)
     }
@@ -103,12 +111,10 @@ struct TrainPatternVariantsTests {
         let encoded = String(decoding: try JSONEncoder().encode(plain), as: UTF8.self)
         #expect(!encoded.contains("allStations") && !encoded.contains("variants"))
 
-        let bundled = TrainServicePatterns.patterns
+        // Data branches may add records with these keys; the validator run on the
+        // bundled catalogue (bundledCatalogueNewKeys) judges them.
         #expect(TrainServicePatterns.catalogFailure == nil)
-        #expect(bundled.count >= 338)
-        // When the data branches land and add records with these keys, this
-        // pin should be replaced by the strict validator run (see VERIFICATION.md).
-        #expect(bundled.allSatisfy { !$0.allStations && $0.variants == nil })
+        #expect(TrainServicePatterns.patterns.count >= 338)
     }
 
     @Test("a variants block with an unknown schema reads as no variants")
@@ -117,14 +123,14 @@ struct TrainPatternVariantsTests {
         #expect(try Sample.decode(future)[0].variants == nil)
     }
 
-    @Test("malformed numbers, a missing status and a missing citation key are refused at decode")
+    @Test("range strings, odd tokens, a missing status and a missing source are refused at decode")
     func malformedBlocksThrow() {
         for bad in [
-            Sample.revisions.replacingOccurrences(of: "9003-9005", with: "9005-9003"),
-            Sample.revisions.replacingOccurrences(of: "9003-9005", with: "9003-9999999"),
-            Sample.revisions.replacingOccurrences(of: "9003-9005", with: "odd"),
-            Sample.revisions.replacingOccurrences(of: #""status": "verified", "#, with: ""),
-            Sample.revisions.replacingOccurrences(of: #""citation": "SAMPLE citation one","#, with: ""),
+            Sample.revisions.replacingOccurrences(of: "9003, 9004, 9005", with: #""9003-9005""#),
+            Sample.revisions.replacingOccurrences(of: "9003, 9004, 9005", with: #""odd""#),
+            Sample.revisions.replacingOccurrences(of: #""status": "verified","#, with: ""),
+            Sample.revisions.replacingOccurrences(of: #""source": {"type": "operator_timetable","#, with: #""x": {"type": "operator_timetable","#),
+            Sample.revisions.replacingOccurrences(of: #""runs": "extra", "dates""#, with: #""runs": "sometimes", "dates""#),
         ] {
             #expect(throws: (any Error).self) { try Sample.decode(Sample.variantBase(revisions: bad)) }
         }
@@ -169,15 +175,15 @@ struct TrainPatternVariantsTests {
         #expect(cut.stops.map(\.sourceCode) == ["S01", "S02", "S03", "S06"], "ends at S06, a pattern with `to`")
     }
 
-    @Test("range shorthand matches each expanded number and nothing beside it")
-    func rangeExpandsToExplicitNumbers() throws {
+    @Test("only listed numbers match; neighbours, parity and block edges never do")
+    func onlyListedNumbersMatch() throws {
         let patterns = try Sample.catalogue()
         for number in [9003, 9004, 9005] {
             #expect(exact(TrainServicePatterns.resolve(
                 serviceName: "サンプル", number: number, day: "2030-05-01", in: patterns))?.variant.id == "a")
         }
         // Neighbours, a gap in parity and a block edge are all unlisted.
-        for number in [9000, 9006, 9007, 9010, 9012, 9013, 9022, 1] {
+        for number in [9000, 9006, 9007, 9010, 9012, 9013, 9022, 9032, 1] {
             let answer = TrainServicePatterns.resolve(
                 serviceName: "サンプル", number: number, day: "2030-05-01", in: patterns)
             #expect(reason(answer) == .notListed, "\(number) must not be inferred")
@@ -239,7 +245,95 @@ struct TrainPatternVariantsTests {
         #expect(variant(.holiday) == "d")
         #expect(variant(nil) == nil)
         #expect(reason(TrainServicePatterns.resolve(
-            serviceName: "サンプル", number: 9021, day: "2030-05-01", in: patterns)) == .ambiguous)
+            serviceName: "サンプル", number: 9021, day: "2030-05-01", in: patterns)) == .needsDayKind)
+        let bothWeekdays = try Sample.decode(Sample.variantBase(revisions: Sample.revisions.replacingOccurrences(
+            of: #""numbers": [9021], "runs": "holidays""#, with: #""numbers": [9021], "runs": "weekdays""#)))
+        #expect(reason(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9021, day: "2030-05-01", dayKind: .weekday, in: bothWeekdays))
+            == .ambiguous, "two patterns that both apply is conflicting data, not a pick")
+    }
+
+    @Test("a number listed for one day type only never answers exactly without the day type")
+    func dayTypeIsNeverIgnored() throws {
+        let patterns = try Sample.catalogue()
+        // 9041 runs on Fridays (any day type) and on holidays, both in pattern e.
+        // 2030-05-03 is a Friday, 2030-05-04 a Saturday, 2030-05-06 a Monday.
+        func answer(_ day: String, _ kind: Variants.DayKind?) -> TrainServicePatterns.Resolution {
+            TrainServicePatterns.resolve(serviceName: "サンプル", number: 9041, day: day, dayKind: kind, in: patterns)
+        }
+        #expect(exact(answer("2030-05-03", .weekday))?.variant.id == "e")
+        #expect(exact(answer("2030-05-04", .holiday))?.variant.id == "e")
+        #expect(reason(answer("2030-05-06", .weekday)) == .notListed, "a Monday is not a Friday")
+        #expect(exact(answer("2030-05-03", nil))?.variant.id == "e", "every day type gives the same pattern")
+        // A number whose only group is weekday-only is not confident without the day type.
+        let weekdayOnly = try Sample.decode(Sample.variantBase(revisions: Sample.revisions.replacingOccurrences(
+            of: #""numbers": [9041], "runs": "holidays""#, with: #""numbers": [9042], "runs": "holidays""#)))
+        #expect(reason(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9042, day: "2030-05-04", in: weekdayOnly)) == .needsDayKind)
+        #expect(exact(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9042, day: "2030-05-04", dayKind: .holiday, in: weekdayOnly)) != nil)
+        #expect(reason(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9042, day: "2030-05-04", dayKind: .weekday, in: weekdayOnly)) == .notListed)
+    }
+
+    @Test("an extra train runs on its announced dates only")
+    func extraTrainDates() throws {
+        let patterns = try Sample.catalogue()
+        func found(_ day: String) -> Bool {
+            exact(TrainServicePatterns.resolve(serviceName: "サンプル", number: 9031, day: day, in: patterns)) != nil
+        }
+        #expect(found("2030-08-10") && found("2030-08-14"))
+        #expect(!found("2030-08-11") && !found("2030-08-12") && !found("2030-09-01"))
+        func exampleNumbers(_ day: String) -> [Int]? {
+            TrainServicePatterns.patternSummaries(serviceName: "サンプル", day: day, in: patterns)
+                .first { $0.variant.id == "e" }?.exampleNumbers
+        }
+        #expect(exampleNumbers("2030-08-10")?.contains(9031) == true)
+        #expect(exampleNumbers("2030-08-11")?.contains(9031) == false, "the summary agrees with resolve")
+    }
+
+    @Test("a coupling belongs to its group and carries the partner number")
+    func couplingPerGroup() throws {
+        let coupled = Sample.revisions.replacingOccurrences(
+            of: #"{"direction": "up", "numbers": [9002]}"#,
+            with: #"{"direction": "up", "numbers": [9002], "coupled": {"service": "sample-all", "from": "S01", "to": "S03", "partnerNumbers": {"9002": 8002}}}"#)
+        let patterns = try Sample.decode(Sample.variantBase(revisions: coupled), Sample.allStationsBase)
+        let up = try #require(exact(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9002, day: "2030-05-01", in: patterns)))
+        #expect(up.coupled?.service == "sample-all" && up.partnerNumber == 8002)
+        let alone = try #require(exact(TrainServicePatterns.resolve(
+            serviceName: "サンプル", number: 9001, day: "2030-05-01", in: patterns)))
+        #expect(alone.coupled == nil && alone.partnerNumber == nil, "same pattern, uncoupled train")
+        let same = Variants.Coupling(service: "x", from: "a", to: "b", number: "same")
+        #expect(same.partnerNumber(for: 77) == 77)
+    }
+
+    @Test("a different service name or a transcription of it finds the record")
+    func nameSpellings() throws {
+        let patterns = try Sample.catalogue()
+        for name in ["サンプル", "ｻﾝﾌﾟﾙ", "Sample X", "sample_x", "SAMPLE-X", "サ ン プ ル"] {
+            #expect(exact(TrainServicePatterns.resolve(
+                serviceName: name, number: 9001, day: "2030-05-01", in: patterns)) != nil, "\(name)")
+        }
+        let hiragana = try Sample.decode(Sample.variantBase().replacingOccurrences(of: "\"name\": \"サンプル\"", with: "\"name\": \"さんぷる\""))
+        #expect(TrainServicePatterns.baseRecords(named: "サンプル", in: hiragana).count == 1)
+    }
+
+    @Test("an all-stops section answers for a ride inside it when stations are given")
+    func allStationsSection() throws {
+        let shortRecord = #"""
+        {"patternId": "sample-all-short", "serviceId": "sample-all", "name": "サンプル各停", "company": "SAMPLE",
+         "label": "甲〜丁", "origin": "甲", "destination": "丁",
+         "stops": \#(Sample.refs([1, 2, 3, 4])), "optionalStops": [], "via": [], "lines": ["サンプル線"]}
+        """#
+        let mixed = try Sample.decode(Sample.allStationsBase, shortRecord)
+        // Only the full record is flagged all-stops; the short one is not.
+        guard case .allStations(let bases) = TrainServicePatterns.resolve(
+            serviceName: "サンプル各停", number: 1, day: "2030-05-01", boardingCode: "S01", alightingCode: "S08", in: mixed)
+        else { Issue.record("expected the flagged section to answer"); return }
+        #expect(bases.map(\.id) == ["sample-all-all"])
+        #expect(reason(TrainServicePatterns.resolve(
+            serviceName: "サンプル各停", number: 1, day: "2030-05-01", in: mixed)) == .noTableForDate, "without stations a mixed service is not all-stops")
     }
 
     @Test("an all-stops service answers any number, with or without a date")
@@ -281,9 +375,10 @@ struct TrainPatternVariantsTests {
         let patterns = try Sample.catalogue()
         let list = TrainServicePatterns.patternSummaries(
             serviceName: "サンプル", day: "2030-05-01", in: patterns)
-        // a: 5 numbers, b: 2, then the tie c and d (1 each) ordered by id.
-        #expect(list.map(\.variant.id) == ["a", "b", "c", "d"])
-        #expect(list.map(\.trainCount) == [5, 2, 1, 1])
+        // a: 5 numbers, b: 2, then the tie c, d and e (1 each, e by its Friday and holiday
+        // groups, whose day type is unknown here) ordered by id.
+        #expect(list.map(\.variant.id) == ["a", "b", "c", "d", "e"])
+        #expect(list.map(\.trainCount) == [5, 2, 1, 1, 1])
         #expect(list[0].exampleNumbers == [9001, 9002, 9003])
         // Calls S04 / S02 / none / S05: each pattern's own call differs from the common set (empty).
         #expect(list[0].extraStops.map(\.sourceCode) == ["S04"])
@@ -323,7 +418,10 @@ struct TrainPatternVariantsTests {
             ("のぞみ 23", "のぞみ", 23), ("のぞみ23号", "のぞみ", 23), ("Nozomi 23", "Nozomi", 23),
             ("のぞみ２３号", "のぞみ", 23), ("　のぞみ　23　", "のぞみ", 23), ("のぞみ第23号", "のぞみ", 23),
             ("のぞみ 23 号", "のぞみ", 23), ("のぞみ", "のぞみ", nil), ("のぞみ号", "のぞみ", nil),
-            ("のぞみ 0023", "のぞみ", 23),
+            ("のぞみ 0023", "のぞみ", 23), ("Nozomi No. 23", "Nozomi", 23), ("Nozomi No.23", "Nozomi", 23),
+            ("Nozomi no 23", "Nozomi", 23), ("Nozomi-23", "Nozomi", 23), ("Nozomi #23", "Nozomi", 23),
+            ("のぞみNo.23", "のぞみ", 23), ("Max Toki 301", "Max Toki", 301), ("Nasuno 123", "Nasuno", 123),
+            ("ノゾミ 23", "ノゾミ", 23),
         ]
         for (text, name, number) in cases {
             let parsed = TrainNumberParser.parse(text)
@@ -367,7 +465,8 @@ struct TrainPatternVariantsValidatorTests {
         }
         #expect(try rules(violations(Sample.variantBase(order: #"["S01","S03","S02","S04","S05","S06","S07","S08"]"#))) == [.orderMismatch])
         #expect(try rules(violations(Sample.variantBase(order: #"["S01","S02","S03","S04","S05","S06","S07"]"#))) == [.orderMismatch])
-        #expect(try mutate { $0.replacingOccurrences(of: #""calls": ["S04"]"#, with: #""calls": ["S03"]"#) } == [.callNotOptional])
+        // S03 is always served, so the call is not optional and a's stop list now equals c's.
+        #expect(try mutate { $0.replacingOccurrences(of: #""calls": ["S04"]"#, with: #""calls": ["S03"]"#) } == [.callNotOptional, .duplicateStopList])
         #expect(try mutate { $0.replacingOccurrences(of: "SAMPLE citation one", with: "  ") } == [.missingCitation])
         #expect(try mutate { $0.replacingOccurrences(of: #""validUntil": "2031-03-01""#, with: #""validUntil": "2031-06-01""#) } == [.revisionOverlap, .numberInTwoPatterns])
         #expect(try mutate { $0.replacingOccurrences(of: #""validUntil": "2031-03-01""#, with: #""validUntil": null"#) } == [.openEndedRevisionNotLast, .numberInTwoPatterns])
@@ -384,13 +483,38 @@ struct TrainPatternVariantsValidatorTests {
         #expect(try mutate {
             $0.replacingOccurrences(of: #"{"direction": "down", "numbers": [9011]}"#,
                                     with: #"{"direction": "down", "numbers": [9001], "validFrom": "2030-09-01", "validUntil": "2030-10-01"}"#)
-                .replacingOccurrences(of: #"{"direction": "down", "numbers": [9001, "9003-9005"]}"#,
-                                      with: #"{"direction": "down", "numbers": [9001, "9003-9005"], "validFrom": "2030-03-01", "validUntil": "2030-09-01"}"#)
+                .replacingOccurrences(of: #"{"direction": "down", "numbers": [9001, 9003, 9004, 9005]}"#,
+                                      with: #"{"direction": "down", "numbers": [9001, 9003, 9004, 9005], "validFrom": "2030-03-01", "validUntil": "2030-09-01"}"#)
         }.isEmpty)
         #expect(try mutate {
             $0.replacingOccurrences(of: #"{"direction": "down", "numbers": [9011]}"#,
                                     with: #"{"direction": "down", "numbers": [9011], "validFrom": "2029-01-01"}"#)
         } == [.groupOutsideRevision])
+        // Two groups of one pattern (weekdays plus an extra date, same stops) are one answer.
+        #expect(try mutate {
+            $0.replacingOccurrences(
+                of: #"{"direction": "down", "numbers": [9011]}"#,
+                with: #"{"direction": "down", "numbers": [9011]}, {"direction": "down", "numbers": [9011], "runs": "extra", "dates": ["2030-08-10"]}"#)
+        }.isEmpty)
+        // Extra groups need real, unique dates inside their revision.
+        let extra = #"{"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2030-08-10", "2030-08-14"]}"#
+        #expect(try mutate { $0.replacingOccurrences(of: extra, with: #"{"direction": "down", "numbers": [9031], "runs": "extra"}"#) } == [.extraDates])
+        #expect(try mutate { $0.replacingOccurrences(of: extra, with: #"{"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2030-08-10", "2030-08-10"]}"#) } == [.extraDates])
+        #expect(try mutate { $0.replacingOccurrences(of: extra, with: #"{"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2030-13-10"]}"#) } == [.invalidDate])
+        #expect(try mutate { $0.replacingOccurrences(of: extra, with: #"{"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2032-08-10"]}"#) } == [.groupOutsideRevision])
+        #expect(try mutate { $0.replacingOccurrences(of: extra, with: #"{"direction": "down", "numbers": [9031], "dates": ["2030-08-10"]}"#) } == [.extraDates])
+        // An extra date that meets a daily group of another pattern conflicts; a date it does not meet does not.
+        #expect(try mutate { $0.replacingOccurrences(of: "[9011]", with: "[9031]") } == [.numberInTwoPatterns])
+        #expect(try mutate {
+            $0.replacingOccurrences(of: "[9011]", with: "[9031]")
+                .replacingOccurrences(of: #"{"direction": "down", "numbers": [9031]}"#,
+                                      with: #"{"direction": "down", "numbers": [9031], "validUntil": "2030-08-01"}"#)
+        }.isEmpty, "a window that ends before the extra dates is disjoint")
+        // The same stop list in two patterns of one revision.
+        #expect(try mutate { $0.replacingOccurrences(of: #"{"id": "d", "calls": ["S05"]"#, with: #"{"id": "d", "calls": []"#) } == [.duplicateStopList])
+        // Verified needs an official source type and a second reader.
+        #expect(try mutate { $0.replacingOccurrences(of: #""type": "operator_timetable""#, with: #""type": "web_page""#) } == [.verifiedWithoutOfficialSource])
+        #expect(try mutate { $0.replacingOccurrences(of: #", "verifiedBy": "SAMPLE reader""#, with: "") } == [.verifiedWithoutSecondReader])
     }
 
     @Test("record-level classes: corridor, all-stations, required/optional overlap, coupling")
@@ -420,13 +544,27 @@ struct TrainPatternVariantsValidatorTests {
             of: #""optionalStops": [{"name": "乙""#, with: #""optionalStops": [{"name": "甲", "sourceCode": "S01"}, {"name": "乙""#)
         #expect(rules(try violations(overlapping)).contains(.optionalOverlapsRequired))
         // Coupling to a service that does not exist, and to one that exists but does not couple back.
-        let coupled = { (service: String) in Sample.variantBase(revisions: Sample.revisions.replacingOccurrences(
-            of: #"{"id": "c", "calls": []"#,
-            with: #"{"id": "c", "coupled": {"service": "\#(service)", "from": "S01", "to": "S03"}, "calls": []"#)) }
-        #expect(rules(try violations(coupled("sample-nowhere"))) == [.coupledPartnerMissing])
-        let reciprocal = try violations(coupled("sample-all"))
+        let coupled = { (service: String, more: String) in Sample.variantBase(revisions: Sample.revisions.replacingOccurrences(
+            of: #""numbers": [9021], "runs": "weekdays""#,
+            with: #""numbers": [9021], "runs": "weekdays", "coupled": {"service": "\#(service)", "from": "S01", "to": "S03"\#(more)}"#)) }
+        #expect(rules(try violations(coupled("sample-nowhere", ""))) == [.coupledPartnerMissing])
+        let reciprocal = try violations(coupled("sample-all", ""))
         #expect(TrainPatternVariantsValidator.errors(in: reciprocal).isEmpty)
         #expect(rules(reciprocal, .warning).contains(.coupledNotReciprocal))
+        #expect(rules(try violations(coupled("sample-all", #", "number": "23""#))) == [.coupledPartnerNumbers])
+        #expect(rules(try violations(coupled("sample-all", #", "partnerNumbers": {"9999": 5}"#))) == [.coupledPartnerNumbers])
+        #expect(TrainPatternVariantsValidator.errors(in: try violations(coupled("sample-all", #", "partnerNumbers": {"9021": 5}"#))).isEmpty)
+    }
+
+    @Test("two services sharing a service id cannot list one number on overlapping days")
+    func conflictsFollowEveryLookupKey() throws {
+        let twin = Sample.variantBase().replacingOccurrences(of: "sample-x-all", with: "sample-y-all")
+            .replacingOccurrences(of: #""name": "サンプル""#, with: #""name": "別名""#)
+        let found = TrainPatternVariantsValidator.validate(try Sample.decode(Sample.variantBase(), twin)) { _ in Sample.corridor }
+        #expect(rules(found).contains(.numberInTwoPatterns), "serviceId sample-x is shared and lookup merges them")
+        let other = twin.replacingOccurrences(of: #""serviceId": "sample-x""#, with: #""serviceId": "sample-y""#)
+        let apart = TrainPatternVariantsValidator.validate(try Sample.decode(Sample.variantBase(), other)) { _ in Sample.corridor }
+        #expect(!rules(apart).contains(.numberInTwoPatterns))
     }
 
     @Test("a record's revisions must lie inside the record's own dates")

@@ -13,8 +13,15 @@ import Foundation
 // - If the number is listed in several patterns that all apply on the date
 //   (conflicting data), the answer is "pattern not known" (`ambiguous`), never a
 //   pick.
+// - A group that runs on weekdays only or holidays only answers exactly only
+//   when the caller gives the day type; without it the answer is
+//   `needsDayKind`, unless every day type gives the same pattern.
 // - A service answers `allStations` only when every applicable base record of it
-//   is flagged `allStations`; then no number is needed.
+//   is flagged `allStations`; then no number is needed. With the boarding and
+//   alighting stations given, only the records containing both are considered,
+//   so a flagged section answers for a ride inside it. A service that is
+//   all-stops except some trains has no exception list: it is modelled as full
+//   variants with every number listed.
 
 extension TrainServicePatterns {
 
@@ -40,7 +47,9 @@ extension TrainServicePatterns {
         public let stops: [Pattern.StationRef]
 
         public var direction: Variants.Direction { group.direction }
-        public var coupled: Variants.Coupling? { variant.coupled }
+        public var coupled: Variants.Coupling? { group.coupled }
+        /// The coupled partner's number, when the source gives it.
+        public var partnerNumber: Int? { group.coupled?.partnerNumber(for: trainKey.number) }
         public var isExtraTrain: Bool { group.runs == .extra }
         /// The revision was transcribed from a source read twice.
         public var isVerified: Bool { revision.status == .verified }
@@ -69,6 +78,9 @@ extension TrainServicePatterns {
         case notListed
         /// The number is listed in more than one pattern that applies on the date.
         case ambiguous
+        /// The answer depends on whether the date is a weekday or a holiday and
+        /// the caller gave no day type.
+        case needsDayKind
     }
 
     public enum Resolution: Sendable, Hashable {
@@ -90,7 +102,7 @@ extension TrainServicePatterns {
         /// Optional stops this pattern serves that not every listed pattern of
         /// the same base record and revision serves (the stops that differ).
         public let extraStops: [Pattern.StationRef]
-        /// Distinct numbers across non-extra groups (counted, not ranked by rule).
+        /// Distinct numbers of the groups that run on the day (counted, not ranked by rule).
         public let trainCount: Int
         /// The lowest listed numbers, for display.
         public let exampleNumbers: [Int]
@@ -108,21 +120,36 @@ extension TrainServicePatterns {
 
     // MARK: Service name
 
+    /// Comparison key of a service name: full-width folded, lower case, katakana
+    /// folded to hiragana, spaces, hyphens and underscores removed. Applied to
+    /// both sides, so "ノゾミ" = "のぞみ" and "Max Toki" = "max-toki".
     static func normalizedServiceName(_ text: String) -> String {
-        text.precomposedStringWithCompatibilityMapping
-            .trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        var out = String.UnicodeScalarView()
+        for scalar in text.precomposedStringWithCompatibilityMapping.lowercased().unicodeScalars {
+            if CharacterSet.whitespacesAndNewlines.contains(scalar) || scalar == "-" || scalar == "_" { continue }
+            if (0x30A1...0x30F6).contains(scalar.value), let hira = Unicode.Scalar(scalar.value - 0x60) {
+                out.append(hira)
+            } else {
+                out.append(scalar)
+            }
+        }
+        return String(out)
     }
 
-    /// Base records whose displayed name or service id equals `name`
-    /// (case-insensitive, full-width folded): "のぞみ", "Nozomi", "nozomi".
+    /// Every key a lookup by service name can match this record on: its
+    /// displayed name and its service id. One definition for lookup and validator.
+    static func serviceKeys(of base: Pattern) -> Set<String> {
+        [normalizedServiceName(base.name), normalizedServiceName(base.serviceId)]
+    }
+
+    /// Base records whose displayed name or service id equals `name` under
+    /// ``normalizedServiceName(_:)``: "のぞみ", "Nozomi", "nozomi", "ノゾミ".
     public static func baseRecords(
         named name: String, in catalogue: [Pattern] = patterns
     ) -> [Pattern] {
         let wanted = normalizedServiceName(name)
         guard !wanted.isEmpty else { return [] }
-        return catalogue.filter {
-            normalizedServiceName($0.name) == wanted || $0.serviceId.lowercased() == wanted
-        }
+        return catalogue.filter { serviceKeys(of: $0).contains(wanted) }
     }
 
     private static func applicable(_ bases: [Pattern], on day: String?) -> [Pattern] {
@@ -133,14 +160,24 @@ extension TrainServicePatterns {
     // MARK: (service, number, date) -> answer
 
     /// Exact lookup on (service name, train number, date, optional day type).
+    /// `boardingCode` and `alightingCode` (station codes) narrow an `allStations`
+    /// answer to the records that contain both stations.
     public static func resolve(
         serviceName: String, number: Int, day: String?, dayKind: Variants.DayKind? = nil,
+        boardingCode: String? = nil, alightingCode: String? = nil,
         in catalogue: [Pattern] = patterns
     ) -> Resolution {
         let named = baseRecords(named: serviceName, in: catalogue)
         guard !named.isEmpty else { return .notKnown(.unknownService, bases: []) }
-        let bases = applicable(named, on: day)
+        var bases = applicable(named, on: day)
         guard !bases.isEmpty else { return .notKnown(.noTableForDate, bases: named) }
+        if let boardingCode, let alightingCode, boardingCode != alightingCode {
+            let section = bases.filter {
+                let codes = Set(($0.stopRefs + $0.optionalStopRefs).map(\.sourceCode))
+                return codes.contains(boardingCode) && codes.contains(alightingCode)
+            }
+            if !section.isEmpty { bases = section }
+        }
         if bases.allSatisfy(\.allStations) { return .allStations(bases: bases) }
         guard let day else { return .notKnown(.noDate, bases: bases) }
         guard let parsedDay = Pattern.GregorianDay(day) else {
@@ -149,37 +186,38 @@ extension TrainServicePatterns {
 
         var covered = false
         var matches: [ExactMatch] = []
+        var pending: [ExactMatch] = []
         for base in bases where !base.allStations {
             guard let variants = base.variants else { continue }
             for revision in variants.revisions where revision.covers(day) {
                 covered = true
                 for variant in revision.patterns {
-                    for group in variant.trains
-                    where group.numbers.contains(number)
-                        && group.windowCovers(parsedDay)
-                        && runs(group.runs, on: dayKind) {
-                        matches.append(ExactMatch(
+                    for group in variant.trains where group.numbers.contains(number) {
+                        let applies = group.applies(on: parsedDay, dayKind: dayKind)
+                        guard applies != .no else { continue }
+                        let match = ExactMatch(
                             base: base, revision: revision, variant: variant, group: group,
                             trainKey: TrainKey(serviceId: base.serviceId, number: number, day: day),
-                            stops: stops(of: variant, in: base, variants: variants, direction: group.direction)))
+                            stops: stops(of: variant, in: base, variants: variants, direction: group.direction))
+                        if applies == .yes { matches.append(match) } else { pending.append(match) }
                     }
                 }
             }
         }
         guard covered else { return .notKnown(.noTableForDate, bases: bases) }
-        guard let first = matches.first else { return .notKnown(.notListed, bases: bases) }
-        let distinct = Set(matches.map {
+        let all = matches + pending
+        guard let first = all.first else { return .notKnown(.notListed, bases: bases) }
+        let distinct = Set(all.map {
             "\($0.base.id)|\($0.revision.revision)|\($0.variant.id)|\($0.group.direction.rawValue)"
         })
-        return distinct.count == 1 ? .exact(first) : .notKnown(.ambiguous, bases: bases)
-    }
-
-    private static func runs(_ runs: Variants.RunDay, on kind: Variants.DayKind?) -> Bool {
-        switch (runs, kind) {
-        case (.daily, _), (.extra, _), (_, nil): true
-        case (.weekdays, .weekday), (.holidays, .holiday): true
-        default: false
+        if !pending.isEmpty {
+            // Day type unknown: exact only if every day type gives the same pattern.
+            let bothKinds = Set(pending.map(\.group.runs)).isSuperset(of: [.weekdays, .holidays])
+            guard distinct.count == 1, !matches.isEmpty || bothKinds else {
+                return .notKnown(.needsDayKind, bases: bases)
+            }
         }
+        return distinct.count == 1 ? .exact(first) : .notKnown(.ambiguous, bases: bases)
     }
 
     private static func stops(
@@ -201,9 +239,10 @@ extension TrainServicePatterns {
     /// covers, the result is empty because a number table means nothing without
     /// its date. Base records with no variants contribute nothing.
     public static func patternSummaries(
-        serviceName: String, day: String?, in catalogue: [Pattern] = patterns
+        serviceName: String, day: String?, dayKind: Variants.DayKind? = nil,
+        in catalogue: [Pattern] = patterns
     ) -> [PatternSummary] {
-        guard let day, Pattern.GregorianDay(day) != nil else { return [] }
+        guard let day, let parsedDay = Pattern.GregorianDay(day) else { return [] }
         var summaries: [PatternSummary] = []
         for base in applicable(baseRecords(named: serviceName, in: catalogue), on: day)
         where !base.allStations {
@@ -212,10 +251,15 @@ extension TrainServicePatterns {
                 (base.stopRefs + base.optionalStopRefs).map { ($0.sourceCode, $0) },
                 uniquingKeysWith: { first, _ in first })
             for revision in variants.revisions where revision.covers(day) {
-                let common = revision.patterns.map { Set($0.calls) }
+                // Only groups that run on the day count, as in `resolve`; a pattern
+                // none of whose groups runs that day is not listed.
+                let running: [(variant: Variants.Variant, numbers: Set<Int>)] = revision.patterns.compactMap {
+                    let groups = $0.trains.filter { $0.applies(on: parsedDay, dayKind: dayKind) != .no }
+                    return groups.isEmpty ? nil : ($0, Set(groups.flatMap(\.numbers)))
+                }
+                let common = running.map { Set($0.variant.calls) }
                     .reduce(nil as Set<String>?) { $0?.intersection($1) ?? $1 } ?? []
-                for variant in revision.patterns {
-                    let numbers = Set(variant.trains.filter { $0.runs != .extra }.flatMap(\.numbers))
+                for (variant, numbers) in running {
                     let extra = Set(variant.calls).subtracting(common)
                     summaries.append(PatternSummary(
                         base: base, revision: revision, variant: variant,

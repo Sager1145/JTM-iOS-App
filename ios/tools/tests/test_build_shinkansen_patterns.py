@@ -93,6 +93,14 @@ def mutated_source(fn):
     return source
 
 
+def later_revision():
+    """The sample as the next revision: open-ended from 2031-03-01, extra dates moved into it."""
+    def shift(s):
+        s.update(revision="2031-03-01", validFrom="2031-03-01", validUntil=None)
+        pattern(s, "e")["trains"][0]["dates"] = ["2031-08-10", "2031-08-14"]
+    return mutated_source(shift)
+
+
 def pattern(source, pid):
     return next(p for p in source["services"][0]["patterns"] if p["id"] == pid)
 
@@ -121,16 +129,21 @@ class GeneratorOutput(unittest.TestCase):
         self.assertEqual(block["order"], [f"S0{i}" for i in range(1, 9)])
         (revision,) = block["revisions"]
         self.assertEqual(revision["status"], "unverified")
-        self.assertIn("SAMPLE publisher", revision["citation"])
+        self.assertEqual(revision["source"]["publisher"], "SAMPLE publisher")
+        self.assertEqual(revision["source"]["type"], "sample_fixture")
+        self.assertNotIn("citation", revision)
         patterns = {p["id"]: p for p in revision["patterns"]}
         self.assertEqual(patterns["a"]["calls"], ["S04"])
         self.assertNotIn("from", patterns["a"])
         self.assertNotIn("to", patterns["a"])
         self.assertEqual(patterns["b"]["to"], "S06")
         self.assertEqual(patterns["b"]["calls"], ["S02"])
-        # The range is stored as explicit numbers, not as shorthand.
+        # Numbers are stored explicitly.
         self.assertEqual(patterns["a"]["trains"][0]["numbers"], [9001, 9003, 9004, 9005])
         self.assertEqual(patterns["c"]["trains"][0]["runs"], "weekdays")
+        extra_group, friday, holiday = patterns["e"]["trains"]
+        self.assertEqual((extra_group["runs"], extra_group["dates"]), ("extra", ["2030-08-10", "2030-08-14"]))
+        self.assertEqual(friday["daysOfWeek"], ["fri"])
         self.assertNotIn("variants", generated[1])
         self.assertEqual(rules_of(findings), set())
 
@@ -156,7 +169,7 @@ class GeneratorOutput(unittest.TestCase):
         self.assertIn("variantsWithoutSource", orphan.rules()[0])
 
     def test_two_revisions_are_both_kept_in_date_order(self):
-        later = mutated_source(lambda s: s.update(revision="2031-03-01", validFrom="2031-03-01", validUntil=None))
+        later = later_revision()
         case = Case(self, sources=[later, SAMPLE_SOURCE])
         generated = case.analyse(check=False)[1]
         self.assertEqual([r["revision"] for r in generated[0]["variants"]["revisions"]], ["2030-03-01", "2031-03-01"])
@@ -234,10 +247,11 @@ class SourceRulesRefused(unittest.TestCase):
         self.refused("openEndedRevisionNotLast", source=first, extra=[second])
 
     def test_number_forms(self):
-        self.refused("badNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=["9005-9003"]))
+        # Ranges are not accepted: one number per entry.
+        self.refused("badNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=["9003-9005"]))
         self.refused("badNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=["odd"]))
-        self.refused("badNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=["9001-99999"]))
-        self.refused("duplicateNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=[9001, "9001-9002"]))
+        self.refused("badNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=[True]))
+        self.refused("duplicateNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=[9001, 9001]))
         self.refused("nonPositiveNumber", lambda s: pattern(s, "a")["trains"][0].update(numbers=[0]))
         self.refused("emptyNumbers", lambda s: pattern(s, "a")["trains"][0].update(numbers=[]))
         self.refused("badDirection", lambda s: pattern(s, "a")["trains"][0].update(direction="north"))
@@ -258,7 +272,7 @@ class SourceRulesRefused(unittest.TestCase):
             pattern(s, "b")["trains"][0].update(numbers=[9001], validFrom="2030-09-01", validUntil="2030-10-01")
         case = Case(self, sources=[mutated_source(seasonal)])
         self.assertEqual(case.rules(check=False)[0], set())
-        later = mutated_source(lambda s: s.update(revision="2031-03-01", validFrom="2031-03-01", validUntil=None))
+        later = later_revision()
         case = Case(self, sources=[SAMPLE_SOURCE, later])
         self.assertEqual(case.rules(check=False)[0], set())
 
@@ -283,13 +297,90 @@ class SourceRulesRefused(unittest.TestCase):
         self.assertEqual(B.run(case.patterns, case.package, case.through, case.sources, True, True, out), 0)
 
     def test_coupled_partner_must_exist(self):
-        def couple(service):
-            return lambda s: pattern(s, "a").update(coupled={"service": service, "from": "S01", "to": "S03"})
+        def couple(service, **more):
+            return lambda s: pattern(s, "a")["trains"][1].update(
+                coupled={"service": service, "from": "S01", "to": "S03", **more})
         self.refused("coupledPartnerMissing", couple("sample-nowhere"))
         case = Case(self, sources=[mutated_source(couple("sample-all"))])
         findings = case.analyse(check=False)[0]
         self.assertEqual(findings.errors, [])
         self.assertTrue(any(r == "coupledNotReciprocal" for r, _, _ in findings.warnings))
+        # Coupling is per group: the other group of the same pattern stays uncoupled.
+        generated = case.analyse(check=False)[1]
+        groups = generated[0]["variants"]["revisions"][0]["patterns"][0]["trains"]
+        self.assertEqual([("coupled" in g) for g in groups], [False, True])
+        ok = Case(self, sources=[mutated_source(couple("sample-all", partnerNumbers={"9002": 8002}))])
+        self.assertEqual(ok.rules(check=False)[0], set())
+
+    def test_coupled_shape_is_checked_so_the_bundled_file_always_decodes(self):
+        for bad in (
+            {"service": "sample-all", "from": "S01", "to": "S03", "number": 23},
+            {"service": "sample-all", "from": "S01", "to": "S03", "number": True},
+            {"service": "sample-all", "from": "S01", "to": "S03", "number": "same", "partnerNumbers": {"9002": 1}},
+            {"service": "sample-all", "from": "S01", "to": "S03", "partnerNumbers": {"9999": 1}},
+            {"service": "sample-all", "from": "S01", "to": "S03", "partnerNumbers": {"9002": "x"}},
+            {"service": 5, "from": "S01", "to": "S03"},
+            {"service": "sample-all", "from": "S01"},
+            "sample-all",
+            [],
+        ):
+            self.refused("badCoupling", lambda s, bad=bad: pattern(s, "a")["trains"][1].update(coupled=bad))
+        ok = {"service": "sample-all", "from": "S01", "to": "S03", "number": "same"}
+        case = Case(self, sources=[mutated_source(lambda s: pattern(s, "a")["trains"][1].update(coupled=ok))])
+        self.assertEqual(case.rules(check=False)[0], set())
+
+    def test_extra_dates_days_of_week_and_runs(self):
+        extra = lambda s: pattern(s, "e")["trains"][0]
+        self.refused("extraDates", lambda s: extra(s).pop("dates"))
+        self.refused("extraDates", lambda s: extra(s).update(dates=["2030-08-10", "2030-08-10"]))
+        self.refused("extraDates", lambda s: extra(s).update(runs="daily"))
+        self.refused("invalidDate", lambda s: extra(s).update(dates=["2030-02-30"]))
+        self.refused("groupOutsideRevision", lambda s: extra(s).update(dates=["2032-01-01"]))
+        self.refused("badDaysOfWeek", lambda s: pattern(s, "e")["trains"][1].update(daysOfWeek=["fri", "fri"]))
+        self.refused("badDaysOfWeek", lambda s: pattern(s, "e")["trains"][1].update(daysOfWeek=["friday"]))
+        # An extra date meeting another group of the same number is a conflict; a miss is not.
+        self.refused("numberInTwoPatterns", lambda s: pattern(s, "a")["trains"][0].update(numbers=[9001, 9031]))
+        def window_misses(s):
+            pattern(s, "a")["trains"][0].update(numbers=[9001, 9031], validUntil="2030-08-01")
+        self.assertEqual(Case(self, sources=[mutated_source(window_misses)]).rules(check=False)[0], set())
+        # Friday-only against a Monday-only group of the same number does not conflict either.
+        def weekdays_apart(s):
+            pattern(s, "e")["trains"].pop()  # the holidays group would meet a Monday holiday
+            pattern(s, "a")["trains"][0].update(numbers=[9001, 9041], daysOfWeek=["mon"])
+        self.assertEqual(Case(self, sources=[mutated_source(weekdays_apart)]).rules(check=False)[0], set())
+
+    def test_groups_of_one_pattern_never_conflict_but_a_changed_stop_list_does(self):
+        def same_pattern(s):
+            pattern(s, "b")["trains"].append({"direction": "down", "numbers": [9011], "runs": "extra", "dates": ["2030-08-10"]})
+        self.assertEqual(Case(self, sources=[mutated_source(same_pattern)]).rules(check=False)[0], set())
+
+    def test_same_stop_list_in_two_patterns_is_refused(self):
+        self.refused("duplicateStopList", lambda s: pattern(s, "d").update(stops=pattern(s, "c")["stops"]))
+
+    def test_shared_service_id_conflicts_are_found(self):
+        records = base_records()
+        twin = copy.deepcopy(records[0])
+        twin.update(patternId="sample-y-all", name="別名")  # same serviceId "sample-x"
+        source = mutated_source(lambda s: s["services"].append(copy.deepcopy(s["services"][0]) | {"pattern": "sample-y-all"}))
+        case = Case(self, records=records + [twin], sources=[source])
+        self.assertIn("numberInTwoPatterns", case.rules(check=False)[0])
+        twin["serviceId"] = "sample-y"
+        case = Case(self, records=records + [twin], sources=[source])
+        self.assertNotIn("numberInTwoPatterns", case.rules(check=False)[0])
+
+    def test_service_key_folds_kana_spaces_and_hyphens(self):
+        self.assertEqual(B.service_key("ノゾミ"), B.service_key("のぞみ"))
+        self.assertEqual(B.service_key("Max Toki"), B.service_key("max-toki"))
+
+    def test_bundled_source_is_rechecked_for_verified_status(self):
+        case = Case(self, sources=[SAMPLE_SOURCE])
+        B.run(case.patterns, case.package, case.through, case.sources, False, False, __import__("io").StringIO())
+        records = json.loads(case.patterns.read_text(encoding="utf-8"))
+        rev = records[0]["variants"]["revisions"][0]
+        rev["status"] = "verified"
+        self.assertTrue({"verifiedWithoutOfficialSource", "verifiedWithoutSecondReader"} <= Case(self, records=records).rules()[0])
+        rev["source"].pop("title")
+        self.assertIn("missingCitation", Case(self, records=records).rules()[0])
 
     def test_all_stations_rules(self):
         records = base_records()

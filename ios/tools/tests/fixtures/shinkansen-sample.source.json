@@ -19,7 +19,7 @@
       "pattern": "sample-x-all",
       "patterns": [
         {"id": "a", "stops": ["甲", "丙", "丁", "己", "辛"],
-         "trains": [{"direction": "down", "numbers": [9001, "9003-9005"]},
+         "trains": [{"direction": "down", "numbers": [9001, 9003, 9004, 9005]},
                     {"direction": "up", "numbers": [9002]}]},
         {"id": "b", "stops": ["甲", "乙", "丙", "己"],
          "trains": [{"direction": "down", "numbers": [9011]},
@@ -27,7 +27,11 @@
         {"id": "c", "stops": ["甲", "丙", "己", "辛"],
          "trains": [{"direction": "down", "numbers": [9021], "runs": "weekdays"}]},
         {"id": "d", "stops": ["甲", "丙", "戊", "己", "辛"],
-         "trains": [{"direction": "down", "numbers": [9021], "runs": "holidays"}]}
+         "trains": [{"direction": "down", "numbers": [9021], "runs": "holidays"}]},
+        {"id": "e", "stops": ["甲", "丙", "己", "庚", "辛"],
+         "trains": [{"direction": "down", "numbers": [9031], "runs": "extra", "dates": ["2030-08-10", "2030-08-14"]},
+                    {"direction": "down", "numbers": [9041], "daysOfWeek": ["fri"]},
+                    {"direction": "down", "numbers": [9041], "runs": "holidays"}]}
       ]
     }
   ]

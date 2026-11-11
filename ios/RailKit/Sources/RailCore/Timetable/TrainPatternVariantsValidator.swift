@@ -33,6 +33,11 @@ public enum TrainPatternVariantsValidator {
         case numberInTwoPatterns
         case groupOutsideRevision
         case coupledPartnerMissing
+        case coupledPartnerNumbers
+        case duplicateStopList
+        case extraDates
+        case verifiedWithoutOfficialSource
+        case verifiedWithoutSecondReader
         // Warnings
         case parityConvention
         case coupledNotReciprocal
@@ -138,8 +143,19 @@ public enum TrainPatternVariantsValidator {
     ) {
         var windows: [(from: Day, until: Day?, name: String)] = []
         for revision in variants.revisions {
-            if revision.citation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                add(.missingCitation, "revision \(revision.revision) has no citation", .error)
+            let source = revision.source
+            if [source.type, source.publisher, source.title, source.locator, source.accessedAt]
+                .contains(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) {
+                add(.missingCitation, "revision \(revision.revision) has an incomplete source", .error)
+            }
+            if revision.status == .verified {
+                if !TrainServicePatterns.Variants.Source.officialTypes.contains(source.type) {
+                    add(.verifiedWithoutOfficialSource,
+                        "revision \(revision.revision) is verified without an operator or printed timetable source", .error)
+                }
+                if (source.verifiedBy ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    add(.verifiedWithoutSecondReader, "revision \(revision.revision) is verified without verifiedBy", .error)
+                }
             }
             let from = Day(revision.validFrom)
             let until = revision.validUntil.flatMap(Day.init)
@@ -183,6 +199,7 @@ public enum TrainPatternVariantsValidator {
     ) {
         let optional = Set(base.optionalStopRefs.map(\.sourceCode))
         var seen = Set<String>()
+        var stopLists: [[String]: String] = [:]
         for variant in revision.patterns {
             let tag = "revision \(revision.revision) pattern \(variant.id)"
             if !seen.insert(variant.id).inserted {
@@ -203,22 +220,41 @@ public enum TrainPatternVariantsValidator {
             if variant.trains.isEmpty || variant.trains.contains(where: { $0.numbers.isEmpty }) {
                 add(.emptyNumbers, "\(tag): a pattern or group lists no train numbers", .error)
             }
+            let codes = variants.stopCodes(of: variant, in: base)
+            if !codes.isEmpty, let first = stopLists.updateValue(variant.id, forKey: codes) {
+                add(.duplicateStopList, "\(tag): same stop list as pattern \(first); list its trains as groups of one pattern", .error)
+            }
             for group in variant.trains {
                 checkGroup(group, tag: tag, revision: revision, add: add)
+                checkCoupling(group, base: base, tag: tag, catalogue: catalogue, add: add)
             }
-            if let coupled = variant.coupled {
-                let partners = catalogue.filter { $0.serviceId == coupled.service }
-                let partnerCodes = Set(partners.flatMap { ($0.stopRefs + $0.optionalStopRefs).map(\.sourceCode) })
-                if partners.isEmpty || !partnerCodes.contains(coupled.from) || !partnerCodes.contains(coupled.to) {
-                    add(.coupledPartnerMissing, "\(tag): coupled partner \(coupled.service) or its stations do not exist", .error)
-                } else if !partners.contains(where: { partner in
-                    partner.variants?.revisions.contains { rev in
-                        rev.patterns.contains { $0.coupled?.service == base.serviceId }
-                    } ?? false
-                }) {
-                    add(.coupledNotReciprocal, "\(tag): \(coupled.service) does not couple back", .warning)
-                }
-            }
+        }
+    }
+
+    private static func checkCoupling(
+        _ group: TrainServicePatterns.Variants.TrainGroup, base: Pattern, tag: String,
+        catalogue: [Pattern], add: (Rule, String, Severity) -> Void
+    ) {
+        guard let coupled = group.coupled else { return }
+        if let number = coupled.number, number != "same" || coupled.partnerNumbers != nil {
+            add(.coupledPartnerNumbers, "\(tag): coupled number must be \"same\" and then no partnerNumbers", .error)
+        }
+        if let partnerNumbers = coupled.partnerNumbers,
+           partnerNumbers.contains(where: { key, value in
+               value <= 0 || !group.numbers.contains(where: { String($0) == key })
+           }) {
+            add(.coupledPartnerNumbers, "\(tag): partnerNumbers must map numbers of this group to positive numbers", .error)
+        }
+        let partners = catalogue.filter { $0.serviceId == coupled.service }
+        let partnerCodes = Set(partners.flatMap { ($0.stopRefs + $0.optionalStopRefs).map(\.sourceCode) })
+        if partners.isEmpty || !partnerCodes.contains(coupled.from) || !partnerCodes.contains(coupled.to) {
+            add(.coupledPartnerMissing, "\(tag): coupled partner \(coupled.service) or its stations do not exist", .error)
+        } else if !partners.contains(where: { partner in
+            partner.variants?.revisions.contains { rev in
+                rev.patterns.contains { $0.trains.contains { $0.coupled?.service == base.serviceId } }
+            } ?? false
+        }) {
+            add(.coupledNotReciprocal, "\(tag): \(coupled.service) does not couple back", .warning)
         }
     }
 
@@ -245,6 +281,29 @@ public enum TrainPatternVariantsValidator {
                 add(.groupOutsideRevision, "\(tag): a group runs past its revision", .error)
             }
         }
+        // Explicit dates: required for extra trains, not allowed otherwise, each a
+        // real date inside the revision and the group's window.
+        if group.runs == .extra {
+            let parsed = group.dates?.map { ($0, Day($0)) } ?? []
+            if parsed.isEmpty {
+                add(.extraDates, "\(tag): an extra group must list the exact dates it runs", .error)
+            }
+            if parsed.contains(where: { $0.1 == nil }) {
+                add(.invalidDate, "\(tag): an extra date is malformed", .error)
+            }
+            let days = parsed.compactMap(\.1)
+            if Set(days.map(\.rawValue)).count != days.count {
+                add(.extraDates, "\(tag): an extra date is listed twice", .error)
+            }
+            if days.contains(where: { !revision.covers($0.rawValue) || !group.windowCovers($0) }) {
+                add(.groupOutsideRevision, "\(tag): an extra date lies outside its revision or window", .error)
+            }
+        } else if group.dates != nil {
+            add(.extraDates, "\(tag): dates are only for extra groups", .error)
+        }
+        if let days = group.daysOfWeek, days.isEmpty || Set(days).count != days.count {
+            add(.extraDates, "\(tag): daysOfWeek must list each weekday once", .error)
+        }
         // Convention only: odd numbers down, even numbers up. Never an error, never
         // used for lookup.
         let expectedOdd = group.direction == .down
@@ -255,52 +314,72 @@ public enum TrainPatternVariantsValidator {
 
     // MARK: Number conflicts across patterns
 
+    private typealias Revision = TrainServicePatterns.Variants.Revision
+    private typealias Group = TrainServicePatterns.Variants.TrainGroup
+
     /// A number may map to different patterns on different days, but only when
     /// the days provably do not intersect: the revisions and group windows are
-    /// disjoint or the day types are (weekdays vs holidays). Anything else is a
-    /// conflict, because a lookup could not pick one.
+    /// disjoint, the weekday sets or day types are (weekdays vs holidays), or the
+    /// explicit dates do not meet the other group. Two groups of the same
+    /// pattern (same base record, revision, pattern and direction) never
+    /// conflict: they give one answer. Records are grouped by every key a
+    /// lookup can match (name and service id), so two services sharing a service
+    /// id are compared too.
     private static func checkNumberConflicts(_ catalogue: [Pattern], into out: inout [Violation]) {
         struct Entry {
-            let base: Pattern; let revision: TrainServicePatterns.Variants.Revision
-            let variant: String; let group: TrainServicePatterns.Variants.TrainGroup
+            let base: Pattern; let revision: Revision
+            let variant: String; let group: Group
+            var identity: String { "\(base.id)|\(revision.revision)|\(variant)|\(group.direction.rawValue)" }
         }
-        var byService: [String: [Int: [Entry]]] = [:]
+        var byKey: [String: [Int: [Entry]]] = [:]
         for base in catalogue {
             for revision in base.variants?.revisions ?? [] {
                 for variant in revision.patterns {
                     for group in variant.trains {
                         for number in Set(group.numbers) {
-                            byService[base.name, default: [:]][number, default: []].append(
-                                Entry(base: base, revision: revision, variant: variant.id, group: group))
+                            for key in TrainServicePatterns.serviceKeys(of: base) {
+                                byKey[key, default: [:]][number, default: []].append(
+                                    Entry(base: base, revision: revision, variant: variant.id, group: group))
+                            }
                         }
                     }
                 }
             }
         }
-        for (service, numbers) in byService {
+        var reported = Set<String>()
+        for (key, numbers) in byKey {
             for (number, entries) in numbers where entries.count > 1 {
                 for i in entries.indices {
                     for j in entries.indices where j > i {
                         let a = entries[i], b = entries[j]
-                        guard !disjointDays(a.revision, a.group, b.revision, b.group) else { continue }
+                        guard a.identity != b.identity,
+                              !disjointDays(a.revision, a.group, b.revision, b.group) else { continue }
+                        let ids = [a.identity, b.identity].sorted()
+                        guard reported.insert("\(number)|\(ids[0])|\(ids[1])").inserted else { continue }
                         out.append(Violation(
                             rule: .numberInTwoPatterns, severity: .error, patternID: a.base.id,
-                            message: "\(service) \(number) is listed in \(a.base.id)/\(a.revision.revision)/\(a.variant) and \(b.base.id)/\(b.revision.revision)/\(b.variant) on overlapping days"))
+                            message: "\(key) \(number) is listed in \(a.base.id)/\(a.revision.revision)/\(a.variant) and \(b.base.id)/\(b.revision.revision)/\(b.variant) on overlapping days"))
                     }
                 }
             }
         }
     }
 
-    private static func disjointDays(
-        _ ra: TrainServicePatterns.Variants.Revision, _ ga: TrainServicePatterns.Variants.TrainGroup,
-        _ rb: TrainServicePatterns.Variants.Revision, _ gb: TrainServicePatterns.Variants.TrainGroup
-    ) -> Bool {
+    /// Could `group` of `revision` run on `day` for some day type?
+    private static func couldRun(_ revision: Revision, _ group: Group, on day: Day) -> Bool {
+        revision.covers(day.rawValue) && group.applies(on: day, dayKind: nil) != .no
+    }
+
+    private static func disjointDays(_ ra: Revision, _ ga: Group, _ rb: Revision, _ gb: Group) -> Bool {
         if (ga.runs == .weekdays && gb.runs == .holidays) || (ga.runs == .holidays && gb.runs == .weekdays) {
             return true
         }
-        func interval(_ r: TrainServicePatterns.Variants.Revision, _ g: TrainServicePatterns.Variants.TrainGroup)
-            -> (String, String?) {
+        if let da = ga.daysOfWeek, let db = gb.daysOfWeek, Set(da).isDisjoint(with: db) { return true }
+        for (dated, other, otherRevision) in [(ga, gb, rb), (gb, ga, ra)] where dated.runs == .extra {
+            let days = dated.dates?.compactMap(Day.init) ?? []
+            if !days.contains(where: { couldRun(otherRevision, other, on: $0) }) { return true }
+        }
+        func interval(_ r: Revision, _ g: Group) -> (String, String?) {
             let from = max(r.validFrom, g.validFrom ?? r.validFrom)
             let untils = [r.validUntil, g.validUntil].compactMap { $0 }
             return (from, untils.min())

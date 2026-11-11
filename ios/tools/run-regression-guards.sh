@@ -40,7 +40,7 @@ step "string keys" bash "$ROOT/ios/tools/check-string-keys.sh"
 # variants, coupled, source files) until the data branches that correct the existing
 # stop lists have landed. Then add --strict here so the base-data rules fail too.
 # See ios/VERIFICATION.md ("Shinkansen stop-pattern database").
-step "shinkansen patterns (new-key rules)" python3 -I "$ROOT/ios/tools/build-shinkansen-patterns.py" --check
+step "shinkansen patterns (new-key rules)" python3 -I "$ROOT/ios/tools/build-shinkansen-patterns.py" --check --strict
 step "shinkansen patterns tests" python3 -I "$ROOT/ios/tools/tests/test_build_shinkansen_patterns.py"
 
 for f in "${FIXTURES[@]}"; do
