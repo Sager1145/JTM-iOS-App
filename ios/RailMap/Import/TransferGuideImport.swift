@@ -106,7 +106,7 @@ final class TransferGuideImport {
 
     /// ``TripListRules/initialMembership(date:startClock:clock:now:)`` for a
     /// screenshot journey on `date` whose first departure reads `firstDeparture`.
-    static func membership(date: Date, firstDeparture: String?, now: Date) -> TripListMembership {
+    nonisolated static func membership(date: Date, firstDeparture: String?, now: Date) -> TripListMembership {
         TripListRules.initialMembership(
             date: RecordDate.text(from: date, in: clock), startClock: firstDeparture,
             clock: clock, now: now)
@@ -419,7 +419,7 @@ final class TransferGuideImport {
     /// day it is on in Japan. Nothing here converts a time the screenshot
     /// printed — 22:47 at 品川 is 22:47, and rewriting it into the reader's
     /// own zone would be this app editing somebody else's timetable.
-    static let clock = RegionClock.japan
+    nonisolated static let clock = RegionClock.japan
 
     // MARK: - the station table
 
