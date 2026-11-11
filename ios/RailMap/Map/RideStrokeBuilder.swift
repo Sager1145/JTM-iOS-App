@@ -95,6 +95,15 @@ nonisolated enum RideStrokeBuilder {
     static func polylineCoordinates(
         for request: Request, frame: Frame
     ) -> [CLLocationCoordinate2D]? {
+        resolve(request, frame: frame)?.points
+    }
+
+    /// ``polylineCoordinates(for:frame:)`` plus whether the points came from
+    /// the built chain. Only those are a function of the share key alone; a
+    /// slice that came back empty falls back to the ride's own coordinates.
+    fileprivate static func resolve(
+        _ request: Request, frame: Frame
+    ) -> (points: [CLLocationCoordinate2D], fromChain: Bool)? {
         let built = builtInk(of: request, frame: frame)
         let stroke = (built ?? request.coordinates.map(\.clLocation)).map {
             Coordinate(lon: $0.longitude, lat: $0.latitude)
@@ -106,7 +115,8 @@ nonisolated enum RideStrokeBuilder {
             : 0
         let kept = Geometry.douglasPeuckerIndices(stroke, epsilonMeters: epsilon)
         let points = kept.map { stroke[$0].clLocation }
-        return points.count >= 2 ? points : nil
+        guard points.count >= 2 else { return nil }
+        return (points, built != nil && request.stroke != nil)
     }
 
     private static func builtInk(of request: Request, frame: Frame) -> [CLLocationCoordinate2D]? {
@@ -184,9 +194,11 @@ nonisolated enum RideStrokeBuilder {
             if let shareKey, let known = memo.points(for: shareKey, frame: frame) {
                 points = known
                 shared += 1
-            } else if let fresh = polylineCoordinates(for: request, frame: frame) {
-                points = fresh
-                if let shareKey { memo.store(fresh, for: shareKey, frame: frame) }
+            } else if let fresh = resolve(request, frame: frame) {
+                points = fresh.points
+                if let shareKey, fresh.fromChain {
+                    memo.store(fresh.points, for: shareKey, frame: frame)
+                }
             } else {
                 continue
             }

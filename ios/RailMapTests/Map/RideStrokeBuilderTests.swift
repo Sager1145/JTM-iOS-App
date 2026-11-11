@@ -18,6 +18,7 @@ import Testing
 /// plus the degenerate cases (too few points, a slice that comes back empty).
 /// The oracle fixture stores no coordinates, so real solved polylines are
 /// compared by the app-control run, not here.
+@MainActor
 struct RideStrokeBuilderTests {
 
     private struct Generator {
@@ -166,7 +167,11 @@ struct RideStrokeBuilderTests {
         var drawn = 0
         var empty = 0
         for request in requests {
-            let expected = Self.reference(request, frame: frame)
+            // The original path handed its points to `MKPolyline`, which keeps
+            // projected map points; compare what each polyline holds.
+            let expected = Self.reference(request, frame: frame).map {
+                Self.points(of: MKPolyline(coordinates: $0, count: $0.count))
+            }
             let actual = byKey[request.key].map(Self.points(of:))
             switch (expected, actual) {
             case (nil, nil): empty += 1
@@ -190,7 +195,10 @@ struct RideStrokeBuilderTests {
         let memo = RideStrokeBuilder.Memo()
         let first = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
         let second = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
-        #expect(second.shared == second.built.count, "every sliced request hits the memo")
+        // Every request whose slice succeeded hits the memo; one whose slice
+        // came back empty draws its own coordinates and is never shared.
+        #expect(second.shared >= first.shared + 1)
+        #expect(second.shared <= second.built.count)
         #expect(first.built.map(\.key) == second.built.map(\.key))
         for (a, b) in zip(first.built, second.built) {
             #expect(Self.identical(Self.points(of: a.polyline), Self.points(of: b.polyline)))
@@ -211,10 +219,10 @@ struct RideStrokeBuilderTests {
         let started = clock.now
         let onMain = await Task.detached(priority: .userInitiated) { () -> (Bool, Int) in
             let output = RideStrokeBuilder.build(requests, frame: frame, memo: .init())
-            return (Thread.isMainThread, output.built.count)
+            return (pthread_main_np() != 0, output.built.count)
         }.value
         let elapsed = clock.now - started
-        #expect(onMain.0 == false)
+        #expect(onMain.0 == false, "the build ran on the main thread")
         #expect(onMain.1 > 1_000)
         print("RideStrokeBuilderTests: worker build of \(requests.count) segments took \(elapsed)")
     }
