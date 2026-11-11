@@ -545,9 +545,7 @@ struct TransferGuideImportView: View {
                             .railText(.tertiary)
                     }
                 }
-                .padding(.horizontal, RailSpacing.screenInset)
-                .padding(.vertical, RailSpacing.s8)
-                .background(.bar)
+                .railActionBar()
             }
         case .imported(_, let saveError):
             if saveError != nil {

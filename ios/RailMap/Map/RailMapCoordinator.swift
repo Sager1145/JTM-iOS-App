@@ -1886,7 +1886,7 @@ extension RailMapView.Surface {
                             for: ride, scope: scope, solid: solid, crossDay: crossDay, unproven: unproven))
                         continue
                     }
-                    let color = UIColor(railHex: ride.colorHex) ?? .systemBlue
+                    let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
                     let width = rideWidthToken(selected: selected)
                     let alpha = rideAlpha(ride, selected: selected)
 
@@ -2127,7 +2127,7 @@ extension RailMapView.Surface {
                 return batches.map { batch in
                     let multi = reconciliation.multiPolyline(batch.polylines, key: batch.key)
                     overlayStyles[batch.key] = .init(
-                        color: UIColor(railHex: batch.colorHex) ?? .systemBlue,
+                        color: UIColor(railHex: batch.colorHex) ?? .railDefaultTrip,
                         widthToken: RideOverlayStyle.widthToken(display: display, selected: false),
                         alpha: RideOverlayStyle.batchAlpha(
                             display: display, scope: scope, hasSelection: hasSelection,
@@ -2787,7 +2787,7 @@ extension RailMapView.Surface {
                     if let cached = routeColors[item.routeColorHex] {
                         routeColor = cached
                     } else {
-                        let color = UIColor(railHex: item.routeColorHex) ?? .systemBlue
+                        let color = UIColor(railHex: item.routeColorHex) ?? .railDefaultTrip
                         routeColors[item.routeColorHex] = color
                         routeColor = color
                     }
@@ -2885,7 +2885,7 @@ extension RailMapView.Surface {
                     }
                     let endpoint = MapEndpointLabels.endpointStop(of: ride, kind: spec.kind,
                         stationPosition: { knownEndpointPosition(for: $0, of: ride) })
-                    let color = UIColor(railHex: ride.colorHex) ?? .systemBlue
+                    let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
                     markerAnnotations.append(RideStationAnnotation(
                         rideID: ride.id, drawsInOverlay: !hasSelection,
                         coordinate: position, name: spec.name, rawName: spec.rawName,

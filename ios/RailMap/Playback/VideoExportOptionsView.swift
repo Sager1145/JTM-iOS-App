@@ -107,7 +107,7 @@ struct VideoExportOptionsView: View {
                 .buttonStyle(.railPrimary(fillsWidth: true))
                 .disabled(seconds <= 0)
                 .accessibilityIdentifier("videoExportStart")
-                .padding(RailSpacing.screenInset).background(.bar)
+                .railActionBar()
             }
     }
 

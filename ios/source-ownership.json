@@ -397,6 +397,7 @@
         "ios/RailMap/Design/GlassStyle.swift",
         "ios/RailMap/Design/HexColor.swift",
         "ios/RailMap/Design/OperatorBadge.swift",
+        "ios/RailMap/Design/RailChoiceRow.swift",
         "ios/RailMap/Design/RailMotion.swift",
         "ios/RailMap/Design/RailSheetChrome.swift",
         "ios/RailMap/Design/RailSpacing.swift",

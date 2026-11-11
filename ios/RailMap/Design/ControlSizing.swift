@@ -1,5 +1,15 @@
 import SwiftUI
 
+/// The label colour of a button with the `.destructive` role: the accessible red
+/// the status labels use (`RailStatusKind.error`), never the stock system red,
+/// which is 3.6:1 on a light capsule. A destructive button is never drawn as the
+/// prominent (filled) capsule: HIG forbids the primary role for destructive
+/// actions, and `check-ui-tokens.sh` rejects `.railPrimary` on one.
+private func railButtonLabelStyle(role: ButtonRole?, prominent: Bool) -> AnyShapeStyle {
+    if role == .destructive { return AnyShapeStyle(RailStatusKind.error.tint) }
+    return prominent ? AnyShapeStyle(Color.white) : AnyShapeStyle(.tint)
+}
+
 /// Text controls share the visible height of the circular sheet controls.
 struct RailCapsuleButtonStyle: ButtonStyle {
     var prominent = false
@@ -35,6 +45,10 @@ struct RailCapsuleButtonStyle: ButtonStyle {
                 .animation(RailMotion.press, value: configuration.isPressed && isEnabled)
         }
 
+        /// A destructive button keeps the quiet capsule even when asked for the
+        /// prominent one: the red label on the filled tint would be unreadable.
+        private var filled: Bool { prominent && configuration.role != .destructive }
+
         private var capsule: some View {
             configuration.label
                 .frame(maxWidth: fillsWidth ? .infinity : nil)
@@ -43,9 +57,9 @@ struct RailCapsuleButtonStyle: ButtonStyle {
                 // Compact labels align with circular controls at normal sizes,
                 // but must be allowed to grow with Dynamic Type.
                 .frame(minHeight: visualHeight ?? SheetIconButton<Image>.visualSide)
-                .foregroundStyle(prominent ? AnyShapeStyle(Color.white) : AnyShapeStyle(.tint))
+                .foregroundStyle(railButtonLabelStyle(role: configuration.role, prominent: filled))
                 .background(
-                    prominent ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary.opacity(0.5)),
+                    filled ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary.opacity(0.5)),
                     in: Capsule())
         }
     }
@@ -63,7 +77,7 @@ struct RailTextButtonStyle: ButtonStyle {
 
         var body: some View {
             configuration.label
-                .foregroundStyle(.tint)
+                .foregroundStyle(railButtonLabelStyle(role: configuration.role, prominent: false))
                 .frame(minHeight: RailSize.touch)
                 .contentShape(.rect)
                 .scaleEffect(configuration.isPressed && isEnabled ? RailMotion.pressedScale : 1)
@@ -97,6 +111,13 @@ extension ButtonStyle where Self == RailTextButtonStyle {
 }
 
 extension View {
+    /// The bar that holds a sheet's or screen's bottom action buttons: the
+    /// screen inset on every side over the bar material. One padding for all
+    /// four places that had their own (import, transfer guide, share, video).
+    func railActionBar() -> some View {
+        padding(RailSpacing.screenInset).background(.bar)
+    }
+
     /// Keeps a compact control's visual style while giving the control the
     /// minimum landing area used throughout the app.
     ///

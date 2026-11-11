@@ -391,8 +391,7 @@ struct DataImportView: View {
                 .buttonStyle(.railSecondary(fillsWidth: true))
             }
         }
-        .padding(RailSpacing.screenInset)
-        .background(.bar)
+        .railActionBar()
     }
 
     // MARK: - helpers

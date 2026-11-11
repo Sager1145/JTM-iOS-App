@@ -3060,3 +3060,15 @@ extension TrainValidation.JSON {
         }
     }
 }
+
+extension Train {
+    /// The colour every trip surface draws this trip in: the stored colour when
+    /// `TrainValidation.isValidTrainColor` accepts it, otherwise
+    /// `TrainValidation.defaultTrainColor`. A stored value that is truthy but
+    /// invalid stays in the file unchanged (web parity) and still draws the
+    /// default, so the colour before a save equals the colour after it.
+    public var displayColorHex: String {
+        if let color = style?.color, TrainValidation.isValidTrainColor(color) { return color }
+        return TrainValidation.defaultTrainColor
+    }
+}
