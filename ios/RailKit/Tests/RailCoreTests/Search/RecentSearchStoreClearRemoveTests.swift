@@ -2,9 +2,9 @@ import Foundation
 import Testing
 @testable import RailCore
 
-struct RecentSearchStoreTests {
+struct RecentSearchStoreClearRemoveTests {
     private func defaults() -> UserDefaults {
-        let name = "RecentSearchStoreTests-\(UUID().uuidString)"
+        let name = "RecentSearchStoreClearRemoveTests-\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: name)!
         defaults.removePersistentDomain(forName: name)
         return defaults
