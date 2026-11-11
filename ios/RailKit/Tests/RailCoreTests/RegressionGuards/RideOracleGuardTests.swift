@@ -208,7 +208,22 @@ struct RegressionGuardRideOracle {
                 }
             }
         }
-        return rides.compactMap { records[$0.train.id] }
+        return try rides.map { ride in
+            guard let record = records[ride.train.id] else { throw OracleError.noRecord(ride.train.id) }
+            return record
+        }
+    }
+
+    enum OracleError: Error, CustomStringConvertible {
+        case noRecord(String)
+        case mixedGapKinds(ride: String, section: Int, kinds: [String])
+        var description: String {
+            switch self {
+            case .noRecord(let id): "ride \(id) got no record from the live pipeline"
+            case .mixedGapKinds(let ride, let section, let kinds):
+                "ride \(ride) section \(section) has several gap kinds \(kinds); the oracle stores one, extend the schema"
+            }
+        }
     }
 
     /// One scope: the app's two passes, then one record per ride. Mirrors
@@ -251,7 +266,7 @@ struct RegressionGuardRideOracle {
             outcomes[ride.train.id] = ("legacy", try solve(ride, allowLegacy: true))
         }
 
-        return rides.map { ride in
+        return try rides.map { ride in
             let (pass, result) = outcomes[ride.train.id]!
             let timetableMatched = canonical[ride.train.id]!.databaseProvenance != nil
             let disposition = String(describing: result.disposition)
@@ -261,16 +276,16 @@ struct RegressionGuardRideOracle {
             }
             var sections: [Section] = []
             for (index, section) in result.expectedSections.enumerated() {
-                let gap: String
-                if result.physicalGaps.contains(where: { $0.segmentIndex == index && $0.isBoundary }) {
-                    gap = "boundary"
-                } else if result.physicalGaps.contains(where: { $0.segmentIndex == index && $0.isUnproven }) {
-                    gap = "unproven"
-                } else if result.physicalGaps.contains(where: { $0.segmentIndex == index }) {
-                    gap = "interior"
-                } else {
-                    gap = "none"
+                var kinds: [String] = []
+                let own = result.physicalGaps.filter { $0.segmentIndex == index }
+                if own.contains(where: \.isBoundary) { kinds.append("boundary") }
+                if own.contains(where: \.isUnproven) { kinds.append("unproven") }
+                if own.contains(where: { !$0.isBoundary && !$0.isUnproven }) { kinds.append("interior") }
+                // The fixture stores one gap label per section; refuse to hide a second kind.
+                guard kinds.count <= 1 else {
+                    throw OracleError.mixedGapKinds(ride: ride.train.id, section: index, kinds: kinds)
                 }
+                let gap = kinds.first ?? "none"
                 let parts = result.segments
                     .filter { $0.segmentIndex == index }
                     .sorted { $0.partIndex < $1.partIndex }
@@ -342,7 +357,8 @@ struct RegressionGuardRideOracle {
         let url = try PortFixtures.repositoryRoot().appending(path: Self.fixturePath)
         let onDisk = try Data(contentsOf: url)
         let document = try JSONDecoder().decode(Document.self, from: onDisk)
-        #expect(try Self.encode(document) == onDisk, "regenerate with RIDE_ORACLE_EXPORT=1, do not hand edit")
+        #expect(try Self.encode(document) == onDisk,
+                "not canonical: hand edit, or the toolchain's JSONEncoder formatting (Double or escapes) changed; regenerate with RIDE_ORACLE_EXPORT=1 only if the live checks still pass")
     }
 
     // MARK: - Live checks
@@ -358,6 +374,7 @@ struct RegressionGuardRideOracle {
         #expect(rides.count == 3)
         let live = try Self.resolve(rides: rides, root: root)
         let frozen = Dictionary(uniqueKeysWithValues: fixture.rides.map { ($0.id, $0) })
+        #expect(live.map(\.id) == rides.map(\.train.id), "every sample ride must produce a record")
         for ride in live { #expect(frozen[ride.id] == ride, "\(ride.id) differs from the oracle") }
     }
 
