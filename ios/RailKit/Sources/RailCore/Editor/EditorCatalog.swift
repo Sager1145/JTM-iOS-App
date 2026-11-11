@@ -815,26 +815,27 @@ public struct StationSearchIndex: Sendable {
         var stationRanks: [String: (rank: Int, score: Double)] = [:]
         var matchedLines: Set<String> = []
         var response: SearchResponse?
-        if !browsing {
-            let answer = engine.query(
-                needle, scope: [.stations, .lines],
-                context: SearchContext(
-                    regionCode: regionCode, recentPicks: query.recentPicks, rideCounts: query.rideCounts,
-                    visibleRegion: query.visibleRegion, lineIDs: query.lineIDs, limit: 100_000))
-            response = answer
-            for result in answer.results {
-                switch result.entity.kind {
-                case .station:
-                    let rank = Self.rank(result.match.kind)
-                    if let existing = stationRanks[result.entity.id], existing.rank <= rank { continue }
-                    stationRanks[result.entity.id] = (rank, result.score)
-                case .line where result.match.kind != .fuzzy:
-                    matchedLines.insert(result.entity.id)
-                default: break
-                }
+        // An empty box asks the engine for its suggestions: recent picks, the
+        // most ridden stations, the visible map, then the busiest hubs.
+        let answer = engine.query(
+            needle, scope: browsing ? .stations : [.stations, .lines],
+            context: SearchContext(
+                regionCode: regionCode, recentPicks: query.recentPicks, rideCounts: query.rideCounts,
+                visibleRegion: query.visibleRegion, lineIDs: query.lineIDs,
+                limit: browsing ? max(12, query.suggestionLimit * 3) : 100_000))
+        response = browsing ? nil : answer
+        for result in answer.results {
+            switch result.entity.kind {
+            case .station:
+                let rank = Self.rank(result.match.kind)
+                if let existing = stationRanks[result.entity.id], existing.rank <= rank { continue }
+                stationRanks[result.entity.id] = (rank, result.score)
+            case .line where result.match.kind != .fuzzy:
+                matchedLines.insert(result.entity.id)
+            default: break
             }
-            if Task.isCancelled { return StationSearchResult(response: response) }
         }
+        if Task.isCancelled { return StationSearchResult(response: response) }
         let company = query.companyName?.trimmingCharacters(in: .whitespacesAndNewlines)
         let identity = (company?.isEmpty == false)
             ? RegistryIdentityCache.identity(forRegion: regionCode) : nil
@@ -860,7 +861,7 @@ public struct StationSearchIndex: Sendable {
                 let lineMatched = !browsing && matchedLines.contains(line.id)
                 var hits: [StationSearchHit] = []
                 for station in line.stations {
-                    let engineRank = browsing ? nil : stationRanks[station.key.sourceCode]
+                    let engineRank = stationRanks[station.key.sourceCode]
                     let stationRank = browsing ? 0 : engineRank?.rank
                     guard browsing || lineMatched || stationRank != nil else { continue }
                     let rank = stationRank ?? 3
@@ -869,15 +870,15 @@ public struct StationSearchIndex: Sendable {
                         subject: .current(station.key, lineID: line.id), rank: rank,
                         stationID: station.stationID, complexID: station.complexID,
                         stationIDs: ids))
-                    if !browsing, let stationRank, seenSuggestion.insert(station.key).inserted {
+                    if let engineRank, seenSuggestion.insert(station.key).inserted {
                         suggestionPool.append((
                             StationSearchHit(
-                                subject: .current(station.key, lineID: nil), rank: stationRank,
+                                subject: .current(station.key, lineID: nil), rank: engineRank.rank,
                                 stationID: station.stationID, complexID: station.complexID,
                                 qualifier: station.qualifier, stationIDs: ids),
                             station.name,
                             station.key.sourceCode,
-                            engineRank?.score ?? 0))
+                            engineRank.score))
                     }
                 }
                 guard !hits.isEmpty else { continue }
@@ -893,9 +894,7 @@ public struct StationSearchIndex: Sendable {
             }
         }
 
-        let grouped = browsing
-            ? []
-            : Self.groupSuggestions(suggestionPool, idsByComplex: Self.stationIDsByComplex(lines))
+        let grouped = Self.groupSuggestions(suggestionPool, idsByComplex: Self.stationIDsByComplex(lines))
         let suggestions = grouped.sorted { lhs, rhs in
             if lhs.hit.rank != rhs.hit.rank { return lhs.hit.rank < rhs.hit.rank }
             if lhs.score != rhs.score { return lhs.score > rhs.score }

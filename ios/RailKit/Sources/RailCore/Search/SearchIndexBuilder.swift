@@ -14,10 +14,11 @@ public enum SearchIndexBuilder {
     /// readings, former names and English names, marked with their kind.
     public static func catalog(
         _ catalog: EditorCatalog, regionCode: String, extraNames: [String: [String]] = [:],
-        aliases: SearchAliasTable = .bundled
+        aliases: SearchAliasTable = .bundled, readingProvider: any SearchReadingProvider = SystemSearchReading()
     ) -> SearchIndex {
         SearchIndex(regionCode: regionCode, documents: documents(
-            catalog, regionCode: regionCode, extraNames: extraNames, aliases: aliases))
+            catalog, regionCode: regionCode, extraNames: extraNames, aliases: aliases),
+            readingProvider: readingProvider)
     }
 
     static func documents(

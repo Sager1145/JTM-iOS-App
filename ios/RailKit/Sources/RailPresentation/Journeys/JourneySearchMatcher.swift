@@ -150,16 +150,30 @@ public enum JourneySearchMatcher {
         return trains.filter { matches($0, prepared: prepared, needle: needle, alsoNamed: alsoNamed) }
     }
 
-    /// "Did you mean …?" for a journey query: the closest station name, train
-    /// name or type spelled in these journeys, when the query matches none of them.
-    /// Nil when the query already matches, or nothing is close.
-    public static func suggestion(
+    /// "Did you mean …?" for a journey query: up to three of the closest station
+    /// names, train names or types spelled in these journeys, when the query
+    /// matches none of them. Empty when the query already matches, or nothing is close.
+    public static func suggestions(
         for query: String, in trains: [Train], alsoNamed: (Train) -> [String] = { _ in [] }
-    ) -> SearchCorrection? {
+    ) -> [SearchCorrection] {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty, filter(trains, query: needle, alsoNamed: alsoNamed).isEmpty else { return nil }
+        guard !needle.isEmpty, filter(trains, query: needle, alsoNamed: alsoNamed).isEmpty else { return [] }
         return vocabulary(of: trains, alsoNamed: alsoNamed)
-            .query(needle, scope: .terms, context: SearchContext(regionCode: "", limit: 5)).didYouMean
+            .query(needle, scope: .terms, context: SearchContext(regionCode: "", limit: 5)).corrections
+    }
+
+    /// The stations these journeys name most often (origin, destination and
+    /// stops), most frequent first: the empty-box suggestions of the journey search.
+    public static func frequentStationNames(in trains: [Train], limit: Int = 6) -> [String] {
+        var counts: [String: Int] = [:]
+        for train in trains {
+            var names = Set(train.stops.map(\.name))
+            names.insert(train.origin)
+            names.insert(train.destination)
+            for name in names where !name.isEmpty { counts[name, default: 0] += 1 }
+        }
+        return counts.sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }
+            .prefix(max(0, limit)).map(\.key)
     }
 
     /// Completion candidates for a journey search box: names spelled in these

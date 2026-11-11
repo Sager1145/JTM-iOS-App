@@ -47,6 +47,11 @@ public final class SearchIndex: Sendable {
     /// Line table index → line document.
     let lineDocByRef: [Int32]
     let operatorDocByRef: [Int32]
+    /// Station documents with the highest importance (lines served), best first.
+    /// The empty-box fallback after recent picks, rides and the visible map.
+    let hubDocs: [Int32]
+    /// Reads kanji queries aloud for the second pass.
+    let readingProvider: any SearchReadingProvider
 
     // Names and keys.
     let nameBlob: [UInt8]
@@ -61,8 +66,12 @@ public final class SearchIndex: Sendable {
 
     private let pool: SearchScratchPool
 
-    public init(regionCode: String, documents: [SearchDocument]) {
+    public init(
+        regionCode: String, documents: [SearchDocument],
+        readingProvider: any SearchReadingProvider = SystemSearchReading()
+    ) {
         self.regionCode = regionCode
+        self.readingProvider = readingProvider
         let profile = SearchNormalizer.Profile(regionCode: regionCode)
         self.profile = profile
         var kinds: [SearchEntityKind] = [], ids: [String] = [], titles: [String] = []
@@ -166,6 +175,10 @@ public final class SearchIndex: Sendable {
             if let doc = docByEntity[.company(op)] { operatorDocByRef[index] = doc }
         }
 
+        let hubs = kinds.indices.filter { kinds[$0] == .station && importance[$0] > 0 }
+            .sorted { importance[$0] != importance[$1] ? importance[$0] > importance[$1] : titles[$0] < titles[$1] }
+            .prefix(60).map { Int32($0) }
+        self.hubDocs = Array(hubs)
         self.kinds = kinds; self.ids = ids; self.titles = titles
         self.importance = importance; self.latitudes = latitudes; self.longitudes = longitudes
         self.lineRefStart = lineRefStart; self.lineRefs = lineRefs
@@ -267,6 +280,9 @@ final class SearchScratch {
     var bestKey: [Int32] = []
     var bestHit: [SearchMatching.Hit?] = []
     var tokenMask: [UInt16] = []
+    /// Second pass: query words matched only with a typo, and the summed distance.
+    var tokenFuzzyMask: [UInt16] = []
+    var tokenFuzzyCost: [UInt8] = []
     var allowed: [Bool] = []
     var touched: [Int32] = []
     let rows = UnsafeMutablePointer<Int32>.allocate(capacity: SearchMatching.rowCapacity)
@@ -279,6 +295,8 @@ final class SearchScratch {
             bestKey = [Int32](repeating: -1, count: documents)
             bestHit = [SearchMatching.Hit?](repeating: nil, count: documents)
             tokenMask = [UInt16](repeating: 0, count: documents)
+            tokenFuzzyMask = [UInt16](repeating: 0, count: documents)
+            tokenFuzzyCost = [UInt8](repeating: 0, count: documents)
             allowed = [Bool](repeating: true, count: documents)
             touched.reserveCapacity(1024)
         }
@@ -291,6 +309,8 @@ final class SearchScratch {
             bestKey[d] = -1
             bestHit[d] = nil
             tokenMask[d] = 0
+            tokenFuzzyMask[d] = 0
+            tokenFuzzyCost[d] = 0
         }
         touched.removeAll(keepingCapacity: true)
     }
