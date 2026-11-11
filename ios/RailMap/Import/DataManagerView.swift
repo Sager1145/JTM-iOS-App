@@ -13,7 +13,6 @@ import UniformTypeIdentifiers
 /// that destroy things.
 struct DataManagerView: View {
     @Environment(AppLocalization.self) private var localization
-    @Environment(PresentationHost.self) private var presentationHost
     @Environment(RiddenRouteStore.self) private var riddenRoutes
     /// Optional so this view can be previewed and hosted outside the shell
     /// that publishes the network store; the availability section simply has
@@ -31,18 +30,12 @@ struct DataManagerView: View {
     @State private var exportAction: ExportAction?
     private enum ExportAction { case file, clipboard }
 
-    /// The sample a long-press asked to replace EVERYTHING with, held while
-    /// the confirmation is up so the dialog can name it.
+    /// Which confirmation or system sheet is up.
     private enum Destination: Equatable {
         case exportFile
-        case deleteSaved, deleteAll, restore, discardBackup, replaceSample(RideLibrary.Sample)
+        case deleteAll, restore, discardBackup
     }
     @State private var destination: Destination?
-
-    private var replaceCandidate: RideLibrary.Sample? {
-        guard case .replaceSample(let sample) = destination else { return nil }
-        return sample
-    }
 
     private func isPresented(_ target: Destination) -> Binding<Bool> {
         Binding(get: { destination == target }, set: { presented in
@@ -64,20 +57,20 @@ struct DataManagerView: View {
 
     var body: some View {
         List {
+            // Order (audit A11): status and error cards, Export, Backup
+            // directly under it, Routes, Sample trips, Railway data, Danger
+            // zone. Importing adds trips, so it lives in the tab bar's Add
+            // trip menu; the Export footer says so.
             sourceSection
             blockingSections
-            // Pass 3: importing adds trips, so it lives in the tab bar's Add
-            // trip menu (file · paste · transfer guide); this library keeps
-            // what manages the data already here.
             exportSection
-            samplesSection
-            reloadAllSection
-            sampleRegionSections
-            availabilitySection
             recoverySection
+            reloadAllSection
+            sampleTripsSection
+            availabilitySection
             dangerSection
         }
-        .navigationTitle(localization.text("nav.data", fallback: "Data"))
+        .navigationTitle(localization.text("nav.dataLibrary", fallback: "Data Library"))
         .navigationBarTitleDisplayMode(.inline)
         .task(id: exportAction) {
             guard let action = exportAction else { return }
@@ -252,36 +245,11 @@ struct DataManagerView: View {
                 })
         } header: {
             Text(localization.text("data.exportGroup"))
-        }
-    }
-
-    // MARK: - samples and the reader's own copy
-
-    private var samplesSection: some View {
-        Section {
-            Button {
-                _ = itineraries.saveWorkingSet()
-            } label: {
-                Label(
-                    localization.text("btn.saveAsMine", fallback: "Save current rides"),
-                    systemImage: "square.and.arrow.down")
-            }
-            .disabled(itineraries.store == nil || exportAction != nil)
-
-            Button {
-                itineraries.load(from: library)
-            } label: {
-                Label(
-                    localization.text("btn.restoreMine", fallback: "Restore saved rides"),
-                    systemImage: "arrow.uturn.backward")
-            }
-            .disabled(!library.hasSavedStore)
-        } header: {
-            Text(localization.text("ios.myRides", fallback: "My rides"))
         } footer: {
-            Text(localization.text("data.storageFootnote"))
+            // Import is under Add trip (decision B1); nothing here connects
+            // the two, so the sentence does.
+            Text(localization.text("data.importSignpost"))
         }
-        .disabled(itineraries.isImporting)
     }
 
     /// Reads every trip's saved route again and solves only what is missing,
@@ -312,6 +280,8 @@ struct DataManagerView: View {
                 .accessibilityIdentifier("reloadAllButton")
                 .accessibilityValue(Text(verbatim: "\(riddenRoutes.reloadsFinished)"))
             }
+        } header: {
+            Text(localization.text("data.routesGroup"))
         } footer: {
             Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time."))
         }
@@ -328,138 +298,18 @@ struct DataManagerView: View {
         }
     }
 
-    /// The seven samples, grouped by the region each belongs to.
-    ///
-    /// **Loading one adds its rides to the working set.** In the web app the
-    /// button replaces the store, because the store is one region's and the
-    /// sample is that region's; with one merged store, replacing everything to
-    /// see the Macao sample would delete the reader's Japanese rides. So a
-    /// sample is folded in, a recovery copy is written first, and loading the
-    /// same one twice updates those rides rather than duplicating them.
-    ///
-    /// The web app's 重置示例 — "this sample IS the store" — survives as the
-    /// long-press action, where it has an unambiguous subject.
-    /// Place the footnote after the last supported region that has samples.
-    private var lastRegionWithSamples: Region? {
-        Region.enabledOrdered.last { !RideLibrary.Sample.forRegion($0).isEmpty }
-    }
-
-    private var sampleRegionSections: some View {
-        ForEach(Region.enabledOrdered) { region in
-            let samples = RideLibrary.Sample.forRegion(region)
-            if !samples.isEmpty {
-                Section {
-                    ForEach(samples) { sample in
-                        Button {
-                            loadSample(sample, replacingEverything: false)
-                        } label: {
-                            Label(
-                                localization.text(sample.titleKey, fallback: sample.title),
-                                systemImage: library.loadedSamples.contains(sample.resource)
-                                    ? "checkmark.circle" : "doc.text")
-                        }
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                // A context menu is itself a presentation on
-                                // iOS. Let its controller leave before asking
-                                // SwiftUI for the confirmation dialog.
-                                presentationHost.afterTeardown {
-                                    destination = .replaceSample(sample)
-                                }
-                            } label: {
-                                Label(
-                                    localization.text(
-                                        "btn.resetDefaults", fallback: "Replace all rides"),
-                                    systemImage: "arrow.counterclockwise")
-                            }
-                        }
-                    }
-                } header: {
-                    Text(localization.text(region.localizationKey, fallback: region.fallbackName))
-                } footer: {
-                    if region == lastRegionWithSamples {
-                        Text(localization.text("data.sampleFootnote"))
-                    }
-                }
+    /// One row for every sample; the page it opens owns adding, replacing and
+    /// removing them (``SampleTripsView``).
+    private var sampleTripsSection: some View {
+        Section {
+            NavigationLink {
+                SampleTripsView(itineraries: itineraries, library: library)
+            } label: {
+                Label(localization.text("data.sampleTrips"), systemImage: "doc.text")
             }
+            .accessibilityIdentifier("dataSampleTripsLink")
         }
         .disabled(itineraries.isImporting)
-    }
-
-    /// Fold a sample in, or — from the long-press action — make it the whole
-    /// working set. Only the second writes a recovery copy first: it discards
-    /// the reader's own rides, while a fold replaces only that sample's
-    /// example rides with their bundled copies.
-    private func loadSample(_ sample: RideLibrary.Sample, replacingEverything: Bool) {
-        // A `Task` because both doors now place the incoming rides in their
-        // region before they are published, and that reads a shipped dataset
-        // for the four whose station codes do not say which region they are.
-        // The read is off the main actor and the button is disabled while an
-        // import runs, so the only thing this changes for the reader is that
-        // a Macanese sample arrives already Macanese instead of arriving
-        // Japanese and failing to solve.
-        Task {
-            do {
-                // Checked before spending a backup write on an action that
-                // was never going to land: `replaceAll`/`merge` refuse under
-                // the same conditions this mirrors, but only after the
-                // snapshot below has already run.
-                guard replacingEverything ? itineraries.canReplace : itineraries.canMutate else {
-                    operationError = OperationError(
-                        titleKey: "data.loadFailedTitle",
-                        detail: localization.text("data.errorNothingChanged"),
-                        keptKey: "data.loadFailedKept")
-                    return
-                }
-                let incoming = try await library.sample(sample.resource)
-                // Only replacing everything writes a recovery copy first: it
-                // discards the reader's own rides. Folding a sample in touches
-                // only that sample's example rides, which it puts back to the
-                // bundled copy by design (user decision 2026-11-05: an edited
-                // example ride is not kept and not backed up).
-                if replacingEverything, let store = itineraries.store, !store.trains.isEmpty {
-                    // Aborts into the catch below on failure, before the
-                    // working set is touched.
-                    try await library.snapshotBackup(store, reason: .beforeReplace)
-                }
-                // `forgetLoadedSamples`/`noteSampleLoaded` only follow a
-                // commit that actually landed: an import claiming the store
-                // (or, for `replaceAll`, a load still reading it) refuses the
-                // fold, and marking the sample "loaded" or forgetting the
-                // others on the strength of a refusal would tell the reader
-                // something happened that did not.
-                let committed: Bool
-                if replacingEverything {
-                    switch try await itineraries.replaceAll(with: incoming, into: library).outcome {
-                    case .committed:
-                        library.forgetLoadedSamples()
-                        committed = true
-                    case .refused:
-                        committed = false
-                    }
-                } else {
-                    switch try await itineraries.merge(
-                        incoming, into: library,
-                        legacySampleIDs: SampleLegacyRideIDs.map(for: sample.resource)).outcome {
-                    case .committed: committed = true
-                    case .refused: committed = false
-                    }
-                }
-                if committed {
-                    library.noteSampleLoaded(sample.resource)
-                } else {
-                    operationError = OperationError(
-                        titleKey: "data.loadFailedTitle",
-                        detail: ItineraryStore.ImportBusy().localizedDescription,
-                        keptKey: "data.loadFailedKept")
-                }
-            } catch {
-                operationError = OperationError(
-                    titleKey: "data.loadFailedTitle",
-                    detail: error.localizedDescription,
-                    keptKey: "data.loadFailedKept")
-            }
-        }
     }
 
     // MARK: - §8.8 degradation
@@ -625,13 +475,6 @@ struct DataManagerView: View {
     private var dangerSection: some View {
         Section {
             DisclosureGroup(localization.text("grp.danger", fallback: "Danger zone")) {
-                Button(role: .destructive) { destination = .deleteSaved } label: {
-                    Label(
-                        localization.text("btn.clearStorage", fallback: "Delete saved rides"),
-                        systemImage: "trash")
-                }
-                .disabled(!library.hasSavedStore)
-
                 Button(role: .destructive) { destination = .deleteAll } label: {
                     Label(localization.text("data.deleteAllTitle"), systemImage: "trash.slash")
                 }
@@ -643,45 +486,6 @@ struct DataManagerView: View {
         }
         .listSectionSpacing(.custom(44))
         .disabled(itineraries.isImporting)
-        .confirmationDialog(
-            localization.text("btn.clearStorage", fallback: "Delete saved rides"),
-            isPresented: isPresented(.deleteSaved),
-            titleVisibility: .visible
-        ) {
-            Button(
-                localization.text("btn.clearStorage", fallback: "Delete saved rides"),
-                role: .destructive
-            ) {
-                destination = nil
-                Task {
-                    do {
-                        if let store = itineraries.store {
-                            try await library.snapshotBackup(store, reason: .beforeDeleteAll)
-                        }
-                        // Hidden trips in a disabled region (mainland China)
-                        // are kept: empty the visible rides and save, rather
-                        // than removing the file.
-                        if let store = itineraries.store,
-                           !ItineraryStore.disabledRegionTrips(store.trains).isEmpty {
-                            itineraries.deleteAll(clearing: library)
-                        } else {
-                            try await library.deleteSavedStore()
-                            itineraries.load(from: library)
-                        }
-                    } catch {
-                        operationError = OperationError(
-                            titleKey: "data.loadFailedTitle",
-                            detail: error.localizedDescription,
-                            keptKey: "data.errorNothingChanged")
-                    }
-                }
-            }
-        } message: {
-            Text(
-                localization.text(
-                    "data.deleteSavedScope", params: ["region": .string(regionName)])
-                    + "\n" + localization.text("data.deleteAllRecovery"))
-        }
         .confirmationDialog(
             localization.text("data.deleteAllTitle"),
             isPresented: isPresented(.deleteAll),
@@ -726,33 +530,6 @@ struct DataManagerView: View {
                     "data.deleteAllScope", params: ["region": .string(regionName), "count": .number(Double(trainCount))])
                     + "\n" + localization.text("data.deleteAllRecovery")
                     + (hasHiddenRegionTrips ? "\n" + localization.text("data.hiddenRegionKept") : ""))
-        }
-        // 重置示例, which now names WHICH sample rather than "the one this
-        // region ships": the reader long-pressed a specific one, so the
-        // dialog can say what it is about to become.
-        .confirmationDialog(
-            localization.text(
-                "confirm.resetDefaults",
-                fallback: "Replace the current journeys with the bundled sample?"),
-            isPresented: Binding(
-                get: { replaceCandidate != nil },
-                set: { if !$0 { destination = nil } }),
-            titleVisibility: .visible
-        ) {
-            Button(
-                localization.text("btn.resetDefaults", fallback: "Reset sample"),
-                role: .destructive
-            ) {
-                let sample = replaceCandidate
-                destination = nil
-                if let sample {
-                    loadSample(sample, replacingEverything: true)
-                }
-            }
-        } message: {
-            Text(
-                (replaceCandidate.map { localization.text($0.titleKey, fallback: $0.title) }
-                    ?? "") + "\n" + localization.text("data.deleteAllRecovery"))
         }
     }
 

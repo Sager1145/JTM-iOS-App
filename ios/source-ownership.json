@@ -200,6 +200,7 @@
         "ios/RailMap/Import/ImportFileReader.swift",
         "ios/RailMap/Import/ImportFlow.swift",
         "ios/RailMap/Import/ImportPreflight.swift",
+        "ios/RailMap/Import/SampleTripsView.swift",
         "ios/RailMap/Import/TextRecognizer.swift",
         "ios/RailMap/Import/TrainStoreDocument.swift",
         "ios/RailMap/Import/TransferGuideImport.swift",

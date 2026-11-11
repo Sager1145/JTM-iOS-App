@@ -466,14 +466,11 @@ enum ShellStrings {
             .zhHans: "线路粗细、站点标记大小，以及所选行程的突出显示方式。",
             .zhHant: "路線粗細、站點標記大小，以及所選行程的突出顯示方式。",
         ],
-        "ios.aboutDiagnostics": [
-            .en: "About & diagnostics", .ja: "情報と診断", .zhHans: "关于与诊断", .zhHant: "關於與診斷",
-        ],
         "ios.note.mapSettingsElsewhere": [
-            .en: "Show or hide the rail network with the train button on the map. Layer switches are in the map's Layers panel.",
-            .ja: "路線網の表示・非表示は地図上の列車ボタンで切り替えます。レイヤーのスイッチは地図の「レイヤー」パネルにあります。",
-            .zhHans: "用地图上的列车按钮显示或隐藏铁路网。图层开关位于地图的“图层”面板中。",
-            .zhHant: "用地圖上的列車按鈕顯示或隱藏鐵路網。圖層開關位於地圖的「圖層」面板中。",
+            .en: "Show or hide the rail network with the train button on the map. Network era, date options and layer switches are in the map's Layers panel.",
+            .ja: "路線網の表示・非表示は地図上の列車ボタンで切り替えます。路線網の年代、日付のオプション、レイヤーのスイッチは地図の「レイヤー」パネルにあります。",
+            .zhHans: "用地图上的列车按钮显示或隐藏铁路网。路网年代、日期选项和图层开关位于地图的“图层”面板中。",
+            .zhHant: "用地圖上的列車按鈕顯示或隱藏鐵路網。路網年代、日期選項和圖層開關位於地圖的「圖層」面板中。",
         ],
         "ios.layers.frameNetwork": [
             .en: "Show the whole network", .ja: "路線網全体を表示", .zhHans: "显示整个铁路网",
@@ -700,10 +697,51 @@ enum ShellStrings {
             .zhHant: "所有行程標記的邊框粗細。",
         ],
         "ios.note.reset": [
-            .en: "Resets the display settings on this screen only. Your rides and exported data are untouched.",
-            .ja: "この画面の表示設定だけを初期化します。乗車記録と書き出しデータは変わりません。",
-            .zhHans: "只重设本页的显示设置；乘车记录与导出数据不受影响。",
-            .zhHant: "只重設本頁的顯示設定；乘車記錄與匯出資料不受影響。",
+            .en: "Resets map style, network era, name readings and translations. Language, theme and opening view are kept. Your trips and exported data are untouched.",
+            .ja: "地図のスタイル、路線網の年代、駅名の読み、翻訳を初期化します。言語、テーマ、起動時の地図範囲は変わりません。旅程と書き出したデータには影響しません。",
+            .zhHans: "重设地图样式、路网年代、站名读音与翻译。语言、主题和启动地图范围保持不变。行程与导出数据不受影响。",
+            .zhHant: "重設地圖樣式、路網年代、站名讀音與翻譯。語言、主題和啟動地圖範圍保持不變。行程與匯出資料不受影響。",
+        ],
+
+        // MARK: Layers "Dates and history", Settings reset and diagnostics, source links
+
+        "ios.layers.datesGroup": [
+            .en: "Dates and history", .ja: "日付と履歴", .zhHans: "日期与历史", .zhHant: "日期與歷史",
+        ],
+        "ios.layers.onlySelectedDate": [
+            .en: "Only the selected date", .ja: "選択した日付のみ",
+            .zhHans: "仅显示所选日期", .zhHant: "僅顯示所選日期",
+        ],
+        "ios.layers.autoFocus": [
+            .en: "Auto-focus", .ja: "自動フォーカス", .zhHans: "自动缩放", .zhHant: "自動縮放",
+        ],
+        "ios.note.datesLayers": [
+            .en: "Network era chooses which railway network is drawn. Only the selected date hides trips on other days, and Auto-focus moves the map when you pick a date. How other days look is set in Settings, under Map style.",
+            .ja: "路線網の年代は、描く路線網を選びます。「選択した日付のみ」は他の日の旅程を隠し、自動フォーカスは日付を選ぶと地図を動かします。他の日の見た目は「設定」の「地図のスタイル」で変えられます。",
+            .zhHans: "路网年代决定绘制哪一套铁路网。“仅显示所选日期”会隐藏其他日期的行程，自动缩放会在选择日期时移动地图。其他日期的外观在“设置”的“地图样式”中调整。",
+            .zhHant: "路網年代決定繪製哪一套鐵路網。「僅顯示所選日期」會隱藏其他日期的行程，自動縮放會在選擇日期時移動地圖。其他日期的外觀在「設定」的「地圖樣式」中調整。",
+        ],
+        "ios.resetDefaults": [
+            .en: "Reset to defaults", .ja: "初期設定に戻す", .zhHans: "恢复默认设置", .zhHant: "恢復預設設定",
+        ],
+        "ios.resetDefaults.confirmTitle": [
+            .en: "Reset display settings?", .ja: "表示設定を初期化しますか？",
+            .zhHans: "重设显示设置？", .zhHant: "重設顯示設定？",
+        ],
+        "ios.resetDefaults.confirm": [
+            .en: "Reset", .ja: "初期化", .zhHans: "重设", .zhHant: "重設",
+        ],
+        "ios.version": [
+            .en: "Version", .ja: "バージョン", .zhHans: "版本", .zhHant: "版本",
+        ],
+        "ios.info.hkJourneyPlanner": [
+            .en: "MTR Journey Planner", .ja: "MTR 経路案内", .zhHans: "港铁行程搜索", .zhHant: "港鐵行程搜尋",
+        ],
+        "ios.info.hkOpenData": [
+            .en: "MTR Open Data", .ja: "MTR オープンデータ", .zhHans: "港铁开放数据", .zhHant: "港鐵開放數據",
+        ],
+        "ios.info.moLrtLines": [
+            .en: "Macao LRT Lines", .ja: "マカオ LRT 路線", .zhHans: "澳门轻轨线路", .zhHant: "澳門輕軌路線",
         ],
     ]
 }
