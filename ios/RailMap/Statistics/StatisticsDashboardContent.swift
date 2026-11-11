@@ -47,6 +47,9 @@ struct StatisticsDashboardContent: View {
     /// destination of its own, so tapping a journey here opens the record
     /// rather than silently changing what the map behind the panel draws.
     var openJourney: (Train) -> Void
+    /// A12: reveals the unconfirmed trips (History, ridden filter). `nil`
+    /// leaves the note without the action.
+    var showUnconfirmed: (() -> Void)?
 
     /// §13.2: work under about 400 ms must not flash progress UI at the
     /// reader. Held here rather than inside the summary because the summary is
@@ -405,7 +408,7 @@ struct StatisticsDashboardContent: View {
                         spoken: allPending ? distance : "\(km) km · \(serviceDetail(row.group))")
                 },
             span: localization.text(
-                "ios.ticket.spanDay", params: ["date": .string(StatisticsFormat.spelledDate(daily.date, localization: localization))]),
+                "ios.ticket.spanDay", params: ["date": .string(TripDateLabel.label(daily.date, .compact, language: localization.language))]),
             issued: StatisticsFormat.ticketIssued(region: region, localization: localization)
         )
         .passportCard(.feature)
@@ -1228,7 +1231,7 @@ struct StatisticsDashboardContent: View {
 
     /// The train, and the day it ran — the reference's "WS 255 · 20 Feb 2025".
     private func journeyCaption(_ journey: PassportStatistics.Journey) -> String {
-        let day = journey.date.isEmpty ? nil : StatisticsFormat.dayLabel(journey.date, localization: localization)
+        let day = journey.date.isEmpty ? nil : TripDateLabel.label(journey.date, .compact, language: localization.language)
         return [journey.title, day].compactMap { $0 }.joined(separator: " · ")
     }
 
@@ -1264,6 +1267,14 @@ struct StatisticsDashboardContent: View {
             Text(localization.text("stats.empty"))
             if unconfirmed > 0 {
                 Text(unconfirmedMessage(unconfirmed))
+                if let showUnconfirmed {
+                    Button(action: showUnconfirmed) {
+                        Text(localization.text(
+                            "ios.stats.showUnconfirmed", params: ["n": .number(Double(unconfirmed))]))
+                    }
+                    .buttonStyle(.railTertiary)
+                    .accessibilityIdentifier("statisticsShowUnconfirmed")
+                }
             }
         }
         .font(.subheadline)

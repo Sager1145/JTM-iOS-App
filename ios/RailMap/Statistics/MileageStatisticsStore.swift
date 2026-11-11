@@ -1092,8 +1092,8 @@ extension MileageStatisticsStore {
             let dates = dateSelection
             if let start = dates.start {
                 let end = dates.end ?? start
-                let range = start == end ? StatisticsFormat.dayLabel(start, localization: localization) : "\(StatisticsFormat.dayLabel(start, localization: localization)) – \(StatisticsFormat.dayLabel(end, localization: localization))"
-                let excluded = dates.excludedDates.sorted().map { "− \(StatisticsFormat.dayLabel($0, localization: localization))" }
+                let range = start == end ? TripDateLabel.label(start, .compact, language: localization.language) : "\(TripDateLabel.label(start, .compact, language: localization.language)) – \(TripDateLabel.label(end, .compact, language: localization.language))"
+                let excluded = dates.excludedDates.sorted().map { "− \(TripDateLabel.label($0, .compact, language: localization.language))" }
                 return ([range] + excluded).joined(separator: " · ")
             }
             return selectedYear.map { String($0) }
@@ -1138,7 +1138,7 @@ extension MileageStatisticsStore {
             kind: StatisticsCardKind
         ) -> String {
             var detail: [String] = []
-            if !journey.date.isEmpty { detail.append(StatisticsFormat.dayLabel(journey.date, localization: localization)) }
+            if !journey.date.isEmpty { detail.append(TripDateLabel.label(journey.date, .compact, language: localization.language)) }
             if let train = trains.first(where: { $0.id == journey.id }) {
                 let indexes = Statistics.effectivelyRiddenStopIndexes(train.stops)
                 if let first = indexes.first, let last = indexes.last {
@@ -1190,7 +1190,7 @@ extension MileageStatisticsStore {
             return data(
                 hero: StatisticsFormat.km(daily.stats.services.km), unit: "km",
                 supporting: StatisticsFormat.duration(daily.stats.rideMinutes, localization),
-                contextDetail: StatisticsFormat.dayLabel(daily.date, localization: localization),
+                contextDetail: TripDateLabel.label(daily.date, .compact, language: localization.language),
                 secondaryValue: daily.trainCount.formatted(),
                 secondaryLabel: localization.text("ios.ticket.label.rides"),
                 rows: serviceWidgetRows(daily.stats.services))

@@ -33,14 +33,14 @@ struct StatisticsScopePicker: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: RailSpacing.s16) {
-                    VStack(spacing: 0) {
-                        classification(.date, text: localization.statisticsScopeText("byDate"))
-                        Divider()
-                        classification(.journeyGroup, text: localization.statisticsScopeText("byGroup"))
+                    Picker(localization.text("ios.stats.scope"), selection: classificationBinding) {
+                        Text(localization.statisticsScopeText("byDate"))
+                            .tag(MileageStatisticsStore.Classification.date)
+                        Text(localization.statisticsScopeText("byGroup"))
+                            .tag(MileageStatisticsStore.Classification.journeyGroup)
                     }
-                    .padding(.horizontal, RailSpacing.s16)
-                    .background(Color(.secondarySystemGroupedBackground),
-                                in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
+                    .pickerStyle(.segmented)
+                    .accessibilityIdentifier("statisticsClassification")
                     if statistics.classification == .date {
                         dateCalendar
                     } else {
@@ -83,19 +83,10 @@ struct StatisticsScopePicker: View {
         .accessibilityIdentifier("statisticsScopePicker")
     }
 
-    private func classification(_ mode: MileageStatisticsStore.Classification, text: String) -> some View {
-        Button { statistics.selectClassification(mode) } label: {
-            HStack {
-                Text(text).foregroundStyle(.primary)
-                Spacer()
-                Image(systemName: statistics.classification == mode ? "checkmark.circle.fill" : "circle")
-            }
-            .padding(.vertical, RailSpacing.s12)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(statistics.classification == mode ? .isSelected : [])
-        .accessibilityIdentifier("statisticsClassification-\(mode.rawValue)")
+    private var classificationBinding: Binding<MileageStatisticsStore.Classification> {
+        Binding(
+            get: { statistics.classification },
+            set: { statistics.selectClassification($0) })
     }
 
     private func groupChoice(_ id: String?, name: String) -> some View {
@@ -103,7 +94,11 @@ struct StatisticsScopePicker: View {
             HStack {
                 Text(name).foregroundStyle(.primary)
                 Spacer()
-                Image(systemName: statistics.selectedJourneyGroupID == id ? "checkmark.circle.fill" : "circle")
+                if statistics.selectedJourneyGroupID == id {
+                    Image(systemName: "checkmark")
+                        .foregroundStyle(.tint)
+                        .accessibilityHidden(true)
+                }
             }
             .padding(.vertical, RailSpacing.s12)
             .contentShape(Rectangle())

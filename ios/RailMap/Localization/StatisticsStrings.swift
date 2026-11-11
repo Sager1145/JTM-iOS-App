@@ -61,15 +61,6 @@ enum StatisticsStrings {
         "ios.ticket.unit.percent": [
             .en: "%", .ja: "％", .zhHans: "％", .zhHant: "％",
         ],
-        // 「集計期間は年を必ず入れる」 — the design's own 表記 rule, and the
-        // reason this is a spelled date rather than the compact 年.月.日 form
-        // the foot of the card uses. A span that read 「4.1 から 3.31」 would
-        // not say which year, and this line is the only place on the face that
-        // says what the figures above it cover.
-        "ios.ticket.date": [
-            .en: "{y}-{m}-{d}", .ja: "{y}年{m}月{d}日",
-            .zhHans: "{y}年{m}月{d}日", .zhHant: "{y}年{m}月{d}日",
-        ],
         "ios.ticket.span": [
             .en: "From {from} to {to}",
             .ja: "{from}から　{to}まで集計",
@@ -307,6 +298,10 @@ enum StatisticsStrings {
             .ja: "乗車が未確認の行程：{n} 本。確認すると集計に加わります。",
             .zhHans: "尚未确认乘坐的行程：{n} 趟。确认后即计入统计。",
             .zhHant: "尚未確認乘坐的行程：{n} 趟。確認後即計入統計。",
+        ],
+        "ios.stats.showUnconfirmed": [
+            .en: "Show {n} trips", .ja: "{n}件の旅程を表示",
+            .zhHans: "显示 {n} 个行程", .zhHant: "顯示 {n} 個行程",
         ],
         "ios.stats.totalRiddenKm": [
             .en: "Total ridden km", .ja: "乗車した全区間",
