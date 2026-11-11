@@ -15,8 +15,7 @@
 # Rule status-color: an orange or red foreground style outside Design/ is a
 # warning/error message in the wrong style (audit H4): use RailStatusLabel. It is
 # NOT silenced by ui-token-ok. A legitimate non-message use (a destructive glyph,
-# a record dot) carries `// status-color-ok: reason` on the same line; a file
-# owned by another unmerged branch is listed in STATUS_COLOR_FILES below.
+# a record dot) carries `// status-color-ok: reason` on the same line.
 set -euo pipefail
 IOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exec python3 -I - "$IOS_DIR" "$@" <<'PY'
@@ -29,14 +28,6 @@ EXCL_DIRS = {"Diagnostics", "Design"}
 EXCL_FILES = {"Sharing/ShareCard.swift", "Sharing/StatsWidgetView.swift",
               "Statistics/PassportTicketFace.swift", "Statistics/TicketJimon.swift",
               "Playback/PlaybackVideoExporter.swift"}
-
-# Files not yet converted because another branch owns them. Each entry names the
-# branch; delete the entry when that branch has merged and the file is converted.
-STATUS_COLOR_FILES = {
- # TODO(branch claude/goofy-haibt-1f061c): add-trip branch edits the time fields.
- "JourneyEditor/EditorDateTimeFields.swift",
- "JourneyEditor/EditorTimeSection.swift",
-}
 
 def num_ok(m):  # allowed small numbers
     return m in ("0", "1", "2")
@@ -141,17 +132,16 @@ def scan(app=None):
             st = line.strip()
             if st.startswith("//"):
                 continue
-            if rel[len("RailMap/"):] not in STATUS_COLOR_FILES:
-                for m in R_FG.finditer(line):
-                    # The argument may continue on later lines; read to its close paren.
-                    span = [line[m.end():]]
-                    for nxt in lines[i + 1:i + 7]:
-                        if paren_closed("".join(span)): break
-                        span.append(nxt)
-                    joined = "\n".join(span)
-                    arg = inner(joined, 0)
-                    if R_STATUS_ARG.search(arg) and not any(R_STATUS_OK.search(t) for t in span):
-                        add("status-color", i)
+            for m in R_FG.finditer(line):
+                # The argument may continue on later lines; read to its close paren.
+                span = [line[m.end():]]
+                for nxt in lines[i + 1:i + 7]:
+                    if paren_closed("".join(span)): break
+                    span.append(nxt)
+                joined = "\n".join(span)
+                arg = inner(joined, 0)
+                if R_STATUS_ARG.search(arg) and not any(R_STATUS_OK.search(t) for t in span):
+                    add("status-color", i)
             # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
             if R_OK.search(line):
                 continue
@@ -301,11 +291,6 @@ def self_test():
             'Text(m)\n.foregroundStyle(\n    ok ? Color.secondary : Color.primary)\n'
             'Text(m)\n.foregroundStyle(\n    Color.red) // status-color-ok: dot\n')
         expected.append(("Feature/Multi.swift", 2, "status-color"))
-        # a file named in STATUS_COLOR_FILES is exempt from status-color only
-        os.makedirs(os.path.join(app, "JourneyEditor"))
-        open(os.path.join(app, "JourneyEditor", "EditorTimeSection.swift"), "w").write(
-            'Text(m).foregroundStyle(.red)\n.padding(.top, 9)\n')
-        expected.append(("JourneyEditor/EditorTimeSection.swift", 2, "padding-literal"))
         # Design/ and Diagnostics/ are excluded entirely
         for d in ("Design", "Diagnostics"):
             open(os.path.join(app, d, "Z.swift"), "w").write(

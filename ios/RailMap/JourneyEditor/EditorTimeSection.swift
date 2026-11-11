@@ -41,12 +41,9 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 .accessibilityIdentifier("newTripAddActualTimes")
             }
             if model.scheduledTimesConflict {
-                Text(text(
+                RailStatusLabel(kind: .error, text: text(
                     "arrivalBeforeDeparture",
                     fallback: "Arrival is before departure."))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
             }
             Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
                 get: { model.isRidden }, set: { model.riddenOverride = $0 }))
@@ -87,9 +84,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
             }
             if scheduled != nil { chipRow(isDeparture: isDeparture) }
             if raw != nil, normalized == nil {
-                Text(localization.text("ios.editor.invalidClock"))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
+                RailStatusLabel(kind: .error, text: localization.text("ios.editor.invalidClock"))
             } else if let scheduled, let status = StopTimingStatus.localizedLabel(
                 scheduled: scheduled, actual: normalized, localization: localization) {
                 // Compared with the scheduled clock above; a placeholder time has no delay.
