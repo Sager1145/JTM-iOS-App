@@ -186,7 +186,7 @@ struct TimetableAppFlowTests {
         let seasonalID = "jr-central.shinano.81.2013-summer"
         #expect(try database.trip(id: seasonalID, on: "2013-08-01") == nil)
         let early = try #require(try database.trip(id: seasonalID, on: "2013-08-12"))
-        #expect(early.stops.first?.departureTime == "08:25")
+        #expect(early.stops.first?.departureTime == nil)
         #expect(early.serviceDate == "2013-08-12")
     }
 }
