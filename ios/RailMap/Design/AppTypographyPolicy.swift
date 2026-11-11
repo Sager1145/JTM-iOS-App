@@ -18,6 +18,10 @@ import UIKit
 /// `.xxLarge` up, those rows wrap into the next row's space or truncate
 /// station names. Every size at or below the cap still follows the reader's
 /// setting; `.xSmall` is the system's smallest, so nothing below is limited.
+///
+/// This cap is an accepted product decision, not a defect: see
+/// `docs/decisions/0014-text-size-cap-is-a-feature.md`. Do not report it in
+/// audits or lift it without the user asking.
 enum AppTypographyPolicy {
     /// THE cap. Change it here and nowhere else.
     static let maximumSize: DynamicTypeSize = .xLarge
