@@ -85,12 +85,21 @@ public enum TrainServicePatterns {
         /// graph — recorded so route-solving tests can skip them without
         /// masking genuine regressions.
         public let unsolvableLegs: [[String]]
+        /// True when every train of the service calls at every station between
+        /// `origin` and `destination`. Such a record holds no train numbers: any
+        /// number resolves to it. Absent in older files (decodes as false).
+        public let allStations: Bool
+        /// Per-revision stop patterns with the train numbers that use each, or
+        /// nil when the record has none (or its `variants.schema` is unknown).
+        /// See ``TrainServicePatterns/Variants``.
+        public let variants: Variants?
 
         private enum CodingKeys: String, CodingKey {
             case id = "patternId"
             case serviceId, name, company, label, origin, destination
             case stops, optionalStops, via, confidence, source
             case lines, validFrom, validUntil, completeness, notes, unsolvableLegs
+            case allStations, variants
         }
 
         public init(from decoder: Decoder) throws {
@@ -121,6 +130,8 @@ public enum TrainServicePatterns {
             notes = try container.decodeIfPresent(String.self, forKey: .notes)
             unsolvableLegs = try container.decodeIfPresent(
                 [[String]].self, forKey: .unsolvableLegs) ?? []
+            allStations = try container.decodeIfPresent(Bool.self, forKey: .allStations) ?? false
+            variants = try Variants.decodeIfSupported(from: container, forKey: .variants)
         }
 
         public init(
@@ -129,7 +140,8 @@ public enum TrainServicePatterns {
             via: [String], confidence: String?, source: String?, lines: [String] = [],
             validFrom: String? = nil, validUntil: String? = nil,
             completeness: Completeness = .missing, notes: String? = nil,
-            unsolvableLegs: [[String]] = []
+            unsolvableLegs: [[String]] = [],
+            allStations: Bool = false, variants: Variants? = nil
         ) {
             precondition(
                 Self.hasValidValidityInterval(validFrom: validFrom, validUntil: validUntil),
@@ -152,6 +164,8 @@ public enum TrainServicePatterns {
             self.completeness = completeness
             self.notes = notes
             self.unsolvableLegs = unsolvableLegs
+            self.allStations = allStations
+            self.variants = variants
         }
 
         public func encode(to encoder: Encoder) throws {
@@ -174,6 +188,8 @@ public enum TrainServicePatterns {
             try container.encode(completeness, forKey: .completeness)
             try container.encodeIfPresent(notes, forKey: .notes)
             try container.encode(unsolvableLegs, forKey: .unsolvableLegs)
+            if allStations { try container.encode(true, forKey: .allStations) }
+            try container.encodeIfPresent(variants, forKey: .variants)
         }
 
         /// `company`, mapped through ``OperatorBranding/companyLabel(_:)`` —
@@ -273,7 +289,7 @@ public enum TrainServicePatterns {
             }
         }
 
-        private struct GregorianDay: Comparable {
+        struct GregorianDay: Comparable {
             let rawValue: String
 
             init?(_ rawValue: String) {
