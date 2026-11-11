@@ -1037,6 +1037,113 @@ def prepared_row(entity, row):
     return result
 
 
+STOPS_ONLY_SCHEMA_VERSION = "1.3.0"
+STOPS_ONLY_STATEMENT = (
+    "Stop lists are compiled from the operators' public information. "
+    "No timetable times (departures or arrivals) are stored in this database."
+)
+# Publisher text in source_documents -> the credit name shown in the app.
+CREDIT_OPERATORS = (
+    ("北海道旅客鉄道", "JR Hokkaido (北海道旅客鉄道)"),
+    ("Hokkaido Railway", "JR Hokkaido (北海道旅客鉄道)"),
+    ("東日本旅客鉄道", "JR East (東日本旅客鉄道)"),
+    ("East Japan Railway", "JR East (東日本旅客鉄道)"),
+    ("東海旅客鉄道", "JR Central (東海旅客鉄道)"),
+    ("Central Japan Railway", "JR Central (東海旅客鉄道)"),
+    ("西日本旅客鉄道", "JR West (西日本旅客鉄道)"),
+    ("West Japan Railway", "JR West (西日本旅客鉄道)"),
+    ("四国旅客鉄道", "JR Shikoku (四国旅客鉄道)"),
+    ("Shikoku Railway", "JR Shikoku (四国旅客鉄道)"),
+    ("九州旅客鉄道", "JR Kyushu (九州旅客鉄道)"),
+    ("Kyushu Railway", "JR Kyushu (九州旅客鉄道)"),
+    ("伊勢鉄道", "Ise Tetsudo (伊勢鉄道)"),
+    ("交通新聞社", "Kotsu Shimbunsha (交通新聞社)"),
+    ("Kotsu Shimbunsha", "Kotsu Shimbunsha (交通新聞社)"),
+)
+
+
+def stops_only_credits(connection):
+    """Per-credit source counts for the sources that back a stored stop list."""
+    rows = connection.execute("""
+        SELECT publisher, COUNT(*) FROM source_documents
+        WHERE source_id IN (SELECT source_id FROM stop_times
+                            UNION SELECT source_id FROM timetable_version_sources)
+        GROUP BY publisher ORDER BY publisher""").fetchall()
+    credits = {}
+    for publisher, count in rows:
+        for needle, name in CREDIT_OPERATORS:
+            if needle in publisher:
+                credits[name] = credits.get(name, 0) + count
+    return [{"publisher": name, "sources": credits[name]} for name in sorted(credits)]
+
+
+def apply_stops_only(connection):
+    """Make the open database stops-only: keep each trip's identity, calendar,
+    ordered stops, stop kind and platform; drop every departure/arrival time.
+
+    The one implementation used both by ``build`` and by ``strip-times`` (the
+    deterministic migration for an already built file).  Idempotent.  The time
+    columns stay in the tables, always NULL, so existing readers keep working.
+    """
+    connection.execute("""
+        UPDATE stop_times SET arrival_time = NULL, departure_time = NULL,
+            arrival_seconds = NULL, departure_seconds = NULL, day_offset = 0,
+            arrival_day_offset = NULL, departure_day_offset = NULL,
+            time_accuracy = 'unknown'""")
+    # An override that only moved a time says nothing once times are gone.
+    connection.execute("DELETE FROM trip_stop_time_overrides WHERE platform_override_present = 0")
+    connection.execute("""
+        UPDATE trip_stop_time_overrides SET arrival_override = NULL, departure_override = NULL,
+            arrival_seconds_override = NULL, departure_seconds_override = NULL,
+            arrival_day_offset_override = NULL, departure_day_offset_override = NULL""")
+    connection.execute("DELETE FROM fact_sources WHERE field_name = 'times'")
+    connection.execute("""
+        UPDATE fact_completeness SET status = 'not_applicable',
+            notes = 'Stops-only database: no timetable times are stored.'
+        WHERE dimension = 'times'""")
+    connection.execute("DELETE FROM coverage_declarations WHERE dimension = 'times'")
+    metadata = {
+        "schema_version": STOPS_ONLY_SCHEMA_VERSION,
+        "time_policy": "stops_only",
+        "credit_statement": STOPS_ONLY_STATEMENT,
+        "credit_sources": canonical_json(stops_only_credits(connection)),
+    }
+    connection.execute("DELETE FROM metadata WHERE key = 'service_day_time_semantics'")
+    for key, value in sorted(metadata.items()):
+        connection.execute("INSERT OR REPLACE INTO metadata (key, value) VALUES (?, ?)", (key, value))
+
+
+def strip_times_in_place(database):
+    """Deterministic migration for an existing database file."""
+    connection = sqlite3.connect(database)
+    try:
+        connection.execute("PRAGMA foreign_keys = ON")
+        connection.execute("BEGIN")
+        apply_stops_only(connection)
+        connection.commit()
+        connection.execute("VACUUM")
+    finally:
+        connection.close()
+
+
+def time_values_present(database):
+    """Count stored time values; the stops-only guard requires zero."""
+    connection = sqlite3.connect(database)
+    try:
+        return connection.execute("""
+            SELECT (SELECT COUNT(*) FROM stop_times
+                    WHERE arrival_time IS NOT NULL OR departure_time IS NOT NULL
+                       OR arrival_seconds IS NOT NULL OR departure_seconds IS NOT NULL
+                       OR arrival_day_offset IS NOT NULL OR departure_day_offset IS NOT NULL
+                       OR day_offset != 0)
+                 + (SELECT COUNT(*) FROM trip_stop_time_overrides
+                    WHERE arrival_override IS NOT NULL OR departure_override IS NOT NULL
+                       OR arrival_seconds_override IS NOT NULL OR departure_seconds_override IS NOT NULL)
+        """).fetchone()[0]
+    finally:
+        connection.close()
+
+
 def insert_rows(connection, table, rows):
     if not rows:
         return
@@ -1113,6 +1220,7 @@ def build_database(canonical_dir, output=None):
                     insert_rows(connection, "timetable_version_sources", joins)
             from rail_interval_codes import populate_interval_tables
             populate_interval_tables(connection, json.loads(JP_PACKAGE.read_text(encoding="utf-8")), data)
+            apply_stops_only(connection)
             foreign_errors = connection.execute("PRAGMA foreign_key_check").fetchall()
             if foreign_errors:
                 raise DatasetError(f"SQLite foreign-key check failed: {foreign_errors}")
@@ -2065,6 +2173,8 @@ def main(argv=None):
     subparsers.add_parser("validate")
     build = subparsers.add_parser("build")
     build.add_argument("--output", type=Path)
+    strip = subparsers.add_parser("strip-times", help="remove every stored time from an existing database (stops-only migration)")
+    strip.add_argument("database", type=Path)
     audit = subparsers.add_parser("audit-coverage")
     audit.add_argument("--database", type=Path)
     audit.add_argument("--output", type=Path)
@@ -2080,6 +2190,10 @@ def main(argv=None):
     normalize.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.command == "strip-times":
+            strip_times_in_place(args.database)
+            print(f"Stripped times from {args.database}; time values left: {time_values_present(args.database)}.")
+            return 0
         manifest = load_manifest(args.canonical_dir)
         if args.command == "validate":
             data, origins = load_dataset(args.canonical_dir, manifest)

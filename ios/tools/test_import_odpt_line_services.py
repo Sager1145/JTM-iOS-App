@@ -35,8 +35,7 @@ class ImportODPTTests(unittest.TestCase):
 
     def test_midnight_explicit_dates_and_cross_operator_links(self):
         artifact=self.normalize(); trip=artifact['trips'][0]
-        self.assertEqual(trip['stops'][1]['arrivalSeconds'],86400+240)
-        self.assertEqual(trip['stops'][1]['departureSeconds'],86400+300)
+        self.assertEqual(trip['stops'][1],dict(stationCode=trip['stops'][1]['stationCode'],stationName=trip['stops'][1]['stationName']))
         self.assertEqual(trip['serviceDates'],['2026-10-04'])
         self.assertEqual(trip['previousTrainIDs'],['other-operator-trip'])
         self.assertEqual(trip['nextTrainIDs'],['trip-2'])
@@ -59,16 +58,9 @@ class ImportODPTTests(unittest.TestCase):
         self.mapping['calendars']['holiday']['serviceDates']=['2026-10-05']
         with self.assertRaises(ValueError): self.normalize()
 
-    def test_invalid_time_rejected(self):
-        self.row['odpt:trainTimetableObject'][0]['odpt:departureTime']='23:62'
-        with self.assertRaises(ValueError): self.normalize()
-
-    def test_daytime_regression_is_not_an_invented_overnight_wait(self):
-        calls = self.row['odpt:trainTimetableObject']
-        calls[0]['odpt:departureTime'] = '10:05'
-        calls[1]['odpt:arrivalTime'] = '09:55'
-        calls[1]['odpt:departureTime'] = '09:56'
-        with self.assertRaises(ValueError): self.normalize()
+    def test_normalized_stops_carry_no_times(self):
+        for stop in self.normalize()['trips'][0]['stops']:
+            self.assertEqual(set(stop), {'stationCode', 'stationName'})
 
     def test_import_rejects_duplicate_trip(self):
         with self.assertRaises(ValueError):
@@ -84,7 +76,7 @@ class ImportODPTTests(unittest.TestCase):
         self.assertEqual(result['lines'][1]['coverage'],'unknown')
         with self.assertRaises(ValueError): BUILD.merge_reviewed(result,self.normalize())
 
-    def test_overlay_rejects_backwards_normalized_times(self):
+    def test_overlay_rejects_times(self):
         overlay=self.normalize(); overlay['trips'][0]['stops'][1]['arrivalSeconds']=1
         base=dict(schemaVersion=1,inventoryVersion='test',trips=[],lines=[dict(lineID='test-line',operatorName='Test operator',kinds=[],coverage='unknown')])
         with self.assertRaises(ValueError): BUILD.merge_reviewed(base,overlay)

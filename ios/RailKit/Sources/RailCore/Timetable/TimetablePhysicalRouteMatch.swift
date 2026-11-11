@@ -144,10 +144,13 @@ public enum TimetablePhysicalRouteMatch {
                     var unknown = hasUnknown
                     var conflictingTime = false
                     let exactClock = call.timeAccuracy == "exact" || call.timeAccuracy == "minute"
+                    // Stops-only data publishes no times: a recorded time then
+                    // neither proves nor contradicts the call. Only a published
+                    // time that is not exact keeps the match unproven.
                     for (recorded, published) in [(times[index].arrival, call.arrivalSeconds),
                                                    (times[index].departure, call.departureSeconds)] {
-                        guard let recorded else { continue }
-                        if exactClock, let published {
+                        guard let recorded, let published else { continue }
+                        if exactClock {
                             if published != recorded + dateOffset * 86_400 { conflictingTime = true }
                         } else { unknown = true }
                     }
@@ -161,10 +164,16 @@ public enum TimetablePhysicalRouteMatch {
                     }
                     // An untimed first visit still belongs to the rider's civil
                     // boarding day; do not freely shift it to a different day.
-                    if index == 0, times[0].arrival == nil, times[0].departure == nil {
-                        if exactClock, let seconds = call.departureSeconds ?? call.arrivalSeconds {
+                    if index == 0, times[0].arrival == nil, times[0].departure == nil,
+                       let seconds = call.departureSeconds ?? call.arrivalSeconds {
+                        if exactClock {
                             if seconds / 86_400 != dateOffset { continue }
                         } else { unknown = true }
+                    }
+                    // No published time anywhere to place the ride on a day: the
+                    // rider's boarding day is the trip's service day.
+                    if index == 0, call.departureSeconds == nil, call.arrivalSeconds == nil, dateOffset != 0 {
+                        continue
                     }
                     mapStops(index + 1, after: callIndex, path: path + [callIndex], hasUnknown: unknown)
                 }

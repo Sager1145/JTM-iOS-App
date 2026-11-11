@@ -387,6 +387,22 @@ enum ShellStrings {
             .zhHans: "Apple 地图，其署名显示在地图上。",
             .zhHant: "Apple 地圖，其署名顯示在地圖上。",
         ],
+        // Where the bundled train stop lists come from. Stops only: the app
+        // carries no timetable times — see `TrainTimetableDatabase.Credits`.
+        "ios.info.stopListsTitle": [
+            .en: "Train stop lists", .ja: "列車の停車駅データ",
+            .zhHans: "列车停靠站数据", .zhHant: "列車停靠站資料",
+        ],
+        "ios.info.stopListsBody": [
+            .en:
+                "Stop lists are compiled from the public information of JR Hokkaido, JR East, JR Central, JR West, JR Shikoku and JR Kyushu (some pages published together with Kotsu Shimbunsha), and each list names its source. No timetable times are bundled.",
+            .ja:
+                "停車駅は、JR北海道・JR東日本・JR東海・JR西日本・JR四国・JR九州が公開している情報（一部は交通新聞社との共同掲載ページ）をもとに編集したものです。各リストに出典を記録しています。時刻表の時刻は収録していません。",
+            .zhHans:
+                "停靠站数据依据 JR 北海道、JR 东日本、JR 东海、JR 西日本、JR 四国、JR 九州公开的信息（部分页面与交通新闻社联合发布）整理而成，每份清单均记录其来源。本应用不收录时刻表时间。",
+            .zhHant:
+                "停靠站資料依據 JR 北海道、JR 東日本、JR 東海、JR 西日本、JR 四國、JR 九州公開的資訊（部分頁面與交通新聞社聯合發布）整理而成，每份清單均記錄其來源。本應用程式不收錄時刻表時間。",
+        ],
         "ios.mapInfo": [
             .en: "Legend and sources", .ja: "凡例と出典",
             .zhHans: "图例与数据来源", .zhHant: "圖例與資料來源",

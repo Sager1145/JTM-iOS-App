@@ -116,15 +116,13 @@ def build():
         'Official through express timetable explicitly covers Sanyo-Himeji–Hanshin Osaka-Umeda; no other class inferred.')
     # Two small manual factual excerpts, not a full reproduction of the timetable.
     by_name={s[1]:s[0] for l in package['lines'] for s in l['stations'] if l['operator']=='西日本旅客鉄道'}
-    def stop(name,arrival,departure):
-        def seconds(v):
-            if v is None: return None
-            h,m=map(int,v.split(':')); return h*3600+m*60
-        return dict(stationCode=by_name[name],stationName=name,arrivalSeconds=seconds(arrival),departureSeconds=seconds(departure))
+    def stop(name):
+        # Stops only: the published clock times are deliberately not stored.
+        return dict(stationCode=by_name[name],stationName=name)
     def trip(number,kind,url,rows):
-        return dict(id='jr-west-'+number+'-20261004-excerpt',trainNumber=number,trainType=kind,operatorName='西日本旅客鉄道',lineIDs=[main],serviceDates=['2026-10-04'],sourceURL=url,coverage='partial',note='Manual excerpt of published scheduled times for this date only; omitted stations and dates are unknown. Not an actual-operation report.',stops=[stop(*row) for row in rows])
-    trips=[trip('102C','普通','https://timetable.jr-odekake.net/train-timetable/173421?date=20261004', [('大阪','06:10','06:12'),('新大阪','06:15','06:16')]),
-           trip('3408M','新快速','https://timetable.jr-odekake.net/train-timetable/173041?date=20261004',[('大阪','07:28','07:30'),('新大阪','07:33','07:34'),('高槻','07:45','07:46'),('京都','07:59','08:00')])]
+        return dict(id='jr-west-'+number+'-20261004-excerpt',trainNumber=number,trainType=kind,operatorName='西日本旅客鉄道',lineIDs=[main],serviceDates=['2026-10-04'],sourceURL=url,coverage='partial',note='Manual excerpt of the published stop list for this date only; omitted stations and dates are unknown. Not an actual-operation report.',stops=[stop(name) for name in rows])
+    trips=[trip('102C','普通','https://timetable.jr-odekake.net/train-timetable/173421?date=20261004', ['大阪','新大阪']),
+           trip('3408M','新快速','https://timetable.jr-odekake.net/train-timetable/173041?date=20261004',['大阪','新大阪','高槻','京都'])]
     for t in trips:
         add(main,t['trainType'],t['sourceURL'],'2026-10-04','2026-10-05','JR京都線 published trip excerpt 大阪–京都')
     return dict(schemaVersion=1,inventoryVersion=package['version'],observedOn=max([OBSERVED] + [kind['observedOn'] for line in lines.values() for kind in line['kinds']]),lines=list(lines.values()),trips=trips)
@@ -171,12 +169,8 @@ def merge_reviewed(artifact, overlay):
             raise ValueError('Reviewed trip calendar missing')
         if trip['coverage'] != 'partial' or len(trip['stops']) < 2:
             raise ValueError('Reviewed timetable coverage invalid')
-        previous = -1
-        for stop in trip['stops']:
-            times = [stop[key] for key in ['arrivalSeconds', 'departureSeconds'] if stop.get(key) is not None]
-            if not times or any(not isinstance(value, int) or value < previous for value in times) or times != sorted(times):
-                raise ValueError('Reviewed times are not chronological')
-            previous = max(times)
+        if any(key in stop for stop in trip['stops'] for key in ['arrivalSeconds', 'departureSeconds']):
+            raise ValueError('Stops-only catalog: reviewed trips must not carry times')
         trip_ids.add(trip['id'])
         artifact['trips'].append(trip)
     artifact['observedOn'] = max(artifact.get('observedOn', ''), overlay.get('observedOn', ''))
