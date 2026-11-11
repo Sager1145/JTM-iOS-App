@@ -19,7 +19,7 @@ public struct SystemSearchReading: SearchReadingProvider {
         #if canImport(CoreFoundation) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS))
         let source = text as CFString
         let range = CFRangeMake(0, CFStringGetLength(source))
-        let locale = CFLocaleCreate(nil, "ja" as CFString)
+        let locale = Locale(identifier: "ja") as CFLocale
         let tokenizer = CFStringTokenizerCreate(nil, source, range, CFOptionFlags(kCFStringTokenizerUnitWordBoundary), locale)
         var result = ""
         while CFStringTokenizerAdvanceToNextToken(tokenizer).rawValue != 0 {

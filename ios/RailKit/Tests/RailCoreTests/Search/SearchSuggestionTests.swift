@@ -45,8 +45,11 @@ import Testing
 
     @Test func koreanAndTaiwanTyposAreCorrected() throws {
         let korea = try #require(SearchEngineFixture.regionIndex("kr"))
+        // 서을 romanizes like 서울 (soul), so the loose key resolves it as an exact
+        // match: it is found first, and an exact match carries no correction.
         let seoul = korea.query("서을", scope: .stations, context: SearchContext(regionCode: "kr"))
-        #expect(seoul.corrections.contains { $0.text.hasPrefix("서울") }, "\(seoul.corrections.map(\.text))")
+        #expect(seoul.results.first?.title.hasPrefix("서울") == true)
+        #expect(seoul.corrections.isEmpty)
 
         let taiwan = try #require(SearchEngineFixture.regionIndex("tw"))
         let kaohsiung = taiwan.query("gaoxoing", scope: .stations, context: SearchContext(regionCode: "tw"))
