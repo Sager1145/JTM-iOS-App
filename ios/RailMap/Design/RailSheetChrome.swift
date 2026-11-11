@@ -55,15 +55,18 @@ struct RailEditingToolbar: ToolbarContent {
     var onConfirm: (() -> Void)?
 
     var body: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            if let cancelTitle {
+        // The conditions sit OUTSIDE the items: an item whose content is
+        // empty still claims its slot, and on iOS 26 draws an empty glass
+        // bubble (or crowds the back button on a pushed page).
+        if let cancelTitle {
+            ToolbarItem(placement: .cancellationAction) {
                 Button(role: .cancel, action: onCancel) { cancelTitle }
                     .disabled(cancelDisabled)
                     .optionalIdentifier(cancelID)
             }
         }
-        ToolbarItem(placement: .confirmationAction) {
-            if let confirmTitle, let onConfirm {
+        if let confirmTitle, let onConfirm {
+            ToolbarItem(placement: .confirmationAction) {
                 confirmButton(title: confirmTitle, action: onConfirm)
             }
         }

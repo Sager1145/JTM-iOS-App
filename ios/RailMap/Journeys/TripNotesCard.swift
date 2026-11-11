@@ -432,7 +432,7 @@ private struct TripNoteFormSheet: View {
                     onCancel: { if flow.isEdited { confirmsDiscard = true } else { flow.screen = nil } },
                     confirmTitle: Text(localization.text("ios.tripNotes.save")),
                     confirmID: "tripNoteSave",
-                    canConfirm: !(!canSave || flow.isSaving),
+                    canConfirm: canSave && !flow.isSaving,
                     onConfirm: { save() })
             }
             .confirmationDialog(

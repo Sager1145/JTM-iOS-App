@@ -102,17 +102,20 @@ private struct PlatformPad: View {
                     .frame(width: otherFieldWidth)
                     .onSubmit(commitOther)
                 Button(localization.text("ios.done", fallback: "Done"), action: commitOther)
+                    .lineLimit(1).fixedSize()
                     .disabled(Int(other) == nil)
                 Spacer(minLength: 0)
                 Button(localization.text("ios.newTrip.platformClear", fallback: "Clear"), role: .destructive) {
                     platform = nil
                     done()
                 }
+                .lineLimit(1).fixedSize()
                 .disabled(platform == nil)
             }
         }
         .padding(RailSpacing.s12)
-        .frame(width: padWidth)
+        // At least the key grid; wider when large text needs it for the bottom row.
+        .frame(minWidth: padWidth)
     }
 
     private func commitOther() {
