@@ -20,9 +20,13 @@ to through its `identity` field.
   from a reliable secondary source (Wikipedia citing operator usage, Railway
   Gazette, government English pages, or the earlier curated
   `operator-identities.json` `names.en` list) is used and marked `other`.
-- No machine translation and no invented romanization. Operators without an
-  official or established English name are absent from the JSON and stay
-  untranslated (`none`).
+- No machine translation and no invented romanization, with one explicit
+  exception: the four non-cn operators with no official or established
+  English name (jp.jukkoku, jp.maya-cable, jp.tango-kairiku, kr.sillim) carry
+  a romanized label by user decision 2026-11-10, marked `unofficial`. Every
+  non-cn operator must have a label (guarded by `OperatorIdentityTests`).
+  Other operators without an English name (all remaining are `cn`, region
+  disabled) stay absent and untranslated (`none`).
 - Legal suffixes that could not be confirmed are not added. For example,
   China Railway bureau groups are written "China Railway Jinan Group" without
   "Co., Ltd.".
@@ -32,7 +36,8 @@ to through its `identity` field.
 
 Research: 2026-11-05, web research by region. `official` = checked against
 the operator's own English material; `other` = secondary or existing curated
-list, not re-verified against an official page in this pass.
+list, not re-verified against an official page in this pass; `unofficial` =
+romanization chosen by the user, not an established English name.
 
 | Code | Native label | English label | Full corporate name | Source type | Source | Note |
 |---|---|---|---|---|---|---|
@@ -301,7 +306,7 @@ list, not re-verified against an official page in this pass.
 | jp.jr-kyushu | JR九州 | JR Kyushu | Kyushu Railway Company | official | https://www.jrkyushu.co.jp/english/ | well-known official name |
 | jp.jr-shikoku | JR四国 | JR Shikoku | Shikoku Railway Company | official | https://www.jr-shikoku.co.jp/global/en/ | well-known official name |
 | jp.jr-west | JR西日本 | JR West | West Japan Railway Company | official | https://www.westjr.co.jp/global/en/ | well-known official name |
-| jp.jukkoku | 十国峠 | — |  | none | existing operator-identities.json | dropped in review: romanization only, no source |
+| jp.jukkoku | 十国峠 | Jukkokutoge |  | unofficial | existing operator-identities.json | user decision 2026-11-10: romanized, not an official name |
 | jp.kagoshima-tram | 鹿児島市電 | Kagoshima City Tram |  | other | existing operator-identities.json | kept existing; not web-verified |
 | jp.kanto | 関東鉄道 | Kanto Railway |  | other | existing operator-identities.json | kept existing; not web-verified |
 | jp.kashima | 鹿島臨海鉄道 | Kashima Coastal Railway |  | other | existing operator-identities.json | kept existing; not web-verified |
@@ -329,7 +334,7 @@ list, not re-verified against an official page in this pass.
 | jp.linimo | 愛知高速交通 | Aichi Rapid Transit | Aichi Rapid Transit Co., Ltd. | official | https://www.linimo.jp/language/en/company/ | label is company name; Linimo is the line brand |
 | jp.manyosen | 万葉線 | Manyosen |  | other | existing operator-identities.json | kept existing; not web-verified |
 | jp.matsuura | 松浦鉄道 | Matsuura Railway |  | other | existing operator-identities.json | kept existing; not web-verified |
-| jp.maya-cable | こうべ未来都市機構 | — |  | none | https://en.wikipedia.org/wiki/Kobe_Future_City | dropped in review: secondary source only; label is the Kobe city development body |
+| jp.maya-cable | こうべ未来都市機構 | Kobe Future City |  | unofficial | https://en.wikipedia.org/wiki/Kobe_Future_City | user decision 2026-11-10: romanized, not an official name |
 | jp.meitetsu | 名鉄 | Meitetsu | Nagoya Railroad Co., Ltd. | other | https://www.meitetsu.co.jp/eng/ | brand-level to match label |
 | jp.minamiaso | 南阿蘇鉄道 | Minamiaso Railway |  | other | existing operator-identities.json | kept existing; not web-verified |
 | jp.minatomirai | 横浜高速鉄道 | Yokohama Minatomirai Railway |  | other | existing operator-identities.json | kept existing; not web-verified |
@@ -382,7 +387,7 @@ list, not re-verified against an official page in this pass.
 | jp.sotetsu | 相鉄 | Sotetsu | Sagami Railway Co., Ltd. | other | existing operator-identities.json | short brand |
 | jp.takao | 高尾登山電鉄 | Takao Tozan Electric Railway |  | other | existing operator-identities.json |  |
 | jp.tama-monorail | 多摩都市モノレール | Tama Monorail |  | other | existing operator-identities.json |  |
-| jp.tango-kairiku | 丹後海陸交通 | — |  | none | existing operator-identities.json | dropped in review: romanization only, no source |
+| jp.tango-kairiku | 丹後海陸交通 | Tango Kairiku Kotsu |  | unofficial | existing operator-identities.json | user decision 2026-11-10: romanized, not an official name |
 | jp.tarumi | 樽見鉄道 | Tarumi Railway |  | other | existing operator-identities.json |  |
 | jp.tateyama-kurobe | 立山黒部貫光 | Tateyama Kurobe Kanko |  | other | existing operator-identities.json | DOUBTFUL: official English not found |
 | jp.tenhama | 天竜浜名湖鉄道 | Tenryu Hamanako Railroad |  | other | existing operator-identities.json |  |
@@ -429,7 +434,7 @@ list, not re-verified against an official page in this pass.
 | kr.neotrans | 네오트랜스주식회사 | NeoTrans | NeoTrans Co., Ltd. | other | existing operator-identities.json | Shinbundang Line is the line |
 | kr.seoul-line9 | 서울시메트로9호선 | Seoul Metro Line 9 |  | other | existing operator-identities.json | unverified |
 | kr.seoul-metro | 서울교통공사 | Seoul Metro | Seoul Metro | other | existing operator-identities.json | Seoul Transportation Corporation is older English |
-| kr.sillim | 로템SRS | — |  | none | existing operator-identities.json | dropped in review: English found is the line name (Sillim Line), not the operator 로템SRS |
+| kr.sillim | 로템SRS | Rotem SRS |  | unofficial | existing operator-identities.json | user decision 2026-11-10: romanized, not an official name |
 | kr.sr | 에스알 | SR | SR Co., Ltd. | other | existing operator-identities.json | SRT is the service |
 | kr.ui-sinseol | 우이신설 도시철도 | Ui-Sinseol LRT |  | other | existing operator-identities.json | DOUBTFUL: unverified |
 | kr.uijeongbu-lrt | (주)우진메트로 | Uijeongbu Light Rail |  | other | existing operator-identities.json | unverified |
