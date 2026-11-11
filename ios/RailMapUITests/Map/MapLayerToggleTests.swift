@@ -148,17 +148,20 @@ final class MapLayerToggleTests: XCTestCase {
     func testNetworkStationSwitchesExist() {
         let app = launch()
         XCTAssertTrue(app.buttons["mapLayersButton"].waitForExistence(timeout: 12))
-        app.buttons["mapLayersButton"].tap()
-
-        // The layers sheet is non-modal: the map's own network button stays
-        // hittable above it, and the network switches are disabled until the
-        // network is on (the same rule as the ridden-line switches).
+        // The network switches are disabled until the network is on (the same
+        // rule as the ridden-line switches), so turn it on before opening.
         let network = app.buttons["mapNetworkToggle"]
         XCTAssertTrue(network.waitForExistence(timeout: 8))
-        XCTAssertTrue(
-            network.isHittable,
-            "the map behind the half-height layers sheet must stay interactive")
         if !network.isSelected { network.tap() }
+        app.buttons["mapLayersButton"].tap()
+
+        // The layers sheet is non-modal on iPhone: the map's own network
+        // button stays hittable above it. Sheets stay modal on iPad.
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            XCTAssertTrue(
+                network.isHittable,
+                "the map behind the half-height layers sheet must stay interactive")
+        }
 
         for label in ["layerNetworkStations", "layerNetworkStationNames"] {
             let toggle = app.switches[label]
@@ -433,7 +436,7 @@ final class MapLayerToggleTests: XCTestCase {
     /// toolbar and the label depends on the reader's language, which is what
     /// made the first version of this suite fail on a Japanese simulator.
     private func dismissLayers(_ app: XCUIApplication) {
-        let done = app.navigationBars.buttons.element(boundBy: 0)
+        let done = app.buttons["mapLayersClose"]
         if done.waitForExistence(timeout: 6) { done.tap() }
     }
 

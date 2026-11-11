@@ -46,14 +46,14 @@ enum ShellStrings {
         "ios.note.routesLayers": [
             .en: "These follow the Train routes switch on the map.",
             .ja: "これらは地図上の列車経路スイッチに従います。",
-            .zhHans: "这些开关跟随地图上的列车路线按钮。",
-            .zhHant: "這些開關跟隨地圖上的列車路線按鈕。",
+            .zhHans: "这些开关跟随地图上的列车路线开关。",
+            .zhHant: "這些開關跟隨地圖上的列車路線開關。",
         ],
         "ios.hide.menuActive": [
             .en: "Show regions and months… ({n} hidden)", .ja: "表示する地域と月…（{n} 件非表示）",
             .zhHans: "显示的地区和月份…（已隐藏 {n} 项）", .zhHant: "顯示的地區與月份…（已隱藏 {n} 項）",
         ],
-        "ios.hide.regions": [.en: "Show trips from", .ja: "表示する旅程", .zhHans: "显示以下行程", .zhHant: "顯示以下行程"],
+        "ios.hide.regions": [.en: "Show trips from", .ja: "次の国・地域の旅程を表示", .zhHans: "显示这些地区的行程", .zhHant: "顯示這些地區的行程"],
         "ios.hide.months": [.en: "Months", .ja: "月", .zhHans: "月份", .zhHant: "月份"],
         "ios.hide.allHidden": [
             .en: "All trips are hidden by the filter.", .ja: "すべての旅程がフィルタで非表示になっています。",
