@@ -30,13 +30,6 @@ RailMap/JourneyEditor/StopEditorView.swift	spacing-literal	3
 RailMap/JourneyEditor/StopEditorView.swift	touch-literal	1
 RailMap/JourneyEditor/TicketScanView.swift	spacing-literal	2
 RailMap/JourneyEditor/TicketScanView.swift	stock-bordered	1
-RailMap/Journeys/JourneyMenuView.swift	dismiss-text	1
-RailMap/Journeys/JourneyMenuView.swift	padding-literal	1
-RailMap/Journeys/RideCard.swift	padding-literal	1
-RailMap/Journeys/RideCard.swift	spacing-literal	4
-RailMap/Journeys/RideDetailView.swift	padding-literal	16
-RailMap/Journeys/RideDetailView.swift	spacing-literal	24
-RailMap/Journeys/RideDetailView.swift	stock-bordered	4
-RailMap/Journeys/RideDetailView.swift	touch-literal	5
+RailMap/Journeys/RideDetailView.swift	touch-literal	1
 RailMap/Timetable/ServiceSectionSummary.swift	spacing-literal	1
 RailMap/Timetable/TimetableQuickMatchView.swift	spacing-literal	1

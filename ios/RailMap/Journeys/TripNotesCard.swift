@@ -190,7 +190,7 @@ struct TripNotesCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.s12) {
-            Text(localization.text("ios.tripNotes.title")).font(.headline)
+            Text(localization.text("ios.tripNotes.title")).railText(.cardTitle)
             ForEach(notes) { note in row(note) }
             Button {
                 flow.beginAdd(train: train)
@@ -202,7 +202,7 @@ struct TripNotesCard: View {
             .accessibilityIdentifier("tripNotesListAdd")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(RailSpacing.s16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(cornerRadius: RailStyle.cardCornerRadius, style: .continuous))
@@ -223,7 +223,7 @@ struct TripNotesCard: View {
                     .frame(width: discSide, height: discSide)
                     .background(Color(red: 1.0, green: 0.72, blue: 0.1), in: Circle())
                     .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     if !note.category.isEmpty {
                         Text(note.category).font(.subheadline.weight(.semibold))
                     }
@@ -357,7 +357,7 @@ private struct TripNoteReadCard: View {
                 Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
             }
         }
-        .presentationDetents([.medium, .large])
+        .railSheet(.half)
         .accessibilityIdentifier("tripNoteReadCard")
     }
 
@@ -452,7 +452,7 @@ private struct TripNoteFormSheet: View {
             }
         }
         .interactiveDismissDisabled(flow.isEdited || flow.isSaving)
-        .presentationDetents([.large])
+        .railSheet(.full)
         .accessibilityIdentifier("tripNoteForm")
     }
 
