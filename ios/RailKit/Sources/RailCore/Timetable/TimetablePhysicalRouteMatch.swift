@@ -170,9 +170,11 @@ public enum TimetablePhysicalRouteMatch {
                             if seconds / 86_400 != dateOffset { continue }
                         } else { unknown = true }
                     }
-                    // No published time anywhere to place the ride on a day: the
-                    // rider's boarding day is the trip's service day.
-                    if index == 0, call.departureSeconds == nil, call.arrivalSeconds == nil, dateOffset != 0 {
+                    // No published time to place the ride on a day: the stops-only
+                    // calendar fact is the call's own civil-day offset (an overnight
+                    // trip's after-midnight calls fall on the next day).
+                    if index == 0, call.departureSeconds == nil, call.arrivalSeconds == nil,
+                       dateOffset != call.departureDayOffset {
                         continue
                     }
                     mapStops(index + 1, after: callIndex, path: path + [callIndex], hasUnknown: unknown)
@@ -192,6 +194,14 @@ public enum TimetablePhysicalRouteMatch {
                     case .unknown: missingProof = true; continue
                     case .yes: break
                     }
+                }
+                // Without published times the stations, date and pickup alone name
+                // no train: the rider must have recorded a number or a section
+                // name or number that the trip answers to (checked by
+                // serviceConstraints), else the route stays unproven.
+                if calls[start].departureSeconds == nil, calls[end].arrivalSeconds == nil,
+                   !hasServiceIdentity(train, routeSections) {
+                    missingProof = true; continue
                 }
                 guard !mapping.unknown, serviceAgreement != .unknown,
                       trip.timetableCompleteness != .conflict, trip.canApplyToRouteEditor,
@@ -252,6 +262,11 @@ public enum TimetablePhysicalRouteMatch {
     }
 
     private enum Agreement: Equatable { case yes, no, unknown }
+
+    private static func hasServiceIdentity(_ train: Train, _ routeSections: [RouteSection]) -> Bool {
+        [train.number, train.numberEn].contains { nonempty($0) != nil }
+            || routeSections.contains { nonempty($0.name) != nil || nonempty($0.number) != nil }
+    }
 
     private static func completePhysicalChain(_ trip: TrainTimetableDatabase.Trip) -> Bool {
         let calls = trip.passengerStops

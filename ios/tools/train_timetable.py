@@ -1077,6 +1077,50 @@ def stops_only_credits(connection):
     return [{"publisher": name, "sources": credits[name]} for name in sorted(credits)]
 
 
+# A clock value in free text (08:25, 札幌 6:48発, 9時30分) is a copied time too.
+CLOCK_TEXT = re.compile(r"(?<![0-9A-Za-z:@.+\-])\d{1,2}[:：]\d{2}(?![0-9:])|(?<![0-9-])\d{1,2}時(?:\d{1,2}分|(?=[発着]))")
+# Publication titles that merely name an issue time.
+CLOCK_TEXT_ALLOWED_TITLES = ("JR九州トレインナビ 2026年6月26日8:00 運転計画",)
+FREE_TEXT_COLUMNS = (
+    ("source_documents", "notes"), ("source_documents", "title"),
+    ("fact_sources", "page_or_locator"), ("fact_completeness", "notes"),
+    ("research_queue", "notes"), ("trips", "notes"),
+)
+
+
+def tidy_clock_text(text):
+    """``text`` without its clock values (idempotent)."""
+    cleaned = CLOCK_TEXT.sub("", text)
+    cleaned = re.sub(r"[ \t]{2,}", " ", cleaned)
+    cleaned = re.sub(r" ([–\-~〜→,;:、。.)）])", r"\1", cleaned).strip()
+    # A sentence that only pointed at the removed clock keeps its meaning.
+    return cleaned.replace("the previous 2026 August edition shows.", "the previous 2026 August edition differs by a minute.")
+
+
+def scrub_clock_values(value):
+    """Recursively remove clock values from every string of a JSON value."""
+    if isinstance(value, dict):
+        return {key: scrub_clock_values(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [scrub_clock_values(item) for item in value]
+    if isinstance(value, str) and CLOCK_TEXT.search(value):
+        return tidy_clock_text(value)
+    return value
+
+
+def scrub_clock_text(connection):
+    """Remove clock values from the provenance free text, keeping the rest."""
+    for table, column in FREE_TEXT_COLUMNS:
+        if column not in [row[1] for row in connection.execute(f"PRAGMA table_info({table})")]:
+            continue
+        for rowid, text in connection.execute(
+                f"SELECT rowid, {column} FROM {table} WHERE {column} IS NOT NULL").fetchall():
+            if text in CLOCK_TEXT_ALLOWED_TITLES or not CLOCK_TEXT.search(text):
+                continue
+            connection.execute(f"UPDATE {table} SET {column} = ? WHERE rowid = ?",
+                               (tidy_clock_text(text), rowid))
+
+
 def apply_stops_only(connection):
     """Make the open database stops-only: keep each trip's identity, calendar,
     ordered stops, stop kind and platform; drop every departure/arrival time.
@@ -1085,12 +1129,16 @@ def apply_stops_only(connection):
     deterministic migration for an already built file).  Idempotent.  The time
     columns stay in the tables, always NULL, so existing readers keep working.
     """
+    # day_offset is a calendar fact (which civil day a call falls on after
+    # midnight), not a copied clock: keep it as one integer per call.
+    connection.execute("""
+        UPDATE stop_times SET
+            day_offset = MAX(day_offset, COALESCE(arrival_day_offset, 0), COALESCE(departure_day_offset, 0))""")
     connection.execute("""
         UPDATE stop_times SET arrival_time = NULL, departure_time = NULL,
-            arrival_seconds = NULL, departure_seconds = NULL, day_offset = 0,
+            arrival_seconds = NULL, departure_seconds = NULL,
             arrival_day_offset = NULL, departure_day_offset = NULL,
             time_accuracy = 'unknown'""")
-    # An override that only moved a time says nothing once times are gone.
     connection.execute("DELETE FROM trip_stop_time_overrides WHERE platform_override_present = 0")
     connection.execute("""
         UPDATE trip_stop_time_overrides SET arrival_override = NULL, departure_override = NULL,
@@ -1102,6 +1150,9 @@ def apply_stops_only(connection):
             notes = 'Stops-only database: no timetable times are stored.'
         WHERE dimension = 'times'""")
     connection.execute("DELETE FROM coverage_declarations WHERE dimension = 'times'")
+    # Research tasks that ask for times contradict the stops-only policy.
+    connection.execute("DELETE FROM research_queue WHERE missing_dimension = 'times'")
+    scrub_clock_text(connection)
     metadata = {
         "schema_version": STOPS_ONLY_SCHEMA_VERSION,
         "time_policy": "stops_only",
@@ -1134,8 +1185,7 @@ def time_values_present(database):
             SELECT (SELECT COUNT(*) FROM stop_times
                     WHERE arrival_time IS NOT NULL OR departure_time IS NOT NULL
                        OR arrival_seconds IS NOT NULL OR departure_seconds IS NOT NULL
-                       OR arrival_day_offset IS NOT NULL OR departure_day_offset IS NOT NULL
-                       OR day_offset != 0)
+                       OR arrival_day_offset IS NOT NULL OR departure_day_offset IS NOT NULL)
                  + (SELECT COUNT(*) FROM trip_stop_time_overrides
                     WHERE arrival_override IS NOT NULL OR departure_override IS NOT NULL
                        OR arrival_seconds_override IS NOT NULL OR departure_seconds_override IS NOT NULL)
@@ -2123,7 +2173,7 @@ def build_projection(canonical_dir, legacy_path=DEFAULT_LEGACY, output=None, aud
     fallback = []
     if legacy_path and legacy_path.exists():
         for row in json.loads(legacy_path.read_text(encoding="utf-8")):
-            copy = deepcopy(row)
+            copy = scrub_clock_values(deepcopy(row))
             copy["_derivation"] = {"status": "legacy_unverified_fallback", "reason": "canonical timetable coverage is not yet sufficient for this service"}
             fallback.append(copy)
     result = sorted(derived + fallback, key=lambda row: row["patternId"])

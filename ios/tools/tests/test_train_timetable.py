@@ -155,7 +155,9 @@ class TrainTimetablePipelineTests(unittest.TestCase):
             override_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_stop_time_overrides)")}
             number_override_columns = {row[1] for row in connection.execute("PRAGMA table_info(trip_train_number_overrides)")}
             seconds = connection.execute("SELECT departure_seconds FROM stop_times WHERE trip_id='trip.test' AND stop_sequence=0").fetchone()[0]
-            override_offset = connection.execute("SELECT arrival_day_offset_override FROM trip_stop_time_overrides WHERE trip_id='trip.test'").fetchone()[0]
+            time_overrides = connection.execute("SELECT COUNT(*) FROM trip_stop_time_overrides WHERE trip_id='trip.test'").fetchone()[0]
+            day_offsets = [row[0] for row in connection.execute("SELECT day_offset FROM stop_times WHERE trip_id='trip.test' ORDER BY stop_sequence")]
+            time_values = timetable.time_values_present(first)
         finally:
             connection.close()
         self.assertEqual("Asia/Tokyo", metadata["timezone"])
@@ -168,8 +170,14 @@ class TrainTimetablePipelineTests(unittest.TestCase):
         self.assertTrue({"arrival_day_offset_override", "departure_day_offset_override",
                          "platform_override", "platform_override_present"} <= override_columns)
         self.assertTrue({"trip_id", "service_date", "train_number", "source_id"} <= number_override_columns)
-        self.assertEqual(86100, seconds)
-        self.assertEqual(1, override_offset)
+        # The builder output is stops-only: no time value, the time-only
+        # override is gone, the after-midnight civil day is kept.
+        self.assertEqual("1.3.0", metadata["schema_version"])
+        self.assertEqual("stops_only", metadata["time_policy"])
+        self.assertIsNone(seconds)
+        self.assertEqual(0, time_overrides)
+        self.assertEqual(0, time_values)
+        self.assertEqual(1, max(day_offsets))
 
     def test_unknown_station_and_backwards_time_are_rejected(self):
         manifest, data, origins = self.load()
