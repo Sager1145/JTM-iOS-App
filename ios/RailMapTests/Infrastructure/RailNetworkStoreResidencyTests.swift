@@ -95,6 +95,7 @@ struct RailNetworkStoreResidencyTests {
         let f = try fixture()
         let entry = try #require(f.index.entriesByRegion["jp"]?.first {
             $0.overview != nil && $0.dependsOn.isEmpty && $0.chunk.length < 120_000
+                && f.store.wantedDisplayDetail(lineID: $0.id, cameraZoom: 3) == .overview
         })
         f.store.ensure(lineIDs: [entry.id], owner: "rides", cameraZoom: 3)
         await f.store.waitForDisplayIdle()

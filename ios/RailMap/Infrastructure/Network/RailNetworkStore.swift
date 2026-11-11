@@ -1188,6 +1188,12 @@ final class RailNetworkStore {
         loadedDisplayLines[lineID]?.detail
     }
 
+    /// The detail a request at `cameraZoom` would want for `lineID` right now,
+    /// nil for an unknown id.
+    func wantedDisplayDetail(lineID: String, cameraZoom: Double) -> DisplayDetail? {
+        displayIndex?.entryByID[lineID].map { wantedDetail(for: $0, cameraZoom: cameraZoom) }
+    }
+
     /// Resolves when no display batch is in flight (and the chain of batches
     /// the last one started has settled). For tests and measurement.
     func waitForDisplayIdle() async {
@@ -1254,16 +1260,24 @@ final class RailNetworkStore {
                 return la != lb ? la < lb : a < b
             }
         var bytes = residentBytes
-        for id in candidates {
-            guard bytes > residentByteBudget else { break }
-            let hasSurvivingDependent = loadedDisplayLines.keys.contains { survivorID in
-                survivorID != id && index.entryByID[survivorID]?.dependsOn.contains(id) == true
+        // Repeated until a pass evicts nothing: removing a dependent frees the
+        // line it depended on, which an earlier visit in the same pass had to
+        // skip.
+        var evicted = true
+        while evicted && bytes > residentByteBudget {
+            evicted = false
+            for id in candidates {
+                guard bytes > residentByteBudget else { break }
+                let hasSurvivingDependent = loadedDisplayLines.keys.contains { survivorID in
+                    survivorID != id && index.entryByID[survivorID]?.dependsOn.contains(id) == true
+                }
+                guard !hasSurvivingDependent, let prepared = loadedDisplayLines[id] else { continue }
+                loadedDisplayLines.removeValue(forKey: id)
+                displayAttempts.removeValue(forKey: id)
+                bytes -= prepared.bytes
+                evictedLineTotal += 1
+                evicted = true
             }
-            guard !hasSurvivingDependent, let prepared = loadedDisplayLines[id] else { continue }
-            loadedDisplayLines.removeValue(forKey: id)
-            displayAttempts.removeValue(forKey: id)
-            bytes -= prepared.bytes
-            evictedLineTotal += 1
         }
     }
 
