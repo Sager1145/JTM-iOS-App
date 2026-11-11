@@ -1,8 +1,14 @@
 import RailPresentation
 import XCTest
 
-/// "Reload all trips" from Settings: it finishes, it can be stopped, and the
-/// app is still in the foreground afterwards (no crash, no watchdog kill).
+/// "Repair routes" from the data manager: it finishes, it can be stopped, and
+/// the app is still in the foreground afterwards (no crash, no watchdog kill).
+///
+/// Repair reads cached routes back, so on a warm cache it can finish before
+/// its progress row is ever visible. These tests therefore wait for the
+/// button to come back and never require the progress row; the progress and
+/// stop path of the full rebuild is covered by `rebuildResolvesAll` in
+/// `RiddenRouteStoreLandingTests`.
 @MainActor
 final class ReloadAllUITests: XCTestCase {
     override func setUp() async throws {
@@ -13,11 +19,9 @@ final class ReloadAllUITests: XCTestCase {
         let app = launchWithSample()
         openReloadRow(in: app)
         startReload(in: app)
-        XCTAssertTrue(app.descendants(matching: .any)["reloadAllProgress"].waitForExistence(timeout: 20),
-                      "A running reload shows its progress.")
-        // The row returns to its button only when the reload has finished.
-        XCTAssertTrue(app.buttons["reloadAllButton"].waitForExistence(timeout: 600),
-                      "Reload all did not finish within 10 minutes.")
+        // The row is disabled until the repair has finished.
+        waitUntilEnabled(app.buttons["reloadAllButton"], timeout: 600,
+                         "Repair did not finish within 10 minutes.")
         XCTAssertEqual(app.state, .runningForeground)
     }
 
@@ -25,16 +29,15 @@ final class ReloadAllUITests: XCTestCase {
         let app = launchWithSample()
         openReloadRow(in: app)
         startReload(in: app)
+        // A repair that already finished has nothing to stop.
         let stop = app.buttons["reloadAllStop"]
-        XCTAssertTrue(stop.waitForExistence(timeout: 20))
-        stop.tap()
-        XCTAssertTrue(app.buttons["reloadAllButton"].waitForExistence(timeout: 10),
-                      "Stopping returns the row to its button.")
+        if stop.waitForExistence(timeout: 5) { stop.tap() }
+        waitUntilEnabled(app.buttons["reloadAllButton"], timeout: 60,
+                         "Stopping returns the row to its button.")
         // Starting again straight after a stop is the race this guards.
         startReload(in: app)
-        XCTAssertTrue(app.descendants(matching: .any)["reloadAllProgress"].waitForExistence(timeout: 30),
-                      "The restarted reload shows its progress.")
-        XCTAssertTrue(app.buttons["reloadAllButton"].waitForExistence(timeout: 600))
+        waitUntilEnabled(app.buttons["reloadAllButton"], timeout: 600,
+                         "The restarted repair did not finish.")
         XCTAssertEqual(app.state, .runningForeground)
     }
 
@@ -51,16 +54,20 @@ final class ReloadAllUITests: XCTestCase {
         let menu = app.descendants(matching: .any)["utilityMenuButton"].firstMatch
         XCTAssertTrue(menu.waitForExistence(timeout: 30))
         menu.tap()
-        let settings = app.buttons["utilitySettingsButton"]
-        XCTAssertTrue(settings.waitForExistence(timeout: 8))
-        settings.tap()
-        let about = app.descendants(matching: .any)["settingsDiagnosticsLink"].firstMatch
-        for _ in 0..<6 where !(about.exists && about.isHittable) { app.swipeUp() }
-        XCTAssertTrue(about.waitForExistence(timeout: 8))
-        about.tap()
+        let data = app.buttons["utilityDataButton"]
+        XCTAssertTrue(data.waitForExistence(timeout: 8))
+        data.tap()
         let button = app.buttons["reloadAllButton"]
         for _ in 0..<6 where !(button.exists && button.isHittable) { app.swipeUp() }
         XCTAssertTrue(button.waitForExistence(timeout: 8))
+    }
+
+    /// Waits for the button to exist and be enabled (a running repair swaps it
+    /// for its progress row, and a finished one leaves it enabled).
+    private func waitUntilEnabled(_ button: XCUIElement, timeout: TimeInterval, _ message: String) {
+        XCTAssertTrue(button.waitForExistence(timeout: timeout), message)
+        let enabled = expectation(for: NSPredicate(format: "exists == true AND isEnabled == true"), evaluatedWith: button)
+        wait(for: [enabled], timeout: timeout)
     }
 
     private func startReload(in app: XCUIApplication) {

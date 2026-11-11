@@ -85,10 +85,12 @@ final class TripPerformanceUITests: XCTestCase {
         }
     }
 
-    // MARK: 3. Reload all
+    // MARK: 3. Repair routes
 
-    /// Settings, About and diagnostics, Reload all trips, confirm, until the
-    /// row returns to its button. XCTMemoryMetric reports the peak.
+    /// The data manager, Repair routes, confirm, until the row is enabled
+    /// again. A repair reads cached routes back and can finish before its
+    /// progress row shows, so progress is not asserted. XCTMemoryMetric reports
+    /// the peak.
     func testPerf03ReloadAll() {
         let app = seededApp()
         defer { app.terminate() }
@@ -109,10 +111,9 @@ final class TripPerformanceUITests: XCTestCase {
             let confirm = app.buttons["reloadAllConfirm"].firstMatch
             XCTAssertTrue(confirm.waitForExistence(timeout: 8))
             confirm.tap()
-            XCTAssertTrue(any("reloadAllProgress", in: app).waitForExistence(timeout: 60),
-                          "A running reload shows its progress.")
-            XCTAssertTrue(app.buttons["reloadAllButton"].waitForExistence(timeout: 900),
-                          "Reload all did not finish.")
+            XCTAssertTrue(button.waitForExistence(timeout: 900), "Repair did not finish.")
+            let finished = expectation(for: NSPredicate(format: "exists == true AND isEnabled == true"), evaluatedWith: button)
+            wait(for: [finished], timeout: 900)
             stopMeasuring()
             watch.report("reloadAll")
         }
@@ -659,13 +660,9 @@ final class TripPerformanceUITests: XCTestCase {
         let menu = any("utilityMenuButton", in: app)
         XCTAssertTrue(menu.waitForExistence(timeout: 30))
         menu.tap()
-        let settings = app.buttons["utilitySettingsButton"]
-        XCTAssertTrue(settings.waitForExistence(timeout: 8))
-        settings.tap()
-        let about = any("settingsDiagnosticsLink", in: app)
-        for _ in 0..<6 where !(about.exists && about.isHittable) { app.swipeUp() }
-        XCTAssertTrue(about.waitForExistence(timeout: 8))
-        about.tap()
+        let data = app.buttons["utilityDataButton"]
+        XCTAssertTrue(data.waitForExistence(timeout: 8))
+        data.tap()
         let button = app.buttons["reloadAllButton"]
         for _ in 0..<6 where !(button.exists && button.isHittable) { app.swipeUp() }
         XCTAssertTrue(button.waitForExistence(timeout: 8))
