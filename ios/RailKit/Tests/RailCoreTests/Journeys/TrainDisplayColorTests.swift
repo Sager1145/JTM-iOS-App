@@ -1,45 +1,38 @@
-import Foundation
 import Testing
 
 @testable import RailCore
 
-/// `Train.displayColorHex` is the one colour every trip surface draws. The
-/// default is the website's `DEFAULT_TRAIN_COLOR`; nothing draws blue.
 struct TrainDisplayColorTests {
     private func train(color: String?) -> Train {
-        var train = Train(id: "t", number: "", origin: "", destination: "", stops: [], region: "jp")
-        if let color { train.style = TrainStyle(color: color) }
+        var train = Train(
+            id: "t", date: "2026-09-07", number: "1", origin: "A", destination: "B",
+            stops: [Stop(name: "A", departure: "08:00"), Stop(name: "B", arrival: "09:00")])
+        train.style = color.map { TrainStyle(color: $0) }
         return train
     }
 
-    @Test func defaultIsTheWebsiteRed() {
-        #expect(TrainValidation.defaultTrainColor == "#d9364f")
+    @Test("a stored colour is drawn, in the spellings the app has always drawn, else the default")
+    func table() {
+        let red = TrainValidation.defaultTrainColor
+        #expect(red == "#d9364f")
+        let rows: [(String?, String)] = [
+            (nil, red), ("", red), ("red", red), ("#12345", red), ("#1234567", red),
+            ("#12345g", red), ("+12345", red),
+            ("#0A84FF", "#0A84FF"), ("#0a84ff", "#0a84ff"),
+            ("d9364f", "#d9364f"), (" #0A84FF ", "#0A84FF"), ("\n#336699\n", "#336699"),
+        ]
+        for (stored, expected) in rows {
+            #expect(train(color: stored).displayColorHex == expected, "\(stored ?? "nil")")
+        }
+        #expect(train(color: nil).displayColorHex == red)
     }
 
-    @Test(arguments: [
-        (nil as String?, "#d9364f"),
-        ("", "#d9364f"),
-        ("red", "#d9364f"),
-        ("#12345", "#d9364f"),
-        ("d9364f", "#d9364f"),
-        (" #0A84FF ", "#d9364f"),
-        ("#0A84FF", "#0A84FF"),
-        ("#00ff00", "#00ff00"),
-    ])
-    func table(stored: String?, expected: String) {
-        #expect(train(color: stored).displayColorHex == expected)
-    }
-
-    /// The colour drawn in the session that created a trip equals the colour
-    /// after save and relaunch (the export writes the default for a missing
-    /// colour and keeps an invalid one).
-    @Test(arguments: [nil as String?, "", "red", "#12345", "#0A84FF"])
-    func stableAcrossSave(stored: String?) throws {
-        let before = train(color: stored)
-        let exported = TrainValidation.normalizeExportTrain(
-            before, country: "jp", stations: .empty)
-        let data = try JSONEncoder().encode(exported)
-        let after = try JSONDecoder().decode(Train.self, from: data)
-        #expect(before.displayColorHex == after.displayColorHex)
+    @Test("the colour drawn before saving equals the colour after the export normaliser")
+    func survivesNormalisation() {
+        for stored in [nil, "", "red", "#12345", "#0A84FF", "d9364f", " #0A84FF "] {
+            let before = train(color: stored)
+            let after = TrainValidation.normalizeExportTrain(before)
+            #expect(before.displayColorHex == after.displayColorHex, "\(stored ?? "nil")")
+        }
     }
 }

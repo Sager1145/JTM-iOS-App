@@ -104,8 +104,14 @@ R_RAW_RED = re.compile(r'Color\(red:\s*0\.85,\s*green:\s*0\.21,\s*blue:\s*0\.31\
 COLOUR_READERS = {"RailMap/JourneyEditor/JourneyEditorDetails.swift"}
 RIDE_COLOUR_DIRS = ("RailMap/Map/", "RailMap/Playback/", "RailMap/Sharing/")
 # Renderer-missing-style guards and the editor's candidate route are not trip colours.
-SYSBLUE_EXEMPT = {"RailMap/Map/MapOverlayStyles.swift", "RailMap/Map/RailMapCoordinator.swift",
-                  "RailMap/Map/TripMapView.swift"}
+# Only the renderer-missing-style form `style?.color ?? .systemBlue` is exempt
+# (RailMapCoordinator.swift:4837, MapOverlayStyles.swift:297); no whole file is.
+R_SYSBLUE_RENDERER = re.compile(r'style\?\.color\s*\?\?\s*\.systemBlue\b')
+# RailKit/Sources is scanned for the trip-colour rules too. These files may read
+# `style?.color`: Train.swift (displayColorHex and the schema diagnostic) and the
+# editor draft validation.
+KIT_COLOUR_READERS = {"RailKit/Sources/RailCore/Journeys/Train.swift",
+                      "RailKit/Sources/RailApplication/Editor/RideDraftValidation.swift"}
 R_KEYDEF = re.compile(r'^\s*"([^"]+)"\s*:\s*\[')
 R_KEYUSE = re.compile(r'\b(?:text|countryText)\(\s*"([^"]+)"')
 SHARED_KEYS = {"ios.cancel", "ios.close", "ios.done"}
@@ -186,8 +192,28 @@ def files(app=None):
                 continue
             yield "RailMap/" + rel, os.path.join(d, f)
 
-def scan(app=None):
+def kit_files(kit):
+    for d, ds, fs in os.walk(kit):
+        ds.sort()
+        for f in sorted(fs):
+            if f.endswith(".swift") and " 2" not in f:
+                yield "RailKit/Sources/" + os.path.relpath(os.path.join(d, f), kit), os.path.join(d, f)
+
+def scan_kit(kit, found):
+    for rel, path in kit_files(kit):
+        for i, line in enumerate(open(path, encoding="utf-8", errors="replace").read().split("\n")):
+            if line.strip().startswith("//"):
+                continue
+            if (R_BLUE.search(line) or R_RAW_RED.search(line)
+                    or (R_STYLE_COLOR.search(line) and rel not in KIT_COLOUR_READERS)):
+                found.setdefault((rel, "trip-colour"), []).append(i + 1)
+
+def scan(app=None, kit=None):
     found = {}  # (rel, rule) -> [lineno]
+    if app is None:
+        kit = os.path.join(ios, "RailKit", "Sources")
+    if kit:
+        scan_kit(kit, found)
     for rel, path in files(app):
         lines = open(path, encoding="utf-8", errors="replace").read().split("\n")
         def add(rule, i):
@@ -226,7 +252,7 @@ def scan(app=None):
             if (R_BLUE.search(line) or R_RAW_RED.search(line)
                     or (R_STYLE_COLOR.search(line) and rel not in COLOUR_READERS)
                     or (R_SYSBLUE_FALLBACK.search(line) and rel.startswith(RIDE_COLOUR_DIRS)
-                        and rel not in SYSBLUE_EXEMPT)):
+                        and not R_SYSBLUE_RENDERER.search(line))):
                 add("trip-colour", i)
             for m in R_PAD.finditer(line):
                 if has_big(inner(line, m.end())): add("padding-literal", i)
@@ -409,8 +435,20 @@ def self_test():
         open(os.path.join(app, "Map", "Ride.swift"), "w").write(
             'let c = UIColor(railHex: h) ?? .systemBlue\nlet d = UIColor(railHex: h) ?? .railDefaultTrip\n')
         expected.append(("Map/Ride.swift", 1, "trip-colour"))
-        open(os.path.join(app, "Map", "TripMapView.swift"), "w").write(
-            'let c = piece.color ?? .systemBlue\n')
+        # only the renderer-missing-style form is exempt, even in RailMapCoordinator.swift
+        open(os.path.join(app, "Map", "RailMapCoordinator.swift"), "w").write(
+            'let c = UIColor(railHex: ride.colorHex) ?? .systemBlue\n'
+            'renderer.strokeColor = (style?.color ?? .systemBlue)\n')
+        expected.append(("Map/RailMapCoordinator.swift", 1, "trip-colour"))
+        # RailKit/Sources is scanned for the trip-colour rules
+        kit = os.path.join(tmp, "Sources")
+        os.makedirs(os.path.join(kit, "RailCore", "Journeys"))
+        os.makedirs(os.path.join(kit, "RailCore", "Rendering"))
+        open(os.path.join(kit, "RailCore", "Rendering", "Playback.swift"), "w").write(
+            'let c = train.style?.color ?? TrainValidation.defaultTrainColor\nlet d = train.displayColorHex\n')
+        expected.append(("../Sources/RailCore/Rendering/Playback.swift", 1, "trip-colour"))
+        open(os.path.join(kit, "RailCore", "Journeys", "Train.swift"), "w").write(
+            'guard let stored = style?.color else { return x }\n')
         open(os.path.join(app, "Playback", "Exp.swift"), "w").write(
             'let c = UIColor(railHex: h) ?? .systemBlue\n')
         expected.append(("Playback/Exp.swift", 1, "trip-colour"))
@@ -425,8 +463,9 @@ def self_test():
             open(os.path.join(app, d, "Z.swift"), "w").write(
                 '.presentationDetents([.medium])\n.buttonStyle(RailCapsuleButtonStyle(kind: .primary))\n.padding(.top, 9)\n')
         got = []
-        for (rel, rule), lns in scan(app).items():
-            got += [(rel[len("RailMap/"):], ln, rule) for ln in lns]
+        for (rel, rule), lns in scan(app, kit).items():
+            got += [(rel[len("RailMap/"):] if rel.startswith("RailMap/")
+                     else "../" + rel[len("RailKit/"):], ln, rule) for ln in lns]
         if sorted(got) != sorted(expected):
             print("self-test FAILED")
             for t in sorted(set(expected) - set(got)):

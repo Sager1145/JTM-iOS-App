@@ -649,6 +649,28 @@ public struct TrainStyle: Codable, Equatable, Sendable {
     public init(color: String? = nil) { self.color = color }
 }
 
+extension Train {
+    /// The one colour every trip surface draws: the stored colour when it
+    /// reads as a colour, else ``TrainValidation/defaultTrainColor``.
+    ///
+    /// Reading is as tolerant as the app's drawing code has been: surrounding
+    /// whitespace is ignored and the leading `#` is optional (`d9364f` and
+    /// ` #D9364F ` both draw), and the result is normalised to `#` plus six
+    /// hex digits with the digits' case kept. Anything else (nil, empty,
+    /// `red`, `#12345`) falls back to the default. The stored value itself is
+    /// never rewritten; ``TrainValidation/canonicalStyle(_:)`` still owns what
+    /// is saved.
+    public var displayColorHex: String {
+        guard let stored = style?.color else { return TrainValidation.defaultTrainColor }
+        var body = stored.trimmingCharacters(in: .whitespacesAndNewlines)
+        if body.hasPrefix("#") { body.removeFirst() }
+        let isHex = body.utf8.count == 6 && body.utf8.allSatisfy {
+            ($0 >= 48 && $0 <= 57) || ($0 >= 65 && $0 <= 70) || ($0 >= 97 && $0 <= 102)
+        }
+        return isHex ? "#" + body : TrainValidation.defaultTrainColor
+    }
+}
+
 // MARK: - the rules
 
 /// `app-validation.js` §33 and the `app-store-ops.js` §18–§19 shapes.
@@ -3058,17 +3080,5 @@ extension TrainValidation.JSON {
                 }
                 .joined(separator: ",") + "}"
         }
-    }
-}
-
-extension Train {
-    /// The colour every trip surface draws this trip in: the stored colour when
-    /// `TrainValidation.isValidTrainColor` accepts it, otherwise
-    /// `TrainValidation.defaultTrainColor`. A stored value that is truthy but
-    /// invalid stays in the file unchanged (web parity) and still draws the
-    /// default, so the colour before a save equals the colour after it.
-    public var displayColorHex: String {
-        if let color = style?.color, TrainValidation.isValidTrainColor(color) { return color }
-        return TrainValidation.defaultTrainColor
     }
 }
