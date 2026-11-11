@@ -689,8 +689,11 @@ def region_checks(testcase: unittest.TestCase, directory: Path, region: str, pac
                 testcase.assertEqual(chain, node["chain"], (line["id"], node["code"]))
                 expected = rulers[chain][0][vertex]
             else:
+                # No slot to compare with: the station's own display coordinate (a
+                # reviewed display override where the package has one).
                 row = next(r for r in stations if r[0] == node["code"])
-                expected = [row[2], row[3]]
+                override = (package_line_row.get("displayStationCoordinates") or {}).get(node["code"])
+                expected = list(override) if override else [row[2], row[3]]
             testcase.assertLessEqual(metres_between(point, expected), 0.5, (line["id"], node["code"]))
             counts["slice"] += 1
         # runs address parts or chains that exist, with ordered ends inside the ruler
@@ -772,6 +775,72 @@ class FullBuildTests(unittest.TestCase):
         ("jp|jp-伊予鉄道-城北線", 4), ("jp|jp-伊予鉄道-城北線", 5), ("jp|jp-伊予鉄道-城北線", 6),
         ("jp|jp-伊予鉄道-花園線", 0), ("jp|jp-万葉線-高岡軌道線", 5), ("jp|jp-万葉線-高岡軌道線", 12),
     }
+
+    # Registry rows the builder cannot turn into a link: the row names a station
+    # code one of its lines does not have, has one line only (nothing to join), or
+    # has no station code or evidence. Reported, not guessed; the wave that adds
+    # the reviewed exception file turns each into a link, an intra-line row or an
+    # error. A ledger that may only shrink.
+    KNOWN_UNPLACED_JUNCTION_ROWS = {
+        ('agano-ikebukuro-seibu-chichibu', 'stationCodeNotOnLine'),
+        ('akabane-tohoku-track', 'noTwoLinePair'),
+        ('aomori-tohoku-tsugaru', 'stationCodeNotOnLine'),
+        ('astram-kencho-class16-class24', 'noTwoLinePair'),
+        ('fukui-railway-fukubu-class12-class21-shokokaigisho-mae', 'noTwoLinePair'),
+        ('goryokaku-esashi-hakodate-kamiiso', 'noStationCodeOrEvidence'),
+        ('goryokaku-hakodate-esashi', 'stationCodeNotOnLine'),
+        ('higashi-kanagawa-tokaido-yokohama', 'stationCodeNotOnLine'),
+        ('kaifu-mugi-asato', 'stationCodeNotOnLine'),
+        ('kanazawa-ir-hokuriku', 'stationCodeNotOnLine'),
+        ('kanda-tohoku-track', 'noTwoLinePair'),
+        ('kikonai-esashi-kaikyo', 'noStationCodeOrEvidence'),
+        ('kikonai-kaikyo-isaribi', 'noTwoLinePair'),
+        ('kintetsu-keihanna-class21-class12-mid-tunnel', 'noStationCodeOrEvidence'),
+        ('kitaosaka-minoh-semba-class12-class21', 'noTwoLinePair'),
+        ('kobe-new-transit-port-island-class16-class24-minami-koen', 'noTwoLinePair'),
+        ('kobe-new-transit-port-island-class24-class16-port-terminal', 'noTwoLinePair'),
+        ('kobe-new-transit-rokko-island-class16-class24-minami-uozaki', 'noTwoLinePair'),
+        ('kobe-new-transit-rokko-island-class24-class16-island-kitaguchi', 'noTwoLinePair'),
+        ('matobacho-gap-008063', 'noTwoLinePair'),
+        ('matsuda-east-15', 'stationCodeNotOnLine'),
+        ('musashino-minami-fuchuhommachi-tsurumi', 'noStationCodeOrEvidence'),
+        ('nagoya-chuo-tokaido', 'stationCodeNotOnLine'),
+        ('naka-oguni-tsugaru-kaikyo', 'noTwoLinePair'),
+        ('naoetsu-shinetsu-hokuriku', 'stationCodeNotOnLine'),
+        ('niiya-yosan-uchiko', 'stationCodeNotOnLine'),
+        ('nippori-tohoku-main-approach', 'noTwoLinePair'),
+        ('nishi-biwajima-nagoya-inuyama', 'stationCodeNotOnLine'),
+        ('okutsugaru-imabetsu-kaikyo-osm', 'noTwoLinePair'),
+        ('osaka-metro-chuo-class12-class21-osakako', 'noTwoLinePair'),
+        ('osaka-metro-nankou-port-town-class16-class24-nakafuto', 'noTwoLinePair'),
+        ('osaka-metro-nankou-port-town-class16-class24-trade-center-mae', 'noTwoLinePair'),
+        ('osaka-metro-nankou-port-town-class24-class16-ferry-terminal', 'noTwoLinePair'),
+        ('osaki-yamanote-tokaido', 'stationCodeNotOnLine'),
+        ('sangi-asake-gap-005982', 'noTwoLinePair'),
+        ('seibu-chichibu-connector', 'stationCodeNotOnLine'),
+        ('sendai-kagoshima-hisatsu-orange', 'stationCodeNotOnLine'),
+        ('senseki-tohoku-connector', 'stationCodeNotOnLine'),
+        ('tokoname-tokoname-airport', 'stationCodeNotOnLine'),
+        ('tokyo-sobu-shin-nihonbashi', 'noTwoLinePair'),
+        ('tokyo-tohoku-kanda', 'noTwoLinePair'),
+        ('tokyo-tohoku-shinkansen-ueno', 'noTwoLinePair'),
+        ('tokyo-tokaido-shinkansen-shinagawa', 'noTwoLinePair'),
+        ('tokyo-tokaido-yurakucho', 'noTwoLinePair'),
+        ('toyama-chitetsu-toyamako-class12-class21-okuda-chugakko-mae', 'noTwoLinePair'),
+        ('tsubata-hokuriku-nanao', 'stationCodeNotOnLine'),
+        ('tsugaru-futamata-kaikyo-tsugaru', 'stationCodeNotOnLine'),
+        ('tsukuda-tokushima-dosan', 'stationCodeNotOnLine'),
+        ('uchiko-yosan-uchiko', 'stationCodeNotOnLine'),
+    }
+
+    def test_unplaced_junction_rows_may_only_shrink(self):
+        report = json.loads((self.directory / "display-network-report.json").read_text())
+        topology_report = report["regions"]["jp"]["topology"]
+        rows = topology_report["unplacedJunctionRows"]
+        self.assertEqual(len(rows["first"]), rows["count"])
+        found = {(row["id"], row["reason"]) for row in rows["first"]}
+        self.assertEqual(found - self.KNOWN_UNPLACED_JUNCTION_ROWS, set())
+        self.assertEqual(topology_report["unplacedThroughServiceRows"]["count"], 0)
 
     def test_every_region(self):
         for region in ("jp", "tw", "hk", "mo", "kr"):
