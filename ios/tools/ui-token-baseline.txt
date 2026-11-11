@@ -4,3 +4,29 @@
 #   bash ios/tools/check-ui-tokens.sh --update PATH...
 # which refuses to raise a count. New code uses RailSpacing/RailRadius/RailSize,
 # .railPrimary/.railSecondary, railText/railGlyph and railSheetClose.
+RailMap/Import/TransferGuideImportView.swift	secondary-style	1
+RailMap/JourneyEditor/AutoFilledStationLabel.swift	secondary-style	1
+RailMap/JourneyEditor/EditorDateTimeFields.swift	secondary-style	2
+RailMap/JourneyEditor/EditorQuickFillSection.swift	secondary-style	1
+RailMap/JourneyEditor/EditorRouteSection.swift	secondary-style	4
+RailMap/JourneyEditor/EditorServiceSection.swift	secondary-style	1
+RailMap/JourneyEditor/JourneyCompletionView.swift	secondary-style	1
+RailMap/JourneyEditor/LocalLineServicesSection.swift	secondary-style	1
+RailMap/JourneyEditor/StopEditorView.swift	secondary-style	2
+RailMap/Journeys/JourneyComponents.swift	secondary-style	3
+RailMap/Journeys/RideCard.swift	secondary-style	2
+RailMap/Journeys/RideDetailView.swift	secondary-style	7
+RailMap/Journeys/RideSheet.swift	layout-literal	2
+RailMap/Map/MapControlBar.swift	layout-literal	2
+RailMap/Map/TripNotePickOverlay.swift	layout-literal	1
+RailMap/Playback/PlaybackTransportBar.swift	layout-literal	2
+RailMap/Sharing/ShareComposer.swift	layout-literal	2
+RailMap/Sharing/ShareComposer.swift	min-height-literal	1
+RailMap/Statistics/StatisticsComponents.swift	secondary-style	3
+RailMap/Statistics/StatisticsDashboardContent.swift	secondary-style	7
+RailMap/Statistics/StatisticsScopePicker.swift	checkmark-swap	2
+RailMap/Statistics/StatisticsScopePicker.swift	layout-literal	2
+RailMap/Statistics/StatisticsScopePicker.swift	secondary-style	1
+RailMap/Workspace/JourneyWorkspaceStates.swift	layout-literal	1
+RailMap/Workspace/RailWorkspaceView.swift	checkmark-swap	8
+RailMap/Workspace/RailWorkspaceView.swift	secondary-style	3

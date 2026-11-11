@@ -33,6 +33,12 @@ enum HexColor {
 }
 
 extension UIColor {
+    /// `TrainValidation.defaultTrainColor` (#d9364f) for the UIKit tiers: what a
+    /// trip is drawn in when its stored colour is missing or invalid. Pinned to
+    /// the RailCore constant by `TripColourTests`.
+    static let railDefaultTrip = UIColor(
+        red: 0xd9 / 255, green: 0x36 / 255, blue: 0x4f / 255, alpha: 1)
+
     /// A rail package's colour, for the tiers that draw in UIKit — the map's
     /// annotation views, its overlay renderers and the video exporter.
     ///

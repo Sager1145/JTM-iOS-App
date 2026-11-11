@@ -16,6 +16,16 @@
 # warning/error message in the wrong style (audit H4): use RailStatusLabel. It is
 # NOT silenced by ui-token-ok. A legitimate non-message use (a destructive glyph,
 # a record dot) carries `// status-color-ok: reason` on the same line.
+# New rules (wave 1, design layer): secondary-style (hand-written subheadline or
+# caption with .secondary, use railText), min-height-literal and layout-literal
+# (numeric minHeight above 44, maxWidth/idealWidth/offset literals: name a
+# constant), checkmark-swap (a selection mark made by swapping an icon: use
+# RailChoiceRow, Picker or a select-only Toggle; a status icon such as
+# `copied ? "checkmark" : "doc.on.doc"` is fine), destructive-primary (a
+# destructive-role Button styled .railPrimary: HIG forbids it), and the
+# trip-colour rules (blue fallbacks, style?.color read outside
+# Train.displayColorHex). Placement and confirmation rules: ios/VERIFICATION.md,
+# "UI placement and confirmation rules".
 set -euo pipefail
 IOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exec python3 -I - "$IOS_DIR" "$@" <<'PY'
@@ -46,6 +56,12 @@ HINT = {
  "footnote-font": "use railText(.secondary/.tertiary), or mark the deliberate case // ui-token-ok: reason",
  "direct-capsule": "use .railPrimary / .railSecondary statics instead of constructing RailCapsuleButtonStyle",
  "status-color": "orange/red text is a message: use RailStatusLabel(kind:text:); a non-message glyph carries // status-color-ok: reason",
+ "secondary-style": "use railText(.secondary) or railText(.tertiary) instead of a hand-written subheadline/caption with .secondary",
+ "min-height-literal": "name the minimum height (RailSize.textEditorMinHeight or a constant beside its use)",
+ "layout-literal": "name the layout number (a constant beside its use, or a RailSize token)",
+ "checkmark-swap": "selection is a trailing checkmark row (RailChoiceRow), a Picker or a select-only Toggle, never an icon swapped to a checkmark",
+ "destructive-primary": "a destructive button is never .railPrimary (HIG): use .railSecondary or .railTertiary, which draw the role in red",
+ "trip-colour": "trip colour comes from Train.displayColorHex (default TrainValidation.defaultTrainColor); no blue fallback, no raw style?.color",
  "feature-dismiss-key": "use the shared ios.cancel / ios.close / ios.done strings instead of a per-feature dismiss string",
 }
 # A bare numeric literal: not preceded by a letter, digit, '.' or '_' (so RailSpacing.s12 is a token).
@@ -71,6 +87,31 @@ R_STATUS_ARG = re.compile(
     r'\bColor\.(?:orange|red)\b|(?<![A-Za-z0-9_])\.(?:orange|red)\b'
     r'|\bsystem(?:Orange|Red)\b|\btone\.color\b')
 R_STATUS_OK = re.compile(r'//\s*status-color-ok:\s*\S')
+R_SECFONT = re.compile(r'\.font\(\s*\.(?:subheadline|caption)\b')
+R_SECFG = re.compile(r'\.foreground(?:Style|Color)\(\s*\.secondary\s*\)')
+R_MINH = re.compile(r'\bminHeight:\s*(\d+(?:\.\d+)?)(?![A-Za-z0-9_.])')
+R_MAXW = re.compile(r'\b(?:maxWidth|idealWidth):\s*(\d+(?:\.\d+)?)(?![A-Za-z0-9_.])')
+R_OFFSET = re.compile(r'\.offset\(')
+R_CHECK_TERN = re.compile(
+    r'(?P<cond>[^?\n]*?)\?\s*(?P<a>"[\w.]*"|[\w.]+)\s*:\s*(?P<b>"[\w.]*"|[\w.]+)')
+R_CHECK_NAME = re.compile(r'^"checkmark(?:\.circle(?:\.fill)?)?"$')
+R_DESTR = re.compile(r'role:\s*\.destructive\b')
+R_BLUE = re.compile(r'0a84ff', re.I)
+R_STYLE_COLOR = re.compile(r'style\?\.color\b(?!\s*\?\?\s*\.systemBlue)')
+R_SYSBLUE_FALLBACK = re.compile(r'\?\?\s*\.systemBlue\b')
+R_RAW_RED = re.compile(r'Color\(red:\s*0\.85,\s*green:\s*0\.21,\s*blue:\s*0\.31\)')
+# The only files that may read the stored colour: the editor's binding.
+COLOUR_READERS = {"RailMap/JourneyEditor/JourneyEditorDetails.swift"}
+RIDE_COLOUR_DIRS = ("RailMap/Map/", "RailMap/Playback/", "RailMap/Sharing/")
+# Renderer-missing-style guards and the editor's candidate route are not trip colours.
+# Only the renderer-missing-style form `style?.color ?? .systemBlue` is exempt
+# (RailMapCoordinator.swift:4837, MapOverlayStyles.swift:297); no whole file is.
+R_SYSBLUE_RENDERER = re.compile(r'style\?\.color\s*\?\?\s*\.systemBlue\b')
+# RailKit/Sources is scanned for the trip-colour rules too. These files may read
+# `style?.color`: Train.swift (displayColorHex and the schema diagnostic) and the
+# editor draft validation.
+KIT_COLOUR_READERS = {"RailKit/Sources/RailCore/Journeys/Train.swift",
+                      "RailKit/Sources/RailApplication/Editor/RideDraftValidation.swift"}
 R_KEYDEF = re.compile(r'^\s*"([^"]+)"\s*:\s*\[')
 R_KEYUSE = re.compile(r'\b(?:text|countryText)\(\s*"([^"]+)"')
 SHARED_KEYS = {"ios.cancel", "ios.close", "ios.done"}
@@ -106,6 +147,35 @@ def paren_closed(text):
             depth -= 1
     return False
 
+def check_swap(text):
+    """True when a ternary swaps a checkmark icon to mark a selection (not a status)."""
+    for m in R_CHECK_TERN.finditer(text):
+        a, b, cond = m.group("a"), m.group("b"), m.group("cond")
+        a_check, b_check = bool(R_CHECK_NAME.match(a)), bool(R_CHECK_NAME.match(b))
+        if not (a_check or b_check):
+            continue
+        other = b if a_check else a
+        if "==" in cond or "selected" in cond.lower() or other in ('"circle"', '""'):
+            return True
+    return False
+
+def destructive_primary(lines, i):
+    """A Button(role: .destructive ...) whose modifier chain carries .railPrimary."""
+    depth, opened, j = 0, False, i
+    while j < len(lines) and j < i + 40:
+        for c in lines[j]:
+            if c == "{": depth += 1; opened = True
+            elif c == "}": depth -= 1
+        if opened and depth <= 0:
+            break
+        j += 1
+    k = j + 1
+    while k < len(lines) and re.match(r'\s*[.}]|\s*//', lines[k]) and not lines[k].lstrip().startswith("}"):
+        if "railPrimary" in lines[k]:
+            return True
+        k += 1
+    return False
+
 def has_big(expr):
     return any(not num_ok(m.group(1)) for m in LIT.finditer(expr))
 
@@ -122,8 +192,28 @@ def files(app=None):
                 continue
             yield "RailMap/" + rel, os.path.join(d, f)
 
-def scan(app=None):
+def kit_files(kit):
+    for d, ds, fs in os.walk(kit):
+        ds.sort()
+        for f in sorted(fs):
+            if f.endswith(".swift") and " 2" not in f:
+                yield "RailKit/Sources/" + os.path.relpath(os.path.join(d, f), kit), os.path.join(d, f)
+
+def scan_kit(kit, found):
+    for rel, path in kit_files(kit):
+        for i, line in enumerate(open(path, encoding="utf-8", errors="replace").read().split("\n")):
+            if line.strip().startswith("//"):
+                continue
+            if (R_BLUE.search(line) or R_RAW_RED.search(line)
+                    or (R_STYLE_COLOR.search(line) and rel not in KIT_COLOUR_READERS)):
+                found.setdefault((rel, "trip-colour"), []).append(i + 1)
+
+def scan(app=None, kit=None):
     found = {}  # (rel, rule) -> [lineno]
+    if app is None:
+        kit = os.path.join(ios, "RailKit", "Sources")
+    if kit:
+        scan_kit(kit, found)
     for rel, path in files(app):
         lines = open(path, encoding="utf-8", errors="replace").read().split("\n")
         def add(rule, i):
@@ -145,6 +235,25 @@ def scan(app=None):
             # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
             if R_OK.search(line):
                 continue
+            if R_SECFONT.search(line) and any(
+                    R_SECFG.search(t) for t in lines[i:i + 3]):
+                add("secondary-style", i)
+            for m in R_MINH.finditer(line):
+                if float(m.group(1)) > 44: add("min-height-literal", i)
+            for m in R_MAXW.finditer(line):
+                add("layout-literal", i)
+            for m in R_OFFSET.finditer(line):
+                if has_big(inner(line, m.end())): add("layout-literal", i)
+            if '"checkmark' in line and (check_swap(line) or check_swap(
+                    line + " " + (lines[i + 1] if i + 1 < len(lines) else ""))):
+                add("checkmark-swap", i)
+            if R_DESTR.search(line) and "Button" in line and destructive_primary(lines, i):
+                add("destructive-primary", i)
+            if (R_BLUE.search(line) or R_RAW_RED.search(line)
+                    or (R_STYLE_COLOR.search(line) and rel not in COLOUR_READERS)
+                    or (R_SYSBLUE_FALLBACK.search(line) and rel.startswith(RIDE_COLOUR_DIRS)
+                        and not R_SYSBLUE_RENDERER.search(line))):
+                add("trip-colour", i)
             for m in R_PAD.finditer(line):
                 if has_big(inner(line, m.end())): add("padding-literal", i)
             for m in R_SPC.finditer(line):
@@ -257,6 +366,30 @@ def self_test():
      ('.background(Color.orange.opacity(0.2))', []),
      ('.tint(.orange)', []),
      ('Text(text("ios.guide.title"))', []),
+     ('Text(a).font(.subheadline).foregroundStyle(.secondary)', ["secondary-style"]),
+     ('Text(a).font(.caption).foregroundColor(.secondary)', ["secondary-style"]),
+     ('Text(a).font(.subheadline).foregroundStyle(.primary)', []),
+     ('Text(a).railText(.secondary)', []),
+     ('.frame(minHeight: 110)', ["min-height-literal"]),
+     ('.frame(minHeight: RailSize.textEditorMinHeight)', []),
+     ('.frame(maxWidth: 400)', ["layout-literal"]),
+     ('.frame(idealWidth: 540.5)', ["layout-literal"]),
+     ('.frame(maxWidth: .infinity)', []),
+     ('.frame(maxWidth: cardWidth)', []),
+     ('.offset(x: -12)', ["layout-literal"]),
+     ('.offset(y: 0)', []),
+     ('.offset(x: dx)', []),
+     ('Image(systemName: mode == m ? "checkmark.circle.fill" : "circle")', ["checkmark-swap"]),
+     ('Label(a, systemImage: scope == nil ? "checkmark" : "globe")', ["checkmark-swap"]),
+     ('Image(systemName: isSelected ? "checkmark" : "")', ["checkmark-swap"]),
+     ('Label(a, systemImage: copied ? "checkmark" : "doc.on.doc")', []),
+     ('Label(a, systemImage: ridden ? "circle.dashed" : "checkmark.circle")', []),
+     ('Label(a, systemImage: confirmed ? "checkmark.circle.fill" : "checkmark.circle")', []),
+     ('let colour = ride.colorHex ?? "#0A84FF"', ["trip-colour"]),
+     ('let c = Color(red: 0.85, green: 0.21, blue: 0.31)', ["trip-colour"]),
+     ('let c = train.style?.color ?? "#d9364f"', ["trip-colour"]),
+     ('let c = train.displayColorHex', []),
+     ('renderer.strokeColor = (style?.color ?? .systemBlue)', []),
     ]
     with tempfile.TemporaryDirectory() as tmp:
         app = os.path.join(tmp, "RailMap")
@@ -291,13 +424,48 @@ def self_test():
             'Text(m)\n.foregroundStyle(\n    ok ? Color.secondary : Color.primary)\n'
             'Text(m)\n.foregroundStyle(\n    Color.red) // status-color-ok: dot\n')
         expected.append(("Feature/Multi.swift", 2, "status-color"))
+        open(os.path.join(app, "Feature", "Destr.swift"), "w").write(
+            'Button(role: .destructive) {\n    delete()\n} label: {\n    Text("x")\n}\n.buttonStyle(.railPrimary)\n'
+            'Button(role: .destructive) { delete() } label: { Text("x") }\n.buttonStyle(.railSecondary)\n'
+            'Button("Save") { save() }\n.buttonStyle(.railPrimary)\n')
+        expected.append(("Feature/Destr.swift", 1, "destructive-primary"))
+        # a blue fallback after a ride colour is flagged in Map/Playback/Sharing, except the exempt files
+        os.makedirs(os.path.join(app, "Map"))
+        os.makedirs(os.path.join(app, "Playback"))
+        open(os.path.join(app, "Map", "Ride.swift"), "w").write(
+            'let c = UIColor(railHex: h) ?? .systemBlue\nlet d = UIColor(railHex: h) ?? .railDefaultTrip\n')
+        expected.append(("Map/Ride.swift", 1, "trip-colour"))
+        # only the renderer-missing-style form is exempt, even in RailMapCoordinator.swift
+        open(os.path.join(app, "Map", "RailMapCoordinator.swift"), "w").write(
+            'let c = UIColor(railHex: ride.colorHex) ?? .systemBlue\n'
+            'renderer.strokeColor = (style?.color ?? .systemBlue)\n')
+        expected.append(("Map/RailMapCoordinator.swift", 1, "trip-colour"))
+        # RailKit/Sources is scanned for the trip-colour rules
+        kit = os.path.join(tmp, "Sources")
+        os.makedirs(os.path.join(kit, "RailCore", "Journeys"))
+        os.makedirs(os.path.join(kit, "RailCore", "Rendering"))
+        open(os.path.join(kit, "RailCore", "Rendering", "Playback.swift"), "w").write(
+            'let c = train.style?.color ?? TrainValidation.defaultTrainColor\nlet d = train.displayColorHex\n')
+        expected.append(("../Sources/RailCore/Rendering/Playback.swift", 1, "trip-colour"))
+        open(os.path.join(kit, "RailCore", "Journeys", "Train.swift"), "w").write(
+            'guard let stored = style?.color else { return x }\n')
+        open(os.path.join(app, "Playback", "Exp.swift"), "w").write(
+            'let c = UIColor(railHex: h) ?? .systemBlue\n')
+        expected.append(("Playback/Exp.swift", 1, "trip-colour"))
+        open(os.path.join(app, "Feature", "Other.swift"), "w").write(
+            'let c = fallback ?? .systemBlue\n')
+        # a ternary split over two lines is still a selection mark
+        open(os.path.join(app, "Feature", "Split.swift"), "w").write(
+            'Image(systemName: current == x ? "checkmark.circle.fill"\n    : "circle")\n')
+        expected.append(("Feature/Split.swift", 1, "checkmark-swap"))
         # Design/ and Diagnostics/ are excluded entirely
         for d in ("Design", "Diagnostics"):
             open(os.path.join(app, d, "Z.swift"), "w").write(
                 '.presentationDetents([.medium])\n.buttonStyle(RailCapsuleButtonStyle(kind: .primary))\n.padding(.top, 9)\n')
         got = []
-        for (rel, rule), lns in scan(app).items():
-            got += [(rel[len("RailMap/"):], ln, rule) for ln in lns]
+        for (rel, rule), lns in scan(app, kit).items():
+            got += [(rel[len("RailMap/"):] if rel.startswith("RailMap/")
+                     else "../" + rel[len("RailKit/"):], ln, rule) for ln in lns]
         if sorted(got) != sorted(expected):
             print("self-test FAILED")
             for t in sorted(set(expected) - set(got)):

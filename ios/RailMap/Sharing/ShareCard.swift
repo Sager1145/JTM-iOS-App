@@ -98,7 +98,7 @@ struct ShareCardView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     private var accent: Color {
-        content.accentHex.flatMap { UIColor(railHex: $0) }.map(Color.init) ?? Color(red: 0.85, green: 0.21, blue: 0.31)
+        content.accentHex.flatMap { UIColor(railHex: $0) }.map(Color.init) ?? Color(.railDefaultTrip)
     }
     private var paper: Color { colorScheme == .dark ? Color(white: 0.09) : .white }
     private var ink: Color { colorScheme == .dark ? .white : Color(red: 0.08, green: 0.1, blue: 0.13) }

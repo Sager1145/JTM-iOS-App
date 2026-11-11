@@ -1401,7 +1401,7 @@ final class RiddenRouteStore {
             id: train.id,
             trainType: train.trainType,
             country: country,
-            colorHex: train.style?.color ?? "#0a84ff",
+            colorHex: train.displayColorHex,
             visible: train.visible != false,
             segments: segments,
             route: outcome,

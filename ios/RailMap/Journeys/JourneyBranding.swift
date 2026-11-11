@@ -273,10 +273,7 @@ enum JourneyBranding {
 
     /// The journey's recorded colour, which is what a mark falls back to.
     static func color(of train: Train) -> Color {
-        if let color = train.style?.color, let resolved = Color(hex: color) {
-            return resolved
-        }
-        return Color(hex: TrainValidation.defaultTrainColor) ?? .accentColor
+        Color(hex: train.displayColorHex) ?? Color(.railDefaultTrip)
     }
 
     private static func uniqueNonEmpty(_ values: [String]) -> [String] {

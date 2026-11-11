@@ -401,7 +401,7 @@ private struct TripNoteFormSheet: View {
                 categorySection
                 Section {
                     TextEditor(text: draft.text)
-                        .frame(minHeight: 110)
+                        .frame(minHeight: RailSize.textEditorMinHeight)
                         .overlay(alignment: .topLeading) {
                             if draft.wrappedValue.text.isEmpty {
                                 Text(localization.text("ios.tripNotes.textPlaceholder"))

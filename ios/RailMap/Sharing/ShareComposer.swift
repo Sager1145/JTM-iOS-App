@@ -288,8 +288,7 @@ struct ShareComposer: View {
                 .disabled(content == nil || exporting)
                 .accessibilityIdentifier("shareImageButton")
             }
-            .padding(RailSpacing.s16)
-            .background(.bar)
+            .railActionBar()
         }
     }
 

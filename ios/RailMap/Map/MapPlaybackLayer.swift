@@ -134,7 +134,7 @@ final class MapPlaybackLayer {
         _ snapshot: PlaybackMapSnapshot, on mapView: MKMapView, applyCamera: Bool,
         forceExactPartial: Bool = false
     ) {
-        let color = UIColor(railHex: snapshot.path.color) ?? .systemBlue
+        let color = UIColor(railHex: snapshot.path.color) ?? .railDefaultTrip
         let isSeek = snapshot.frame.distance < lastDistance
         let styleChanged = partialColor?.isEqual(color) == false
         syncDone(snapshot.done, fallbackColor: color, on: mapView)

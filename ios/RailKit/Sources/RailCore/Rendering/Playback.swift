@@ -322,7 +322,7 @@ public enum Playback {
 
         let zoom = playbackZoom(runs: runs, globalS: globalS, clock: clock)
 
-        let color = train.style?.color ?? TrainValidation.defaultTrainColor
+        let color = train.displayColorHex
         return Path(
             zoom: zoom,
             stations: stationList(
@@ -494,7 +494,7 @@ public enum Playback {
         localize: (String, String?) -> String
     ) -> [Station] {
         let stops = train.stops
-        let color = train.style?.color ?? TrainValidation.defaultTrainColor
+        let color = train.displayColorHex
 
         // stop index → arc distance, from the intervals that survived the
         // filter. The `if (!has)` on `s0` and the unconditional `set` on

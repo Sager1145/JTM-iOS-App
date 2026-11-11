@@ -263,7 +263,7 @@ struct JourneyEditorDetails: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                 RouteLogoSquare.shape(side: 22)
-                    .fill(Color(hex: draft.style?.color) ?? .accentColor)
+                    .fill(Color(hex: draft.displayColorHex) ?? Color(.railDefaultTrip))
                     .frame(width: 22, height: 22)
                     .overlay(RouteLogoSquare.shape(side: 22).strokeBorder(.separator, lineWidth: 0.5))
                     .accessibilityHidden(true)

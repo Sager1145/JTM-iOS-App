@@ -57,7 +57,7 @@ struct ShareCardBuilder {
             + facts.map { "\($0.label) \($0.value)" } + rows.map { "\($0.leading) \($0.title)" })
             .filter { !$0.isEmpty }.joined(separator: "\n")
         return ShareCardContent(
-            accentHex: train.style?.color,
+            accentHex: train.displayColorHex,
             eyebrow: eyebrow.isEmpty ? l.text("ios.share.scope.journey") : eyebrow,
             // The compact title, not the record's full name: the route is
             // the hero just below, so a name that spells it would say it twice.
@@ -132,7 +132,7 @@ struct ShareCardBuilder {
                 emphasised: false)
         }
         return ShareCardContent(
-            accentHex: trains.first?.style?.color,
+            accentHex: trains.first?.displayColorHex,
             eyebrow: l.text("ios.share.scope.list"),
             title: title,
             subtitle: span,
