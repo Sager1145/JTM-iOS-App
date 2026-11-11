@@ -261,7 +261,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/ひだ_(列車)",
-  "notes": "高山以北（猪谷〜富山）はJR西日本区間。2004年10月の台風23号被災で猪谷〜富山直通が2007-09-08まで運休。HC85系で2022-07-01から富山直通。越中八尾・速星の停車は列車により異なる可能性があり未照合。富山直通の開始日は未確認。 【2026-11-11 recheck: jr-central#4, jr-central#5, jr-central#6; sources: https://railway.jr-central.co.jp/time-schedule/search/ResultControl?st=<code https://timetable.jr-odekake.net/train-timetable/<id】"
+  "notes": "高山以北（猪谷〜富山）はJR西日本区間。2004年10月の台風23号被災で猪谷〜富山直通が2007-09-08まで運休。HC85系で2022-07-01から富山直通。越中八尾・速星の停車は列車により異なる可能性があり未照合。富山直通の開始日は未確認。 【2026-11-11 recheck: older era of hida-nagoya-toyama (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hida-osaka-takayama",
@@ -425,7 +425,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ひだ_(列車)",
-  "notes": "大阪発着ひだ（1日1往復、名古屋を経由せず岐阜で東海道本線から高山本線へ）。HC85系化 2023-03-18。草津・米原・大垣など滋賀・西濃の停車駅は記憶ベースで未照合。系統開始日不明。 【2026-11-11 recheck: jr-central#8, jr-central#9, jr-central#10; sources: https://railway.jr-central.co.jp/time-schedule/search/ResultControl?st=<code https://timetable.jr-odekake.net/train-timetable/76841?date=20261111 https://timetable.jr-odekake.net/train-timetable/77031?date=20261111】"
+  "notes": "大阪発着ひだ（1日1往復、名古屋を経由せず岐阜で東海道本線から高山本線へ）。HC85系化 2023-03-18。草津・米原・大垣など滋賀・西濃の停車駅は記憶ベースで未照合。系統開始日不明。 【2026-11-11 recheck: older era of hida-osaka-takayama (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "shinano-nagoya-nagano",
@@ -758,7 +758,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/ふじかわ_(列車)",
-  "notes": "373系による特急化 1995-10-01。静岡〜富士は東海道本線。身延は全列車停車とみなし optionalStops から stops へ移動（要照合）。内船・下部温泉・甲斐岩間は一部停車。 【2026-11-11 recheck: jr-central#13; sources: https://timetables.jreast.co.jp/2611/train/010/011061.html https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/minobu_Utsubuna_C_wh_ud.pdf】"
+  "notes": "373系による特急化 1995-10-01。静岡〜富士は東海道本線。身延は全列車停車とみなし optionalStops から stops へ移動（要照合）。内船・下部温泉・甲斐岩間は一部停車。 【2026-11-11 recheck: older era of fujikawa-shizuoka-kofu (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "nanpu-okayama-kochi",
@@ -1734,7 +1734,7 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list0958.html",
-  "notes": "Removed 下吉田 (not a 富士回遊 stop to my knowledge; verify). Fuji section operator 富士急行 → 富士山麓電気鉄道 (2022-04-01 split). 三鷹 stop on some trains unresolved. [verify 2026-09 chuo] Official 富士急行線 富士回遊 停車駅 diagram (station2026.svg; identical station2025.png) lists 新宿・立川・八王子・大月・都留文科大学前・下吉田・富士山・富士急ハイランド・河口湖 — 下吉田 restored (earlier removal was wrong). The diagram draws dotted gaps 新宿〜立川〜八王子〜大月 meaning some trains make extra JR stops, but does not name them, so optionalStops stays empty and completeness.stops stays partial. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 定期列車は新宿〜大月であずさ／かいじに併結。 【2026-11-11 recheck: jr-east-chuo-tokaido-izu#5, jr-east-chuo-tokaido-izu#6, jr-east-chuo-tokaido-izu#7; sources: https://timetables.jreast.co.jp/2611/timetable/tt0609/0609020.html https://timetables.jreast.co.jp/2611/train/050/054812.html https://timetables.jreast.co.jp/2611/train/100/103031.html https://timetables.jreast.co.jp/2611/train/100/103041.html https://timetables.jreast.co.jp/2611/train/190/191061.html】"
+  "notes": "Removed 下吉田 (not a 富士回遊 stop to my knowledge; verify). Fuji section operator 富士急行 → 富士山麓電気鉄道 (2022-04-01 split). 三鷹 stop on some trains unresolved. [verify 2026-09 chuo] Official 富士急行線 富士回遊 停車駅 diagram (station2026.svg; identical station2025.png) lists 新宿・立川・八王子・大月・都留文科大学前・下吉田・富士山・富士急ハイランド・河口湖 — 下吉田 restored (earlier removal was wrong). The diagram draws dotted gaps 新宿〜立川〜八王子〜大月 meaning some trains make extra JR stops, but does not name them, so optionalStops stays empty and completeness.stops stays partial. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 定期列車は新宿〜大月であずさ／かいじに併結。 【2026-11-11 recheck: older era of fuji-excursion-shinjuku-kawaguchiko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hachioji-tokyo-hachioji",
@@ -5177,7 +5177,7 @@
   },
   "confidence": "medium",
   "source": "https://www.jrhokkaido.co.jp/train/tr012_01.html",
-  "notes": "JR北海道 列車ガイド 停車駅図（2025年3月現在）は全列車の停車駅の和集合のみを示し、「列車により停車駅が異なる」と注記。和集合は現行 stops+optionalStops と一致（千歳・沼ノ端・鷲別を含む）。区別未確認のため partial。 【2026-11-11 recheck: jr-hokkaido#1, jr-hokkaido#2; sources: https://jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s={110,111,130,131,150,151} https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20251212_KO_kaisei.pdf】"
+  "notes": "JR北海道 列車ガイド 停車駅図（2025年3月現在）は全列車の停車駅の和集合のみを示し、「列車により停車駅が異なる」と注記。和集合は現行 stops+optionalStops と一致（千歳・沼ノ端・鷲別を含む）。区別未確認のため partial。 【2026-11-11 recheck: older era of suzuran-muroran-sapporo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ozora-sapporo-kushiro",
@@ -5808,7 +5808,7 @@
   },
   "confidence": "medium",
   "source": "https://www.jrhokkaido.co.jp/train/tr010_01.html",
-  "notes": "JR北海道 列車ガイド 停車駅図（2025年3月現在）は全列車の停車駅の和集合のみを示し、「列車により停車駅が異なる」と注記。公式図の和集合: 札幌 岩見沢 美唄 砂川 滝川 深川 旭川 上川 白滝 丸瀬布 遠軽 生田原 留辺蘂 北見 美幌 女満別 網走。白滝・丸瀬布を optional に追加、図に無い相内・東相内・西北見を削除。区別未確認のため partial。 【2026-11-11 recheck: jr-hokkaido#6, jr-hokkaido#7; sources: https://jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s={110,111,130,131,150,151} https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20241213_KO_kaisei.pdf https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20261022_KO_2026winter.pdf https://www.jrhokkaido.co.jp/press/2010/100924-1.pdf https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20181214_KO_H31Kaisei.pdf】"
+  "notes": "JR北海道 列車ガイド 停車駅図（2025年3月現在）は全列車の停車駅の和集合のみを示し、「列車により停車駅が異なる」と注記。公式図の和集合: 札幌 岩見沢 美唄 砂川 滝川 深川 旭川 上川 白滝 丸瀬布 遠軽 生田原 留辺蘂 北見 美幌 女満別 網走。白滝・丸瀬布を optional に追加、図に無い相内・東相内・西北見を削除。区別未確認のため partial。 【2026-11-11 recheck: older era of okhotsk-sapporo-abashiri (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "taisetsu-asahikawa-abashiri",
@@ -6033,7 +6033,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ニセコ_(列車)",
-  "notes": "Seasonal 臨時 特急 via the 函館本線 山線 (長万部〜小樽). Operating years not pinned; 山線 slated for closure with the 北海道新幹線 extension. 【2026-11-11 recheck: jr-hokkaido#12, jr-hokkaido#13; sources: https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20260515_KO_2026summer.pdf】"
+  "notes": "Seasonal 臨時 特急 via the 函館本線 山線 (長万部〜小樽). Operating years not pinned; 山線 slated for closure with the 北海道新幹線 extension. 【2026-11-11 recheck: older era of niseko-sapporo-hakodate (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "sonic-hakata-oita",
@@ -6265,7 +6265,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ソニック_(列車)",
-  "notes": "「ソニックにちりん」から「ソニック」へ改称した1997-11-29を起点とした（日付は記憶ベース、要確認）。停車駅は列車ごとの差が大きく、杵築・宇佐などの定期/一部停車の区別は未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: jr-kyushu-east-south#1, jr-kyushu-east-south#2; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1 https://www.jrkyushu-timetable.jp/jr-k_time/2611/0001/00013201.html】"
+  "notes": "「ソニックにちりん」から「ソニック」へ改称した1997-11-29を起点とした（日付は記憶ベース、要確認）。停車駅は列車ごとの差が大きく、杵築・宇佐などの定期/一部停車の区別は未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: older era of sonic-hakata-oita (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "sonic-hakata-saiki",
@@ -6509,7 +6509,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ソニック_(列車)",
-  "notes": "大分以南佐伯まで延長する一部列車。現行運転は確認済み扱いだが、開始日は不明。幸崎・鶴崎の停車区分も未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: jr-kyushu-east-south#3, jr-kyushu-east-south#4; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0001/00015801.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0011/00119101.html】"
+  "notes": "大分以南佐伯まで延長する一部列車。現行運転は確認済み扱いだが、開始日は不明。幸崎・鶴崎の停車区分も未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ソニック46号に赤間・福間・香椎停車追加。https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正でソニック6号が赤間に新規停車し、博多10時前着の博多方面特急は全て赤間停車。2022-09-23改正PDFで戸畑停車拡大・香椎停車の見直し。一部停車の全体表は未入手のためpartial維持。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: older era of sonic-hakata-saiki (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "nichirin-oita-miyazakikuko",
@@ -6702,7 +6702,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/にちりん",
-  "notes": "一部列車は宮崎止まり、過去には小倉・博多発着もあった。宮崎空港乗り入れは宮崎空港線開業(1996-07-18)以降。本パターン（大分発着）の開始日は未確認。 【2026-11-11 recheck: jr-kyushu-east-south#5, jr-kyushu-east-south#6; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1 https://www.jrkyushu-timetable.jp/jr-k_time/2611/0007/00076601.html】"
+  "notes": "一部列車は宮崎止まり、過去には小倉・博多発着もあった。宮崎空港乗り入れは宮崎空港線開業(1996-07-18)以降。本パターン（大分発着）の開始日は未確認。 【2026-11-11 recheck: older era of nichirin-oita-miyazakikuko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "nichirin-seagaia-hakata-miyazakikuko",
@@ -6969,7 +6969,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/にちりんシーガイア",
-  "notes": "博多〜宮崎空港の直通1往復。香椎を定期停車とするかは未確認。運転開始日（1990年代）不明。 【2026-11-11 recheck: jr-kyushu-east-south#7, jr-kyushu-east-south#8, jr-kyushu-east-south#9, jr-kyushu-east-south#10; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0016/00167201.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00194801.html】"
+  "notes": "博多〜宮崎空港の直通1往復。香椎を定期停車とするかは未確認。運転開始日（1990年代）不明。 【2026-11-11 recheck: older era of nichirin-seagaia-hakata-miyazakikuko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hyuga-nobeoka-miyazakikuko",
@@ -7114,7 +7114,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ひゅうが_(列車)",
-  "notes": "延岡〜宮崎/宮崎空港の区間特急。開始日（2000年代）未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ひゅうが5号 (2025年春改正で時刻繰上げ) は延岡・南延岡・門川・日向市・都農・高鍋・佐土原・宮崎・南宮崎・宮崎空港に停車。他列車の停車駅未確認のためpartial維持。 【2026-11-11 recheck: jr-kyushu-east-south#11, jr-kyushu-east-south#12; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0008/00088001.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0016/00167501.html】"
+  "notes": "延岡〜宮崎/宮崎空港の区間特急。開始日（2000年代）未確認。 JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: ひゅうが5号 (2025年春改正で時刻繰上げ) は延岡・南延岡・門川・日向市・都農・高鍋・佐土原・宮崎・南宮崎・宮崎空港に停車。他列車の停車駅未確認のためpartial維持。 【2026-11-11 recheck: older era of hyuga-nobeoka-miyazakikuko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kirishima-miyazaki-kagoshimachuo",
@@ -7417,7 +7417,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/みどり_(列車)",
-  "notes": "江北は2022-09-23まで肥前山口。2022-09-23までは博多〜肥前山口でかもめと、以降はリレーかもめ/ハウステンボスと併結する運転に変化したが、停車駅の骨格は同じため1パターンとした。開始日1976-07-01は記憶ベース。 【2026-11-11 recheck: jr-kyushu-north-west#4, jr-kyushu-north-west#5, jr-kyushu-north-west#6; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu-36plus3.jp/about/dia/ https://www.jrkyushu-36plus3.jp/faq/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0008/00087101.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0002/00021601.html】"
+  "notes": "江北は2022-09-23まで肥前山口。2022-09-23までは博多〜肥前山口でかもめと、以降はリレーかもめ/ハウステンボスと併結する運転に変化したが、停車駅の骨格は同じため1パターンとした。開始日1976-07-01は記憶ベース。 【2026-11-11 recheck: older era of midori-hakata-sasebo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "huis-ten-bosch-hakata-huistenbosch",
@@ -7754,7 +7754,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/きらめき_(列車)",
-  "notes": "主体は小倉〜博多、一部門司港発着。門司港発着が現行ダイヤでも残るかは未確認。開始日不明。 https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正で朝夕通勤通学時間帯のきらめきは全て東郷停車、きらめき1号は吉塚にも停車（1号: 小倉・戸畑・黒崎・折尾・赤間・東郷・福間・吉塚・博多）。JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: 行橋発博多行ききらめき101号新設（下曽根停車、別パターン）。全列車の停車駅一覧は未入手のためpartial維持。 【2026-11-11 recheck: jr-kyushu-north-west#12, jr-kyushu-north-west#13; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu-36plus3.jp/about/dia/ https://www.jrkyushu-36plus3.jp/faq/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0016/00167101.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0016/00167001.html】"
+  "notes": "主体は小倉〜博多、一部門司港発着。門司港発着が現行ダイヤでも残るかは未確認。開始日不明。 https://www.jrkyushu.co.jp/common/inc/news/newtopics/__icsFiles/afieldfile/2025/12/12/20251212_Spring_2026_timetable_revision.pdf: 2026-03-14改正で朝夕通勤通学時間帯のきらめきは全て東郷停車、きらめき1号は吉塚にも停車（1号: 小倉・戸畑・黒崎・折尾・赤間・東郷・福間・吉塚・博多）。JR九州 2024-12-13「2025年春ダイヤ改正について」PDF: 行橋発博多行ききらめき101号新設（下曽根停車、別パターン）。全列車の停車駅一覧は未入手のためpartial維持。 【2026-11-11 recheck: older era of kirameki-mojiko-hakata (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ariake-omuta-hakata",
@@ -8205,7 +8205,7 @@
   "serviceId": "asoboy",
   "name": "あそぼーい！",
   "company": "九州旅客鉄道",
-  "label": "熊本〜別府（2026年3月以降）",
+  "label": "熊本〜別府（2020年8月以降）",
   "origin": "熊本",
   "destination": "別府",
   "stops": [
@@ -8284,75 +8284,8 @@
    "豊肥本線",
    "日豊本線"
   ],
-  "validFrom": "2026-03-14",
-  "validUntil": "2025-03-15",
-  "completeness": {
-   "stops": "partial",
-   "lines": "complete",
-   "validity": "partial"
-  },
-  "confidence": "low",
-  "source": "https://ja.wikipedia.org/wiki/あそぼーい！",
-  "notes": "2011-06-04に熊本〜宮地で運転開始。熊本地震後は別府〜阿蘇で運転、豊肥本線全線再開(2020-08-08)後に熊本〜別府となったと推定（日付要確認）。現行運転の有無も要確認。 Official page (2026-03-14 timetable, https://www.jrkyushu.co.jp/trains/asoboy/) shows あそぼーい！ running 熊本〜宮地 only (熊本 新水前寺 肥後大津 立野 阿蘇 宮地); 別府 through-running end date not verified. 【2026-11-11 recheck: jr-kyushu-east-south#18, jr-kyushu-east-south#19; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2024/12/13/241213_2025daiya_kaisei_1.pdf https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1】"
- },
- {
-  "patternId": "asoboy-kumamoto-beppu-until-2026-03",
-  "serviceId": "asoboy",
-  "name": "あそぼーい！",
-  "company": "九州旅客鉄道",
-  "label": "熊本〜別府（2020年8月以降）",
-  "origin": "熊本",
-  "destination": "別府",
-  "stops": [
-   {
-    "name": "熊本",
-    "sourceCode": "009785"
-   },
-   {
-    "name": "新水前寺",
-    "sourceCode": "009770"
-   },
-   {
-    "name": "肥後大津",
-    "sourceCode": "009674"
-   },
-   {
-    "name": "立野",
-    "sourceCode": "009672"
-   },
-   {
-    "name": "阿蘇",
-    "sourceCode": "009642"
-   },
-   {
-    "name": "宮地",
-    "sourceCode": "009643"
-   },
-   {
-    "name": "豊後竹田",
-    "sourceCode": "009631"
-   },
-   {
-    "name": "三重町",
-    "sourceCode": "009623"
-   },
-   {
-    "name": "大分",
-    "sourceCode": "009479"
-   },
-   {
-    "name": "別府",
-    "sourceCode": "009428"
-   }
-  ],
-  "optionalStops": [],
-  "via": [],
-  "lines": [
-   "豊肥本線",
-   "日豊本線"
-  ],
   "validFrom": "2020-08-08",
-  "validUntil": "2026-03-14",
+  "validUntil": "2025-03-15",
   "completeness": {
    "stops": "partial",
    "lines": "complete",
@@ -8548,7 +8481,7 @@
   },
   "confidence": "high",
   "source": "https://www.jrkyushu.co.jp/trains/umisachiyamasachi/",
-  "notes": "2009-10-10運転開始、主に土休日。宮崎〜南宮崎は日豊本線、南宮崎〜南郷は日南線。油津を記憶に基づき追加、田吉の停車は疑わしい。 Official 2026-03-14: down train calls 宮崎空港 (not 田吉); up train calls 田吉 (not 宮崎空港); 日南 served both ways; 木花 not a stop. 【2026-11-11 recheck: jr-kyushu-east-south#21, jr-kyushu-east-south#22; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0035/00357701.html https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1】"
+  "notes": "2009-10-10運転開始、主に土休日。宮崎〜南宮崎は日豊本線、南宮崎〜南郷は日南線。油津を記憶に基づき追加、田吉の停車は疑わしい。 Official 2026-03-14: down train calls 宮崎空港 (not 田吉); up train calls 田吉 (not 宮崎空港); 日南 served both ways; 木花 not a stop. 【2026-11-11 recheck: older era of umisachi-yamasachi-miyazaki-nango (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "36-plus-3-red-hakata-kagoshima-chuo",
@@ -8750,7 +8683,7 @@
   },
   "confidence": "high",
   "source": "https://www.jrkyushu-36plus3.jp/about/dia/",
-  "notes": "宮崎空港線・日豊本線（宗太郎越え、重岡で停車）。当初は宮崎発だった可能性あり。2020-10-16運行開始、初回日未確認。 Per official 2026-03-14 dia: 延岡, 宗太郎(特別停車), 重岡; 佐伯 not a stop. 【2026-11-11 recheck: jr-kyushu-north-west#14; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu-36plus3.jp/about/dia/ https://www.jrkyushu-36plus3.jp/faq/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0017/00170601.html】"
+  "notes": "宮崎空港線・日豊本線（宗太郎越え、重岡で停車）。当初は宮崎発だった可能性あり。2020-10-16運行開始、初回日未確認。 Per official 2026-03-14 dia: 延岡, 宗太郎(特別停車), 重岡; 佐伯 not a stop. 【2026-11-11 recheck: older era of 36-plus-3-green-miyazaki-airport-beppu (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "36-plus-3-blue-oita-hakata",
@@ -10050,7 +9983,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/こうのとり_(列車)",
-  "notes": "2011-03-12 に「北近畿」を改称して設定。大半は福知山止めで城崎温泉直通は一部。川西池田など一部停車駅は未照合。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#1, jr-west-hokuriku-kinki-north#2, jr-west-hokuriku-kinki-north#3; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/train-timetable/165451?date=20261112 https://timetable.jr-odekake.net/train-timetable/183931?date=20261114】"
+  "notes": "2011-03-12 に「北近畿」を改称して設定。大半は福知山止めで城崎温泉直通は一部。川西池田など一部停車駅は未照合。 【2026-11-11 recheck: older era of kounotori-shinosaka-kinosaki (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kinosaki-kyoto-kinosaki",
@@ -10220,7 +10153,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/きのさき_(列車)",
-  "notes": "山陰本線京都〜園部電化に伴う1996年3月設定と記憶（日付未照合）。2011-03-12 から287系。城崎駅は2005年に城崎温泉へ改称。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#5, jr-west-hokuriku-kinki-north#6; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://www.jr-odekake.net/railroad/train/kinosaki/】"
+  "notes": "山陰本線京都〜園部電化に伴う1996年3月設定と記憶（日付未照合）。2011-03-12 から287系。城崎駅は2005年に城崎温泉へ改称。 【2026-11-11 recheck: older era of kinosaki-kyoto-kinosaki (until 2011-03-12), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hashidate-kyoto-amanohashidate",
@@ -10358,7 +10291,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/はしだて_(列車)",
-  "notes": "福知山から京都丹後鉄道宮福線・宮津線（宮豊線区間）へ直通。西舞鶴は宮福線経由の経路上にないため optionalStops から除去。2015-04-01 から丹後鉄道区間は WILLER TRAINS 運営（それ以前は北近畿タンゴ鉄道）。設定日1996年3月は記憶ベース。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#8, jr-west-hokuriku-kinki-north#9; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/train-timetable/216141?date=20261112】"
+  "notes": "福知山から京都丹後鉄道宮福線・宮津線（宮豊線区間）へ直通。西舞鶴は宮福線経由の経路上にないため optionalStops から除去。2015-04-01 から丹後鉄道区間は WILLER TRAINS 運営（それ以前は北近畿タンゴ鉄道）。設定日1996年3月は記憶ベース。 【2026-11-11 recheck: older era of hashidate-kyoto-amanohashidate (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hashidate-kyoto-toyooka",
@@ -10543,7 +10476,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/はしだて_(列車)",
-  "notes": "天橋立から宮津線（宮豊線）を豊岡まで延長する列車。実在期間・停車駅とも未照合。宮豊線は路線インベントリ上「宮津線」。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#10, jr-west-hokuriku-kinki-north#11; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://www.jr-odekake.net/railroad/train/hashidate/ https://timetable.jr-odekake.net/train-timetable/91211?date=20261112 https://timetable.jr-odekake.net/train-timetable/91231?date=20261112】"
+  "notes": "天橋立から宮津線（宮豊線）を豊岡まで延長する列車。実在期間・停車駅とも未照合。宮豊線は路線インベントリ上「宮津線」。 【2026-11-11 recheck: older era of hashidate-kyoto-toyooka (until 2025-03-15), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "maizuru-kyoto-higashimaizuru",
@@ -10667,7 +10600,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/まいづる_(列車)",
-  "notes": "舞鶴線電化に伴い1999-10-02 特急まいづる設定。綾部で方向転換。多くは京都〜綾部を きのさき・はしだて と併結。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#13, jr-west-hokuriku-kinki-north#14; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/station-timetable/<id https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf】"
+  "notes": "舞鶴線電化に伴い1999-10-02 特急まいづる設定。綾部で方向転換。多くは京都〜綾部を きのさき・はしだて と併結。 【2026-11-11 recheck: older era of maizuru-kyoto-higashimaizuru (until 2011-03-12), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hamakaze-osaka-hamasaka",
@@ -10891,7 +10824,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/はまかぜ_(列車)",
-  "notes": "はまかぜ は1972-03-15 設定。姫路で方向転換し播但線経由。2010-11-07 からキハ189系。開始日は記憶ベース。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#11, jr-west-kinki-south-sanin-sanyo#12, jr-west-kinki-south-sanin-sanyo#13; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "はまかぜ は1972-03-15 設定。姫路で方向転換し播但線経由。2010-11-07 からキハ189系。開始日は記憶ベース。 【2026-11-11 recheck: older era of hamakaze-osaka-hamasaka (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hamakaze-osaka-tottori",
@@ -11127,7 +11060,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/はまかぜ_(列車)",
-  "notes": "鳥取直通は1往復程度。浜坂〜鳥取間の停車駅（岩美のみか）未照合。期間不明。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#14, jr-west-kinki-south-sanin-sanyo#15; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "鳥取直通は1往復程度。浜坂〜鳥取間の停車駅（岩美のみか）未照合。期間不明。 【2026-11-11 recheck: older era of hamakaze-osaka-tottori (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "super-hakuto-kyoto-kurayoshi",
@@ -11343,7 +11276,7 @@
   },
   "confidence": "high",
   "source": "https://www.chizukyu.co.jp/chizukyu/jikoku_unchin/superinaba/",
-  "notes": "キハ187系で2003-10-01 設定（旧 いなば を置換）。 【公式照合2026-09】智頭急行 特急スーパーいなば運賃表の掲載駅=岡山・上郡・佐用・大原・智頭・郡家・鳥取で stops と完全一致。運賃表は発売駅一覧で列車別停車は示さないため completeness は据え置き。optionalStops（用瀬）は運賃表に無く未照合。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#19; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "キハ187系で2003-10-01 設定（旧 いなば を置換）。 【公式照合2026-09】智頭急行 特急スーパーいなば運賃表の掲載駅=岡山・上郡・佐用・大原・智頭・郡家・鳥取で stops と完全一致。運賃表は発売駅一覧で列車別停車は示さないため completeness は据え置き。optionalStops（用瀬）は運賃表に無く未照合。 【2026-11-11 recheck: older era of super-inaba-okayama-tottori (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "yakumo-okayama-izumoshi",
@@ -11720,7 +11653,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/はるか_(列車)",
-  "notes": "朝の野洲（過去は米原・草津）始発列車。京都以東の停車駅と実施期間は未照合。 【公式照合2026-09】おでかけネット停車駅一覧(https://www.jr-odekake.net/railroad/train/haruka/)は野洲・守山・草津・南草津・石山・大津・山科・京都・高槻・新大阪・大阪・天王寺・和泉府中・日根野・関西空港。西九条・りんくうタウンは含まれないため optionalStops から削除。野洲始発列車の設定日・日根野の全停車は未確定。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#23, jr-west-kinki-south-sanin-sanyo#24, jr-west-kinki-south-sanin-sanyo#25; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "朝の野洲（過去は米原・草津）始発列車。京都以東の停車駅と実施期間は未照合。 【公式照合2026-09】おでかけネット停車駅一覧(https://www.jr-odekake.net/railroad/train/haruka/)は野洲・守山・草津・南草津・石山・大津・山科・京都・高槻・新大阪・大阪・天王寺・和泉府中・日根野・関西空港。西九条・りんくうタウンは含まれないため optionalStops から削除。野洲始発列車の設定日・日根野の全停車は未確定。 【2026-11-11 recheck: older era of haruka-yasu-kansai-airport (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "super-oki-tottori-shinyamaguchi",
@@ -11960,7 +11893,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/スーパーおき",
-  "notes": "キハ187系で2001-07-07 設定（日付記憶ベース）。鳥取始発は一部、大半は米子始発。小郡は2003-10-01 に新山口へ改称。日原・徳佐・三谷は停車駅として照合。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#26, jr-west-kinki-south-sanin-sanyo#27, jr-west-kinki-south-sanin-sanyo#28; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "キハ187系で2001-07-07 設定（日付記憶ベース）。鳥取始発は一部、大半は米子始発。小郡は2003-10-01 に新山口へ改称。日原・徳佐・三谷は停車駅として照合。 W4照合: rosen-zu.net 列車別ページ、2026-03-14改正時刻表。 【2026-11-11 recheck: older era of super-oki-tottori-shinyamaguchi (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "super-matsukaze-tottori-masuda",
@@ -12158,7 +12091,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/スーパーまつかぜ",
-  "notes": "2003-10-01 設定。米子発着の列車も多い。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#29, jr-west-kinki-south-sanin-sanyo#30, jr-west-kinki-south-sanin-sanyo#31, jr-west-kinki-south-sanin-sanyo#32; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "2003-10-01 設定。米子発着の列車も多い。 【2026-11-11 recheck: older era of super-matsukaze-tottori-masuda (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "rakuraku-harima-kyoto-aboshi",
@@ -13293,7 +13226,7 @@
   },
   "confidence": "high",
   "source": "https://timetables.jreast.co.jp/timetable/list1638.html",
-  "notes": "Started 1998-07-10. 児島 (crew change JR西→JR四国) listed as a passenger stop in the v1 data but not verified. 琴平 extension seasonal. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 浜松は下りのみ停車、大阪・三ノ宮は上りのみ停車。琴平延長運転日は多度津・善通寺・琴平停車。 【2026-11-11 recheck: jr-overnight-cross-company#7, jr-overnight-cross-company#8; sources: https://timetables.jreast.co.jp/2611/train/010/012851.html】"
+  "notes": "Started 1998-07-10. 児島 (crew change JR西→JR四国) listed as a passenger stop in the v1 data but not verified. 琴平 extension seasonal. 2026-09-23 JR東日本「駅の時刻表」（JR時刻表2026年10月号ベース）で全列車の停車駅一覧を照合。 浜松は下りのみ停車、大阪・三ノ宮は上りのみ停車。琴平延長運転日は多度津・善通寺・琴平停車。 【2026-11-11 recheck: older era of sunrise-seto-tokyo-takamatsu (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "mizukaze-sanin-course",
@@ -13408,7 +13341,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/TWILIGHT_EXPRESS_瑞風",
-  "notes": "クルーズトレイン。2017-06-17 運行開始。京都発は山陰本線経由、大阪発は福知山線経由と推定。停車・立寄駅はコース・年度で異なり未照合。幡生〜下関は山陽本線。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#41; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "クルーズトレイン。2017-06-17 運行開始。京都発は山陰本線経由、大阪発は福知山線経由と推定。停車・立寄駅はコース・年度で異なり未照合。幡生〜下関は山陽本線。 【2026-11-11 recheck: older era of mizukaze-sanin-course (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "mizukaze-sanyo-course",
@@ -13509,7 +13442,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/TWILIGHT_EXPRESS_瑞風",
-  "notes": "クルーズトレイン山陽コース。立寄駅（尾道・宮島口・岩国など）はコース・年度で異なり未照合。 【2026-11-11 recheck: jr-west-kinki-south-sanin-sanyo#42, jr-west-kinki-south-sanin-sanyo#43; sources: https://timetable.jr-odekake.net/line-timetable/2312 https://timetable.jr-odekake.net/line-timetable/2280 https://timetable.jr-odekake.net/line-timetable/2442 https://timetable.jr-odekake.net/line-timetable/2414 https://timetable.jr-odekake.net/line-timetable/2401 https://timetable.jr-odekake.net/line-timetable/2310】"
+  "notes": "クルーズトレイン山陽コース。立寄駅（尾道・宮島口・岩国など）はコース・年度で異なり未照合。 【2026-11-11 recheck: older era of mizukaze-sanyo-course (until 2026-03-01), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "inaji-toyohashi-iida",
@@ -19246,7 +19179,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/びわこエクスプレス",
-  "notes": "平日朝夕の通勤特急。草津発着もあり。2024-03-16 らくラクびわこに改称。停車駅は年代で変動。 validTo 公式確認: 2023-12-15 JR西日本近畿統括本部リリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_kinto.pdf)「平日朝夕通勤時間帯に大阪駅〜米原駅で運転している通勤特急『びわこエクスプレス』の列車名を『らくラクびわこ』に変更」（2024-03-16改正）。停車駅・開始日は公式未確認。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#23, jr-west-hokuriku-kinki-north#24; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/station-timetable/<id https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf】"
+  "notes": "平日朝夕の通勤特急。草津発着もあり。2024-03-16 らくラクびわこに改称。停車駅は年代で変動。 validTo 公式確認: 2023-12-15 JR西日本近畿統括本部リリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_kinto.pdf)「平日朝夕通勤時間帯に大阪駅〜米原駅で運転している通勤特急『びわこエクスプレス』の列車名を『らくラクびわこ』に変更」（2024-03-16改正）。停車駅・開始日は公式未確認。 【2026-11-11 recheck: older era of biwako-express-osaka-maibara (until 2014-03-15), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "biwako-express-osaka-maibara-until-2003-06",
@@ -19316,7 +19249,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/びわこエクスプレス",
-  "notes": "平日朝夕の通勤特急。草津発着もあり。2024-03-16 らくラクびわこに改称。停車駅は年代で変動。 validTo 公式確認: 2023-12-15 JR西日本近畿統括本部リリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_kinto.pdf)「平日朝夕通勤時間帯に大阪駅〜米原駅で運転している通勤特急『びわこエクスプレス』の列車名を『らくラクびわこ』に変更」（2024-03-16改正）。停車駅・開始日は公式未確認。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#23, jr-west-hokuriku-kinki-north#24; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/station-timetable/<id https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf】"
+  "notes": "平日朝夕の通勤特急。草津発着もあり。2024-03-16 らくラクびわこに改称。停車駅は年代で変動。 validTo 公式確認: 2023-12-15 JR西日本近畿統括本部リリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_kinto.pdf)「平日朝夕通勤時間帯に大阪駅〜米原駅で運転している通勤特急『びわこエクスプレス』の列車名を『らくラクびわこ』に変更」（2024-03-16改正）。停車駅・開始日は公式未確認。 【2026-11-11 recheck: older era of biwako-express-osaka-maibara (until 2003-06-01), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ohayo-express-fukui-kanazawa",
@@ -19527,7 +19460,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/しらさぎ_(列車)",
-  "notes": "朝/夜の北陸本線区間特急（平日運転）。2014-12-19 JR西日本金沢支社「平成27年春ダイヤ改正について」(https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf)で金沢→福井の平日運転継続を確認。2023-12-15 JR西日本ニュースリリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf)で2024-03-16改正により「敦賀駅〜金沢駅間」運転終了（最終期は敦賀発着）→ validTo 2024-03-15 は公式。運行開始日・停車駅は公式未確認。旧北陸本線区間は現行名で記載。 【2026-11-11 recheck: jr-west-hokuriku-kinki-north#22; sources: https://timetable.jr-odekake.net/station-timetable/2796076001 https://timetable.jr-odekake.net/station-timetable/3208026001 https://timetable.jr-odekake.net/station-timetable/2784055001 https://timetable.jr-odekake.net/station-timetable/<id https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf】"
+  "notes": "朝/夜の北陸本線区間特急（平日運転）。2014-12-19 JR西日本金沢支社「平成27年春ダイヤ改正について」(https://www.westjr.co.jp/press/article/items/141219_00_hokuriku.pdf)で金沢→福井の平日運転継続を確認。2023-12-15 JR西日本ニュースリリース(https://www.westjr.co.jp/press/article/items/231215_00_press_daiyakaisei_honsya.pdf)で2024-03-16改正により「敦賀駅〜金沢駅間」運転終了（最終期は敦賀発着）→ validTo 2024-03-15 は公式。運行開始日・停車駅は公式未確認。旧北陸本線区間は現行名で記載。 【2026-11-11 recheck: older era of oyasumi-express-kanazawa-fukui (until 2019-03-18), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "hanayome-noren-kanazawa-wakuraonsen",
@@ -21247,7 +21180,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Stop list varies by train; optional list partly from memory. validFrom predates 2010. 【2026-11-11 recheck: kanto-private-other#4, kanto-private-other#5, kanto-private-other#6, kanto-private-other#7, kanto-private-other#8; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Stop list varies by train; optional list partly from memory. validFrom predates 2010. 【2026-11-11 recheck: older era of sagami-shinjuku-odawara (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "enoshima-shinjuku-katasenoshima",
@@ -21362,7 +21295,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Reverses direction at 藤沢. validFrom predates 2010. 【2026-11-11 recheck: kanto-private-other#9, kanto-private-other#10, kanto-private-other#11; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Reverses direction at 藤沢. validFrom predates 2010. 【2026-11-11 recheck: older era of enoshima-shinjuku-katasenoshima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "metro-hakone-kitasenju-hakoneyumoto",
@@ -21504,7 +21437,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "小田原〜箱根湯本 is 小田急箱根 鉄道線 (箱根登山鉄道 until 2024-04-01 rename); operated as a through run. Through service via 東京メトロ千代田線 started 2008-03-15 with 60000形 MSE; 代々木上原 is a crew-change (運転停車) stop. Some early trains started at 大手町/本厚木 rather than 北千住. 【2026-11-11 recheck: kanto-private-other#12, kanto-private-other#13; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "小田原〜箱根湯本 is 小田急箱根 鉄道線 (箱根登山鉄道 until 2024-04-01 rename); operated as a through run. Through service via 東京メトロ千代田線 started 2008-03-15 with 60000形 MSE; 代々木上原 is a crew-change (運転停車) stop. Some early trains started at 大手町/本厚木 rather than 北千住. 【2026-11-11 recheck: older era of metro-hakone-kitasenju-hakoneyumoto (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "metro-enoshima-kitasenju-katasenoshima",
@@ -21629,7 +21562,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Weekend/holiday seasonal operation; start and end dates and exact stops unverified. May no longer run regularly. 【2026-11-11 recheck: kanto-private-other#14, kanto-private-other#15, kanto-private-other#16; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Weekend/holiday seasonal operation; start and end dates and exact stops unverified. May no longer run regularly. 【2026-11-11 recheck: older era of metro-enoshima-kitasenju-katasenoshima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "metro-sagami-kitasenju-honatsugi",
@@ -21819,7 +21752,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Introduced at the 2018-03-17 複々線 revision. Some trains start at 秦野/本厚木 or 片瀬江ノ島 (江ノ島線); those are not separate patterns here. 【2026-11-11 recheck: kanto-private-other#18, kanto-private-other#19, kanto-private-other#20; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Introduced at the 2018-03-17 複々線 revision. Some trains start at 秦野/本厚木 or 片瀬江ノ島 (江ノ島線); those are not separate patterns here. 【2026-11-11 recheck: older era of morningway-odawara-shinjuku (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "homeway-shinjuku-odawara",
@@ -22052,7 +21985,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Origin may be 秦野/海老名 for some trains; terminal 北千住 vs 大手町 unverified. 【2026-11-11 recheck: kanto-private-other#21, kanto-private-other#22; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Origin may be 秦野/海老名 for some trains; terminal 北千住 vs 大手町 unverified. 【2026-11-11 recheck: older era of metro-morningway-honatsugi-kitasenju (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "metro-homeway-kitasenju-honatsugi",
@@ -22240,7 +22173,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/ふじさん_(列車)",
-  "notes": "Leaves 小田原線 near 新松田 via the 松田連絡線 and stops at JR 松田. Renamed from あさぎり on 2018-03-17 (no change of route). 【2026-11-11 recheck: jr-private-through#1, jr-private-through#2; sources: https://www.odakyu.jp/news/o5oaa1000001f2xm-att/o5oaa1000001f2xt.pdf https://www.tobu.co.jp/cms-pdf/news/20260731005716zuq0-n9-1-ePKp4c_DBh1A.pdf https://www.tobu.co.jp/cms-pdf/news/20260901120554F1nfkr_lUr8cTMX55B0T1w.pdf https://www.tobu.co.jp/cms-pdf/news/2026110210163935G6B0AZYZ42PMNgTGYtLg.pdf https://web.archive.org/web/20260420115850/https://www.jreast.co.jp/press/2025/omiya/20260213_o01.pdf】"
+  "notes": "Leaves 小田原線 near 新松田 via the 松田連絡線 and stops at JR 松田. Renamed from あさぎり on 2018-03-17 (no change of route). 【2026-11-11 recheck: older era of fujisan-shinjuku-gotemba (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "asagiri-shinjuku-numazu",
@@ -22598,7 +22531,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/モーニングライナー_(京成電鉄)",
-  "notes": "Name used for 京成本線 有料特急 after スカイライナー moved to the スカイアクセス線 (2010-07-17); may have existed earlier. Some trains start at 京成成田. Optional stops unverified. [verify 2026-09-23: official keisei.co.jp liner page shows ライナー stops only as images; stops/dates NOT verified against an official source in this pass.] 【2026-11-11 recheck: kanto-private-other#24, kanto-private-other#25; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Name used for 京成本線 有料特急 after スカイライナー moved to the スカイアクセス線 (2010-07-17); may have existed earlier. Some trains start at 京成成田. Optional stops unverified. [verify 2026-09-23: official keisei.co.jp liner page shows ライナー stops only as images; stops/dates NOT verified against an official source in this pass.] 【2026-11-11 recheck: older era of morning-liner-naritaairport-keiseiueno (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "evening-liner-keiseiueno-naritaairport",
@@ -22732,7 +22665,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/イブニングライナー",
-  "notes": "Evening outbound 京成本線 有料特急; validFrom may be earlier than 2010. Some trains terminate at 京成成田. Optional stops unverified. [verify 2026-09-23: official keisei.co.jp liner page shows ライナー stops only as images; stops/dates NOT verified against an official source in this pass.] 【2026-11-11 recheck: kanto-private-other#26, kanto-private-other#27; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Evening outbound 京成本線 有料特急; validFrom may be earlier than 2010. Some trains terminate at 京成成田. Optional stops unverified. [verify 2026-09-23: official keisei.co.jp liner page shows ライナー stops only as images; stops/dates NOT verified against an official source in this pass.] 【2026-11-11 recheck: older era of evening-liner-keiseiueno-naritaairport (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "city-liner-keiseiueno-naritaairport",
@@ -22893,7 +22826,7 @@
   },
   "confidence": "high",
   "source": "https://www.seiburailway.jp/railway/reservedtrain/laview/",
-  "notes": "Regular stops 池袋・所沢・入間市・飯能・横瀬・西武秩父 match the official Laview page. Official page does not list 一部停車 stations, so optionalStops (石神井公園, ひばりヶ丘) remain unverified; stops completeness left partial. 【2026-11-11 recheck: kanto-private-other#28; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Regular stops 池袋・所沢・入間市・飯能・横瀬・西武秩父 match the official Laview page. Official page does not list 一部停車 stations, so optionalStops (石神井公園, ひばりヶ丘) remain unverified; stops completeness left partial. 【2026-11-11 recheck: older era of chichibu-ikebukuro-seibuchichibu (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "musashi-ikebukuro-hanno",
@@ -22990,7 +22923,7 @@
   },
   "confidence": "high",
   "source": "https://www.seiburailway.jp/railway/reservedtrain/laview/",
-  "notes": "Regular stops 池袋・所沢・入間市・飯能 match the official Laview page. Official page does not list 一部停車 stations, so optionalStops remain unverified; stops completeness left partial. 【2026-11-11 recheck: kanto-private-other#30; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Regular stops 池袋・所沢・入間市・飯能 match the official Laview page. Official page does not list 一部停車 stations, so optionalStops remain unverified; stops completeness left partial. 【2026-11-11 recheck: older era of musashi-ikebukuro-hanno (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "koedo-seibushinjuku-honkawagoe",
@@ -23192,7 +23125,7 @@
   },
   "confidence": "high",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Map shows current service only; pre-2012 variants (業平橋, fewer 北千住/栃木 stops) not covered. 【2026-11-11 recheck: tobu#1, tobu#2; sources: https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Map shows current service only; pre-2012 variants (業平橋, fewer 北千住/栃木 stops) not covered. 【2026-11-11 recheck: older era of kegon-asakusa-tobunikko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kinu-asakusa-kinugawaonsen",
@@ -23362,7 +23295,7 @@
   },
   "confidence": "medium",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk (浅草〜下今市) verified; 鬼怒川線 calls at 新高徳/東武ワールドスクウェア not resolved at image resolution, so kept partial. 【2026-11-11 recheck: tobu#3, tobu#4; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk (浅草〜下今市) verified; 鬼怒川線 calls at 新高徳/東武ワールドスクウェア not resolved at image resolution, so kept partial. 【2026-11-11 recheck: older era of kinu-asakusa-kinugawaonsen (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ryomo-asakusa-akagi",
@@ -23592,7 +23525,7 @@
   },
   "confidence": "high",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Short working terminating at 太田. 【2026-11-11 recheck: tobu#5; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_02_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_02_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Short working terminating at 太田. 【2026-11-11 recheck: older era of ryomo-asakusa-ota (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ryomo-asakusa-isesaki",
@@ -23765,7 +23698,7 @@
   },
   "confidence": "high",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. 伊勢崎線 太田〜伊勢崎: 木崎・境町・新伊勢崎 marked as stops. 【2026-11-11 recheck: tobu#6, tobu#7; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_02_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_02_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. 伊勢崎線 太田〜伊勢崎: 木崎・境町・新伊勢崎 marked as stops. 【2026-11-11 recheck: older era of ryomo-asakusa-isesaki (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ryomo-asakusa-kuzu",
@@ -23924,7 +23857,7 @@
   },
   "confidence": "high",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. CONFLICT: the current official map still marks 佐野線 佐野市・佐野・田沼・葛生 as りょうもう stops, so the 2020-06-05 validTo looks wrong; date left unchanged pending an official 改正 release. 2020-06-06改正で減便されたが現行の公式停車駅図に葛生系統が残るため現行扱いに修正。 【2026-11-11 recheck: tobu#8, tobu#9; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_02_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_02_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. CONFLICT: the current official map still marks 佐野線 佐野市・佐野・田沼・葛生 as りょうもう stops, so the 2020-06-05 validTo looks wrong; date left unchanged pending an official 改正 release. 2020-06-06改正で減便されたが現行の公式停車駅図に葛生系統が残るため現行扱いに修正。 【2026-11-11 recheck: older era of ryomo-asakusa-kuzu (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "spacia-x-asakusa-tobunikko",
@@ -24043,7 +23976,7 @@
   },
   "confidence": "medium",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official SPACIA X 停車駅 image (stopstation03.jpg) lists 浅草・とうきょうスカイツリー・北千住・春日部・栃木・新鹿沼・下今市・東武日光 / 東武ワールドスクウェア・鬼怒川温泉 but has no 一部停車 notation, so 栃木/新鹿沼 kept optional until a timetable confirms every train stops. 【2026-11-11 recheck: tobu#10; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf https://www.tobu.co.jp/cms-pdf/releases/20220714145639kM21uyWeaNPoTNtDiNssEw.pdf】"
+  "notes": "Official SPACIA X 停車駅 image (stopstation03.jpg) lists 浅草・とうきょうスカイツリー・北千住・春日部・栃木・新鹿沼・下今市・東武日光 / 東武ワールドスクウェア・鬼怒川温泉 but has no 一部停車 notation, so 栃木/新鹿沼 kept optional until a timetable confirms every train stops. 【2026-11-11 recheck: older era of spacia-x-asakusa-tobunikko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "spacia-x-asakusa-kinugawaonsen",
@@ -24172,7 +24105,7 @@
   },
   "confidence": "medium",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official SPACIA X 停車駅 image (stopstation03.jpg) lists 浅草・とうきょうスカイツリー・北千住・春日部・栃木・新鹿沼・下今市・東武日光 / 東武ワールドスクウェア・鬼怒川温泉 but has no 一部停車 notation, so 栃木/新鹿沼/東武ワールドスクウェア kept optional until a timetable confirms every train stops. 【2026-11-11 recheck: tobu#11; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf】"
+  "notes": "Official SPACIA X 停車駅 image (stopstation03.jpg) lists 浅草・とうきょうスカイツリー・北千住・春日部・栃木・新鹿沼・下今市・東武日光 / 東武ワールドスクウェア・鬼怒川温泉 but has no 一部停車 notation, so 栃木/新鹿沼/東武ワールドスクウェア kept optional until a timetable confirms every train stops. 【2026-11-11 recheck: older era of spacia-x-asakusa-kinugawaonsen (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "revaty-kegon-asakusa-tobunikko",
@@ -24328,7 +24261,7 @@
   },
   "confidence": "high",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Legend groups スペーシア/リバティ けごん・きぬ as one stop pattern. Often coupled/split at 下今市 or 春日部. 【2026-11-11 recheck: tobu#12, tobu#13, tobu#14; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Legend groups スペーシア/リバティ けごん・きぬ as one stop pattern. Often coupled/split at 下今市 or 春日部. 【2026-11-11 recheck: older era of revaty-kegon-asakusa-tobunikko (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "revaty-kinu-asakusa-kinugawaonsen",
@@ -24494,7 +24427,7 @@
   },
   "confidence": "medium",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk (浅草〜下今市) verified; 鬼怒川線 calls at 新高徳/東武ワールドスクウェア not resolved at image resolution, so kept partial. 【2026-11-11 recheck: tobu#15, tobu#16; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk (浅草〜下今市) verified; 鬼怒川線 calls at 新高徳/東武ワールドスクウェア not resolved at image resolution, so kept partial. 【2026-11-11 recheck: older era of revaty-kinu-asakusa-kinugawaonsen (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "revaty-aizu-asakusa-aizutajima",
@@ -24736,7 +24669,7 @@
   },
   "confidence": "medium",
   "source": "https://www.tobu.co.jp/railway/special_express/stop_station/",
-  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk verified. North of 新藤原 the map marks 龍王峡・川治温泉・川治湯元・湯西川温泉・中三依温泉・上三依塩原温泉口・会津高原尾瀬口・会津田島 (男鹿高原 not shown → passed, removed); full vs 一部 for 龍王峡/川治湯元/中三依温泉 not resolvable, kept optional. 【2026-11-11 recheck: tobu#17, tobu#18, tobu#19; sources: https://www.tobu.co.jp/pdf/timetable/time-table_01_kudari.pdf https://www.tobu.co.jp/pdf/timetable/time-table_01_nobori.pdf https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/pdf/service/service_revaty.pdf?20260512 https://www.tobu.co.jp/cms-pdf/releases/20211210120436z2ZpUL2macF_-vcgP5S43w.pdf https://www.tobu.co.jp/news/3658/】"
+  "notes": "Official 特急停車駅ご案内 image (stopstation01.jpg, current timetable) read with zoom: ○=全列車, ⊖=一部停車. Trunk verified. North of 新藤原 the map marks 龍王峡・川治温泉・川治湯元・湯西川温泉・中三依温泉・上三依塩原温泉口・会津高原尾瀬口・会津田島 (男鹿高原 not shown → passed, removed); full vs 一部 for 龍王峡/川治湯元/中三依温泉 not resolvable, kept optional. 【2026-11-11 recheck: older era of revaty-aizu-asakusa-aizutajima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "revaty-ryomo-asakusa-akagi",
@@ -25033,7 +24966,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/きりふり_(列車)",
-  "notes": "Many trains ran only as far as 南栗橋 or 新栃木 (see separate pattern); stops from memory. 【2026-11-11 recheck: tobu#20; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://web.archive.org/web/20200606025144/https://www.tobu.co.jp/_assets/images/railway/lower/special_express/stop_station/stopstation01.png?20200606_03 https://web.archive.org/web/20211107105626/https://www.tobu.co.jp/_assets/images/railway/lower/special_express/stop_station/stopstation01.png?20211014_02】"
+  "notes": "Many trains ran only as far as 南栗橋 or 新栃木 (see separate pattern); stops from memory. 【2026-11-11 recheck: older era of kirifuri-asakusa-tobunikko (until 2020-06-06), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kirifuri-asakusa-minamikurihashi",
@@ -25245,7 +25178,7 @@
   "serviceId": "urban-park-liner",
   "name": "アーバンパークライナー",
   "company": "東武鉄道",
-  "label": "大宮〜柏（2026年3月〜2024年3月）",
+  "label": "大宮〜柏",
   "origin": "大宮",
   "destination": "柏",
   "stops": [
@@ -25323,62 +25256,8 @@
   "lines": [
    "野田線"
   ],
-  "validFrom": "2026-03-14",
-  "validUntil": "2024-03-16",
-  "completeness": {
-   "stops": "partial",
-   "lines": "complete",
-   "validity": "complete"
-  },
-  "confidence": "low",
-  "source": "https://ja.wikipedia.org/wiki/アーバンパークライナー",
-  "notes": "Not shown on the current official 特急ライナー停車駅ご案内 (only スカイツリーライナー), so apparently discontinued; end date and stops still unverified against an official release. 一部は短区間運転（6号は運河まで、7号は春日部まで、2021-12 プレス別紙）。八木崎・豊春・東岩槻には停車しない（2026-11-11 照合）。 【2026-11-11 recheck: tobu#24, tobu#25; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://web.archive.org/web/20220619012257/https://www.tobu.co.jp/_assets/images/railway/lower/special_express/stop_station/stopstation02.png】"
- },
- {
-  "patternId": "urban-park-liner-omiya-kashiwa-until-2026-03",
-  "serviceId": "urban-park-liner",
-  "name": "アーバンパークライナー",
-  "company": "東武鉄道",
-  "label": "大宮〜柏（2026年3月まで）",
-  "origin": "大宮",
-  "destination": "柏",
-  "stops": [
-   {
-    "name": "大宮",
-    "sourceCode": "002914"
-   },
-   {
-    "name": "岩槻",
-    "sourceCode": "002833"
-   },
-   {
-    "name": "春日部",
-    "sourceCode": "002785"
-   },
-   {
-    "name": "野田市",
-    "sourceCode": "002841"
-   },
-   {
-    "name": "運河",
-    "sourceCode": "002892"
-   },
-   {
-    "name": "流山おおたかの森",
-    "sourceCode": "002969"
-   },
-   {
-    "name": "柏",
-    "sourceCode": "002984"
-   }
-  ],
-  "optionalStops": [],
-  "via": [],
-  "lines": [
-   "野田線"
-  ],
   "validFrom": null,
-  "validUntil": "2026-03-14",
+  "validUntil": "2024-03-16",
   "completeness": {
    "stops": "partial",
    "lines": "complete",
@@ -25386,7 +25265,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/アーバンパークライナー",
-  "notes": "Not shown on the current official 特急ライナー停車駅ご案内 (only スカイツリーライナー), so apparently discontinued; end date and stops still unverified against an official release. 【2026-11-11 recheck: tobu#24, tobu#25; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://web.archive.org/web/20220619012257/https://www.tobu.co.jp/_assets/images/railway/lower/special_express/stop_station/stopstation02.png】"
+  "notes": "Not shown on the current official 特急ライナー停車駅ご案内 (only スカイツリーライナー), so apparently discontinued; end date and stops still unverified against an official release. 一部は短区間運転（6号は運河まで、7号は春日部まで、2021-12 プレス別紙）。八木崎・豊春・東岩槻には停車しない（2026-11-11 照合）。 【2026-11-11 recheck: tobu#24, tobu#25; sources: https://www.tobu.co.jp/railway/special_express/stop_station/ https://www.tobu.co.jp/news/3658/ https://web.archive.org/web/20220619012257/https://www.tobu.co.jp/_assets/images/railway/lower/special_express/stop_station/stopstation02.png】"
  },
  {
   "patternId": "skytree-liner-asakusa-kasukabe",
@@ -26223,7 +26102,7 @@
   },
   "confidence": "medium",
   "source": "https://www.kintetsu.co.jp/gyoumu/Express/pdf/express_system_chart.pdf",
-  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称であり運用系統は日により異なるため、現行公式図の阪伊系統2本（大阪難波⇔賢島／大阪難波・大阪上本町⇔名張・伊賀神戸・松阪・宇治山田・五十鈴川・鳥羽・賢島）の共通停車駅をstops、その他をoptionalとした。車両固有の停車駅ではないためpartial。 【2026-11-11 recheck: kintetsu#1, kintetsu#2; sources: https://eki.kintetsu.co.jp/norikae/T5 https://eki.kintetsu.co.jp/norikae/T7?sf=5213&tx=1-10129&dw=1&time=0920 https://eki.kintetsu.co.jp/norikae/T7?sf=4937&tx=1-1076&dw=0&time=0910 https://eki.kintetsu.co.jp/norikae/T7?sf=5212&tx=1-290&dw=0&time=0000】"
+  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称であり運用系統は日により異なるため、現行公式図の阪伊系統2本（大阪難波⇔賢島／大阪難波・大阪上本町⇔名張・伊賀神戸・松阪・宇治山田・五十鈴川・鳥羽・賢島）の共通停車駅をstops、その他をoptionalとした。車両固有の停車駅ではないためpartial。 【2026-11-11 recheck: older era of ise-shima-liner-namba-kashikojima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ise-shima-liner-nagoya-kashikojima",
@@ -26399,7 +26278,7 @@
   },
   "confidence": "medium",
   "source": "https://www.kintetsu.co.jp/gyoumu/Express/pdf/express_system_chart.pdf",
-  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称のため現行公式図の名伊系統2本の共通停車駅をstops、その他をoptionalとした。partial。 【2026-11-11 recheck: kintetsu#4; sources: https://eki.kintetsu.co.jp/norikae/T5 https://eki.kintetsu.co.jp/norikae/T7?sf=4104&tx=1-10174&dw=1&time=0920】"
+  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称のため現行公式図の名伊系統2本の共通停車駅をstops、その他をoptionalとした。partial。 【2026-11-11 recheck: older era of ise-shima-liner-nagoya-kashikojima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "ise-shima-liner-kyoto-kashikojima",
@@ -26586,7 +26465,7 @@
   },
   "confidence": "medium",
   "source": "https://www.kintetsu.co.jp/gyoumu/Express/pdf/express_system_chart.pdf",
-  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称のため現行公式図の京伊系統（京都⇔名張・松阪・宇治山田・鳥羽・賢島）停車駅を適用。partial。 【2026-11-11 recheck: kintetsu#3; sources: https://eki.kintetsu.co.jp/norikae/T5 https://eki.kintetsu.co.jp/norikae/T7?sf=5198&tx=1-1963&dw=0&time=0910 https://eki.kintetsu.co.jp/norikae/T7?sf=5061&tx=1-1537&dw=0&time=0000 https://eki.kintetsu.co.jp/norikae/T7?sf=5198&tx=1-1732&dw=0&time=1720】"
+  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。23000系。車両愛称のため現行公式図の京伊系統（京都⇔名張・松阪・宇治山田・鳥羽・賢島）停車駅を適用。partial。 【2026-11-11 recheck: older era of ise-shima-liner-kyoto-kashikojima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "sakura-liner-abenobashi-yoshino",
@@ -27109,7 +26988,7 @@
   },
   "confidence": "high",
   "source": "https://www.kintetsu.co.jp/gyoumu/Express/pdf/express_system_chart.pdf",
-  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。現行公式図の阪伊2系統: 大阪難波⇔賢島（鶴橋→伊勢市間無停車）と大阪難波・大阪上本町⇔名張・伊賀神戸・松阪・宇治山田・五十鈴川・鳥羽・賢島（大和八木・名張・伊勢中川・松阪・五十鈴川停車、布施・五位堂・大和高田・榛原・桔梗が丘・伊賀神戸・榊原温泉口は一部）。両系統共通をstops、その他をoptional。宇治山田・五十鈴川・鳥羽止まりも多い。 【2026-11-11 recheck: kintetsu#5, kintetsu#6; sources: https://eki.kintetsu.co.jp/norikae/T5 https://eki.kintetsu.co.jp/norikae/T7?sf=4937&tx=1-1077&dw=0&time=0800 https://eki.kintetsu.co.jp/norikae/T7?sf=4937&tx=1-6279&dw=1&time=0810 https://eki.kintetsu.co.jp/norikae/T7?sf=4404&tx=1-4247&dw=0&time=1610 https://eki.kintetsu.co.jp/norikae/T7?sf=4645&tx=1-4251&dw=0&time=0550】"
+  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。現行公式図の阪伊2系統: 大阪難波⇔賢島（鶴橋→伊勢市間無停車）と大阪難波・大阪上本町⇔名張・伊賀神戸・松阪・宇治山田・五十鈴川・鳥羽・賢島（大和八木・名張・伊勢中川・松阪・五十鈴川停車、布施・五位堂・大和高田・榛原・桔梗が丘・伊賀神戸・榊原温泉口は一部）。両系統共通をstops、その他をoptional。宇治山田・五十鈴川・鳥羽止まりも多い。 【2026-11-11 recheck: older era of kintetsu-hanise-namba-kashikojima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kintetsu-meii-nagoya-kashikojima",
@@ -27386,7 +27265,7 @@
   },
   "confidence": "high",
   "source": "https://www.kintetsu.co.jp/gyoumu/Express/pdf/express_system_chart.pdf",
-  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。大和八木で橿原線→大阪線（八木西口短絡線）。現行公式図の京伊系統（京都⇔名張・松阪・宇治山田・鳥羽・賢島）で照合。 【2026-11-11 recheck: kintetsu#7; sources: https://eki.kintetsu.co.jp/norikae/T5 https://eki.kintetsu.co.jp/norikae/T7?sf=4645&tx=1-4253&dw=0&time=0630 https://eki.kintetsu.co.jp/norikae/T7?sf=5717&tx=1-1013&dw=0&time=0550】"
+  "notes": "近鉄公式「特急運転系統図と停車駅案内図」（2026-09取得、現行ダイヤ）で照合。○=一部列車停車→optionalStops。大和八木で橿原線→大阪線（八木西口短絡線）。現行公式図の京伊系統（京都⇔名張・松阪・宇治山田・鳥羽・賢島）で照合。 【2026-11-11 recheck: older era of kintetsu-kyoise-kyoto-kashikojima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kintetsu-keina-kyoto-nara",
@@ -28195,7 +28074,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ミュースカイ",
-  "notes": "岐阜発着の運行開始日は未確認（空港線開業日を仮置き）。 【2026-11-11 recheck: private-other#8, private-other#9, private-other#10; sources: https://www.meitetsu.co.jp/train/station_info/line01/index.html https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_NH_W1.pdf https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/06/22/kai_20260314_TA_W2.pdf https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/03/03/20260314_TA_H2.pdf】"
+  "notes": "岐阜発着の運行開始日は未確認（空港線開業日を仮置き）。 【2026-11-11 recheck: older era of mu-sky-meitetsu-gifu-centrair (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "mu-sky-shin-unuma-centrair",
@@ -28347,7 +28226,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/ミュースカイ",
-  "notes": "主体は名鉄名古屋〜中部国際空港（本パターンに内包）。 【2026-11-11 recheck: private-other#11, private-other#12, private-other#13; sources: https://www.meitetsu.co.jp/train/station_info/line12/index.html https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/02/25/20260314_IY_W1.pdf https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/02/25/20260314_HM_W2.pdf https://www.meitetsu.co.jp/train/station_info/line13/index.html】"
+  "notes": "主体は名鉄名古屋〜中部国際空港（本パターンに内包）。 【2026-11-11 recheck: older era of mu-sky-shin-unuma-centrair (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "kyo-train-garaku-umeda-kawaramachi",
@@ -28571,7 +28450,7 @@
   },
   "confidence": "low",
   "source": "https://ja.wikipedia.org/wiki/たんごリレー",
-  "notes": "KTR8000形。網野止まり・福知山発着（宮福線）の列車もあったが未収録。会社名はline-names.txtの表記（全角スペース）。開始日不明。 【2026-11-11 recheck: private-other#17, private-other#18, private-other#19, private-other#20, private-other#21, private-other#22; sources: https://trains.willer.co.jp/wp-content/uploads/2026/03/db11cd539ef9e1e69eb6698e2302bbb8.pdf https://trains.willer.co.jp/wp-content/uploads/2026/03/7eb4a7127d6f3457a77f651ae1fcc433.pdf https://trains.willer.co.jp/wp-content/uploads/2026/03/224dacc22d8d5920de0c31b05309d8f3-1-1.pdf https://trains.willer.co.jp/wp-content/uploads/2026/03/98d513a6194313550240d27f44618dfd-1.pdf】"
+  "notes": "KTR8000形。網野止まり・福知山発着（宮福線）の列車もあったが未収録。会社名はline-names.txtの表記（全角スペース）。開始日不明。 【2026-11-11 recheck: older era of tango-relay-amanohashidate-toyooka (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "tango-discovery-kyoto-amanohashidate",
@@ -28820,7 +28699,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/四国まんなか千年ものがたり",
-  "notes": "土休日中心の観光特急。琴平発着の便あり。 【2026-11-11 recheck: jr-shikoku#14; sources: https://timetable.jr-odekake.net/train-timetable/248181?date=20261114】"
+  "notes": "土休日中心の観光特急。琴平発着の便あり。 【2026-11-11 recheck: older era of shikoku-mannaka-sennen-monogatari-tadotsu-oboke (until 2026-03-14), kept as it was; the corrections apply to the record from that date】"
  },
  {
   "patternId": "shikoku-tosa-jidai-no-yoake-kochi-kubokawa",
@@ -29272,7 +29151,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道完結。小田原・熱海・三島・新富士・掛川・豊橋・三河安城・岐阜羽島・米原は定期のぞみ停車が未確認のため未収録。 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: shinkansen-tokaido-sanyo#1, shinkansen-tokaido-sanyo#2, shinkansen-tokaido-sanyo#3, shinkansen-tokaido-sanyo#4; sources: https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi https://timetable.jr-odekake.net/station-timetable/2815002001 https://timetable.jr-odekake.net/station-timetable/2815002002 https://timetable.jr-odekake.net/train-timetable/104131?date=20261111 https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi?MODE=7&HOUR=0&DIAF=%c0%c5%b2%ac&DIAR=%c5%ec%b3%a4%c6%bb%a1%a6%bb%b3%cd%db%bf%b7%b4%b4%c0%fe&DIAD=1&YEAR=126&MONH=10&DATE=11】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 東海道完結。小田原・熱海・三島・新富士・掛川・豊橋・三河安城・岐阜羽島・米原は定期のぞみ停車が未確認のため未収録。 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: older era of nozomi-tokyo-shin-osaka (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -29448,7 +29327,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。新大阪〜博多のみの列車も同じ山陽停車の部分集合。博多は山陽新幹線の 009034。 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: shinkansen-tokaido-sanyo#5, shinkansen-tokaido-sanyo#6, shinkansen-tokaido-sanyo#7, shinkansen-tokaido-sanyo#8, shinkansen-tokaido-sanyo#9, shinkansen-tokaido-sanyo#10, shinkansen-tokaido-sanyo#11, shinkansen-tokaido-sanyo#12; sources: https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi https://timetable.jr-odekake.net/station-timetable/2815002001 https://timetable.jr-odekake.net/station-timetable/2815002002 https://timetable.jr-odekake.net/train-timetable/18511?date=20261111 https://timetable.jr-odekake.net/train-timetable/65641?date=20261111 https://timetable.jr-odekake.net/train-timetable/65631?date=20261111】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。新大阪〜博多のみの列車も同じ山陽停車の部分集合。博多は山陽新幹線の 009034。 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: older era of nozomi-tokyo-hakata (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -29751,7 +29630,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 博多直通の定期ひかりはひかりレールスター（2011-03-11 まで）とさくら側に分け、この pattern の終点は広島。岡山止めは途中駅。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/315221?date=20260514 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: shinkansen-tokaido-sanyo#14, shinkansen-tokaido-sanyo#15, shinkansen-tokaido-sanyo#16, shinkansen-tokaido-sanyo#17, shinkansen-tokaido-sanyo#18, shinkansen-tokaido-sanyo#19, shinkansen-tokaido-sanyo#20; sources: https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi https://timetable.jr-odekake.net/station-timetable/2815002001 https://timetable.jr-odekake.net/station-timetable/2815002002 https://timetable.jr-odekake.net/train-timetable/314351?date=20261111 https://timetable.jr-odekake.net/train-timetable/314461?date=20261111 https://timetable.jr-odekake.net/train-timetable/314371?date=20261111】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 博多直通の定期ひかりはひかりレールスター（2011-03-11 まで）とさくら側に分け、この pattern の終点は広島。岡山止めは途中駅。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/315221?date=20260514 品川・新横浜は全列車停車のため必須停車駅とする。 【2026-11-11 recheck: older era of hikari-tokyo-hiroshima (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -30160,7 +30039,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2011-03-12 九州新幹線全線開業で設定。博多・熊本止めは途中駅。博多は九州新幹線コード 009033。新鳥栖・久留米など九州の各駅はみずほが止まるか未確認のため未収録。 【2026-11-11 recheck: shinkansen-kyushu#1, shinkansen-kyushu#2; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://timetable.jr-odekake.net/station-timetable/3449002001 https://timetable.jr-odekake.net/station-timetable/3449002002 https://www.jrkyushu-timetable.jp/jr-k_time/2611/0026/00263901.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0009/00090901.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0026/00263601.html】",
+  "notes": "2011-03-12 九州新幹線全線開業で設定。博多・熊本止めは途中駅。博多は九州新幹線コード 009033。新鳥栖・久留米など九州の各駅はみずほが止まるか未確認のため未収録。 【2026-11-11 recheck: older era of mizuho-shin-osaka-kagoshima-chuo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -30419,7 +30298,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2011-03-12 設定の山陽・九州直通。広島・熊本などへの短区間は途中駅。停車の組み合わせは列車ごとに違うため stops は partial。 Sample conformance: verified regular partial stops added as optional; https://www.westjr.co.jp/press/article/items/191213_00_hiroshima.pdf ; https://timetable.jr-odekake.net/train-timetable/189951?date=20260225 【2026-11-11 recheck: shinkansen-kyushu#5, shinkansen-kyushu#6, shinkansen-kyushu#7, shinkansen-kyushu#8; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://timetable.jr-odekake.net/station-timetable/3449002001 https://timetable.jr-odekake.net/station-timetable/3449002002 https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00347901.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00348401.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00341801.html】",
+  "notes": "2011-03-12 設定の山陽・九州直通。広島・熊本などへの短区間は途中駅。停車の組み合わせは列車ごとに違うため stops は partial。 Sample conformance: verified regular partial stops added as optional; https://www.westjr.co.jp/press/article/items/191213_00_hiroshima.pdf ; https://timetable.jr-odekake.net/train-timetable/189951?date=20260225 【2026-11-11 recheck: older era of sakura-shin-osaka-kagoshima-chuo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -30557,7 +30436,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "九州内のさくら。各駅停車のつばめとは別に、中間駅は一部停車として optional。熊本止めは途中駅。 【2026-11-11 recheck: shinkansen-kyushu#9, shinkansen-kyushu#10; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://timetable.jr-odekake.net/station-timetable/3449002001 https://timetable.jr-odekake.net/station-timetable/3449002002 https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00348901.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00349401.html https://www.jrkyushu-timetable.jp/jr-k_time/2611/0038/00385801.html】",
+  "notes": "九州内のさくら。各駅停車のつばめとは別に、中間駅は一部停車として optional。熊本止めは途中駅。 【2026-11-11 recheck: older era of sakura-hakata-kagoshima-chuo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -30870,7 +30749,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "はやぶさの運行開始は 2011-03-05。盛岡止めは途中駅。2016-03-26 以降も新青森止めは残るため validTo は開けたまま。新函館北斗直通は別 pattern。七戸十和田など未確認の中間駅は未収録。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#1, shinkansen-tohoku-hokkaido-mini#2, shinkansen-tohoku-hokkaido-mini#3, shinkansen-tohoku-hokkaido-mini#4; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html】",
+  "notes": "はやぶさの運行開始は 2011-03-05。盛岡止めは途中駅。2016-03-26 以降も新青森止めは残るため validTo は開けたまま。新函館北斗直通は別 pattern。七戸十和田など未確認の中間駅は未収録。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 【2026-11-11 recheck: older era of hayabusa-tokyo-shin-aomori (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31034,7 +30913,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "北海道新幹線開業 2016-03-26 以降。新青森は東北側コード 000531。新青森・盛岡止めは途中駅。奥津軽いまべつ・木古内は一部停車。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#5, shinkansen-tohoku-hokkaido-mini#6, shinkansen-tohoku-hokkaido-mini#7; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://www.jreast.co.jp/press/2015/20151211.pdf https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html】",
+  "notes": "北海道新幹線開業 2016-03-26 以降。新青森は東北側コード 000531。新青森・盛岡止めは途中駅。奥津軽いまべつ・木古内は一部停車。 Sample conformance: verified regular partial stops added as optional; https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 二戸も定期列車の一部停車駅として補完。https://www.jreast.co.jp/press/2021/akita/20210902_a01.pdf 【2026-11-11 recheck: older era of hayabusa-tokyo-shin-hakodate-hokuto (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31268,7 +31147,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2016-03-26 以降のはやては盛岡／新青森〜新函館北斗が主体、という整理。新青森止めではなく新青森経由。東京直通が残るかは未確認のため、この pattern の起点は盛岡。 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#8, shinkansen-tohoku-hokkaido-mini#9, shinkansen-tohoku-hokkaido-mini#10, shinkansen-tohoku-hokkaido-mini#11; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html https://www.jreast.co.jp/press/2015/20151211.pdf】",
+  "notes": "2016-03-26 以降のはやては盛岡／新青森〜新函館北斗が主体、という整理。新青森止めではなく新青森経由。東京直通が残るかは未確認のため、この pattern の起点は盛岡。 【2026-11-11 recheck: older era of hayate-morioka-shin-hakodate-hokuto (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31466,7 +31345,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 仙台止めは途中駅。どの中間駅が全列車停車かは未照合のため、東京・大宮・仙台・盛岡以外は optional。 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#14, shinkansen-tohoku-hokkaido-mini#15, shinkansen-tohoku-hokkaido-mini#16; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 仙台止めは途中駅。どの中間駅が全列車停車かは未照合のため、東京・大宮・仙台・盛岡以外は optional。 【2026-11-11 recheck: older era of yamabiko-tokyo-morioka (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31584,7 +31463,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 なすのは東北新幹線の近距離列車。那須塩原・新白河止めは郡山 pattern の途中駅。小山が全列車停車かは未確認。 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#17, shinkansen-tohoku-hokkaido-mini#18; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 なすのは東北新幹線の近距離列車。那須塩原・新白河止めは郡山 pattern の途中駅。小山が全列車停車かは未確認。 【2026-11-11 recheck: older era of nasuno-tokyo-koriyama (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31758,7 +31637,7 @@
    "lines": "partial",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#19, shinkansen-tohoku-hokkaido-mini#20, shinkansen-tohoku-hokkaido-mini#21, shinkansen-tohoku-hokkaido-mini#22, shinkansen-tohoku-hokkaido-mini#23; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html https://www.jreast.co.jp/press/2015/20151211.pdf】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。 【2026-11-11 recheck: older era of komachi-tokyo-akita (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -31942,7 +31821,7 @@
    "lines": "partial",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。 【2026-11-11 recheck: shinkansen-tohoku-hokkaido-mini#24, shinkansen-tohoku-hokkaido-mini#25, shinkansen-tohoku-hokkaido-mini#26, shinkansen-tohoku-hokkaido-mini#27; sources: https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30 https://timetables.jreast.co.jp/2611/timetable-v/003d1.html https://timetables.jreast.co.jp/2611/timetable-v/003d2.html https://timetables.jreast.co.jp/2611/timetable-v/003u1.html https://timetables.jreast.co.jp/2611/timetable-v/003u2.html https://www.jreast.co.jp/press/2015/20151211.pdf】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 在来線区間は stations.json の田沢湖線・奥羽線の実在N02コードで収録。列車ごとの停車差と期間は未確認のためpartial。 【2026-11-11 recheck: older era of tsubasa-tokyo-shinjo (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -32138,7 +32017,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 ガーラ湯沢は stations.json の新幹線 line_name に無いので未収録。越後湯沢は上越新幹線コード 001718（在来線 001717 ではない）。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#4, shinkansen-joetsu-hokuriku#5, shinkansen-joetsu-hokuriku#6; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/010/012741.html https://timetables.jreast.co.jp/2611/train/065/068201.html https://timetables.jreast.co.jp/2611/train/020/021922.html https://timetables.jreast.co.jp/2611/train/025/025881.html】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 ガーラ湯沢は stations.json の新幹線 line_name に無いので未収録。越後湯沢は上越新幹線コード 001718（在来線 001717 ではない）。 【2026-11-11 recheck: older era of tanigawa-tokyo-echigo-yuzawa (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -32469,7 +32348,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "敦賀開業 2024-03-16 以降。金沢止めは途中駅。福井は一部停車。小松・加賀温泉・芦原温泉・越前たけふはかがやき停車が未確認のため未収録。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#12, shinkansen-joetsu-hokuriku#13, shinkansen-joetsu-hokuriku#14, shinkansen-joetsu-hokuriku#15, shinkansen-joetsu-hokuriku#16, shinkansen-joetsu-hokuriku#17; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098481.html https://timetables.jreast.co.jp/2611/train/095/098591.html https://timetables.jreast.co.jp/2611/train/095/098491.html https://timetables.jreast.co.jp/2611/train/130/130091.html】",
+  "notes": "敦賀開業 2024-03-16 以降。金沢止めは途中駅。福井は一部停車。小松・加賀温泉・芦原温泉・越前たけふはかがやき停車が未確認のため未収録。 【2026-11-11 recheck: older era of kagayaki-tokyo-tsuruga (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -32800,7 +32679,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2024-03-16 敦賀開業後。金沢止めは途中駅。敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#27, shinkansen-joetsu-hokuriku#28, shinkansen-joetsu-hokuriku#29, shinkansen-joetsu-hokuriku#30, shinkansen-joetsu-hokuriku#31, shinkansen-joetsu-hokuriku#32; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098711.html https://timetables.jreast.co.jp/2611/train/095/098721.html https://timetables.jreast.co.jp/2611/train/035/038611.html】",
+  "notes": "2024-03-16 敦賀開業後。金沢止めは途中駅。敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221 【2026-11-11 recheck: older era of hakutaka-tokyo-tsuruga (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -32946,7 +32825,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 2015-03-14 以降もあさまの終点は長野のままなので期間は割らない。飯山・上越妙高は長野より先なので入れない。高崎は北陸新幹線コード 002387。N02 の line_name は長野新幹線ではなく北陸新幹線。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#33, shinkansen-joetsu-hokuriku#34, shinkansen-joetsu-hokuriku#35, shinkansen-joetsu-hokuriku#36; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/035/039081.html https://timetables.jreast.co.jp/2611/train/035/038841.html https://timetables.jreast.co.jp/2611/train/035/039321.html】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 2015-03-14 以降もあさまの終点は長野のままなので期間は割らない。飯山・上越妙高は長野より先なので入れない。高崎は北陸新幹線コード 002387。N02 の line_name は長野新幹線ではなく北陸新幹線。 【2026-11-11 recheck: older era of asama-tokyo-nagano (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -33110,7 +32989,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡は富山〜金沢のつるぎ pattern でも必須停車駅のため必須。金沢〜敦賀の小松・加賀温泉・芦原温泉・福井・越前たけふは全列車が停まるかを公式時刻表で未照合のため optional。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#39, shinkansen-joetsu-hokuriku#40, shinkansen-joetsu-hokuriku#41; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetable.jr-odekake.net/station-timetable/2675006002?date=20261111 https://timetable.jr-odekake.net/station-timetable/2663006002?date=20261111 https://timetable.jr-odekake.net/station-timetable/2635006001?date=20261111】",
+  "notes": "2024-03-16 以降、富山〜敦賀。金沢は途中の主要駅。新高岡は富山〜金沢のつるぎ pattern でも必須停車駅のため必須。金沢〜敦賀の小松・加賀温泉・芦原温泉・福井・越前たけふは全列車が停まるかを公式時刻表で未照合のため optional。 【2026-11-11 recheck: older era of tsurugi-toyama-tsuruga (until 2026-03-14), kept as it was; the corrections apply to the record from that date】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  }

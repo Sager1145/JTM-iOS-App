@@ -125,7 +125,7 @@ struct TrainServicePatternsTests {
         }.count)
 
         let haruka = TrainServicePatterns.search("はるか")
-        #expect(haruka.count == 3)
+        #expect(haruka.count == 4)
         #expect(Set(haruka.map(\.origin)) == ["京都", "野洲"])
     }
 
@@ -324,10 +324,10 @@ struct TrainServicePatternsTests {
         #expect(all.count == TrainServicePatterns.search("").count)
 
         let haruka = TrainServicePatterns.search("ハルカ")
-        #expect(haruka.count == 3)
+        #expect(haruka.count == 4)
 
         let harukaHiragana = TrainServicePatterns.search("はるか ")
-        #expect(harukaHiragana.count == 3)
+        #expect(harukaHiragana.count == 4)
     }
 
     // MARK: - Shinkansen always-served stops

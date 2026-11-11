@@ -178,10 +178,7 @@
    "stops": "大宮 岩槻 春日部 藤の牛島 南桜井 川間 七光台 清水公園 愛宕 野田市 梅郷 運河 江戸川台 初石 流山おおたかの森 豊四季 柏"
   },
   "notesAppend": "一部は短区間運転（6号は運河まで、7号は春日部まで、2021-12 プレス別紙）。八木崎・豊春・東岩槻には停車しない（2026-11-11 照合）。",
-  "split": {
-   "newId": "urban-park-liner-omiya-kashiwa-until-2026-03",
-   "at": "2026-03-14"
-  }
+  "periodEvidence": "the correction closes the service before the 2026-03-14 timetable (validUntil 2024-03-16); its stops describe the record's own period"
  },
  {
   "record": "skytree-liner-asakusa-kasukabe",

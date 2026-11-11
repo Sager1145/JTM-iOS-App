@@ -273,7 +273,7 @@ struct TrainServicePatternRouteTests {
         let canonical = TrainValidation.normalizeExportTrain(applied, country: "jp")
         #expect(canonical.stops.map(\.n02StationCode) == pattern.stopRefs.map { Optional($0.sourceCode) })
         let sections = StoreOperations.rideRouteSections(for: canonical)
-        let index = try #require(sections.firstIndex { $0.from == "表参道" && $0.to == "町田" })
+        let index = try #require(sections.firstIndex { $0.from == "表参道" && $0.to == "成城学園前" })
         // yoyogi-uehara-east-12 is the reviewed Chiyoda–Odakyu boundary
         // (validFrom 1978-03-31). The service catalog does not create it.
         let solved = try #require(RouteSolver.solveSectionOnDemand(

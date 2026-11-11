@@ -223,7 +223,7 @@ def short_id(cid):
 
 def marker(ids, urls, basis):
     parts = ", ".join(sorted((short_id(i) for i in ids), key=lambda s: natural(s)))
-    text = f"【{CHECKED} recheck: {parts or basis}; sources: {' '.join(urls)}】"
+    text = f"【{CHECKED} recheck: {parts or basis}" + (f"; sources: {' '.join(urls)}】" if urls else "】")
     return text
 
 
@@ -411,7 +411,11 @@ def run(check, quiet):
             record["validFrom"] = split["at"]
             if split.get("setBase"):
                 apply_set(record, split["setBase"], resolver)
-            touch(clone_id, entry)
+            if any(split.get(k) for k in ("dropStops", "setClone", "cloneValidFrom")):
+                touch(clone_id, entry)
+            else:
+                touch(clone_id, {"ids": [], "basis": f"older era of {entry['record']} (until {split['at']}), kept as it was; "
+                                 "the corrections apply to the record from that date"})
             split_records.update((entry["record"], clone_id))
     pre = {pid: copy.deepcopy(r) for pid, r in by_id.items()}
 
@@ -446,6 +450,11 @@ def run(check, quiet):
 
     for pid in split_records:
         by_id[pid]["label"] = period_label(by_id[pid])
+
+    for record in patterns:
+        if record.get("validFrom") and record.get("validUntil") and not record["validFrom"] < record["validUntil"]:
+            raise Fail(f"{record['patternId']}: validity {record['validFrom']}..{record['validUntil']} is empty "
+                       f"(the app refuses the whole catalog)")
 
     problems = period_problems(entries_by_record, pre, by_id, corrections)
     if problems:

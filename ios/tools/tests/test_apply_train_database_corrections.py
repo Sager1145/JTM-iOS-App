@@ -128,6 +128,13 @@ class AppliedCorrectionsAgreeWithBundledData(unittest.TestCase):
                 self.assertEqual(row["destination"], row["stops"][-1]["name"], pid)
         self.assertGreater(moved, 0)
 
+    def test_validity_intervals_are_nonempty_and_ids_unique(self):
+        rows = json.loads(PATTERNS.read_text(encoding="utf-8"))
+        self.assertEqual(len({r["patternId"] for r in rows}), len(rows))
+        for row in rows:
+            if row["validFrom"] and row["validUntil"]:
+                self.assertLess(row["validFrom"], row["validUntil"], row["patternId"])
+
     def test_dated_validity_is_not_marked_missing(self):
         for pid, row in records().items():
             if row["validFrom"] and row["validUntil"]:
