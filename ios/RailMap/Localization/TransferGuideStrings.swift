@@ -16,10 +16,10 @@ enum TransferGuideStrings {
         // MARK: entry
 
         "ios.guide.entry": [
-            .zhHant: "讀取乘換案內截圖",
-            .zhHans: "读取乘换案内截图",
-            .ja: "乗換案内のスクリーンショットを読み込む",
-            .en: "Read a transfer-guide screenshot",
+            .zhHant: "讀取乘換案內截圖（日本）",
+            .zhHans: "读取乘换案内截图（日本）",
+            .ja: "乗換案内のスクリーンショットを読み込む（日本）",
+            .en: "Read a transfer-guide screenshot (Japan)",
         ],
         "ios.guide.title": [
             .zhHant: "從截圖匯入", .zhHans: "从截图导入", .ja: "スクリーンショットから読み込む",
