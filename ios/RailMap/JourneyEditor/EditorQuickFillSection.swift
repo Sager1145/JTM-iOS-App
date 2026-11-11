@@ -41,8 +41,7 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
             if Self.showsJapanOnlyTimetableNote(region: model.region) {
                 Text(text("timetableJapanOnly",
                           fallback: "Timetable autofill is available for Japan only for now."))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("newTripTimetableJapanOnly")
             }
