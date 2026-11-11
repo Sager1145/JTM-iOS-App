@@ -4,4 +4,3 @@
 #   bash ios/tools/check-ui-tokens.sh --update PATH...
 # which refuses to raise a count. New code uses RailSpacing/RailRadius/RailSize,
 # .railPrimary/.railSecondary, railText/railGlyph and railSheetClose.
-RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1

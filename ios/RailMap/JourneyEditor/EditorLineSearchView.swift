@@ -200,7 +200,7 @@ struct EditorLineSearchView: View {
         .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+            ToolbarItem(placement: .confirmationAction) { // ui-token-ok: Done commits the multi-line selection (a confirm, not a dismiss)
                 Button(localization.text("ios.done", fallback: "Done")) {
                     commit()
                     dismiss()
