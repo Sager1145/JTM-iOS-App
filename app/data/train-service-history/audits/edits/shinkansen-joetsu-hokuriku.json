@@ -19,14 +19,13 @@
  {
   "record": "tanigawa-tokyo-echigo-yuzawa",
   "ids": [
-   "shinkansen-joetsu-hokuriku#3",
    "shinkansen-joetsu-hokuriku#4",
    "shinkansen-joetsu-hokuriku#5",
    "shinkansen-joetsu-hokuriku#6"
   ],
   "set": {
-   "stops": "東京 上野 大宮",
-   "optionalStops": "熊谷 本庄早稲田 高崎 上毛高原 越後湯沢",
+   "stops": "東京 上野 大宮 越後湯沢",
+   "optionalStops": "熊谷 本庄早稲田 高崎 上毛高原",
    "completeness": {
     "stops": "partial"
    }
@@ -37,6 +36,14 @@
    "report": "shinkansen-joetsu-hokuriku.md"
   },
   "notesAppend": "冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。"
+ },
+ {
+  "record": "tanigawa-tokyo-echigo-yuzawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#3"
+  ],
+  "status": "notApplied",
+  "reason": "越後湯沢 is not an every-train stop (東京⇔高崎 たにがわ exist), but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
  },
  {
   "record": "kagayaki-tokyo-kanazawa",
@@ -51,16 +58,16 @@
  {
   "record": "kagayaki-tokyo-tsuruga",
   "ids": [
-   "shinkansen-joetsu-hokuriku#11",
    "shinkansen-joetsu-hokuriku#12",
    "shinkansen-joetsu-hokuriku#13",
    "shinkansen-joetsu-hokuriku#14",
    "shinkansen-joetsu-hokuriku#15",
-   "shinkansen-joetsu-hokuriku#16"
+   "shinkansen-joetsu-hokuriku#16",
+   "shinkansen-joetsu-hokuriku#17"
   ],
   "set": {
-   "stops": "東京 大宮 長野 富山 金沢",
-   "optionalStops": "上野 新高岡 小松 加賀温泉 芦原温泉 福井 越前たけふ 敦賀",
+   "stops": "東京 大宮 長野 富山 金沢 福井 敦賀",
+   "optionalStops": "上野 新高岡 小松 加賀温泉 芦原温泉 越前たけふ",
    "completeness": {
     "stops": "partial"
    }
@@ -74,10 +81,10 @@
  {
   "record": "kagayaki-tokyo-tsuruga",
   "ids": [
-   "shinkansen-joetsu-hokuriku#17"
+   "shinkansen-joetsu-hokuriku#11"
   ],
   "status": "notApplied",
-  "reason": "福井 is called by 32/32 敦賀 かがやき, but 敦賀 is optional (519, 500 and about 30 extras end at 金沢) so 福井, beyond 金沢, cannot be called by every train; it stays optional"
+  "reason": "敦賀 is not reached by the 金沢-terminating かがやき (519, 500 and about 30 extras), but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
  },
  {
   "record": "hakutaka-tokyo-kanazawa",
@@ -96,16 +103,16 @@
  {
   "record": "hakutaka-tokyo-tsuruga",
   "ids": [
-   "shinkansen-joetsu-hokuriku#26",
    "shinkansen-joetsu-hokuriku#27",
    "shinkansen-joetsu-hokuriku#28",
    "shinkansen-joetsu-hokuriku#29",
    "shinkansen-joetsu-hokuriku#30",
+   "shinkansen-joetsu-hokuriku#31",
    "shinkansen-joetsu-hokuriku#32"
   ],
   "set": {
-   "stops": "東京 上野 大宮 高崎 長野 上越妙高 富山 新高岡 金沢",
-   "optionalStops": "軽井沢 佐久平 上田 飯山 糸魚川 黒部宇奈月温泉 小松 加賀温泉 芦原温泉 福井 越前たけふ 敦賀",
+   "stops": "東京 上野 大宮 高崎 長野 上越妙高 富山 新高岡 金沢 福井 敦賀",
+   "optionalStops": "軽井沢 佐久平 上田 飯山 糸魚川 黒部宇奈月温泉 小松 加賀温泉 芦原温泉 越前たけふ",
    "completeness": {
     "stops": "partial"
    }
@@ -119,10 +126,10 @@
  {
   "record": "hakutaka-tokyo-tsuruga",
   "ids": [
-   "shinkansen-joetsu-hokuriku#31"
+   "shinkansen-joetsu-hokuriku#26"
   ],
   "status": "notApplied",
-  "reason": "福井 is called by 16/16 敦賀 はくたか, but only 560–569 and five extras reach 敦賀 and so 福井; 敦賀 is optional, so 福井 stays optional"
+  "reason": "敦賀 is reached only by 560–569 and five extras, but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
  },
  {
   "record": "asama-tokyo-nagano",

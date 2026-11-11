@@ -125,7 +125,7 @@ struct TrainServicePatternsTests {
         }.count)
 
         let haruka = TrainServicePatterns.search("はるか")
-        #expect(haruka.count == 2)
+        #expect(haruka.count == 3)
         #expect(Set(haruka.map(\.origin)) == ["京都", "野洲"])
     }
 
@@ -324,10 +324,10 @@ struct TrainServicePatternsTests {
         #expect(all.count == TrainServicePatterns.search("").count)
 
         let haruka = TrainServicePatterns.search("ハルカ")
-        #expect(haruka.count == 2)
+        #expect(haruka.count == 3)
 
         let harukaHiragana = TrainServicePatterns.search("はるか ")
-        #expect(harukaHiragana.count == 2)
+        #expect(harukaHiragana.count == 3)
     }
 
     // MARK: - Shinkansen always-served stops
@@ -337,11 +337,15 @@ struct TrainServicePatternsTests {
     /// every train serves must never be filed under optionalStops.
     private static let shinkansenAlwaysServed: [String: [String]] = [
         "nozomi-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
-        "nozomi-tokyo-hakata": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "博多"],
+        "nozomi-tokyo-hakata": [
+            "東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "新神戸", "岡山", "広島", "小倉", "博多",
+        ],
         "hikari-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
-        "hikari-tokyo-hiroshima": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "広島"],
+        "hikari-tokyo-hiroshima": [
+            "東京", "品川", "新横浜", "静岡", "名古屋", "京都", "新大阪", "新神戸", "岡山", "広島",
+        ],
         "tsurugi-toyama-tsuruga": [
-            "富山", "新高岡", "金沢", "敦賀",
+            "富山", "新高岡", "金沢", "福井", "敦賀",
         ],
     ]
 

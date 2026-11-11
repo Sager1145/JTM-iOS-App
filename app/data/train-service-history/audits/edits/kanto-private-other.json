@@ -19,8 +19,8 @@
   "record": "sagami-shinjuku-odawara",
   "ids": "kanto-private-other#4,5,6,7,8",
   "set": {
-   "stops": "新宿",
-   "optionalStops": "新百合ヶ丘 町田 相模大野 海老名 本厚木 伊勢原 秦野 小田原",
+   "stops": "新宿 小田原",
+   "optionalStops": "新百合ヶ丘 町田 相模大野 海老名 本厚木 伊勢原 秦野",
    "completeness": {
     "stops": "partial"
    }
@@ -29,7 +29,8 @@
    "service": "さがみ",
    "distinctPatterns": 9,
    "report": "kanto-private-other.md"
-  }
+  },
+  "notesAppend": "停車駅はこの区間の起点・終点だけを残している（2026-11-11 照合では新宿以外の全駅が一部列車のみ停車で、小田原止まりでない列車もあるが、パターンは始発と終着を always に持つ必要がある）。"
  },
  {
   "record": "enoshima-shinjuku-katasenoshima",
@@ -80,8 +81,8 @@
   "record": "morningway-odawara-shinjuku",
   "ids": "kanto-private-other#18,19,20",
   "set": {
-   "stops": "新宿",
-   "optionalStops": "小田原 秦野 本厚木 海老名 相模大野 町田 新百合ヶ丘",
+   "stops": "小田原 新宿",
+   "optionalStops": "秦野 本厚木 海老名 相模大野 町田 新百合ヶ丘",
    "lines": "小田原線 江ノ島線",
    "completeness": {
     "stops": "partial"
@@ -97,7 +98,8 @@
    "service": "モーニングウェイ",
    "distinctPatterns": 8,
    "report": "kanto-private-other.md"
-  }
+  },
+  "notesAppend": "停車駅は起点・終点だけを残している（2026-11-11 照合では小田原3/20、秦野8/20、本厚木13/20、相模大野7/20、町田15/20、新百合ヶ丘6/20の停車で、停車駅のない始発駅もあるが、パターンは始発と終着を always に持つ必要がある）。"
  },
  {
   "record": "metro-morningway-honatsugi-kitasenju",

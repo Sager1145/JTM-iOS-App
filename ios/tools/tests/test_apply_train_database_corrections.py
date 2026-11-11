@@ -97,7 +97,8 @@ class SampleOfCorrectedRecordsPerGroup(unittest.TestCase):
 
     def test_shinkansen_joetsu_hokuriku(self):
         hakutaka = self.data["hakutaka-tokyo-tsuruga"]
-        self.assertIn("敦賀", names(hakutaka["optionalStops"]))
+        self.assertIn("福井", names(hakutaka["stops"]))
+        self.assertIn("小松", names(hakutaka["optionalStops"]))
         for station in ("熊谷", "本庄早稲田"):
             self.assertNotIn(station, names(hakutaka["stops"]) + names(hakutaka["optionalStops"]))
         self.assertEqual(self.data["kagayaki-tokyo-kanazawa"]["validUntil"], "2024-03-16")
@@ -141,7 +142,8 @@ class SampleOfCorrectedRecordsPerGroup(unittest.TestCase):
     def test_private_railways(self):
         self.assertNotIn("町田", names(self.data["fujisan-shinjuku-gotemba"]["stops"]))
         self.assertNotIn("大阪難波", names(self.data["ise-shima-liner-namba-kashikojima"]["stops"]))
-        self.assertEqual(names(self.data["sagami-shinjuku-odawara"]["stops"]), ["新宿"])
+        self.assertEqual(names(self.data["sagami-shinjuku-odawara"]["stops"]), ["新宿", "小田原"])
+        self.assertIn("町田", names(self.data["sagami-shinjuku-odawara"]["optionalStops"]))
         self.assertEqual(self.data["tango-relay-amanohashidate-toyooka"]["origin"], "福知山")
         self.assertEqual(self.data["urban-park-liner-asakusa-omiya"]["validUntil"], "2024-03-16")
         kegon = self.data["kegon-asakusa-tobunikko"]

@@ -71,12 +71,12 @@
     "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
    ],
    "corrections": [
-    "shinkansen-joetsu-hokuriku#11",
     "shinkansen-joetsu-hokuriku#12",
     "shinkansen-joetsu-hokuriku#13",
     "shinkansen-joetsu-hokuriku#14",
     "shinkansen-joetsu-hokuriku#15",
-    "shinkansen-joetsu-hokuriku#16"
+    "shinkansen-joetsu-hokuriku#16",
+    "shinkansen-joetsu-hokuriku#17"
    ]
   },
   {
@@ -252,7 +252,6 @@
     "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
    ],
    "corrections": [
-    "shinkansen-joetsu-hokuriku#3",
     "shinkansen-joetsu-hokuriku#4",
     "shinkansen-joetsu-hokuriku#5",
     "shinkansen-joetsu-hokuriku#6"
@@ -351,11 +350,11 @@
     "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
    ],
    "corrections": [
-    "shinkansen-joetsu-hokuriku#26",
     "shinkansen-joetsu-hokuriku#27",
     "shinkansen-joetsu-hokuriku#28",
     "shinkansen-joetsu-hokuriku#29",
     "shinkansen-joetsu-hokuriku#30",
+    "shinkansen-joetsu-hokuriku#31",
     "shinkansen-joetsu-hokuriku#32"
    ]
   },

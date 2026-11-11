@@ -335,7 +335,7 @@
   "company": "東海旅客鉄道/伊勢鉄道/西日本旅客鉄道",
   "label": "名古屋〜紀伊勝浦",
   "origin": "名古屋",
-  "destination": "紀伊勝浦",
+  "destination": "新宮",
   "stops": [
    {
     "name": "名古屋",
@@ -2181,7 +2181,7 @@
   "company": "東日本旅客鉄道",
   "label": "東京〜小田原（2021年3月〜）",
   "origin": "東京",
-  "destination": "小田原",
+  "destination": "茅ヶ崎",
   "stops": [
    {
     "name": "東京",
@@ -3556,7 +3556,7 @@
   "name": "あかぎ",
   "company": "東日本旅客鉄道",
   "label": "上野・新宿〜高崎（2023年3月〜）",
-  "origin": "上野",
+  "origin": "大宮",
   "destination": "高崎",
   "stops": [
    {
@@ -3644,7 +3644,7 @@
   "name": "草津・四万",
   "company": "東日本旅客鉄道",
   "label": "上野〜長野原草津口（2023年3月〜）",
-  "origin": "上野",
+  "origin": "赤羽",
   "destination": "長野原草津口",
   "stops": [
    {
@@ -4675,7 +4675,7 @@
   "name": "すずらん",
   "company": "北海道旅客鉄道",
   "label": "室蘭・東室蘭〜札幌",
-  "origin": "室蘭",
+  "origin": "東室蘭",
   "destination": "札幌",
   "stops": [
    {
@@ -5679,7 +5679,7 @@
   "company": "九州旅客鉄道",
   "label": "大分〜宮崎空港",
   "origin": "大分",
-  "destination": "宮崎空港",
+  "destination": "南宮崎",
   "stops": [
    {
     "name": "大分",
@@ -5910,7 +5910,7 @@
   "company": "九州旅客鉄道",
   "label": "延岡〜宮崎空港",
   "origin": "延岡",
-  "destination": "宮崎空港",
+  "destination": "宮崎",
   "stops": [
    {
     "name": "延岡",
@@ -6282,8 +6282,8 @@
   "name": "かささぎ",
   "company": "九州旅客鉄道",
   "label": "門司港〜肥前鹿島（2022年9月以降）",
-  "origin": "門司港",
-  "destination": "肥前鹿島",
+  "origin": "博多",
+  "destination": "佐賀",
   "stops": [
    {
     "name": "博多",
@@ -6386,7 +6386,7 @@
   "name": "きらめき",
   "company": "九州旅客鉄道",
   "label": "門司港/小倉〜博多",
-  "origin": "門司港",
+  "origin": "小倉",
   "destination": "博多",
   "stops": [
    {
@@ -6569,7 +6569,7 @@
   "company": "九州旅客鉄道",
   "label": "博多〜別府",
   "origin": "博多",
-  "destination": "別府",
+  "destination": "大分",
   "stops": [
    {
     "name": "博多",
@@ -6784,7 +6784,7 @@
   "name": "九州横断特急",
   "company": "九州旅客鉄道",
   "label": "別府〜熊本",
-  "origin": "別府",
+  "origin": "大分",
   "destination": "熊本",
   "stops": [
    {
@@ -8359,7 +8359,7 @@
   "company": "西日本旅客鉄道",
   "label": "新大阪〜城崎温泉",
   "origin": "新大阪",
-  "destination": "城崎温泉",
+  "destination": "福知山",
   "stops": [
    {
     "name": "新大阪",
@@ -8468,7 +8468,7 @@
   "company": "西日本旅客鉄道",
   "label": "京都〜城崎温泉",
   "origin": "京都",
-  "destination": "城崎温泉",
+  "destination": "福知山",
   "stops": [
    {
     "name": "京都",
@@ -8638,7 +8638,7 @@
   "company": "西日本旅客鉄道/WILLER TRAINS",
   "label": "京都〜天橋立",
   "origin": "京都",
-  "destination": "天橋立",
+  "destination": "宮津",
   "stops": [
    {
     "name": "京都",
@@ -8911,7 +8911,7 @@
   "company": "西日本旅客鉄道",
   "label": "大阪〜浜坂",
   "origin": "大阪",
-  "destination": "浜坂",
+  "destination": "香住",
   "stops": [
    {
     "name": "大阪",
@@ -9134,8 +9134,8 @@
   "name": "スーパーはくと",
   "company": "西日本旅客鉄道/智頭急行",
   "label": "京都〜鳥取・倉吉",
-  "origin": "京都",
-  "destination": "倉吉",
+  "origin": "大阪",
+  "destination": "鳥取",
   "stops": [
    {
     "name": "大阪",
@@ -9799,7 +9799,7 @@
   "name": "らくラクはりま",
   "company": "西日本旅客鉄道",
   "label": "京都/大阪〜網干",
-  "origin": "京都",
+  "origin": "新大阪",
   "destination": "網干",
   "stops": [
    {
@@ -9880,7 +9880,7 @@
   "company": "西日本旅客鉄道",
   "label": "大阪〜草津/米原",
   "origin": "大阪",
-  "destination": "米原",
+  "destination": "草津",
   "stops": [
    {
     "name": "大阪",
@@ -10142,7 +10142,7 @@
   "company": "西日本旅客鉄道/IRいしかわ鉄道",
   "label": "金沢〜和倉温泉",
   "origin": "金沢",
-  "destination": "和倉温泉",
+  "destination": "七尾",
   "stops": [
    {
     "name": "金沢",
@@ -13429,7 +13429,7 @@
   "name": "スワローあかぎ",
   "company": "東日本旅客鉄道",
   "label": "上野〜高崎/前橋（2014〜2023年）",
-  "origin": "上野",
+  "origin": "浦和",
   "destination": "高崎",
   "stops": [
    {
@@ -13527,7 +13527,7 @@
   "name": "スワローあかぎ",
   "company": "東日本旅客鉄道",
   "label": "上野〜高崎/前橋（2014〜2023年）",
-  "origin": "上野",
+  "origin": "浦和",
   "destination": "高崎",
   "stops": [
    {
@@ -13625,7 +13625,7 @@
   "name": "あかぎ",
   "company": "東日本旅客鉄道",
   "label": "上野〜前橋（2023年3月まで）",
-  "origin": "上野",
+  "origin": "赤羽",
   "destination": "前橋",
   "stops": [
    {
@@ -16535,7 +16535,7 @@
   "company": "西日本旅客鉄道",
   "label": "大阪〜草津/米原（2024年3月まで）",
   "origin": "大阪",
-  "destination": "米原",
+  "destination": "草津",
   "stops": [
    {
     "name": "大阪",
@@ -18505,6 +18505,10 @@
    {
     "name": "新宿",
     "sourceCode": "003700"
+   },
+   {
+    "name": "小田原",
+    "sourceCode": "005215"
    }
   ],
   "optionalStops": [
@@ -18535,10 +18539,6 @@
    {
     "name": "秦野",
     "sourceCode": "004913"
-   },
-   {
-    "name": "小田原",
-    "sourceCode": "005215"
    }
   ],
   "via": [],
@@ -18554,7 +18554,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Stop list varies by train; optional list partly from memory. validFrom predates 2010. 【2026-11-11 recheck: kanto-private-other#4, kanto-private-other#5, kanto-private-other#6, kanto-private-other#7, kanto-private-other#8; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Stop list varies by train; optional list partly from memory. validFrom predates 2010. 停車駅はこの区間の起点・終点だけを残している（2026-11-11 照合では新宿以外の全駅が一部列車のみ停車で、小田原止まりでない列車もあるが、パターンは始発と終着を always に持つ必要がある）。 【2026-11-11 recheck: kanto-private-other#4, kanto-private-other#5, kanto-private-other#6, kanto-private-other#7, kanto-private-other#8; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
  },
  {
   "patternId": "enoshima-shinjuku-katasenoshima",
@@ -18809,15 +18809,15 @@
   "destination": "新宿",
   "stops": [
    {
+    "name": "小田原",
+    "sourceCode": "005215"
+   },
+   {
     "name": "新宿",
     "sourceCode": "003700"
    }
   ],
   "optionalStops": [
-   {
-    "name": "小田原",
-    "sourceCode": "005215"
-   },
    {
     "name": "秦野",
     "sourceCode": "004913"
@@ -18857,7 +18857,7 @@
   },
   "confidence": "medium",
   "source": "https://ja.wikipedia.org/wiki/小田急ロマンスカー",
-  "notes": "Introduced at the 2018-03-17 複々線 revision. Some trains start at 秦野/本厚木 or 藤沢 (江ノ島線; 平日50・60号、土休日60号。片瀬江ノ島始発はない); those are not separate patterns here. 【2026-11-11 recheck: kanto-private-other#18, kanto-private-other#19, kanto-private-other#20; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
+  "notes": "Introduced at the 2018-03-17 複々線 revision. Some trains start at 秦野/本厚木 or 藤沢 (江ノ島線; 平日50・60号、土休日60号。片瀬江ノ島始発はない); those are not separate patterns here. 停車駅は起点・終点だけを残している（2026-11-11 照合では小田原3/20、秦野8/20、本厚木13/20、相模大野7/20、町田15/20、新百合ヶ丘6/20の停車で、停車駅のない始発駅もあるが、パターンは始発と終着を always に持つ必要がある）。 【2026-11-11 recheck: kanto-private-other#18, kanto-private-other#19, kanto-private-other#20; sources: https://www.odakyu.jp/romancecar/station/ https://www.odakyu.jp/romancecar/timetable/ https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf】"
  },
  {
   "patternId": "homeway-shinjuku-odawara",
@@ -19030,7 +19030,7 @@
   "name": "メトロホームウェイ",
   "company": "小田急電鉄/東京地下鉄",
   "label": "北千住→本厚木（平日夜下り）",
-  "origin": "北千住",
+  "origin": "大手町",
   "destination": "本厚木",
   "stops": [
    {
@@ -19378,7 +19378,7 @@
   "name": "モーニングライナー",
   "company": "京成電鉄",
   "label": "成田空港→京成上野（京成本線経由）",
-  "origin": "成田空港",
+  "origin": "京成成田",
   "destination": "京成上野",
   "stops": [
    {
@@ -19442,7 +19442,7 @@
   "company": "京成電鉄",
   "label": "京成上野→成田空港（京成本線経由）",
   "origin": "京成上野",
-  "destination": "成田空港",
+  "destination": "京成成田",
   "stops": [
    {
     "name": "京成上野",
@@ -21242,8 +21242,8 @@
   "name": "ゆけむり",
   "company": "長野電鉄",
   "label": "長野〜湯田中",
-  "origin": "長野",
-  "destination": "湯田中",
+  "origin": "須坂",
+  "destination": "信州中野",
   "stops": [
    {
     "name": "須坂",
@@ -21309,8 +21309,8 @@
   "name": "スノーモンキー",
   "company": "長野電鉄",
   "label": "長野〜湯田中",
-  "origin": "長野",
-  "destination": "湯田中",
+  "origin": "須坂",
+  "destination": "信州中野",
   "stops": [
    {
     "name": "須坂",
@@ -21708,7 +21708,7 @@
   "name": "伊勢志摩ライナー",
   "company": "近畿日本鉄道",
   "label": "大阪難波〜賢島",
-  "origin": "大阪難波",
+  "origin": "大阪上本町",
   "destination": "賢島",
   "stops": [
    {
@@ -22289,7 +22289,7 @@
   "name": "阪伊特急",
   "company": "近畿日本鉄道",
   "label": "大阪難波〜賢島",
-  "origin": "大阪難波",
+  "origin": "大阪上本町",
   "destination": "賢島",
   "stops": [
    {
@@ -25177,12 +25177,6 @@
     "sourceCode": "009822"
    }
   ],
-  "unsolvableLegs": [
-   [
-    "新大村",
-    "諫早"
-   ]
-  ],
   "optionalStops": [
    {
     "name": "嬉野温泉",
@@ -25988,6 +25982,10 @@
    {
     "name": "大宮",
     "sourceCode": "002914"
+   },
+   {
+    "name": "越後湯沢",
+    "sourceCode": "001717"
    }
   ],
   "optionalStops": [
@@ -26006,10 +26004,6 @@
    {
     "name": "上毛高原",
     "sourceCode": "001952"
-   },
-   {
-    "name": "越後湯沢",
-    "sourceCode": "001717"
    }
   ],
   "via": [],
@@ -26024,7 +26018,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 ガーラ湯沢は stations.json の新幹線 line_name に無いので未収録。越後湯沢は上越新幹線コード 001718（在来線 001717 ではない）。 冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#3, shinkansen-joetsu-hokuriku#4, shinkansen-joetsu-hokuriku#5, shinkansen-joetsu-hokuriku#6; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/010/012741.html https://timetables.jreast.co.jp/2611/train/065/068201.html https://timetables.jreast.co.jp/2611/train/020/021922.html https://timetables.jreast.co.jp/2611/train/025/025881.html】",
+  "notes": "validFrom 2010-01-01 は収録範囲の床であり、列車名の実際の開始日ではない。停車は公式時刻表の転記ではなく、全列車停車と判断した駅のみ required。列車により違う駅は optional。未確認の駅は入れていない。 ガーラ湯沢は stations.json の新幹線 line_name に無いので未収録。越後湯沢は上越新幹線コード 001718（在来線 001717 ではない）。 冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#4, shinkansen-joetsu-hokuriku#5, shinkansen-joetsu-hokuriku#6; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/010/012741.html https://timetables.jreast.co.jp/2611/train/065/068201.html https://timetables.jreast.co.jp/2611/train/020/021922.html https://timetables.jreast.co.jp/2611/train/025/025881.html】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -26245,6 +26239,14 @@
    {
     "name": "金沢",
     "sourceCode": "002093"
+   },
+   {
+    "name": "福井",
+    "sourceCode": "002688"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
    }
   ],
   "optionalStops": [
@@ -26269,16 +26271,8 @@
     "sourceCode": "002529"
    },
    {
-    "name": "福井",
-    "sourceCode": "002688"
-   },
-   {
     "name": "越前たけふ",
     "sourceCode": "010180"
-   },
-   {
-    "name": "敦賀",
-    "sourceCode": "010186"
    }
   ],
   "via": [],
@@ -26294,7 +26288,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "敦賀開業 2024-03-16 以降。金沢止めは途中駅。福井は一部停車。小松・加賀温泉・芦原温泉・越前たけふはかがやき停車が未確認のため未収録。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#11, shinkansen-joetsu-hokuriku#12, shinkansen-joetsu-hokuriku#13, shinkansen-joetsu-hokuriku#14, shinkansen-joetsu-hokuriku#15, shinkansen-joetsu-hokuriku#16; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098481.html https://timetables.jreast.co.jp/2611/train/095/098591.html https://timetables.jreast.co.jp/2611/train/095/098491.html https://timetables.jreast.co.jp/2611/train/130/130091.html】",
+  "notes": "敦賀開業 2024-03-16 以降。金沢止めは途中駅。福井は一部停車。小松・加賀温泉・芦原温泉・越前たけふはかがやき停車が未確認のため未収録。 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#12, shinkansen-joetsu-hokuriku#13, shinkansen-joetsu-hokuriku#14, shinkansen-joetsu-hokuriku#15, shinkansen-joetsu-hokuriku#16, shinkansen-joetsu-hokuriku#17; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098481.html https://timetables.jreast.co.jp/2611/train/095/098591.html https://timetables.jreast.co.jp/2611/train/095/098491.html https://timetables.jreast.co.jp/2611/train/130/130091.html】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },
@@ -26439,6 +26433,14 @@
    {
     "name": "金沢",
     "sourceCode": "002093"
+   },
+   {
+    "name": "福井",
+    "sourceCode": "002688"
+   },
+   {
+    "name": "敦賀",
+    "sourceCode": "010186"
    }
   ],
   "optionalStops": [
@@ -26479,16 +26481,8 @@
     "sourceCode": "002529"
    },
    {
-    "name": "福井",
-    "sourceCode": "002688"
-   },
-   {
     "name": "越前たけふ",
     "sourceCode": "010180"
-   },
-   {
-    "name": "敦賀",
-    "sourceCode": "010186"
    }
   ],
   "via": [],
@@ -26504,7 +26498,7 @@
    "lines": "complete",
    "validity": "partial"
   },
-  "notes": "2024-03-16 敦賀開業後。金沢止めは途中駅。敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#26, shinkansen-joetsu-hokuriku#27, shinkansen-joetsu-hokuriku#28, shinkansen-joetsu-hokuriku#29, shinkansen-joetsu-hokuriku#30, shinkansen-joetsu-hokuriku#32; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098711.html https://timetables.jreast.co.jp/2611/train/095/098721.html https://timetables.jreast.co.jp/2611/train/035/038611.html】",
+  "notes": "2024-03-16 敦賀開業後。金沢止めは途中駅。敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。 Sample conformance: verified regular partial stops added as optional; https://timetable.jr-odekake.net/train-timetable/117911?date=20260221 【2026-11-11 recheck: shinkansen-joetsu-hokuriku#27, shinkansen-joetsu-hokuriku#28, shinkansen-joetsu-hokuriku#29, shinkansen-joetsu-hokuriku#30, shinkansen-joetsu-hokuriku#31, shinkansen-joetsu-hokuriku#32; sources: https://timetables.jreast.co.jp/2611/timetable/ https://timetable.jr-odekake.net/ https://timetables.jreast.co.jp/2611/train/095/098711.html https://timetables.jreast.co.jp/2611/train/095/098721.html https://timetables.jreast.co.jp/2611/train/035/038611.html】",
   "confidence": "low",
   "source": "w3-fragment; not a single-timetable transcription"
  },

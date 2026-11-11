@@ -335,6 +335,18 @@ def run(check, quiet):
 
     for pid, item in evidence.items():
         record = by_id[pid]
+        # the app applies a pattern as a ride from origin to destination, so both must be the first and last
+        # always-served stop: a terminal that only some trains reach is optional and the ends move inward
+        if len(record["stops"]) < 2:
+            raise Fail(f"{pid}: fewer than two always-served stops")
+        for key, stop in (("origin", record["stops"][0]), ("destination", record["stops"][-1])):
+            if record[key] != stop["name"]:
+                record[key] = stop["name"]
+        if record.get("unsolvableLegs"):
+            pairs = [[a["name"], b["name"]] for a, b in zip(record["stops"], record["stops"][1:])]
+            record["unsolvableLegs"] = [leg for leg in record["unsolvableLegs"] if leg in pairs]
+            if not record["unsolvableLegs"]:
+                del record["unsolvableLegs"]
         notes = MARKER.sub("", record.get("notes") or "").rstrip()
         urls = urls_for(corrections, item["ids"], item["urls"])
         record["notes"] = (notes + " " + marker(item["ids"], urls, item["basis"])).strip()
