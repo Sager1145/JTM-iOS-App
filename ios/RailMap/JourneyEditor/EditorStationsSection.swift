@@ -69,7 +69,6 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 line: model.originLine,
                 source: model.filledBy[.origin],
                 identifier: "newTripOrigin") { model.picking = .origin }
-                .id(EditorAnchor.origin.rawValue)
             Divider()
             stationButton(
                 title: text("to", fallback: "To"),
@@ -77,8 +76,9 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 line: model.destinationLine,
                 source: model.filledBy[.destination],
                 identifier: "newTripDestination") { model.picking = .destination }
-                .id(EditorAnchor.destination.rawValue)
         }
+        // One Form row holds both stations, so one id serves both anchors.
+        .id(EditorAnchor.origin.rawValue)
         // Room for Swap, so a long station name never runs under it.
         .padding(.trailing, RailSize.touch)
         .overlay(alignment: .trailing) {

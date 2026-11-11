@@ -86,8 +86,25 @@ struct EditorSaveStatusTests {
         }
     }
 
-    @Test func theRecordIdentifierIsNotEditableInTheEditor() throws {
+    @Test func theRecordIdentifierIsEditableOnlyWhenItIsInvalid() throws {
         let details = try source("JourneyEditorDetails.swift")
-        #expect(!details.contains("text: $draft.id"))
+        #expect(details.contains("issues.all(for: .id).contains(where: { $0.severity == .error })"))
+        #expect(details.contains("LabeledContent(localization.countryText(\"field.id\""))
+    }
+
+    @Test func theCompletionPageResetsWhenTheFillSheetGoesAway() throws {
+        let fill = try source("EditorFillDetailsSheet.swift")
+        #expect(fill.contains(".onDisappear { model.showsCompletion = false }"))
+    }
+
+    @Test func scrollAnchorsAreOnRowsNotSections() throws {
+        for name in ["EditorServiceSection.swift", "EditorTimeSection.swift", "EditorRouteSection.swift",
+                     "EditorStationsSection.swift", "JourneyEditorDetails.swift"] {
+            let text = try source(name)
+            for line in text.split(separator: "\n") where line.contains(".id(EditorAnchor.") {
+                // Section-level ids sit at body indentation (8 spaces).
+                #expect(!line.hasPrefix("        .id("), "\(name): \(line)")
+            }
+        }
     }
 }

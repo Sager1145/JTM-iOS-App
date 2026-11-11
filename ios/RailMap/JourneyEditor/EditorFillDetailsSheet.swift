@@ -94,6 +94,9 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                     })
             }
         }
+        // A swipe-down removes the stack without writing false back, so the
+        // pushed completion page would reappear on the next open.
+        .onDisappear { model.showsCompletion = false }
         .sheet(isPresented: $model.showsTimetablePicker) {
             ServicePatternPickerView(
                 region: model.region.code,

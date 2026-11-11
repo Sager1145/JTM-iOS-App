@@ -579,8 +579,8 @@ enum NewTripStrings {
             .zhHant: "請為行程群組命名", .zhHans: "请为行程分组命名",
         ],
         "ios.newTrip.blocker.times": [
-            .en: "Check the times: one is before an earlier one", .ja: "時刻を確認してください。前の時刻より早い時刻があります",
-            .zhHant: "請檢查時間：有時間早於前一個時間", .zhHans: "请检查时间：有时间早于前一个时间",
+            .en: "Arrival is before departure", .ja: "到着が出発より前になっています",
+            .zhHant: "到達時間早於出發時間", .zhHans: "到达时间早于出发时间",
         ],
         "ios.newTrip.blocker.noRoute": [
             .en: "This trip has no route to save", .ja: "保存できる経路がありません",
@@ -601,10 +601,6 @@ enum NewTripStrings {
         "ios.newTrip.statusSection": [
             .en: "Status", .ja: "状態",
             .zhHant: "狀態", .zhHans: "状态",
-        ],
-        "ios.newTrip.notesSection": [
-            .en: "Notes", .ja: "メモ",
-            .zhHant: "備註", .zhHans: "备注",
         ],
         "ios.newTrip.resetColor": [
             .en: "Use the default color", .ja: "既定の色に戻す",

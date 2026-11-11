@@ -27,6 +27,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
 
     var body: some View {
         Section {
+            Group {
             if let timetableTrain = model.timetableTrain {
                 timetablePassStations(timetableTrain)
             } else if model.showsRecordRoute {
@@ -42,6 +43,9 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                 }
                 historicalNotices
             }
+            }
+            // Anchor on the rows, not the Section, so scrollTo finds it.
+            .id(EditorAnchor.route.rawValue)
             if let routeProofFailure = model.routeProofFailure {
                 Text(routeProofFailure)
                     .railText(.secondary)
@@ -51,7 +55,6 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         } header: {
             Text(text("route", fallback: "Route"))
         }
-        .id(EditorAnchor.route.rawValue)
         .task(id: trackPairKey) {
             let key = trackPairKey
             guard let package = model.package else { trackPairSections = [:]; return }

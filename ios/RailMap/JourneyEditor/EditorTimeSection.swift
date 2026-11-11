@@ -14,6 +14,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
     var body: some View {
         Section {
             dateTimeField(isDeparture: true)
+                .id(EditorAnchor.time.rawValue)
             dateTimeField(isDeparture: false)
             if let source = timeSource {
                 HStack(spacing: RailSpacing.s8) {
@@ -46,7 +47,6 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
         } header: {
             Text(text("time", fallback: "Time"))
         }
-        .id(EditorAnchor.time.rawValue)
     }
 
     private func dateTimeField(isDeparture: Bool) -> some View {

@@ -34,8 +34,7 @@ enum EditorSaveBlocker: Equatable {
 
     var anchor: EditorAnchor {
         switch self {
-        case .chooseOrigin, .regionConflict: .origin
-        case .chooseDestination: .destination
+        case .chooseOrigin, .regionConflict, .chooseDestination: .origin
         case .times: .time
         case .groupName: .details
         case .repairing, .timetableStops, .noRoute, .findingRoute, .chooseRoute: .route
@@ -46,7 +45,6 @@ enum EditorSaveBlocker: Equatable {
 /// Where the status row scrolls the form to.
 enum EditorAnchor: String, Hashable {
     case origin = "newTripAnchorOrigin"
-    case destination = "newTripAnchorDestination"
     case time = "newTripAnchorTime"
     case service = "newTripAnchorService"
     case route = "newTripAnchorRoute"
@@ -55,8 +53,7 @@ enum EditorAnchor: String, Hashable {
 
     init(field: RideDraftIssue.Field) {
         switch field {
-        case .origin: self = .origin
-        case .destination: self = .destination
+        case .origin, .destination: self = .origin
         case .date: self = .time
         case .number: self = .service
         case .stops, .stop: self = .stops

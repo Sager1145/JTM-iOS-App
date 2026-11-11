@@ -66,8 +66,8 @@ struct JourneyEditorDetails: View {
                 .contentShape(Rectangle())
             }
             .accessibilityIdentifier("newTripMoreDetails")
+            .id(EditorAnchor.details.rawValue)
         }
-        .id(EditorAnchor.details.rawValue)
         if expanded {
             serviceDetailsSection
             serviceSectionsSection
@@ -104,6 +104,8 @@ struct JourneyEditorDetails: View {
                     }
                 }
                 .accessibilityIdentifier("rideEditorStop-\(index)")
+                // Scroll anchors live on a row, not on the Section.
+                .id(index == 0 ? EditorAnchor.stops.rawValue : "rideEditorStopRow-\(index)")
                 // The platform is entered here, without opening the stop.
                 PlatformEntryBadge(
                     platform: Binding(
@@ -120,7 +122,6 @@ struct JourneyEditorDetails: View {
                 "ios.newTrip.stopsNote",
                 fallback: "To change the route, pick other stations or add a stop on the map."))
         }
-        .id(EditorAnchor.stops.rawValue)
     }
 
     private var routeLineIDs: Set<String> {
@@ -231,7 +232,7 @@ struct JourneyEditorDetails: View {
                 .lineLimit(2...5)
                 .accessibilityIdentifier("rideEditorNotes")
         } header: {
-            Text(localization.text("ios.newTrip.notesSection", fallback: "Notes"))
+            Text(localization.text("ios.ai.notes"))
         }
     }
 
@@ -282,10 +283,22 @@ struct JourneyEditorDetails: View {
     /// links between records, so it is shown, not edited.
     private var recordSection: some View {
         Section {
-            LabeledContent(localization.countryText("field.id", fallback: "Identifier")) {
-                Text(verbatim: draft.id)
-                    .textSelection(.enabled)
+            if issues.all(for: .id).contains(where: { $0.severity == .error }) {
+                // Only a record whose identifier is empty or invalid (a
+                // legacy or imported one) can be fixed here; Save is refused
+                // until it is.
+                EditorTextField(
+                    title: localization.countryText("field.id", fallback: "Identifier"),
+                    text: $draft.id)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
                     .accessibilityIdentifier("rideEditorID")
+            } else {
+                LabeledContent(localization.countryText("field.id", fallback: "Identifier")) {
+                    Text(verbatim: draft.id)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("rideEditorID")
+                }
             }
             issueRows(.id)
             issueRows(.record)
