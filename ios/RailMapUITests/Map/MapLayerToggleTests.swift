@@ -150,6 +150,16 @@ final class MapLayerToggleTests: XCTestCase {
         XCTAssertTrue(app.buttons["mapLayersButton"].waitForExistence(timeout: 12))
         app.buttons["mapLayersButton"].tap()
 
+        // The layers sheet is non-modal: the map's own network button stays
+        // hittable above it, and the network switches are disabled until the
+        // network is on (the same rule as the ridden-line switches).
+        let network = app.buttons["mapNetworkToggle"]
+        XCTAssertTrue(network.waitForExistence(timeout: 8))
+        XCTAssertTrue(
+            network.isHittable,
+            "the map behind the half-height layers sheet must stay interactive")
+        if !network.isSelected { network.tap() }
+
         for label in ["layerNetworkStations", "layerNetworkStationNames"] {
             let toggle = app.switches[label]
             XCTAssertTrue(

@@ -38,11 +38,13 @@ struct MapLayersView: View {
                             "ios.layers.networkStations", fallback: "Stations"),
                         isOn: $controller.layers.networkStations)
                     .accessibilityIdentifier("layerNetworkStations")
+                    .disabled(!controller.showsNetwork)
                     Toggle(
                         localization.text(
                             "ios.layers.networkStationNames", fallback: "Station names"),
                         isOn: $controller.layers.networkStationNames)
                     .accessibilityIdentifier("layerNetworkStationNames")
+                    .disabled(!controller.showsNetwork)
                     // Moved here from Settings: this sheet sits at half height
                     // over the map, so the reader sees the camera move. Behind
                     // the full-height Settings sheet the move was invisible.
@@ -90,6 +92,10 @@ struct MapLayersView: View {
                 } header: {
                     Text(localization.countryText(
                         "map.riddenGroup", fallback: "Ridden lines"))
+                } footer: {
+                    Text(localization.text(
+                        "ios.note.routesLayers",
+                        fallback: "These follow the Train routes switch on the map."))
                 }
 
                 Section {
@@ -174,6 +180,6 @@ struct MapLayersView: View {
         // §4.2: this sheet is ABOUT the map, so it must not cover all of it —
         // half by default, full when the reader pulls it up. Declared here
         // rather than at the presenter, the way `VideoExportOptionsView` does.
-        .railSheet(.half)
+        .railSheet(.halfNonModal)
     }
 }

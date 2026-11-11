@@ -103,6 +103,11 @@ enum RailSheetHeight {
     case half
     /// Opens full height.
     case full
+    /// Half height like ``half``, and the map or list behind it stays live and
+    /// undimmed up to medium height. For sheets whose controls change the
+    /// parent view (map layers, trip filters): the reader checks the result
+    /// without dismissing the sheet. HIG Sheets, non-modal.
+    case halfNonModal
 }
 
 extension View {
@@ -118,6 +123,10 @@ extension View {
             railHalfSheetDetents().presentationDragIndicator(.visible)
         case .full:
             presentationDetents([.large])
+        case .halfNonModal:
+            railHalfSheetDetents()
+                .presentationDragIndicator(.visible)
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
         }
         #endif
     }

@@ -41,13 +41,19 @@ enum ShellStrings {
         "ios.search.didYouMean": [
             .en: "Did you mean “{text}”?", .ja: "もしかして「{text}」？", .zhHans: "你是不是要找“{text}”？", .zhHant: "你是不是要找「{text}」？",
         ],
-        "ios.hide.title": [.en: "Hide trips", .ja: "旅程を非表示", .zhHans: "隐藏行程", .zhHant: "隱藏行程"],
-        "ios.hide.menu": [.en: "Hide trips…", .ja: "旅程を非表示…", .zhHans: "隐藏行程…", .zhHant: "隱藏行程…"],
-        "ios.hide.menuActive": [
-            .en: "Hide trips… ({n} hidden)", .ja: "旅程を非表示…（{n} 件）",
-            .zhHans: "隐藏行程…（已隐藏 {n} 项）", .zhHant: "隱藏行程…（已隱藏 {n} 項）",
+        "ios.hide.title": [.en: "Regions and months shown", .ja: "表示する地域と月", .zhHans: "显示的地区和月份", .zhHant: "顯示的地區與月份"],
+        "ios.hide.menu": [.en: "Show regions and months…", .ja: "表示する地域と月…", .zhHans: "显示的地区和月份…", .zhHant: "顯示的地區與月份…"],
+        "ios.note.routesLayers": [
+            .en: "These follow the Train routes switch on the map.",
+            .ja: "これらは地図上の列車経路スイッチに従います。",
+            .zhHans: "这些开关跟随地图上的列车路线按钮。",
+            .zhHant: "這些開關跟隨地圖上的列車路線按鈕。",
         ],
-        "ios.hide.regions": [.en: "Countries and regions", .ja: "国・地域", .zhHans: "国家和地区", .zhHant: "國家與地區"],
+        "ios.hide.menuActive": [
+            .en: "Show regions and months… ({n} hidden)", .ja: "表示する地域と月…（{n} 件非表示）",
+            .zhHans: "显示的地区和月份…（已隐藏 {n} 项）", .zhHant: "顯示的地區與月份…（已隱藏 {n} 項）",
+        ],
+        "ios.hide.regions": [.en: "Show trips from", .ja: "表示する旅程", .zhHans: "显示以下行程", .zhHant: "顯示以下行程"],
         "ios.hide.months": [.en: "Months", .ja: "月", .zhHans: "月份", .zhHant: "月份"],
         "ios.hide.allHidden": [
             .en: "All trips are hidden by the filter.", .ja: "すべての旅程がフィルタで非表示になっています。",
