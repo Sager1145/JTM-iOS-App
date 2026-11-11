@@ -1,5 +1,6 @@
 import Foundation
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// The number spellings the 統計 panel uses, ported from `app-stats-render.js`.
@@ -122,17 +123,10 @@ extension StatisticsFormat {
          ServiceRow(key: "stat.othertrains", group: services.other)]
     }
 
+    /// Forwarder kept only for `Sharing/ShareCardBuilder.swift` (outside the
+    /// Statistics unit); delete with its call sites.
     static func dayLabel(_ date: String, localization: AppLocalization) -> String {
-        // A civil day has no zone: build it and print it on one fixed calendar.
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .gmt
-        let parts = date.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3,
-              let point = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2]))
-        else { return date }
-        return point.formatted(
-            Date.FormatStyle(calendar: calendar, timeZone: .gmt)
-                .year().month(.abbreviated).day().locale(localization.locale))
+        TripDateLabel.label(date, .compact, language: localization.language)
     }
 
     private static func symbolCalendar(_ localization: AppLocalization) -> Calendar {
@@ -190,15 +184,9 @@ extension StatisticsFormat {
         }
     }
 
+    /// Forwarder kept only for `Sharing/ShareCardBuilder.swift`; delete with it.
     static func spelledDate(_ date: String, localization: AppLocalization) -> String {
-        let parts = date.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3 else {
-            let key = Dates.dateLabelKey(date)
-            return localization.text(key, fallback: key)
-        }
-        return localization.text("ios.ticket.date", params: [
-            "y": .string(String(parts[0])), "m": .string(String(parts[1])), "d": .string(String(parts[2])),
-        ])
+        TripDateLabel.label(date, .compact, language: localization.language)
     }
 
     private static func ticketDate(_ date: String) -> String {
@@ -213,11 +201,11 @@ extension StatisticsFormat {
         guard let first = dated.first, let last = dated.last else { return nil }
         guard first != last else {
             return localization.text("ios.ticket.spanDay", params: [
-                "date": .string(spelledDate(first, localization: localization))])
+                "date": .string(TripDateLabel.label(first, .compact, language: localization.language))])
         }
         return localization.text("ios.ticket.span", params: [
-            "from": .string(spelledDate(first, localization: localization)),
-            "to": .string(spelledDate(last, localization: localization))])
+            "from": .string(TripDateLabel.label(first, .compact, language: localization.language)),
+            "to": .string(TripDateLabel.label(last, .compact, language: localization.language))])
     }
 
     static func ticketScope(trains: [Train], groupID: String?, scopeName: String?,

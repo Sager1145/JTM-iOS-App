@@ -100,7 +100,7 @@ final class JourneyGroupUITests: XCTestCase {
         let periodItem = app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch
         XCTAssertTrue(periodItem.waitForExistence(timeout: 5), app.debugDescription)
         periodItem.tap()
-        let byGroup = app.buttons["statisticsClassification-journeyGroup"]
+        let byGroup = app.segmentedControls["statisticsClassification"].buttons.element(boundBy: 1)
         XCTAssertTrue(byGroup.waitForExistence(timeout: 10))
         byGroup.tap()
         let filter = app.descendants(matching: .any)["statisticsJourneyGroupFilter"].firstMatch

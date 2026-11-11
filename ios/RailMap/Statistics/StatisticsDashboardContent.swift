@@ -405,7 +405,7 @@ struct StatisticsDashboardContent: View {
                         spoken: allPending ? distance : "\(km) km · \(serviceDetail(row.group))")
                 },
             span: localization.text(
-                "ios.ticket.spanDay", params: ["date": .string(StatisticsFormat.spelledDate(daily.date, localization: localization))]),
+                "ios.ticket.spanDay", params: ["date": .string(TripDateLabel.label(daily.date, .compact, language: localization.language))]),
             issued: StatisticsFormat.ticketIssued(region: region, localization: localization)
         )
         .passportCard(.feature)
@@ -1228,7 +1228,7 @@ struct StatisticsDashboardContent: View {
 
     /// The train, and the day it ran — the reference's "WS 255 · 20 Feb 2025".
     private func journeyCaption(_ journey: PassportStatistics.Journey) -> String {
-        let day = journey.date.isEmpty ? nil : StatisticsFormat.dayLabel(journey.date, localization: localization)
+        let day = journey.date.isEmpty ? nil : TripDateLabel.label(journey.date, .compact, language: localization.language)
         return [journey.title, day].compactMap { $0 }.joined(separator: " · ")
     }
 

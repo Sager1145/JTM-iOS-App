@@ -250,10 +250,10 @@ struct StationCardView: View {
                             value: localization.text("ios.station.\(card.temporalKind.rawValue)"))
                     }
                     if let date = card.validFrom, !date.isEmpty {
-                        detailRow("validFrom", value: date)
+                        detailRow("validFrom", value: TripDateLabel.label(date, .compact, language: localization.language))
                     }
                     if let date = card.validTo, !date.isEmpty {
-                        detailRow("validTo", value: date)
+                        detailRow("validTo", value: TripDateLabel.label(date, .compact, language: localization.language))
                     }
                 } header: {
                     Text(localization.text("ios.station.info"))
