@@ -69,7 +69,10 @@ private struct PickerHints: Equatable {
 
     var suggested: [Filter] = []
     var residualText: String?
-    var didYouMean: String?
+    /// Up to three close spellings, nearest first.
+    var corrections: [SearchCorrection] = []
+    /// What the field would complete to while typing.
+    var completion: String?
 }
 
 /// Catalog stations for one region. Empty search is a company → line → station
@@ -110,6 +113,8 @@ struct StationPickerView: View {
     @State private var filterMapContent = TripMapContent()
     @State private var lineRows: [CatalogStationRow] = []
     @State private var hints = PickerHints()
+    /// Recent searches typed in this picker's region, for the empty box.
+    @State private var recentSearches: [String] = []
     /// The text a reader typed before an applied filter took its keywords,
     /// restored when that chip is removed.
     @State private var textBeforeAppliedFilter: String?
@@ -345,7 +350,9 @@ struct StationPickerView: View {
                 } else if onSelectWithLine != nil, filterOperatorID == nil {
                     Text(localization.text("ios.newTrip.searchPrompt", fallback: "Search by station, line or company"))
                         .foregroundStyle(.secondary)
+                    suggestedSection
                 } else {
+                    suggestedSection
                     if filterOperatorID != nil {
                         // The company's lines: choosing one lists its stations in order.
                         ForEach(filterLines, id: \.id) { line in
@@ -521,7 +528,7 @@ struct StationPickerView: View {
         hints = PickerHints(
             suggested: suggested,
             residualText: response.parsed.residualText,
-            didYouMean: response.didYouMean.map(\.text))
+            corrections: response.corrections, completion: response.completion)
         guard !applied.isEmpty else { return }
         textBeforeAppliedFilter = searchText
         writtenResidual = response.parsed.residualText
@@ -556,26 +563,43 @@ struct StationPickerView: View {
     }
 
     @ViewBuilder private var hintRows: some View {
-        if !hints.suggested.isEmpty || hints.didYouMean != nil {
+        SearchSuggestionChips(chips: suggestionChips, identifierPrefix: "stationPickerSuggestion") { chip in
+            queryBinding.wrappedValue = chip.text
+        }
+        if !hints.suggested.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: RailSpacing.s8) {
-                    if let correction = hints.didYouMean {
-                        Button {
-                            queryBinding.wrappedValue = correction
-                        } label: {
-                            Text(localization.text("ios.newTrip.didYouMean", params: ["text": .string(correction)],
-                                                   fallback: "Did you mean {text}?"))
-                                .font(.subheadline)
-                                .frame(minHeight: RailSize.touch)
-                        }
-                        .accessibilityIdentifier("stationPickerDidYouMean")
-                    }
                     ForEach(hints.suggested) { filter in
                         Button { apply(filter) } label: { chip(filter.title, active: false) }
                             .accessibilityIdentifier("stationPickerSuggestedFilter-\(filter.id)")
                     }
                 }
                 .padding(.horizontal, RailSpacing.screenInset)
+            }
+        }
+    }
+
+    /// Under a typed query: the top completion, then up to three corrections.
+    /// In an empty box: the recent searches.
+    private var suggestionChips: [SearchSuggestionChips.Chip] {
+        guard inlineQuery == nil else { return [] }
+        let typed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !typed.isEmpty else {
+            guard filterOperatorID == nil else { return [] }
+            return recentSearches.map { .init(kind: .recent, label: $0, text: $0) }
+        }
+        var chips = SearchSuggestionChips.chips(corrections: hints.corrections)
+        if let completion = hints.completion, completion != typed {
+            chips.insert(.init(kind: .completion, label: completion, text: completion), at: 0)
+        }
+        return chips
+    }
+
+    /// The empty box's stations: recent picks, the most ridden, the visible map, then hubs.
+    @ViewBuilder private var suggestedSection: some View {
+        if filterOperatorID == nil, !suggestions.isEmpty {
+            Section(localization.text("ios.search.suggestedStations", fallback: "Suggested stations")) {
+                ForEach(suggestions) { row in stationButton(row) }
             }
         }
     }
@@ -717,6 +741,7 @@ struct StationPickerView: View {
         }
         let readings = localization.stationSearchNames(region: region)
         let recent = StationPickerRecents.load(regionCode: regionCode)
+        recentSearches = RecentSearchStore.load(.stationPicker, regionCode: regionCode)
         let rideCounts = StationPickerRecents.rideCounts(
             trains: itineraries?.loaded?.trains ?? [], regionCode: regionCode)
         search.setSignals(recentPicks: recent, rideCounts: rideCounts)
@@ -789,6 +814,9 @@ struct StationPickerView: View {
     }
     private func select(_ row: CatalogStationRow, line: CatalogLine? = nil) {
         recordPick(row.station)
+        if isSearching, inlineQuery == nil {
+            recentSearches = RecentSearchStore.record(searchText, box: .stationPicker, regionCode: regionCode)
+        }
         if let onSelectWithLine { onSelectWithLine(row.station, line, row.stationID) }
         else { onSelect?(row.station, row.stationID) }
         if inlineQuery == nil { dismiss() }
@@ -892,7 +920,8 @@ private struct CatalogStationLabel: View {
     private var matchedVia: (text: String, ranges: [Range<Int>])? {
         guard let match = row.match, match.source != .name, !match.matchedText.isEmpty,
               match.matchedText != visibleName,
-              match.kind != .browse, match.kind != .recent, match.kind != .frequent else { return nil }
+              match.kind != .browse, match.kind != .recent, match.kind != .frequent,
+              match.kind != .hub else { return nil }
         return (match.matchedText, match.highlights)
     }
 

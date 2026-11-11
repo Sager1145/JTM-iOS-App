@@ -38,8 +38,17 @@ enum ShellStrings {
         "ios.tab.stats": [
             .en: "Stats", .ja: "統計", .zhHans: "统计", .zhHant: "統計",
         ],
-        "ios.search.didYouMean": [
-            .en: "Did you mean “{text}”?", .ja: "もしかして「{text}」？", .zhHans: "你是不是要找“{text}”？", .zhHant: "你是不是要找「{text}」？",
+        "ios.search.didYouMeanLabel": [
+            .en: "Did you mean", .ja: "もしかして", .zhHans: "你是不是要找", .zhHant: "你是不是要找",
+        ],
+        "ios.search.recentLabel": [
+            .en: "Recent", .ja: "最近の検索", .zhHans: "最近搜索", .zhHant: "最近搜尋",
+        ],
+        "ios.search.suggestedStations": [
+            .en: "Suggested stations", .ja: "おすすめの駅", .zhHans: "推荐车站", .zhHant: "推薦車站",
+        ],
+        "ios.search.frequentLabel": [
+            .en: "Often", .ja: "よく使う", .zhHans: "常用", .zhHant: "常用",
         ],
         "ios.hide.title": [.en: "Hide trips", .ja: "旅程を非表示", .zhHans: "隐藏行程", .zhHant: "隱藏行程"],
         "ios.hide.menu": [.en: "Hide trips…", .ja: "旅程を非表示…", .zhHans: "隐藏行程…", .zhHant: "隱藏行程…"],

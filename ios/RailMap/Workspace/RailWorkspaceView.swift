@@ -2061,27 +2061,47 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// The engine's correction for a query this list has no match for,
-    /// drawn from this list's journeys only (see ``journeySearchRequest``).
+    /// Under the search field: recent searches and the most ridden stations in
+    /// an empty box; with text, the top completion and, for a query this list
+    /// has no match for, up to three of the engine's corrections drawn from
+    /// this list's journeys only (see ``journeySearchRequest``).
     @ViewBuilder
-    private var didYouMeanLine: some View {
-        if selection == .search, journeySearch.completed == journeySearchRequest,
-           journeySearch.days.isEmpty, let correction = journeySearch.didYouMean {
-            Button {
-                query = correction.text
-            } label: {
-                Text(localization.text(
-                    "ios.search.didYouMean", params: ["text": .string(correction.text)],
-                    fallback: "Did you mean “\(correction.text)”?"))
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+    private var journeySuggestionLines: some View {
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if selection == .search, journeySearch.completed == journeySearchRequest {
+            if needle.isEmpty {
+                SearchSuggestionChips(chips: recentJourneySearches.map { .init(kind: .recent, label: $0, text: $0) },
+                                      identifierPrefix: "journeySearchRecent") { query = $0.text }
+                SearchSuggestionChips(chips: journeySearch.frequentNames.map { .init(kind: .frequent, label: $0, text: $0) },
+                                      identifierPrefix: "journeySearchFrequent") { query = $0.text }
+            } else {
+                SearchSuggestionChips(chips: journeyTypingChips(for: needle),
+                                      identifierPrefix: "journeySearchSuggestion") { query = $0.text }
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(.tint)
-            .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
-            .padding(.bottom, RailSpacing.rowVertical)
-            .accessibilityIdentifier("journeySearchDidYouMean")
         }
+    }
+
+    private func journeyTypingChips(for needle: String) -> [SearchSuggestionChips.Chip] {
+        var chips = journeySearch.days.isEmpty
+            ? SearchSuggestionChips.chips(corrections: journeySearch.corrections) : []
+        if let completion = journeySearch.completion, completion != needle {
+            chips.insert(.init(kind: .completion, label: completion, text: completion), at: 0)
+        }
+        return chips
+    }
+
+    private var journeySearchRegionCode: String { regionScope?.code ?? "all" }
+
+    private var recentJourneySearches: [String] {
+        RecentSearchStore.load(.journeys, regionCode: journeySearchRegionCode)
+    }
+
+    /// A search the reader typed and left with results counts as a recent search.
+    private func recordJourneySearch() {
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard selection == .search, !needle.isEmpty, journeySearch.completed == journeySearchRequest,
+              !journeySearch.days.isEmpty else { return }
+        RecentSearchStore.record(needle, box: .journeys, regionCode: journeySearchRegionCode)
     }
 
     // MARK: - Add trip (pass 3)
@@ -2666,7 +2686,7 @@ struct RailWorkspaceView: View {
         let list = listTab(for: page)
         return VStack(spacing: 0) {
             JourneySearchField(query: $query, isFocused: $searchFocused)
-            if page == .search { didYouMeanLine }
+            if page == .search { journeySuggestionLines }
             Group {
                 if page == .search, !needle.isEmpty {
                     journeyListState(searchQuery: needle, region: nil, partition: list)
@@ -2679,6 +2699,7 @@ struct RailWorkspaceView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .background { keyboardShortcuts }
+        .onChange(of: searchFocused) { _, focused in if !focused { recordJourneySearch() } }
     }
 
     @ViewBuilder

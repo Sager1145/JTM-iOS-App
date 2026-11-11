@@ -83,6 +83,7 @@
         "ios/RailMap/Journeys/RideDetailView.swift",
         "ios/RailMap/Journeys/RideSheet.swift",
         "ios/RailMap/Journeys/RouteGlyph.swift",
+        "ios/RailMap/Journeys/SearchSuggestionChips.swift",
         "ios/RailMap/Journeys/StopTimingStatus.swift",
         "ios/RailMap/Journeys/TripNoteEditing.swift",
         "ios/RailMap/Journeys/TripNotesCard.swift"
@@ -506,6 +507,7 @@
         "ios/RailKit/Sources/RailCore/Routing/TripRouteGeometry.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRoutePlanner.swift",
         "ios/RailKit/Sources/RailCore/Routing/TripRouteSections.swift",
+        "ios/RailKit/Sources/RailCore/Search/RecentSearchStore.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchAPI.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchEngine.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchIndex.swift",
@@ -514,6 +516,7 @@
         "ios/RailKit/Sources/RailCore/Search/SearchMatching.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchNormalizer.swift",
         "ios/RailKit/Sources/RailCore/Search/SearchQueryRunner.swift",
+        "ios/RailKit/Sources/RailCore/Search/SearchReadingProvider.swift",
         "ios/RailKit/Sources/RailCore/Stations/NearbyStations.swift",
         "ios/RailKit/Sources/RailCore/Stations/RailIntervalCodes.swift",
         "ios/RailKit/Sources/RailCore/Stations/StationCodeAliases.swift",
