@@ -237,7 +237,7 @@ struct StationPickerView: View {
         Group {
             if inlineQuery != nil {
                 if let loadError {
-                    Text(loadError).font(.footnote).foregroundStyle(.secondary)
+                    Text(loadError).railText(.secondary)
                 } else if showsSuggestions && isSearching {
                     ForEach(suggestions) { row in stationButton(row) }
                     ForEach(retiredStations) { station in retiredStationButton(station) }
@@ -311,13 +311,13 @@ struct StationPickerView: View {
             .overlay(alignment: .top) {
                 Text(localization.text("ios.newTrip.pickOnMap", fallback: "Tap a station on the map, or search"))
                     .font(.footnote.weight(.medium))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
+                    .padding(.horizontal, RailSpacing.s12)
+                    .padding(.vertical, RailSpacing.s8)
                     .background(.regularMaterial, in: Capsule())
-                    .padding(.top, 8)
+                    .padding(.top, RailSpacing.s8)
                     .allowsHitTesting(false)
             }
-            .frame(height: 220)
+            .frame(height: 220) // ui-token-ok: map viewport height
             .accessibilityIdentifier("stationPickerMap")
     }
 
@@ -350,7 +350,7 @@ struct StationPickerView: View {
                         // The company's lines: choosing one lists its stations in order.
                         ForEach(filterLines, id: \.id) { line in
                             Button { filterLineID = line.id } label: {
-                                Text(line.name).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                Text(line.name).frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                             }
                             .accessibilityIdentifier("stationPickerFilterLine-\(line.id)")
                         }
@@ -364,7 +364,7 @@ struct StationPickerView: View {
                                         select(row, line: group.line)
                                     }
                                 } label: {
-                                    Text(group.line.name).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                    Text(group.line.name).frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                                 }
                                 .accessibilityIdentifier("rideEditorStationLine-\(group.line.id)")
                             }
@@ -558,7 +558,7 @@ struct StationPickerView: View {
     @ViewBuilder private var hintRows: some View {
         if !hints.suggested.isEmpty || hints.didYouMean != nil {
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
+                HStack(spacing: RailSpacing.s8) {
                     if let correction = hints.didYouMean {
                         Button {
                             queryBinding.wrappedValue = correction
@@ -566,7 +566,7 @@ struct StationPickerView: View {
                             Text(localization.text("ios.newTrip.didYouMean", params: ["text": .string(correction)],
                                                    fallback: "Did you mean {text}?"))
                                 .font(.subheadline)
-                                .frame(minHeight: 44)
+                                .frame(minHeight: RailSize.touch)
                         }
                         .accessibilityIdentifier("stationPickerDidYouMean")
                     }
@@ -575,7 +575,7 @@ struct StationPickerView: View {
                             .accessibilityIdentifier("stationPickerSuggestedFilter-\(filter.id)")
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, RailSpacing.screenInset)
             }
         }
     }
@@ -584,7 +584,7 @@ struct StationPickerView: View {
         hintRows
         if !filterOperators.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
+                HStack(spacing: RailSpacing.s8) {
                     Menu {
                         ForEach(filterOperators, id: \.id) { op in
                             Button(operatorLabel(op)) {
@@ -630,28 +630,28 @@ struct StationPickerView: View {
                                 .labelStyle(.iconOnly)
                                 .font(.title3)
                                 .foregroundStyle(.secondary)
-                                .frame(minWidth: 44, minHeight: 44)
+                                .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
                         }
                         .accessibilityIdentifier("stationPickerClearFilters")
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 6)
+                .padding(.horizontal, RailSpacing.screenInset)
+                .padding(.vertical, RailSpacing.rowVertical)
             }
         }
     }
 
     private func chip(_ title: String, active: Bool) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: RailSpacing.s4) {
             Text(title).lineLimit(1)
             Image(systemName: "chevron.down").font(.caption2.weight(.semibold))
         }
         .font(.subheadline.weight(active ? .semibold : .regular))
-        .padding(.horizontal, 12)
-        .padding(.vertical, 7)
+        .padding(.horizontal, RailSpacing.s12)
+        .padding(.vertical, RailSpacing.s8)
         .foregroundStyle(active ? Color.white : Color.primary)
         .background(active ? Color.accentColor : Color(.tertiarySystemFill), in: Capsule())
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
     }
 
     /// Operators with lines here, ranked by how often the reader rode them.
@@ -810,13 +810,13 @@ struct RetiredStationLabel: View {
                 officialName: station.name, regionCode: regionCode,
                 qualifier: "\(station.lineName) · \(station.operatorName)",
                 localization: localization))
-                .font(.caption).foregroundStyle(.secondary)
+                .railText(.tertiary)
             Label(
                 closedText, systemImage: "clock.arrow.circlepath"
             )
-            .font(.caption).foregroundStyle(.secondary)
+            .railText(.tertiary)
         }
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
     }
 
     private var closedText: String {
@@ -852,13 +852,12 @@ private struct CatalogStationLabel: View {
             }
             if !row.detail.isEmpty {
                 Text(row.detail)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
         .contentShape(.rect)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(spoken)
@@ -988,8 +987,7 @@ struct StationQualifierCaption: View {
 
     var body: some View {
         Text(text)
-            .font(.caption)
-            .foregroundStyle(.secondary)
+            .railText(.tertiary)
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)
     }

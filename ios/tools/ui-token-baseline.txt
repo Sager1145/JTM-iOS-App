@@ -13,10 +13,6 @@ RailMap/JourneyEditor/EditorFillDetailsSheet.swift	touch-literal	1
 RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1
 RailMap/JourneyEditor/EditorLineSearchView.swift	spacing-literal	3
 RailMap/JourneyEditor/EditorLineSearchView.swift	touch-literal	2
-RailMap/JourneyEditor/EditorMapPanel.swift	padding-literal	8
-RailMap/JourneyEditor/EditorMapPanel.swift	radius-literal	2
-RailMap/JourneyEditor/EditorMapPanel.swift	spacing-literal	2
-RailMap/JourneyEditor/EditorMapPanel.swift	stock-bordered	2
 RailMap/JourneyEditor/EditorRouteSection.swift	spacing-literal	7
 RailMap/JourneyEditor/EditorRouteSection.swift	touch-literal	4
 RailMap/JourneyEditor/EditorStationsSection.swift	touch-literal	1
@@ -31,9 +27,6 @@ RailMap/JourneyEditor/JourneyEditorManualEntry.swift	touch-literal	3
 RailMap/JourneyEditor/JourneyEditorView.swift	padding-literal	2
 RailMap/JourneyEditor/JourneyEditorView.swift	spacing-literal	1
 RailMap/JourneyEditor/LocalLineServicesSection.swift	spacing-literal	2
-RailMap/JourneyEditor/StationPickerView.swift	padding-literal	8
-RailMap/JourneyEditor/StationPickerView.swift	spacing-literal	3
-RailMap/JourneyEditor/StationPickerView.swift	touch-literal	7
 RailMap/JourneyEditor/StopEditorView.swift	spacing-literal	3
 RailMap/JourneyEditor/StopEditorView.swift	touch-literal	1
 RailMap/JourneyEditor/TicketScanView.swift	spacing-literal	2
