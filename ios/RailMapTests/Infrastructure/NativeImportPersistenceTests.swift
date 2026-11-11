@@ -511,7 +511,7 @@ struct NativeImportPersistenceTests {
         edited.number = "edited by the reader"
         try #require(edited != bundled)
         let replaced = itineraries.replace(edited, replacing: bundled.id)
-        try #require(replaced.outcome.isCommitted)
+        try #require(replaced.outcome == .saved)
         try #require(itineraries.store?.trains.first { $0.id == bundled.id } == edited)
 
         let again = try await itineraries.merge(try await library.sample(sample), into: library)
