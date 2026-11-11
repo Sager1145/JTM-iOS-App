@@ -4,7 +4,6 @@ import SwiftUI
 /// Source clocks remain visible even when route evidence is incomplete.
 struct TimetableTripDetailView: View {
     @Environment(AppLocalization.self) private var localization
-    @Environment(\.dismiss) private var dismiss
     @State private var sources: [TrainTimetableDatabase.SourceDocument] = []
     @State private var sourceQueryFailed = false
     @State private var showsAICheck = false
@@ -26,154 +25,149 @@ struct TimetableTripDetailView: View {
             into: [Int: TrainTimetableDatabase.StopTime]()) { result, stop in
                 if result[stop.sequence] == nil { result[stop.sequence] = stop }
             }
-        NavigationStack {
-            List {
-                Section {
-                    Text(detailText("serviceDate", ["date": .string(trip.serviceDate)]))
-                    LabeledContent(localization.text("ios.ai.researchTrainNumber", fallback: "Operating train number"),
-                                   value: trip.trainNumber)
-                    Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?")")
-                    if let englishName = trip.service.englishName {
-                        Text(englishName).foregroundStyle(.secondary)
-                    }
-                    Text(detailText("edition", ["edition": .string(trip.timetableEditionName)]))
-                        .railText(.tertiary)
-                    if !trip.canApplyToRouteEditor {
-                        RailStatusLabel(
-                            kind: .warning,
-                            text: trip.timetableCompleteness == .conflict
-                                ? detailText("conflictDraft")
-                                : detailText("unverifiedRoute"))
-                    }
-                    if trip.factCompleteness["stops"] != .verified {
-                        Text(detailText("publishedOnly"))
-                            .railText(.tertiary)
-                    }
-                    if onUseDraft != nil, trip.timetableCompleteness != .conflict,
-                       trip.passengerStops.count >= 2 {
-                        Button(detailText("useDraft")) { onUseDraft?(trip) }
-                            .accessibilityIdentifier("timetableUseDraft-\(trip.id)")
-                        Text(detailText("draftHelp"))
-                            .railText(.tertiary)
-                    }
-                    Button(localization.text("ios.ai.researchCheck", fallback: "Check with ChatGPT")) { showsAICheck = true }
-                        .accessibilityIdentifier("timetableAICheck-\(trip.id)")
+        List {
+            Section {
+                Text(detailText("serviceDate", ["date": .string(trip.serviceDate)]))
+                LabeledContent(localization.text("ios.ai.researchTrainNumber", fallback: "Operating train number"),
+                               value: trip.trainNumber)
+                Text("\(trip.origin?.station.name ?? "?") → \(trip.destination?.station.name ?? "?")")
+                if let englishName = trip.service.englishName {
+                    Text(englishName).foregroundStyle(.secondary)
                 }
-                Section(detailText("stopsTimes")) {
-                    ForEach(trip.stops) { stop in
-                        HStack(alignment: .top, spacing: RailSpacing.s12) {
-                            Text(stop.station.name).font(.headline)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Spacer(minLength: RailSpacing.s8)
-                            VStack(alignment: .trailing, spacing: RailSpacing.labelValueGap) {
-                                if stop.callType == "pass" {
-                                    Text("レ")
-                                        .font(.body.monospaced())
-                                        .frame(width: timeColumnWidth)
-                                        .foregroundStyle(.secondary)
-                                        .accessibilityLabel(detailText("pass"))
-                                } else {
-                                    Text(detailText("arrival", ["time": .string(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))]))
-                                    Text(detailText("departure", ["time": .string(clock(stop.departureTime, seconds: stop.departureSeconds))]))
-                                }
-                                if !stop.isPassengerCall && stop.callType != "pass" {
-                                    Text(detailText("nonPassenger")).railText(.tertiary)
-                                }
-                            }
-                            .frame(minWidth: timeColumnWidth, alignment: .trailing)
-                            .fixedSize(horizontal: true, vertical: false)
-                        }
-                        .monospacedDigit()
-                        .accessibilityElement(children: .combine)
-                        .accessibilityIdentifier("timetableStop-\(stop.sequence)")
-                        ForEach(trip.timetableSymbols.filter { $0.afterStopSequence == stop.sequence }) { row in
-                            HStack(alignment: .top, spacing: RailSpacing.s12) {
-                                Text(row.stationName).font(.headline)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Spacer(minLength: RailSpacing.s8)
-                                Text(row.symbol)
+                Text(detailText("edition", ["edition": .string(trip.timetableEditionName)]))
+                    .railText(.tertiary)
+                if !trip.canApplyToRouteEditor {
+                    RailStatusLabel(
+                        kind: .warning,
+                        text: trip.timetableCompleteness == .conflict
+                            ? detailText("conflictDraft")
+                            : detailText("unverifiedRoute"))
+                }
+                if trip.factCompleteness["stops"] != .verified {
+                    Text(detailText("publishedOnly"))
+                        .railText(.tertiary)
+                }
+                if onUseDraft != nil, trip.timetableCompleteness != .conflict,
+                   trip.passengerStops.count >= 2 {
+                    Button(detailText("useDraft")) { onUseDraft?(trip) }
+                        .accessibilityIdentifier("timetableUseDraft-\(trip.id)")
+                    Text(detailText("draftHelp"))
+                        .railText(.tertiary)
+                }
+                Button(localization.text("ios.ai.researchCheck", fallback: "Check with ChatGPT")) { showsAICheck = true }
+                    .accessibilityIdentifier("timetableAICheck-\(trip.id)")
+            }
+            Section(detailText("stopsTimes")) {
+                ForEach(trip.stops) { stop in
+                    HStack(alignment: .top, spacing: RailSpacing.s12) {
+                        Text(stop.station.name).font(.headline)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer(minLength: RailSpacing.s8)
+                        VStack(alignment: .trailing, spacing: RailSpacing.labelValueGap) {
+                            if stop.callType == "pass" {
+                                Text("レ")
                                     .font(.body.monospaced())
                                     .frame(width: timeColumnWidth)
-                                    .accessibilityLabel(row.symbol == "レ" ? detailText("pass") : detailText("notVia"))
-                            }
-                            .foregroundStyle(.secondary)
-                            .accessibilityElement(children: .combine)
-                            .accessibilityIdentifier("timetableSymbol-\(row.id)")
-                        }
-                    }
-                }
-                if !trip.lineSegments.isEmpty {
-                    Section(localization.text("ios.ai.lines", fallback: "Lines")) {
-                        ForEach(trip.lineSegments) { segment in
-                            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
-                                Text(segment.lineName)
-                                if let from = stopsByStationID[segment.fromStationID],
-                                   let to = stopsByStationID[segment.toStationID] {
-                                    Text("\(from.station.name) → \(to.station.name)")
-                                        .railText(.tertiary)
-                                }
-                            }
-                        }
-                    }
-                }
-                if !trip.operatorSegments.isEmpty {
-                    Section(localization.text("ios.ai.company", fallback: "Operator")) {
-                        ForEach(trip.operatorSegments) { segment in
-                            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
-                                Text(segment.displayName)
-                                if let from = stopsBySequence[segment.fromSequence],
-                                   let to = stopsBySequence[segment.toSequence] {
-                                    Text("\(from.station.name) → \(to.station.name)")
-                                        .railText(.tertiary)
-                                }
-                            }
-                        }
-                    }
-                }
-                Section(detailText("completeness")) {
-                    ForEach(trip.factCompleteness.keys.sorted(), id: \.self) { key in
-                        LabeledContent(dimension(key), value: status(trip.factCompleteness[key]))
-                    }
-                }
-                Section(detailText("sources")) {
-                    if sourceQueryFailed {
-                        Text(detailText("sourceFailed")).foregroundStyle(.secondary)
-                    }
-                    ForEach(sources) { source in
-                        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
-                            if let url = URL(string: source.urlOrLocator),
-                               ["https", "http"].contains(url.scheme ?? "") {
-                                Link(source.title, destination: url)
+                                    .foregroundStyle(.secondary)
+                                    .accessibilityLabel(detailText("pass"))
                             } else {
-                                Text(source.title)
+                                Text(detailText("arrival", ["time": .string(clock(stop.arrivalTime, seconds: stop.arrivalSeconds))]))
+                                Text(detailText("departure", ["time": .string(clock(stop.departureTime, seconds: stop.departureSeconds))]))
                             }
-                            Text(source.publisher).railText(.tertiary)
+                            if !stop.isPassengerCall && stop.callType != "pass" {
+                                Text(detailText("nonPassenger")).railText(.tertiary)
+                            }
+                        }
+                        .frame(minWidth: timeColumnWidth, alignment: .trailing)
+                        .fixedSize(horizontal: true, vertical: false)
+                    }
+                    .monospacedDigit()
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("timetableStop-\(stop.sequence)")
+                    ForEach(trip.timetableSymbols.filter { $0.afterStopSequence == stop.sequence }) { row in
+                        HStack(alignment: .top, spacing: RailSpacing.s12) {
+                            Text(row.stationName).font(.headline)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer(minLength: RailSpacing.s8)
+                            Text(row.symbol)
+                                .font(.body.monospaced())
+                                .frame(width: timeColumnWidth)
+                                .accessibilityLabel(row.symbol == "レ" ? detailText("pass") : detailText("notVia"))
+                        }
+                        .foregroundStyle(.secondary)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("timetableSymbol-\(row.id)")
+                    }
+                }
+            }
+            if !trip.lineSegments.isEmpty {
+                Section(localization.text("ios.ai.lines", fallback: "Lines")) {
+                    ForEach(trip.lineSegments) { segment in
+                        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
+                            Text(segment.lineName)
+                            if let from = stopsByStationID[segment.fromStationID],
+                               let to = stopsByStationID[segment.toStationID] {
+                                Text("\(from.station.name) → \(to.station.name)")
+                                    .railText(.tertiary)
+                            }
                         }
                     }
                 }
             }
-            .accessibilityIdentifier("timetableDetailList")
-            .navigationTitle("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)")
-            .navigationBarTitleDisplayMode(.inline)
-            .railSheetClose(Text(localization.text("ios.close", fallback: "Close")),
-                            identifier: "timetableTripClose") { dismiss() }
-            .task {
-                guard case .success(let database) = Self.openedDatabase else {
-                    sourceQueryFailed = true
-                    return
-                }
-                do {
-                    sources = try database.sources(for: trip)
-                } catch {
-                    sourceQueryFailed = true
+            if !trip.operatorSegments.isEmpty {
+                Section(localization.text("ios.ai.company", fallback: "Operator")) {
+                    ForEach(trip.operatorSegments) { segment in
+                        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
+                            Text(segment.displayName)
+                            if let from = stopsBySequence[segment.fromSequence],
+                               let to = stopsBySequence[segment.toSequence] {
+                                Text("\(from.station.name) → \(to.station.name)")
+                                    .railText(.tertiary)
+                            }
+                        }
+                    }
                 }
             }
-            .sheet(isPresented: $showsAICheck) {
-                TrainResearchView(region: "jp",
-                                  query: "\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)",
-                                  rideDate: trip.serviceDate, trip: trip, sources: sources)
-                .railSheet(.full)
+            Section(detailText("completeness")) {
+                ForEach(trip.factCompleteness.keys.sorted(), id: \.self) { key in
+                    LabeledContent(dimension(key), value: status(trip.factCompleteness[key]))
+                }
             }
+            Section(detailText("sources")) {
+                if sourceQueryFailed {
+                    Text(detailText("sourceFailed")).foregroundStyle(.secondary)
+                }
+                ForEach(sources) { source in
+                    VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
+                        if let url = URL(string: source.urlOrLocator),
+                           ["https", "http"].contains(url.scheme ?? "") {
+                            Link(source.title, destination: url)
+                        } else {
+                            Text(source.title)
+                        }
+                        Text(source.publisher).railText(.tertiary)
+                    }
+                }
+            }
+        }
+        .accessibilityIdentifier("timetableDetailList")
+        .navigationTitle("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)")
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            guard case .success(let database) = Self.openedDatabase else {
+                sourceQueryFailed = true
+                return
+            }
+            do {
+                sources = try database.sources(for: trip)
+            } catch {
+                sourceQueryFailed = true
+            }
+        }
+        .navigationDestination(isPresented: $showsAICheck) {
+            TrainResearchView(region: "jp",
+                              query: "\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)",
+                              rideDate: trip.serviceDate, trip: trip, sources: sources)
         }
     }
 

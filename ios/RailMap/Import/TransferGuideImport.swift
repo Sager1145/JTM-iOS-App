@@ -89,6 +89,27 @@ final class TransferGuideImport {
         var recordByLeg: [Int: Int] = [:]
 
         var legs: [TransferGuide.Leg] { route.ridableLegs }
+
+        /// The list every record of this screenshot is filed under, decided
+        /// once for the whole journey: from the first included leg's
+        /// departure on Japan's clock, by the one rule the editor and the
+        /// timetable use. A later leg is never judged on its own, so a leg
+        /// cannot land in History while the journey it belongs to is ahead.
+        func membership(now: Date) -> TripListMembership {
+            let first = legs.indices
+                .first { included.indices.contains($0) && included[$0] }
+                .flatMap { legs[$0].calls.first?.departure }
+            return TransferGuideImport.membership(
+                date: date, firstDeparture: first, now: now)
+        }
+    }
+
+    /// ``TripListRules/initialMembership(date:startClock:clock:now:)`` for a
+    /// screenshot journey on `date` whose first departure reads `firstDeparture`.
+    static func membership(date: Date, firstDeparture: String?, now: Date) -> TripListMembership {
+        TripListRules.initialMembership(
+            date: RecordDate.text(from: date, in: clock), startClock: firstDeparture,
+            clock: clock, now: now)
     }
 
     private(set) var phase: Phase = .waiting
@@ -216,17 +237,13 @@ final class TransferGuideImport {
             date: date,
             dateWasRead: wasRead,
             source: read.source,
-            // A journey in the future was not ridden yesterday, and one in the
-            // past is not a plan. The reader can say otherwise; this is only
-            // which answer the screen opens on.
-            //
-            // Two civil dates rather than two instants, both on Japan's clock:
-            // the screenshot is of a Japanese journey, so "has this happened?"
-            // is asked where the train is. A reader in London opening the sheet
-            // at 19:00 is looking at a journey whose day in Japan has already
-            // turned, and comparing the picker's midnight against `Date()`
-            // would have called it a plan.
-            ridden: Self.clock.isTodayOrEarlier(RecordDate.text(from: date, in: Self.clock), at: now),
+            // Ridden is on exactly when the journey has already started, by
+            // the same rule that files a new trip under History (see
+            // ``membership(date:firstDeparture:now:)``). The reader can say
+            // otherwise; this is only which answer the screen opens on.
+            ridden: Self.membership(
+                date: date, firstDeparture: route.ridableLegs.first?.calls.first?.departure,
+                now: now) == .past,
             included: route.ridableLegs.map { _ in true },
             build: TransferGuide.BuildResult())
         rebuild(&draft, existingIDs: existingIDs)
@@ -367,7 +384,14 @@ final class TransferGuideImport {
         defer { isCommitting = false }
         itineraries.attach(library)
         // One publication of every accepted screenshot record, then one save.
-        let commit = itineraries.add(draft.build.trains)
+        // Every leg is filed together, under the list the journey as a whole
+        // belongs to, rather than each leg by its own departure.
+        let membership = draft.membership(now: Date())
+        let commit = itineraries.add(draft.build.trains.map { train in
+            var filed = train
+            filed.listMembership = membership
+            return filed
+        })
         let error = await commit.save?.value.error
         phase = .imported(count: commit.outcome.count, saveError: error)
         return commit.outcome

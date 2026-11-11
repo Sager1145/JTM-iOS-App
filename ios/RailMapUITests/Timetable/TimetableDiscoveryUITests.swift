@@ -34,7 +34,7 @@ final class TimetableDiscoveryUITests: XCTestCase {
         screenshot.lifetime = .keepAlways
         add(screenshot)
         detail.tap()
-        XCTAssertTrue(app.buttons["Close"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.collectionViews["timetableDetailList"].waitForExistence(timeout: 8))
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(
             format: "label CONTAINS %@", "Japan time")).firstMatch.exists)
         let useDraft = app.buttons.matching(NSPredicate(
