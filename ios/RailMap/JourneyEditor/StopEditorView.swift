@@ -7,17 +7,18 @@ struct StopEditorLabel: View {
     let journeyDate: String?
     let index: Int
     var emptyTitle: String? = nil
+    @ScaledMetric(relativeTo: .caption) private var indexColumnWidth: CGFloat = 24
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: RailSpacing.s8) {
             Text(index, format: .number)
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
-                .frame(width: 24)
-            VStack(alignment: .leading, spacing: 2) {
+                .frame(width: indexColumnWidth)
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(stop.name.isEmpty ? (emptyTitle ?? localization.text("ios.editor.untitledStop")) : stop.name)
                     .fixedSize(horizontal: false, vertical: true)
-                HStack(spacing: 6) {
+                HStack(spacing: RailSpacing.s4) {
                     if let arrival = stop.arrival, !arrival.isEmpty { Text(displayTime(arrival)) }
                     if let departure = stop.departure, !departure.isEmpty { Text(displayTime(departure)) }
                     if let actual = stop.actualArrival, !actual.isEmpty {
@@ -53,7 +54,7 @@ struct StopEditorLabel: View {
                     .accessibilityLabel(localization.text("ios.detail.ridden"))
             }
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
     }
 
     private func displayTime(_ raw: String) -> String {
@@ -142,10 +143,10 @@ struct StopEditorView: View {
         Form {
             Section(localization.text("ios.editor.station")) {
                 if stop.routeEditing?.generatedBy != nil {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s8) {
                         AutoFilledStationLabel()
                         Text(localization.text("ios.editor.generatedStationsNote"))
-                            .font(.footnote).foregroundStyle(.secondary)
+                            .railText(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .accessibilityIdentifier("stopEditorAutoFilledNote")
@@ -196,8 +197,7 @@ struct StopEditorView: View {
                 }
                 if stop.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text(localization.text("ios.editor.stationGuide"))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .railText(.secondary)
                 } else if stop.n02StationCode?.isEmpty != false {
                     if let matchedRetired = retiredOpenStations.first(where: { $0.name == stop.name }) {
                         Label(
@@ -205,19 +205,17 @@ struct StopEditorView: View {
                                 matchedRetired.certifiedCode != nil
                                     ? "ios.editor.renamedStationNote" : "ios.editor.retiredStationNote"),
                             systemImage: "clock.arrow.circlepath")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .railText(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     } else {
                         Text(localization.text("ios.editor.stationUnmatched"))
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .railText(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 if hasStationLineConflict {
                     Label {
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                             Text("\(localization.text("ios.editor.station")): \(stop.name)")
                             Text("\(localization.text("ios.editor.lineNames")): \(selectedLines.map(\.name).joined(separator: " · "))")
                         }

@@ -18,15 +18,15 @@ struct EditorDateField: View {
     private var clock: RegionClock { region.clock }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(title)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 dateTextField
             }
-            .frame(minHeight: 44)
+            .frame(minHeight: RailSize.touch)
             DatePicker(title, selection: pickerSelection, displayedComponents: .date)
                 .environment(\.timeZone, clock.timeZone)
                 .environment(\.calendar, clock.calendar)
@@ -129,15 +129,15 @@ struct EditorTimeField: View {
     @State private var pendingPickerDayOffset: Int?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(title)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 timeTextField
             }
-            .frame(minHeight: 44)
+            .frame(minHeight: RailSize.touch)
             if let dateBounds {
                 DatePicker(
                     localization.text("ios.editor.date"),
@@ -327,14 +327,17 @@ struct TypedDateTimeField: View {
     @State private var timeText = ""
     @State private var showsCalendar = false
     @FocusState private var focused: Part?
+    @ScaledMetric(relativeTo: .body) private var dateFieldMinWidth: CGFloat = 96
+    @ScaledMetric(relativeTo: .body) private var dateFieldMaxWidth: CGFloat = 120
+    @ScaledMetric(relativeTo: .body) private var timeFieldWidth: CGFloat = 56
 
     private enum Part: Hashable { case date, time }
 
     private var calendar: Calendar { clock.calendar }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+            HStack(spacing: RailSpacing.s8) {
                 Text(title)
                     .lineLimit(1)
                     .layoutPriority(1)
@@ -344,7 +347,7 @@ struct TypedDateTimeField: View {
                     .multilineTextAlignment(.trailing)
                     .autocorrectionDisabled()
                     .focused($focused, equals: .date)
-                    .frame(minWidth: 96, maxWidth: 120)
+                    .frame(minWidth: dateFieldMinWidth, maxWidth: dateFieldMaxWidth)
                     .accessibilityLabel(title)
                     .accessibilityIdentifier("\(identifier)Date")
                     .onSubmit(submit)
@@ -353,7 +356,7 @@ struct TypedDateTimeField: View {
                     .multilineTextAlignment(.trailing)
                     .autocorrectionDisabled()
                     .focused($focused, equals: .time)
-                    .frame(width: 56)
+                    .frame(width: timeFieldWidth)
                     .accessibilityIdentifier("\(identifier)Time")
                     .onSubmit(submit)
                 Button {
@@ -362,7 +365,7 @@ struct TypedDateTimeField: View {
                     showsCalendar = true
                 } label: {
                     Image(systemName: "calendar")
-                        .frame(minWidth: 44, minHeight: 44)
+                        .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
                 }
                 .buttonStyle(.borderless)
                 .accessibilityLabel(localization.text("ios.newTrip.openCalendar", fallback: "Calendar"))
@@ -388,7 +391,7 @@ struct TypedDateTimeField: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .frame(minHeight: 44)
+        .frame(minHeight: RailSize.touch)
         .onAppear(perform: refresh)
         .onChange(of: value) { _, _ in if focused == nil { refresh() } }
         .onChange(of: clock) { _, _ in if focused == nil { refresh() } }

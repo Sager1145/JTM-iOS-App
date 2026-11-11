@@ -47,7 +47,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 Button(action: model.swapStations) {
                     Image(systemName: "arrow.up.arrow.down")
                         .font(.body.weight(.semibold))
-                        .frame(width: 44, height: 44)
+                        .frame(width: RailSize.touch, height: RailSize.touch)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.borderless)
@@ -110,15 +110,13 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
 
     private func viaRow(_ via: TripDraftModel.ViaStop, index: Int) -> some View {
         HStack(spacing: RailSpacing.s12) {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(text("viaTitle", fallback: "Via"))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 Text(stationTitle(via.station))
                 if let subtitle = stationSubtitle(via.station, line: nil) {
                     Text(subtitle)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                         .lineLimit(2)
                 }
             }
@@ -132,6 +130,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                     .foregroundStyle(.red)
             }
             .buttonStyle(.plain)
+            .railMinimumTouchTarget()
             .accessibilityLabel(text("removeVia", fallback: "Remove stop"))
             .accessibilityIdentifier("newTripRemoveVia-\(index)")
         }
@@ -148,11 +147,10 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
         choose: @escaping () -> Void
     ) -> some View {
         Button(action: choose) {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 HStack(spacing: RailSpacing.s8) {
                     Text(title)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                     FillSourceBadge(source: source)
                 }
                 Text(stationTitle(station))
@@ -160,8 +158,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                     .foregroundStyle(station == nil ? Color.secondary : Color.primary)
                 if let station, let subtitle = stationSubtitle(station, line: line) {
                     Text(subtitle)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                 }

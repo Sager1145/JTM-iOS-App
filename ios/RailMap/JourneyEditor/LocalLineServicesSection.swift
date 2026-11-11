@@ -19,14 +19,14 @@ struct LineServiceCatalogView: View {
     var body: some View {
         DisclosureGroup(text("types")) {
             ForEach(lines, id: \.id) { line in
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Text(line.name).font(.subheadline.weight(.medium))
                     let kinds = catalog.serviceKinds(lineID: line.id, operatorName: line.operator)
                     if kinds.isEmpty { Text(text("unknown")).foregroundStyle(.secondary) }
                     ForEach(kinds) { kind in
                         if let url = URL(string: kind.sourceURL) {
                             Link(destination: url) {
-                                VStack(alignment: .leading, spacing: 2) {
+                                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                                     Text(kind.displayName)
                                     Text(scope(kind, line: line)).font(.caption)
                                     Text(kind.validFrom.map { start in
@@ -46,9 +46,9 @@ struct LineServiceCatalogView: View {
                                 }
                                 ForEach(catalog.continuations(for: trip)) { next in
                                     Text(text("continues") + " " + next.trainNumber)
-                                        .font(.caption).foregroundStyle(.secondary)
+                                        .railText(.tertiary)
                                 }
-                                Text(text("timetableNote")).font(.caption).foregroundStyle(.secondary)
+                                Text(text("timetableNote")).railText(.tertiary)
                                 if let url = URL(string: trip.sourceURL) {
                                     Link(text("timetable"), destination: url)
                                 }
@@ -57,7 +57,7 @@ struct LineServiceCatalogView: View {
                     }
                 }
             }
-            Text(text("partial")).font(.caption).foregroundStyle(.secondary)
+            Text(text("partial")).railText(.tertiary)
         }
     }
 
@@ -158,15 +158,15 @@ private struct LocalLineServiceBrowser: View {
                 .navigationTitle(line.lineName)
                 .navigationBarTitleDisplayMode(.inline)
             } label: {
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     Text(line.lineName)
-                    Text(line.operatorName).font(.caption).foregroundStyle(.secondary)
+                    Text(line.operatorName).railText(.tertiary)
                     if line.kinds.isEmpty {
                         Text(localization.text("ios.localFill.unknown"))
-                            .font(.caption).foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     } else {
                         Text(Array(Set(line.kinds.map(\.displayName))).sorted().joined(separator: " · "))
-                            .font(.caption).foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
                 }
             }

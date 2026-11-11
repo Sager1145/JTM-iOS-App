@@ -29,8 +29,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 HStack(spacing: RailSpacing.s8) {
                     FillSourceBadge(source: source)
                     Text(text("timeFilled", fallback: "Check the time; changing it keeps your value."))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityElement(children: .combine)
@@ -70,7 +69,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
         let id = isDeparture ? "newTripActualDeparture" : "newTripActualArrival"
         let raw = isDeparture ? model.actualDeparture : model.actualArrival
         let normalized = model.normalizedActual(raw, isDeparture: isDeparture)
-        return VStack(alignment: .leading, spacing: 2) {
+        return VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             EditorCompactRow(title: localization.text(
                 isDeparture ? "ios.editor.actualDeparture" : "ios.editor.actualArrival")) {
                 TextField("H:MM", text: model.actualTimeText(isDeparture: isDeparture))
@@ -91,8 +90,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 localization: localization) {
                 // Compared with the scheduled clock above; a placeholder time has no delay.
                 Text(status)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .accessibilityIdentifier(isDeparture ? "newTripActualDepartureStatus" : "newTripActualArrivalStatus")
             }
         }

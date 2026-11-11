@@ -4,32 +4,15 @@
 #   bash ios/tools/check-ui-tokens.sh --update PATH...
 # which refuses to raise a count. New code uses RailSpacing/RailRadius/RailSize,
 # .railPrimary/.railSecondary, railText/railGlyph and railSheetClose.
-RailMap/JourneyEditor/AutoFilledStationLabel.swift	padding-literal	2
-RailMap/JourneyEditor/EditorDateTimeFields.swift	spacing-literal	6
-RailMap/JourneyEditor/EditorDateTimeFields.swift	touch-literal	4
 RailMap/JourneyEditor/EditorFillDetailsSheet.swift	dismiss-text	1
 RailMap/JourneyEditor/EditorFillDetailsSheet.swift	touch-literal	1
 RailMap/JourneyEditor/EditorLineSearchView.swift	dismiss-text	1
 RailMap/JourneyEditor/EditorLineSearchView.swift	spacing-literal	3
 RailMap/JourneyEditor/EditorLineSearchView.swift	touch-literal	2
-RailMap/JourneyEditor/EditorRouteSection.swift	spacing-literal	7
-RailMap/JourneyEditor/EditorRouteSection.swift	touch-literal	4
-RailMap/JourneyEditor/EditorStationsSection.swift	touch-literal	1
 RailMap/JourneyEditor/JourneyCompletionView.swift	spacing-literal	3
 RailMap/JourneyEditor/JourneyCompletionView.swift	touch-literal	2
-RailMap/JourneyEditor/JourneyEditorDetails.swift	spacing-literal	3
-RailMap/JourneyEditor/JourneyEditorDetails.swift	touch-literal	1
-RailMap/JourneyEditor/JourneyEditorManualEntry.swift	padding-literal	3
-RailMap/JourneyEditor/JourneyEditorManualEntry.swift	radius-literal	1
-RailMap/JourneyEditor/JourneyEditorManualEntry.swift	spacing-literal	4
-RailMap/JourneyEditor/JourneyEditorManualEntry.swift	touch-literal	3
 RailMap/JourneyEditor/JourneyEditorView.swift	padding-literal	2
 RailMap/JourneyEditor/JourneyEditorView.swift	spacing-literal	1
-RailMap/JourneyEditor/LocalLineServicesSection.swift	spacing-literal	2
-RailMap/JourneyEditor/StopEditorView.swift	spacing-literal	3
-RailMap/JourneyEditor/StopEditorView.swift	touch-literal	1
 RailMap/JourneyEditor/TicketScanView.swift	spacing-literal	2
 RailMap/JourneyEditor/TicketScanView.swift	stock-bordered	1
 RailMap/Journeys/RideDetailView.swift	touch-literal	1
-RailMap/Timetable/ServiceSectionSummary.swift	spacing-literal	1
-RailMap/Timetable/TimetableQuickMatchView.swift	spacing-literal	1

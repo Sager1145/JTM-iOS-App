@@ -61,7 +61,7 @@ struct JourneyEditorDetails: View {
                         .foregroundStyle(.secondary)
                         .accessibilityHidden(true)
                 }
-                .frame(minHeight: 44)
+                .frame(minHeight: RailSize.touch)
                 .contentShape(Rectangle())
             }
             .accessibilityIdentifier("newTripMoreDetails")
@@ -82,19 +82,18 @@ struct JourneyEditorDetails: View {
         Section {
             if draft.stops.contains(where: { $0.routeEditing?.generatedBy != nil }) {
                 Label(localization.text("ios.editor.generatedStationsNote"), systemImage: "info.circle")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("rideEditorAutoFilledStationsNote")
             }
             ForEach(draft.stops.indices, id: \.self) { index in
-                HStack(spacing: 8) {
+                HStack(spacing: RailSpacing.s8) {
                 NavigationLink {
                     StopEditorView(
                         stop: editableStop(index), journeyDate: $draft.date,
                         index: index, region: region, selectedLineIDs: routeLineIDs)
                 } label: {
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s4) {
                         StopEditorLabel(stop: draft.stops[index], journeyDate: draft.date, index: index + 1)
                         if draft.stops[index].routeEditing?.generatedBy != nil {
                             AutoFilledStationLabel()
@@ -168,10 +167,10 @@ struct JourneyEditorDetails: View {
                 guard let name = officialEnglishName.value else { return }
                 draft.numberEn = name
             } label: {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Text(localization.text("ios.editor.useOfficialEnglishName"))
                     if let name = officialEnglishName.value {
-                        Text(verbatim: name).font(.caption).foregroundStyle(.secondary)
+                        Text(verbatim: name).railText(.tertiary)
                     }
                 }
             }
@@ -179,7 +178,7 @@ struct JourneyEditorDetails: View {
             .accessibilityIdentifier("rideEditorUseOfficialEnglishName")
             if case .unavailable = officialEnglishName {
                 Text(localization.text("ios.editor.officialEnglishNameUnavailable"))
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         } header: {
             Text(localization.text("ios.editor.serviceDetails"))
@@ -232,8 +231,7 @@ struct JourneyEditorDetails: View {
                 Text(localization.text(
                     "ios.editor.riddenPartlyNote",
                     params: ["n": .number(Double(RideLedger.riddenSegmentCount(draft.stops)))]))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             Toggle(localization.text("ios.showOnMap", fallback: "Show on map"), isOn: Binding(
                 get: { draft.visible != false }, set: { draft.visible = $0 }))

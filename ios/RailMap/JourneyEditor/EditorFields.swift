@@ -17,10 +17,9 @@ struct EditorField<Content: View>: View {
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: RailSpacing.s4) {
+        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .railText(.tertiary)
                 .fixedSize(horizontal: false, vertical: true)
             content
         }
