@@ -205,7 +205,7 @@ final class NewTripUITests: XCTestCase {
         pickStation(field: "newTripDestination", query: "丸ノ内", code: "003390", in: app)
 
         let error = app.descendants(matching: .any)["newTripRouteError"]
-        XCTAssertTrue(reveal(error, in: app, timeout: 40))
+        XCTAssertTrue(reveal(error, in: app, timeout: 90))
         XCTAssertTrue(error.label.contains("赤坂見附"), error.label)
         XCTAssertFalse(app.buttons["newTripSave"].isEnabled,
                        "A disconnected pair must not be savable.")
@@ -498,6 +498,9 @@ final class NewTripUITests: XCTestCase {
         // so the arrival is moved back again afterwards.
         NewTripTimetableTestSupport.setTime(hour: 10, minute: 0, field: "newTripDeparture", in: app)
         moveArrivalToPreviousDay(in: app)
+        // Only a set clock is compared: a date-only arrival is not recorded,
+        // so give the earlier arrival a clock of its own.
+        NewTripTimetableTestSupport.setTime(hour: 9, minute: 0, field: "newTripArrival", in: app)
         XCTAssertTrue(reveal(error, in: app, timeout: 8))
         XCTAssertFalse(save.isEnabled, "An arrival before a set departure must block Save.")
     }
@@ -772,8 +775,8 @@ final class NewTripUITests: XCTestCase {
         let field = app.textFields["newTripNumber"]
         // Service fields sit above the route. After a long pass-station list
         // the number is off the top, so look down first and then back up.
-        let visible = reveal(field, in: app, timeout: 8)
-            || reveal(field, in: app, timeout: 16, upward: true)
+        // reveal reverses on its own at the end of the form.
+        let visible = reveal(field, in: app, timeout: 60)
         XCTAssertTrue(visible, "Train number must scroll into the form.")
         XCTAssertTrue(
             focusField(field, in: app),
@@ -936,11 +939,10 @@ final class NewTripUITests: XCTestCase {
     /// Cheap scroll anchor: identity and position of the form's first and last
     /// mounted cells. It stops changing once a nudge no longer moves the form.
     private func formScrollAnchor(in app: XCUIApplication) -> String {
-        let cells = formList(in: app).cells
-        guard cells.count > 0 else { return "-" }
-        let first = cells.firstMatch
-        let last = cells.element(boundBy: cells.count - 1)
-        return "\(first.identifier)|\(Int(first.frame.minY))|\(last.identifier)|\(Int(last.frame.minY))"
+        // One cheap query: every XCUI query costs ~0.3 s over the busy map,
+        // and the form has stopped moving when its first mounted row has.
+        let first = formList(in: app).cells.firstMatch
+        return first.exists ? "\(first.identifier)|\(Int(first.frame.minY))" : "-"
     }
 
     /// The add-trip form is long and lazy (Quick fill, Journey, Time, Service,

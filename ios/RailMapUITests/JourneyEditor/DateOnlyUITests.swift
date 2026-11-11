@@ -101,6 +101,10 @@ final class DateOnlyUITests: XCTestCase {
         field: String, query: String, code: String, lineID: String, in app: XCUIApplication
     ) {
         let button = app.buttons[field]
+        // An earlier check may have scrolled the stations off the top.
+        if !button.waitForExistence(timeout: 2) {
+            NewTripTimetableTestSupport.reveal(button, in: app, upward: true)
+        }
         XCTAssertTrue(button.waitForExistence(timeout: 20))
         XCTAssertTrue(waitForEnabled(button, timeout: 20))
         button.tap()

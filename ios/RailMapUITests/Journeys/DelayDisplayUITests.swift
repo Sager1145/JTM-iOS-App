@@ -56,6 +56,8 @@ final class DelayDisplayUITests: XCTestCase {
     private func launch(selecting: Bool, style: String?) -> XCUIApplication {
         let app = XCUIApplication()
         app.uiTestLaunch[.storageId] = UUID().uuidString
+        // The seeded trip is in the past, so it lists under History, not Upcoming.
+        app.uiTestLaunch[.tab] = "all"
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
                                "-interface-language", "en"]
             + (style.map { ["-AppleInterfaceStyle", $0] } ?? [])
