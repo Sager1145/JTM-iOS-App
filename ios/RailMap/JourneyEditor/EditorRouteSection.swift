@@ -27,6 +27,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
 
     var body: some View {
         Section {
+            Group {
             if let timetableTrain = model.timetableTrain {
                 timetablePassStations(timetableTrain)
             } else if model.showsRecordRoute {
@@ -42,13 +43,13 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                 }
                 historicalNotices
             }
+            }
+            // Anchor on the rows, not the Section, so scrollTo finds it.
+            .id(EditorAnchor.route.rawValue)
             if let routeProofFailure = model.routeProofFailure {
                 Text(routeProofFailure)
                     .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-            }
-            if model.autofillFailed {
-                RailStatusLabel(kind: .error, text: text("autofillFailed", fallback: "This route could not be applied."))
             }
             directionRows
         } header: {

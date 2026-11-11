@@ -30,7 +30,8 @@ enum PrimaryTab: String, CaseIterable, Identifiable {
         switch self {
         // Mirrors `WorkspacePanelActions` (pass 3). History: play, share,
         // filter, utilities. Upcoming and Stats: share, filter, utilities.
-        // A search reserves History's width.
+        // A search reserves History's width. Stats gains Play (B4) together
+        // with the `RailWorkspaceView` change that shows it; keep 3 until then.
         case .all, .search: 4
         case .upcoming, .stats: 3
         }

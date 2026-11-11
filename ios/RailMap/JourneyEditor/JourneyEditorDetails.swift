@@ -2,6 +2,7 @@ import RailApplication
 import RailCore
 import RailPresentation
 import SwiftUI
+import UIKit
 
 /// The saved record's stops and the fields the route and timetable never
 /// set: English name, direction, vehicle, section services, notes,
@@ -65,11 +66,12 @@ struct JourneyEditorDetails: View {
                 .contentShape(Rectangle())
             }
             .accessibilityIdentifier("newTripMoreDetails")
+            .id(EditorAnchor.details.rawValue)
         }
         if expanded {
             serviceDetailsSection
             serviceSectionsSection
-            statusSection
+            notesSection
             groupSection
             styleSection
             recordSection
@@ -102,6 +104,8 @@ struct JourneyEditorDetails: View {
                     }
                 }
                 .accessibilityIdentifier("rideEditorStop-\(index)")
+                // Scroll anchors live on a row, not on the Section.
+                .id(index == 0 ? EditorAnchor.stops.rawValue : "rideEditorStopRow-\(index)")
                 // The platform is entered here, without opening the stop.
                 PlatformEntryBadge(
                     platform: Binding(
@@ -215,9 +219,6 @@ struct JourneyEditorDetails: View {
             }
             .disabled(draft.stops.count < 2)
             .accessibilityIdentifier("rideEditorAddServiceLeg")
-            TextField(localization.text("ios.ai.notes"), text: optionalText(\.notes), axis: .vertical)
-                .lineLimit(2...5)
-                .accessibilityIdentifier("rideEditorNotes")
         } header: {
             Text(localization.text("ios.editor.sectionServices"))
         } footer: {
@@ -225,19 +226,13 @@ struct JourneyEditorDetails: View {
         }
     }
 
-    private var statusSection: some View {
+    private var notesSection: some View {
         Section {
-            if RideLedger.confirmation(of: draft) == .partly {
-                Text(localization.text(
-                    "ios.editor.riddenPartlyNote",
-                    params: ["n": .number(Double(RideLedger.riddenSegmentCount(draft.stops)))]))
-                    .railText(.secondary)
-            }
-            Toggle(localization.text("ios.showOnMap", fallback: "Show on map"), isOn: Binding(
-                get: { draft.visible != false }, set: { draft.visible = $0 }))
-                .accessibilityIdentifier("rideEditorVisible")
-        } footer: {
-            Text(localization.text("ios.editor.visibilityNote"))
+            TextField(localization.text("ios.ai.notes"), text: optionalText(\.notes), axis: .vertical)
+                .lineLimit(2...5)
+                .accessibilityIdentifier("rideEditorNotes")
+        } header: {
+            Text(localization.text("ios.ai.notes"))
         }
     }
 
@@ -253,20 +248,15 @@ struct JourneyEditorDetails: View {
 
     private var styleSection: some View {
         Section {
-            HStack {
-                EditorTextField(
-                    title: localization.text("ios.editor.routeColor"),
-                    text: Binding(
-                        get: { draft.style?.color ?? "" },
-                        set: { draft.style = TrainStyle(color: $0.isEmpty ? nil : $0) }),
-                    prompt: "#RRGGBB")
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                RouteLogoSquare.shape(side: 22)
-                    .fill(Color(hex: draft.style?.color) ?? .accentColor)
-                    .frame(width: 22, height: 22)
-                    .overlay(RouteLogoSquare.shape(side: 22).strokeBorder(.separator, lineWidth: 0.5))
-                    .accessibilityHidden(true)
+            ColorPicker(
+                localization.text("ios.editor.routeColor"),
+                selection: colorBinding, supportsOpacity: false)
+                .accessibilityIdentifier("rideEditorColor")
+            if draft.style?.color != nil {
+                Button(localization.text("ios.newTrip.resetColor", fallback: "Use the default color")) {
+                    draft.style = nil
+                }
+                .accessibilityIdentifier("rideEditorColorReset")
             }
             issueRows(.color)
         } header: {
@@ -274,20 +264,48 @@ struct JourneyEditorDetails: View {
         }
     }
 
+    /// The system colour picker's value, stored as the `#rrggbb` the record
+    /// keeps. An unset colour shows the default one.
+    private var colorBinding: Binding<Color> {
+        Binding(
+            get: { Color(hex: draft.displayColorHex) ?? .accentColor },
+            set: { draft.style = TrainStyle(color: Self.hex(of: $0)) })
+    }
+
+    private static func hex(of color: Color) -> String {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        UIColor(color).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        func byte(_ value: CGFloat) -> Int { Int((min(max(value, 0), 1) * 255).rounded()) }
+        return String(format: "#%02x%02x%02x", byte(red), byte(green), byte(blue))
+    }
+
+    /// The identifier is created with the trip; changing it would break the
+    /// links between records, so it is shown, not edited.
     private var recordSection: some View {
         Section {
-            EditorTextField(
-                title: localization.countryText("field.id", fallback: "Identifier"),
-                text: $draft.id)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .accessibilityIdentifier("rideEditorID")
+            if issues.all(for: .id).contains(where: { $0.severity == .error }) {
+                // Only a record whose identifier is empty or invalid (a
+                // legacy or imported one) can be fixed here; Save is refused
+                // until it is.
+                EditorTextField(
+                    title: localization.countryText("field.id", fallback: "Identifier"),
+                    text: $draft.id)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("rideEditorID")
+            } else {
+                LabeledContent(localization.countryText("field.id", fallback: "Identifier")) {
+                    Text(verbatim: draft.id)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("rideEditorID")
+                }
+            }
             issueRows(.id)
             issueRows(.record)
         } header: {
             Text(localization.text("ios.editor.record"))
         } footer: {
-            Text(localization.text("ios.editor.recordNote"))
+            Text(localization.text("ios.newTrip.idReadOnlyNote", fallback: "Set when the trip was created. It cannot be changed."))
         }
     }
 

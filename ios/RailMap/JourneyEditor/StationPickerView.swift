@@ -91,12 +91,15 @@ struct StationPickerView: View {
     var sourceCatalog: EditorCatalog? = nil
     var companyFilter: String? = nil
     var onSelectWithLine: ((CatalogStation, CatalogLine?, String?) -> Void)? = nil
+    /// Opened for an empty field: the cursor starts in the search box.
+    var focusesSearchOnAppear = false
     /// A stop keeps free text; only its suggestions use the shared picker.
     var inlineQuery: Binding<String>? = nil
     var showsSuggestions = true
     var onLoad: ((EditorCatalog?, [RetiredStation], [String: String]) -> Void)? = nil
     var accessibilityPrefix = "rideEditorStation"
     @State private var query = ""
+    @State private var isSearchPresented = false
     /// Company, then optionally one of its lines. Both narrow the results
     /// and the map; a line also lists its stations in route order.
     @State private var filterOperatorID: String?
@@ -116,6 +119,9 @@ struct StationPickerView: View {
     @State private var hints = PickerHints()
     /// Recent searches typed in this picker's region, for the empty box.
     @State private var recentSearches: [String] = []
+    /// How many recent picks are stored for this region; the Clear in the
+    /// "Suggested stations" header shows while there are picks but no queries.
+    @State private var recentPickCount = 0
     /// The text a reader typed before an applied filter took its keywords,
     /// restored when that chip is removed.
     @State private var textBeforeAppliedFilter: String?
@@ -252,16 +258,11 @@ struct StationPickerView: View {
                 browser
                     .navigationTitle(localization.text("ios.editor.chooseStation"))
                     .navigationBarTitleDisplayMode(.inline)
-                    .searchable(text: queryBinding, placement: .navigationBarDrawer(displayMode: .always),
+                    .searchable(text: queryBinding, isPresented: $isSearchPresented,
+                                placement: .navigationBarDrawer(displayMode: .always),
                                 prompt: Text(localization.text("ios.editor.stationSearch")))
                     .onSubmit(of: .search) { readHints(latestResponse ?? search.output.response, submitted: true) }
-                    .toolbar {
-                        if onSelectWithLine != nil {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                            }
-                        }
-                    }
+                    .task { if focusesSearchOnAppear { isSearchPresented = true } }
             }
         }
         .task(id: loadToken) { await load() }
@@ -564,9 +565,11 @@ struct StationPickerView: View {
     }
 
     @ViewBuilder private var hintRows: some View {
-        SearchSuggestionChips(chips: suggestionChips, identifierPrefix: "stationPickerSuggestion") { chip in
-            queryBinding.wrappedValue = chip.text
-        }
+        SearchSuggestionChips(chips: suggestionChips, identifierPrefix: "stationPickerSuggestion",
+            action: { chip in queryBinding.wrappedValue = chip.text },
+            onRemove: removeRecentChip,
+            onClear: recentClearAction,
+            clearIdentifier: "stationPickerRecentClear")
         if !hints.suggested.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: RailSpacing.s8) {
@@ -596,11 +599,37 @@ struct StationPickerView: View {
         return chips
     }
 
+    private var recentClearAction: (() -> Void)? {
+        if recentSearches.isEmpty { return nil }
+        return { clearRecents() }
+    }
+
+    private func removeRecentChip(_ chip: SearchSuggestionChips.Chip) {
+        recentSearches = search.removeRecentQuery(chip.text, regionCode: regionCode, defaults: preferences)
+    }
+
+    /// Forget this region's recent queries and picks at once: no confirmation, no undo.
+    private func clearRecents() {
+        search.clearRecents(regionCode: regionCode, defaults: preferences)
+        recentSearches = []
+        recentPickCount = 0
+    }
+
     /// The empty box's stations: recent picks, the most ridden, the visible map, then hubs.
     @ViewBuilder private var suggestedSection: some View {
         if filterOperatorID == nil, !suggestions.isEmpty {
-            Section(localization.text("ios.search.suggestedStations", fallback: "Suggested stations")) {
+            Section {
                 ForEach(suggestions) { row in stationButton(row) }
+            } header: {
+                HStack {
+                    Text(localization.text("ios.search.suggestedStations", fallback: "Suggested stations"))
+                    Spacer()
+                    if recentSearches.isEmpty, recentPickCount > 0 {
+                        Button(localization.text("ios.search.clearRecent", fallback: "Clear"), action: clearRecents)
+                            .textCase(nil)
+                            .accessibilityIdentifier("stationPickerRecentClear")
+                    }
+                }
             }
         }
     }
@@ -743,6 +772,7 @@ struct StationPickerView: View {
         let readings = localization.stationSearchNames(region: region)
         let recent = StationPickerRecents.load(regionCode: regionCode, defaults: preferences)
         recentSearches = RecentSearchStore.load(.stationPicker, regionCode: regionCode, defaults: preferences)
+        recentPickCount = recent.count
         let rideCounts = StationPickerRecents.rideCounts(
             trains: itineraries?.loaded?.trains ?? [], regionCode: regionCode)
         search.setSignals(recentPicks: recent, rideCounts: rideCounts)
@@ -816,6 +846,7 @@ struct StationPickerView: View {
         let recent = StationPickerRecents.record(
             stationCode: station.key.sourceCode, regionCode: regionCode, defaults: preferences)
         search.setSignals(recentPicks: recent)
+        recentPickCount = recent.count
     }
     private func select(_ row: CatalogStationRow, line: CatalogLine? = nil) {
         recordPick(row.station)

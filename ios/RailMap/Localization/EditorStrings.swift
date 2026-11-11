@@ -1634,6 +1634,12 @@ enum EditorStrings {
             .zhHant: "確認狀況",
             .zhHans: "确认状况",
         ],
+        "ios.editor.pattern.serviceDateValue": [
+            .en: "Service date: {date}",
+            .ja: "運転日: {date}",
+            .zhHant: "班次日期：{date}",
+            .zhHans: "班次日期：{date}",
+        ],
         "ios.editor.pattern.detail.sources": [
             .en: "Sources",
             .ja: "出典",

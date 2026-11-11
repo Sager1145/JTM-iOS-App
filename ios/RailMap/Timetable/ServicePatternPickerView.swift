@@ -130,8 +130,8 @@ struct ServicePatternPickerView: View {
             List {
                 Section {
                     Button { showsDateEditor.toggle() } label: {
-                        Label(localization.text("ios.editor.timetableBrowseDate")
-                              + (rideDate.map { ": " + $0 } ?? ""), systemImage: "calendar")
+                        Label(rideDate.map { pickerText("serviceDateValue", ["date": .string($0)]) }
+                              ?? localization.text("ios.editor.timetableBrowseDate"), systemImage: "calendar")
                     }
                     .accessibilityIdentifier("servicePatternDateEditor")
                     if showsDateEditor {
@@ -264,18 +264,16 @@ struct ServicePatternPickerView: View {
             }
             .task(id: "\(region):\(rideDate ?? "")") { await loadTimetable() }
             .task(id: searchKey) { await updateSearchSnapshot() }
-            .sheet(isPresented: $showsTrainResearch) {
+            .navigationDestination(isPresented: $showsTrainResearch) {
                 TrainResearchView(region: region, query: query, rideDate: rideDate)
-                    .railSheet(.full)
             }
-            .sheet(item: $inspectedTrip) { trip in
+            .navigationDestination(item: $inspectedTrip) { trip in
                 TimetableTripDetailView(trip: trip, onUseDraft: onSelectDraft == nil ? nil : { chosen in
                     onSelectDate?(chosen.serviceDate)
                     onSelectDraft?(chosen)
                     inspectedTrip = nil
                     dismiss()
                 })
-                .railSheet(.half)
             }
             .confirmationDialog(
                 pickerText("outsideConfirm"),

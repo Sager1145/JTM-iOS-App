@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// 地圖圖層 — what of the reader's own journeys is drawn.
@@ -18,6 +19,12 @@ import SwiftUI
 struct MapLayersView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(DisplaySettings.self) private var display
+    /// What the lists' date choice does to the map. The workspace reads the
+    /// same two keys to apply them; this sheet is the only view that edits
+    /// them (audit B3).
+    @AppStorage("map-follows-selected-date") private var mapFollowsSelectedDate = false
+    @AppStorage("auto-focus-zoom") private var autoFocusZoom = false
 
     @Bindable var controller: RailMapController
     /// Whether a region's network is being read right now so the categories
@@ -167,6 +174,45 @@ struct MapLayersView: View {
                     // opacity-only transition remains useful under Reduce
                     // Motion and avoids collapsing the footer in one frame.
                     .animation(RailMotion.crossfade, value: classifying)
+                }
+
+                // What is drawn depends on WHEN as well as where: which era's
+                // network, and whether other days' trips are shown. They were
+                // in Settings and in the lists' date menu; the map's own
+                // sheet is where the reader sees the change happen.
+                Section {
+                    Picker(
+                        localization.text("ios.networkEra", fallback: "Network era"),
+                        selection: Binding(
+                            get: { display.networkEra },
+                            set: { display.networkEra = $0; display.persist() }
+                        )
+                    ) {
+                        Text(localization.text("ios.networkEra.current", fallback: "Current"))
+                            .tag(DisplayNetworkEra.current)
+                        Text(localization.text(
+                            "ios.networkEra.rideDate", fallback: "Selected trip's date"))
+                            .tag(DisplayNetworkEra.rideDate)
+                        Text(localization.text(
+                            "ios.networkEra.overlay", fallback: "Historical overlay"))
+                            .tag(DisplayNetworkEra.historicalOverlay)
+                    }
+                    .pickerStyle(.navigationLink)
+                    .accessibilityIdentifier("layerNetworkEra")
+                    Toggle(
+                        localization.text(
+                            "ios.layers.onlySelectedDate", fallback: "Only the selected date"),
+                        isOn: $mapFollowsSelectedDate)
+                    .accessibilityIdentifier("layerOnlySelectedDate")
+                    Toggle(
+                        localization.text("ios.layers.autoFocus", fallback: "Auto-focus"),
+                        isOn: $autoFocusZoom)
+                    .accessibilityIdentifier("layerAutoFocus")
+                } header: {
+                    Text(localization.text(
+                        "ios.layers.datesGroup", fallback: "Dates and history"))
+                } footer: {
+                    Text(localization.text("ios.note.datesLayers"))
                 }
             }
             .navigationTitle(localization.countryText("map.layers", fallback: "Map layers"))

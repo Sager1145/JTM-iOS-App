@@ -68,14 +68,16 @@ final class StatisticsCalendarUITests: XCTestCase {
         XCTAssertFalse(december.isSelected)
         XCTAssertEqual(element("statisticsCalendarSelection", in: app).label, "2026-01-01")
 
-        let byGroup = element("statisticsClassification-journeyGroup", in: app)
+        let mode = app.segmentedControls["statisticsClassification"]
+        let byGroup = mode.buttons.element(boundBy: 1)
+        let byDate = mode.buttons.element(boundBy: 0)
         byGroup.tap()
         XCTAssertTrue(byGroup.isSelected)
-        XCTAssertFalse(element("statisticsClassification-date", in: app).isSelected)
+        XCTAssertFalse(byDate.isSelected)
         XCTAssertFalse(element("statisticsCalendar", in: app).exists)
         XCTAssertTrue(element("statisticsGroup-all", in: app).exists)
 
-        element("statisticsClassification-date", in: app).tap()
+        byDate.tap()
         XCTAssertFalse(byGroup.isSelected)
         XCTAssertEqual(element("statisticsCalendarSelection", in: app).label, "All")
         element("statisticsCalendarNext", in: app).tap()
@@ -92,7 +94,7 @@ final class StatisticsCalendarUITests: XCTestCase {
         calendar.tap()
         app.buttons.matching(NSPredicate(format: "identifier == 'statisticsPeriodItem' OR label BEGINSWITH 'Period'")).firstMatch.tap()
         XCTAssertTrue(byGroup.waitForExistence(timeout: 5))
-        element("statisticsClassification-date", in: app).tap()
+        byDate.tap()
         app.buttons["statisticsScopeClose"].tap()
         assertRideCount(39, in: app)
         calendar.tap()

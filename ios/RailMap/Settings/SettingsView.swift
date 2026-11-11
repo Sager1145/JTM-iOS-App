@@ -42,6 +42,7 @@ struct SettingsView: View {
     /// the workspace root with the whole app in between.
     @AppStorage("launch-map-scope") private var launchScope = LaunchMapScope.auto.rawValue
     @AppStorage("launch-map-region") private var launchScopeRegion = Region.jp.rawValue
+    @State private var confirmReset = false
 
     var body: some View {
         // The first screen holds what most readers change: language, theme,
@@ -54,8 +55,8 @@ struct SettingsView: View {
             stationNameSection
             mapSection
             moreSection
-            resetSection
             aboutSection
+            resetSection
         }
         .navigationTitle(localization.text("ios.settings", fallback: "Settings"))
         .navigationBarTitleDisplayMode(.inline)
@@ -98,20 +99,30 @@ struct SettingsView: View {
         Section {
             NavigationLink {
                 Form {
+                    LabeledContent(
+                        localization.text("ios.version", fallback: "Version"),
+                        value: Self.versionText)
                     LabeledContent(localization.text("ios.renderer", fallback: "Renderer")) {
                         Text(verbatim: "Apple Maps")
                     }
                     diagnosticsSection
                 }
-                .navigationTitle(localization.text(
-                    "ios.aboutDiagnostics", fallback: "About & diagnostics"))
+                .navigationTitle(localization.text("ios.diagnostics", fallback: "Diagnostics"))
                 .navigationBarTitleDisplayMode(.inline)
             } label: {
-                Label(localization.text("ios.aboutDiagnostics", fallback: "About & diagnostics"),
+                Label(localization.text("ios.diagnostics", fallback: "Diagnostics"),
                       systemImage: "stethoscope")
             }
             .accessibilityIdentifier("settingsDiagnosticsLink")
         }
+    }
+
+    /// The app version and build, read from the bundle.
+    private static var versionText: String {
+        let info = Bundle.main.infoDictionary
+        let version = info?["CFBundleShortVersionString"] as? String ?? "-"
+        let build = info?["CFBundleVersion"] as? String ?? "-"
+        return "\(version) (\(build))"
     }
 
     // MARK: - 1. Language
@@ -161,18 +172,19 @@ struct SettingsView: View {
     // MARK: - 1b. Station name readings
 
     private var journeyNameSection: some View {
-        Section(localization.journeyText("ios.journey.cardNames")) {
-            VStack(alignment: .leading, spacing: RailSpacing.s4) {
-                Toggle(
-                    localization.journeyText("ios.journey.showTranslations"),
-                    isOn: Binding(
-                        get: { display.showJourneyTranslations },
-                        set: { display.showJourneyTranslations = $0; display.persist() }))
-                .accessibilityIdentifier("showJourneyTranslations")
-                Text(localization.journeyText("ios.journey.showTranslationsNote"))
-                    .railText(.secondary)
-            }
-            .padding(.vertical, RailSpacing.rowVertical)
+        // One explanation pattern for the standalone notes on this screen: the
+        // section footer (audit L17).
+        Section {
+            Toggle(
+                localization.journeyText("ios.journey.showTranslations"),
+                isOn: Binding(
+                    get: { display.showJourneyTranslations },
+                    set: { display.showJourneyTranslations = $0; display.persist() }))
+            .accessibilityIdentifier("showJourneyTranslations")
+        } header: {
+            Text(localization.journeyText("ios.journey.cardNames"))
+        } footer: {
+            Text(localization.journeyText("ios.journey.showTranslationsNote"))
         }
     }
 
@@ -186,16 +198,7 @@ struct SettingsView: View {
     @ViewBuilder
     private var stationNameSection: some View {
         Section {
-            if localization.localizesEveryStationName {
-                Text(
-                    localization.text(
-                        "ios.note.readingsLocalized",
-                        fallback:
-                            "This region's station names come straight from the operator's own official name in each language."
-                    )
-                )
-                .railText(.secondary)
-            } else {
+            if !localization.localizesEveryStationName {
                 SettingToggleRow(
                     title: localization.countryText(
                         "disp.nameReadingKana", fallback: "Station kana readings"),
@@ -232,7 +235,14 @@ struct SettingsView: View {
         } header: {
             Text(localization.text("ios.stationNames", fallback: "Station names"))
         } footer: {
-            if !localization.localizesEveryStationName && !display.nameReadingsCustomized {
+            if localization.localizesEveryStationName {
+                Text(
+                    localization.text(
+                        "ios.note.readingsLocalized",
+                        fallback:
+                            "This region's station names come straight from the operator's own official name in each language."
+                    ))
+            } else if !display.nameReadingsCustomized {
                 Text(
                     localization.text(
                         "ios.note.readingsFollowLanguage",
@@ -298,40 +308,26 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.navigationLink)
             }
-            Text(localization.text(
-                "ios.note.launchScope",
-                fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
-                .railText(.secondary)
-            if let trains = itineraries.loaded?.trains, tripHide?.hasDisabledRegionTrips(trains) == true {
-                Text(localization.text(
-                    "ios.note.disabledRegionTrips",
-                    fallback: "Mainland China trips are hidden. They stay saved and will reappear if support returns."))
-                    .railText(.secondary)
-            }
-            Picker(
-                localization.text("ios.networkEra", fallback: "Network era"),
-                selection: Binding(
-                    get: { display.networkEra },
-                    set: { display.networkEra = $0; display.persist() }
-                )
-            ) {
-                Text(localization.text("ios.networkEra.current", fallback: "Current"))
-                    .tag(DisplayNetworkEra.current)
-                Text(localization.text("ios.networkEra.rideDate", fallback: "Selected ride's date"))
-                    .tag(DisplayNetworkEra.rideDate)
-                Text(localization.text("ios.networkEra.overlay", fallback: "Historical overlay"))
-                    .tag(DisplayNetworkEra.historicalOverlay)
-            }
-            .pickerStyle(.navigationLink)
         } header: {
             Text(localization.text("ios.mapContent", fallback: "Map"))
         } footer: {
-            // The rail-network switch is the map's own train button; framing
-            // the network is in the map's Layers sheet, where the reader can
-            // see the map move. Neither is repeated here.
-            Text(localization.text(
-                "ios.note.mapSettingsElsewhere",
-                fallback: "Show or hide the rail network with the train button on the map. Layer switches are in the map's Layers panel."))
+            // Network era moved to the map's Layers sheet with the other
+            // choices about what is drawn (audit B3); this screen keeps the
+            // opening view. The rail-network switch is the map's own train
+            // button and is not repeated here.
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
+                Text(localization.text(
+                    "ios.note.launchScope",
+                    fallback: "Where the map is framed when the app opens. Automatic uses the country of your first upcoming journey, or of the first journey in your log; with no journeys, it shows East Asia."))
+                if let trains = itineraries.loaded?.trains, tripHide?.hasDisabledRegionTrips(trains) == true {
+                    Text(localization.text(
+                        "ios.note.disabledRegionTrips",
+                        fallback: "Mainland China trips are hidden. They stay saved and will reappear if support returns."))
+                }
+                Text(localization.text(
+                    "ios.note.mapSettingsElsewhere",
+                    fallback: "Show or hide the rail network with the train button on the map. Network era, date options and layer switches are in the map's Layers panel."))
+            }
         }
     }
 
@@ -470,7 +466,32 @@ struct SettingsView: View {
 
     private var resetSection: some View {
         Section {
-            Button(localization.countryText("disp.reset", fallback: "Reset to defaults")) {
+            Button(
+                localization.text("ios.resetDefaults", fallback: "Reset to defaults"),
+                role: .destructive
+            ) {
+                confirmReset = true
+            }
+            .accessibilityIdentifier("settingsResetButton")
+        } footer: {
+            // Lists what `DisplaySettings.reset()` changes; the unit test
+            // `SampleTripsAndResetTests` pins that list to the function.
+            Text(
+                localization.text(
+                    "ios.note.reset",
+                    fallback:
+                        "Resets map style, network era, name readings and translations. Language, theme and opening view are kept. Your trips and exported data are untouched."
+                ))
+        }
+        .confirmationDialog(
+            localization.text("ios.resetDefaults.confirmTitle", fallback: "Reset display settings?"),
+            isPresented: $confirmReset,
+            titleVisibility: .visible
+        ) {
+            Button(
+                localization.text("ios.resetDefaults.confirm", fallback: "Reset"),
+                role: .destructive
+            ) {
                 display.reset()
                 // `reset` clears `nameReadingsCustomized`, which puts the three
                 // reading toggles back to tracking the interface language —
@@ -478,13 +499,9 @@ struct SettingsView: View {
                 localization.setNameReadings(nil)
                 display.syncNameReadingDefaults(to: localization.language)
             }
-        } footer: {
-            Text(
-                localization.text(
-                    "ios.note.reset",
-                    fallback:
-                        "Resets the display settings on this screen only. Your rides and exported data are untouched."
-                ))
+            .accessibilityIdentifier("settingsResetConfirm")
+        } message: {
+            Text(localization.text("ios.note.reset"))
         }
     }
 

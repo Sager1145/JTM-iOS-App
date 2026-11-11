@@ -554,5 +554,61 @@ enum NewTripStrings {
             .en: "Custom", .ja: "その他",
             .zhHant: "自訂", .zhHans: "自定义",
         ],
+        "ios.newTrip.blocker.repairing": [
+            .en: "Repairing the route…", .ja: "経路を修復しています…",
+            .zhHant: "正在修復路線…", .zhHans: "正在修复路线…",
+        ],
+        "ios.newTrip.blocker.findingRoute": [
+            .en: "Finding the route…", .ja: "経路を探しています…",
+            .zhHant: "正在尋找路線…", .zhHans: "正在查找路线…",
+        ],
+        "ios.newTrip.blocker.chooseOrigin": [
+            .en: "Choose where the trip starts", .ja: "出発駅を選んでください",
+            .zhHant: "請選擇出發車站", .zhHans: "请选择出发车站",
+        ],
+        "ios.newTrip.blocker.chooseDestination": [
+            .en: "Choose where the trip ends", .ja: "到着駅を選んでください",
+            .zhHant: "請選擇到達車站", .zhHans: "请选择到达车站",
+        ],
+        "ios.newTrip.blocker.regionConflict": [
+            .en: "These stations are in regions that are not connected", .ja: "これらの駅は接続されていない地域にあります",
+            .zhHant: "這些車站位於互不相連的地區", .zhHans: "这些车站位于互不相连的地区",
+        ],
+        "ios.newTrip.blocker.groupName": [
+            .en: "Name the trip group", .ja: "旅程グループに名前を付けてください",
+            .zhHant: "請為行程群組命名", .zhHans: "请为行程分组命名",
+        ],
+        "ios.newTrip.blocker.times": [
+            .en: "Arrival is before departure", .ja: "到着が出発より前になっています",
+            .zhHant: "到達時間早於出發時間", .zhHans: "到达时间早于出发时间",
+        ],
+        "ios.newTrip.blocker.noRoute": [
+            .en: "This trip has no route to save", .ja: "保存できる経路がありません",
+            .zhHant: "此行程沒有可儲存的路線", .zhHans: "此行程没有可保存的路线",
+        ],
+        "ios.newTrip.blocker.chooseRoute": [
+            .en: "Choose a route on the map", .ja: "地図で経路を選んでください",
+            .zhHant: "請在地圖上選擇路線", .zhHans: "请在地图上选择路线",
+        ],
+        "ios.newTrip.blocker.timetableStops": [
+            .en: "This timetable has no stops to save", .ja: "この時刻表には保存できる停車駅がありません",
+            .zhHant: "此時刻表沒有可儲存的停靠站", .zhHans: "此时刻表没有可保存的停靠站",
+        ],
+        "ios.newTrip.clockHint": [
+            .en: "H:MM", .ja: "時:分",
+            .zhHant: "時:分", .zhHans: "时:分",
+        ],
+        "ios.newTrip.statusSection": [
+            .en: "Status", .ja: "状態",
+            .zhHant: "狀態", .zhHans: "状态",
+        ],
+        "ios.newTrip.resetColor": [
+            .en: "Use the default color", .ja: "既定の色に戻す",
+            .zhHant: "使用預設顏色", .zhHans: "使用默认颜色",
+        ],
+        "ios.newTrip.idReadOnlyNote": [
+            .en: "Set when the trip was created. It cannot be changed.", .ja: "旅程の作成時に付与されます。変更できません。",
+            .zhHant: "建立行程時自動產生，無法更改。", .zhHans: "创建行程时自动生成，无法更改。",
+        ],
     ]
 }

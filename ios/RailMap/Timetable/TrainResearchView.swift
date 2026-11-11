@@ -3,7 +3,6 @@ import SwiftUI
 
 /// Research answers remain separate from the published timetable and journey draft.
 struct TrainResearchView: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @Environment(AppLocalization.self) private var localization
     let region: String
@@ -90,63 +89,59 @@ struct TrainResearchView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section(text("researchTarget", fallback: "Train query")) {
-                    if let trip {
-                        Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) · \(trip.serviceDate)")
-                    } else {
-                        TextField(text("researchQuery", fallback: "Train name, number or route"),
-                                  text: $query, axis: .vertical)
-                            .accessibilityIdentifier("trainResearchQuery")
-                        EditorDateField(title: text("date"), date: $rideDate,
-                                        region: Region(rawValue: region) ?? .jp,
-                                        accessibilityID: "trainResearchDate")
-                    }
-                    TextField(text("remarks", fallback: "Additional remarks (optional)"),
-                              text: $remarks, axis: .vertical)
-                        .lineLimit(3...8)
-                        .accessibilityIdentifier("trainResearchRemarks")
-                    if !hasQuery {
-                        Text(text("researchRequired", fallback: "Enter a train name, number or route and an operating date."))
-                            .railText(.secondary)
-                    }
-                    Text(text("researchReview", fallback: "Check the official sources before editing your journey. The answer is a research suggestion."))
+        Form {
+            Section(text("researchTarget", fallback: "Train query")) {
+                if let trip {
+                    Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber) · \(trip.serviceDate)")
+                } else {
+                    TextField(text("researchQuery", fallback: "Train name, number or route"),
+                              text: $query, axis: .vertical)
+                        .accessibilityIdentifier("trainResearchQuery")
+                    EditorDateField(title: text("date"), date: $rideDate,
+                                    region: Region(rawValue: region) ?? .jp,
+                                    accessibilityID: "trainResearchDate")
+                }
+                TextField(text("remarks", fallback: "Additional remarks (optional)"),
+                          text: $remarks, axis: .vertical)
+                    .lineLimit(3...8)
+                    .accessibilityIdentifier("trainResearchRemarks")
+                if !hasQuery {
+                    Text(text("researchRequired", fallback: "Enter a train name, number or route and an operating date."))
                         .railText(.secondary)
                 }
-                .disabled(isWorking)
-                subscriptionSection
-                Section {
-                    ShareLink(item: prompt) { Label(text("share"), systemImage: "square.and.arrow.up") }
-                        .disabled(!hasQuery)
-                    Button(text("open")) { openURL(URL(string: "https://chatgpt.com/")!) }
-                    DisclosureGroup(text("prompt")) {
-                        Text(prompt).font(.caption.monospaced()).textSelection(.enabled)
-                    }
+                Text(text("researchReview", fallback: "Check the official sources before editing your journey. The answer is a research suggestion."))
+                    .railText(.secondary)
+            }
+            .disabled(isWorking)
+            subscriptionSection
+            Section {
+                ShareLink(item: prompt) { Label(text("share"), systemImage: "square.and.arrow.up") }
+                    .disabled(!hasQuery)
+                Button(text("open")) { openURL(URL(string: "https://chatgpt.com/")!) }
+                DisclosureGroup(text("prompt")) {
+                    Text(prompt).font(.caption.monospaced()).textSelection(.enabled)
                 }
-                if let failure {
-                    Section { RailStatusLabel(kind: .error, text: failure) }
-                }
-                if !answer.isEmpty {
-                    Section(text("sources")) {
-                        Text(LocalizedStringKey(answer)).textSelection(.enabled)
-                            .accessibilityIdentifier("trainResearchAnswer")
-                        DisclosureGroup(text("researchAnsweredPrompt", fallback: "Request for this answer")) {
-                            Text(answeredPrompt).font(.caption.monospaced()).textSelection(.enabled)
-                        }
+            }
+            if let failure {
+                Section { RailStatusLabel(kind: .error, text: failure) }
+            }
+            if !answer.isEmpty {
+                Section(text("sources")) {
+                    Text(LocalizedStringKey(answer)).textSelection(.enabled)
+                        .accessibilityIdentifier("trainResearchAnswer")
+                    DisclosureGroup(text("researchAnsweredPrompt", fallback: "Request for this answer")) {
+                        Text(answeredPrompt).font(.caption.monospaced()).textSelection(.enabled)
                     }
                 }
             }
-            .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
-                                  fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
-            .navigationBarTitleDisplayMode(.inline)
-            .railSheetClose(Text(localization.text("ios.close", fallback: "Close")),
-                            identifier: "researchClose") { dismiss() }
-            .task { if auth.isSignedIn { run { try await loadModels() } } }
-            .onDisappear { cancel() }
-            .onChange(of: auth.isSignedIn) { _, signedIn in
-                if !signedIn { models = []; selectedModel = "" }
-            }
+        }
+        .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
+                              fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
+        .navigationBarTitleDisplayMode(.inline)
+        .task { if auth.isSignedIn { run { try await loadModels() } } }
+        .onDisappear { cancel() }
+        .onChange(of: auth.isSignedIn) { _, signedIn in
+            if !signedIn { models = []; selectedModel = "" }
         }
     }
 

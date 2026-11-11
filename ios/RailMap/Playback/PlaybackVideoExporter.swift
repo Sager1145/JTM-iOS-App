@@ -439,7 +439,7 @@ final class PlaybackVideoExporter {
 
     private func trackColor(hex: String) -> UIColor {
         if let colorCache, colorCache.hex == hex { return colorCache.color }
-        let color = UIColor(railHex: hex) ?? .systemBlue
+        let color = UIColor(railHex: hex) ?? .railDefaultTrip
         colorCache = (hex, color)
         return color
     }

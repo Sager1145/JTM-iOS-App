@@ -622,6 +622,36 @@ final class ItineraryStore {
         return Commit(outcome: true, save: enqueueSave(snapshot))
     }
 
+    /// Removes exactly the trips whose identifiers are listed, and nothing else.
+    ///
+    /// The "Remove sample trips" action: a sample's trips are the ones whose
+    /// ids it carries, so the reader's own trips and any hidden-region trips
+    /// are never matched. Queues one save of the result and forgets which
+    /// samples were loaded, because none of their trips are left to point at.
+    /// The caller takes the backup first. `outcome` is the number removed, or
+    /// nil when the store refused (an import owns it) or nothing matched.
+    @discardableResult
+    func removeTrains(withIDs ids: Set<String>, clearing library: RideLibrary) -> Commit<Int?> {
+        attach(library)
+        var removed = 0
+        let commit = mutate(region: .jp) { workspace in
+            let before = workspace.store.trains.count
+            workspace.store.trains.removeAll { ids.contains($0.id) }
+            removed = before - workspace.store.trains.count
+            guard removed > 0 else { return nil }
+            if let selected = workspace.selectedTrainID, ids.contains(selected) {
+                workspace.selectedTrainID = nil
+            }
+            if let focused = workspace.focusedTrainID, ids.contains(focused) {
+                workspace.focusedTrainID = nil
+            }
+            return .trainCollectionChanged
+        }
+        guard commit.outcome.isCommitted else { return Commit(outcome: nil, save: nil) }
+        library.forgetLoadedSamples()
+        return Commit(outcome: removed, save: commit.save)
+    }
+
     /// The canonical JSON for every ride, whatever region each belongs to.
     func exportJSON() async -> String? {
         guard let store else { return nil }

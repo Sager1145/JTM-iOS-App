@@ -24,7 +24,7 @@ import SwiftUI
 ///
 /// The header owns the day and region controls. The year bar below it owns
 /// the overall time range through `MileageStatisticsStore.selectedYear`.
-/// All cards, map coverage, replay and sharing use that same year scope.
+/// All cards, map coverage, and sharing use that same year scope.
 struct PassportWorkspaceView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -55,7 +55,12 @@ struct PassportWorkspaceView: View {
     /// workspace's to supply rather than the statistics screen's to reach for.
     var journeyPresentation: (Train) -> JourneyPresentation
     var openJourney: (Train) -> Void
+    /// Unused since the Export JSON button was removed (export lives only in
+    /// the Data Library); delete with the argument in `RailWorkspaceView`.
     var openData: () -> Void
+    /// A12: the unconfirmed-trips note's "Show trips" action. `nil` hides the
+    /// button until `RailWorkspaceView` supplies it.
+    var showUnconfirmed: (() -> Void)?
     var openSettings: () -> Void
 
     var body: some View {
@@ -96,12 +101,12 @@ struct PassportWorkspaceView: View {
                     },
                     derived: derived,
                     journeyPresentation: journeyPresentation,
-                    openJourney: openJourney)
+                    openJourney: openJourney,
+                    showUnconfirmed: showUnconfirmed)
 
-                PassportShareCard(
+                PassportReplayCard(
                     canReplay: !scopedTrains.isEmpty,
-                    onReplay: { replay(scopedTrains) },
-                    onExport: openData)
+                    onReplay: { replay(scopedTrains) })
             }
             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
             .padding(.top, WorkspaceMenuMetrics.contentTopInset)
@@ -150,16 +155,6 @@ struct PassportWorkspaceView: View {
             trains: trains, rides: riddenRoutes.rides)
     }
 
-    // MARK: - what is in scope
-    //
-    // `scopedTrains` — one region, either one day or all of them, and only
-    // what the records say was ridden — used to be computed here on every
-    // body evaluation. It is now `RailWorkspaceView.statisticsScope.trains`,
-    // handed down as a stored property: the same three filters (region,
-    // ``RailCore/RideLedger``, date), so 回放 still can never play a
-    // journey the numbers above it excluded, computed once per (trains
-    // generation, region, date) instead of once per screen.
-
     private func replay(_ trains: [Train]) {
         guard !trains.isEmpty else { return }
         _ = playback.start(
@@ -168,40 +163,15 @@ struct PassportWorkspaceView: View {
     }
 }
 
-/// §5.3.5 Replay & Share — two entry points into flows that already exist: the
-/// transport Journeys uses, and the Data Library's export.
-private struct PassportShareCard: View {
+/// Play for the trips in scope. Interim home until the header Play (B4) is
+/// wired in `RailWorkspaceView`; delete this with that change. Export is not
+/// offered here: it lives only in the Data Library.
+private struct PassportReplayCard: View {
     @Environment(AppLocalization.self) private var localization
     var canReplay: Bool
     var onReplay: () -> Void
-    var onExport: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: RailSpacing.s12) {
-            Label(
-                localization.text("grp.passportShare", fallback: "Replay and export"),
-                systemImage: "square.and.arrow.up")
-                .railText(.cardTitle)
-
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: RailSpacing.s8) { replayButton; exportButton }
-                VStack(spacing: RailSpacing.s8) { replayButton; exportButton }
-            }
-
-            // §2.3 / §2.4: the film is a recording, not a broadcast. Saying so
-            // plainly is what keeps Flighty's "Live Share" from being implied
-            // by a share button on a journey screen.
-            Text(localization.journeyText(
-                "ios.passport.shareNote",
-                fallback: "Playback is exported as a video file. Nothing is shared live."))
-                .railText(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityIdentifier("passportShareNote")
-        }
-        .statisticsCard()
-    }
-
-    private var replayButton: some View {
         Button(action: onReplay) {
             Label(
                 localization.countryText("btn.play", fallback: "Play"),
@@ -211,16 +181,6 @@ private struct PassportShareCard: View {
         .buttonStyle(.railPrimary(fillsWidth: true))
         .railMinimumTouchTarget()
         .disabled(!canReplay)
-    }
-
-    private var exportButton: some View {
-        Button(action: onExport) {
-            Label(
-                localization.countryText("btn.exportJson", fallback: "Export JSON"),
-                systemImage: "arrow.down.doc")
-                .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.railSecondary(fillsWidth: true))
-        .railMinimumTouchTarget()
+        .accessibilityIdentifier("statisticsPlay")
     }
 }
