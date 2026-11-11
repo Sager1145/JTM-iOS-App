@@ -341,7 +341,7 @@ private struct TripNoteReadCard: View {
                             delete(note)
                         }
                         .accessibilityIdentifier("tripNoteDeleteConfirm")
-                        Button(localization.text("ios.tripNotes.cancel"), role: .cancel) {}
+                        Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {}
                     }
                 } else {
                     Color.clear.onAppear { flow.screen = nil }
@@ -442,7 +442,7 @@ private struct TripNoteFormSheet: View {
                 Button(localization.text("ios.tripNotes.discard"), role: .destructive) {
                     flow.screen = nil
                 }
-                Button(localization.text("ios.tripNotes.cancel"), role: .cancel) {}
+                Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) {}
             }
             .alert(localization.text("ios.tripNotes.saveRefused"), isPresented: $flow.saveRefused) {
                 Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}

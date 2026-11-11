@@ -9,7 +9,6 @@ enum JourneyCompletionStrings {
         "ios.ai.researchRequired": [.zhHant: "請輸入列車名稱、車次或路線及運行日期。", .zhHans: "请输入列车名称、车次或路线及运行日期。", .ja: "列車名・列車番号・経路と運転日を入力してください。", .en: "Enter a train name, number or route and an operating date."],
         "ios.ai.researchReview": [.zhHant: "回答是調查建議。修改旅程前，請核對官方來源。", .zhHans: "回答是调查建议。修改旅程前，请核对官方来源。", .ja: "回答は調査の提案です。旅程を編集する前に公式の出典を確認してください。", .en: "Check the official sources before editing your journey. The answer is a research suggestion."],
         "ios.ai.researchAnsweredPrompt": [.zhHant: "此回答的查詢內容", .zhHans: "此回答的查询内容", .ja: "この回答の依頼内容", .en: "Request for this answer"],
-        "ios.ai.researchClose": [.zhHant: "關閉", .zhHans: "关闭", .ja: "閉じる", .en: "Close"],
         "ios.ai.researchSubscriptionInfo": [.zhHant: "使用實驗性的 Codex 訂閱介面，登入頁會顯示 Codex。模型與額度由帳號決定。查詢會將顯示的提示詞與備註傳送至 OpenAI。", .zhHans: "使用实验性的 Codex 订阅接口，登录页会显示 Codex。模型与额度由账号决定。查询会将显示的提示词与备注发送至 OpenAI。", .ja: "実験的なCodexサブスクリプション連携を使用し、認証画面にはCodexと表示されます。モデルと利用枠はアカウントに依存します。調査すると表示中の依頼内容と補足をOpenAIに送信します。", .en: "Uses the experimental Codex subscription interface; authorization displays Codex. Models and limits depend on your account. Querying sends the displayed request and remarks to OpenAI."],
         "ios.ai.researchRun": [.zhHant: "使用 ChatGPT 查詢", .zhHans: "使用 ChatGPT 查询", .ja: "ChatGPTで調査", .en: "Query with ChatGPT"],
         "ios.ai.researchCheck": [.zhHant: "使用 ChatGPT 核對", .zhHans: "使用 ChatGPT 核对", .ja: "ChatGPTで照合", .en: "Check with ChatGPT"],

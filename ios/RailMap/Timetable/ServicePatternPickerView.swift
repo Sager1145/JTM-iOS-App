@@ -290,7 +290,7 @@ struct ServicePatternPickerView: View {
                     guard let selection = pendingSelection else { return }
                     apply(selection)
                 }
-                Button(pickerText("cancel"), role: .cancel) { pendingSelection = nil }
+                Button(localization.text("ios.cancel", fallback: "Cancel"), role: .cancel) { pendingSelection = nil }
             }
         }
     }

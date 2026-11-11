@@ -140,7 +140,7 @@ struct TrainResearchView: View {
             .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
                                   fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
             .navigationBarTitleDisplayMode(.inline)
-            .railSheetClose(Text(text("researchClose", fallback: "Close")),
+            .railSheetClose(Text(localization.text("ios.close", fallback: "Close")),
                             identifier: "researchClose") { dismiss() }
             .task { if auth.isSignedIn { run { try await loadModels() } } }
             .onDisappear { cancel() }

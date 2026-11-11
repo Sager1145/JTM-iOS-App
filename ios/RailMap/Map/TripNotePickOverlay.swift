@@ -108,7 +108,7 @@ struct TripNotePickOverlay: View {
 
     private func bar(_ feedback: TripNotePickFeedback?) -> some View {
         HStack(spacing: RailSpacing.s8) {
-            Button(text("ios.tripNotes.pick.cancel", fallback: "Cancel")) {
+            Button(text("ios.cancel", fallback: "Cancel")) {
                 controller.cancelTripNotePick()
             }
             .accessibilityIdentifier("tripNotePickCancel")

@@ -252,7 +252,7 @@ struct StationPickerView: View {
                     .toolbar {
                         if onSelectWithLine != nil {
                             ToolbarItem(placement: .cancellationAction) {
-                                Button(localization.text("ios.newTrip.cancel", fallback: "Cancel")) { dismiss() }
+                                Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
                             }
                         }
                     }
