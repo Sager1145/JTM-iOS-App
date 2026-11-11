@@ -9,14 +9,15 @@ private struct DetailActionSizing: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if let visualHeight {
-            content
-                .buttonStyle(RailCapsuleButtonStyle(
-                    prominent: prominent, visualHeight: visualHeight))
-                .railMinimumTouchTarget()
+            if prominent {
+                content.buttonStyle(.railPrimary(visualHeight: visualHeight))
+            } else {
+                content.buttonStyle(.railSecondary(visualHeight: visualHeight))
+            }
         } else if prominent {
-            content.buttonStyle(.borderedProminent).frame(minHeight: 44)
+            content.buttonStyle(.railPrimary)
         } else {
-            content.frame(minHeight: 44)
+            content.railMinimumTouchTarget()
         }
     }
 }
@@ -105,6 +106,7 @@ struct RideDetailView: View {
                             showsEditor = false
                         }
                     })
+                .railSheet(.full)
             }
     }
 
@@ -196,6 +198,8 @@ struct RideDetailContent: View {
         case done(sections: Int)
     }
 
+    @ScaledMetric(relativeTo: .subheadline) private var timeColumnWidth: CGFloat = 52
+
     private struct DetailRequest: Equatable {
         let train: Train
 
@@ -220,7 +224,7 @@ struct RideDetailContent: View {
             } else {
                 ProgressView(localization.journeyText("ios.journey.loadingTitle"))
                     .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(RailSpacing.screenInset)
             }
         }
         .task(id: DetailRequest(train: train)) {
@@ -243,7 +247,7 @@ struct RideDetailContent: View {
     }
 
     private func cards(_ detail: JourneyDetailSnapshot) -> some View {
-        LazyVStack(spacing: 16) {
+        LazyVStack(spacing: RailSpacing.s16) {
             if includesIdentity { identityCard }
             if includesStationPair { stationPairCard }
             timelineCard(detail)
@@ -256,8 +260,8 @@ struct RideDetailContent: View {
             serviceCard
             advancedCard(detail)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, RailSpacing.screenInset)
+        .padding(.vertical, RailSpacing.s12)
     }
 
     // MARK: - 1. Identity
@@ -272,11 +276,11 @@ struct RideDetailContent: View {
     /// beside the same name reads as a different journey for the moment it
     /// takes to check.
     private var identityCard: some View {
-        HStack(alignment: .center, spacing: 12) {
+        HStack(alignment: .center, spacing: RailSpacing.s12) {
             RouteLogoSquare(train: train, side: 44)
 
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
+            VStack(alignment: .leading, spacing: RailSpacing.s4) {
+                HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
                     Text(train.number)
                         .font(.title2.bold())
                         .fixedSize(horizontal: false, vertical: true)
@@ -298,7 +302,7 @@ struct RideDetailContent: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -350,8 +354,8 @@ struct RideDetailContent: View {
 
     @ViewBuilder
     private var stationPairCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .top, spacing: 12) {
+        VStack(alignment: .leading, spacing: RailSpacing.s12) {
+            HStack(alignment: .top, spacing: RailSpacing.s12) {
                 stationSummary(
                     stop: train.stops.first,
                     fallbackName: train.origin,
@@ -363,7 +367,7 @@ struct RideDetailContent: View {
                 Spacer(minLength: 8)
                 Image(systemName: "arrow.right")
                     .foregroundStyle(.secondary)
-                    .padding(.top, 8)
+                    .padding(.top, RailSpacing.s8)
                     .accessibilityHidden(true)
                 Spacer(minLength: 8)
                 stationSummary(
@@ -381,12 +385,11 @@ struct RideDetailContent: View {
             // detail is where it gets explained instead of rewritten.
             if crossesMidnight {
                 Text(localization.text("ios.detail.crossDay"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -416,7 +419,7 @@ struct RideDetailContent: View {
         let caption = BracketedStationText.secondary(
             officialName: official, regionCode: detailRegion.code,
             qualifier: identity.qualifier, localization: localization)
-        return VStack(alignment: isArrival ? .trailing : .leading, spacing: 4) {
+        return VStack(alignment: isArrival ? .trailing : .leading, spacing: RailSpacing.s4) {
             Text(role)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
@@ -427,19 +430,17 @@ struct RideDetailContent: View {
                 .layoutPriority(1)
             if stop != nil {
                 Text(caption)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                     .lineLimit(2)
                     .multilineTextAlignment(isArrival ? .trailing : .leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
             if stop?.stationID?.isEmpty != false {
                 Text(localization.text(RegistryStationDisplay.unresolvedKey))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
             }
             if let time, !time.isEmpty {
-                HStack(spacing: 5) {
+                HStack(spacing: RailSpacing.s4) {
                     Text(time).font(.headline).monospacedDigit()
                     if Dates.isCrossDayTimeString(time) { nextDayTag }
                 }
@@ -479,8 +480,8 @@ struct RideDetailContent: View {
         // Deferring the card alone still lays out every stop when it appears.
         return LazyVStack(alignment: .leading, spacing: 0) {
             Text(localization.countryText("sec.stops", fallback: "Stops"))
-                .font(.headline)
-                .padding(.bottom, 12)
+                .railText(.cardTitle)
+                .padding(.bottom, RailSpacing.s12)
             ForEach(Array(train.stops.enumerated()), id: \.offset) { index, stop in
                 let lines = intervals.indices.contains(index) ? intervals[index] : nil
                 let previous = intervals.indices.contains(index - 1) ? intervals[index - 1] : nil
@@ -491,7 +492,7 @@ struct RideDetailContent: View {
             }
             localTimeNote
         }
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -514,10 +515,9 @@ struct RideDetailContent: View {
     /// uses the journey date rather than the day the record is viewed.
     private var localTimeNote: some View {
         Text(clockNote(train.journeyClock))
-            .font(.caption)
-            .foregroundStyle(.secondary)
+            .railText(.tertiary)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 12)
+            .padding(.top, RailSpacing.s12)
     }
 
     /// The sentence under the stop list, for one clock or for two.
@@ -553,7 +553,7 @@ struct RideDetailContent: View {
                              lines: [(name: String, color: Color)], identity: StationLabel.Text,
                              showsLineNames: Bool) -> some View {
         let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
-        return HStack(alignment: .top, spacing: 12) {
+        return HStack(alignment: .top, spacing: RailSpacing.s12) {
             VStack(spacing: 0) {
                 Circle()
                     .fill(stop.stopType == "pass_through" ? Color.clear : markerColor)
@@ -582,8 +582,8 @@ struct RideDetailContent: View {
                         .accessibilityHidden(true)
                 }
             }
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(alignment: .firstTextBaseline, spacing: 6) {
+            VStack(alignment: .leading, spacing: RailSpacing.s2) {
+                HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s4) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(BracketedStationText.title(
                             officialName: stop.name,
@@ -599,20 +599,17 @@ struct RideDetailContent: View {
                         Text(BracketedStationText.secondary(
                             officialName: stop.name, regionCode: detailRegion.code,
                             qualifier: identity.qualifier, localization: localization))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                             .lineLimit(2)
                             .fixedSize(horizontal: false, vertical: true)
                         if stop.stationID?.isEmpty != false {
                             Text(localization.text(RegistryStationDisplay.unresolvedKey))
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
+                                .railText(.tertiary)
                         }
                     }
                     if stop.stopType != "passenger_stop" && stop.stopType != "pass_through" {
                         Text(stopTypeName(stop.stopType))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                             .fixedSize()
                     }
                 }
@@ -620,14 +617,14 @@ struct RideDetailContent: View {
                    stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
                     Text(localization.text(stop.routeEditing?.generatedBy != nil
                         ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
-                        .font(.caption).foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 }
                 if showsLineNames {
                     ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-                        HStack(spacing: 6) {
+                        HStack(spacing: RailSpacing.s4) {
                             Rectangle().fill(line.color).frame(width: 18, height: 3)
                                 .accessibilityHidden(true)
-                            Text(line.name).font(.caption).foregroundStyle(.secondary)
+                            Text(line.name).railText(.tertiary)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -643,7 +640,7 @@ struct RideDetailContent: View {
             Spacer(minLength: 8)
             timeColumn(stop)
         }
-        .frame(minHeight: 44, alignment: .top)
+        .frame(minHeight: RailSize.touch, alignment: .top)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(([accessibilityLabel(for: stop, stationSpoken: stationSpoken(identity))]
             + (showsLineNames ? lines.map(\.name) : [])).joined(separator: ", "))
@@ -766,7 +763,7 @@ struct RideDetailContent: View {
                 Text("レ")
                     .font(.subheadline.monospaced())
                     .foregroundStyle(.secondary)
-                    .frame(width: 52)
+                    .frame(width: timeColumnWidth)
             } else {
                 timeRow(stop.arrival,
                         title: localization.countryText("tag.arr", fallback: "Arr"), emphasised: true)
@@ -781,14 +778,14 @@ struct RideDetailContent: View {
                 PlatformBadge(number: platform, compact: true)
             }
         }
-        .frame(minWidth: 52, alignment: .trailing)
+        .frame(minWidth: timeColumnWidth, alignment: .trailing)
         .accessibilityHidden(true)
     }
 
     @ViewBuilder
     private func actualTimeRow(_ title: String, scheduled: String?, actual: String?) -> some View {
         if let actual, !actual.isEmpty {
-            HStack(spacing: 4) {
+            HStack(spacing: RailSpacing.s4) {
                 Text("\(title) \(actual)")
                 if let status = StopTimingStatus.localizedLabel(
                     scheduled: scheduled, actual: actual, localization: localization) {
@@ -804,7 +801,7 @@ struct RideDetailContent: View {
     @ViewBuilder
     private func timeRow(_ time: String?, title: String, emphasised: Bool) -> some View {
         if let time, !time.isEmpty {
-            HStack(spacing: 4) {
+            HStack(spacing: RailSpacing.s4) {
                 Text(title).font(.caption2).foregroundStyle(.secondary)
                 Text(time)
                     .font(emphasised ? .subheadline : .caption)
@@ -818,7 +815,7 @@ struct RideDetailContent: View {
     private var nextDayTag: some View {
         Text(localization.text("ios.detail.nextDay"))
             .font(.caption2.weight(.semibold))
-            .padding(.horizontal, 5)
+            .padding(.horizontal, RailSpacing.s4)
             .padding(.vertical, 1)
             .background(Color.secondary.opacity(0.14), in: Capsule())
             .foregroundStyle(.secondary)
@@ -851,15 +848,14 @@ struct RideDetailContent: View {
     /// date will never decide this — because this card is the only place the
     /// reader meets it.
     private var notRiddenCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             Label(
                 localization.text("ios.detail.notRiddenTitle"),
                 systemImage: "circle.dashed"
             )
-            .font(.headline)
+            .railText(.cardTitle)
             Text(localization.text("ios.detail.notRiddenDetail"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             if let onSetRidden {
                 Button(localization.text("ios.detail.confirmRidden")) { onSetRidden(true) }
@@ -867,7 +863,7 @@ struct RideDetailContent: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -878,15 +874,14 @@ struct RideDetailContent: View {
     // MARK: - 4b. Hidden (§8.5)
 
     private var hiddenCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             Label(
                 localization.text("ios.detail.hiddenTitle"),
                 systemImage: "eye.slash"
             )
-            .font(.headline)
+            .railText(.cardTitle)
             Text(localization.text("ios.detail.hiddenDetail"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             // §8.5: showing it again is the primary action while hidden.
             if let onSetVisible {
@@ -895,7 +890,7 @@ struct RideDetailContent: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -939,10 +934,10 @@ struct RideDetailContent: View {
     // MARK: - 5. Service metadata
 
     private var serviceCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(localization.text("ios.detail.service")).font(.headline)
+        VStack(alignment: .leading, spacing: RailSpacing.s12) {
+            Text(localization.text("ios.detail.service")).railText(.cardTitle)
             if let notes = train.notes, !notes.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Text(localization.text("ios.ai.notes")).font(.subheadline.weight(.semibold))
                     Text(notes).font(.subheadline).fixedSize(horizontal: false, vertical: true)
                 }
@@ -1004,7 +999,7 @@ struct RideDetailContent: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -1016,7 +1011,7 @@ struct RideDetailContent: View {
 
     private func advancedCard(_ detail: JourneyDetailSnapshot) -> some View {
         DisclosureGroup {
-            LazyVStack(alignment: .leading, spacing: 12) {
+            LazyVStack(alignment: .leading, spacing: RailSpacing.s12) {
                 LabeledContent(
                     localization.countryText("field.id", fallback: "Identifier"), value: train.id)
                 LabeledContent(
@@ -1039,17 +1034,16 @@ struct RideDetailContent: View {
                     }
                 } else {
                     Text(localization.text("ios.detail.noRouteSections"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 8)
+            .padding(.top, RailSpacing.s8)
         } label: {
-            Text(localization.text("ios.detail.advanced")).font(.headline)
+            Text(localization.text("ios.detail.advanced")).railText(.cardTitle)
         }
         .accessibilityIdentifier("rideDetailAdvancedToggle")
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -1171,7 +1165,7 @@ private struct RideRouteStateCard: View {
     @Environment(AppLocalization.self) private var localization
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: RailSpacing.s12) {
             header
             if let detail {
                 Text(detail)
@@ -1180,11 +1174,11 @@ private struct RideRouteStateCard: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             if !resourceWarnings.isEmpty {
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Label(localization.text("ios.route.resourceSupplementFailed"), systemImage: "exclamationmark.triangle")
                         .font(.subheadline.weight(.semibold))
                     ForEach(resourceWarnings, id: \.self) { message in
-                        Text(message).font(.footnote)
+                        Text(message).railText(.secondary)
                     }
                 }
                 .foregroundStyle(.secondary)
@@ -1195,20 +1189,18 @@ private struct RideRouteStateCard: View {
             // straight line stood in for railway.
             if status.isNoteworthy, status != .unknown, status != .resolving {
                 Text(localization.text("ios.route.recordKept"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             if status.blocksPlayback, status != .noRoute {
                 Text(localization.text("ios.route.playbackBlocked"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             actions
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(RailSpacing.cardPadding)
         .background(
             surface,
             in: RoundedRectangle(
@@ -1217,7 +1209,7 @@ private struct RideRouteStateCard: View {
     }
 
     private var header: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: RailSpacing.s8) {
             if isBusy {
                 ProgressView().controlSize(.small)
             } else {
@@ -1226,7 +1218,7 @@ private struct RideRouteStateCard: View {
                     .accessibilityHidden(true)
             }
             Text(title)
-                .font(.headline)
+                .railText(.cardTitle)
                 .foregroundStyle(tint)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
@@ -1237,7 +1229,7 @@ private struct RideRouteStateCard: View {
     }
 
     private var affectedSections: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text(localization.text("ios.route.affected"))
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
@@ -1258,13 +1250,13 @@ private struct RideRouteStateCard: View {
                             "to": .string(name(gap.to, stopIndex: gap.segmentIndex + 1)),
                         ])
                 )
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: compact tinted gap notice inside the route card
                 .monospacedDigit()
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .padding(10)
+        .padding(RailSpacing.s8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             tint.opacity(0.12),
@@ -1279,12 +1271,11 @@ private struct RideRouteStateCard: View {
         // never a verb with no stated consequence.
         if onRebuild != nil {
             Text(localization.text("ios.route.rebuildExplain"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
 
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: RailSpacing.s8) {
             // §8.4 / §5.5: for a route that needs a human decision, editing the
             // stops leads. Offering "retry" as the prominent action against a
             // solver that already failed on the same input is the dead loop the
@@ -1293,8 +1284,7 @@ private struct RideRouteStateCard: View {
                 Button(localization.text("ios.route.editStops"), systemImage: "list.bullet") {
                     onEditStops()
                 }
-                .buttonStyle(.borderedProminent)
-                .frame(minHeight: 44)
+                .buttonStyle(.railPrimary(fillsWidth: true))
             }
             if let onRebuild {
                 let button = Button(
@@ -1302,20 +1292,18 @@ private struct RideRouteStateCard: View {
                     systemImage: "arrow.trianglehead.2.clockwise.rotate.90",
                     action: onRebuild
                 )
-                .frame(minHeight: 44)
                 .disabled(isBusy)
                 // §3.1: exactly one filled button on a surface. When the stops
                 // need a human decision, "Edit stops" above holds that slot.
                 if prefersProminentRebuild {
-                    button.buttonStyle(.borderedProminent)
+                    button.buttonStyle(.railPrimary(fillsWidth: true))
                 } else {
-                    button.buttonStyle(.bordered)
+                    button.buttonStyle(.railSecondary(fillsWidth: true))
                 }
             }
             if needsHumanFix, onEditStops == nil, onRebuild == nil {
                 Text(localization.text("ios.route.viewConstraints"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         }
 
@@ -1327,8 +1315,7 @@ private struct RideRouteStateCard: View {
                     params: ["count": .number(Double(rebuiltSections))],
                     fallback: "Rebuilt \(rebuiltSections) route sections.")
             )
-            .font(.footnote)
-            .foregroundStyle(.secondary)
+            .railText(.secondary)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.updatesFrequently)
         }

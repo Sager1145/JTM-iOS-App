@@ -1324,12 +1324,6 @@ enum EditorStrings {
             .zhHant: "從列車模式輸入",
             .zhHans: "从列车模式输入",
         ],
-        "ios.editor.pattern.cancel": [
-            .en: "Cancel",
-            .ja: "キャンセル",
-            .zhHant: "取消",
-            .zhHans: "取消",
-        ],
         "ios.editor.pattern.outsideConfirm": [
             .en: "This pattern is outside the ride date. Apply it?",
             .ja: "このパターンは乗車日の対象外です。適用しますか？",

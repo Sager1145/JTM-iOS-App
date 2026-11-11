@@ -73,15 +73,14 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
             HStack {
                 Text(text("platforms", fallback: "Platforms"))
                 Spacer()
-                Text(text("departureShort", fallback: "Dep.")).font(.caption).foregroundStyle(.secondary)
+                Text(text("departureShort", fallback: "Dep.")).railText(.tertiary)
                 PlatformEntryBadge(platform: model.departurePlatform, identifier: "newTripDeparturePlatform")
-                Text(text("arrivalShort", fallback: "Arr.")).font(.caption).foregroundStyle(.secondary)
+                Text(text("arrivalShort", fallback: "Arr.")).railText(.tertiary)
                 PlatformEntryBadge(platform: model.arrivalPlatform, identifier: "newTripArrivalPlatform")
             }
             if !missing.isEmpty {
                 Label(missingText(missing), systemImage: "square.and.pencil")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .accessibilityIdentifier("newTripNeedsDetails")
             }
         } header: {
@@ -94,9 +93,9 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
         _ title: String, field: TripDraftModel.Field, binding: Binding<String>,
         keyboard: UIKeyboardType, identifier: String
     ) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             HStack(spacing: RailSpacing.s4) {
-                Text(title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                Text(title).railText(.tertiary).lineLimit(1)
                 if model.filledBy[field] != nil {
                     Image(systemName: model.filledBy[field]?.symbol ?? "")
                         .font(.caption2)
@@ -174,7 +173,7 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
                     EditorInlineTextField(title: "0", text: model.fareText, keyboard: .numberPad)
                         .accessibilityIdentifier("newTripFare")
                     if let currency = model.draft.ticket?.currency ?? model.regionCurrency {
-                        Text(currency).font(.footnote).foregroundStyle(.secondary)
+                        Text(currency).railText(.secondary)
                     }
                 }
             }
@@ -209,9 +208,9 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
     private func stacked<Content: View>(
         _ title: String, field: TripDraftModel.Field, @ViewBuilder content: () -> Content
     ) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             HStack(spacing: RailSpacing.s8) {
-                Text(title).font(.caption).foregroundStyle(.secondary)
+                Text(title).railText(.tertiary)
                 FillSourceBadge(source: model.filledBy[field])
             }
             content()

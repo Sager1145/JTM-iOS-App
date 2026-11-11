@@ -78,6 +78,12 @@ extension ButtonStyle where Self == RailCapsuleButtonStyle {
     static var railPrimary: Self { .init(prominent: true, minimumTouch: true) }
     /// Quiet capsule with the 44-pt touch area built in.
     static var railSecondary: Self { .init(prominent: false, minimumTouch: true) }
+    static func railPrimary(visualHeight: CGFloat?, fillsWidth: Bool = false) -> Self {
+        .init(prominent: true, visualHeight: visualHeight, fillsWidth: fillsWidth, minimumTouch: true)
+    }
+    static func railSecondary(visualHeight: CGFloat?, fillsWidth: Bool = false) -> Self {
+        .init(prominent: false, visualHeight: visualHeight, fillsWidth: fillsWidth, minimumTouch: true)
+    }
     static func railPrimary(fillsWidth: Bool) -> Self {
         .init(prominent: true, fillsWidth: fillsWidth, minimumTouch: true)
     }

@@ -43,12 +43,11 @@ struct TimetableQuickMatchView: View {
                     onSelect(trip)
                     controller.didSelectMatch()
                 } label: {
-                    VStack(alignment: .leading, spacing: 3) {
+                    VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                         Text("\(trip.displayName) \(trip.publicNumber ?? trip.trainNumber)")
                             .font(.headline)
                         Text("\(trip.timetableEditionName) · \(status)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }

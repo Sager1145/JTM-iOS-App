@@ -49,7 +49,7 @@ struct TransferGuideImportView: View {
                 if isLoadingPages { readingSection(done: 0, total: 1) }
                 if case .failure(let error) = completionCatalogResult {
                     Section {
-                        Text(error.localizedDescription).font(.footnote)
+                        Text(error.localizedDescription).railText(.secondary)
                         Button(localization.text("ios.journeyShare.retry")) { catalogAttempt += 1 }
                     }
                 }
@@ -90,13 +90,13 @@ struct TransferGuideImportView: View {
             .navigationTitle(localization.text("ios.guide.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    onCancel: {
                         loadTask?.cancel()
                         flow.cancel()
                         dismiss()
-                    }
-                }
+                    })
             }
             .safeAreaInset(edge: .bottom) { actionBar }
             // This screen reads Japanese screenshots against the Japanese
@@ -458,7 +458,7 @@ struct TransferGuideImportView: View {
             }
             if !draft.build.unresolved.isEmpty {
                 Text(draft.build.unresolved.joined(separator: "、"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: warning text with its own colour
                     .foregroundStyle(.orange)
             }
         } footer: {
@@ -476,7 +476,7 @@ struct TransferGuideImportView: View {
                 ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
                     Label {
                         Text(sentence(note))
-                            .font(.footnote)
+                            .railText(.secondary)
                     } icon: {
                         Image(systemName: "info.circle").foregroundStyle(.secondary)
                     }
@@ -571,7 +571,7 @@ struct TransferGuideImportView: View {
                 .background(.bar)
             } else {
                 Button { dismiss() } label: {
-                    Text(localization.text("ios.guide.done")).frame(maxWidth: .infinity)
+                    Text(localization.text("ios.done", fallback: "Done")).frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.railPrimary(fillsWidth: true))
                 .padding(.horizontal, RailSpacing.screenInset)

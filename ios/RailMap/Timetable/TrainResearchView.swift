@@ -140,7 +140,7 @@ struct TrainResearchView: View {
             .navigationTitle(text(trip == nil ? "researchTitle" : "researchCheckTitle",
                                   fallback: trip == nil ? "Ask ChatGPT about a train" : "Check published timetable"))
             .navigationBarTitleDisplayMode(.inline)
-            .railSheetClose(Text(text("researchClose", fallback: "Close")),
+            .railSheetClose(Text(localization.text("ios.close", fallback: "Close")),
                             identifier: "researchClose") { dismiss() }
             .task { if auth.isSignedIn { run { try await loadModels() } } }
             .onDisappear { cancel() }
@@ -200,7 +200,7 @@ struct TrainResearchView: View {
             }
             if let code = auth.userCode, auth.isSigningIn {
                 Text(code).font(.title2.monospaced()).textSelection(.enabled)
-                Text(text("deviceInstructions")).font(.footnote)
+                Text(text("deviceInstructions")).railText(.secondary)
                 Button(text("authorize")) { openURL(auth.loginURL) }
             }
             if isWorking {

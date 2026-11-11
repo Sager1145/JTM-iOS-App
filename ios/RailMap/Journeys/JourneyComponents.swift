@@ -264,7 +264,7 @@ struct RouteTimingView: View {
 
     private func arrow(_ direction: ConnectorDirection) -> some View {
         Image(systemName: direction == .rightwards ? "arrow.right" : "arrow.down")
-            .font(.footnote.weight(.semibold))
+            .font(.footnote.weight(.semibold)) // ui-token-ok: connector glyph sized to the action label
             .foregroundStyle(.tertiary)
             .accessibilityHidden(true)
     }
@@ -372,7 +372,7 @@ struct PlatformBadge: View {
         Text(localization.platformText(number))
             .font((compact ? Font.caption2 : .caption).weight(.semibold))
             .foregroundStyle(.secondary)
-            .padding(.horizontal, compact ? 6 : 7)
+            .padding(.horizontal, compact ? RailSpacing.s4 : RailSpacing.s8)
             .padding(.vertical, 2)
             .background(Color(.tertiarySystemFill), in: Capsule(style: .continuous))
             .fixedSize(horizontal: true, vertical: false)
@@ -655,7 +655,7 @@ struct QuietActionGroup: View {
         let title = short ? appearance.shortLabel : appearance.label
         return Button { perform(action) } label: {
             Label(title, systemImage: appearance.systemImage)
-                .font(.footnote.weight(.semibold))
+                .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
                 .lineLimit(1)
                 // States its TRUE width. Without this the label truncates to
                 // whatever it is offered, so the full-label candidate below
@@ -665,11 +665,10 @@ struct QuietActionGroup: View {
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 2)
         }
-        .buttonStyle(RailCapsuleButtonStyle(prominent: true, visualHeight: actionButtonHeight))
-        // A compact visual button with a 44-point landing area.
+        // A compact visual button with a 44-point landing area (built into the style).
         // The action stays easy to hit without reading as a
         // full-width call-to-action that overwhelms the journey itself.
-        .railMinimumTouchTarget()
+        .buttonStyle(.railPrimary(visualHeight: actionButtonHeight))
         .accessibilityLabel(Text(appearance.label))
         // Which action this IS varies by state — 経路 / 播放 / 聚焦 — and its
         // label is the reader's language on top of that, so a harness has no
@@ -702,7 +701,7 @@ struct QuietActionGroup: View {
         let appearance = action.appearance(localization)
         return Button { performSecondary(action) } label: {
             Label(appearance.label, systemImage: appearance.systemImage)
-                .font(.footnote.weight(.semibold))
+                .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
                 .lineLimit(multiline ? nil : 1)
                 .minimumScaleFactor(expands && !multiline ? 0.85 : 1)
                 .multilineTextAlignment(.center)
@@ -710,8 +709,7 @@ struct QuietActionGroup: View {
                 .padding(.horizontal, expands ? 0 : 2)
                 .frame(maxWidth: expands ? .infinity : nil)
         }
-        .buttonStyle(RailCapsuleButtonStyle(visualHeight: actionButtonHeight))
-        .railMinimumTouchTarget()
+        .buttonStyle(.railSecondary(visualHeight: actionButtonHeight))
         .accessibilityLabel(Text(appearance.label))
     }
 

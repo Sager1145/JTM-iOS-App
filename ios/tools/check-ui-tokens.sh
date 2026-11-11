@@ -6,6 +6,8 @@
 #   check-ui-tokens.sh                 check (exit 1 on growth or new entries)
 #   check-ui-tokens.sh --update        regenerate the whole baseline (refuses growth;
 #                                      --force only for a reviewed reset)
+#   check-ui-tokens.sh --self-test    synthetic positive/negative case for every rule
+#                                      (also runs before every normal check)
 #   check-ui-tokens.sh --update PATH.. rewrite entries for those paths only;
 #                                      refuses (exit 1) if any count would grow
 # Paths are relative to ios/ (e.g. RailMap/Foo/Bar.swift).
@@ -34,19 +36,62 @@ HINT = {
  "stock-bordered": "use .buttonStyle(.railPrimary) / .railSecondary",
  "fixed-font": "use railText/railGlyph or a @ScaledMetric size",
  "dismiss-text": "view-only dismiss must use .railSheetClose(...)",
+ "edgeinsets-literal": "use RailSpacing.* for EdgeInsets values",
+ "small-touch": "minHeight/minWidth below 44 pt: use RailSize.touch or .railMinimumTouchTarget()",
+ "raw-detents": "use railSheet(.half/.full); a deliberate exception carries // ui-token-ok: reason",
+ "footnote-font": "use railText(.secondary/.tertiary), or mark the deliberate case // ui-token-ok: reason",
+ "direct-capsule": "use .railPrimary / .railSecondary statics instead of constructing RailCapsuleButtonStyle",
+ "feature-dismiss-key": "use the shared ios.cancel / ios.close / ios.done strings instead of a per-feature dismiss string",
 }
-R_PAD = re.compile(r'\.padding\(\s*(?:\.[a-zA-Z]+\s*,\s*)?(\d+(?:\.\d+)?)')
-R_SPC = re.compile(r'spacing:\s*(\d+(?:\.\d+)?)')
+# A bare numeric literal: not preceded by a letter, digit, '.' or '_' (so RailSpacing.s12 is a token).
+LIT = re.compile(r'(?<![A-Za-z0-9_.])(\d+(?:\.\d+)?)(?![A-Za-z0-9_])')
+R_OK = re.compile(r'//\s*ui-token-ok:\s*\S')
+R_PAD = re.compile(r'\.padding\(')
+R_SPC = re.compile(r'\bspacing:\s*')
+R_EDGE = re.compile(r'(?<![A-Za-z0-9_])EdgeInsets\(')
+R_MIN = re.compile(r'\b(?:minHeight|minWidth):\s*(\d+(?:\.\d+)?)(?![A-Za-z0-9_.])')
 R_RAD = re.compile(r'(?:cornerRadius:\s*|\.cornerRadius\(\s*)(\d+(?:\.\d+)?)')
 R_TOUCH = re.compile(r'\.frame\([^)]*\b(?:min)?(?:Width|Height|width|height):\s*44\b')
 R_BORD = re.compile(r'\.buttonStyle\(\.bordered(?:Prominent)?\)')
-R_FONT = re.compile(r'\.font\(\.system\(size:\s*\d')
+R_FONT = re.compile(r'\.system\(size:\s*\d')
+R_FOOT = re.compile(r'\.font\(\s*\.footnote\b|\bFont\.footnote\b')
+R_DET = re.compile(r'\.presentationDetents\(')
+R_CAPS = re.compile(r'\bRailCapsuleButtonStyle\(')
 R_TB = re.compile(r'ToolbarItem\(placement:\s*\.(?:cancellationAction|confirmationAction|topBarTrailing|topBarLeading)')
-R_DISMISS = re.compile(r'"(?:ios\.done|ios\.close|utility\.close|researchClose)"')
+R_DISMISS = re.compile(r'"(?:ios\.done|ios\.close|utility\.close)"')
+R_KEYDEF = re.compile(r'^\s*"([^"]+)"\s*:\s*\[')
+R_KEYUSE = re.compile(r'\b(?:text|countryText)\(\s*"([^"]+)"')
+SHARED_KEYS = {"ios.cancel", "ios.close", "ios.done"}
 
-def files():
-    for d, ds, fs in os.walk(APP):
-        rel_d = os.path.relpath(d, APP)
+def dismiss_key(key):
+    if key in SHARED_KEYS:
+        return False
+    seg = key.rsplit(".", 1)[-1]
+    return seg.lower() in ("cancel", "close", "done") or \
+        re.search(r'[a-z0-9](?:Cancel|Close|Done)$', seg) is not None
+
+def inner(line, start, stop_at_comma=False):
+    """Text from `start` to the matching close paren (or a depth-0 comma) on the same line."""
+    depth = 0
+    for j in range(start, len(line)):
+        c = line[j]
+        if c in "([{":
+            depth += 1
+        elif c in ")]}":
+            if depth == 0:
+                return line[start:j]
+            depth -= 1
+        elif c == "," and depth == 0 and stop_at_comma:
+            return line[start:j]
+    return line[start:]
+
+def has_big(expr):
+    return any(not num_ok(m.group(1)) for m in LIT.finditer(expr))
+
+def files(app=None):
+    app = app or APP
+    for d, ds, fs in os.walk(app):
+        rel_d = os.path.relpath(d, app)
         ds[:] = sorted(x for x in ds if not (rel_d == "." and x in EXCL_DIRS))
         for f in sorted(fs):
             if not f.endswith(".swift") or " 2" in f:
@@ -56,30 +101,157 @@ def files():
                 continue
             yield "RailMap/" + rel, os.path.join(d, f)
 
-def scan():
-    found = {}  # (rel, rule) -> [(lineno, text)]
-    for rel, path in files():
+def scan(app=None):
+    found = {}  # (rel, rule) -> [lineno]
+    for rel, path in files(app):
         lines = open(path, encoding="utf-8", errors="replace").read().split("\n")
         def add(rule, i):
             found.setdefault((rel, rule), []).append(i + 1)
         for i, line in enumerate(lines):
             st = line.strip()
-            if st.startswith("//") or "// ui-token-ok:" in line:
+            # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
+            if st.startswith("//") or R_OK.search(line):
                 continue
             for m in R_PAD.finditer(line):
-                if not num_ok(m.group(1)): add("padding-literal", i)
+                if has_big(inner(line, m.end())): add("padding-literal", i)
             for m in R_SPC.finditer(line):
-                if not num_ok(m.group(1)): add("spacing-literal", i)
+                if has_big(inner(line, m.end(), True)): add("spacing-literal", i)
+            for m in R_EDGE.finditer(line):
+                if has_big(inner(line, m.end())): add("edgeinsets-literal", i)
+            for m in R_MIN.finditer(line):
+                if 20 <= float(m.group(1)) < 44: add("small-touch", i)
             for m in R_RAD.finditer(line):
                 if m.group(1) != "0": add("radius-literal", i)
             if R_TOUCH.search(line): add("touch-literal", i)
             if R_BORD.search(line): add("stock-bordered", i)
             if R_FONT.search(line): add("fixed-font", i)
+            if R_FOOT.search(line): add("footnote-font", i)
+            if R_DET.search(line): add("raw-detents", i)
+            if R_CAPS.search(line): add("direct-capsule", i)
             if R_TB.search(line):
                 nxt = "\n".join(lines[i + 1:i + 4])
                 if R_DISMISS.search(nxt) and "RailSheetCloseButton" not in nxt:
                     add("dismiss-text", i)
+            km = R_KEYDEF.match(line)
+            if km and dismiss_key(km.group(1)): add("feature-dismiss-key", i)
+            for m in R_KEYUSE.finditer(line):
+                if dismiss_key(m.group(1)): add("feature-dismiss-key", i)
     return found
+
+def self_test():
+    import tempfile
+    # (swift line, expected rules on that line)
+    cases = [
+     ('.padding(.horizontal, 6)', ["padding-literal"]),
+     ('.padding(.horizontal, compact ? 6 : 7)', ["padding-literal"]),
+     ('.padding(x + 4)', ["padding-literal"]),
+     ('.padding(.top, isOn ? RailSpacing.s4 : 10)', ["padding-literal"]),
+     ('.padding(.horizontal, compact ? RailSpacing.s4 : RailSpacing.s8)', []),
+     ('.padding(RailSpacing.s12)', []),
+     ('.padding(.horizontal, 2)', []),
+     ('.padding()', []),
+     ('.padding(.top, 6) // ui-token-ok: legacy', []),
+     ('.padding(.top, 6) // ui-token-ok:', ["padding-literal"]),
+     ('.padding(.top, 6) // ui-token-ok:   ', ["padding-literal"]),
+     ('// .padding(.top, 6)', []),
+     ('VStack(spacing: 6) {', ["spacing-literal"]),
+     ('VStack(spacing: base * 3) {', ["spacing-literal"]),
+     ('VStack(spacing: RailSpacing.s12) {', []),
+     ('VStack(alignment: .leading, spacing: 0) {', []),
+     ('HStack(spacing: RailSpacing.s4, content: 9) {', []),
+     ('let e = EdgeInsets(top: 8, leading: RailSpacing.s4, bottom: 0, trailing: 0)', ["edgeinsets-literal"]),
+     ('let e = EdgeInsets(top: RailSpacing.s4, leading: 2, bottom: 0, trailing: 1)', []),
+     ('let e = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)', []),
+     ('let e = NSDirectionalEdgeInsets(top: 56, leading: 0, bottom: 0, trailing: 0)', []),
+     ('.frame(minHeight: 32)', ["small-touch"]),
+     ('.frame(minWidth: 20, minHeight: 43)', ["small-touch", "small-touch"]),
+     ('.frame(minHeight: 44)', ["touch-literal"]),
+     ('.frame(minHeight: 19)', []),
+     ('.frame(minHeight: RailSize.touch)', []),
+     ('.frame(height: 32)', []),
+     ('.frame(minHeight: 32) // ui-token-ok: decorative', []),
+     ('.presentationDetents([.medium])', ["raw-detents"]),
+     ('.presentationDetents([.medium]) // ui-token-ok: map sheet', []),
+     ('.railSheet(.half)', []),
+     ('.font(.system(size: 14))', ["fixed-font"]),
+     ('let f = Font.system(size: 12, weight: .bold)', ["fixed-font"]),
+     ('let f = .system(size: 12)', ["fixed-font"]),
+     ('.font(.system(size: size))', []),
+     ('.font(.system(.body))', []),
+     ('.font(.footnote)', ["footnote-font"]),
+     ('.font(.footnote.weight(.bold))', ["footnote-font"]),
+     ('let f = Font.footnote', ["footnote-font"]),
+     ('UIFont.preferredFont(forTextStyle: .footnote)', []),
+     ('.font(.footnote) // ui-token-ok: system label', []),
+     ('.font(.footnoteLike)', []),
+     ('.buttonStyle(RailCapsuleButtonStyle(kind: .primary))', ["direct-capsule"]),
+     ('.buttonStyle(.railPrimary)', []),
+     ('.cornerRadius(8)', ["radius-literal"]),
+     ('.cornerRadius(0)', []),
+     ('.frame(width: 44, height: 44)', ["touch-literal"]),
+     ('.frame(width: RailSize.touch, height: RailSize.touch)', []),
+     ('.buttonStyle(.bordered)', ["stock-bordered"]),
+     ('"feature.cancel": [.en: "Cancel"],', ["feature-dismiss-key"]),
+     ('"ios.guide.done": [', ["feature-dismiss-key"]),
+     ('"data.importDone": [', ["feature-dismiss-key"]),
+     ('"video.Close": [', ["feature-dismiss-key"]),
+     ('"ios.cancel": [.en: "Cancel"],', []),
+     ('"ios.close": [', []),
+     ('"ios.done": [', []),
+     ('"ios.guide.undone": [', []),
+     ('"ios.guide.abandoned": [', []),
+     ('"ios.guide.title": [', []),
+     ('"feature.close": [', ["feature-dismiss-key"]),
+     ('"feature.cancel": [ // ui-token-ok: legacy', []),
+     ('Text(text("data.done"))', ["feature-dismiss-key"]),
+     ('Text(countryText("video.cancel", region))', ["feature-dismiss-key"]),
+     ('Text(text("ios.done"))', []),
+     ('Text(text("ios.guide.title"))', []),
+    ]
+    with tempfile.TemporaryDirectory() as tmp:
+        app = os.path.join(tmp, "RailMap")
+        os.makedirs(os.path.join(app, "Feature"))
+        os.makedirs(os.path.join(app, "Localization"))
+        os.makedirs(os.path.join(app, "Design"))
+        os.makedirs(os.path.join(app, "Diagnostics"))
+        body = [c[0] for c in cases]
+        # multi-line dismiss-text cases appended after the single-line ones
+        extra = [
+         ('ToolbarItem(placement: .cancellationAction) {', "dismiss-text"),
+         ('    Button(text("ios.close")) { dismiss() }', None),
+         ('}', None),
+         ('ToolbarItem(placement: .cancellationAction) {', None),
+         ('    RailSheetCloseButton(text("ios.close")) { dismiss() }', None),
+         ('}', None),
+        ]
+        expected = []
+        for n, (line, rules) in enumerate(cases, 1):
+            expected += [("Feature/Main.swift", n, r) for r in rules]
+        for k, (line, rule) in enumerate(extra):
+            body.append(line)
+            if rule: expected.append(("Feature/Main.swift", len(cases) + k + 1, rule))
+        open(os.path.join(app, "Feature", "Main.swift"), "w").write("\n".join(body) + "\n")
+        # same string-table line must also be scanned under Localization/
+        open(os.path.join(app, "Localization", "XStrings.swift"), "w").write(
+            '        "x.cancel": [.en: "Cancel"],\n        "x.ok": [.en: "OK"],\n')
+        expected.append(("Localization/XStrings.swift", 1, "feature-dismiss-key"))
+        # Design/ and Diagnostics/ are excluded entirely
+        for d in ("Design", "Diagnostics"):
+            open(os.path.join(app, d, "Z.swift"), "w").write(
+                '.presentationDetents([.medium])\n.buttonStyle(RailCapsuleButtonStyle(kind: .primary))\n.padding(.top, 9)\n')
+        got = []
+        for (rel, rule), lns in scan(app).items():
+            got += [(rel[len("RailMap/"):], ln, rule) for ln in lns]
+        if sorted(got) != sorted(expected):
+            print("self-test FAILED")
+            for t in sorted(set(expected) - set(got)):
+                print("  missing :", t, (body[t[1] - 1] if t[0].endswith("Main.swift") else ""))
+            for t in sorted(set(got) - set(expected)):
+                print("  spurious:", t, (body[t[1] - 1] if t[0].endswith("Main.swift") else ""))
+            if len(got) != len(expected):
+                print(f"  (counts: got {len(got)}, expected {len(expected)})")
+            sys.exit(1)
+    return len(cases) + len(extra)
 
 def load():
     base = {}
@@ -103,6 +275,11 @@ def write(base):
         f.write(HEADER)
         for (p, r), c in sorted(base.items()):
             if c > 0: f.write(f"{p}\t{r}\t{c}\n")
+
+if args and args[0] == "--self-test":
+    print(f"ui tokens self-test: ok ({self_test()} cases)")
+    sys.exit(0)
+self_test()  # the guard must not rot silently; stays well under a second
 
 found = scan()
 counts = {k: len(v) for k, v in found.items()}
@@ -157,7 +334,7 @@ if args and args[0] == "--update":
     print("baseline updated for: " + ", ".join(paths))
     sys.exit(0)
 if args:
-    print("usage: check-ui-tokens.sh [--update [PATH...]]"); sys.exit(2)
+    print("usage: check-ui-tokens.sh [--self-test | --update [PATH...]]"); sys.exit(2)
 
 base = load()
 bad = False

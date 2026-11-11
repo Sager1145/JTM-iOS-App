@@ -52,7 +52,7 @@ struct EditorQuickFillSection: View, JourneyEditorLabelling {
                       : text("ticketFilled", fallback: "Filled {count} fields from the ticket. Check them below.",
                              ["count": .string(String(count))]),
                       systemImage: count == 0 ? "exclamationmark.triangle" : "checkmark.circle")
-                    .font(.footnote)
+                    .font(.subheadline)
                     .foregroundStyle(count == 0 ? Color.orange : Color.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityElement(children: .combine)
@@ -72,7 +72,7 @@ private extension View {
         self
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(prominent ? AnyShapeStyle(.white) : AnyShapeStyle(.tint))
-            .frame(maxWidth: .infinity, minHeight: 40)
+            .frame(maxWidth: .infinity, minHeight: RailSize.touch)
             .background(prominent ? AnyShapeStyle(.tint) : AnyShapeStyle(.tint.opacity(0.14)), in: Capsule())
             .contentShape(Capsule())
     }

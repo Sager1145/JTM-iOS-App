@@ -42,12 +42,12 @@ struct PlatformEntryBadge: View {
                 ?? localization.text("ios.newTrip.platformAdd", fallback: "+ Platform"))
                 .font(.caption.weight(.semibold).monospacedDigit())
                 .foregroundStyle(platform == nil ? Color.accentColor : Color.primary)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 5)
+                .padding(.horizontal, RailSpacing.s8)
+                .padding(.vertical, RailSpacing.s4)
                 .background(
                     platform == nil ? Color.accentColor.opacity(0.12) : Color(.tertiarySystemFill),
                     in: Capsule())
-                .frame(minHeight: 44)
+                .frame(minHeight: RailSize.touch)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.borderless)
@@ -66,11 +66,18 @@ private struct PlatformPad: View {
     let done: () -> Void
     @State private var other = ""
 
-    private let columns = Array(repeating: GridItem(.fixed(44), spacing: 6), count: 5)
+    @ScaledMetric(relativeTo: .body) private var otherFieldWidth: CGFloat = 96
+    private static let keyColumns = 5
+
+    private let columns = Array(repeating: GridItem(.fixed(RailSize.touch), spacing: RailSpacing.s4),
+                                count: PlatformPad.keyColumns)
+    /// Key columns at touch size plus their gaps and the content padding.
+    private let padWidth = CGFloat(PlatformPad.keyColumns) * RailSize.touch
+        + CGFloat(PlatformPad.keyColumns - 1) * RailSpacing.s4 + 2 * RailSpacing.s12
 
     var body: some View {
-        VStack(spacing: 10) {
-            LazyVGrid(columns: columns, spacing: 6) {
+        VStack(spacing: RailSpacing.s8) {
+            LazyVGrid(columns: columns, spacing: RailSpacing.s4) {
                 ForEach(1...20, id: \.self) { number in
                     Button {
                         platform = number
@@ -78,34 +85,37 @@ private struct PlatformPad: View {
                     } label: {
                         Text(String(number))
                             .font(.body.monospacedDigit())
-                            .frame(width: 44, height: 40)
+                            .frame(minWidth: RailSize.touch, minHeight: RailSize.touch)
                             .background(
                                 platform == number ? Color.accentColor : Color(.tertiarySystemFill),
-                                in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
                             .foregroundStyle(platform == number ? Color.white : Color.primary)
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("platformPadKey-\(number)")
                 }
             }
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 TextField(localization.text("ios.newTrip.platformOther", fallback: "Other"), text: $other)
                     .keyboardType(.numberPad)
                     .textFieldStyle(.roundedBorder)
-                    .frame(width: 96)
+                    .frame(width: otherFieldWidth)
                     .onSubmit(commitOther)
                 Button(localization.text("ios.done", fallback: "Done"), action: commitOther)
+                    .lineLimit(1).fixedSize()
                     .disabled(Int(other) == nil)
                 Spacer(minLength: 0)
                 Button(localization.text("ios.newTrip.platformClear", fallback: "Clear"), role: .destructive) {
                     platform = nil
                     done()
                 }
+                .lineLimit(1).fixedSize()
                 .disabled(platform == nil)
             }
         }
-        .padding(14)
-        .frame(width: 290)
+        .padding(RailSpacing.s12)
+        // At least the key grid; wider when large text needs it for the bottom row.
+        .frame(minWidth: padWidth)
     }
 
     private func commitOther() {
@@ -151,7 +161,7 @@ struct VehiclePickerView: View {
                                         Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
                                     }
                                 }
-                                .frame(minHeight: 44)
+                                .frame(minHeight: RailSize.touch)
                             }
                             .accessibilityIdentifier("vehiclePickerSuggestion-\(value)")
                         }
@@ -169,9 +179,7 @@ struct VehiclePickerView: View {
             .navigationTitle(localization.text("ios.editor.vehicleType"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .onAppear { typed = vehicleType ?? "" }
         }

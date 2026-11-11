@@ -37,9 +37,7 @@ struct TicketScanView: View {
             .navigationTitle(localization.text("ios.ticket.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.ticket.cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .fullScreenCover(isPresented: $showsCamera) {
                 DocumentCameraPicker(
@@ -74,8 +72,7 @@ struct TicketScanView: View {
                 .accessibilityIdentifier("ticketScanCamera")
             } else {
                 Text(localization.text("ios.ticket.cameraUnavailable"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             PhotosPicker(selection: $photo, matching: .images) {
                 Label(localization.text("ios.ticket.photos"), systemImage: "photo.on.rectangle")
@@ -83,14 +80,14 @@ struct TicketScanView: View {
             .disabled(isReading)
             .accessibilityIdentifier("ticketScanPhotos")
             if isReading {
-                HStack(spacing: 8) {
+                HStack(spacing: RailSpacing.s8) {
                     ProgressView()
                     Text(localization.text("ios.ticket.reading"))
                         .foregroundStyle(.secondary)
                 }
             }
             if let message {
-                Text(message).font(.footnote).foregroundStyle(.red)
+                Text(message).font(.footnote).foregroundStyle(.red) // ui-token-ok: error text
             }
         } footer: {
             Text(localization.text("ios.ticket.privacy"))

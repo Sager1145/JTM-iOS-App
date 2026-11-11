@@ -327,7 +327,7 @@ struct PanelHeader<Actions: View>: View {
 
     private func subtitleLabel(_ value: String) -> some View {
         Text(value)
-            .font(.footnote)
+            .font(.footnote) // ui-token-ok: subtitleRow height is derived from the footnote line height
             .foregroundStyle(.secondary)
             .lineLimit(1)
             .minimumScaleFactor(BottomChromeMetrics.smallestLegibleScale)
@@ -525,7 +525,7 @@ private struct ResidentBottomSheetModifier<SheetContent: View>: ViewModifier {
                 .allowsHitTesting(!isSuspended)
                 .accessibilityHidden(isSuspended)
                 .railAnimation(RailMotion.spring, value: isSuspended, reduceMotion: reduceMotion)
-                .presentationDetents(
+                .presentationDetents( // ui-token-ok: hand-built detents (spec §0.1 resident surfaces)
                     isSuspended ? metrics.detents.union([suspendedDetent]) : metrics.detents,
                     selection: visibleDetent)
                 // The system owns the sheet's Liquid Glass and detent changes.

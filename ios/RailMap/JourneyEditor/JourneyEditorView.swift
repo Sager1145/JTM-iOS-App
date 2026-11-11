@@ -11,7 +11,7 @@ import SwiftUI
 /// panel chrome and persists the result of `onSave`.
 ///
 /// The draft and its planning live in `TripDraftModel`; this view is the
-/// shell: header, map, the form's sections, the sheets, and the events
+/// shell: navigation bar, map, the form's sections, the sheets, and the events
 /// that keep the model's derived state current.
 struct JourneyEditorView: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
@@ -63,11 +63,25 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                header
                 EditorMapPanel(model: model)
                 form
             }
-            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "newTripCancel",
+                    onCancel: {
+                        if model.isDirty(original: train) { showsDiscardConfirmation = true } else { onCancel() }
+                    },
+                    confirmTitle: Text(text("save", fallback: "Save")),
+                    confirmID: "newTripSave",
+                    canConfirm: model.canSave,
+                    // ⌘S is disabled by the same condition as the button.
+                    confirmShortcut: KeyboardShortcut("s", modifiers: .command),
+                    onConfirm: { commit(confirmedRemoval: false) })
+            }
         }
         .confirmationDialog(
             localization.text("ios.editor.discardTitle"),
@@ -130,16 +144,19 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         .sheet(isPresented: $model.showsTicketScan) {
             if let region = model.ticketRegion {
                 TicketScanView(region: region) { reading in model.fillFromTicket(reading) }
+                    .railSheet(.full)
             }
         }
         .sheet(isPresented: $model.showsFillDetails) {
             EditorFillDetailsSheet(model: model, original: train)
+                .railSheet(.full)
         }
         .sheet(isPresented: $model.showsVehiclePicker) {
             VehiclePickerView(
                 vehicleType: model.readerBinding(
                     .vehicleType, get: { model.draft.vehicleType }, set: { model.draft.vehicleType = $0 }),
                 suggestions: model.vehicleSuggestions(among: suggestionTrains))
+                .railSheet(.half)
         }
         .sheet(item: $model.picking) { field in
             if let catalog = model.catalog {
@@ -152,6 +169,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                             model.pick(station, line: line, stationID: stationID, for: field, generation: generation)
                         })
                 }
+                .railSheet(.full)
             }
         }
         .onChange(of: model.departure) { _, newValue in
@@ -234,7 +252,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 Text(text(
                     "loadFailed",
                     fallback: "The rail data for this region could not be loaded."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -262,7 +280,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 Section {
                     ForEach(model.saveIssues) { issue in
                         Text(localization.text(for: issue))
-                            .font(.footnote)
+                            .font(.footnote) // ui-token-ok: error text
                             .foregroundStyle(.red)
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -283,30 +301,6 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 .accessibilityIdentifier("newTripKeyboardDone")
             }
         }
-    }
-
-    private var header: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 12) {
-            Button(text("cancel", fallback: "Cancel")) {
-                if model.isDirty(original: train) { showsDiscardConfirmation = true } else { onCancel() }
-            }
-            .accessibilityIdentifier("newTripCancel")
-            Spacer(minLength: 8)
-            Text(title)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-            Spacer(minLength: 8)
-            Button(text("save", fallback: "Save")) { commit(confirmedRemoval: false) }
-                .fontWeight(.semibold)
-                .disabled(!model.canSave)
-                // ⌘S is disabled by the same condition as the button.
-                .keyboardShortcut("s", modifiers: .command)
-                .accessibilityIdentifier("newTripSave")
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
     }
 
     private func commit(confirmedRemoval: Bool) {

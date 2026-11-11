@@ -27,14 +27,14 @@ struct DataImportView: View {
             .navigationTitle(localization.text("sec.import", fallback: "Import"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) {
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelID: "importCancel",
+                    cancelDisabled: !flow.canCancel,
+                    onCancel: {
                         flow.cancel()
                         dismiss()
-                    }
-                    .disabled(!flow.canCancel)
-                    .accessibilityIdentifier("importCancel")
-                }
+                    })
             }
             .safeAreaInset(edge: .bottom) { actionBar }
             // §10.2: an import finishes on a screen the reader may not be
@@ -93,7 +93,7 @@ struct DataImportView: View {
                     .overlay(alignment: .topLeading) {
                         if flow.text.isEmpty {
                             Text(localization.text("data.pasteHint"))
-                                .font(.footnote)
+                                .font(.system(.footnote, design: .monospaced))
                                 .foregroundStyle(.tertiary)
                                 .padding(.top, RailSpacing.s8)
                                 .allowsHitTesting(false)
@@ -160,7 +160,7 @@ struct DataImportView: View {
                     .foregroundStyle(.secondary)
                 }
             }
-            .font(.footnote)
+            .font(.footnote) // ui-token-ok: form section help text
             .fixedSize(horizontal: false, vertical: true)
         } header: {
             Text(localization.text("data.importMode"))
@@ -282,7 +282,7 @@ struct DataImportView: View {
                         + " (\(report.crossRegionRows.count))",
                     systemImage: "exclamationmark.triangle"
                 )
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: warning text with its own colour
                 .foregroundStyle(.orange)
                 .accessibilityIdentifier("importCrossRegionWarning")
             }
@@ -381,7 +381,7 @@ struct DataImportView: View {
                 }
             case .finished:
                 Button { dismiss() } label: {
-                    Text(localization.text("data.done"))
+                    Text(localization.text("ios.done", fallback: "Done"))
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.railPrimary(fillsWidth: true))
@@ -486,7 +486,7 @@ struct DataIssueRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.s2) {
             Text(issue.detail)
-                .font(.footnote)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Text(location)
                 .font(.system(.caption2, design: .monospaced))
@@ -526,7 +526,7 @@ struct DataErrorCard: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.orange)
             Text(detail)
-                .font(.footnote)
+                .font(.subheadline)
             Text(kept)
                 .railText(.secondary)
         }

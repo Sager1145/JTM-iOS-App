@@ -8,7 +8,7 @@ struct ServiceSectionSummary: View {
     let train: Train
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text("\(localization.sectionEndpoint(name: leg.from, code: leg.fromStationCode, in: train, stopIndex: leg.fromStopIndex)) → \(localization.sectionEndpoint(name: leg.to, code: leg.toStationCode, in: train, stopIndex: leg.toStopIndex))")
                 .font(.subheadline.weight(.semibold))
             if !leg.info.operatorNames.isEmpty {
@@ -17,7 +17,7 @@ struct ServiceSectionSummary: View {
             }
             if !leg.info.lineNames.isEmpty {
                 Text(leg.info.lineNames.joined(separator: " · "))
-                    .font(.subheadline).foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
             if let name = leg.info.name {
                 Text(name).font(.subheadline)
@@ -25,7 +25,7 @@ struct ServiceSectionSummary: View {
             LabeledContent(
                 localization.countryText("field.number", fallback: "Train number"),
                 value: leg.info.number ?? localization.text("ios.editor.sectionNumberUnknown"))
-                .font(.caption).foregroundStyle(.secondary)
+                .railText(.tertiary)
         }
         .fixedSize(horizontal: false, vertical: true)
         .accessibilityElement(children: .combine)

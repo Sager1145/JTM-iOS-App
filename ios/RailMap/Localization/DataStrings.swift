@@ -200,7 +200,7 @@ enum DataStrings {
 
         // MARK: import — outcome
 
-        "data.importDone": [
+        "data.importDone": [ // ui-token-ok: import result message, not a dismiss button
             .zhHant: "已匯入 {count} 趟行程，並儲存在此裝置。",
             .zhHans: "已导入 {count} 趟行程，并保存在此设备。",
             .ja: "{count} 本を読み込み、この端末に保存しました。",
@@ -229,9 +229,6 @@ enum DataStrings {
             .zhHans: "导入 {count} 趟行程",
             .ja: "{count} 本を読み込む",
             .en: "Import {count} journeys",
-        ],
-        "data.done": [
-            .zhHant: "完成", .zhHans: "完成", .ja: "完了", .en: "Done",
         ],
         "data.recheck": [
             .zhHant: "重新檢查", .zhHans: "重新检查", .ja: "再チェック", .en: "Check again",

@@ -44,9 +44,6 @@ enum TicketScanStrings {
             .zhHant: "無法從此車票讀取任何內容，請改用清晰、光線充足的照片。",
             .zhHans: "无法从此车票读取任何内容，请改用清晰、光线充足的照片。",
         ],
-        "ios.ticket.cancel": [
-            .en: "Cancel", .ja: "キャンセル", .zhHant: "取消", .zhHans: "取消",
-        ],
         "ios.ticket.kind.ticket": [
             .en: "Fare ticket", .ja: "乗車券", .zhHant: "乘車票", .zhHans: "乘车票",
         ],

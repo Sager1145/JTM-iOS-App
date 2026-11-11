@@ -13,7 +13,7 @@ struct StatsWidgetGrid: View {
     let openDetails: (StatisticsCardKind) -> Void
 
     var body: some View {
-        StatsWidgetModuleLayout(spacing: 10) {
+        StatsWidgetModuleLayout(spacing: 10) { // ui-token-ok: widget grid gutter matches designSize geometry
             ForEach(items) { item in
                 Button { openDetails(item.kind) } label: {
                     GeometryReader { proxy in

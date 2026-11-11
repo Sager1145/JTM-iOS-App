@@ -28,9 +28,6 @@ enum TripNoteStrings {
         "ios.tripNotes.share": [
             .en: "Share", .ja: "共有", .zhHant: "分享", .zhHans: "分享",
         ],
-        "ios.tripNotes.cancel": [
-            .en: "Cancel", .ja: "キャンセル", .zhHant: "取消", .zhHans: "取消",
-        ],
         "ios.tripNotes.discardConfirm": [
             .en: "Discard changes?", .ja: "変更を破棄しますか？", .zhHant: "要捨棄變更嗎？", .zhHans: "要放弃更改吗？",
         ],
@@ -106,9 +103,6 @@ enum TripNoteStrings {
         ],
         "ios.tripNotes.pick.confirm": [
             .en: "Confirm", .ja: "決定", .zhHant: "確認", .zhHans: "确认",
-        ],
-        "ios.tripNotes.pick.cancel": [
-            .en: "Cancel", .ja: "キャンセル", .zhHant: "取消", .zhHans: "取消",
         ],
         "ios.tripNotes.location.denied": [
             .en: "Location access is off. Turn it on in Settings, or pick a station.", .ja: "位置情報の利用がオフです。設定でオンにするか、駅を選んでください。", .zhHant: "定位服務已關閉。請在設定中開啟，或改選車站。", .zhHans: "定位服务已关闭。请在设置中开启，或改选车站。",

@@ -89,7 +89,7 @@ struct WorkspaceJourneyMenu: View {
                         })
                     // The source panel's compact stage must not hide this card's body.
                     .environment(cardMorph)
-                    .padding(.top, 16)
+                    .padding(.top, RailSpacing.s16)
                     .sheet(isPresented: $showsDetails) {
                         NavigationStack {
                             RideDetailView(
@@ -111,15 +111,15 @@ struct WorkspaceJourneyMenu: View {
                                 } message: {
                                     Text(saveFailureDetail ?? "")
                                 }
-                                .toolbar {
-                                    ToolbarItem(placement: .cancellationAction) {
-                                        Button(localization.text("ios.close", fallback: "Close"),
-                                               systemImage: "xmark") { showsDetails = false }
-                                    }
-                                }
+                                .railSheetClose(
+                                    Text(localization.text("ios.close", fallback: "Close")),
+                                    identifier: "rideDetailClose"
+                                ) { showsDetails = false }
                         }
                         .environment(localization)
                         .environment(network)
+                        // The full ride detail, so it opens full height.
+                        .railSheet(.full)
                     }
             }
         }
@@ -150,7 +150,7 @@ struct WorkspaceJourneyMenu: View {
             }
         }
         #if !targetEnvironment(macCatalyst)
-        .presentationDetents(
+        .presentationDetents( // ui-token-ok: hand-built detents (spec §0.1 resident surfaces)
             dynamicTypeSize.isAccessibilitySize
                 ? [.large] : [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large],
             selection: $detent)

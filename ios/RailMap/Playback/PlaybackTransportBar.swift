@@ -122,7 +122,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .disabled(videoExporter.state == .finishing)
-            .accessibilityLabel(localization.countryText("common.close", fallback: "Close"))
+            .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
             .accessibilityIdentifier("playbackExportDismiss")
         }
     }
@@ -167,7 +167,7 @@ struct PlaybackTransportBar: View {
                 Spacer()
                 speedSlider.frame(maxWidth: 120)
                 speedReadout
-                    .frame(minWidth: 34, alignment: .trailing)
+                    .frame(minWidth: 34, alignment: .trailing) // ui-token-ok: text readout width, not a control
                     .fixedSize(horizontal: true, vertical: false)
                 videoControl
             }
@@ -365,7 +365,7 @@ struct PlaybackTransportBar: View {
                     .contentShape(.rect)
             }
             .accessibilityLabel(
-                localization.countryText("video.cancel", fallback: "Cancel video export"))
+                localization.countryText("video.cancel", fallback: "Cancel video export")) // ui-token-ok: distinct verb phrase
         case .finishing:
             // The same 44-point box as the other three branches, and here it
             // is a LAYOUT contract rather than a hit target: a bare

@@ -143,7 +143,7 @@ struct RideCard: View {
             if !scrollsHeader {
                 header
                     .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
-                    .padding(.bottom, interpolated(12, 8))
+                    .padding(.bottom, interpolated(12, 8)) // ui-token-ok: animated geometry
             }
 
             Group {
@@ -194,8 +194,7 @@ struct RideCard: View {
                                 Label(localization.text("ios.tripNotes.add"),
                                       systemImage: "exclamationmark.bubble")
                             }
-                            .buttonStyle(RailCapsuleButtonStyle())
-                            .railMinimumTouchTarget()
+                            .buttonStyle(.railSecondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
                             .accessibilityIdentifier("tripNotesAdd")
@@ -225,7 +224,7 @@ struct RideCard: View {
                             actionButtonHeight: SheetIconButton<Image>.visualSide
                         )
                     }
-                    .padding(.top, 4)
+                    .padding(.top, RailSpacing.s4)
                 }
                 // No bottom content margin here, and that is the fix rather
                 // than an omission: the panel reaches under the system tab
@@ -295,7 +294,7 @@ struct RideCard: View {
         // row that still jumped mid-drag; the buttons take a small
         // interpolated top inset instead, which reads as centred against the
         // short collapsed block and as top-aligned against the tall open one.
-        RideIdentityHeaderLayout(progress: progress, spacing: 10) {
+        RideIdentityHeaderLayout(progress: progress, spacing: RailSpacing.s8) {
             // The journey's own mark, the same square the list row and the
             // detail screen draw it in — this card is what a tapped row opens
             // into, and the mark is the thing that says it is still the same
@@ -357,8 +356,8 @@ struct RideCard: View {
                 // stopped caring which journey is on it. Open, `RouteTiming`
                 // below says the same thing properly, so this one gives its
                 // height back rather than repeating it.
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 5) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
+                    HStack(spacing: RailSpacing.s4) {
                         Text(localization.originName(of: train))
                         Image(systemName: "arrow.right")
                             .imageScale(.small)
@@ -369,8 +368,7 @@ struct RideCard: View {
                             Text(time).monospacedDigit()
                         }
                     }
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                     .lineLimit(1)
 
                     // Collapsed, the state still has to be visible: a journey
@@ -383,7 +381,7 @@ struct RideCard: View {
                 // Only the compact identity needs separation from the title.
                 // At the expanded stop its height and its spacing both become
                 // zero, so it leaves no invisible gap below the heading.
-                .padding(.top, interpolated(2, 0))
+                .padding(.top, interpolated(2, 0)) // ui-token-ok: animated geometry
                 .opacity(1 - progress)
                 .frame(height: collapsedIdentityHeight * (1 - progress), alignment: .top)
                 .clipped()
@@ -494,7 +492,7 @@ struct RideCard: View {
         // is already the first word of the title directly underneath.
         let type = (train.trainType?.isEmpty == false) && !dynamicTypeSize.isAccessibilitySize
             ? train.trainType : nil
-        HStack(spacing: 5) {
+        HStack(spacing: RailSpacing.s4) {
             if dynamicTypeSize.isAccessibilitySize, let split = Self.splitDate(date) {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(split.year).monospacedDigit()

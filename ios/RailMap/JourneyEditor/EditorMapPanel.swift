@@ -53,9 +53,9 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                     ? min(max(height * 0.28, 180), 300)
                     : min(max(height * 0.42, 240), 460)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .padding(.horizontal, 12)
-            .padding(.bottom, 4)
+            .clipShape(RoundedRectangle(cornerRadius: RailRadius.card, style: .continuous))
+            .padding(.horizontal, RailSpacing.s12)
+            .padding(.bottom, RailSpacing.s4)
             .sensoryFeedback(.selection, trigger: model.selectedCorridorID) { old, new in
                 old != nil && new != nil
             }
@@ -82,13 +82,13 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
         }()
         if let hint {
             Text(hint)
-                .font(.footnote.weight(.medium))
+                .font(.footnote.weight(.medium)) // ui-token-ok: map overlay hint, primary colour
                 .foregroundStyle(.primary)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 7)
+                .padding(.horizontal, RailSpacing.s12)
+                .padding(.vertical, RailSpacing.s8)
                 .background(.regularMaterial, in: Capsule())
-                .padding(.top, 10)
-                .padding(.horizontal, 12)
+                .padding(.top, RailSpacing.s8)
+                .padding(.horizontal, RailSpacing.s12)
                 .allowsHitTesting(false)
                 .accessibilityIdentifier("newTripMapHint")
                 .id(hint)
@@ -99,7 +99,7 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
 
     private func stationActionCard(_ station: CatalogStation) -> some View {
         let role = model.mapRole(of: station)
-        return VStack(alignment: .leading, spacing: 10) {
+        return VStack(alignment: .leading, spacing: RailSpacing.s8) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(stationTitle(station))
@@ -107,12 +107,11 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                         .lineLimit(2)
                     if let subtitle = stationSubtitle(station, line: nil) {
                         Text(subtitle)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                             .lineLimit(1)
                     }
                 }
-                Spacer(minLength: 8)
+                Spacer(minLength: RailSpacing.s8)
                 Button {
                     withAnimation(RailMotion.animation(RailMotion.enter, reduceMotion: reduceMotion)) {
                         model.tappedStation = nil
@@ -122,12 +121,13 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                         .font(.title3)
                         .symbolRenderingMode(.hierarchical)
                         .foregroundStyle(.secondary)
+                        .railMinimumTouchTarget()
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(text("close", fallback: "Close"))
+                .accessibilityLabel(localization.text("ios.close", fallback: "Close"))
                 .accessibilityIdentifier("newTripMapStationClose")
             }
-            HStack(spacing: 8) {
+            HStack(spacing: RailSpacing.s8) {
                 if let role {
                     actionButton(text("mapRemove", fallback: "Remove"), systemImage: "minus.circle",
                                  identifier: "newTripMapRemove", prominent: false) {
@@ -152,10 +152,10 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                 }
             }
         }
-        .padding(14)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .padding(RailSpacing.s12)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: RailRadius.control, style: .continuous))
         .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
-        .padding(10)
+        .padding(RailSpacing.s8)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("newTripMapStationCard")
     }
@@ -169,15 +169,14 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
                 Button(action: action) {
                     Label(title, systemImage: systemImage).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.railPrimary(fillsWidth: true))
             } else {
                 Button(action: action) {
                     Label(title, systemImage: systemImage).frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.railSecondary(fillsWidth: true))
             }
         }
-        .controlSize(.regular)
         .labelStyle(.titleAndIcon)
         .accessibilityIdentifier(identifier)
     }

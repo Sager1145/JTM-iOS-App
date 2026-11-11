@@ -44,13 +44,12 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             }
             if let routeProofFailure = model.routeProofFailure {
                 Text(routeProofFailure)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             if model.autofillFailed {
                 Text(text("autofillFailed", fallback: "This route could not be applied."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -75,7 +74,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         // in the editor). Policy-only names keep the "Saved route" caption.
         let sequence = RiddenLineSequence(train: model.draft, continuations: nil)
         let lines = sequence.sections.contains { $0.source == .recorded } ? JourneyLineText.summary(sequence) : ""
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             Text(lines.isEmpty ? text("savedRoute", fallback: "Saved route") : lines)
                 .font(.body.weight(.semibold))
             Text(text("stationCount", fallback: "{count} stations",
@@ -84,8 +83,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                 .foregroundStyle(.secondary)
             if model.draft.routeConfirmation == .pending {
                 Text(localization.text("ios.route.pendingConfirmation", fallback: "Route pending confirmation"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         }
         .accessibilityElement(children: .combine)
@@ -129,15 +127,14 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             } label: {
                 Label(localization.text("ios.route.repairRoute", fallback: "Repair route"),
                       systemImage: "wrench.and.screwdriver")
-                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
             }
             .disabled(model.package == nil)
             .accessibilityIdentifier("newTripRepairRoute")
         }
         if let summary = model.repair.summary {
             Text(summary)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("newTripRepairSummary")
         }
@@ -201,7 +198,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             ForEach(Array(timetable.stops.enumerated()), id: \.offset) { _, stop in
                 let qualifier = recordedQualifier(code: stop.n02StationCode)
                 HStack(alignment: .firstTextBaseline) {
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                         Text(BracketedStationText.title(
                             officialName: stop.name,
                             localizedTitle: localization.stationName(
@@ -253,21 +250,21 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
 
     @ViewBuilder private var directionRows: some View {
         ForEach(Array(model.directionLegs.enumerated()), id: \.offset) { index, leg in
-            HStack(spacing: 10) {
+            HStack(spacing: RailSpacing.s8) {
                 Image(systemName: leg.direction == .up ? "arrow.up.circle.fill"
                       : leg.direction == .down ? "arrow.down.circle.fill" : "questionmark.circle")
                     .foregroundStyle(leg.direction == nil ? Color.secondary : Color.accentColor)
                     .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     Text(directionWord(leg.direction))
                         .font(.subheadline.weight(.semibold))
                     if let line = leg.lineID.flatMap(model.lineName(for:)) {
-                        Text(line).font(.caption).foregroundStyle(.secondary)
+                        Text(line).railText(.tertiary)
                     }
                 }
                 Spacer(minLength: 8)
                 if index == model.directionLegs.count - 1, let boundFor = model.boundFor {
-                    Text(boundForText(boundFor)).font(.caption).foregroundStyle(.secondary)
+                    Text(boundForText(boundFor)).railText(.tertiary)
                 }
             }
             .accessibilityElement(children: .combine)
@@ -290,7 +287,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     Text(model.boundFor.map(boundForText) ?? text("boundForChoose", fallback: "Choose"))
                         .foregroundStyle(model.boundFor == nil ? .secondary : .primary)
                 }
-                .frame(minHeight: 44)
+                .frame(minHeight: RailSize.touch)
             }
             .accessibilityIdentifier("newTripBoundFor")
             .alert(text("boundForTitle", fallback: "方面"), isPresented: $model.showsBoundForEntry) {
@@ -317,18 +314,17 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     fallback: corridors.isEmpty
                         ? "No route was open on this date."
                         : "Some routes are hidden because they were not open on this date."))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         case .disconnected(let junctions):
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: RailSpacing.s8) {
                 if !model.routeErrorCoveredByNotice {
                     routeError(disconnectedMessage(junctions))
                 }
                 Text(text("continueAnywayExplanation",
                           fallback: "Treat the listed stations as through-running connections."))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 Button(text("continueAnyway", fallback: "Continue anyway")) {
                     model.allowUnverifiedConnections = true
                 }
@@ -360,14 +356,14 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
     private func sectionNotice(
         title: String?, warning: Bool, message: String, detail: String? = nil
     ) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             if let title {
                 Text(title)
-                    .font(.footnote.weight(.semibold))
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: notice title
             }
             Label {
                 Text(message)
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: notice text, colour set by label
                     .fixedSize(horizontal: false, vertical: true)
             } icon: {
                 Image(systemName: warning ? "exclamationmark.triangle" : "clock.arrow.circlepath")
@@ -376,8 +372,8 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             .foregroundStyle(warning ? Color.orange : Color.secondary)
             if let detail {
                 Text(detail)
-                    .font(.footnote)
-                    .foregroundStyle(Color.secondary)
+                    .font(.footnote) // ui-token-ok: notice detail stays at the notice's own text size
+                    .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -429,24 +425,23 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     model.activeSection = index
                     model.refreshDrawnRoutes()
                 } label: {
-                    HStack(spacing: 10) {
+                    HStack(spacing: RailSpacing.s8) {
                         Image(systemName: model.choice(for: section) != nil ? "checkmark.circle.fill"
                               : section.candidates.count > 1 ? "questionmark.circle.fill" : "exclamationmark.circle")
                             .foregroundStyle(model.choice(for: section) != nil ? Color.accentColor : Color.orange)
                             .accessibilityHidden(true)
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                             Text(text("sectionTitle", fallback: "Section {n} of {count}: {from} → {to}", [
                                 "n": .string(String(index + 1)), "count": .string(String(shownSections.count)),
                                 "from": .string(section.fromName), "to": .string(section.toName)]))
                                 .font(.subheadline.weight(index == shownActiveSection ? .semibold : .regular))
                                 .foregroundStyle(.primary)
                             Text(sectionStatus(section))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .railText(.tertiary)
                         }
                         Spacer(minLength: 0)
                     }
-                    .frame(minHeight: 44)
+                    .frame(minHeight: RailSize.touch)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -477,7 +472,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         if !model.pendingSections.isEmpty, shownSections.count > 1 {
             Text(text("sectionsToChoose", fallback: "{count} sections still to choose before the stations are filled in",
                       ["count": .string(String(model.pendingSections.count))]))
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: warning text
                 .foregroundStyle(.orange)
                 .accessibilityIdentifier("newTripSectionsPending")
         }
@@ -501,19 +496,17 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         return Button {
             if model.showsRecordRoute { model.chooseRepair(index, text: repairText) } else { model.choose(corridor.id, inSection: model.activeSection) }
         } label: {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .top, spacing: RailSpacing.s12) {
+                VStack(alignment: .leading, spacing: RailSpacing.s4) {
                     Text(corridor.lineNames.joined(separator: " → "))
                         .font(.body)
                         .multilineTextAlignment(.leading)
                     if !corridor.operatorNames.isEmpty {
                         Text(corridor.operatorNames.joined(separator: " · "))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .railText(.tertiary)
                     }
                     Text(stationCountText(corridor))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                     ForEach(Array(corridor.junctions.enumerated()), id: \.offset) { _, junction in
                         if let badge = junctionBadge(junction) {
                             if junction.link == .none {
@@ -548,7 +541,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         return DisclosureGroup {
             ForEach(Array(stations.enumerated()), id: \.offset) { index, visit in
                 let qualifier = visitQualifier(visit, corridor: corridor)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                     Text(BracketedStationText.title(
                         officialName: visit.name,
                         localizedTitle: localization.stationName(
@@ -562,7 +555,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                         officialName: visit.name, regionCode: model.region.code,
                         qualifier: qualifier, localization: localization))
                 }
-                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(StationQualifierCopy.spoken(
                     name: visit.name, countryCode: model.region.code.uppercased(),
@@ -592,7 +585,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
 
     private func routeError(_ message: String) -> some View {
         Text(message)
-            .font(.footnote)
+            .font(.footnote) // ui-token-ok: error text
             .foregroundStyle(.red)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)

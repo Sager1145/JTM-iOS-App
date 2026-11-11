@@ -8,8 +8,8 @@ struct AutoFilledStationLabel: View {
         Label(localization.text("ios.editor.generatedStation"), systemImage: "wand.and.stars")
             .font(.caption.weight(.medium))
             .foregroundStyle(.secondary)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+            .padding(.horizontal, RailSpacing.s8)
+            .padding(.vertical, RailSpacing.s4)
             .background(.quaternary, in: Capsule())
             .fixedSize(horizontal: false, vertical: true)
     }

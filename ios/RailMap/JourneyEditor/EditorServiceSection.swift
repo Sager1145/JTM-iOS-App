@@ -68,7 +68,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
             }
             if model.timetableFailed {
                 Text(text("timetableFailed", fallback: "This timetable could not be applied."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
             }
             if let timetableTrain = model.timetableTrain {
@@ -84,19 +84,18 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
             Image(systemName: "clock.badge.checkmark")
                 .foregroundStyle(.tint)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                 Text(model.limitedExpressName.isEmpty ? timetableTrain.number : model.limitedExpressName)
                     .font(.subheadline.weight(.semibold))
                 Text("\(timetableTrain.origin) → \(timetableTrain.destination) · "
                      + text("stationCount", fallback: "{count} stations",
                             ["count": .string(String(timetableTrain.stops.count))]))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 Text(model.timetableTimes(timetableTrain))
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(.secondary)
             }
-            Spacer(minLength: 4)
+            Spacer(minLength: RailSpacing.s4)
             Button(text("timetableRemove", fallback: "Remove"), action: model.removeTimetable)
                 .buttonStyle(.borderless)
                 .accessibilityIdentifier("newTripTimetableRemove")

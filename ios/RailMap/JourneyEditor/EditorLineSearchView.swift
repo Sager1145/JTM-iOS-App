@@ -94,7 +94,7 @@ struct EditorLineSearchView: View {
     var body: some View {
         Group {
             if let loadError {
-                Text(loadError).foregroundStyle(.secondary).padding()
+                Text(loadError).railText(.secondary).padding(RailSpacing.s16)
             } else if catalog == nil {
                 ProgressView()
             } else {
@@ -107,22 +107,22 @@ struct EditorLineSearchView: View {
                             ForEach(unresolvedNames, id: \.self) { name in
                                 Text(name)
                                     .foregroundStyle(.secondary)
-                                    .frame(minHeight: 44, alignment: .leading)
+                                    .frame(minHeight: RailSize.touch, alignment: .leading)
                             }
                         }
                     }
                     if !snapshot.conflictingSelectedLines.isEmpty {
                         Section {
                             ForEach(snapshot.conflictingSelectedLines, id: \.id) { line in
-                                HStack(spacing: 12) {
+                                HStack(spacing: RailSpacing.s12) {
                                     Image(systemName: "exclamationmark.triangle.fill")
                                         .foregroundStyle(.orange)
-                                    VStack(alignment: .leading, spacing: 3) {
+                                    VStack(alignment: .leading, spacing: RailSpacing.s2) {
                                         Text(line.name)
                                         if let operatorName = line.operatorIDs
                                             .compactMap({ operatorNameByID[$0] }).first
                                         {
-                                            Text(operatorName).font(.caption).foregroundStyle(.secondary)
+                                            Text(operatorName).railText(.tertiary)
                                         }
                                     }
                                 }
@@ -140,7 +140,7 @@ struct EditorLineSearchView: View {
                     }
                     if let indexError {
                         Section {
-                            Text(indexError).font(.footnote).foregroundStyle(.secondary)
+                            Text(indexError).railText(.secondary)
                         }
                     }
                     if !snapshot.hasMatches {
@@ -200,7 +200,7 @@ struct EditorLineSearchView: View {
         .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+            ToolbarItem(placement: .confirmationAction) { // ui-token-ok: text Done ends a multi-select picker (HIG toolbars); it is not a view-only sheet
                 Button(localization.text("ios.done", fallback: "Done")) {
                     commit()
                     dismiss()
@@ -247,16 +247,16 @@ struct EditorLineSearchView: View {
             isSearching = false
         } label: {
             HStack {
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: RailSpacing.s2) {
                     Text(line.name)
                     if let operatorName {
-                        Text(operatorName).font(.caption).foregroundStyle(.secondary)
+                        Text(operatorName).railText(.tertiary)
                     }
                 }
                 Spacer()
                 if selected { Image(systemName: "checkmark") }
             }
-            .frame(minHeight: 44)
+            .frame(minHeight: RailSize.touch)
         }
         .accessibilityValue(selected ? localization.text("ios.editor.lineSelected") : "")
     }

@@ -34,6 +34,70 @@ extension View {
     }
 }
 
+/// The toolbar of an editing sheet (spec §6.5, D3): Cancel leading, optional
+/// confirm trailing, inline title, system navigation bar.
+///
+/// Cancel always reads `localization.text("ios.cancel", fallback: "Cancel")`;
+/// pass that as `cancelTitle` so every sheet says the same word in every
+/// language. Callers keep their own dirty checks and dismissal inside the
+/// closures. Pass `cancelTitle: nil` for a pushed screen that has no Cancel,
+/// only a confirm. The confirm button is semibold before iOS 26 and the
+/// prominent glass button on iOS 26.
+struct RailEditingToolbar: ToolbarContent {
+    var cancelTitle: Text?
+    var cancelID: String?
+    var cancelDisabled = false
+    var onCancel: () -> Void = {}
+    var confirmTitle: Text?
+    var confirmID: String?
+    var canConfirm = true
+    var confirmShortcut: KeyboardShortcut?
+    var onConfirm: (() -> Void)?
+
+    var body: some ToolbarContent {
+        // The conditions sit OUTSIDE the items: an item whose content is
+        // empty still claims its slot, and on iOS 26 draws an empty glass
+        // bubble (or crowds the back button on a pushed page).
+        if let cancelTitle {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(role: .cancel, action: onCancel) { cancelTitle }
+                    .disabled(cancelDisabled)
+                    .optionalIdentifier(cancelID)
+            }
+        }
+        if let confirmTitle, let onConfirm {
+            ToolbarItem(placement: .confirmationAction) {
+                confirmButton(title: confirmTitle, action: onConfirm)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func confirmButton(title: Text, action: @escaping () -> Void) -> some View {
+        let button = Button(action: action) { title }
+            .disabled(!canConfirm)
+            .optionalShortcut(confirmShortcut)
+            .optionalIdentifier(confirmID)
+        if #available(iOS 26.0, *) {
+            button.buttonStyle(.glassProminent)
+        } else {
+            button.fontWeight(.semibold)
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func optionalIdentifier(_ id: String?) -> some View {
+        if let id { accessibilityIdentifier(id) } else { self }
+    }
+
+    @ViewBuilder
+    func optionalShortcut(_ shortcut: KeyboardShortcut?) -> some View {
+        if let shortcut { keyboardShortcut(shortcut) } else { self }
+    }
+}
+
 enum RailSheetHeight {
     /// Opens at half height, expandable, with a visible grabber.
     case half

@@ -29,8 +29,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 HStack(spacing: RailSpacing.s8) {
                     FillSourceBadge(source: source)
                     Text(text("timeFilled", fallback: "Check the time; changing it keeps your value."))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .railText(.tertiary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityElement(children: .combine)
@@ -53,7 +52,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 Text(text(
                     "arrivalBeforeDeparture",
                     fallback: "Arrival is before departure."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -70,7 +69,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
         let id = isDeparture ? "newTripActualDeparture" : "newTripActualArrival"
         let raw = isDeparture ? model.actualDeparture : model.actualArrival
         let normalized = model.normalizedActual(raw, isDeparture: isDeparture)
-        return VStack(alignment: .leading, spacing: 2) {
+        return VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             EditorCompactRow(title: localization.text(
                 isDeparture ? "ios.editor.actualDeparture" : "ios.editor.actualArrival")) {
                 TextField("H:MM", text: model.actualTimeText(isDeparture: isDeparture))
@@ -84,15 +83,14 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
             if model.scheduledIsSet(isDeparture: isDeparture) { chipRow(isDeparture: isDeparture) }
             if raw != nil, normalized == nil {
                 Text(localization.text("ios.editor.invalidClock"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
             } else if model.scheduledIsSet(isDeparture: isDeparture), let status = StopTimingStatus.localizedLabel(
                 scheduled: model.scheduledClock(isDeparture: isDeparture), actual: normalized,
                 localization: localization) {
                 // Compared with the scheduled clock above; a placeholder time has no delay.
                 Text(status)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .accessibilityIdentifier(isDeparture ? "newTripActualDepartureStatus" : "newTripActualArrivalStatus")
             }
         }
@@ -111,10 +109,10 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 }
             } label: {
                 Text(label)
-                    .font(.footnote.weight(.semibold))
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: chip label
                     .foregroundStyle(.tint)
                     .padding(.horizontal, RailSpacing.s12)
-                    .frame(minHeight: 34)
+                    .frame(minHeight: 34) // ui-token-ok: visual capsule; tap target is the 44 frame below
                     .background(.tint.opacity(0.14), in: Capsule())
                     // The capsule stays compact; the tap area is a full touch target.
                     .frame(minHeight: RailSize.touch)

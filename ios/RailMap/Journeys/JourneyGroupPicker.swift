@@ -48,8 +48,7 @@ struct JourneyGroupChoiceFields: View {
                 .submitLabel(.done)
                 .accessibilityIdentifier("journeyGroupName")
             Text("\(name.count)/\(JourneyGroup.maxNameLength) · \(localization.text("ios.journeyGroup.limit"))")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.tertiary)
                 .accessibilityIdentifier("journeyGroupNameLimit")
         }
     }
@@ -115,15 +114,14 @@ struct JourneyGroupAssignmentView: View {
             .navigationTitle(localization.text("ios.journeyGroup.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                        .disabled(saving)
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localization.text("btn.save", fallback: "Save")) { save() }
-                        .disabled(saving || selection?.name.isEmpty == true)
-                        .accessibilityIdentifier("saveJourneyGroup")
-                }
+                RailEditingToolbar(
+                    cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
+                    cancelDisabled: saving,
+                    onCancel: { dismiss() },
+                    confirmTitle: Text(localization.text("btn.save", fallback: "Save")),
+                    confirmID: "saveJourneyGroup",
+                    canConfirm: !(saving || selection?.name.isEmpty == true),
+                    onConfirm: { save() })
             }
             .disabled(saving)
         }

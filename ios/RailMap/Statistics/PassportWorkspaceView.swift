@@ -194,8 +194,7 @@ private struct PassportShareCard: View {
             Text(localization.journeyText(
                 "ios.passport.shareNote",
                 fallback: "Playback is exported as a video file. Nothing is shared live."))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("passportShareNote")
         }

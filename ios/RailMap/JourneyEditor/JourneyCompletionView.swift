@@ -78,9 +78,7 @@ struct JourneyCompletionView: View {
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                }
+                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
             }
             .task {
                 let region = initialTrains.first.map { Region.resolved($0).code } ?? Region.jp.code
@@ -116,11 +114,10 @@ struct JourneyCompletionView: View {
     private var rawImportSection: some View {
         Section {
             Text(text("rawInstructions"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
             TextEditor(text: $rawText)
                 .font(.caption.monospaced())
-                .frame(minHeight: 120)
+                .frame(minHeight: RailSize.textEditorMinHeight)
                 .accessibilityLabel(text("rawInput"))
                 .accessibilityIdentifier("aiRawInput")
                 .disabled(isWorking)
@@ -157,7 +154,7 @@ struct JourneyCompletionView: View {
 
     @ViewBuilder
     private func rawStopRow(_ stop: JourneyCompletion.RawStop) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: RailSpacing.s4) {
             HStack {
                 Text(stop.matchedName).font(.headline).lineLimit(2).layoutPriority(1)
                 Spacer()
@@ -167,16 +164,14 @@ struct JourneyCompletionView: View {
             }
             if stop.candidates.isEmpty {
                 Text(text("stationMatch"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 Text(text("chooseStation"))
                     .foregroundStyle(.secondary)
             } else if stop.confirmsSingleCandidate, let station = stop.candidates.first {
                 candidateRow(stop, index: 0, station: station, selected: true)
             } else {
                 Text(text("stationMatch"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .railText(.tertiary)
                 Button {
                     guard rawSelections[stop.id] != nil else { return }
                     rawSelections[stop.id] = nil
@@ -191,7 +186,7 @@ struct JourneyCompletionView: View {
                                 .accessibilityHidden(true)
                         }
                     }
-                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
                 }
                 .buttonStyle(.plain)
                 ForEach(Array(stop.candidates.enumerated()), id: \.element.key) { index, station in
@@ -216,7 +211,7 @@ struct JourneyCompletionView: View {
         let full = stop.candidateLabels.indices.contains(index) ? stop.candidateLabels[index] : station.name
         let qualifier = StationQualifierCopy.qualifier(fromFull: full, name: station.name)
         let country = station.key.regionCode.uppercased()
-        return HStack(alignment: .firstTextBaseline, spacing: 8) {
+        return HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(localization.stationName(
                     station.name, code: station.key.sourceCode,
@@ -228,14 +223,14 @@ struct JourneyCompletionView: View {
                     StationQualifierCaption(text: qualifier)
                 }
             }
-            Spacer(minLength: 8)
+            Spacer(minLength: RailSpacing.s8)
             if selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: RailSize.touch, alignment: .leading)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(StationQualifierCopy.spoken(
             name: station.name, countryCode: country, qualifier: qualifier, localization: localization))
@@ -312,7 +307,7 @@ struct JourneyCompletionView: View {
                 .lineLimit(3...8)
                 .disabled(isWorking)
                 .accessibilityIdentifier("aiCompletionRemarks")
-            Text(text("remarksInfo")).font(.footnote).foregroundStyle(.secondary)
+            Text(text("remarksInfo")).railText(.secondary)
             Toggle(text("keepRemarks"), isOn: $keepsRemarks)
                 .disabled(isWorking || remarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .accessibilityIdentifier("aiCompletionKeepRemarks")
@@ -331,7 +326,7 @@ struct JourneyCompletionView: View {
         Section {
             TextEditor(text: $response)
                 .font(.caption.monospaced())
-                .frame(minHeight: 160)
+                .frame(minHeight: RailSize.textEditorMinHeight)
                 .accessibilityLabel(text("response"))
                 .accessibilityIdentifier("aiCompletionResponse")
                 .disabled(isWorking)
@@ -349,7 +344,7 @@ struct JourneyCompletionView: View {
             Text(text("review"))
             ForEach(reviewed, id: \.id) { train in
                 if let old = initialTrains.first(where: { $0.id == train.id }) {
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: RailSpacing.s4) {
                         Text(train.number.isEmpty ? "\(train.origin) → \(train.destination)" : train.number)
                             .font(.headline)
                         ForEach(changes(from: old, to: train)) { change in
@@ -378,7 +373,7 @@ struct JourneyCompletionView: View {
 
     private var subscriptionSection: some View {
         Section {
-            Text(text("subscriptionInfo")).font(.footnote).foregroundStyle(.secondary)
+            Text(text("subscriptionInfo")).railText(.secondary)
             if auth.isSignedIn {
                 LabeledContent(text("account"), value: auth.accountLabel ?? "ChatGPT")
                 if let plan = auth.planLabel { LabeledContent(text("plan"), value: plan) }
@@ -422,7 +417,7 @@ struct JourneyCompletionView: View {
             if let code = auth.userCode, auth.isSigningIn {
                 Text(code).font(.title2.monospaced()).textSelection(.enabled)
                     .accessibilityIdentifier("aiSubscriptionCode")
-                Text(text("deviceInstructions")).font(.footnote)
+                Text(text("deviceInstructions")).railText(.secondary)
                 Button(text("authorize")) { openURL(auth.loginURL) }
             }
             if isWorking {
