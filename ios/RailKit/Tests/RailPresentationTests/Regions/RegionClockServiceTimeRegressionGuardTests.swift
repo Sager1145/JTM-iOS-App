@@ -107,7 +107,10 @@ struct RegionClockServiceTimeRegressionGuardTests {
     @Test("malformed clocks and dates are rejected")
     func parseRejects() {
         let japan = RegionClock.japan
-        let bad: [String?] = ["", "7", "1:5", "48:00", "12:60", "ab:cd", "１２:００", nil]
+        let bad: [String?] = [
+            "", "7", "1:5", "100:00", "12:60", "10:00:60", "10:00:5", "10:00+", "10:00+367",
+            "10:00+-1", "-1:30", "ab:cd", "１２:００", "12:00 pm", "10:00:00:00", nil,
+        ]
         for clock in bad {
             #expect(RegionClock.parseServiceClock(clock) == nil, "\(clock ?? "nil")")
             #expect(japan.instant(serviceDate: "2026-08-27", clock: clock) == nil)
@@ -134,19 +137,67 @@ struct RegionClockServiceTimeRegressionGuardTests {
         #expect(japan.serviceClock(of: instant, serviceDate: "2026-08-27") == "07:05")
     }
 
-    @Test("an instant two days after the service date has no service clock")
-    func beyondNextDayIsNil() {
+    @Test("an instant days after the service date keeps counting hours, up to hour 99")
+    func laterDaysKeepCountingHours() {
         let japan = RegionClock.japan
         guard let later = japan.instant(serviceDate: "2026-08-29", clock: "12:00") else {
             Issue.record("nil instant")
             return
         }
-        #expect(japan.serviceClock(of: later, serviceDate: "2026-08-27") == nil)
+        #expect(japan.serviceClock(of: later, serviceDate: "2026-08-27") == "60:00")
         guard let nextDay = japan.instant(serviceDate: "2026-08-28", clock: "01:10") else {
             Issue.record("nil instant")
             return
         }
         #expect(japan.serviceClock(of: nextDay, serviceDate: "2026-08-27") == "25:10")
+        guard let tooFar = japan.instant(serviceDate: "2026-09-05", clock: "12:00") else {
+            Issue.record("nil instant")
+            return
+        }
+        #expect(japan.serviceClock(of: tooFar, serviceDate: "2026-08-27") == nil)
+    }
+
+    @Test("every stored spelling parses to the same hours, minutes and seconds")
+    func storedSpellings() {
+        let cases: [(String, Int, Int, Int)] = [
+            ("7:05", 7, 5, 0), ("07:05", 7, 5, 0), ("10:30:00", 10, 30, 0), ("10:30:45", 10, 30, 45),
+            ("49:10", 49, 10, 0), ("25:30", 25, 30, 0), ("1:05+1", 25, 5, 0), ("10:00+1", 34, 0, 0),
+            ("10:00 + 2", 58, 0, 0), ("  9:30 ", 9, 30, 0), ("00:00", 0, 0, 0), ("99:59", 99, 59, 0),
+            ("0:00+366", 366 * 24, 0, 0),
+        ]
+        for (text, hours, minutes, seconds) in cases {
+            let time = RegionClock.parseServiceTime(text)
+            #expect(time == RegionClock.ServiceTime(hours: hours, minutes: minutes, seconds: seconds), "\(text)")
+            #expect(RegionClock.parseServiceClock(text)?.0 == hours, "\(text)")
+            #expect(RegionClock.parseServiceClock(text)?.1 == minutes, "\(text)")
+        }
+    }
+
+    @Test("every stored spelling is an instant on the region's calendar and reads back as HH:MM")
+    func storedSpellingsAreInstants() {
+        let japan = RegionClock.japan
+        let day = "2026-08-27"
+        let cases: [(String, String)] = [
+            ("10:30:00", "10:30"), ("49:10", "49:10"), ("1:05+1", "25:05"), ("10:00+1", "34:00"),
+            ("25:30", "25:30"), ("7:05", "07:05"), ("10:30:45", "10:30"),
+        ]
+        for (text, canonical) in cases {
+            guard let instant = japan.instant(serviceDate: day, clock: text) else {
+                Issue.record("nil instant for \(text)")
+                continue
+            }
+            #expect(japan.serviceClock(of: instant, serviceDate: day) == canonical, "\(text)")
+        }
+        guard let plain = japan.instant(serviceDate: day, clock: "10:30"),
+            let withSeconds = japan.instant(serviceDate: day, clock: "10:30:45"),
+            let suffixed = japan.instant(serviceDate: day, clock: "10:00+1"),
+            let extended = japan.instant(serviceDate: day, clock: "34:00")
+        else {
+            Issue.record("nil instant")
+            return
+        }
+        #expect(withSeconds.timeIntervalSince(plain) == 45)
+        #expect(suffixed == extended)
     }
 
     @Test("the region calendar is Gregorian, not era-based")

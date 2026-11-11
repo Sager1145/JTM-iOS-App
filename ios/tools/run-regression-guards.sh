@@ -2,6 +2,8 @@
 # Regression guards: one command, a few minutes. Run before every merge to main.
 # See ios/VERIFICATION.md ("Regression guards") and docs/maintenance/2026-11-06-regression-guards.md.
 # Runs every step even after a failure, prints per-step timings, exits non-zero if any step failed.
+# JTM_NATIVE_GUARDS=1 also runs the native editor time-zone suites (simulator; required before
+# merging changes to JourneyEditor/, RecordDate or region-clock code — see ios/VERIFICATION.md).
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT" || exit 2
@@ -44,6 +46,19 @@ if [ -f /private/tmp/jtm-heavy-job-run.sh ]; then
   step "swift guards + parity" bash /private/tmp/jtm-heavy-job-run.sh "${swift_cmd[@]}"
 else
   step "swift guards + parity" "${swift_cmd[@]}"
+fi
+
+if [ "${JTM_NATIVE_GUARDS:-0}" = 1 ]; then
+  # The editor's draft model lives in the app, so these run on the simulator.
+  native_cmd=(xcodebuild test -project "$ROOT/ios/RailMap.xcodeproj" -scheme RailMapTests
+    -destination "${JTM_SIM_DESTINATION:-platform=iOS Simulator,id=0DBE2488-0BEB-4932-9B55-091B3CC793B6}"
+    -only-testing:RailMapTests/TripDraftDeviceZoneTests
+    -only-testing:RailMapTests/TripDraftStoredFormatsTests)
+  if [ -f /private/tmp/jtm-heavy-job-run.sh ]; then
+    step "native editor time-zone suites" bash /private/tmp/jtm-heavy-job-run.sh "${native_cmd[@]}"
+  else
+    step "native editor time-zone suites" "${native_cmd[@]}"
+  fi
 fi
 
 echo
