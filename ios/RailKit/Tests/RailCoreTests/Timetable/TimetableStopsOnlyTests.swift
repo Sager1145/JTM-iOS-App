@@ -50,7 +50,7 @@ struct TimetableStopsOnlyTests {
         #expect(sqlite3_open_v2(url.path, &connection, SQLITE_OPEN_READONLY, nil) == SQLITE_OK)
         defer { sqlite3_close(connection) }
         let clock = try NSRegularExpression(
-            pattern: "(?<![0-9A-Za-z:@.+\\-])\\d{1,2}[:：]\\d{2}(?![0-9:])|(?<![0-9-])\\d{1,2}時(?:\\d{1,2}分|(?=[発着]))")
+            pattern: "(?<![0-9A-Za-z:@.+\\-])\\d{1,2}(?::|：)\\d{2}(?![0-9:])|(?<![0-9-])\\d{1,2}時(?:\\d{1,2}分|(?=[発着]))")
         let allowed = ["JR九州トレインナビ 2026年6月26日8:00 運転計画"]
         func rows(_ sql: String) -> [[String?]] {
             var statement: OpaquePointer?
@@ -87,7 +87,7 @@ struct TimetableStopsOnlyTests {
 
     @Test func bundledPatternsAndCatalogNotesCarryNoClockValue() throws {
         let clock = try NSRegularExpression(
-            pattern: "(?<![0-9A-Za-z:@.+\\-])\\d{1,2}[:：]\\d{2}(?![0-9:])|(?<![0-9-])\\d{1,2}時(?:\\d{1,2}分|(?=[発着]))")
+            pattern: "(?<![0-9A-Za-z:@.+\\-])\\d{1,2}(?::|：)\\d{2}(?![0-9:])|(?<![0-9-])\\d{1,2}時(?:\\d{1,2}分|(?=[発着]))")
         for name in ["train-service-patterns", "japan-through-services", "line-service-catalog", "train-service-branding"] {
             let url = try #require(Bundle.module.url(forResource: name, withExtension: "json"))
             let text = try String(contentsOf: url, encoding: .utf8)
@@ -129,20 +129,6 @@ struct TimetableStopsOnlyTests {
         #expect(applied.stops.count >= 2)
         #expect(applied.stops.allSatisfy { $0.arrival == nil && $0.departure == nil })
         #expect(applied.stops.allSatisfy { !$0.name.isEmpty })
-    }
-
-    @Test func applyingToTheRouteEditorKeepsIdentityAndLeavesTimesEmpty() throws {
-        let database = try TrainTimetableDatabase.bundled(bundle: .module)
-        let trips = try database.trips(on: "2026-09-30")
-        // Dropping "times" from the required facts keeps verified trips applicable.
-        let trip = try #require(trips.first { $0.canApplyToRouteEditor })
-        let draft = Train(id: "draft", date: trip.serviceDate, number: "", origin: "", destination: "", stops: [], region: "jp")
-        let applied = try #require(trip.applying(to: draft, ridden: false))
-        #expect(applied.stops.count >= 2)
-        #expect(applied.stops.allSatisfy { $0.arrival == nil && $0.departure == nil })
-        #expect(applied.number.hasPrefix(trip.service.canonicalName))
-        #expect(applied.company?.isEmpty == false)
-        #expect(!(applied.routeSections ?? []).isEmpty)
     }
 
     @Test func nameOnlyTicketWithAClockNeverMatchesAStopsOnlyTrip() throws {

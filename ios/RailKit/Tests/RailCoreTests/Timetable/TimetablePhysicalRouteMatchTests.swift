@@ -303,6 +303,19 @@ struct TimetablePhysicalRouteMatchTests {
             routeSections: TrainValidation.routeSectionsForSolving(for: wrong), among: [trip]) == .unavailable)
     }
 
+    @Test func untimedTripAppliesToTheEditorWithIdentityAndNoTimes() throws {
+        // "times" is no longer a required fact: a verified stops-only trip applies.
+        let trip = fixture(untimed: true)
+        #expect(trip.canApplyToRouteEditor)
+        let draft = Train(id: "draft", date: trip.serviceDate, number: "", origin: "", destination: "", stops: [], region: "jp")
+        let applied = try #require(trip.applying(to: draft, ridden: false))
+        #expect(applied.stops.map(\.name) == ["A", "B", "C", "D"])
+        #expect(applied.stops.allSatisfy { $0.arrival == nil && $0.departure == nil })
+        #expect(applied.number == "Express 1")
+        #expect(applied.company == "JR東日本")
+        #expect(applied.routeSections?.count == 3)
+    }
+
     @Test func untimedOvernightCallsKeepTheirCivilDay() throws {
         // B is after midnight (next civil day): a ride from B dated the next day matches.
         let trip = fixture(untimed: true, dayOffsets: [0, 1, 1, 1])
@@ -343,7 +356,7 @@ struct TimetablePhysicalRouteMatchTests {
                          timeAccuracy: String? = "minute", untimed: Bool = false,
                          dayOffsets: [Int]? = nil) -> TrainTimetableDatabase.Trip {
         let facts = ["identity", "train_number", "operator", "validity_calendar", "origin_destination",
-                     "stops", "times", "route_lines", "station_refs", "provenance"]
+                     "stops", "route_lines", "station_refs", "provenance"]
         let calls = codes.enumerated().map { index, code in
             TrainTimetableDatabase.StopTime(sequence: index, station: .init(
                 id: code, name: code, referenceKind: .currentN02, currentSourceCode: code,
