@@ -15,16 +15,8 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
 
     var body: some View {
         Section {
-            TypedDateTimeField(
-                title: text("departure", fallback: "Departure"),
-                value: model.timetableTimeSelection(isDeparture: true),
-                clock: model.region.clock,
-                identifier: "newTripDeparture")
-            TypedDateTimeField(
-                title: text("arrival", fallback: "Arrival"),
-                value: model.timetableTimeSelection(isDeparture: false),
-                clock: model.region.clock,
-                identifier: "newTripArrival")
+            dateTimeField(isDeparture: true)
+            dateTimeField(isDeparture: false)
             if let source = timeSource {
                 HStack(spacing: RailSpacing.s8) {
                     FillSourceBadge(source: source)
@@ -64,11 +56,24 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
         }
     }
 
+    private func dateTimeField(isDeparture: Bool) -> some View {
+        TypedDateTimeField(
+            title: isDeparture ? text("departure", fallback: "Departure") : text("arrival", fallback: "Arrival"),
+            value: isDeparture ? model.departure : model.arrival,
+            timeIsSet: model.scheduledIsSet(isDeparture: isDeparture),
+            clock: model.region.clock,
+            identifier: isDeparture ? "newTripDeparture" : "newTripArrival",
+            setDateTime: { model.setClock($0, isDeparture: isDeparture) },
+            setDay: { model.setDay($0, isDeparture: isDeparture) },
+            clearTime: { model.clearTime(isDeparture: isDeparture) })
+    }
+
     /// One observed clock, typed as H:MM, with how far it was from schedule.
     private func actualRow(isDeparture: Bool) -> some View {
         let id = isDeparture ? "newTripActualDeparture" : "newTripActualArrival"
         let raw = isDeparture ? model.actualDeparture : model.actualArrival
         let normalized = model.normalizedActual(raw, isDeparture: isDeparture)
+        let scheduled = model.scheduledClock(isDeparture: isDeparture)
         return VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             EditorCompactRow(title: localization.text(
                 isDeparture ? "ios.editor.actualDeparture" : "ios.editor.actualArrival")) {
@@ -80,14 +85,13 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                     .focused($focusedActual, equals: isDeparture)
                     .accessibilityIdentifier(id)
             }
-            if model.scheduledIsSet(isDeparture: isDeparture) { chipRow(isDeparture: isDeparture) }
+            if scheduled != nil { chipRow(isDeparture: isDeparture) }
             if raw != nil, normalized == nil {
                 Text(localization.text("ios.editor.invalidClock"))
                     .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
-            } else if model.scheduledIsSet(isDeparture: isDeparture), let status = StopTimingStatus.localizedLabel(
-                scheduled: model.scheduledClock(isDeparture: isDeparture), actual: normalized,
-                localization: localization) {
+            } else if let scheduled, let status = StopTimingStatus.localizedLabel(
+                scheduled: scheduled, actual: normalized, localization: localization) {
                 // Compared with the scheduled clock above; a placeholder time has no delay.
                 Text(status)
                     .railText(.secondary)

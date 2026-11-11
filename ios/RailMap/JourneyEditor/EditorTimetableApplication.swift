@@ -43,13 +43,9 @@ extension TripDraftModel {
             in: query, catalogs: catalog.map { [region.code: $0] } ?? [:])
     }
 
-    /// The Time section's clocks. Setting one is the reader's change.
-    func timetableTimeSelection(isDeparture: Bool) -> Binding<Date> {
-        Binding(
-            get: { isDeparture ? self.departure : self.arrival },
-            set: { value in
-                self.apply(isDeparture ? Patch(departure: value) : Patch(arrival: value), source: .reader)
-            })
+    /// The reader typed or picked a clock: it is theirs, and the day it falls on.
+    func setClock(_ value: Date, isDeparture: Bool) {
+        apply(isDeparture ? Patch(departure: value) : Patch(arrival: value), source: .reader)
     }
 
     /// Remove puts the header back as it was before the timetable filled it.
@@ -69,20 +65,22 @@ extension TripDraftModel {
     /// applied keeps its value.
     func restoreHeaderBeforeTimetable(keepingReaderEdits: Bool = false) {
         guard let header = headerBeforeTimetable else { return }
-        let kept = keepingReaderEdits ? touched.subtracting(header.touched) : []
+        let kept = keepingReaderEdits
+            ? touched.subtracting(header.touched).union(clearedClocks.subtracting(header.cleared)) : []
         if !kept.contains(.trainType) { trainType = header.trainType }
-        if !kept.contains(.departure) {
+        if !kept.contains(.departure), !kept.contains(.date) {
             departure = header.departure
             previousDeparture = header.previousDeparture
         }
-        if !kept.contains(.arrival) { arrival = header.arrival }
+        if !kept.contains(.arrival), !kept.contains(.arrivalDate) { arrival = header.arrival }
         let restored = Self.headerFields.subtracting(kept)
         touched = touched.subtracting(restored).union(header.touched.intersection(restored))
+        clearedClocks = clearedClocks.subtracting(restored).union(header.cleared.intersection(restored))
         for field in restored { filledBy[field] = header.filledBy[field] }
     }
 
     /// The fields a timetable's header snapshot restores.
-    static let headerFields: Set<Field> = [.departure, .arrival, .date, .trainType]
+    static let headerFields: Set<Field> = [.departure, .arrival, .date, .arrivalDate, .trainType]
 
     /// A timetable no longer applies: the formation it filled goes with it.
     func clearTimetable() {
@@ -201,7 +199,7 @@ extension TripDraftModel {
             headerBeforeTimetable = HeaderSnapshot(
                 trainType: trainType, departure: departure, arrival: arrival,
                 previousDeparture: previousDeparture,
-                touched: touched, filledBy: filledBy)
+                touched: touched, filledBy: filledBy, cleared: clearedClocks)
         }
         timetableTrain = applied
         timetableRideSpan = span
@@ -231,9 +229,12 @@ extension TripDraftModel {
         }
         // The timetable's clocks are not the reader's: nothing becomes touched.
         // A timetable a ticket found leaves a clock the reader set alone.
-        if automatic, touched.contains(.departure) { appliedDeparture = nil }
-        if automatic, touched.contains(.arrival) { appliedArrival = nil }
+        if automatic, touched.contains(.departure) || clearedClocks.contains(.departure) { appliedDeparture = nil }
+        if automatic, touched.contains(.arrival) || clearedClocks.contains(.arrival) { appliedArrival = nil }
         apply(Patch(departure: appliedDeparture, arrival: appliedArrival), source: .timetable)
+        // A timetable the reader chose gives the side a clock again.
+        if appliedDeparture != nil { clearedClocks.remove(.departure) }
+        if appliedArrival != nil { clearedClocks.remove(.arrival) }
         // A clock the ticket printed stays the ticket's: it is a real time
         // even if this timetable is later removed.
         if appliedDeparture != nil, filledBy[.departure] != .ticket { filledBy[.departure] = .timetable }
@@ -267,12 +268,16 @@ extension TripDraftModel {
         }
         let pickerDeparture = clock(
             departure, extraDays: extraDays(from: serviceDate, to: departure))
-        if timeIsSet(.departure), result.stops[span.lowerBound].departure != pickerDeparture {
+        if clearedClocks.contains(.departure) {
+            result.stops[span.lowerBound].departure = nil
+        } else if timeIsSet(.departure), result.stops[span.lowerBound].departure != pickerDeparture {
             result.stops[span.lowerBound].departure = pickerDeparture
         }
         let pickerArrival = clock(
             arrival, extraDays: extraDays(from: serviceDate, to: arrival))
-        if timeIsSet(.arrival), result.stops[span.upperBound].arrival != pickerArrival {
+        if clearedClocks.contains(.arrival) {
+            result.stops[span.upperBound].arrival = nil
+        } else if timeIsSet(.arrival), result.stops[span.upperBound].arrival != pickerArrival {
             result.stops[span.upperBound].arrival = pickerArrival
         }
         // The header shows a saved journey's own number and operator. Only a

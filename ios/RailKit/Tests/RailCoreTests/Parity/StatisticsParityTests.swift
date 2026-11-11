@@ -276,11 +276,15 @@ struct StatisticsParityTests {
         struct StopJSON: Decodable {
             let arrival: String?
             let departure: String?
+            let actualArrival: String?
+            let actualDeparture: String?
             let stopType: String?
             let rideSegment: AnyJSON
 
             private enum CodingKeys: String, CodingKey {
                 case arrival, departure
+                case actualArrival = "actual_arrival"
+                case actualDeparture = "actual_departure"
                 case stopType = "stop_type"
                 case rideSegment = "ride_segment"
             }
@@ -453,7 +457,8 @@ struct StatisticsParityTests {
             id: id, date: date, number: "", trainType: trainType, origin: "", destination: "",
             stops: stops.map {
                 Stop(
-                    name: "", arrival: $0.arrival, departure: $0.departure,
+                    name: "", arrival: $0.arrival, actualArrival: $0.actualArrival,
+                    departure: $0.departure, actualDeparture: $0.actualDeparture,
                     stopType: $0.stopType ?? "passenger_stop",
                     rideSegment: $0.rideSegment.isExactlyTrue)
             })

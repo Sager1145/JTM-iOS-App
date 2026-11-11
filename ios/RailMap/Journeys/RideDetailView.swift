@@ -357,7 +357,7 @@ struct RideDetailContent: View {
         VStack(alignment: .leading, spacing: RailSpacing.s12) {
             HStack(alignment: .top, spacing: RailSpacing.s12) {
                 stationSummary(
-                    stop: train.stops.first,
+                    stop: train.boardingStopIndex.map { train.stops[$0] },
                     fallbackName: train.origin,
                     fallbackCode: train.originStationCode,
                     role: localization.countryText("popup.departure", fallback: "Departure"),
@@ -371,7 +371,7 @@ struct RideDetailContent: View {
                     .accessibilityHidden(true)
                 Spacer(minLength: 8)
                 stationSummary(
-                    stop: train.stops.last,
+                    stop: train.alightingStopIndex.map { train.stops[$0] },
                     fallbackName: train.destination,
                     fallbackCode: train.destinationStationCode,
                     role: localization.countryText("popup.arrival", fallback: "Arrival"),
@@ -404,8 +404,12 @@ struct RideDetailContent: View {
         role: String,
         isArrival: Bool
     ) -> some View {
-        let time = isArrival ? stop?.arrival ?? stop?.departure
-            : stop?.departure ?? stop?.arrival
+        let timing = stop.flatMap { isArrival
+            ? RideCardTimeText.arrivalDisplay(of: $0) : RideCardTimeText.departureDisplay(of: $0) }
+        let time = timing?.shown
+        let spokenTime = timing.map { timing -> String in
+            StopTimingStatus.spoken(role: nil, timing, localization: localization)
+        }
         let platform = stop?.platformNumber.flatMap { $0 >= 0 ? $0 : nil }
         // The record's own spelling goes to the readings table with the code
         // the record carries; what the reader sees is the answer.
@@ -439,11 +443,19 @@ struct RideDetailContent: View {
                 Text(localization.text(RegistryStationDisplay.unresolvedKey))
                     .railText(.tertiary)
             }
-            if let time, !time.isEmpty {
+            if let timing {
                 HStack(spacing: RailSpacing.s4) {
-                    Text(time).font(.headline).monospacedDigit()
-                    if Dates.isCrossDayTimeString(time) { nextDayTag }
+                    Text(timing.shown).font(.headline).monospacedDigit()
+                    if let scheduled = timing.scheduled {
+                        Text(scheduled)
+                            .font(.subheadline)
+                            .monospacedDigit()
+                            .strikethrough()
+                            .foregroundStyle(.secondary)
+                    }
+                    if Dates.isCrossDayTimeString(timing.shown) { nextDayTag }
                 }
+                DelayMarker(display: timing, font: .caption)
             }
             if let platform {
                 PlatformBadge(number: platform, compact: true)
@@ -451,7 +463,8 @@ struct RideDetailContent: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            [role, stationSpoken(identity), time, time.map(nextDayVoiceOver) ?? nil,
+            [role, stationSpoken(identity), spokenTime,
+             time.map(nextDayVoiceOver) ?? nil,
              platform.map { localization.platformText($0) }]
                 .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ", ")
         )

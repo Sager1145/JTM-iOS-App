@@ -193,10 +193,13 @@ extension TripDraftModel {
             })
         }
 
-        let day = reading.date?.value.dayString(near: now, calendar: region.clock.calendar)
+        // The reader's own day outranks the ticket's.
+        let day = touched.contains(.date)
+            ? nil : reading.date?.value.dayString(near: now, calendar: region.clock.calendar)
         // The service day, before this fill moves the departure.
         let serviceDay = day ?? dayString(departure)
         if let time = reading.departureTime?.value, !touched.contains(.departure),
+           !clearedClocks.contains(.departure),
            let base = day ?? Optional(dayString(departure)),
            let date = timetableDate(Dates.addDays(base, time.dayOffset) ?? base,
                                     time: String(format: "%02d:%02d", time.hour, time.minute)) {
@@ -218,6 +221,7 @@ extension TripDraftModel {
         // departure's is the next morning. Writing it also pins the
         // departure the arrival follows, so the onChange shift adds nothing.
         if let time = reading.arrivalTime?.value, !touched.contains(.arrival),
+           !clearedClocks.contains(.arrival),
            let value = ticketArrival(time, serviceDay: serviceDay) {
             previousDeparture = departure
             apply(Patch(arrival: value), source: .ticket)

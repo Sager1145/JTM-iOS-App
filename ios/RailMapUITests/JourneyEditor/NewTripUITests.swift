@@ -166,9 +166,21 @@ final class NewTripUITests: XCTestCase {
         replaceSearch(search, with: "東京メトロ", in: app)
         XCTAssertTrue(stationRows(in: app).firstMatch.waitForExistence(timeout: 20),
                       "A company query must list that company's stations.")
-        XCTAssertTrue(stationRows(in: app).matching(NSPredicate(
-            format: "label CONTAINS '東京メトロ'")).firstMatch.waitForExistence(timeout: 8),
-                      "A company query must list stations whose label (title，qualifier) names 東京メトロ.")
+        // The row label carries the operator only for non-unique line names, so
+        // the company's own stations are proven by their identifier prefix.
+        // The lazy list starts with other operators' sections (Toei first), so
+        // swipe the station list, not the form, until a Tokyo Metro row mounts.
+        let metroRow = stationRows(in: app).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "newTripStation-jp-東京地下鉄-")).firstMatch
+        var swipes = 0
+        while !metroRow.waitForExistence(timeout: 2), swipes < 6 {
+            let anchorRow = stationRows(in: app).firstMatch
+            let from = anchorRow.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            from.press(forDuration: 0.05, thenDragTo: from.withOffset(CGVector(dx: 0, dy: -300)))
+            swipes += 1
+        }
+        XCTAssertTrue(metroRow.exists,
+                      "A company query must list stations of that company (identifier names 東京地下鉄).")
 
         replaceSearch(search, with: "Ginza", in: app)
         let ginzaShibuya = stationRows(in: app).matching(NSPredicate(
@@ -176,11 +188,14 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(ginzaShibuya.waitForExistence(timeout: 20))
         ginzaShibuya.tap()
 
+        // The origin's accessibility label is the spoken station form
+        // ("From，渋谷，… 3号線銀座線", StationQualifierCopy.spoken); the " · "
+        // line·operator text exists only in the picker's visible detail line.
         let shown = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label CONTAINS ' · ' AND label CONTAINS '銀座'"),
+            predicate: NSPredicate(format: "label CONTAINS '渋谷' AND label CONTAINS '銀座線'"),
             object: origin)
         XCTAssertEqual(XCTWaiter.wait(for: [shown], timeout: 8), .completed,
-                       "Picking a row must show \"<line> · <operator>\" on the origin.")
+                       "Picking a row must show the station and its line on the origin. \(origin.label)")
     }
 
     func testDisconnectedLinesShowError() {
@@ -190,7 +205,7 @@ final class NewTripUITests: XCTestCase {
         pickStation(field: "newTripDestination", query: "丸ノ内", code: "003390", in: app)
 
         let error = app.descendants(matching: .any)["newTripRouteError"]
-        XCTAssertTrue(reveal(error, in: app, timeout: 40))
+        XCTAssertTrue(reveal(error, in: app, timeout: 90))
         XCTAssertTrue(error.label.contains("赤坂見附"), error.label)
         XCTAssertFalse(app.buttons["newTripSave"].isEnabled,
                        "A disconnected pair must not be savable.")
@@ -207,7 +222,7 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(reveal(corridor, in: app, timeout: 20))
         let passes = app.buttons["newTripPassStations"]
         if !passes.exists { corridor.tap() }
-        XCTAssertTrue(reveal(passes, in: app, timeout: 8))
+        XCTAssertTrue(reveal(passes, in: app))
         passes.tap()
         // The disclosure group's aggregate label also contains 横浜. Target
         // the station itself, which is near the end of the long through route.
@@ -483,6 +498,9 @@ final class NewTripUITests: XCTestCase {
         // so the arrival is moved back again afterwards.
         NewTripTimetableTestSupport.setTime(hour: 10, minute: 0, field: "newTripDeparture", in: app)
         moveArrivalToPreviousDay(in: app)
+        // Only a set clock is compared: a date-only arrival is not recorded,
+        // so give the earlier arrival a clock of its own.
+        NewTripTimetableTestSupport.setTime(hour: 9, minute: 0, field: "newTripArrival", in: app)
         XCTAssertTrue(reveal(error, in: app, timeout: 8))
         XCTAssertFalse(save.isEnabled, "An arrival before a set departure must block Save.")
     }
@@ -495,7 +513,7 @@ final class NewTripUITests: XCTestCase {
         pickStation(field: "newTripDestination", query: "大崎", code: "004135",
                     lineID: "jp-東日本旅客鉄道-山手線", in: app)
         let number = app.textFields["newTripNumber"]
-        XCTAssertTrue(reveal(number, in: app, timeout: 8))
+        XCTAssertTrue(reveal(number, in: app))
         let typed = number.value as? String ?? ""
         XCTAssertTrue(typed.isEmpty || typed == number.placeholderValue,
                       "The train number starts empty.")
@@ -537,11 +555,11 @@ final class NewTripUITests: XCTestCase {
 
         let origin = app.buttons["newTripOrigin"]
         let destination = app.buttons["newTripDestination"]
-        XCTAssertTrue(reveal(origin, in: app, timeout: 8, upward: true))
+        XCTAssertTrue(reveal(origin, in: app, upward: true))
         XCTAssertTrue(origin.label.contains("品川"), origin.label)
         XCTAssertTrue(destination.label.contains("大崎"), destination.label)
         let number = app.textFields["newTripNumber"]
-        XCTAssertTrue(reveal(number, in: app, timeout: 8))
+        XCTAssertTrue(reveal(number, in: app))
         XCTAssertEqual(number.value as? String, "Rotate 42",
                        "Rotation must retain the draft number.")
     }
@@ -757,8 +775,8 @@ final class NewTripUITests: XCTestCase {
         let field = app.textFields["newTripNumber"]
         // Service fields sit above the route. After a long pass-station list
         // the number is off the top, so look down first and then back up.
-        let visible = reveal(field, in: app, timeout: 8)
-            || reveal(field, in: app, timeout: 16, upward: true)
+        // reveal reverses on its own at the end of the form.
+        let visible = reveal(field, in: app, timeout: 60)
         XCTAssertTrue(visible, "Train number must scroll into the form.")
         XCTAssertTrue(
             focusField(field, in: app),
@@ -843,7 +861,13 @@ final class NewTripUITests: XCTestCase {
         japan.timeZone = TimeZone(identifier: "Asia/Tokyo")!
         let yesterday = japan.date(byAdding: .day, value: -1, to: Date())!
         let parts = japan.dateComponents([.year, .month, .day], from: yesterday)
-        arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+        // A tap right after a scroll can land before the field takes focus.
+        for _ in 0..<4 {
+            arrival.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: 0.5)).tap()
+            if (arrival.value(forKey: "hasKeyboardFocus") as? Bool) == true { break }
+            _ = app.keyboards.firstMatch.waitForExistence(timeout: 1)
+            if (arrival.value(forKey: "hasKeyboardFocus") as? Bool) == true { break }
+        }
         if let current = arrival.value as? String, !current.isEmpty {
             arrival.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count + 2))
         }
@@ -915,17 +939,38 @@ final class NewTripUITests: XCTestCase {
     private func frameInBand(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
         let frame = element.frame
         guard frame.width > 1, frame.height > 1 else { return false }
-        return app.frame.insetBy(dx: 0, dy: 120).contains(frame)
+        var band = app.frame.insetBy(dx: 0, dy: 120)
+        // A half-height sheet starts the form low on screen: a field above
+        // the form's own top sits under the sheet header, where taps miss it.
+        let form = app.collectionViews["newTripForm"]
+        if form.exists, form.frame.height > 40 {
+            band = band.intersection(form.frame.insetBy(dx: 0, dy: 4))
+        }
+        return !band.isNull && band.contains(frame)
     }
 
+    /// Cheap scroll anchor: identity and position of the form's first mounted
+    /// cell. It stops changing once a nudge no longer moves the form.
+    private func formScrollAnchor(in app: XCUIApplication) -> String {
+        // One cheap query: every XCUI query costs ~0.3 s over the busy map,
+        // and the form has stopped moving when its first mounted row has.
+        let first = formList(in: app).cells.firstMatch
+        return first.exists ? "\(first.identifier)|\(Int(first.frame.minY))" : "-"
+    }
+
+    /// The add-trip form is long and lazy (Quick fill, Journey, Time, Service,
+    /// Route, stops, Train and car, Ticket, More details) and the sheet may sit
+    /// at a half-height detent, so a row can be many swipes away. Keep scrolling
+    /// one way until the form stops moving (its end), and only then reverse.
     @discardableResult
     private func reveal(
         _ element: XCUIElement, in app: XCUIApplication,
-        timeout: TimeInterval = 20, upward: Bool = false
+        timeout: TimeInterval = 40, upward: Bool = false
     ) -> Bool {
         let deadline = Date().addingTimeInterval(timeout)
         var searchUp = upward
         var streak = 0
+        var anchor = formScrollAnchor(in: app)
         if element.waitForExistence(timeout: min(2, max(0, timeout))), revealed(element, in: app) {
             return true
         }
@@ -934,9 +979,7 @@ final class NewTripUITests: XCTestCase {
                 if revealed(element, in: app) { return true }
                 searchUp = element.frame.midY < app.frame.midY
                 streak = 0
-            } else if streak >= 8 {
-                // Keep one direction long enough to cross the form.
-                // Toggling every swipe walks back to the start.
+            } else if streak >= 20 {
                 searchUp.toggle()
                 streak = 0
             }
@@ -946,6 +989,15 @@ final class NewTripUITests: XCTestCase {
                 predicate: NSPredicate { _, _ in self.revealed(element, in: app) }, object: nil)
             if XCTWaiter.wait(for: [visible], timeout: min(0.5, max(0, deadline.timeIntervalSinceNow))) == .completed {
                 return true
+            }
+            if !element.exists {
+                let now = formScrollAnchor(in: app)
+                if now == anchor, streak > 1 {
+                    // The nudge moved nothing: this end of the form is reached.
+                    searchUp.toggle()
+                    streak = 0
+                }
+                anchor = now
             }
         }
         return revealed(element, in: app)

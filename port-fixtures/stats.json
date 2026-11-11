@@ -111568,12 +111568,16 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": 1
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": 1
         }
@@ -111589,12 +111593,16 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": "true"
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": "true"
         }
@@ -111610,12 +111618,16 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": false
         }
@@ -111631,18 +111643,24 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "10:30",
           "departure": "10:31",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": "pass_through",
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111658,18 +111676,24 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": false
         },
         {
           "arrival": "10:30",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": "pass_through",
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": false
         }
@@ -111685,12 +111709,16 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": "pass_through",
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111706,12 +111734,16 @@
         {
           "arrival": null,
           "departure": "22:10",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "06:05",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111727,12 +111759,16 @@
         {
           "arrival": null,
           "departure": "22:10",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "06:05 +1",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111748,12 +111784,16 @@
         {
           "arrival": null,
           "departure": "22:10",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "25:10",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111769,12 +111809,16 @@
         {
           "arrival": "10:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": null,
           "departure": "11:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111790,12 +111834,16 @@
         {
           "arrival": null,
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": null,
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111811,12 +111859,16 @@
         {
           "arrival": null,
           "departure": "とても朝",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111832,12 +111884,16 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "10:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
@@ -111853,23 +111909,204 @@
         {
           "arrival": null,
           "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "23:00",
           "departure": "23:01",
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         },
         {
           "arrival": "11:00",
           "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
           "stop_type": null,
           "ride_segment": true
         }
       ],
       "rideMinutes": 60,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Actual-only trip: no scheduled clocks, the observed ones give the minutes.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": null,
+          "actual_departure": "10:00",
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": "11:30",
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 90,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Scheduled-only trip: no actual clocks, the scheduled ones give the minutes.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": "11:00",
+          "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 60,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Mixed: scheduled departure with an observed arrival.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": "11:00",
+          "departure": null,
+          "actual_arrival": "11:20",
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 80,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Actual outranks scheduled at both ends.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": "10:05",
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": "11:00",
+          "departure": null,
+          "actual_arrival": "11:20",
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 75,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "A blank actual is absent, so the scheduled clock is used.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": "10:00",
+          "actual_arrival": null,
+          "actual_departure": "",
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": "11:00",
+          "departure": null,
+          "actual_arrival": "  ",
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 60,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Actual overnight 23:50 to 24:20 is thirty minutes.",
+      "country": "jp",
+      "trainType": "寝台特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": null,
+          "actual_departure": "23:50",
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": "24:20",
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": 30,
+      "serviceGroup": "ltd"
+    },
+    {
+      "why": "Date-only trip: no clocks at all is null, not zero.",
+      "country": "jp",
+      "trainType": "特急",
+      "stops": [
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        },
+        {
+          "arrival": null,
+          "departure": null,
+          "actual_arrival": null,
+          "actual_departure": null,
+          "stop_type": null,
+          "ride_segment": true
+        }
+      ],
+      "rideMinutes": null,
       "serviceGroup": "ltd"
     },
     {

@@ -26,6 +26,8 @@ final class TripDraftModel {
         case arrival
         /// The departure's day, from a ticket that printed no time.
         case date
+        /// The arrival's day, set on its own without a clock.
+        case arrivalDate
         case origin
         case destination
         case trainType
@@ -79,6 +81,7 @@ final class TripDraftModel {
         var previousDeparture: Date
         var touched: Set<Field>
         var filledBy: [Field: FillSource]
+        var cleared: Set<Field> = []
     }
 
     /// A route change that would drop recorded stops, waiting for the reader.
@@ -203,6 +206,9 @@ final class TripDraftModel {
     var showsCompletion = false
     /// Header fields the reader set (`apply(_:source:)` with `.reader`).
     var touched: Set<Field> = []
+    /// Clocks (`.departure`, `.arrival`) the reader emptied: no source writes
+    /// them again, and a saved journey's clock on that side is removed.
+    var clearedClocks: Set<Field> = []
     /// Fields an automatic source wrote, and which source. Cleared for a
     /// field the moment the reader sets it.
     var filledBy: [Field: FillSource] = [:]
@@ -276,14 +282,14 @@ final class TripDraftModel {
 
     // MARK: - actual times
 
-    /// The stop the reader boarded at and the one they left at: the stops a
-    /// timetable or the editor marked origin and destination, else the ends.
+    /// The stop the reader boarded at and the one they left at; RailKit's
+    /// one rule (`Train.boardingStopIndex` / `alightingStopIndex`).
     nonisolated static func boardingIndex(_ stops: [Stop]) -> Int? {
-        stops.firstIndex { $0.stopType == "origin" } ?? (stops.isEmpty ? nil : 0)
+        stops.boardingStopIndex
     }
 
     nonisolated static func alightingIndex(_ stops: [Stop]) -> Int? {
-        stops.lastIndex { $0.stopType == "destination" } ?? (stops.count >= 2 ? stops.count - 1 : nil)
+        stops.alightingStopIndex
     }
 
     func seedActualTimes(from train: Train) {
@@ -322,8 +328,9 @@ final class TripDraftModel {
     /// A chip: the actual clock is the scheduled clock plus `minutes`, done on
     /// the clock text alone (no calendar, no time zone). A typed value stays.
     func applyActualChip(minutes: Int, isDeparture: Bool) {
-        guard !actualIsTyped(isDeparture: isDeparture), scheduledIsSet(isDeparture: isDeparture),
-              case .valid(_, let planned) = EditorTime.parseTime(scheduledClock(isDeparture: isDeparture))
+        guard !actualIsTyped(isDeparture: isDeparture),
+              let scheduled = scheduledClock(isDeparture: isDeparture),
+              case .valid(_, let planned) = EditorTime.parseTime(scheduled)
         else { return }
         let total = planned.serviceMinutes + minutes
         let time = ServiceClockTime(dayOffset: total / 1440, hour: total % 1440 / 60, minute: total % 60)
@@ -334,7 +341,8 @@ final class TripDraftModel {
     }
 
     /// The scheduled clock an actual one is compared with, as stored.
-    func scheduledClock(isDeparture: Bool) -> String {
+    func scheduledClock(isDeparture: Bool) -> String? {
+        guard scheduledIsSet(isDeparture: isDeparture) else { return nil }
         let date = isDeparture ? departure : arrival
         return clock(date, extraDays: extraDays(from: headerServiceDate(), to: date))
     }
@@ -342,7 +350,7 @@ final class TripDraftModel {
     /// The clock a typed one is read against: the scheduled clock when it is
     /// real, else the actual departure for an arrival. Never a placeholder.
     func plannedReference(isDeparture: Bool) -> String? {
-        if scheduledIsSet(isDeparture: isDeparture) { return scheduledClock(isDeparture: isDeparture) }
+        if let scheduled = scheduledClock(isDeparture: isDeparture) { return scheduled }
         guard !isDeparture, case .valid(_, let left) = EditorTime.parseTime(actualDeparture) else { return nil }
         return EditorTime.canonical(left)
     }
@@ -415,10 +423,46 @@ final class TripDraftModel {
         }
         if source == .reader {
             touched.insert(field)
+            clearedClocks.remove(field)
             filledBy[field] = nil
             if isDeparture { filledBy[.date] = nil }
         }
         if isDeparture { departure = value } else { arrival = value }
+    }
+
+    /// The reader moved only the day: the side keeps its wall clock, and
+    /// neither clock becomes set. A departure day other than the applied
+    /// timetable's replaces it, like a time on another day.
+    func setDay(_ day: Date, isDeparture: Bool) {
+        let calendar = region.clock.calendar
+        if isDeparture, let timetableTrain, dayString(day) != timetableTrain.date,
+           dayString(day) != dayString(departure) {
+            clearTimetable()
+        }
+        let current = isDeparture ? departure : arrival
+        var parts = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: current)
+        let civil = calendar.dateComponents([.year, .month, .day], from: day)
+        parts.year = civil.year
+        parts.month = civil.month
+        parts.day = civil.day
+        guard let next = calendar.date(from: parts) else { return }
+        markTouched(isDeparture ? .date : .arrivalDate)
+        if isDeparture { departure = next } else { arrival = next }
+    }
+
+    /// The reader emptied a clock: it is unset, and the day it was on stays counted.
+    func clearTime(isDeparture: Bool) {
+        let side: Field = isDeparture ? .departure : .arrival
+        if isDeparture {
+            if touched.contains(.departure) {
+                touched.insert(.date)
+            } else if filledBy[.departure] == .ticket {
+                filledBy[.date] = .ticket
+            }
+        }
+        touched.remove(side)
+        filledBy[side] = nil
+        clearedClocks.insert(side)
     }
 
     // MARK: - editor events
@@ -427,6 +471,18 @@ final class TripDraftModel {
     func departureChanged(to newValue: Date) {
         // Wall-clock minutes on the region's calendar, not a raw interval.
         let calendar = region.clock.calendar
+        // A blank departure clock shows a placeholder hour. A typed arrival
+        // follows a day move by whole days, keeping its own clock, and is
+        // never clamped onto that placeholder.
+        if !scheduledIsSet(isDeparture: true), timeIsSet(.arrival) {
+            let days = calendar.dateComponents(
+                [.day], from: calendar.startOfDay(for: previousDeparture),
+                to: calendar.startOfDay(for: newValue)).day ?? 0
+            arrival = calendar.date(byAdding: .day, value: days, to: arrival) ?? arrival
+            previousDeparture = newValue
+            saveIssues = []
+            return
+        }
         let moved = calendar.dateComponents([.minute], from: previousDeparture, to: newValue).minute ?? 0
         let shiftedArrival = calendar.date(byAdding: .minute, value: moved, to: arrival) ?? arrival
         arrival = max(shiftedArrival, newValue)
@@ -498,9 +554,9 @@ final class TripDraftModel {
             // Each side separately: the reader's clock stays, the other
             // starts over on the new region's wall clock.
             let now = Date()
-            if !timeIsSet(.departure) { departure = now }
+            if !timeIsSet(.departure), !touched.contains(.date) { departure = now }
             previousDeparture = departure
-            if !timeIsSet(.arrival) { arrival = now }
+            if !timeIsSet(.arrival), !touched.contains(.arrivalDate) { arrival = now }
         }
         limitedExpressName = ""
         origin = nil
@@ -555,6 +611,8 @@ final class TripDraftModel {
         }
         if trainType != seed.trainType || trainNumber != seed.number || companyName != seed.company
             || departure != seed.departure || arrival != seed.arrival { return true }
+        if clearedClocks.contains(.departure) && seed.departureKnown
+            || clearedClocks.contains(.arrival) && seed.arrivalKnown { return true }
         if hasRecordRoute { return routeEdited }
         return origin != nil || destination != nil || !vias.isEmpty
     }
@@ -824,6 +882,7 @@ final class TripDraftModel {
         arrival = seeded.arrival
         previousDeparture = seeded.departure
         riddenOverride = nil
+        clearedClocks = []
         seedActualTimes(from: completed)
         seededStationIdentity = nil
         if let catalog { seedStations(from: catalog) }
@@ -831,30 +890,59 @@ final class TripDraftModel {
 
     var isRidden: Bool {
         riddenOverride ?? (hasRecordRoute ? RideLedger.hasBeenRidden(draft) : prefillRidden(
-            forDate: dayString(departure),
-            startClock: normalizedActual(actualDeparture, isDeparture: true) ?? clock(departure, extraDays: 0),
-            timeIsSet: headerTimeIsSet || normalizedActual(actualDeparture, isDeparture: true) != nil))
+            forDate: dayString(departure), startClock: startClock, timeIsSet: startClock != nil))
     }
 
-    /// The header's clocks came from the reader, a timetable or an adopted
-    /// completion. A new trip's untouched header shows only the moment the
-    /// editor opened, which is a date and not a time.
+    /// The clock the trip starts at: the actual departure, else a real
+    /// scheduled one. Nil when every clock is the editor's placeholder.
+    private var startClock: String? {
+        if let actual = normalizedActual(actualDeparture, isDeparture: true) { return actual }
+        if scheduledIsSet(isDeparture: true) { return clock(departure, extraDays: 0) }
+        if scheduledIsSet(isDeparture: false) {
+            return clock(arrival, extraDays: extraDays(from: departure, to: arrival))
+        }
+        return nil
+    }
+
+    /// A header clock is real: the reader, a ticket, a timetable or the saved
+    /// journey gave it. A new trip's untouched header shows only the moment
+    /// the editor opened, which is a date and not a time.
     var headerTimeIsSet: Bool {
-        timetableTrain != nil || timeIsSet(.departure) || timeIsSet(.arrival)
-            || seed.departureKnown || seed.arrivalKnown
+        scheduledIsSet(isDeparture: true) || scheduledIsSet(isDeparture: false)
     }
 
-    /// The reader or a ticket gave this clock; the editor's placeholder did not.
+    /// The reader or a ticket gave this clock, and it was not emptied since;
+    /// the editor's placeholder did not.
     func timeIsSet(_ field: Field) -> Bool {
-        touched.contains(field) || filledBy[field] == .ticket
+        !clearedClocks.contains(field) && (touched.contains(field) || filledBy[field] == .ticket)
+    }
+
+    /// The departure's day is the reader's or a ticket's: set on its own, or
+    /// carried by a departure clock (even one since emptied).
+    var dayIsSet: Bool {
+        timeIsSet(.departure) || touched.contains(.date) || filledBy[.date] != nil
     }
 
     /// One scheduled clock is real: the reader or a ticket set it, a
     /// timetable supplied it, or the saved journey had it. Anything else is
     /// the editor's placeholder and is never written, compared or labelled.
     func scheduledIsSet(isDeparture: Bool) -> Bool {
-        timetableTrain != nil || timeIsSet(isDeparture ? .departure : .arrival)
-            || (isDeparture ? seed.departureKnown : seed.arrivalKnown)
+        let side: Field = isDeparture ? .departure : .arrival
+        return !clearedClocks.contains(side)
+            && (timeIsSet(side) || timetableSupplies(isDeparture: isDeparture)
+                || (isDeparture ? seed.departureKnown : seed.arrivalKnown))
+    }
+
+    /// The applied timetable has a readable clock at the ride's boarding
+    /// (departure) or alighting (arrival) stop.
+    private func timetableSupplies(isDeparture: Bool) -> Bool {
+        guard let timetableTrain, !timetableTrain.stops.isEmpty else { return false }
+        let span = timetableRideSpan ?? 0...(timetableTrain.stops.count - 1)
+        let index = isDeparture ? span.lowerBound : span.upperBound
+        guard timetableTrain.stops.indices.contains(index),
+              let time = isDeparture ? timetableTrain.stops[index].departure : timetableTrain.stops[index].arrival
+        else { return false }
+        return timetableDate(timetableTrain.date ?? dayString(departure), time: time) != nil
     }
 
     /// Both scheduled clocks are real and arrival is before departure.
@@ -1267,18 +1355,20 @@ final class TripDraftModel {
     func applyHeader(to result: inout Train) {
         let last = result.stops.count - 1
         let serviceDate = headerServiceDate()
-        if timeIsSet(.departure) || filledBy[.date] != nil {
-            result.date = serviceDate
-            if last >= 1, seed.departureKnown
-                || clock(departure, extraDays: 0) != clock(seed.departure, extraDays: 0) {
+        if dayIsSet { result.date = serviceDate }
+        if last >= 1 {
+            if clearedClocks.contains(.departure) {
+                result.stops[0].departure = nil
+            } else if dayIsSet, timeIsSet(.departure) || seed.departureKnown {
                 result.stops[0].departure = clock(
                     departure, extraDays: extraDays(from: serviceDate, to: departure))
             }
-        }
-        if timeIsSet(.arrival), last >= 1, seed.arrivalKnown
-            || clock(arrival, extraDays: 0) != clock(seed.arrival, extraDays: 0) {
-            result.stops[last].arrival = clock(
-                arrival, extraDays: extraDays(from: serviceDate, to: arrival))
+            if clearedClocks.contains(.arrival) {
+                result.stops[last].arrival = nil
+            } else if timeIsSet(.arrival) || seed.arrivalKnown && touched.contains(.arrivalDate) {
+                result.stops[last].arrival = clock(
+                    arrival, extraDays: extraDays(from: serviceDate, to: arrival))
+            }
         }
         let number = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
         if number != seed.number.trimmingCharacters(in: .whitespacesAndNewlines), !number.isEmpty {
@@ -1294,7 +1384,7 @@ final class TripDraftModel {
     /// day the service started, not on the calendar day it left.
     func headerServiceDate() -> String {
         let saved = Dates.normalizeDateString(draft.date)
-        guard timeIsSet(.departure) || filledBy[.date] != nil else { return saved ?? dayString(departure) }
+        guard dayIsSet else { return saved ?? dayString(departure) }
         let calendar = region.clock.calendar
         let moved = calendar.dateComponents(
             [.day], from: calendar.startOfDay(for: seed.departure),
@@ -1369,9 +1459,14 @@ final class TripDraftModel {
     /// Hours run past 24 when arrival falls on a later calendar day (`25:10`).
     func clock(_ date: Date, extraDays: Int) -> String {
         let calendar = region.clock.calendar
-        let hour = calendar.component(.hour, from: date) + extraDays * 24
+        let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
-        return String(format: "%02d:%02d", hour, minute)
+        // Padded up to hour 99, as ordinary records store it. Beyond that the
+        // storage grammar's `H:MM+N` form, which every reader can parse.
+        if extraDays * 24 + hour > 99 {
+            return EditorTime.canonical(ServiceClockTime(dayOffset: extraDays, hour: hour, minute: minute))
+        }
+        return String(format: "%02d:%02d", extraDays * 24 + hour, minute)
     }
 
     func extraDays(from departure: Date, to arrival: Date) -> Int {

@@ -1828,19 +1828,23 @@ public enum Statistics {
     ///
     /// A span that is still negative after that single wrap (for example
     /// `23:50+1` → `00:20`) is a data error, not a duration, and answers `nil`.
-    /// This deliberately diverges from `app/public/app-stats.js`
-    /// `trainRideMinutes`, whose JS twin still returns the negative; mirroring
-    /// it is a website-repo follow-up. The port fixtures contain no negative
-    /// cases, so parity stays green.
+    /// The JS twin `app/public/app-stats.js` `trainRideMinutes` mirrors this
+    /// and returns `null` on a negative span.
+    ///
+    /// An observed clock outranks the scheduled one at each end: the boarding
+    /// stop's `actualDeparture` and the alighting stop's `actualArrival` are
+    /// read first (a blank one is absent), as `app-stats.js` does.
     public static func trainRideMinutes(_ train: Train) -> Double? {
         let stops = train.stops
         guard let bounds = rideBoundaryIndexes(stops) else { return nil }
         let first = stops[bounds.first]
         let last = stops[bounds.last]
         guard
-            let start = Dates.parseTimeToMinutes(first.departure)
+            let start = Dates.parseTimeToMinutes(first.actualDeparture)
+                ?? Dates.parseTimeToMinutes(first.departure)
                 ?? Dates.parseTimeToMinutes(first.arrival),
-            var end = Dates.parseTimeToMinutes(last.arrival)
+            var end = Dates.parseTimeToMinutes(last.actualArrival)
+                ?? Dates.parseTimeToMinutes(last.arrival)
                 ?? Dates.parseTimeToMinutes(last.departure)
         else { return nil }
         if end < start { end += 24 * 60 }
@@ -1856,6 +1860,8 @@ public enum Statistics {
     /// The zone shift is applied before the overnight wrap, so a westbound
     /// ride printed 23:30 (JST) → 23:10 (TST) is 40 minutes, not 1480. As in
     /// the one-argument form, a span still negative after one wrap is nil.
+    ///
+    /// Actual clocks outrank scheduled ones exactly as in the one-argument form.
     public static func trainRideMinutes(_ train: Train, clock: JourneyClock) -> Double? {
         guard clock.crossesTimeZones else { return trainRideMinutes(train) }
         let stops = train.stops
@@ -1863,9 +1869,11 @@ public enum Statistics {
         let first = stops[bounds.first]
         let last = stops[bounds.last]
         guard
-            let start = Dates.parseTimeToMinutes(first.departure)
+            let start = Dates.parseTimeToMinutes(first.actualDeparture)
+                ?? Dates.parseTimeToMinutes(first.departure)
                 ?? Dates.parseTimeToMinutes(first.arrival),
-            let end = Dates.parseTimeToMinutes(last.arrival)
+            let end = Dates.parseTimeToMinutes(last.actualArrival)
+                ?? Dates.parseTimeToMinutes(last.arrival)
                 ?? Dates.parseTimeToMinutes(last.departure)
         else { return nil }
         let shift = Double(clock.offsetMinutes(

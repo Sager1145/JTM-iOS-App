@@ -28,8 +28,9 @@ struct ShareCardBuilder {
     // MARK: journey
 
     func journey(_ train: Train, stops mode: ShareStopsMode) -> ShareCardContent {
-        let first = train.stops.first(where: { $0.stopType == "origin" }) ?? train.stops.first
-        let last = train.stops.last(where: { $0.stopType == "destination" }) ?? train.stops.last
+        // The same boarding and alighting stops as the card, detail and sort.
+        let first = train.stops.boardingStopIndex.map { train.stops[$0] }
+        let last = train.stops.alightingStopIndex.map { train.stops[$0] }
         let origin = l.stationName(train.origin, in: train, code: train.originStationCode)
         let destination = l.stationName(train.destination, in: train, code: train.destinationStationCode)
         // main: operator names through companyText (English operator names).
@@ -63,8 +64,8 @@ struct ShareCardBuilder {
             title: JourneyTitle.compact(train),
             subtitle: train.date.map { StatisticsFormat.spelledDate($0, localization: l) },
             body: .journey(
-                origin: origin, departure: first?.departure ?? first?.arrival,
-                destination: destination, arrival: last?.arrival ?? last?.departure),
+                origin: origin, departure: first.flatMap { RideCardTimeText.departure(of: $0) },
+                destination: destination, arrival: last.flatMap { RideCardTimeText.arrival(of: $0) }),
             facts: facts,
             rows: rows,
             rowsHeading: l.text(mode.localizationKey),
@@ -86,7 +87,7 @@ struct ShareCardBuilder {
             let important = index == 0 || index == last || changes.contains(index)
                 || stop.stopType == "passenger_stop"
             if mode == .key, !important { return nil }
-            let time = stop.departure ?? stop.arrival ?? "—"
+            let time = RideCardTimeText.departure(of: stop) ?? "—"
             return ShareCardContent.Row(
                 id: "\(index)",
                 leading: time,

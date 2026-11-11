@@ -147,4 +147,27 @@ struct IntegrationReviewFixesTests {
         #expect(!RiddenRouteStore.probeGraphIsCached)
     }
     #endif
+
+    // MARK: share card endpoints
+
+    @Test("the share card times the boarding and alighting stops the card uses")
+    func shareCardUsesBoardingAndAlightingStops() throws {
+        let train = Train(
+            id: "mid", date: "2026-07-03", number: "1", origin: "新横浜", destination: "名古屋",
+            stops: [
+                Stop(name: "東京", departure: "07:00"),
+                Stop(name: "新横浜", departure: "08:10", actualDeparture: "08:15", rideSegment: true),
+                Stop(name: "名古屋", arrival: "09:30", rideSegment: true),
+                Stop(name: "新大阪", arrival: "10:00"),
+            ],
+            region: "jp")
+        let card = ShareCardBuilder(localization: AppLocalization(), passport: nil).journey(train, stops: .key)
+        guard case let .journey(_, departure, _, arrival) = card.body else {
+            Issue.record("expected a journey body")
+            return
+        }
+        #expect(departure == RideCardTimeText.departure(of: train.stops[1]))
+        #expect(departure != RideCardTimeText.departure(of: train.stops[0]))
+        #expect(arrival == RideCardTimeText.arrival(of: train.stops[2]))
+    }
 }

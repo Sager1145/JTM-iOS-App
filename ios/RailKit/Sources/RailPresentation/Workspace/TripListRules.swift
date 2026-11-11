@@ -83,7 +83,7 @@ public enum TripListRules {
         return end <= now
     }
 
-    /// The instant the trip starts: first actual departure, else first
+    /// The instant the trip starts: the boarding stop's actual departure, else first
     /// departure, else first arrival, else the end of its date.
     public static func start(of train: Train, clock: RegionClock) -> Date? {
         guard let day = clock.startOfDay(train.date) else { return nil }
@@ -91,7 +91,7 @@ public enum TripListRules {
         return day.addingTimeInterval(start * 60)
     }
 
-    /// The instant the trip ends: last actual arrival, else last arrival,
+    /// The instant the trip ends: the alighting stop's actual arrival, else last arrival,
     /// else last departure, else the end of its date.
     ///
     /// A record whose last time reads earlier than its first without a
@@ -119,14 +119,17 @@ public enum TripListRules {
     // MARK: - clock strings
 
     private static func actualStart(_ train: Train) -> Double? {
-        for stop in train.stops {
-            if let minutes = Dates.parseTimeToMinutes(stop.actualDeparture) { return minutes }
-        }
-        return nil
+        guard let boarding = train.boardingStopIndex else { return nil }
+        return Dates.parseTimeToMinutes(train.stops[boarding].actualDeparture)
     }
 
     private static func scheduledStart(_ train: Train) -> Double? {
         guard train.listByDate != true else { return nil }
+        if let boarding = train.boardingStopIndex,
+            let minutes = Dates.parseTimeToMinutes(train.stops[boarding].departure)
+        {
+            return minutes
+        }
         for stop in train.stops {
             if let minutes = Dates.parseTimeToMinutes(stop.departure) { return minutes }
         }
@@ -137,14 +140,17 @@ public enum TripListRules {
     }
 
     private static func actualEnd(_ train: Train) -> Double? {
-        for stop in train.stops.reversed() {
-            if let minutes = Dates.parseTimeToMinutes(stop.actualArrival) { return minutes }
-        }
-        return nil
+        guard let alighting = train.alightingStopIndex else { return nil }
+        return Dates.parseTimeToMinutes(train.stops[alighting].actualArrival)
     }
 
     private static func scheduledEnd(_ train: Train) -> Double? {
         guard train.listByDate != true else { return nil }
+        if let alighting = train.alightingStopIndex,
+            let minutes = Dates.parseTimeToMinutes(train.stops[alighting].arrival)
+        {
+            return minutes
+        }
         for stop in train.stops.reversed() {
             if let minutes = Dates.parseTimeToMinutes(stop.arrival) { return minutes }
         }

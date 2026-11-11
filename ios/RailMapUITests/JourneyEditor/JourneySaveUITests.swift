@@ -103,13 +103,16 @@ final class JourneySaveUITests: XCTestCase {
         // back is the same draft the confirmation screen used to round-trip.
         let origin = app.descendants(matching: .any)["rideEditorStop-0"].firstMatch
         // The stops sit above the details the group is part of.
-        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, unmountedRowIsAbove: true))
+        XCTAssertTrue(EditorUITestSupport.reveal(origin, in: app, maxDrags: 16, unmountedRowIsAbove: true))
         EditorUITestSupport.tap(origin, in: app)
         XCTAssertTrue(app.otherElements["rideEditorStopName"].waitForExistence(timeout: 8))
         // The stop screen's back button, whatever its title.
         app.navigationBars.buttons.element(boundBy: 0).tap()
 
-        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app), app.debugDescription)
+        // The system navigation bar and 44 pt rows put the group name more
+        // than 8 drags below the stops, so search downward with headroom.
+        XCTAssertTrue(EditorUITestSupport.reveal(name, in: app, maxDrags: 16, unmountedRowIsAbove: false),
+                      app.debugDescription)
         XCTAssertTrue(name.waitForExistence(timeout: 5))
         XCTAssertEqual(name.value as? String, "Rail holiday")
         name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()

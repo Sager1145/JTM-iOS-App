@@ -150,6 +150,18 @@ enum EditorStrings {
             .zhHans: "提前 {minutes} 分钟", .zhHant: "提前 {minutes} 分鐘",
             .ja: "{minutes}分早い", .en: "{minutes} min early",
         ],
+        "ios.delay.markerLate": [
+            .zhHans: "+{minutes} 分钟", .zhHant: "+{minutes} 分鐘",
+            .ja: "+{minutes}分", .en: "+{minutes} min",
+        ],
+        "ios.delay.markerEarly": [
+            .zhHans: "\u{2212}{minutes} 分钟", .zhHant: "\u{2212}{minutes} 分鐘",
+            .ja: "\u{2212}{minutes}分", .en: "\u{2212}{minutes} min",
+        ],
+        "ios.delay.scheduledSpoken": [
+            .zhHans: "计划 {time}", .zhHant: "計劃 {time}",
+            .ja: "予定 {time}", .en: "scheduled {time}",
+        ],
         "ios.editor.limitedExpressName": [
             .zhHans: "特急名称", .zhHant: "特急名稱",
             .ja: "特急列車名", .en: "Limited express name",

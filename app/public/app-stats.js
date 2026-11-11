@@ -781,8 +781,9 @@ function aggregateMileageStats(idx, entries, asOf) {
 }
 
 // Ride TIME of one train: first effectively-ridden stopping station's
-// departure -> last one's arrival (falling back to the other field when one
-// is missing; "+1" day offsets are handled by parseTimeToMinutes, and a plain
+// departure -> last one's arrival. An observed actual_departure / actual_arrival
+// outranks the scheduled field at its end (a blank actual is absent); either
+// end falls back to the other field when one is missing; "+1" day offsets are handled by parseTimeToMinutes, and a plain
 // end-before-start wraps overnight). null = no usable times.
 function trainRideMinutes(train) {
   const stops = train.stops || [];
@@ -791,12 +792,17 @@ function trainRideMinutes(train) {
   const first = stops[ridden[0]];
   const last = stops[ridden[ridden.length - 1]];
   const start =
-    parseTimeToMinutes(first.departure) ?? parseTimeToMinutes(first.arrival);
+    parseTimeToMinutes(first.actual_departure) ??
+    parseTimeToMinutes(first.departure) ??
+    parseTimeToMinutes(first.arrival);
   let end =
-    parseTimeToMinutes(last.arrival) ?? parseTimeToMinutes(last.departure);
+    parseTimeToMinutes(last.actual_arrival) ??
+    parseTimeToMinutes(last.arrival) ??
+    parseTimeToMinutes(last.departure);
   if (start === null || end === null) return null;
   if (end < start) end += 24 * 60;
-  return end - start;
+  const span = end - start;
+  return span < 0 ? null : span;
 }
 
 function sumRideMinutes(trains) {
