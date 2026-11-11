@@ -495,8 +495,12 @@ final class RiddenRouteStore {
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 let landed = landedSince(landingMark)
+                // A cache-only pass cannot redraw a trip whose cache file is gone,
+                // so a stand-in with geometry stays on the map (still not
+                // completed: the next ordinary load solves it).
+                let kept = solveMisses ? [] : placeholders.filter { !$0.segments.isEmpty }
                 rides = mergedRides(
-                    retained: retained,
+                    retained: retained + kept,
                     batch: Self.keepingStandIns(decoded, standIns, solved: fresh.all),
                     since: landingMark)
                 visibleRides = rides.filter(\.visible)
@@ -1284,6 +1288,12 @@ final class RiddenRouteStore {
     ) async throws -> [DrawnRide] {
         try Task.checkCancellation()
         noteSolveAttempt(trains)
+        #if DEBUG
+        while solveHold.withLock({ $0 }) && !Task.isCancelled {
+            try? await Task.sleep(for: .milliseconds(5))
+        }
+        try Task.checkCancellation()
+        #endif
         var result = previous
         var missing = Dictionary(
             trains.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
@@ -2708,6 +2718,14 @@ final class RiddenRouteStore {
 
     nonisolated static func resetSolveAttemptsForTesting() {
         solveAttemptLog.withLock { $0 = [:] }
+    }
+
+    private nonisolated static let solveHold = OSAllocatedUnfairLock(initialState: false)
+
+    /// Test seam: while on, a load that reaches the solver waits there (after
+    /// the cache reads and their partial publication, before any solve).
+    nonisolated static func holdSolvesForTesting(_ on: Bool) {
+        solveHold.withLock { $0 = on }
     }
 
     private struct InjectedLoadFailure: Error {}

@@ -63,6 +63,7 @@ struct RiddenRouteStoreRepairTests {
 
         deinit {
             RiddenRouteStore.setCacheRootForTesting(nil)
+            RiddenRouteStore.holdSolvesForTesting(false)
             // Back to "not loaded": the next real use reads the real index file
             // instead of flushing this test's empty one over it.
             RouteDigestIndexStore.shared.resetForTesting()
@@ -106,6 +107,12 @@ struct RiddenRouteStoreRepairTests {
     }
 
     private func rideIDs(_ store: RiddenRouteStore) -> Set<String> { Set(store.rides.map(\.id)) }
+
+    /// Rides that have drawn geometry. A trip whose solve failed is still a
+    /// ride (`.unavailable`, no segments), and is never written to the cache.
+    private func drawnIDs(_ store: RiddenRouteStore) -> Set<String> {
+        Set(store.rides.filter { !$0.segments.isEmpty }.map(\.id))
+    }
 
     // MARK: repair
 
@@ -151,16 +158,17 @@ struct RiddenRouteStoreRepairTests {
         defer { withExtendedLifetime(cache) {} }
         let bad = unsolvableTrain("unsolvable")
         let store = await solvedStore(try solvableTrains() + [bad])
-        let routed = rideIDs(store)
-        try #require(!routed.isEmpty)
+        let drawn = rideIDs(store)
+        let routed = drawnIDs(store)
+        try #require(!routed.isEmpty && !routed.contains(bad.id))
 
         await store.reloadAll(mode: .repair)
         await settled(store)
 
         let attempts = RiddenRouteStore.solveAttempts
         #expect(attempts[bad.id] == 1)
-        for id in routed { #expect(attempts[id] == nil) }
-        #expect(rideIDs(store) == routed)
+        for id in routed { #expect(attempts[id] == nil, "\(id)") }
+        #expect(rideIDs(store) == drawn)
         store.clear()
     }
 
@@ -232,9 +240,13 @@ struct RiddenRouteStoreRepairTests {
         edited.number = original.number + "-edited"
         let updated = [edited] + trains.dropFirst() + [unsolvableTrain("unsolvable")]
 
+        // Hold the solver so the repair stays mid-flight after its cache reads
+        // have been published as a partial result.
+        RiddenRouteStore.holdSolvesForTesting(true)
         await store.reloadAll(mode: .repair)
         var sawPartial = false
         for _ in 0..<4000 where !sawPartial {
+            if case .loaded = store.state { break }
             sawPartial = (store.reloadProgress?.done ?? 0) > 0
             if !sawPartial { try? await Task.sleep(for: .milliseconds(5)) }
         }
@@ -245,6 +257,7 @@ struct RiddenRouteStoreRepairTests {
         // while the trips that did not change stay drawn.
         #expect(!store.rides.contains { $0.id == original.id })
         #expect(routed.subtracting([original.id]).isSubset(of: rideIDs(store)))
+        RiddenRouteStore.holdSolvesForTesting(false)
         await settled(store)
 
         #expect(store.hasSettledRoutes(in: [edited], matching: { _ in true }))
@@ -283,19 +296,55 @@ struct RiddenRouteStoreRepairTests {
         defer { withExtendedLifetime(cache) {} }
         let bad = unsolvableTrain("unsolvable")
         let store = await solvedStore(try solvableTrains() + [bad])
-        let routed = rideIDs(store)
-        try #require(!routed.isEmpty)
+        let routed = drawnIDs(store)
+        try #require(!routed.isEmpty && !routed.contains(bad.id))
+        try #require(store.rides.first { $0.id == bad.id }?.segments.isEmpty == true)
 
         await store.reloadAll(mode: .repair)
         store.cancelReloadAll()
         await settled(store)
 
         #expect(RiddenRouteStore.solveAttempts[bad.id] == nil)
-        #expect(rideIDs(store) == routed)
+        #expect(drawnIDs(store) == routed)
         #expect(store.routeEntries[bad.id] != nil)
         #expect(!store.hasSettledRoutes(in: [bad], matching: { _ in true }))
         #expect(store.reloadProgress == nil)
         #expect(store.canReloadAll)
+        store.clear()
+    }
+
+    /// A drawn ride whose cache file is gone cannot be read back by the
+    /// cache-only pass Stop runs; it stays drawn, and the next ordinary load
+    /// solves it.
+    @Test func stopDuringRepairKeepsRideWithoutCacheFile() async throws {
+        let cache = IsolatedCache()
+        defer { withExtendedLifetime(cache) {} }
+        let trains = try solvableTrains()
+        let store = await solvedStore(trains)
+        let lost = trains[0].id
+        try #require(drawnIDs(store).contains(lost))
+        // Every route file goes (the digest index stays), so no trip can be read back.
+        let routes = cache.root.appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        let walker = try #require(FileManager.default.enumerator(at: routes, includingPropertiesForKeys: nil))
+        let files = walker.compactMap { $0 as? URL }
+            .filter { $0.pathExtension == "json" && !$0.path.contains("/index/") }
+        try #require(!files.isEmpty)
+        for file in files { try FileManager.default.removeItem(at: file) }
+
+        await store.reloadAll(mode: .repair)
+        store.cancelReloadAll()
+        await settled(store)
+
+        // Still drawn, with geometry, though nothing could be read back for it.
+        #expect(store.rides.first { $0.id == lost }?.segments.isEmpty == false)
+        #expect(RiddenRouteStore.solveAttempts[lost] == nil)
+        #expect(!store.hasSettledRoutes(in: [trains[0]], matching: { _ in true }))
+
+        store.load(trains: trains)
+        await settled(store)
+        #expect(RiddenRouteStore.solveAttempts[lost] == 1)
+        #expect(store.rides.first { $0.id == lost }?.segments.isEmpty == false)
+        #expect(store.hasSettledRoutes(in: [trains[0]], matching: { _ in true }))
         store.clear()
     }
 
