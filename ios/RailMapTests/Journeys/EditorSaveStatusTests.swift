@@ -3,8 +3,8 @@ import RailCore
 import Testing
 @testable import RailMap
 
-/// A disabled Save always has a reason shown next to it, and the editor's
-/// pickers and sheets keep the structure the audit asked for.
+/// A disabled Save always has a reason shown next to it. The editor's source
+/// structure is guarded in RailKit (RegressionGuardEditorStructure).
 @MainActor
 struct EditorSaveStatusTests {
     private func record() -> Train {
@@ -53,58 +53,5 @@ struct EditorSaveStatusTests {
         model.apply(TripDraftModel.Patch(departure: late, arrival: early), source: .reader)
         #expect(model.saveBlocker == .times)
         expectConsistent(model)
-    }
-
-    // MARK: - structure the audit asked for
-
-    private func source(_ name: String) throws -> String {
-        let root = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-        return try String(
-            contentsOf: root.appendingPathComponent("RailMap/JourneyEditor/\(name)"), encoding: .utf8)
-    }
-
-    @Test func theEditorPushesItsSearchableListsAndKeepsOneSheetForFillDetails() throws {
-        let editor = try source("JourneyEditorView.swift")
-        #expect(!editor.contains(".sheet(item: $model.picking)"))
-        #expect(!editor.contains(".sheet(isPresented: $model.showsVehiclePicker)"))
-        let fill = try source("EditorFillDetailsSheet.swift")
-        #expect(!fill.contains(".sheet(isPresented: $model.showsCompletion)"))
-    }
-
-    @Test func saveErrorsLiveInTheStatusRowNotAtTheBottomOfTheForm() throws {
-        let editor = try source("JourneyEditorView.swift")
-        #expect(editor.contains("EditorSaveStatusRow"))
-        #expect(!editor.contains("ForEach(model.saveIssues)"))
-    }
-
-    @Test func theEditorHasNoHandBuiltCancelOrDoneToolbarItems() throws {
-        for name in ["StationPickerView.swift", "EditorLineSearchView.swift", "JourneyEditorManualEntry.swift"] {
-            let text = try source(name)
-            #expect(!text.contains("ToolbarItem(placement: .confirmationAction)"), "\(name)")
-            #expect(!text.contains("ToolbarItem(placement: .cancellationAction)"), "\(name)")
-        }
-    }
-
-    @Test func theRecordIdentifierIsEditableOnlyWhenItIsInvalid() throws {
-        let details = try source("JourneyEditorDetails.swift")
-        #expect(details.contains("issues.all(for: .id).contains(where: { $0.severity == .error })"))
-        #expect(details.contains("LabeledContent(localization.countryText(\"field.id\""))
-    }
-
-    @Test func theCompletionPageResetsWhenTheFillSheetGoesAway() throws {
-        let fill = try source("EditorFillDetailsSheet.swift")
-        #expect(fill.contains(".onDisappear { model.showsCompletion = false }"))
-    }
-
-    @Test func scrollAnchorsAreOnRowsNotSections() throws {
-        for name in ["EditorServiceSection.swift", "EditorTimeSection.swift", "EditorRouteSection.swift",
-                     "EditorStationsSection.swift", "JourneyEditorDetails.swift"] {
-            let text = try source(name)
-            for line in text.split(separator: "\n") where line.contains(".id(EditorAnchor.") {
-                // Section-level ids sit at body indentation (8 spaces).
-                #expect(!line.hasPrefix("        .id("), "\(name): \(line)")
-            }
-        }
     }
 }
