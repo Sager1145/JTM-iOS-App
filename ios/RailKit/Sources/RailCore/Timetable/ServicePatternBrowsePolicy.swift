@@ -30,6 +30,26 @@ public enum ServicePatternBrowsePolicy {
         }
     }
 
+    /// The three kinds of limited-express service the browse list can be narrowed to.
+    public enum ServiceClass: String, CaseIterable, Sendable, Hashable {
+        case shinkansen
+        case jrLimitedExpress
+        case privateLimitedExpress
+
+        /// A pattern is Shinkansen when it runs on a 新幹線 line, JR when any of its
+        /// operators is a passenger JR company, and private otherwise.
+        public static func of(_ pattern: TrainServicePatterns.Pattern, region: String = "jp") -> ServiceClass {
+            if pattern.lines.contains(where: { $0.hasSuffix("新幹線") }) { return .shinkansen }
+            return ServicePatternBrowsePolicy.isJROrNationalRailway(pattern, region: region)
+                ? .jrLimitedExpress : .privateLimitedExpress
+        }
+
+        public static func of(_ trip: TrainTimetableDatabase.Trip) -> ServiceClass {
+            if trip.lineSegments.contains(where: { $0.lineName.hasSuffix("新幹線") }) { return .shinkansen }
+            return trip.service.isJRService ? .jrLimitedExpress : .privateLimitedExpress
+        }
+    }
+
     public struct SearchGroup: Sendable {
         public let name: String
         public let companyLabel: String
@@ -42,8 +62,11 @@ public enum ServicePatternBrowsePolicy {
         public var companyFilter: String?
         public var lineFilter: String?
         public var showsAllHistory: Bool
-    
-        public init(region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool) {
+        public var classFilter: ServiceClass?
+
+        public init(region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool,
+                    classFilter: ServiceClass? = nil) {
+            self.classFilter = classFilter
             self.region = region
             self.rideDate = rideDate
             self.companyFilter = companyFilter
@@ -91,6 +114,16 @@ public enum ServicePatternBrowsePolicy {
         case queryFailed
         case ready(TrainTimetableDatabase.Coverage)
 
+        /// The database answered but does not vouch for the date: no timed trains there
+        /// means "not covered", not "no service".
+        var isUnverifiedCoverage: Bool {
+            switch self {
+            case .ready(.verified): false
+            case .ready: true
+            default: false
+            }
+        }
+
         public var isHardFailure: Bool {
             switch self {
             case .missing, .damaged, .queryFailed: true
@@ -106,11 +139,14 @@ public enum ServicePatternBrowsePolicy {
         public let companyFilter: String?
         public let lineFilter: String?
         public let showsAllHistory: Bool
+        public let classFilter: ServiceClass?
         public let language: String
         public let sources: TimetableKnowledgeQuery.ClassifiedSources
         public let generation: Int
     
-        public init(query: String, region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool, language: String, sources: TimetableKnowledgeQuery.ClassifiedSources, generation: Int) {
+        public init(query: String, region: String, rideDate: String?, companyFilter: String?, lineFilter: String?, showsAllHistory: Bool, language: String, sources: TimetableKnowledgeQuery.ClassifiedSources, generation: Int,
+                classFilter: ServiceClass? = nil) {
+            self.classFilter = classFilter
             self.query = query
             self.region = region
             self.rideDate = rideDate
@@ -128,6 +164,7 @@ public enum ServicePatternBrowsePolicy {
         let sources = input.sources
         let patternMatches = sources.patterns.filter { pattern in
             matchesFilters(companies: [pattern.company], lines: pattern.lines, input: input)
+                && matchesClass(ServiceClass.of(pattern, region: input.region), input: input)
                 && search.matches(pattern)
         }.sorted {
             if let day = input.rideDate, $0.isValid(on: day) != $1.isValid(on: day) {
@@ -145,15 +182,23 @@ public enum ServicePatternBrowsePolicy {
             hasIncompleteOccurrences = hasIncompleteOccurrences || !canApply
             guard matchesFilters(companies: trip.operatorSegments.map(\.displayName),
                                  lines: trip.lineSegments.map(\.lineName), input: input),
+                  matchesClass(ServiceClass.of(trip), input: input),
                   search.matches(trip) else { continue }
             if canApply { completeMatches.append(trip) }
             else { incompleteMatches.append(trip) }
         }
-        let primaryRowsArePatterns = input.region != "jp" || input.rideDate == nil
+        // A Japanese date with no timed trains at all is browsed by stop pattern: the
+        // patterns are the result, not a footnote under an empty list.
+        let datePatterns = input.region == "jp" && input.rideDate != nil
+            && sources.occurrences.isEmpty && sources.availability.isUnverifiedCoverage
+        let primaryRowsArePatterns = input.region != "jp" || input.rideDate == nil || datePatterns
         let knownMatches: [Row]
         let incompleteTrips: [TrainTimetableDatabase.Trip]
         if primaryRowsArePatterns {
-            knownMatches = patternMatches.map(Row.pattern)
+            knownMatches = patternMatches.filter { pattern in
+                guard datePatterns, let rideDate = input.rideDate else { return true }
+                return pattern.applicability(on: rideDate) != .notApplicable
+            }.map(Row.pattern)
             incompleteTrips = []
         } else if sources.availability.isHardFailure {
             knownMatches = []
@@ -170,7 +215,7 @@ public enum ServicePatternBrowsePolicy {
         }()
         let shouldShowLegacyFallback = researchIncomplete || hasIncompleteOccurrences
         let unknownPatterns: [TrainServicePatterns.Pattern]
-        if sources.availability.isHardFailure {
+        if sources.availability.isHardFailure || primaryRowsArePatterns {
             unknownPatterns = []
         } else if input.region == "jp", let rideDate = input.rideDate {
             unknownPatterns = patternMatches.filter { pattern in
@@ -227,8 +272,12 @@ public enum ServicePatternBrowsePolicy {
             filters: SearchFilters(
                 region: input.region, rideDate: input.rideDate,
                 companyFilter: input.companyFilter, lineFilter: input.lineFilter,
-                showsAllHistory: input.showsAllHistory),
+                showsAllHistory: input.showsAllHistory, classFilter: input.classFilter),
             primaryRowsArePatterns: primaryRowsArePatterns)
+    }
+
+    private static func matchesClass(_ serviceClass: ServiceClass, input: SearchInput) -> Bool {
+        input.classFilter.map { $0 == serviceClass } ?? true
     }
 
     private static func matchesFilters(companies: [String], lines: [String], input: SearchInput) -> Bool {
@@ -260,7 +309,7 @@ public enum ServicePatternBrowsePolicy {
         return identity.operatorLabel(identifier) ?? identifier
     }
 
-    private static func isJROrNationalRailway(
+    fileprivate static func isJROrNationalRailway(
         _ pattern: TrainServicePatterns.Pattern, region: String
     ) -> Bool {
         let parts = pattern.company.components(separatedBy: CharacterSet(charactersIn: "/／"))

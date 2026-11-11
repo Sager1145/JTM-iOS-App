@@ -128,12 +128,89 @@ struct ServicePatternBrowsePolicyTests {
         }
     }
 
-    @Test func partialCoverageKeepsProvidedPatternsSeparateFromOccurrences() {
+    private func realInput(query: String = "", filter: ServicePatternBrowsePolicy.ServiceClass? = nil)
+        -> ServicePatternBrowsePolicy.SearchInput {
+        .init(query: query, region: "jp", rideDate: "2026-11-11", companyFilter: nil, lineFilter: nil,
+              showsAllHistory: false, language: "en",
+              sources: .init(availability: .ready(.unknown), occurrences: [],
+                             patterns: TrainServicePatterns.patterns, excerpts: [],
+                             patternCatalog: .loaded, excerptCatalog: .loaded),
+              generation: 1, classFilter: filter)
+    }
+
+    @Test func dateWithoutTimedTrainsListsPatternsAsThePrimaryRows() {
+        for availability: ServicePatternBrowsePolicy.OccurrenceAvailability in [.ready(.partial), .ready(.unknown)] {
+            let result = ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+                patterns: [pattern], availability: availability))
+            #expect(result.primaryRowsArePatterns)
+            #expect(result.groups.flatMap(\.rows).map(\.id) == ["pattern:\(pattern.id)"])
+            #expect(result.unknownPatterns.isEmpty)
+            #expect(result.incompleteTrips.isEmpty)
+        }
+    }
+
+    @Test func verifiedCoverageWithoutTrainsStaysEmptyAndHardFailureStaysHidden() {
+        let verified = ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+            patterns: [pattern], availability: .ready(.verified)))
+        #expect(!verified.primaryRowsArePatterns)
+        #expect(verified.groups.isEmpty)
+        let failed = ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+            patterns: [pattern], availability: .queryFailed))
+        #expect(!failed.primaryRowsArePatterns)
+        #expect(failed.groups.isEmpty)
+    }
+
+    @Test func patternsOutsideTheirValidityDoNotLeadOnTheRideDate() throws {
+        let ended = try #require(TrainServicePatterns.patterns.first {
+            $0.applicability(on: "2026-11-11") == .notApplicable })
         let result = ServicePatternBrowsePolicy.makeSearchSnapshot(input(
-            patterns: [pattern], availability: .ready(.partial)))
+            date: "2026-11-11", patterns: [ended], availability: .ready(.unknown)))
         #expect(result.groups.isEmpty)
-        #expect(result.unknownPatterns.map(\.id) == [pattern.id])
-        #expect(result.incompleteTrips.isEmpty)
+    }
+
+    @Test func classFilterNarrowsPatternsToShinkansenJROrPrivate() {
+        func ids(_ filter: ServicePatternBrowsePolicy.ServiceClass?) -> Set<String> {
+            let snapshot = RegistryIdentityTestGate.withProvider(Self.passengerJR) {
+                ServicePatternBrowsePolicy.makeSearchSnapshot(realInput(filter: filter))
+            }
+            #expect(snapshot.filters.classFilter == filter)
+            return Set(snapshot.groups.flatMap(\.rows).map(\.id))
+        }
+        let all = ids(nil)
+        let shinkansen = ids(.shinkansen)
+        let jr = ids(.jrLimitedExpress)
+        let priv = ids(.privateLimitedExpress)
+        #expect(shinkansen.contains("pattern:nozomi-tokyo-shin-osaka"))
+        #expect(!jr.contains("pattern:nozomi-tokyo-shin-osaka"))
+        #expect(jr.contains { $0.hasPrefix("pattern:azusa") })
+        #expect(shinkansen.isDisjoint(with: jr) && shinkansen.isDisjoint(with: priv) && jr.isDisjoint(with: priv))
+        #expect(shinkansen.union(jr).union(priv) == all)
+        #expect(!shinkansen.isEmpty && !jr.isEmpty && !priv.isEmpty)
+    }
+
+    @Test func classFilterAlsoNarrowsTimedTrips() throws {
+        let fixture = try FixtureDatabase()
+        defer { fixture.remove() }
+        let database = try TrainTimetableDatabase(url: fixture.url)
+        let sources = TimetableKnowledgeQuery.sources(
+            country: "jp", serviceDate: "2026-09-29", serviceID: "shinano",
+            database: .success(database), patterns: .success([]), excerpts: [])
+        let trip = try #require(sources.occurrences.first)
+        let expected = ServicePatternBrowsePolicy.ServiceClass.of(trip)
+        for filter in ServicePatternBrowsePolicy.ServiceClass.allCases {
+            let result = ServicePatternBrowsePolicy.makeSearchSnapshot(.init(
+                query: "", region: "jp", rideDate: trip.serviceDate, companyFilter: nil, lineFilter: nil,
+                showsAllHistory: false, language: "en", sources: sources, generation: 1, classFilter: filter))
+            let count = result.groups.flatMap(\.rows).count + result.incompleteTrips.count
+            #expect((count > 0) == (filter == expected))
+        }
+    }
+
+    @Test func numberedAndTolerantQueriesFindTheNozomiPatterns() {
+        for query in ["のぞみ 23", "のぞみ23号", "ノゾミ　２３", "nozomi", "Nozomi 23", "ﾉｿﾞﾐ", "shinkansen"] {
+            let result = ServicePatternBrowsePolicy.makeSearchSnapshot(realInput(query: query))
+            #expect(result.groups.flatMap(\.rows).map(\.id).contains("pattern:nozomi-tokyo-shin-osaka"), "\(query)")
+        }
     }
 
     @Test func endedPatternOnlyAppearsInOutsideHistoryOnLaterDate() {
