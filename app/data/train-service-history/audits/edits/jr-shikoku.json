@@ -1,0 +1,115 @@
+[
+ {
+  "record": "muroto-tokushima-mugi",
+  "ids": "jr-shikoku#1",
+  "set": {
+   "validUntil": "2025-03-15"
+  },
+  "notesReplace": [
+   [
+    "の1往復が継続と確認",
+    "の1往復が運転取りやめと確認（2025-03-15 改正で終了）"
+   ]
+  ]
+ },
+ {
+  "record": "midnight-exp-takamatsu-iyo-saijo",
+  "ids": "jr-shikoku#2",
+  "status": "notApplied",
+  "reason": "the name is gone (the 22:20 slot is now いしづち29号) but the end date 2021-03-13 rests on ja.wikipedia only; the recheck found no official or second source for any end date, so none may be set"
+ },
+ {
+  "record": "midnight-exp-matsuyama-niihama",
+  "ids": "jr-shikoku#3",
+  "status": "notApplied",
+  "reason": "the name is gone (the 21:49 slot is now いしづち106号) but no source gives an end date, so none may be set"
+ },
+ {
+  "record": "uzushio-okayama-tokushima",
+  "ids": "jr-shikoku#4,5",
+  "set": {
+   "stops": "岡山 児島 坂出 高松 栗林 志度 三本松 板野 徳島",
+   "optionalStops": "屋島 オレンジタウン 讃岐津田 讃岐白鳥 引田 池谷 勝瑞",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "shimanto-takamatsu-kochi",
+  "ids": "jr-shikoku#6",
+  "status": "variantOnly",
+  "companyAdd": "土佐くろしお鉄道",
+  "variants": {
+   "service": "しまんと",
+   "distinctPatterns": null,
+   "report": "jr-shikoku.md"
+  }
+ },
+ {
+  "record": "shiokaze-okayama-matsuyama",
+  "ids": "jr-shikoku#7",
+  "status": "variantOnly",
+  "variants": {
+   "service": "しおかぜ",
+   "distinctPatterns": 11,
+   "report": "jr-shikoku.md"
+  }
+ },
+ {
+  "record": "ishizuchi-takamatsu-matsuyama",
+  "ids": "jr-shikoku#8",
+  "status": "variantOnly",
+  "variants": {
+   "service": "いしづち",
+   "distinctPatterns": 14,
+   "report": "jr-shikoku.md"
+  }
+ },
+ {
+  "record": "morning-exp-iyosaijo-takamatsu",
+  "ids": "jr-shikoku#9",
+  "notesReplace": [
+   [
+    "平日朝のみ。",
+    "毎日運転（2026-11-11 照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "morning-exp-niihama-matsuyama",
+  "ids": "jr-shikoku#10",
+  "notesReplace": [
+   [
+    "平日朝のみ。",
+    "毎日運転（2026-11-11 照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "nanpu-okayama-nakamura",
+  "ids": "jr-shikoku#11",
+  "set": {
+   "optionalStops": "茶屋町 大杉"
+  }
+ },
+ {
+  "record": "nanpu-okayama-sukumo",
+  "ids": "jr-shikoku#12",
+  "set": {
+   "optionalStops": "茶屋町 大杉"
+  }
+ },
+ {
+  "record": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke",
+  "ids": "jr-shikoku#14",
+  "set": {
+   "optionalStops": ""
+  }
+ },
+ {
+  "record": "iyonada-monogatari-matsuyama-iyo-ozu",
+  "ids": "jr-shikoku#17",
+  "citeSource": true
+ }
+]

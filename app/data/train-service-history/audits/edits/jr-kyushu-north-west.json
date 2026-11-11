@@ -1,0 +1,125 @@
+[
+ {
+  "record": "relay-kamome-hakata-takeoonsen",
+  "ids": "jr-kyushu-north-west#1,2,3",
+  "set": {
+   "stops": "博多 鳥栖 新鳥栖 佐賀 武雄温泉",
+   "optionalStops": "二日市 江北",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "リレーかもめ",
+   "distinctPatterns": null,
+   "report": "jr-kyushu-north-west.md"
+  }
+ },
+ {
+  "record": "midori-hakata-sasebo",
+  "ids": "jr-kyushu-north-west#4,5,6",
+  "set": {
+   "optionalStops": "二日市 吉野ヶ里公園",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesReplace": [
+   [
+    "リレーかもめ/ハウステンボスと併結する運転",
+    "ハウステンボスと併結する運転（リレーかもめとは併結しない、2026-11-11 照合）"
+   ]
+  ],
+  "variants": {
+   "service": "みどり",
+   "distinctPatterns": null,
+   "report": "jr-kyushu-north-west.md"
+  }
+ },
+ {
+  "record": "huis-ten-bosch-hakata-huistenbosch",
+  "ids": "jr-kyushu-north-west#7",
+  "set": {
+   "stops": "博多 鳥栖 新鳥栖 佐賀 江北 武雄温泉 有田 早岐 ハウステンボス",
+   "optionalStops": "二日市 吉野ヶ里公園"
+  }
+ },
+ {
+  "record": "kasasagi-mojiko-hizenkashima",
+  "ids": "jr-kyushu-north-west#8,9,10,11",
+  "set": {
+   "stops": "博多 二日市 鳥栖 新鳥栖 佐賀",
+   "optionalStops": "門司港 門司 小倉 戸畑 八幡 黒崎 折尾 赤間 東郷 福間 香椎 吉塚 江北 肥前鹿島",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "かささぎ",
+   "distinctPatterns": null,
+   "report": "jr-kyushu-north-west.md"
+  }
+ },
+ {
+  "record": "kirameki-mojiko-hakata",
+  "ids": "jr-kyushu-north-west#12,13",
+  "set": {
+   "stops": "小倉 戸畑 黒崎 折尾 赤間 福間 博多",
+   "optionalStops": "門司港 門司 八幡 東郷 香椎 吉塚",
+   "lines": "日豊本線 鹿児島本線",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "36-plus-3-green-miyazaki-airport-beppu",
+  "ids": "jr-kyushu-north-west#14",
+  "set": {
+   "lines": "宮崎空港線 日南線 日豊本線"
+  }
+ },
+ {
+  "record": "36-plus-3-green-miyazaki-airport-beppu",
+  "ids": "jr-kyushu-north-west#18",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "needs a call flag for 'the train stops here but no passenger may board or alight' (延岡, 宗太郎, 重岡 are おもてなし calls); the pattern model has no such flag"
+ },
+ {
+  "record": "36-plus-3-gold-hakata-sasebo",
+  "ids": "jr-kyushu-north-west#15",
+  "set": {
+   "stops": "博多 佐賀 武雄温泉 上有田 早岐 佐世保",
+   "optionalStops": "肥前浜"
+  }
+ },
+ {
+  "record": "36-plus-3-gold-hakata-sasebo",
+  "ids": "jr-kyushu-north-west#20",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "needs the no-boarding/no-alighting call flag (上有田 is an おもてなし call; 肥前浜 is alighting-only); the pattern model has no such flag"
+ },
+ {
+  "record": "36-plus-3-red-hakata-kagoshima-chuo",
+  "ids": "jr-kyushu-north-west#16",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "needs the no-boarding/no-alighting call flag (玉名 and 牛ノ浜 are おもてなし calls); the pattern model has no such flag"
+ },
+ {
+  "record": "36-plus-3-black-kagoshima-chuo-miyazaki",
+  "ids": "jr-kyushu-north-west#17",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "needs the no-boarding/no-alighting call flag (大隅大川原 is passed without a call on the JR page, boarding only at 霧島神宮); the pattern model has no such flag"
+ },
+ {
+  "record": "36-plus-3-blue-oita-hakata",
+  "ids": "jr-kyushu-north-west#19",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "needs the no-boarding/no-alighting call flag (杵築 and 中津 are おもてなし calls, 門司港 is passed); the pattern model has no such flag"
+ }
+]

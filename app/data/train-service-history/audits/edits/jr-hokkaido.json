@@ -1,0 +1,143 @@
+[
+ {
+  "record": "suzuran-muroran-sapporo",
+  "ids": [
+   "jr-hokkaido#1",
+   "jr-hokkaido#2"
+  ],
+  "set": {
+   "stops": "東室蘭 鷲別 幌別 登別 白老 苫小牧 沼ノ端 南千歳 千歳 新札幌 札幌",
+   "optionalStops": "室蘭 母恋 御崎 輪西",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "すずらん",
+   "distinctPatterns": 2,
+   "report": "jr-hokkaido.md"
+  }
+ },
+ {
+  "record": "ozora-sapporo-kushiro",
+  "ids": [
+   "jr-hokkaido#3"
+  ],
+  "set": {
+   "stops": "札幌 新札幌 南千歳 新得 帯広 釧路",
+   "optionalStops": "追分 新夕張 占冠 トマム 十勝清水 芽室 池田 浦幌 白糠"
+  }
+ },
+ {
+  "record": "tokachi-sapporo-obihiro",
+  "ids": [
+   "jr-hokkaido#4",
+   "jr-hokkaido#5"
+  ],
+  "set": {
+   "stops": "札幌 新札幌 南千歳 新得 帯広",
+   "optionalStops": "追分 新夕張 占冠 トマム 十勝清水 芽室"
+  }
+ },
+ {
+  "record": "okhotsk-sapporo-abashiri",
+  "ids": [
+   "jr-hokkaido#6",
+   "jr-hokkaido#7"
+  ],
+  "set": {
+   "stops": "札幌 岩見沢 滝川 深川 旭川 上川 白滝 丸瀬布 遠軽 生田原 留辺蘂 北見 美幌 女満別 網走",
+   "optionalStops": "美唄 砂川",
+   "lines": "函館本線 宗谷本線 石北本線"
+  }
+ },
+ {
+  "record": "taisetsu-asahikawa-abashiri",
+  "ids": [
+   "jr-hokkaido#10"
+  ],
+  "set": {
+   "lines": "宗谷本線 石北本線"
+  }
+ },
+ {
+  "record": "taisetsu-asahikawa-abashiri",
+  "ids": [
+   "jr-hokkaido#8"
+  ],
+  "status": "notApplied",
+  "reason": "concerns the link between the ended 特急 record and the timed 特別快速 大雪 trips (serviceId shared); the 特別快速 is a different, current service that needs its own record and the timed rows live in the sqlite, so no field of this record changes"
+ },
+ {
+  "record": "niseko-sapporo-hakodate",
+  "ids": [
+   "jr-hokkaido#12",
+   "jr-hokkaido#13"
+  ],
+  "set": {
+   "stops": "函館 五稜郭 新函館北斗 森 八雲 長万部 黒松内 昆布 ニセコ 倶知安 余市 小樽 手稲 札幌",
+   "optionalStops": "大沼公園"
+  }
+ },
+ {
+  "record": "niseko-sapporo-hakodate",
+  "ids": [
+   "jr-hokkaido#14"
+  ],
+  "status": "notApplied",
+  "reason": "the recheck only shows the 2026 season dates (9/5-7, 11-14, 18-23, 25-27) and the name 特急ニセコ号; earlier seasons were not checked, so no validFrom can be set from it"
+ },
+ {
+  "record": "super-hokuto-hakodate-sapporo",
+  "ids": [
+   "jr-hokkaido#21"
+  ],
+  "set": {
+   "stops": "函館 森 八雲 長万部 伊達紋別 東室蘭 苫小牧 南千歳 新札幌 札幌",
+   "optionalStops": "五稜郭 新函館北斗 大沼公園 豊浦 洞爺 登別 白老"
+  }
+ },
+ {
+  "record": "super-ozora-sapporo-kushiro",
+  "ids": [
+   "jr-hokkaido#22",
+   "jr-hokkaido#23"
+  ],
+  "set": {
+   "stops": "札幌 新札幌 南千歳 トマム 新得 帯広 池田 釧路",
+   "optionalStops": "追分 新夕張 占冠 十勝清水 芽室 浦幌 白糠 音別",
+   "lines": "函館線 千歳線 石勝線 根室線"
+  }
+ },
+ {
+  "record": "super-tokachi-sapporo-obihiro",
+  "ids": [
+   "jr-hokkaido#24",
+   "jr-hokkaido#25"
+  ],
+  "set": {
+   "optionalStops": "追分 新夕張 占冠",
+   "lines": "函館線 千歳線 石勝線 根室線"
+  }
+ },
+ {
+  "record": "super-hakucho-shinaomori-hakodate",
+  "ids": [
+   "jr-hokkaido#31"
+  ],
+  "set": {
+   "stops": "新青森 青森 蟹田 木古内 函館",
+   "optionalStops": "五稜郭"
+  }
+ },
+ {
+  "record": "hakucho-shinaomori-hakodate",
+  "ids": [
+   "jr-hokkaido#32"
+  ],
+  "set": {
+   "stops": "新青森 青森 蟹田 木古内 函館",
+   "optionalStops": "五稜郭"
+  }
+ }
+]

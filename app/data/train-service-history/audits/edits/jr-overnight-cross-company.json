@@ -1,0 +1,47 @@
+[
+ {
+  "record": "west-express-ginga-sanyo",
+  "ids": "jr-overnight-cross-company#1",
+  "set": {
+   "validFrom": "2026-10-02",
+   "validUntil": "2027-03-11"
+  }
+ },
+ {
+  "record": "west-express-ginga-kinan",
+  "ids": "jr-overnight-cross-company#2,3",
+  "set": {
+   "validFrom": "2026-07-03",
+   "validUntil": "2026-10-01",
+   "stops": "京都 新大阪 大阪 串本 古座 太地 紀伊勝浦 新宮",
+   "optionalStops": "天王寺 日根野 和歌山 海南 御坊 紀伊田辺 白浜 周参見"
+  }
+ },
+ {
+  "record": "west-express-ginga-sanin",
+  "ids": "jr-overnight-cross-company#4,5",
+  "set": {
+   "validUntil": "2026-07-02"
+  },
+  "notesReplace": [
+   [
+    "現行ページには山陰コースの停車駅が載っていないため、停車駅は未照合。",
+    "2026-01-16 プレスの停車駅表（2026-04-03〜07-01）で停車駅を照合（2026-11-11）。"
+   ]
+  ],
+  "citeSource": true
+ },
+ {
+  "record": "sunrise-seto-tokyo-takamatsu",
+  "ids": "jr-overnight-cross-company#7,8",
+  "set": {
+   "lines": "東海道本線 山陽本線 宇野線 本四備讃線 予讃線 土讃線"
+  }
+ },
+ {
+  "record": "twilight-express-osaka-sapporo",
+  "ids": "jr-overnight-cross-company#21",
+  "status": "notApplied",
+  "reason": "函館本線 appears twice because the route really uses it twice (函館〜長万部 and 小樽〜札幌, with 室蘭本線 and 千歳線 between); removing one occurrence would break the line order, and the record is a historical train the recheck could not verify officially"
+ }
+]

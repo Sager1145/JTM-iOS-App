@@ -1,0 +1,77 @@
+[
+ {
+  "record": "azusa-minamiotari",
+  "ids": "jr-east-chuo-tokaido-izu#1,2",
+  "set": {
+   "validFrom": "2025-03-15"
+  },
+  "notesAppend": "下りあずさ5号が新宿→白馬、上りあずさ38号が白馬→新宿。あずさ46号は2025-03-15以降は松本始発（2026-11-11 照合）。2025-03-15より前は南小谷まで直通で別時代の扱い。"
+ },
+ {
+  "record": "azusa-minamiotari",
+  "ids": "jr-east-chuo-tokaido-izu#3",
+  "status": "notApplied",
+  "reason": "seasonal 臨時 あずさ83号 白馬エクスプレス is a separate pattern with its own sub-name; the recheck says not to widen this record's optional stops, and a new record needs a stop list from a dated source"
+ },
+ {
+  "record": "azusa-minamiotari",
+  "ids": "jr-east-chuo-tokaido-izu#4",
+  "status": "notApplied",
+  "reason": "cosmetic only: the patternId misnomer is already noted in the record and renaming an id breaks stored references"
+ },
+ {
+  "record": "fuji-excursion-shinjuku-kawaguchiko",
+  "ids": "jr-east-chuo-tokaido-izu#5,6,7",
+  "set": {
+   "optionalStops": "千葉 船橋 錦糸町",
+   "lines": "総武本線 中央本線 大月線 河口湖線",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "富士回遊3号は毎日千葉始発で、5003M千葉〜大月と併結。93・94号は臨時（8xxxM）で併結なし（2026-11-11 照合）。"
+ },
+ {
+  "record": "fuji-excursion-shinjuku-kawaguchiko",
+  "ids": "jr-east-chuo-tokaido-izu#8",
+  "status": "notApplied",
+  "reason": "富士山マラソン号 is a one-off special under a sub-name (12/12-13); it needs its own record, not a change to this one"
+ },
+ {
+  "record": "odoriko-tokyo-izukyushimoda",
+  "ids": "jr-east-chuo-tokaido-izu#9,10",
+  "status": "notApplied",
+  "reason": "the stop list already matches the claim; the 池袋/新宿 corridors and the 3-date 臨時 94号 from 伊東 are separate trains that need their own records with dated sources"
+ },
+ {
+  "record": "odoriko-tokyo-shuzenji",
+  "ids": "jr-east-chuo-tokaido-izu#11",
+  "set": {
+   "company": "東日本旅客鉄道/東海旅客鉄道/伊豆箱根鉄道"
+  }
+ },
+ {
+  "record": "saphir-odoriko-tokyo-izukyushimoda",
+  "ids": "jr-east-chuo-tokaido-izu#12",
+  "status": "notApplied",
+  "reason": "the record's own note already says 新宿発着 is not modelled; no field changes"
+ },
+ {
+  "record": "shonan-tokyo-odawara",
+  "ids": "jr-east-chuo-tokaido-izu#13",
+  "set": {
+   "stops": "東京 品川 藤沢 茅ヶ崎",
+   "optionalStops": "新橋 大船 辻堂 平塚 二宮 国府津 小田原",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "super-azusa-shinjuku-matsumoto",
+  "ids": "jr-east-chuo-tokaido-izu#14",
+  "set": {
+   "stops": "新宿 八王子 甲府 茅野 上諏訪 塩尻 松本"
+  }
+ }
+]

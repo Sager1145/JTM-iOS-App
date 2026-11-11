@@ -1,0 +1,121 @@
+[
+ {
+  "record": "hitachi-shinagawa-iwaki",
+  "ids": "jr-east-sobu-boso-joban#1",
+  "set": {
+   "optionalStops": "土浦 石岡 友部 偕楽園 東海 大甕 常陸多賀 高萩 磯原 勿来"
+  }
+ },
+ {
+  "record": "hitachi-shinagawa-sendai",
+  "ids": "jr-east-sobu-boso-joban#2",
+  "set": {
+   "optionalStops": "柏 土浦 石岡 偕楽園 東海 大甕 高萩 磯原 勿来 亘理 岩沼"
+  }
+ },
+ {
+  "record": "tokiwa-shinagawa-katsuta",
+  "ids": "jr-east-sobu-boso-joban#3",
+  "set": {
+   "optionalStops": "日暮里 龍ケ崎市 牛久 ひたち野うしく 荒川沖 偕楽園 赤塚"
+  }
+ },
+ {
+  "record": "tokiwa-shinagawa-katsuta",
+  "ids": "jr-east-sobu-boso-joban#4",
+  "status": "notApplied",
+  "reason": "the claim concerns one-off event ときわ (土浦花火, マラソン号) that skip 土浦/石岡/友部; the recheck itself says these are separate trains and that making the stops optional for all ときわ would be wrong"
+ },
+ {
+  "record": "narita-express-tokyo",
+  "ids": "jr-east-sobu-boso-joban#5",
+  "status": "notApplied",
+  "reason": "the facts in the record are right; the fix is a modelling choice (document it as the numbered 東京–成田空港 section) and changes no field"
+ },
+ {
+  "record": "narita-express-yokohama-before-terminal2",
+  "ids": "jr-east-sobu-boso-joban#6",
+  "set": {
+   "stops": "横浜 品川 東京 成田空港"
+  }
+ },
+ {
+  "record": "narita-express-yokohama",
+  "ids": "jr-east-sobu-boso-joban#7",
+  "split": {
+   "newId": "narita-express-yokohama-until-2010-03",
+   "at": "2010-03-13",
+   "dropStops": [
+    "武蔵小杉"
+   ]
+  }
+ },
+ {
+  "record": "narita-express-yokohama",
+  "ids": "jr-east-sobu-boso-joban#8",
+  "status": "notApplied",
+  "reason": "no N'EX starts or ends at 横浜 in the current timetable, but the recheck did not find the date the 横浜 terminal ended; no end date may be invented"
+ },
+ {
+  "record": "narita-express-ofuna",
+  "ids": "jr-east-sobu-boso-joban#9",
+  "split": {
+   "newId": "narita-express-ofuna-until-2010-03",
+   "at": "2010-03-13",
+   "dropStops": [
+    "武蔵小杉"
+   ]
+  }
+ },
+ {
+  "record": "wakashio-tokyo-awakamogawa",
+  "ids": "jr-east-sobu-boso-joban#10,11",
+  "set": {
+   "validFrom": "1990-03-10",
+   "optionalStops": "海浜幕張 土気 長者町 上総興津"
+  },
+  "notesAppend": "validFrom 1990-03-10 は京葉線東京〜蘇我間の全線開業日（下限）。京葉線経由での運行開始日そのものは未特定（2026-11-11 照合）。"
+ },
+ {
+  "record": "shinjuku-wakashio-shinjuku-awakamogawa",
+  "ids": "jr-east-sobu-boso-joban#12",
+  "set": {
+   "optionalStops": "土気 長者町"
+  }
+ },
+ {
+  "record": "shinjuku-sazanami-shinjuku-tateyama",
+  "ids": "jr-east-sobu-boso-joban#14",
+  "set": {
+   "optionalStops": "佐貫町 上総湊 竹岡"
+  }
+ },
+ {
+  "record": "shiosai-tokyo-choshi",
+  "ids": "jr-east-sobu-boso-joban#15",
+  "set": {
+   "optionalStops": "四街道 南酒々井"
+  }
+ },
+ {
+  "record": "super-hitachi-ueno-iwaki",
+  "ids": "jr-east-sobu-boso-joban#16",
+  "set": {
+   "lines": "東北本線 常磐線"
+  }
+ },
+ {
+  "record": "super-hitachi-ueno-sendai",
+  "ids": "jr-east-sobu-boso-joban#17",
+  "set": {
+   "lines": "東北本線 常磐線 東北本線"
+  }
+ },
+ {
+  "record": "fresh-hitachi-ueno-katsuta",
+  "ids": "jr-east-sobu-boso-joban#18",
+  "set": {
+   "lines": "東北本線 常磐線"
+  }
+ }
+]

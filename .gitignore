@@ -94,7 +94,10 @@ backups/north-america/2026-10-03/**
 /app/data/train-service-history/sources
 /app/data/train-service-history/normalized
 /app/data/train-service-history/candidates
-/app/data/train-service-history/audits
+/app/data/train-service-history/audits/*
+!/app/data/train-service-history/audits/corrections.json
+!/app/data/train-service-history/audits/needs-variants.json
+!/app/data/train-service-history/audits/edits/
 /app/data/train-service-history/migration
 /app/data/train-service-history/manifest.json
 /app/data/conventional-timetable

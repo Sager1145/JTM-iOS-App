@@ -1,0 +1,110 @@
+[
+ {
+  "record": "fujisan-shinjuku-gotemba",
+  "ids": "jr-private-through#1,2",
+  "set": {
+   "stops": "新宿 新百合ヶ丘 相模大野 本厚木 秦野 松田 御殿場",
+   "optionalStops": "駿河小山",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "asagiri-shinjuku-gotemba",
+  "ids": "jr-private-through#3",
+  "set": {
+   "stops": "新宿 新百合ヶ丘 相模大野 本厚木 秦野 松田 御殿場",
+   "optionalStops": "駿河小山"
+  }
+ },
+ {
+  "record": "asagiri-shinjuku-numazu",
+  "ids": "jr-private-through#4",
+  "set": {
+   "optionalStops": "駿河小山"
+  }
+ },
+ {
+  "record": "nikko-shinjuku-tobunikko",
+  "ids": "jr-private-through#5",
+  "status": "skippedHistorical",
+  "reason": "the regular 253系 日光 ended 2023-03-18; the claim judges that closed record against the 2026 臨時 日光 21号, which is a different working that needs its own record"
+ },
+ {
+  "record": "nikko-shinjuku-tobunikko",
+  "split": {
+   "newId": "nikko-shinjuku-tobunikko-until-2013-03",
+   "at": "2013-03-16",
+   "dropStops": [
+    "浦和"
+   ],
+   "setClone": {
+    "label": "新宿〜東武日光（2006年3月〜2013年3月）"
+   }
+  },
+  "ids": "jr-private-through#6,7"
+ },
+ {
+  "record": "nikko-shinjuku-tobunikko",
+  "ids": "",
+  "set": {
+   "label": "新宿〜東武日光（2013年3月〜2023年3月）"
+  }
+ },
+ {
+  "record": "kinugawa-shinjuku-kinugawaonsen-2006",
+  "split": {
+   "newId": "kinugawa-shinjuku-kinugawaonsen-2006-until-2013-03",
+   "at": "2013-03-16",
+   "dropStops": [
+    "浦和"
+   ]
+  },
+  "ids": "jr-private-through#9"
+ },
+ {
+  "record": "kinugawa-shinjuku-kinugawaonsen-2006",
+  "ids": "jr-private-through#10",
+  "set": {
+   "validUntil": "2018-03-17"
+  }
+ },
+ {
+  "record": "kinugawa-shinjuku-kinugawaonsen",
+  "ids": "jr-private-through#11",
+  "set": {
+   "validFrom": "2018-03-17"
+  }
+ },
+ {
+  "record": "spacia-kinugawa-shinjuku-kinugawaonsen",
+  "split": {
+   "newId": "spacia-kinugawa-shinjuku-kinugawaonsen-until-2017-07",
+   "at": "2017-07-22",
+   "dropStops": [
+    "東武ワールドスクウェア"
+   ]
+  },
+  "ids": ""
+ },
+ {
+  "record": "spacia-kinugawa-shinjuku-kinugawaonsen",
+  "ids": "jr-private-through#12",
+  "set": {
+   "stops": "新宿 池袋 浦和 大宮 栃木 新鹿沼 下今市 鬼怒川温泉",
+   "optionalStops": "東武ワールドスクウェア"
+  }
+ },
+ {
+  "record": "spacia-kinugawa-shinjuku-kinugawaonsen-until-2017-07",
+  "split": {
+   "newId": "spacia-kinugawa-shinjuku-kinugawaonsen-until-2013-03",
+   "at": "2013-03-16",
+   "dropStops": [
+    "浦和"
+   ]
+  },
+  "ids": "jr-private-through#13"
+ }
+]

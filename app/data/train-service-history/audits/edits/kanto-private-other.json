@@ -1,0 +1,157 @@
+[
+ {
+  "record": "hakone-shinjuku-hakoneyumoto",
+  "ids": "kanto-private-other#1,2,3",
+  "set": {
+   "stops": "新宿 小田原 箱根湯本",
+   "optionalStops": "新百合ヶ丘 町田 相模大野 海老名 本厚木 伊勢原 秦野",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はこね",
+   "distinctPatterns": 7,
+   "report": "kanto-private-other.md"
+  }
+ },
+ {
+  "record": "sagami-shinjuku-odawara",
+  "ids": "kanto-private-other#4,5,6,7,8",
+  "set": {
+   "stops": "新宿",
+   "optionalStops": "新百合ヶ丘 町田 相模大野 海老名 本厚木 伊勢原 秦野 小田原",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "さがみ",
+   "distinctPatterns": 9,
+   "report": "kanto-private-other.md"
+  }
+ },
+ {
+  "record": "enoshima-shinjuku-katasenoshima",
+  "ids": "kanto-private-other#9,10,11",
+  "set": {
+   "stops": "新宿 新百合ヶ丘 相模大野 大和 藤沢 片瀬江ノ島",
+   "optionalStops": "",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "平日えのしま1号は藤沢止まり。土休日のえのしま30〜41号（12本）ははこねと併結し相模大野で分割・併合（2026-11-11 照合）。",
+  "variants": {
+   "service": "えのしま",
+   "distinctPatterns": null,
+   "report": "kanto-private-other.md"
+  }
+ },
+ {
+  "record": "metro-hakone-kitasenju-hakoneyumoto",
+  "ids": "kanto-private-other#12,13",
+  "set": {
+   "stops": "北千住 大手町 霞ヶ関 表参道 成城学園前 伊勢原 小田原 箱根湯本",
+   "optionalStops": "町田 相模大野 本厚木"
+  }
+ },
+ {
+  "record": "metro-enoshima-kitasenju-katasenoshima",
+  "ids": "kanto-private-other#14,15,16",
+  "set": {
+   "stops": "北千住 大手町 霞ヶ関 表参道 成城学園前 相模大野 藤沢 片瀬江ノ島",
+   "optionalStops": ""
+  },
+  "notesReplace": [
+   [
+    "Weekend/holiday seasonal operation; start and end dates and exact stops unverified. May no longer run regularly.",
+    "Regular 土休日 operation (メトロはこね91/93/90 coupled; the stops map labels it [土休日]; 2026-11-11 recheck). Start date unverified."
+   ]
+  ]
+ },
+ {
+  "record": "metro-sagami-kitasenju-honatsugi",
+  "ids": "kanto-private-other#17",
+  "status": "notApplied",
+  "reason": "no train named メトロさがみ appears in the 2026 timetable PDFs, stops map or homeway page, but the recheck did not establish an end date; no end date may be invented"
+ },
+ {
+  "record": "morningway-odawara-shinjuku",
+  "ids": "kanto-private-other#18,19,20",
+  "set": {
+   "stops": "新宿",
+   "optionalStops": "小田原 秦野 本厚木 海老名 相模大野 町田 新百合ヶ丘",
+   "lines": "小田原線 江ノ島線",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesReplace": [
+   [
+    "or 片瀬江ノ島 (江ノ島線)",
+    "or 藤沢 (江ノ島線; 平日50・60号、土休日60号。片瀬江ノ島始発はない)"
+   ]
+  ],
+  "variants": {
+   "service": "モーニングウェイ",
+   "distinctPatterns": 8,
+   "report": "kanto-private-other.md"
+  }
+ },
+ {
+  "record": "metro-morningway-honatsugi-kitasenju",
+  "ids": "kanto-private-other#21,22",
+  "set": {
+   "stops": "本厚木 海老名 町田 表参道 霞ヶ関 大手町 北千住",
+   "optionalStops": "新百合ヶ丘 成城学園前"
+  }
+ },
+ {
+  "record": "metro-homeway-kitasenju-honatsugi",
+  "ids": "kanto-private-other#23",
+  "set": {
+   "stops": "大手町 霞ヶ関 表参道 成城学園前 新百合ヶ丘 町田 海老名 本厚木",
+   "optionalStops": "北千住",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "morning-liner-naritaairport-keiseiueno",
+  "ids": "kanto-private-other#24,25",
+  "set": {
+   "stops": "京成成田 京成佐倉 八千代台 京成船橋 青砥 日暮里 京成上野",
+   "optionalStops": "成田空港 空港第2ビル",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "evening-liner-keiseiueno-naritaairport",
+  "ids": "kanto-private-other#26,27",
+  "set": {
+   "stops": "京成上野 日暮里 青砥 京成船橋 八千代台 京成佐倉 京成成田",
+   "optionalStops": "空港第2ビル 成田空港",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "chichibu-ikebukuro-seibuchichibu",
+  "ids": "kanto-private-other#28",
+  "set": {
+   "optionalStops": ""
+  }
+ },
+ {
+  "record": "musashi-ikebukuro-hanno",
+  "ids": "kanto-private-other#30",
+  "set": {
+   "optionalStops": ""
+  }
+ }
+]

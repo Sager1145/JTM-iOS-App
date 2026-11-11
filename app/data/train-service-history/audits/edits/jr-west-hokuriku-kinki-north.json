@@ -1,0 +1,179 @@
+[
+ {
+  "record": "kounotori-shinosaka-kinosaki",
+  "ids": "jr-west-hokuriku-kinki-north#1,2,3",
+  "set": {
+   "stops": "新大阪 大阪 尼崎 宝塚 三田 篠山口 柏原 福知山",
+   "optionalStops": "川西池田 中山寺 西宮名塩 新三田 相野 谷川 黒井 和田山 八鹿 江原 豊岡 城崎温泉",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "こうのとり",
+   "distinctPatterns": null,
+   "report": "jr-west-hokuriku-kinki-north.md"
+  }
+ },
+ {
+  "record": "kounotori-shinosaka-kinosaki",
+  "ids": "jr-west-hokuriku-kinki-north#4",
+  "citeSource": true
+ },
+ {
+  "record": "kinosaki-kyoto-kinosaki",
+  "split": {
+   "newId": "kinosaki-kyoto-kinosaki-until-2011-03",
+   "at": "2011-03-12"
+  },
+  "ids": ""
+ },
+ {
+  "record": "kinosaki-kyoto-kinosaki",
+  "ids": "jr-west-hokuriku-kinki-north#5,6",
+  "set": {
+   "stops": "京都 二条 亀岡 園部 綾部 福知山",
+   "optionalStops": "日吉 和田山 八鹿 江原 豊岡 城崎温泉",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "きのさき",
+   "distinctPatterns": null,
+   "report": "jr-west-hokuriku-kinki-north.md"
+  }
+ },
+ {
+  "record": "hashidate-kyoto-amanohashidate",
+  "ids": "jr-west-hokuriku-kinki-north#8,9",
+  "set": {
+   "stops": "京都 二条 亀岡 園部 綾部 福知山 大江 宮津",
+   "optionalStops": "天橋立",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "hashidate-kyoto-toyooka",
+  "ids": "jr-west-hokuriku-kinki-north#10,11",
+  "set": {
+   "stops": "京都 二条 亀岡 園部 綾部 福知山 大江 宮津 天橋立 与謝野 京丹後大宮 峰山 網野 夕日ヶ浦木津温泉",
+   "optionalStops": "",
+   "destination": "夕日ヶ浦木津温泉",
+   "label": "京都〜夕日ヶ浦木津温泉（天橋立経由）"
+  },
+  "notesAppend": "特急の運転区間は夕日ヶ浦木津温泉まで。同駅〜豊岡間は快速列車（2026-11-11 照合）。"
+ },
+ {
+  "record": "maizuru-kyoto-higashimaizuru",
+  "split": {
+   "newId": "maizuru-kyoto-higashimaizuru-until-2011-03",
+   "at": "2011-03-12"
+  },
+  "ids": ""
+ },
+ {
+  "record": "maizuru-kyoto-higashimaizuru",
+  "ids": "jr-west-hokuriku-kinki-north#13,14",
+  "set": {
+   "optionalStops": "日吉"
+  },
+  "notesAppend": "全列車が京都〜綾部間できのさき・はしだてと併結し、綾部で分割する（2026-11-11 照合）。"
+ },
+ {
+  "record": "rakuraku-biwako-osaka-maibara",
+  "ids": "jr-west-hokuriku-kinki-north#15",
+  "set": {
+   "stops": "大阪 新大阪 京都 山科 大津 石山 南草津 草津",
+   "optionalStops": "守山 野洲 近江八幡 彦根 米原",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "noto-kagaribi-kanazawa-wakuraonsen",
+  "split": {
+   "newId": "noto-kagaribi-kanazawa-wakuraonsen-until-2024-03",
+   "at": "2024-03-16",
+   "setClone": {
+    "optionalStops": "津幡 宇野気 高松 良川"
+   }
+  },
+  "ids": "jr-west-hokuriku-kinki-north#17"
+ },
+ {
+  "record": "noto-kagaribi-kanazawa-wakuraonsen",
+  "ids": "jr-west-hokuriku-kinki-north#16",
+  "set": {
+   "stops": "金沢 羽咋 七尾",
+   "optionalStops": "津幡 高松 良川 和倉温泉",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "ohayo-express-fukui-kanazawa",
+  "ids": "jr-west-hokuriku-kinki-north#18,20",
+  "set": {
+   "stops": "福井 芦原温泉 大聖寺 加賀温泉 小松 金沢",
+   "optionalStops": ""
+  }
+ },
+ {
+  "record": "ohayo-express-fukui-kanazawa",
+  "ids": "jr-west-hokuriku-kinki-north#19",
+  "split": {
+   "newId": "ohayo-express-fukui-kanazawa-until-2019-03",
+   "at": "2019-03-18",
+   "cloneValidFrom": "2015-03-14",
+   "setBase": {
+    "origin": "敦賀",
+    "label": "敦賀→金沢（朝）",
+    "stops": "敦賀 武生 鯖江 福井 芦原温泉 大聖寺 加賀温泉 小松 金沢"
+   }
+  }
+ },
+ {
+  "record": "oyasumi-express-kanazawa-fukui",
+  "ids": "jr-west-hokuriku-kinki-north#21",
+  "set": {
+   "stops": "金沢 小松 加賀温泉 大聖寺 芦原温泉 福井"
+  }
+ },
+ {
+  "record": "oyasumi-express-kanazawa-fukui",
+  "ids": "jr-west-hokuriku-kinki-north#22",
+  "split": {
+   "newId": "oyasumi-express-kanazawa-fukui-until-2019-03",
+   "at": "2019-03-18",
+   "setBase": {
+    "destination": "敦賀",
+    "label": "金沢→敦賀（夜）",
+    "stops": "金沢 小松 加賀温泉 大聖寺 芦原温泉 福井 鯖江 武生 敦賀"
+   }
+  }
+ },
+ {
+  "record": "biwako-express-osaka-maibara",
+  "split": {
+   "newId": "biwako-express-osaka-maibara-until-2003-06",
+   "at": "2003-06-01"
+  },
+  "ids": ""
+ },
+ {
+  "record": "biwako-express-osaka-maibara",
+  "ids": "jr-west-hokuriku-kinki-north#23,24",
+  "set": {
+   "stops": "大阪 新大阪 京都 大津 南草津 草津",
+   "optionalStops": "守山 野洲 近江八幡 彦根 米原",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ }
+]

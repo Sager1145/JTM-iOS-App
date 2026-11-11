@@ -1,0 +1,64 @@
+[
+ {
+  "record": "hida-nagoya-takayama",
+  "ids": "jr-central#1,2,3",
+  "set": {
+   "destination": "高山",
+   "stops": "名古屋 岐阜 美濃太田 下呂 高山",
+   "optionalStops": "尾張一宮 鵜沼 白川口 飛騨金山 上呂 飛騨萩原 飛騨小坂 久々野 飛騨古川",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "ひだ",
+   "distinctPatterns": null,
+   "report": "jr-central.md"
+  }
+ },
+ {
+  "record": "hida-nagoya-toyama",
+  "ids": "jr-central#4,5,6",
+  "set": {
+   "optionalStops": "飛騨金山 上呂 飛騨萩原 久々野 速星",
+   "stops": "名古屋 岐阜 美濃太田 下呂 高山 飛騨古川 猪谷 越中八尾 富山",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "hida-nagoya-toyama",
+  "ids": "jr-central#7",
+  "status": "notApplied",
+  "reason": "the 2026-03-18 JR Central release suspends 高山–富山 through running 「当面の間」 and through running has since resumed, but no resumption date is given in the sources, so no validity bound can be set"
+ },
+ {
+  "record": "hida-osaka-takayama",
+  "ids": "jr-central#8,9,10",
+  "set": {
+   "optionalStops": "飛騨金山"
+  },
+  "notesAppend": "大阪発着のひだ25号・36号は岐阜〜高山間でひだ5号・16号に併結（2026-11-11 照合）。飛騨金山は2026-11-23のみの停車。"
+ },
+ {
+  "record": "nanki-nagoya-kiikatsuura",
+  "ids": "jr-central#11,12",
+  "set": {
+   "stops": "名古屋 桑名 四日市 鈴鹿 津 松阪 多気 三瀬谷 紀伊長島 尾鷲 熊野市 新宮",
+   "optionalStops": "鈴鹿サーキット稲生 紀伊勝浦",
+   "company": "東海旅客鉄道/伊勢鉄道/西日本旅客鉄道",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "fujikawa-shizuoka-kofu",
+  "ids": "jr-central#13",
+  "set": {
+   "stops": "静岡 清水 富士 富士宮 身延 内船 下部温泉 甲斐岩間 鰍沢口 市川大門 東花輪 南甲府 甲府",
+   "optionalStops": ""
+  }
+ }
+]

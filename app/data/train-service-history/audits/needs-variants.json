@@ -1,0 +1,600 @@
+{
+ "schema": 1,
+ "checkedOn": "2026-11-11",
+ "note": "Services whose stop pattern differs by train number or date. The base record in train-service-patterns.json lists what every train of the name calls at (stops) and what only some call at (optionalStops); the per-number tables still have to be authored from dated public timetables (ios/tools/shinkansen-patterns.md for the Shinkansen model). No number is inferred.",
+ "services": [
+  {
+   "service": "あかぎ",
+   "patterns": [
+    "akagi-ueno-takasaki"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-east-takasaki-niigata-ou.md"
+   ],
+   "corrections": [
+    "jr-east-takasaki-niigata-ou#1",
+    "jr-east-takasaki-niigata-ou#3"
+   ]
+  },
+  {
+   "service": "あさま",
+   "patterns": [
+    "asama-tokyo-nagano"
+   ],
+   "distinctPatterns": 14,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#33",
+    "shinkansen-joetsu-hokuriku#34",
+    "shinkansen-joetsu-hokuriku#35",
+    "shinkansen-joetsu-hokuriku#36"
+   ]
+  },
+  {
+   "service": "いしづち",
+   "patterns": [
+    "ishizuchi-takamatsu-matsuyama"
+   ],
+   "distinctPatterns": 14,
+   "source": [
+    "docs/maintenance/database-audit/jr-shikoku.md"
+   ],
+   "corrections": [
+    "jr-shikoku#8"
+   ]
+  },
+  {
+   "service": "えのしま",
+   "patterns": [
+    "enoshima-shinjuku-katasenoshima"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/kanto-private-other.md"
+   ],
+   "corrections": [
+    "kanto-private-other#9",
+    "kanto-private-other#10",
+    "kanto-private-other#11"
+   ]
+  },
+  {
+   "service": "かがやき",
+   "patterns": [
+    "kagayaki-tokyo-tsuruga"
+   ],
+   "distinctPatterns": 8,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#11",
+    "shinkansen-joetsu-hokuriku#12",
+    "shinkansen-joetsu-hokuriku#13",
+    "shinkansen-joetsu-hokuriku#14",
+    "shinkansen-joetsu-hokuriku#15",
+    "shinkansen-joetsu-hokuriku#16"
+   ]
+  },
+  {
+   "service": "かささぎ",
+   "patterns": [
+    "kasasagi-mojiko-hizenkashima"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   ],
+   "corrections": [
+    "jr-kyushu-north-west#8",
+    "jr-kyushu-north-west#9",
+    "jr-kyushu-north-west#10",
+    "jr-kyushu-north-west#11"
+   ]
+  },
+  {
+   "service": "かもめ",
+   "patterns": [
+    "kamome-takeo-onsen-nagasaki"
+   ],
+   "distinctPatterns": 8,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   ],
+   "corrections": [
+    "shinkansen-kyushu#13",
+    "shinkansen-kyushu#14",
+    "shinkansen-kyushu#15"
+   ]
+  },
+  {
+   "service": "きのさき",
+   "patterns": [
+    "kinosaki-kyoto-kinosaki"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-west-hokuriku-kinki-north.md"
+   ],
+   "corrections": [
+    "jr-west-hokuriku-kinki-north#5",
+    "jr-west-hokuriku-kinki-north#6"
+   ]
+  },
+  {
+   "service": "くろしお",
+   "patterns": [
+    "kuroshio-shinosaka-shirahama"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-west-kinki-south-sanin-sanyo.md"
+   ],
+   "corrections": [
+    "jr-west-kinki-south-sanin-sanyo#5"
+   ]
+  },
+  {
+   "service": "こうのとり",
+   "patterns": [
+    "kounotori-shinosaka-kinosaki"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-west-hokuriku-kinki-north.md"
+   ],
+   "corrections": [
+    "jr-west-hokuriku-kinki-north#1",
+    "jr-west-hokuriku-kinki-north#2",
+    "jr-west-hokuriku-kinki-north#3"
+   ]
+  },
+  {
+   "service": "こまち",
+   "patterns": [
+    "komachi-tokyo-akita"
+   ],
+   "distinctPatterns": 5,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#19",
+    "shinkansen-tohoku-hokkaido-mini#20",
+    "shinkansen-tohoku-hokkaido-mini#21",
+    "shinkansen-tohoku-hokkaido-mini#22",
+    "shinkansen-tohoku-hokkaido-mini#23"
+   ]
+  },
+  {
+   "service": "さがみ",
+   "patterns": [
+    "sagami-shinjuku-odawara"
+   ],
+   "distinctPatterns": 9,
+   "source": [
+    "docs/maintenance/database-audit/kanto-private-other.md"
+   ],
+   "corrections": [
+    "kanto-private-other#4",
+    "kanto-private-other#5",
+    "kanto-private-other#6",
+    "kanto-private-other#7",
+    "kanto-private-other#8"
+   ]
+  },
+  {
+   "service": "さくら",
+   "patterns": [
+    "sakura-shin-osaka-kagoshima-chuo"
+   ],
+   "distinctPatterns": 33,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   ],
+   "corrections": [
+    "shinkansen-kyushu#5",
+    "shinkansen-kyushu#6",
+    "shinkansen-kyushu#7",
+    "shinkansen-kyushu#8"
+   ]
+  },
+  {
+   "service": "しおかぜ",
+   "patterns": [
+    "shiokaze-okayama-matsuyama"
+   ],
+   "distinctPatterns": 11,
+   "source": [
+    "docs/maintenance/database-audit/jr-shikoku.md"
+   ],
+   "corrections": [
+    "jr-shikoku#7"
+   ]
+  },
+  {
+   "service": "しまんと",
+   "patterns": [
+    "shimanto-takamatsu-kochi"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-shikoku.md"
+   ],
+   "corrections": [
+    "jr-shikoku#6"
+   ]
+  },
+  {
+   "service": "すずらん",
+   "patterns": [
+    "suzuran-muroran-sapporo"
+   ],
+   "distinctPatterns": 2,
+   "source": [
+    "docs/maintenance/database-audit/jr-hokkaido.md"
+   ],
+   "corrections": [
+    "jr-hokkaido#1",
+    "jr-hokkaido#2"
+   ]
+  },
+  {
+   "service": "たにがわ",
+   "patterns": [
+    "tanigawa-tokyo-echigo-yuzawa"
+   ],
+   "distinctPatterns": 12,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#3",
+    "shinkansen-joetsu-hokuriku#4",
+    "shinkansen-joetsu-hokuriku#5",
+    "shinkansen-joetsu-hokuriku#6"
+   ]
+  },
+  {
+   "service": "つばさ",
+   "patterns": [
+    "tsubasa-tokyo-shinjo"
+   ],
+   "distinctPatterns": 9,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#24",
+    "shinkansen-tohoku-hokkaido-mini#25",
+    "shinkansen-tohoku-hokkaido-mini#26",
+    "shinkansen-tohoku-hokkaido-mini#27"
+   ]
+  },
+  {
+   "service": "つるぎ",
+   "patterns": [
+    "tsurugi-toyama-tsuruga"
+   ],
+   "distinctPatterns": 5,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#39",
+    "shinkansen-joetsu-hokuriku#40",
+    "shinkansen-joetsu-hokuriku#41"
+   ]
+  },
+  {
+   "service": "とき",
+   "patterns": [
+    "toki-tokyo-niigata"
+   ],
+   "distinctPatterns": 26,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#1"
+   ]
+  },
+  {
+   "service": "なすの",
+   "patterns": [
+    "nasuno-tokyo-koriyama"
+   ],
+   "distinctPatterns": 3,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#17",
+    "shinkansen-tohoku-hokkaido-mini#18"
+   ]
+  },
+  {
+   "service": "のぞみ",
+   "patterns": [
+    "nozomi-tokyo-hakata",
+    "nozomi-tokyo-shin-osaka"
+   ],
+   "distinctPatterns": 22,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tokaido-sanyo.md"
+   ],
+   "corrections": [
+    "shinkansen-tokaido-sanyo#1",
+    "shinkansen-tokaido-sanyo#2",
+    "shinkansen-tokaido-sanyo#3",
+    "shinkansen-tokaido-sanyo#4",
+    "shinkansen-tokaido-sanyo#5",
+    "shinkansen-tokaido-sanyo#6",
+    "shinkansen-tokaido-sanyo#7",
+    "shinkansen-tokaido-sanyo#8",
+    "shinkansen-tokaido-sanyo#9",
+    "shinkansen-tokaido-sanyo#10",
+    "shinkansen-tokaido-sanyo#11",
+    "shinkansen-tokaido-sanyo#12"
+   ]
+  },
+  {
+   "service": "はくたか",
+   "patterns": [
+    "hakutaka-tokyo-tsuruga"
+   ],
+   "distinctPatterns": 30,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   ],
+   "corrections": [
+    "shinkansen-joetsu-hokuriku#26",
+    "shinkansen-joetsu-hokuriku#27",
+    "shinkansen-joetsu-hokuriku#28",
+    "shinkansen-joetsu-hokuriku#29",
+    "shinkansen-joetsu-hokuriku#30",
+    "shinkansen-joetsu-hokuriku#32"
+   ]
+  },
+  {
+   "service": "はこね",
+   "patterns": [
+    "hakone-shinjuku-hakoneyumoto"
+   ],
+   "distinctPatterns": 7,
+   "source": [
+    "docs/maintenance/database-audit/kanto-private-other.md"
+   ],
+   "corrections": [
+    "kanto-private-other#1",
+    "kanto-private-other#2",
+    "kanto-private-other#3"
+   ]
+  },
+  {
+   "service": "はまかぜ",
+   "patterns": [
+    "hamakaze-osaka-hamasaka"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-west-kinki-south-sanin-sanyo.md"
+   ],
+   "corrections": [
+    "jr-west-kinki-south-sanin-sanyo#11",
+    "jr-west-kinki-south-sanin-sanyo#12",
+    "jr-west-kinki-south-sanin-sanyo#13"
+   ]
+  },
+  {
+   "service": "はやて",
+   "patterns": [
+    "hayate-morioka-shin-hakodate-hokuto"
+   ],
+   "distinctPatterns": 2,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#8",
+    "shinkansen-tohoku-hokkaido-mini#9",
+    "shinkansen-tohoku-hokkaido-mini#10",
+    "shinkansen-tohoku-hokkaido-mini#11"
+   ]
+  },
+  {
+   "service": "はやぶさ",
+   "patterns": [
+    "hayabusa-tokyo-shin-aomori",
+    "hayabusa-tokyo-shin-hakodate-hokuto"
+   ],
+   "distinctPatterns": 19,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#1",
+    "shinkansen-tohoku-hokkaido-mini#2",
+    "shinkansen-tohoku-hokkaido-mini#3",
+    "shinkansen-tohoku-hokkaido-mini#4",
+    "shinkansen-tohoku-hokkaido-mini#5",
+    "shinkansen-tohoku-hokkaido-mini#6",
+    "shinkansen-tohoku-hokkaido-mini#7"
+   ]
+  },
+  {
+   "service": "ひかり",
+   "patterns": [
+    "hikari-tokyo-hiroshima",
+    "hikari-tokyo-shin-osaka"
+   ],
+   "distinctPatterns": 26,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tokaido-sanyo.md"
+   ],
+   "corrections": [
+    "shinkansen-tokaido-sanyo#13",
+    "shinkansen-tokaido-sanyo#14",
+    "shinkansen-tokaido-sanyo#15",
+    "shinkansen-tokaido-sanyo#16",
+    "shinkansen-tokaido-sanyo#17",
+    "shinkansen-tokaido-sanyo#18",
+    "shinkansen-tokaido-sanyo#19",
+    "shinkansen-tokaido-sanyo#20"
+   ]
+  },
+  {
+   "service": "ひだ",
+   "patterns": [
+    "hida-nagoya-takayama"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-central.md"
+   ],
+   "corrections": [
+    "jr-central#1",
+    "jr-central#2",
+    "jr-central#3"
+   ]
+  },
+  {
+   "service": "みずほ",
+   "patterns": [
+    "mizuho-shin-osaka-kagoshima-chuo"
+   ],
+   "distinctPatterns": 12,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   ],
+   "corrections": [
+    "shinkansen-kyushu#1",
+    "shinkansen-kyushu#2"
+   ]
+  },
+  {
+   "service": "みどり",
+   "patterns": [
+    "midori-hakata-sasebo"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   ],
+   "corrections": [
+    "jr-kyushu-north-west#4",
+    "jr-kyushu-north-west#5",
+    "jr-kyushu-north-west#6"
+   ]
+  },
+  {
+   "service": "やまびこ",
+   "patterns": [
+    "yamabiko-tokyo-morioka"
+   ],
+   "distinctPatterns": 15,
+   "source": [
+    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   ],
+   "corrections": [
+    "shinkansen-tohoku-hokkaido-mini#14",
+    "shinkansen-tohoku-hokkaido-mini#15",
+    "shinkansen-tohoku-hokkaido-mini#16"
+   ]
+  },
+  {
+   "service": "ゆけむり",
+   "patterns": [
+    "yukemuri-nagano-yudanaka"
+   ],
+   "distinctPatterns": 4,
+   "source": [
+    "docs/maintenance/database-audit/private-other.md"
+   ],
+   "corrections": [
+    "private-other#1",
+    "private-other#2",
+    "private-other#3"
+   ]
+  },
+  {
+   "service": "スノーモンキー",
+   "patterns": [
+    "snow-monkey-nagano-yudanaka"
+   ],
+   "distinctPatterns": 4,
+   "source": [
+    "docs/maintenance/database-audit/private-other.md"
+   ],
+   "corrections": [
+    "private-other#4",
+    "private-other#5"
+   ]
+  },
+  {
+   "service": "ソニック",
+   "patterns": [
+    "sonic-hakata-oita",
+    "sonic-hakata-saiki"
+   ],
+   "distinctPatterns": 38,
+   "source": [
+    "docs/maintenance/database-audit/jr-kyushu-east-south.md"
+   ],
+   "corrections": [
+    "jr-kyushu-east-south#1",
+    "jr-kyushu-east-south#2",
+    "jr-kyushu-east-south#3",
+    "jr-kyushu-east-south#4"
+   ]
+  },
+  {
+   "service": "ミュースカイ",
+   "patterns": [
+    "mu-sky-shin-unuma-centrair"
+   ],
+   "distinctPatterns": 7,
+   "source": [
+    "docs/maintenance/database-audit/private-other.md"
+   ],
+   "corrections": [
+    "private-other#11",
+    "private-other#12",
+    "private-other#13"
+   ]
+  },
+  {
+   "service": "モーニングウェイ",
+   "patterns": [
+    "morningway-odawara-shinjuku"
+   ],
+   "distinctPatterns": 8,
+   "source": [
+    "docs/maintenance/database-audit/kanto-private-other.md"
+   ],
+   "corrections": [
+    "kanto-private-other#18",
+    "kanto-private-other#19",
+    "kanto-private-other#20"
+   ]
+  },
+  {
+   "service": "リレーかもめ",
+   "patterns": [
+    "relay-kamome-hakata-takeoonsen"
+   ],
+   "distinctPatterns": null,
+   "source": [
+    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   ],
+   "corrections": [
+    "jr-kyushu-north-west#1",
+    "jr-kyushu-north-west#2",
+    "jr-kyushu-north-west#3"
+   ]
+  }
+ ]
+}

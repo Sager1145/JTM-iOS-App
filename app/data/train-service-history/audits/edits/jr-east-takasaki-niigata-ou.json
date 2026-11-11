@@ -1,0 +1,108 @@
+[
+ {
+  "record": "akagi-ueno-takasaki",
+  "ids": "jr-east-takasaki-niigata-ou#1,3",
+  "set": {
+   "stops": "大宮 上尾 桶川 北本 鴻巣 熊谷 深谷 本庄 新町 高崎",
+   "optionalStops": "新宿 池袋 上野 赤羽 浦和",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "あかぎ",
+   "distinctPatterns": null,
+   "report": "jr-east-takasaki-niigata-ou.md"
+  }
+ },
+ {
+  "record": "kusatsu-shima-ueno-naganoharakusatsuguchi",
+  "ids": "jr-east-takasaki-niigata-ou#4,5",
+  "set": {
+   "stops": "赤羽 浦和 大宮 熊谷 高崎 新前橋 渋川 中之条 長野原草津口",
+   "optionalStops": "新宿 池袋 上野"
+  }
+ },
+ {
+  "record": "inaho-niigata-sakata",
+  "ids": "jr-east-takasaki-niigata-ou#6",
+  "set": {
+   "stops": "新潟 新発田 村上 鶴岡 酒田",
+   "optionalStops": "豊栄 中条 坂町 府屋 あつみ温泉 余目",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesReplace": [
+   [
+    "府屋は全列車停車。",
+    "府屋は定期のいなほは全列車停車だが、臨時いなほ55号・52号は通過する（2026-11-11 照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "tsugaru-akita-aomori",
+  "ids": "jr-east-takasaki-niigata-ou#7",
+  "notesReplace": [
+   [
+    "the listed regular stops reflect the fast pattern and extra stops sit in optionalStops.",
+    "the listed stops are those of every つがる (2026-11-11 recheck: 森岳 and 浪岡 are called at by all four つがる)."
+   ]
+  ]
+ },
+ {
+  "record": "akagi-ueno-maebashi",
+  "ids": "jr-east-takasaki-niigata-ou#8,9,10",
+  "set": {
+   "validUntil": "2021-03-13",
+   "stops": "赤羽 浦和 大宮 上尾 桶川 熊谷 深谷 本庄 高崎 新前橋 前橋",
+   "optionalStops": "新宿 上野 北本 鴻巣"
+  }
+ },
+ {
+  "record": "swallow-akagi-ueno-takasaki",
+  "ids": "jr-east-takasaki-niigata-ou#11,12",
+  "set": {
+   "stops": "浦和 大宮 上尾 桶川 北本 鴻巣 熊谷 深谷 本庄 高崎",
+   "optionalStops": "新宿 上野 赤羽 籠原 新町 新前橋 前橋",
+   "lines": "東北線 高崎線 上越線 両毛線"
+  }
+ },
+ {
+  "record": "swallow-akagi-ueno-takasaki",
+  "ids": "jr-east-takasaki-niigata-ou#13",
+  "split": {
+   "newId": "swallow-akagi-ueno-takasaki-until-2018-03",
+   "at": "2018-03-17",
+   "setClone": {
+    "stops": "浦和 大宮 上尾 桶川 熊谷 深谷 本庄 高崎",
+    "optionalStops": "新宿 上野 赤羽 北本 鴻巣 籠原 新町 新前橋 前橋"
+   }
+  }
+ },
+ {
+  "record": "hakutaka-echigoyuzawa-kanazawa",
+  "ids": "jr-east-takasaki-niigata-ou#19",
+  "set": {
+   "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢",
+   "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動 津幡"
+  }
+ },
+ {
+  "record": "hakutaka-echigoyuzawa-fukui",
+  "ids": "jr-east-takasaki-niigata-ou#22",
+  "set": {
+   "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢 小松 加賀温泉 芦原温泉 福井",
+   "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動 津幡"
+  }
+ },
+ {
+  "record": "hakutaka-echigoyuzawa-wakuraonsen",
+  "ids": "jr-east-takasaki-niigata-ou#23,24",
+  "set": {
+   "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢 津幡 羽咋 七尾 和倉温泉",
+   "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動",
+   "label": "越後湯沢〜和倉温泉（在来線）"
+  }
+ }
+]

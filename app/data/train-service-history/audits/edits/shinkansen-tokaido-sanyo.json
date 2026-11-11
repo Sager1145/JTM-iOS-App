@@ -1,0 +1,111 @@
+[
+ {
+  "record": "nozomi-tokyo-shin-osaka",
+  "ids": [
+   "shinkansen-tokaido-sanyo#1",
+   "shinkansen-tokaido-sanyo#2",
+   "shinkansen-tokaido-sanyo#3",
+   "shinkansen-tokaido-sanyo#4"
+  ],
+  "set": {
+   "stops": "東京 品川 新横浜 名古屋 京都 新大阪",
+   "optionalStops": ""
+  },
+  "variants": {
+   "service": "のぞみ",
+   "distinctPatterns": 22,
+   "report": "shinkansen-tokaido-sanyo.md"
+  }
+ },
+ {
+  "record": "nozomi-tokyo-hakata",
+  "ids": [
+   "shinkansen-tokaido-sanyo#5",
+   "shinkansen-tokaido-sanyo#6",
+   "shinkansen-tokaido-sanyo#7",
+   "shinkansen-tokaido-sanyo#8",
+   "shinkansen-tokaido-sanyo#9",
+   "shinkansen-tokaido-sanyo#10",
+   "shinkansen-tokaido-sanyo#11",
+   "shinkansen-tokaido-sanyo#12"
+  ],
+  "set": {
+   "stops": "東京 品川 新横浜 名古屋 京都 新大阪 新神戸 岡山 広島 小倉 博多",
+   "optionalStops": "西明石 姫路 福山 徳山 新山口",
+   "label": "東京〜博多（姫路・西明石・岡山・広島などは短区間終点）"
+  },
+  "variants": {
+   "service": "のぞみ",
+   "distinctPatterns": 22,
+   "report": "shinkansen-tokaido-sanyo.md"
+  }
+ },
+ {
+  "record": "hikari-tokyo-shin-osaka",
+  "ids": [
+   "shinkansen-tokaido-sanyo#13"
+  ],
+  "set": {
+   "stops": "東京 品川 新横浜 名古屋 京都 新大阪",
+   "optionalStops": "小田原 熱海 三島 静岡 浜松 豊橋 岐阜羽島 米原"
+  },
+  "variants": {
+   "service": "ひかり",
+   "distinctPatterns": 26,
+   "report": "shinkansen-tokaido-sanyo.md"
+  }
+ },
+ {
+  "record": "hikari-tokyo-hiroshima",
+  "ids": [
+   "shinkansen-tokaido-sanyo#14",
+   "shinkansen-tokaido-sanyo#15",
+   "shinkansen-tokaido-sanyo#16",
+   "shinkansen-tokaido-sanyo#17",
+   "shinkansen-tokaido-sanyo#18",
+   "shinkansen-tokaido-sanyo#19",
+   "shinkansen-tokaido-sanyo#20"
+  ],
+  "set": {
+   "stops": "東京 品川 新横浜 静岡 名古屋 京都 新大阪 新神戸 岡山 広島",
+   "optionalStops": "小田原 熱海 三島 浜松 豊橋 岐阜羽島 米原 西明石 姫路 相生 新倉敷 福山 新尾道 三原 東広島"
+  },
+  "variants": {
+   "service": "ひかり",
+   "distinctPatterns": 26,
+   "report": "shinkansen-tokaido-sanyo.md"
+  }
+ },
+ {
+  "record": "hikari-rail-star-shin-osaka-hakata",
+  "ids": [
+   "shinkansen-tokaido-sanyo#21"
+  ],
+  "set": {
+   "validUntil": null
+  }
+ },
+ {
+  "record": "kodama-tokyo-shin-osaka",
+  "ids": [],
+  "basis": "shinkansen-tokaido-sanyo.md: confirmed correct, all 17 stations always served by every こだま run",
+  "set": {
+   "allStations": true
+  },
+  "sourceURLs": [
+   "https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi?MODE=7&HOUR=0&DIAF=%c0%c5%b2%ac&DIAR=%c5%ec%b3%a4%c6%bb%a1%a6%bb%b3%cd%db%bf%b7%b4%b4%c0%fe&DIAD=1&YEAR=126&MONH=10&DATE=11",
+   "https://timetable.jr-odekake.net/train-timetable/315761?date=20261111"
+  ]
+ },
+ {
+  "record": "kodama-shin-osaka-hakata",
+  "ids": [],
+  "basis": "shinkansen-tokaido-sanyo.md: confirmed correct, all 19 stations always served by every こだま run",
+  "set": {
+   "allStations": true
+  },
+  "sourceURLs": [
+   "https://timetable.jr-odekake.net/train-timetable/315121?date=20261111"
+  ]
+ }
+]

@@ -1,0 +1,45 @@
+[
+ {
+  "record": "ise-shima-liner-namba-kashikojima",
+  "ids": "kintetsu#1,2",
+  "set": {
+   "stops": "大阪上本町 鶴橋 伊勢市 宇治山田 鳥羽 志摩磯部 鵜方 賢島",
+   "optionalStops": "大阪難波 大和高田 大和八木 榛原 名張 伊賀神戸 榊原温泉口 伊勢中川 松阪 五十鈴川",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "ise-shima-liner-kyoto-kashikojima",
+  "ids": "kintetsu#3",
+  "set": {
+   "optionalStops": ""
+  }
+ },
+ {
+  "record": "ise-shima-liner-nagoya-kashikojima",
+  "ids": "kintetsu#4",
+  "set": {
+   "optionalStops": "桑名 近鉄四日市 白子 伊勢中川 松阪 五十鈴川"
+  }
+ },
+ {
+  "record": "kintetsu-hanise-namba-kashikojima",
+  "ids": "kintetsu#5,6",
+  "set": {
+   "stops": "大阪上本町 鶴橋 伊勢市 宇治山田 鳥羽 志摩磯部 鵜方 賢島",
+   "optionalStops": "大阪難波 大和高田 大和八木 榛原 名張 伊賀神戸 榊原温泉口 伊勢中川 松阪 五十鈴川",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "kintetsu-kyoise-kyoto-kashikojima",
+  "ids": "kintetsu#7",
+  "set": {
+   "optionalStops": ""
+  }
+ }
+]

@@ -1,0 +1,153 @@
+[
+ {
+  "record": "hayabusa-tokyo-shin-aomori",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#1",
+   "shinkansen-tohoku-hokkaido-mini#2",
+   "shinkansen-tohoku-hokkaido-mini#3",
+   "shinkansen-tohoku-hokkaido-mini#4"
+  ],
+  "set": {
+   "optionalStops": "上野 古川 一ノ関 北上 いわて沼宮内 二戸 八戸 七戸十和田",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやぶさ",
+   "distinctPatterns": 19,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "hayabusa-tokyo-shin-aomori",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#28"
+  ],
+  "citeSource": true
+ },
+ {
+  "record": "hayabusa-tokyo-shin-hakodate-hokuto",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#5",
+   "shinkansen-tohoku-hokkaido-mini#6",
+   "shinkansen-tohoku-hokkaido-mini#7"
+  ],
+  "set": {
+   "optionalStops": "上野 一ノ関 いわて沼宮内 二戸 八戸 七戸十和田 奥津軽いまべつ 木古内",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやぶさ",
+   "distinctPatterns": 19,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "hayate-morioka-shin-hakodate-hokuto",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#8",
+   "shinkansen-tohoku-hokkaido-mini#9",
+   "shinkansen-tohoku-hokkaido-mini#10",
+   "shinkansen-tohoku-hokkaido-mini#11"
+  ],
+  "set": {
+   "stops": "盛岡 八戸 七戸十和田 新青森 奥津軽いまべつ 木古内 新函館北斗",
+   "optionalStops": "二戸",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやて",
+   "distinctPatterns": 2,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "yamabiko-tokyo-morioka",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#14",
+   "shinkansen-tohoku-hokkaido-mini#15",
+   "shinkansen-tohoku-hokkaido-mini#16"
+  ],
+  "set": {
+   "stops": "東京 大宮 福島 仙台 古川 くりこま高原 一ノ関 水沢江刺 北上 新花巻 盛岡",
+   "optionalStops": "上野 小山 宇都宮 那須塩原 新白河 郡山 白石蔵王",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "やまびこ",
+   "distinctPatterns": 15,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "nasuno-tokyo-koriyama",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#17",
+   "shinkansen-tohoku-hokkaido-mini#18"
+  ],
+  "set": {
+   "stops": "東京 上野 大宮 小山 宇都宮 郡山",
+   "optionalStops": "那須塩原 新白河",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "なすの",
+   "distinctPatterns": 3,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "komachi-tokyo-akita",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#19",
+   "shinkansen-tohoku-hokkaido-mini#20",
+   "shinkansen-tohoku-hokkaido-mini#21",
+   "shinkansen-tohoku-hokkaido-mini#22",
+   "shinkansen-tohoku-hokkaido-mini#23"
+  ],
+  "set": {
+   "stops": "東京 大宮 仙台 盛岡 大曲 秋田",
+   "optionalStops": "上野 古川 くりこま高原 一ノ関 水沢江刺 北上 新花巻 雫石 田沢湖 角館",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "全列車がはやぶさに併結され、盛岡で分割・併合する（2026-11-11 照合）。",
+  "variants": {
+   "service": "こまち",
+   "distinctPatterns": 5,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ },
+ {
+  "record": "tsubasa-tokyo-shinjo",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#24",
+   "shinkansen-tohoku-hokkaido-mini#25",
+   "shinkansen-tohoku-hokkaido-mini#26",
+   "shinkansen-tohoku-hokkaido-mini#27"
+  ],
+  "set": {
+   "stops": "東京 大宮 福島 米沢 山形 天童 さくらんぼ東根 村山 大石田 新庄",
+   "optionalStops": "上野 宇都宮 郡山 高畠 赤湯 かみのやま温泉",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "定期のつばさは約半数が福島までやまびこに併結、残りは単独運転（2026-11-11 照合）。",
+  "variants": {
+   "service": "つばさ",
+   "distinctPatterns": 9,
+   "report": "shinkansen-tohoku-hokkaido-mini.md"
+  }
+ }
+]
