@@ -365,7 +365,7 @@ struct RideCard: View {
                         Text(localization.destinationName(of: train))
                         if let time = departureTime {
                             Text("·")
-                            Text(time).monospacedDigit()
+                            Text(time.shown).monospacedDigit()
                         }
                     }
                     .railText(.tertiary)
@@ -526,18 +526,59 @@ struct RideCard: View {
 
     // MARK: - times
 
-    private var departureTime: String? {
-        let time = train.stops.first?.departure ?? train.stops.first?.arrival
-        guard let time, !time.isEmpty else { return nil }
-        return time
-    }
+    private var departureTime: StopTimingStatus.TimeDisplay? { RideCardTimeText.departureDisplay(train.stops) }
 
     /// The last call's arrival. `25:10` stays `25:10` — §7.3 keeps a 24+ hour
     /// business time as written rather than rolling it into the next date.
-    private var arrivalTime: String? {
-        let time = train.stops.last?.arrival ?? train.stops.last?.departure
-        guard let time, !time.isEmpty else { return nil }
-        return time
+    private var arrivalTime: StopTimingStatus.TimeDisplay? { RideCardTimeText.arrivalDisplay(train.stops) }
+}
+
+/// The clocks a trip card prints, resolved from the boarding and alighting
+/// stops.
+///
+/// Each side shows its effective clock: the recorded actual one when there is
+/// one, else the scheduled one. When both exist and differ the scheduled clock
+/// rides along (struck through) with the signed offset. A side with neither is
+/// `nil` - never a placeholder such as `00:00` - and the views drop that side's
+/// text instead of leaving a gap.
+enum RideCardTimeText {
+    static func departureDisplay(_ stops: [Stop]) -> StopTimingStatus.TimeDisplay? {
+        stops.boardingStopIndex.flatMap { departureDisplay(of: stops[$0]) }
+    }
+
+    static func arrivalDisplay(_ stops: [Stop]) -> StopTimingStatus.TimeDisplay? {
+        stops.alightingStopIndex.flatMap { arrivalDisplay(of: stops[$0]) }
+    }
+
+    /// One given stop's departure side: actual, else scheduled.
+    static func departureDisplay(of stop: Stop) -> StopTimingStatus.TimeDisplay? {
+        StopTimingStatus.timeDisplay(
+            scheduled: firstNonEmpty(stop.departure, stop.arrival),
+            actual: firstNonEmpty(stop.actualDeparture, stop.actualArrival))
+    }
+
+    /// One given stop's arrival side: actual, else scheduled.
+    static func arrivalDisplay(of stop: Stop) -> StopTimingStatus.TimeDisplay? {
+        StopTimingStatus.timeDisplay(
+            scheduled: firstNonEmpty(stop.arrival, stop.departure),
+            actual: firstNonEmpty(stop.actualArrival, stop.actualDeparture))
+    }
+
+    static func departure(_ stops: [Stop]) -> String? { departureDisplay(stops)?.shown }
+
+    static func arrival(_ stops: [Stop]) -> String? { arrivalDisplay(stops)?.shown }
+
+    static func departure(of stop: Stop) -> String? { departureDisplay(of: stop)?.shown }
+
+    static func arrival(of stop: Stop) -> String? { arrivalDisplay(of: stop)?.shown }
+
+    /// The effective clock of one stop: actual if recorded, else scheduled.
+    static func effective(scheduled: String?, actual: String?) -> String? {
+        firstNonEmpty(actual, scheduled)
+    }
+
+    private static func firstNonEmpty(_ values: String?...) -> String? {
+        values.lazy.compactMap { $0 }.first { !$0.isEmpty }
     }
 }
 

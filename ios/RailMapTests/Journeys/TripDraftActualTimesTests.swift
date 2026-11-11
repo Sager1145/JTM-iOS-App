@@ -30,7 +30,7 @@ struct TripDraftActualTimesTests {
         #expect(model.normalizedActual(model.actualDeparture, isDeparture: true) == "10:35")
         #expect(model.touched.contains(.actualDeparture))
         let label = StopTimingStatus.localizedLabel(
-            scheduled: model.scheduledClock(isDeparture: true), actual: "10:35", localization: AppLocalization())
+            scheduled: model.scheduledClock(isDeparture: true) ?? "", actual: "10:35", localization: AppLocalization())
         #expect(label?.contains("5") == true)
         #expect(label != StopTimingStatus.localizedLabel(
             scheduled: "10:30", actual: "10:30", localization: AppLocalization()))

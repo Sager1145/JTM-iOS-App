@@ -86,8 +86,8 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                 region: model.region.code,
                 rideDate: model.dayString(model.departure),
                 onSelectDate: { day in
-                    if let day, let date = model.timetableDate(day, time: model.clock(model.departure, extraDays: 0)) {
-                        model.timetableTimeSelection(isDeparture: true).wrappedValue = date
+                    if let day, let date = model.timetableDate(day, time: "00:00") {
+                        model.setDay(date, isDeparture: true)
                     }
                 },
                 onSelectTrip: { model.applyTimetableTrip($0); model.showsFillDetails = false },

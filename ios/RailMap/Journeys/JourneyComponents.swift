@@ -153,8 +153,8 @@ struct JourneyStateBlock: View {
 struct RouteTimingView: View {
     var origin: String
     var destination: String
-    var departure: String?
-    var arrival: String?
+    var departure: StopTimingStatus.TimeDisplay?
+    var arrival: StopTimingStatus.TimeDisplay?
     var originPlatform: Int? = nil
     var destinationPlatform: Int? = nil
     /// The two endpoints' station codes and the region they belong to — what
@@ -187,6 +187,7 @@ struct RouteTimingView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(spokenSummary))
+        .accessibilityIdentifier("rideCardTiming")
     }
 
     private var sideBySide: some View {
@@ -308,8 +309,8 @@ struct RouteTimingView: View {
     /// the one number the reader did not write down.
     private var elapsed: String? {
         guard let departure, let arrival,
-            let start = TransferGuide.Clock.minutes(departure),
-            let end = TransferGuide.Clock.minutes(arrival),
+            let start = TransferGuide.Clock.minutes(departure.shown),
+            let end = TransferGuide.Clock.minutes(arrival.shown),
             end > start
         else { return nil }
         // `StatisticsFormat` rather than a local spelling: 「1 小時 5 分」 is a
@@ -320,7 +321,7 @@ struct RouteTimingView: View {
     }
 
     private func endpoint(
-        _ name: String, code: String?, time: String?, platform: Int?,
+        _ name: String, code: String?, time: StopTimingStatus.TimeDisplay?, platform: Int?,
         alignment: HorizontalAlignment
     ) -> some View {
         VStack(alignment: alignment, spacing: 2) {
@@ -329,11 +330,21 @@ struct RouteTimingView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(
                     alignment == .center ? .center : alignment == .trailing ? .trailing : .leading)
-            if let time, !time.isEmpty {
-                Text(time)
-                    .font((usesSmallTimes ? Font.caption : Font.title3).weight(.semibold))
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
+            if let time {
+                HStack(spacing: RailSpacing.s4) {
+                    Text(time.shown)
+                        .font((usesSmallTimes ? Font.caption : Font.title3).weight(.semibold))
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                    if let scheduled = time.scheduled {
+                        Text(scheduled)
+                            .font(.caption)
+                            .monospacedDigit()
+                            .strikethrough()
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                DelayMarker(display: time)
             }
             if let platform, platform >= 0 {
                 PlatformBadge(number: platform)
@@ -344,14 +355,25 @@ struct RouteTimingView: View {
             alignment: alignment == .center ? .center : alignment == .trailing ? .trailing : .leading)
     }
 
+    /// The bare clock, or "Departure 10:35, scheduled 10:30, 5 min late" when
+    /// an actual time was recorded against a schedule.
+    private func spokenTime(
+        role key: String, _ fallback: String, _ display: StopTimingStatus.TimeDisplay
+    ) -> String {
+        guard display.offsetMinutes != nil else { return display.shown }
+        return StopTimingStatus.spoken(
+            role: localization.countryText(key, fallback: fallback), display,
+            localization: localization)
+    }
+
     /// §10.2: one journey reads as one sentence, not as four labels.
     private var spokenSummary: String {
         var parts = [localization.stationName(origin, code: originCode, region: region)]
-        if let departure, !departure.isEmpty { parts.append(departure) }
+        if let departure { parts.append(spokenTime(role: "popup.departure", "Departure", departure)) }
         if let originPlatform, originPlatform >= 0 { parts.append(localization.platformText(originPlatform)) }
         parts.append(
             localization.stationName(destination, code: destinationCode, region: region))
-        if let arrival, !arrival.isEmpty { parts.append(arrival) }
+        if let arrival { parts.append(spokenTime(role: "popup.arrival", "Arrival", arrival)) }
         if let destinationPlatform, destinationPlatform >= 0 {
             parts.append(localization.platformText(destinationPlatform))
         }
@@ -361,6 +383,35 @@ struct RouteTimingView: View {
         return parts.joined(separator: ", ")
     }
 
+}
+
+/// The small signed marker beside an actual time: "+5 min", "−3 min" or "On
+/// time". The sign and an SF Symbol carry the meaning; colour only adds to it.
+/// Draws nothing when there is no scheduled time to compare against.
+struct DelayMarker: View {
+    var display: StopTimingStatus.TimeDisplay
+    var font: Font = .caption2
+
+    @Environment(AppLocalization.self) private var localization
+
+    var body: some View {
+        if let text = StopTimingStatus.markerText(display, localization: localization) {
+            HStack(spacing: RailSpacing.s2) {
+                Image(systemName: StopTimingStatus.markerSymbol(display))
+                Text(text).monospacedDigit()
+            }
+            .font(font.weight(.semibold))
+            .foregroundStyle(tint)
+            .lineLimit(1)
+            .fixedSize()
+        }
+    }
+
+    private var tint: Color {
+        if display.isLate { return .orange }
+        if display.isEarly { return .blue }
+        return .secondary
+    }
 }
 
 struct PlatformBadge: View {
@@ -517,17 +568,9 @@ struct JourneySummaryRow: View {
         return value
     }
 
-    private var departureTime: String? {
-        let time = train.stops.first?.departure ?? train.stops.first?.arrival
-        guard let time, !time.isEmpty else { return nil }
-        return time
-    }
+    private var departureTime: StopTimingStatus.TimeDisplay? { RideCardTimeText.departureDisplay(train.stops) }
 
-    private var arrivalTime: String? {
-        let time = train.stops.last?.arrival ?? train.stops.last?.departure
-        guard let time, !time.isEmpty else { return nil }
-        return time
-    }
+    private var arrivalTime: StopTimingStatus.TimeDisplay? { RideCardTimeText.arrivalDisplay(train.stops) }
 }
 
 // MARK: - §7.6 QuietActionGroup

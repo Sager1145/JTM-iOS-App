@@ -559,8 +559,24 @@ public enum Dates {
     /// Infinity` being **false** is what sends two of them to the id tiebreak
     /// instead of producing a `NaN` comparison result that `Array#sort` would
     /// read as "equal".
+    ///
+    /// An observed clock outranks the scheduled one: the boarding stop's
+    /// `actualDeparture` (``Train/boardingStopIndex``) sorts first when it
+    /// parses. This diverges from `app/public/app-dates.js`, which has no
+    /// actual times; mirroring it is a website-repo follow-up. The port
+    /// fixtures carry no `actual_*` fields, so parity stays green.
     public static func departureMinutes(of train: Train) -> Double {
         guard let first = train.stops.first else { return .infinity }
+        if let boarding = train.boardingStopIndex,
+            let actual = parseTimeToMinutes(train.stops[boarding].actualDeparture)
+        {
+            return actual
+        }
+        if let boarding = train.boardingStopIndex,
+            let departure = parseTimeToMinutes(train.stops[boarding].departure)
+        {
+            return departure
+        }
         if let departure = parseTimeToMinutes(first.departure) { return departure }
         // `stops.find(stop => stop.stop_type === "origin")` — the first stop
         // so marked, which is not necessarily `stops[0]`.
@@ -799,4 +815,33 @@ public enum Dates {
         if date == undated { return "date.undated" }
         return date
     }
+}
+
+extension Array where Element == Stop {
+    /// The stop the rider boarded at: the first `origin`, else the first
+    /// ridden stop, else stop 0. `nil` only for no stops.
+    public var boardingStopIndex: Int? {
+        guard !isEmpty else { return nil }
+        return firstIndex { $0.stopType == "origin" }
+            ?? firstIndex { $0.rideSegment }
+            ?? 0
+    }
+
+    /// The stop the rider alighted at: the last `destination`, else the last
+    /// ridden stop, else the last stop. `nil` for fewer than two stops, which
+    /// has nowhere to alight.
+    public var alightingStopIndex: Int? {
+        guard count >= 2 else { return nil }
+        return lastIndex { $0.stopType == "destination" }
+            ?? lastIndex { $0.rideSegment }
+            ?? count - 1
+    }
+}
+
+extension Train {
+    /// ``Swift/Array/boardingStopIndex`` of this train's stops.
+    public var boardingStopIndex: Int? { stops.boardingStopIndex }
+
+    /// ``Swift/Array/alightingStopIndex`` of this train's stops.
+    public var alightingStopIndex: Int? { stops.alightingStopIndex }
 }

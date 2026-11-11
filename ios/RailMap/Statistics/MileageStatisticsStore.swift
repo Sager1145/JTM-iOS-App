@@ -988,7 +988,7 @@ final class MileageStatisticsStore {
         return true
     }
 
-    private nonisolated static func entryDigest(
+    nonisolated static func entryDigest(
         train: Train, ride: RiddenRouteStore.DrawnRide?
     ) -> Int {
         var hasher = Hasher()
@@ -1007,6 +1007,8 @@ final class MileageStatisticsStore {
         for stop in train.stops {
             hasher.combine(stop.arrival)
             hasher.combine(stop.departure)
+            hasher.combine(stop.actualArrival)
+            hasher.combine(stop.actualDeparture)
             hasher.combine(stop.stopType)
             hasher.combine(stop.rideSegment)
         }
@@ -1140,8 +1142,8 @@ extension MileageStatisticsStore {
             if let train = trains.first(where: { $0.id == journey.id }) {
                 let indexes = Statistics.effectivelyRiddenStopIndexes(train.stops)
                 if let first = indexes.first, let last = indexes.last {
-                    let start = train.stops[first].departure ?? train.stops[first].arrival
-                    let end = train.stops[last].arrival ?? train.stops[last].departure
+                    let start = RideCardTimeText.departure(of: train.stops[first])
+                    let end = RideCardTimeText.arrival(of: train.stops[last])
                     let times = [start, end].compactMap { $0 }.filter { !$0.isEmpty }
                     if !times.isEmpty { detail.append(times.joined(separator: " → ")) }
                 }

@@ -169,9 +169,12 @@ enum NewTripTimetableTestSupport {
         // Save sits in the header, outside the form, so a "containing save"
         // query never matches. A downward swipe from the sheet's top also
         // collapses the sheet to a bottom detent and hides the summary.
+        // The form is long and lazy, so a row can be many swipes away: keep
+        // one direction until the form stops moving (its end), then reverse.
         var searchUp = upward
         var streak = 0
-        let deadline = Date().addingTimeInterval(22)
+        var anchor = scrollAnchor(in: app, list: list)
+        let deadline = Date().addingTimeInterval(40)
         while Date() < deadline {
             expandSheetIfNeeded(in: app)
             if element.exists {
@@ -186,12 +189,21 @@ enum NewTripTimetableTestSupport {
                 nudge(in: app, list: list, up: searchUp, span: justOff ? 0.12 : 0.40)
                 streak = 0
                 continue
-            } else if streak >= 6 {
+            } else if streak >= 20 {
                 searchUp.toggle()
                 streak = 0
             }
             nudge(in: app, list: list, up: searchUp, span: 0.40)
             streak += 1
+            if !element.exists {
+                let now = scrollAnchor(in: app, list: list)
+                if now == anchor, streak > 1 {
+                    // The nudge moved nothing: this end of the form is reached.
+                    searchUp.toggle()
+                    streak = 0
+                }
+                anchor = now
+            }
         }
         XCTAssertTrue(element.exists, app.debugDescription)
     }
@@ -217,6 +229,16 @@ enum NewTripTimetableTestSupport {
         let start = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: startY))
         let end = form.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: endY))
         start.press(forDuration: 0.05, thenDragTo: end)
+    }
+
+    /// Identity and position of the list's first and last mounted cells; it
+    /// stops changing once a nudge no longer moves the form.
+    private static func scrollAnchor(in app: XCUIApplication, list: XCUIElement?) -> String {
+        let cells = tallestList(in: app, preferred: list).cells
+        guard cells.count > 0 else { return "-" }
+        let first = cells.firstMatch
+        let last = cells.element(boundBy: cells.count - 1)
+        return "\(first.identifier)|\(Int(first.frame.minY))|\(last.identifier)|\(Int(last.frame.minY))"
     }
 
     private static func tallestList(in app: XCUIApplication, preferred: XCUIElement?) -> XCUIElement {

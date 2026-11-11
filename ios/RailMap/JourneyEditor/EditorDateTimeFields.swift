@@ -317,12 +317,22 @@ struct EditorTimeField: View {
 /// typed but applied only on Return or when the field is left, so a
 /// half-typed date (`11/1` on the way to `11/15`) never reaches the trip.
 /// Leaving a field with text that does not parse puts the trip's value back.
+///
+/// Only the date is required: an empty time box is a clock nobody set. Typing
+/// a clock sets it (`setDateTime`); moving only the date keeps the clock as it
+/// is (`setDay`); emptying the box on Return or blur unsets it (`clearTime`).
 struct TypedDateTimeField: View {
     @Environment(AppLocalization.self) private var localization
     let title: String
-    @Binding var value: Date
+    let value: Date
+    /// The clock is real (the reader, a ticket, a timetable or the saved trip
+    /// gave it); otherwise `value`'s time is the editor's placeholder.
+    let timeIsSet: Bool
     let clock: RegionClock
     let identifier: String
+    let setDateTime: (Date) -> Void
+    let setDay: (Date) -> Void
+    let clearTime: () -> Void
     @State private var dateText = ""
     @State private var timeText = ""
     @State private var showsCalendar = false
@@ -351,7 +361,7 @@ struct TypedDateTimeField: View {
                     .accessibilityLabel(title)
                     .accessibilityIdentifier("\(identifier)Date")
                     .onSubmit(submit)
-                TextField("9:30", text: $timeText)
+                TextField("H:MM", text: $timeText)
                     .keyboardType(.numbersAndPunctuation)
                     .multilineTextAlignment(.trailing)
                     .autocorrectionDisabled()
@@ -371,7 +381,9 @@ struct TypedDateTimeField: View {
                 .accessibilityLabel(localization.text("ios.newTrip.openCalendar", fallback: "Calendar"))
                 .accessibilityIdentifier(identifier)
                 .popover(isPresented: $showsCalendar) {
-                    DatePicker(title, selection: $value, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker(
+                        title, selection: calendarSelection,
+                        displayedComponents: timeIsSet ? [.date, .hourAndMinute] : [.date])
                         .environment(\.timeZone, clock.timeZone)
                         .environment(\.calendar, clock.calendar)
                         .datePickerStyle(.graphical)
@@ -394,6 +406,7 @@ struct TypedDateTimeField: View {
         .onAppear(perform: refresh)
         .onChange(of: value) { _, _ in if focused == nil { refresh() } }
         .onChange(of: clock) { _, _ in if focused == nil { refresh() } }
+        .onChange(of: timeIsSet) { _, _ in if focused == nil { refresh() } }
         .onChange(of: focused) { old, part in if old != nil, part == nil { normalize() } }
         // A complete form ("2027-09-30", "9:30") is applied as it is typed;
         // a half-typed one ("11/1" on the way to "11/15") never is.
@@ -420,23 +433,70 @@ struct TypedDateTimeField: View {
         return nil
     }
 
-    /// Writes the typed day and clock into `value` when both parse.
-    private func apply() {
+    /// The calendar's pick: a changed clock is the reader's clock, a changed
+    /// day alone moves only the day.
+    private var calendarSelection: Binding<Date> {
+        Binding(
+            get: { value },
+            set: { picked in
+                let parts: Set<Calendar.Component> = [.hour, .minute]
+                if timeIsSet, calendar.dateComponents(parts, from: picked) != calendar.dateComponents(parts, from: value) {
+                    setDateTime(picked)
+                } else {
+                    setDay(picked)
+                }
+            })
+    }
+
+    /// What the boxes show once the trip has taken an entry. The trip's own
+    /// values reach this view only on the next render, so a refresh straight
+    /// after an entry reads this instead of the stale properties.
+    private struct Shown {
+        var day: Date
+        var clock: Date
+        var timeSet: Bool
+    }
+
+    /// Sends the typed day and clock to the trip. `committing` (Return or
+    /// leaving the field) is the only time an empty time box unsets the clock.
+    @discardableResult
+    private func apply(committing: Bool = false) -> Shown {
+        var shown = Shown(day: value, clock: value, timeSet: timeIsSet)
         guard case .valid(let year, let month, let day, _) = parsedDate,
-              case .valid(_, let time) = EditorTime.parseTime(timeText),
-              let start = calendar.date(from: DateComponents(year: year, month: month, day: day)),
-              let civil = calendar.date(byAdding: .day, value: time.dayOffset, to: start),
-              let next = calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: civil)
-        else { return }
-        // Same minute: nothing changed, and a seed's seconds stay untouched.
-        guard !calendar.isDate(next, equalTo: value, toGranularity: .minute) else { return }
-        value = next
+              let start = calendar.date(from: DateComponents(year: year, month: month, day: day))
+        else { return shown }
+        switch EditorTime.parseTime(timeText) {
+        case .invalid:
+            break
+        case .unset:
+            if !calendar.isDate(start, inSameDayAs: value) {
+                setDay(start)
+                shown.day = start
+            }
+            if committing, timeIsSet {
+                clearTime()
+                shown.timeSet = false
+            }
+        case .valid(_, let time):
+            guard let civil = calendar.date(byAdding: .day, value: time.dayOffset, to: start),
+                  let next = calendar.date(bySettingHour: time.hour, minute: time.minute, second: 0, of: civil)
+            else { break }
+            let current = calendar.dateComponents([.hour, .minute], from: value)
+            if !timeIsSet || current.hour != time.hour || current.minute != time.minute {
+                // Any clock typed into an empty box is the reader's, even one equal to the placeholder.
+                setDateTime(next)
+                shown = Shown(day: next, clock: next, timeSet: true)
+            } else if !calendar.isDate(civil, inSameDayAs: value) {
+                setDay(civil)
+                shown.day = civil
+            }
+        }
+        return shown
     }
 
     /// Leaving a field shows the value in its canonical form.
     private func normalize() {
-        apply()
-        refresh()
+        refresh(apply(committing: true))
     }
 
     /// Return finishes the entry: apply it and give the keyboard back, so the
@@ -447,8 +507,12 @@ struct TypedDateTimeField: View {
     }
 
     private func refresh() {
-        dateText = RecordDate.text(from: value, in: clock)
-        let parts = calendar.dateComponents([.hour, .minute], from: value)
-        timeText = String(format: "%d:%02d", parts.hour ?? 0, parts.minute ?? 0)
+        refresh(Shown(day: value, clock: value, timeSet: timeIsSet))
+    }
+
+    private func refresh(_ shown: Shown) {
+        dateText = RecordDate.text(from: shown.day, in: clock)
+        let parts = calendar.dateComponents([.hour, .minute], from: shown.clock)
+        timeText = shown.timeSet ? String(format: "%d:%02d", parts.hour ?? 0, parts.minute ?? 0) : ""
     }
 }

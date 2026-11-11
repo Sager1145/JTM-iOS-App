@@ -158,6 +158,31 @@ struct TripListRulesTests {
         if let end, let start { #expect(end.timeIntervalSince(start) == 40 * 60) }
     }
 
+    @Test("the list start and end come from the boarding and alighting stops")
+    func midTrainBoarding() {
+        var mid = train(list: .upcoming)
+        mid.stops = (0..<5).map { index in
+            var stop = Stop(name: "S\(index)")
+            stop.departure = String(format: "%02d:00", 8 + index)
+            stop.arrival = String(format: "%02d:00", 8 + index)
+            stop.rideSegment = (1...3).contains(index)
+            return stop
+        }
+        mid.stops[1].stopType = "origin"
+        mid.stops[3].stopType = "destination"
+        let start = TripListRules.start(of: mid, clock: .japan)!
+        let end = TripListRules.end(of: mid, clock: .japan)!
+        #expect(end.timeIntervalSince(start) == 2 * 3600)
+        mid.stops[1].actualDeparture = "09:30"
+        let actualStart = TripListRules.start(of: mid, clock: .japan)!
+        #expect(start.timeIntervalSince(actualStart) == -30 * 60)
+        // An import with no types starts at its first ridden stop.
+        for index in mid.stops.indices { mid.stops[index].stopType = ""; mid.stops[index].actualDeparture = nil
+            mid.stops[index].rideSegment = index >= 2 }
+        let imported = TripListRules.start(of: mid, clock: .japan)!
+        #expect(imported.timeIntervalSince(start) == 3600)
+    }
+
     @Test("without times the end of the date is the end")
     func untimedEnd() {
         let untimed = train(departure: nil, arrival: nil, list: .upcoming)
@@ -267,5 +292,34 @@ struct TripListRulesTests {
         var sameDay = train(date: "2026-09-06", departure: "10:00", arrival: "10:10", list: .upcoming)
         sameDay.stops[0].actualDeparture = "10:15"
         #expect(TripListRules.end(of: sameDay, clock: .japan) == day.addingTimeInterval(615 * 60))
+    }
+
+    @Test("a middle stop's actual departure is ignored for the list start")
+    func middleActualIgnored() {
+        var trip = Train(
+            id: "m", date: "2026-09-06", number: "1", origin: "A", destination: "C",
+            stops: [
+                Stop(name: "A", departure: "10:00", stopType: "origin", rideSegment: true),
+                Stop(name: "B", departure: "10:30", actualDeparture: "10:45", rideSegment: true),
+                Stop(name: "C", arrival: "11:00", stopType: "destination", rideSegment: true),
+            ])
+        trip.listMembership = .upcoming
+        let day = RegionClock.japan.startOfDay("2026-09-06")!
+        #expect(TripListRules.start(of: trip, clock: .japan) == day.addingTimeInterval(600 * 60))
+        trip.stops[0].actualDeparture = "10:05"
+        #expect(TripListRules.start(of: trip, clock: .japan) == day.addingTimeInterval(605 * 60))
+    }
+
+    @Test("a middle stop's actual arrival is ignored for the list end")
+    func middleActualArrivalIgnored() {
+        let trip = Train(
+            id: "e", date: "2026-09-06", number: "1", origin: "A", destination: "C",
+            stops: [
+                Stop(name: "A", departure: "10:00", stopType: "origin", rideSegment: true),
+                Stop(name: "B", arrival: "10:30", actualArrival: "10:40", rideSegment: true),
+                Stop(name: "C", arrival: "11:00", stopType: "destination", rideSegment: true),
+            ])
+        let day = RegionClock.japan.startOfDay("2026-09-06")!
+        #expect(TripListRules.end(of: trip, clock: .japan) == day.addingTimeInterval(660 * 60))
     }
 }

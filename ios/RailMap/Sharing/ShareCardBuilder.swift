@@ -63,8 +63,8 @@ struct ShareCardBuilder {
             title: JourneyTitle.compact(train),
             subtitle: train.date.map { StatisticsFormat.spelledDate($0, localization: l) },
             body: .journey(
-                origin: origin, departure: first?.departure ?? first?.arrival,
-                destination: destination, arrival: last?.arrival ?? last?.departure),
+                origin: origin, departure: first.flatMap { RideCardTimeText.departure(of: $0) },
+                destination: destination, arrival: last.flatMap { RideCardTimeText.arrival(of: $0) }),
             facts: facts,
             rows: rows,
             rowsHeading: l.text(mode.localizationKey),
@@ -86,7 +86,7 @@ struct ShareCardBuilder {
             let important = index == 0 || index == last || changes.contains(index)
                 || stop.stopType == "passenger_stop"
             if mode == .key, !important { return nil }
-            let time = stop.departure ?? stop.arrival ?? "—"
+            let time = RideCardTimeText.departure(of: stop) ?? "—"
             return ShareCardContent.Row(
                 id: "\(index)",
                 leading: time,

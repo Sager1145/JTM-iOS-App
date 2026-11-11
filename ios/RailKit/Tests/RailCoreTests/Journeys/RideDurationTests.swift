@@ -136,4 +136,49 @@ struct RideDurationTests {
             #expect(plain?.bitPattern == zoned?.bitPattern)
         }
     }
+
+    private static func clocks(
+        departure: String? = nil, actualDeparture: String? = nil,
+        arrival: String? = nil, actualArrival: String? = nil
+    ) -> Train {
+        Train(
+            id: "C", date: "2026-08-27", number: "C", origin: "A", destination: "B",
+            stops: [
+                Stop(
+                    name: "A", departure: departure, actualDeparture: actualDeparture,
+                    stopType: "origin", rideSegment: true),
+                Stop(
+                    name: "B", arrival: arrival, actualArrival: actualArrival,
+                    stopType: "destination", rideSegment: true),
+            ])
+    }
+
+    @Test("an actual-only trip gets minutes from the actual clocks")
+    func actualOnly() {
+        #expect(Statistics.trainRideMinutes(
+            Self.clocks(actualDeparture: "10:00", actualArrival: "11:30")) == 90)
+    }
+
+    @Test("scheduled departure with an actual arrival mixes")
+    func mixed() {
+        #expect(Statistics.trainRideMinutes(
+            Self.clocks(departure: "10:00", arrival: "11:00", actualArrival: "11:20")) == 80)
+    }
+
+    @Test("a blank actual is absent")
+    func blankActual() {
+        #expect(Statistics.trainRideMinutes(
+            Self.clocks(departure: "10:00", actualDeparture: "", arrival: "11:00", actualArrival: " ")) == 60)
+    }
+
+    @Test("an actual overnight 23:50 to 24:20 is thirty minutes")
+    func actualOvernight() {
+        #expect(Statistics.trainRideMinutes(
+            Self.clocks(actualDeparture: "23:50", actualArrival: "24:20")) == 30)
+    }
+
+    @Test("a trip with no clocks is nil, not zero")
+    func noClocks() {
+        #expect(Statistics.trainRideMinutes(Self.clocks()) == nil)
+    }
 }
