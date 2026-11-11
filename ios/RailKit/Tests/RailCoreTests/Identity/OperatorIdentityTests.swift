@@ -37,6 +37,14 @@ struct OperatorIdentityTests {
         #expect(OperatorIdentity.displayName(code: "jp.jr-west", language: "en") == "JR West")
     }
 
+    @Test func everyNonCnOperatorHasAnEnglishLabel() {
+        // cn is excluded because the region is disabled; no allowlist for other regions.
+        let missing = OperatorIdentity.registry.operators
+            .filter { $0.region != "cn" && OperatorIdentity.englishLabel(code: $0.code) == nil }
+            .map(\.code)
+        #expect(missing.isEmpty, "Operators without an English label: \(missing)")
+    }
+
     @Test func companyTextTranslatesOnlyInEnglishAndOnlyWhole() {
         #expect(OperatorIdentity.displayLabel(forCompanyText: "東日本旅客鉄道", language: "en") == "JR East")
         #expect(OperatorIdentity.displayLabel(forCompanyText: "東日本旅客鉄道", language: "ja") == "JR東日本")
