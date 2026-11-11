@@ -165,6 +165,7 @@ final class RideLibrary {
     }
     private var pendingSave: SaveBatch?
     private var deletionRevision = 0
+    @ObservationIgnored private var cachedSampleTripIDs: Set<String>?
     /// Bumped once per save that actually starts a new write (coalesced
     /// snapshot updates on an unstarted batch share the same sequence). A
     /// completion only sets or clears ``lastSaveError`` when its own sequence
@@ -207,15 +208,21 @@ final class RideLibrary {
     /// the store are the ones carrying its ids, so nothing the reader added is
     /// ever in this set. A sample that cannot be read adds nothing to it.
     func allSampleTripIDs() async -> Set<String> {
+        // The bundled resources never change, and the Japanese store alone is
+        // about 200 trips, so the set is built once per launch.
+        if let cachedSampleTripIDs { return cachedSampleTripIDs }
         var ids = Set<String>()
+        var complete = true
         for entry in Sample.all {
-            guard let incoming = try? await sample(entry.resource) else { continue }
+            guard let incoming = try? await sample(entry.resource) else { complete = false; continue }
             let current = Set(incoming.trains.map(\.id))
             ids.formUnion(current)
             for (legacy, now) in SampleLegacyRideIDs.map(for: entry.resource) where current.contains(now) {
                 ids.insert(legacy)
             }
         }
+        // A sample that could not be read is retried next time, not cached.
+        if complete { cachedSampleTripIDs = ids }
         return ids
     }
 

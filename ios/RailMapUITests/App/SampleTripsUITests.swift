@@ -38,8 +38,16 @@ final class SampleTripsUITests: XCTestCase {
         if cancel.waitForExistence(timeout: 2) { cancel.tap() } else { app.tap() }
         XCTAssertFalse(app.buttons["sampleAddConfirm"].exists, "Cancel adds nothing.")
 
-        XCTAssertTrue(app.descendants(matching: .any)["sampleReplaceAllMenu"].firstMatch.exists,
-                      "Replace all trips is a visible row.")
+        let replaceMenu = app.descendants(matching: .any)["sampleReplaceAllMenu"].firstMatch
+        XCTAssertTrue(replaceMenu.exists, "Replace all trips is a visible row.")
+        replaceMenu.tap()
+        let pick = app.buttons["sampleReplacePick-train-store"].firstMatch
+        XCTAssertTrue(pick.waitForExistence(timeout: 8))
+        pick.tap()
+        XCTAssertTrue(app.buttons["sampleReplaceConfirm"].firstMatch.waitForExistence(timeout: 8),
+                      "Choosing a sample from the menu asks before replacing everything.")
+        let cancelReplace = app.buttons["Cancel"].firstMatch
+        if cancelReplace.waitForExistence(timeout: 2) { cancelReplace.tap() } else { app.tap() }
         for _ in 0..<4 where !app.buttons["sampleRemoveButton"].exists { app.swipeUp() }
         XCTAssertTrue(app.buttons["sampleRemoveButton"].exists, "Remove sample trips is offered.")
     }

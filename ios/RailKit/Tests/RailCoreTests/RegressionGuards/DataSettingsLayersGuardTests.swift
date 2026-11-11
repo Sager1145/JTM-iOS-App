@@ -21,6 +21,16 @@ struct DataSettingsLayersGuardTests {
         try String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)
     }
 
+    /// The first string literal after `marker`.
+    private static func quoted(after marker: String, in text: String) -> String? {
+        guard let start = text.range(of: marker) else { return nil }
+        let rest = text[start.upperBound...]
+        guard let open = rest.firstIndex(of: "\"") else { return nil }
+        let body = rest[rest.index(after: open)...]
+        guard let close = body.firstIndex(of: "\"") else { return nil }
+        return String(body[..<close])
+    }
+
     private static func count(_ needle: String, in text: String) -> Int {
         text.components(separatedBy: needle).count - 1
     }
@@ -32,11 +42,15 @@ struct DataSettingsLayersGuardTests {
         let view = try Self.source("RailMap/Import/DataManagerView.swift")
         // "Save current rides" and "Save again" both queued the same write.
         #expect(Self.count("saveWorkingSet()", in: view) <= 1)
-        // The reload retry and the backup restore are the only readers.
-        #expect(Self.count("itineraries.load(from:", in: view) <= 2)
-        for retired in ["btn.saveAsMine", "btn.restoreMine", "btn.clearStorage", "deleteSavedStore", "deleteSaved"] {
+        // The reload retry, the backup restore and the unreadable-file delete
+        // are the only readers.
+        #expect(Self.count("itineraries.load(from:", in: view) <= 3)
+        for retired in ["btn.saveAsMine", "btn.restoreMine", "btn.clearStorage", "deleteSaved("] {
             #expect(!view.contains(retired), "\(retired) is a retired duplicate of save, reload or delete")
         }
+        // The only other delete is the one for a file that cannot be read.
+        #expect(Self.count("deleteSavedStore()", in: view) == 1)
+        #expect(view.contains("deleteUnreadableConfirm"))
         // One delete, one confirmation.
         #expect(Self.count("data.deleteAllTitle", in: view) >= 1)
         #expect(Self.count("isPresented(.deleteAll)", in: view) == 1)
@@ -71,6 +85,15 @@ struct DataSettingsLayersGuardTests {
         let block = String(strings[start.lowerBound...].prefix(600))
         for language in [".en:", ".ja:", ".zhHans:", ".zhHant:"] { #expect(block.contains(language)) }
         #expect(block.contains("To import a file, use Add trip."))
+        // The sentence names the Add trip entry as that language spells it.
+        let shell = try Self.source("RailMap/Localization/ShellStrings.swift")
+        let addStart = try #require(shell.range(of: "\"ios.tab.addTrip\": ["))
+        let addBlock = String(shell[addStart.lowerBound...].prefix(300))
+        for language in [".ja:", ".zhHans:", ".zhHant:"] {
+            let label = try #require(Self.quoted(after: language, in: addBlock))
+            let line = try #require(Self.quoted(after: language, in: block))
+            #expect(line.contains(label), "\(language) signpost must name “\(label)”")
+        }
     }
 
     // MARK: B5: one Sample trips page

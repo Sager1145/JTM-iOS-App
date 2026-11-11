@@ -19,6 +19,7 @@ import SwiftUI
 /// reader's own trips, so only it writes a backup first, as does removing.
 struct SampleTripsView: View {
     @Environment(AppLocalization.self) private var localization
+    @Environment(PresentationHost.self) private var presentationHost
     @Bindable var itineraries: ItineraryStore
     @Bindable var library: RideLibrary
 
@@ -141,8 +142,11 @@ struct SampleTripsView: View {
                 ForEach(Region.enabledOrdered) { region in
                     ForEach(RideLibrary.Sample.forRegion(region)) { sample in
                         Button(localization.text(sample.titleKey, fallback: sample.title)) {
-                            replaceCandidate = sample
+                            // A menu is itself a presentation on iOS: the
+                            // dialog waits until it has finished closing.
+                            presentationHost.afterTeardown { replaceCandidate = sample }
                         }
+                        .accessibilityIdentifier("sampleReplacePick-\(sample.resource)")
                     }
                 }
             } label: {

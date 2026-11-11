@@ -33,7 +33,7 @@ struct DataManagerView: View {
     /// Which confirmation or system sheet is up.
     private enum Destination: Equatable {
         case exportFile
-        case deleteAll, restore, discardBackup
+        case deleteAll, restore, discardBackup, deleteUnreadable
     }
     @State private var destination: Destination?
 
@@ -171,6 +171,37 @@ struct DataManagerView: View {
                 Button(localization.text("data.retryLoad")) {
                     itineraries.load(from: library)
                 }
+                // A file that cannot be read fails the same way on every
+                // retry, and nothing else can empty a store that never loaded.
+                if library.hasSavedStore {
+                    Button(localization.text("data.deleteUnreadable"), role: .destructive) {
+                        destination = .deleteUnreadable
+                    }
+                    .accessibilityIdentifier("deleteUnreadableButton")
+                }
+            }
+            .confirmationDialog(
+                localization.text("data.deleteUnreadable"),
+                isPresented: isPresented(.deleteUnreadable),
+                titleVisibility: .visible
+            ) {
+                Button(localization.text("data.deleteUnreadable"), role: .destructive) {
+                    destination = nil
+                    Task {
+                        do {
+                            try await library.deleteSavedStore()
+                            itineraries.load(from: library)
+                        } catch {
+                            operationError = OperationError(
+                                titleKey: "data.loadFailedTitle",
+                                detail: error.localizedDescription,
+                                keptKey: "data.errorNothingChanged")
+                        }
+                    }
+                }
+                .accessibilityIdentifier("deleteUnreadableConfirm")
+            } message: {
+                Text(localization.text("data.deleteUnreadableDetail"))
             }
         }
 

@@ -90,7 +90,9 @@ struct DataImportView: View {
                 // file. Typing still waits for "Validate JSON" (audit A20).
                 PasteButton(payloadType: String.self) { strings in
                     guard let pasted = strings.first, !pasted.isEmpty else { return }
-                    flow.text = pasted
+                    // `load` resets the region and detection first, so the
+                    // check below runs against the region the text names.
+                    flow.load(pasted, origin: .pasted)
                     flow.prepareForPresentation()
                     flow.check(itineraries: itineraries)
                 }

@@ -81,6 +81,54 @@ struct SampleTripsAndResetTests {
         #expect(library.loadedSamples == ["train-store"], "a refused removal does not forget the samples")
     }
 
+    @Test func sampleTripIDsAreCachedAndIncludeALoadedSamplesIDs() async throws {
+        let isolated = try Isolated()
+        defer { isolated.remove() }
+        let library = RideLibrary(storage: RideStorage(directory: isolated.root), preferences: isolated.defaults)
+        let entry = try #require(RideLibrary.Sample.all.first)
+        let loaded = try await library.sample(entry.resource)
+        let ids = await library.allSampleTripIDs()
+        #expect(!loaded.trains.isEmpty)
+        for train in loaded.trains { #expect(ids.contains(train.id)) }
+        for (legacy, now) in SampleLegacyRideIDs.map(for: entry.resource) where Set(loaded.trains.map(\.id)).contains(now) {
+            #expect(ids.contains(legacy))
+        }
+        #expect(await library.allSampleTripIDs() == ids)
+    }
+
+    @Test func aStoreLeftFailedCanBeEmptiedByDeletingTheSavedFile() async throws {
+        let isolated = try Isolated()
+        defer { isolated.remove() }
+        try Data("{ not a store".utf8).write(to: isolated.root.appending(path: "train-store.json"))
+        let library = RideLibrary(storage: RideStorage(directory: isolated.root), preferences: isolated.defaults)
+        let itineraries = ItineraryStore(preferences: isolated.defaults)
+        itineraries.load(from: library)
+        try await waitUntil { if case .failed = itineraries.state { return true } else { return false } }
+        #expect(itineraries.store == nil)
+        #expect(library.hasSavedStore)
+
+        try await library.deleteSavedStore()
+        itineraries.load(from: library)
+        try await waitUntil { itineraries.canReplace }
+
+        #expect(!library.hasSavedStore)
+        #expect(itineraries.store?.trains.isEmpty == true)
+    }
+
+    @Test func pastingAnOfficialStoreDetectsItsRegion() {
+        let flow = ImportFlow()
+        flow.load("{\"trains\":[{\"id\":\"tw-official-1\"}]}", origin: .pasted)
+        flow.prepareForPresentation()
+        #expect(flow.detectedRegion == .tw)
+        #expect(flow.region == .tw)
+        // A sheet that prepared an empty paste first must not block detection.
+        let reused = ImportFlow()
+        reused.prepareForPresentation()
+        reused.load("{\"trains\":[{\"id\":\"hk-official-1\"}]}", origin: .pasted)
+        reused.prepareForPresentation()
+        #expect(reused.detectedRegion == .hk)
+    }
+
     @Test func everyBundledSampleIsKnownToTheRemoval() {
         // The removal matches ids read from these resources; a sample missing
         // from `Sample.all` would be impossible to remove.

@@ -309,6 +309,16 @@ enum DataStrings {
         "data.retryLoad": [
             .zhHant: "重新讀取", .zhHans: "重新读取", .ja: "再読み込み", .en: "Read again",
         ],
+        "data.deleteUnreadable": [
+            .zhHant: "刪除無法讀取的檔案", .zhHans: "删除无法读取的文件",
+            .ja: "読み込めないファイルを削除", .en: "Delete the saved file",
+        ],
+        "data.deleteUnreadableDetail": [
+            .zhHant: "已儲存的行程檔案無法讀取，刪除後會從空白開始。這無法復原。",
+            .zhHans: "已保存的行程文件无法读取，删除后会从空白开始。这无法撤销。",
+            .ja: "保存された旅程ファイルを読み込めません。削除すると空の状態から始まります。この操作は取り消せません。",
+            .en: "The saved trips file cannot be read. Deleting it starts from an empty list. This cannot be undone.",
+        ],
 
         // MARK: degradation
 
@@ -444,7 +454,7 @@ enum DataStrings {
 
         "data.importSignpost": [
             .zhHant: "要匯入檔案，請使用「新增行程」。",
-            .zhHans: "要导入文件，请使用“新增行程”。",
+            .zhHans: "要导入文件，请使用“添加行程”。",
             .ja: "ファイルを読み込むには、「旅程を追加」を使います。",
             .en: "To import a file, use Add trip.",
         ],

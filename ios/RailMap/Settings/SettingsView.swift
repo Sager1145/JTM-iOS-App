@@ -475,7 +475,7 @@ struct SettingsView: View {
             .accessibilityIdentifier("settingsResetButton")
         } footer: {
             // Lists what `DisplaySettings.reset()` changes; the unit test
-            // `DisplaySettingsResetTests` pins that list to the function.
+            // `SampleTripsAndResetTests` pins that list to the function.
             Text(
                 localization.text(
                     "ios.note.reset",
