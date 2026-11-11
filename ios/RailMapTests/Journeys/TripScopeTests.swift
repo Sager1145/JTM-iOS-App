@@ -40,7 +40,7 @@ struct TripScopeTests {
         }
         let selected = "t0"
         let capped = MapTripCap.capped(ids, id: { $0 }, selectedID: selected, dates: dates)
-        #expect(limit == ResourceProfile.current.mapTripLimit)
+        #expect(limit == 500)
         #expect(capped.count == limit)
         #expect(capped.contains(selected))
         // Every kept trip is at least as recent as every dropped one
@@ -56,6 +56,41 @@ struct TripScopeTests {
     @Test func capLeavesSmallSetsUntouched() {
         let ids = (0..<MapTripCap.limit).map { "t\($0)" }
         #expect(MapTripCap.capped(ids, id: { $0 }, selectedID: nil, dates: [:]) == ids)
+    }
+
+    @Test func capAppliesToTheDrawableSetAndHidingShrinksIt() {
+        // 700 jp trips in 2025 (600) and 2024 (100), plus 50 tw trips.
+        var trains: [Train] = []
+        for i in 0..<600 { trains.append(train("a\(i)", date: String(format: "2025-%02d-%02d", i % 12 + 1, i % 28 + 1))) }
+        for i in 0..<100 { trains.append(train("b\(i)", date: String(format: "2024-%02d-10", i % 12 + 1))) }
+        for i in 0..<50 { trains.append(train("t\(i)", date: "2025-06-01", country: "tw")) }
+        let store = loaded(trains)
+        let filter = TripHideFilter(defaults: freshDefaults())
+
+        func drawn(_ scoped: [Train]) -> [Train] {
+            MapTripCap.capped(scoped, id: \.id, selectedID: nil, dates: MapTripCap.dates(scoped))
+        }
+        // Lists keep every trip; the map draws only the cap.
+        #expect(filter.scoped(store).trains.count == 750)
+        #expect(drawn(filter.scoped(store).trains).count == 500)
+
+        // Hiding a country reduces the drawable set but it is still capped.
+        filter.setRegion(.tw, hidden: true)
+        #expect(filter.scoped(store).trains.count == 700)
+        #expect(drawn(filter.scoped(store).trains).count == 500)
+
+        // Hiding a year brings it under the cap: everything left is drawn.
+        filter.setYear(2025, hidden: true)
+        #expect(filter.scoped(store).trains.count == 100)
+        #expect(drawn(filter.scoped(store).trains).count == 100)
+
+        // Hiding a single month of the remaining year reduces it further.
+        filter.setYear(2025, hidden: false)
+        filter.setYear(2024, hidden: false)
+        filter.setMonth("2024-01", hidden: true)
+        let remaining = filter.scoped(store).trains.filter { $0.date?.hasPrefix("2024-01") == true }
+        #expect(remaining.isEmpty)
+        #expect(drawn(filter.scoped(store).trains).count == 500)
     }
 
     // MARK: hide filter

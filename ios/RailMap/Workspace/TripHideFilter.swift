@@ -9,9 +9,9 @@ import RailPresentation
 /// (`RailWorkspaceView.mapRides`), and reused by the two other places that
 /// can draw many routes: playback's queue and the share card's map. Lists
 /// still scroll through every trip; only drawing is capped. 500 on a phone
-/// or iPad, 1,500 on a Mac (``ResourceProfile/mapTripLimit``).
+/// or iPad or Mac (``ResourceProfile/mapTripLimit``).
 enum MapTripCap {
-    static let limit = ResourceProfile.current.mapTripLimit
+    static let limit = ResourceProfile.mapTripLimit
 
     /// Trip id → normalised `YYYY-MM-DD` ("" when undated), the sort key.
     static func dates(_ trains: [Train]) -> [String: String] {

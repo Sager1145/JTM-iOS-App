@@ -28,7 +28,6 @@ struct ResourceProfileTests {
         #expect(compact.countryCacheSlots == 1)
         #expect(compact.displayResidentByteBudget == 16 * 1024 * 1024)
         #expect(compact.geometryFrameCapacity == 5)
-        #expect(compact.mapTripLimit == 500)
 
         let large = ResourceProfile(tier: .large)
         #expect(large.regionalGraphNodeBudget == 450_000)
@@ -37,7 +36,6 @@ struct ResourceProfileTests {
         #expect(large.countryCacheSlots == 2)
         #expect(large.displayResidentByteBudget == 48 * 1024 * 1024)
         #expect(large.geometryFrameCapacity == 16)
-        #expect(large.mapTripLimit == 500)
 
         let desktop = ResourceProfile(tier: .desktop)
         #expect(desktop.regionalGraphNodeBudget == 450_000)
@@ -45,7 +43,11 @@ struct ResourceProfileTests {
         #expect(desktop.countryCacheSlots == 2)
         #expect(desktop.displayResidentByteBudget == 128 * 1024 * 1024)
         #expect(desktop.geometryFrameCapacity == 16)
-        #expect(desktop.mapTripLimit == 1_500)
+    }
+
+    @Test("the map trip limit is a flat 500 whatever the tier")
+    func mapTripLimitIsFlat() {
+        #expect(ResourceProfile.mapTripLimit == 500)
     }
 
     @Test("the detected profile is what current reports without an override")
