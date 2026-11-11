@@ -80,6 +80,7 @@ private struct PickerHints: Equatable {
 /// with the same display name into one ambiguous list.
 struct StationPickerView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.searchPreferences) private var preferences
     @Environment(AppLocalization.self) private var localization
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let regionCode: String
@@ -740,8 +741,8 @@ struct StationPickerView: View {
             return
         }
         let readings = localization.stationSearchNames(region: region)
-        let recent = StationPickerRecents.load(regionCode: regionCode)
-        recentSearches = RecentSearchStore.load(.stationPicker, regionCode: regionCode)
+        let recent = StationPickerRecents.load(regionCode: regionCode, defaults: preferences)
+        recentSearches = RecentSearchStore.load(.stationPicker, regionCode: regionCode, defaults: preferences)
         let rideCounts = StationPickerRecents.rideCounts(
             trains: itineraries?.loaded?.trains ?? [], regionCode: regionCode)
         search.setSignals(recentPicks: recent, rideCounts: rideCounts)
@@ -782,7 +783,8 @@ struct StationPickerView: View {
             didLoad = true
             prepareFilters(catalog: loaded.0)
             refreshFilterState()
-            if isSearching { search.apply(query: searchText, companyName: nil) }
+            // Always: an empty box asks the engine for suggestions with the signals set above.
+            search.apply(query: searchText, companyName: nil)
         } catch {
             guard !Task.isCancelled, search.acceptsLoad(loadID) else { return }
             loadError = error.localizedDescription
@@ -809,13 +811,14 @@ struct StationPickerView: View {
     }
     private func recordPick(_ station: CatalogStation) {
         let recent = StationPickerRecents.record(
-            stationCode: station.key.sourceCode, regionCode: regionCode)
+            stationCode: station.key.sourceCode, regionCode: regionCode, defaults: preferences)
         search.setSignals(recentPicks: recent)
     }
     private func select(_ row: CatalogStationRow, line: CatalogLine? = nil) {
         recordPick(row.station)
         if isSearching, inlineQuery == nil {
-            recentSearches = RecentSearchStore.record(searchText, box: .stationPicker, regionCode: regionCode)
+            recentSearches = RecentSearchStore.record(
+                searchText, box: .stationPicker, regionCode: regionCode, defaults: preferences)
         }
         if let onSelectWithLine { onSelectWithLine(row.station, line, row.stationID) }
         else { onSelect?(row.station, row.stationID) }

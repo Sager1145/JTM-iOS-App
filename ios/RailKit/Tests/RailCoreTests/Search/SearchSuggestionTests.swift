@@ -150,6 +150,27 @@ import Testing
         #expect(exact.corrections.isEmpty)
     }
 
+    /// A valid prefix is never "corrected": no typo rows, no chips.
+    @Test func aValidPrefixIsNotCorrected() throws {
+        let response = try query("高輪")
+        #expect(!response.results.isEmpty)
+        #expect(response.results.allSatisfy { $0.match.kind != .fuzzy })
+        #expect(response.corrections.isEmpty)
+    }
+
+    @Test func aRealTwoKanjiTypoWithNoSolidHitStillCorrects() throws {
+        let response = try query("渋矢")
+        #expect(response.results.allSatisfy { $0.match.kind == .fuzzy })
+        #expect(response.corrections.contains { $0.text == "渋谷" })
+    }
+
+    @Test func theChipRowLeadSkipsACompletionChip() {
+        #expect(SearchChipKind.lead(of: [.completion, .didYouMean, .didYouMean]) == .didYouMean)
+        #expect(SearchChipKind.lead(of: [.recent, .recent]) == .recent)
+        #expect(SearchChipKind.lead(of: [.completion]) == nil)
+        #expect(SearchChipKind.lead(of: []) == nil)
+    }
+
     @Test func topCompletionWhileTyping() throws {
         let partial = try query("shinj")
         #expect(partial.completion != nil)
@@ -213,7 +234,60 @@ import Testing
     }
 }
 
+@Suite struct StationBrowsingSignalsTests {
+    private func code(_ hit: StationSearchHit) -> String? {
+        if case .current(let key, _) = hit.subject { return key.sourceCode }
+        return nil
+    }
+
+    /// The picker's empty box: recent pick first, then the most ridden, then the
+    /// visible map, then hubs, through `StationSearchIndex.search`.
+    @Test func emptyBoxHonoursRecentRiddenVisibleThenHubs() throws {
+        let catalog = try #require(SearchEngineFixture.catalog)
+        let engine = try #require(SearchEngineFixture.index)
+        let index = catalog.stationSearchIndex(regionCode: "jp", engine: engine)
+        let context = SearchContext(regionCode: "jp")
+        let tokyo = try #require(engine.query("東京", scope: .stations, context: context).results.first)
+        let shinjuku = try #require(engine.query("新宿", scope: .stations, context: context).results.first)
+        let remote = try #require(engine.kinds.indices.first {
+            engine.kinds[$0] == .station && engine.importance[$0] == 0 && !engine.latitudes[$0].isNaN
+        })
+        let box = SearchMapRect(
+            centerLatitude: Double(engine.latitudes[remote]), centerLongitude: Double(engine.longitudes[remote]),
+            latitudeDelta: 0.0006, longitudeDelta: 0.0006)
+
+        var query = StationSearchQuery(regionCode: "jp", suggestionLimit: 8)
+        // Without signals the box shows hubs only.
+        let plain = index.search(query).suggestions.compactMap(code)
+        #expect(plain.count > 3)
+        #expect(!plain.contains(engine.ids[remote]))
+
+        query.recentPicks = [tokyo.entity]
+        query.rideCounts = [shinjuku.entity: 12]
+        query.visibleRegion = box
+        let codes = index.search(query).suggestions.compactMap(code)
+        #expect(codes.first == tokyo.entity.id)
+        #expect(codes.dropFirst().first == shinjuku.entity.id)
+        let nearby = try #require(codes.firstIndex(of: engine.ids[remote]))
+        #expect(nearby >= 2)
+        #expect(codes.count > 3) // hubs fill the rest
+    }
+}
+
 @Suite struct RecentSearchStoreTests {
+    @Test func storesOnDifferentSuitesDoNotSeeEachOther() {
+        func suite() -> UserDefaults {
+            let name = "RecentSearchStoreTests.suite.\(UUID().uuidString)"
+            let defaults = UserDefaults(suiteName: name)!
+            defaults.removePersistentDomain(forName: name)
+            return defaults
+        }
+        let first = suite(), second = suite()
+        RecentSearchStore.record("新宿", box: .journeys, regionCode: "jp", defaults: first)
+        #expect(RecentSearchStore.load(.journeys, regionCode: "jp", defaults: first) == ["新宿"])
+        #expect(RecentSearchStore.load(.journeys, regionCode: "jp", defaults: second).isEmpty)
+    }
+
     private func defaults() -> UserDefaults {
         let name = "RecentSearchStoreTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: name)!

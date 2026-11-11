@@ -39,6 +39,8 @@ final class StationPickerSearchController {
     @ObservationIgnored private var loadID: UUID?
     @ObservationIgnored private var requestID = UUID()
     @ObservationIgnored private var filterTask: Task<Void, Never>?
+    @ObservationIgnored private var emptyBoxTask: Task<Void, Never>?
+    @ObservationIgnored private var lastNeedle = ""
     @ObservationIgnored private var index: StationSearchIndex?
     @ObservationIgnored private var retired: [RetiredStation] = []
     @ObservationIgnored private var recentPicks: [SearchEntityID] = []
@@ -63,6 +65,7 @@ final class StationPickerSearchController {
         output = StationSearchResult()
         matches = [:]
         visibleRegion = nil
+        lastNeedle = ""
         return id
     }
 
@@ -93,7 +96,10 @@ final class StationPickerSearchController {
     ) {
         if let recentPicks { self.recentPicks = recentPicks }
         if let rideCounts { self.rideCounts = rideCounts }
-        if let visibleRegion { self.visibleRegion = visibleRegion }
+        if let visibleRegion {
+            self.visibleRegion = visibleRegion
+            refreshEmptyBox()
+        }
     }
 
     nonisolated private static func matches(of output: StationSearchResult) -> [String: SearchMatch] {
@@ -105,8 +111,23 @@ final class StationPickerSearchController {
         return best
     }
 
+    /// The map settled somewhere new while the box is empty: re-rank the empty-box
+    /// suggestions by what is visible. Debounced; the map reports on camera idle.
+    private func refreshEmptyBox() {
+        guard index != nil, lastNeedle.isEmpty else { return }
+        emptyBoxTask?.cancel()
+        let debounce = debounce
+        emptyBoxTask = Task { @MainActor [weak self] in
+            do { try await debounce() } catch { return }
+            guard let self, self.lastNeedle.isEmpty else { return }
+            self.apply(query: "", companyName: self.request.companyName)
+        }
+    }
+
     func apply(query: String, companyName: String? = nil) {
         request.companyName = companyName
+        emptyBoxTask?.cancel()
+        lastNeedle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         filterTask?.cancel()
         let id = UUID()
         requestID = id
@@ -133,6 +154,7 @@ final class StationPickerSearchController {
 
     func cancel() {
         filterTask?.cancel()
+        emptyBoxTask?.cancel()
         filterTask = nil
         requestID = UUID()
         loadID = nil

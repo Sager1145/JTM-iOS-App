@@ -11,9 +11,12 @@ final class JourneySearch {
         let date: String
         let query: String
         let naming: StationNamingGeneration
+        /// Only the search tab shows the frequent-station chips.
+        var wantsFrequent = false
 
         static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.date == rhs.date && lhs.query == rhs.query && lhs.naming == rhs.naming
+                && lhs.wantsFrequent == rhs.wantsFrequent
                 && ArrayGeneration.same(lhs.days, rhs.days)
         }
     }
@@ -36,10 +39,13 @@ final class JourneySearch {
     func search(_ request: Request, alsoNamed: (Train) -> [String]) async {
         guard request != completed else { return }
         guard !request.query.isEmpty else {
-            let trains = request.days.flatMap(\.trains)
-            let frequent = await Task.detached(priority: .userInitiated) {
-                JourneySearchMatcher.frequentStationNames(in: trains)
-            }.value
+            var frequent: [String] = []
+            if request.wantsFrequent {
+                let trains = request.days.flatMap(\.trains)
+                frequent = await Task.detached(priority: .userInitiated) {
+                    JourneySearchMatcher.frequentStationNames(in: trains)
+                }.value
+            }
             guard !Task.isCancelled else { return }
             days = []; corrections = []; completion = nil; frequentNames = frequent; completed = request
             return
@@ -88,8 +94,10 @@ final class JourneySearch {
                 // Nothing matched: offer the closest spelling (typos are not matched per journey).
                 let searched = source.filter { date == Dates.allDates || $0.date == date }.flatMap(\.trains)
                 try Task.checkCancellation()
+                // The cached vocabulary covers this list's journeys on every date.
                 let corrections = JourneySearchMatcher.suggestions(
-                    for: query, in: searched, alsoNamed: { names[$0.id] ?? [] })
+                    for: query, in: searched, vocabulary: date == Dates.allDates ? vocabulary : nil,
+                    alsoNamed: { names[$0.id] ?? [] })
                 return (result, corrections, completion)
             }
             let result = try await withTaskCancellationHandler {

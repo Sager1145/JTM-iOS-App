@@ -153,12 +153,14 @@ public enum JourneySearchMatcher {
     /// "Did you mean …?" for a journey query: up to three of the closest station
     /// names, train names or types spelled in these journeys, when the query
     /// matches none of them. Empty when the query already matches, or nothing is close.
+    /// Pass `vocabulary` (built once per store generation) to avoid rebuilding it per query.
     public static func suggestions(
-        for query: String, in trains: [Train], alsoNamed: (Train) -> [String] = { _ in [] }
+        for query: String, in trains: [Train], vocabulary cached: SearchIndex? = nil,
+        alsoNamed: (Train) -> [String] = { _ in [] }
     ) -> [SearchCorrection] {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty, filter(trains, query: needle, alsoNamed: alsoNamed).isEmpty else { return [] }
-        return vocabulary(of: trains, alsoNamed: alsoNamed)
+        return (cached ?? vocabulary(of: trains, alsoNamed: alsoNamed))
             .query(needle, scope: .terms, context: SearchContext(regionCode: "", limit: 5)).corrections
     }
 

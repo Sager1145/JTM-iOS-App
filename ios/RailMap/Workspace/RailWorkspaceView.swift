@@ -68,6 +68,9 @@ struct RailWorkspaceView: View {
     @State private var dialog: WorkspaceDialog?
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
+    @Environment(\.searchPreferences) private var searchPreferences
+    /// Recent journey searches of the current region scope, refreshed when one is recorded.
+    @State private var recentJourneySearches: [String] = []
     @State private var sheet: WorkspaceSheet?
     @State private var linePreview: RailwayLinePreview?
     /// The selection a journey card took over, and what it replaced. The card
@@ -2092,16 +2095,13 @@ struct RailWorkspaceView: View {
 
     private var journeySearchRegionCode: String { regionScope?.code ?? "all" }
 
-    private var recentJourneySearches: [String] {
-        RecentSearchStore.load(.journeys, regionCode: journeySearchRegionCode)
-    }
-
-    /// A search the reader typed and left with results counts as a recent search.
+    /// A search the reader submitted or opened a result from counts as a recent search.
     private func recordJourneySearch() {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard selection == .search, !needle.isEmpty, journeySearch.completed == journeySearchRequest,
               !journeySearch.days.isEmpty else { return }
-        RecentSearchStore.record(needle, box: .journeys, regionCode: journeySearchRegionCode)
+        recentJourneySearches = RecentSearchStore.record(
+            needle, box: .journeys, regionCode: journeySearchRegionCode, defaults: searchPreferences)
     }
 
     // MARK: - Add trip (pass 3)
@@ -2685,7 +2685,7 @@ struct RailWorkspaceView: View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         let list = listTab(for: page)
         return VStack(spacing: 0) {
-            JourneySearchField(query: $query, isFocused: $searchFocused)
+            JourneySearchField(query: $query, onSubmit: recordJourneySearch, isFocused: $searchFocused)
             if page == .search { journeySuggestionLines }
             Group {
                 if page == .search, !needle.isEmpty {
@@ -2699,7 +2699,11 @@ struct RailWorkspaceView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .background { keyboardShortcuts }
-        .onChange(of: searchFocused) { _, focused in if !focused { recordJourneySearch() } }
+        .task(id: journeySearchRegionCode) {
+            recentJourneySearches = RecentSearchStore.load(
+                .journeys, regionCode: journeySearchRegionCode, defaults: searchPreferences)
+        }
+        .onChange(of: itineraries.selectedTrainID) { _, id in if id != nil { recordJourneySearch() } }
     }
 
     @ViewBuilder
@@ -3108,7 +3112,7 @@ struct RailWorkspaceView: View {
             : derived.listDays(all, ahead: aheadIDs, wantsAhead: list == .upcoming)
         return .init(days: days, date: selectedDate,
             query: selection == .search ? query.trimmingCharacters(in: .whitespacesAndNewlines) : "",
-            naming: localization.stationNamingGeneration)
+            naming: localization.stationNamingGeneration, wantsFrequent: selection == .search)
     }
 
     private func journeyDates(

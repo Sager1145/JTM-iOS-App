@@ -352,10 +352,11 @@ struct SearchQueryRunner {
 
     private typealias Ranked = [(doc: Int32, score: Float, hit: SearchMatching.Hit)]
 
-    /// Fewer than three solid (non-typo) hits and no exact one.
+    /// No exact, prefix or substring hit at all: only then is the query treated
+    /// as mistyped (relaxed second pass, corrections). A valid prefix such as
+    /// 高輪 is never "corrected".
     private static func isWeak(_ ranked: Ranked) -> Bool {
-        let solid = ranked.lazy.filter { $0.hit.kind != .fuzzy }.prefix(3).count
-        return solid < 3 && !ranked.contains { $0.hit.kind == .exact }
+        !ranked.contains { $0.hit.kind != .fuzzy }
     }
 
     private static func hasShortHan(_ qc: [UInt16]) -> Bool {

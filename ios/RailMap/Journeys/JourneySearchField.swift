@@ -11,6 +11,8 @@ import SwiftUI
 /// statistics panel was a blank line.
 struct JourneySearchField: View {
     @Binding var query: String
+    /// Called when the reader submits the search.
+    var onSubmit: () -> Void = {}
 
     /// The focus lives with the destination that owns the keyboard shortcut
     /// (⌘F focuses this field from anywhere), so it is bound in rather than
@@ -33,7 +35,10 @@ struct JourneySearchField: View {
                 .textFieldStyle(.plain)
                 .focused($isFocused)
                 .submitLabel(.search)
-                .onSubmit { isFocused = false }
+                .onSubmit {
+                    onSubmit()
+                    isFocused = false
+                }
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .accessibilityIdentifier("journeySearchField")

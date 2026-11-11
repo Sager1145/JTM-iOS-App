@@ -5,12 +5,7 @@ import SwiftUI
 /// "Did you mean" corrections, the top completion while typing, or recent
 /// searches in an empty box. Shared by the station picker and journey search.
 struct SearchSuggestionChips: View {
-    enum Kind {
-        case didYouMean
-        case completion
-        case recent
-        case frequent
-    }
+    typealias Kind = SearchChipKind
 
     struct Chip: Identifiable, Hashable {
         var kind: Kind
@@ -30,8 +25,10 @@ struct SearchSuggestionChips: View {
         corrections.prefix(3).map { Chip(kind: .didYouMean, label: $0.displayText, text: $0.text) }
     }
 
+    /// The row's label comes from its first labelled chip, so a completion chip
+    /// in front does not hide "Did you mean".
     private var lead: String? {
-        switch chips.first?.kind {
+        switch Kind.lead(of: chips.map(\.kind)) {
         case .didYouMean: localization.text("ios.search.didYouMeanLabel", fallback: "Did you mean")
         case .recent: localization.text("ios.search.recentLabel", fallback: "Recent")
         case .frequent: localization.text("ios.search.frequentLabel", fallback: "Often")
@@ -50,11 +47,13 @@ struct SearchSuggestionChips: View {
                                 if chip.kind == .completion { Image(systemName: "arrow.turn.down.right") }
                                 Text(chip.label).lineLimit(1)
                             }
-                            .font(.subheadline)
+                            .railText(.secondary)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, RailSpacing.s12)
                             .padding(.vertical, RailSpacing.s8)
                             .background(Color(.tertiarySystemFill), in: Capsule())
                             .frame(minHeight: RailSize.touch)
+                            .contentShape(.rect)
                         }
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("\(identifierPrefix)-\(chip.id)")
