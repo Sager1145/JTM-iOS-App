@@ -239,8 +239,8 @@ final class AppControlHost: AppControlDriver {
             return state(stores, includeTrips: includeTrips)
         case .loadSamples(let names):
             return try await loadSamples(names, stores)
-        case .reloadAll(let wait, let timeoutMs):
-            return try await reloadAll(stores, wait: wait, timeoutMs: timeoutMs)
+        case .reloadAll(let wait, let timeoutMs, let force):
+            return try await reloadAll(stores, wait: wait, timeoutMs: timeoutMs, force: force)
         case .selectTrip(let id):
             let workspace = try requireWorkspace()
             let train = try trip(id, stores)
@@ -360,12 +360,12 @@ final class AppControlHost: AppControlDriver {
         return ["samples": .object(loaded), "trips": .number(Double(stores.itineraries.loaded?.trains.count ?? 0))]
     }
 
-    private func reloadAll(_ stores: Stores, wait: Bool, timeoutMs: Int) async throws -> AppControlJSON {
+    private func reloadAll(_ stores: Stores, wait: Bool, timeoutMs: Int, force: Bool) async throws -> AppControlJSON {
         let routes = stores.riddenRoutes
         try await until("routes requested", timeoutMs: 30_000) { !routes.requestedIsEmpty || stores.itineraries.loaded?.trains.isEmpty == true }
         guard !routes.requestedIsEmpty else { throw AppControlError.unavailable("no trips to reload") }
         let started = ContinuousClock.now
-        await routes.reloadAll()
+        await routes.reloadAll(mode: force ? .rebuild : .repair)
         if wait {
             try await until("reloadAll", timeoutMs: timeoutMs) { !routes.isLoading }
         }

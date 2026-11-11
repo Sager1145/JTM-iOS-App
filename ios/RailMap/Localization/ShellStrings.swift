@@ -448,28 +448,28 @@ enum ShellStrings {
             .zhHant: "{loaded}/{requested} · {kb} KB",
         ],
         "ios.reloadAll": [
-            .en: "Reload all trips", .ja: "すべての行程を再読み込み",
-            .zhHans: "重新载入所有行程", .zhHant: "重新載入所有行程",
+            .en: "Repair routes", .ja: "経路を修復",
+            .zhHans: "修复路线", .zhHant: "修復路線",
         ],
         "ios.reloadAll.confirmTitle": [
-            .en: "Reload all trips?", .ja: "すべての行程を再読み込みしますか？",
-            .zhHans: "要重新载入所有行程吗？", .zhHant: "要重新載入所有行程嗎？",
+            .en: "Repair routes?", .ja: "経路を修復しますか？",
+            .zhHans: "要修复路线吗？", .zhHant: "要修復路線嗎？",
         ],
         "ios.reloadAll.confirm": [
-            .en: "Reload all", .ja: "すべて再読み込み", .zhHans: "全部重新载入", .zhHant: "全部重新載入",
+            .en: "Repair", .ja: "修復", .zhHans: "修复", .zhHant: "修復",
         ],
         "ios.reloadAll.stop": [
-            .en: "Stop reloading", .ja: "再読み込みを中止", .zhHans: "停止重新载入", .zhHant: "停止重新載入",
+            .en: "Stop repairing", .ja: "修復を中止", .zhHans: "停止修复", .zhHant: "停止修復",
         ],
         "ios.reloadAll.progress": [
             .en: "{done} of {total}", .ja: "{total}件中{done}件",
             .zhHans: "{done} / {total}", .zhHant: "{done} / {total}",
         ],
         "ios.note.reloadAll": [
-            .en: "Clears every saved route and works out each trip's route again. You can keep using the app while it runs, and stop it at any time.",
-            .ja: "保存済みの経路をすべて消去し、各行程の経路をもう一度求めます。実行中もアプリを使えます。いつでも中止できます。",
-            .zhHans: "清除所有已保存的路线，并重新计算每个行程的路线。运行期间可以继续使用应用，也可以随时停止。",
-            .zhHant: "清除所有已儲存的路線，並重新計算每個行程的路線。執行期間可以繼續使用 App，也可以隨時停止。",
+            .en: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time.",
+            .ja: "各行程の保存済みの経路を読み直し、ないものだけを求め直します。実行中も地図はそのままで、アプリを使えます。いつでも中止できます。",
+            .zhHans: "重新读取每个行程已保存的路线，只重新计算缺失的路线。运行期间地图保持原样，可以继续使用应用，也可以随时停止。",
+            .zhHant: "重新讀取每個行程已儲存的路線，只重新計算缺失的路線。執行期間地圖保持原樣，可以繼續使用 App，也可以隨時停止。",
         ],
         "ios.renderer": [.en: "Renderer", .ja: "描画エンジン", .zhHans: "绘制引擎", .zhHant: "繪製引擎"],
 

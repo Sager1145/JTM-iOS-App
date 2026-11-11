@@ -234,7 +234,8 @@ struct AppShell: View {
         .modifier(AppControlRegistration(stores: AppControlHost.Stores(
             network: network, itineraries: itineraries, library: library, riddenRoutes: riddenRoutes,
             controller: mapController, tripHide: tripHide, selection: $selection)))
-        // "Reload all", run by a harness that cannot tap through Settings:
+        // "Reload all" (repair; the full rebuild with `RELOAD_ALL_FORCE`), run
+        // by a harness that cannot tap through the data manager:
         // N runs back to back once the first load settles, the first one
         // optionally stopped partway. Each run's wall time is logged under
         // the app's subsystem for `log show`.
@@ -243,6 +244,7 @@ struct AppShell: View {
                   let runs = Int(raw), runs > 0 else { return }
             let stopAfter = UITestLaunchConfiguration.current[.reloadAllStopAfterMilliseconds]
                 .flatMap(Int.init)
+            let force = UITestLaunchConfiguration.current[.reloadAllForce].map { $0 != "0" } ?? false
             let log = Logger(subsystem: RailSignpost.subsystem, category: "harness")
             @MainActor func settled() async {
                 for _ in 0..<2400 {
@@ -254,7 +256,7 @@ struct AppShell: View {
             log.notice("reloadAll ready rides=\(riddenRoutes.rides.count, privacy: .public)")
             for run in 1...runs {
                 let started = ContinuousClock.now
-                await riddenRoutes.reloadAll()
+                await riddenRoutes.reloadAll(mode: force ? .rebuild : .repair)
                 if run == 1, let stopAfter {
                     try? await Task.sleep(for: .milliseconds(stopAfter))
                     let progress = riddenRoutes.reloadProgress

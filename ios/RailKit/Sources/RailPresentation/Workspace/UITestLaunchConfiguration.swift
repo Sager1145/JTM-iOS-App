@@ -40,6 +40,8 @@ public struct UITestLaunchConfiguration: Sendable, Equatable {
         case reloadAll = "RAILMAP_UI_TEST_RELOAD_ALL"
         /// Stop the first reload this many milliseconds after it starts.
         case reloadAllStopAfterMilliseconds = "RAILMAP_UI_TEST_RELOAD_ALL_STOP_MS"
+        /// Run those reloads as the full rebuild; absent or "0" repairs.
+        case reloadAllForce = "RAILMAP_UI_TEST_RELOAD_ALL_FORCE"
         case stress = "RAILMAP_UI_TEST_STRESS"
         case tab = "RAILMAP_UI_TEST_TAB"
         /// Text lines of a paper ticket, "|"-separated, filled into a new trip

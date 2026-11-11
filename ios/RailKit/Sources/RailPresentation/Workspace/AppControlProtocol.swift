@@ -232,7 +232,10 @@ public enum AppControlCameraAction: Equatable, Sendable {
 public enum AppControlCommand: Equatable, Sendable {
     case loadSamples([String])
     case useStorage(String)
-    case reloadAll(wait: Bool, timeoutMs: Int)
+    /// `force` is the full rebuild (every cache wiped, every trip solved
+    /// again); without it the app repairs: cached routes are read back and
+    /// only the missing ones are solved.
+    case reloadAll(wait: Bool, timeoutMs: Int, force: Bool)
     case state(includeTrips: Bool)
     case selectTrip(String)
     case focusTrip(String)
@@ -402,7 +405,9 @@ public enum AppControlCommand: Equatable, Sendable {
             guard UUID(uuidString: id) != nil else { throw AppControlError.invalidArgument("id", "expected a UUID") }
             return .useStorage(id)
         case "reloadAll":
-            return .reloadAll(wait: try bool("wait", default: true), timeoutMs: try int("timeoutMs", default: 600_000))
+            return .reloadAll(
+                wait: try bool("wait", default: true), timeoutMs: try int("timeoutMs", default: 600_000),
+                force: try bool("force", default: false))
         case "state":
             return .state(includeTrips: try bool("trips", default: true))
         case "selectTrip": return .selectTrip(try string("id"))
