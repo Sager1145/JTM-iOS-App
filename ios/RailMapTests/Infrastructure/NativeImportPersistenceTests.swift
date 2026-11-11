@@ -485,6 +485,44 @@ struct NativeImportPersistenceTests {
         return root
     }
 
+    /// User decision 2026-11-05: an edited example ride is not kept and not
+    /// backed up. Loading a sample again puts its rides back to the bundled
+    /// copy, leaves the reader's own rides alone, and writes no recovery copy.
+    @Test func reloadingASampleRestoresAnEditedExampleRideWithoutABackup() async throws {
+        let preferences = try IsolatedPreferences()
+        defer { preferences.remove() }
+        let root = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let library = RideLibrary(storage: RideStorage(directory: root), preferences: preferences.defaults)
+        let own = train("own-ride")
+        let seeded = await library.saveResult(TrainStore(trains: [own])).value
+        try #require(seeded.saved)
+        let itineraries = ItineraryStore(preferences: preferences.defaults)
+        itineraries.load(from: library)
+        try await waitUntil { itineraries.canReplace }
+
+        let sample = "train-store-mo"
+        let first = try await itineraries.merge(try await library.sample(sample), into: library)
+        try #require(first.outcome != .refused)
+        let bundled = try #require(itineraries.store?.trains.first { $0.id != own.id })
+        let ownBefore = try #require(itineraries.store?.trains.first { $0.id == own.id })
+
+        var edited = bundled
+        edited.number = "edited by the reader"
+        try #require(edited != bundled)
+        let replaced = itineraries.replace(edited, replacing: bundled.id)
+        try #require(replaced.outcome.isCommitted)
+        try #require(itineraries.store?.trains.first { $0.id == bundled.id } == edited)
+
+        let again = try await itineraries.merge(try await library.sample(sample), into: library)
+        try #require(again.outcome != .refused)
+        #expect(itineraries.store?.trains.first { $0.id == bundled.id } == bundled)
+        #expect(itineraries.store?.trains.first { $0.id == own.id } == ownBefore)
+        #expect(library.backup == nil)
+        let names = try FileManager.default.contentsOfDirectory(atPath: root.path)
+        #expect(names.allSatisfy { !$0.localizedCaseInsensitiveContains("backup") })
+    }
+
     /// Seeds one original journey through the product import door.
     ///
     /// `runImport` refuses a store that has not finished its initial read, so
