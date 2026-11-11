@@ -569,10 +569,8 @@ struct StationPickerView: View {
     @ViewBuilder private var hintRows: some View {
         SearchSuggestionChips(chips: suggestionChips, identifierPrefix: "stationPickerSuggestion",
             action: { chip in queryBinding.wrappedValue = chip.text },
-            onRemove: { chip in
-                recentSearches = search.removeRecentQuery(chip.text, regionCode: regionCode, defaults: preferences)
-            },
-            onClear: recentSearches.isEmpty ? nil : clearRecents,
+            onRemove: removeRecentChip,
+            onClear: recentClearAction,
             clearIdentifier: "stationPickerRecentClear")
         if !hints.suggested.isEmpty {
             ScrollView(.horizontal, showsIndicators: false) {
@@ -601,6 +599,15 @@ struct StationPickerView: View {
             chips.insert(.init(kind: .completion, label: completion, text: completion), at: 0)
         }
         return chips
+    }
+
+    private var recentClearAction: (() -> Void)? {
+        if recentSearches.isEmpty { return nil }
+        return { clearRecents() }
+    }
+
+    private func removeRecentChip(_ chip: SearchSuggestionChips.Chip) {
+        recentSearches = search.removeRecentQuery(chip.text, regionCode: regionCode, defaults: preferences)
     }
 
     /// Forget this region's recent queries and picks at once: no confirmation, no undo.
