@@ -45,6 +45,7 @@ HINT = {
 }
 # A bare numeric literal: not preceded by a letter, digit, '.' or '_' (so RailSpacing.s12 is a token).
 LIT = re.compile(r'(?<![A-Za-z0-9_.])(\d+(?:\.\d+)?)(?![A-Za-z0-9_])')
+R_OK = re.compile(r'//\s*ui-token-ok:\s*\S')
 R_PAD = re.compile(r'\.padding\(')
 R_SPC = re.compile(r'\bspacing:\s*')
 R_EDGE = re.compile(r'(?<![A-Za-z0-9_])EdgeInsets\(')
@@ -108,7 +109,8 @@ def scan(app=None):
             found.setdefault((rel, rule), []).append(i + 1)
         for i, line in enumerate(lines):
             st = line.strip()
-            if st.startswith("//") or "// ui-token-ok:" in line:
+            # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
+            if st.startswith("//") or R_OK.search(line):
                 continue
             for m in R_PAD.finditer(line):
                 if has_big(inner(line, m.end())): add("padding-literal", i)
@@ -149,6 +151,8 @@ def self_test():
      ('.padding(.horizontal, 2)', []),
      ('.padding()', []),
      ('.padding(.top, 6) // ui-token-ok: legacy', []),
+     ('.padding(.top, 6) // ui-token-ok:', ["padding-literal"]),
+     ('.padding(.top, 6) // ui-token-ok:   ', ["padding-literal"]),
      ('// .padding(.top, 6)', []),
      ('VStack(spacing: 6) {', ["spacing-literal"]),
      ('VStack(spacing: base * 3) {', ["spacing-literal"]),

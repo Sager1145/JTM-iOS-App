@@ -200,7 +200,7 @@ struct EditorLineSearchView: View {
         .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) { // ui-token-ok: Done commits the multi-line selection (a confirm, not a dismiss)
+            ToolbarItem(placement: .confirmationAction) { // ui-token-ok: text Done ends a multi-select picker (HIG toolbars); it is not a view-only sheet
                 Button(localization.text("ios.done", fallback: "Done")) {
                     commit()
                     dismiss()

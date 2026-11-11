@@ -49,7 +49,7 @@ struct TransferGuideImportView: View {
                 if isLoadingPages { readingSection(done: 0, total: 1) }
                 if case .failure(let error) = completionCatalogResult {
                     Section {
-                        Text(error.localizedDescription).font(.footnote) // ui-token-ok: error text
+                        Text(error.localizedDescription).railText(.secondary)
                         Button(localization.text("ios.journeyShare.retry")) { catalogAttempt += 1 }
                     }
                 }

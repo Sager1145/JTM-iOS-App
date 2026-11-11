@@ -87,13 +87,14 @@ struct DataImportView: View {
             case .pasted:
                 TextEditor(text: $flow.text)
                     .accessibilityIdentifier("importText")
-                    .font(.system(.footnote, design: .monospaced)) // ui-token-ok: monospaced data
+                    .font(.system(.footnote, design: .monospaced))
                     .frame(minHeight: RailSize.textEditorMinHeight)
                     .disabled(flow.isRunning)
                     .overlay(alignment: .topLeading) {
                         if flow.text.isEmpty {
                             Text(localization.text("data.pasteHint"))
-                                .railText(.tertiary)
+                                .font(.system(.footnote, design: .monospaced))
+                                .foregroundStyle(.tertiary)
                                 .padding(.top, RailSpacing.s8)
                                 .allowsHitTesting(false)
                         }
@@ -269,7 +270,7 @@ struct DataImportView: View {
                             localization.text(
                                 "data.renameList", params: ["from": .string(rename.from), "to": .string(rename.to)])
                         )
-                        .font(.system(.footnote, design: .monospaced)) // ui-token-ok: monospaced data
+                        .font(.system(.footnote, design: .monospaced))
                     }
                 } label: {
                     scopeLabel("data.willRename", report.renames.count)
@@ -525,7 +526,7 @@ struct DataErrorCard: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.orange)
             Text(detail)
-                .railText(.secondary)
+                .font(.subheadline)
             Text(kept)
                 .railText(.secondary)
         }

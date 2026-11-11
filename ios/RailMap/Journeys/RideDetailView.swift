@@ -1250,7 +1250,7 @@ private struct RideRouteStateCard: View {
                             "to": .string(name(gap.to, stopIndex: gap.segmentIndex + 1)),
                         ])
                 )
-                .font(.footnote) // ui-token-ok: monospaced data
+                .font(.footnote) // ui-token-ok: compact tinted gap notice inside the route card
                 .monospacedDigit()
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)

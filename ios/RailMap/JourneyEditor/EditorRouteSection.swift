@@ -372,7 +372,8 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             .foregroundStyle(warning ? Color.orange : Color.secondary)
             if let detail {
                 Text(detail)
-                    .railText(.secondary)
+                    .font(.footnote) // ui-token-ok: notice detail stays at the notice's own text size
+                    .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
