@@ -4,29 +4,29 @@ import Testing
 
 @testable import RailPresentation
 
-@Suite("RecordDate", .serialized)
-struct RecordDateTests {
+@Suite("TripDateLabel", .serialized)
+struct TripDateLabelTests {
     typealias L = Localization.Language
 
     // date, then [en, ja, zhHans, zhHant] for full and compact.
     static let cases: [(String, [String], [String])] = [
         ("2026-11-05",
-         ["Thu, Nov 5, 2026", "2026年11月5日(木)", "2026年11月5日 周四", "2026年11月5日週四"],
+         ["Thu, Nov 5, 2026", "2026年11月5日(木)", "2026年11月5日 周四", "2026年11月5日 週四"],
          ["Nov 5, 2026", "2026年11月5日", "2026年11月5日", "2026年11月5日"]),
         ("2026-11-5",
-         ["Thu, Nov 5, 2026", "2026年11月5日(木)", "2026年11月5日 周四", "2026年11月5日週四"],
+         ["Thu, Nov 5, 2026", "2026年11月5日(木)", "2026年11月5日 周四", "2026年11月5日 週四"],
          ["Nov 5, 2026", "2026年11月5日", "2026年11月5日", "2026年11月5日"]),
         ("2024-02-29",
-         ["Thu, Feb 29, 2024", "2024年2月29日(木)", "2024年2月29日 周四", "2024年2月29日週四"],
+         ["Thu, Feb 29, 2024", "2024年2月29日(木)", "2024年2月29日 周四", "2024年2月29日 週四"],
          ["Feb 29, 2024", "2024年2月29日", "2024年2月29日", "2024年2月29日"]),
         ("2025-12-31",
-         ["Wed, Dec 31, 2025", "2025年12月31日(水)", "2025年12月31日 周三", "2025年12月31日週三"],
+         ["Wed, Dec 31, 2025", "2025年12月31日(水)", "2025年12月31日 周三", "2025年12月31日 週三"],
          ["Dec 31, 2025", "2025年12月31日", "2025年12月31日", "2025年12月31日"]),
         ("2026-01-01",
-         ["Thu, Jan 1, 2026", "2026年1月1日(木)", "2026年1月1日 周四", "2026年1月1日週四"],
+         ["Thu, Jan 1, 2026", "2026年1月1日(木)", "2026年1月1日 周四", "2026年1月1日 週四"],
          ["Jan 1, 2026", "2026年1月1日", "2026年1月1日", "2026年1月1日"]),
         ("2000-01-02",
-         ["Sun, Jan 2, 2000", "2000年1月2日(日)", "2000年1月2日 周日", "2000年1月2日週日"],
+         ["Sun, Jan 2, 2000", "2000年1月2日(日)", "2000年1月2日 周日", "2000年1月2日 週日"],
          ["Jan 2, 2000", "2000年1月2日", "2000年1月2日", "2000年1月2日"]),
     ]
     static let languages: [L] = [.en, .ja, .zhHans, .zhHant]
@@ -34,8 +34,8 @@ struct RecordDateTests {
     @Test func everyLanguageAndStyle() {
         for (date, full, compact) in Self.cases {
             for (i, lang) in Self.languages.enumerated() {
-                #expect(RecordDate.label(date, .full, language: lang) == full[i], "\(date) \(lang)")
-                #expect(RecordDate.label(date, .compact, language: lang) == compact[i], "\(date) \(lang)")
+                #expect(TripDateLabel.label(date, .full, language: lang) == full[i], "\(date) \(lang)")
+                #expect(TripDateLabel.label(date, .compact, language: lang) == compact[i], "\(date) \(lang)")
             }
         }
     }
@@ -43,13 +43,13 @@ struct RecordDateTests {
     @Test func undatedAndEmpty() {
         let expected = ["No date", "日付なし", "无日期", "無日期"]
         for (i, lang) in Self.languages.enumerated() {
-            for style in [RecordDate.LabelStyle.full, .compact] {
-                #expect(RecordDate.label(nil, style, language: lang) == expected[i])
-                #expect(RecordDate.label("", style, language: lang) == expected[i])
-                #expect(RecordDate.label(Dates.undated, style, language: lang) == expected[i])
+            for style in [TripDateLabel.LabelStyle.full, .compact] {
+                #expect(TripDateLabel.label(nil, style, language: lang) == expected[i])
+                #expect(TripDateLabel.label("", style, language: lang) == expected[i])
+                #expect(TripDateLabel.label(Dates.undated, style, language: lang) == expected[i])
             }
         }
-        #expect(RecordDate.label(Dates.allDates, .full, language: .en) == "All dates")
+        #expect(TripDateLabel.label(Dates.allDates, .full, language: .en) == "All dates")
     }
 
     @Test func malformedIsReturnedUnchanged() {
@@ -57,8 +57,8 @@ struct RecordDateTests {
                     "2026/11/05", "abc", "2026-11", "2026-11-05T10:00", "2026-1x-05",
                     "2026-11-005", " 2026-11-05", "２０２６-11-05"] {
             for lang in Self.languages {
-                #expect(RecordDate.label(bad, .full, language: lang) == bad)
-                #expect(RecordDate.label(bad, .compact, language: lang) == bad)
+                #expect(TripDateLabel.label(bad, .full, language: lang) == bad)
+                #expect(TripDateLabel.label(bad, .compact, language: lang) == bad)
             }
         }
     }
@@ -68,8 +68,8 @@ struct RecordDateTests {
             var out: [String] = []
             for (date, _, _) in Self.cases {
                 for lang in Self.languages {
-                    out.append(RecordDate.label(date, .full, language: lang))
-                    out.append(RecordDate.label(date, .compact, language: lang))
+                    out.append(TripDateLabel.label(date, .full, language: lang))
+                    out.append(TripDateLabel.label(date, .compact, language: lang))
                 }
             }
             return out

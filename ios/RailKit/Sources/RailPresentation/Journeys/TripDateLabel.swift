@@ -10,7 +10,7 @@ import RailCore
 /// era calendar or another language cannot change a single character.
 ///
 /// The year is always shown. There is no "Today" or "Tomorrow".
-public enum RecordDate {
+public enum TripDateLabel {
 
     public enum LabelStyle: Sendable, Hashable {
         /// Weekday, year, month, day.
@@ -48,7 +48,7 @@ public enum RecordDate {
             return style == .full ? "\(day) 周\(weekdaysZh[weekday(y, m, d)])" : day
         case .zhHant:
             let day = "\(y)年\(m)月\(d)日"
-            return style == .full ? "\(day)週\(weekdaysZh[weekday(y, m, d)])" : day
+            return style == .full ? "\(day) 週\(weekdaysZh[weekday(y, m, d)])" : day
         }
     }
 
