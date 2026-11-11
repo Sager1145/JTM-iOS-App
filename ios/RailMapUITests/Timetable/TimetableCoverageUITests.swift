@@ -17,12 +17,12 @@ final class TimetableCoverageUITests: XCTestCase {
         XCTAssertTrue(picker.waitForExistence(timeout: 8), app.debugDescription)
         EditorUITestSupport.tap(picker, in: app)
 
-        XCTAssertTrue(app.staticTexts["timetableInventoryIncomplete"]
+        XCTAssertTrue(app.descendants(matching: .any)["timetableInventoryIncomplete"].firstMatch
             .waitForExistence(timeout: 15), app.debugDescription)
-        XCTAssertTrue(app.staticTexts["timetableTripsNotApplicable"]
+        XCTAssertTrue(app.descendants(matching: .any)["timetableTripsNotApplicable"].firstMatch
             .waitForExistence(timeout: 15), app.debugDescription)
-        XCTAssertTrue(app.staticTexts["timetableInventoryIncomplete"].label.contains("still being researched"))
-        XCTAssertTrue(app.staticTexts["timetableTripsNotApplicable"].label.contains("full routes unverified"))
+        XCTAssertTrue(app.descendants(matching: .any)["timetableInventoryIncomplete"].firstMatch.label.contains("still being researched"))
+        XCTAssertTrue(app.descendants(matching: .any)["timetableTripsNotApplicable"].firstMatch.label.contains("full routes unverified"))
     }
 
     private func hachiojiJourney(date: String) -> [String: Any] {

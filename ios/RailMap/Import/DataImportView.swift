@@ -519,8 +519,8 @@ struct DataErrorCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
-            RailStatusLabel(kind: .warning) {
-                Text(title).font(.subheadline.weight(.semibold))
+            RailStatusLabel(kind: .warning, font: .subheadline.weight(.semibold)) {
+                Text(title)
             }
             Text(detail)
                 .font(.subheadline)

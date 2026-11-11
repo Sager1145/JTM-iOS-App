@@ -54,10 +54,12 @@ enum RailStatusKind {
 struct RailStatusLabel<Content: View>: View {
     @Environment(AppLocalization.self) private var localization
     let kind: RailStatusKind
+    private let font: Font
     private let content: Content
 
-    init(kind: RailStatusKind, @ViewBuilder content: () -> Content) {
+    init(kind: RailStatusKind, font: Font = .footnote, @ViewBuilder content: () -> Content) {
         self.kind = kind
+        self.font = font
         self.content = content()
     }
 
@@ -70,7 +72,7 @@ struct RailStatusLabel<Content: View>: View {
                 .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .font(.footnote)
+        .font(font)
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }

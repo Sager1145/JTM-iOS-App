@@ -116,7 +116,7 @@ struct EditorLineSearchView: View {
                             ForEach(snapshot.conflictingSelectedLines, id: \.id) { line in
                                 HStack(spacing: RailSpacing.s12) {
                                     Image(systemName: "exclamationmark.triangle.fill")
-                                        .foregroundStyle(.orange)
+                                        .foregroundStyle(.orange) // status-color-ok: row glyph; the conflict is written in the row text
                                     VStack(alignment: .leading, spacing: RailSpacing.s2) {
                                         Text(line.name)
                                         if let operatorName = line.operatorIDs

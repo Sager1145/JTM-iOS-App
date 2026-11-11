@@ -802,11 +802,7 @@ struct RideDetailContent: View {
                 Text("\(title) \(actual)")
                 if let status = StopTimingStatus.localizedLabel(
                     scheduled: scheduled, actual: actual, localization: localization) {
-                    if status == localization.text("ios.editor.actualOnTime") {
-                        Text(status).foregroundStyle(.secondary)
-                    } else {
-                        RailStatusLabel(kind: .warning, text: status)
-                    }
+                    Text(status).foregroundStyle(.secondary)
                 }
             }
             .font(.caption2.monospacedDigit())

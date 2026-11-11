@@ -507,14 +507,10 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                         .railText(.tertiary)
                     ForEach(Array(corridor.junctions.enumerated()), id: \.offset) { _, junction in
                         if let badge = junctionBadge(junction) {
-                            if junction.link == .none {
-                                RailStatusLabel(kind: .warning, text: badge)
-                            } else {
-                                Text(badge)
-                                    .font(.caption2)
-                                    .foregroundStyle(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
+                            Text(badge)
+                                .font(.caption2)
+                                .foregroundStyle(junction.link == .none ? Color.primary : Color.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                 }

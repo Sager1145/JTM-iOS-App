@@ -33,13 +33,9 @@ EXCL_FILES = {"Sharing/ShareCard.swift", "Sharing/StatsWidgetView.swift",
 # Files not yet converted because another branch owns them. Each entry names the
 # branch; delete the entry when that branch has merged and the file is converted.
 STATUS_COLOR_FILES = {
- # TODO(branch claude/journey-editor-time): journey editor time fields.
+ # TODO(branch claude/goofy-haibt-1f061c): add-trip branch edits the time fields.
  "JourneyEditor/EditorDateTimeFields.swift",
  "JourneyEditor/EditorTimeSection.swift",
- # TODO(branch claude/trip-notes): trip-note pick overlay.
- "Map/TripNotePickOverlay.swift",
- # TODO(branch claude/station-search): line/station search screens.
- "JourneyEditor/EditorLineSearchView.swift",
 }
 
 def num_ok(m):  # allowed small numbers
@@ -77,9 +73,12 @@ R_DET = re.compile(r'\.presentationDetents\(')
 R_CAPS = re.compile(r'\bRailCapsuleButtonStyle\(')
 R_TB = re.compile(r'ToolbarItem\(placement:\s*\.(?:cancellationAction|confirmationAction|topBarTrailing|topBarLeading)')
 R_DISMISS = re.compile(r'"(?:ios\.done|ios\.close|utility\.close)"')
-R_STATUS = re.compile(
-    r'\.foreground(?:Style|Color)\(.*(?:\bColor\.(?:orange|red)\b|(?<![A-Za-z0-9_])\.(?:orange|red)\b'
-    r'|\bsystem(?:Orange|Red)\b)')
+R_FG = re.compile(r'\.foreground(?:Style|Color)\(')
+# Orange/red as the colour argument, or a status tone colour (tone.color is an
+# orange/red tint and is never a text colour; use tone.iconColor on icons).
+R_STATUS_ARG = re.compile(
+    r'\bColor\.(?:orange|red)\b|(?<![A-Za-z0-9_])\.(?:orange|red)\b'
+    r'|\bsystem(?:Orange|Red)\b|\btone\.color\b')
 R_STATUS_OK = re.compile(r'//\s*status-color-ok:\s*\S')
 R_KEYDEF = re.compile(r'^\s*"([^"]+)"\s*:\s*\[')
 R_KEYUSE = re.compile(r'\b(?:text|countryText)\(\s*"([^"]+)"')
@@ -107,6 +106,15 @@ def inner(line, start, stop_at_comma=False):
             return line[start:j]
     return line[start:]
 
+def paren_closed(text):
+    depth = 0
+    for c in text:
+        if c in "([{": depth += 1
+        elif c in ")]}":
+            if depth == 0: return True
+            depth -= 1
+    return False
+
 def has_big(expr):
     return any(not num_ok(m.group(1)) for m in LIT.finditer(expr))
 
@@ -133,9 +141,17 @@ def scan(app=None):
             st = line.strip()
             if st.startswith("//"):
                 continue
-            if (R_STATUS.search(line) and not R_STATUS_OK.search(line)
-                    and rel[len("RailMap/"):] not in STATUS_COLOR_FILES):
-                add("status-color", i)
+            if rel[len("RailMap/"):] not in STATUS_COLOR_FILES:
+                for m in R_FG.finditer(line):
+                    # The argument may continue on later lines; read to its close paren.
+                    span = [line[m.end():]]
+                    for nxt in lines[i + 1:i + 7]:
+                        if paren_closed("".join(span)): break
+                        span.append(nxt)
+                    joined = "\n".join(span)
+                    arg = inner(joined, 0)
+                    if R_STATUS_ARG.search(arg) and not any(R_STATUS_OK.search(t) for t in span):
+                        add("status-color", i)
             # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
             if R_OK.search(line):
                 continue
@@ -243,6 +259,10 @@ def self_test():
      ('.foregroundStyle(.red) // status-color-ok:', ["status-color"]),
      ('.foregroundStyle(.secondary)', []),
      ('.foregroundStyle(.reddish)', []),
+     ('.foregroundStyle(status.tone.color)', ["status-color"]),
+     ('.foregroundStyle(status.tone.iconColor)', []),
+     ('.foregroundStyle(.secondary).background(Color.red)', []),
+     ('.foregroundStyle(.primary).tint(.orange)', []),
      ('.foregroundStyle(tint)', []),
      ('.background(Color.orange.opacity(0.2))', []),
      ('.tint(.orange)', []),
@@ -275,6 +295,12 @@ def self_test():
         open(os.path.join(app, "Localization", "XStrings.swift"), "w").write(
             '        "x.cancel": [.en: "Cancel"],\n        "x.ok": [.en: "OK"],\n')
         expected.append(("Localization/XStrings.swift", 1, "feature-dismiss-key"))
+        # an argument that continues on the next lines
+        open(os.path.join(app, "Feature", "Multi.swift"), "w").write(
+            'Text(m)\n.foregroundStyle(\n    ok\n    ? Color.secondary : Color.orange)\n'
+            'Text(m)\n.foregroundStyle(\n    ok ? Color.secondary : Color.primary)\n'
+            'Text(m)\n.foregroundStyle(\n    Color.red) // status-color-ok: dot\n')
+        expected.append(("Feature/Multi.swift", 2, "status-color"))
         # a file named in STATUS_COLOR_FILES is exempt from status-color only
         os.makedirs(os.path.join(app, "JourneyEditor"))
         open(os.path.join(app, "JourneyEditor", "EditorTimeSection.swift"), "w").write(

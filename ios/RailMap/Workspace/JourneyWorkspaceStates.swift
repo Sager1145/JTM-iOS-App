@@ -63,7 +63,7 @@ struct WorkspaceUnavailableView: View {
                 if let status = presentation.status {
                     // §13.3: what was kept, next to what went wrong.
                     Text(localization.journeyText(status.title))
-                        .foregroundStyle(status.tone.color)
+                        .foregroundStyle(.primary)
                 }
             }
         } actions: {

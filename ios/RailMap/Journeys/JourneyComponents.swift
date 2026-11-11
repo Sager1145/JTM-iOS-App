@@ -29,10 +29,12 @@ struct JourneyStatusBadge: View {
     var body: some View {
         Label {
             Text(localization.journeyText(status.title))
+                .foregroundStyle(.primary)
         } icon: {
             Image(systemName: status.tone.systemImage)
+                .foregroundStyle(status.tone.iconColor)
         }
-        .font(compact ? .caption2.weight(.semibold) : .caption.weight(.semibold))
+        .font(.footnote.weight(.semibold)) // ui-token-ok: status badge text, footnote is the minimum
         .labelStyle(.titleAndIcon)
         // A status is a sentence, not a label: at an accessibility size
         // 「路線未完成，6 段中 4 段」 needs more than three lines, and a status
@@ -40,7 +42,6 @@ struct JourneyStatusBadge: View {
         // must not be guessed at (§14.4).
         .lineLimit(compact ? (dynamicTypeSize.isAccessibilitySize ? nil : 1) : 3)
         .multilineTextAlignment(.leading)
-        .foregroundStyle(status.tone.color)
         .padding(.horizontal, RailSpacing.s8)
         .padding(.vertical, RailSpacing.s4)
         .background {
