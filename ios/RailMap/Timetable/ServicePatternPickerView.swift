@@ -157,19 +157,16 @@ struct ServicePatternPickerView: View {
                     }
 
                     if region != "jp" {
-                        Text(pickerText("databaseUnsupported"))
-                            .font(.caption).foregroundStyle(.orange)
+                        RailStatusLabel(kind: .warning, text: pickerText("databaseUnsupported"))
                     }
                     if region == "jp", let rideDate {
                         timetableStatus(date: rideDate)
                     }
                     switch sources?.patternCatalog {
                     case .missing:
-                        Text(pickerText("patternCatalogMissing"))
-                            .font(.caption).foregroundStyle(.orange)
+                        RailStatusLabel(kind: .warning, text: pickerText("patternCatalogMissing"))
                     case .damaged:
-                        Text(pickerText("patternCatalogDamaged"))
-                            .font(.caption).foregroundStyle(.orange)
+                        RailStatusLabel(kind: .warning, text: pickerText("patternCatalogDamaged"))
                     case .loaded, .notApplicable, nil:
                         EmptyView()
                     }
@@ -408,8 +405,7 @@ struct ServicePatternPickerView: View {
                 ].compactMap { key in
                     trip.factCompleteness[key] == .verified ? nil : pickerText("fact." + key)
                 }
-                Text(pickerText("unverifiedFacts", ["facts": .string(missing.joined(separator: "・"))]))
-                    .font(.caption2).foregroundStyle(.orange)
+                RailStatusLabel(kind: .warning, text: pickerText("unverifiedFacts", ["facts": .string(missing.joined(separator: "・"))]))
             } else if !trip.lineSegments.isEmpty {
                 Text(pickerText("via", ["lines": .string(trip.lineSegments.map(\.lineName).joined(separator: "・"))]))
                     .railText(.tertiary)
@@ -440,17 +436,13 @@ struct ServicePatternPickerView: View {
     @ViewBuilder private func timetableStatus(date: String) -> some View {
         switch sources?.availability {
         case .missing:
-            Text(pickerText("databaseMissing"))
-                .font(.caption).foregroundStyle(.orange)
+            RailStatusLabel(kind: .warning, text: pickerText("databaseMissing"))
         case .damaged:
-            Text(pickerText("databaseDamaged"))
-                .font(.caption).foregroundStyle(.orange)
+            RailStatusLabel(kind: .warning, text: pickerText("databaseDamaged"))
         case .queryFailed:
-            Text(pickerText("databaseQueryFailed"))
-                .font(.caption).foregroundStyle(.orange)
+            RailStatusLabel(kind: .warning, text: pickerText("databaseQueryFailed"))
         case .unsupported:
-            Text(pickerText("databaseUnsupported"))
-                .font(.caption).foregroundStyle(.orange)
+            RailStatusLabel(kind: .warning, text: pickerText("databaseUnsupported"))
         case .notRequested, nil:
             EmptyView()
         case .ready:
@@ -462,20 +454,17 @@ struct ServicePatternPickerView: View {
         if let sources, case .ready(let coverage) = sources.availability {
             let incompleteCount = sources.occurrences.filter { !$0.canApplyToRouteEditor }.count
             if coverage == .conflict {
-                Text(pickerText("conflict", ["date": .string(date)]))
-                    .font(.caption).foregroundStyle(.orange)
+                RailStatusLabel(kind: .warning, text: pickerText("conflict", ["date": .string(date)]))
             } else if sources.isLegalZero {
                 Text(pickerText("noJRServices", ["date": .string(date)]))
                     .railText(.tertiary)
             } else {
                 if coverage == .partial || coverage == .unknown {
-                    Text(pickerText("inventoryIncomplete", ["date": .string(date)]))
-                        .font(.caption).foregroundStyle(.orange)
+                    RailStatusLabel(kind: .warning, text: pickerText("inventoryIncomplete", ["date": .string(date)]))
                         .accessibilityIdentifier("timetableInventoryIncomplete")
                 }
                 if incompleteCount > 0 {
-                    Text(pickerText("routesIncomplete", ["total": .number(Double(sources.occurrences.count)), "incomplete": .number(Double(incompleteCount))]))
-                        .font(.caption).foregroundStyle(.orange)
+                    RailStatusLabel(kind: .warning, text: pickerText("routesIncomplete", ["total": .number(Double(sources.occurrences.count)), "incomplete": .number(Double(incompleteCount))]))
                         .accessibilityIdentifier("timetableTripsNotApplicable")
                 }
                 if coverage == .verified && incompleteCount == 0 && !sources.occurrences.isEmpty {

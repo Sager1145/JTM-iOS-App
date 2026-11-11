@@ -294,12 +294,8 @@ struct JourneyEditorDetails: View {
     @ViewBuilder
     private func issueRows(_ field: RideDraftIssue.Field) -> some View {
         ForEach(issues.all(for: field)) { issue in
-            Label(localization.text(for: issue),
-                  systemImage: issue.severity == .error ? "exclamationmark.circle.fill" : "exclamationmark.triangle")
-                .font(.footnote) // ui-token-ok: validation text with its own colour
-                .foregroundStyle(issue.severity == .error ? Color.red : Color.orange)
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityElement(children: .combine)
+            RailStatusLabel(kind: issue.severity == .error ? .error : .warning,
+                            text: localization.text(for: issue))
         }
     }
 

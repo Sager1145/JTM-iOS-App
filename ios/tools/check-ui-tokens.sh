@@ -12,6 +12,11 @@
 #                                      refuses (exit 1) if any count would grow
 # Paths are relative to ios/ (e.g. RailMap/Foo/Bar.swift).
 # Silence one deliberate line with a trailing `// ui-token-ok: reason`.
+# Rule status-color: an orange or red foreground style outside Design/ is a
+# warning/error message in the wrong style (audit H4): use RailStatusLabel. It is
+# NOT silenced by ui-token-ok. A legitimate non-message use (a destructive glyph,
+# a record dot) carries `// status-color-ok: reason` on the same line; a file
+# owned by another unmerged branch is listed in STATUS_COLOR_FILES below.
 set -euo pipefail
 IOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exec python3 -I - "$IOS_DIR" "$@" <<'PY'
@@ -24,6 +29,18 @@ EXCL_DIRS = {"Diagnostics", "Design"}
 EXCL_FILES = {"Sharing/ShareCard.swift", "Sharing/StatsWidgetView.swift",
               "Statistics/PassportTicketFace.swift", "Statistics/TicketJimon.swift",
               "Playback/PlaybackVideoExporter.swift"}
+
+# Files not yet converted because another branch owns them. Each entry names the
+# branch; delete the entry when that branch has merged and the file is converted.
+STATUS_COLOR_FILES = {
+ # TODO(branch claude/journey-editor-time): journey editor time fields.
+ "JourneyEditor/EditorDateTimeFields.swift",
+ "JourneyEditor/EditorTimeSection.swift",
+ # TODO(branch claude/trip-notes): trip-note pick overlay.
+ "Map/TripNotePickOverlay.swift",
+ # TODO(branch claude/station-search): line/station search screens.
+ "JourneyEditor/EditorLineSearchView.swift",
+}
 
 def num_ok(m):  # allowed small numbers
     return m in ("0", "1", "2")
@@ -41,6 +58,7 @@ HINT = {
  "raw-detents": "use railSheet(.half/.full); a deliberate exception carries // ui-token-ok: reason",
  "footnote-font": "use railText(.secondary/.tertiary), or mark the deliberate case // ui-token-ok: reason",
  "direct-capsule": "use .railPrimary / .railSecondary statics instead of constructing RailCapsuleButtonStyle",
+ "status-color": "orange/red text is a message: use RailStatusLabel(kind:text:); a non-message glyph carries // status-color-ok: reason",
  "feature-dismiss-key": "use the shared ios.cancel / ios.close / ios.done strings instead of a per-feature dismiss string",
 }
 # A bare numeric literal: not preceded by a letter, digit, '.' or '_' (so RailSpacing.s12 is a token).
@@ -59,6 +77,10 @@ R_DET = re.compile(r'\.presentationDetents\(')
 R_CAPS = re.compile(r'\bRailCapsuleButtonStyle\(')
 R_TB = re.compile(r'ToolbarItem\(placement:\s*\.(?:cancellationAction|confirmationAction|topBarTrailing|topBarLeading)')
 R_DISMISS = re.compile(r'"(?:ios\.done|ios\.close|utility\.close)"')
+R_STATUS = re.compile(
+    r'\.foreground(?:Style|Color)\(.*(?:\bColor\.(?:orange|red)\b|(?<![A-Za-z0-9_])\.(?:orange|red)\b'
+    r'|\bsystem(?:Orange|Red)\b)')
+R_STATUS_OK = re.compile(r'//\s*status-color-ok:\s*\S')
 R_KEYDEF = re.compile(r'^\s*"([^"]+)"\s*:\s*\[')
 R_KEYUSE = re.compile(r'\b(?:text|countryText)\(\s*"([^"]+)"')
 SHARED_KEYS = {"ios.cancel", "ios.close", "ios.done"}
@@ -109,8 +131,13 @@ def scan(app=None):
             found.setdefault((rel, rule), []).append(i + 1)
         for i, line in enumerate(lines):
             st = line.strip()
+            if st.startswith("//"):
+                continue
+            if (R_STATUS.search(line) and not R_STATUS_OK.search(line)
+                    and rel[len("RailMap/"):] not in STATUS_COLOR_FILES):
+                add("status-color", i)
             # An opt-out must say why: `// ui-token-ok:` with no reason does not count.
-            if st.startswith("//") or R_OK.search(line):
+            if R_OK.search(line):
                 continue
             for m in R_PAD.finditer(line):
                 if has_big(inner(line, m.end())): add("padding-literal", i)
@@ -206,6 +233,19 @@ def self_test():
      ('Text(text("data.done"))', ["feature-dismiss-key"]),
      ('Text(countryText("video.cancel", region))', ["feature-dismiss-key"]),
      ('Text(text("ios.done"))', []),
+     ('Text(m).foregroundStyle(.orange)', ["status-color"]),
+     ('Text(m).foregroundStyle(.red)', ["status-color"]),
+     ('.foregroundStyle(ok ? Color.secondary : Color.orange)', ["status-color"]),
+     ('.foregroundColor(Color.red)', ["status-color"]),
+     ('.foregroundStyle(Color(.systemOrange))', ["status-color"]),
+     ('.foregroundStyle(.red) // ui-token-ok: error text', ["status-color"]),
+     ('.foregroundStyle(.red) // status-color-ok: record dot', []),
+     ('.foregroundStyle(.red) // status-color-ok:', ["status-color"]),
+     ('.foregroundStyle(.secondary)', []),
+     ('.foregroundStyle(.reddish)', []),
+     ('.foregroundStyle(tint)', []),
+     ('.background(Color.orange.opacity(0.2))', []),
+     ('.tint(.orange)', []),
      ('Text(text("ios.guide.title"))', []),
     ]
     with tempfile.TemporaryDirectory() as tmp:
@@ -235,6 +275,11 @@ def self_test():
         open(os.path.join(app, "Localization", "XStrings.swift"), "w").write(
             '        "x.cancel": [.en: "Cancel"],\n        "x.ok": [.en: "OK"],\n')
         expected.append(("Localization/XStrings.swift", 1, "feature-dismiss-key"))
+        # a file named in STATUS_COLOR_FILES is exempt from status-color only
+        os.makedirs(os.path.join(app, "JourneyEditor"))
+        open(os.path.join(app, "JourneyEditor", "EditorTimeSection.swift"), "w").write(
+            'Text(m).foregroundStyle(.red)\n.padding(.top, 9)\n')
+        expected.append(("JourneyEditor/EditorTimeSection.swift", 2, "padding-literal"))
         # Design/ and Diagnostics/ are excluded entirely
         for d in ("Design", "Diagnostics"):
             open(os.path.join(app, d, "Z.swift"), "w").write(

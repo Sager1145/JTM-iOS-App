@@ -125,7 +125,7 @@ struct TrainResearchView: View {
                     }
                 }
                 if let failure {
-                    Section { Text(failure).foregroundStyle(.red) }
+                    Section { RailStatusLabel(kind: .error, text: failure) }
                 }
                 if !answer.isEmpty {
                     Section(text("sources")) {

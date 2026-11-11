@@ -39,10 +39,11 @@ struct TimetableTripDetailView: View {
                     Text(detailText("edition", ["edition": .string(trip.timetableEditionName)]))
                         .railText(.tertiary)
                     if !trip.canApplyToRouteEditor {
-                        Text(trip.timetableCompleteness == .conflict
-                             ? detailText("conflictDraft")
-                             : detailText("unverifiedRoute"))
-                            .foregroundStyle(.orange)
+                        RailStatusLabel(
+                            kind: .warning,
+                            text: trip.timetableCompleteness == .conflict
+                                ? detailText("conflictDraft")
+                                : detailText("unverifiedRoute"))
                     }
                     if trip.factCompleteness["stops"] != .verified {
                         Text(detailText("publishedOnly"))

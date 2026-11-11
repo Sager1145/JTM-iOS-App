@@ -153,8 +153,7 @@ struct MapLayersView: View {
                             .transition(.opacity)
                         }
                         if let classificationFailure {
-                            Text(classificationFailure)
-                                .foregroundStyle(.orange)
+                            RailStatusLabel(kind: .warning, text: classificationFailure)
                                 .accessibilityIdentifier("riddenCategoryFailure")
                         }
                     }

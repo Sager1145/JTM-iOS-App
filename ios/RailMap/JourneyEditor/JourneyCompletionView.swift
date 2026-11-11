@@ -68,7 +68,7 @@ struct JourneyCompletionView: View {
                 subscriptionSection
                 promptSection
                 responseSection
-                if let failure { Section { Text(failure).foregroundStyle(.red) } }
+                if let failure { Section { RailStatusLabel(kind: .error, text: failure) } }
                 if proposed != nil || draftTrains != initialTrains
                     || (keepsRemarks && !remarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
                     reviewSection

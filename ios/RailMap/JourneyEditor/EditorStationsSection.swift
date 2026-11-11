@@ -127,7 +127,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
             } label: {
                 Image(systemName: "minus.circle.fill")
                     .font(.title3)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(.red) // status-color-ok: destructive remove glyph, not a message
             }
             .buttonStyle(.plain)
             .railMinimumTouchTarget()

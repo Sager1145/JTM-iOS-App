@@ -174,8 +174,7 @@ struct TransferGuideImportView: View {
         } footer: {
             VStack(alignment: .leading, spacing: RailSpacing.s4) {
                 if !hasNetwork {
-                    Text(localization.text("ios.guide.networkLoading"))
-                        .foregroundStyle(.orange)
+                    RailStatusLabel(kind: .warning, text: localization.text("ios.guide.networkLoading"))
                 }
                 Text(localization.text("ios.guide.entryNote"))
             }
@@ -229,7 +228,7 @@ struct TransferGuideImportView: View {
                         .railText(.secondary)
                 }
             } icon: {
-                Image(systemName: "exclamationmark.triangle").foregroundStyle(.orange)
+                Image(systemName: "exclamationmark.triangle").foregroundStyle(RailStatusKind.warning.tint)
             }
         }
     }
@@ -438,7 +437,7 @@ struct TransferGuideImportView: View {
             if code(draft, position: position, index: index) == nil {
                 Image(systemName: "questionmark.circle")
                     .font(.caption)
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(.orange) // status-color-ok: unmatched-field glyph in a form row, not a message
             }
         }
     }
@@ -457,9 +456,7 @@ struct TransferGuideImportView: View {
                         ]))
             }
             if !draft.build.unresolved.isEmpty {
-                Text(draft.build.unresolved.joined(separator: "、"))
-                    .font(.footnote) // ui-token-ok: warning text with its own colour
-                    .foregroundStyle(.orange)
+                RailStatusLabel(kind: .warning, text: draft.build.unresolved.joined(separator: "、"))
             }
         } footer: {
             if !draft.build.unresolved.isEmpty {

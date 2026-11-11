@@ -249,12 +249,9 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
     private var form: some View {
         Form {
             if model.loadFailed {
-                Text(text(
+                RailStatusLabel(kind: .error, text: text(
                     "loadFailed",
                     fallback: "The rail data for this region could not be loaded."))
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
             }
             // Quick fill first, then the order a ticket reads: where, when,
             // which train, then what was ridden and what it cost.
@@ -279,10 +276,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
             if !model.saveIssues.isEmpty {
                 Section {
                     ForEach(model.saveIssues) { issue in
-                        Text(localization.text(for: issue))
-                            .font(.footnote) // ui-token-ok: error text
-                            .foregroundStyle(.red)
-                            .fixedSize(horizontal: false, vertical: true)
+                        RailStatusLabel(kind: .error, text: localization.text(for: issue))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }

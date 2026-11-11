@@ -214,17 +214,12 @@ struct StopEditorView: View {
                     }
                 }
                 if hasStationLineConflict {
-                    Label {
+                    RailStatusLabel(kind: .warning) {
                         VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
                             Text("\(localization.text("ios.editor.station")): \(stop.name)")
                             Text("\(localization.text("ios.editor.lineNames")): \(selectedLines.map(\.name).joined(separator: " · "))")
                         }
-                    } icon: {
-                        Image(systemName: "exclamationmark.triangle.fill")
                     }
-                    .font(.footnote) // ui-token-ok: warning text
-                    .foregroundStyle(.orange)
-                    .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("rideEditorStationLineConflict")
                 }
                 NavigationLink {
@@ -255,13 +250,7 @@ struct StopEditorView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 if let platform = stop.platformNumber, platform < 0 {
-                    Label(
-                        localization.text("ios.editor.platformRule"),
-                        systemImage: "exclamationmark.circle.fill"
-                    )
-                    .font(.footnote) // ui-token-ok: error text
-                    .foregroundStyle(.red)
-                    .fixedSize(horizontal: false, vertical: true)
+                    RailStatusLabel(kind: .error, text: localization.text("ios.editor.platformRule"))
                 }
             }
 
