@@ -11,8 +11,11 @@
   },
   "variants": {
    "service": "こうのとり",
-   "distinctPatterns": null,
-   "report": "jr-west-hokuriku-kinki-north.md"
+   "distinctPatterns": null
+  },
+  "split": {
+   "newId": "kounotori-shinosaka-kinosaki-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -26,7 +29,8 @@
    "newId": "kinosaki-kyoto-kinosaki-until-2011-03",
    "at": "2011-03-12"
   },
-  "ids": ""
+  "ids": "",
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2011-03-12); the older era is kept in the split record"
  },
  {
   "record": "kinosaki-kyoto-kinosaki",
@@ -40,8 +44,7 @@
   },
   "variants": {
    "service": "きのさき",
-   "distinctPatterns": null,
-   "report": "jr-west-hokuriku-kinki-north.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -53,6 +56,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "hashidate-kyoto-amanohashidate-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -64,7 +71,12 @@
    "destination": "夕日ヶ浦木津温泉",
    "label": "京都〜夕日ヶ浦木津温泉（天橋立経由）"
   },
-  "notesAppend": "特急の運転区間は夕日ヶ浦木津温泉まで。同駅〜豊岡間は快速列車（2026-11-11 照合）。"
+  "notesAppend": "特急の運転区間は夕日ヶ浦木津温泉まで。同駅〜豊岡間は快速列車（2026-11-11 照合）。",
+  "split": {
+   "newId": "hashidate-kyoto-toyooka-until-2025-03",
+   "at": "2025-03-15"
+  },
+  "periodEvidence": "the 夕日ヶ浦木津温泉 limited-express terminal started 2025-03-15 (jr-west-hokuriku-kinki-north.md); the earlier 豊岡/久美浜 record is kept as it was"
  },
  {
   "record": "maizuru-kyoto-higashimaizuru",
@@ -72,7 +84,8 @@
    "newId": "maizuru-kyoto-higashimaizuru-until-2011-03",
    "at": "2011-03-12"
   },
-  "ids": ""
+  "ids": "",
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2011-03-12); the older era is kept in the split record"
  },
  {
   "record": "maizuru-kyoto-higashimaizuru",
@@ -121,7 +134,8 @@
   "set": {
    "stops": "福井 芦原温泉 大聖寺 加賀温泉 小松 金沢",
    "optionalStops": ""
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-west-hokuriku-kinki-north#18: Press 141219 p.6 (section 5, 3-car set): 「停車駅：福井・芦原温泉・大聖寺・加賀温泉・小松・金沢」. Wikipedia stop list includes 大聖寺"
  },
  {
   "record": "ohayo-express-fukui-kanazawa",
@@ -135,14 +149,16 @@
     "label": "敦賀→金沢（朝）",
     "stops": "敦賀 武生 鯖江 福井 芦原温泉 大聖寺 加賀温泉 小松 金沢"
    }
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-west-hokuriku-kinki-north#19: Press 231215 honsya: 「特急「おはようエクスプレス」：敦賀駅～金沢駅間」. Wikipedia: 敦賀発着 from 2019-03-18"
  },
  {
   "record": "oyasumi-express-kanazawa-fukui",
   "ids": "jr-west-hokuriku-kinki-north#21",
   "set": {
    "stops": "金沢 小松 加賀温泉 大聖寺 芦原温泉 福井"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-west-hokuriku-kinki-north#21: The same press 141219 section covers both trains (\"おはよう/おやすみ … 停車駅：…大聖寺…\"). Wikipedia gives one shared stop list with 大聖寺"
  },
  {
   "record": "oyasumi-express-kanazawa-fukui",
@@ -155,7 +171,8 @@
     "label": "金沢→敦賀（夜）",
     "stops": "金沢 小松 加賀温泉 大聖寺 芦原温泉 福井 鯖江 武生 敦賀"
    }
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-west-hokuriku-kinki-north#22: Press 231215 honsya: 「おやすみエクスプレス」：敦賀駅～金沢駅間. Wikipedia: 敦賀発着 from 2019-03-18"
  },
  {
   "record": "biwako-express-osaka-maibara",
@@ -167,13 +184,23 @@
  },
  {
   "record": "biwako-express-osaka-maibara",
+  "ids": "",
+  "split": {
+   "newId": "biwako-express-osaka-maibara-until-2014-03",
+   "at": "2014-03-15"
+  }
+ },
+ {
+  "record": "biwako-express-osaka-maibara",
   "ids": "jr-west-hokuriku-kinki-north#23,24",
   "set": {
    "stops": "大阪 新大阪 京都 大津 南草津 草津",
    "optionalStops": "守山 野洲 近江八幡 彦根 米原",
    "completeness": {
     "stops": "partial"
-   }
-  }
+   },
+   "label": "大阪〜草津（2014年3月〜2024年3月）"
+  },
+  "periodEvidence": "the verifier dates the 大阪→草津 working from 2014-03-15 to 2024-03-15; 2003-2014 keeps 米原 as the always-served terminal"
  }
 ]

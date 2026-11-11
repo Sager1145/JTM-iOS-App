@@ -12,8 +12,7 @@
   },
   "variants": {
    "service": "ひだ",
-   "distinctPatterns": null,
-   "report": "jr-central.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -25,6 +24,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "hida-nagoya-toyama-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -39,7 +42,11 @@
   "set": {
    "optionalStops": "飛騨金山"
   },
-  "notesAppend": "大阪発着のひだ25号・36号は岐阜〜高山間でひだ5号・16号に併結（2026-11-11 照合）。飛騨金山は2026-11-23のみの停車。"
+  "notesAppend": "大阪発着のひだ25号・36号は岐阜〜高山間でひだ5号・16号に併結（2026-11-11 照合）。飛騨金山は2026-11-23のみの停車。",
+  "split": {
+   "newId": "hida-osaka-takayama-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "nanki-nagoya-kiikatsuura",
@@ -59,6 +66,10 @@
   "set": {
    "stops": "静岡 清水 富士 富士宮 身延 内船 下部温泉 甲斐岩間 鰍沢口 市川大門 東花輪 南甲府 甲府",
    "optionalStops": ""
+  },
+  "split": {
+   "newId": "fujikawa-shizuoka-kofu-until-2026-03",
+   "at": "2026-03-14"
   }
  }
 ]

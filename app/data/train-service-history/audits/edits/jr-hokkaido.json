@@ -14,8 +14,11 @@
   },
   "variants": {
    "service": "すずらん",
-   "distinctPatterns": 2,
-   "report": "jr-hokkaido.md"
+   "distinctPatterns": 2
+  },
+  "split": {
+   "newId": "suzuran-muroran-sapporo-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -49,7 +52,17 @@
    "stops": "札幌 岩見沢 滝川 深川 旭川 上川 白滝 丸瀬布 遠軽 生田原 留辺蘂 北見 美幌 女満別 網走",
    "optionalStops": "美唄 砂川",
    "lines": "函館本線 宗谷本線 石北本線"
-  }
+  },
+  "split": {
+   "newId": "okhotsk-sapporo-abashiri-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "白滝・丸瀬布を optional に追加、図に無い相内・東相内・西北見を削除。",
+    "白滝・丸瀬布・生田原・留辺蘂・女満別は2026-11-11 の再照合で全列車停車を確認（2026-03-14 以降は stops）。図に無い相内・東相内・西北見は削除。"
+   ]
+  ]
  },
  {
   "record": "taisetsu-asahikawa-abashiri",
@@ -58,7 +71,8 @@
   ],
   "set": {
    "lines": "宗谷本線 石北本線"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#10: Same app network evidence as #7."
  },
  {
   "record": "taisetsu-asahikawa-abashiri",
@@ -77,6 +91,10 @@
   "set": {
    "stops": "函館 五稜郭 新函館北斗 森 八雲 長万部 黒松内 昆布 ニセコ 倶知安 余市 小樽 手稲 札幌",
    "optionalStops": "大沼公園"
+  },
+  "split": {
+   "newId": "niseko-sapporo-hakodate-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -95,7 +113,8 @@
   "set": {
    "stops": "函館 森 八雲 長万部 伊達紋別 東室蘭 苫小牧 南千歳 新札幌 札幌",
    "optionalStops": "五稜郭 新函館北斗 大沼公園 豊浦 洞爺 登別 白老"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#21: V1: from 2010-12-04 all trains except スーパー北斗15号 call at 五稜郭, so it was not \"always\". V2 別紙1-2 (2019): 大沼公園 is served by only 8 of 12 up trains, and 洞爺 and 登別 by 11 of 12."
  },
  {
   "record": "super-ozora-sapporo-kushiro",
@@ -107,7 +126,8 @@
    "stops": "札幌 新札幌 南千歳 トマム 新得 帯広 池田 釧路",
    "optionalStops": "追分 新夕張 占冠 十勝清水 芽室 浦幌 白糠 音別",
    "lines": "函館線 千歳線 石勝線 根室線"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#22: V2: 「スーパーおおぞら１･７･８号」を追分駅と新夕張駅に停車拡大 from 2019-03-16. In the V2 別紙2, スーパーおおぞら1号 passes 白糠, so 白糠 is optional."
  },
  {
   "record": "super-tokachi-sapporo-obihiro",
@@ -118,7 +138,8 @@
   "set": {
    "optionalStops": "追分 新夕張 占冠",
    "lines": "函館線 千歳線 石勝線 根室線"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#24: Same evidence as #23."
  },
  {
   "record": "super-hakucho-shinaomori-hakodate",
@@ -128,7 +149,8 @@
   "set": {
    "stops": "新青森 青森 蟹田 木古内 函館",
    "optionalStops": "五稜郭"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#31: V1 別紙1/2 (rendered and viewed): 五稜郭 is served only by スーパー白鳥 down 27/31/33 and up 20/22/26/98. The others show レ. In the same table, every train calls at 蟹田."
  },
  {
   "record": "hakucho-shinaomori-hakodate",
@@ -138,6 +160,7 @@
   "set": {
    "stops": "新青森 青森 蟹田 木古内 函館",
    "optionalStops": "五稜郭"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-hokkaido#32: V1: 白鳥93 calls at 五稜郭 (10:21), but 白鳥23, 28 and 96 and 臨時白鳥71–74 pass it."
  }
 ]

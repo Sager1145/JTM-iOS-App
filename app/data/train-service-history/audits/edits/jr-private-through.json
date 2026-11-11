@@ -8,6 +8,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "fujisan-shinjuku-gotemba-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -16,14 +20,16 @@
   "set": {
    "stops": "新宿 新百合ヶ丘 相模大野 本厚木 秦野 松田 御殿場",
    "optionalStops": "駿河小山"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-private-through#3: Now official, not medium. (C): 「途中停車駅：新百合ヶ丘、相模大野、本厚木、秦野、松田、駿河小山（一部列車）…町田には停車いたしません」. (D): 「新宿・新百合ヶ丘・相模大野・本厚木・秦野・松田・※駿河小山・御殿場」, 「駿河小山は、下り１号・３号、上り６号・１２号のみ停車」. Correct patte"
  },
  {
   "record": "asagiri-shinjuku-numazu",
   "ids": "jr-private-through#4",
   "set": {
    "optionalStops": "駿河小山"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-private-through#4: Upgraded from low. (C) underlines 新百合ヶ丘, 相模大野 and 秦野 as stations 「新たに停車する駅」 from 2012-03-17, so no あさぎり called there before. Remove 新百合ヶ丘 and 秦野. That 駿河小山 was served by "
  },
  {
   "record": "nikko-shinjuku-tobunikko",
@@ -59,16 +65,24 @@
    "at": "2013-03-16",
    "dropStops": [
     "浦和"
-   ]
+   ],
+   "setClone": {
+    "label": "新宿〜鬼怒川温泉（2006–2013）"
+   },
+   "setBase": {
+    "label": "新宿〜鬼怒川温泉（2013–2018）"
+   }
   },
-  "ids": "jr-private-through#9"
+  "ids": "jr-private-through#9",
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-private-through#9: (G): no 浦和 at the 2006 start. (H): 浦和 added from the 2013-03 revision."
  },
  {
   "record": "kinugawa-shinjuku-kinugawaonsen-2006",
   "ids": "jr-private-through#10",
   "set": {
    "validUntil": "2018-03-17"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-private-through#10: Upgraded from low. (I) 別紙2: from 2017-07-22 the only JR-through trains calling at 東武ワールドスクウェア were スペーシアきぬがわ3号 and 6号; no きぬがわ is listed. (J): 「新たに「きぬがわ４号」と「きぬがわ５号」も同駅に停車"
  },
  {
   "record": "kinugawa-shinjuku-kinugawaonsen",
@@ -86,7 +100,8 @@
     "東武ワールドスクウェア"
    ]
   },
-  "ids": ""
+  "ids": "",
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); reviewed against the correction evidence"
  },
  {
   "record": "spacia-kinugawa-shinjuku-kinugawaonsen",
@@ -94,7 +109,8 @@
   "set": {
    "stops": "新宿 池袋 浦和 大宮 栃木 新鹿沼 下今市 鬼怒川温泉",
    "optionalStops": "東武ワールドスクウェア"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-private-through#12: (G): not in the 2006 stop list. (I): the station opened 2017-07-22, and from that day only スペーシアきぬがわ3号 and 6号 called there. (J) confirms. Make it optional from 2017-07-22"
  },
  {
   "record": "spacia-kinugawa-shinjuku-kinugawaonsen-until-2017-07",

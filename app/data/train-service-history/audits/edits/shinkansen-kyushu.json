@@ -14,8 +14,11 @@
   },
   "variants": {
    "service": "みずほ",
-   "distinctPatterns": 12,
-   "report": "shinkansen-kyushu.md"
+   "distinctPatterns": 12
+  },
+  "split": {
+   "newId": "mizuho-shin-osaka-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -51,8 +54,11 @@
   },
   "variants": {
    "service": "さくら",
-   "distinctPatterns": 33,
-   "report": "shinkansen-kyushu.md"
+   "distinctPatterns": 33
+  },
+  "split": {
+   "newId": "sakura-shin-osaka-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -64,7 +70,17 @@
   "set": {
    "stops": "博多 新鳥栖 久留米 熊本 川内 鹿児島中央",
    "optionalStops": "新八代 新水俣 出水"
-  }
+  },
+  "split": {
+   "newId": "sakura-hakata-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "中間駅は一部停車として optional。",
+    "2026-03-14 以降は新鳥栖・久留米・川内が全列車停車（2026-11-11 再照合）、他の中間駅は一部停車として optional。"
+   ]
+  ]
  },
  {
   "record": "tsubame-hakata-kagoshima-chuo",
@@ -72,10 +88,12 @@
    "shinkansen-kyushu#12"
   ],
   "set": {
-   "lines": "山陽新幹線 九州新幹線",
    "optionalStops": ""
   },
-  "notesAppend": "つばめ321号は新下関始発、302号は小倉止まり（山陽新幹線区間、2026-11-11 照合）。この2駅は九州新幹線の駅列に載らないため停車駅には入れていない。"
+  "notesAppend": "つばめ321号は新下関始発、302号は小倉止まり（山陽新幹線区間、2026-11-11 照合）。この2駅は九州新幹線の駅列に載らないため停車駅には入れていない。",
+  "variants": {
+   "service": "つばめ"
+  }
  },
  {
   "record": "kamome-takeo-onsen-nagasaki",
@@ -99,8 +117,7 @@
   ],
   "variants": {
    "service": "かもめ",
-   "distinctPatterns": 8,
-   "report": "shinkansen-kyushu.md"
+   "distinctPatterns": 8
   }
  }
 ]

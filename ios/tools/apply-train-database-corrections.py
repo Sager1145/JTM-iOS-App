@@ -4,6 +4,19 @@
 Inputs (all tracked, nothing depends on the untracked docs folder):
   app/data/train-service-history/audits/corrections.json   copy of the recheck's machine-readable list
   app/data/train-service-history/audits/edits/*.json       one authored edit file per audit group
+  app/data/train-service-history/audits/baseline-patterns.json  the master as it was before any correction
+
+Every run starts from the baseline, applies all edits and compares the result with the current master:
+a record the script changes must equal either the baseline or the script's result, otherwise the run stops
+and names the record and fields (a hand edit is never overwritten silently; move it into an edit file).
+Split records (older eras) are rebuilt from the baseline on every run, so they cannot drift. Records the
+script does not touch are taken from the current master.
+
+Period rule: a correction only changes what its evidence covers. A record that ended before the check date
+may change only when its entry carries `periodEvidence`; a record in force before 2026-03-14 (ERA, the
+timetable the recheck read) that gains an always-served stop, loses a station or gains a line must be split
+at that date (`split.at`: the older era keeps its data) or carry `periodEvidence`. The labels of split
+records get their period regenerated from the dates; a moved terminal is named in the label.
 
 Every entry of `corrections` in the recheck file (two-source confirmed) is classified by the edit files:
   applied            the record fields in `set` / `notesReplace` / `notesAppend` / `split` / ... are written
@@ -51,6 +64,8 @@ AUDITS = ROOT / "app/data/train-service-history/audits"
 CORRECTIONS = AUDITS / "corrections.json"
 EDITS = AUDITS / "edits"
 VARIANTS = AUDITS / "needs-variants.json"
+BASELINE = AUDITS / "baseline-patterns.json"
+ERA = "2026-03-14"
 CHECKED = "2026-11-11"
 MARKER = re.compile(r"\s*【" + CHECKED + r" recheck:[^】]*】")
 MAX_URLS = 6
@@ -251,19 +266,102 @@ def classify(corrections, entries):
     return status
 
 
+def splits_of(entry):
+    split = entry.get("split")
+    return split if isinstance(split, list) else ([split] if split else [])
+
+
+def names_of(items):
+    return [s["name"] for s in items]
+
+
+def period_problems(entries_by_record, pre, post, corrections):
+    """Records that a correction changed outside the period its evidence covers (see the module doc)."""
+    problems = []
+    for pid, items in entries_by_record.items():
+        if pid not in pre or any(e.get("periodEvidence") for e in items):
+            continue
+        a, b = pre[pid], post[pid]
+        keys = ("stops", "optionalStops", "lines", "origin", "destination", "validFrom", "validUntil", "allStations")
+        if all(a.get(k) == b.get(k) for k in keys):
+            continue
+        if a.get("validUntil") and a["validUntil"] < CHECKED:
+            problems.append(f"{pid}: ended {a['validUntil']} but changed without periodEvidence "
+                            f"({', '.join(e['_where'] for e in items)})")
+            continue
+        in_force_before_era = ((a.get("validFrom") is None or a["validFrom"] < ERA)
+                               and (a.get("validUntil") is None or a["validUntil"] >= ERA))
+        if not in_force_before_era:
+            continue
+        added = [n for n in names_of(b["stops"]) if n not in names_of(a["stops"])]
+        gone = [n for n in names_of(a["stops"]) + names_of(a["optionalStops"])
+                if n not in names_of(b["stops"]) + names_of(b["optionalStops"])]
+        lines = [n for n in b["lines"] if n not in a["lines"]]
+        if added or gone or lines:
+            problems.append(f"{pid}: valid from {a.get('validFrom')}, evidence covers the {ERA} timetable only; "
+                            f"adds always {added or '-'}, removes {gone or '-'}, adds lines {lines or '-'} "
+                            f"({', '.join(e['_where'] for e in items)}): split at {ERA} (split.at) or give periodEvidence")
+    return problems
+
+
+def new_label(record, pre, explicit):
+    """A moved terminal keeps the label honest: the label names the old ends, the ride is origin to destination."""
+    if explicit or (record["origin"] == pre["origin"] and record["destination"] == pre["destination"]):
+        return record["label"]
+    return f"{record['label']}（全列車に共通する区間 {record['origin']}〜{record['destination']}）"
+
+
+PERIOD_RANGE = re.compile(r"(\d{4})年(\d{1,2})月〜(\d{4})年(\d{1,2})月")
+PERIOD_UNTIL = re.compile(r"(\d{4})年(\d{1,2})月まで")
+PERIOD_FROM = re.compile(r"(\d{4})年(\d{1,2})月(〜|から|以降)")
+PERIOD_YEARS = re.compile(r"\d{4}[–〜]\d{4}")
+
+
+def year_month(day):
+    year, month, _ = day.split("-")
+    return f"{int(year)}年{int(month)}月"
+
+
+def period_label(record):
+    """The period named in the label of a split record is regenerated from its own validity dates."""
+    label, start, end = record["label"], record.get("validFrom"), record.get("validUntil")
+    if PERIOD_RANGE.search(label) and start and end:
+        return PERIOD_RANGE.sub(f"{year_month(start)}〜{year_month(end)}", label, count=1)
+    if PERIOD_UNTIL.search(label) and end:
+        return PERIOD_UNTIL.sub(f"{year_month(end)}まで", label, count=1)
+    if PERIOD_FROM.search(label) and start:
+        return PERIOD_FROM.sub(lambda m: f"{year_month(start)}{m.group(3)}", label, count=1)
+    if PERIOD_YEARS.search(label) or PERIOD_RANGE.search(label) or PERIOD_UNTIL.search(label) or PERIOD_FROM.search(label):
+        return label
+    if start and end:
+        return f"{label}（{year_month(start)}〜{year_month(end)}）"
+    if end:
+        return f"{label}（{year_month(end)}まで）"
+    if start:
+        return f"{label}（{year_month(start)}〜）"
+    return label
+
+
 def run(check, quiet):
     corrections_doc = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
     corrections = OrderedDict((c["id"], c) for c in corrections_doc["corrections"])
     entries = load_edits()
     status = classify(corrections, entries)
 
-    original_text = PATTERNS.read_text(encoding="utf-8")
-    patterns = json.loads(original_text, object_pairs_hook=OrderedDict)
-    before = {r["patternId"]: copy.deepcopy(r) for r in patterns}
-    resolver = Resolver(patterns)
+    baseline = json.loads(BASELINE.read_text(encoding="utf-8"), object_pairs_hook=OrderedDict)
+    master = json.loads(PATTERNS.read_text(encoding="utf-8"), object_pairs_hook=OrderedDict)
+    master_by = {r["patternId"]: r for r in master}
+    # every run starts from the pre-correction baseline, so clones and edits do not depend on earlier runs
+    patterns = copy.deepcopy(baseline)
+    before = {r["patternId"]: copy.deepcopy(r) for r in baseline}
+    resolver = Resolver(baseline)
     by_id = {r["patternId"]: r for r in patterns}
     evidence = defaultdict(lambda: {"ids": [], "urls": [], "basis": ""})
-    variants = defaultdict(lambda: {"patterns": set(), "distinct": None, "reports": set(), "ids": set()})
+    variants = defaultdict(lambda: {"patterns": set(), "distinct": None, "ids": set()})
+    applied = [e for e in entries if e.get("status", "applied") not in ("notApplied", "skippedHistorical", "deferred")]
+    entries_by_record = defaultdict(list)
+    for entry in applied:
+        entries_by_record[entry["record"]].append(entry)
 
     def touch(pid, entry):
         item = evidence[pid]
@@ -277,38 +375,50 @@ def run(check, quiet):
             item["basis"] = entry["basis"]
 
     for entry in entries:
-        state = entry.get("status", "applied")
-        if state in ("notApplied", "skippedHistorical", "deferred"):
+        if entry.get("status", "applied") in ("notApplied", "skippedHistorical", "deferred"):
             if entry["record"] not in by_id and "split" not in entry:
                 raise Fail(f"{entry['_where']}: unknown record {entry['record']}")
-            continue
-        pid = entry["record"]
-        record = by_id.get(pid)
+
+    split_records, explicit_labels = set(), set()
+    for entry in applied:
+        if "label" in (entry.get("set") or {}):
+            explicit_labels.add(entry["record"])
+        for split in splits_of(entry):
+            if "label" in (split.get("setClone") or {}):
+                explicit_labels.add(split["newId"])
+    # phase A: split off the older era from the record as it is before any correction
+    for entry in applied:
+        record = by_id.get(entry["record"])
         if record is None:
-            raise Fail(f"{entry['_where']}: unknown record {pid}")
-        split = entry.get("split")
-        if split:
+            raise Fail(f"{entry['_where']}: unknown record {entry['record']}")
+        for split in splits_of(entry):
             clone_id = split["newId"]
-            if clone_id not in by_id:
-                clone = copy.deepcopy(record)
-                clone["patternId"] = clone_id
-                clone["validUntil"] = split["at"]
-                if split.get("cloneValidFrom"):
-                    clone["validFrom"] = split["cloneValidFrom"]
-                for name in split.get("dropStops", []):
-                    clone["stops"] = [s for s in clone["stops"] if s["name"] != name]
-                    clone["optionalStops"] = [s for s in clone["optionalStops"] if s["name"] != name]
-                if split.get("setClone"):
-                    apply_set(clone, split["setClone"], resolver)
-                index = patterns.index(record) + 1
-                patterns.insert(index, clone)
-                by_id[clone_id] = clone
-                before.setdefault(clone_id, None)
-            if record.get("validFrom") != split["at"]:
-                record["validFrom"] = split["at"]
+            if clone_id in by_id:
+                raise Fail(f"{entry['_where']}: split target {clone_id} already exists")
+            clone = copy.deepcopy(record)
+            clone["patternId"] = clone_id
+            clone["validUntil"] = split["at"]
+            if split.get("cloneValidFrom"):
+                clone["validFrom"] = split["cloneValidFrom"]
+            for name in split.get("dropStops", []):
+                clone["stops"] = [s for s in clone["stops"] if s["name"] != name]
+                clone["optionalStops"] = [s for s in clone["optionalStops"] if s["name"] != name]
+            if split.get("setClone"):
+                apply_set(clone, split["setClone"], resolver)
+            patterns.insert(patterns.index(record) + 1, clone)
+            by_id[clone_id] = clone
+            before.setdefault(clone_id, None)
+            record["validFrom"] = split["at"]
             if split.get("setBase"):
                 apply_set(record, split["setBase"], resolver)
             touch(clone_id, entry)
+            split_records.update((entry["record"], clone_id))
+    pre = {pid: copy.deepcopy(r) for pid, r in by_id.items()}
+
+    # phase B: the corrections themselves
+    for entry in applied:
+        pid = entry["record"]
+        record = by_id[pid]
         if entry.get("set"):
             apply_set(record, entry["set"], resolver)
         if entry.get("citeSource"):
@@ -321,18 +431,27 @@ def run(check, quiet):
         if spec:
             item = variants[spec["service"]]
             item["patterns"].add(pid)
-            item["reports"].add(spec["report"])
             item["ids"].update(entry["ids"])
             if spec.get("distinctPatterns"):
                 item["distinct"] = max(item["distinct"] or 0, spec["distinctPatterns"])
 
-    # historical guard: a record may not change on a correction that judges it against today's timetable
+    # a historical correction must name an existing record, and that record must really be historical
     for cid, (state, _, _) in status.items():
         if state == "skippedHistorical":
             record = by_id.get(corrections[cid]["recordId"])
-            if record is not None and not (record.get("validUntil") and record["validUntil"] < CHECKED):
+            if record is None:
+                raise Fail(f"{cid} is marked historical but record {corrections[cid]['recordId']} does not exist")
+            if not (record.get("validUntil") and record["validUntil"] < CHECKED):
                 raise Fail(f"{cid} is marked historical but {record['patternId']} is current")
 
+    for pid in split_records:
+        by_id[pid]["label"] = period_label(by_id[pid])
+
+    problems = period_problems(entries_by_record, pre, by_id, corrections)
+    if problems:
+        raise Fail("corrections outside the period of their evidence:\n  " + "\n  ".join(problems))
+
+    dropped_legs = []
     for pid, item in evidence.items():
         record = by_id[pid]
         # the app applies a pattern as a ride from origin to destination, so both must be the first and last
@@ -342,20 +461,42 @@ def run(check, quiet):
         for key, stop in (("origin", record["stops"][0]), ("destination", record["stops"][-1])):
             if record[key] != stop["name"]:
                 record[key] = stop["name"]
+        record["label"] = new_label(record, pre[pid], pid in explicit_labels)
+        if record["completeness"].get("validity") == "missing" and (record.get("validFrom") or record.get("validUntil")):
+            record["completeness"]["validity"] = "complete" if record.get("validFrom") and record.get("validUntil") else "partial"
         if record.get("unsolvableLegs"):
             pairs = [[a["name"], b["name"]] for a, b in zip(record["stops"], record["stops"][1:])]
-            record["unsolvableLegs"] = [leg for leg in record["unsolvableLegs"] if leg in pairs]
-            if not record["unsolvableLegs"]:
+            kept = [leg for leg in record["unsolvableLegs"] if leg in pairs]
+            dropped_legs.extend((pid, leg) for leg in record["unsolvableLegs"] if leg not in pairs)
+            record["unsolvableLegs"] = kept
+            if not kept:
                 del record["unsolvableLegs"]
         notes = MARKER.sub("", record.get("notes") or "").rstrip()
         urls = urls_for(corrections, item["ids"], item["urls"])
         record["notes"] = (notes + " " + marker(item["ids"], urls, item["basis"])).strip()
 
-    out_patterns = json.dumps(patterns, ensure_ascii=False, indent=1) + "\n"
+    touched = {pid for pid in by_id if before.get(pid) != by_id[pid]}
+    for pid in sorted(touched):
+        current = master_by.get(pid)
+        if current is not None and current != by_id[pid] and current != before.get(pid):
+            fields = sorted(k for k in set(current) | set(by_id[pid]) if current.get(k) != by_id[pid].get(k))
+            raise Fail(f"{pid} was edited by hand (fields {', '.join(fields)}); the script would overwrite it. "
+                       f"Move the edit into audits/edits and rerun")
+    # untouched records come from the current master, so unrelated later edits survive a rerun
+    result = []
+    for record in patterns:
+        pid = record["patternId"]
+        if pid in touched:
+            result.append(record)
+        elif pid in master_by:
+            result.append(master_by[pid])
+    known = {r["patternId"] for r in result}
+    result.extend(r for r in master if r["patternId"] not in known and r["patternId"] not in before)
+    out_patterns = json.dumps(result, ensure_ascii=False, indent=1) + "\n"
 
     derived = json.loads(DERIVED.read_text(encoding="utf-8"))
     keep = [r for r in derived if "_derivation" not in r or r["_derivation"] != LEGACY]
-    mirrored = [dict(copy.deepcopy(r), _derivation=LEGACY) for r in patterns]
+    mirrored = [dict(copy.deepcopy(r), _derivation=LEGACY) for r in result]
     out_derived = json.dumps(sorted(keep + mirrored, key=lambda r: r["patternId"]),
                              ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
@@ -365,26 +506,29 @@ def run(check, quiet):
         "note": ("Services whose stop pattern differs by train number or date. The base record in train-service-patterns.json "
                  "lists what every train of the name calls at (stops) and what only some call at (optionalStops); "
                  "the per-number tables still have to be authored from dated public timetables "
-                 "(ios/tools/shinkansen-patterns.md for the Shinkansen model). No number is inferred."),
+                 "(ios/tools/shinkansen-patterns.md for the Shinkansen model). No number is inferred. "
+                 "`sources` are the verifier and auditor URLs of the listed corrections."),
         "services": [
             OrderedDict([
                 ("service", name),
                 ("patterns", sorted(item["patterns"])),
                 ("distinctPatterns", item["distinct"]),
-                ("source", sorted("docs/maintenance/database-audit/" + r for r in item["reports"])),
+                ("sources", urls_for(corrections, sorted(item["ids"], key=natural), [])),
                 ("corrections", sorted(item["ids"], key=natural)),
             ]) for name, item in sorted(variants.items())
         ],
     }
     out_variants = json.dumps(needs, ensure_ascii=False, indent=1) + "\n"
 
-    changed_records = [pid for pid in by_id if before.get(pid) != by_id[pid]]
+    changed_records = [pid for pid in by_id if pid in touched and master_by.get(pid) != by_id[pid]]
     outputs = {PATTERNS: out_patterns, DERIVED: out_derived, VARIANTS: out_variants}
     changes = {p: (p.read_text(encoding="utf-8") if p.exists() else None) != text for p, text in outputs.items()}
 
     if not quiet:
         for pid in changed_records:
-            report(pid, before.get(pid), by_id[pid])
+            report(pid, master_by.get(pid) or before.get(pid), by_id[pid])
+        for pid, leg in dropped_legs:
+            print(f"! {pid}: known unsolvable leg {leg} is no longer a pair of consecutive stops and was dropped")
     counts = defaultdict(int)
     for state, _, _ in status.values():
         counts[state] += 1
@@ -398,7 +542,7 @@ def run(check, quiet):
     for kind, number in sorted(deferred.items()):
         print(f"    deferred/{kind}: {number}")
     print(f"records changed in train-service-patterns.json: {len(changed_records)} "
-          f"({sum(1 for p in changed_records if before.get(p) is None)} new)")
+          f"({sum(1 for p in changed_records if p not in master_by)} new)")
     print(f"needs-variants services: {len(needs['services'])}")
     for path, flag in changes.items():
         print(f"  {path.relative_to(ROOT)}: {'WOULD CHANGE' if flag else 'unchanged'}")

@@ -62,15 +62,117 @@ class AppliedCorrectionsAgreeWithBundledData(unittest.TestCase):
 
     def test_changed_records_carry_the_recheck_marker(self):
         data = records()
-        for pid in ("nozomi-tokyo-shin-osaka", "hida-nagoya-takayama", "kuroshio-shinosaka-shirahama", "tobu-none"):
-            if pid in data:
-                self.assertIn("recheck:", data[pid]["notes"], pid)
-                self.assertIn("http", data[pid]["notes"], pid)
+        for pid in ("nozomi-tokyo-shin-osaka", "hida-nagoya-takayama", "kuroshio-shinosaka-shirahama",
+                    "kirifuri-asakusa-tobunikko", "kinu-asakusa-kinugawaonsen", "hashidate-kyoto-toyooka"):
+            self.assertIn("recheck:", data[pid]["notes"], pid)
+            self.assertIn("http", data[pid]["notes"], pid)
+
+    def test_a_hand_edited_record_stops_the_script(self):
+        import contextlib
+        import io
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            master = Path(tmp) / "patterns.json"
+            derived = Path(tmp) / "derived.json"
+            rows = json.loads(PATTERNS.read_text(encoding="utf-8"))
+            for row in rows:
+                if row["patternId"] == "nozomi-tokyo-shin-osaka":
+                    row["stops"] = row["stops"][:-1]
+            master.write_text(json.dumps(rows, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+            derived.write_text(DERIVED.read_text(encoding="utf-8"), encoding="utf-8")
+            saved = tool.PATTERNS, tool.DERIVED
+            tool.PATTERNS, tool.DERIVED = master, derived
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    with self.assertRaises(tool.Fail) as caught:
+                        tool.run(True, True)
+            finally:
+                tool.PATTERNS, tool.DERIVED = saved
+            self.assertIn("nozomi-tokyo-shin-osaka", str(caught.exception))
+            self.assertIn("stops", str(caught.exception))
+
+    def test_a_correction_outside_its_period_is_refused(self):
+        a = {"stops": [{"name": "A"}], "optionalStops": [], "lines": [], "origin": "A", "destination": "A",
+             "validFrom": "2010-01-01", "validUntil": None}
+        b = dict(a, stops=[{"name": "A"}, {"name": "B"}])
+        entry = {"_where": "x[0]"}
+        self.assertTrue(tool.period_problems({"r": [entry]}, {"r": a}, {"r": b}, {}))
+        self.assertFalse(tool.period_problems({"r": [dict(entry, periodEvidence="why")]}, {"r": a}, {"r": b}, {}))
+        self.assertFalse(tool.period_problems({"r": [entry]}, {"r": dict(a, validFrom=tool.ERA)},
+                                              {"r": dict(b, validFrom=tool.ERA)}, {}))
+        ended = dict(a, validUntil="2015-03-14")
+        self.assertTrue(tool.period_problems({"r": [entry]}, {"r": ended}, {"r": dict(ended, lines=["L"])}, {}))
+
+    def test_label_period_matches_validity(self):
+        import re
+        for pid, row in records().items():
+            until = re.search(r"(\d{4})年(\d{1,2})月まで", row["label"])
+            if until and row["validUntil"]:
+                self.assertEqual((int(until.group(1)), int(until.group(2))),
+                                 tuple(int(x) for x in row["validUntil"].split("-")[:2]), pid)
+            start = re.search(r"(\d{4})年(\d{1,2})月(?:〜|から)", row["label"])
+            if start and row["validFrom"]:
+                self.assertEqual((int(start.group(1)), int(start.group(2))),
+                                 tuple(int(x) for x in row["validFrom"].split("-")[:2]), pid)
+
+    def test_moved_terminals_are_named_in_the_label(self):
+        baseline = {r["patternId"]: r for r in json.loads(tool.BASELINE.read_text(encoding="utf-8"))}
+        moved = 0
+        for pid, row in records().items():
+            old = baseline.get(pid)
+            if old and (old["origin"], old["destination"]) != (row["origin"], row["destination"]) and row["label"] == old["label"]:
+                self.fail(f"{pid}: terminals moved but the label still promises the old ride")
+            if old and (old["origin"], old["destination"]) != (row["origin"], row["destination"]):
+                moved += 1
+                self.assertEqual(row["origin"], row["stops"][0]["name"], pid)
+                self.assertEqual(row["destination"], row["stops"][-1]["name"], pid)
+        self.assertGreater(moved, 0)
+
+    def test_dated_validity_is_not_marked_missing(self):
+        for pid, row in records().items():
+            if row["validFrom"] and row["validUntil"]:
+                self.assertNotEqual(row["completeness"]["validity"], "missing", pid)
+
+    def test_notes_no_longer_say_a_confirmed_stop_is_optional(self):
+        data = records()
+        stale = {
+            "yamabiko-tokyo-morioka": "東京・大宮・仙台・盛岡以外は optional",
+            "nasuno-tokyo-koriyama": "小山が全列車停車かは未確認",
+            "tsurugi-toyama-tsuruga": "福井・越前たけふは全列車が停まるかを公式時刻表で未照合",
+            "hakutaka-tokyo-tsuruga": "敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）",
+            "sakura-hakata-kagoshima-chuo": "各駅停車のつばめとは別に、中間駅は",
+            "revaty-aizu-asakusa-aizutajima": "kept optional",
+            "chichibu-ikebukuro-seibuchichibu": "remain unverified",
+            "nozomi-tokyo-hakata": "途中駅（optional）",
+            "mizukaze-sanin-course": "大阪発は福知山線経由と推定。",
+        }
+        for pid, phrase in stale.items():
+            self.assertNotIn(phrase, data[pid]["notes"], pid)
+
+    def test_older_eras_keep_the_data_they_had(self):
+        data = records()
+        old = data["yamabiko-tokyo-morioka-until-2026-03"]
+        self.assertEqual(old["validUntil"], "2026-03-14")
+        self.assertEqual(data["yamabiko-tokyo-morioka"]["validFrom"], "2026-03-14")
+        self.assertEqual(names(old["stops"]), ["東京", "大宮", "仙台", "盛岡"])
+        old = data["hashidate-kyoto-toyooka-until-2025-03"]
+        self.assertEqual((old["destination"], old["validUntil"]), ("豊岡", "2025-03-15"))
+        self.assertEqual(data["hashidate-kyoto-toyooka"]["validFrom"], "2025-03-15")
+        biwako = data["biwako-express-osaka-maibara-until-2014-03"]
+        self.assertEqual((biwako["destination"], biwako["validUntil"]), ("米原", "2014-03-15"))
+        self.assertEqual(data["mizukaze-sanyo-course"]["validFrom"], "2026-03-01")
+        self.assertIn("尾道", names(data["mizukaze-sanyo-course-until-2026-03"]["optionalStops"] + data["mizukaze-sanyo-course-until-2026-03"]["stops"]))
+        for pid in ("kinu-asakusa-kinugawaonsen", "revaty-kinu-asakusa-kinugawaonsen", "revaty-aizu-asakusa-aizutajima"):
+            self.assertNotIn("東武ワールドスクウェア", names(data[pid + "-until-2026-03"]["stops"]), pid)
+            self.assertIn("東武ワールドスクウェア", names(data[pid]["stops"]), pid)
 
     def test_needs_variants_lists_the_same_name_services(self):
-        listed = {s["service"] for s in json.loads(VARIANTS.read_text(encoding="utf-8"))["services"]}
-        for service in ("のぞみ", "ひかり", "はやぶさ", "ひだ", "ソニック", "くろしお", "はこね"):
+        services = json.loads(VARIANTS.read_text(encoding="utf-8"))["services"]
+        listed = {s["service"] for s in services}
+        for service in ("のぞみ", "ひかり", "はやぶさ", "ひだ", "ソニック", "くろしお", "はこね", "つばめ"):
             self.assertIn(service, listed)
+        for service in services:
+            self.assertTrue(service["sources"] and all(u.startswith("http") for u in service["sources"]), service["service"])
 
 
 class SampleOfCorrectedRecordsPerGroup(unittest.TestCase):
@@ -81,7 +183,7 @@ class SampleOfCorrectedRecordsPerGroup(unittest.TestCase):
         nozomi = self.data["nozomi-tokyo-shin-osaka"]
         self.assertEqual(names(nozomi["stops"]), ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"])
         self.assertEqual(nozomi["optionalStops"], [])
-        self.assertIsNone(self.data["hikari-rail-star-shin-osaka-hakata"]["validUntil"])
+        self.assertEqual(self.data["hikari-rail-star-shin-osaka-hakata"]["validUntil"], "2011-03-12")
         self.assertTrue(self.data["kodama-tokyo-shin-osaka"]["allStations"])
 
     def test_shinkansen_kyushu(self):

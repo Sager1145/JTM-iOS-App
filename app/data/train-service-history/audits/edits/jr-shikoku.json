@@ -33,7 +33,8 @@
    "completeness": {
     "stops": "partial"
    }
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#4: Press 2024-12-13, p.10 【通過を停車に変更】: 屋島駅 うずしお13号 12:20 / うずしお22号 17:20. The same press, 別紙 2(1), shows that 13号 5013D and 22号 5022D are the same trains as before, only cut "
  },
  {
   "record": "shimanto-takamatsu-kochi",
@@ -42,8 +43,7 @@
   "companyAdd": "土佐くろしお鉄道",
   "variants": {
    "service": "しまんと",
-   "distinctPatterns": null,
-   "report": "jr-shikoku.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -52,8 +52,7 @@
   "status": "variantOnly",
   "variants": {
    "service": "しおかぜ",
-   "distinctPatterns": 11,
-   "report": "jr-shikoku.md"
+   "distinctPatterns": 11
   }
  },
  {
@@ -62,8 +61,7 @@
   "status": "variantOnly",
   "variants": {
    "service": "いしづち",
-   "distinctPatterns": 14,
-   "report": "jr-shikoku.md"
+   "distinctPatterns": 14
   }
  },
  {
@@ -91,20 +89,26 @@
   "ids": "jr-shikoku#11",
   "set": {
    "optionalStops": "茶屋町 大杉"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#11: Live odekake 104121 (南風1号) runs 上の町→児島→宇多津 with no 坂出 row. The JR Shikoku nanpu stop diagram also has no 坂出. The 宇多津 chord of the 瀬戸大橋線 (in place since 1988) does not pas"
  },
  {
   "record": "nanpu-okayama-sukumo",
   "ids": "jr-shikoku#12",
   "set": {
    "optionalStops": "茶屋町 大杉"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#12: Same evidence as the row above."
  },
  {
   "record": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke",
   "ids": "jr-shikoku#14",
   "set": {
    "optionalStops": ""
+  },
+  "split": {
+   "newId": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {

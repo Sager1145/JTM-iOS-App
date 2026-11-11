@@ -11,8 +11,7 @@
   },
   "variants": {
    "service": "ゆけむり",
-   "distinctPatterns": 4,
-   "report": "private-other.md"
+   "distinctPatterns": 4
   }
  },
  {
@@ -27,8 +26,7 @@
   },
   "variants": {
    "service": "スノーモンキー",
-   "distinctPatterns": 4,
-   "report": "private-other.md"
+   "distinctPatterns": 4
   }
  },
  {
@@ -40,7 +38,8 @@
     "和歌山大学前"
    ]
   },
-  "ids": ""
+  "ids": "",
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2014-10-18); the older era is kept in the split record"
  },
  {
   "record": "southern-namba-wakayamashi",
@@ -55,6 +54,10 @@
   "set": {
    "stops": "名鉄岐阜 名鉄一宮 国府宮 名鉄名古屋 金山 神宮前 中部国際空港",
    "optionalStops": "太田川 尾張横須賀 朝倉 新舞子 常滑"
+  },
+  "split": {
+   "newId": "mu-sky-meitetsu-gifu-centrair-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -69,8 +72,11 @@
   },
   "variants": {
    "service": "ミュースカイ",
-   "distinctPatterns": 7,
-   "report": "private-other.md"
+   "distinctPatterns": 7
+  },
+  "split": {
+   "newId": "mu-sky-shin-unuma-centrair-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -83,6 +89,10 @@
    "stops": "福知山 大江 宮津 天橋立 与謝野 京丹後大宮 峰山 網野",
    "lines": "宮福線 宮津線",
    "company": "WILLER TRAINS"
+  },
+  "split": {
+   "newId": "tango-relay-amanohashidate-toyooka-until-2026-03",
+   "at": "2026-03-14"
   }
  }
 ]

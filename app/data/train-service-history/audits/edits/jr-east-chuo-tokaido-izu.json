@@ -29,7 +29,11 @@
     "stops": "partial"
    }
   },
-  "notesAppend": "富士回遊3号は毎日千葉始発で、5003M千葉〜大月と併結。93・94号は臨時（8xxxM）で併結なし（2026-11-11 照合）。"
+  "notesAppend": "富士回遊3号は毎日千葉始発で、5003M千葉〜大月と併結。93・94号は臨時（8xxxM）で併結なし（2026-11-11 照合）。",
+  "split": {
+   "newId": "fuji-excursion-shinjuku-kawaguchiko-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "fuji-excursion-shinjuku-kawaguchiko",
@@ -72,6 +76,7 @@
   "ids": "jr-east-chuo-tokaido-izu#14",
   "set": {
    "stops": "新宿 八王子 甲府 茅野 上諏訪 塩尻 松本"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-chuo-tokaido-izu#14: 008041 (1M 茅野 09:07 → 上諏訪 09:13); 111491 and 190211 also have 茅野 before 上諏訪"
  }
 ]

@@ -11,8 +11,7 @@
   },
   "variants": {
    "service": "はこね",
-   "distinctPatterns": 7,
-   "report": "kanto-private-other.md"
+   "distinctPatterns": 7
   }
  },
  {
@@ -27,10 +26,13 @@
   },
   "variants": {
    "service": "さがみ",
-   "distinctPatterns": 9,
-   "report": "kanto-private-other.md"
+   "distinctPatterns": 9
   },
-  "notesAppend": "停車駅はこの区間の起点・終点だけを残している（2026-11-11 照合では新宿以外の全駅が一部列車のみ停車で、小田原止まりでない列車もあるが、パターンは始発と終着を always に持つ必要がある）。"
+  "notesAppend": "停車駅はこの区間の起点・終点だけを残している（2026-11-11 照合では新宿以外の全駅が一部列車のみ停車で、小田原止まりでない列車もあるが、パターンは始発と終着を always に持つ必要がある）。",
+  "split": {
+   "newId": "sagami-shinjuku-odawara-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "enoshima-shinjuku-katasenoshima",
@@ -45,8 +47,11 @@
   "notesAppend": "平日えのしま1号は藤沢止まり。土休日のえのしま30〜41号（12本）ははこねと併結し相模大野で分割・併合（2026-11-11 照合）。",
   "variants": {
    "service": "えのしま",
-   "distinctPatterns": null,
-   "report": "kanto-private-other.md"
+   "distinctPatterns": null
+  },
+  "split": {
+   "newId": "enoshima-shinjuku-katasenoshima-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -55,6 +60,10 @@
   "set": {
    "stops": "北千住 大手町 霞ヶ関 表参道 成城学園前 伊勢原 小田原 箱根湯本",
    "optionalStops": "町田 相模大野 本厚木"
+  },
+  "split": {
+   "newId": "metro-hakone-kitasenju-hakoneyumoto-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -69,7 +78,11 @@
     "Weekend/holiday seasonal operation; start and end dates and exact stops unverified. May no longer run regularly.",
     "Regular 土休日 operation (メトロはこね91/93/90 coupled; the stops map labels it [土休日]; 2026-11-11 recheck). Start date unverified."
    ]
-  ]
+  ],
+  "split": {
+   "newId": "metro-enoshima-kitasenju-katasenoshima-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "metro-sagami-kitasenju-honatsugi",
@@ -96,10 +109,13 @@
   ],
   "variants": {
    "service": "モーニングウェイ",
-   "distinctPatterns": 8,
-   "report": "kanto-private-other.md"
+   "distinctPatterns": 8
   },
-  "notesAppend": "停車駅は起点・終点だけを残している（2026-11-11 照合では小田原3/20、秦野8/20、本厚木13/20、相模大野7/20、町田15/20、新百合ヶ丘6/20の停車で、停車駅のない始発駅もあるが、パターンは始発と終着を always に持つ必要がある）。"
+  "notesAppend": "停車駅は起点・終点だけを残している（2026-11-11 照合では小田原3/20、秦野8/20、本厚木13/20、相模大野7/20、町田15/20、新百合ヶ丘6/20の停車で、停車駅のない始発駅もあるが、パターンは始発と終着を always に持つ必要がある）。",
+  "split": {
+   "newId": "morningway-odawara-shinjuku-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "metro-morningway-honatsugi-kitasenju",
@@ -107,6 +123,10 @@
   "set": {
    "stops": "本厚木 海老名 町田 表参道 霞ヶ関 大手町 北千住",
    "optionalStops": "新百合ヶ丘 成城学園前"
+  },
+  "split": {
+   "newId": "metro-morningway-honatsugi-kitasenju-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -129,6 +149,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "morning-liner-naritaairport-keiseiueno-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -140,6 +164,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "evening-liner-keiseiueno-naritaairport-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -147,13 +175,33 @@
   "ids": "kanto-private-other#28",
   "set": {
    "optionalStops": ""
-  }
+  },
+  "split": {
+   "newId": "chichibu-ikebukuro-seibuchichibu-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "optionalStops (石神井公園, ひばりヶ丘) remain unverified;",
+    "石神井公園・ひばりヶ丘は一部停車の根拠が確認できず optionalStops に入れていない（2026-11-11 再照合）;"
+   ]
+  ]
  },
  {
   "record": "musashi-ikebukuro-hanno",
   "ids": "kanto-private-other#30",
   "set": {
    "optionalStops": ""
-  }
+  },
+  "split": {
+   "newId": "musashi-ikebukuro-hanno-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "so optionalStops remain unverified;",
+    "so no 一部停車 station is listed in optionalStops (2026-11-11 recheck);"
+   ]
+  ]
  }
 ]

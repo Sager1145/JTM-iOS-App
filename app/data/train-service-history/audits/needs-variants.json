@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "checkedOn": "2026-11-11",
- "note": "Services whose stop pattern differs by train number or date. The base record in train-service-patterns.json lists what every train of the name calls at (stops) and what only some call at (optionalStops); the per-number tables still have to be authored from dated public timetables (ios/tools/shinkansen-patterns.md for the Shinkansen model). No number is inferred.",
+ "note": "Services whose stop pattern differs by train number or date. The base record in train-service-patterns.json lists what every train of the name calls at (stops) and what only some call at (optionalStops); the per-number tables still have to be authored from dated public timetables (ios/tools/shinkansen-patterns.md for the Shinkansen model). No number is inferred. `sources` are the verifier and auditor URLs of the listed corrections.",
  "services": [
   {
    "service": "あかぎ",
@@ -9,8 +9,13 @@
     "akagi-ueno-takasaki"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-east-takasaki-niigata-ou.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/timetable/list0259.html",
+    "https://timetables.jreast.co.jp/timetable/list0108.html",
+    "https://www.jreast.co.jp/press/2017/20171213.pdf",
+    "https://www.hokuhoku.co.jp/2jikoku/201403/kudari-kanazawa.pdf",
+    "https://timetables.jreast.co.jp/2611/train/075/076231.html",
+    "https://timetables.jreast.co.jp/2611/train/065/068221.html"
    ],
    "corrections": [
     "jr-east-takasaki-niigata-ou#1",
@@ -23,8 +28,12 @@
     "asama-tokyo-nagano"
    ],
    "distinctPatterns": 14,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetables.jreast.co.jp/2611/train/035/039081.html",
+    "https://timetables.jreast.co.jp/2611/train/035/038841.html",
+    "https://timetables.jreast.co.jp/2611/train/035/039321.html"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#33",
@@ -39,8 +48,9 @@
     "ishizuchi-takamatsu-matsuyama"
    ],
    "distinctPatterns": 14,
-   "source": [
-    "docs/maintenance/database-audit/jr-shikoku.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/train-timetable/99681",
+    "https://timetable.jr-odekake.net/train-timetable/195931?date=20261112"
    ],
    "corrections": [
     "jr-shikoku#8"
@@ -52,8 +62,12 @@
     "enoshima-shinjuku-katasenoshima"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/kanto-private-other.md"
+   "sources": [
+    "https://www.odakyu.jp/romancecar/station/",
+    "https://www.odakyu.jp/romancecar/timetable/",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf"
    ],
    "corrections": [
     "kanto-private-other#9",
@@ -67,8 +81,13 @@
     "kagayaki-tokyo-tsuruga"
    ],
    "distinctPatterns": 8,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetables.jreast.co.jp/2611/train/095/098481.html",
+    "https://timetables.jreast.co.jp/2611/train/095/098591.html",
+    "https://timetables.jreast.co.jp/2611/train/095/098491.html",
+    "https://timetables.jreast.co.jp/2611/train/130/130091.html"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#12",
@@ -85,8 +104,13 @@
     "kasasagi-mojiko-hizenkashima"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://www.jrkyushu-36plus3.jp/about/dia/",
+    "https://www.jrkyushu-36plus3.jp/faq/",
+    "https://www.jrkyushu.co.jp/company/info/data/line_km.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00195501.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00195901.html"
    ],
    "corrections": [
     "jr-kyushu-north-west#8",
@@ -101,8 +125,13 @@
     "kamome-takeo-onsen-nagasaki"
    ],
    "distinctPatterns": 8,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/3449002001",
+    "https://timetable.jr-odekake.net/station-timetable/3449002002",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00191001.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00191201.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00192701.html"
    ],
    "corrections": [
     "shinkansen-kyushu#13",
@@ -116,8 +145,11 @@
     "kinosaki-kyoto-kinosaki"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-west-hokuriku-kinki-north.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/station-timetable/2796076001",
+    "https://timetable.jr-odekake.net/station-timetable/3208026001",
+    "https://timetable.jr-odekake.net/station-timetable/2784055001",
+    "https://www.jr-odekake.net/railroad/train/kinosaki/"
    ],
    "corrections": [
     "jr-west-hokuriku-kinki-north#5",
@@ -130,8 +162,13 @@
     "kuroshio-shinosaka-shirahama"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-west-kinki-south-sanin-sanyo.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/line-timetable/2312",
+    "https://timetable.jr-odekake.net/line-timetable/2280",
+    "https://timetable.jr-odekake.net/line-timetable/2442",
+    "https://timetable.jr-odekake.net/line-timetable/2414",
+    "https://timetable.jr-odekake.net/line-timetable/2401",
+    "https://timetable.jr-odekake.net/line-timetable/2310"
    ],
    "corrections": [
     "jr-west-kinki-south-sanin-sanyo#5"
@@ -143,8 +180,12 @@
     "kounotori-shinosaka-kinosaki"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-west-hokuriku-kinki-north.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/station-timetable/2796076001",
+    "https://timetable.jr-odekake.net/station-timetable/3208026001",
+    "https://timetable.jr-odekake.net/station-timetable/2784055001",
+    "https://timetable.jr-odekake.net/train-timetable/165451?date=20261112",
+    "https://timetable.jr-odekake.net/train-timetable/183931?date=20261114"
    ],
    "corrections": [
     "jr-west-hokuriku-kinki-north#1",
@@ -158,8 +199,13 @@
     "komachi-tokyo-akita"
    ],
    "distinctPatterns": 5,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html",
+    "https://www.jreast.co.jp/press/2015/20151211.pdf"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#19",
@@ -175,8 +221,12 @@
     "sagami-shinjuku-odawara"
    ],
    "distinctPatterns": 9,
-   "source": [
-    "docs/maintenance/database-audit/kanto-private-other.md"
+   "sources": [
+    "https://www.odakyu.jp/romancecar/station/",
+    "https://www.odakyu.jp/romancecar/timetable/",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf"
    ],
    "corrections": [
     "kanto-private-other#4",
@@ -192,8 +242,13 @@
     "sakura-shin-osaka-kagoshima-chuo"
    ],
    "distinctPatterns": 33,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/3449002001",
+    "https://timetable.jr-odekake.net/station-timetable/3449002002",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00347901.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00348401.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0034/00341801.html"
    ],
    "corrections": [
     "shinkansen-kyushu#5",
@@ -208,8 +263,9 @@
     "shiokaze-okayama-matsuyama"
    ],
    "distinctPatterns": 11,
-   "source": [
-    "docs/maintenance/database-audit/jr-shikoku.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/train-timetable/150941?date=20261112",
+    "https://timetable.jr-odekake.net/train-timetable/99681?date=20261112"
    ],
    "corrections": [
     "jr-shikoku#7"
@@ -221,8 +277,9 @@
     "shimanto-takamatsu-kochi"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-shikoku.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/train-timetable/104061?date=20261112",
+    "https://timetable.jr-odekake.net/train-timetable/275731?date=20261112"
    ],
    "corrections": [
     "jr-shikoku#6"
@@ -234,8 +291,9 @@
     "suzuran-muroran-sapporo"
    ],
    "distinctPatterns": 2,
-   "source": [
-    "docs/maintenance/database-audit/jr-hokkaido.md"
+   "sources": [
+    "https://jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s={110,111,130,131,150,151}",
+    "https://www.jrhokkaido.co.jp/CM/Info/press/pdf/20251212_KO_kaisei.pdf"
    ],
    "corrections": [
     "jr-hokkaido#1",
@@ -248,8 +306,13 @@
     "tanigawa-tokyo-echigo-yuzawa"
    ],
    "distinctPatterns": 12,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetables.jreast.co.jp/2611/train/010/012741.html",
+    "https://timetables.jreast.co.jp/2611/train/065/068201.html",
+    "https://timetables.jreast.co.jp/2611/train/020/021922.html",
+    "https://timetables.jreast.co.jp/2611/train/025/025881.html"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#4",
@@ -263,8 +326,13 @@
     "tsubasa-tokyo-shinjo"
    ],
    "distinctPatterns": 9,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html",
+    "https://www.jreast.co.jp/press/2015/20151211.pdf"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#24",
@@ -274,13 +342,35 @@
    ]
   },
   {
+   "service": "つばめ",
+   "patterns": [
+    "tsubame-hakata-kagoshima-chuo"
+   ],
+   "distinctPatterns": null,
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/3449002001",
+    "https://timetable.jr-odekake.net/station-timetable/3449002002",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0035/00351501.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0035/00359501.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0037/00377401.html"
+   ],
+   "corrections": [
+    "shinkansen-kyushu#12"
+   ]
+  },
+  {
    "service": "つるぎ",
    "patterns": [
     "tsurugi-toyama-tsuruga"
    ],
    "distinctPatterns": 5,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetable.jr-odekake.net/station-timetable/2675006002?date=20261111",
+    "https://timetable.jr-odekake.net/station-timetable/2663006002?date=20261111",
+    "https://timetable.jr-odekake.net/station-timetable/2635006001?date=20261111"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#39",
@@ -294,8 +384,13 @@
     "toki-tokyo-niigata"
    ],
    "distinctPatterns": 26,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetables.jreast.co.jp/2611/train/035/038241.html",
+    "https://timetables.jreast.co.jp/2611/train/010/012761.html",
+    "https://timetables.jreast.co.jp/2611/train/050/051171.html",
+    "https://timetables.jreast.co.jp/2611/train/015/018451.html"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#1"
@@ -307,8 +402,12 @@
     "nasuno-tokyo-koriyama"
    ],
    "distinctPatterns": 3,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#17",
@@ -322,8 +421,13 @@
     "nozomi-tokyo-shin-osaka"
    ],
    "distinctPatterns": 22,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tokaido-sanyo.md"
+   "sources": [
+    "https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/2815002001",
+    "https://timetable.jr-odekake.net/station-timetable/2815002002",
+    "https://timetable.jr-odekake.net/train-timetable/104131?date=20261111",
+    "https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi?MODE=7&HOUR=0&DIAF=%c0%c5%b2%ac&DIAR=%c5%ec%b3%a4%c6%bb%a1%a6%bb%b3%cd%db%bf%b7%b4%b4%c0%fe&DIAD=1&YEAR=126&MONH=10&DATE=11",
+    "https://timetable.jr-odekake.net/train-timetable/18511?date=20261111"
    ],
    "corrections": [
     "shinkansen-tokaido-sanyo#1",
@@ -346,8 +450,12 @@
     "hakutaka-tokyo-tsuruga"
    ],
    "distinctPatterns": 30,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-joetsu-hokuriku.md"
+   "sources": [
+    "https://timetables.jreast.co.jp/2611/timetable/",
+    "https://timetable.jr-odekake.net/",
+    "https://timetables.jreast.co.jp/2611/train/095/098711.html",
+    "https://timetables.jreast.co.jp/2611/train/095/098721.html",
+    "https://timetables.jreast.co.jp/2611/train/035/038611.html"
    ],
    "corrections": [
     "shinkansen-joetsu-hokuriku#27",
@@ -364,8 +472,12 @@
     "hakone-shinjuku-hakoneyumoto"
    ],
    "distinctPatterns": 7,
-   "source": [
-    "docs/maintenance/database-audit/kanto-private-other.md"
+   "sources": [
+    "https://www.odakyu.jp/romancecar/station/",
+    "https://www.odakyu.jp/romancecar/timetable/",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf"
    ],
    "corrections": [
     "kanto-private-other#1",
@@ -379,8 +491,13 @@
     "hamakaze-osaka-hamasaka"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-west-kinki-south-sanin-sanyo.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/line-timetable/2312",
+    "https://timetable.jr-odekake.net/line-timetable/2280",
+    "https://timetable.jr-odekake.net/line-timetable/2442",
+    "https://timetable.jr-odekake.net/line-timetable/2414",
+    "https://timetable.jr-odekake.net/line-timetable/2401",
+    "https://timetable.jr-odekake.net/line-timetable/2310"
    ],
    "corrections": [
     "jr-west-kinki-south-sanin-sanyo#11",
@@ -394,8 +511,13 @@
     "hayate-morioka-shin-hakodate-hokuto"
    ],
    "distinctPatterns": 2,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html",
+    "https://www.jreast.co.jp/press/2015/20151211.pdf"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#8",
@@ -411,8 +533,13 @@
     "hayabusa-tokyo-shin-hakodate-hokuto"
    ],
    "distinctPatterns": 19,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html",
+    "https://www.jreast.co.jp/press/2015/20151211.pdf"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#1",
@@ -431,8 +558,13 @@
     "hikari-tokyo-shin-osaka"
    ],
    "distinctPatterns": 26,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tokaido-sanyo.md"
+   "sources": [
+    "https://railway.jr-central.co.jp/cgi-bin/timetable/tokainr.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/2815002001",
+    "https://timetable.jr-odekake.net/station-timetable/2815002002",
+    "https://timetable.jr-odekake.net/train-timetable/162771?date=20261111",
+    "https://timetable.jr-odekake.net/train-timetable/314351?date=20261111",
+    "https://timetable.jr-odekake.net/train-timetable/314461?date=20261111"
    ],
    "corrections": [
     "shinkansen-tokaido-sanyo#13",
@@ -451,8 +583,13 @@
     "hida-nagoya-takayama"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-central.md"
+   "sources": [
+    "https://timetable.jr-odekake.net/train-timetable/77321",
+    "https://timetable.jr-odekake.net/train-timetable/77321?date=20261111",
+    "https://timetable.jr-odekake.net/train-timetable/76841?date=20261111",
+    "https://timetable.jr-odekake.net/train-timetable/77021?date=20261111",
+    "https://railway.jr-central.co.jp/time-schedule/srch/_pdf/data/202603/takayama_Hida-furukawa_E_e_ud.pdf",
+    "https://timetable.jr-odekake.net/train-timetable/77322?date=20261111"
    ],
    "corrections": [
     "jr-central#1",
@@ -466,8 +603,13 @@
     "mizuho-shin-osaka-kagoshima-chuo"
    ],
    "distinctPatterns": 12,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-kyushu.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://timetable.jr-odekake.net/station-timetable/3449002001",
+    "https://timetable.jr-odekake.net/station-timetable/3449002002",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0026/00263901.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0009/00090901.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0026/00263601.html"
    ],
    "corrections": [
     "shinkansen-kyushu#1",
@@ -480,8 +622,13 @@
     "midori-hakata-sasebo"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://www.jrkyushu-36plus3.jp/about/dia/",
+    "https://www.jrkyushu-36plus3.jp/faq/",
+    "https://www.jrkyushu.co.jp/company/info/data/line_km.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0008/00087101.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0002/00021601.html"
    ],
    "corrections": [
     "jr-kyushu-north-west#4",
@@ -495,8 +642,12 @@
     "yamabiko-tokyo-morioka"
    ],
    "distinctPatterns": 15,
-   "source": [
-    "docs/maintenance/database-audit/shinkansen-tohoku-hokkaido-mini.md"
+   "sources": [
+    "https://www.jrhokkaidonorikae.com/vtime/vtime.php?d=20261111&s=30",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003d2.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u1.html",
+    "https://timetables.jreast.co.jp/2611/timetable-v/003u2.html"
    ],
    "corrections": [
     "shinkansen-tohoku-hokkaido-mini#14",
@@ -510,8 +661,10 @@
     "yukemuri-nagano-yudanaka"
    ],
    "distinctPatterns": 4,
-   "source": [
-    "docs/maintenance/database-audit/private-other.md"
+   "sources": [
+    "https://www.nagaden-net.co.jp/info/timetable/",
+    "https://www.nagaden-net.co.jp/hubfs/ikoku20210313-01-1.pdf",
+    "https://roote.ekispert.net/timetable/train/24282/5191"
    ],
    "corrections": [
     "private-other#1",
@@ -525,8 +678,11 @@
     "snow-monkey-nagano-yudanaka"
    ],
    "distinctPatterns": 4,
-   "source": [
-    "docs/maintenance/database-audit/private-other.md"
+   "sources": [
+    "https://www.nagaden-net.co.jp/info/timetable/",
+    "https://www.nagaden-net.co.jp/hubfs/ikoku20210313-01-1.pdf",
+    "https://roote.ekispert.net/timetable/train/24282/5191",
+    "https://www.nankai.co.jp/lib/traffic/express/rapit/pdf/rairt_down.pdf"
    ],
    "corrections": [
     "private-other#4",
@@ -540,8 +696,13 @@
     "sonic-hakata-saiki"
    ],
    "distinctPatterns": 38,
-   "source": [
-    "docs/maintenance/database-audit/jr-kyushu-east-south.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://www.jrkyushu.co.jp/trains/asoboy/",
+    "https://www.jrkyushu.co.jp/trains/umisachiyamasachi/",
+    "https://www.jrkyushu.co.jp/company/info/data/line_km.html",
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0001/00013201.html"
    ],
    "corrections": [
     "jr-kyushu-east-south#1",
@@ -556,8 +717,11 @@
     "mu-sky-shin-unuma-centrair"
    ],
    "distinctPatterns": 7,
-   "source": [
-    "docs/maintenance/database-audit/private-other.md"
+   "sources": [
+    "https://www.meitetsu.co.jp/train/station_info/line12/index.html",
+    "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/02/25/20260314_IY_W1.pdf",
+    "https://www.meitetsu.co.jp/train/timetable/__icsFiles/afieldfile/2026/02/25/20260314_HM_W2.pdf",
+    "https://www.meitetsu.co.jp/train/station_info/line13/index.html"
    ],
    "corrections": [
     "private-other#11",
@@ -571,8 +735,12 @@
     "morningway-odawara-shinjuku"
    ],
    "distinctPatterns": 8,
-   "source": [
-    "docs/maintenance/database-audit/kanto-private-other.md"
+   "sources": [
+    "https://www.odakyu.jp/romancecar/station/",
+    "https://www.odakyu.jp/romancecar/timetable/",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_down2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/weekday_up2026.pdf",
+    "https://www.odakyu.jp/romancecar/timetable/doc/260314/holiday_down2026.pdf"
    ],
    "corrections": [
     "kanto-private-other#18",
@@ -586,8 +754,13 @@
     "relay-kamome-hakata-takeoonsen"
    ],
    "distinctPatterns": null,
-   "source": [
-    "docs/maintenance/database-audit/jr-kyushu-north-west.md"
+   "sources": [
+    "https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi",
+    "https://www.jrkyushu-36plus3.jp/about/dia/",
+    "https://www.jrkyushu-36plus3.jp/faq/",
+    "https://www.jrkyushu.co.jp/company/info/data/line_km.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00190501.html",
+    "https://www.jrkyushu-timetable.jp/jr-k_time/2611/0019/00190701.html"
    ],
    "corrections": [
     "jr-kyushu-north-west#1",

@@ -12,8 +12,7 @@
   },
   "variants": {
    "service": "とき",
-   "distinctPatterns": 26,
-   "report": "shinkansen-joetsu-hokuriku.md"
+   "distinctPatterns": 26
   }
  },
  {
@@ -32,10 +31,13 @@
   },
   "variants": {
    "service": "たにがわ",
-   "distinctPatterns": 12,
-   "report": "shinkansen-joetsu-hokuriku.md"
+   "distinctPatterns": 12
   },
-  "notesAppend": "冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。"
+  "notesAppend": "冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。",
+  "split": {
+   "newId": "tanigawa-tokyo-echigo-yuzawa-until-2026-03",
+   "at": "2026-03-14"
+  }
  },
  {
   "record": "tanigawa-tokyo-echigo-yuzawa",
@@ -74,8 +76,11 @@
   },
   "variants": {
    "service": "かがやき",
-   "distinctPatterns": 8,
-   "report": "shinkansen-joetsu-hokuriku.md"
+   "distinctPatterns": 8
+  },
+  "split": {
+   "newId": "kagayaki-tokyo-tsuruga-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -119,9 +124,18 @@
   },
   "variants": {
    "service": "はくたか",
-   "distinctPatterns": 30,
-   "report": "shinkansen-joetsu-hokuriku.md"
-  }
+   "distinctPatterns": 30
+  },
+  "split": {
+   "newId": "hakutaka-tokyo-tsuruga-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。",
+    "2026-03-14 以降は上野・上越妙高・新高岡・福井が全列車停車（2026-11-11 再照合）、小松など他の追加駅は一部停車として optional。"
+   ]
+  ]
  },
  {
   "record": "hakutaka-tokyo-tsuruga",
@@ -148,8 +162,11 @@
   },
   "variants": {
    "service": "あさま",
-   "distinctPatterns": 14,
-   "report": "shinkansen-joetsu-hokuriku.md"
+   "distinctPatterns": 14
+  },
+  "split": {
+   "newId": "asama-tokyo-nagano-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -176,8 +193,17 @@
   },
   "variants": {
    "service": "つるぎ",
-   "distinctPatterns": 5,
-   "report": "shinkansen-joetsu-hokuriku.md"
-  }
+   "distinctPatterns": 5
+  },
+  "split": {
+   "newId": "tsurugi-toyama-tsuruga-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "金沢〜敦賀の小松・加賀温泉・芦原温泉・福井・越前たけふは全列車が停まるかを公式時刻表で未照合のため optional。",
+    "2026-03-14 以降は福井が全列車停車（2026-11-11 再照合）。小松・加賀温泉・芦原温泉・越前たけふは列車により違うため optional。"
+   ]
+  ]
  }
 ]

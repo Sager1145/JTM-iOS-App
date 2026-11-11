@@ -11,8 +11,7 @@
   },
   "variants": {
    "service": "リレーかもめ",
-   "distinctPatterns": null,
-   "report": "jr-kyushu-north-west.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -32,8 +31,11 @@
   ],
   "variants": {
    "service": "みどり",
-   "distinctPatterns": null,
-   "report": "jr-kyushu-north-west.md"
+   "distinctPatterns": null
+  },
+  "split": {
+   "newId": "midori-hakata-sasebo-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -56,8 +58,7 @@
   },
   "variants": {
    "service": "かささぎ",
-   "distinctPatterns": null,
-   "report": "jr-kyushu-north-west.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -70,6 +71,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "kirameki-mojiko-hakata-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -77,6 +82,10 @@
   "ids": "jr-kyushu-north-west#14",
   "set": {
    "lines": "宮崎空港線 日南線 日豊本線"
+  },
+  "split": {
+   "newId": "36-plus-3-green-miyazaki-airport-beppu-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {

@@ -13,8 +13,11 @@
   },
   "variants": {
    "service": "のぞみ",
-   "distinctPatterns": 22,
-   "report": "shinkansen-tokaido-sanyo.md"
+   "distinctPatterns": 22
+  },
+  "split": {
+   "newId": "nozomi-tokyo-shin-osaka-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -36,9 +39,18 @@
   },
   "variants": {
    "service": "のぞみ",
-   "distinctPatterns": 22,
-   "report": "shinkansen-tokaido-sanyo.md"
-  }
+   "distinctPatterns": 22
+  },
+  "split": {
+   "newId": "nozomi-tokyo-hakata-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅（optional）として扱う。",
+    "岡山・広島止めは別 pattern にせず、この東京〜博多の途中駅として扱う（2026-03-14 以降は岡山・広島とも全列車停車で stops、姫路・西明石など短区間終点の駅は optional）。"
+   ]
+  ]
  },
  {
   "record": "hikari-tokyo-shin-osaka",
@@ -51,8 +63,7 @@
   },
   "variants": {
    "service": "ひかり",
-   "distinctPatterns": 26,
-   "report": "shinkansen-tokaido-sanyo.md"
+   "distinctPatterns": 26
   }
  },
  {
@@ -72,18 +83,26 @@
   },
   "variants": {
    "service": "ひかり",
-   "distinctPatterns": 26,
-   "report": "shinkansen-tokaido-sanyo.md"
-  }
+   "distinctPatterns": 26
+  },
+  "split": {
+   "newId": "hikari-tokyo-hiroshima-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "岡山止めは途中駅。",
+    "2026-03-14 以降は岡山も全列車停車（2026-11-11 再照合）。"
+   ]
+  ]
  },
  {
   "record": "hikari-rail-star-shin-osaka-hakata",
   "ids": [
    "shinkansen-tokaido-sanyo#21"
   ],
-  "set": {
-   "validUntil": null
-  }
+  "status": "skippedHistorical",
+  "reason": "the record is the 2010-01-01..2011-03-12 ひかりレールスター stop rule; the claim is today's ひかり680/775 carrying the レールスター designation in 2026, and the auditor states the 2010-2011 stop list was not checked. A current ひかり with Rail Star sets, if modelled, needs its own dated record"
  },
  {
   "record": "kodama-tokyo-shin-osaka",

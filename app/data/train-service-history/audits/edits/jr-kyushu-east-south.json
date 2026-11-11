@@ -10,8 +10,11 @@
   },
   "variants": {
    "service": "ソニック",
-   "distinctPatterns": 38,
-   "report": "jr-kyushu-east-south.md"
+   "distinctPatterns": 38
+  },
+  "split": {
+   "newId": "sonic-hakata-oita-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -26,8 +29,11 @@
   },
   "variants": {
    "service": "ソニック",
-   "distinctPatterns": 38,
-   "report": "jr-kyushu-east-south.md"
+   "distinctPatterns": 38
+  },
+  "split": {
+   "newId": "sonic-hakata-saiki-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -40,6 +46,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "nichirin-oita-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -49,6 +59,10 @@
    "stops": "博多 香椎 赤間 折尾 黒崎 小倉 朽網 行橋 中津 別府 大分 鶴崎 臼杵 津久見 佐伯 延岡 南延岡 日向市 高鍋 佐土原 宮崎 南宮崎 宮崎空港",
    "optionalStops": "吉塚 福間 杵築",
    "lines": "鹿児島本線 日豊本線 日南線 宮崎空港線"
+  },
+  "split": {
+   "newId": "nichirin-seagaia-hakata-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -61,6 +75,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "hyuga-nobeoka-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -105,6 +123,10 @@
   "set": {
    "validUntil": "2025-03-15",
    "stops": "熊本 水前寺 新水前寺 武蔵塚 光の森 肥後大津 立野 赤水 阿蘇 宮地 豊後荻 豊後竹田 緒方 三重町 中判田 大分 別府"
+  },
+  "split": {
+   "newId": "asoboy-kumamoto-beppu-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -119,6 +141,10 @@
   "set": {
    "lines": "日豊本線 日南線 宮崎空港線",
    "validFrom": "2026-03-14"
+  },
+  "split": {
+   "newId": "umisachi-yamasachi-miyazaki-nango-until-2026-03",
+   "at": "2026-03-14"
   }
  }
 ]

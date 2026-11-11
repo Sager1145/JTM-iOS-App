@@ -36,6 +36,10 @@
   "ids": "jr-overnight-cross-company#7,8",
   "set": {
    "lines": "東海道本線 山陽本線 宇野線 本四備讃線 予讃線 土讃線"
+  },
+  "split": {
+   "newId": "sunrise-seto-tokyo-takamatsu-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {

@@ -11,8 +11,7 @@
   },
   "variants": {
    "service": "あかぎ",
-   "distinctPatterns": null,
-   "report": "jr-east-takasaki-niigata-ou.md"
+   "distinctPatterns": null
   }
  },
  {
@@ -56,8 +55,10 @@
   "set": {
    "validUntil": "2021-03-13",
    "stops": "赤羽 浦和 大宮 上尾 桶川 熊谷 深谷 本庄 高崎 新前橋 前橋",
-   "optionalStops": "新宿 上野 北本 鴻巣"
-  }
+   "optionalStops": "新宿 上野 北本 鴻巣",
+   "label": "上野〜前橋（2021年3月まで）"
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#8: 20201218_ta01 (改正日 2021-03-13) lists every 前橋 run as cut: 休日 あかぎ8号 and 9号 cut 高崎–前橋, 10号 (前橋発・新宿行) cancelled. The 2022-12-16 release lists the pre-2023 あかぎ 6/8号 and スワローあ"
  },
  {
   "record": "swallow-akagi-ueno-takasaki",
@@ -66,7 +67,8 @@
    "stops": "浦和 大宮 上尾 桶川 北本 鴻巣 熊谷 深谷 本庄 高崎",
    "optionalStops": "新宿 上野 赤羽 籠原 新町 新前橋 前橋",
    "lines": "東北線 高崎線 上越線 両毛線"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#11: 20151211: スワローあかぎ２号 (前橋発・新宿行), and スワローあかぎ13号 (新宿発 21:29) ended 2016-03-26. The 2017-12 release's スワローあかぎ stop table has 新宿/池袋 columns, but its extracted text cannot be m"
  },
  {
   "record": "swallow-akagi-ueno-takasaki",
@@ -76,9 +78,14 @@
    "at": "2018-03-17",
    "setClone": {
     "stops": "浦和 大宮 上尾 桶川 熊谷 深谷 本庄 高崎",
-    "optionalStops": "新宿 上野 赤羽 北本 鴻巣 籠原 新町 新前橋 前橋"
+    "optionalStops": "新宿 上野 赤羽 北本 鴻巣 籠原 新町 新前橋 前橋",
+    "label": "上野〜高崎/前橋（2014〜2018年）"
+   },
+   "setBase": {
+    "label": "上野〜高崎/前橋（2018〜2023年）"
    }
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#13: 2017-12-15 release (20171213.pdf, 改正日 2018-03-17): 「特急『スワローあかぎ』の停車駅を統一…全列車が北本駅・鴻巣駅に停車」, with ★ (new stop) on several trains. Optional for 2014-03-15 to 2018-03-16."
  },
  {
   "record": "hakutaka-echigoyuzawa-kanazawa",
@@ -86,7 +93,8 @@
   "set": {
    "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢",
    "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動 津幡"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#19: 北越急行 2014-03-15 timetable. 六日町 is called only by 4号 (1004M, 湯沢→金沢) and 23号 (1023M, →湯沢). 十日町 is passed by e.g. 2/6/10/14号 and 1/5/9/15/19/21号. Both are optional."
  },
  {
   "record": "hakutaka-echigoyuzawa-fukui",
@@ -94,7 +102,8 @@
   "set": {
    "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢 小松 加賀温泉 芦原温泉 福井",
    "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動 津幡"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#22: 北越急行 2014 timetable: 1005M (5号, 福井発 7:30) passes 十日町 and 六日町. 1024M (24号, 福井行) calls at 十日町 20:01 and passes 六日町. Both must be optional at least. The claim that \"六日町 is n"
  },
  {
   "record": "hakutaka-echigoyuzawa-wakuraonsen",
@@ -103,6 +112,7 @@
    "stops": "越後湯沢 直江津 糸魚川 魚津 富山 高岡 金沢 津幡 羽咋 七尾 和倉温泉",
    "optionalStops": "六日町 十日町 まつだい 虫川大杉 泊 入善 黒部 滑川 石動",
    "label": "越後湯沢〜和倉温泉（在来線）"
-  }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-east-takasaki-niigata-ou#23: 北越急行 2014 timetable: 1006M (6号) 「和倉温泉着14:35◄13:23」 is a 金沢 arrival, and 1021M (21号) 「16:20◄和倉温泉発15:16」 is a 金沢 departure, so 金沢 is a stop. Both trains pass 十日町 and 六日町. N"
  }
 ]

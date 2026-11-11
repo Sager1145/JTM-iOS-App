@@ -8,6 +8,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "ise-shima-liner-namba-kashikojima-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -15,6 +19,10 @@
   "ids": "kintetsu#3",
   "set": {
    "optionalStops": ""
+  },
+  "split": {
+   "newId": "ise-shima-liner-kyoto-kashikojima-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -22,6 +30,10 @@
   "ids": "kintetsu#4",
   "set": {
    "optionalStops": "桑名 近鉄四日市 白子 伊勢中川 松阪 五十鈴川"
+  },
+  "split": {
+   "newId": "ise-shima-liner-nagoya-kashikojima-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -33,6 +45,10 @@
    "completeness": {
     "stops": "partial"
    }
+  },
+  "split": {
+   "newId": "kintetsu-hanise-namba-kashikojima-until-2026-03",
+   "at": "2026-03-14"
   }
  },
  {
@@ -40,6 +56,10 @@
   "ids": "kintetsu#7",
   "set": {
    "optionalStops": ""
+  },
+  "split": {
+   "newId": "kintetsu-kyoise-kyoto-kashikojima-until-2026-03",
+   "at": "2026-03-14"
   }
  }
 ]
