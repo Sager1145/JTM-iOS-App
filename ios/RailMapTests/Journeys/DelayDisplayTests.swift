@@ -124,4 +124,19 @@ struct DelayDisplayTests {
         #expect(display("00:03", "23:58")?.offsetMinutes == -5)
         #expect(display("10:30", "10:35")?.offsetMinutes == 5)
     }
+
+    @Test func offsetAcrossDayOffsets() {
+        #expect(display("10:00+2", "10:05")?.offsetMinutes == 5)
+        #expect(display("23:58", "24:03")?.offsetMinutes == 5)
+        #expect(display("23:00+1", "12:00+2")?.offsetMinutes == 780)
+        #expect(display("10:05", "10:00+2")?.offsetMinutes == -5)
+    }
+
+    /// The actuals the editor itself stores (`normalizedActual` adds one day
+    /// when the typed clock is more than twelve hours before the plan).
+    @Test func offsetForEditorStoredActuals() {
+        #expect(display("23:58+1", "24:03")?.offsetMinutes == 5)
+        #expect(display("10:00+2", "34:05")?.offsetMinutes == 5)
+        #expect(display("25:10", "25:07")?.offsetMinutes == -3)
+    }
 }

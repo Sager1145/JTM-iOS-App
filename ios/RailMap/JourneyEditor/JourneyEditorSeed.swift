@@ -17,6 +17,10 @@ struct EditorSeed: Equatable {
     /// The saved journey carried this clock. A placeholder clock is never written back.
     var departureKnown: Bool
     var arrivalKnown: Bool
+    /// The saved boarding departure / final arrival text, exactly as stored.
+    /// Set only when it parsed.
+    var departureText: String?
+    var arrivalText: String?
 
     init(train: Train, isNew: Bool, clock: RegionClock, now: Date = Date()) {
         let type = train.trainType ?? ""
@@ -40,15 +44,21 @@ struct EditorSeed: Equatable {
         company = train.company ?? ""
         let day = Dates.normalizeDateString(train.date)
         let start = day.flatMap { clock.instant(serviceDate: $0, clock: "00:00") }
-        let leaving = day.flatMap { day in
+        // Minute precision: the editor's pickers and delta maths ignore seconds.
+        func minute(_ d: Date?) -> Date? {
+            d.map { clock.calendar.dateInterval(of: .minute, for: $0)?.start ?? $0 }
+        }
+        let leaving = minute(day.flatMap { day in
             train.stops.first?.departure.flatMap { clock.instant(serviceDate: day, clock: $0) }
-        }
-        let arriving = day.flatMap { day in
+        })
+        let arriving = minute(day.flatMap { day in
             train.stops.last?.arrival.flatMap { clock.instant(serviceDate: day, clock: $0) }
-        }
+        })
         departure = leaving ?? start ?? now
         arrival = max(arriving ?? departure, departure)
         departureKnown = leaving != nil
         arrivalKnown = arriving != nil
+        departureText = leaving != nil ? train.stops.first?.departure : nil
+        arrivalText = arriving != nil ? train.stops.last?.arrival : nil
     }
 }

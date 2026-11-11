@@ -80,9 +80,16 @@ enum StopTimingStatus {
         guard case .valid(_, let planned) = EditorTime.parseTime(scheduled),
               case .valid(_, let observed) = EditorTime.parseTime(actual)
         else { return nil }
-        var difference = observed.serviceMinutes - planned.serviceMinutes
-        // 23:58 planned and 00:03 observed is +5 across midnight, not -1435.
-        if difference > 720 { difference -= 1440 } else if difference < -720 { difference += 1440 }
-        return difference
+        let raw = observed.serviceMinutes - planned.serviceMinutes
+        // The nearest same time of day: "10:00+2" vs "10:05" (stored by the
+        // editor as "34:05") and "23:58+1" vs "24:03" are +5, and 23:58
+        // planned with 00:03 observed is +5 across midnight, not -1435.
+        var nearest = raw % 1440
+        if nearest > 720 { nearest -= 1440 } else if nearest <= -720 { nearest += 1440 }
+        // Days typed on both sides are real: "23:00+1" vs "12:00+2" is 13 hours
+        // late. Only lateness keeps them; the editor never writes an actual
+        // more than half a day later than planned on its own.
+        if planned.dayOffset > 0, observed.dayOffset > 0, raw > 720 { return raw }
+        return nearest
     }
 }

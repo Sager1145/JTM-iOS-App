@@ -1360,14 +1360,16 @@ final class TripDraftModel {
             if clearedClocks.contains(.departure) {
                 result.stops[0].departure = nil
             } else if dayIsSet, timeIsSet(.departure) || seed.departureKnown {
-                result.stops[0].departure = clock(
-                    departure, extraDays: extraDays(from: serviceDate, to: departure))
+                result.stops[0].departure = untouchedClockText(
+                    seed.departureText, seed: seed.departure, now: departure, isSet: timeIsSet(.departure))
+                    ?? clock(departure, extraDays: extraDays(from: serviceDate, to: departure))
             }
             if clearedClocks.contains(.arrival) {
                 result.stops[last].arrival = nil
             } else if timeIsSet(.arrival) || seed.arrivalKnown && touched.contains(.arrivalDate) {
-                result.stops[last].arrival = clock(
-                    arrival, extraDays: extraDays(from: serviceDate, to: arrival))
+                result.stops[last].arrival = untouchedClockText(
+                    seed.arrivalText, seed: seed.arrival, now: arrival, isSet: timeIsSet(.arrival))
+                    ?? clock(arrival, extraDays: extraDays(from: serviceDate, to: arrival))
             }
         }
         let number = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1377,6 +1379,18 @@ final class TripDraftModel {
         if trainType != seed.trainType { result.trainType = trainType.isEmpty ? nil : trainType }
         if companyName != seed.company { commitCompany(companyName, on: &result) }
         if let riddenOverride { result = RideLedger.setRidden(result, riddenOverride) }
+    }
+
+    /// The saved clock text, verbatim, when the reader never set this clock and
+    /// the instant moved only by the same whole days as the service date, so a
+    /// date-only edit does not rewrite "10:30:15" or "10:00+1".
+    private func untouchedClockText(_ text: String?, seed: Date, now: Date, isSet: Bool) -> String? {
+        guard !isSet, let text else { return nil }
+        let calendar = region.clock.calendar
+        let moved = calendar.dateComponents(
+            [.day], from: calendar.startOfDay(for: self.seed.departure),
+            to: calendar.startOfDay(for: departure)).day ?? 0
+        return calendar.date(byAdding: .day, value: moved, to: seed) == now ? text : nil
     }
 
     /// The saved service day, moved by as many days as the reader moved the
