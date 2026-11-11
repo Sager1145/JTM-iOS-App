@@ -147,6 +147,8 @@ public enum SearchMatchKind: UInt8, Hashable, Sendable, Comparable {
     case frequent
     /// Listed because a parsed filter selected it (e.g. stations of a line).
     case browse
+    /// Empty query: a major hub (most lines), after recent, frequent and nearby.
+    case hub
 
     public static func < (lhs: Self, rhs: Self) -> Bool { lhs.rawValue < rhs.rawValue }
 }
@@ -299,10 +301,15 @@ public struct SearchCorrection: Hashable, Sendable {
     public var text: String
     /// The entity the correction names, when it is one.
     public var entity: SearchEntityID?
+    /// The chip label: the correction in the script the user typed (romaji for
+    /// a Latin query, kana for a kana query) when a spelling in that script
+    /// exists, else the same as `text`.
+    public var displayText: String
 
-    public init(text: String, entity: SearchEntityID? = nil) {
+    public init(text: String, entity: SearchEntityID? = nil, displayText: String? = nil) {
         self.text = text
         self.entity = entity
+        self.displayText = displayText ?? text
     }
 }
 
@@ -314,18 +321,25 @@ public struct SearchResponse: Hashable, Sendable {
     /// query these are suggestions (recent, frequent) with `.recent`/`.frequent`.
     public var results: [SearchResult]
     /// Set when there were no or few non-fuzzy results and a close spelling exists.
-    public var didYouMean: SearchCorrection?
+    public var didYouMean: SearchCorrection? { corrections.first }
+    /// Up to three distinct close spellings, nearest first (ties by importance).
+    /// Empty when there is an exact match or enough solid results.
+    public var corrections: [SearchCorrection]
+    /// The top result's title when the typed text is a prefix of it (or of a
+    /// reading of it): what the field would complete to. Nil otherwise.
+    public var completion: String?
     /// Recent query strings for an empty query (from `SearchContext.recentQueries`).
     public var recentQueries: [String]
 
     public init(
         query: String = "", parsed: SearchParsedQuery = SearchParsedQuery(), results: [SearchResult] = [],
-        didYouMean: SearchCorrection? = nil, recentQueries: [String] = []
+        corrections: [SearchCorrection] = [], completion: String? = nil, recentQueries: [String] = []
     ) {
         self.query = query
         self.parsed = parsed
         self.results = results
-        self.didYouMean = didYouMean
+        self.corrections = corrections
+        self.completion = completion
         self.recentQueries = recentQueries
     }
 

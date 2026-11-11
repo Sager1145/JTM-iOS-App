@@ -26,7 +26,9 @@ enum SearchMatching {
     }
 
     /// Allowed typos for a query key.
-    static func budget(_ q: UnsafeBufferPointer<UInt16>, loose: Bool) -> Int {
+    /// `relaxed` is the second pass over weak results: a two-character kanji
+    /// name (新宿, 渋谷) may then carry one wrong character.
+    static func budget(_ q: UnsafeBufferPointer<UInt16>, loose: Bool, relaxed: Bool = false) -> Int {
         let n = q.count
         if loose { return n >= 7 ? 2 : (n >= 4 ? 1 : 0) }
         var han = false, jamo = false, kana = false, latin = false
@@ -38,7 +40,7 @@ enum SearchMatching {
         }
         if latin && !han && !kana && !jamo { return 0 } // Latin typos go through the loose key
         if jamo { return n >= 8 ? 2 : (n >= 4 ? 1 : 0) }
-        if han && !kana { return n >= 6 ? 2 : (n >= 3 ? 1 : 0) }
+        if han && !kana { return n >= 6 ? 2 : (n >= (relaxed ? 2 : 3) ? 1 : 0) }
         return n >= 6 ? 2 : (n >= 3 ? 1 : 0)
     }
 

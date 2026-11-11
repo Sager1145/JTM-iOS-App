@@ -17,6 +17,8 @@ struct AppShell: View {
     @State private var selection = PrimaryTab.upcoming
     @State private var network = RailNetworkStore()
     @State private var itineraries: ItineraryStore
+    /// The shell's preferences store (isolated under UI test), shared with search history.
+    private let preferences: UserDefaults
     @State private var library: RideLibrary
     @State private var mapController = RailMapController()
     @State private var riddenRoutes = RiddenRouteStore()
@@ -93,6 +95,7 @@ struct AppShell: View {
 #endif
         let itineraries = ItineraryStore(preferences: preferences)
         let library = RideLibrary(storage: storage, preferences: preferences)
+        self.preferences = preferences
         _itineraries = State(initialValue: itineraries)
         _library = State(initialValue: library)
     }
@@ -127,6 +130,7 @@ struct AppShell: View {
         )
         .background { presentationHost.anchor }
         .environment(presentationHost)
+        .environment(\.searchPreferences, preferences)
         .environment(localization)
         .environment(network)
         .environment(displaySettings)

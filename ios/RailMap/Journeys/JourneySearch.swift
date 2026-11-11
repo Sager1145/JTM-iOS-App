@@ -11,19 +11,29 @@ final class JourneySearch {
         let date: String
         let query: String
         let naming: StationNamingGeneration
+        /// Only the search tab shows the frequent-station chips.
+        var wantsFrequent = false
 
         static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.date == rhs.date && lhs.query == rhs.query && lhs.naming == rhs.naming
+                && lhs.wantsFrequent == rhs.wantsFrequent
                 && ArrayGeneration.same(lhs.days, rhs.days)
         }
     }
 
     private(set) var completed: Request?
     private(set) var days: [ItineraryStore.Loaded.Day] = []
-    /// "Did you mean …?" when the completed query matched no journey: the
-    /// closest station/train/type spelling in the searched journeys (shared
-    /// search engine). Nil otherwise.
-    private(set) var didYouMean: SearchCorrection?
+    /// "Did you mean …?" when the completed query matched no journey: up to
+    /// three of the closest station/train/type spellings in the searched
+    /// journeys (shared search engine). Empty otherwise.
+    private(set) var corrections: [SearchCorrection] = []
+    /// What the typed text completes to: the top matching name in the journeys.
+    private(set) var completion: String?
+    /// Empty box: the stations these journeys name most often.
+    private(set) var frequentNames: [String] = []
+    @ObservationIgnored private var vocabulary: SearchIndex?
+    /// Vocabularies of single-date scopes, built on first no-match and dropped when the trips change.
+    @ObservationIgnored private var dateVocabularies: [String: SearchIndex] = [:]
     @ObservationIgnored private var source: [ItineraryStore.Loaded.Day] = []
     @ObservationIgnored private var naming: StationNamingGeneration?
     @ObservationIgnored private var names: [String: [String]] = [:]
@@ -31,7 +41,15 @@ final class JourneySearch {
     func search(_ request: Request, alsoNamed: (Train) -> [String]) async {
         guard request != completed else { return }
         guard !request.query.isEmpty else {
-            days = []; didYouMean = nil; completed = request
+            var frequent: [String] = []
+            if request.wantsFrequent {
+                let trains = request.days.flatMap(\.trains)
+                frequent = await Task.detached(priority: .userInitiated) {
+                    JourneySearchMatcher.frequentStationNames(in: trains)
+                }.value
+            }
+            guard !Task.isCancelled else { return }
+            days = []; corrections = []; completion = nil; frequentNames = frequent; completed = request
             return
         }
         do {
@@ -48,11 +66,20 @@ final class JourneySearch {
                 }
                 try Task.checkCancellation()
                 source = request.days; naming = request.naming; names = snapshot
+                dateVocabularies = [:]
+                let trains = request.days.flatMap(\.trains)
+                let spellings = snapshot
+                vocabulary = await Task.detached(priority: .userInitiated) {
+                    JourneySearchMatcher.vocabulary(of: trains, alsoNamed: { spellings[$0.id] ?? [] })
+                }.value
+                try Task.checkCancellation()
             }
             let names = names
             let source = request.days
             let date = request.date
             let query = request.query
+            let vocabulary = vocabulary
+            let cachedForDate = dateVocabularies[date]
             let worker = Task.detached(priority: .userInitiated) {
                 var result: [ItineraryStore.Loaded.Day] = []
                 for day in source where date == Dates.allDates || day.date == date {
@@ -65,19 +92,29 @@ final class JourneySearch {
                     }
                     if !trains.isEmpty { result.append(.init(date: day.date, trains: trains)) }
                 }
-                guard result.isEmpty else { return (result, nil as SearchCorrection?) }
+                let completion = vocabulary?.query(
+                    query, scope: .terms, context: SearchContext(regionCode: "", limit: 1)).completion
+                guard result.isEmpty else { return (result, [SearchCorrection](), completion, nil as SearchIndex?) }
                 // Nothing matched: offer the closest spelling (typos are not matched per journey).
                 let searched = source.filter { date == Dates.allDates || $0.date == date }.flatMap(\.trains)
                 try Task.checkCancellation()
-                let correction = JourneySearchMatcher.suggestion(
-                    for: query, in: searched, alsoNamed: { names[$0.id] ?? [] })
-                return (result, correction)
+                // One vocabulary per date scope, cached across keystrokes.
+                var built: SearchIndex?
+                var scoped = date == Dates.allDates ? vocabulary : cachedForDate
+                if scoped == nil {
+                    built = JourneySearchMatcher.vocabulary(of: searched, alsoNamed: { names[$0.id] ?? [] })
+                    scoped = built
+                }
+                let corrections = JourneySearchMatcher.suggestions(
+                    for: query, in: searched, vocabulary: scoped, alsoNamed: { names[$0.id] ?? [] })
+                return (result, corrections, completion, built)
             }
             let result = try await withTaskCancellationHandler {
                 try await worker.value
             } onCancel: { worker.cancel() }
             try Task.checkCancellation()
-            days = result.0; didYouMean = result.1; completed = request
+            if let built = result.3 { dateVocabularies[request.date] = built }
+            days = result.0; corrections = result.1; completion = result.2; completed = request
         } catch { }
     }
 }

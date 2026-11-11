@@ -68,6 +68,11 @@ struct RailWorkspaceView: View {
     @State private var dialog: WorkspaceDialog?
     /// §10.3's ⌘F target.
     @FocusState private var searchFocused: Bool
+    @Environment(\.searchPreferences) private var searchPreferences
+    /// Recent journey searches of the current region scope, refreshed when one is recorded.
+    @State private var recentJourneySearches: [String] = []
+    /// Decides when a journey search counts as recent (see `RecentSearchRecordGate`).
+    @State private var recordGate = RecentSearchRecordGate()
     @State private var sheet: WorkspaceSheet?
     @State private var linePreview: RailwayLinePreview?
     /// The selection a journey card took over, and what it replaced. The card
@@ -2061,27 +2066,52 @@ struct RailWorkspaceView: View {
         }
     }
 
-    /// The engine's correction for a query this list has no match for,
-    /// drawn from this list's journeys only (see ``journeySearchRequest``).
+    /// Under the search field: recent searches and the most ridden stations in
+    /// an empty box; with text, the top completion and, for a query this list
+    /// has no match for, up to three of the engine's corrections drawn from
+    /// this list's journeys only (see ``journeySearchRequest``).
     @ViewBuilder
-    private var didYouMeanLine: some View {
-        if selection == .search, journeySearch.completed == journeySearchRequest,
-           journeySearch.days.isEmpty, let correction = journeySearch.didYouMean {
-            Button {
-                query = correction.text
-            } label: {
-                Text(localization.text(
-                    "ios.search.didYouMean", params: ["text": .string(correction.text)],
-                    fallback: "Did you mean “\(correction.text)”?"))
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+    private var journeySuggestionLines: some View {
+        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if selection == .search, journeySearch.completed == journeySearchRequest {
+            if needle.isEmpty {
+                SearchSuggestionChips(chips: recentJourneySearches.map { .init(kind: .recent, label: $0, text: $0) },
+                                      identifierPrefix: "journeySearchRecent") { query = $0.text }
+                SearchSuggestionChips(chips: journeySearch.frequentNames.map { .init(kind: .frequent, label: $0, text: $0) },
+                                      identifierPrefix: "journeySearchFrequent") { query = $0.text }
+            } else {
+                SearchSuggestionChips(chips: journeyTypingChips(for: needle),
+                                      identifierPrefix: "journeySearchSuggestion") { query = $0.text }
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(.tint)
-            .padding(.horizontal, WorkspaceMenuMetrics.fieldHorizontalInset)
-            .padding(.bottom, RailSpacing.rowVertical)
-            .accessibilityIdentifier("journeySearchDidYouMean")
         }
+    }
+
+    private func journeyTypingChips(for needle: String) -> [SearchSuggestionChips.Chip] {
+        var chips = journeySearch.days.isEmpty
+            ? SearchSuggestionChips.chips(corrections: journeySearch.corrections) : []
+        if let completion = journeySearch.completion, completion != needle {
+            chips.insert(.init(kind: .completion, label: completion, text: completion), at: 0)
+        }
+        return chips
+    }
+
+    private var journeySearchRegionCode: String { regionScope?.code ?? "all" }
+
+    private var recordGateState: RecentSearchRecordGate.State {
+        .init(query: query, isSearchTab: selection == .search,
+              isCurrent: journeySearch.completed == journeySearchRequest,
+              hasResults: !journeySearch.days.isEmpty)
+    }
+
+    private func commitRecentJourneySearch() {
+        recentJourneySearches = RecentSearchStore.record(
+            query.trimmingCharacters(in: .whitespacesAndNewlines), box: .journeys,
+            regionCode: journeySearchRegionCode, defaults: searchPreferences)
+    }
+
+    /// Return pressed: records now, or as soon as the debounced search catches up.
+    private func submitJourneySearch() {
+        if recordGate.submit(recordGateState) { commitRecentJourneySearch() }
     }
 
     // MARK: - Add trip (pass 3)
@@ -2665,8 +2695,8 @@ struct RailWorkspaceView: View {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         let list = listTab(for: page)
         return VStack(spacing: 0) {
-            JourneySearchField(query: $query, isFocused: $searchFocused)
-            if page == .search { didYouMeanLine }
+            JourneySearchField(query: $query, onSubmit: submitJourneySearch, isFocused: $searchFocused)
+            if page == .search { journeySuggestionLines }
             Group {
                 if page == .search, !needle.isEmpty {
                     journeyListState(searchQuery: needle, region: nil, partition: list)
@@ -2679,6 +2709,14 @@ struct RailWorkspaceView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .background { keyboardShortcuts }
+        .task(id: journeySearchRegionCode) {
+            recentJourneySearches = RecentSearchStore.load(
+                .journeys, regionCode: journeySearchRegionCode, defaults: searchPreferences)
+        }
+        .onChange(of: journeySearch.completed) { _, _ in
+            if recordGate.completed(recordGateState) { commitRecentJourneySearch() }
+        }
+        .onChange(of: query) { _, _ in recordGate.queryChanged() }
     }
 
     @ViewBuilder
@@ -3087,7 +3125,7 @@ struct RailWorkspaceView: View {
             : derived.listDays(all, ahead: aheadIDs, wantsAhead: list == .upcoming)
         return .init(days: days, date: selectedDate,
             query: selection == .search ? query.trimmingCharacters(in: .whitespacesAndNewlines) : "",
-            naming: localization.stationNamingGeneration)
+            naming: localization.stationNamingGeneration, wantsFrequent: selection == .search)
     }
 
     private func journeyDates(
@@ -3400,6 +3438,7 @@ struct RailWorkspaceView: View {
     /// destination, filters and panel size are retained while it slides away.
     private func pick(_ train: Train) {
         guard yieldRun() else { return }
+        if RecentSearchRecordGate.recordsOnPick(recordGateState) { commitRecentJourneySearch() }
         let previous: String?
         if let lease = journeyMenuSelection, itineraries.selectionRevision == lease.revision {
             previous = lease.previous

@@ -278,8 +278,10 @@ struct SearchEngineTests {
             regionCode: "jp", recentPicks: [tokyo.entity], recentQueries: ["目黒"],
             rideCounts: [shinjuku.entity: 12])
         let response = index.query("", scope: .stations, context: personal)
-        #expect(response.results.map(\.entity) == [tokyo.entity, shinjuku.entity])
-        #expect(response.results.map(\.match.kind) == [.recent, .frequent])
+        // Recent and frequent first; the busiest hubs fill the rest of the box.
+        #expect(Array(response.results.prefix(2).map(\.entity)) == [tokyo.entity, shinjuku.entity])
+        #expect(Array(response.results.prefix(2).map(\.match.kind)) == [.recent, .frequent])
+        #expect(response.results.dropFirst(2).allSatisfy { $0.match.kind == .hub })
         #expect(response.recentQueries == ["目黒"])
     }
 
@@ -309,7 +311,8 @@ struct SearchEngineTests {
         }
         let built = try #require(index)
         let keystrokes = ["s", "sh", "shi", "shin", "shinj", "shinjy", "shinjyu", "shinjyuk", "shinjyuku",
-                          "と", "とう", "とうき", "東", "東京", "东急 目黑线", "山手綫", "Tokoy", "yamanote", "新宿駅"]
+                          "と", "とう", "とうき", "東", "東京", "东急 目黑线", "山手綫", "Tokoy", "yamanote", "新宿駅",
+                          "shinjkuu", "いけぶくお", "渋矢", "新縮"]
         _ = built.query("warm", context: context)
         var worst: Duration = .zero
         var total: Duration = .zero

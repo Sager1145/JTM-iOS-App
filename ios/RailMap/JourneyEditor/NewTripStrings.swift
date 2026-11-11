@@ -382,10 +382,6 @@ enum NewTripStrings {
             .en: "{count} options", .ja: "候補 {count} 件",
             .zhHant: "{count} 個選項", .zhHans: "{count} 个选项",
         ],
-        "ios.newTrip.didYouMean": [
-            .en: "Did you mean {text}?", .ja: "もしかして：{text}",
-            .zhHant: "您是不是要找：{text}", .zhHans: "您是不是要找：{text}",
-        ],
         "ios.newTrip.journey": [
             .en: "Journey", .ja: "行程",
             .zhHant: "行程", .zhHans: "行程",

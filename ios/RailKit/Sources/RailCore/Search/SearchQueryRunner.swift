@@ -302,15 +302,93 @@ struct SearchQueryRunner {
             ? Array(residual.prefix(12).map { SearchNormalizer.canonical($0) }.filter { !$0.isEmpty }) : []
         let tokenLoose: [[UInt16]] = tokenKeys.map { SearchNormalizer.loose(fromCanonical: $0, profile: index.profile) ?? [] }
         let allTokens: UInt16 = tokenKeys.isEmpty ? 0 : UInt16((1 << tokenKeys.count) - 1)
-        let qcMask = SearchMatching.mask(qc), qlMask = SearchMatching.mask(ql)
+        var inputs = ScanInputs(qc: qc, ql: ql, tokenKeys: tokenKeys, tokenLoose: tokenLoose, allTokens: allTokens)
+
+        guard var ranking = scanAndRank(scratch, inputs, relaxed: false) else {
+            return SearchResponse(query: text, parsed: parsedQuery)
+        }
+        // Second pass, only for weak results: a wrong character in a two-character
+        // kanji name, a typo in one word of several, or a kanji query read aloud.
+        if Self.isWeak(ranking) {
+            let reading = secondPassReading(qc: qc, residualText: residualText)
+            if !reading.isEmpty || allTokens != 0 || Self.hasShortHan(qc) {
+                scratch.reset()
+                inputs.reading = reading
+                guard let relaxed = scanAndRank(scratch, inputs, relaxed: true) else {
+                    return SearchResponse(query: text, parsed: parsedQuery)
+                }
+                ranking = relaxed
+            }
+        }
+
+        var results: [SearchResult] = []
+        results.reserveCapacity(min(limit, ranking.count))
+        for entry in ranking.prefix(limit) {
+            let record = index.keys[Int(scratch.bestKey[Int(entry.doc)])]
+            results.append(result(entry.doc, record: record, hit: entry.hit, score: entry.score,
+                                  queryLength: record.isLoose ? ql.count : qc.count))
+        }
+
+        var response = SearchResponse(query: text, parsed: parsedQuery, results: results)
+        if parsed.applied.isEmpty, let top = results.first, top.match.kind == .prefix,
+           SearchNormalizer.canonical(top.title) != qc {
+            response.completion = top.title
+        }
+        if Self.isWeak(ranking) {
+            response.corrections = corrections(ranking, scratch: scratch, qc: qc, kept: parsed.applied.map(\.sourceText))
+        }
+        return response
+    }
+
+    private struct ScanInputs {
+        var qc: [UInt16]
+        var ql: [UInt16]
+        var tokenKeys: [[UInt16]]
+        var tokenLoose: [[UInt16]]
+        var allTokens: UInt16
+        /// Loose key of the query read aloud (second pass only).
+        var reading: [UInt16] = []
+    }
+
+    private typealias Ranked = [(doc: Int32, score: Float, hit: SearchMatching.Hit)]
+
+    /// No exact, prefix or substring hit at all: only then is the query treated
+    /// as mistyped (relaxed second pass, corrections). A valid prefix such as
+    /// 高輪 is never "corrected".
+    private static func isWeak(_ ranked: Ranked) -> Bool {
+        !ranked.contains { $0.hit.kind != .fuzzy }
+    }
+
+    private static func hasShortHan(_ qc: [UInt16]) -> Bool {
+        qc.count == 2 && qc.allSatisfy { SearchNormalizer.isHan($0) }
+    }
+
+    /// The loose key of a kanji query read aloud; empty when the query has no
+    /// kanji, the region is not Japanese, or no reading is available.
+    private func secondPassReading(qc: [UInt16], residualText: String) -> [UInt16] {
+        guard index.profile == .japanese, qc.contains(where: { SearchNormalizer.isHan($0) }),
+              let latin = index.readingProvider.latinReading(of: residualText) else { return [] }
+        let key = SearchNormalizer.loose(fromCanonical: SearchNormalizer.canonical(latin), profile: index.profile) ?? []
+        return key.count >= 4 ? key : []
+    }
+
+    /// One scan over every key, then the ranking. Nil when the task was cancelled.
+    private func scanAndRank(_ scratch: SearchScratch, _ inputs: ScanInputs, relaxed: Bool) -> Ranked? {
+        let qc = inputs.qc, ql = inputs.ql, tokenKeys = inputs.tokenKeys, tokenLoose = inputs.tokenLoose
+        let allTokens = inputs.allTokens, qr = inputs.reading
+        let qcMask = SearchMatching.mask(qc), qlMask = SearchMatching.mask(ql), qrMask = SearchMatching.mask(qr)
+        let tokenMasks = tokenKeys.map { SearchMatching.mask($0) }
+        let tokenLooseMasks = tokenLoose.map { SearchMatching.mask($0) }
         var cancelled = false
 
         qc.withUnsafeBufferPointer { qcBuf in
         ql.withUnsafeBufferPointer { qlBuf in
+        qr.withUnsafeBufferPointer { qrBuf in
         index.units.withUnsafeBufferPointer { arena in
         index.keys.withUnsafeBufferPointer { keys in
-            let budgetCanonical = SearchMatching.budget(qcBuf, loose: false)
+            let budgetCanonical = SearchMatching.budget(qcBuf, loose: false, relaxed: relaxed)
             let budgetLoose = SearchMatching.budget(qlBuf, loose: true)
+            let budgetReading = SearchMatching.budget(qrBuf, loose: true)
             for k in 0..<keys.count {
                 if k & 4095 == 0, Task.isCancelled { cancelled = true; return }
                 let record = keys[k]
@@ -325,7 +403,24 @@ struct SearchQueryRunner {
                         q, qMask: loose ? qlMask : qcMask, key, keyMask: record.mask, budget: budget, rows: scratch.rows) {
                         let score = Self.baseScore(hit, record, queryLength: q.count)
                         if score > scratch.bestScore[doc] {
-                            if scratch.bestKey[doc] < 0 && scratch.tokenMask[doc] == 0 { scratch.touched.append(Int32(doc)) }
+                            if scratch.bestKey[doc] < 0 { scratch.touched.append(Int32(doc)) }
+                            scratch.bestScore[doc] = score
+                            scratch.bestKey[doc] = Int32(k)
+                            scratch.bestHit[doc] = hit
+                        }
+                    }
+                }
+                if loose, qrBuf.count > 0,
+                   var hit = SearchMatching.compare(
+                    qrBuf, qMask: qrMask, key, keyMask: record.mask, budget: budgetReading, rows: scratch.rows) {
+                    // A same-reading kanji is a typo, never a better match than the typed text.
+                    if hit.kind == .exact {
+                        hit = SearchMatching.Hit(kind: .fuzzy, distance: 0, position: 0, prefixFuzzy: false)
+                    }
+                    if hit.kind == .fuzzy, !hit.prefixFuzzy {
+                        let score = Self.baseScore(hit, record, queryLength: qrBuf.count)
+                        if score > scratch.bestScore[doc] {
+                            if scratch.bestKey[doc] < 0 { scratch.touched.append(Int32(doc)) }
                             scratch.bestScore[doc] = score
                             scratch.bestKey[doc] = Int32(k)
                             scratch.bestHit[doc] = hit
@@ -334,29 +429,53 @@ struct SearchQueryRunner {
                 }
                 if allTokens != 0 {
                     var bits: UInt16 = 0
-                    for (t, token) in (loose ? tokenLoose : tokenKeys).enumerated() where !token.isEmpty {
-                        if Self.contains(key, token) { bits |= 1 << UInt16(t) }
+                    let tokens = loose ? tokenLoose : tokenKeys
+                    for t in tokens.indices where !tokens[t].isEmpty {
+                        let bit = UInt16(1) << UInt16(t)
+                        if Self.contains(key, tokens[t]) {
+                            bits |= bit
+                        } else if relaxed, (scratch.tokenFuzzyMask[doc] | scratch.tokenMask[doc]) & bit == 0 {
+                            let hit: SearchMatching.Hit? = tokens[t].withUnsafeBufferPointer { token in
+                                SearchMatching.compare(
+                                    token, qMask: loose ? tokenLooseMasks[t] : tokenMasks[t], key, keyMask: record.mask,
+                                    budget: record.noFuzzy ? 0 : SearchMatching.budget(token, loose: loose, relaxed: true),
+                                    rows: scratch.rows)
+                            }
+                            if let hit, hit.kind == .fuzzy {
+                                if scratch.bestKey[doc] < 0 { scratch.bestKey[doc] = Int32(k); scratch.touched.append(Int32(doc)) }
+                                scratch.tokenFuzzyMask[doc] |= bit
+                                scratch.tokenFuzzyCost[doc] &+= UInt8(truncatingIfNeeded: hit.distance)
+                            }
+                        }
                     }
                     if bits != 0 {
-                        if scratch.bestKey[doc] < 0 && scratch.tokenMask[doc] == 0 { scratch.touched.append(Int32(doc)) }
-                        if scratch.bestKey[doc] < 0 { scratch.bestKey[doc] = Int32(k) }
+                        if scratch.bestKey[doc] < 0 { scratch.bestKey[doc] = Int32(k); scratch.touched.append(Int32(doc)) }
                         scratch.tokenMask[doc] |= bits
                     }
                 }
             }
-        }}}}
-        if cancelled { return SearchResponse(query: text, parsed: parsedQuery) }
+        }}}}}
+        if cancelled { return nil }
 
         let signals = signals()
-        var ranked: [(doc: Int32, score: Float, hit: SearchMatching.Hit)] = []
+        var ranked: Ranked = []
         ranked.reserveCapacity(scratch.touched.count)
         for doc in scratch.touched {
             let d = Int(doc)
             var hit = scratch.bestHit[d]
             var score = scratch.bestScore[d]
-            if allTokens != 0, scratch.tokenMask[d] == allTokens, hit == nil || hit!.kind == .fuzzy {
-                hit = SearchMatching.Hit(kind: .substring, distance: 0, position: 0, prefixFuzzy: false)
-                score = 560
+            if allTokens != 0 {
+                let matched = scratch.tokenMask[d], typo = scratch.tokenFuzzyMask[d] & ~matched
+                if matched == allTokens, hit == nil || hit!.kind == .fuzzy {
+                    hit = SearchMatching.Hit(kind: .substring, distance: 0, position: 0, prefixFuzzy: false)
+                    score = 560
+                } else if typo != 0, matched | typo == allTokens {
+                    let cost = max(1, Int(scratch.tokenFuzzyCost[d]))
+                    if hit == nil || (hit!.kind == .fuzzy && hit!.distance > cost) {
+                        hit = SearchMatching.Hit(kind: .fuzzy, distance: cost, position: 0, prefixFuzzy: false)
+                        score = 430 - 60 * Float(cost)
+                    }
+                }
             }
             guard let hit, scratch.bestKey[d] >= 0 else { continue }
             ranked.append((doc, score + relevance(doc, signals), hit))
@@ -367,29 +486,51 @@ struct SearchQueryRunner {
             if lt.count != rt.count { return lt.count < rt.count }
             return lt < rt
         }
+        return ranked
+    }
 
-        var results: [SearchResult] = []
-        results.reserveCapacity(min(limit, ranked.count))
-        for entry in ranked.prefix(limit) {
-            let record = index.keys[Int(scratch.bestKey[Int(entry.doc)])]
-            results.append(result(entry.doc, record: record, hit: entry.hit, score: entry.score,
-                                  queryLength: record.isLoose ? ql.count : qc.count))
+    // MARK: Corrections
+
+    /// Up to three distinct close spellings, nearest first, then by importance.
+    private func corrections(_ ranked: Ranked, scratch: SearchScratch, qc: [UInt16], kept: [String]) -> [SearchCorrection] {
+        let typos = ranked.filter { $0.hit.kind == .fuzzy }
+            .sorted { ($0.hit.distance, -$0.score) < ($1.hit.distance, -$1.score) }
+        var seen: Set<[UInt16]> = []
+        var out: [SearchCorrection] = []
+        for typo in typos where out.count < 3 {
+            let d = Int(typo.doc)
+            let title = index.titles[d]
+            let key = SearchNormalizer.canonical(title)
+            guard key != qc, seen.insert(key).inserted else { continue }
+            let record = index.keys[Int(scratch.bestKey[d])]
+            let shown = Self.scriptDisplay(title, matched: index.nameText(record.name), query: qc)
+            out.append(SearchCorrection(
+                text: (kept + [title]).joined(separator: " "),
+                entity: SearchEntityID(kind: index.kinds[d], id: index.ids[d]),
+                displayText: (kept + [shown]).joined(separator: " ")))
         }
+        return out
+    }
 
-        var response = SearchResponse(query: text, parsed: parsedQuery, results: results)
-        let solid = ranked.lazy.filter { $0.hit.kind != .fuzzy }.prefix(3).count
-        let hasExact = ranked.contains { $0.hit.kind == .exact }
-        if solid < 3, !hasExact, let best = ranked.filter({ $0.hit.kind == .fuzzy })
-            .min(by: { ($0.hit.distance, -$0.score) < ($1.hit.distance, -$1.score) }) {
-            let title = index.titles[Int(best.doc)]
-            if SearchNormalizer.canonical(title) != qc {
-                let kept = parsed.applied.map(\.sourceText)
-                response.didYouMean = SearchCorrection(
-                    text: (kept + [title]).joined(separator: " "),
-                    entity: SearchEntityID(kind: index.kinds[Int(best.doc)], id: index.ids[Int(best.doc)]))
+    /// The correction in the script the user typed, when the matched spelling
+    /// (or a transliteration of a kana/Hangul one) exists in it.
+    private static func scriptDisplay(_ title: String, matched: String, query: [UInt16]) -> String {
+        guard !query.isEmpty else { return title }
+        if query.allSatisfy({ SearchNormalizer.isLatinOrDigit($0) }) {
+            let units = SearchNormalizer.canonical(matched)
+            if units.allSatisfy({ SearchNormalizer.isLatinOrDigit($0) }) { return matched }
+            if !units.contains(where: { SearchNormalizer.isHan($0) }),
+               let latin = matched.applyingTransform(.toLatin, reverse: false)?
+                .applyingTransform(.stripDiacritics, reverse: false), !latin.isEmpty {
+                return latin.capitalized
             }
+            return title
         }
-        return response
+        if query.allSatisfy({ SearchNormalizer.isKana($0) }) {
+            let units = SearchNormalizer.canonical(matched)
+            if !units.isEmpty, units.allSatisfy({ SearchNormalizer.isKana($0) }) { return matched }
+        }
+        return title
     }
 
     @inline(__always)
@@ -526,6 +667,15 @@ struct SearchQueryRunner {
             nearby.sort { $0.1 != $1.1 ? $0.1 > $1.1 : index.titles[$0.0] < index.titles[$1.0] }
             for (d, importance) in nearby.prefix(min(limit, 10) - results.count) {
                 results.append(plain(d, .browse, 1000 + importance))
+            }
+        }
+        // Last: the busiest stations (most lines), one row per name.
+        if results.count < min(limit, 10), scope.contains(.stations) {
+            var titles = Set(results.map(\.title))
+            for doc in index.hubDocs where results.count < min(limit, 10) {
+                let d = Int(doc)
+                guard scratch.allowed[d], !seen.contains(doc), titles.insert(index.titles[d]).inserted else { continue }
+                results.append(plain(d, .hub, 500 + index.importance[d]))
             }
         }
         return results
