@@ -408,6 +408,7 @@ editor's draft model is app code, so they cannot run in the RailKit package).
 |---|---|
 | `check-ui-test-identifiers.sh` | UI test ids that no longer exist in the app |
 | `check-string-keys.sh` | string keys missing from, or incomplete in, the four-language tables |
+| `build-shinkansen-patterns.py --check` (+ `TrainPatternVariants*` Swift suites) | the Shinkansen stop-pattern keys (`allStations`, `variants`, `coupled`) and their source files breaking a rule: station identity, order, citation, revision dates, number overlap. See "Shinkansen stop-pattern database" below |
 | `RegressionGuardTopologyGaps` | new different-line seams with no junction row; bad registry station codes |
 | `RegressionGuardHistoryStamps` | history events losing or narrowing their `rail-history.json` stamps |
 | `RegressionGuardPairedTracks` | paired-track catalog drifting from `paired_alignment` rows; branches listed as pairs |
@@ -417,6 +418,8 @@ editor's draft model is app code, so they cannot run in the RailKit package).
 | `DataCountExpectations` (per-region counts) | one region's rows breaking counts; says "code regression" vs "data changed" |
 | `build-port-fixtures.mjs --check --only=<f>` (15 fast fixtures) | JS reference output drifting from its committed fixture |
 | Playback / RouteGraph / Localization / ContinuousStroke parity, `SamplePrecomputeProvenanceTests`, `TravelDirectionTests`, `DirectionalAlignmentSelectionTests` | Swift vs JS drift in route key, operator names, i18n, stroke; direction logic |
+
+**Shinkansen stop-pattern database.** `python3 -I ios/tools/build-shinkansen-patterns.py --check` reads the bundled `train-service-patterns.json`, the rail package rows, the through-service legs and any source files in `app/data/shinkansen-patterns/`, writes nothing and prints the findings. Source format and every rule: `ios/tools/shinkansen-patterns.md`; fixture tests: `python3 -I ios/tools/tests/test_build_shinkansen_patterns.py`; the same checks on a decoded catalogue are `TrainPatternVariantsValidatorTests` (RailKit). The guard runs it in default mode, which fails only on the new keys' rules (`allStations`, `variants`, `coupled`, source files). Findings about the existing stop lists of Shinkansen records (a stop that is not a station of its Shinkansen row, out-of-order stops) are printed as notes, because other branches are still correcting that data. When they have merged, add `--strict` to the step in `ios/tools/run-regression-guards.sh` so those findings fail too. Without source files the script changes nothing; with them, run it with no arguments to regenerate the `variants` blocks and commit the result (the check fails on a bundled file that differs). No rule maps a train number to a pattern: numbers are listed explicitly, lookup is exact, and odd/even is only a warning.
 
 Refreshing a baseline or expectation: the failing guard prints the exact command,
 for example
