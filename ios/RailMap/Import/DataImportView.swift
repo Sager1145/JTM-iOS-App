@@ -87,14 +87,13 @@ struct DataImportView: View {
             case .pasted:
                 TextEditor(text: $flow.text)
                     .accessibilityIdentifier("importText")
-                    .font(.system(.footnote, design: .monospaced))
+                    .font(.system(.footnote, design: .monospaced)) // ui-token-ok: monospaced data
                     .frame(minHeight: RailSize.textEditorMinHeight)
                     .disabled(flow.isRunning)
                     .overlay(alignment: .topLeading) {
                         if flow.text.isEmpty {
                             Text(localization.text("data.pasteHint"))
-                                .font(.footnote)
-                                .foregroundStyle(.tertiary)
+                                .railText(.tertiary)
                                 .padding(.top, RailSpacing.s8)
                                 .allowsHitTesting(false)
                         }
@@ -160,7 +159,7 @@ struct DataImportView: View {
                     .foregroundStyle(.secondary)
                 }
             }
-            .font(.footnote)
+            .font(.footnote) // ui-token-ok: form section help text
             .fixedSize(horizontal: false, vertical: true)
         } header: {
             Text(localization.text("data.importMode"))
@@ -270,7 +269,7 @@ struct DataImportView: View {
                             localization.text(
                                 "data.renameList", params: ["from": .string(rename.from), "to": .string(rename.to)])
                         )
-                        .font(.system(.footnote, design: .monospaced))
+                        .font(.system(.footnote, design: .monospaced)) // ui-token-ok: monospaced data
                     }
                 } label: {
                     scopeLabel("data.willRename", report.renames.count)
@@ -282,7 +281,7 @@ struct DataImportView: View {
                         + " (\(report.crossRegionRows.count))",
                     systemImage: "exclamationmark.triangle"
                 )
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: warning text with its own colour
                 .foregroundStyle(.orange)
                 .accessibilityIdentifier("importCrossRegionWarning")
             }
@@ -486,7 +485,7 @@ struct DataIssueRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.s2) {
             Text(issue.detail)
-                .font(.footnote)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Text(location)
                 .font(.system(.caption2, design: .monospaced))
@@ -526,7 +525,7 @@ struct DataErrorCard: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.orange)
             Text(detail)
-                .font(.footnote)
+                .railText(.secondary)
             Text(kept)
                 .railText(.secondary)
         }

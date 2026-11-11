@@ -578,7 +578,7 @@ struct StatisticsSuperlative: View {
     }
 
     private var block: some View {
-        VStack(alignment: .leading, spacing: ride == nil ? 4 : 10) {
+        VStack(alignment: .leading, spacing: ride == nil ? RailSpacing.s4 : RailSpacing.s8) {
             HStack(alignment: .firstTextBaseline, spacing: RailSpacing.s8) {
                 PassportEyebrow(eyebrow)
                 Spacer(minLength: 8)

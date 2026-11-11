@@ -252,8 +252,7 @@ struct StatisticsDashboardContent: View {
     private func pendingMileageNote(_ loaded: ItineraryStore.Loaded) -> some View {
         if loaded.trains.contains(where: \.requiresRouteConfirmation) {
             Text(localization.text("ios.routeGuide.pendingMileageNote"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -1247,8 +1246,7 @@ struct StatisticsDashboardContent: View {
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Text(localization.text("ios.stats.failedBody"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .statisticsCard()

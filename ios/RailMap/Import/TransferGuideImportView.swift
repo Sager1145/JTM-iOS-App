@@ -49,7 +49,7 @@ struct TransferGuideImportView: View {
                 if isLoadingPages { readingSection(done: 0, total: 1) }
                 if case .failure(let error) = completionCatalogResult {
                     Section {
-                        Text(error.localizedDescription).font(.footnote)
+                        Text(error.localizedDescription).font(.footnote) // ui-token-ok: error text
                         Button(localization.text("ios.journeyShare.retry")) { catalogAttempt += 1 }
                     }
                 }
@@ -458,7 +458,7 @@ struct TransferGuideImportView: View {
             }
             if !draft.build.unresolved.isEmpty {
                 Text(draft.build.unresolved.joined(separator: "、"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: warning text with its own colour
                     .foregroundStyle(.orange)
             }
         } footer: {
@@ -476,7 +476,7 @@ struct TransferGuideImportView: View {
                 ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
                     Label {
                         Text(sentence(note))
-                            .font(.footnote)
+                            .railText(.secondary)
                     } icon: {
                         Image(systemName: "info.circle").foregroundStyle(.secondary)
                     }

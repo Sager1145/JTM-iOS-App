@@ -182,8 +182,7 @@ struct StatisticsScopePicker: View {
             }
             .padding(.horizontal, RailSpacing.s4)
             Text(localization.statisticsScopeText("instructions"))
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .railText(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, RailSpacing.s4)
         }
@@ -430,7 +429,6 @@ extension AppLocalization {
         let strings: [String: [Localization.Language: String]] = [
             "byDate": [.zhHans: "按照日期分类", .zhHant: "按照日期分類", .ja: "日付別", .en: "By date"],
             "byGroup": [.zhHans: "按照行程组分类", .zhHant: "按照行程組分類", .ja: "旅程グループ別", .en: "By journey group"],
-            "done": [.zhHans: "完成", .zhHant: "完成", .ja: "完了", .en: "Done"],
             "year": [.zhHans: "年份", .zhHant: "年份", .ja: "年", .en: "Year"],
             "month": [.zhHans: "月份", .zhHant: "月份", .ja: "月", .en: "Month"],
             "previousMonth": [.zhHans: "上个月", .zhHant: "上個月", .ja: "前の月", .en: "Previous month"],
