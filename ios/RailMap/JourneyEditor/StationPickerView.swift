@@ -91,12 +91,15 @@ struct StationPickerView: View {
     var sourceCatalog: EditorCatalog? = nil
     var companyFilter: String? = nil
     var onSelectWithLine: ((CatalogStation, CatalogLine?, String?) -> Void)? = nil
+    /// Opened for an empty field: the cursor starts in the search box.
+    var focusesSearchOnAppear = false
     /// A stop keeps free text; only its suggestions use the shared picker.
     var inlineQuery: Binding<String>? = nil
     var showsSuggestions = true
     var onLoad: ((EditorCatalog?, [RetiredStation], [String: String]) -> Void)? = nil
     var accessibilityPrefix = "rideEditorStation"
     @State private var query = ""
+    @State private var isSearchPresented = false
     /// Company, then optionally one of its lines. Both narrow the results
     /// and the map; a line also lists its stations in route order.
     @State private var filterOperatorID: String?
@@ -252,16 +255,11 @@ struct StationPickerView: View {
                 browser
                     .navigationTitle(localization.text("ios.editor.chooseStation"))
                     .navigationBarTitleDisplayMode(.inline)
-                    .searchable(text: queryBinding, placement: .navigationBarDrawer(displayMode: .always),
+                    .searchable(text: queryBinding, isPresented: $isSearchPresented,
+                                placement: .navigationBarDrawer(displayMode: .always),
                                 prompt: Text(localization.text("ios.editor.stationSearch")))
                     .onSubmit(of: .search) { readHints(latestResponse ?? search.output.response, submitted: true) }
-                    .toolbar {
-                        if onSelectWithLine != nil {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button(localization.text("ios.cancel", fallback: "Cancel")) { dismiss() }
-                            }
-                        }
-                    }
+                    .task { if focusesSearchOnAppear { isSearchPresented = true } }
             }
         }
         .task(id: loadToken) { await load() }

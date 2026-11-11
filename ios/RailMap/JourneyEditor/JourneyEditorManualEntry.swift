@@ -126,7 +126,31 @@ private struct PlatformPad: View {
     }
 }
 
-/// Vehicle type: suggestions for this trip first, then free text.
+/// A choice in a list: the title, and a trailing accent checkmark on the
+/// selected row only. Local until the design system's shared choice row
+/// exists; that component replaces this one.
+struct EditorChoiceRow: View {
+    let title: String
+    let isSelected: Bool
+
+    var body: some View {
+        HStack {
+            Text(title).foregroundStyle(.primary)
+            Spacer()
+            if isSelected {
+                Image(systemName: "checkmark")
+                    .foregroundStyle(Color.accentColor)
+                    .accessibilityHidden(true)
+            }
+        }
+        .frame(minHeight: RailSize.touch)
+        .contentShape(Rectangle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+/// Vehicle type: suggestions for this trip first, then free text. A page
+/// pushed in the editor's navigation stack.
 struct VehiclePickerView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
@@ -135,54 +159,42 @@ struct VehiclePickerView: View {
     @State private var typed = ""
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    HStack {
-                        TextField(localization.text("ios.editor.vehicleType"), text: $typed)
-                            .submitLabel(.done)
-                            .onSubmit(commitTyped)
-                            .accessibilityIdentifier("vehiclePickerField")
-                        Button(localization.text("ios.done", fallback: "Done"), action: commitTyped)
-                            .disabled(typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                    }
+        List {
+            Section {
+                HStack {
+                    TextField(localization.text("ios.editor.vehicleType"), text: $typed)
+                        .submitLabel(.done)
+                        .onSubmit(commitTyped)
+                        .accessibilityIdentifier("vehiclePickerField")
+                    Button(localization.text("ios.done", fallback: "Done"), action: commitTyped)
+                        .disabled(typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
-                if !suggestions.isEmpty {
-                    Section(localization.text("ios.newTrip.vehicleSuggestions", fallback: "Suggestions")) {
-                        ForEach(suggestions, id: \.self) { value in
-                            Button {
-                                vehicleType = value
-                                dismiss()
-                            } label: {
-                                HStack {
-                                    Text(value).foregroundStyle(.primary)
-                                    Spacer()
-                                    if vehicleType == value {
-                                        Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
-                                    }
-                                }
-                                .frame(minHeight: RailSize.touch)
-                            }
-                            .accessibilityIdentifier("vehiclePickerSuggestion-\(value)")
-                        }
-                    }
-                }
-                if vehicleType != nil {
-                    Section {
-                        Button(localization.text("ios.newTrip.platformClear", fallback: "Clear"), role: .destructive) {
-                            vehicleType = nil
+            }
+            if !suggestions.isEmpty {
+                Section(localization.text("ios.newTrip.vehicleSuggestions", fallback: "Suggestions")) {
+                    ForEach(suggestions, id: \.self) { value in
+                        Button {
+                            vehicleType = value
                             dismiss()
+                        } label: {
+                            EditorChoiceRow(title: value, isSelected: vehicleType == value)
                         }
+                        .accessibilityIdentifier("vehiclePickerSuggestion-\(value)")
                     }
                 }
             }
-            .navigationTitle(localization.text("ios.editor.vehicleType"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
+            if vehicleType != nil {
+                Section {
+                    Button(localization.text("ios.newTrip.platformClear", fallback: "Clear"), role: .destructive) {
+                        vehicleType = nil
+                        dismiss()
+                    }
+                }
             }
-            .onAppear { typed = vehicleType ?? "" }
         }
+        .navigationTitle(localization.text("ios.editor.vehicleType"))
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear { typed = vehicleType ?? "" }
     }
 
     private func commitTyped() {

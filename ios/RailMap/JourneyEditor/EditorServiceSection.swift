@@ -75,6 +75,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
         } header: {
             Text(text("service", fallback: "Service"))
         }
+        .id(EditorAnchor.service.rawValue)
     }
 
     private func timetableCard(_ timetableTrain: Train) -> some View {

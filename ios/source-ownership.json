@@ -110,6 +110,7 @@
         "ios/RailMap/JourneyEditor/EditorMapPanel.swift",
         "ios/RailMap/JourneyEditor/EditorRoutePlanning.swift",
         "ios/RailMap/JourneyEditor/EditorRouteSection.swift",
+        "ios/RailMap/JourneyEditor/EditorSaveStatus.swift",
         "ios/RailMap/JourneyEditor/EditorServiceSection.swift",
         "ios/RailMap/JourneyEditor/EditorStationsSection.swift",
         "ios/RailMap/JourneyEditor/EditorTimeSection.swift",

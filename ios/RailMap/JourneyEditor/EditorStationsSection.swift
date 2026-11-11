@@ -37,24 +37,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 ProgressView()
                     .frame(maxWidth: .infinity)
             }
-            HStack(spacing: RailSpacing.s8) {
-                stationButton(
-                    title: text("from", fallback: "From"),
-                    station: model.origin,
-                    line: model.originLine,
-                    source: model.filledBy[.origin],
-                    identifier: "newTripOrigin") { model.picking = .origin }
-                Button(action: model.swapStations) {
-                    Image(systemName: "arrow.up.arrow.down")
-                        .font(.body.weight(.semibold))
-                        .frame(width: RailSize.touch, height: RailSize.touch)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.borderless)
-                .accessibilityIdentifier("newTripSwap")
-                .accessibilityLabel(text("swap", fallback: "Swap stations"))
-                .disabled(model.origin == nil && model.destination == nil)
-            }
+            endpoints
             if model.origin == nil, !model.nearbyStations.isEmpty {
                 nearbyRow
             }
@@ -71,14 +54,44 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                 .disabled(model.catalog == nil)
                 .accessibilityIdentifier("newTripAddVia")
             }
+        } header: {
+            Text(text("journey", fallback: "Journey"))
+        }
+    }
+
+    /// From and To one above the other, with Swap drawn between them at the
+    /// trailing edge, so it always sits next to the two stations it swaps.
+    private var endpoints: some View {
+        VStack(spacing: 0) {
+            stationButton(
+                title: text("from", fallback: "From"),
+                station: model.origin,
+                line: model.originLine,
+                source: model.filledBy[.origin],
+                identifier: "newTripOrigin") { model.picking = .origin }
+                .id(EditorAnchor.origin.rawValue)
+            Divider()
             stationButton(
                 title: text("to", fallback: "To"),
                 station: model.destination,
                 line: model.destinationLine,
                 source: model.filledBy[.destination],
                 identifier: "newTripDestination") { model.picking = .destination }
-        } header: {
-            Text(text("journey", fallback: "Journey"))
+                .id(EditorAnchor.destination.rawValue)
+        }
+        // Room for Swap, so a long station name never runs under it.
+        .padding(.trailing, RailSize.touch)
+        .overlay(alignment: .trailing) {
+            Button(action: model.swapStations) {
+                Image(systemName: "arrow.up.arrow.down")
+                    .font(.body.weight(.semibold))
+                    .frame(width: RailSize.touch, height: RailSize.touch)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
+            .accessibilityIdentifier("newTripSwap")
+            .accessibilityLabel(text("swap", fallback: "Swap stations"))
+            .disabled(model.origin == nil && model.destination == nil)
         }
     }
 

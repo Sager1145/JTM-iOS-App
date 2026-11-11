@@ -66,6 +66,8 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 EditorMapPanel(model: model)
                 form
             }
+            // Inside the stack: the pushed pickers need its navigation destinations.
+            .modifier(EditorPresentations(model: model, train: train, suggestionTrains: suggestionTrains))
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -141,37 +143,6 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
         .task(id: model.directionKey) { await model.loadDirections(original: train) }
         // Closing the editor stops a running repair search at once.
         .onDisappear { model.repair.cancel() }
-        .sheet(isPresented: $model.showsTicketScan) {
-            if let region = model.ticketRegion {
-                TicketScanView(region: region) { reading in model.fillFromTicket(reading) }
-                    .railSheet(.full)
-            }
-        }
-        .sheet(isPresented: $model.showsFillDetails) {
-            EditorFillDetailsSheet(model: model, original: train)
-                .railSheet(.full)
-        }
-        .sheet(isPresented: $model.showsVehiclePicker) {
-            VehiclePickerView(
-                vehicleType: model.readerBinding(
-                    .vehicleType, get: { model.draft.vehicleType }, set: { model.draft.vehicleType = $0 }),
-                suggestions: model.vehicleSuggestions(among: suggestionTrains))
-                .railSheet(.half)
-        }
-        .sheet(item: $model.picking) { field in
-            if let catalog = model.catalog {
-                NavigationStack {
-                    StationPickerView(
-                        regionCode: model.region.code,
-                        sourceCatalog: catalog,
-                        companyFilter: model.companyName.isEmpty ? nil : model.companyName,
-                        onSelectWithLine: { [generation = model.draftGeneration] station, line, stationID in
-                            model.pick(station, line: line, stationID: stationID, for: field, generation: generation)
-                        })
-                }
-                .railSheet(.full)
-            }
-        }
         .onChange(of: model.departure) { _, newValue in
             model.departureChanged(to: newValue)
         }
@@ -247,6 +218,19 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
     }
 
     private var form: some View {
+        ScrollViewReader { proxy in
+            formContent
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    EditorSaveStatusRow(model: model) { anchor in
+                        withAnimation(reduceMotion ? nil : .default) {
+                            proxy.scrollTo(anchor.rawValue, anchor: .top)
+                        }
+                    }
+                }
+        }
+    }
+
+    private var formContent: some View {
         Form {
             if model.loadFailed {
                 RailStatusLabel(kind: .error, text: text(
@@ -259,6 +243,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
             EditorStationsSection(model: model)
             EditorTimeSection(model: model)
             EditorServiceSection(model: model, suggestions: historySuggestions)
+            EditorStatusSection(model: model)
             if model.timetableTrain != nil || model.hasRecordRoute || (model.origin != nil && model.destination != nil) {
                 EditorRouteSection(model: model, original: train, reviewGaps: reviewGaps)
             }
@@ -273,14 +258,6 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 draft: $model.draft, region: model.region, showsStops: model.showsRecordRoute,
                 suggestionTrains: suggestionTrains, issues: model.detailIssues,
                 expanded: $model.detailsExpanded, part: .more)
-            if !model.saveIssues.isEmpty {
-                Section {
-                    ForEach(model.saveIssues) { issue in
-                        RailStatusLabel(kind: .error, text: localization.text(for: issue))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-            }
         }
         .accessibilityIdentifier("newTripForm")
         .scrollDismissesKeyboard(.interactively)
@@ -322,6 +299,57 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                   pendingConfirmationIDs: itineraries?.pendingConfirmationIDs ?? []),
               case .needsReview(_, _, let gaps) = status, !gaps.isEmpty else { return nil }
         return gaps
+    }
+}
+
+/// What the editor presents over its form: the ticket scan and Fill details as
+/// sheets, and the searchable pickers as pages pushed in its navigation stack.
+private struct EditorPresentations: ViewModifier {
+    @Bindable var model: TripDraftModel
+    let train: Train
+    let suggestionTrains: [Train]
+
+    /// An empty field opens its picker with the cursor in the search box; a
+    /// chosen station opens on the list.
+    private func startsEmpty(_ field: TripDraftModel.StationField) -> Bool {
+        switch field {
+        case .origin: model.origin == nil
+        case .destination: model.destination == nil
+        case .via: true
+        }
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(isPresented: $model.showsTicketScan) {
+                if let region = model.ticketRegion {
+                    TicketScanView(region: region) { reading in model.fillFromTicket(reading) }
+                        .railSheet(.full)
+                }
+            }
+            .sheet(isPresented: $model.showsFillDetails) {
+                EditorFillDetailsSheet(model: model, original: train)
+                    .railSheet(.full)
+            }
+            // A searchable list is a pushed page, not a sheet.
+            .navigationDestination(isPresented: $model.showsVehiclePicker) {
+                VehiclePickerView(
+                    vehicleType: model.readerBinding(
+                        .vehicleType, get: { model.draft.vehicleType }, set: { model.draft.vehicleType = $0 }),
+                    suggestions: model.vehicleSuggestions(among: suggestionTrains))
+            }
+            .navigationDestination(item: $model.picking) { field in
+                if let catalog = model.catalog {
+                    StationPickerView(
+                        regionCode: model.region.code,
+                        sourceCatalog: catalog,
+                        companyFilter: model.companyName.isEmpty ? nil : model.companyName,
+                        onSelectWithLine: { [generation = model.draftGeneration] station, line, stationID in
+                            model.pick(station, line: line, stationID: stationID, for: field, generation: generation)
+                        },
+                        focusesSearchOnAppear: startsEmpty(field))
+                }
+            }
     }
 }
 

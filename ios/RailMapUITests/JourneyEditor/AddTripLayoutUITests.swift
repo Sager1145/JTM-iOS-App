@@ -11,6 +11,28 @@ final class AddTripLayoutUITests: XCTestCase {
         XCUIDevice.shared.orientation = .portrait
     }
 
+    func testDisabledSaveShowsItsReasonWithoutScrolling() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let save = app.buttons["newTripSave"]
+        XCTAssertTrue(save.waitForExistence(timeout: 20), app.debugDescription)
+        XCTAssertFalse(save.isEnabled)
+        let status = app.descendants(matching: .any)["newTripSaveStatus"].firstMatch
+        XCTAssertTrue(status.waitForExistence(timeout: 5), "A disabled Save must say what is missing.")
+        XCTAssertTrue(status.isHittable, "The reason sits under the navigation bar, not below the fold.")
+    }
+
+    func testStationPickerOpensWithTheCursorInTheSearchField() {
+        let app = XCUIApplication()
+        EditorLaunchSupport.launchNewTrip(app)
+        let origin = app.buttons["newTripOrigin"]
+        XCTAssertTrue(origin.waitForExistence(timeout: 20), app.debugDescription)
+        XCTAssertTrue(waitHittable(origin))
+        origin.tap()
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 8),
+                      "An empty station field opens its picker ready to type.")
+    }
+
     func testQuickFillLeadsTheFormAndScanOpensCameraOrPhotos() {
         let app = XCUIApplication()
         EditorLaunchSupport.launchNewTrip(app)
@@ -21,10 +43,13 @@ final class AddTripLayoutUITests: XCTestCase {
         XCTAssertTrue(find.exists)
         XCTAssertTrue(origin.waitForExistence(timeout: 5))
         XCTAssertLessThan(scan.frame.minY, origin.frame.minY, "Quick fill comes before the stations.")
-        // Swap shares From's row instead of taking its own.
+        // Swap is drawn between From and To, next to both stations it swaps.
         let swap = app.buttons["newTripSwap"]
+        let destination = app.buttons["newTripDestination"]
         XCTAssertTrue(swap.exists)
-        XCTAssertLessThan(abs(swap.frame.midY - origin.frame.midY), origin.frame.height)
+        XCTAssertTrue(destination.exists)
+        XCTAssertGreaterThan(swap.frame.midY, origin.frame.midY)
+        XCTAssertLessThan(swap.frame.midY, destination.frame.midY)
 
         let shot = XCTAttachment(screenshot: app.screenshot())
         shot.name = "add-trip-quick-fill"

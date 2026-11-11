@@ -196,7 +196,7 @@ struct EditorTimeField: View {
     }
 
     private var timeTextField: some View {
-        TextField(title, text: text, prompt: Text("H:MM"))
+        TextField(title, text: text, prompt: Text(localization.text("ios.newTrip.clockHint", fallback: "H:MM")))
             .keyboardType(.numbersAndPunctuation)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
@@ -355,7 +355,7 @@ struct TypedDateTimeField: View {
                     .accessibilityLabel(title)
                     .accessibilityIdentifier("\(identifier)Date")
                     .onSubmit(submit)
-                TextField("H:MM", text: $timeText)
+                TextField(localization.text("ios.newTrip.clockHint", fallback: "H:MM"), text: $timeText)
                     .keyboardType(.numbersAndPunctuation)
                     .multilineTextAlignment(.trailing)
                     .autocorrectionDisabled()

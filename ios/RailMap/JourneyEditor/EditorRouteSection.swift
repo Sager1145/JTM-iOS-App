@@ -47,13 +47,11 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
                     .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            if model.autofillFailed {
-                RailStatusLabel(kind: .error, text: text("autofillFailed", fallback: "This route could not be applied."))
-            }
             directionRows
         } header: {
             Text(text("route", fallback: "Route"))
         }
+        .id(EditorAnchor.route.rawValue)
         .task(id: trackPairKey) {
             let key = trackPairKey
             guard let package = model.package else { trackPairSections = [:]; return }
