@@ -26,6 +26,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
                 .labelsHidden()
                 .accessibilityIdentifier("newTripTrainType")
             }
+            .id(EditorAnchor.service.rawValue)
             if model.trainType.isEmpty, let suggested = suggestions[.trainType] {
                 EditorSuggestionChip(value: trainTypeLabel(suggested), identifier: "newTripSuggestTrainType") {
                     model.apply(TripDraftModel.Patch(trainType: suggested), source: .reader)

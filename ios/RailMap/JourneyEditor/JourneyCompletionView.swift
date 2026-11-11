@@ -1,6 +1,16 @@
 import RailCore
 import SwiftUI
 
+/// The completion page's own navigation stack, unless a caller's stack shows it.
+private struct CompletionContainer<Content: View>: View {
+    let isPushed: Bool
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        if isPushed { content } else { NavigationStack { content } }
+    }
+}
+
 /// Completion is staged locally; only an explicit apply changes the caller's draft.
 struct JourneyCompletionView: View {
     @Environment(AppLocalization.self) private var localization
@@ -10,6 +20,10 @@ struct JourneyCompletionView: View {
     private let initialTrains: [Train]
     private let initialContext: String
     private let allowsRawImport: Bool
+    /// Shown as a page pushed in the caller's navigation stack: no stack and
+    /// no Cancel of its own, the system Back button leaves. The screenshot
+    /// import still presents it as a sheet; it drops this flag when it pushes.
+    private let isPushed: Bool
     private let onApply: ([Train]) -> Void
     /// Temporary source compatibility for callers using the former injected gate. The catalog
     /// and corresponding-time gate always runs as well, so callers cannot loosen it.
@@ -40,13 +54,14 @@ struct JourneyCompletionView: View {
     @State private var catalogsAreLoading = true
 
     init(
-        trains: [Train], context: String = "", allowsRawImport: Bool = false,
+        trains: [Train], context: String = "", allowsRawImport: Bool = false, isPushed: Bool = false,
         onApply: @escaping ([Train]) -> Void,
         isEligible: ((Train) -> Bool)? = nil
     ) {
         initialTrains = trains
         initialContext = context
         self.allowsRawImport = allowsRawImport
+        self.isPushed = isPushed
         self.onApply = onApply
         callerEligibility = isEligible
         _draftTrains = State(initialValue: trains)
@@ -62,7 +77,7 @@ struct JourneyCompletionView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        CompletionContainer(isPushed: isPushed) {
             Form {
                 if allowsRawImport { rawImportSection }
                 subscriptionSection
@@ -78,7 +93,10 @@ struct JourneyCompletionView: View {
             .navigationTitle(text("title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                RailEditingToolbar(cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
+                if !isPushed {
+                    RailEditingToolbar(
+                        cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")), onCancel: { dismiss() })
+                }
             }
             .task {
                 let region = initialTrains.first.map { Region.resolved($0).code } ?? Region.jp.code

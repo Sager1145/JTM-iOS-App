@@ -3,10 +3,8 @@ import RailCore
 import RailPresentation
 import SwiftUI
 
-/// Departure and arrival, typed or picked (`TypedDateTimeField`), the
-/// observed clocks when the train ran early or late, and whether the ride is
-/// done. Ridden follows the time (`TripListRules`) until the reader sets it.
-/// The scheduled clocks are what a timetable or ticket fills; the actual ones
+/// Departure and arrival, typed or picked (`TypedDateTimeField`), and the
+/// observed clocks when the train ran early or late. The scheduled clocks are what a timetable or ticket fills; the actual ones
 /// only the reader enters.
 struct EditorTimeSection: View, JourneyEditorLabelling {
     @Environment(AppLocalization.self) var localization
@@ -16,6 +14,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
     var body: some View {
         Section {
             dateTimeField(isDeparture: true)
+                .id(EditorAnchor.time.rawValue)
             dateTimeField(isDeparture: false)
             if let source = timeSource {
                 HStack(spacing: RailSpacing.s8) {
@@ -45,9 +44,6 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                     "arrivalBeforeDeparture",
                     fallback: "Arrival is before departure."))
             }
-            Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
-                get: { model.isRidden }, set: { model.riddenOverride = $0 }))
-                .accessibilityIdentifier("newTripRidden")
         } header: {
             Text(text("time", fallback: "Time"))
         }
@@ -74,7 +70,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
         return VStack(alignment: .leading, spacing: RailSpacing.labelValueGap) {
             EditorCompactRow(title: localization.text(
                 isDeparture ? "ios.editor.actualDeparture" : "ios.editor.actualArrival")) {
-                TextField("H:MM", text: model.actualTimeText(isDeparture: isDeparture))
+                TextField(localization.text("ios.newTrip.clockHint", fallback: "H:MM"), text: model.actualTimeText(isDeparture: isDeparture))
                     .multilineTextAlignment(.trailing)
                     .keyboardType(.numbersAndPunctuation)
                     .autocorrectionDisabled()
@@ -140,5 +136,33 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
     /// The source of a clock or day the reader has not set themselves.
     private var timeSource: TripDraftModel.FillSource? {
         model.filledBy[.departure] ?? model.filledBy[.arrival] ?? model.filledBy[.date]
+    }
+}
+
+/// The two switches that say what state the trip is in: ridden, and shown on
+/// the map. Ridden follows the time (`TripListRules`) until the reader sets it.
+struct EditorStatusSection: View, JourneyEditorLabelling {
+    @Environment(AppLocalization.self) var localization
+    @Bindable var model: TripDraftModel
+
+    var body: some View {
+        Section {
+            Toggle(text("ridden", fallback: "I have ridden this journey"), isOn: Binding(
+                get: { model.isRidden }, set: { model.riddenOverride = $0 }))
+                .accessibilityIdentifier("newTripRidden")
+            if RideLedger.confirmation(of: model.draft) == .partly {
+                Text(localization.text(
+                    "ios.editor.riddenPartlyNote",
+                    params: ["n": .number(Double(RideLedger.riddenSegmentCount(model.draft.stops)))]))
+                    .railText(.secondary)
+            }
+            Toggle(localization.text("ios.showOnMap", fallback: "Show on map"), isOn: Binding(
+                get: { model.draft.visible != false }, set: { model.draft.visible = $0 }))
+                .accessibilityIdentifier("rideEditorVisible")
+        } header: {
+            Text(text("statusSection", fallback: "Status"))
+        } footer: {
+            Text(localization.text("ios.editor.visibilityNote"))
+        }
     }
 }

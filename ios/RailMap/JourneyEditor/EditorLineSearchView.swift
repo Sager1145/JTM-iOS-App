@@ -200,13 +200,13 @@ struct EditorLineSearchView: View {
         .onDisappear { languageTask?.cancel() }
         .onDisappear { commit() }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) { // ui-token-ok: text Done ends a multi-select picker (HIG toolbars); it is not a view-only sheet
-                Button(localization.text("ios.done", fallback: "Done")) {
+            RailEditingToolbar(
+                confirmTitle: Text(localization.text("ios.done", fallback: "Done")),
+                confirmID: "rideEditorLinesDone",
+                onConfirm: {
                     commit()
                     dismiss()
-                }
-                .accessibilityIdentifier("rideEditorLinesDone")
-            }
+                })
         }
     }
 

@@ -80,7 +80,23 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                 identifier: "newTripFillDetailsDone"
             ) { model.showsFillDetails = false }
             .accessibilityIdentifier("newTripFillDetailsForm")
+            .navigationDestination(isPresented: $model.showsCompletion) {
+                JourneyCompletionView(
+                    trains: [model.currentResult(original: original) ?? model.draft],
+                    context: model.limitedExpressName.isEmpty ? ""
+                        : "Limited express service name: \(model.limitedExpressName)",
+                    allowsRawImport: true,
+                    isPushed: true,
+                    onApply: { completed in
+                        guard let completed = completed.first else { return }
+                        model.adoptCompletedRecord(completed)
+                        model.showsFillDetails = false
+                    })
+            }
         }
+        // A swipe-down removes the stack without writing false back, so the
+        // pushed completion page would reappear on the next open.
+        .onDisappear { model.showsCompletion = false }
         .sheet(isPresented: $model.showsTimetablePicker) {
             ServicePatternPickerView(
                 region: model.region.code,
@@ -97,19 +113,6 @@ struct EditorFillDetailsSheet: View, JourneyEditorLabelling {
                 model.showsFillDetails = false
             }
             .railSheet(.full)
-        }
-        .sheet(isPresented: $model.showsCompletion) {
-            JourneyCompletionView(
-                trains: [model.currentResult(original: original) ?? model.draft],
-                context: model.limitedExpressName.isEmpty ? ""
-                    : "Limited express service name: \(model.limitedExpressName)",
-                allowsRawImport: true,
-                onApply: { completed in
-                    guard let completed = completed.first else { return }
-                    model.adoptCompletedRecord(completed)
-                    model.showsFillDetails = false
-                })
-                .railSheet(.full)
         }
     }
 }
