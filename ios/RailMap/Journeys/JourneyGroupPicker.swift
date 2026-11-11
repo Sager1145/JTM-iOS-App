@@ -117,7 +117,7 @@ struct JourneyGroupAssignmentView: View {
                     cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
                     cancelDisabled: saving,
                     onCancel: { dismiss() },
-                    confirmTitle: Text(localization.text("btn.save", fallback: "Save")),
+                    confirmTitle: Text(localization.text("ios.save", fallback: "Save")),
                     confirmID: "saveJourneyGroup",
                     canConfirm: !(saving || selection?.name.isEmpty == true),
                     onConfirm: { save() })

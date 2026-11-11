@@ -35,7 +35,7 @@ struct DataManagerView: View {
     /// the confirmation is up so the dialog can name it.
     private enum Destination: Equatable {
         case exportFile
-        case deleteSaved, deleteAll, restore, replaceSample(RideLibrary.Sample)
+        case deleteSaved, deleteAll, restore, discardBackup, replaceSample(RideLibrary.Sample)
     }
     @State private var destination: Destination?
 
@@ -556,11 +556,15 @@ struct DataManagerView: View {
                         localization.text("data.restoreBackup"),
                         systemImage: "clock.arrow.circlepath")
                 }
+                // The backup is the only undo for the deletes below, so
+                // deleting it asks first, like every other destructive
+                // action on this screen.
                 Button(role: .destructive) {
-                    library.discardBackup()
+                    destination = .discardBackup
                 } label: {
                     Label(localization.text("data.discardBackup"), systemImage: "trash")
                 }
+                .accessibilityIdentifier("discardBackupButton")
             } header: {
                 Text(localization.text("data.recovery"))
             }
@@ -598,6 +602,21 @@ struct DataManagerView: View {
                     localization.text(
                         "data.restoreBackupDetail", params: ["count": .number(Double(backup.trainCount))]))
             }
+            .confirmationDialog(
+                localization.text("data.discardBackup"),
+                isPresented: isPresented(.discardBackup),
+                titleVisibility: .visible
+            ) {
+                Button(localization.text("data.discardBackup"), role: .destructive) {
+                    destination = nil
+                    library.discardBackup()
+                }
+                .accessibilityIdentifier("discardBackupConfirm")
+            } message: {
+                Text(
+                    localization.text(
+                        "data.discardBackupDetail", params: ["count": .number(Double(backup.trainCount))]))
+            }
         }
     }
 
@@ -616,9 +635,11 @@ struct DataManagerView: View {
                 Button(role: .destructive) { destination = .deleteAll } label: {
                     Label(localization.text("data.deleteAllTitle"), systemImage: "trash.slash")
                 }
+                .accessibilityIdentifier("deleteAllButton")
                 .disabled(trainCount == 0)
 
             }
+            .accessibilityIdentifier("dangerZoneDisclosure")
         }
         .listSectionSpacing(.custom(44))
         .disabled(itineraries.isImporting)
@@ -698,6 +719,7 @@ struct DataManagerView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("deleteAllConfirm")
         } message: {
             Text(
                 localization.text(

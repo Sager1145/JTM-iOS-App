@@ -232,6 +232,45 @@ enum ShellStrings {
         "ios.status.warning": [.en: "Warning", .ja: "警告", .zhHans: "警告", .zhHant: "警告"],
         "ios.status.error": [.en: "Error", .ja: "エラー", .zhHans: "错误", .zhHant: "錯誤"],
         "ios.save": [.en: "Save", .ja: "保存", .zhHans: "保存", .zhHant: "儲存"],
+        // Settings > Network era: which snapshot of the railway network the map draws.
+        "ios.networkEra": [
+            .en: "Network era", .ja: "路線網の年代",
+            .zhHans: "路网年代", .zhHant: "路網年代",
+        ],
+        "ios.networkEra.current": [
+            .en: "Current", .ja: "現在",
+            .zhHans: "当前", .zhHant: "目前",
+        ],
+        "ios.networkEra.rideDate": [
+            .en: "Selected trip's date", .ja: "選択中の旅程の日付",
+            .zhHans: "所选行程的日期", .zhHant: "所選行程的日期",
+        ],
+        "ios.networkEra.overlay": [
+            .en: "Historical overlay", .ja: "過去の路線を重ねる",
+            .zhHans: "叠加历史线路", .zhHant: "疊加歷史路線",
+        ],
+        // Playback: the toggle that keeps the map centred on the moving train.
+        "ios.play.follow": [
+            .en: "Follow", .ja: "追従",
+            .zhHans: "跟随", .zhHant: "跟隨",
+        ],
+        "ios.play.followTrain": [
+            .en: "Follow the train", .ja: "列車に追従",
+            .zhHans: "跟随列车", .zhHant: "跟隨列車",
+        ],
+        // Keyboard-shortcut titles (hardware keyboard / iPad menu bar).
+        "ios.network.toggle": [
+            .en: "Toggle railway network", .ja: "路線網の表示を切り替え",
+            .zhHans: "切换铁路路网", .zhHant: "切換鐵路路網",
+        ],
+        "ios.date.previous": [
+            .en: "Previous date", .ja: "前の日付",
+            .zhHans: "上一个日期", .zhHant: "上一個日期",
+        ],
+        "ios.date.next": [
+            .en: "Next date", .ja: "次の日付",
+            .zhHans: "下一个日期", .zhHant: "下一個日期",
+        ],
         "ios.cancel": [.en: "Cancel", .ja: "キャンセル", .zhHans: "取消", .zhHant: "取消"],
         // The search field's own clear button. Spoken, not drawn: the glyph is
         // `xmark.circle.fill`, which VoiceOver would otherwise announce by its

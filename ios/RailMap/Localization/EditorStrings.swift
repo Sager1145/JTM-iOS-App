@@ -21,6 +21,16 @@ enum EditorStrings {
 
     static let table: [String: [Localization.Language: String]] = [
 
+        // The "Copy" menu item on a station name, in every station menu.
+        "ios.editor.copyStation": [
+            .en: "Copy", .ja: "コピー",
+            .zhHans: "复制", .zhHant: "複製",
+        ],
+        "ios.route.pendingConfirmation": [
+            .en: "Route pending confirmation", .ja: "経路は確認待ちです",
+            .zhHans: "路线待确认", .zhHant: "路線待確認",
+        ],
+
         "ios.direction.up": [
             .zhHans: "上行", .zhHant: "上行", .ja: "上り", .en: "Up",
         ],
