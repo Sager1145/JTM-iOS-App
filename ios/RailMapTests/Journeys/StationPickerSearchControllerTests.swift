@@ -137,7 +137,7 @@ struct StationPickerRecentsClearTests {
         #expect(rest == ["ブラボー"])
     }
 
-    @Test func clearRefreshesTheEmptyBoxList() async throws {
+    @Test func clearRefreshesTheEmptyBoxList() async {
         let d = defaults()
         seed(d, region: "jp")
         let catalog = EditorCatalogBuilder.build([
@@ -160,11 +160,14 @@ struct StationPickerRecentsClearTests {
             }
         }
         controller.setSignals(recentPicks: StationPickerRecents.load(regionCode: "jp", defaults: d))
+        func settle(until done: () -> Bool) async {
+            for _ in 0..<200 where !done() { try? await Task.sleep(for: .milliseconds(25)) }
+        }
         controller.apply(query: "")
-        try await Task.sleep(for: .milliseconds(250))
+        await settle { codes() == ["A"] }
         #expect(codes() == ["A"])
         controller.clearRecents(regionCode: "jp", defaults: d)
-        try await Task.sleep(for: .milliseconds(250))
+        await settle { codes().isEmpty }
         #expect(codes().isEmpty)
     }
 

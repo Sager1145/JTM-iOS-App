@@ -55,6 +55,7 @@ struct SearchSuggestionChips: View {
                 if let onClear, chips.contains(where: { $0.kind == .recent }) {
                     Button(localization.text("ios.search.clearRecent", fallback: "Clear"), action: onClear)
                         .railText(.secondary)
+                        .foregroundStyle(.tint)
                         .frame(minHeight: RailSize.touch)
                         .padding(.trailing, RailSpacing.screenInset)
                         .accessibilityIdentifier(clearIdentifier)
