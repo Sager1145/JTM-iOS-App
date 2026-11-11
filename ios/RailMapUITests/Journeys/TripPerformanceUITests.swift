@@ -105,15 +105,19 @@ final class TripPerformanceUITests: XCTestCase {
             let button = app.buttons["reloadAllButton"]
             let enabled = expectation(for: NSPredicate(format: "isEnabled == true"), evaluatedWith: button)
             wait(for: [enabled], timeout: 60)
+            let before = (button.value as? String) ?? ""
             let watch = Stopwatch()
             startMeasuring()
             button.tap()
             let confirm = app.buttons["reloadAllConfirm"].firstMatch
             XCTAssertTrue(confirm.waitForExistence(timeout: 8))
             confirm.tap()
-            XCTAssertTrue(button.waitForExistence(timeout: 900), "Repair did not finish.")
-            let finished = expectation(for: NSPredicate(format: "exists == true AND isEnabled == true"), evaluatedWith: button)
-            wait(for: [finished], timeout: 900)
+            // The button's value is the number of reloads the store has
+            // finished; it moves when this repair ends, however quick it was.
+            let finished = expectation(
+                for: NSPredicate(format: "exists == true AND isEnabled == true AND value != %@", before),
+                evaluatedWith: button)
+            XCTAssertEqual(XCTWaiter().wait(for: [finished], timeout: 900), .completed, "Repair did not finish.")
             stopMeasuring()
             watch.report("reloadAll")
         }

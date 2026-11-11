@@ -310,9 +310,10 @@ struct DataManagerView: View {
                 }
                 .disabled(!riddenRoutes.canReloadAll)
                 .accessibilityIdentifier("reloadAllButton")
+                .accessibilityValue(Text(verbatim: "\(riddenRoutes.reloadsFinished)"))
             }
         } footer: {
-            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing."))
+            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time."))
         }
         .confirmationDialog(
             localization.text("ios.reloadAll.confirmTitle", fallback: "Repair routes?"),
@@ -323,7 +324,7 @@ struct DataManagerView: View {
             }
             .accessibilityIdentifier("reloadAllConfirm")
         } message: {
-            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing."))
+            Text(localization.text("ios.note.reloadAll", fallback: "Reads every trip's saved route again and works out only the routes that are missing. The map stays as it is while it runs. You can keep using the app, and stop it at any time."))
         }
     }
 

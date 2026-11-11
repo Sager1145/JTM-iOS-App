@@ -92,6 +92,22 @@ final class RouteDigestIndexStore: @unchecked Sendable {
         lock.unlock()
     }
 
+    #if DEBUG
+    /// Test seam: back to "nothing loaded", so the next use reads the file at
+    /// the then-current cache root. Drops any flush whose snapshot predates it.
+    func resetForTesting() {
+        writeLock.lock()
+        defer { writeLock.unlock() }
+        lock.lock()
+        index = RouteDigestIndex()
+        loaded = false
+        dirty = false
+        usageDirty = false
+        generation &+= 1
+        lock.unlock()
+    }
+    #endif
+
     private func loadIfNeeded() {
         guard !loaded else { return }
         loaded = true
