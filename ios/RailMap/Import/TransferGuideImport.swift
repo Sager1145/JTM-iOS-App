@@ -76,6 +76,9 @@ final class TransferGuideImport {
         var source: TransferGuide.Source
         /// The reader's answer to "did this happen?".
         var ridden: Bool
+        /// Whether the reader has touched the Ridden/Planned picker. Until
+        /// they do, the answer follows the date and the first departure.
+        var riddenWasChosen = false
         /// One flag per ridable leg.
         var included: [Bool]
         /// The records as they stand, rebuilt whenever any of the above moves.
@@ -264,6 +267,7 @@ final class TransferGuideImport {
     func setDate(_ date: Date, existingIDs: Set<String>) {
         guard !isCommitting, var draft else { return }
         draft.date = date
+        if !draft.riddenWasChosen { draft.ridden = draft.membership(now: Date()) == .past }
         draft.completions = [:]
         rebuild(&draft, existingIDs: existingIDs)
         self.draft = draft
@@ -272,6 +276,7 @@ final class TransferGuideImport {
     func setRidden(_ ridden: Bool, existingIDs: Set<String>) {
         guard !isCommitting, var draft else { return }
         draft.ridden = ridden
+        draft.riddenWasChosen = true
         rebuild(&draft, existingIDs: existingIDs)
         self.draft = draft
     }
@@ -386,7 +391,9 @@ final class TransferGuideImport {
         // One publication of every accepted screenshot record, then one save.
         // Every leg is filed together, under the list the journey as a whole
         // belongs to, rather than each leg by its own departure.
-        let membership = draft.membership(now: Date())
+        // The reader's answer decides the list, so a trip they confirmed as
+        // ridden is never filed under Upcoming (nor a planned one in History).
+        let membership: TripListMembership = draft.ridden ? .past : .upcoming
         let commit = itineraries.add(draft.build.trains.map { train in
             var filed = train
             filed.listMembership = membership
