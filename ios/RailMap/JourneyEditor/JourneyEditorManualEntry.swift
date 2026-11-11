@@ -126,29 +126,6 @@ private struct PlatformPad: View {
     }
 }
 
-/// A choice in a list: the title, and a trailing accent checkmark on the
-/// selected row only. Local until the design system's shared choice row
-/// exists; that component replaces this one.
-struct EditorChoiceRow: View {
-    let title: String
-    let isSelected: Bool
-
-    var body: some View {
-        HStack {
-            Text(title).foregroundStyle(.primary)
-            Spacer()
-            if isSelected {
-                Image(systemName: "checkmark")
-                    .foregroundStyle(Color.accentColor)
-                    .accessibilityHidden(true)
-            }
-        }
-        .frame(minHeight: RailSize.touch)
-        .contentShape(Rectangle())
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-}
-
 /// Vehicle type: suggestions for this trip first, then free text. A page
 /// pushed in the editor's navigation stack.
 struct VehiclePickerView: View {
@@ -173,11 +150,9 @@ struct VehiclePickerView: View {
             if !suggestions.isEmpty {
                 Section(localization.text("ios.newTrip.vehicleSuggestions", fallback: "Suggestions")) {
                     ForEach(suggestions, id: \.self) { value in
-                        Button {
+                        RailChoiceRow(value, isSelected: vehicleType == value) {
                             vehicleType = value
                             dismiss()
-                        } label: {
-                            EditorChoiceRow(title: value, isSelected: vehicleType == value)
                         }
                         .accessibilityIdentifier("vehiclePickerSuggestion-\(value)")
                     }
