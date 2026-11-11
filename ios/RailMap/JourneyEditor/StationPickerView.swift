@@ -310,7 +310,7 @@ struct StationPickerView: View {
             stationsRevision: mapStationsRevision)
             .overlay(alignment: .top) {
                 Text(localization.text("ios.newTrip.pickOnMap", fallback: "Tap a station on the map, or search"))
-                    .font(.footnote.weight(.medium))
+                    .font(.footnote.weight(.medium)) // ui-token-ok: map overlay hint
                     .padding(.horizontal, RailSpacing.s12)
                     .padding(.vertical, RailSpacing.s8)
                     .background(.regularMaterial, in: Capsule())

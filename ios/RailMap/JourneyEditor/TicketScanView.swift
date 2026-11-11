@@ -87,7 +87,7 @@ struct TicketScanView: View {
                 }
             }
             if let message {
-                Text(message).font(.footnote).foregroundStyle(.red)
+                Text(message).font(.footnote).foregroundStyle(.red) // ui-token-ok: error text
             }
         } footer: {
             Text(localization.text("ios.ticket.privacy"))

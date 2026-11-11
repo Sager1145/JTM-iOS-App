@@ -296,7 +296,7 @@ struct JourneyEditorDetails: View {
         ForEach(issues.all(for: field)) { issue in
             Label(localization.text(for: issue),
                   systemImage: issue.severity == .error ? "exclamationmark.circle.fill" : "exclamationmark.triangle")
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: validation text with its own colour
                 .foregroundStyle(issue.severity == .error ? Color.red : Color.orange)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityElement(children: .combine)

@@ -49,7 +49,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             }
             if model.autofillFailed {
                 Text(text("autofillFailed", fallback: "This route could not be applied."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -359,11 +359,11 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         VStack(alignment: .leading, spacing: RailSpacing.s4) {
             if let title {
                 Text(title)
-                    .font(.footnote.weight(.semibold))
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: notice title
             }
             Label {
                 Text(message)
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: notice text, colour set by label
                     .fixedSize(horizontal: false, vertical: true)
             } icon: {
                 Image(systemName: warning ? "exclamationmark.triangle" : "clock.arrow.circlepath")
@@ -372,8 +372,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
             .foregroundStyle(warning ? Color.orange : Color.secondary)
             if let detail {
                 Text(detail)
-                    .font(.footnote)
-                    .foregroundStyle(Color.secondary)
+                    .railText(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -472,7 +471,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
         if !model.pendingSections.isEmpty, shownSections.count > 1 {
             Text(text("sectionsToChoose", fallback: "{count} sections still to choose before the stations are filled in",
                       ["count": .string(String(model.pendingSections.count))]))
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: warning text
                 .foregroundStyle(.orange)
                 .accessibilityIdentifier("newTripSectionsPending")
         }
@@ -585,7 +584,7 @@ struct EditorRouteSection: View, JourneyEditorLabelling {
 
     private func routeError(_ message: String) -> some View {
         Text(message)
-            .font(.footnote)
+            .font(.footnote) // ui-token-ok: error text
             .foregroundStyle(.red)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)

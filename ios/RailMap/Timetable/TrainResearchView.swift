@@ -200,7 +200,7 @@ struct TrainResearchView: View {
             }
             if let code = auth.userCode, auth.isSigningIn {
                 Text(code).font(.title2.monospaced()).textSelection(.enabled)
-                Text(text("deviceInstructions")).font(.footnote)
+                Text(text("deviceInstructions")).railText(.secondary)
                 Button(text("authorize")) { openURL(auth.loginURL) }
             }
             if isWorking {

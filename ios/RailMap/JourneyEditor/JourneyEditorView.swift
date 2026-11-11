@@ -252,7 +252,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 Text(text(
                     "loadFailed",
                     fallback: "The rail data for this region could not be loaded."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -280,7 +280,7 @@ struct JourneyEditorView: View, JourneyEditorLabelling {
                 Section {
                     ForEach(model.saveIssues) { issue in
                         Text(localization.text(for: issue))
-                            .font(.footnote)
+                            .font(.footnote) // ui-token-ok: error text
                             .foregroundStyle(.red)
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: .infinity, alignment: .leading)

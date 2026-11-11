@@ -80,8 +80,7 @@ struct EditorVehicleSection: View, JourneyEditorLabelling {
             }
             if !missing.isEmpty {
                 Label(missingText(missing), systemImage: "square.and.pencil")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
                     .accessibilityIdentifier("newTripNeedsDetails")
             }
         } header: {
@@ -174,7 +173,7 @@ struct EditorTicketSection: View, JourneyEditorLabelling {
                     EditorInlineTextField(title: "0", text: model.fareText, keyboard: .numberPad)
                         .accessibilityIdentifier("newTripFare")
                     if let currency = model.draft.ticket?.currency ?? model.regionCurrency {
-                        Text(currency).font(.footnote).foregroundStyle(.secondary)
+                        Text(currency).railText(.secondary)
                     }
                 }
             }

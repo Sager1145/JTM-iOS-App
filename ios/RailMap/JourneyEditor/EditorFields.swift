@@ -144,7 +144,7 @@ struct EditorSuggestionChip: View {
     var body: some View {
         Button(action: action) {
             Label(value, systemImage: "clock.arrow.circlepath")
-                .font(.footnote)
+                .font(.footnote) // ui-token-ok: button label inside capsule style
                 .lineLimit(1)
         }
         .buttonStyle(.railSecondary)

@@ -38,7 +38,7 @@ struct EditorDateField: View {
             }
             if case .invalid = EditorTime.parseDate(date) {
                 Text(localization.text("ios.editor.dateRule"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -179,7 +179,7 @@ struct EditorTimeField: View {
             }
             if case .invalid = EditorTime.parseTime(time) {
                 Text(localization.text("ios.editor.invalidClock"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -189,7 +189,7 @@ struct EditorTimeField: View {
                let civilDate = Dates.addDays(serviceDate, clock.dayOffset) {
                 Text("\(civilDate) " + String(
                     format: "%02d:%02d", clock.hour, clock.minute))
-                    .font(.footnote.monospacedDigit())
+                    .font(.footnote.monospacedDigit()) // ui-token-ok: monospaced data
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("\(accessibilityID ?? "rideEditorTime")Civil")
             }
@@ -382,13 +382,12 @@ struct TypedDateTimeField: View {
             }
             if let problem {
                 Text(problem)
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             } else if focused == .date {
                 Text(localization.text("ios.newTrip.dateForms", fallback: "e.g. 2026-11-05, 11/05 or 1105"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .railText(.secondary)
             }
         }
         .frame(minHeight: RailSize.touch)

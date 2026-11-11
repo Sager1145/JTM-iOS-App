@@ -52,7 +52,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 Text(text(
                     "arrivalBeforeDeparture",
                     fallback: "Arrival is before departure."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -83,7 +83,7 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
             if model.scheduledIsSet(isDeparture: isDeparture) { chipRow(isDeparture: isDeparture) }
             if raw != nil, normalized == nil {
                 Text(localization.text("ios.editor.invalidClock"))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
             } else if model.scheduledIsSet(isDeparture: isDeparture), let status = StopTimingStatus.localizedLabel(
                 scheduled: model.scheduledClock(isDeparture: isDeparture), actual: normalized,
@@ -109,10 +109,10 @@ struct EditorTimeSection: View, JourneyEditorLabelling {
                 }
             } label: {
                 Text(label)
-                    .font(.footnote.weight(.semibold))
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: chip label
                     .foregroundStyle(.tint)
                     .padding(.horizontal, RailSpacing.s12)
-                    .frame(minHeight: 34)
+                    .frame(minHeight: 34) // ui-token-ok: visual capsule; tap target is the 44 frame below
                     .background(.tint.opacity(0.14), in: Capsule())
                     // The capsule stays compact; the tap area is a full touch target.
                     .frame(minHeight: RailSize.touch)

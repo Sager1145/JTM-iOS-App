@@ -96,7 +96,7 @@ struct EditorStationsSection: View, JourneyEditorLabelling {
                         Text(text("nearbyStation", fallback: "{station} · {distance} m",
                                   ["station": .string(stationTitle(nearby.station)),
                                    "distance": .string(String(Int(nearby.meters.rounded())))]))
-                            .font(.footnote)
+                            .font(.footnote) // ui-token-ok: button label inside capsule style
                             .lineLimit(1)
                     }
                     .buttonStyle(.railSecondary)

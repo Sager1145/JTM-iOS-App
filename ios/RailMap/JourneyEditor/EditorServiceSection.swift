@@ -68,7 +68,7 @@ struct EditorServiceSection: View, JourneyEditorLabelling {
             }
             if model.timetableFailed {
                 Text(text("timetableFailed", fallback: "This timetable could not be applied."))
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
             }
             if let timetableTrain = model.timetableTrain {

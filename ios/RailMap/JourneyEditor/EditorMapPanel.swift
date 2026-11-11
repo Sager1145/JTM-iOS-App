@@ -82,7 +82,7 @@ struct EditorMapPanel: View, JourneyEditorLabelling {
         }()
         if let hint {
             Text(hint)
-                .font(.footnote.weight(.medium))
+                .font(.footnote.weight(.medium)) // ui-token-ok: map overlay hint, primary colour
                 .foregroundStyle(.primary)
                 .padding(.horizontal, RailSpacing.s12)
                 .padding(.vertical, RailSpacing.s8)

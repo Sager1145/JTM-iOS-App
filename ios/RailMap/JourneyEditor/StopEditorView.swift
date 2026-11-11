@@ -222,7 +222,7 @@ struct StopEditorView: View {
                     } icon: {
                         Image(systemName: "exclamationmark.triangle.fill")
                     }
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: warning text
                     .foregroundStyle(.orange)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("rideEditorStationLineConflict")
@@ -259,7 +259,7 @@ struct StopEditorView: View {
                         localization.text("ios.editor.platformRule"),
                         systemImage: "exclamationmark.circle.fill"
                     )
-                    .font(.footnote)
+                    .font(.footnote) // ui-token-ok: error text
                     .foregroundStyle(.red)
                     .fixedSize(horizontal: false, vertical: true)
                 }
