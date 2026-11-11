@@ -69,4 +69,31 @@ public enum LocalJourneyAutofill {
         return Proposal(train: result, choice: choice,
             conflictingStops: removed + plan.conflictingStops)
     }
+
+    /// Fills the stretch between two existing calls of `train` (`span` indexes
+    /// `train.stops`) with the untimed visits of `choice`, the same plan route
+    /// repair makes between two visit IDs. Every existing call keeps its
+    /// times, stop type and ridden flag; calls outside the span and
+    /// `routeConfirmation` stay as they were. Returns nil instead of dropping
+    /// a call: when the choice does not start and end at the span's two calls
+    /// or does not pass every call inside the span, in order.
+    public static func proposal(
+        train: Train, choice: RailwayRouteChoices.Choice, span: ClosedRange<Int>
+    ) -> Proposal? {
+        let prepared = RailwayRouteEditing.preparing(train)
+        guard span.lowerBound >= 0, span.upperBound < prepared.stops.count,
+              span.lowerBound < span.upperBound,
+              let origin = choice.stations.first, let destination = choice.stations.last,
+              origin.code != destination.code else { return nil }
+        let first = prepared.stops[span.lowerBound]
+        let last = prepared.stops[span.upperBound]
+        guard first.n02StationCode == origin.code, last.n02StationCode == destination.code,
+              let plan = RailwayRouteEditing.plan(
+                train: prepared, choice: choice,
+                fromVisitID: first.routeEditing?.visitID, toVisitID: last.routeEditing?.visitID),
+              plan.conflictingStops.isEmpty else { return nil }
+        var result = plan.updatedTrain
+        result.routeConfirmation = train.routeConfirmation
+        return Proposal(train: result, choice: choice, conflictingStops: [])
+    }
 }
