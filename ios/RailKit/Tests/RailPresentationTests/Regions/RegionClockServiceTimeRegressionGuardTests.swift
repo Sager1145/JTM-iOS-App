@@ -155,6 +155,15 @@ struct RegionClockServiceTimeRegressionGuardTests {
             return
         }
         #expect(japan.serviceClock(of: tooFar, serviceDate: "2026-08-27") == nil)
+        guard let lastHour = japan.instant(serviceDate: "2026-08-27", clock: "99:59"),
+            let pastLast = japan.instant(serviceDate: "2026-08-27", clock: "4:00+4")
+        else {
+            Issue.record("nil instant at the hour-99 edge")
+            return
+        }
+        #expect(japan.serviceClock(of: lastHour, serviceDate: "2026-08-27") == "99:59")
+        #expect(japan.serviceClock(of: lastHour.addingTimeInterval(60), serviceDate: "2026-08-27") == nil)
+        #expect(japan.serviceClock(of: pastLast, serviceDate: "2026-08-27") == nil)
     }
 
     @Test("every stored spelling parses to the same hours, minutes and seconds")
@@ -163,7 +172,7 @@ struct RegionClockServiceTimeRegressionGuardTests {
             ("7:05", 7, 5, 0), ("07:05", 7, 5, 0), ("10:30:00", 10, 30, 0), ("10:30:45", 10, 30, 45),
             ("49:10", 49, 10, 0), ("25:30", 25, 30, 0), ("1:05+1", 25, 5, 0), ("10:00+1", 34, 0, 0),
             ("10:00 + 2", 58, 0, 0), ("  9:30 ", 9, 30, 0), ("00:00", 0, 0, 0), ("99:59", 99, 59, 0),
-            ("0:00+366", 366 * 24, 0, 0),
+            ("0:00+366", 366 * 24, 0, 0), ("5:30+4", 101, 30, 0),
         ]
         for (text, hours, minutes, seconds) in cases {
             let time = RegionClock.parseServiceTime(text)

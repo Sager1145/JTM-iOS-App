@@ -28,6 +28,8 @@ struct TripDraftStoredFormatsTests {
         Format(name: "stop-editor-two-days", departure: "49:10", arrival: "50:20"),
         Format(name: "legacy-suffix", departure: "10:00+1", arrival: "11:15+1"),
         Format(name: "short-suffix", departure: "1:05+1", arrival: "2:10+1"),
+        // A touched clock past hour 99 is stored as `H:MM+N` (TripDraftModel).
+        Format(name: "big-suffix", departure: "5:00", arrival: "5:30+4"),
     ]
 
     private func record(_ region: Region, _ departure: String?, _ arrival: String?) -> Train {
@@ -117,6 +119,31 @@ struct TripDraftStoredFormatsTests {
         }
     }
 
+    /// The date picker's own path (`setDay`), not a departure edit: the
+    /// arrival string is kept and the departure stays at its service minute.
+    @Test func theDatePickerAloneKeepsTheTimes() {
+        for zone in Self.deviceZones {
+            withPhoneTimeZone(zone) {
+                for region in Self.regions {
+                    for format in Self.formats {
+                        let original = record(region, format.departure, format.arrival)
+                        let model = TripDraftModel(train: original, isNew: false)
+                        let moved = region.clock.calendar.date(byAdding: .day, value: 1, to: model.departure)!
+                        model.setDay(moved, isDeparture: true)
+                        model.departureChanged(to: model.departure)
+                        let result = saved(model, original: original)
+                        let label = Comment(rawValue: "\(zone) \(region.code) \(format.name)")
+                        #expect(result.date == Self.nextDay, label)
+                        #expect(
+                            Dates.parseTimeToMinutes(result.stops[0].departure)
+                                == Dates.parseTimeToMinutes(format.departure), label)
+                        #expect(result.stops[1].arrival == format.arrival, label)
+                    }
+                }
+            }
+        }
+    }
+
     @Test func midnightOnAnUnreadableRecordApplies() {
         for zone in Self.deviceZones {
             withPhoneTimeZone(zone) {
@@ -131,14 +158,31 @@ struct TripDraftStoredFormatsTests {
                     model.apply(TripDraftModel.Patch(departure: midnight, arrival: midnight), source: .reader)
                     model.departureChanged(to: midnight)
                     let result = saved(model, original: original)
-                    // Known issue until TripDraftModel records a reader-chosen clock
-                    // apart from its seed (fix owned by the add-trip work). When it
-                    // lands this reports "known issue was not recorded": delete the
-                    // wrapper so the expectations guard the fix.
-                    withKnownIssue("a reader-set 00:00 equals the unreadable record's placeholder") {
-                        #expect(result.stops[0].departure == "00:00", "\(zone) \(region.code) departure")
-                        #expect(result.stops[1].arrival == "00:00", "\(zone) \(region.code) arrival")
-                    }
+                    #expect(result.stops[0].departure == "00:00", "\(zone) \(region.code) departure")
+                    #expect(result.stops[1].arrival == "00:00", "\(zone) \(region.code) arrival")
+                }
+            }
+        }
+    }
+
+    /// A touched arrival four days out is saved as `5:30+4`, and that saved
+    /// record opens again at the same instant and saves back unchanged.
+    @Test func aBigSuffixRoundTripsThroughTheEditor() {
+        for zone in Self.deviceZones {
+            withPhoneTimeZone(zone) {
+                for region in Self.regions {
+                    let label = Comment(rawValue: "\(zone) \(region.code)")
+                    let original = record(region, "05:00", "05:30")
+                    let model = TripDraftModel(train: original, isNew: false)
+                    let target = region.clock.instant(serviceDate: "2026-08-31", clock: "05:30")!
+                    model.setClock(target, isDeparture: false)
+                    let stored = saved(model, original: original)
+                    #expect(stored.stops[1].arrival == "5:30+4", label)
+
+                    let reopened = TripDraftModel(train: stored, isNew: false)
+                    #expect(reopened.seed.arrivalKnown, label)
+                    #expect(reopened.arrival == target, label)
+                    #expect(json(saved(reopened, original: stored)) == json(stored), label)
                 }
             }
         }
