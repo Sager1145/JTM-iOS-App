@@ -667,9 +667,26 @@ The user accepted every recommendation in §4. Steps 1–5 are on branch `claude
 
 The token baseline went from 389 literal violations (112 entries) to 182 (53 entries), and the guard fails on any increase.
 
-**Step 6 is not started.** It waits for the add-trip and trip-notes branches to merge. It covers:
+**Step 6** is on branch `claude/ui-audit-step6`, based on main b08b25f1f after steps 1–5, add-trip and trip notes merged. It covers:
 
-- trip detail: `RideDetailView`, `RideCard`, `JourneyMenuView`
-- the trip editor (`JourneyEditor/**`): D3 system navigation bar, Cancel / 保存旅程, the shared editing chrome and Cancel-key unification
-- `RailWorkspaceView` (the trip-cap pill, empty states, a half sheet for the scope picker's popover)
-- `Localization/**`
+- **Trip editor (D3):** the custom header is replaced by the system navigation bar. The bar has an inline title, Cancel, and **Save Trip / 旅程を保存 / 保存旅程 / 儲存旅程** (spec §5.1.4). Save renders as `.glassProminent` on iOS 26 and semibold before that, and ⌘S still works. Ids `newTripCancel` and `newTripSave` are unchanged.
+- **Editing chrome:** one shared `RailEditingToolbar` (Cancel at `.cancellationAction`, confirm at `.confirmationAction`) is used by every editing sheet. That includes the editor, completion, ticket scan, platform entry, section service, journey group, trip notes, share, import, transfer guide and the timetable picker.
+- **Shared dismiss strings:** every Cancel, Close and Done reads `ios.cancel`, `ios.close` or `ios.done`. Nine per-feature duplicate keys were deleted. Two VoiceOver labels used undefined keys and therefore read English in every language: the editor map's close and the playback close. Both are now localized.
+- **Trip detail:** the journey menu's details sheet closes with the trailing system Close (`rideDetailClose`) and opens at full height. The ride detail and ride card use `cardPadding`, the rail button styles and text roles. Trip-notes sheets use `railSheet`.
+- **Editor form:** one label-over-value treatment, rows at `RailSize.touch`, a 44 pt target on remove-via, platform keys at 44×44, and Dynamic-Type-safe date, time and index widths.
+- **Workspace host:** the trip-cap notice has a 44 pt target, and the empty and search-miss states use `.railSecondary`.
+- **Text roles (D8):** footnotes became text roles. Every remaining `.footnote` carries an inline `// ui-token-ok: <reason>`: error or warning colours, monospaced data, a derived line height, or the notice's own size.
+- **Guard:**
+  - `ios/tools/check-ui-tokens.sh` also catches:
+    - ternary and arithmetic literals
+    - `EdgeInsets` literals
+    - `minHeight`/`minWidth` below 44
+    - raw `.presentationDetents`
+    - `.system(size:)` anywhere
+    - `.footnote` fonts
+    - direct `RailCapsuleButtonStyle`
+    - per-feature Cancel/Close/Done keys
+  - A 71-case `--self-test` runs before every check.
+  - An opt-out must give a reason.
+  - **The baseline is empty.**
+- **Screenshots:** before and after are in `docs/maintenance/screenshots/ui-consistency-audit/step6/{before,after}`.

@@ -566,7 +566,7 @@ final class NewTripUITests: XCTestCase {
         XCTAssertTrue(cancel.waitForExistence(timeout: 20))
         XCTAssertTrue(waitForEnabled(save, timeout: 20))
         XCTAssertEqual(cancel.label, "取消")
-        XCTAssertEqual(save.label, "保存")
+        XCTAssertEqual(save.label, "保存旅程")
         XCTAssertLessThanOrEqual(cancel.frame.height, 100)
         XCTAssertLessThanOrEqual(save.frame.height, 100)
         XCTAssertTrue(app.frame.contains(cancel.frame))
