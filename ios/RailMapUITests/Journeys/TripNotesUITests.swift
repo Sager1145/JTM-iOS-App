@@ -368,7 +368,9 @@ final class TripNotesUITests: XCTestCase {
         let more = app.buttons["journeyMoreActions"].firstMatch
         XCTAssertTrue(more.waitForExistence(timeout: 20), "More menu missing.")
         more.tap()
-        let item = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", label)).firstMatch
+        // The card's own Add note button (id tripNotesAdd) is not a menu item.
+        let item = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS[c] %@ AND identifier != %@", label, "tripNotesAdd")).firstMatch
         return item.waitForExistence(timeout: 5) ? item : nil
     }
 
