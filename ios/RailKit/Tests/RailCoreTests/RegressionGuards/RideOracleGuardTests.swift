@@ -169,29 +169,9 @@ struct RegressionGuardRideOracle {
     /// Resolves `rides` the way the app does, scope by scope, and returns the
     /// decision records in input order.
     static func resolve(rides: [Census.Ride], root: URL) throws -> [Ride] {
-        let data = root.appending(path: "app/data")
-        let regionsInUse = Set(rides.flatMap { Census.regionsTouched($0.train) })
-        var bundles: [String: RegistryBundle] = [:]
-        for region in regionsInUse {
-            let url = data.appending(path: "registry-bundle/\(region).json")
-            guard FileManager.default.fileExists(atPath: url.path) else { continue }
-            let bundle = try JSONDecoder().decode(RegistryBundle.self, from: Data(contentsOf: url))
-            if bundle.region.lowercased() == region { bundles[region] = bundle }
-        }
-        let registry = Census.Registry(bundles: bundles, identities: bundles.mapValues(RegistryIdentity.init(bundle:)))
-        let identities = registry.identities
-        let junctionRegistry = try PhysicalRailJunctionRegistry(
-            data: Data(contentsOf: data.appending(path: "physical-rail-junctions.json")))
-        let timetableURL = data.appending(path: "train-service-history/derived/train-service-timetable.sqlite")
-        guard FileManager.default.fileExists(atPath: timetableURL.path) else {
-            throw CocoaError(.fileNoSuchFile, userInfo: [NSFilePathErrorKey: timetableURL.path])
-        }
-        let timetable = Census.TimetableEvidence(url: timetableURL)
-
+        let context = try Census.Context.make(rides: rides, root: root)
         var records: [String: Ride] = [:]
-        try RegistryIdentityLookup.withTestPhase({ region in
-            identities[region.lowercased()].map(RegistryPhase.ready) ?? .unavailable
-        }) {
+        try context.withRegistryPhase {
             for ride in rides where ride.train.requiresRouteConfirmation {
                 records[ride.train.id] = Ride(
                     id: ride.train.id, store: ride.store, scope: "", pass: "none",
@@ -202,7 +182,7 @@ struct RegressionGuardRideOracle {
             for scope in Census.ordered(byScope.keys) {
                 for record in try resolve(
                     scope: scope, rides: byScope[scope] ?? [], root: root,
-                    junctions: junctionRegistry, registry: registry, timetable: timetable)
+                    junctions: context.junctions, registry: context.registry, timetable: context.timetable)
                 {
                     records[record.id] = record
                 }
@@ -233,80 +213,62 @@ struct RegressionGuardRideOracle {
         registry: Census.Registry, timetable: Census.TimetableEvidence
     ) throws -> [Ride] {
         let data = try Census.load(scope: scope, root: root, junctions: junctions)
-        let country = scope.home
-        var canonical: [String: Census.CanonicalInput] = [:]
-        for ride in rides {
-            canonical[ride.train.id] = Census.canonicalRouteInput(
-                ride.train, country: country, registry: registry, timetable: timetable)
-        }
-        func solve(_ ride: Census.Ride, allowLegacy: Bool) throws -> RideRouteResolution.Result {
-            let input = canonical[ride.train.id]!
-            var resolver = RideRouteResolution(
-                inputs: data.inputs, country: country, network: data.prepared,
-                officialIntervals: data.inputs.officialIntervals, graphStore: data.graphStore)
-            return try resolver.resolve(.init(
-                train: registry.upgradeIfReady(ride.train), canonicalTrain: input.train,
-                databaseSections: input.databaseSections, databaseProvenance: input.databaseProvenance),
-                allowLegacy: allowLegacy)
-        }
-        func emitsRide(_ result: RideRouteResolution.Result) -> Bool {
-            switch result.disposition {
-            case .geometry, .unavailable: true
-            case .unsupported, .awaitingConfirmation, .noSections: false
-            }
-        }
-        var outcomes: [String: (pass: String, result: RideRouteResolution.Result)] = [:]
-        var missing: [Census.Ride] = []
-        for ride in rides {
-            let result = try solve(ride, allowLegacy: false)
-            outcomes[ride.train.id] = ("inference", result)
-            if !emitsRide(result) { missing.append(ride) }
-        }
-        for ride in missing {
-            outcomes[ride.train.id] = ("legacy", try solve(ride, allowLegacy: true))
-        }
-
+        let outcomes = try Census.solveScope(
+            scope: scope, rides: rides, data: data, registry: registry, timetable: timetable,
+            graphStores: .shared(budget: Census.graphNodeBudget, clearMemoBeforeEachSolve: false))
         return try rides.map { ride in
-            let (pass, result) = outcomes[ride.train.id]!
-            let timetableMatched = canonical[ride.train.id]!.databaseProvenance != nil
-            let disposition = String(describing: result.disposition)
-            guard emitsRide(result) else {
-                return Ride(id: ride.train.id, store: ride.store, scope: scope.key, pass: pass,
-                            disposition: disposition, timetableMatched: timetableMatched, sections: [])
-            }
-            var sections: [Section] = []
-            for (index, section) in result.expectedSections.enumerated() {
-                var kinds: [String] = []
-                let own = result.physicalGaps.filter { $0.segmentIndex == index }
-                if own.contains(where: \.isBoundary) { kinds.append("boundary") }
-                if own.contains(where: \.isUnproven) { kinds.append("unproven") }
-                if own.contains(where: { !$0.isBoundary && !$0.isUnproven }) { kinds.append("interior") }
-                // The fixture stores one gap label per section; refuse to hide a second kind.
-                guard kinds.count <= 1 else {
-                    throw OracleError.mixedGapKinds(ride: ride.train.id, section: index, kinds: kinds)
-                }
-                let gap = kinds.first ?? "none"
-                let parts = result.segments
-                    .filter { $0.segmentIndex == index }
-                    .sorted { $0.partIndex < $1.partIndex }
-                    .map { segment -> Part in
-                        let route = segment.physicalRoute
-                        return Part(
-                            part: segment.partIndex,
-                            lineIDs: route?.lines.map(\.lineID) ?? [],
-                            lineKm: route?.lines.map { round3($0.km) } ?? [],
-                            intervalCodes: route?.intervals.map(\.code) ?? [],
-                            intervalDirections: route?.intervals.map(\.direction) ?? [],
-                            sourceKm: round3(Census.length(segment.sourceCoordinates) / 1000),
-                            drawnKm: round3(Census.length(segment.drawnCoordinates) / 1000),
-                            temporalKind: segment.temporalKind.rawValue,
-                            provenance: route?.provenance.rawValue)
-                    }
-                sections.append(Section(index: index, from: section.from, to: section.to, gap: gap, parts: parts))
-            }
-            return Ride(id: ride.train.id, store: ride.store, scope: scope.key, pass: pass,
-                        disposition: disposition, timetableMatched: timetableMatched, sections: sections)
+            let outcome = outcomes[ride.train.id]!
+            return try record(
+                ride: ride, scope: scope, pass: outcome.pass, result: outcome.result,
+                timetableMatched: outcome.timetableMatched)
         }
+    }
+
+    /// The decision fields of one solved ride. Shared with the solve benchmark
+    /// and the history-independence test, which compare these records.
+    static func record(
+        ride: Census.Ride, scope: Census.Scope, pass: String, result: RideRouteResolution.Result,
+        timetableMatched: Bool
+    ) throws -> Ride {
+        let disposition = String(describing: result.disposition)
+        switch result.disposition {
+        case .geometry, .unavailable: break
+        case .unsupported, .awaitingConfirmation, .noSections:
+            return Ride(id: ride.train.id, store: ride.store, scope: scope.key, pass: pass,
+                        disposition: disposition, timetableMatched: timetableMatched, sections: [])
+        }
+        var sections: [Section] = []
+        for (index, section) in result.expectedSections.enumerated() {
+            var kinds: [String] = []
+            let own = result.physicalGaps.filter { $0.segmentIndex == index }
+            if own.contains(where: \.isBoundary) { kinds.append("boundary") }
+            if own.contains(where: \.isUnproven) { kinds.append("unproven") }
+            if own.contains(where: { !$0.isBoundary && !$0.isUnproven }) { kinds.append("interior") }
+            // The fixture stores one gap label per section; refuse to hide a second kind.
+            guard kinds.count <= 1 else {
+                throw OracleError.mixedGapKinds(ride: ride.train.id, section: index, kinds: kinds)
+            }
+            let gap = kinds.first ?? "none"
+            let parts = result.segments
+                .filter { $0.segmentIndex == index }
+                .sorted { $0.partIndex < $1.partIndex }
+                .map { segment -> Part in
+                    let route = segment.physicalRoute
+                    return Part(
+                        part: segment.partIndex,
+                        lineIDs: route?.lines.map(\.lineID) ?? [],
+                        lineKm: route?.lines.map { round3($0.km) } ?? [],
+                        intervalCodes: route?.intervals.map(\.code) ?? [],
+                        intervalDirections: route?.intervals.map(\.direction) ?? [],
+                        sourceKm: round3(Census.length(segment.sourceCoordinates) / 1000),
+                        drawnKm: round3(Census.length(segment.drawnCoordinates) / 1000),
+                        temporalKind: segment.temporalKind.rawValue,
+                        provenance: route?.provenance.rawValue)
+                }
+            sections.append(Section(index: index, from: section.from, to: section.to, gap: gap, parts: parts))
+        }
+        return Ride(id: ride.train.id, store: ride.store, scope: scope.key, pass: pass,
+                    disposition: disposition, timetableMatched: timetableMatched, sections: sections)
     }
 
     static func round3(_ value: Double) -> Double { (value * 1000).rounded() / 1000 }

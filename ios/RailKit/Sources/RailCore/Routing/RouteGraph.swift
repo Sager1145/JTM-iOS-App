@@ -3063,6 +3063,30 @@ public enum RouteGraph {
 
 extension RouteGraph {
 
+    /// Counts and wall time of every graph build a store performs, by kind
+    /// (`full`, `regional`, `corridor`). Always on, so a Release benchmark can
+    /// report builds without signposts (`SignpostRecorder` is Debug only). One
+    /// lock and two additions per build, which is negligible beside the build.
+    @_spi(Testing) public enum BuildLog {
+        public struct Entry: Sendable, Equatable {
+            public var count = 0
+            public var seconds = 0.0
+            public var nodes = 0
+        }
+        private static let state = OSAllocatedUnfairLock(initialState: [String: Entry]())
+        public static func reset() { state.withLock { $0.removeAll() } }
+        public static func snapshot() -> [String: Entry] { state.withLock { $0 } }
+        static func record(kind: String, seconds: Double, nodes: Int) {
+            state.withLock {
+                var entry = $0[kind] ?? Entry()
+                entry.count += 1
+                entry.seconds += seconds
+                entry.nodes += nodes
+                $0[kind] = entry
+            }
+        }
+    }
+
     public enum GraphCachePolicy: Sendable {
         /// Historical cache behavior, retained for parity/export callers.
         case standard
@@ -3140,9 +3164,15 @@ extension RouteGraph {
             } else {
                 plans = nil
             }
+            let started = ContinuousClock.now
             let graph = RouteGraph.build(compiled: compiled(), featureIndices: featureIndices,
                                          junctions: junctions, plans: plans,
                                          identityPeriods: identityPeriods, kind: kind)
+            let elapsed = ContinuousClock.now - started
+            BuildLog.record(
+                kind: kind,
+                seconds: Double(elapsed.components.seconds) + Double(elapsed.components.attoseconds) * 1e-18,
+                nodes: graph.nodes.count)
             if let sourceSnapshotID, augment == nil {
                 graph.qualifySourceProofs(.init(snapshotID: sourceSnapshotID, featureIndices: featureIndices))
             }
