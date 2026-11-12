@@ -4285,7 +4285,9 @@ def build(
         }
         if region in topology_reports:
             report_regions[region]["topology"] = {
-                name: ({"count": len(value), "first": value[:50]} if isinstance(value, list) else value)
+                name: ({"count": len(value),
+                        "first": value if name in ("unplacedJunctionRows", "unplacedThroughServiceRows") else value[:50]}
+                       if isinstance(value, list) else value)
                 for name, value in topology_reports[region].items()}
 
     # `byLineId` keys from every reviewed render-group policy file that name

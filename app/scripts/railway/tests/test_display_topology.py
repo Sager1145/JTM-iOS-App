@@ -343,24 +343,56 @@ class DerivationTests(unittest.TestCase):
             build([source("jp|jp-d", line, True, fragments, None, chains, origins=[(0, 0), (1, 1)])])
 
     def test_build_stops_on_what_the_ledgers_do_not_allow(self):
+        ledger_lengths = [{"line": line, "interval": interval}
+                          for line, interval in sorted(topology.KNOWN_LENGTH_MISMATCHES)]
+        ledger_rows = [{"id": id_, "reason": reason}
+                       for id_, reason in sorted(topology.KNOWN_UNPLACED_JUNCTION_ROWS)]
         clean = topology.new_report()
-        clean.update({"lines": 1, "unplacedJunctionRows": [], "unplacedThroughServiceRows": []})
+        clean.update({"lines": 1, "unplacedJunctionRows": ledger_rows, "unplacedThroughServiceRows": [],
+                      "lengthMismatchEdges": ledger_lengths})
         topology.enforce_invariants("jp", clean)
         for name, value in (("unanchoredStations", ["jp|x:S"]), ("slotMismatches", ["jp|x:S"]),
                             ("edgesWithoutGeometry", ["jp|x#0"]), ("overviewAlignFailures", 1),
-                            ("lengthMismatchEdges", [{"line": "jp|x", "interval": 0}]),
-                            ("unplacedJunctionRows", [{"id": "new-row", "reason": "noTwoLinePair"}]),
+                            ("lengthMismatchEdges", ledger_lengths + [{"line": "jp|x", "interval": 0}]),
+                            ("unplacedJunctionRows", ledger_rows + [{"id": "new-row", "reason": "noTwoLinePair"}]),
                             ("unplacedThroughServiceRows", [{"id": "T"}])):
             with self.subTest(name=name):
                 report = dict(clean, **{name: value})
                 with self.assertRaises(topology.TopologyError):
                     topology.enforce_invariants("jp", report)
-        ledger = sorted(topology.KNOWN_LENGTH_MISMATCHES)[0]
-        row = next(iter(topology.KNOWN_UNPLACED_JUNCTION_ROWS))
-        topology.enforce_invariants("jp", dict(clean, lengthMismatchEdges=[{"line": ledger[0], "interval": ledger[1]}],
-                                               unplacedJunctionRows=[{"id": row[0], "reason": row[1]}]))
+        # Two-sided: a ledger entry the build no longer reports must be removed from the ledger.
+        with self.subTest(name="stale length entry"):
+            with self.assertRaises(topology.TopologyError):
+                topology.enforce_invariants("jp", dict(clean, lengthMismatchEdges=ledger_lengths[1:]))
+        with self.subTest(name="stale junction row"):
+            with self.assertRaises(topology.TopologyError):
+                topology.enforce_invariants("jp", dict(clean, unplacedJunctionRows=ledger_rows[1:]))
         with self.assertRaises(topology.TopologyError):     # the ledgers belong to jp alone
-            topology.enforce_invariants("tw", dict(clean, lengthMismatchEdges=[{"line": ledger[0], "interval": ledger[1]}]))
+            topology.enforce_invariants("tw", dict(topology.new_report(), lines=1, unplacedJunctionRows=[],
+                                                   unplacedThroughServiceRows=[],
+                                                   lengthMismatchEdges=ledger_lengths[:1]))
+
+    def test_overview_with_a_different_part_count_is_reported(self):
+        mapper = topology._OverviewMap([[[0.0, 0.0], [0.001, 0.0]]],
+                                       [[[0.0, 0.0], [0.001, 0.0]], [[0.001, 0.0], [0.002, 0.0]]])
+        self.assertEqual(mapper.failures, 1)
+        self.assertEqual(mapper.position(0), topology.UNSET)
+
+    def test_a_station_between_only_withheld_intervals_is_not_unanchored(self):
+        line, fragments, pieces = self.non_continuous_line()
+        _, report, _ = build([source("jp|jp-n", line, False, fragments, None, pieces=pieces, withheld={1})])
+        self.assertEqual(report["unanchoredStations"], [])
+
+    def test_a_station_at_a_withheld_end_interval_is_not_unanchored(self):
+        a = [(0.0, 0.0), (0.001, 0.0)]
+        stations = [station("E0", 0.0, 0.0), station("E1", 0.001, 0.0), station("E2", 0.001, 0.001)]
+        line = package_line("jp-e", stations, [0.1, 0.1])
+        fragments = [{"lineKey": "jp|jp-e", "lane": 0.0, "parts": [[list(p) for p in a]]}]
+        decoded, report, _ = build([source("jp|jp-e", line, False, fragments, None,
+                                           pieces=[(0.0, 0, a)], withheld={1})])
+        self.assertEqual(report["unanchoredStations"], [])
+        nodes = decoded["lines"][0]["nodes"]
+        self.assertTrue(nodes[2]["flags"] & topology.NODE_NO_CHAIN_SLOT)
 
     def test_fragment_that_is_not_a_slice_of_the_builders_chain_stops_the_build(self):
         line, chain, fragment, overview, _ = self.continuous_line()
@@ -840,9 +872,9 @@ class FullBuildTests(unittest.TestCase):
         report = json.loads((self.directory / "display-network-report.json").read_text())
         topology_report = report["regions"]["jp"]["topology"]
         rows = topology_report["unplacedJunctionRows"]
-        self.assertEqual(len(rows["first"]), rows["count"])
+        self.assertEqual(len(rows["first"]), rows["count"])      # the report keeps this list whole
         found = {(row["id"], row["reason"]) for row in rows["first"]}
-        self.assertEqual(found - self.KNOWN_UNPLACED_JUNCTION_ROWS, set())
+        self.assertEqual(found, set(self.KNOWN_UNPLACED_JUNCTION_ROWS))
         self.assertEqual(topology_report["unplacedThroughServiceRows"]["count"], 0)
 
     def test_every_region(self):

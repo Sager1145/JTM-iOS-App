@@ -498,6 +498,8 @@ class _OverviewMap:
         self.ok = len(full_parts) == len(overview_parts) and bool(full_parts)
         self.failures = 0
         if not self.ok:
+            if overview_parts:      # an overview exists but does not match: reported, not silently unset
+                self.failures += 1
             return
         self.full_points, self.full_bounds = join_parts([_tuples(p) for p in full_parts])
         self.points, self.bounds = join_parts([_tuples(p) for p in overview_parts])
@@ -861,7 +863,11 @@ def _derive_parts(source: LineSource, report: dict):
             last = incoming.runs[-1]
             node = Node(row[0], last.chain, last.full_to, last.overview_to, row[2], row[3], 0)
         else:
-            report["unanchoredStations"].append(f"{source.key}:{row[0]}")
+            adjacent = [e for e in (outgoing, incoming) if e is not None]
+            # A station whose every adjacent interval is withheld has nothing drawn to sit on:
+            # it keeps NODE_NO_CHAIN_SLOT, as the contract says, and is not an error.
+            if not adjacent or not all(e.flags & EDGE_WITHHELD for e in adjacent):
+                report["unanchoredStations"].append(f"{source.key}:{row[0]}")
         nodes.append(node)
     _settle_runs(edges, nodes, station_count, is_loop, always=True)
     return nodes, edges, flat
@@ -1295,16 +1301,24 @@ def enforce_invariants(region: str, report: dict) -> None:
     if report["overviewAlignFailures"]:
         problems.append(f"overviewAlignFailures: {report['overviewAlignFailures']}")
     known_lengths = KNOWN_LENGTH_MISMATCHES if region == "jp" else frozenset()
+    reported_lengths = {(row["line"], row["interval"]) for row in report["lengthMismatchEdges"]}
     extra = [row for row in report["lengthMismatchEdges"]
              if (row["line"], row["interval"]) not in known_lengths]
     if extra:
         problems.append(f"lengthMismatchEdges outside the ledger: {extra[:5]}")
+    if report["lines"]:     # the ledger is two-sided: a fixed edge must leave it
+        stale = sorted(known_lengths - reported_lengths)
+        if stale:
+            problems.append(f"KNOWN_LENGTH_MISMATCHES entries no longer reported (remove them): {stale[:5]}")
     if report["lines"]:     # a region with no lines has nothing to place the registry rows on
         known_rows = KNOWN_UNPLACED_JUNCTION_ROWS if region == "jp" else frozenset()
         rows = [row for row in report["unplacedJunctionRows"]
                 if (row["id"], row["reason"]) not in known_rows]
         if rows:
             problems.append(f"unplacedJunctionRows outside the ledger: {rows[:5]}")
+        stale_rows = sorted(known_rows - {(row["id"], row["reason"]) for row in report["unplacedJunctionRows"]})
+        if stale_rows:
+            problems.append(f"KNOWN_UNPLACED_JUNCTION_ROWS entries no longer reported (remove them): {stale_rows[:5]}")
         if report["unplacedThroughServiceRows"]:
             problems.append(f"unplacedThroughServiceRows: {report['unplacedThroughServiceRows'][:5]}")
     if problems:
