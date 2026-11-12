@@ -206,6 +206,23 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
         var historyBytes: Int?
         var historySHA256: String?
         var temporalBank: TemporalBank? = nil
+        /// Topology file (`{region}.topology.bin`, format in
+        /// `docs/reference/rail-topology-format.md`). Absent until the builder
+        /// writes one; all three fields travel together.
+        var topologyFile: String?
+        var topologyBytes: Int?
+        var topologySHA256: String?
+
+        var hasTopology: Bool { topologyFile != nil }
+
+        /// Either all three topology fields name a well-formed file, or none is set.
+        var hasConsistentTopologyFields: Bool {
+            guard let topologyFile else { return topologyBytes == nil && topologySHA256 == nil }
+            return topologyFile == "\(region).topology.bin"
+                && (topologyBytes ?? 0) > 0
+                && topologySHA256?.count == 64
+                && topologySHA256?.allSatisfy(\.isHexDigit) == true
+        }
 
         var hasRequiredHistoryMetadata: Bool {
             historyFile == "\(region).display-history.json"
@@ -314,6 +331,7 @@ struct RailDisplayNetworkManifest: Decodable, Sendable {
                 && record.sha256.allSatisfy(\.isHexDigit)
                 && (0...30).contains(record.minZoomMapLibre)
                 && record.hasValidBounds
+                && record.hasConsistentTopologyFields
         }) else { throw RailDisplayNetworkError.invalidRegionIndex }
         guard lines.values.allSatisfy({ line in
             line.bounds != nil
