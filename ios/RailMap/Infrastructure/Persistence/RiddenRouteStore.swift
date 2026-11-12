@@ -362,6 +362,9 @@ final class RiddenRouteStore {
     ///   Also applies, without being asked, while a repair is still settling
     ///   (`drawnBaseline` is not empty): a load that supersedes it must not
     ///   blank the map either.
+    /// - Parameter retryFailures: solve trips whose stored answer is a failure
+    ///   again (Repair). Otherwise a stored failure is kept, so a launch does
+    ///   not retry what could not be solved.
     /// - Parameter solveMisses: false settles from the route cache alone. A
     ///   trip the cache cannot answer is neither solved nor marked completed,
     ///   so the next ordinary load solves it.
@@ -369,7 +372,8 @@ final class RiddenRouteStore {
         trains: [Train], preferredTrainID: String? = nil,
         priority: TaskPriority = .userInitiated,
         keepDrawn: Bool = false,
-        solveMisses: Bool = true
+        solveMisses: Bool = true,
+        retryFailures: Bool = false
     ) {
         bindPendingOwner()
         // Trips in a disabled region stay in the store but are never cached,
@@ -443,7 +447,7 @@ final class RiddenRouteStore {
         loadTask = Task(priority: priority) {
             await Self.$activePendingOwner.withValue(owner) {
             do {
-                let preread = try await Self.loadPreferred(id: preferredTrainID, wanted: pending)
+                let preread = try await Self.loadPreferred(id: preferredTrainID, wanted: pending, retryFailures: retryFailures)
                 let primed = preread.rides.first
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
@@ -464,7 +468,7 @@ final class RiddenRouteStore {
                 decoded = try await Self.decode(
                     wanted: pending, requestedOrder: wantedIDs,
                     preferredTrainID: preferredTrainID, primed: primed, preread: preread,
-                    fresh: fresh
+                    fresh: fresh, retryFailures: retryFailures
                 ) { partial in
                     if inbox.post(partial) {
                         Task { @MainActor in
@@ -619,9 +623,10 @@ final class RiddenRouteStore {
 
     /// Cached routes are not stale — the cache rejects an entry itself when
     /// its version, semantics, digest or resource revision no longer match —
-    /// so repair keeps the cache and the memos of what succeeded. It forgets
-    /// only what failed, reads every trip back from its cache file, and
-    /// solves the trips that have none.
+    /// so repair keeps the cache and the memos of what succeeded. It reads every
+    /// trip back from its cache file and solves exactly the trips that have no
+    /// valid entry or whose stored entry is a failure; a solved entry is never
+    /// discarded.
     private func repairAll() {
         if case .loading = state, loadingInputs != nil, loadingInputs == lastRequestedInputs {
             // A load for exactly this set is already running; it is the repair.
@@ -635,7 +640,7 @@ final class RiddenRouteStore {
         reloadMode = .repair
         drawnBaseline = completedInputs
         completedInputs = [:]
-        load(trains: trains, priority: .utility, keepDrawn: true)
+        load(trains: trains, priority: .utility, keepDrawn: true, retryFailures: true)
         if case .loading = state { reloadingAll = true } else { reloadsFinished += 1 }
     }
 
@@ -723,10 +728,10 @@ final class RiddenRouteStore {
     /// A miss hands its canonical input and digest to the decoder, so the
     /// preferred journey is enriched and read once rather than three times.
     @concurrent private nonisolated static func loadPreferred(
-        id: String?, wanted: [String: Train]
+        id: String?, wanted: [String: Train], retryFailures: Bool
     ) async throws -> CacheBatch {
         guard let id, let train = wanted[id] else { return CacheBatch() }
-        return try await loadCached([train], country: RouteScope(train).code)
+        return try await loadCached([train], country: RouteScope(train).code, retryFailures: retryFailures)
     }
 
     func clear() {
@@ -1056,7 +1061,7 @@ final class RiddenRouteStore {
     ) async throws -> DrawnRide? {
         try Task.checkCancellation()
         guard !train.requiresRouteConfirmation else { return nil }
-        let cached = try await loadCached([train], country: scope.code)
+        let cached = try await loadCached([train], country: scope.code, retryFailures: true)
         cached.noteCurrentDigests()
         RouteDigestIndexStore.shared.flush()
         if let ride = cached.rides.first { return ride }
@@ -1121,6 +1126,7 @@ final class RiddenRouteStore {
         wanted: [String: Train], requestedOrder: [String],
         preferredTrainID: String?, primed: DrawnRide? = nil, preread: CacheBatch = CacheBatch(),
         fresh: FreshSolves? = nil,
+        retryFailures: Bool = false,
         publish: @Sendable ([DrawnRide]) async -> Void = { _ in }
     ) async throws -> [DrawnRide] {
         var result: [DrawnRide] = primed.map { [$0] } ?? []
@@ -1154,7 +1160,8 @@ final class RiddenRouteStore {
         // over which.
         for scope in RouteScope.ordered(byScope.keys) where scope.home.isEnabled {
             guard let trains = byScope[scope] else { continue }
-            let cached = try await loadCachedConcurrently(trains, country: scope.code, prepared: prepared)
+            let cached = try await loadCachedConcurrently(
+                trains, country: scope.code, prepared: prepared, retryFailures: retryFailures)
             cached.noteCurrentDigests()
             prepared.merge(cached.prepared) { _, new in new }
             result += cached.rides
@@ -1568,7 +1575,7 @@ final class RiddenRouteStore {
                     expectedSections: canonicalSections(canonical), indicesAreAuthoritative: shared.indicesAreAuthoritative,
                     physicalGaps: shared.physicalGaps, timetableFailure: routeInput.timetableFailure)
                 results.append(ride)
-                if !ride.segments.isEmpty, let digest {
+                if let digest {
                     try? saveCache(ride, digest: digest, country: scope.code, resourceScope: scope.key)
                 }
                 await publish(results)
@@ -1977,8 +1984,7 @@ final class RiddenRouteStore {
                     if let ride = result.rides.first {
                         let train = trains[nextIndex]
                         let canonical = try await canonicalRouteInput(train, country: scope.code).train
-                        if !ride.segments.isEmpty,
-                           let digest = await routeCacheDigest(canonical, raw: train, country: scope.code) {
+                        if let digest = await routeCacheDigest(canonical, raw: train, country: scope.code) {
                             try? saveCache(
                                 ride, digest: digest, country: scope.code, resourceScope: scope.key)
                         }
@@ -2064,7 +2070,7 @@ final class RiddenRouteStore {
                 train, country: country, segments: segments, expectedSections: result.expectedSections,
                 physicalGaps: result.physicalGaps, timetableFailure: routeInput.timetableFailure)
             rides.append(ride)
-            if saveRoutes, !segments.isEmpty,
+            if saveRoutes,
                let digest = await routeCacheDigest(canonical, raw: train, country: country) {
                 try? saveCache(ride, digest: digest, country: country, resourceScope: scope.key)
             }
@@ -2422,11 +2428,13 @@ final class RiddenRouteStore {
     }
 
     private nonisolated static func loadCached(
-        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:]
+        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:],
+        retryFailures: Bool = false
     ) async throws -> CacheBatch {
         var batch = CacheBatch()
         for train in trains {
-            batch.append(try await readCached(train, country: country, prepared: prepared[train.id]), for: train)
+            batch.append(try await readCached(
+                train, country: country, prepared: prepared[train.id], retryFailures: retryFailures), for: train)
         }
         return batch
     }
@@ -2456,10 +2464,11 @@ final class RiddenRouteStore {
     /// and that order reaches the map: it is the order the overlays are added
     /// in, and therefore which line is drawn over which.
     private nonisolated static func loadCachedConcurrently(
-        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:]
+        _ trains: [Train], country: String, prepared: [String: PreparedRoute] = [:],
+        retryFailures: Bool = false
     ) async throws -> CacheBatch {
         guard trains.count > 1 else {
-            return try await loadCached(trains, country: country, prepared: prepared)
+            return try await loadCached(trains, country: country, prepared: prepared, retryFailures: retryFailures)
         }
         let interval = RailSignpost.data.begin("route.cacheRead")
         defer { RailSignpost.data.end("route.cacheRead", interval) }
@@ -2474,7 +2483,8 @@ final class RiddenRouteStore {
                 next += 1
                 group.addTask {
                     try Task.checkCancellation()
-                    return (position, try await readCached(train, country: country, prepared: known))
+                    return (position, try await readCached(
+                        train, country: country, prepared: known, retryFailures: retryFailures))
                 }
             }
             for _ in 0..<Swift.min(cacheReadWidth, trains.count) { addNext() }
@@ -2524,7 +2534,7 @@ final class RiddenRouteStore {
     /// runs timetable enrichment and the digest, and records the answer.
     /// `prepared` is a miss this load already computed: it is returned as is.
     private nonisolated static func readCached(
-        _ train: Train, country: String, prepared: PreparedRoute? = nil
+        _ train: Train, country: String, prepared: PreparedRoute? = nil, retryFailures: Bool = false
     ) async throws -> CacheRead {
         guard !train.requiresRouteConfirmation else { return .miss(nil, digest: nil) }
         if let prepared, prepared.train == train { return .miss(prepared, digest: prepared.digest) }
@@ -2602,7 +2612,12 @@ final class RiddenRouteStore {
                     validTo: cached.validTo, temporalKind: cached.temporalKind,
                     physicalRoute: cached.physicalRoute)
             }
-        guard !segments.isEmpty else { return .miss(computed, digest: digest) }
+        switch RouteCacheEntryPolicy.decide(
+            hasDrawableSegments: !segments.isEmpty, storedFailure: cache.failure,
+            retryFailures: retryFailures) {
+        case .solve: return .miss(computed, digest: digest)
+        case .reuseSolved, .reuseFailure: break
+        }
         return .hit(drawnRide(
             train,
             country: country,
@@ -2656,9 +2671,18 @@ final class RiddenRouteStore {
         return scope.split(separator: "+").contains("jp") ? rail + "|timetable:" + resources.timetableRevision : rail
     }
 
+    /// Stores a solved ride, or, when it has no geometry, the trip's failure
+    /// under the same key, so the next load does not solve it again.
     private nonisolated static func saveCache(
         _ ride: DrawnRide, digest: String, country: String, resourceScope: String
     ) throws {
+        var failure: String?
+        if ride.segments.isEmpty {
+            guard RouteCacheEntryPolicy.shouldStoreFailure(
+                drawnSegments: 0, hasResourceWarnings: !ride.resourceWarnings.isEmpty) else { return }
+            failure = RouteCacheEntryPolicy.failureReason(
+                expectedSections: ride.expectedSectionCount, physicalGapCount: ride.physicalGaps.count)
+        }
         guard let revision = runtimeResourceRevision(scope: resourceScope) else { return }
         let directory = cacheDirectory(country: country)
         try FileManager.default.createDirectory(
@@ -2675,7 +2699,7 @@ final class RiddenRouteStore {
                     historyIDs: $0.historyIDs, validFrom: $0.validFrom,
                     validTo: $0.validTo, temporalKind: $0.temporalKind,
                     physicalRoute: $0.physicalRoute)
-            })
+            }, failure: failure)
         try JSONEncoder().encode(cache).write(
             to: cacheURL(country: country, digest: digest), options: .atomic)
     }
@@ -2865,6 +2889,9 @@ final class RiddenRouteStore {
         var indicesAreAuthoritative: Bool? = nil
         let physicalGaps: [PhysicalGap]
         let segments: [CachedSegment]
+        /// Set (with empty `segments`) when the solver found no route for this
+        /// trip. Older files lack it and older builds read such a file as a miss.
+        var failure: String? = nil
     }
 
     private struct CachedSegment: Codable {
@@ -3016,7 +3043,7 @@ private final class PartialRideInbox: Sendable {
 /// partial can never land on top of that.
 @MainActor
 private final class PartialRidePublication {
-    static let interval: Duration = .milliseconds(750)
+    static let interval: Duration = .seconds(5)
 
     private var lastApplied: ContinuousClock.Instant?
     private var pending: [RiddenRouteStore.DrawnRide]?

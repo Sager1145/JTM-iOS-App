@@ -498,6 +498,7 @@
         "ios/RailKit/Sources/RailCore/Routing/ResolvedRouteExport.swift",
         "ios/RailKit/Sources/RailCore/Routing/RideRouteResolution.swift",
         "ios/RailKit/Sources/RailCore/Routing/RouteBatchInspection.swift",
+        "ios/RailKit/Sources/RailCore/Routing/RouteCacheEntryPolicy.swift",
         "ios/RailKit/Sources/RailCore/Routing/RouteDigestIndex.swift",
         "ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift",
         "ios/RailKit/Sources/RailCore/Routing/RouteNetwork.swift",
