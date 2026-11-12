@@ -125,6 +125,34 @@ enum RailDisplayNetwork {
         return file
     }
 
+    /// Maps a region's topology file, or nil when the manifest names none.
+    /// Throws when the file is missing, its size or (debug) digest differs
+    /// from the manifest, it is not a valid topology file, or it was built
+    /// against a different display blob than the manifest's.
+    static func topology(
+        _ record: RailDisplayNetworkManifest.RegionRecord, bundle: Bundle = .main
+    ) throws -> RailTopology? {
+        guard let name = record.topologyFile else { return nil }
+        guard let url = bundle.url(
+            forResource: name, withExtension: nil, subdirectory: subdirectory)
+        else { throw RailDisplayNetworkError.missingRegion(record.region) }
+        let data = try Data(contentsOf: url, options: .alwaysMapped)
+        guard data.count == record.topologyBytes else {
+            throw RailDisplayNetworkError.corruptRegion(record.region)
+        }
+        #if DEBUG
+        guard SHA256.hash(data: data).hex == record.topologySHA256 else {
+            throw RailDisplayNetworkError.corruptRegion(record.region)
+        }
+        #endif
+        let topology = try RailTopology(data: data)
+        guard topology.header.region == record.region,
+              topology.header.displaySHA256.map({ String(format: "%02x", $0) }).joined()
+                  == record.sha256
+        else { throw RailDisplayNetworkError.invalidRegionPayload(record.region) }
+        return topology
+    }
+
     /// Reads station identities separately from viewport geometry, so selected
     /// journeys can rank hubs even with the network hidden or evicted.
     static func stationIdentity(

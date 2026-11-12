@@ -47,7 +47,7 @@ class ResourceRevisionTests(unittest.TestCase):
                 f"{family}{suffix}.json" for family in
                 ("stations", "rail-sections", "station-readings", "rail-history", "train-store")]
             names += [f"rail-display-network/{region}.{ending}" for ending in
-                      ("display.bin", "stations.json", "display-history.json")]
+                      ("display.bin", "stations.json", "display-history.json", "topology.bin")]
             for name in names:
                 with self.subTest(region=region, resource=name):
                     before = self.manifest()
@@ -77,6 +77,24 @@ class ResourceRevisionTests(unittest.TestCase):
         before = self.manifest()
         (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')
         self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+
+    def test_topology_builder_invalidates_all_regions(self):
+        # The topology file is compiled by the display builder from its library.
+        path = self.repo / "app/scripts/railway/lib/display_topology.py"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("one")
+        before = self.manifest()
+        path.write_text("two")
+        self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+
+    def test_through_service_catalog_invalidates_only_japan(self):
+        # Only the jp topology file's links are compiled from the catalog.
+        path = self.repo / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("one")
+        before = self.manifest()
+        path.write_text("two")
+        self.assertEqual(self.changed_regions(before), {"jp"})
 
     def test_removed_optional_history_invalidates_revision(self):
         history = self.bundle / "rail-history-tw.json"

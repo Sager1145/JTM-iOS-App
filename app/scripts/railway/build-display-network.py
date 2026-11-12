@@ -46,6 +46,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "lib"))
 
 import display_identity  # noqa: E402
+import display_topology  # noqa: E402
 import na_geo  # noqa: E402
 
 
@@ -293,6 +294,9 @@ RENDER_GROUP_POLICY_FORMATS = frozenset({
 # reader always had.
 RENDER_GROUP_POLICY_FILENAMES = ("na-render-groups.json", "jp-render-groups.json")
 REGIONS = ("jp", "tw", "hk", "mo", "kr", "cn")
+# Regions the app routes in. cn is built and shipped for the map but has no
+# topology file: its region is disabled.
+TOPOLOGY_REGIONS = ("jp", "tw", "hk", "mo", "kr")
 # Regions whose railways the native map draws as ONE continuous stroke per
 # chain of intervals, with the screen-space lane offset and corner rounding
 # baked into the geometry on device (RailCore ContinuousStroke, the port of
@@ -381,10 +385,19 @@ def _chain_provenance_rows(chain: dict) -> list[tuple]:
     return rows
 
 
+def _fragment_origins(fragments: list[dict]) -> dict[tuple[str, int], tuple[int, int]]:
+    """(line key, final chain) to (original chain, first vertex in it) for every
+    continuous fragment: where the topology file places the fragment. Read
+    before `_drop_memory_only_fragment_fields` removes the record."""
+    return {(fragment["lineKey"], int(fragment["chain"])): tuple(fragment["sourceChain"])
+            for fragment in fragments if fragment.get("continuous")}
+
+
 def _drop_memory_only_fragment_fields(fragments: list[dict]) -> None:
     for fragment in fragments:
         fragment.pop("preWeldParts", None)
         fragment.pop("partLengths", None)
+        fragment.pop("sourceChain", None)
 
 
 def decoded_intervals(line: dict) -> list[list[list[float]]]:
@@ -640,8 +653,9 @@ def ramped_lane_rows(rows: list[list], total: float) -> list[tuple[float, float,
 
 def split_intervals_by_lane(
     intervals: list[list[list[float]]], rows: list[list],
-) -> list[tuple[float, list[list[float]]]]:
+) -> list[tuple[float, list[list[float]], int]]:
     """Split ordered interval geometry wherever its screen-space lane changes.
+    Each piece carries the index of the interval it was cut from.
 
     Lane rows use the cumulative measure of display part 0. Current reviewed
     data has 99% of its rows on that main part; nonzero part rows are retained
@@ -650,7 +664,8 @@ def split_intervals_by_lane(
     total = sum(lane_measure_length(interval) for interval in intervals)
     profile = ramped_lane_rows([row for row in rows if int(row[1]) == 0], total)
     if not profile:
-        return [(0.0, interval) for interval in intervals if len(interval) >= 2]
+        return [(0.0, interval, index) for index, interval in enumerate(intervals)
+                if len(interval) >= 2]
     boundaries = sorted({
         max(0.0, min(total, value))
         for start, end, _ in profile for value in (start, end)
@@ -668,9 +683,9 @@ def split_intervals_by_lane(
         return next((lane for start, end, lane in profile
                      if start <= held <= end), 0.0)
 
-    pieces: list[tuple[float, list[list[float]]]] = []
+    pieces: list[tuple[float, list[list[float]], int]] = []
     measure = 0.0
-    for interval in intervals:
+    for interval_index, interval in enumerate(intervals):
         current_lane = None
         current: list[list[float]] = []
         emitted_at = len(pieces)
@@ -695,21 +710,21 @@ def split_intervals_by_lane(
                 ]
                 if current_lane != lane:
                     if len(current) >= 2:
-                        pieces.append((float(current_lane), current))
+                        pieces.append((float(current_lane), current, interval_index))
                     current_lane, current = lane, [a, b]
                 else:
                     append_distinct(current, [a, b])
             measure += length
         if len(current) >= 2:
-            pieces.append((float(current_lane), current))
+            pieces.append((float(current_lane), current, interval_index))
         # One rebuilt piece for this interval is still that interval. A lane
         # cut that produced several pieces is not the whole pre-weld span, so
         # those pieces keep today's display-vertex test.
         if len(pieces) == emitted_at + 1:
-            lane, piece = pieces[-1]
+            lane, piece, owner = pieces[-1]
             pre_weld, length_km = _interval_provenance(interval)
             if pre_weld is not None or length_km is not None:
-                pieces[-1] = (lane, DisplayInterval(piece, pre_weld, length_km))
+                pieces[-1] = (lane, DisplayInterval(piece, pre_weld, length_km), owner)
     return pieces
 
 
@@ -2251,6 +2266,8 @@ def _split_mixed_continuous_chains(
                 subs.append(_subchain_fragment(
                     fragment, parts[start:end], measure_start, measure_end,
                     chain, keep_join=(offset == 0)))
+                source_chain, source_vertex = fragment["sourceChain"]
+                subs[-1]["sourceChain"] = [source_chain, source_vertex + bounds[start][0]]
                 sub_stamps.append(part_stamps[start:end])
                 pieces.append({
                     "new_index": chain,
@@ -3155,6 +3172,78 @@ def build_region_history(
     return result
 
 
+def load_topology_inputs(
+    junctions_path: Path | None, through_services_path: Path | None,
+    registry_dir: Path | None,
+) -> tuple[dict, dict[str, str]]:
+    """The documents the topology's links and stop index are compiled from, and
+    their digests for the manifest. A path of None means that input is not part
+    of this build; nothing is looked for elsewhere."""
+    documents: dict = {"junctions": None, "throughServices": None, "registryDir": registry_dir}
+    digests: dict[str, str] = {}
+    for name, path, label in (
+            ("junctions", junctions_path, "topology/physical-rail-junctions.json"),
+            ("throughServices", through_services_path, "topology/japan-through-services.json")):
+        if path is None:
+            continue
+        raw = Path(path).read_bytes()
+        documents[name] = json.loads(raw)
+        digests[label] = hashlib.sha256(raw).hexdigest()
+    if registry_dir is not None:
+        for region in sorted(TOPOLOGY_REGIONS):
+            registry_path = Path(registry_dir) / f"{region}.json"
+            if registry_path.is_file():
+                digests[f"topology/registry-bundle/{region}.json"] = hashlib.sha256(
+                    registry_path.read_bytes()).hexdigest()
+    if junctions_path is not None and documents["junctions"].get("format") != "jtm-physical-rail-junctions-v1":
+        raise RuntimeError(f"{junctions_path}: unsupported junction registry format")
+    return documents, digests
+
+
+def build_topology_file(
+    region: str, package_sha256: str, display_sha256: str, ordered_keys: list[str],
+    topology_lines: dict[str, dict], fragments_by_key: dict[str, list[dict]],
+    overview_by_key: dict[str, list[dict]], stations_by_key: dict[str, list[dict]],
+    region_history: dict | None, inputs: dict,
+    fragment_origins: dict[tuple[str, int], tuple[int, int]],
+) -> tuple[bytes, dict]:
+    """`{region}.topology.bin` from this region's final display data (see
+    `lib/display_topology.py` for what is derived and how)."""
+    stamps: dict[tuple, tuple] = {}
+    for row in (region_history or {}).get("parts") or []:
+        stamps[(row["id"], int(row["index"]))] = (row.get("validFrom"), row.get("validTo"))
+    sources = []
+    for key in ordered_keys:
+        state = topology_lines.get(key)
+        if state is None:
+            raise RuntimeError(f"{key}: display line is not a package line")
+        fragments = fragments_by_key.get(key, [])
+        slots = {station["stationCode"]: station["slot"]
+                 for station in stations_by_key.get(key, []) if station.get("slot")}
+        sources.append(display_topology.LineSource(
+            key=key, line=state["package"], continuous=state["continuous"],
+            fragments=fragments, overview=overview_by_key.get(key),
+            chains=state["chains"], pieces=state["pieces"], withheld=state["withheld"],
+            slots=slots, stamps=stamps,
+            draw_ids=[display_draw_id(fragment) for fragment in fragments],
+            origins=([fragment_origins[(key, int(fragment["chain"]))] for fragment in fragments]
+                     if state["continuous"] else [])))
+    registry = None
+    registry_dir = inputs.get("registryDir")
+    if registry_dir is not None:
+        registry_path = Path(registry_dir) / f"{region}.json"
+        if not registry_path.is_file():
+            raise RuntimeError(f"{registry_path}: registry bundle for topology region {region} is missing")
+        registry = json.loads(registry_path.read_bytes())
+    junctions = inputs.get("junctions")
+    through = inputs.get("throughServices")
+    data, report = display_topology.build_region_topology(
+        region, sources, bytes.fromhex(package_sha256), bytes.fromhex(display_sha256),
+        junctions, through if region == "jp" else None, registry)
+    display_topology.enforce_invariants(region, report)
+    return data, report
+
+
 def _history_line_style(
     region: str, name: str, operator: str, metadata: dict[str, dict]
 ) -> tuple[str, str, int, int, float]:
@@ -3215,6 +3304,9 @@ def build(
     small_region_max_bytes: int = DEFAULT_SMALL_REGION_MAX_BYTES,
     history_dir: Path | None = None,
     temporal_bank: dict | None = None,
+    junctions_path: Path | None = None,
+    through_services_path: Path | None = None,
+    registry_dir: Path | None = None,
 ) -> dict:
     if output.exists():
         shutil.rmtree(output)
@@ -3391,6 +3483,10 @@ def build(
         render_group_policy_by_line_id.append(
             (list(scope), render_groups_doc.get("byLineId") or {}))
 
+    topology_inputs, topology_input_digests = load_topology_inputs(
+        junctions_path, through_services_path, registry_dir)
+    input_sha256.update(topology_input_digests)
+
     display_hubs_doc: dict = {}
     display_hubs_path = rail_dir / "display-hubs.json"
     if display_hubs_path.exists():
@@ -3414,6 +3510,7 @@ def build(
     display_joins: list[dict] = []
 
     region_line_ids: dict[str, set[str]] = {}
+    topology_reports: dict[str, dict] = {}
     identity_summaries: dict[str, dict] = {}
     timings_seconds: dict[str, float] = {}
     fragment_counts: dict[str, int] = {}
@@ -3586,6 +3683,8 @@ def build(
             follow_rows_by_line, chains_by_line)
 
         line_keys_by_station: dict[str, list[str]] = defaultdict(list)
+        topology_lines: dict[str, dict] = {}
+        overview_by_key: dict[str, list[dict]] = {}
         region_fragments: list[dict] = []
         region_stations: list[dict] = []
         region_min_zoom: int | None = None
@@ -3645,8 +3744,13 @@ def build(
                     line_keys_by_station[row[0]].append(key)
 
             intervals = intervals_by_line[line["id"]]
-            lane_pieces = split_intervals_by_lane(
+            owned_lane_pieces = split_intervals_by_lane(
                 intervals, lane_rows_by_line.get(line["id"], []))
+            lane_pieces = [(lane, piece) for lane, piece, _ in owned_lane_pieces]
+            # Each piece of a non-continuous line's display data with the
+            # interval it came from, in creation order: the topology file
+            # needs which interval every drawn part belongs to.
+            topology_pieces: list[tuple] = []
             source_geometry = source_intervals_by_line[line["id"]]
             source_intervals += len(source_geometry)
             source_vertices += sum(len(interval) for interval in source_geometry)
@@ -3747,6 +3851,7 @@ def build(
                             - chain["startMetres"], 1),
                         "withheld": chain.get("withheld") or [],
                         "familyWindows": family_windows,
+                        "sourceChain": [chain_index, 0],
                     }
                     if (line["id"], chain_index) in (
                             non_joining_previous_by_region.get(region) or set()):
@@ -3781,12 +3886,20 @@ def build(
                     if len(interval) >= 2:
                         parts_by_lane[0.0].append(rounded(interval))
                         provenance_by_lane[0.0].append(_interval_provenance(interval))
+                        topology_pieces.append((0.0, interval_index, parts_by_lane[0.0][-1]))
             else:
-                for lane, piece in lane_pieces:
+                for lane, piece, owner in owned_lane_pieces:
                     if len(piece) >= 2:
                         parts_by_lane[float(lane)].append(rounded(piece))
                         provenance_by_lane[float(lane)].append(_interval_provenance(piece))
+                        topology_pieces.append(
+                            (float(lane), owner, parts_by_lane[float(lane)][-1]))
 
+            topology_lines[key] = {
+                "package": line, "continuous": line_is_continuous,
+                "chains": continuous_chains_for_line, "pieces": topology_pieces,
+                "withheld": set(withheld),
+            }
             for lane, parts in sorted(parts_by_lane.items()):
                 fragment = {"lineKey": key, "lane": lane, "parts": parts}
                 _attach_fragment_provenance(fragment, provenance_by_lane[lane])
@@ -3900,6 +4013,7 @@ def build(
             region, history_dir, region_fragments, region_stations, metadata,
             temporal_binding=temporal_binding if region == "jp" else None)
         _finalize_literal_display_spans(region_fragments)
+        fragment_origins = _fragment_origins(region_fragments)
         _drop_memory_only_fragment_fields(region_fragments)
         built_fragments += len(region_fragments) - fragments_before_history
 
@@ -4071,6 +4185,7 @@ def build(
                         indices = [index for index, candidate in enumerate(overview_chains[slot[0]])
                                    if candidate == point]
                         station["slot"] = [slot[0], indices[occurrence]]
+                overview_by_key[key] = overview_fragments
                 overview_doc = {
                     "format": output_format, "region": region, "lineId": line_id,
                     "detail": "overview",
@@ -4133,6 +4248,17 @@ def build(
         # in the Gulf of Guinea. Absent bounds mean "never".
         if region_fragments or region_stations:
             record.update(bounds_of(region_fragments, region_stations))
+        if region in TOPOLOGY_REGIONS:
+            topology_bytes, topology_report = build_topology_file(
+                region, package_digests[region], record["sha256"], ordered_keys,
+                topology_lines, fragments_by_key, overview_by_key, stations_by_key,
+                region_history, topology_inputs, fragment_origins)
+            topology_name = f"{region}{display_topology.FILE_SUFFIX}"
+            (output / topology_name).write_bytes(topology_bytes)
+            record["topologyFile"] = topology_name
+            record["topologyBytes"] = len(topology_bytes)
+            record["topologySHA256"] = hashlib.sha256(topology_bytes).hexdigest()
+            topology_reports[region] = topology_report
         if region_history is not None:
             history_name = f"{region}.display-history.json"
             history_bytes = compact_json(region_history)
@@ -4157,6 +4283,12 @@ def build(
             "fullBytes": full_bytes, "dpSeconds": dp_seconds,
             **identity_summaries[region],
         }
+        if region in topology_reports:
+            report_regions[region]["topology"] = {
+                name: ({"count": len(value),
+                        "first": value if name in ("unplacedJunctionRows", "unplacedThroughServiceRows") else value[:50]}
+                       if isinstance(value, list) else value)
+                for name, value in topology_reports[region].items()}
 
     # `byLineId` keys from every reviewed render-group policy file that name
     # no line in any package loaded within that file's own `scope` (spec
@@ -4334,11 +4466,22 @@ def main() -> None:
              "Omit to leave the display network unchanged.")
     parser.add_argument("--temporal-bank", type=Path, default=None,
                         help="Explicit external jtm-temporal-parts-v1 bank; no autodiscovery")
+    parser.add_argument("--junctions", type=Path, default=None,
+                        help="physical-rail-junctions.json: reviewed junction rows the "
+                             "topology's links are compiled from. Omit for no junction links.")
+    parser.add_argument("--through-services", type=Path, default=None,
+                        help="japan-through-services.json: dated through services the "
+                             "topology's links are compiled from. Omit for none.")
+    parser.add_argument("--registry-dir", type=Path, default=None,
+                        help="Directory of <region>.json registry bundles for the topology's "
+                             "registry and group stop keys. Omit for platform codes only.")
     args = parser.parse_args()
     manifest = build(
         args.rail_dir, args.output, args.small_region_max_bytes,
         history_dir=args.history_dir,
-        temporal_bank=json.loads(args.temporal_bank.read_bytes()) if args.temporal_bank else None)
+        temporal_bank=json.loads(args.temporal_bank.read_bytes()) if args.temporal_bank else None,
+        junctions_path=args.junctions, through_services_path=args.through_services,
+        registry_dir=args.registry_dir)
     print(json.dumps({
         "format": manifest["format"], **manifest["source"], **manifest["built"],
         "bytes": {

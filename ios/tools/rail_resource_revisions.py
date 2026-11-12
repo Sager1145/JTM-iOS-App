@@ -84,7 +84,8 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
     rail = repo / "app/public/rail"
     shared = [(f"display-input/{name}", rail / name) for name in SHARED_DISPLAY_INPUTS]
     shared += [(f"builder/{name}", repo / "app/scripts/railway" / name) for name in (
-        "build-display-network.py", "lib/display_identity.py", "lib/na_geo.py",
+        "build-display-network.py", "lib/display_identity.py", "lib/display_topology.py",
+        "lib/na_geo.py",
     )]
     # Legacy matched routes may cover any region; changes invalidate every region.
     shared += [(name, bundle / name) for name in ("matched-routes.json", "matched-stops.json", "physical-rail-junctions.json")]
@@ -98,7 +99,7 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
             f"{family}{suffix}.json" for family in
             ("stations", "rail-sections", "station-readings", "station-names", "rail-history", "train-store")
         ] + [f"rail-display-network/{region}.{ending}" for ending in
-             ("display.bin", "stations.json", "display-history.json")]
+             ("display.bin", "stations.json", "display-history.json", "topology.bin")]
         inputs = shared + [(name, bundle / name) for name in names]
         # The identity registry (app/data/registry-bundle/<region>.json, shipped
         # as registry-<region>.json) feeds station/operator identity and
@@ -117,6 +118,9 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
             # The reviewed paired-track catalog decides which source paths certify.
             inputs.append(("railcore/japan-paired-tracks.json",
                            repo / "ios/RailKit/Sources/RailCore/Resources/japan-paired-tracks.json"))
+            # Only the jp topology file's through-service links are compiled from this catalog.
+            inputs.append(("railcore/japan-through-services.json",
+                           repo / "ios/RailKit/Sources/RailCore/Resources/japan-through-services.json"))
         for dataset in datasets:
             directory = bundle / dataset
             inputs.append((dataset, directory / "manifest.json"))

@@ -78,12 +78,17 @@ done
 # continuous stroke — and what keeps a national network off the GPU is still
 # the renderer's own per-frame viewport cull rather than the shape of the
 # storage. compact-v1 files above remain the route solver/statistics source of
-# truth.
+# truth. The same run writes `{region}.topology.bin` (lines, nodes with both
+# metre rulers, edges, junction and through-service links, stop index) next to
+# each display blob; nothing in the app reads it yet.
 network_dir="$target_dir/rail-display-network"
 prune_owned_dir "$network_dir"
 python3 "$source_dir/../../scripts/railway/build-display-network.py" \
     --rail-dir "$source_dir" --output "$network_dir" \
-    --history-dir "$here/../app/data"
+    --history-dir "$here/../app/data" \
+    --junctions "$here/../app/data/physical-rail-junctions.json" \
+    --through-services "$here/RailKit/Sources/RailCore/Resources/japan-through-services.json" \
+    --registry-dir "$here/../app/data/registry-bundle"
 
 # Build timings identify an execution, not the rail snapshot. Keep them in the
 # build log so equal source content produces identical packaged descriptors.

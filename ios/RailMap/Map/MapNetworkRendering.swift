@@ -311,6 +311,12 @@ final class MapNetworkGeometryCache {
     func storeRidePolyline(_ polyline: MKPolyline, for key: String) {
         entries[frameKey, default: FrameEntry()].ridePolylines[key] = polyline
     }
+
+    /// Files a polyline built for `frameKey` without moving the current frame.
+    /// A frame the cache has already evicted drops it.
+    func storeRidePolyline(_ polyline: MKPolyline, for key: String, frameKey: String) {
+        entries[frameKey]?.ridePolylines[key] = polyline
+    }
 }
 
 /// The installed overlay identities captured at the start of one rebuild.
