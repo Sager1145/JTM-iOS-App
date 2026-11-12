@@ -41,7 +41,8 @@ public struct LineServiceCatalog: Codable, Sendable {
         public struct StopTime: Codable, Sendable {
             public let stationCode: String
             public let stationName: String
-            /// Seconds since midnight in the Japanese service day. Values >=86400 cross midnight.
+            /// The bundled catalog is stops-only: these stay nil. A value would be
+            /// rejected by validation, so no copied clock time can enter the app.
             public let arrivalSeconds: Int?
             public let departureSeconds: Int?
         }
@@ -120,14 +121,8 @@ public struct LineServiceCatalog: Codable, Sendable {
                   URL(string: trip.sourceURL)?.scheme == "https", trip.stops.count >= 2 else {
                 throw CatalogError.invalidArtifact("Invalid timetable scope")
             }
-            var previous = -1
-            for stop in trip.stops {
-                let values = [stop.arrivalSeconds, stop.departureSeconds].compactMap { $0 }
-                guard !values.isEmpty, values.allSatisfy({ $0 >= previous && $0 >= 0 }),
-                      stop.arrivalSeconds == nil || stop.departureSeconds == nil || stop.arrivalSeconds! <= stop.departureSeconds! else {
-                    throw CatalogError.invalidArtifact("Non-monotonic stop times")
-                }
-                previous = values.max()!
+            guard trip.stops.allSatisfy({ $0.arrivalSeconds == nil && $0.departureSeconds == nil }) else {
+                throw CatalogError.invalidArtifact("Stops-only catalog must not contain times")
             }
         }
         self = decoded

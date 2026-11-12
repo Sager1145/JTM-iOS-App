@@ -16,7 +16,7 @@ struct TimetableTicketMatchTests {
         let calls = trip.passengerStops
         try #require(calls.count >= 4)
         let from = calls[1], to = calls[3]
-        let minutes = try #require(from.departureSeconds) / 60
+        let minutes = 10 * 60
         let query = TimetableTicketMatch.Query(
             date: "2026-09-30", serviceName: trip.service.canonicalName, serviceNumber: "0003号",
             originCode: try #require(from.station.currentSourceCode),
@@ -25,18 +25,19 @@ struct TimetableTicketMatchTests {
         #expect(TimetableTicketMatch.candidates(for: query, among: trips).map(\.id) == [trip.id])
     }
 
-    @Test func aWrongClockReversedStationsOrMissingServiceFindNothing() throws {
+    @Test func aReversedStationsOrMissingServiceFindNothing() throws {
         let (trip, trips) = try akagi3()
         let calls = trip.passengerStops
         let from = try #require(calls[1].station.currentSourceCode)
         let to = try #require(calls[3].station.currentSourceCode)
-        let minutes = try #require(calls[1].departureSeconds) / 60
+        let minutes = 10 * 60
         let name = trip.service.canonicalName
         func run(_ q: TimetableTicketMatch.Query) -> [String] {
             TimetableTicketMatch.candidates(for: q, among: trips).map(\.id)
         }
+        // A printed clock cannot rule out a trip whose database publishes no time.
         #expect(run(.init(date: "2026-09-30", serviceName: name, serviceNumber: "3",
-                          originCode: from, destinationCode: to, departureMinutes: minutes + 1)).isEmpty)
+                          originCode: from, destinationCode: to, departureMinutes: minutes + 1)).count == 1)
         #expect(run(.init(date: "2026-09-30", serviceName: name, serviceNumber: "3",
                           originCode: to, destinationCode: from)).isEmpty)
         #expect(run(.init(date: "2026-09-30", serviceName: nil, serviceNumber: nil,

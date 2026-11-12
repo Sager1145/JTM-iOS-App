@@ -287,6 +287,48 @@ struct TimetablePhysicalRouteMatchTests {
             railRevision: nil, timetableRevision: "tt-1") == nil)
     }
 
+    // Stops-only data: no published time on any call.
+    @Test func untimedTripNeedsARecordedServiceIdentity() throws {
+        let trip = fixture(untimed: true)
+        var unnamed = journey(["A", "D"])
+        unnamed.number = ""
+        let sections = TrainValidation.routeSectionsForSolving(for: unnamed)
+        // Stations, date and a clock alone name no train.
+        unnamed.stops[0].departure = "10:00"
+        #expect(TimetablePhysicalRouteMatch.resolve(for: unnamed, routeSections: sections, among: [trip]) == .unsupported)
+        #expect(try matched(journey(["A", "D"]), trips: [trip]).provenance.tripID == "trip")
+        var wrong = journey(["A", "D"])
+        wrong.number = "Express 2"
+        #expect(TimetablePhysicalRouteMatch.resolve(for: wrong,
+            routeSections: TrainValidation.routeSectionsForSolving(for: wrong), among: [trip]) == .unavailable)
+    }
+
+    @Test func untimedTripAppliesToTheEditorWithIdentityAndNoTimes() throws {
+        // "times" is no longer a required fact: a verified stops-only trip applies.
+        let trip = fixture(untimed: true)
+        #expect(trip.canApplyToRouteEditor)
+        let draft = Train(id: "draft", date: trip.serviceDate, number: "", origin: "", destination: "", stops: [], region: "jp")
+        let applied = try #require(trip.applying(to: draft, ridden: false))
+        #expect(applied.stops.map(\.name) == ["A", "B", "C", "D"])
+        #expect(applied.stops.allSatisfy { $0.arrival == nil && $0.departure == nil })
+        #expect(applied.number == "Express 1")
+        #expect(applied.company == "JR東日本")
+        #expect(applied.routeSections?.count == 3)
+    }
+
+    @Test func untimedOvernightCallsKeepTheirCivilDay() throws {
+        // B is after midnight (next civil day): a ride from B dated the next day matches.
+        let trip = fixture(untimed: true, dayOffsets: [0, 1, 1, 1])
+        var next = journey(["B", "D"])
+        next.date = "2026-09-30"
+        #expect(try matched(next, trips: [trip]).provenance.tripID == "trip")
+        let sameDay = journey(["B", "D"])
+        #expect(TimetablePhysicalRouteMatch.resolve(for: sameDay,
+            routeSections: TrainValidation.routeSectionsForSolving(for: sameDay), among: [trip]) == .unavailable)
+        // A boarding at the first call on the service day still matches.
+        #expect(try matched(journey(["A", "D"]), trips: [trip]).provenance.tripID == "trip")
+    }
+
     private func matched(_ train: Train, sections: [RouteSection]? = nil,
                          trips: [TrainTimetableDatabase.Trip]) throws -> TimetablePhysicalRouteMatch.Match {
         let result = TimetablePhysicalRouteMatch.resolve(for: train,
@@ -311,16 +353,19 @@ struct TimetablePhysicalRouteMatchTests {
     private func fixture(id: String = "trip", codes: [String] = ["A", "B", "C", "D"],
                          seconds: [Int] = [36_000, 36_600, 37_200, 37_800],
                          verified: Bool = true, direction: String? = "down",
-                         timeAccuracy: String? = "minute") -> TrainTimetableDatabase.Trip {
+                         timeAccuracy: String? = "minute", untimed: Bool = false,
+                         dayOffsets: [Int]? = nil) -> TrainTimetableDatabase.Trip {
         let facts = ["identity", "train_number", "operator", "validity_calendar", "origin_destination",
-                     "stops", "times", "route_lines", "station_refs", "provenance"]
+                     "stops", "route_lines", "station_refs", "provenance"]
         let calls = codes.enumerated().map { index, code in
             TrainTimetableDatabase.StopTime(sequence: index, station: .init(
                 id: code, name: code, referenceKind: .currentN02, currentSourceCode: code,
                 railHistoryID: nil, validFrom: nil, validUntil: nil),
-                arrivalTime: nil, departureTime: nil, arrivalSeconds: seconds[index],
-                departureSeconds: seconds[index], dayOffset: seconds[index] / 86_400,
-                arrivalDayOffset: seconds[index] / 86_400, departureDayOffset: seconds[index] / 86_400,
+                arrivalTime: nil, departureTime: nil, arrivalSeconds: untimed ? nil : seconds[index],
+                departureSeconds: untimed ? nil : seconds[index],
+                dayOffset: dayOffsets?[index] ?? seconds[index] / 86_400,
+                arrivalDayOffset: dayOffsets?[index] ?? seconds[index] / 86_400,
+                departureDayOffset: dayOffsets?[index] ?? seconds[index] / 86_400,
                 callType: index == 0 ? "origin" : index == codes.count - 1 ? "destination" : "passenger_stop",
                 pickupAllowed: true, dropoffAllowed: true, platform: nil, timeAccuracy: timeAccuracy)
         }

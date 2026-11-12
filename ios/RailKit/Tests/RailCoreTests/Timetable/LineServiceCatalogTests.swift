@@ -76,10 +76,12 @@ struct LineServiceCatalogTests {
         let local = try #require(trips.first { $0.trainNumber == "102C" })
         #expect(local.coverage == .partial)
         #expect(local.stops.count == 2)
-        #expect(local.stops.first?.departureSeconds == 6 * 3600 + 12 * 60)
+        #expect(local.stops.first?.stationName == "大阪")
+        #expect(local.stops.first?.departureSeconds == nil)
         #expect(local.stops.last?.stationName == "新大阪")
         let rapid = try #require(trips.first { $0.trainNumber == "3408M" })
-        #expect(rapid.stops.last?.arrivalSeconds == 7 * 3600 + 59 * 60)
+        #expect(rapid.stops.map(\.stationName) == ["大阪", "新大阪", "高槻", "京都"])
+        #expect(rapid.stops.allSatisfy { $0.arrivalSeconds == nil && $0.departureSeconds == nil })
     }
 
     @Test func reviewedPublicInputsRetainDatedCallsAndThroughNumberChanges() throws {
@@ -105,8 +107,8 @@ struct LineServiceCatalogTests {
             ["id": id, "trainNumber": id, "trainType": "local", "operatorName": "Operator",
              "lineIDs": [], "serviceDates": [date], "sourceURL": "https://example.com/timetable",
              "coverage": "partial", "note": "", "stops": [
-                ["stationCode": from, "stationName": from, "departureSeconds": 0],
-                ["stationCode": "B", "stationName": "B", "arrivalSeconds": 60]
+                ["stationCode": from, "stationName": from],
+                ["stationCode": "B", "stationName": "B"]
              ]]
         }
         var parent = trip("parent", from: "A")
@@ -126,7 +128,7 @@ struct LineServiceCatalogTests {
         }
     }
 
-    @Test func importerRejectsInvalidTimesAndDuplicateIdentities() throws {
+    @Test func importerRejectsAnyTimeAndDuplicateIdentities() throws {
         let source = try LineServiceCatalog.loadBundled()
         let encoder = JSONEncoder()
         let encoded = try encoder.encode(source)

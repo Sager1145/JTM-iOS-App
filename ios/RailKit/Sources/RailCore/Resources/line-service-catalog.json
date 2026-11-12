@@ -9320,19 +9320,15 @@
       ],
       "sourceURL": "https://timetable.jr-odekake.net/train-timetable/173421?date=20261004",
       "coverage": "partial",
-      "note": "Manual excerpt of published scheduled times for this date only; omitted stations and dates are unknown. Not an actual-operation report.",
+      "note": "Manual excerpt of the published stop list for this date only; omitted stations and dates are unknown. Not an actual-operation report.",
       "stops": [
         {
           "stationCode": "007068",
-          "stationName": "大阪",
-          "arrivalSeconds": 22200,
-          "departureSeconds": 22320
+          "stationName": "大阪"
         },
         {
           "stationCode": "006911",
-          "stationName": "新大阪",
-          "arrivalSeconds": 22500,
-          "departureSeconds": 22560
+          "stationName": "新大阪"
         }
       ]
     },
@@ -9349,31 +9345,23 @@
       ],
       "sourceURL": "https://timetable.jr-odekake.net/train-timetable/173041?date=20261004",
       "coverage": "partial",
-      "note": "Manual excerpt of published scheduled times for this date only; omitted stations and dates are unknown. Not an actual-operation report.",
+      "note": "Manual excerpt of the published stop list for this date only; omitted stations and dates are unknown. Not an actual-operation report.",
       "stops": [
         {
           "stationCode": "007068",
-          "stationName": "大阪",
-          "arrivalSeconds": 26880,
-          "departureSeconds": 27000
+          "stationName": "大阪"
         },
         {
           "stationCode": "006911",
-          "stationName": "新大阪",
-          "arrivalSeconds": 27180,
-          "departureSeconds": 27240
+          "stationName": "新大阪"
         },
         {
           "stationCode": "006432",
-          "stationName": "高槻",
-          "arrivalSeconds": 27900,
-          "departureSeconds": 27960
+          "stationName": "高槻"
         },
         {
           "stationCode": "006079",
-          "stationName": "京都",
-          "arrivalSeconds": 28740,
-          "departureSeconds": 28800
+          "stationName": "京都"
         }
       ]
     },
@@ -9394,15 +9382,11 @@
       "stops": [
         {
           "stationCode": "006185",
-          "stationName": "東岡崎",
-          "arrivalSeconds": null,
-          "departureSeconds": 20940
+          "stationName": "東岡崎"
         },
         {
           "stationCode": "006072",
-          "stationName": "新安城",
-          "arrivalSeconds": 21540,
-          "departureSeconds": 21600
+          "stationName": "新安城"
         }
       ]
     },
@@ -9423,15 +9407,11 @@
       "stops": [
         {
           "stationCode": "006786",
-          "stationName": "豊橋",
-          "arrivalSeconds": null,
-          "departureSeconds": 21180
+          "stationName": "豊橋"
         },
         {
           "stationCode": "006185",
-          "stationName": "東岡崎",
-          "arrivalSeconds": 22740,
-          "departureSeconds": 22740
+          "stationName": "東岡崎"
         }
       ]
     },
@@ -9452,15 +9432,11 @@
       "stops": [
         {
           "stationCode": "005605",
-          "stationName": "神宮前",
-          "arrivalSeconds": 24600,
-          "departureSeconds": 24660
+          "stationName": "神宮前"
         },
         {
           "stationCode": "005551",
-          "stationName": "金山",
-          "arrivalSeconds": 24780,
-          "departureSeconds": 24840
+          "stationName": "金山"
         }
       ]
     },
@@ -9481,15 +9457,11 @@
       "stops": [
         {
           "stationCode": "006786",
-          "stationName": "豊橋",
-          "arrivalSeconds": null,
-          "departureSeconds": 22320
+          "stationName": "豊橋"
         },
         {
           "stationCode": "006185",
-          "stationName": "東岡崎",
-          "arrivalSeconds": 23580,
-          "departureSeconds": 23640
+          "stationName": "東岡崎"
         }
       ]
     },
@@ -9510,15 +9482,11 @@
       "stops": [
         {
           "stationCode": "006786",
-          "stationName": "豊橋",
-          "arrivalSeconds": null,
-          "departureSeconds": 24660
+          "stationName": "豊橋"
         },
         {
           "stationCode": "006185",
-          "stationName": "東岡崎",
-          "arrivalSeconds": 25860,
-          "departureSeconds": 25860
+          "stationName": "東岡崎"
         }
       ]
     },
@@ -9539,27 +9507,19 @@
       "stops": [
         {
           "stationCode": "007068",
-          "stationName": "大阪",
-          "arrivalSeconds": 38580,
-          "departureSeconds": 38700
+          "stationName": "大阪"
         },
         {
           "stationCode": "006911",
-          "stationName": "新大阪",
-          "arrivalSeconds": 38940,
-          "departureSeconds": 39000
+          "stationName": "新大阪"
         },
         {
           "stationCode": "006432",
-          "stationName": "高槻",
-          "arrivalSeconds": 39600,
-          "departureSeconds": 39660
+          "stationName": "高槻"
         },
         {
           "stationCode": "006079",
-          "stationName": "京都",
-          "arrivalSeconds": 40440,
-          "departureSeconds": 40500
+          "stationName": "京都"
         }
       ],
       "previousTrainIDs": null,
@@ -9582,27 +9542,19 @@
       "stops": [
         {
           "stationCode": "007068",
-          "stationName": "大阪",
-          "arrivalSeconds": 40920,
-          "departureSeconds": 40980
+          "stationName": "大阪"
         },
         {
           "stationCode": "006911",
-          "stationName": "新大阪",
-          "arrivalSeconds": 41220,
-          "departureSeconds": 41280
+          "stationName": "新大阪"
         },
         {
           "stationCode": "006567",
-          "stationName": "茨木",
-          "arrivalSeconds": 41820,
-          "departureSeconds": 41820
+          "stationName": "茨木"
         },
         {
           "stationCode": "006432",
-          "stationName": "高槻",
-          "arrivalSeconds": 42180,
-          "departureSeconds": null
+          "stationName": "高槻"
         }
       ],
       "previousTrainIDs": null,
@@ -9625,51 +9577,35 @@
       "stops": [
         {
           "stationCode": "006432",
-          "stationName": "高槻",
-          "arrivalSeconds": null,
-          "departureSeconds": 38580
+          "stationName": "高槻"
         },
         {
           "stationCode": "006359",
-          "stationName": "島本",
-          "arrivalSeconds": 38880,
-          "departureSeconds": 38880
+          "stationName": "島本"
         },
         {
           "stationCode": "006329",
-          "stationName": "山崎",
-          "arrivalSeconds": 39000,
-          "departureSeconds": 39060
+          "stationName": "山崎"
         },
         {
           "stationCode": "006258",
-          "stationName": "長岡京",
-          "arrivalSeconds": 39240,
-          "departureSeconds": 39240
+          "stationName": "長岡京"
         },
         {
           "stationCode": "006178",
-          "stationName": "向日町",
-          "arrivalSeconds": 39420,
-          "departureSeconds": 39420
+          "stationName": "向日町"
         },
         {
           "stationCode": "006152",
-          "stationName": "桂川",
-          "arrivalSeconds": 39540,
-          "departureSeconds": 39540
+          "stationName": "桂川"
         },
         {
           "stationCode": "006096",
-          "stationName": "西大路",
-          "arrivalSeconds": 39720,
-          "departureSeconds": 39720
+          "stationName": "西大路"
         },
         {
           "stationCode": "006079",
-          "stationName": "京都",
-          "arrivalSeconds": 39900,
-          "departureSeconds": 40020
+          "stationName": "京都"
         }
       ],
       "previousTrainIDs": null,
@@ -9692,63 +9628,43 @@
       "stops": [
         {
           "stationCode": "006043",
-          "stationName": "山科",
-          "arrivalSeconds": 39000,
-          "departureSeconds": 39000
+          "stationName": "山科"
         },
         {
           "stationCode": "005894",
-          "stationName": "大津京",
-          "arrivalSeconds": 39300,
-          "departureSeconds": 39300
+          "stationName": "大津京"
         },
         {
           "stationCode": "005764",
-          "stationName": "比叡山坂本",
-          "arrivalSeconds": 39540,
-          "departureSeconds": 39600
+          "stationName": "比叡山坂本"
         },
         {
           "stationCode": "005626",
-          "stationName": "堅田",
-          "arrivalSeconds": 39840,
-          "departureSeconds": 39900
+          "stationName": "堅田"
         },
         {
           "stationCode": "005264",
-          "stationName": "近江舞子",
-          "arrivalSeconds": 40560,
-          "departureSeconds": 40560
+          "stationName": "近江舞子"
         },
         {
           "stationCode": "005225",
-          "stationName": "北小松",
-          "arrivalSeconds": 40680,
-          "departureSeconds": 40740
+          "stationName": "北小松"
         },
         {
           "stationCode": "005134",
-          "stationName": "近江高島",
-          "arrivalSeconds": 40980,
-          "departureSeconds": 40980
+          "stationName": "近江高島"
         },
         {
           "stationCode": "005032",
-          "stationName": "安曇川",
-          "arrivalSeconds": 41220,
-          "departureSeconds": 41220
+          "stationName": "安曇川"
         },
         {
           "stationCode": "004955",
-          "stationName": "新旭",
-          "arrivalSeconds": 41400,
-          "departureSeconds": 41400
+          "stationName": "新旭"
         },
         {
           "stationCode": "004835",
-          "stationName": "近江今津",
-          "arrivalSeconds": 41640,
-          "departureSeconds": null
+          "stationName": "近江今津"
         }
       ],
       "previousTrainIDs": null,
@@ -9774,45 +9690,31 @@
       "stops": [
         {
           "stationCode": "004835",
-          "stationName": "近江今津",
-          "arrivalSeconds": null,
-          "departureSeconds": 42180
+          "stationName": "近江今津"
         },
         {
           "stationCode": "004709",
-          "stationName": "近江中庄",
-          "arrivalSeconds": 42420,
-          "departureSeconds": 42420
+          "stationName": "近江中庄"
         },
         {
           "stationCode": "004649",
-          "stationName": "マキノ",
-          "arrivalSeconds": 42600,
-          "departureSeconds": 42660
+          "stationName": "マキノ"
         },
         {
           "stationCode": "004527",
-          "stationName": "永原",
-          "arrivalSeconds": 42900,
-          "departureSeconds": 42960
+          "stationName": "永原"
         },
         {
           "stationCode": "004400",
-          "stationName": "近江塩津",
-          "arrivalSeconds": 43260,
-          "departureSeconds": 43260
+          "stationName": "近江塩津"
         },
         {
           "stationCode": "004256",
-          "stationName": "新疋田",
-          "arrivalSeconds": 43680,
-          "departureSeconds": 43680
+          "stationName": "新疋田"
         },
         {
           "stationCode": "010186",
-          "stationName": "敦賀",
-          "arrivalSeconds": 44100,
-          "departureSeconds": null
+          "stationName": "敦賀"
         }
       ],
       "previousTrainIDs": [
@@ -9837,21 +9739,15 @@
       "stops": [
         {
           "stationCode": "003700",
-          "stationName": "新宿",
-          "arrivalSeconds": 35040,
-          "departureSeconds": 35100
+          "stationName": "新宿"
         },
         {
           "stationCode": "003568",
-          "stationName": "中野",
-          "arrivalSeconds": 35280,
-          "departureSeconds": 35340
+          "stationName": "中野"
         },
         {
           "stationCode": "003573",
-          "stationName": "高円寺",
-          "arrivalSeconds": 35460,
-          "departureSeconds": 35460
+          "stationName": "高円寺"
         }
       ],
       "previousTrainIDs": null,
@@ -9878,21 +9774,15 @@
       "stops": [
         {
           "stationCode": "003700",
-          "stationName": "新宿",
-          "arrivalSeconds": 35280,
-          "departureSeconds": 35280
+          "stationName": "新宿"
         },
         {
           "stationCode": "003568",
-          "stationName": "中野",
-          "arrivalSeconds": 35580,
-          "departureSeconds": 35640
+          "stationName": "中野"
         },
         {
           "stationCode": "003587",
-          "stationName": "三鷹",
-          "arrivalSeconds": 36240,
-          "departureSeconds": 36300
+          "stationName": "三鷹"
         }
       ],
       "previousTrainIDs": null,
@@ -9920,21 +9810,15 @@
       "stops": [
         {
           "stationCode": "003700",
-          "stationName": "新宿",
-          "arrivalSeconds": 37980,
-          "departureSeconds": 38160
+          "stationName": "新宿"
         },
         {
           "stationCode": "003634",
-          "stationName": "立川",
-          "arrivalSeconds": 39840,
-          "departureSeconds": 39840
+          "stationName": "立川"
         },
         {
           "stationCode": "003581",
-          "stationName": "西立川",
-          "arrivalSeconds": 40020,
-          "departureSeconds": 40080
+          "stationName": "西立川"
         }
       ],
       "previousTrainIDs": null,
@@ -9962,27 +9846,19 @@
       "stops": [
         {
           "stationCode": "003505",
-          "stationName": "上野",
-          "arrivalSeconds": 32040,
-          "departureSeconds": 32100
+          "stationName": "上野"
         },
         {
           "stationCode": "003766",
-          "stationName": "東京",
-          "arrivalSeconds": 32460,
-          "departureSeconds": 32520
+          "stationName": "東京"
         },
         {
           "stationCode": "003872",
-          "stationName": "新橋",
-          "arrivalSeconds": 32700,
-          "departureSeconds": 32760
+          "stationName": "新橋"
         },
         {
           "stationCode": "004095",
-          "stationName": "品川",
-          "arrivalSeconds": 33120,
-          "departureSeconds": null
+          "stationName": "品川"
         }
       ],
       "previousTrainIDs": null,

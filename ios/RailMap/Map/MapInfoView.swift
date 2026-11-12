@@ -119,6 +119,20 @@ struct MapInfoView: View {
                 .init(label: "OpenStreetMap (ODbL)", url: "https://www.openstreetmap.org/copyright"),
             ]),
         Source(
+            titleKey: "ios.info.stopListsTitle", titleFallback: "Train stop lists",
+            bodyKey: "ios.info.stopListsBody",
+            bodyFallback:
+                "Stop lists are compiled from the operators' public information. No timetable times are bundled.",
+            links: [
+                .init(label: "JR Hokkaido", url: "https://www.jrhokkaido.co.jp/"),
+                .init(label: "JR East", url: "https://www.jreast.co.jp/"),
+                .init(label: "JR Central", url: "https://jr-central.co.jp/"),
+                .init(label: "JR West", url: "https://www.westjr.co.jp/"),
+                .init(label: "JR Shikoku", url: "https://www.jr-shikoku.co.jp/"),
+                .init(label: "JR Kyushu", url: "https://www.jrkyushu.co.jp/"),
+                .init(label: "Kotsu Shimbunsha", url: "https://www.kotsu.co.jp/"),
+            ]),
+        Source(
             titleKey: "info.twRailTitle", titleFallback: "Taiwanese rail network",
             bodyKey: "info.twRailBody",
             bodyFallback: "Processed from TDX, NLSC, the Alishan Forest Railway and Taipei's open data.",

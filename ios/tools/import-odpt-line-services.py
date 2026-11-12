@@ -15,31 +15,6 @@ def iso_date(value):
     return value
 
 
-def time_seconds(value, previous):
-    if value is None:
-        return None
-    parts = value.split(':')
-    if len(parts) not in (2, 3) or not all(part.isdigit() for part in parts):
-        raise ValueError('Invalid ODPT time: ' + value)
-    hour, minute = map(int, parts[:2])
-    second = int(parts[2]) if len(parts) == 3 else 0
-    if hour > 47 or minute > 59 or second > 59:
-        raise ValueError('ODPT time outside supported service day')
-    seconds = hour * 3600 + minute * 60 + second
-    # Preserve explicit 24:xx values. Unqualified clocks after midnight
-    # inherit the established day, but a daytime regression is not a 24-hour wait.
-    if hour < 24 and previous >= 86400:
-        seconds += (previous // 86400) * 86400
-    if seconds < previous:
-        if hour < 6 and previous % 86400 >= 18 * 3600:
-            seconds += 86400
-        else:
-            raise ValueError('Backwards times without an evidenced midnight transition')
-    if seconds >= 172800:
-        raise ValueError('More than one midnight crossing or inconsistent times')
-    return seconds
-
-
 def mapped(mapping, category, identity):
     value = mapping.get(category, {}).get(identity)
     if not isinstance(value, dict):
@@ -95,7 +70,8 @@ def normalize(rows, mapping, provenance, package):
             station_codes.update(station[0] for station in line['stations'])
         if not isinstance(row.get('odpt:trainNumber', ''), str):
             raise ValueError('Train number must be a string; no service class inference')
-        stops, previous = [], -1
+        # Stops only: the export's departure/arrival times are deliberately not kept.
+        stops = []
         for call in row.get('odpt:trainTimetableObject', []):
             station_id = call.get('odpt:arrivalStation') or call.get('odpt:departureStation')
             if call.get('odpt:arrivalStation') and call.get('odpt:departureStation') and call['odpt:arrivalStation'] != call['odpt:departureStation']:
@@ -103,13 +79,7 @@ def normalize(rows, mapping, provenance, package):
             station = mapped(mapping, 'stations', station_id)
             if station['stationCode'] not in station_codes:
                 raise ValueError('Station is not on an explicitly mapped physical line')
-            arrival = time_seconds(call.get('odpt:arrivalTime'), previous)
-            departure = time_seconds(call.get('odpt:departureTime'), arrival if arrival is not None else previous)
-            if arrival is None and departure is None:
-                raise ValueError('Stop has no time')
-            previous = departure if departure is not None else arrival
-            stops.append(dict(stationCode=station['stationCode'], stationName=station['stationName'],
-                              arrivalSeconds=arrival, departureSeconds=departure))
+            stops.append(dict(stationCode=station['stationCode'], stationName=station['stationName']))
         if len(stops) < 2:
             raise ValueError('At least two researched calls are required')
         for lid in line_ids:
