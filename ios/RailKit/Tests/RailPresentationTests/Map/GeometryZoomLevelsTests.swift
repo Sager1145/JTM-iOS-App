@@ -81,4 +81,19 @@ struct GeometryZoomLevelsTests {
         #expect(cancels(27, 12.1, 24))         // level the camera has left
         #expect(!cancels(nil, 12.1, 24))       // nothing in flight
     }
+
+    @Test("Swapping whenever the level is wanted bounds the baked-zoom error by half a zoom")
+    func installedErrorStaysWithinHalfZoom() {
+        var installed = GeometryZoomLevels.nearestLevel(zoom: 8)
+        var worst = 0.0
+        var z = 8.0
+        for step in 0...1200 {
+            // Zoom in, then back out.
+            z = step <= 600 ? 8 + Double(step) * 0.01 : 14 - Double(step - 600) * 0.01
+            installed = GeometryZoomLevels.wantedLevel(zoom: z, installed: installed)
+            worst = max(worst, abs(z - GeometryZoomLevels.nominalZoom(level: installed)))
+        }
+        #expect(worst <= GeometryZoomLevels.spacing / 2 + GeometryZoomLevels.hysteresis)
+        #expect(worst < GeometryZoomLevels.spacing)
+    }
 }
