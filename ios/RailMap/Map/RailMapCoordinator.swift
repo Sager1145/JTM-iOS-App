@@ -2671,12 +2671,16 @@ extension RailMapView.Surface {
                     }
                 }
 
-                // Polylines are built on a worker only from a full
-                // rebuild; a changed ride that still needs one takes it.
-                if !rideStrokeRequests(
-                        for: changedRides, rideBuildRect: rideBuildRect,
-                        strokeFor: { networkGeometry.stroke(for: $0) }).isEmpty {
-                    return false
+                // A changed ride that still needs a line has it built on a
+                // worker for those rides alone, then re-enters here. Never
+                // a full network rebuild (`RideArrivalPlan`).
+                let missing = rideStrokeRequests(
+                    for: changedRides, rideBuildRect: rideBuildRect,
+                    strokeFor: { networkGeometry.stroke(for: $0) })
+                if !missing.isEmpty {
+                    prepareArrivalStrokes(
+                        missing, change: change, frame: frame, on: mapView)
+                    return true
                 }
 
                 var affectedCells: Set<Int> = []
@@ -2730,6 +2734,53 @@ extension RailMapView.Surface {
                     overlays: desired.count, elapsed: ContinuousClock.now - started, on: mapView)
                 return true
             }
+
+            /// Builds the missing lines of newly arrived rides on a worker
+            /// and re-enters ``updateRides(_:on:)`` for them when they land.
+            /// Arrivals during the build join the same pending set, so one
+            /// worker run follows another instead of each taking a rebuild.
+            private func prepareArrivalStrokes(
+                _ requests: [RideStrokeBuilder.Request], change: RideDeckState.Change,
+                frame: MapGeometryFrame, on mapView: MKMapView
+            ) {
+                arrivalPendingRideIDs.formUnion(change.changed)
+                guard arrivalStrokePreparation == nil else { return }
+                let strokeFrame = RideStrokeBuilder.Frame(
+                    key: frame.key, mapPointsPerScreenPoint: frame.mapPointsPerScreenPoint,
+                    scale: frame.scale)
+                let memo = rideStrokeMemo
+                let worker = Task.detached(priority: .userInitiated) {
+                    RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
+                }
+                arrivalStrokePreparation = Task { @MainActor [weak self, weak mapView] in
+                    let output = await withTaskCancellationHandler {
+                        await worker.value
+                    } onCancel: { worker.cancel() }
+                    guard let self, let mapView, !Task.isCancelled else { return }
+                    self.arrivalStrokePreparation = nil
+                    for built in output.built {
+                        self.networkGeometry.storeRidePolyline(
+                            built.polyline, for: built.key, frameKey: strokeFrame.key)
+                    }
+                    if self.rideStrokeEmptyFrameKey == strokeFrame.key {
+                        self.rideStrokeEmptyKeys.formUnion(output.empty)
+                    }
+                    let pending = self.arrivalPendingRideIDs
+                    self.arrivalPendingRideIDs = []
+                    guard !pending.isEmpty else { return }
+                    let rebuildChange = RideDeckState.Change(
+                        changed: pending, orderChanged: false, ambiguous: false)
+                    if self.playbackLayer.lastSnapshot != nil {
+                        self.rebuildDeferredByPlayback = true
+                    } else if !self.updateRides(rebuildChange, on: mapView) {
+                        self.noteRebuildTrigger(.rideStrokesPrepared)
+                        self.rebuild(on: mapView)
+                    }
+                }
+            }
+
+            private var arrivalStrokePreparation: Task<Void, Never>?
+            private var arrivalPendingRideIDs: Set<String> = []
 
             /// Keeps the render status and the panel's stats current after a
             /// rides-only update: the last full rebuild's frame, with this
@@ -4139,17 +4190,62 @@ extension RailMapView.Surface {
                     }
                     self.matchedSignature = signature
                     self.pendingStrokeRefs = (revision, results, inputs)
-                    self.networkBuildState.invalidateZoomBucket()
                     if self.playback?.isActive == true, self.playbackLayer.lastSnapshot != nil {
                         self.rebuildDeferredByPlayback = true
                     } else if self.isManipulating {
                         self.rebuildDeferredByGesture = true
                     } else if let map = self.mapView {
-                        self.noteRebuildTrigger(.strokeMatching)
-                        self.rebuild(on: map)
+                        if !self.applyMatchesIncrementally(on: map) {
+                            self.noteRebuildTrigger(.strokeMatching)
+                            self.rebuild(on: map)
+                        }
                     }
                     self.runOwedStrokeMatching()
                 }
+            }
+
+            /// Installs a finished match for only the rides whose matches moved
+            /// and re-forms their batches, instead of a full rebuild. Answers
+            /// `false`, with nothing installed and the zoom bucket cleared, when
+            /// the full rebuild must run (`RideArrivalPlan`): the match changed
+            /// what the network layer reads, or the last build cannot answer.
+            private func applyMatchesIncrementally(on mapView: MKMapView) -> Bool {
+                guard let pending = pendingStrokeRefs, pending.revision == matchingRevision,
+                    pending.inputs == matchedLineInputs, playback?.isActive != true,
+                    markerBuildContext != nil, rideBatchCache != nil
+                else {
+                    networkBuildState.invalidateZoomBucket()
+                    return false
+                }
+                let changed = Set(rides.compactMap { ride in
+                    strokeRefCache[ride.id]?.refs == pending.refs[ride.id]?.refs ? nil : ride.id
+                })
+                let action = RideArrivalPlan.decide(.init(
+                    mapReady: mapView.bounds.width > 1, incrementalBaseCurrent: true,
+                    changedRideCount: changed.count, matchesPending: true))
+                if action == .nothing {
+                    pendingStrokeRefs = nil
+                    strokeRefCache = pending.refs
+                    return true
+                }
+                let previousRefs = strokeRefCache
+                let previousInputs = matchedLineInputs
+                pendingStrokeRefs = nil
+                strokeRefCache = pending.refs
+                matchedLineInputs = pending.inputs
+                retainRidePolylines(excludingStrokeFor: changed)
+                interaction.invalidateRideGeometry()
+                stationLabels.invalidateGeometry()
+                if updateRides(.init(changed: changed, orderChanged: false, ambiguous: false),
+                               on: mapView) {
+                    return true
+                }
+                // Roll back so the full rebuild installs the same results itself.
+                strokeRefCache = previousRefs
+                matchedLineInputs = previousInputs
+                pendingStrokeRefs = pending
+                networkBuildState.invalidateZoomBucket()
+                return false
             }
 
             /// What one matching run depends on: the line/station generation
@@ -4710,6 +4806,9 @@ extension RailMapView.Surface {
                         inFlightLevel: geometryPreparationLevel,
                         zoom: mapView.map { MapProjection.zoomLevel(of: $0) } ?? 0,
                         installedLevel: installedGeometryLevel) {
+                        // The cancelled job exits without rebuilding; a touch
+                        // that never moves the camera must still owe one.
+                        if geometryPreparation != nil { rebuildDeferredByGesture = true }
                         cancelGeometryPreparation()
                     }
                 case .ended, .cancelled, .failed:

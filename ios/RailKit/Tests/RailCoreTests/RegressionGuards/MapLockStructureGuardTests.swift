@@ -82,4 +82,30 @@ struct RegressionGuardMapLock {
         #expect(Self.rendering.contains("GeometryFrameRecency("))
         #expect(!Self.rendering.contains("recentKeys"))
     }
+
+    @Test func touchDownCancelOwesARebuild() throws {
+        let began = try Self.body(
+            Self.coordinator, from: "case .began:", to: "case .ended, .cancelled, .failed:")
+        let cancel = try #require(began.range(of: "cancelGeometryPreparation()"))
+        let before = began[began.startIndex..<cancel.lowerBound]
+        #expect(before.contains("rebuildDeferredByGesture = true"))
+    }
+
+    @Test func matchingCompletionNeverRebuildsUnconditionally() throws {
+        let completion = try Self.body(
+            Self.coordinator, from: "self.pendingStrokeRefs = (revision, results, inputs)",
+            to: "self.runOwedStrokeMatching()\n                }\n            }")
+        #expect(completion.contains("applyMatchesIncrementally(on:"))
+        #expect(!completion.contains("invalidateZoomBucket()"))
+        let rebuild = try #require(completion.range(of: "self.rebuild(on: map)"))
+        #expect(completion[completion.startIndex..<rebuild.lowerBound]
+            .contains("if !self.applyMatchesIncrementally"))
+    }
+
+    @Test func newRidesWithMissingLinesNeverFallBackToAFullRebuild() throws {
+        let update = try Self.body(
+            Self.coordinator, from: "private func updateRides(", to: "private func prepareArrivalStrokes(")
+        #expect(update.contains("prepareArrivalStrokes("))
+        #expect(!update.contains("Polylines are built on a worker only from a full"))
+    }
 }

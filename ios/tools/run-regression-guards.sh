@@ -18,7 +18,7 @@ FIXTURES=(continuous-stroke playback stats station-display display-parts i18n
 
 # One swift test run: the guards plus the Swift/JS parity suites.
 # Excluded as slow: RailHistoryPackageTests (~15 min), JunctionApproachTests (~11 min).
-SWIFT_FILTER='RegressionGuard|GeometryZoomLevelsTests|OverlaySwapSequencerTests|MapLoadAhead|AddOnlyBatchLedger|GeometryFrameRecency|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests'
+SWIFT_FILTER='RegressionGuard|GeometryZoomLevelsTests|OverlaySwapSequencerTests|MapLoadAhead|RideArrivalPlan|AddOnlyBatchLedger|GeometryFrameRecency|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests'
 
 names=(); times=(); results=(); failed=0
 
