@@ -417,6 +417,22 @@ final class MapOverlayInstaller {
         swap = nil
     }
 
+    /// Identity box so a polyline can be a ledger item (and stay alive in it).
+    private struct PolylineItem: Hashable {
+        let polyline: MKPolyline
+        static func == (lhs: Self, rhs: Self) -> Bool { lhs.polyline === rhs.polyline }
+        func hash(into hasher: inout Hasher) { hasher.combine(ObjectIdentifier(polyline)) }
+    }
+    private var networkBatches = AddOnlyBatchLedger<PolylineItem>()
+    private var historicalBatches = AddOnlyBatchLedger<PolylineItem>()
+    private var withheldBatches = AddOnlyBatchLedger<PolylineItem>()
+    private var batchEpoch: String?
+
+    /// Network overlays are batched by colour group AND spatial tile, and a
+    /// batch's polylines are fixed when it is created: area that loads later
+    /// adds batches and never replaces one already on the map. `epoch` names
+    /// the geometry the polylines belong to (the level's frame); a new epoch
+    /// starts the batches afresh.
     func networkOverlays(
         byColor: [String: [MKPolyline]],
         historicalByColor: [String: [MKPolyline]],
@@ -424,49 +440,70 @@ final class MapOverlayInstaller {
         colors: [String: UIColor],
         dark: Bool,
         alphaScale: CGFloat = 1,
+        epoch: String,
+        tileSize: Double,
         reconciliation: MapOverlayReconciliation
     ) -> [MKMultiPolyline] {
+        if batchEpoch != epoch {
+            networkBatches.reset()
+            historicalBatches.reset()
+            withheldBatches.reset()
+            batchEpoch = epoch
+        }
+        func entries(_ byGroup: [String: [MKPolyline]]) -> [AddOnlyBatchLedger<PolylineItem>.Entry] {
+            byGroup.keys.sorted().flatMap { group in
+                byGroup[group]!.map { polyline in
+                    let rect = polyline.boundingMapRect
+                    return AddOnlyBatchLedger<PolylineItem>.Entry(
+                        item: PolylineItem(polyline: polyline), group: group,
+                        tile: MapOverlayTiling.tile(
+                            of: .init(x: rect.origin.x, y: rect.origin.y,
+                                      width: rect.size.width, height: rect.size.height),
+                            tileSize: tileSize))
+                }
+            }
+        }
+        networkBatches.update(entries(byColor))
+        historicalBatches.update(entries(historicalByColor))
+        withheldBatches.update(entries(withheldByColor))
+
         var overlays: [MKMultiPolyline] = []
         // Preserve the same stack across rebuilds and process launches, including
         // shared track geometry whose visible color depends on overlay order.
-        for key in byColor.keys.sorted() {
-            let polylines = byColor[key]!
-            let styleKey = "network|\(key)"
-            let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+        for batch in networkBatches.batches {
+            let styleKey = "network|\(batch.key)"
+            let multi = reconciliation.multiPolyline(batch.items.map(\.polyline), key: styleKey)
             styles[styleKey] = .init(
-                color: colors[key] ?? .systemGray,
+                color: colors[batch.group] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
                 alpha: RailStyle.networkOpacity * alphaScale
             )
             overlays.append(multi)
         }
-        for key in historicalByColor.keys.sorted() {
-            let polylines = historicalByColor[key]!
-            let styleKey = "network-hist|\(key)"
-            let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+        for batch in historicalBatches.batches {
+            let styleKey = "network-hist|\(batch.key)"
+            let multi = reconciliation.multiPolyline(batch.items.map(\.polyline), key: styleKey)
             styles[styleKey] = .init(
-                color: colors[key] ?? .systemGray,
+                color: colors[batch.group] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
                 alpha: RailStyle.networkOpacity * alphaScale,
                 historical: true
             )
             overlays.append(multi)
         }
-        for key in withheldByColor.keys.sorted() {
-            let polylines = withheldByColor[key]!
-            let styleKey = "network-withheld|\(key)"
-            let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+        for batch in withheldBatches.batches {
+            let styleKey = "network-withheld|\(batch.key)"
+            let multi = reconciliation.multiPolyline(batch.items.map(\.polyline), key: styleKey)
             styles[styleKey] = .init(
-                color: colors[key] ?? .systemGray,
+                color: colors[batch.group] ?? .systemGray,
                 widthToken: RailStyle.railWidth,
                 alpha: RailStyle.withheldOpacity * alphaScale
             )
             overlays.append(multi)
         }
-        for key in withheldByColor.keys.sorted() {
-            let polylines = withheldByColor[key]!
-            let styleKey = "network-withheld-casing|\(key)"
-            let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+        for batch in withheldBatches.batches {
+            let styleKey = "network-withheld-casing|\(batch.key)"
+            let multi = reconciliation.multiPolyline(batch.items.map(\.polyline), key: styleKey)
             styles[styleKey] = .init(
                 color: MapLabelStyle.halo(dark: dark),
                 widthToken: RailStyle.railWidth,

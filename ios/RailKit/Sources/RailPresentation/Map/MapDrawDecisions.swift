@@ -25,6 +25,8 @@ public enum MapRebuildTrigger: Int, CaseIterable, Sendable {
     case tripsOnly = 9
     /// The prepared geometry level was swapped in while the fingers were down.
     case levelSwapped = 10
+    /// Newly loaded area was added at the installed level while the camera moved.
+    case movingExtended = 11
 }
 
 /// What the map owes after a change owes it a full rebuild.

@@ -72,6 +72,42 @@ public enum MapLoadAhead {
             width: maxX - minX + 2 * marginX, height: maxY - minY + 2 * marginY)
     }
 
+    /// The area geometry is built for while the camera moves: the visible
+    /// rect extended exactly one screen in the direction of travel, plus the
+    /// margin ring. Loading may reach further than building.
+    public static func movingBuildRect(visible: Rect, velocity: Velocity) -> Rect {
+        func axis(_ v: Double, _ screen: Double) -> Double {
+            v == 0 ? 0 : (v > 0 ? screen : -screen)
+        }
+        let aheadX = axis(velocity.dx, visible.width)
+        let aheadY = axis(velocity.dy, visible.height)
+        var minX = visible.x, maxX = visible.x + visible.width
+        var minY = visible.y, maxY = visible.y + visible.height
+        if aheadX > 0 { maxX += aheadX } else { minX += aheadX }
+        if aheadY > 0 { maxY += aheadY } else { minY += aheadY }
+        let marginX = visible.width * marginFraction
+        let marginY = visible.height * marginFraction
+        return Rect(
+            x: minX - marginX, y: minY - marginY,
+            width: maxX - minX + 2 * marginX, height: maxY - minY + 2 * marginY)
+    }
+
+    /// Whether the geometry already built still covers one screen ahead of
+    /// the camera. When it does not, a moving-camera extension is due.
+    public static func needsExtension(built: Rect, visible: Rect, velocity: Velocity) -> Bool {
+        func axis(_ v: Double, _ screen: Double) -> Double {
+            v == 0 ? 0 : (v > 0 ? screen : -screen)
+        }
+        let aheadX = axis(velocity.dx, visible.width)
+        let aheadY = axis(velocity.dy, visible.height)
+        var minX = visible.x, maxX = visible.x + visible.width
+        var minY = visible.y, maxY = visible.y + visible.height
+        if aheadX > 0 { maxX += aheadX } else { minX += aheadX }
+        if aheadY > 0 { maxY += aheadY } else { minY += aheadY }
+        let need = Rect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+        return !contains(built, need)
+    }
+
     public static func contains(_ outer: Rect, _ inner: Rect) -> Bool {
         outer.x <= inner.x && outer.y <= inner.y
             && outer.x + outer.width >= inner.x + inner.width

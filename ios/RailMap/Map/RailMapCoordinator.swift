@@ -196,6 +196,12 @@ extension RailMapView.Surface {
                 let dependencies: [String: UUID]
             }
             private var lineInputs: [String: LineInputs] = [:]
+            /// The inputs each line would be built from now, whatever is held.
+            private var trueLineInputs: [String: LineInputs] = [:]
+            private var lineInputGenerations: [String: Int] = [:]
+            private var strokeStability = StrokeStabilityLedger()
+            /// Lines whose stored stroke is held while the camera moves.
+            private var heldJointLineIDs: Set<String> = []
             private var junctionIndex = StrokeJunctionIndex([])
             private var lineDependencyIDs: [String: Set<String>] = [:]
             private var matchedLineInputs: [String: LineInputs] = [:]
@@ -627,6 +633,7 @@ extension RailMapView.Surface {
 
                 if linesChanged {
                     self.lines = lines
+                    if isManipulating { linesArrivedWhileMoving = true }
                     // The display-datum chains `prepareStrokeReferences()` reads
                     // and every `strokeRef(for:of:)` answer keyed on them are
                     // built from `self.lines` alone; both are stale the
@@ -1040,6 +1047,12 @@ extension RailMapView.Surface {
                         return
                     }
                     self.rebuildDeferredByGesture = false
+                    // The fingers are up: lines held for stable joints take the
+                    // strokes their neighbours now imply.
+                    if !self.heldJointLineIDs.isEmpty {
+                        self.refreshLineInputs()
+                        self.networkBuildState.invalidateGeometry()
+                    }
                     // Overlays about to be replaced keep their width; the
                     // rebuild's install rescales the new ones once.
                     let zoom = MapProjection.zoomLevel(of: mapView)
@@ -1106,6 +1119,7 @@ extension RailMapView.Surface {
                 }
                 cancelNeighbourPrebuildIfWantedSetMoved(zoom: zoom)
                 swapGeometryDuringGestureIfReady(zoom: zoom, on: mapView)
+                runMovingLoadPass(zoom: zoom, on: mapView)
                 scheduleCameraRebuild(on: mapView)
                 // Names update on their own quarter-zoom cadence, well ahead of
                 // the full rebuild's 120 ms debounce — gated by the previous
@@ -1383,6 +1397,84 @@ extension RailMapView.Surface {
             }
 
             private var lastGestureSwapAttempt: ContinuousClock.Instant?
+
+            // MARK: loading while the camera moves
+
+            private static let clockOrigin = ContinuousClock.now
+            private static func seconds(_ instant: ContinuousClock.Instant) -> Double {
+                let d = instant - clockOrigin
+                return Double(d.components.seconds) + Double(d.components.attoseconds) / 1e18
+            }
+            private static func buildAreaRect(_ rect: MKMapRect) -> MapBuildArea.Rect {
+                .init(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
+            }
+            private static func mapRect(_ rect: MapBuildArea.Rect) -> MKMapRect {
+                MKMapRect(x: rect.x, y: rect.y, width: rect.width, height: rect.height)
+            }
+
+            private var loadAheadLastPass: Double?
+            private var loadAheadSample: (rect: MapBuildArea.Rect, at: Double)?
+            private var loadAheadVelocity = MapLoadAhead.Velocity.zero
+            /// Set only while a moving-camera extension rebuild runs: the area
+            /// that rebuild builds for, ahead of travel.
+            private var movingBuildRect: MKMapRect?
+            private var lastMovingExtension: Double?
+            /// Lines loaded while the fingers were down; owes an extension pass.
+            private var linesArrivedWhileMoving = false
+
+            /// While the camera moves (pan, fling, zoom), about every 200 ms:
+            /// ask the loader for the visible rect extended in the direction of
+            /// travel plus a margin ring, and, when the built area no longer
+            /// covers a screen ahead, add the newly loaded area at the
+            /// installed level. Never waits for the gesture to end, and never
+            /// unloads or replaces what is drawn (batches are add-only).
+            private func runMovingLoadPass(zoom: Double, on mapView: MKMapView) {
+                guard showsNetwork, playbackLayer.lastSnapshot == nil, mapView.bounds.width > 1,
+                      mapView.bounds.height > 1 else { return }
+                let now = Self.seconds(.now)
+                guard MapLoadAhead.isDue(now: now, lastPass: loadAheadLastPass) else { return }
+                loadAheadLastPass = now
+                let visible = Self.buildAreaRect(mapView.visibleMapRect)
+                if let sample = loadAheadSample, now - sample.at <= 1 {
+                    loadAheadVelocity = MapLoadAhead.velocity(
+                        from: sample.rect, to: visible, elapsed: now - sample.at)
+                } else {
+                    loadAheadVelocity = .zero
+                }
+                loadAheadSample = (visible, now)
+                let visibilityZoom = networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
+                onBuildRect(
+                    Self.mapRect(MapLoadAhead.requestRect(visible: visible, velocity: loadAheadVelocity)),
+                    visibilityZoom)
+                extendBuiltAreaWhileMoving(zoom: zoom, visible: visible, on: mapView)
+            }
+
+            /// Add-only extension at the unchanged installed level.
+            private func extendBuiltAreaWhileMoving(
+                zoom: Double, visible: MapBuildArea.Rect, on mapView: MKMapView
+            ) {
+                guard isManipulating, let installed = installedGeometryLevel,
+                      wantedGeometryLevel(at: zoom) == installed,
+                      !networkBuildState.builtRect.isNull else { return }
+                let built = networkBuildState.builtRect
+                let velocity = loadAheadVelocity
+                let linesArrived = linesArrivedWhileMoving
+                guard linesArrived
+                    || MapLoadAhead.needsExtension(
+                        built: Self.buildAreaRect(built), visible: visible, velocity: velocity)
+                else { return }
+                // One extension rebuild at a time, no faster than the pass rate.
+                let now = Self.seconds(.now)
+                if let last = lastMovingExtension, now - last < MapLoadAhead.interval { return }
+                lastMovingExtension = now
+                linesArrivedWhileMoving = false
+                networkBuildState.invalidateZoomBucket()
+                movingBuildRect = Self.mapRect(
+                    MapLoadAhead.movingBuildRect(visible: visible, velocity: velocity))
+                defer { movingBuildRect = nil }
+                noteRebuildTrigger(.movingExtended)
+                rebuild(on: mapView, duringGesture: true)
+            }
 
             // MARK: neighbour prebuild
 
@@ -1713,7 +1805,7 @@ extension RailMapView.Surface {
                     hasLanedLines: hasLanedLines,
                     visibleRect: visibleRect
                 ) else { return }
-                let buildRect = NetworkLOD.buildRect(for: visibleRect)
+                let buildRect = movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
                 onBuildRect(buildRect, visibilityZoom)
                 guard prepareNetworkGeometry(
                     on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: buildRect
@@ -1996,6 +2088,8 @@ extension RailMapView.Surface {
                     withheldByColor: withheldByColor,
                     colors: colors, dark: dark,
                     alphaScale: hasSelection ? RailStyle.selectDim : 1,
+                    epoch: geometryFrame.key,
+                    tileSize: MapOverlayTiling.tileSize(mapPointsPerScreenPoint: mapPointsPerScreenPoint),
                     reconciliation: overlayReconciliation)
                 desiredOverlays.append(contentsOf: overlays)
 #if DEBUG
@@ -3872,6 +3966,26 @@ extension RailMapView.Surface {
                     next[line.id] = LineInputs(contentID: line.contentID,
                         anchors: anchors[line.id] ?? [], dependencies: dependencies)
                 }
+                // Stable joints: a line's stroke depends on which junction
+                // neighbours are loaded, so a later wave must not move a line
+                // that is already drawn. While the fingers are down, a drawn
+                // line keeps its stored stroke (and the inputs it was built
+                // from); it refreshes once the camera settles.
+                var trueGenerations = lineInputGenerations
+                for (id, inputs) in next where trueLineInputs[id] != inputs {
+                    trueGenerations[id] = (trueGenerations[id] ?? 0) + 1
+                }
+                trueGenerations = trueGenerations.filter { next[$0.key] != nil }
+                trueLineInputs = next
+                lineInputGenerations = trueGenerations
+                strokeStability.resolve(current: trueGenerations, moving: isManipulating)
+                let frameKey = currentGeometryFrame?.key
+                let heldIDs = strokeStability.held(current: trueGenerations).filter { id in
+                    frameKey.map { networkGeometry.hasLineBuild(for: id, in: $0) } == true
+                        && lineInputs[id] != nil
+                }
+                for id in heldIDs { next[id] = lineInputs[id] }
+                heldJointLineIDs = heldIDs
                 let retainedIDs = Set(next.keys.filter { next[$0] == lineInputs[$0] })
                 networkGeometry.retainLineBuilds(withIDs: retainedIDs)
                 resetRideStrokeCaches()

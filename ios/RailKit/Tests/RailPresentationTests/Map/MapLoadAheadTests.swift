@@ -38,6 +38,24 @@ struct MapLoadAheadTests {
         #expect(rect.x + rect.width == 1000 + 400 + 1500 + 200)
     }
 
+    @Test func movingBuildRectIsOneScreenAheadPlusMargin() {
+        let rect = MapLoadAhead.movingBuildRect(visible: visible, velocity: .init(dx: 50, dy: 0))
+        #expect(rect == Rect(x: 800, y: 850, width: 400 + 400 + 400, height: 600))
+        #expect(MapLoadAhead.movingBuildRect(visible: visible, velocity: .zero)
+            == MapLoadAhead.requestRect(visible: visible, velocity: .zero))
+    }
+
+    @Test func extensionIsDueOnlyOnceTheBuiltAreaNoLongerCoversOneScreenAhead() {
+        let v = MapLoadAhead.Velocity(dx: 50, dy: 0)
+        let built = MapLoadAhead.movingBuildRect(visible: visible, velocity: v)
+        #expect(!MapLoadAhead.needsExtension(built: built, visible: visible, velocity: v))
+        let moved = Rect(x: 1250, y: 1000, width: 400, height: 300)
+        #expect(MapLoadAhead.needsExtension(built: built, visible: moved, velocity: v))
+        // Reversing direction needs a screen behind, which was not built.
+        #expect(MapLoadAhead.needsExtension(
+            built: built, visible: visible, velocity: .init(dx: -50, dy: 0)))
+    }
+
     @Test func throttleRunsEveryIntervalNotEveryCallback() {
         #expect(MapLoadAhead.isDue(now: 5, lastPass: nil))
         #expect(!MapLoadAhead.isDue(now: 5.1, lastPass: 5))
