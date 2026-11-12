@@ -67,8 +67,21 @@ VARIANTS = AUDITS / "needs-variants.json"
 BASELINE = AUDITS / "baseline-patterns.json"
 ERA = "2026-03-14"
 CHECKED = "2026-11-11"
+CLOCK_TEXT = re.compile(r"(?<![0-9A-Za-z:@.+\-])\d{1,2}[:：]\d{2}(?![0-9:])|(?<![0-9-])\d{1,2}時(?:\d{1,2}分|(?=[発着]))")  # same as train_timetable.CLOCK_TEXT
 MARKER = re.compile(r"\s*【" + CHECKED + r" recheck:[^】]*】")
 MAX_URLS = 6
+# Stops-only decision: the bundled data carries no copied clock times. The baseline is the pre-correction
+# master and is not tracked, so the removal of the clock times from its notes is recorded here and applied
+# to the baseline as it is read (every other record, clone and edit then starts from the scrubbed text).
+STOPS_ONLY_NOTE_SCRUBS = {
+    "muroto-tokushima-mugi": [("（徳島19:33→牟岐20:58）", "（徳島→牟岐）"), ("（牟岐6:59→徳島8:20）", "（牟岐→徳島）")],
+    "ariake-omuta-hakata": [("（大牟田6:43発・久留米7:12発）", "（大牟田発・久留米発）")],
+    "kaio-nogata-hakata": [("3号(直方10:00発)に時刻変更", "3号(直方発)に時刻変更")],
+    "iyonada-monogatari-matsuyama-iyo-ozu": [("（松山8:28発→", "（松山発→"), ("伊予大洲10:28着）", "伊予大洲着）")],
+    "iyonada-monogatari-matsuyama-yawatahama": [
+        ("（松山13:38発→", "（松山発→"), ("伊予大洲15:13着→八幡浜15:56着）", "伊予大洲着→八幡浜着）"),
+        ("（八幡浜16:27発→", "（八幡浜発→"), ("→松山18:30着）", "→松山着）")],
+}
 LEGACY = {"status": "legacy_unverified_fallback",
           "reason": "canonical timetable coverage is not yet sufficient for this service"}
 AUTO_DEFERRED = (
@@ -342,6 +355,20 @@ def period_label(record):
     return label
 
 
+def scrub_baseline_notes(baseline):
+    """Apply STOPS_ONLY_NOTE_SCRUBS to the baseline records; an entry that no longer matches is an error."""
+    by_id = {r["patternId"]: r for r in baseline}
+    for pid, replacements in STOPS_ONLY_NOTE_SCRUBS.items():
+        if pid not in by_id:
+            raise Fail(f"stops-only scrub: unknown baseline record {pid}")
+        notes = by_id[pid].get("notes", "")
+        for old, new in replacements:
+            if old not in notes:
+                raise Fail(f"stops-only scrub: {pid} notes do not contain {old!r}")
+            notes = notes.replace(old, new)
+        by_id[pid]["notes"] = notes
+
+
 def run(check, quiet):
     corrections_doc = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
     corrections = OrderedDict((c["id"], c) for c in corrections_doc["corrections"])
@@ -349,11 +376,13 @@ def run(check, quiet):
     status = classify(corrections, entries)
 
     baseline = json.loads(BASELINE.read_text(encoding="utf-8"), object_pairs_hook=OrderedDict)
+    raw_baseline = copy.deepcopy(baseline)
+    scrub_baseline_notes(baseline)
     master = json.loads(PATTERNS.read_text(encoding="utf-8"), object_pairs_hook=OrderedDict)
     master_by = {r["patternId"]: r for r in master}
     # every run starts from the pre-correction baseline, so clones and edits do not depend on earlier runs
     patterns = copy.deepcopy(baseline)
-    before = {r["patternId"]: copy.deepcopy(r) for r in baseline}
+    before = {r["patternId"]: copy.deepcopy(r) for r in raw_baseline}
     resolver = Resolver(baseline)
     by_id = {r["patternId"]: r for r in patterns}
     evidence = defaultdict(lambda: {"ids": [], "urls": [], "basis": ""})
@@ -501,6 +530,10 @@ def run(check, quiet):
             result.append(master_by[pid])
     known = {r["patternId"] for r in result}
     result.extend(r for r in master if r["patternId"] not in known and r["patternId"] not in before)
+    leftover = [r["patternId"] for r in result if CLOCK_TEXT.search(r.get("notes") or "")]
+    if leftover:
+        raise Fail("clock times remain in the notes of " + ", ".join(leftover)
+                   + " (stops-only decision); add a STOPS_ONLY_NOTE_SCRUBS entry")
     out_patterns = json.dumps(result, ensure_ascii=False, indent=1) + "\n"
 
     derived = json.loads(DERIVED.read_text(encoding="utf-8"))

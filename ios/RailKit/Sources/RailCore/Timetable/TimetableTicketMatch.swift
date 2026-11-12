@@ -4,8 +4,10 @@ import Foundation
 /// the service (のぞみ 23号), the day and the two stations of the ride, and
 /// often the departure clock; it never prints the arrival, so the two-clock
 /// ``TimetableTripMatch`` cannot be used. The ride may be any part of the
-/// trip: both stations must be passenger calls, in order, and a printed
-/// departure must equal the published departure at the first.
+/// trip: both stations must be passenger calls, in order. A printed
+/// departure must equal a published departure at the first call when one is
+/// published; the bundled database is stops-only, so it then matches by service
+/// number (a name alone names no train), day and stations.
 public enum TimetableTicketMatch {
     public struct Query: Sendable, Equatable {
         public var date: String
@@ -50,9 +52,14 @@ public enum TimetableTicketMatch {
             guard let from = calls.firstIndex(where: { $0.station.currentSourceCode == query.originCode }),
                   calls[(from + 1)...].contains(where: { $0.station.currentSourceCode == query.destinationCode })
             else { return false }
-            if let minutes = query.departureMinutes {
-                guard let seconds = calls[from].departureSeconds,
-                      (seconds / 60) % 1440 == minutes % 1440 else { return false }
+            // The bundled database stores no times, so the printed departure can
+            // only rule a trip out when this database publishes one. With no
+            // published departure the clock cannot tell same-name trains apart:
+            // a read service number must then name the train.
+            if let seconds = calls[from].departureSeconds {
+                if let minutes = query.departureMinutes, (seconds / 60) % 1440 != minutes % 1440 { return false }
+            } else if number == nil {
+                return false
             }
             return true
         }

@@ -69,9 +69,9 @@ struct TrainTimetableDatabaseTests {
         let regularQuery = try database.trip(id: id, on: "2013-08-03")
         let regular = try #require(regularQuery)
         #expect(early.serviceDate == "2013-08-12")
-        #expect(early.stops.first?.departureTime == "08:25")
-        #expect(early.stops.first?.departureSeconds == 30_300)
-        #expect(regular.stops.first?.departureTime == "08:28")
+        #expect(early.stops.first?.departureTime == nil && early.stops.first?.departureSeconds == nil)
+        #expect(regular.stops.first?.departureTime == nil)
+        #expect(early.id == regular.id && early.serviceDate != regular.serviceDate)
         #expect(try database.trip(id: id, on: "2013-08-01") == nil)
         #expect(!early.canApplyToRouteEditor)
         #expect(early.stops.count == 2)
@@ -164,22 +164,20 @@ struct TrainTimetableDatabaseTests {
         #expect(selected.id != regular.id)
         #expect(selected.trainNumber == "1M" && regular.trainNumber == "1M")
         #expect(selected.stops.count == 12 && regular.stops.count == 12)
-        #expect(selected.stops.last?.arrivalTime == "09:43")
-        #expect(regular.stops.last?.arrivalTime == "09:38")
+        // Stops only: the two dated variants differ by occurrence, not by a stored time.
+        #expect(selected.stops.last?.arrivalTime == nil && regular.stops.last?.arrivalTime == nil)
         #expect(!selected.canApplyToRouteEditor && !regular.canApplyToRouteEditor)
         let from = try #require(regular.origin)
         let to = try #require(regular.destination)
         let fromCode = try #require(from.station.currentSourceCode)
         let toCode = try #require(to.station.currentSourceCode)
-        let departure = try #require(from.departureTime)
-        let arrival = try #require(to.arrivalTime)
         let input = Train(
             id: "azusa-lookup", date: "2026-09-27", number: "", origin: from.station.name,
             destination: to.station.name, stops: [
                 Stop(name: from.station.name, n02StationCode: fromCode,
-                     departure: departure, stopType: "origin"),
+                     stopType: "origin"),
                 Stop(name: to.station.name, n02StationCode: toCode,
-                     arrival: arrival, stopType: "destination"),
+                     stopType: "destination"),
             ], region: "jp")
         #expect(TimetableTripMatch.candidates(
             for: input, serviceName: "あずさ", among: sunday).contains(regular))
@@ -246,16 +244,13 @@ struct TrainTimetableDatabaseTests {
         let trip = try #require(queried)
         let wakayama = try #require(trip.stops.first { $0.station.name == "和歌山" })
         #expect(trip.serviceDate == "2026-09-28")
-        #expect(wakayama.arrivalTime == "23:42")
-        #expect(wakayama.departureTime == "0:30")
-        #expect(wakayama.arrivalSeconds == 85_320)
-        #expect(wakayama.departureSeconds == 88_200)
-        #expect(wakayama.arrivalDayOffset == 0)
-        #expect(wakayama.departureDayOffset == 1)
+        #expect(wakayama.arrivalTime == nil && wakayama.departureTime == nil)
+        #expect(wakayama.arrivalSeconds == nil && wakayama.departureSeconds == nil)
+        #expect(trip.stops.map(\.sequence) == trip.stops.map(\.sequence).sorted())
         #expect(!wakayama.isPassengerCall)
         #expect(!wakayama.pickupAllowed && !wakayama.dropoffAllowed)
         #expect(!trip.canApplyToRouteEditor)
-        #expect(trip.stops.last?.arrivalSeconds == 120_900)
+        #expect(trip.stops.last?.arrivalSeconds == nil)
     }
 
     @Test func calendarExceptionsAndOverridesMaterializeExactServiceDay() throws {

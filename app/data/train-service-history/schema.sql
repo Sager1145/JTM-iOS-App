@@ -140,6 +140,12 @@ CREATE TABLE trips (
     notes TEXT
 );
 
+-- Stops-only policy (schema 1.3.0): the bundled database keeps each trip's
+-- ordered stops, call type and platform but NO departure or arrival times.
+-- The time columns below stay for reader compatibility and are always NULL
+-- (arrival_time/departure_time/*_seconds/*_day_offset) or 0 (day_offset) with
+-- time_accuracy 'unknown'; train_timetable.py apply_stops_only enforces this
+-- on every build and `strip-times` migrates an existing file.
 CREATE TABLE stop_times (
     trip_id TEXT NOT NULL REFERENCES trips(trip_id) ON DELETE CASCADE,
     stop_sequence INTEGER NOT NULL CHECK (stop_sequence >= 0),

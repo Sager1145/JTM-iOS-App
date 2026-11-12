@@ -144,10 +144,13 @@ public enum TimetablePhysicalRouteMatch {
                     var unknown = hasUnknown
                     var conflictingTime = false
                     let exactClock = call.timeAccuracy == "exact" || call.timeAccuracy == "minute"
+                    // Stops-only data publishes no times: a recorded time then
+                    // neither proves nor contradicts the call. Only a published
+                    // time that is not exact keeps the match unproven.
                     for (recorded, published) in [(times[index].arrival, call.arrivalSeconds),
                                                    (times[index].departure, call.departureSeconds)] {
-                        guard let recorded else { continue }
-                        if exactClock, let published {
+                        guard let recorded, let published else { continue }
+                        if exactClock {
                             if published != recorded + dateOffset * 86_400 { conflictingTime = true }
                         } else { unknown = true }
                     }
@@ -161,10 +164,18 @@ public enum TimetablePhysicalRouteMatch {
                     }
                     // An untimed first visit still belongs to the rider's civil
                     // boarding day; do not freely shift it to a different day.
-                    if index == 0, times[0].arrival == nil, times[0].departure == nil {
-                        if exactClock, let seconds = call.departureSeconds ?? call.arrivalSeconds {
+                    if index == 0, times[0].arrival == nil, times[0].departure == nil,
+                       let seconds = call.departureSeconds ?? call.arrivalSeconds {
+                        if exactClock {
                             if seconds / 86_400 != dateOffset { continue }
                         } else { unknown = true }
+                    }
+                    // No published time to place the ride on a day: the stops-only
+                    // calendar fact is the call's own civil-day offset (an overnight
+                    // trip's after-midnight calls fall on the next day).
+                    if index == 0, call.departureSeconds == nil, call.arrivalSeconds == nil,
+                       dateOffset != call.departureDayOffset {
+                        continue
                     }
                     mapStops(index + 1, after: callIndex, path: path + [callIndex], hasUnknown: unknown)
                 }
@@ -183,6 +194,14 @@ public enum TimetablePhysicalRouteMatch {
                     case .unknown: missingProof = true; continue
                     case .yes: break
                     }
+                }
+                // Without published times the stations, date and pickup alone name
+                // no train: the rider must have recorded a number or a section
+                // name or number that the trip answers to (checked by
+                // serviceConstraints), else the route stays unproven.
+                if calls[start].departureSeconds == nil, calls[end].arrivalSeconds == nil,
+                   !hasServiceIdentity(train, routeSections) {
+                    missingProof = true; continue
                 }
                 guard !mapping.unknown, serviceAgreement != .unknown,
                       trip.timetableCompleteness != .conflict, trip.canApplyToRouteEditor,
@@ -243,6 +262,11 @@ public enum TimetablePhysicalRouteMatch {
     }
 
     private enum Agreement: Equatable { case yes, no, unknown }
+
+    private static func hasServiceIdentity(_ train: Train, _ routeSections: [RouteSection]) -> Bool {
+        [train.number, train.numberEn].contains { nonempty($0) != nil }
+            || routeSections.contains { nonempty($0.name) != nil || nonempty($0.number) != nil }
+    }
 
     private static func completePhysicalChain(_ trip: TrainTimetableDatabase.Trip) -> Bool {
         let calls = trip.passengerStops

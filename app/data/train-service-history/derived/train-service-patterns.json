@@ -988,7 +988,7 @@
       "鹿児島本線"
     ],
     "name": "有明",
-    "notes": "九州新幹線全線開業(2011-03-12)後の区間特急として起点を置いた。2021-03-13改正で廃止（最終運転日2021-03-12）。晩年は平日朝の上り（長洲/大牟田→博多）のみで、始発駅が長洲だった可能性あり、要確認。 [verified] JR九州 2020-12-18 リリース「2021年3月にダイヤを見直します」: 2021-03-13（土）改正で平日朝の大牟田〜博多間の「有明」の運転を取りやめ → validTo 2021-03-12 確定。晩年の始発は長洲ではなく大牟田（大牟田6:43発・久留米7:12発）。中間停車駅の完全一覧は資料になく stops は partial のまま。validFrom は未確認（2011-03-12 は長洲パターンと重複、2018-03-17 の可能性）。 https://www.jrkyushu.co.jp/railway/dia/pdf/press_kyushu.pdf",
+    "notes": "九州新幹線全線開業(2011-03-12)後の区間特急として起点を置いた。2021-03-13改正で廃止（最終運転日2021-03-12）。晩年は平日朝の上り（長洲/大牟田→博多）のみで、始発駅が長洲だった可能性あり、要確認。 [verified] JR九州 2020-12-18 リリース「2021年3月にダイヤを見直します」: 2021-03-13（土）改正で平日朝の大牟田〜博多間の「有明」の運転を取りやめ → validTo 2021-03-12 確定。晩年の始発は長洲ではなく大牟田（大牟田発・久留米発）。中間停車駅の完全一覧は資料になく stops は partial のまま。validFrom は未確認（2011-03-12 は長洲パターンと重複、2018-03-17 の可能性）。 https://www.jrkyushu.co.jp/railway/dia/pdf/press_kyushu.pdf",
     "optionalStops": [],
     "origin": "大牟田",
     "patternId": "ariake-omuta-hakata",
@@ -10123,7 +10123,7 @@
       "予讃線"
     ],
     "name": "伊予灘ものがたり",
-    "notes": "公式サイト（JR四国運営）大洲編（松山8:28発→下灘 約11分停車→伊予大洲10:28着）・双海編（伊予大洲→下灘→松山）の行程に基づく。伊予市・伊予長浜は公式行程に記載なし。予讃線海回り（内子線は通らない）。validFrom は未再照合（既存値）。 【2026-11-11 recheck: jr-shikoku#17; sources: https://timetable.jr-odekake.net/train-timetable/228781?date=20261114】",
+    "notes": "公式サイト（JR四国運営）大洲編（松山発→下灘 約11分停車→伊予大洲着）・双海編（伊予大洲→下灘→松山）の行程に基づく。伊予市・伊予長浜は公式行程に記載なし。予讃線海回り（内子線は通らない）。validFrom は未再照合（既存値）。 【2026-11-11 recheck: jr-shikoku#17; sources: https://timetable.jr-odekake.net/train-timetable/228781?date=20261114】",
     "optionalStops": [],
     "origin": "松山",
     "patternId": "iyonada-monogatari-matsuyama-iyo-ozu",
@@ -10167,7 +10167,7 @@
       "予讃線"
     ],
     "name": "伊予灘ものがたり",
-    "notes": "公式サイト（JR四国運営）八幡浜編（松山13:38発→下灘 約8分停車→伊予大洲15:13着→八幡浜15:56着）・道後編（八幡浜16:27発→伊予大洲→下灘→松山18:30着）に基づく。伊予市・伊予長浜は公式行程に記載なし。validFrom は未再照合（既存値）。",
+    "notes": "公式サイト（JR四国運営）八幡浜編（松山発→下灘 約8分停車→伊予大洲着→八幡浜着）・道後編（八幡浜発→伊予大洲→下灘→松山着）に基づく。伊予市・伊予長浜は公式行程に記載なし。validFrom は未再照合（既存値）。",
     "optionalStops": [],
     "origin": "松山",
     "patternId": "iyonada-monogatari-matsuyama-yawatahama",
@@ -10499,7 +10499,7 @@
       "鹿児島本線"
     ],
     "name": "かいおう",
-    "notes": "筑豊本線（福北ゆたか線）・篠栗線電化の2001-10-06に新設（日付は要確認）。停車順を筑豊本線の駅順（飯塚→新飯塚）に修正。 Verified vs official 2026年春ダイヤ改正 PDF (2025-12-12) full timetable of かいおう1号/3号: 直方・新飯塚・飯塚・桂川・吉塚・博多 (all stations with times). 2026-03-14から土休日は3号(直方10:00発)に時刻変更。",
+    "notes": "筑豊本線（福北ゆたか線）・篠栗線電化の2001-10-06に新設（日付は要確認）。停車順を筑豊本線の駅順（飯塚→新飯塚）に修正。 Verified vs official 2026年春ダイヤ改正 PDF (2025-12-12) full timetable of かいおう1号/3号: 直方・新飯塚・飯塚・桂川・吉塚・博多 (all stations with times). 2026-03-14から土休日は3号(直方発)に時刻変更。",
     "optionalStops": [],
     "origin": "直方",
     "patternId": "kaio-nogata-hakata",
@@ -17821,7 +17821,7 @@
       "牟岐線"
     ],
     "name": "むろと",
-    "notes": "牟岐線特急。JR四国 2025年3月ダイヤ改正プレス（2024-12-13）で むろと1号（徳島19:33→牟岐20:58）・2号（牟岐6:59→徳島8:20）の1往復が運転取りやめと確認（2025-03-15 改正で終了）。中間停車駅は公式未照合（JR四国の特急紹介ページに むろと は掲載なし）。 【2026-11-11 recheck: jr-shikoku#1; sources: https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/<name https://timetable.jr-odekake.net/train-timetable/104121?date=20261112 https://timetable.jr-odekake.net/train-timetable/104061?date=20261112 https://timetable.jr-odekake.net/train-timetable/275731?date=20261112】",
+    "notes": "牟岐線特急。JR四国 2025年3月ダイヤ改正プレス（2024-12-13）で むろと1号（徳島→牟岐）・2号（牟岐→徳島）の1往復が運転取りやめと確認（2025-03-15 改正で終了）。中間停車駅は公式未照合（JR四国の特急紹介ページに むろと は掲載なし）。 【2026-11-11 recheck: jr-shikoku#1; sources: https://www.jr-shikoku.co.jp/01_trainbus/vehicle-info/<name https://timetable.jr-odekake.net/train-timetable/104121?date=20261112 https://timetable.jr-odekake.net/train-timetable/104061?date=20261112 https://timetable.jr-odekake.net/train-timetable/275731?date=20261112】",
     "optionalStops": [],
     "origin": "徳島",
     "patternId": "muroto-tokushima-mugi",

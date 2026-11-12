@@ -123,7 +123,7 @@ struct TimetableAppFlowTests {
         #expect(trip.compatibilityPattern() == nil)
     }
 
-    @Test func exactMatchRejectsDifferentDayClocksAndShorterSegments() throws {
+    @Test func exactMatchRejectsDifferentDayAndShorterSegmentsAndIgnoresUnpublishedClocks() throws {
         let database = try TrainTimetableDatabase.bundled(bundle: .module)
         let trips = try database.trips(for: "azusa", on: "2026-09-27")
         let trip = try #require(trips.first)
@@ -136,7 +136,11 @@ struct TimetableAppFlowTests {
         #expect(TimetableTripMatch.candidates(for: wrongDate, among: trips).isEmpty)
         var wrongClock = draft
         wrongClock.stops[0].departure = "00:00"
-        #expect(TimetableTripMatch.candidates(for: wrongClock, among: trips).isEmpty)
+        // The database publishes no time, so a rider's clock cannot rule the trip out.
+        #expect(TimetableTripMatch.candidates(for: wrongClock, among: trips).contains(trip))
+        var unnamed = draft
+        unnamed.number = ""
+        #expect(TimetableTripMatch.candidates(for: unnamed, among: trips).isEmpty)
         var shorter = draft
         shorter.stops.removeFirst()
         #expect(TimetableTripMatch.candidates(for: shorter, among: trips).isEmpty)
@@ -152,14 +156,14 @@ struct TimetableAppFlowTests {
         let draft = try #require(trip.publishedStopsDraft(to: Train(
             id: "overnight", date: nil, number: "", origin: "", destination: "", stops: [], region: "jp")))
         #expect(draft.date == "2026-09-28")
-        #expect(draft.stops.last?.arrival == "33:35")
+        #expect(draft.stops.allSatisfy { $0.arrival == nil && $0.departure == nil })
         #expect(!draft.stops.contains { $0.name == "和歌山" })
         var workspace = StoreOperations.Workspace()
         StoreOperations.addTrain(draft, in: &workspace)
         let saved = StoreOperations.exportTrainStore(workspace)
         let decoded = try JSONDecoder().decode(TrainStore.self, from: Data(saved.utf8))
         #expect(decoded.trains.first?.date == "2026-09-28")
-        #expect(decoded.trains.first?.stops.last?.arrival == "33:35")
+        #expect(decoded.trains.first?.stops.last?.arrival == nil)
     }
 
     @Test(arguments: ["2026-02-29", "2026-13-01", "2026-09-31", "2026-9-30", "", "__all__"])
@@ -182,7 +186,7 @@ struct TimetableAppFlowTests {
         let seasonalID = "jr-central.shinano.81.2013-summer"
         #expect(try database.trip(id: seasonalID, on: "2013-08-01") == nil)
         let early = try #require(try database.trip(id: seasonalID, on: "2013-08-12"))
-        #expect(early.stops.first?.departureTime == "08:25")
+        #expect(early.stops.first?.departureTime == nil)
         #expect(early.serviceDate == "2013-08-12")
     }
 }

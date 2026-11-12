@@ -122,6 +122,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public let station: StationIdentity
         public let arrivalTime: String?
         public let departureTime: String?
+        /// Times are absent (nil) in the bundled stops-only database and are never
+        /// derived; a value can only come from a database that stores one.
         /// Total seconds from the start of the trip's Japanese service day.
         public let arrivalSeconds: Int?
         public let departureSeconds: Int?
@@ -294,7 +296,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         public var canApplyToRouteEditor: Bool {
             let required = [
                 "identity", "train_number", "operator", "validity_calendar",
-                "origin_destination", "stops", "times", "route_lines", "station_refs", "provenance",
+                "origin_destination", "stops", "route_lines", "station_refs", "provenance",
             ]
             return canApplyToCurrentStationDirectory
                 && passengerStops.allSatisfy { $0.station.isValid(on: serviceDate) }
@@ -605,6 +607,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
 
     private let connection: OpaquePointer
     private let supportsPhysicalRoutes: Bool
+    /// 1.3.0 is the stops-only build: the 1.2.0 layout with every time NULL.
+    private static let datedOverrideSchemaVersions: Set<String> = ["1.2.0", "1.3.0"]
     private let supportsDatedOverrides: Bool
     private let lock = NSLock()
 
@@ -632,7 +636,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             "fact_sources", "fact_completeness", "holiday_dates", "holiday_calendar_years",
             "coverage_declarations", "metadata", "verified_zero_service_intervals",
         ]
-        if schemaVersion == "1.2.0" {
+        if Self.datedOverrideSchemaVersions.contains(schemaVersion) {
             required.append("trip_train_number_overrides")
         }
         let present: Set<String>
@@ -648,7 +652,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
             throw DatabaseError.incompatibleSchema(missingTables: missing)
         }
         do {
-            try Self.validateEssentialColumns(in: database, datedOverrides: schemaVersion == "1.2.0")
+            try Self.validateEssentialColumns(in: database, datedOverrides: Self.datedOverrideSchemaVersions.contains(schemaVersion))
         } catch {
             sqlite3_close(database)
             throw error
@@ -656,7 +660,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         supportsPhysicalRoutes = present.contains("trip_physical_route_sections")
             && present.contains("trip_line_interval_codes")
         connection = database
-        supportsDatedOverrides = schemaVersion == "1.2.0"
+        supportsDatedOverrides = Self.datedOverrideSchemaVersions.contains(schemaVersion)
     }
 
     deinit { sqlite3_close(connection) }
@@ -744,6 +748,33 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
                         id: row.string(0), title: row.string(1), publisher: row.string(2),
                         urlOrLocator: row.string(3), licenseStatus: row.string(4))
                 }
+        }
+    }
+
+    /// The credit the database carries for its stop lists: which operators'
+    /// public information they were compiled from, and that no timetable
+    /// times are stored. Read from the build metadata, never invented.
+    public struct Credits: Sendable, Equatable {
+        public struct Source: Sendable, Equatable, Decodable {
+            public let publisher: String
+            public let sources: Int
+        }
+        public let timePolicy: String
+        public let statement: String
+        public let sources: [Source]
+    }
+
+    /// Nil for a database built before the stops-only credit metadata existed.
+    public func credits() throws -> Credits? {
+        try withLock {
+            let metadata = Dictionary(uniqueKeysWithValues: try rows(
+                "SELECT key, value FROM metadata WHERE key IN ('time_policy', 'credit_statement', 'credit_sources')"
+            ).map { ($0.string(0), $0.string(1)) })
+            guard let policy = metadata["time_policy"], let statement = metadata["credit_statement"],
+                  let encoded = metadata["credit_sources"],
+                  let sources = try? JSONDecoder().decode([Credits.Source].self, from: Data(encoded.utf8))
+            else { return nil }
+            return Credits(timePolicy: policy, statement: statement, sources: sources)
         }
     }
 
@@ -1054,7 +1085,7 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         }.filter { !$0.isEmpty }
         guard !scopes.isEmpty, let year = Int(serviceDate.prefix(4)) else { return false }
         let requiredDimensions = [
-            "inventory", "calendar", "stops", "times", "route_lines", "station_refs", "provenance",
+            "inventory", "calendar", "stops", "route_lines", "station_refs", "provenance",
         ]
         for scope in scopes {
             let records = try rows("""
@@ -1354,8 +1385,8 @@ public final class TrainTimetableDatabase: @unchecked Sendable {
         defer { sqlite3_finalize(statement) }
         guard sqlite3_step(statement) == SQLITE_ROW,
               let value = sqlite3_column_text(statement, 0),
-              ["1.0.0", "1.1.0", "1.2.0"].contains(String(cString: value))
-        else { throw DatabaseError.invalidArtifact("metadata.schema_version must be 1.0.0, 1.1.0 or 1.2.0") }
+              ["1.0.0", "1.1.0", "1.2.0", "1.3.0"].contains(String(cString: value))
+        else { throw DatabaseError.invalidArtifact("metadata.schema_version must be 1.0.0, 1.1.0, 1.2.0 or 1.3.0") }
         return String(cString: value)
     }
 

@@ -410,6 +410,7 @@ editor's draft model is app code, so they cannot run in the RailKit package).
 |---|---|
 | `check-ui-test-identifiers.sh` | UI test ids that no longer exist in the app |
 | `check-string-keys.sh` | string keys missing from, or incomplete in, the four-language tables |
+| `python3 -I ios/tools/check-timetable-stops-only.py` (+ `TimetableStopsOnlyTests`) | any departure or arrival time value in the bundled `train-service-timetable.sqlite`, its `app/data/train-service-history/derived` copy or the `line-service-catalog.json` excerpts, or missing credit metadata. The database is stops only; `python3 ios/tools/train_timetable.py strip-times <db>` is the deterministic migration, and `build` applies the same step |
 | `build-shinkansen-patterns.py --check --strict` (+ `TrainPatternVariants*` Swift suites) | the Shinkansen stop-pattern keys (`allStations`, `variants`, group `coupled`) and their source files, or the base stop lists of Shinkansen records, breaking a rule: station identity, order, source, revision dates, number overlap. See "Shinkansen stop-pattern database" below |
 | `RegressionGuardTopologyGaps` | new different-line seams with no junction row; bad registry station codes |
 | `RegressionGuardHistoryStamps` | history events losing or narrowing their `rail-history.json` stamps |
