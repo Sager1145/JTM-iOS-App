@@ -1391,6 +1391,11 @@ extension RailMapView.Surface {
                 var buildRect: MKMapRect
                 var eraKey: String
                 var visibilityZoom: Double
+
+                static func == (lhs: Self, rhs: Self) -> Bool {
+                    lhs.levels == rhs.levels && MKMapRectEqualToRect(lhs.buildRect, rhs.buildRect)
+                        && lhs.eraKey == rhs.eraKey && lhs.visibilityZoom == rhs.visibilityZoom
+                }
             }
             private var neighbourPrebuild: Task<Void, Never>?
             /// What the running (or finished) prebuild was asked for, so an

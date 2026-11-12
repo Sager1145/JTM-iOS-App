@@ -265,8 +265,9 @@ final class MapNetworkGeometryCache {
             nextStrokeGeneration += 1
             entries[key]?.strokeGenerations[id] = nextStrokeGeneration
             // A replaced stroke build invalidates the dashed runs cut from it.
-            entries[key]?.withheldPolylines =
-                entries[key]?.withheldPolylines.filter { $0.value.lineID != id } ?? [:]
+            if let withheld = entries[key]?.withheldPolylines.filter({ $0.value.lineID != id }) {
+                entries[key]?.withheldPolylines = withheld
+            }
         }
         entries[key]?.lineBuilds.merge(result.lines) { _, new in new }
         if !result.strokes.isEmpty { dropStaleRidePolylines(in: key) }
