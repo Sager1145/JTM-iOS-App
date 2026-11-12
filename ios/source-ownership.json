@@ -290,6 +290,7 @@
         "ios/RailMap/Map/RideIncrementalUpdate.swift",
         "ios/RailMap/Map/RideOverlayBatching.swift",
         "ios/RailMap/Map/RideStationOverlay.swift",
+        "ios/RailMap/Map/RideStrokeBuilder.swift",
         "ios/RailMap/Map/RideTapIndex.swift",
         "ios/RailMap/Map/StationAnnotationViews.swift",
         "ios/RailMap/Map/StationAnnotations.swift",
