@@ -47,7 +47,7 @@ class ResourceRevisionTests(unittest.TestCase):
                 f"{family}{suffix}.json" for family in
                 ("stations", "rail-sections", "station-readings", "rail-history", "train-store")]
             names += [f"rail-display-network/{region}.{ending}" for ending in
-                      ("display.bin", "stations.json", "display-history.json", "topology.bin")]
+                      ("display.bin", "stations.json", "display-history.json")]
             for name in names:
                 with self.subTest(region=region, resource=name):
                     before = self.manifest()
@@ -78,14 +78,36 @@ class ResourceRevisionTests(unittest.TestCase):
         (self.bundle / "physical-rail-junctions.json").write_text('{"junctions":[]}')
         self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
 
-    def test_topology_builder_invalidates_all_regions(self):
-        # The topology file is compiled by the display builder from its library.
-        path = self.repo / "app/scripts/railway/lib/display_topology.py"
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("one")
+    def test_builder_script_text_and_topology_bin_do_not_change_revision(self):
+        # Two bundles that differ only in builder script text or topology.bin
+        # share one route-cache revision; a changed builder output still changes it.
+        script = self.repo / "app/scripts/railway/lib/display_topology.py"
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text("one")
+        (self.repo / "app/scripts/railway/build-display-network.py").write_text("one")
+        network = self.bundle / "rail-display-network"
+        network.mkdir()
+        for region in resources.REGIONS:
+            (network / f"{region}.topology.bin").write_bytes(b"topology one")
+            (network / f"{region}.display.bin").write_bytes(b"display one")
+        manifest_path = network / "manifest.json"
+        def write_manifest(topology_digest):
+            manifest_path.write_text(json.dumps({
+                "format": "jtm-display-network-v2",
+                "regions": [{"region": region, "sha256": region,
+                             "topologyFile": f"{region}.topology.bin",
+                             "topologyBytes": 12, "topologySHA256": topology_digest}
+                            for region in resources.REGIONS]}))
+        write_manifest("aaa")
         before = self.manifest()
-        path.write_text("two")
-        self.assertEqual(self.changed_regions(before), set(resources.REGIONS))
+        script.write_text("two")
+        (self.repo / "app/scripts/railway/build-display-network.py").write_text("two")
+        for region in resources.REGIONS:
+            (network / f"{region}.topology.bin").write_bytes(b"topology two, longer")
+        write_manifest("bbb")
+        self.assertEqual(before, self.manifest())
+        (network / "tw.display.bin").write_bytes(b"display two")
+        self.assertEqual(self.changed_regions(before), {"tw"})
 
     def test_through_service_catalog_invalidates_only_japan(self):
         # Only the jp topology file's links are compiled from the catalog.
