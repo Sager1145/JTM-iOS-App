@@ -118,8 +118,11 @@ extension TopologyView {
             let b = lineBase(line)
             guard F.isValid(on: query.day, from: u32(b + F.Line.validFrom), to: u32(b + F.Line.validTo)) else { continue }
             let institution = u16(b + F.Line.institution)
-            if !query.institutions.isEmpty, !query.institutions.contains(institution) { continue }
+            // Institution 0 is "unknown" and passes, as an empty institution code does in the solver
+            // (`RouteSolver.edgeHasPreferredInstitution`, `:266-280`).
+            if !query.institutions.isEmpty, institution != 0, !query.institutions.contains(institution) { continue }
             if query.excludedInstitutions.contains(institution) { continue }
+            if query.excludeHighSpeed, F.LineFlag(rawValue: u16(b + F.Line.flags)).contains(.highSpeed) { continue }
             let id = u32(b + F.Line.id)
             if !wanted.isEmpty, !wanted.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) { continue }
             var factor: UInt64 = 1

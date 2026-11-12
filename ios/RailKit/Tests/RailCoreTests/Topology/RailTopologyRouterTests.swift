@@ -298,6 +298,28 @@ struct RailTopologyRouterTests {
         // Hard exclusion: p is excluded, q is the only way; excluding both leaves nothing, even unproven.
         #expect(route(excluded: [1])?.spans[1].line == t.lineIndex(forID: "q"))
         #expect(route(excluded: [1, 2]) == nil)
+        // The hard filter: unknown (0) passes like an empty code does in the solver, others must be in the set.
+        func hard(_ set: Set<UInt16>) -> RailTopology.SectionPath? {
+            var q = Self.query(t, [("s", 0)], [("t", 1)]); q.institutions = set
+            return t.route(q)
+        }
+        #expect(hard([1])?.spans[1].line == t.lineIndex(forID: "p"))
+        #expect(hard([2])?.spans[1].line == t.lineIndex(forID: "q"))
+        #expect(hard([3]) == nil)
+    }
+
+    @Test("excludeHighSpeed never uses a high-speed line, even when it is the shorter way")
+    func highSpeedExclusion() throws {
+        var net = Self.parallelNetwork(p: 50_000, q: 100_000)
+        net.lines[1].flags.insert(.highSpeed)
+        let t = try net.topology()
+        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)]))?.spans[1].line == t.lineIndex(forID: "p"))
+        var q = Self.query(t, [("s", 0)], [("t", 1)])
+        q.excludeHighSpeed = true
+        #expect(t.route(q)?.spans[1].line == t.lineIndex(forID: "q"))
+        net.lines[2].flags.insert(.highSpeed)
+        let both = try net.topology()
+        #expect(both.route(q) == nil)
     }
 
     @Test("equal-cost ties are decided by line id, not by the order of lines in the file")

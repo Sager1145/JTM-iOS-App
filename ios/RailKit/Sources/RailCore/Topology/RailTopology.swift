@@ -45,7 +45,8 @@ public struct RailTopology: Sendable {
         /// Day number of the ride (see ``RailTopologyFormat/dayNumber(ofISODate:)``);
         /// nil: undated, only rows without a `validTo` count.
         public var day: UInt32?
-        /// Hard filters: when non-empty only these line ids / institution codes may be used.
+        /// Hard filters: when non-empty only these line ids / institution codes may be used
+        /// (a line with institution 0, unknown, passes the institution filter).
         public var lineIDs: Set<String>
         public var institutions: Set<UInt16>
         /// Soft preference: when non-empty, every line outside this set costs
@@ -54,6 +55,9 @@ public struct RailTopology: Sendable {
         /// Hard exclusion: lines with these institution codes are never used
         /// (the production solver's `hardExcludedInstitutionTypeCodes`).
         public var excludedInstitutions: Set<UInt16>
+        /// Hard exclusion of lines flagged high-speed (Shinkansen). Stands in for excluded
+        /// institution 1 while the file carries no institution codes.
+        public var excludeHighSpeed: Bool
         /// Soft preference: when non-empty, lines whose institution code is not in
         /// this set (and not 0, unknown) cost ``RailTopology/nonPreferredInstitutionFactor``
         /// times their length.
@@ -61,7 +65,9 @@ public struct RailTopology: Sendable {
         public init(from: [NodeRef], to: [NodeRef], day: UInt32? = nil,
                     lineIDs: Set<String> = [], institutions: Set<UInt16> = [],
                     preferredLineIDs: Set<String> = [],
-                    excludedInstitutions: Set<UInt16> = [], preferredInstitutions: Set<UInt16> = []) {
+                    excludedInstitutions: Set<UInt16> = [], preferredInstitutions: Set<UInt16> = [],
+                    excludeHighSpeed: Bool = false) {
+            self.excludeHighSpeed = excludeHighSpeed
             self.from = from; self.to = to; self.day = day
             self.lineIDs = lineIDs; self.institutions = institutions
             self.preferredLineIDs = preferredLineIDs
