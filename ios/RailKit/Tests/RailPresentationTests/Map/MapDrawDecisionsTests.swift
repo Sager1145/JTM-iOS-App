@@ -4,10 +4,23 @@ import Testing
 struct MapDrawDecisionsTests {
     // MARK: - rebuild policy and the preparation ledger
 
+    /// One arrival that owes a rebuild, run through the same two decisions the
+    /// coordinator makes: `rebuildOwed` (policy cancel) then
+    /// `prepareNetworkGeometry` (gate).
+    private func arrive(
+        _ ledger: inout GeometryPreparationLedger, tripsOnly: Bool, key: String, missingWork: Bool = true
+    ) -> GeometryPreparationGate.Decision {
+        if MapRebuildOwedPolicy(tripsOnly: tripsOnly).cancelsGeometryPreparation { ledger.cancel() }
+        let d = GeometryPreparationGate.decide(
+            inFlightKey: ledger.inFlightKey, requestedKey: key, missingWork: missingWork)
+        ledger.apply(d, key: key)
+        return d
+    }
+
     @Test func aTripsOnlyChangeNeverCancelsAPreparation() {
         var ledger = GeometryPreparationLedger()
         ledger.request(key: "frame-a")
-        ledger.rebuildOwed(MapRebuildOwedPolicy(tripsOnly: true), key: "frame-a")
+        _ = arrive(&ledger, tripsOnly: true, key: "frame-a")
         #expect(ledger.cancelled == 0)
         #expect(ledger.started == 1)
         #expect(ledger.isInFlight)
@@ -16,7 +29,7 @@ struct MapDrawDecisionsTests {
     @Test func anythingElseThatOwesARebuildCancelsAndRestarts() {
         var ledger = GeometryPreparationLedger()
         ledger.request(key: "frame-a")
-        ledger.rebuildOwed(MapRebuildOwedPolicy(tripsOnly: false), key: "frame-a")
+        _ = arrive(&ledger, tripsOnly: false, key: "frame-a")
         #expect(ledger.cancelled == 1)
         #expect(ledger.started == 2)
     }
@@ -24,18 +37,20 @@ struct MapDrawDecisionsTests {
     @Test func aTripsOnlyChangeOnAnotherFrameStillCancelsTheStalePreparation() {
         var ledger = GeometryPreparationLedger()
         ledger.request(key: "frame-a")
-        ledger.rebuildOwed(MapRebuildOwedPolicy(tripsOnly: true), key: "frame-b")
+        let d = arrive(&ledger, tripsOnly: true, key: "frame-b")
+        #expect(d.cancelInFlight && d.start)
         #expect(ledger.cancelled == 1)
         #expect(ledger.inFlightKey == "frame-b")
     }
 
     @Test func manyArrivalsDuringOnePreparationEndInExactlyOneFinishedDraw() {
         var ledger = GeometryPreparationLedger()
-        ledger.request(key: "frame-a")
-        for _ in 0..<40 {
-            ledger.rebuildOwed(MapRebuildOwedPolicy(tripsOnly: true), key: "frame-a")
-        }
+        _ = arrive(&ledger, tripsOnly: true, key: "frame-a")
+        for _ in 0..<40 { _ = arrive(&ledger, tripsOnly: true, key: "frame-a") }
         ledger.finish()
+        // The landing rebuild finds nothing missing and draws.
+        let landing = arrive(&ledger, tripsOnly: true, key: "frame-a", missingWork: false)
+        #expect(landing.drawNow)
         #expect(ledger.started == 1)
         #expect(ledger.cancelled == 0)
         #expect(ledger.finished == 1)
@@ -43,13 +58,23 @@ struct MapDrawDecisionsTests {
     }
 
     @Test func theOldBehaviourNeverFinishedUnderTheSameArrivals() {
-        // What the policy replaces: every arrival cancels, so a preparation
-        // that outlasts the gap between arrivals never lands.
         var ledger = GeometryPreparationLedger()
-        ledger.request(key: "frame-a")
-        for _ in 0..<40 { ledger.rebuildOwed(MapRebuildOwedPolicy(tripsOnly: false), key: "frame-a") }
+        _ = arrive(&ledger, tripsOnly: false, key: "frame-a")
+        for _ in 0..<40 { _ = arrive(&ledger, tripsOnly: false, key: "frame-a") }
         #expect(ledger.finished == 0)
         #expect(ledger.cancelled == 40)
+    }
+
+    @Test func nothingMissingDrawsWithoutStartingAnything() {
+        let d = GeometryPreparationGate.decide(inFlightKey: nil, requestedKey: "a", missingWork: false)
+        #expect(d == .init(cancelInFlight: false, start: false, drawNow: true))
+    }
+
+    @Test func cancelOnlyCountsWhenSomethingWasInFlight() {
+        var ledger = GeometryPreparationLedger()
+        let counted = ledger.cancel()
+        #expect(!counted)
+        #expect(ledger.cancelled == 0)
     }
 
     @Test func tripsOnlyKeepsTheLaneScaleAndDropsTheZoomBucketAndMarkers() {

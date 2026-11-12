@@ -77,10 +77,13 @@ public struct GeometryPreparationLedger: Equatable, Sendable {
         return true
     }
 
-    public mutating func cancel() {
-        guard inFlightKey != nil else { return }
+    /// Returns whether a preparation was in flight and is now counted cancelled.
+    @discardableResult
+    public mutating func cancel() -> Bool {
+        guard inFlightKey != nil else { return false }
         inFlightKey = nil
         cancelled += 1
+        return true
     }
 
     public mutating func finish() {
@@ -89,18 +92,40 @@ public struct GeometryPreparationLedger: Equatable, Sendable {
         finished += 1
     }
 
+    /// Applies a gate decision the way the coordinator does.
+    public mutating func apply(_ decision: GeometryPreparationGate.Decision, key: String) {
+        if decision.cancelInFlight { cancel() }
+        if decision.start { request(key: key) }
+    }
+
     /// The preparation ended without a result and was not cancelled by us.
     public mutating func abort() { inFlightKey = nil }
+}
 
-    /// A rebuild is owed for `policy` while the frame is `key`: cancels the
-    /// preparation when the policy says so, or when it was asked for another
-    /// frame, then asks for it again.
-    @discardableResult
-    public mutating func rebuildOwed(_ policy: MapRebuildOwedPolicy, key: String) -> Bool {
-        if policy.cancelsGeometryPreparation || (inFlightKey != nil && inFlightKey != key) {
-            cancel()
+/// What `prepareNetworkGeometry` does about the line preparation, given the
+/// frame it was asked for and the work still missing. The coordinator calls
+/// this for every decision, so the tests pin the rule the app runs.
+public enum GeometryPreparationGate {
+    public struct Decision: Equatable, Sendable {
+        /// Cancel the preparation in flight: it was asked for another frame.
+        public var cancelInFlight: Bool
+        /// Start a preparation for the requested frame.
+        public var start: Bool
+        /// Nothing is missing: the rebuild may draw now.
+        public var drawNow: Bool
+
+        public init(cancelInFlight: Bool, start: Bool, drawNow: Bool) {
+            self.cancelInFlight = cancelInFlight
+            self.start = start
+            self.drawNow = drawNow
         }
-        return request(key: key)
+    }
+
+    public static func decide(inFlightKey: String?, requestedKey: String, missingWork: Bool) -> Decision {
+        let cancel = inFlightKey != nil && inFlightKey != requestedKey
+        let inFlight = cancel ? nil : inFlightKey
+        guard missingWork else { return Decision(cancelInFlight: cancel, start: false, drawNow: true) }
+        return Decision(cancelInFlight: cancel, start: inFlight == nil, drawNow: false)
     }
 }
 

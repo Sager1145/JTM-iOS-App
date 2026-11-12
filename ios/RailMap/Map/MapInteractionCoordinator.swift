@@ -108,6 +108,7 @@ final class MapInteractionCoordinator {
                     self.cachedTapIndex == nil, !self.ridesAreLoading
                 else { return }
                 self.cachedTapIndex = built
+                self.prebuildTask = nil
                 self.counters.notePrebuilt()
                 RailSignpost.map.mark("map.tapIndex.built", self.counters.prebuilt, self.counters.onDemand)
                 return

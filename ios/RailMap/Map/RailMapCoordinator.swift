@@ -1274,8 +1274,9 @@ extension RailMapView.Surface {
 
             private func cancelGeometryPreparation() {
                 guard geometryPreparation != nil else { return }
-                drawCounters.preparations.cancel()
-                RailSignpost.map.mark("map.geometry.prep.cancelled", drawCounters.preparations.cancelled)
+                if drawCounters.preparations.cancel() {
+                    RailSignpost.map.mark("map.geometry.prep.cancelled", drawCounters.preparations.cancelled)
+                }
                 geometryPreparation?.cancel()
                 geometryPreparation = nil
                 geometryPreparationKey = nil
@@ -1296,9 +1297,10 @@ extension RailMapView.Surface {
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
-                if geometryPreparation != nil, geometryPreparationKey != key {
-                    cancelGeometryPreparation()
-                }
+                let staleCancel = GeometryPreparationGate.decide(
+                    inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
+                    requestedKey: key, missingWork: true).cancelInFlight
+                if staleCancel { cancelGeometryPreparation() }
                 networkGeometry.beginFrame(key: key)
                 let selected = showsNetwork
                     ? networkSelection(zoom: visibilityZoom, buildRect: buildRect).lines
@@ -1335,8 +1337,12 @@ extension RailMapView.Surface {
                             || line.intervalRects.contains(where: { $0.intersects(buildRect) }) else { return nil }
                     return line
                 }
-                guard !missingLines.isEmpty || !missingStrokes.isEmpty else { return true }
-                guard geometryPreparation == nil else { return false }
+                let gate = GeometryPreparationGate.decide(
+                    inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
+                    requestedKey: key,
+                    missingWork: !missingLines.isEmpty || !missingStrokes.isEmpty)
+                if gate.drawNow { return true }
+                guard gate.start else { return false }
                 let anchors = lineInputs.mapValues(\.anchors)
                 let cachedStrokes = networkGeometry.preparedStrokes
                 let requestID = UUID()
@@ -1416,14 +1422,14 @@ extension RailMapView.Surface {
                     }
                     // A replaced chain build changes the pixels rides slice.
                     self.resetRideStrokeCaches()
-                    self.drawCounters.preparations.finish()
-                    RailSignpost.map.mark("map.geometry.prep.finished", self.drawCounters.preparations.finished)
                     await Task.yield()
                     guard !Task.isCancelled,
                           self.geometryPreparationID == requestID else {
                         clearPreparationIfCurrent()
                         return
                     }
+                    self.drawCounters.preparations.finish()
+                    RailSignpost.map.mark("map.geometry.prep.finished", self.drawCounters.preparations.finished)
                     if self.playbackLayer.lastSnapshot != nil {
                         self.rebuildDeferredByPlayback = true
                         clearPreparationIfCurrent()
