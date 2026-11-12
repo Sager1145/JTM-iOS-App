@@ -49,6 +49,13 @@ public struct GeometryZoomLevels: Equatable, Sendable {
         [level - 1, level + 1]
     }
 
+    /// The one neighbour worth pre-building while idle: the level in the
+    /// direction of the last zoom (`lastZoomDirection` > 0 zooming in, < 0
+    /// out; 0, no zoom seen yet, takes the finer level).
+    public static func prebuildNeighbour(of level: Int, lastZoomDirection: Int) -> Int {
+        lastZoomDirection < 0 ? level - 1 : level + 1
+    }
+
     /// (c) Whether to swap the installed level now during a gesture.
     public static func shouldSwapDuringGesture(
         zoom: Double, installed: Int, wanted: Int, wantedIsReady: Bool

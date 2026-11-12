@@ -171,6 +171,9 @@ extension RailMapView.Surface {
             /// rebuild is owed, so a stale context can never place markers against
             /// geometry that is about to change.
             private var markerBuildContext: MarkerBuildContext?
+            /// Set when a rebuild during a gesture skipped the full marker
+            /// pass; paid by the first full pass, normally at settle.
+            private var markerPassDebt = MarkerPassDebt()
             /// Per-ride digests of `rides`, kept in step with it in `update`.
             private var rideDeck = RideDeckState()
             /// The non-selected rides' installed batches and the inputs they
@@ -985,6 +988,10 @@ extension RailMapView.Surface {
             /// identify this coordinator or this exact map view.
             func tearDown(_ dismantledMapView: MKMapView) {
                 selectedStationSnapshots.tearDown()
+                if let memoryWarningObserver {
+                    NotificationCenter.default.removeObserver(memoryWarningObserver)
+                }
+                memoryWarningObserver = nil
                 cameraRebuildTimer.cancel()
                 stationLabels.tearDown()
                 pendingViewUpdate = nil
@@ -1122,6 +1129,10 @@ extension RailMapView.Surface {
                 if preparationFrame.key != geometryPreparationKey {
                     cancelGeometryPreparation()
                 }
+                if let last = lastObservedZoom, abs(zoom - last) > 0.001 {
+                    lastZoomDirection = zoom > last ? 1 : -1
+                }
+                lastObservedZoom = zoom
                 cancelNeighbourPrebuildIfWantedSetMoved(zoom: zoom)
                 swapGeometryDuringGestureIfReady(zoom: zoom, on: mapView)
                 runMovingLoadPass(zoom: zoom, on: mapView)
@@ -1164,6 +1175,11 @@ extension RailMapView.Surface {
                     if self.strokeBucketPending(at: zoom) {
                         self.restyle(on: mapView, overlays: false)
                         self.runLabelPass(on: mapView, moving: true)
+                        return
+                    }
+                    // A rebuild during the gesture left the full marker pass owed.
+                    if self.markerPassDebt.isOwed,
+                       self.runLabelPass(on: mapView, moving: false, fullPass: true) {
                         return
                     }
                     self.restyle(on: mapView)
@@ -1359,7 +1375,7 @@ extension RailMapView.Surface {
                         (ContinuousClock.now - rideScanStarted).milliseconds
                 }
 #endif
-                let byID = Dictionary(lines.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+                let byID = linesByID()
                 let missingLines = selected.filter { !networkGeometry.hasLineBuild(for: $0.id, in: key) }
                 let missingStrokes = needed.compactMap { id -> RailNetworkStore.DrawnLine? in
                     guard !networkGeometry.hasStrokeBuild(for: id, in: key) else { return nil }
@@ -1370,6 +1386,18 @@ extension RailMapView.Surface {
                 }
                 return (missingLines, missingStrokes, byID)
             }
+
+            /// Every line by id, built once per lines generation: the readiness
+            /// check runs every 250 ms during a gesture.
+            private func linesByID() -> [String: RailNetworkStore.DrawnLine] {
+                if let linesByIDCache, linesByIDCache.generation == linesGeneration {
+                    return linesByIDCache.byID
+                }
+                let byID = Dictionary(lines.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+                linesByIDCache = (linesGeneration, byID)
+                return byID
+            }
+            private var linesByIDCache: (generation: Int, byID: [String: RailNetworkStore.DrawnLine])?
 
             private func isGeometryLevelReady(_ level: Int, zoom: Double, on mapView: MKMapView) -> Bool {
                 let visibilityZoom = networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
@@ -1495,6 +1523,26 @@ extension RailMapView.Surface {
                 }
             }
             private var neighbourPrebuild: Task<Void, Never>?
+            /// The camera's last zoom and which way it last moved (1 in, -1 out).
+            private var lastObservedZoom: Double?
+            private var lastZoomDirection = 0
+            private var memoryWarningObserver: NSObjectProtocol?
+
+            /// A memory warning drops every geometry frame but the current one
+            /// and stops the idle prebuild that would refill the cache.
+            func observeMemoryWarnings() {
+                guard memoryWarningObserver == nil else { return }
+                memoryWarningObserver = NotificationCenter.default.addObserver(
+                    forName: UIApplication.didReceiveMemoryWarningNotification,
+                    object: nil, queue: .main
+                ) { [weak self] _ in
+                    MainActor.assumeIsolated {
+                        guard let self else { return }
+                        self.cancelNeighbourPrebuild()
+                        self.networkGeometry.dropNonCurrentFrames()
+                    }
+                }
+            }
             /// What the running (or finished) prebuild was asked for, so an
             /// idle camera asks once per installed level, area and era.
             private var neighbourPrebuildTarget: NeighbourPrebuildTarget?
@@ -1509,21 +1557,25 @@ extension RailMapView.Surface {
             /// neighbours) changes; a touch-down alone does not stop it.
             private func cancelNeighbourPrebuildIfWantedSetMoved(zoom: Double) {
                 guard let target = neighbourPrebuildTarget else { return }
-                let wanted = Set(GeometryZoomLevels.neighbourLevels(of: wantedGeometryLevel(at: zoom)))
-                if Set(target.levels) != wanted { cancelNeighbourPrebuild() }
+                let wanted = GeometryZoomLevels.neighbourLevels(of: wantedGeometryLevel(at: zoom))
+                if !target.levels.allSatisfy(wanted.contains) { cancelNeighbourPrebuild() }
             }
 
-            /// While idle, builds the level below and above the installed one on
-            /// a low-priority worker, so the next swap finds its geometry ready.
+            /// While idle, builds ONE neighbour of the installed level, the one in
+            /// the direction of the last zoom, on a low-priority worker, so the
+            /// next swap finds its geometry ready. Skipped while resident frame
+            /// geometry is at its byte cap.
             private func scheduleNeighbourPrebuild(on mapView: MKMapView) {
                 guard showsNetwork, !isManipulating, playback?.isActive != true,
                       playbackLayer.lastSnapshot == nil, geometryPreparation == nil,
                       mapView.bounds.width > 1,
                       let installed = installedGeometryLevel,
                       networkBuildState.geometryLevel == installed,
+                      networkGeometry.hasRoomToPrebuild,
                       let context = markerBuildContext else { return }
                 let target = NeighbourPrebuildTarget(
-                    levels: GeometryZoomLevels.neighbourLevels(of: installed),
+                    levels: [GeometryZoomLevels.prebuildNeighbour(
+                        of: installed, lastZoomDirection: lastZoomDirection)],
                     buildRect: networkBuildState.builtRect, eraKey: geometryEraKey,
                     visibilityZoom: context.visibilityZoom)
                 guard target != neighbourPrebuildTarget else { return }
@@ -1741,7 +1793,7 @@ extension RailMapView.Surface {
                         matchedLineInputs = pending.inputs
                         retainRidePolylines(excludingStrokeFor: changedStrokeRideIDs)
                         interaction.invalidateRideGeometry()
-                        stationLabels.invalidateGeometry()
+                        stationLabels.invalidateGeometry(forRides: changedStrokeRideIDs)
                         networkBuildState.invalidateZoomBucket()
                     }
                 }
@@ -1858,7 +1910,9 @@ extension RailMapView.Surface {
                 RailSignpost.map.mark(
                     "map.rebuild.full", rebuildTrigger.rawValue, drawCounters.totalFullRebuilds)
                 var rideLineMisses = 0
-                stationLabels.resetMovingBudget()
+                if MarkerPassDebt.resetsMovingBudget(duringGesture: duringGesture) {
+                    stationLabels.resetMovingBudget()
+                }
 #if DEBUG
                 diagnostics.didRebuild(manipulating: isManipulating)
 #endif
@@ -2239,9 +2293,23 @@ extension RailMapView.Surface {
 #if DEBUG
                 let markersStarted = ContinuousClock.now
 #endif
-                buildMarkers(context, on: mapView, pendingOverlays: desiredOverlays,
-                             networkTransitionDuration: detailDuration,
-                             highlightTransitionDuration: playback?.isActive == true ? 0 : (animateHighlight ? highlightDuration : nil))
+                let highlightTransition: TimeInterval? =
+                    playback?.isActive == true ? 0 : (animateHighlight ? highlightDuration : nil)
+                switch MarkerPassDebt.pass(duringGesture: duringGesture) {
+                case .full:
+                    buildMarkers(context, on: mapView, pendingOverlays: desiredOverlays,
+                                 networkTransitionDuration: detailDuration,
+                                 highlightTransitionDuration: highlightTransition)
+                case .deferred:
+                    // Mid-gesture: install the overlays this rebuild produced and
+                    // leave markers (election, annotation reconcile, restyle) to the
+                    // settled pass. The moving label pass keeps names current.
+                    installRideStationOverlays(
+                        on: mapView, scale: scale, pendingOverlays: desiredOverlays,
+                        networkTransitionDuration: detailDuration,
+                        highlightTransitionDuration: highlightTransition)
+                    markerPassDebt.noteDeferred()
+                }
 #if DEBUG
                 let markersMilliseconds = (ContinuousClock.now - markersStarted).milliseconds
 #endif
@@ -2896,7 +2964,9 @@ extension RailMapView.Surface {
             /// preserve built zoom and dot positions to avoid replacing endpoint captions.
             /// Settled passes refresh zoom and scale to recover what moving passes skipped.
             @discardableResult
-            private func runLabelPass(on mapView: MKMapView, moving: Bool) -> Bool {
+            private func runLabelPass(
+                on mapView: MKMapView, moving: Bool, fullPass: Bool = false
+            ) -> Bool {
                 guard let context = markerBuildContext,
                       playbackLayer.lastSnapshot == nil,
                       playback?.isActive != true,
@@ -2914,7 +2984,9 @@ extension RailMapView.Surface {
                 if !moving, styledScale.isFinite {
                     copy.scale = styledScale
                 }
-                if moving {
+                if fullPass {
+                    buildMarkers(copy, on: mapView)
+                } else if moving {
                     stationLabels.measureMovingPass {
                         buildMarkers(copy, on: mapView, pass: .labels(moving: true))
                     }
@@ -3133,12 +3205,13 @@ extension RailMapView.Surface {
                     markerPhaseStarted = now
                 }
 #endif
-                let drawn = stationLabels.records(
+                let deckRecords = stationLabels.records(
                     for: rides, geometryIdentity: ridesGeometryIdentity,
                     rideIdentity: { [rideDeck] in rideDeck.digest(of: $0.id) },
                     strokeGeneration: linesGeneration, settings: display.markers,
                     strokeRef: { [self] ride, segment in strokeRef(for: segment, of: ride) })
-                let selectedCallCount = Set(drawn.filter {
+                let drawn = deckRecords.drawn
+                let selectedCallCount = selectedTrainID == nil ? 0 : Set(drawn.filter {
                     $0.feature.tid == selectedTrainID
                         && ["terminal", "xday", "stop"].contains($0.feature.role)
                 }.map(\.record.position)).count
@@ -3211,7 +3284,12 @@ extension RailMapView.Surface {
                 var culledRecordCount = 0
                 finishMarkerPhase("hiddenRides")
 #endif
-                for item in drawn {
+                // Only the records near the built area: the grid answers in deck
+                // order, and the exact per-record cull below still decides.
+                let recordCandidates = deckRecords.grid.indices(in: Self.cullQueryRect(
+                    buildRect: buildRect, mapPointsPerScreenPoint: markerMapPointsPerScreenPoint))
+                for recordIndex in recordCandidates {
+                    let item = drawn[recordIndex]
                     let record = item.record
                     let feature = item.feature
                     // Role and category switches govern ordinary dots.
@@ -3579,10 +3657,14 @@ extension RailMapView.Surface {
                     let era = display.networkEra
                     let rideDate = networkRideDate
                     let todayByRegion = networkTodayByRegion
-                    let visibleStations = stations.compactMap { station -> (
+                    let stationCandidates = setup.stationGrid.indices(in: .init(
+                        x: buildRect.origin.x, y: buildRect.origin.y,
+                        width: buildRect.size.width, height: buildRect.size.height))
+                    let visibleStations = stationCandidates.compactMap { index -> (
                         key: String, station: RailNetworkStore.DrawnStation,
                         displayName: String, readings: [String]?, alpha: CGFloat
                     )? in
+                        let station = self.stations[index]
                         let today = todayByRegion[station.region.rawValue] ?? ""
                         guard era.shows(
                             station.temporalDecoration, today: today, rideDate: rideDate,
@@ -3708,6 +3790,7 @@ extension RailMapView.Surface {
                 rideStationAnnotations = annotationReconciler.apply(
                     rideStationAnnotationPlan, on: mapView, duration: detailDuration)
                 overlayRideDots = overlayDots
+                if !isLabelPass { markerPassDebt.noteFullPassRan() }
 #if DEBUG
                 annotationAddedCount = networkAnnotationPlan.addedCount
                     + rideStationAnnotationPlan.addedCount
@@ -3785,6 +3868,23 @@ extension RailMapView.Surface {
                     diagnostics.didBuildMarkerPhases(value)
                 }
 #endif
+            }
+
+            /// A rect that contains every record the marker cull below can keep:
+            /// the build rect grown by the largest cull margin it can use.
+            private static func cullQueryRect(
+                buildRect: MKMapRect, mapPointsPerScreenPoint: Double
+            ) -> SpatialGrid.Rect {
+                let extremeLatitude = max(
+                    abs(MKMapPoint(x: buildRect.minX, y: buildRect.minY).coordinate.latitude),
+                    abs(MKMapPoint(x: buildRect.minX, y: buildRect.maxY).coordinate.latitude))
+                let margin = max(
+                    2_000 * MKMapPointsPerMeterAtLatitude(extremeLatitude),
+                    96 * mapPointsPerScreenPoint) * 1.5
+                return SpatialGrid.Rect(
+                    x: buildRect.origin.x, y: buildRect.origin.y,
+                    width: buildRect.size.width, height: buildRect.size.height
+                ).inset(by: margin)
             }
 
             private static let allRideStationsID = "all"
@@ -4246,7 +4346,7 @@ extension RailMapView.Surface {
                 matchedLineInputs = pending.inputs
                 retainRidePolylines(excludingStrokeFor: changed)
                 interaction.invalidateRideGeometry()
-                stationLabels.invalidateGeometry()
+                stationLabels.invalidateGeometry(forRides: changed)
                 if updateRides(.init(changed: changed, orderChanged: false, ambiguous: false),
                                on: mapView) {
                     return true

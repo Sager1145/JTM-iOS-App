@@ -119,8 +119,9 @@ public struct ResourceProfile: Sendable, Equatable {
         }
     }
 
-    /// Zoom/era frames of prepared network geometry kept for reuse.
-    public var geometryFrameCapacity: Int { tier == .compact ? 5 : 16 }
+    /// Bytes of prepared network geometry the unpinned zoom/era frames may
+    /// hold between them (the current frame and one neighbour are exempt).
+    public var geometryFrameByteCap: Int { tier == .compact ? 12 * 1024 * 1024 : 24 * 1024 * 1024 }
 
     /// The most trips the map draws at once: 500 on every tier, Mac included.
     /// A fixed product limit, not a resource tier choice.

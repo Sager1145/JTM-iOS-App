@@ -78,9 +78,75 @@ struct RegressionGuardMapLock {
         #expect(!Self.rendering.contains("displayFrame()"))
     }
 
-    @Test func neighbourFramesUseTheRecencyRule() {
-        #expect(Self.rendering.contains("GeometryFrameRecency("))
+    @Test func neighbourFramesUseTheByteCapResidencyRule() {
+        #expect(Self.rendering.contains("GeometryFrameResidency("))
+        #expect(!Self.rendering.contains("GeometryFrameRecency"))
         #expect(!Self.rendering.contains("recentKeys"))
+        #expect(!Self.rendering.contains("frameCapacity"))
+    }
+
+    @Test func idlePrebuildBuildsOneNeighbourUnderTheCapAndMemoryWarningDropsFrames() throws {
+        let prebuild = try Self.body(
+            Self.coordinator, from: "private func scheduleNeighbourPrebuild(",
+            to: "neighbourPrebuild = Task")
+        #expect(prebuild.contains("networkGeometry.hasRoomToPrebuild"))
+        #expect(prebuild.contains("GeometryZoomLevels.prebuildNeighbour("))
+        #expect(!prebuild.contains("neighbourLevels(of: installed)"))
+        #expect(Self.coordinator.contains("didReceiveMemoryWarningNotification"))
+        #expect(Self.coordinator.contains("networkGeometry.dropNonCurrentFrames()"))
+    }
+
+    @Test func aRebuildDuringAGestureDoesNotRunTheFullMarkerPass() throws {
+        let rebuild = String(try Self.body(
+            Self.coordinator, from: "private func rebuild(on mapView: MKMapView, duringGesture",
+            to: "/// The trip-line cache key of one segment"))
+        #expect(rebuild.components(separatedBy: "buildMarkers(").count == 2)
+        #expect(!rebuild.contains("annotationReconciler.apply("))
+        let deferred = try Self.body(rebuild, from: "case .deferred:", to: "markerPassDebt.noteDeferred()")
+        #expect(!deferred.contains("buildMarkers("))
+        let full = try Self.body(rebuild, from: "case .full:", to: "case .deferred:")
+        #expect(full.contains("buildMarkers("))
+        #expect(rebuild.contains("MarkerPassDebt.resetsMovingBudget(duringGesture: duringGesture)"))
+        #expect(!rebuild.contains("\n                stationLabels.resetMovingBudget()"))
+    }
+
+    @Test func theSettledPassPaysTheDeferredMarkerPass() throws {
+        let settle = try Self.body(
+            Self.coordinator, from: "private func restartLabelSettleTask(",
+            to: "func mapView(_ mapView: MKMapView, regionDidChangeAnimated")
+        #expect(settle.contains("markerPassDebt.isOwed"))
+        #expect(settle.contains("fullPass: true"))
+        let build = try Self.body(
+            Self.coordinator, from: "private func buildMarkers(",
+            to: "private static let allRideStationsID")
+        #expect(build.contains("if !isLabelPass { markerPassDebt.noteFullPassRan() }"))
+    }
+
+    @Test func markerPassesQueryTheVisibleRectThroughGrids() throws {
+        let build = try Self.body(
+            Self.coordinator, from: "private func buildMarkers(",
+            to: "private static let allRideStationsID")
+        #expect(build.contains("deckRecords.grid.indices("))
+        #expect(build.contains("setup.stationGrid.indices("))
+        #expect(!build.contains("stations.compactMap"))
+        #expect(!build.contains("for item in drawn {"))
+        let setup = Self.read("RailMap/Map/RideIncrementalUpdate.swift")
+        #expect(setup.contains("SpatialGrid("))
+    }
+
+    @Test func strokeInstallInvalidatesOnlyTheChangedTripsRecords() {
+        #expect(!Self.coordinator.contains("stationLabels.invalidateGeometry()"))
+        #expect(Self.coordinator.components(separatedBy: "stationLabels.invalidateGeometry(forRides:").count == 3)
+        let labels = Self.read("RailMap/Map/MapStationLabelCoordinator.swift")
+        #expect(labels.contains("func invalidateGeometry(forRides"))
+    }
+
+    @Test func missingGeometryWorkReusesTheLinesByIDMap() throws {
+        let work = try Self.body(
+            Self.coordinator, from: "private func missingGeometryWork(",
+            to: "private func linesByID()")
+        #expect(work.contains("linesByID()"))
+        #expect(!work.contains("Dictionary(lines.map"))
     }
 
     @Test func touchDownCancelOwesARebuild() throws {

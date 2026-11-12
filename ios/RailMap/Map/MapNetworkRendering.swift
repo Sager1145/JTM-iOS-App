@@ -98,6 +98,26 @@ final class MapNetworkGeometryCache {
         var strokeGenerations: [String: Int] = [:]
         var withheldPolylines: [String: WithheldPolylineEntry] = [:]
         var familyFallbacks: [String: FamilyFallbackEntry] = [:]
+        /// Estimated resident bytes, see ``GeometryFrameBytes``. Kept in step
+        /// by the cache: recomputed when content is replaced or filtered,
+        /// added to when a polyline is stored.
+        var bytes = 0
+
+        mutating func recomputeBytes() {
+            var polylineVertices = 0
+            for build in lineBuilds.values { polylineVertices += build.drawnVertexCount }
+            for polyline in ridePolylines.values { polylineVertices += polyline.pointCount }
+            for entry in withheldPolylines.values { polylineVertices += entry.polyline.pointCount }
+            for entry in familyFallbacks.values {
+                for build in entry.builds {
+                    for polyline in build.polylines { polylineVertices += polyline.pointCount }
+                }
+            }
+            var strokeVertices = 0
+            for build in strokeBuilds.values { strokeVertices += build.stroke.points.count }
+            bytes = GeometryFrameBytes.estimate(
+                polylineVertices: polylineVertices, strokeVertices: strokeVertices)
+        }
     }
     private struct WithheldPolylineEntry {
         let lineID: String
@@ -111,15 +131,15 @@ final class MapNetworkGeometryCache {
         let builds: [FamilyRunBuild]
     }
 
-    /// Zoom/era frames kept: 8 on a compact device, 16 otherwise.
-    private static let frameCapacity = ResourceProfile.current.geometryFrameCapacity
+    /// Bytes the unpinned zoom/era frames may hold: 12 MB compact, 24 MB otherwise.
+    private static let frameByteCap = ResourceProfile.current.geometryFrameByteCap
 
     let joinedChains: JoinedChainCache
     let chainPixels: ChainPixelCache
 
     private var frameKey = ""
     private var entries: [String: FrameEntry] = [:]
-    private var recency = GeometryFrameRecency(capacity: MapNetworkGeometryCache.frameCapacity)
+    private var residency = GeometryFrameResidency(byteCap: MapNetworkGeometryCache.frameByteCap)
     private var frameStrokes: [String: BuiltStroke] = [:]
     private var nextStrokeGeneration = 0
 
@@ -146,7 +166,26 @@ final class MapNetworkGeometryCache {
             entries[key] = FrameEntry()
         }
         frameKey = key
-        for evicted in recency.begin(key) { entries.removeValue(forKey: evicted) }
+        for evicted in residency.begin(key) { entries.removeValue(forKey: evicted) }
+    }
+
+    /// Whether resident frame geometry leaves room to prebuild a neighbour.
+    var hasRoomToPrebuild: Bool { residency.hasRoomToPrebuild }
+
+    /// Memory pressure: every frame but the current one is released.
+    func dropNonCurrentFrames() {
+        for key in residency.dropNonCurrent() { entries.removeValue(forKey: key) }
+    }
+
+    /// Reports `key`'s size to the residency rule, which may evict others.
+    private func noteBytes(of key: String) {
+        guard let bytes = entries[key]?.bytes else { return }
+        for evicted in residency.setBytes(bytes, for: key) { entries.removeValue(forKey: evicted) }
+    }
+
+    private func recomputeBytes(of key: String) {
+        entries[key]?.recomputeBytes()
+        noteBytes(of: key)
     }
 
     func resetFrameStrokes() {
@@ -168,6 +207,7 @@ final class MapNetworkGeometryCache {
                     && !(entry.key.stroke != nil && rideIDs.contains(entry.key.rideID))
             }) {
                 entries[key]?.ridePolylines = kept
+                recomputeBytes(of: key)
             }
         }
     }
@@ -184,6 +224,7 @@ final class MapNetworkGeometryCache {
                 !rideIDs.contains(entry.key.rideID) || segments.contains(entry.key.segmentIdentity)
             }) {
                 entries[key]?.ridePolylines = kept
+                recomputeBytes(of: key)
             }
         }
     }
@@ -197,6 +238,7 @@ final class MapNetworkGeometryCache {
         entries[key]?.ridePolylines = entry.ridePolylines.filter {
             $0.key.isCurrent(lineGenerations: generations)
         }
+        recomputeBytes(of: key)
     }
 
     func retainLineBuilds(withIDs ids: Set<String>) {
@@ -217,17 +259,18 @@ final class MapNetworkGeometryCache {
                 entries[key]?.strokeGenerations = kept
             }
             dropStaleRidePolylines(in: key)
+            recomputeBytes(of: key)
         }
     }
 
-    /// Creates the entry for `key` without making it the current frame, so
-    /// a neighbour level can be prepared while the installed level stays
-    /// current. The current frame is kept the most recent, so it is never the
-    /// one evicted.
+    /// Creates the entry for `key` without making it the current frame and
+    /// pins it as the one neighbour, so a neighbour level can be prepared
+    /// while the installed level stays current. The current frame and this
+    /// neighbour are never evicted by the byte cap.
     func ensureFrame(key: String) {
         if entries[key] == nil { entries[key] = FrameEntry() }
         guard key != frameKey else { return }
-        for evicted in recency.ensure(key) { entries.removeValue(forKey: evicted) }
+        for evicted in residency.pinNeighbour(key) { entries.removeValue(forKey: evicted) }
     }
 
     func hasStrokeBuild(for id: String, in key: String) -> Bool {
@@ -257,7 +300,7 @@ final class MapNetworkGeometryCache {
             }
         }
         entries[key]?.lineBuilds.merge(result.lines) { _, new in new }
-        if !result.strokes.isEmpty { dropStaleRidePolylines(in: key) }
+        if !result.strokes.isEmpty { dropStaleRidePolylines(in: key) } else { recomputeBytes(of: key) }
         return true
     }
 
@@ -269,6 +312,7 @@ final class MapNetworkGeometryCache {
 
     func store(_ build: LineBuild, for id: String) {
         entries[frameKey, default: FrameEntry()].lineBuilds[id] = build
+        addBytes(polylineVertices: build.drawnVertexCount, to: frameKey)
     }
 
     func familyFallbacks(for key: String) -> [FamilyRunBuild]? {
@@ -278,6 +322,15 @@ final class MapNetworkGeometryCache {
     func storeFamilyFallbacks(_ builds: [FamilyRunBuild], for key: String, lineID: String) {
         entries[frameKey, default: FrameEntry()].familyFallbacks[key] = FamilyFallbackEntry(
             lineID: lineID, builds: builds)
+        addBytes(polylineVertices: builds.reduce(0) { $0 + $1.polylines.reduce(0) { $0 + $1.pointCount } },
+                 to: frameKey)
+    }
+
+    private func addBytes(polylineVertices: Int, to key: String) {
+        guard entries[key] != nil else { return }
+        entries[key]?.bytes += GeometryFrameBytes.estimate(
+            polylineVertices: polylineVertices, strokeVertices: 0)
+        noteBytes(of: key)
     }
 
     func storeStroke(_ value: BuiltStroke, for id: String) {
@@ -316,6 +369,7 @@ final class MapNetworkGeometryCache {
         let polyline = MKPolyline(coordinates: points, count: points.count)
         entries[frameKey, default: FrameEntry()].withheldPolylines[key] = WithheldPolylineEntry(
             lineID: lineID, count: coordinates.count, first: first, last: last, polyline: polyline)
+        addBytes(polylineVertices: polyline.pointCount, to: frameKey)
         return polyline
     }
 
@@ -333,12 +387,14 @@ final class MapNetworkGeometryCache {
 
     func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey) {
         entries[frameKey, default: FrameEntry()].ridePolylines[key] = polyline
+        addBytes(polylineVertices: polyline.pointCount, to: frameKey)
     }
 
     /// Files a polyline built for `frameKey` without moving the current frame.
     /// A frame the cache has already evicted drops it.
     func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey, frameKey: String) {
         entries[frameKey]?.ridePolylines[key] = polyline
+        addBytes(polylineVertices: polyline.pointCount, to: frameKey)
     }
 }
 

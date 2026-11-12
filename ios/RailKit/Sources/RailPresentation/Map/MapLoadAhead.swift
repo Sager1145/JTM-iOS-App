@@ -260,48 +260,6 @@ public struct AddOnlyBatchLedger<Item: Hashable> {
     }
 }
 
-/// Which geometry frames stay cached, most recent last. The current frame is
-/// always the most recent, so it is never the one evicted; a neighbour level
-/// ensured for prebuilding sits just behind it and is never evicted by its
-/// own insertion.
-public struct GeometryFrameRecency: Equatable, Sendable {
-    public private(set) var keys: [String] = []
-    public private(set) var current: String?
-    public let capacity: Int
-
-    public init(capacity: Int) { self.capacity = max(capacity, 2) }
-
-    /// Makes `key` the current frame. Returns the keys evicted.
-    public mutating func begin(_ key: String) -> [String] {
-        keys.removeAll { $0 == key }
-        keys.append(key)
-        current = key
-        return evict(keeping: [key])
-    }
-
-    /// Keeps `key` cached without making it current. Returns the keys evicted.
-    public mutating func ensure(_ key: String) -> [String] {
-        guard key != current else { return [] }
-        if !keys.contains(key) {
-            if let current, let index = keys.firstIndex(of: current) {
-                keys.insert(key, at: index)
-            } else {
-                keys.append(key)
-            }
-        }
-        return evict(keeping: [key])
-    }
-
-    private mutating func evict(keeping protected: Set<String>) -> [String] {
-        var evicted: [String] = []
-        while keys.count > capacity,
-              let index = keys.firstIndex(where: { $0 != current && !protected.contains($0) }) {
-            evicted.append(keys.remove(at: index))
-        }
-        return evicted
-    }
-}
-
 /// Keeps a drawn line's stroke from changing while the map moves.
 ///
 /// A line's stroke depends on which junction neighbours are loaded. While the

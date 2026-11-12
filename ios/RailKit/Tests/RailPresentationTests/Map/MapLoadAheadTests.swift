@@ -175,27 +175,3 @@ struct StrokeStabilityLedgerTests {
         #expect(ledger.held(current: ["a": 2]).isEmpty)
     }
 }
-
-@Suite("GeometryFrameRecency")
-struct GeometryFrameRecencyTests {
-    @Test func ensuredNeighbourSurvivesItsOwnInsertionWhenFull() {
-        var recency = GeometryFrameRecency(capacity: 3)
-        for key in ["a", "b", "c"] { _ = recency.begin(key) }
-        let evicted = recency.ensure("n")
-        #expect(!evicted.contains("n"))
-        #expect(recency.keys.contains("n"))
-        #expect(recency.current == "c")
-        #expect(recency.keys.last == "c")
-        #expect(evicted == ["a"])
-    }
-
-    @Test func currentIsNeverEvicted() {
-        var recency = GeometryFrameRecency(capacity: 2)
-        _ = recency.begin("a")
-        _ = recency.ensure("n1")
-        _ = recency.ensure("n2")
-        #expect(recency.keys.contains("a"))
-        #expect(recency.keys.contains("n2"))
-        #expect(recency.keys.count == 2)
-    }
-}

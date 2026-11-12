@@ -395,6 +395,7 @@ struct RailMapView: View {
             mapView.preferredConfiguration = configuration
 
             context.coordinator.mapView = mapView
+            context.coordinator.observeMemoryWarnings()
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
             context.coordinator.onBuildRect = onBuildRect
