@@ -99,7 +99,7 @@ struct RegressionGuardRideStrokeStructure {
 
     @Test func aSegmentThatDrawsNothingIsRememberedNotRequestedAgain() throws {
         let requests = try Self.body(
-            from: "private func rideStrokeRequests(", to: "/// `.offMain` only: builds the missing")
+            from: "private func rideStrokeRequests(", to: "/// Builds the missing")
         #expect(requests.contains("rideStrokeEmptyKeys.contains(key)"))
         let prepare = try Self.body(
             from: "private func prepareRideStrokes(", to: "/// The non-selected rides' batch overlays")
