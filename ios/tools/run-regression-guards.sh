@@ -42,6 +42,10 @@ step "string keys" bash "$ROOT/ios/tools/check-string-keys.sh"
 # See ios/VERIFICATION.md ("Shinkansen stop-pattern database").
 step "shinkansen patterns (new-key rules)" python3 -I "$ROOT/ios/tools/build-shinkansen-patterns.py" --check --strict
 step "shinkansen patterns tests" python3 -I "$ROOT/ios/tools/tests/test_build_shinkansen_patterns.py"
+# Train database: no copied timetable times anywhere (user decision 2026-11-11), and the
+# confirmed corrections are reproducible from the tracked baseline (re-running changes nothing).
+step "timetable stops only" python3 -I "$ROOT/ios/tools/check-timetable-stops-only.py"
+step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_apply_train_database_corrections.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"
