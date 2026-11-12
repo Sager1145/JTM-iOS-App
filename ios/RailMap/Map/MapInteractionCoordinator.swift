@@ -27,6 +27,12 @@ final class MapInteractionCoordinator {
     private var tapSignature: TapGeometrySignature?
     private var indexGeneration = 0
     private var prebuildTask: Task<Void, Never>?
+    /// True while the route store is resolving trips. Each arrival replaces
+    /// the drawn geometry, so a tap index built meanwhile is thrown away; the
+    /// prebuild waits for the load to settle and then builds once. A tap
+    /// during a load still builds on demand (``rideHits``).
+    private(set) var ridesAreLoading = false
+    private(set) var counters = TapIndexCounters()
     /// Captures the drawn geometry on the main actor; set by the map coordinator.
     /// Returns nil while the map is busy (gesture, camera settling); the
     /// prebuild then retries later.
@@ -51,9 +57,32 @@ final class MapInteractionCoordinator {
         tapSignature = signature
     }
 
+    /// Reported from the view update. Starting a load cancels the prebuild;
+    /// a load settling schedules the one build.
+    func setRidesLoading(_ loading: Bool) {
+        guard loading != ridesAreLoading else { return }
+        ridesAreLoading = loading
+        if loading {
+            cancelPrebuild()
+        } else if cachedTapIndex == nil {
+            schedulePrebuild()
+        }
+    }
+
+    private func cancelPrebuild() {
+        guard prebuildTask != nil else { return }
+        prebuildTask?.cancel()
+        prebuildTask = nil
+        counters.noteAbandoned()
+    }
+
     private func schedulePrebuild() {
         prebuildTask?.cancel()
-        guard tapSnapshotProvider != nil else { prebuildTask = nil; return }
+        prebuildTask = nil
+        guard TapIndexPrebuildPolicy.mayPrebuild(
+            ridesAreLoading: ridesAreLoading, hasIndex: cachedTapIndex != nil,
+            hasSnapshotProvider: tapSnapshotProvider != nil)
+        else { return }
         let generation = indexGeneration
         prebuildTask = Task { [weak self] in
             while true {
@@ -62,14 +91,26 @@ final class MapInteractionCoordinator {
                     self.cachedTapIndex == nil, let provider = self.tapSnapshotProvider
                 else { return }
                 guard let snapshot = provider() else { continue }
-                let built = await Task.detached(priority: .utility) { () -> RideTapIndex in
+                // Cancelling the prebuild reaches the detached build: one that has
+                // not started yet never does, and a finished one is dropped.
+                let worker = Task.detached(priority: .utility) { () -> RideTapIndex? in
+                    guard !Task.isCancelled else { return nil }
                     let interval = RailSignpost.map.begin("map.tapIndex.prebuild")
                     defer { RailSignpost.map.end("map.tapIndex.prebuild", interval) }
                     return RideTapIndex(snapshot: snapshot)
-                }.value
-                guard self.indexGeneration == generation, self.cachedTapIndex == nil
+                }
+                let built = await withTaskCancellationHandler {
+                    await worker.value
+                } onCancel: {
+                    worker.cancel()
+                }
+                guard let built, !Task.isCancelled, self.indexGeneration == generation,
+                    self.cachedTapIndex == nil, !self.ridesAreLoading
                 else { return }
                 self.cachedTapIndex = built
+                self.prebuildTask = nil
+                self.counters.notePrebuilt()
+                RailSignpost.map.mark("map.tapIndex.built", self.counters.prebuilt, self.counters.onDemand)
                 return
             }
         }
@@ -95,6 +136,8 @@ final class MapInteractionCoordinator {
             self.cachedTapIndex = index
             prebuildTask?.cancel()
             prebuildTask = nil
+            counters.noteOnDemand()
+            RailSignpost.map.mark("map.tapIndex.built", counters.prebuilt, counters.onDemand)
             RailSignpost.map.end("map.tapIndex.build", interval)
         }
         // The pitch fallback still projects the complete drawn geometry.
@@ -129,6 +172,7 @@ final class MapInteractionCoordinator {
     }
 
     func tearDown() {
+        ridesAreLoading = false
         prebuildTask?.cancel()
         prebuildTask = nil
         tapSnapshotProvider = nil
