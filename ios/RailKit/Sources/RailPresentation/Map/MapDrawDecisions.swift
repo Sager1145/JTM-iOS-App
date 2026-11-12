@@ -127,6 +127,17 @@ public enum GeometryPreparationGate {
         guard missingWork else { return Decision(cancelInFlight: cancel, start: false, drawNow: true) }
         return Decision(cancelInFlight: cancel, start: inFlight == nil, drawNow: false)
     }
+
+    /// Touch-down hands the camera to the reader. A preparation whose
+    /// geometry level the camera still wants (or will want next) keeps
+    /// running; only one for a level it has left is cancelled.
+    public static func cancelsOnTouchDown(
+        inFlightLevel: Int?, zoom: Double, installedLevel: Int?
+    ) -> Bool {
+        guard let inFlightLevel else { return false }
+        return !GeometryZoomLevels.isStillWanted(
+            level: inFlightLevel, zoom: zoom, installed: installedLevel)
+    }
 }
 
 /// How often the draw pipeline did each costly thing. Read by tests and
