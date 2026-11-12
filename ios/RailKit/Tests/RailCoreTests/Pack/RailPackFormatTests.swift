@@ -76,6 +76,7 @@ struct RailPackFormatTests {
 
     @Test func ladderIsDataAndChoosesLevelsWithHysteresis() throws {
         let ladder = RailPackLadder.default
+        #expect(abs(ladder.switchDistance(from: 12, towards: 11) - 0.45) < 1e-12 && abs(ladder.switchDistance(from: 12, towards: 13) - 0.45) < 1e-12)
         #expect(ladder.levelCount == 27)
         #expect(ladder.zooms.first == 4 && ladder.zooms.last == 17)
         #expect(ladder.mapPointsPerPoint(level: 0) == 32_768)        // 2^15 at z4

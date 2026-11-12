@@ -43,9 +43,12 @@ public struct RailPackSource: Sendable {
     public var groups: [RailPackGroup]
     public var spans: [RailPackSpan]
     public var levels: [RailPackLevelSource]
+    /// Chain indices that are closed loops (flag written to every level's chains rows).
+    public var closedChains: Set<Int>
     public init(datum: RailPackFormat.Datum, regionCode: String, displaySHA256: [UInt8], inputsSHA256: [UInt8],
                 chainCount: Int, nodeCount: Int, lines: [RailPackLine], groups: [RailPackGroup],
-                spans: [RailPackSpan], levels: [RailPackLevelSource]) {
+                spans: [RailPackSpan], levels: [RailPackLevelSource], closedChains: Set<Int> = []) {
+        self.closedChains = closedChains
         self.datum = datum; self.regionCode = regionCode
         self.displaySHA256 = displaySHA256; self.inputsSHA256 = inputsSHA256
         self.chainCount = chainCount; self.nodeCount = nodeCount
@@ -143,12 +146,19 @@ public enum RailPackWriter {
             throw RailPackError.invalidInput("group tierMin above tierMax")
         }
         for span in s.spans where span.fromDay > span.toDay { throw RailPackError.invalidInput("span from after to") }
+        guard s.closedChains.allSatisfy({ $0 >= 0 && $0 < s.chainCount }) else { throw RailPackError.invalidInput("closed chain out of range") }
         var previous = Double.infinity
         for level in s.levels {
-            guard level.mapPointsPerPoint.isFinite, level.mapPointsPerPoint > 0 else { throw RailPackError.invalidInput("mapPointsPerPoint") }
+            guard level.mapPointsPerPoint.isFinite,
+                  level.mapPointsPerPoint >= RailPackFormat.minMapPointsPerPoint,
+                  level.mapPointsPerPoint <= RailPackFormat.maxMapPointsPerPoint else { throw RailPackError.invalidInput("mapPointsPerPoint") }
             // Levels run from the lowest zoom to the highest: mapPointsPerPoint strictly descending.
             guard level.mapPointsPerPoint < previous else { throw RailPackError.invalidInput("levels not in ascending zoom order") }
             previous = level.mapPointsPerPoint
+        }
+        do { _ = try RailPackLadder(mapPointsPerPoint: s.levels.map(\.mapPointsPerPoint)) } catch {
+            if s.levels.isEmpty { return }
+            throw RailPackError.invalidInput("levels closer than \(RailPackFormat.minZoomGap) zoom")
         }
     }
 
@@ -297,7 +307,9 @@ public enum RailPackWriter {
         for chain in 0..<source.chainCount {
             let first = cursor
             while cursor < level.pieces.count && level.pieces[cursor].chain == chain { cursor += 1 }
-            chains.u32(UInt32(first)); chains.u32(UInt32(cursor - first))
+            guard cursor - first <= Int(RailPackFormat.chainCountMask) else { throw RailPackError.valueTooLarge("chain piece count") }
+            chains.u32(UInt32(first))
+            chains.u32(UInt32(cursor - first) | (source.closedChains.contains(chain) ? RailPackFormat.closedChainFlag : 0))
         }
         var nodes = ByteSink()
         for slot in level.nodes { nodes.u32(slot.piece); nodes.u16(slot.vertex); nodes.u16(0) }

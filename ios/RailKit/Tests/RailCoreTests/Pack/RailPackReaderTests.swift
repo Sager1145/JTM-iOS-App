@@ -114,12 +114,14 @@ struct RailPackReaderTests {
         // Node 0 (piece 0 vertex 0) to node 1 (piece 2 vertex 1): pieces 0, 1 whole, piece 2 up to vertex 1.
         let forward = try r.vertexRanges(level: 1, fromNode: 0, toNode: 1)
         #expect(!forward.reversed)
-        #expect(forward.ranges == [RailPackVertexRange(piece: 0, first: 0, last: 3),
-                                   RailPackVertexRange(piece: 1, first: 0, last: 3),
-                                   RailPackVertexRange(piece: 2, first: 0, last: 1)])
+        #expect(forward.ranges == [RailPackVertexRange(chain: 0, piece: 0, first: 0, last: 3),
+                                   RailPackVertexRange(chain: 0, piece: 1, first: 0, last: 3),
+                                   RailPackVertexRange(chain: 0, piece: 2, first: 0, last: 1)])
         let back = try r.vertexRanges(level: 1, fromNode: 1, toNode: 0)
         #expect(back.reversed && back.ranges == forward.ranges)
-        #expect(throws: RailPackError.nodesNotOnOneChain) { try r.vertexRanges(level: 1, fromNode: 0, toNode: 2) }
+        // Node 2 is on chain 1 of the same line (a non-continuous line): chain 0 from node 0, then chain 1's head.
+        let gap = try r.vertexRanges(level: 1, fromNode: 0, toNode: 2)
+        #expect(gap.ranges.map(\.chain) == [0, 0, 0, 0, 1] && gap.ranges.last == RailPackVertexRange(chain: 1, piece: 4, first: 0, last: 3))
         #expect(throws: RailPackError.self) { try r.vertexRanges(level: 1, fromNode: 0, toNode: 3) }  // node 3 has no slot
         // Ranges decode to the stored vertices.
         var points: [RailPackPoint] = []
@@ -191,7 +193,10 @@ struct RailPackReaderTests {
         expectCorrupt(T.patched(data, at: pieces0, 999, width: 4))                // tile index beyond directory
         expectCorrupt(T.patched(data, at: arrayOffset(1, .nodes), 500, width: 4)) // node piece out of range
         expectCorrupt(T.patched(data, at: arrayOffset(2, .chains), 3, width: 4))  // chain no longer starts where the last ended
-        expectCorrupt(T.patched(data, at: arrayOffset(0, .tileDir) + 4, 0x7FFF_0000, width: 4))  // tile directory unsorted (first row's tileY)
+        // A tile directory that is unsorted no longer opens at all (checked at open, see RailPackReviewFixTests).
+        #expect(throws: RailPackError.corrupt("level 0 tile directory not sorted")) {
+            try RailPackReader(data: T.patched(data, at: arrayOffset(0, .tileDir) + 4, 0x7FFF_0000, width: 4))
+        }
         // Accessors reject out-of-range indices with typed errors rather than trapping.
         let r = try RailPackReader(data: data)
         #expect(throws: RailPackError.self) { try r.piece(level: 0, index: 7) }

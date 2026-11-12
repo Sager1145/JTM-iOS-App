@@ -28,6 +28,16 @@ import Foundation
 //       then one per level (the level's arrays, contiguous)
 // then the region tables, then each level's arrays in `ArrayKind` order.
 //
+// Chains row (8 bytes): firstPiece u32, then a u32 whose low 31 bits are the piece count and
+// whose top bit (`closedChainFlag`) marks a closed chain (a loop: its last vertex equals its
+// first). The flag is repeated identically at every level.
+//
+// Long pieces (dashed runs, never cut) have no home tile. They are mounted per piece, not per
+// tile: a long piece is wanted when its bounding box intersects the request rectangle
+// (`RailPackReader.longPieces`), and its mount key is `RailPackMountKey.longPiece`. A normal
+// piece is wanted when its home tile lies in the request rectangle grown by half a tile
+// (mount key `RailPackMountKey.tile`).
+//
 // Tile geometry: a tile is 1,024 points square at the level, side in map points
 // `1024 * mapPointsPerPoint`. A normal piece is stored relative to the centre of its
 // home tile (the tile holding the centre of its bounding box) as Int16 in quanta of
@@ -49,6 +59,16 @@ public enum RailPackFormat {
     public static let noNode: UInt32 = 0xFFFF_FFFF
     public static let tierNoUpperLimit: Int16 = 0x7FFF
     public static let tierNeverDrawn: Int16 = 0x7FFF
+    /// Top bit of a chains row's count word: the chain is closed (a loop).
+    public static let closedChainFlag: UInt32 = 0x8000_0000
+    public static let chainCountMask: UInt32 = 0x7FFF_FFFF
+    /// Accepted `mapPointsPerPoint` range: keeps tile maths inside Int.
+    public static let minMapPointsPerPoint = 0.25
+    public static let maxMapPointsPerPoint = 1_048_576.0
+    /// Adjacent ladder levels must differ by at least this much zoom.
+    public static let minZoomGap = 0.01
+    /// Tile coordinates are clamped to this magnitude (they are stored as Int32).
+    public static let tileCoordinateLimit = 2_147_483_647.0
 
     public enum Datum: UInt8, Sendable { case wgs84 = 0, gcj02 = 1 }
 
@@ -103,10 +123,12 @@ public enum RailPackFormat {
         Double(q) * quantum(mapPointsPerPoint: mapPointsPerPoint)
     }
 
-    /// Tile coordinate holding a map coordinate.
+    /// Tile coordinate holding a map coordinate, clamped to the Int32 range (NaN gives 0); never traps.
     @inline(__always)
     public static func tile(containing map: Double, mapPointsPerPoint: Double) -> Int {
-        Int((map / tileSide(mapPointsPerPoint: mapPointsPerPoint)).rounded(.down))
+        let t = (map / tileSide(mapPointsPerPoint: mapPointsPerPoint)).rounded(.down)
+        if t.isNaN { return 0 }
+        return Int(min(max(t, -tileCoordinateLimit), tileCoordinateLimit))
     }
 }
 
@@ -123,6 +145,7 @@ public enum RailPackError: Error, Equatable, Sendable {
     case corrupt(String)
     case indexOutOfRange(String)
     case nodesNotOnOneChain
+    case chainNotClosed
     // Writer: input level.
     case invalidInput(String)
     case pieceOutsideHomeTile(level: Int, piece: Int)
@@ -220,8 +243,17 @@ public struct RailPackLongPieceRow: Equatable, Sendable {
     public var minX: Int32, minY: Int32, maxX: Int32, maxY: Int32
 }
 
+/// What a loader mounts: one key per tile, or one per long piece (which has no home tile).
+public enum RailPackMountKey: Hashable, Sendable {
+    case tile(level: Int, x: Int, y: Int)
+    case longPiece(level: Int, piece: Int)
+}
+
 /// A run of vertices of one piece, `first...last` inclusive, ascending in the file.
+/// `chain` lets a caller break the stroke where a trip crosses from one chain to the next
+/// (the gap between them draws nothing).
 public struct RailPackVertexRange: Equatable, Sendable {
+    public var chain: Int
     public var piece: UInt32
     public var first: Int
     public var last: Int

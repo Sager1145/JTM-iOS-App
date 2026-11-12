@@ -95,7 +95,8 @@ public struct RailPackReader: Sendable {
                 let row = levelTable + level * RailPackFormat.levelRow
                 let mpp = Double(bitPattern: u64(row))
                 let previous = levels.last?.mapPointsPerPoint ?? Double.infinity
-                guard mpp.isFinite, mpp > 0, mpp < previous else {
+                guard mpp.isFinite, mpp >= RailPackFormat.minMapPointsPerPoint, mpp <= RailPackFormat.maxMapPointsPerPoint,
+                      mpp < previous else {
                     throw RailPackError.badLevel(level)
                 }
                 let section = sections[RailPackFormat.regionSectionCount + level]
@@ -110,6 +111,19 @@ public struct RailPackReader: Sendable {
                     }
                     arrays.append((count, Int(offset)))
                 }
+                // The tile directory must be strictly ascending by (tileY, tileX): lookups rely on it.
+                let dirCount = arrays[RailPackFormat.ArrayKind.tileDir.rawValue].count
+                let dirBase = arrays[RailPackFormat.ArrayKind.tileDir.rawValue].offset
+                let dirRow = RailPackFormat.ArrayKind.tileDir.rowSize
+                var previousKey: (Int32, Int32)?
+                for t in 0..<dirCount {
+                    let o = dirBase + t * dirRow
+                    let x = Int32(bitPattern: UInt32(truncatingIfNeeded: u32(o))), y = Int32(bitPattern: UInt32(truncatingIfNeeded: u32(o + 4)))
+                    if let previousKey, !(previousKey.1 < y || (previousKey.1 == y && previousKey.0 < x)) {
+                        throw RailPackError.corrupt("level \(level) tile directory not sorted")
+                    }
+                    previousKey = (x, y)
+                }
                 levels.append(LevelInfo(mapPointsPerPoint: mpp, laneBucket: raw[row + 8],
                                         sectionOffset: section.0, sectionLength: section.1, arrays: arrays))
             }
@@ -118,7 +132,7 @@ public struct RailPackReader: Sendable {
         self.header = parsed.0
         self.regionSections = parsed.1.map { (offset: $0.0, length: $0.1) }
         self.levels = parsed.2
-        self.ladder = parsed.2.isEmpty ? RailPackLadder(zooms: [0]) : RailPackLadder(mapPointsPerPoint: parsed.2.map(\.mapPointsPerPoint))
+        self.ladder = try parsed.2.isEmpty ? RailPackLadder(zooms: [0]) : RailPackLadder(mapPointsPerPoint: parsed.2.map(\.mapPointsPerPoint))
         self.data = data
     }
 
@@ -183,6 +197,7 @@ public struct RailPackReader: Sendable {
         let info = try self.level(level)
         let mpp = info.mapPointsPerPoint
         let count = info.count(.tileDir)
+        // NaN bounds compare false and give nothing; infinite or huge bounds clamp to the Int32 tile range.
         guard minX <= maxX, minY <= maxY, count > 0 else { return [] }
         let x0 = RailPackFormat.tile(containing: minX, mapPointsPerPoint: mpp), x1 = RailPackFormat.tile(containing: maxX, mapPointsPerPoint: mpp)
         let y0 = RailPackFormat.tile(containing: minY, mapPointsPerPoint: mpp), y1 = RailPackFormat.tile(containing: maxY, mapPointsPerPoint: mpp)
@@ -205,8 +220,9 @@ public struct RailPackReader: Sendable {
             while row < count {
                 let (ty, tx) = key(row)
                 if ty > y1 { break }
-                if tx < x0 { row = lowerBound(ty, x0); continue }
-                if tx > x1 { row = lowerBound(ty + 1, x0); continue }
+                // `max(row + 1, ...)` guarantees progress even on an unsorted directory.
+                if tx < x0 { row = max(row + 1, lowerBound(ty, x0)); continue }
+                if tx > x1 { row = max(row + 1, lowerBound(ty + 1, x0)); continue }
                 result.append(row)
                 row += 1
             }
@@ -215,7 +231,10 @@ public struct RailPackReader: Sendable {
     }
 
     public func tile(level: Int, index: Int) throws -> RailPackTileRow {
-        let info = try self.level(level)
+        try tileRow(try self.level(level), index)
+    }
+
+    private func tileRow(_ info: LevelInfo, _ index: Int) throws -> RailPackTileRow {
         let o = try rowOffset(info, .tileDir, index)
         return read {
             RailPackTileRow(tileX: i32($0, o), tileY: i32($0, o + 4), firstTilePiece: u32($0, o + 8),
@@ -245,7 +264,10 @@ public struct RailPackReader: Sendable {
     }
 
     public func piece(level: Int, index: Int) throws -> RailPackPieceRow {
-        let info = try self.level(level)
+        try pieceRow(try self.level(level), index)
+    }
+
+    private func pieceRow(_ info: LevelInfo, _ index: Int) throws -> RailPackPieceRow {
         let o = try rowOffset(info, .pieces, index)
         return read {
             RailPackPieceRow(tile: u32($0, o), vertexStart: u32($0, o + 4), vertexCount: u16($0, o + 8),
@@ -256,8 +278,8 @@ public struct RailPackReader: Sendable {
     /// Appends the map-point positions of vertices `first...last` of a piece (the whole piece by default)
     /// to `points`: one widening loop, no intermediate objects.
     public func appendVertices(level: Int, piece index: Int, first: Int = 0, last: Int? = nil, to points: inout [RailPackPoint]) throws {
-        let info = try self.level(level)
-        let row = try piece(level: level, index: index)
+        let info = try self.level(level)  // one copy of the level info for the whole call
+        let row = try pieceRow(info, index)
         let lastVertex = last ?? Int(row.vertexCount) - 1
         guard first >= 0, first <= lastVertex, lastVertex < Int(row.vertexCount) else { throw RailPackError.indexOutOfRange("vertex range") }
         let mpp = info.mapPointsPerPoint
@@ -273,7 +295,7 @@ public struct RailPackReader: Sendable {
                 }
             }
         } else {
-            let tile = try self.tile(level: level, index: Int(row.tile))
+            let tile = try tileRow(info, Int(row.tile))
             let start = try rowOffset(info, .vertices, Int(row.vertexStart) + first)
             _ = try rowOffset(info, .vertices, Int(row.vertexStart) + lastVertex)
             read { raw in
@@ -300,6 +322,24 @@ public struct RailPackReader: Sendable {
         }
     }
 
+    /// Everything a loader must mount for a request rectangle: the home tiles in the rectangle grown by
+    /// half a tile (a piece reaches half a tile outside its home tile), then every long piece whose
+    /// bounding box meets the rectangle itself. Long pieces have no home tile and are never listed
+    /// under one, so they mount and unmount per piece.
+    public func mountKeys(level: Int, minX: Double, minY: Double, maxX: Double, maxY: Double) throws -> [RailPackMountKey] {
+        let info = try self.level(level)
+        let half = RailPackFormat.tileSide(mapPointsPerPoint: info.mapPointsPerPoint) / 2
+        var keys: [RailPackMountKey] = []
+        for row in try tiles(level: level, minX: minX - half, minY: minY - half, maxX: maxX + half, maxY: maxY + half) {
+            let t = try tileRow(info, row)
+            keys.append(.tile(level: level, x: Int(t.tileX), y: Int(t.tileY)))
+        }
+        for piece in try longPieces(level: level, minX: minX, minY: minY, maxX: maxX, maxY: maxY) {
+            keys.append(.longPiece(level: level, piece: Int(piece)))
+        }
+        return keys
+    }
+
     public func longPieceRow(level: Int, index: Int) throws -> RailPackLongPieceRow {
         let info = try self.level(level)
         let o = try rowOffset(info, .longPieces, index)
@@ -318,7 +358,14 @@ public struct RailPackReader: Sendable {
     public func pieceRange(level: Int, chain: Int) throws -> Range<Int> {
         let info = try self.level(level)
         let o = try rowOffset(info, .chains, chain)
-        return read { Int(u32($0, o))..<(Int(u32($0, o)) + Int(u32($0, o + 4))) }
+        return read { Int(u32($0, o))..<(Int(u32($0, o)) + Int(u32($0, o + 4) & RailPackFormat.chainCountMask)) }
+    }
+
+    /// Whether a chain is a closed loop (the flag in the top bit of its chains row's count word).
+    public func isClosed(level: Int, chain: Int) throws -> Bool {
+        let info = try self.level(level)
+        let o = try rowOffset(info, .chains, chain)
+        return read { u32($0, o + 4) & RailPackFormat.closedChainFlag != 0 }
     }
 
     /// The chain index owning a piece (binary search over the chain table).
@@ -334,7 +381,7 @@ public struct RailPackReader: Sendable {
             while lo < hi { let mid = (lo + hi) / 2; if first(mid) <= piece { lo = mid + 1 } else { hi = mid } }
             var c = lo - 1
             while c >= 0 {
-                let n = Int(u32(raw, base + c * 8 + 4))
+                let n = Int(u32(raw, base + c * 8 + 4) & RailPackFormat.chainCountMask)
                 if n > 0 { if piece < first(c) + n { return c } else { break } }
                 c -= 1
             }
@@ -342,26 +389,81 @@ public struct RailPackReader: Sendable {
         }
     }
 
-    /// The vertex ranges a trip span draws on one chain, from node `fromNode` to node `toNode`.
-    /// Ranges are ascending in the file; `reversed` is true when the trip runs against the chain.
-    /// Boundary vertices shared by neighbouring pieces appear in both ranges. A span that wraps a
-    /// closed chain is two calls (not handled here).
-    public func vertexRanges(level: Int, fromNode: Int, toNode: Int) throws -> (ranges: [RailPackVertexRange], reversed: Bool) {
-        var a = try nodeSlot(level: level, node: fromNode), b = try nodeSlot(level: level, node: toNode)
+    /// The vertex ranges a trip span draws, from node `fromNode` to node `toNode`.
+    ///
+    /// Ranges come in forward (file) order; `reversed` is true when the trip runs against it, so a
+    /// caller walks the ranges (and each range's vertices) backwards. Boundary vertices shared by
+    /// neighbouring pieces appear in both ranges, except that a range of a single vertex
+    /// (`first == last`) is dropped unless it is all there is.
+    ///
+    /// - Same chain, `wraps` false: the pieces between the two nodes.
+    /// - Same closed chain, `wraps` true: the span crosses the chain's seam. Forward order is
+    ///   `[later node ... chain end] + [chain start ... earlier node]` (the seam vertex appears at the end
+    ///   of the first part and the start of the second); `reversed` is true when `fromNode` sits earlier in
+    ///   the file than `toNode`. `wraps` on an open chain throws ``RailPackError/chainNotClosed``, and on
+    ///   nodes of different chains ``RailPackError/nodesNotOnOneChain``.
+    /// - Different chains of one line (a non-continuous line): the tail of the first chain from its node,
+    ///   every chain between, and the head of the last chain up to its node. Each range carries its
+    ///   `chain`, and the stroke breaks where `chain` changes: the gap itself draws nothing. Nodes on
+    ///   different lines throw ``RailPackError/nodesNotOnOneChain``. This looks the line up by linear scan.
+    public func vertexRanges(level: Int, fromNode: Int, toNode: Int, wraps: Bool = false) throws -> (ranges: [RailPackVertexRange], reversed: Bool) {
+        let a = try nodeSlot(level: level, node: fromNode), b = try nodeSlot(level: level, node: toNode)
         guard !a.isNone, !b.isNone else { throw RailPackError.indexOutOfRange("node without chain slot") }
-        guard try chain(level: level, ofPiece: Int(a.piece)) == chain(level: level, ofPiece: Int(b.piece)) else {
-            throw RailPackError.nodesNotOnOneChain
-        }
-        let reversed = (a.piece, a.vertex) > (b.piece, b.vertex)
-        if reversed { swap(&a, &b) }
+        let ca = try chain(level: level, ofPiece: Int(a.piece)), cb = try chain(level: level, ofPiece: Int(b.piece))
+        let aFirst = (a.piece, a.vertex) <= (b.piece, b.vertex)
+        let early = aFirst ? a : b, late = aFirst ? b : a
         var ranges: [RailPackVertexRange] = []
-        for p in a.piece...b.piece {
-            let row = try piece(level: level, index: Int(p))
-            let first = p == a.piece ? Int(a.vertex) : 0
-            let last = p == b.piece ? Int(b.vertex) : Int(row.vertexCount) - 1
-            ranges.append(RailPackVertexRange(piece: p, first: first, last: last))
+        let reversed: Bool
+
+        if wraps {
+            guard ca == cb else { throw RailPackError.nodesNotOnOneChain }
+            guard try isClosed(level: level, chain: ca) else { throw RailPackError.chainNotClosed }
+            try appendRanges(level: level, chain: ca, from: late, to: nil, into: &ranges)
+            try appendRanges(level: level, chain: ca, from: nil, to: early, into: &ranges)
+            reversed = (a.piece, a.vertex) < (b.piece, b.vertex)
+        } else if ca == cb {
+            try appendRanges(level: level, chain: ca, from: early, to: late, into: &ranges)
+            reversed = (a.piece, a.vertex) > (b.piece, b.vertex)
+        } else {
+            guard let owner = try lineOwning(nodes: fromNode, toNode) else { throw RailPackError.nodesNotOnOneChain }
+            let chains = Int(owner.firstChain)..<(Int(owner.firstChain) + Int(owner.chainCount))
+            guard chains.contains(ca), chains.contains(cb) else { throw RailPackError.nodesNotOnOneChain }
+            let lowFirst = ca < cb
+            let (lowChain, low, highChain, high) = lowFirst ? (ca, a, cb, b) : (cb, b, ca, a)
+            try appendRanges(level: level, chain: lowChain, from: low, to: nil, into: &ranges)
+            for middle in (lowChain + 1)..<highChain { try appendRanges(level: level, chain: middle, from: nil, to: nil, into: &ranges) }
+            try appendRanges(level: level, chain: highChain, from: nil, to: high, into: &ranges)
+            reversed = !lowFirst
         }
-        return (ranges, reversed)
+        let drawn = ranges.filter { $0.first != $0.last }
+        return (drawn.isEmpty ? Array(ranges.prefix(1)) : drawn, reversed)
+    }
+
+    /// Appends the pieces of `chain` from slot `from` (or the chain start) to slot `to` (or the chain end).
+    private func appendRanges(level: Int, chain: Int, from: RailPackNodeSlot?, to: RailPackNodeSlot?, into ranges: inout [RailPackVertexRange]) throws {
+        let info = try self.level(level)
+        let pieces = try pieceRange(level: level, chain: chain)
+        guard !pieces.isEmpty else { return }
+        let first = from.map { Int($0.piece) } ?? pieces.lowerBound
+        let last = to.map { Int($0.piece) } ?? pieces.upperBound - 1
+        guard pieces.contains(first), pieces.contains(last), first <= last else { throw RailPackError.corrupt("span outside chain \(chain)") }
+        for p in first...last {
+            let count = Int(try pieceRow(info, p).vertexCount)
+            let firstVertex = (p == first ? from.map { Int($0.vertex) } : nil) ?? 0
+            let lastVertex = (p == last ? to.map { Int($0.vertex) } : nil) ?? count - 1
+            guard firstVertex <= lastVertex, lastVertex < count else { throw RailPackError.indexOutOfRange("vertex range") }
+            ranges.append(RailPackVertexRange(chain: chain, piece: UInt32(p), first: firstVertex, last: lastVertex))
+        }
+    }
+
+    /// The line whose node range holds both nodes.
+    private func lineOwning(nodes a: Int, _ b: Int) throws -> RailPackLine? {
+        for index in 0..<header.lineCount {
+            let l = try line(index)
+            let nodes = Int(l.firstNode)..<(Int(l.firstNode) + Int(l.nodeCount))
+            if nodes.contains(a), nodes.contains(b) { return l }
+        }
+        return nil
     }
 
     // MARK: Size accounting
@@ -456,6 +558,9 @@ public struct RailPackReader: Sendable {
             let range = try pieceRange(level: levelIndex, chain: c)
             guard range.lowerBound == cursor, range.upperBound <= pieceCount else { throw RailPackError.corrupt("level \(levelIndex) chain \(c)") }
             cursor = range.upperBound; lastChainEnd = cursor
+            if levelIndex > 0, try isClosed(level: levelIndex, chain: c) != isClosed(level: 0, chain: c) {
+                throw RailPackError.corrupt("level \(levelIndex) chain \(c) closed flag differs from level 0")
+            }
         }
         guard lastChainEnd == pieceCount else { throw RailPackError.corrupt("level \(levelIndex) chains do not cover the pieces") }
         for n in 0..<header.nodeCount {
