@@ -1,4 +1,5 @@
 import CoreLocation
+import CryptoKit
 import Foundation
 import MapKit
 import Testing
@@ -53,6 +54,14 @@ struct RailNetworkStoreResidencyTests {
             #expect(f.store.residentDisplayLineIDs.isSuperset(of: [f.dependent.id, f.dependency.id]))
         }
         #expect(f.store.evictedLineTotal > 0)
+    }
+
+    @Test func heldLinesFromARegionWithFailedHistoryDoNotLoad() async throws {
+        let f = try fixture()
+        f.store.displayHistoryFailures[f.dependent.region] = "history failed"
+        f.store.ensure(lineIDs: [f.dependent.id], owner: "rides", cameraZoom: 12)
+        await f.store.waitForDisplayIdle()
+        #expect(f.store.residentDisplayLineIDs.isDisjoint(with: [f.dependent.id, f.dependency.id]))
     }
 
     @Test func releasingMakesLinesEvictable() async throws {
@@ -123,28 +132,74 @@ struct RailNetworkStoreResidencyTests {
         }
     }
 
-    @Test func aCorruptTopologyFileIsRejected() throws {
+    /// RailKit's `topology-mini.bin` (region jp, display sha 0x22 x 32),
+    /// embedded so the hosted test does not read the repository.
+    private static let miniTopology = Data(base64Encoded:
+        "SlRNVAEAoABqcAAAAAAAABERERERERERERERERERERERERERERERERERERERERERIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiLMAwAAAAAAAKAAAAACAAAAEAEAAAYAAAC4AQAABQAAADACAAAEAAAAgAIAAAIAAACwAgAAAQAAAMQCAAADAAAA9AIAAAQAAAAEAwAAxwAAAAIAAAANAAAAHQAAACwAAAABAAEAAAABAAAAAAAAAAAAAAAAAAMAAAAAAAAAAgAAAAAAAAABAAAAOQAAAEQAAABUAAAAAAAAAAIAAgAZAAIAnisBAOI5AQADAAAAAwAAAAIAAAADAAAAAQAAAAAAAABpAAAAAAAAAAAAAAAAAAtDAAAMQgAAAAAAAAAAbgAAAPBJAgDgIgIAjwILQwAADEIAAAAAAAAAAHMAAACyGgYA/////64HC0M9CgxCAAAAAAAAAAB4AAAAAAAAAAAAAACPAgtDAAAMQgEAAAAAAAAA/////1DDAACAuwAAHwULQwAADEIBAAAAAQAAAH0AAAAgTgAAOEoAAB8FC0N7FAxCAQABAAAAAADwSQIAAAAAAAAAAAAAAAAAAwAAAAAAAADC0AMA8EkCAJ4rAQAAAAAABQAAAAAAAABQwwAAAAAAAAAAAAAAAAAACwABAAAAAACQXwEAUMMAAAAAAAAAAAAACwACAAEAAAAwdQAA4CICAAAAAAAAAAAACwABAAMAAAAAAAAAAAAAAFDDAAAAAAAAgLsAAAAAAABQwwAAgDgBAIC7AADgKAEAAQAAAAAAAAAgTgAAAAAAADhKAAABAAAAIE4AAFDDAAA4SgAAmLcAAAEAAAADAAAAAQAAAJ4rAQAAAAAAggAAAAIAAAAFAAAAAgEAAAAAAAAAAAAAjgAAAAAAAACZAAAAqwAAACcLAQCeKwEAaQAAAAMAAQAAAAAAAQAAAHgAAAADAAEAAQAAAAEAAAC6AAAACwACAAIAAAACAAAAAAAAAAMAAAABAAAAAwAAAAAACQBqcC50ZXN0LWEOAHRlc3Qtb3AvdGVzdC1hDQDjg4bjgrnjg4hB57eaCwBB57eaH1Rlc3QgQQkAanAudGVzdC1iDgB0ZXN0LW9wL3Rlc3QtYhMA44OG44K544OIQueSsOeKtue3mgMAQTAxAwBBMDIDAEEwMwMAQjAxAwBCMDMKAGpjdC10ZXN0LTEJAHRzLXRlc3QtMRAA5pen44OG44K544OIQee3mg0AdGVzdC1vcC9vbGQtYQsAc3Q6dGVzdC1hMDIA")!
+
+    /// Writes `data` as `{region}.topology.bin` into a throwaway bundle and returns
+    /// the bundle with a record that describes it (correct size and digest).
+    private func topologyBundle(
+        data: Data, region: String, displaySHA256: String
+    ) throws -> (Bundle, RailDisplayNetworkManifest.RegionRecord, URL) {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".bundle")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: root) }
         try PropertyListSerialization.data(
             fromPropertyList: ["CFBundleIdentifier": "com.jtm.topology-fixture", "CFBundleName": "T"],
             format: .xml, options: 0).write(to: root.appendingPathComponent("Info.plist"))
         let dir = root.appendingPathComponent("rail-display-network")
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let garbage = Data(repeating: 7, count: 64)
-        try garbage.write(to: dir.appendingPathComponent("jp.topology.bin"))
-        let digest = String(repeating: "0", count: 64)
+        try data.write(to: dir.appendingPathComponent("\(region).topology.bin"))
         let record = try JSONDecoder().decode(
             RailDisplayNetworkManifest.RegionRecord.self,
             from: JSONSerialization.data(withJSONObject: [
-                "region": "jp", "file": "jp.display.bin", "bytes": 1, "sha256": digest,
-                "minZoomMapLibre": 0, "topologyFile": "jp.topology.bin",
-                "topologyBytes": garbage.count, "topologySHA256": digest,
+                "region": region, "file": "\(region).display.bin", "bytes": 1, "sha256": displaySHA256,
+                "minZoomMapLibre": 0, "topologyFile": "\(region).topology.bin",
+                "topologyBytes": data.count,
+                "topologySHA256": SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined(),
             ] as [String: Any]))
         #expect(record.hasConsistentTopologyFields)
+        return (Bundle(url: root)!, record, root)
+    }
+
+    /// Size and digest match, so each of these reaches the format parser or
+    /// the header checks rather than the integrity guard.
+    @Test func aCorruptTopologyFileIsRejectedByTheFormatParser() throws {
+        let (bundle, record, root) = try topologyBundle(
+            data: Data(repeating: 7, count: 64), region: "jp",
+            displaySHA256: String(repeating: "11", count: 32))
+        defer { try? FileManager.default.removeItem(at: root) }
         #expect(throws: (any Error).self) {
-            _ = try RailDisplayNetwork.topology(record, bundle: Bundle(url: root)!)
+            _ = try RailDisplayNetwork.topology(record, bundle: bundle)
+        }
+    }
+
+    @Test func aTopologyForAnotherRegionOrDisplayBlobIsRejected() throws {
+        let good = String(repeating: "22", count: 32)
+        let (okBundle, okRecord, okRoot) = try topologyBundle(
+            data: Self.miniTopology, region: "jp", displaySHA256: good)
+        defer { try? FileManager.default.removeItem(at: okRoot) }
+        #expect(try RailDisplayNetwork.topology(okRecord, bundle: okBundle) != nil)
+
+        let (wrongRegionBundle, wrongRegion, wrongRegionRoot) = try topologyBundle(
+            data: Self.miniTopology, region: "kr", displaySHA256: good)
+        defer { try? FileManager.default.removeItem(at: wrongRegionRoot) }
+        do {
+            _ = try RailDisplayNetwork.topology(wrongRegion, bundle: wrongRegionBundle)
+            Issue.record("expected invalidRegionPayload")
+        } catch RailDisplayNetworkError.invalidRegionPayload(let region) {
+            #expect(region == "kr")
+        }
+
+        let (wrongShaBundle, wrongSha, wrongShaRoot) = try topologyBundle(
+            data: Self.miniTopology, region: "jp",
+            displaySHA256: String(repeating: "11", count: 32))
+        defer { try? FileManager.default.removeItem(at: wrongShaRoot) }
+        do {
+            _ = try RailDisplayNetwork.topology(wrongSha, bundle: wrongShaBundle)
+            Issue.record("expected invalidRegionPayload")
+        } catch RailDisplayNetworkError.invalidRegionPayload(let region) {
+            #expect(region == "jp")
         }
     }
 }

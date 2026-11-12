@@ -453,6 +453,7 @@ final class RailNetworkStore {
         manifestLoadTask = nil
         loadEpoch += 1
         displayIndex = nil
+        rebuildHeldCaches()
         displayBlobs = [:]
         loadedDisplayLines = [:]
         loadingDisplayLines = []
@@ -535,6 +536,7 @@ final class RailNetworkStore {
         displayHistoryFailures = history.failures
         refreshNetworkFailure()
         displayIndex = RailDisplayNetworkIndex.lineIndex(for: manifest)
+        rebuildHeldCaches()
         serveLatestDisplayRequest()
     }
 
@@ -823,7 +825,7 @@ final class RailNetworkStore {
     /// A missing history file is not entered: today's geometry is then the
     /// whole network. These regions are left out of the draw so the failure
     /// is not presented as the current map.
-    @ObservationIgnored private var displayHistoryFailures: [String: String] = [:]
+    @ObservationIgnored var displayHistoryFailures: [String: String] = [:]
     /// Package index reads that failed. Distinct from a region that indexed
     /// and simply had nothing to badge.
     @ObservationIgnored private var resourceFailures: [String: String] = [:]
@@ -854,6 +856,11 @@ final class RailNetworkStore {
     /// Owners whose held lines are wanted at full detail whatever the zoom
     /// (the selected or playing trip).
     @ObservationIgnored private var fullDetailOwners: Set<String> = []
+    /// Every held entry with its `dependsOn` closure, enabled regions only;
+    /// rebuilt by ``rebuildHeldCaches()``.
+    @ObservationIgnored private var heldEntryCache: [RailDisplayNetworkIndex.Entry] = []
+    /// Ids of the held lines (closure included) of full-detail owners.
+    @ObservationIgnored private var heldFullDetailIDs: Set<String> = []
     /// The zoom the most recent by-id request was made at; used to choose the
     /// detail when no camera request has been made yet.
     @ObservationIgnored private var heldRequestZoom: Double = 0
@@ -884,7 +891,7 @@ final class RailNetworkStore {
         for entry: RailDisplayNetworkIndex.Entry, cameraZoom: Double
     ) -> DisplayDetail {
         if displayHistoryFullLineIDs.contains(entry.id) { return .full }
-        if heldFullDetailClosure.contains(entry.id) { return .full }
+        if heldFullDetailIDs.contains(entry.id) { return .full }
         return cameraZoom <= Self.overviewDetailMaxZoom && entry.overview != nil ? .overview : .full
     }
 
@@ -896,7 +903,7 @@ final class RailNetworkStore {
         needed.removeAll { Region(rawValue: $0.region)?.isEnabled != true }
         // Held lines (ridden lines, the selected trip) are wanted whatever the
         // camera shows; their closure is already `dependsOn`-closed.
-        let held = heldEntries(in: index)
+        let held = withoutFailedHistory(heldEntryCache)
         if !held.isEmpty {
             let existingIDs = Set(needed.map(\.id))
             needed.append(contentsOf: held.filter { !existingIDs.contains($0.id) })
@@ -1155,6 +1162,7 @@ final class RailNetworkStore {
         }
         heldLineIDs[owner] = lineIDs
         if fullDetail { fullDetailOwners.insert(owner) } else { fullDetailOwners.remove(owner) }
+        rebuildHeldCaches()
         heldRequestZoom = cameraZoom
         guard displayIndex != nil else { return }
         requestSerial += 1
@@ -1174,6 +1182,7 @@ final class RailNetworkStore {
     func release(owner: String) {
         guard heldLineIDs.removeValue(forKey: owner) != nil else { return }
         fullDetailOwners.remove(owner)
+        rebuildHeldCaches()
         guard let index = displayIndex else { return }
         let before = loadedDisplayLines.count
         evictIfNeeded(index: index)
@@ -1200,24 +1209,32 @@ final class RailNetworkStore {
         while let task = displayLoadTask { await task.value }
     }
 
-    /// Every entry any owner holds, plus the `dependsOn` lines they need,
-    /// restricted to enabled regions.
-    private func heldEntries(in index: RailDisplayNetworkIndex) -> [RailDisplayNetworkIndex.Entry] {
-        guard !heldLineIDs.isEmpty else { return [] }
-        let roots = heldLineIDs.values.reduce(into: Set<String>()) { $0.formUnion($1) }
-        let entries = roots.compactMap { index.entryByID[$0] }
-            .filter { Region(rawValue: $0.region)?.isEnabled == true }
-        return RailDisplayNetwork.closure(of: entries, in: index)
-    }
-
-    /// Held lines, closure included, of owners that want full detail.
-    private var heldFullDetailClosure: Set<String> {
-        guard !fullDetailOwners.isEmpty, let index = displayIndex else { return [] }
-        let roots = fullDetailOwners.reduce(into: Set<String>()) {
-            $0.formUnion(heldLineIDs[$1] ?? [])
+    /// Recomputes the cached held entries and full-detail ids. Called when
+    /// the owners, their lines or the index change, so a camera request reads
+    /// two stored values instead of re-walking the closure per entry.
+    private func rebuildHeldCaches() {
+        guard let index = displayIndex else {
+            heldEntryCache = []
+            heldFullDetailIDs = []
+            return
         }
-        return Set(RailDisplayNetwork.closure(
-            of: roots.compactMap { index.entryByID[$0] }, in: index).map(\.id))
+        if heldLineIDs.isEmpty {
+            heldEntryCache = []
+        } else {
+            let roots = heldLineIDs.values.reduce(into: Set<String>()) { $0.formUnion($1) }
+            let entries = roots.compactMap { index.entryByID[$0] }
+                .filter { Region(rawValue: $0.region)?.isEnabled == true }
+            heldEntryCache = RailDisplayNetwork.closure(of: entries, in: index)
+        }
+        if fullDetailOwners.isEmpty {
+            heldFullDetailIDs = []
+        } else {
+            let roots = fullDetailOwners.reduce(into: Set<String>()) {
+                $0.formUnion(heldLineIDs[$1] ?? [])
+            }
+            heldFullDetailIDs = Set(RailDisplayNetwork.closure(
+                of: roots.compactMap { index.entryByID[$0] }, in: index).map(\.id))
+        }
     }
 
     /// The region's mapped topology file, opened on first use; nil when the
@@ -1252,7 +1269,7 @@ final class RailNetworkStore {
         let protectedEntries = lastDisplayRequest.map {
             RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
         } ?? []
-        let protected = Set(protectedEntries.map(\.id)).union(heldEntries(in: index).map(\.id))
+        let protected = Set(protectedEntries.map(\.id)).union(heldEntryCache.map(\.id))
         let candidates = loadedDisplayLines.keys.filter { !protected.contains($0) }
             .sorted { a, b in
                 let la = lastRequestedDisplayLine[a] ?? 0
@@ -1260,20 +1277,29 @@ final class RailNetworkStore {
                 return la != lb ? la < lb : a < b
             }
         var bytes = residentBytes
-        // Repeated until a pass evicts nothing: removing a dependent frees the
-        // line it depended on, which an earlier visit in the same pass had to
-        // skip.
+        // Nothing but held or protected lines resident: no pass can free anything.
+        guard candidates.contains(where: { loadedDisplayLines[$0] != nil }) else { return }
+        // Resident dependents per line, decremented as dependents are evicted,
+        // so a pass is linear. A pass repeats while it frees something, since
+        // evicting a dependent frees the line it needed.
+        var dependentCount: [String: Int] = [:]
+        for id in loadedDisplayLines.keys {
+            for dependency in index.entryByID[id]?.dependsOn ?? [] where dependency != id {
+                dependentCount[dependency, default: 0] += 1
+            }
+        }
         var evicted = true
         while evicted && bytes > residentByteBudget {
             evicted = false
             for id in candidates {
                 guard bytes > residentByteBudget else { break }
-                let hasSurvivingDependent = loadedDisplayLines.keys.contains { survivorID in
-                    survivorID != id && index.entryByID[survivorID]?.dependsOn.contains(id) == true
-                }
-                guard !hasSurvivingDependent, let prepared = loadedDisplayLines[id] else { continue }
+                guard (dependentCount[id] ?? 0) == 0,
+                      let prepared = loadedDisplayLines[id] else { continue }
                 loadedDisplayLines.removeValue(forKey: id)
                 displayAttempts.removeValue(forKey: id)
+                for dependency in index.entryByID[id]?.dependsOn ?? [] where dependency != id {
+                    dependentCount[dependency, default: 0] -= 1
+                }
                 bytes -= prepared.bytes
                 evictedLineTotal += 1
                 evicted = true
