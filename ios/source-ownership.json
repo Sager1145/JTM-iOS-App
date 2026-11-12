@@ -489,6 +489,7 @@
         "ios/RailKit/Sources/RailCore/Rides/RideRecordFile.swift",
         "ios/RailKit/Sources/RailCore/Rides/RideRefs.swift",
         "ios/RailKit/Sources/RailCore/Routing/LocalJourneySearch.swift",
+        "ios/RailKit/Sources/RailCore/Routing/PartialPublicationThrottle.swift",
         "ios/RailKit/Sources/RailCore/Routing/PhysicalRouteMatcher.swift",
         "ios/RailKit/Sources/RailCore/Routing/PrecomputedRouteDisplay.swift",
         "ios/RailKit/Sources/RailCore/Routing/RailwayDirection.swift",

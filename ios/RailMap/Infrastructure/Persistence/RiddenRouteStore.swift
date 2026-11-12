@@ -234,6 +234,9 @@ final class RiddenRouteStore {
     private var lastRequestedInputs: [String: Train] = [:]
     /// True from `reloadAll` until its load finishes, fails or is stopped.
     private var reloadingAll = false
+    /// Whether the load in `loadingInputs` retries stored failures (Repair).
+    /// Only meaningful while `loadingInputs` is non-nil.
+    private var loadingRetriesFailures = false
     /// Repair empties `completedInputs` so every trip is read again, which
     /// would also forget what the drawn rides were solved for. This keeps the
     /// inputs of the rides on the map when the repair began, until the load
@@ -397,6 +400,10 @@ final class RiddenRouteStore {
             state = .loaded(rides: rides)
             return
         }
+        // A load that supersedes a running Repair keeps retrying failures, so
+        // the trips the Repair had not reached do not keep their stored failure.
+        let retryFailures = retryFailures || (loadingInputs != nil && loadingRetriesFailures)
+        loadingRetriesFailures = retryFailures
         loadTask?.cancel()
         cancelResolutions()
         reloadingAll = false
@@ -441,7 +448,7 @@ final class RiddenRouteStore {
         // the main thread: 284 journeys meant a 120–230 ms map rebuild every
         // ~150 ms for the length of the load. Partial results are coalesced
         // instead; the final result below still lands at once.
-        let partials = PartialRidePublication()
+        let partials = PartialRidePublication(preferredTrainID: preferredTrainID)
         let inbox = PartialRideInbox()
         let owner = pendingSolveOwner
         loadTask = Task(priority: priority) {
@@ -449,6 +456,9 @@ final class RiddenRouteStore {
             do {
                 let preread = try await Self.loadPreferred(id: preferredTrainID, wanted: pending, retryFailures: retryFailures)
                 let primed = preread.rides.first
+                // A cache-hit preferred trip is already on the map; otherwise its
+                // first solved route is applied at once.
+                if primed != nil { partials.preferredIsShown() }
                 try Task.checkCancellation()
                 guard loadRevision == revision else { return }
                 if let primed {
@@ -628,8 +638,10 @@ final class RiddenRouteStore {
     /// valid entry or whose stored entry is a failure; a solved entry is never
     /// discarded.
     private func repairAll() {
-        if case .loading = state, loadingInputs != nil, loadingInputs == lastRequestedInputs {
-            // A load for exactly this set is already running; it is the repair.
+        if case .loading = state, loadingInputs != nil, loadingInputs == lastRequestedInputs, loadingRetriesFailures {
+            // A load for exactly this set is already running and retries
+            // failures: it is the repair. One that reuses stored failures is
+            // not, and falls through to be replaced by one that retries.
             reloadMode = .repair
             reloadingAll = true
             return
@@ -1571,9 +1583,13 @@ final class RiddenRouteStore {
             } else { solved = try await operation() }
             try Task.checkCancellation()
             if let shared = solved.first {
-                let ride = drawnRide(train, country: scope.code, segments: shared.segments,
+                var ride = drawnRide(train, country: scope.code, segments: shared.segments,
                     expectedSections: canonicalSections(canonical), indicesAreAuthoritative: shared.indicesAreAuthoritative,
                     physicalGaps: shared.physicalGaps, timetableFailure: routeInput.timetableFailure)
+                // Shared work may have run with a missing input; keep its warning.
+                if shared.resourceWarnings.contains(Self.degradedInputWarning) {
+                    ride.resourceWarnings.append(Self.degradedInputWarning)
+                }
                 results.append(ride)
                 if let digest {
                     try? saveCache(ride, digest: digest, country: scope.code, resourceScope: scope.key)
@@ -2066,9 +2082,15 @@ final class RiddenRouteStore {
             // route became a journey the interface had never heard of — and a
             // ride that is absent cannot be told from a ride that is still
             // being solved. It is reported as `unavailable` instead.
-            let ride = drawnRide(
+            var ride = drawnRide(
                 train, country: country, segments: segments, expectedSections: result.expectedSections,
                 physicalGaps: result.physicalGaps, timetableFailure: routeInput.timetableFailure)
+            // The display network is a solver input. If it did not load in
+            // this run, an empty answer is not the solver's definite one, and
+            // the warning keeps it from being stored as a failure.
+            if displayNetwork == nil, !ride.resourceWarnings.contains(Self.degradedInputWarning) {
+                ride.resourceWarnings.append(Self.degradedInputWarning)
+            }
             rides.append(ride)
             if saveRoutes,
                let digest = await routeCacheDigest(canonical, raw: train, country: country) {
@@ -2671,6 +2693,10 @@ final class RiddenRouteStore {
         return scope.split(separator: "+").contains("jp") ? rail + "|timetable:" + resources.timetableRevision : rail
     }
 
+    /// Added to a ride solved while an optional-looking solver input (the
+    /// display network) was missing, so its empty answer is never cached.
+    nonisolated static let degradedInputWarning = "A route input was unavailable; this journey will be solved again."
+
     /// Stores a solved ride, or, when it has no geometry, the trip's failure
     /// under the same key, so the next load does not solve it again.
     private nonisolated static func saveCache(
@@ -2678,10 +2704,12 @@ final class RiddenRouteStore {
     ) throws {
         var failure: String?
         if ride.segments.isEmpty {
-            guard RouteCacheEntryPolicy.shouldStoreFailure(
-                drawnSegments: 0, hasResourceWarnings: !ride.resourceWarnings.isEmpty) else { return }
-            failure = RouteCacheEntryPolicy.failureReason(
-                expectedSections: ride.expectedSectionCount, physicalGapCount: ride.physicalGaps.count)
+            switch RouteCacheEntryPolicy.storeOutcome(
+                drawnSegments: 0, hasResourceWarnings: !ride.resourceWarnings.isEmpty,
+                expectedSections: ride.expectedSectionCount, physicalGapCount: ride.physicalGaps.count) {
+            case .failure(let reason): failure = reason
+            case .skip, .solved: return
+            }
         }
         guard let revision = runtimeResourceRevision(scope: resourceScope) else { return }
         let directory = cacheDirectory(country: country)
@@ -3036,38 +3064,50 @@ private final class PartialRideInbox: Sendable {
 /// The partial ride lists one route load publishes, coalesced so the map and
 /// the status list take at most one of them per ``interval``.
 ///
-/// The first partial applies at once, so a cold launch still shows its first
-/// journeys immediately. Later ones within the interval replace each other
-/// and the newest is applied when it ends. ``cancel()`` drops a pending one:
+/// The rule itself is ``PartialPublicationThrottle`` (first non-empty partial
+/// at once, later ones coalesced, empty ones ignored, the selected trip's first
+/// solved route immediate). ``cancel()`` drops a pending one:
 /// the load calls it before it applies its complete result, so a stale
 /// partial can never land on top of that.
 @MainActor
 private final class PartialRidePublication {
-    static let interval: Duration = .seconds(5)
-
-    private var lastApplied: ContinuousClock.Instant?
+    private var throttle = PartialPublicationThrottle()
+    private var preferredTrainID: String?
     private var pending: [RiddenRouteStore.DrawnRide]?
     private var pendingApply: (@MainActor ([RiddenRouteStore.DrawnRide]) -> Void)?
     private var flush: Task<Void, Never>?
+    private let origin = ContinuousClock.now
+
+    init(preferredTrainID: String?) { self.preferredTrainID = preferredTrainID }
+
+    private var now: Duration { ContinuousClock.now - origin }
+
+    /// The selected trip is already drawn, so nothing needs to bypass the interval.
+    func preferredIsShown() { preferredTrainID = nil }
 
     func submit(
         _ partial: [RiddenRouteStore.DrawnRide],
         apply: @escaping @MainActor ([RiddenRouteStore.DrawnRide]) -> Void
     ) {
-        let now = ContinuousClock.now
-        if flush == nil, lastApplied.map({ now - $0 >= Self.interval }) ?? true {
-            lastApplied = now
-            apply(partial)
+        let immediate = preferredTrainID.map { id in partial.contains { $0.id == id } } ?? false
+        switch throttle.offer(isEmpty: partial.isEmpty, immediate: immediate, now: now) {
+        case .skip:
             return
-        }
-        pending = partial
-        pendingApply = apply
-        guard flush == nil else { return }
-        let wait = Self.interval - (now - (lastApplied ?? now))
-        flush = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: wait)
-            guard let self, !Task.isCancelled else { return }
-            self.applyPending()
+        case .applyNow:
+            if immediate { preferredTrainID = nil }
+            cancel()
+            apply(partial)
+        case .replacePending:
+            pending = partial
+            pendingApply = apply
+        case .scheduleFlush(let wait):
+            pending = partial
+            pendingApply = apply
+            flush = Task { @MainActor [weak self] in
+                try? await Task.sleep(for: wait)
+                guard let self, !Task.isCancelled else { return }
+                self.applyPending()
+            }
         }
     }
 
@@ -3076,7 +3116,7 @@ private final class PartialRidePublication {
         let partial = pending, apply = pendingApply
         cancel()
         guard let partial, let apply else { return }
-        lastApplied = .now
+        throttle.appliedPending(now: now)
         apply(partial)
     }
 
@@ -3085,6 +3125,7 @@ private final class PartialRidePublication {
         flush = nil
         pending = nil
         pendingApply = nil
+        throttle.cancelPending()
     }
 }
 

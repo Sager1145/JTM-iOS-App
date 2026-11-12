@@ -25,14 +25,29 @@ public enum RouteCacheEntryPolicy {
         return retryFailures ? .solve : .reuseFailure
     }
 
-    /// A failure is stored only when it is the solver's definite answer: no
-    /// geometry and no missing-resource warning, which is transient.
-    public static func shouldStoreFailure(drawnSegments: Int, hasResourceWarnings: Bool) -> Bool {
-        drawnSegments == 0 && !hasResourceWarnings
+    /// What to write after a solve.
+    public enum StoreOutcome: Equatable, Sendable {
+        case solved
+        case failure(reason: String)
+        case skip
+    }
+
+    /// A solved ride is stored. A ride without geometry is stored as a failure
+    /// only when it is the solver's definite answer: no resource warning, which
+    /// covers a missing timetable, a missing revision and an input that did not
+    /// load in this run (all transient), so the next load retries those.
+    public static func storeOutcome(
+        drawnSegments: Int, hasResourceWarnings: Bool,
+        expectedSections: Int, physicalGapCount: Int
+    ) -> StoreOutcome {
+        if drawnSegments > 0 { return .solved }
+        if hasResourceWarnings { return .skip }
+        return .failure(reason: failureReason(
+            expectedSections: expectedSections, physicalGapCount: physicalGapCount))
     }
 
     /// The short reason kept beside a failed entry.
-    public static func failureReason(expectedSections: Int, physicalGapCount: Int) -> String {
+    static func failureReason(expectedSections: Int, physicalGapCount: Int) -> String {
         physicalGapCount > 0
             ? "no route: \(physicalGapCount) of \(expectedSections) sections unproven"
             : "no route: \(expectedSections) sections unsolved"
