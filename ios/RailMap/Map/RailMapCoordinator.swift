@@ -261,6 +261,11 @@ extension RailMapView.Surface {
             private var retiringStationOverlays: [ObjectIdentifier: UUID] = [:]
             private var networkAnnotations: [MKAnnotation] = []
             private var rideStationAnnotations: [MKAnnotation] = []
+            /// Trip dots the shared station overlay draws. They are NOT map
+            /// annotations: a mounted view per dot only provided hit-testing
+            /// and a VoiceOver element, and cost an add/remove per level change.
+            /// A tap reaches them through ``tappedOverlayRideDot(at:on:)``.
+            private var overlayRideDots: [RideStationAnnotation] = []
             /// What the last full rebuild reported, so a rides-only update
             /// can report the same frame with its own ride counts and time.
             private var lastRenderStats: RailMapView.RenderStats?
@@ -1753,6 +1758,7 @@ extension RailMapView.Surface {
                         mapView.removeAnnotations(rideStationAnnotations)
                     }
                     rideStationAnnotations = []
+                    overlayRideDots = []
                     if !endpointAnnotations.isEmpty { mapView.removeAnnotations(endpointAnnotations) }
                     endpointAnnotations = []
                     networkBuildState.invalidateGeometry()
@@ -2263,7 +2269,7 @@ extension RailMapView.Surface {
                     showsNetwork: showsNetwork, visibleLines: visible.count, networkOverlays: overlays.count,
                     threshold: fitted.threshold, totalLines: lines.count,
                     culledOffScreen: selection?.culledOffScreen ?? 0, totalOverlays: stats.overlays,
-                    rideDots: rideStationAnnotations.filter { $0 is RideStationAnnotation }.count,
+                    rideDots: rideStationAnnotations.filter { $0 is RideStationAnnotation }.count + overlayRideDots.count,
                     rideLabels: rideStationAnnotations.filter { $0 is RideLabelAnnotation }.count,
                     rides: rides.count, budgetDrops: builds.count - fitted.kept.count, vertices: vertices,
                     zoom: zoom, visibilityZoom: visibilityZoom,
@@ -2782,7 +2788,7 @@ extension RailMapView.Surface {
                 if var snapshot = lastDiagnosticSnapshot {
                     snapshot.totalOverlays = overlays
                     snapshot.rides = rides.count
-                    snapshot.rideDots = rideStationAnnotations.filter { $0 is RideStationAnnotation }.count
+                    snapshot.rideDots = rideStationAnnotations.filter { $0 is RideStationAnnotation }.count + overlayRideDots.count
                     snapshot.rideLabels = rideStationAnnotations.filter { $0 is RideLabelAnnotation }.count
                     snapshot.buildMilliseconds = elapsed.milliseconds
                     snapshot.annotationViews = mapView.annotations.count
@@ -3186,6 +3192,11 @@ extension RailMapView.Surface {
                 // Sparse selected services offer every call. Dense stopping
                 // lists reveal hubs first; pass-throughs wait for close zooms.
                 var markerAnnotations: [MKAnnotation] = []
+                var overlayDots: [RideStationAnnotation] = []
+                /// Overlay-drawn dots stay out of MapKit entirely.
+                func placeDot(_ dot: RideStationAnnotation) {
+                    if dot.drawsInOverlay { overlayDots.append(dot) } else { markerAnnotations.append(dot) }
+                }
                 var pendingRideLabels: [(
                     claimName: String, position: Coordinate,
                     annotation: RideLabelAnnotation, importance: Int,
@@ -3324,7 +3335,7 @@ extension RailMapView.Surface {
                             isSelected: selected, hasSelection: hasSelection),
                         focusBoost: CGFloat(display.focusBoost),
                         selected: selected)
-                    if drawsDot { markerAnnotations.append(annotation) }
+                    if drawsDot { placeDot(annotation) }
                     // …and its name, if it won one. Unselected rides retain
                     // their tier floor; a selected ride offers every name to
                     // collision placement. Elect the new visible names first;
@@ -3379,17 +3390,18 @@ extension RailMapView.Surface {
                     let position = spec.coordinate.clLocation
                     // Replace a coincident dot with the same resolved endpoint
                     // identity rather than drawing two marker sizes over it.
-                    markerAnnotations.removeAll { annotation in
-                        guard let dot = annotation as? RideStationAnnotation,
-                              dot.selected == selected,
+                    func coincides(_ dot: RideStationAnnotation) -> Bool {
+                        guard dot.selected == selected,
                               Stations.normalizeStationName(dot.rawName)
                                 == Stations.normalizeStationName(spec.rawName) else { return false }
                         return MKMapPoint(dot.coordinate).distance(to: MKMapPoint(position)) < 0.1
                     }
+                    markerAnnotations.removeAll { ($0 as? RideStationAnnotation).map(coincides) ?? false }
+                    overlayDots.removeAll(where: coincides)
                     let endpoint = MapEndpointLabels.endpointStop(of: ride, kind: spec.kind,
                         stationPosition: { knownEndpointPosition(for: $0, of: ride) })
                     let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
-                    markerAnnotations.append(RideStationAnnotation(
+                    placeDot(RideStationAnnotation(
                         rideID: ride.id, drawsInOverlay: !hasSelection,
                         coordinate: position, name: spec.name, rawName: spec.rawName,
                         stationCode: endpoint?.stop.n02StationCode,
@@ -3446,7 +3458,7 @@ extension RailMapView.Surface {
                     // Only revive a below-threshold dot when its label fits;
                     // a national view must not instantiate every station view.
                     if let dot = candidate.supportingDot {
-                        markerAnnotations.append(dot)
+                        placeDot(dot)
                     }
                     markerAnnotations.append(item)
                 }
@@ -3695,6 +3707,7 @@ extension RailMapView.Surface {
                     markerAnnotations, replacing: rideStationAnnotations)
                 rideStationAnnotations = annotationReconciler.apply(
                     rideStationAnnotationPlan, on: mapView, duration: detailDuration)
+                overlayRideDots = overlayDots
 #if DEBUG
                 annotationAddedCount = networkAnnotationPlan.addedCount
                     + rideStationAnnotationPlan.addedCount
@@ -3790,9 +3803,7 @@ extension RailMapView.Surface {
                 let installed = reconciliation.oldOverlays
                 let previous = Dictionary(installed.compactMap { $0 as? RideStationOverlay }
                     .map { ($0.rideID, $0) }, uniquingKeysWith: { first, _ in first })
-                let stations = Dictionary(grouping: rideStationAnnotations.compactMap {
-                    $0 as? RideStationAnnotation
-                }.filter(\.drawsInOverlay), by: \.rideID)
+                let stations = Dictionary(grouping: overlayRideDots, by: \.rideID)
                 let base = (pendingOverlays ?? installed).filter { !($0 is RideStationOverlay) }
                 // Selection already raised its casing and cores. Only remove
                 // ordinary circle batches here; rebuilding deck order would
@@ -3879,7 +3890,7 @@ extension RailMapView.Surface {
             /// A selection keeps its dots on the selected ride's own layers, so
             /// that pass reports no shared-overlay dots.
             private func recordRideStationDots(drawn: Int, overlayStations: Int) {
-                let stationsCount = rideStationAnnotations.count
+                let stationsCount = rideStationAnnotations.count + overlayRideDots.count
                 MapRenderProbe.rideStationDots = .init(
                     drawn: drawn, stations: stationsCount, overlayStations: overlayStations)
                 MapRenderProbe.log.debug(
@@ -4701,6 +4712,14 @@ extension RailMapView.Surface {
                 let point = recognizer.location(in: mapView)
                 let interval = RailSignpost.map.begin("map.tap")
                 defer { RailSignpost.map.end("map.tap", interval) }
+                // A trip dot drawn by the station overlay is not a map
+                // annotation, so MapKit never selects it: its touch target is
+                // resolved here, on the tap only, and answers with the same
+                // station card a mounted dot's selection did.
+                if let dot = tappedOverlayRideDot(at: point, on: mapView) {
+                    if let card = stationCard(for: dot) { onSelectStation(card) }
+                    return
+                }
                 // Projection here, arithmetic in `RideTapResolver`.
                 //
                 // Every ride under the finger is handed up, not just the
@@ -5367,15 +5386,37 @@ extension RailMapView.Surface {
                     onSelectRide([badge.rideID])
                     return
                 }
-                guard let card = interaction.stationCard(for: annotation, named: { [self] name, code in
-                    let named = localized(name, code: code)
-                    return (named.display, localization == nil ? nil : named.readings.map(\.text))
-                }, unresolvedLabel: localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved") else { return }
+                guard let card = stationCard(for: annotation) else { return }
                 mapView.deselectAnnotation(annotation, animated: false)
                 if interaction.suppressesStationSelection {
                     return
                 }
                 onSelectStation(card)
+            }
+
+            private func stationCard(for annotation: any MKAnnotation) -> StationCard? {
+                interaction.stationCard(for: annotation, named: { [self] name, code in
+                    let named = localized(name, code: code)
+                    return (named.display, localization == nil ? nil : named.readings.map(\.text))
+                }, unresolvedLabel: localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved")
+            }
+
+            /// The overlay-drawn trip dot a touch lands in, by the same reach a
+            /// mounted dot view claimed (the larger of the minimum touch target
+            /// and its drawn diameter). Runs on a tap only; nothing per frame.
+            private func tappedOverlayRideDot(at point: CGPoint, on mapView: MKMapView) -> RideStationAnnotation? {
+                guard !overlayRideDots.isEmpty else { return nil }
+                let zoom = MapProjection.zoomLevel(of: mapView)
+                let scale = RailStyle.scale(atZoom: zoom)
+                let targets = overlayRideDots.map { dot -> DotHitTest.Dot in
+                    let centre = mapView.convert(dot.coordinate, toPointTo: mapView)
+                    let diameter = max(1, dot.drawnRadiusToken(atZoom: zoom) * 2 * scale)
+                    return DotHitTest.Dot(
+                        x: Double(centre.x), y: Double(centre.y),
+                        reach: Double(max(RailStyle.minimumTouchTarget, diameter) / 2))
+                }
+                return DotHitTest.hit(x: Double(point.x), y: Double(point.y), among: targets)
+                    .map { overlayRideDots[$0] }
             }
 
             /// MapKit's pair as `RailCore`'s. The annotations hold the

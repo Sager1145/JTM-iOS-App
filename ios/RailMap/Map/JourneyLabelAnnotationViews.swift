@@ -48,6 +48,12 @@ final class RideLabelAnnotationView: MKAnnotationView {
         relayout()
     }
 
+    /// Re-applies the annotation's current text, tier, side and dot radius.
+    func refresh() {
+        guard let item = annotation as? RideLabelAnnotation else { return }
+        configure(item, scale: scale, zoom: zoom)
+    }
+
     func applyScale(_ scale: CGFloat, zoom: Double) {
         guard scale != self.scale || zoom != self.zoom else { return }
         self.scale = scale
@@ -59,8 +65,10 @@ final class RideLabelAnnotationView: MKAnnotationView {
         // Names stay above circle annotations as well as route overlays,
         // including while a selected journey's enlarged dots are present.
         guard item != nil else { return }
-        zPriority = .max
-        layer.zPosition = 2_000
+        // Written only when it differs: this runs for every raised view on
+        // every camera callback, and an equal write still dirties the layer.
+        if zPriority != .max { zPriority = .max }
+        if layer.zPosition != 2_000 { layer.zPosition = 2_000 }
     }
 
     /// Text is not a mark: it rides the tier's own shallow ramp — the
@@ -141,8 +149,8 @@ final class EndpointLabelView: MKAnnotationView {
     required init?(coder: NSCoder) { nil }
 
     func applyStacking() {
-        zPriority = .max
-        layer.zPosition = 2_001
+        if zPriority != .max { zPriority = .max }
+        if layer.zPosition != 2_001 { layer.zPosition = 2_001 }
     }
 
     func configure(_ item: EndpointLabelAnnotation) {

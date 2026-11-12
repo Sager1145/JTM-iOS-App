@@ -79,6 +79,15 @@ final class StationAnnotationView: MKAnnotationView {
         relayout()
     }
 
+    /// Re-applies the annotation's current style fields to this view at its
+    /// present scale; keeps the opacity it is showing.
+    func refresh() {
+        guard let item = annotation as? StationAnnotation else { return }
+        let shown = alpha
+        configure(item, scale: scale, zoom: zoom)
+        alpha = shown
+    }
+
     /// Name election changes fade only the caption; the station bead keeps
     /// its identity, callout state, and opacity throughout the level change.
     func applyNameVisibility(_ visible: Bool, duration: TimeInterval) {
@@ -261,10 +270,14 @@ final class RideStationAnnotationView: MKAnnotationView {
 
     func applyStacking() {
         guard let item else { return }
-        zPriority = item.selected ? .max : .defaultSelected
         // MapKit assigns its own layer order when mounting and moving views.
         // Restore the selected journey above coincident station dots afterward.
-        layer.zPosition = item.selected ? (item.role == "terminal" ? 1_001 : 1_000) : 100
+        // Written only when it differs: this runs for every raised view on
+        // every camera callback, and an equal write still dirties the layer.
+        let priority: MKAnnotationViewZPriority = item.selected ? .max : .defaultSelected
+        if zPriority != priority { zPriority = priority }
+        let position: CGFloat = item.selected ? (item.role == "terminal" ? 1_001 : 1_000) : 100
+        if layer.zPosition != position { layer.zPosition = position }
     }
 
     private func relayout() {
