@@ -23,6 +23,8 @@ public enum MapRebuildTrigger: Int, CaseIterable, Sendable {
     case strokeMatching = 8
     /// Only trips changed and the small update could not answer.
     case tripsOnly = 9
+    /// The prepared geometry level was swapped in while the fingers were down.
+    case levelSwapped = 10
 }
 
 /// What the map owes after a change owes it a full rebuild.

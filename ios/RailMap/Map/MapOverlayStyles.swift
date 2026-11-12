@@ -245,6 +245,13 @@ final class MapOverlayStyles {
         renderers[key] != nil
     }
 
+    /// Whether the renderer for `key` has actually drawn a tile, not merely
+    /// been created. Other renderer kinds never report, so they count as not
+    /// drawn and a swap waiting on them falls back to its frame limit.
+    func hasDrawn(forKey key: String) -> Bool {
+        (renderers[key] as? DrawReportingMultiPolylineRenderer)?.hasDrawn == true
+    }
+
     /// Give an exiting batch its own key so a returning tier can mount while
     /// the old renderer finishes its fade.
     func rekey(from oldKey: String, to newKey: String) {
@@ -327,5 +334,26 @@ final class MapOverlayStyles {
             renderer.setNeedsDisplay()
         }
         stopClockIfIdle()
+    }
+}
+
+/// A multi-polyline renderer that records that MapKit has drawn into it.
+/// MapKit calls `draw(_:zoomScale:in:)` on background threads, so the flag is
+/// lock-protected and read from the main actor.
+final class DrawReportingMultiPolylineRenderer: MKMultiPolylineRenderer, @unchecked Sendable {
+    private let lock = NSLock()
+    private var drew = false
+
+    var hasDrawn: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return drew
+    }
+
+    override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+        super.draw(mapRect, zoomScale: zoomScale, in: context)
+        lock.lock()
+        drew = true
+        lock.unlock()
     }
 }

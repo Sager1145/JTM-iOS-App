@@ -57,7 +57,9 @@ struct MapRebuildPolicyTests {
                 builtVisibilityBucket: 10, hasLanedLines: true, builtGeometryLevel: level)
         }
         #expect(laned(10.44, level: 20).shouldRebuild == false)
-        #expect(laned(9.56, level: 20).shouldRebuild == false)
+        // Level 21 is zoom 10.5: 10.06 is 0.44 below it, 10.04 is 0.46.
+        #expect(laned(10.06, level: 21).shouldRebuild == false)
+        #expect(laned(10.04, level: 21).shouldRebuild)
         #expect(laned(10.46, level: 20).shouldRebuild)
         // No installed level is a different level from the live camera.
         #expect(laned(10, level: nil).shouldRebuild)

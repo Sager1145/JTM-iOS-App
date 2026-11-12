@@ -13,8 +13,7 @@ struct MapNetworkBuildState {
     private(set) var zoomBucket: Int?
     private(set) var visibilityBucket: Int?
     private(set) var viewportSize: CGSize?
-    private(set) var laneZoom: Double?
-    private(set) var laneLODBucket: Int?
+    private(set) var geometryLevel: Int?
     private(set) var builtRect: MKMapRect = .null
 
     func shouldRebuild(
@@ -34,8 +33,7 @@ struct MapNetworkBuildState {
             builtViewportWidth: self.viewportSize.map { Double($0.width) },
             builtViewportHeight: self.viewportSize.map { Double($0.height) },
             hasLanedLines: hasLanedLines,
-            builtLaneZoom: laneZoom,
-            builtLaneLODBucket: laneLODBucket,
+            builtGeometryLevel: geometryLevel,
             visibleRectIsContained: builtRect.contains(visibleRect)
         ).shouldRebuild
     }
@@ -44,12 +42,13 @@ struct MapNetworkBuildState {
         zoom: Double,
         visibilityBucket: Int,
         viewportSize: CGSize,
+        geometryLevel: Int,
         builtRect: MKMapRect
     ) {
         zoomBucket = Int(floor(zoom))
         self.visibilityBucket = visibilityBucket
         self.viewportSize = viewportSize
-        laneZoom = zoom
+        self.geometryLevel = geometryLevel
         self.builtRect = builtRect
     }
 
@@ -57,23 +56,13 @@ struct MapNetworkBuildState {
     /// rect and viewport metadata for diagnostics.
     mutating func invalidateGeometry() {
         zoomBucket = nil
-        laneZoom = nil
+        geometryLevel = nil
     }
 
     /// Used when only a newly prepared route-to-stroke mapping invalidates the
     /// installed result. The existing lane scale is still the previous bucket.
     mutating func invalidateZoomBucket() {
         zoomBucket = nil
-    }
-
-    func previewLaneLOD(at zoom: Double) -> (bucket: Int, scale: Double) {
-        LaneLOD.resolve(zoom: zoom, previousBucket: laneLODBucket)
-    }
-
-    mutating func resolveLaneLOD(at zoom: Double) -> (bucket: Int, scale: Double) {
-        let resolved = previewLaneLOD(at: zoom)
-        laneLODBucket = resolved.bucket
-        return resolved
     }
 }
 
@@ -239,25 +228,48 @@ final class MapNetworkGeometryCache {
         }
     }
 
-    var preparedStrokes: [String: ContinuousStrokeBuild] { currentEntry.strokeBuilds }
+    /// Creates the entry for `key` without making it the current frame, so
+    /// a neighbour level can be prepared while the installed level stays
+    /// current. The current frame is kept the most recent, so it is never the
+    /// one evicted.
+    func ensureFrame(key: String) {
+        if entries[key] == nil { entries[key] = FrameEntry() }
+        guard key != frameKey else { return }
+        if !recentKeys.contains(key) { recentKeys.insert(key, at: 0) }
+        while recentKeys.count > Self.frameCapacity, let evicted = recentKeys.first,
+              evicted != frameKey {
+            recentKeys.removeFirst()
+            entries.removeValue(forKey: evicted)
+        }
+    }
 
-    func hasStrokeBuild(for id: String) -> Bool { currentEntry.strokeBuilds[id] != nil }
-    func hasLineBuild(for id: String) -> Bool { currentEntry.lineBuilds[id] != nil }
+    func hasStrokeBuild(for id: String, in key: String) -> Bool {
+        entries[key]?.strokeBuilds[id] != nil
+    }
+    func hasLineBuild(for id: String, in key: String) -> Bool {
+        entries[key]?.lineBuilds[id] != nil
+    }
+    func preparedStrokes(in key: String) -> [String: ContinuousStrokeBuild] {
+        entries[key]?.strokeBuilds ?? [:]
+    }
 
+    /// Stores a prepared result in the entry for `key`, which must exist (the
+    /// frame was begun or ensured and not evicted since). The current frame is
+    /// not required: a neighbour level's result lands in its own entry.
     func storePrepared(_ result: MapLineGeometry.Prepared, key: String) -> Bool {
-        guard key == frameKey else { return false }
+        guard entries[key] != nil else { return false }
         // Mutate in place: copying an entry out and back would copy its
         // dictionaries on every store.
-        entries[frameKey, default: FrameEntry()].strokeBuilds.merge(result.strokes) { _, new in new }
+        entries[key]?.strokeBuilds.merge(result.strokes) { _, new in new }
         for id in result.strokes.keys {
             nextStrokeGeneration += 1
-            entries[frameKey, default: FrameEntry()].strokeGenerations[id] = nextStrokeGeneration
+            entries[key]?.strokeGenerations[id] = nextStrokeGeneration
             // A replaced stroke build invalidates the dashed runs cut from it.
-            entries[frameKey, default: FrameEntry()].withheldPolylines =
-                entries[frameKey, default: FrameEntry()].withheldPolylines.filter { $0.value.lineID != id }
+            entries[key]?.withheldPolylines =
+                entries[key]?.withheldPolylines.filter { $0.value.lineID != id } ?? [:]
         }
-        entries[frameKey, default: FrameEntry()].lineBuilds.merge(result.lines) { _, new in new }
-        if !result.strokes.isEmpty { dropStaleRidePolylines(in: frameKey) }
+        entries[key]?.lineBuilds.merge(result.lines) { _, new in new }
+        if !result.strokes.isEmpty { dropStaleRidePolylines(in: key) }
         return true
     }
 
@@ -380,6 +392,8 @@ final class MapOverlayInstaller {
     }
     private var retiring: [String: RetiringBatch] = [:]
     private var handoffs: [String: RetiringBatch] = [:]
+    private var swap: OverlaySwapSequencer?
+    private var swapTickScheduled = false
 
     init(styles: MapOverlayStyles) {
         self.styles = styles
@@ -399,6 +413,7 @@ final class MapOverlayInstaller {
         mapView.removeOverlays(overlays)
         retiring.removeAll()
         handoffs.removeAll()
+        swap = nil
     }
 
     func networkOverlays(
@@ -470,17 +485,6 @@ final class MapOverlayInstaller {
         detailTransitionDuration: TimeInterval? = nil,
         alphaTransitionDuration: TimeInterval? = nil
     ) {
-        // A newer install supersedes any replacement still waiting to render,
-        // except network geometry whose replacement has no renderer yet:
-        // removing it now would blank those railways until MapKit draws the
-        // new tiles. Its own deadline in `checkHandoff` still retires it.
-        for (key, batch) in handoffs {
-            if batch.originalKey.hasPrefix("network"),
-               !styles.hasRenderer(forKey: batch.originalKey) { continue }
-            mapView.removeOverlay(batch.overlay)
-            styles.forget([batch.overlay])
-            handoffs.removeValue(forKey: key)
-        }
         let oldOverlays = reconciliation.oldOverlays
         let desiredIDs = Set(desiredOverlays.map { ObjectIdentifier($0) })
         let oldIDs = Set(oldOverlays.map { ObjectIdentifier($0) })
@@ -497,7 +501,6 @@ final class MapOverlayInstaller {
             retiring.removeValue(forKey: key)
         }
         var immediateRemovals: [MKOverlay] = []
-        var createdHandoffKeys: [String] = []
         for overlay in removed {
             guard let key = overlay.title ?? nil else {
                 immediateRemovals.append(overlay)
@@ -531,7 +534,6 @@ final class MapOverlayInstaller {
                 styles[key] = styles[exitKey]
                 multi.title = exitKey
                 handoffs[exitKey] = RetiringBatch(originalKey: key, overlay: multi)
-                createdHandoffKeys.append(exitKey)
                 continue
             }
             immediateRemovals.append(overlay)
@@ -588,25 +590,45 @@ final class MapOverlayInstaller {
             installed.swapAt(position, other)
         }
         styles.rescale(to: scale, alphaTransitionDuration: alphaTransitionDuration)
-        for key in createdHandoffKeys {
-            checkHandoff(key, on: mapView, deadline: CACurrentMediaTime() + 0.3)
-        }
+        beginSwap(on: mapView)
     }
 
-    private func checkHandoff(
-        _ key: String, on mapView: MKMapView, deadline: CFTimeInterval,
-        rendererWasReady: Bool = false
-    ) {
+    /// The old overlays of every replacement stay mounted as one group until
+    /// ``OverlaySwapSequencer`` says the new ones drew, then all come off in
+    /// the same run-loop turn: never neither set, never a partial mix.
+    /// A later install joins the group and restarts its frame count; the
+    /// group's old overlays are never removed one by one.
+    private func beginSwap(on mapView: MKMapView) {
+        guard !handoffs.isEmpty else {
+            swap = nil
+            return
+        }
+        swap = OverlaySwapSequencer(newKeys: handoffs.values.map(\.originalKey))
+        scheduleSwapTick(on: mapView)
+    }
+
+    private func scheduleSwapTick(on mapView: MKMapView) {
+        guard !swapTickScheduled else { return }
+        swapTickScheduled = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 / 60.0) { [weak self, weak mapView] in
-            guard let self, let mapView, let batch = self.handoffs[key] else { return }
-            let rendererIsReady = self.styles.hasRenderer(forKey: batch.originalKey)
-            if rendererWasReady || (!rendererIsReady && CACurrentMediaTime() >= deadline) {
-                mapView.removeOverlay(batch.overlay)
-                self.styles.forget([batch.overlay])
-                self.handoffs.removeValue(forKey: key)
-                return
+            guard let self else { return }
+            self.swapTickScheduled = false
+            guard let mapView, var swap = self.swap else { return }
+            for key in swap.undrawn where self.styles.hasDrawn(forKey: key) {
+                swap.reportDrawn(key: key)
             }
-            self.checkHandoff(key, on: mapView, deadline: deadline, rendererWasReady: rendererIsReady)
+            swap.displayFrame()
+            self.swap = swap
+            switch swap.decision {
+            case .holdOld:
+                self.scheduleSwapTick(on: mapView)
+            case .retireOld:
+                let overlays = self.handoffs.values.map(\.overlay)
+                self.styles.forget(overlays)
+                mapView.removeOverlays(overlays)
+                self.handoffs.removeAll()
+                self.swap = nil
+            }
         }
     }
 }
@@ -660,35 +682,33 @@ final class MapGestureFrameProbe {
 }
 #endif
 
-/// Geometry projection for one stroke bucket. Screen-space geometry (lane
-/// offsets, jog tapers, fillets, decimation) is built at the bucket's nominal
-/// zoom, as the web renderer does, so zooms inside one bucket and returns to a
-/// recent bucket reuse prepared geometry and overlay identities. Renderer
+/// Geometry projection for one geometry level (``GeometryZoomLevels``).
+/// Screen-space geometry (lane offsets, jog tapers, fillets, decimation) is
+/// built at the level's nominal zoom, so zooms near a level and returns to a
+/// recent level reuse prepared geometry and overlay identities. Renderer
 /// widths keep following the live zoom.
 @MainActor
 struct MapGeometryFrame {
+    /// The geometry level.
     let bucket: Int
     let nominalZoom: Double
     let mapPointsPerScreenPoint: Double
     let scale: CGFloat
+    let laneScale: Double
     let key: String
 
-    init(
-        zoom: Double,
-        laneLOD: (bucket: Int, scale: Double),
-        eraKey: String,
-        on mapView: MKMapView
-    ) {
-        let bucket = MapRebuildPolicy.strokeBucket(zoom: zoom)
-        let nominalZoom = MapRebuildPolicy.nominalZoom(bucket: bucket)
-        self.bucket = bucket
+    init(level: Int, eraKey: String, on mapView: MKMapView) {
+        let nominalZoom = GeometryZoomLevels.nominalZoom(level: level)
+        let laneLOD = GeometryZoomLevels.laneLOD(level: level)
+        self.bucket = level
         self.nominalZoom = nominalZoom
+        self.laneScale = laneLOD.scale
         // Inverse of `MapProjection.zoomLevel`: world width / (256 × 2^zoom).
         self.mapPointsPerScreenPoint = MKMapSize.world.width / (256 * exp2(nominalZoom))
         self.scale = MapProjection.quantised(
             RailStyle.scale(atZoom: nominalZoom), on: mapView)
         // The quantised scale carries the display scale, so a window moved
         // to a different screen does not reuse geometry rounded for the other.
-        self.key = "\(bucket)|\(self.scale)|\(laneLOD.bucket)|\(laneLOD.scale)|\(eraKey)"
+        self.key = "\(level)|\(self.scale)|\(laneLOD.bucket)|\(laneLOD.scale)|\(eraKey)"
     }
 }
