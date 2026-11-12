@@ -106,6 +106,7 @@ struct RegressionGuardMapLock {
         #expect(!deferred.contains("buildMarkers("))
         let full = try Self.body(rebuild, from: "case .full:", to: "case .deferred:")
         #expect(full.contains("buildMarkers("))
+        #expect(rebuild.contains("MarkerPassDebt.pass(deferMarkers: deferMarkers)"))
         #expect(rebuild.contains("MarkerPassDebt.resetsMovingBudget(duringGesture: duringGesture)"))
         #expect(!rebuild.contains("\n                stationLabels.resetMovingBudget()"))
     }
@@ -191,11 +192,50 @@ struct RegressionGuardMapLock {
         #expect(!provider.contains("builtStrokeCoordinates"))
     }
 
-    @Test func tapIndexBuildsDetachedAndIsNotKeyedToTheFrame() {
+    @Test func tapIndexBuildsDetachedAndFollowsTheInstalledLevel() throws {
         #expect(Self.interaction.contains("Task.detached(priority: .utility)"))
         #expect(Self.interaction.contains("self.indexGeneration == generation"))
         #expect(!Self.interaction.contains("TapGeometrySignature"))
         #expect(!Self.interaction.contains("updateTapGeometry"))
         #expect(!Self.coordinator.contains("updateTapGeometry"))
+        // Lane offsets scale with the level: a level change re-snapshots.
+        let install = try Self.body(
+            Self.coordinator, from: "currentGeometryFrame?.bucket != geometryFrame.bucket",
+            to: "currentGeometryFrame = geometryFrame")
+        #expect(install.contains("interaction.invalidateRideGeometry()"))
+    }
+
+    @Test func arrivalStrokesRecordEmptyResultsAgainstTheirFrame() throws {
+        let arrival = try Self.body(
+            Self.coordinator, from: "private func prepareArrivalStrokes(",
+            to: "private var arrivalStrokePreparation:")
+        #expect(arrival.contains("rideStrokeEmptyFrameKey = strokeFrame.key"))
+        #expect(arrival.contains("arrivalStrokePreparationID == requestID"))
+        let reset = try Self.body(
+            Self.coordinator, from: "private func resetRideStrokeCaches()", to: "/// The worker requests")
+        #expect(reset.contains("arrivalStrokePreparationID = UUID()"))
+    }
+
+    @Test func tripDotsStayAnnotationsWhileVoiceOverRuns() {
+        #expect(Self.coordinator.contains("!hasSelection && !UIAccessibility.isVoiceOverRunning"))
+        #expect(Self.coordinator.contains("UIAccessibility.voiceOverStatusDidChangeNotification"))
+        #expect(!Self.coordinator.contains("drawsInOverlay: !hasSelection"))
+    }
+
+    @Test func onlyTheLevelSwapDefersTheMarkerPass() throws {
+        let swap = try Self.body(
+            Self.coordinator, from: "noteRebuildTrigger(.levelSwapped)", to: "private var lastGestureSwapAttempt")
+        #expect(swap.contains("deferMarkers: true"))
+        let extend = try Self.body(
+            Self.coordinator, from: "noteRebuildTrigger(.movingExtended)", to: "// MARK: neighbour prebuild")
+        #expect(!extend.contains("deferMarkers: true"))
+    }
+
+    @Test func theDebtPassRestylesBeforeTheFullLabelPass() throws {
+        let settle = try Self.body(
+            Self.coordinator, from: "if self.markerPassDebt.isOwed {", to: "_ = self.runLabelPass(on: mapView, moving: false)")
+        let restyle = try #require(settle.range(of: "self.restyle(on: mapView)"))
+        let full = try #require(settle.range(of: "fullPass: true"))
+        #expect(restyle.lowerBound < full.lowerBound)
     }
 }

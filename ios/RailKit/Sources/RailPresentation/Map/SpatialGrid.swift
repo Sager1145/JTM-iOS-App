@@ -107,10 +107,12 @@ public struct MarkerPassDebt: Equatable, Sendable {
 
     public init() {}
 
-    /// The marker work a rebuild does, and whether it may reset the moving
-    /// label pass's cost budget.
-    public static func pass(duringGesture: Bool) -> RebuildPass {
-        duringGesture ? .deferred : .full
+    /// The marker work a rebuild does. Only the mid-pinch level swap defers it;
+    /// a moving load-ahead extension runs the full pass so the newly shown
+    /// area has stations and dots. The second rule is whether it may reset
+    /// the moving label pass's cost budget.
+    public static func pass(deferMarkers: Bool) -> RebuildPass {
+        deferMarkers ? .deferred : .full
     }
 
     public static func resetsMovingBudget(duringGesture: Bool) -> Bool { !duringGesture }

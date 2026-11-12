@@ -328,8 +328,8 @@ final class MapNetworkGeometryCache {
 
     private func addBytes(polylineVertices: Int, to key: String) {
         guard entries[key] != nil else { return }
-        entries[key]?.bytes += GeometryFrameBytes.estimate(
-            polylineVertices: polylineVertices, strokeVertices: 0)
+        guard polylineVertices != 0 else { return }
+        entries[key]?.bytes = max(0, (entries[key]?.bytes ?? 0) + polylineVertices * GeometryFrameBytes.bytesPerPolylineVertex)
         noteBytes(of: key)
     }
 
@@ -386,15 +386,17 @@ final class MapNetworkGeometryCache {
     }
 
     func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey) {
+        let replaced = entries[frameKey]?.ridePolylines[key]?.pointCount ?? 0
         entries[frameKey, default: FrameEntry()].ridePolylines[key] = polyline
-        addBytes(polylineVertices: polyline.pointCount, to: frameKey)
+        addBytes(polylineVertices: polyline.pointCount - replaced, to: frameKey)
     }
 
     /// Files a polyline built for `frameKey` without moving the current frame.
     /// A frame the cache has already evicted drops it.
     func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey, frameKey: String) {
+        let replaced = entries[frameKey]?.ridePolylines[key]?.pointCount ?? 0
         entries[frameKey]?.ridePolylines[key] = polyline
-        addBytes(polylineVertices: polyline.pointCount, to: frameKey)
+        addBytes(polylineVertices: polyline.pointCount - replaced, to: frameKey)
     }
 }
 

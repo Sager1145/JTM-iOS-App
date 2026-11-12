@@ -17,7 +17,7 @@ public enum GeometryFrameBytes {
 /// Which geometry frames stay resident. The current frame and at most one
 /// neighbour (the one being prebuilt in the direction of the last zoom) are
 /// pinned; every other frame is evicted, least recently used first, whenever
-/// the frames together exceed `byteCap`. A memory warning drops everything
+/// the unpinned frames together exceed `byteCap`. A memory warning drops everything
 /// that is not current.
 public struct GeometryFrameResidency: Equatable, Sendable {
     /// Least recently used first; the current frame is the last it was made.
@@ -31,8 +31,14 @@ public struct GeometryFrameResidency: Equatable, Sendable {
 
     public var totalBytes: Int { frameBytes.values.reduce(0, +) }
 
-    /// Whether another neighbour may be prebuilt: resident geometry is under the cap.
-    public var hasRoomToPrebuild: Bool { totalBytes < byteCap }
+    /// Bytes held by frames that are neither current nor the pinned neighbour.
+    /// Only these count against `byteCap`.
+    public var unpinnedBytes: Int {
+        frameBytes.filter { $0.key != current && $0.key != neighbour }.values.reduce(0, +)
+    }
+
+    /// Whether another neighbour may be prebuilt: unpinned geometry is under the cap.
+    public var hasRoomToPrebuild: Bool { unpinnedBytes < byteCap }
 
     /// Makes `key` the current frame. Returns the keys evicted.
     public mutating func begin(_ key: String) -> [String] {
@@ -82,7 +88,7 @@ public struct GeometryFrameResidency: Equatable, Sendable {
 
     private mutating func evict() -> [String] {
         var evicted: [String] = []
-        while totalBytes > byteCap,
+        while unpinnedBytes > byteCap,
               let index = order.firstIndex(where: { $0 != current && $0 != neighbour }) {
             let key = order.remove(at: index)
             frameBytes.removeValue(forKey: key)

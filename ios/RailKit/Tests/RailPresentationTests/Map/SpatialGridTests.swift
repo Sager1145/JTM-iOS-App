@@ -53,8 +53,8 @@ struct SpatialGridTests {
 @Suite("MarkerPassDebt")
 struct MarkerPassDebtTests {
     @Test func aRebuildDuringAGestureDefersTheFullPass() {
-        #expect(MarkerPassDebt.pass(duringGesture: true) == .deferred)
-        #expect(MarkerPassDebt.pass(duringGesture: false) == .full)
+        #expect(MarkerPassDebt.pass(deferMarkers: true) == .deferred)
+        #expect(MarkerPassDebt.pass(deferMarkers: false) == .full)
     }
 
     @Test func onlyASettledRebuildResetsTheLabelBudget() {

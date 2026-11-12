@@ -26,10 +26,11 @@ final class MapInteractionCoordinator {
     /// prebuild then retries later.
     var tapSnapshotProvider: (@MainActor () -> RideTapIndex.Snapshot?)?
 
-    /// A level change or a stroke rebuild does NOT come through here: the index
-    /// is built from the drawn trip polylines (or raw coordinates), and the
-    /// lane offset and corner rounding that differ between levels are a few
-    /// points, well inside `RideTapResolver.defaultTolerance`.
+    /// A geometry level change DOES come through here (from the rebuild that
+    /// installs the new frame): the index is built from the level's laned ride
+    /// polylines, whose lane offsets are in screen points at that level, so an
+    /// index built at another level can sit far off the drawn line. A stroke
+    /// rebuild within one level does not: the difference is a few points.
     ///
     /// Geometry/filter/matching changes discard the index without rebuilding
     /// inside a SwiftUI update; a coalesced prebuild replaces it once the map

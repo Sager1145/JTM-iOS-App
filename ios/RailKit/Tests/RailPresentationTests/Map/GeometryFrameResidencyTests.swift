@@ -88,4 +88,22 @@ struct GeometryFrameResidencyTests {
         #expect(GeometryFrameBytes.estimate(polylineVertices: 0, strokeVertices: 100) == 4_800)
         #expect(GeometryFrameBytes.estimate(polylineVertices: -5, strokeVertices: -5) == 0)
     }
+
+    @Test func pinnedFramesDoNotCountAgainstTheCap() {
+        var residency = GeometryFrameResidency(byteCap: 100)
+        _ = residency.begin("a")
+        _ = residency.setBytes(30, for: "a")
+        _ = residency.begin("b")
+        _ = residency.setBytes(30, for: "b")
+        _ = residency.begin("cur")
+        _ = residency.setBytes(150, for: "cur")
+        _ = residency.pinNeighbour("nb")
+        _ = residency.setBytes(150, for: "nb")
+        // Current + neighbour are 300 > 100, yet the unpinned a and b survive.
+        #expect(residency.order.contains("a") && residency.order.contains("b"))
+        #expect(residency.unpinnedBytes == 60)
+        #expect(residency.hasRoomToPrebuild)
+        _ = residency.setBytes(60, for: "b")
+        #expect(!residency.order.contains("a"))
+    }
 }

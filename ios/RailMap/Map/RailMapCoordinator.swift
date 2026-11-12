@@ -1178,8 +1178,12 @@ extension RailMapView.Surface {
                         return
                     }
                     // A rebuild during the gesture left the full marker pass owed.
-                    if self.markerPassDebt.isOwed,
-                       self.runLabelPass(on: mapView, moving: false, fullPass: true) {
+                    if self.markerPassDebt.isOwed {
+                        self.restyle(on: mapView)
+                        if self.runLabelPass(on: mapView, moving: false, fullPass: true) {
+                            return
+                        }
+                        _ = self.runLabelPass(on: mapView, moving: false)
                         return
                     }
                     self.restyle(on: mapView)
@@ -1426,7 +1430,7 @@ extension RailMapView.Surface {
                 lastGestureSwapAttempt = now
                 guard isGeometryLevelReady(wanted, zoom: zoom, on: mapView) else { return }
                 noteRebuildTrigger(.levelSwapped)
-                rebuild(on: mapView, duringGesture: true)
+                rebuild(on: mapView, duringGesture: true, deferMarkers: true)
             }
 
             private var lastGestureSwapAttempt: ContinuousClock.Instant?
@@ -1528,9 +1532,37 @@ extension RailMapView.Surface {
             private var lastZoomDirection = 0
             private var memoryWarningObserver: NSObjectProtocol?
 
+            private var voiceOverObserver: NSObjectProtocol?
+
+            /// Trip dots are drawn in the overlay (no annotation, so no
+            /// accessibility element) except while VoiceOver runs; turning it
+            /// on or off re-mounts the dots the other way.
+            private func observeVoiceOver() {
+                guard voiceOverObserver == nil else { return }
+                voiceOverObserver = NotificationCenter.default.addObserver(
+                    forName: UIAccessibility.voiceOverStatusDidChangeNotification,
+                    object: nil, queue: .main
+                ) { [weak self] _ in
+                    MainActor.assumeIsolated {
+                        guard let self, let mapView = self.mapView else { return }
+                        self.annotationsNeedRefresh = true
+                        self.networkBuildState.invalidateZoomBucket()
+                        self.rebuild(on: mapView)
+                    }
+                }
+            }
+
+            /// Whether trip dots are drawn into the overlay instead of mounted
+            /// as annotations: no selection, and no VoiceOver reader who needs
+            /// each station as an element.
+            private func tripDotsDrawInOverlay(hasSelection: Bool) -> Bool {
+                !hasSelection && !UIAccessibility.isVoiceOverRunning
+            }
+
             /// A memory warning drops every geometry frame but the current one
             /// and stops the idle prebuild that would refill the cache.
             func observeMemoryWarnings() {
+                observeVoiceOver()
                 guard memoryWarningObserver == nil else { return }
                 memoryWarningObserver = NotificationCenter.default.addObserver(
                     forName: UIApplication.didReceiveMemoryWarningNotification,
@@ -1769,7 +1801,9 @@ extension RailMapView.Surface {
             /// `duringGesture` is the mid-pinch level swap: the wanted level is
             /// already prepared, so the rebuild only installs it and runs
             /// while the fingers are down.
-            private func rebuild(on mapView: MKMapView, duringGesture: Bool = false) {
+            private func rebuild(
+                on mapView: MKMapView, duringGesture: Bool = false, deferMarkers: Bool = false
+            ) {
                 if !duringGesture,
                    isManipulating || lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) == true {
                     rebuildDeferredByGesture = true
@@ -1939,6 +1973,11 @@ extension RailMapView.Surface {
                 // untouched.
                 let geometryFrame = strokeFrame
                 let mapPointsPerScreenPoint = geometryFrame.mapPointsPerScreenPoint
+                // The tap index is built from this level's laned polylines; their
+                // lane offsets scale with the level, so a new level re-snapshots.
+                if currentGeometryFrame?.bucket != geometryFrame.bucket {
+                    interaction.invalidateRideGeometry()
+                }
                 currentGeometryFrame = geometryFrame
                 networkGeometry.beginFrame(key: geometryFrame.key)
 
@@ -2295,15 +2334,16 @@ extension RailMapView.Surface {
 #endif
                 let highlightTransition: TimeInterval? =
                     playback?.isActive == true ? 0 : (animateHighlight ? highlightDuration : nil)
-                switch MarkerPassDebt.pass(duringGesture: duringGesture) {
+                switch MarkerPassDebt.pass(deferMarkers: deferMarkers) {
                 case .full:
                     buildMarkers(context, on: mapView, pendingOverlays: desiredOverlays,
                                  networkTransitionDuration: detailDuration,
                                  highlightTransitionDuration: highlightTransition)
                 case .deferred:
-                    // Mid-gesture: install the overlays this rebuild produced and
-                    // leave markers (election, annotation reconcile, restyle) to the
-                    // settled pass. The moving label pass keeps names current.
+                    // Mid-pinch level swap only: install the overlays this rebuild
+                    // produced and leave markers (election, annotation reconcile,
+                    // restyle) to the settled pass. A moving load-ahead extension
+                    // runs the full marker pass so new-area stations and dots show.
                     installRideStationOverlays(
                         on: mapView, scale: scale, pendingOverlays: desiredOverlays,
                         networkTransitionDuration: detailDuration,
@@ -2531,6 +2571,7 @@ extension RailMapView.Surface {
                 rideStrokeMemo.removeAll()
                 rideStrokeEmptyKeys.removeAll()
                 rideStrokeEmptyFrameKey = ""
+                arrivalStrokePreparationID = UUID()
             }
 
             /// The worker requests for every drawn segment of `rides` that has
@@ -2808,6 +2849,12 @@ extension RailMapView.Surface {
                 let strokeFrame = RideStrokeBuilder.Frame(
                     key: frame.key, mapPointsPerScreenPoint: frame.mapPointsPerScreenPoint,
                     scale: frame.scale)
+                if rideStrokeEmptyFrameKey != strokeFrame.key {
+                    rideStrokeEmptyKeys.removeAll()
+                    rideStrokeEmptyFrameKey = strokeFrame.key
+                }
+                let requestID = UUID()
+                arrivalStrokePreparationID = requestID
                 let memo = rideStrokeMemo
                 let worker = Task.detached(priority: .userInitiated) {
                     RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
@@ -2818,6 +2865,11 @@ extension RailMapView.Surface {
                     } onCancel: { worker.cancel() }
                     guard let self, let mapView, !Task.isCancelled else { return }
                     self.arrivalStrokePreparation = nil
+                    guard self.arrivalStrokePreparationID == requestID else {
+                        // Built against caches that were reset meanwhile.
+                        self.arrivalPendingRideIDs = []
+                        return
+                    }
                     for built in output.built {
                         self.networkGeometry.storeRidePolyline(
                             built.polyline, for: built.key, frameKey: strokeFrame.key)
@@ -2840,6 +2892,7 @@ extension RailMapView.Surface {
             }
 
             private var arrivalStrokePreparation: Task<Void, Never>?
+            private var arrivalStrokePreparationID = UUID()
             private var arrivalPendingRideIDs: Set<String> = []
 
             /// Keeps the render status and the panel's stats current after a
@@ -3388,7 +3441,7 @@ extension RailMapView.Surface {
                             && (item.stationCode == nil || stop.n02StationCode == item.stationCode)
                     }?.stationID
                     let annotation = RideStationAnnotation(
-                        rideID: feature.tid, drawsInOverlay: !hasSelection,
+                        rideID: feature.tid, drawsInOverlay: tripDotsDrawInOverlay(hasSelection: hasSelection),
                         coordinate: displayCoordinate,
                         name: feature.name,
                         rawName: record.name,
@@ -3480,7 +3533,7 @@ extension RailMapView.Surface {
                         stationPosition: { knownEndpointPosition(for: $0, of: ride) })
                     let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
                     placeDot(RideStationAnnotation(
-                        rideID: ride.id, drawsInOverlay: !hasSelection,
+                        rideID: ride.id, drawsInOverlay: tripDotsDrawInOverlay(hasSelection: hasSelection),
                         coordinate: position, name: spec.name, rawName: spec.rawName,
                         stationCode: endpoint?.stop.n02StationCode,
                         region: Region(rawValue: ride.country), role: "terminal",
