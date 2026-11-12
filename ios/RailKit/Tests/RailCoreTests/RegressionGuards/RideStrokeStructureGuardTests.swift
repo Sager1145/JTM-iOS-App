@@ -62,9 +62,13 @@ struct RegressionGuardRideStrokeStructure {
     @Test func lineStrokesUseTheTripArea() throws {
         let full = Self.coordinator
         #expect(!full.contains("insetBy(dx: -256"))
+        let work = try Self.body(
+            from: "private func missingGeometryWork(", to: "let byID = Dictionary(")
+        #expect(work.contains("let rideRect = NetworkLOD.tripArea("))
+        #expect(!work.contains("rideRect = buildRect"))
         let prep = try Self.body(
             from: "private func prepareNetworkGeometry(", to: "let byID = Dictionary(")
-        #expect(prep.contains("NetworkLOD.tripArea("))
+        #expect(prep.contains("missingGeometryWork("))
         let missing = try Self.body(
             from: "let missingStrokes = needed.compactMap", to: "let gate = ")
         #expect(missing.contains("intersects(rideRect)"))
@@ -80,7 +84,7 @@ struct RegressionGuardRideStrokeStructure {
     /// install, not whatever the previous rebuild left in the cache.
     @Test func theWorkerSlicesFromTheStrokesTheRebuildInstalls() throws {
         let rebuild = try Self.body(
-            from: "private func rebuild(on mapView: MKMapView) {",
+            from: "private func rebuild(on mapView: MKMapView, duringGesture: Bool = false) {",
             to: "// A cold display-network request has no geometry")
         let selected = try #require(rebuild.range(of: "selectFrameStrokes("))
         let prepared = try #require(rebuild.range(of: "prepareRideStrokes("))
@@ -108,7 +112,7 @@ struct RegressionGuardRideStrokeStructure {
 
     @Test func replacedChainBuildsDropTheStrokeMemo() throws {
         let source = Self.coordinator
-        let store = try #require(source.range(of: "networkGeometry.storePrepared(prepared, key: key)"))
+        let store = try #require(source.range(of: "guard self.networkGeometry.storePrepared(prepared, key: key)"))
         let tail = source[store.upperBound...].prefix(400)
         #expect(tail.contains("resetRideStrokeCaches()"))
         let retain = try #require(source.range(of: "networkGeometry.retainLineBuilds(withIDs: retainedIDs)"))

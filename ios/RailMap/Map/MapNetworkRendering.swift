@@ -119,8 +119,7 @@ final class MapNetworkGeometryCache {
 
     private var frameKey = ""
     private var entries: [String: FrameEntry] = [:]
-    /// Most recent last.
-    private var recentKeys: [String] = []
+    private var recency = GeometryFrameRecency(capacity: MapNetworkGeometryCache.frameCapacity)
     private var frameStrokes: [String: BuiltStroke] = [:]
     private var nextStrokeGeneration = 0
 
@@ -147,14 +146,7 @@ final class MapNetworkGeometryCache {
             entries[key] = FrameEntry()
         }
         frameKey = key
-        if let index = recentKeys.firstIndex(of: key) {
-            recentKeys.remove(at: index)
-        }
-        recentKeys.append(key)
-        while recentKeys.count > Self.frameCapacity {
-            let evicted = recentKeys.removeFirst()
-            entries.removeValue(forKey: evicted)
-        }
+        for evicted in recency.begin(key) { entries.removeValue(forKey: evicted) }
     }
 
     func resetFrameStrokes() {
@@ -235,12 +227,7 @@ final class MapNetworkGeometryCache {
     func ensureFrame(key: String) {
         if entries[key] == nil { entries[key] = FrameEntry() }
         guard key != frameKey else { return }
-        if !recentKeys.contains(key) { recentKeys.insert(key, at: 0) }
-        while recentKeys.count > Self.frameCapacity, let evicted = recentKeys.first,
-              evicted != frameKey {
-            recentKeys.removeFirst()
-            entries.removeValue(forKey: evicted)
-        }
+        for evicted in recency.ensure(key) { entries.removeValue(forKey: evicted) }
     }
 
     func hasStrokeBuild(for id: String, in key: String) -> Bool {
@@ -394,6 +381,7 @@ final class MapOverlayInstaller {
     private var retiring: [String: RetiringBatch] = [:]
     private var handoffs: [String: RetiringBatch] = [:]
     private var swap: OverlaySwapSequencer?
+    private var swapLastTick: CFTimeInterval = 0
     private var swapTickScheduled = false
 
     init(styles: MapOverlayStyles) {
@@ -442,8 +430,12 @@ final class MapOverlayInstaller {
         alphaScale: CGFloat = 1,
         epoch: String,
         tileSize: Double,
+        buildRect: MKMapRect,
         reconciliation: MapOverlayReconciliation
     ) -> [MKMultiPolyline] {
+        let area = MapBuildArea.Rect(
+            x: buildRect.origin.x, y: buildRect.origin.y,
+            width: buildRect.size.width, height: buildRect.size.height)
         if batchEpoch != epoch {
             networkBatches.reset()
             historicalBatches.reset()
@@ -454,18 +446,19 @@ final class MapOverlayInstaller {
             byGroup.keys.sorted().flatMap { group in
                 byGroup[group]!.map { polyline in
                     let rect = polyline.boundingMapRect
+                    let bounds = MapBuildArea.Rect(
+                        x: rect.origin.x, y: rect.origin.y,
+                        width: rect.size.width, height: rect.size.height)
                     return AddOnlyBatchLedger<PolylineItem>.Entry(
                         item: PolylineItem(polyline: polyline), group: group,
-                        tile: MapOverlayTiling.tile(
-                            of: .init(x: rect.origin.x, y: rect.origin.y,
-                                      width: rect.size.width, height: rect.size.height),
-                            tileSize: tileSize))
+                        tile: MapOverlayTiling.tile(of: bounds, tileSize: tileSize),
+                        bounds: bounds)
                 }
             }
         }
-        networkBatches.update(entries(byColor))
-        historicalBatches.update(entries(historicalByColor))
-        withheldBatches.update(entries(withheldByColor))
+        networkBatches.update(entries(byColor), buildRect: area)
+        historicalBatches.update(entries(historicalByColor), buildRect: area)
+        withheldBatches.update(entries(withheldByColor), buildRect: area)
 
         var overlays: [MKMultiPolyline] = []
         // Preserve the same stack across rebuilds and process launches, including
@@ -539,9 +532,24 @@ final class MapOverlayInstaller {
             retiring.removeValue(forKey: key)
         }
         var immediateRemovals: [MKOverlay] = []
+        // New network batches replacing old ones (a level, era, colour or batch
+        // rebuild): every old network overlay stays mounted as one group until
+        // the new ones drew, never crossfading against them, never vanishing
+        // before them. Whether the old key survives does not matter.
+        let newNetworkKeys = desiredKeys.subtracting(oldKeys).filter { $0.hasPrefix("network") }
+        let replacesNetwork = !newNetworkKeys.isEmpty
+            && removed.contains { ($0.title ?? nil)?.hasPrefix("network") == true }
         for overlay in removed {
             guard let key = overlay.title ?? nil else {
                 immediateRemovals.append(overlay)
+                continue
+            }
+            if replacesNetwork, key.hasPrefix("network"), !desiredKeys.contains(key),
+               let multi = overlay as? MKMultiPolyline {
+                let exitKey = "handoff|\(UUID().uuidString)"
+                styles.rekey(from: key, to: exitKey)
+                multi.title = exitKey
+                handoffs[exitKey] = RetiringBatch(originalKey: key, overlay: multi)
                 continue
             }
             if let duration = detailTransitionDuration, duration > 0,
@@ -585,7 +593,7 @@ final class MapOverlayInstaller {
         if let duration = detailTransitionDuration {
             for overlay in desiredOverlays {
                 guard let key = overlay.title ?? nil, key.hasPrefix("network"),
-                      !oldKeys.contains(key) else { continue }
+                      !oldKeys.contains(key), !replacesNetwork else { continue }
                 styles.animateOpacity(forKey: key, duration: duration,
                     fromAlpha: returningAlpha[key] ?? 0)
             }
@@ -628,7 +636,7 @@ final class MapOverlayInstaller {
             installed.swapAt(position, other)
         }
         styles.rescale(to: scale, alphaTransitionDuration: alphaTransitionDuration)
-        beginSwap(on: mapView)
+        beginSwap(on: mapView, newKeys: newNetworkKeys)
     }
 
     /// The old overlays of every replacement stay mounted as one group until
@@ -636,12 +644,16 @@ final class MapOverlayInstaller {
     /// the same run-loop turn: never neither set, never a partial mix.
     /// A later install joins the group and restarts its frame count; the
     /// group's old overlays are never removed one by one.
-    private func beginSwap(on mapView: MKMapView) {
+    private func beginSwap(on mapView: MKMapView, newKeys: Set<String>) {
         guard !handoffs.isEmpty else {
             swap = nil
             return
         }
-        swap = OverlaySwapSequencer(newKeys: handoffs.values.map(\.originalKey))
+        // Wait on the new network batches plus any kept key still handed off
+        // (ride layers); a handed-off key that is gone is not waited for.
+        let kept = handoffs.values.map(\.originalKey).filter { styles[$0] != nil }
+        swap = OverlaySwapSequencer(newKeys: newKeys.union(kept))
+        swapLastTick = CACurrentMediaTime()
         scheduleSwapTick(on: mapView)
     }
 
@@ -655,7 +667,9 @@ final class MapOverlayInstaller {
             for key in swap.undrawn where self.styles.hasDrawn(forKey: key) {
                 swap.reportDrawn(key: key)
             }
-            swap.displayFrame()
+            let now = CACurrentMediaTime()
+            swap.elapse(now - self.swapLastTick)
+            self.swapLastTick = now
             self.swap = swap
             switch swap.decision {
             case .holdOld:

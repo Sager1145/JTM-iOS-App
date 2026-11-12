@@ -152,21 +152,32 @@ public enum MapOverlayTiling {
     public typealias Rect = MapBuildArea.Rect
 }
 
-/// Overlay batches keyed by (colour group, tile) that only ever grow.
+/// Overlay batches keyed by (colour group, tile) that only ever grow with area.
 ///
 /// A batch's membership is fixed when it is created. Items the ledger has not
 /// seen go into a NEW batch for their group and tile, so adding area never
-/// replaces a batch already on the map. A batch is dropped only when none of
-/// its items is offered any more. Reset it when the geometry level changes.
+/// replaces a batch already on the map. A batch is rebuilt under a new key
+/// (from its still-offered members) when a member inside the build area is no
+/// longer offered (replaced, culled, filtered) or is offered under another
+/// group (a colour change). A member that is no longer offered because it
+/// left the build area is tolerated: the batch stays as it is. A batch nothing
+/// offers any more is dropped. Reset it when the geometry level changes.
 public struct AddOnlyBatchLedger<Item: Hashable> {
     public struct Entry {
         public var item: Item
         public var group: String
         public var tile: MapOverlayTiling.Tile
-        public init(item: Item, group: String, tile: MapOverlayTiling.Tile) {
+        /// The item's extent in map points; decides whether a no-longer-offered
+        /// item left the build area or was replaced inside it.
+        public var bounds: MapBuildArea.Rect?
+        public init(
+            item: Item, group: String, tile: MapOverlayTiling.Tile,
+            bounds: MapBuildArea.Rect? = nil
+        ) {
             self.item = item
             self.group = group
             self.tile = tile
+            self.bounds = bounds
         }
     }
 
@@ -182,12 +193,14 @@ public struct AddOnlyBatchLedger<Item: Hashable> {
 
     private var batchesByKey: [String: Batch] = [:]
     private var nextSerial: [String: Int] = [:]
+    private var itemBounds: [Item: MapBuildArea.Rect] = [:]
 
     public init() {}
 
     public mutating func reset() {
         batchesByKey = [:]
         nextSerial = [:]
+        itemBounds = [:]
     }
 
     public var batches: [Batch] {
@@ -198,21 +211,25 @@ public struct AddOnlyBatchLedger<Item: Hashable> {
         }
     }
 
-    /// Offers the current items. Returns the keys of batches created now.
+    /// Offers the current items. `buildRect` is the area geometry is built for;
+    /// without it every un-offered member counts as replaced. Returns the keys
+    /// of batches created now.
     @discardableResult
-    public mutating func update(_ entries: [Entry]) -> [String] {
+    public mutating func update(_ entries: [Entry], buildRect: MapBuildArea.Rect? = nil) -> [String] {
+        var offeredGroup: [Item: String] = [:]
+        for entry in entries { offeredGroup[entry.item] = entry.group }
+        for (key, batch) in batchesByKey {
+            let anyOffered = batch.items.contains { offeredGroup[$0] != nil }
+            let changed = batch.items.contains { item in
+                if let group = offeredGroup[item] { return group != batch.group }
+                guard let buildRect, let bounds = itemBounds[item] else { return true }
+                return Self.intersects(bounds, buildRect)
+            }
+            if !anyOffered || changed { batchesByKey[key] = nil }
+        }
         var member = Set<Item>()
-        var offered = Set<Item>()
-        for entry in entries { offered.insert(entry.item) }
-        for batch in batchesByKey.values {
-            for item in batch.items { member.insert(item) }
-        }
-        // Drop batches nothing offers any more (a level or filter change).
-        for (key, batch) in batchesByKey where !batch.items.contains(where: offered.contains) {
-            batchesByKey[key] = nil
-        }
-        member = []
         for batch in batchesByKey.values { for item in batch.items { member.insert(item) } }
+        itemBounds = itemBounds.filter { member.contains($0.key) }
 
         var fresh: [Slot: [Item]] = [:]
         var order: [Slot] = []
@@ -221,6 +238,7 @@ public struct AddOnlyBatchLedger<Item: Hashable> {
             if fresh[slot] == nil { order.append(slot) }
             fresh[slot, default: []].append(entry.item)
             member.insert(entry.item)
+            if let bounds = entry.bounds { itemBounds[entry.item] = bounds }
         }
         var created: [String] = []
         for slot in order {
@@ -234,6 +252,53 @@ public struct AddOnlyBatchLedger<Item: Hashable> {
             created.append(key)
         }
         return created
+    }
+
+    private static func intersects(_ a: MapBuildArea.Rect, _ b: MapBuildArea.Rect) -> Bool {
+        a.x < b.x + b.width && b.x < a.x + a.width
+            && a.y < b.y + b.height && b.y < a.y + a.height
+    }
+}
+
+/// Which geometry frames stay cached, most recent last. The current frame is
+/// always the most recent, so it is never the one evicted; a neighbour level
+/// ensured for prebuilding sits just behind it and is never evicted by its
+/// own insertion.
+public struct GeometryFrameRecency: Equatable, Sendable {
+    public private(set) var keys: [String] = []
+    public private(set) var current: String?
+    public let capacity: Int
+
+    public init(capacity: Int) { self.capacity = max(capacity, 2) }
+
+    /// Makes `key` the current frame. Returns the keys evicted.
+    public mutating func begin(_ key: String) -> [String] {
+        keys.removeAll { $0 == key }
+        keys.append(key)
+        current = key
+        return evict(keeping: [key])
+    }
+
+    /// Keeps `key` cached without making it current. Returns the keys evicted.
+    public mutating func ensure(_ key: String) -> [String] {
+        guard key != current else { return [] }
+        if !keys.contains(key) {
+            if let current, let index = keys.firstIndex(of: current) {
+                keys.insert(key, at: index)
+            } else {
+                keys.append(key)
+            }
+        }
+        return evict(keeping: [key])
+    }
+
+    private mutating func evict(keeping protected: Set<String>) -> [String] {
+        var evicted: [String] = []
+        while keys.count > capacity,
+              let index = keys.firstIndex(where: { $0 != current && !protected.contains($0) }) {
+            evicted.append(keys.remove(at: index))
+        }
+        return evicted
     }
 }
 

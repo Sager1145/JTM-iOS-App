@@ -2090,6 +2090,7 @@ extension RailMapView.Surface {
                     alphaScale: hasSelection ? RailStyle.selectDim : 1,
                     epoch: geometryFrame.key,
                     tileSize: MapOverlayTiling.tileSize(mapPointsPerScreenPoint: mapPointsPerScreenPoint),
+                    buildRect: buildRect,
                     reconciliation: overlayReconciliation)
                 desiredOverlays.append(contentsOf: overlays)
 #if DEBUG
@@ -3935,6 +3936,9 @@ extension RailMapView.Surface {
             /// country arriving must not discard every other country's pixels.
             /// The junction index and per-line dependency ids update incrementally.
             private func refreshLineInputs() {
+                // A neighbour prebuild captured the old inputs; its builds would
+                // land as present-but-stale in the neighbour entry.
+                cancelNeighbourPrebuild()
                 let byID = Dictionary(lines.map { ($0.id, $0) },
                     uniquingKeysWith: { first, _ in first })
                 networkGeometry.retainDisplayChains(Set(lines.map(JoinedChainKey.init)))

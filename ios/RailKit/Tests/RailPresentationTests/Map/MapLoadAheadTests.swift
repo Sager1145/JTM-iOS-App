@@ -101,11 +101,44 @@ struct AddOnlyBatchLedgerTests {
         #expect(ledger.batches.count == 1)
     }
 
-    @Test func offScreenItemsDoNotUnloadABatchWhileAnyMemberIsOffered() {
+    typealias Rect = MapBuildArea.Rect
+    func boxed(_ item: String, _ group: String, _ x: Int, _ y: Int, at px: Double) -> Entry {
+        .init(item: item, group: group, tile: .init(x: x, y: y),
+              bounds: Rect(x: px, y: 0, width: 1, height: 1))
+    }
+    let area = Rect(x: 0, y: 0, width: 100, height: 100)
+
+    @Test func memberThatLeftTheBuildAreaDoesNotUnloadItsBatch() {
+        var ledger = AddOnlyBatchLedger<String>()
+        ledger.update([boxed("a", "red", 0, 0, at: 10), boxed("b", "red", 0, 0, at: 500)], buildRect: area)
+        ledger.update([boxed("a", "red", 0, 0, at: 10)], buildRect: area)
+        #expect(ledger.batches.map(\.key) == ["red|0,0"])
+        #expect(ledger.batches.first?.items == ["a", "b"])
+    }
+
+    @Test func memberReplacedInsideTheBuildAreaIsEvictedFromItsBatch() {
+        var ledger = AddOnlyBatchLedger<String>()
+        ledger.update([boxed("a", "red", 0, 0, at: 10), boxed("b", "red", 0, 0, at: 20)], buildRect: area)
+        // b is rebuilt as b2 in the same tile while a is still offered.
+        ledger.update([boxed("a", "red", 0, 0, at: 10), boxed("b2", "red", 0, 0, at: 20)], buildRect: area)
+        let items = ledger.batches.flatMap(\.items)
+        #expect(!items.contains("b"))
+        #expect(items.sorted() == ["a", "b2"])
+    }
+
+    @Test func withoutABuildRectAnyUnofferedMemberCountsAsReplaced() {
         var ledger = AddOnlyBatchLedger<String>()
         ledger.update([entry("a", "red", 0, 0), entry("b", "red", 0, 0)])
         ledger.update([entry("a", "red", 0, 0)])
-        #expect(ledger.batches.first?.items == ["a", "b"])
+        #expect(ledger.batches.flatMap(\.items) == ["a"])
+    }
+
+    @Test func groupChangeMovesTheItem() {
+        var ledger = AddOnlyBatchLedger<String>()
+        ledger.update([boxed("a", "light", 0, 0, at: 10), boxed("b", "light", 0, 0, at: 20)], buildRect: area)
+        ledger.update([boxed("a", "dark", 0, 0, at: 10), boxed("b", "dark", 0, 0, at: 20)], buildRect: area)
+        #expect(ledger.batches.map(\.group) == ["dark"])
+        #expect(ledger.batches.flatMap(\.items).sorted() == ["a", "b"])
     }
 
     @Test func batchNothingOffersAnyMoreIsDropped() {
@@ -140,5 +173,29 @@ struct StrokeStabilityLedgerTests {
         let drawn = ledger.resolve(current: ["a": 2], moving: false)
         #expect(drawn == ["a": 2])
         #expect(ledger.held(current: ["a": 2]).isEmpty)
+    }
+}
+
+@Suite("GeometryFrameRecency")
+struct GeometryFrameRecencyTests {
+    @Test func ensuredNeighbourSurvivesItsOwnInsertionWhenFull() {
+        var recency = GeometryFrameRecency(capacity: 3)
+        for key in ["a", "b", "c"] { _ = recency.begin(key) }
+        let evicted = recency.ensure("n")
+        #expect(!evicted.contains("n"))
+        #expect(recency.keys.contains("n"))
+        #expect(recency.current == "c")
+        #expect(recency.keys.last == "c")
+        #expect(evicted == ["a"])
+    }
+
+    @Test func currentIsNeverEvicted() {
+        var recency = GeometryFrameRecency(capacity: 2)
+        _ = recency.begin("a")
+        _ = recency.ensure("n1")
+        _ = recency.ensure("n2")
+        #expect(recency.keys.contains("a"))
+        #expect(recency.keys.contains("n2"))
+        #expect(recency.keys.count == 2)
     }
 }

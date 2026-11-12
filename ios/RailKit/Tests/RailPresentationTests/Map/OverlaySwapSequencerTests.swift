@@ -12,12 +12,12 @@ struct OverlaySwapSequencerTests {
         #expect(swap.decision == .retireOld)
     }
 
-    @Test("One display frame is not enough; two retire the old overlays")
-    func frameFallback() {
+    @Test("Undrawn keys hold well past two frames; the time fallback retires them")
+    func timeFallback() {
         var swap = OverlaySwapSequencer(newKeys: ["a"])
-        swap.displayFrame()
+        for _ in 0..<10 { swap.elapse(1.0 / 60.0) }
         #expect(swap.decision == .holdOld)
-        swap.displayFrame()
+        swap.elapse(OverlaySwapSequencer.fallbackSeconds)
         #expect(swap.decision == .retireOld)
     }
 
