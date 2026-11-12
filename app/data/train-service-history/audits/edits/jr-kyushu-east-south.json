@@ -1,0 +1,147 @@
+[
+ {
+  "record": "sonic-hakata-oita",
+  "ids": "jr-kyushu-east-south#1,2",
+  "set": {
+   "optionalStops": "吉塚 香椎 福間 赤間 東郷 八幡 スペースワールド 戸畑 下曽根 朽網 宇島 柳ヶ浦 宇佐 杵築 亀川",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "ソニック",
+   "distinctPatterns": 38
+  },
+  "split": {
+   "newId": "sonic-hakata-oita-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "sonic-hakata-saiki",
+  "ids": "jr-kyushu-east-south#3,4",
+  "set": {
+   "stops": "博多 折尾 黒崎 小倉 行橋 中津 別府 大分 鶴崎 大在 臼杵 津久見 佐伯",
+   "optionalStops": "香椎 赤間 戸畑 宇島 柳ヶ浦 宇佐 杵築 幸崎",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "ソニック",
+   "distinctPatterns": 38
+  },
+  "split": {
+   "newId": "sonic-hakata-saiki-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "nichirin-oita-miyazakikuko",
+  "ids": "jr-kyushu-east-south#5,6",
+  "set": {
+   "stops": "大分 鶴崎 臼杵 津久見 佐伯 延岡 南延岡 日向市 高鍋 佐土原 宮崎 南宮崎",
+   "optionalStops": "幸崎 門川 都農 宮崎神宮 宮崎空港",
+   "lines": "日豊本線 日南線 宮崎空港線",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "split": {
+   "newId": "nichirin-oita-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "nichirin-seagaia-hakata-miyazakikuko",
+  "ids": "jr-kyushu-east-south#7,8,9,10",
+  "set": {
+   "stops": "博多 香椎 赤間 折尾 黒崎 小倉 朽網 行橋 中津 別府 大分 鶴崎 臼杵 津久見 佐伯 延岡 南延岡 日向市 高鍋 佐土原 宮崎 南宮崎 宮崎空港",
+   "optionalStops": "吉塚 福間 杵築",
+   "lines": "鹿児島本線 日豊本線 日南線 宮崎空港線"
+  },
+  "split": {
+   "newId": "nichirin-seagaia-hakata-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "hyuga-nobeoka-miyazakikuko",
+  "ids": "jr-kyushu-east-south#11,12",
+  "set": {
+   "stops": "延岡 南延岡 日向市 高鍋 佐土原 宮崎",
+   "optionalStops": "門川 都農 宮崎神宮 南宮崎 宮崎空港",
+   "lines": "日豊本線 日南線 宮崎空港線",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "split": {
+   "newId": "hyuga-nobeoka-miyazakikuko-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "kirishima-miyazaki-kagoshimachuo",
+  "ids": "jr-kyushu-east-south#13",
+  "set": {
+   "optionalStops": "清武 田野 山之口 三股 加治木 帖佐 姶良 重富"
+  }
+ },
+ {
+  "record": "yufu-hakata-beppu",
+  "ids": "jr-kyushu-east-south#14",
+  "set": {
+   "stops": "博多 二日市 鳥栖 久留米 筑後吉井 日田 天ヶ瀬 豊後森 豊後中村 由布院 湯平 向之原 大分",
+   "optionalStops": "久留米大学前 田主丸 うきは 別府",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "kyushu-odan-tokkyu-beppu-kumamoto",
+  "ids": "jr-kyushu-east-south#15,16",
+  "set": {
+   "stops": "大分 三重町 緒方 豊後竹田 豊後荻 宮地 阿蘇 立野 肥後大津 新水前寺 熊本",
+   "optionalStops": "別府",
+   "validFrom": "2025-03-15",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "kyushu-odan-tokkyu-beppu-kumamoto",
+  "ids": "jr-kyushu-east-south#17",
+  "status": "notApplied",
+  "reason": "the pattern id kyushu-odan-tokkyu differs from the timed twin kyushu-cross-express; which side is canonical is undecided and the timed side lives in the sqlite that cannot be rebuilt here"
+ },
+ {
+  "record": "asoboy-kumamoto-beppu",
+  "ids": "jr-kyushu-east-south#18,19",
+  "set": {
+   "validUntil": "2025-03-15",
+   "stops": "熊本 水前寺 新水前寺 武蔵塚 光の森 肥後大津 立野 赤水 阿蘇 宮地 豊後荻 豊後竹田 緒方 三重町 中判田 大分 別府"
+  },
+  "periodEvidence": "the correction closes the service before the 2026-03-14 timetable (validUntil 2025-03-15); its stops describe the record's own period"
+ },
+ {
+  "record": "asoboy-kumamoto-beppu",
+  "ids": "jr-kyushu-east-south#20",
+  "status": "notApplied",
+  "reason": "the pattern id asoboy differs from the timed twin aso-boy; which side is canonical is undecided and the timed side lives in the sqlite that cannot be rebuilt here"
+ },
+ {
+  "record": "umisachi-yamasachi-miyazaki-nango",
+  "ids": "jr-kyushu-east-south#21,22",
+  "set": {
+   "lines": "日豊本線 日南線 宮崎空港線",
+   "validFrom": "2026-03-14"
+  },
+  "split": {
+   "newId": "umisachi-yamasachi-miyazaki-nango-until-2026-03",
+   "at": "2026-03-14"
+  }
+ }
+]

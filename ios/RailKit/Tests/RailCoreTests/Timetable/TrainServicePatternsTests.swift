@@ -125,7 +125,7 @@ struct TrainServicePatternsTests {
         }.count)
 
         let haruka = TrainServicePatterns.search("はるか")
-        #expect(haruka.count == 2)
+        #expect(haruka.count == 4)
         #expect(Set(haruka.map(\.origin)) == ["京都", "野洲"])
     }
 
@@ -324,10 +324,48 @@ struct TrainServicePatternsTests {
         #expect(all.count == TrainServicePatterns.search("").count)
 
         let haruka = TrainServicePatterns.search("ハルカ")
-        #expect(haruka.count == 2)
+        #expect(haruka.count == 4)
 
         let harukaHiragana = TrainServicePatterns.search("はるか ")
-        #expect(harukaHiragana.count == 2)
+        #expect(harukaHiragana.count == 4)
+    }
+
+    // MARK: - Shinkansen always-served stops
+
+    /// Stops every train of the service calls at. Applying a pattern copies only
+    /// these, and a partial ride needs both endpoints among them, so a station
+    /// every train serves must never be filed under optionalStops.
+    private static let shinkansenAlwaysServed: [String: [String]] = [
+        "nozomi-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
+        "nozomi-tokyo-hakata": [
+            "東京", "品川", "新横浜", "名古屋", "京都", "新大阪", "新神戸", "岡山", "広島", "小倉", "博多",
+        ],
+        "hikari-tokyo-shin-osaka": ["東京", "品川", "新横浜", "名古屋", "京都", "新大阪"],
+        "hikari-tokyo-hiroshima": [
+            "東京", "品川", "新横浜", "静岡", "名古屋", "京都", "新大阪", "新神戸", "岡山", "広島",
+        ],
+        "tsurugi-toyama-tsuruga": [
+            "富山", "新高岡", "金沢", "福井", "敦賀",
+        ],
+    ]
+
+    @Test("Shinkansen always-served stops are pinned in line order and never optional")
+    func shinkansenAlwaysServedStopsArePinned() throws {
+        for (id, expected) in Self.shinkansenAlwaysServed {
+            let pattern = try #require(TrainServicePatterns.patterns.first { $0.id == id }, "\(id)")
+            #expect(pattern.stops == expected, "\(id)")
+            #expect(Set(pattern.optionalStops).isDisjoint(with: expected), "\(id)")
+        }
+    }
+
+    @Test("no Shinkansen pattern files a station under both stops and optionalStops")
+    func shinkansenStopsAndOptionalStopsAreDisjoint() {
+        let shinkansen = TrainServicePatterns.patterns.filter { $0.lines.contains { $0.contains("新幹線") } }
+        #expect(shinkansen.count >= 30)
+        for pattern in shinkansen {
+            let both = Set(pattern.stopRefs.map(\.sourceCode)).intersection(pattern.optionalStopRefs.map(\.sourceCode))
+            #expect(both.isEmpty, "\(pattern.id): \(both)")
+        }
     }
 
     // MARK: - v3 schema and date semantics

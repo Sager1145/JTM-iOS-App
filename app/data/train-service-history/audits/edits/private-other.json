@@ -1,0 +1,98 @@
+[
+ {
+  "record": "yukemuri-nagano-yudanaka",
+  "ids": "private-other#1,2,3",
+  "set": {
+   "stops": "須坂 小布施 信州中野",
+   "optionalStops": "長野 権堂 市役所前 本郷 信濃吉田 朝陽 湯田中",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "ゆけむり",
+   "distinctPatterns": 4
+  }
+ },
+ {
+  "record": "snow-monkey-nagano-yudanaka",
+  "ids": "private-other#4,5",
+  "set": {
+   "stops": "須坂 小布施 信州中野",
+   "optionalStops": "長野 権堂 市役所前 本郷 信濃吉田 朝陽 湯田中",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "スノーモンキー",
+   "distinctPatterns": 4
+  }
+ },
+ {
+  "record": "southern-namba-wakayamashi",
+  "split": {
+   "newId": "southern-namba-wakayamashi-until-2014-10",
+   "at": "2014-10-18",
+   "dropStops": [
+    "和歌山大学前"
+   ]
+  },
+  "ids": "",
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2014-10-18); the older era is kept in the split record"
+ },
+ {
+  "record": "southern-namba-wakayamashi",
+  "ids": "private-other#6,7",
+  "set": {
+   "lines": "南海本線 和歌山港線"
+  }
+ },
+ {
+  "record": "mu-sky-meitetsu-gifu-centrair",
+  "ids": "private-other#8,9,10",
+  "set": {
+   "stops": "名鉄岐阜 名鉄一宮 国府宮 名鉄名古屋 金山 神宮前 中部国際空港",
+   "optionalStops": "太田川 尾張横須賀 朝倉 新舞子 常滑"
+  },
+  "split": {
+   "newId": "mu-sky-meitetsu-gifu-centrair-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "mu-sky-shin-unuma-centrair",
+  "ids": "private-other#11,12,13",
+  "set": {
+   "stops": "新鵜沼 犬山遊園 犬山 江南 岩倉 名鉄名古屋 金山 神宮前 中部国際空港",
+   "optionalStops": "太田川 尾張横須賀 朝倉 新舞子 常滑",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "ミュースカイ",
+   "distinctPatterns": 7
+  },
+  "split": {
+   "newId": "mu-sky-shin-unuma-centrair-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "tango-relay-amanohashidate-toyooka",
+  "ids": "private-other#17,18,19,20,21,22",
+  "set": {
+   "origin": "福知山",
+   "destination": "網野",
+   "label": "福知山〜網野",
+   "stops": "福知山 大江 宮津 天橋立 与謝野 京丹後大宮 峰山 網野",
+   "lines": "宮福線 宮津線",
+   "company": "WILLER TRAINS"
+  },
+  "split": {
+   "newId": "tango-relay-amanohashidate-toyooka-until-2026-03",
+   "at": "2026-03-14"
+  }
+ }
+]

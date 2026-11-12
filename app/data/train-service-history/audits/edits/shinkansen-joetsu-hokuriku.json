@@ -1,0 +1,209 @@
+[
+ {
+  "record": "toki-tokyo-niigata",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#1"
+  ],
+  "status": "variantOnly",
+  "set": {
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "とき",
+   "distinctPatterns": 26
+  }
+ },
+ {
+  "record": "tanigawa-tokyo-echigo-yuzawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#4",
+   "shinkansen-joetsu-hokuriku#5",
+   "shinkansen-joetsu-hokuriku#6"
+  ],
+  "set": {
+   "stops": "東京 上野 大宮 越後湯沢",
+   "optionalStops": "熊谷 本庄早稲田 高崎 上毛高原",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "たにがわ",
+   "distinctPatterns": 12
+  },
+  "notesAppend": "冬季は一部の列車がガーラ湯沢まで直通する（2026-12-12〜2027-02-28 の運転日。ガーラ湯沢は新幹線の駅列に載らないため停車駅には入れていない、2026-11-11 照合）。",
+  "split": {
+   "newId": "tanigawa-tokyo-echigo-yuzawa-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "tanigawa-tokyo-echigo-yuzawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#3"
+  ],
+  "status": "notApplied",
+  "reason": "越後湯沢 is not an every-train stop (東京⇔高崎 たにがわ exist), but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
+ },
+ {
+  "record": "kagayaki-tokyo-kanazawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#8",
+   "shinkansen-joetsu-hokuriku#9",
+   "shinkansen-joetsu-hokuriku#10"
+  ],
+  "status": "skippedHistorical",
+  "reason": "record ended 2024-03-16 (replaced by the 敦賀 record); the three claims judge it against the 2026 timetable and say themselves that 2015–2024 was not checked; a new current 金沢-terminating record needs its own dated source"
+ },
+ {
+  "record": "kagayaki-tokyo-tsuruga",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#12",
+   "shinkansen-joetsu-hokuriku#13",
+   "shinkansen-joetsu-hokuriku#14",
+   "shinkansen-joetsu-hokuriku#15",
+   "shinkansen-joetsu-hokuriku#16",
+   "shinkansen-joetsu-hokuriku#17"
+  ],
+  "set": {
+   "stops": "東京 大宮 長野 富山 金沢 福井 敦賀",
+   "optionalStops": "上野 新高岡 小松 加賀温泉 芦原温泉 越前たけふ",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "かがやき",
+   "distinctPatterns": 8
+  },
+  "split": {
+   "newId": "kagayaki-tokyo-tsuruga-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "kagayaki-tokyo-tsuruga",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#11"
+  ],
+  "status": "notApplied",
+  "reason": "敦賀 is not reached by the 金沢-terminating かがやき (519, 500 and about 30 extras), but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
+ },
+ {
+  "record": "hakutaka-tokyo-kanazawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#18",
+   "shinkansen-joetsu-hokuriku#19",
+   "shinkansen-joetsu-hokuriku#20",
+   "shinkansen-joetsu-hokuriku#21",
+   "shinkansen-joetsu-hokuriku#22",
+   "shinkansen-joetsu-hokuriku#23",
+   "shinkansen-joetsu-hokuriku#24"
+  ],
+  "status": "skippedHistorical",
+  "reason": "record ended 2024-03-16; all seven claims judge it against the current timetable and the verifier states that before 2024 is not checked"
+ },
+ {
+  "record": "hakutaka-tokyo-tsuruga",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#27",
+   "shinkansen-joetsu-hokuriku#28",
+   "shinkansen-joetsu-hokuriku#29",
+   "shinkansen-joetsu-hokuriku#30",
+   "shinkansen-joetsu-hokuriku#31",
+   "shinkansen-joetsu-hokuriku#32"
+  ],
+  "set": {
+   "stops": "東京 上野 大宮 高崎 長野 上越妙高 富山 新高岡 金沢 福井 敦賀",
+   "optionalStops": "軽井沢 佐久平 上田 飯山 糸魚川 黒部宇奈月温泉 小松 加賀温泉 芦原温泉 越前たけふ",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はくたか",
+   "distinctPatterns": 30
+  },
+  "split": {
+   "newId": "hakutaka-tokyo-tsuruga-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "敦賀までの追加駅は一部停車として optional（全列車停車かは未照合）。",
+    "2026-03-14 以降は上野・上越妙高・新高岡・福井が全列車停車（2026-11-11 再照合）、小松など他の追加駅は一部停車として optional。"
+   ]
+  ]
+ },
+ {
+  "record": "hakutaka-tokyo-tsuruga",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#26"
+  ],
+  "status": "notApplied",
+  "reason": "敦賀 is reached only by 560–569 and five extras, but the bundled model needs the destination to be an always-served stop and the Shinkansen validator rejects optional stops beyond the destination, so the far terminal stays in stops; the short-working variant (trains that end earlier) is listed in needs-variants and needs per-number data"
+ },
+ {
+  "record": "asama-tokyo-nagano",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#33",
+   "shinkansen-joetsu-hokuriku#34",
+   "shinkansen-joetsu-hokuriku#35",
+   "shinkansen-joetsu-hokuriku#36"
+  ],
+  "set": {
+   "stops": "東京 上野 大宮 高崎 軽井沢 長野",
+   "optionalStops": "熊谷 本庄早稲田 安中榛名 佐久平 上田",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "あさま",
+   "distinctPatterns": 14
+  },
+  "split": {
+   "newId": "asama-tokyo-nagano-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "tsurugi-toyama-kanazawa",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#38"
+  ],
+  "status": "skippedHistorical",
+  "reason": "record ended 2024-03-16; the 富山–金沢 shuttle running today needs a new current record with its own dated source"
+ },
+ {
+  "record": "tsurugi-toyama-tsuruga",
+  "ids": [
+   "shinkansen-joetsu-hokuriku#39",
+   "shinkansen-joetsu-hokuriku#40",
+   "shinkansen-joetsu-hokuriku#41"
+  ],
+  "set": {
+   "stops": "富山 新高岡 金沢 福井 敦賀",
+   "optionalStops": "小松 加賀温泉 芦原温泉 越前たけふ",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "つるぎ",
+   "distinctPatterns": 5
+  },
+  "split": {
+   "newId": "tsurugi-toyama-tsuruga-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "金沢〜敦賀の小松・加賀温泉・芦原温泉・福井・越前たけふは全列車が停まるかを公式時刻表で未照合のため optional。",
+    "2026-03-14 以降は福井が全列車停車（2026-11-11 再照合）。小松・加賀温泉・芦原温泉・越前たけふは列車により違うため optional。"
+   ]
+  ]
+ }
+]

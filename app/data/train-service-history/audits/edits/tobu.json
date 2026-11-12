@@ -1,0 +1,191 @@
+[
+ {
+  "record": "kegon-asakusa-tobunikko",
+  "ids": "tobu#1,2",
+  "set": {
+   "optionalStops": "曳舟 杉戸高野台 南栗橋"
+  },
+  "split": {
+   "newId": "kegon-asakusa-tobunikko-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "kinu-asakusa-kinugawaonsen",
+  "ids": "tobu#3,4",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新鹿沼 下今市 新高徳 東武ワールドスクウェア 鬼怒川温泉",
+   "optionalStops": "曳舟 杉戸高野台 南栗橋"
+  },
+  "split": {
+   "newId": "kinu-asakusa-kinugawaonsen-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "ryomo-asakusa-ota",
+  "ids": "tobu#5",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 東武動物公園 久喜 加須 羽生 館林 足利市 太田",
+   "optionalStops": "曳舟"
+  },
+  "split": {
+   "newId": "ryomo-asakusa-ota-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "ryomo-asakusa-isesaki",
+  "ids": "tobu#6,7",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 曳舟 北千住 東武動物公園 久喜 加須 羽生 館林 足利市 太田 木崎 境町 新伊勢崎 伊勢崎",
+   "optionalStops": ""
+  },
+  "notesAppend": "伊勢崎行きの下りはリバティりょうもう39号のみ。りょうもう（200系）の伊勢崎発着は上り10号のみ（2026-11-11 照合）。",
+  "split": {
+   "newId": "ryomo-asakusa-isesaki-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "ryomo-asakusa-kuzu",
+  "ids": "tobu#8,9",
+  "set": {
+   "name": "リバティりょうもう",
+   "stops": "浅草 とうきょうスカイツリー 曳舟 北千住 東武動物公園 久喜 加須 羽生 館林 佐野市 佐野 田沼 葛生",
+   "optionalStops": ""
+  },
+  "split": {
+   "newId": "ryomo-asakusa-kuzu-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "spacia-x-asakusa-tobunikko",
+  "ids": "tobu#10",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新鹿沼 下今市 東武日光",
+   "optionalStops": ""
+  },
+  "split": {
+   "newId": "spacia-x-asakusa-tobunikko-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "so 栃木/新鹿沼 kept optional until a timetable confirms every train stops.",
+    "and the 2026-11-11 recheck of the timetable confirms every train stops at 栃木/新鹿沼, so they are always served (from 2026-03-14)."
+   ]
+  ]
+ },
+ {
+  "record": "spacia-x-asakusa-kinugawaonsen",
+  "ids": "tobu#11",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新鹿沼 下今市 東武ワールドスクウェア 鬼怒川温泉",
+   "optionalStops": ""
+  },
+  "split": {
+   "newId": "spacia-x-asakusa-kinugawaonsen-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "so 栃木/新鹿沼/東武ワールドスクウェア kept optional until a timetable confirms every train stops.",
+    "and the 2026-11-11 recheck of the timetable confirms every train stops at 栃木/新鹿沼/東武ワールドスクウェア, so they are always served (from 2026-03-14)."
+   ]
+  ]
+ },
+ {
+  "record": "revaty-kegon-asakusa-tobunikko",
+  "ids": "tobu#12,13,14",
+  "set": {
+   "optionalStops": "曳舟 杉戸高野台 南栗橋 板倉東洋大前"
+  },
+  "notesReplace": [
+   [
+    "Often coupled/split at 下今市 or 春日部.",
+    "Often coupled/split at 下今市 (2026-11-11 recheck: every coupling or split in the current timetable is at 下今市; 春日部 is not a coupling point)."
+   ]
+  ],
+  "split": {
+   "newId": "revaty-kegon-asakusa-tobunikko-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "revaty-kinu-asakusa-kinugawaonsen",
+  "ids": "tobu#15,16",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新鹿沼 下今市 新高徳 東武ワールドスクウェア 鬼怒川温泉",
+   "optionalStops": "鬼怒川公園 新藤原"
+  },
+  "split": {
+   "newId": "revaty-kinu-asakusa-kinugawaonsen-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "revaty-aizu-asakusa-aizutajima",
+  "ids": "tobu#17,18,19",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新鹿沼 下今市 新高徳 東武ワールドスクウェア 鬼怒川温泉 鬼怒川公園 新藤原 龍王峡 川治温泉 川治湯元 湯西川温泉 中三依温泉 上三依塩原温泉口 会津高原尾瀬口 会津田島",
+   "optionalStops": "板倉東洋大前"
+  },
+  "split": {
+   "newId": "revaty-aizu-asakusa-aizutajima-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "full vs 一部 for 龍王峡/川治湯元/中三依温泉 not resolvable, kept optional.",
+    "the 2026-11-11 recheck (tobu#17-19) found 龍王峡/川治湯元/中三依温泉 served by every train from 2026-03-14, so they are always served."
+   ]
+  ]
+ },
+ {
+  "record": "kirifuri-asakusa-tobunikko",
+  "ids": "tobu#20",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 北千住 春日部 栃木 新栃木 新鹿沼 下今市 東武日光",
+   "optionalStops": "曳舟"
+  },
+  "split": {
+   "newId": "kirifuri-asakusa-tobunikko-until-2020-06",
+   "at": "2020-06-06"
+  },
+  "periodEvidence": "tobu#20 evidence covers 2020-06 to 2022-03 only; the earlier era keeps its old optional stops"
+ },
+ {
+  "record": "kirifuri-asakusa-minamikurihashi",
+  "ids": "tobu#21",
+  "status": "notApplied",
+  "reason": "南栗橋 is absent from both the 2020-06 and 2021-10 official maps, so the service ended on or before the 2020-06-06 revision, but the exact end date was not found; no end date may be invented"
+ },
+ {
+  "record": "urban-park-liner-asakusa-omiya",
+  "ids": "tobu#22,23",
+  "set": {
+   "validUntil": "2024-03-16",
+   "optionalStops": "曳舟 せんげん台 八木崎 豊春 東岩槻"
+  }
+ },
+ {
+  "record": "urban-park-liner-omiya-kashiwa",
+  "ids": "tobu#24,25",
+  "set": {
+   "validUntil": "2024-03-16",
+   "stops": "大宮 岩槻 春日部 藤の牛島 南桜井 川間 七光台 清水公園 愛宕 野田市 梅郷 運河 江戸川台 初石 流山おおたかの森 豊四季 柏"
+  },
+  "notesAppend": "一部は短区間運転（6号は運河まで、7号は春日部まで、2021-12 プレス別紙）。八木崎・豊春・東岩槻には停車しない（2026-11-11 照合）。",
+  "periodEvidence": "the correction closes the service before the 2026-03-14 timetable (validUntil 2024-03-16); its stops describe the record's own period"
+ },
+ {
+  "record": "skytree-liner-asakusa-kasukabe",
+  "ids": "tobu#26",
+  "set": {
+   "stops": "浅草 とうきょうスカイツリー 曳舟 北千住 春日部",
+   "optionalStops": "せんげん台"
+  }
+ }
+]

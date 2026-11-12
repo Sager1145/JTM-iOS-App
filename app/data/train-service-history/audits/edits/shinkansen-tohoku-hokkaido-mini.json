@@ -1,0 +1,186 @@
+[
+ {
+  "record": "hayabusa-tokyo-shin-aomori",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#1",
+   "shinkansen-tohoku-hokkaido-mini#2",
+   "shinkansen-tohoku-hokkaido-mini#3",
+   "shinkansen-tohoku-hokkaido-mini#4"
+  ],
+  "set": {
+   "optionalStops": "上野 古川 一ノ関 北上 いわて沼宮内 二戸 八戸 七戸十和田",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやぶさ",
+   "distinctPatterns": 19
+  },
+  "split": {
+   "newId": "hayabusa-tokyo-shin-aomori-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "hayabusa-tokyo-shin-aomori",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#28"
+  ],
+  "citeSource": true
+ },
+ {
+  "record": "hayabusa-tokyo-shin-hakodate-hokuto",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#5",
+   "shinkansen-tohoku-hokkaido-mini#6",
+   "shinkansen-tohoku-hokkaido-mini#7"
+  ],
+  "set": {
+   "optionalStops": "上野 一ノ関 いわて沼宮内 二戸 八戸 七戸十和田 奥津軽いまべつ 木古内",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやぶさ",
+   "distinctPatterns": 19
+  },
+  "split": {
+   "newId": "hayabusa-tokyo-shin-hakodate-hokuto-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "hayate-morioka-shin-hakodate-hokuto",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#8",
+   "shinkansen-tohoku-hokkaido-mini#9",
+   "shinkansen-tohoku-hokkaido-mini#10",
+   "shinkansen-tohoku-hokkaido-mini#11"
+  ],
+  "set": {
+   "stops": "盛岡 八戸 七戸十和田 新青森 奥津軽いまべつ 木古内 新函館北斗",
+   "optionalStops": "二戸",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はやて",
+   "distinctPatterns": 2
+  },
+  "split": {
+   "newId": "hayate-morioka-shin-hakodate-hokuto-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "yamabiko-tokyo-morioka",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#14",
+   "shinkansen-tohoku-hokkaido-mini#15",
+   "shinkansen-tohoku-hokkaido-mini#16"
+  ],
+  "set": {
+   "stops": "東京 大宮 福島 仙台 古川 くりこま高原 一ノ関 水沢江刺 北上 新花巻 盛岡",
+   "optionalStops": "上野 小山 宇都宮 那須塩原 新白河 郡山 白石蔵王",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "やまびこ",
+   "distinctPatterns": 15
+  },
+  "split": {
+   "newId": "yamabiko-tokyo-morioka-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "どの中間駅が全列車停車かは未照合のため、東京・大宮・仙台・盛岡以外は optional。",
+    "2026-03-14 以降は、2026-11-11 の再照合で全列車停車を確認した駅を stops、列車により違う駅を optional とした。"
+   ]
+  ]
+ },
+ {
+  "record": "nasuno-tokyo-koriyama",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#17",
+   "shinkansen-tohoku-hokkaido-mini#18"
+  ],
+  "set": {
+   "stops": "東京 上野 大宮 小山 宇都宮 郡山",
+   "optionalStops": "那須塩原 新白河",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "なすの",
+   "distinctPatterns": 3
+  },
+  "split": {
+   "newId": "nasuno-tokyo-koriyama-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "小山が全列車停車かは未確認。",
+    "2026-03-14 以降は上野・小山とも全列車停車（2026-11-11 再照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "komachi-tokyo-akita",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#19",
+   "shinkansen-tohoku-hokkaido-mini#20",
+   "shinkansen-tohoku-hokkaido-mini#21",
+   "shinkansen-tohoku-hokkaido-mini#22",
+   "shinkansen-tohoku-hokkaido-mini#23"
+  ],
+  "set": {
+   "stops": "東京 大宮 仙台 盛岡 大曲 秋田",
+   "optionalStops": "上野 古川 くりこま高原 一ノ関 水沢江刺 北上 新花巻 雫石 田沢湖 角館",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "全列車がはやぶさに併結され、盛岡で分割・併合する（2026-11-11 照合）。",
+  "variants": {
+   "service": "こまち",
+   "distinctPatterns": 5
+  },
+  "split": {
+   "newId": "komachi-tokyo-akita-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "tsubasa-tokyo-shinjo",
+  "ids": [
+   "shinkansen-tohoku-hokkaido-mini#24",
+   "shinkansen-tohoku-hokkaido-mini#25",
+   "shinkansen-tohoku-hokkaido-mini#26",
+   "shinkansen-tohoku-hokkaido-mini#27"
+  ],
+  "set": {
+   "stops": "東京 大宮 福島 米沢 山形 天童 さくらんぼ東根 村山 大石田 新庄",
+   "optionalStops": "上野 宇都宮 郡山 高畠 赤湯 かみのやま温泉",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesAppend": "定期のつばさは約半数が福島までやまびこに併結、残りは単独運転（2026-11-11 照合）。",
+  "variants": {
+   "service": "つばさ",
+   "distinctPatterns": 9
+  },
+  "split": {
+   "newId": "tsubasa-tokyo-shinjo-until-2026-03",
+   "at": "2026-03-14"
+  }
+ }
+]

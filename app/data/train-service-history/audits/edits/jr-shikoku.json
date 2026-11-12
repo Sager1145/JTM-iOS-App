@@ -1,0 +1,119 @@
+[
+ {
+  "record": "muroto-tokushima-mugi",
+  "ids": "jr-shikoku#1",
+  "set": {
+   "validUntil": "2025-03-15"
+  },
+  "notesReplace": [
+   [
+    "の1往復が継続と確認",
+    "の1往復が運転取りやめと確認（2025-03-15 改正で終了）"
+   ]
+  ]
+ },
+ {
+  "record": "midnight-exp-takamatsu-iyo-saijo",
+  "ids": "jr-shikoku#2",
+  "status": "notApplied",
+  "reason": "the name is gone (the 22:20 slot is now いしづち29号) but the end date 2021-03-13 rests on ja.wikipedia only; the recheck found no official or second source for any end date, so none may be set"
+ },
+ {
+  "record": "midnight-exp-matsuyama-niihama",
+  "ids": "jr-shikoku#3",
+  "status": "notApplied",
+  "reason": "the name is gone (the 21:49 slot is now いしづち106号) but no source gives an end date, so none may be set"
+ },
+ {
+  "record": "uzushio-okayama-tokushima",
+  "ids": "jr-shikoku#4,5",
+  "set": {
+   "stops": "岡山 児島 坂出 高松 栗林 志度 三本松 板野 徳島",
+   "optionalStops": "屋島 オレンジタウン 讃岐津田 讃岐白鳥 引田 池谷 勝瑞",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#4: Press 2024-12-13, p.10 【通過を停車に変更】: 屋島駅 うずしお13号 12:20 / うずしお22号 17:20. The same press, 別紙 2(1), shows that 13号 5013D and 22号 5022D are the same trains as before, only cut "
+ },
+ {
+  "record": "shimanto-takamatsu-kochi",
+  "ids": "jr-shikoku#6",
+  "status": "variantOnly",
+  "companyAdd": "土佐くろしお鉄道",
+  "variants": {
+   "service": "しまんと",
+   "distinctPatterns": null
+  }
+ },
+ {
+  "record": "shiokaze-okayama-matsuyama",
+  "ids": "jr-shikoku#7",
+  "status": "variantOnly",
+  "variants": {
+   "service": "しおかぜ",
+   "distinctPatterns": 11
+  }
+ },
+ {
+  "record": "ishizuchi-takamatsu-matsuyama",
+  "ids": "jr-shikoku#8",
+  "status": "variantOnly",
+  "variants": {
+   "service": "いしづち",
+   "distinctPatterns": 14
+  }
+ },
+ {
+  "record": "morning-exp-iyosaijo-takamatsu",
+  "ids": "jr-shikoku#9",
+  "notesReplace": [
+   [
+    "平日朝のみ。",
+    "毎日運転（2026-11-11 照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "morning-exp-niihama-matsuyama",
+  "ids": "jr-shikoku#10",
+  "notesReplace": [
+   [
+    "平日朝のみ。",
+    "毎日運転（2026-11-11 照合）。"
+   ]
+  ]
+ },
+ {
+  "record": "nanpu-okayama-nakamura",
+  "ids": "jr-shikoku#11",
+  "set": {
+   "optionalStops": "茶屋町 大杉"
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#11: Live odekake 104121 (南風1号) runs 上の町→児島→宇多津 with no 坂出 row. The JR Shikoku nanpu stop diagram also has no 坂出. The 宇多津 chord of the 瀬戸大橋線 (in place since 1988) does not pas"
+ },
+ {
+  "record": "nanpu-okayama-sukumo",
+  "ids": "jr-shikoku#12",
+  "set": {
+   "optionalStops": "茶屋町 大杉"
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-shikoku#12: Same evidence as the row above."
+ },
+ {
+  "record": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke",
+  "ids": "jr-shikoku#14",
+  "set": {
+   "optionalStops": ""
+  },
+  "split": {
+   "newId": "shikoku-mannaka-sennen-monogatari-tadotsu-oboke-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "iyonada-monogatari-matsuyama-iyo-ozu",
+  "ids": "jr-shikoku#17",
+  "citeSource": true
+ }
+]

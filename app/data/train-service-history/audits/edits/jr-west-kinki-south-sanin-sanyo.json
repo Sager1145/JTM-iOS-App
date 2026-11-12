@@ -1,0 +1,259 @@
+[
+ {
+  "record": "kuroshio-shinosaka-shirahama",
+  "ids": "",
+  "split": {
+   "newId": "kuroshio-shinosaka-shirahama-until-2023-03",
+   "at": "2023-03-18",
+   "dropStops": [
+    "大阪"
+   ]
+  },
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2023-03-18); the older era is kept in the split record"
+ },
+ {
+  "record": "kuroshio-shinosaka-shirahama",
+  "ids": "jr-west-kinki-south-sanin-sanyo#1,2,3,4",
+  "set": {
+   "stops": "新大阪 大阪 天王寺 日根野 和歌山 海南 箕島 藤並 湯浅 御坊 南部 紀伊田辺 白浜",
+   "optionalStops": "京都 和泉府中 和泉砂川",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "kuroshio-shinosaka-shirahama",
+  "ids": "jr-west-kinki-south-sanin-sanyo#5",
+  "status": "variantOnly",
+  "variants": {
+   "service": "くろしお",
+   "distinctPatterns": null
+  }
+ },
+ {
+  "record": "kuroshio-shinosaka-shingu",
+  "ids": "",
+  "split": {
+   "newId": "kuroshio-shinosaka-shingu-until-2023-03",
+   "at": "2023-03-18",
+   "dropStops": [
+    "大阪"
+   ]
+  },
+  "periodEvidence": "the base record already starts at the dated split, taken from the correction's own evidence (2023-03-18); the older era is kept in the split record"
+ },
+ {
+  "record": "kuroshio-shinosaka-shingu",
+  "ids": "jr-west-kinki-south-sanin-sanyo#6,7,8,9,10",
+  "set": {
+   "stops": "新大阪 大阪 天王寺 日根野 和歌山 海南 御坊 紀伊田辺 白浜 周参見 串本 古座 太地 紀伊勝浦 新宮",
+   "optionalStops": "京都 和泉府中 和泉砂川 箕島 藤並 湯浅 南部",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "hamakaze-osaka-hamasaka",
+  "ids": "jr-west-kinki-south-sanin-sanyo#11,12,13",
+  "set": {
+   "stops": "大阪 三ノ宮 神戸 明石 姫路 福崎 寺前 生野 和田山 八鹿 江原 豊岡 城崎温泉 竹野 香住",
+   "optionalStops": "西明石 加古川 竹田 佐津 浜坂",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "はまかぜ",
+   "distinctPatterns": null
+  },
+  "split": {
+   "newId": "hamakaze-osaka-hamasaka-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "hamakaze-osaka-tottori",
+  "ids": "jr-west-kinki-south-sanin-sanyo#14,15",
+  "set": {
+   "stops": "大阪 三ノ宮 神戸 明石 姫路 福崎 寺前 生野 竹田 和田山 八鹿 江原 豊岡 城崎温泉 竹野 香住 浜坂 岩美 鳥取",
+   "optionalStops": "加古川 佐津"
+  },
+  "split": {
+   "newId": "hamakaze-osaka-tottori-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "super-hakuto-kyoto-kurayoshi",
+  "ids": "jr-west-kinki-south-sanin-sanyo#16,17,18",
+  "set": {
+   "stops": "大阪 三ノ宮 明石 姫路 上郡 佐用 大原 智頭 郡家 鳥取",
+   "optionalStops": "京都 新大阪 神戸 西明石 加古川 相生 倉吉",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "super-inaba-okayama-tottori",
+  "ids": "jr-west-kinki-south-sanin-sanyo#19",
+  "set": {
+   "optionalStops": ""
+  },
+  "split": {
+   "newId": "super-inaba-okayama-tottori-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "yakumo-okayama-izumoshi",
+  "ids": "jr-west-kinki-south-sanin-sanyo#20",
+  "notesReplace": [
+   [
+    "宍道は12/16/20号が通過のため一部停車へ移動",
+    "宍道は12/16/20号が停車、13/14/18/22号が通過のため一部停車（2026-11-11 照合）"
+   ]
+  ]
+ },
+ {
+  "record": "haruka-kyoto-kansai-airport",
+  "ids": "",
+  "split": {
+   "newId": "haruka-kyoto-kansai-airport-until-2023-03",
+   "at": "2023-03-18",
+   "dropStops": [
+    "大阪"
+   ]
+  }
+ },
+ {
+  "record": "haruka-kyoto-kansai-airport",
+  "ids": "jr-west-kinki-south-sanin-sanyo#21,22",
+  "set": {
+   "stops": "京都 新大阪 大阪 天王寺 関西空港",
+   "optionalStops": "高槻 和泉府中 日根野",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "haruka-yasu-kansai-airport",
+  "ids": "jr-west-kinki-south-sanin-sanyo#23,24,25",
+  "set": {
+   "stops": "野洲 守山 草津 南草津 石山 大津 山科 京都 新大阪 大阪 天王寺 関西空港",
+   "optionalStops": "高槻",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "split": {
+   "newId": "haruka-yasu-kansai-airport-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "super-oki-tottori-shinyamaguchi",
+  "ids": "jr-west-kinki-south-sanin-sanyo#26,27,28",
+  "set": {
+   "optionalStops": "鳥取大学前 玉造温泉 宍道 温泉津 波子 三保三隅",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "split": {
+   "newId": "super-oki-tottori-shinyamaguchi-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "super-matsukaze-tottori-masuda",
+  "ids": "jr-west-kinki-south-sanin-sanyo#29,30,31,32",
+  "set": {
+   "stops": "鳥取 鳥取大学前 倉吉 米子 松江 出雲市 大田市 江津 浜田 益田",
+   "optionalStops": "伯耆大山 安来 玉造温泉 宍道 西出雲 仁万 温泉津 波子 三保三隅",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "split": {
+   "newId": "super-matsukaze-tottori-masuda-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "rakuraku-harima-kyoto-aboshi",
+  "ids": "jr-west-kinki-south-sanin-sanyo#33,35",
+  "set": {
+   "stops": "新大阪 大阪 三ノ宮 神戸 明石 西明石 大久保 加古川 姫路 英賀保 はりま勝原 網干",
+   "optionalStops": "京都",
+   "validFrom": "2024-03-16",
+   "completeness": {
+    "stops": "partial"
+   }
+  }
+ },
+ {
+  "record": "rakuraku-harima-kyoto-aboshi",
+  "ids": "jr-west-kinki-south-sanin-sanyo#34",
+  "status": "deferred",
+  "kind": "model-gap",
+  "reason": "手柄山平和公園 (opened 2025) is not in the station package, so it has no station code and cannot be added to the stop list; needs a station inventory entry"
+ },
+ {
+  "record": "rakuraku-yamato-shinosaka-nara",
+  "ids": "jr-west-kinki-south-sanin-sanyo#36,37",
+  "set": {
+   "stops": "新大阪 大阪 天王寺 久宝寺 王寺 法隆寺 大和小泉 郡山 奈良",
+   "lines": "東海道本線 大阪環状線 関西本線"
+  },
+  "periodEvidence": "evidence is dated inside the record's own period or does not depend on it (station order, line geometry); jr-west-kinki-south-sanin-sanyo#36: The 2023-12-15 press timetable lists 新大阪 19:43, ◎大阪 19:49, 天王寺 20:05, 久宝寺 20:13 … 奈良 20:46. The current train pages (258871/258881) also show 天王寺 and 大阪."
+ },
+ {
+  "record": "hanaakari-current",
+  "ids": "jr-west-kinki-south-sanin-sanyo#38,40",
+  "set": {
+   "label": "大阪〜敦賀（2025年夏コース）",
+   "validFrom": "2025-07-05",
+   "validUntil": "2025-09-29"
+  },
+  "notesAppend": "2025年夏コースは2025-07-05〜09-28の土日（8/9・8/10・8/16・8/17・8/30を除く）。現行はかにカニはまかぜ等への併結で別の運行（2026-11-11 照合）。"
+ },
+ {
+  "record": "mizukaze-sanin-course",
+  "ids": "jr-west-kinki-south-sanin-sanyo#41",
+  "set": {
+   "stops": "京都 城崎温泉 東萩 萩 下関",
+   "optionalStops": "大阪",
+   "lines": "東海道本線 山陰本線 山陽本線"
+  },
+  "notesAppend": "2026年コースの発着は京都、2017年当時の大阪発は未照合（2026-11-11）。",
+  "split": {
+   "newId": "mizukaze-sanin-course-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "京都発は山陰本線経由、大阪発は福知山線経由と推定。",
+    "京都発は山陰本線経由。2026-03-14 以降の現行コースは京都発着で、大阪は一部のみとして optional に残した（福知山線経由は2017年当時の推定で取り下げ、2017〜2026年は別 record）。"
+   ]
+  ]
+ },
+ {
+  "record": "mizukaze-sanyo-course",
+  "ids": "jr-west-kinki-south-sanin-sanyo#42,43",
+  "split": {
+   "newId": "mizukaze-sanyo-course-until-2026-03",
+   "at": "2026-03-01"
+  },
+  "periodEvidence": "the course pages name 【2026年3月以降出発分】; the renamed びわ湖周遊・せとうちコース exists from 2026-03, the 2017 course keeps its data in the older record",
+  "set": {
+   "label": "びわ湖周遊・せとうちコース（京都〜下関）",
+   "stops": "京都 岩国 下関",
+   "optionalStops": "宮島口",
+   "lines": "東海道本線 湖西線 山陽本線"
+  }
+ }
+]

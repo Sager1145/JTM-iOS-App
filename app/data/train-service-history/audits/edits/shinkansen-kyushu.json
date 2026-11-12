@@ -1,0 +1,123 @@
+[
+ {
+  "record": "mizuho-shin-osaka-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#1",
+   "shinkansen-kyushu#2"
+  ],
+  "set": {
+   "stops": "新大阪 新神戸 岡山 広島 小倉 博多 熊本 鹿児島中央",
+   "optionalStops": "姫路 福山 新山口 久留米 川内",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "みずほ",
+   "distinctPatterns": 12
+  },
+  "split": {
+   "newId": "mizuho-shin-osaka-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "mizuho-shin-osaka-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#3"
+  ],
+  "status": "notApplied",
+  "reason": "only みずほ613 is cut back to 熊本, and only by a temporary changed timetable from 2026-10-23 (15 of 16 trains still reach 鹿児島中央); a temporary working is not a stop-pattern fact of the record"
+ },
+ {
+  "record": "mizuho-hakata-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#4"
+  ],
+  "status": "deferred",
+  "reason": "no みずほ runs 博多〜鹿児島中央 in the checked timetable (Nov 2026 to Feb 2027), but the recheck gives no date on which a 博多–based みずほ stopped existing, and the user rule forbids changing a record on evidence about another period; needs a dated source before the record is closed or deleted"
+ },
+ {
+  "record": "sakura-shin-osaka-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#5",
+   "shinkansen-kyushu#6",
+   "shinkansen-kyushu#7",
+   "shinkansen-kyushu#8"
+  ],
+  "set": {
+   "stops": "新大阪 新神戸 岡山 広島 小倉 博多 新鳥栖 久留米 熊本 川内 鹿児島中央",
+   "optionalStops": "西明石 姫路 福山 徳山 新山口 厚狭 新下関 筑後船小屋 新大牟田 新玉名 新八代 新水俣 出水",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "variants": {
+   "service": "さくら",
+   "distinctPatterns": 33
+  },
+  "split": {
+   "newId": "sakura-shin-osaka-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
+  }
+ },
+ {
+  "record": "sakura-hakata-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#9",
+   "shinkansen-kyushu#10"
+  ],
+  "set": {
+   "stops": "博多 新鳥栖 久留米 熊本 川内 鹿児島中央",
+   "optionalStops": "新八代 新水俣 出水"
+  },
+  "split": {
+   "newId": "sakura-hakata-kagoshima-chuo-until-2026-03",
+   "at": "2026-03-14"
+  },
+  "notesReplace": [
+   [
+    "中間駅は一部停車として optional。",
+    "2026-03-14 以降は新鳥栖・久留米・川内が全列車停車（2026-11-11 再照合）、他の中間駅は一部停車として optional。"
+   ]
+  ]
+ },
+ {
+  "record": "tsubame-hakata-kagoshima-chuo",
+  "ids": [
+   "shinkansen-kyushu#12"
+  ],
+  "set": {
+   "optionalStops": ""
+  },
+  "notesAppend": "つばめ321号は新下関始発、302号は小倉止まり（山陽新幹線区間、2026-11-11 照合）。この2駅は九州新幹線の駅列に載らないため停車駅には入れていない。",
+  "variants": {
+   "service": "つばめ"
+  }
+ },
+ {
+  "record": "kamome-takeo-onsen-nagasaki",
+  "ids": [
+   "shinkansen-kyushu#13",
+   "shinkansen-kyushu#14",
+   "shinkansen-kyushu#15"
+  ],
+  "set": {
+   "stops": "武雄温泉 諫早 長崎",
+   "optionalStops": "嬉野温泉 新大村",
+   "completeness": {
+    "stops": "partial"
+   }
+  },
+  "notesReplace": [
+   [
+    "駅は同線の全 5 駅で、途中通過は資料上ない。",
+    "駅は同線の全 5 駅だが、嬉野温泉・新大村は通過するかもめがあり、新大村始終着の列車もある（2026-11-11 照合）。"
+   ]
+  ],
+  "variants": {
+   "service": "かもめ",
+   "distinctPatterns": 8
+  }
+ }
+]
