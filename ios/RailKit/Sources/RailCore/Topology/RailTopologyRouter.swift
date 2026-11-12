@@ -15,18 +15,25 @@ import Foundation
 //  - direction: an edge is travelled first-to-second only with `forward`,
 //    second-to-first only with `reverse`; a directed link only A to B;
 //  - withheld edges are not used unless asked for;
-//  - length: edge `lengthCm` (a preferred line's edges cost 20% less); links cost nothing;
-//  - ties: among equal lengths the path with the fewest row changes (links taken) wins,
-//    then the first path found in settle order, ordered by (cost, row changes, global
-//    node index): a pure function of the file and the query, independent of the
-//    order of `from` and `to`;
+//  - length: edge `lengthCm` times a whole-number factor, the production solver's
+//    cost model (`RouteSolver.swift:21-25`, `:4010-4026`): 1, plus 8 on a line outside a
+//    non-empty preferred-line set, plus 180 on a line whose institution is outside a
+//    non-empty preferred-institution set; links cost nothing. Integer costs only;
+//  - hard exclusion: lines with an excluded institution are never used;
+//  - ties: among equal costs the path with the fewest row changes (links taken) wins,
+//    then the first path found in settle order, ordered by (cost, row changes,
+//    line id rank, node ordinal): a pure function of the line ids and the query,
+//    independent of the order of `from` and `to` and of the order of lines in the file;
 //  - no path under the line filter: the same search without `lineIDs`
 //    (institutions still apply), reported `unproven`.
 
 extension RailTopology {
-    /// Cost scale: a preferred line's edges cost `preferredWeight / baseWeight` of their length.
-    static let baseWeight: UInt64 = 10
-    static let preferredWeight: UInt64 = 8
+    /// Cost factors of the production solver (`RouteSolver.nonPreferredLineLengthFactor` 8
+    /// and `nonPreferredInstitutionLengthFactor` 180, each added to the length itself).
+    /// The solver's flat 5,000 per fine-geometry edge on a non-preferred institution is not
+    /// ported: a topology edge spans many fine edges and the file does not count them.
+    public static let nonPreferredLineFactor: UInt64 = 9
+    public static let nonPreferredInstitutionFactor: UInt64 = 181
 
     /// Deterministic shortest-length path between the two candidate node
     /// sets; nil when none exists. `includeWithheld` lets the path use
@@ -38,31 +45,33 @@ extension RailTopology {
     /// build a full loop circuit itself (two spans, per the format document).
     public func route(_ query: SectionQuery, includeWithheld: Bool = false) -> SectionPath? {
         withView { view in
-            if let spans = view.shortestPath(query, applyLineIDs: true, includeWithheld: includeWithheld, links: linkEntries) {
+            if let spans = view.shortestPath(query, applyLineIDs: true, includeWithheld: includeWithheld, links: linkEntries, lineRank: lineRank) {
                 return SectionPath(spans: spans, lengthCm: spans.reduce(0) { $0 + view.lengthCm(of: $1) })
             }
             guard !query.lineIDs.isEmpty,
-                  let spans = view.shortestPath(query, applyLineIDs: false, includeWithheld: includeWithheld, links: linkEntries)
+                  let spans = view.shortestPath(query, applyLineIDs: false, includeWithheld: includeWithheld, links: linkEntries, lineRank: lineRank)
             else { return nil }
             return SectionPath(spans: spans, lengthCm: spans.reduce(0) { $0 + view.lengthCm(of: $1) }, unproven: true)
         }
     }
 }
 
-/// Binary min-heap of (cost, row changes, node), ordered lexicographically.
+/// Binary min-heap of (cost, row changes, key), ordered lexicographically; `key` is
+/// the line's id rank in the high 32 bits and the node ordinal in the low 32.
 private struct NodeHeap {
-    typealias Item = (cost: UInt64, changes: UInt32, node: UInt32)
+    typealias Item = (cost: UInt64, changes: UInt32, key: UInt64, node: UInt32)
     private var items: [Item] = []
     var isEmpty: Bool { items.isEmpty }
 
     @inline(__always)
     private static func less(_ a: Item, _ b: Item) -> Bool {
         if a.cost != b.cost { return a.cost < b.cost }
-        return a.changes != b.changes ? a.changes < b.changes : a.node < b.node
+        if a.changes != b.changes { return a.changes < b.changes }
+        return a.key != b.key ? a.key < b.key : a.node < b.node
     }
 
-    mutating func push(_ cost: UInt64, _ changes: UInt32, _ node: UInt32) {
-        items.append((cost, changes, node))
+    mutating func push(_ cost: UInt64, _ changes: UInt32, _ key: UInt64, _ node: UInt32) {
+        items.append((cost, changes, key, node))
         var i = items.count - 1
         while i > 0 {
             let parent = (i - 1) / 2
@@ -99,28 +108,41 @@ extension TopologyView {
 
     private func idBytes(_ ids: Set<String>) -> [[UInt8]] { ids.map { Array($0.utf8) } }
 
-    /// Per line: bit 0 usable (valid on the day and passing the hard filters), bit 1 preferred.
-    private func lineFlags(_ query: RailTopology.SectionQuery, applyLineIDs: Bool) -> [UInt8] {
+    /// Per line: 0 when unusable (not valid on the day, or failing a hard filter),
+    /// otherwise the cost factor applied to the length of its edges (at least 1).
+    private func lineFactors(_ query: RailTopology.SectionQuery, applyLineIDs: Bool) -> [UInt64] {
         let wanted = applyLineIDs ? idBytes(query.lineIDs) : []
         let preferred = idBytes(query.preferredLineIDs)
-        var flags = [UInt8](repeating: 0, count: lineCount)
+        var factors = [UInt64](repeating: 0, count: lineCount)
         for line in 0..<lineCount {
             let b = lineBase(line)
             guard F.isValid(on: query.day, from: u32(b + F.Line.validFrom), to: u32(b + F.Line.validTo)) else { continue }
-            if !query.institutions.isEmpty, !query.institutions.contains(u16(b + F.Line.institution)) { continue }
+            let institution = u16(b + F.Line.institution)
+            if !query.institutions.isEmpty, !query.institutions.contains(institution) { continue }
+            if query.excludedInstitutions.contains(institution) { continue }
             let id = u32(b + F.Line.id)
             if !wanted.isEmpty, !wanted.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) { continue }
-            var bits: UInt8 = 1
-            if !preferred.isEmpty, preferred.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) { bits |= 2 }
-            flags[line] = bits
+            var factor: UInt64 = 1
+            if !preferred.isEmpty, !preferred.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) {
+                factor += RailTopology.nonPreferredLineFactor - 1
+            }
+            if !query.preferredInstitutions.isEmpty, institution != 0, !query.preferredInstitutions.contains(institution) {
+                factor += RailTopology.nonPreferredInstitutionFactor - 1
+            }
+            factors[line] = factor
         }
-        return flags
+        return factors
     }
 
     func shortestPath(_ query: RailTopology.SectionQuery, applyLineIDs: Bool, includeWithheld: Bool,
-                      links: [RailTopology.LinkEntry]) -> [RailTopology.Span]? {
-        let flags = lineFlags(query, applyLineIDs: applyLineIDs)
-        func usable(_ line: Int) -> Bool { flags[line] & 1 != 0 }
+                      links: [RailTopology.LinkEntry], lineRank: [UInt32]) -> [RailTopology.Span]? {
+        let factors = lineFactors(query, applyLineIDs: applyLineIDs)
+        func usable(_ line: Int) -> Bool { factors[line] != 0 }
+        /// Settle-order tie-break key: line id rank, then node ordinal.
+        func key(_ node: Int) -> UInt64 {
+            let line = Int(u16(nodeBase(node) + F.Node.line))
+            return UInt64(lineRank[line]) << 32 | UInt64(node - lineFirstNode(line))
+        }
 
         var targets = Set<UInt32>()
         for ref in query.to {
@@ -137,18 +159,18 @@ extension TopologyView {
         for ref in query.from {
             guard let g = global(ref), usable(Int(ref.line)), dist[g] != 0 else { continue }
             dist[g] = 0
-            heap.push(0, 0, UInt32(g))
+            heap.push(0, 0, key(g), UInt32(g))
         }
 
         func relax(_ u: Int, _ v: Int, cost: UInt64, rowChange: UInt32, edge: UInt32) {
             let nd = dist[u] + cost, nc = changes[u] + rowChange
             if nd < dist[v] || (nd == dist[v] && nc < changes[v]) {
                 dist[v] = nd; changes[v] = nc; prev[v] = UInt32(u); prevEdge[v] = edge
-                heap.push(nd, nc, UInt32(v))
+                heap.push(nd, nc, key(v), UInt32(v))
             }
         }
 
-        while let (_, _, node) = heap.pop() {
+        while let (_, _, _, node) = heap.pop() {
             let u = Int(node)
             if settled[u] { continue }
             settled[u] = true
@@ -158,7 +180,7 @@ extension TopologyView {
             let n = lineNodeCount(line), firstNode = lineFirstNode(line)
             let ordinal = u - firstNode
             let loop = lineIsLoop(line)
-            let weight = flags[line] & 2 != 0 ? RailTopology.preferredWeight : RailTopology.baseWeight
+            let weight = factors[line]
 
             func step(edge k: Int, to nextOrdinal: Int, needs direction: F.EdgeFlag) {
                 let v = firstNode + nextOrdinal

@@ -48,14 +48,25 @@ public struct RailTopology: Sendable {
         /// Hard filters: when non-empty only these line ids / institution codes may be used.
         public var lineIDs: Set<String>
         public var institutions: Set<UInt16>
-        /// Soft preference: these lines cost less.
+        /// Soft preference: when non-empty, every line outside this set costs
+        /// ``RailTopology/nonPreferredLineFactor`` times its length.
         public var preferredLineIDs: Set<String>
+        /// Hard exclusion: lines with these institution codes are never used
+        /// (the production solver's `hardExcludedInstitutionTypeCodes`).
+        public var excludedInstitutions: Set<UInt16>
+        /// Soft preference: when non-empty, lines whose institution code is not in
+        /// this set (and not 0, unknown) cost ``RailTopology/nonPreferredInstitutionFactor``
+        /// times their length.
+        public var preferredInstitutions: Set<UInt16>
         public init(from: [NodeRef], to: [NodeRef], day: UInt32? = nil,
                     lineIDs: Set<String> = [], institutions: Set<UInt16> = [],
-                    preferredLineIDs: Set<String> = []) {
+                    preferredLineIDs: Set<String> = [],
+                    excludedInstitutions: Set<UInt16> = [], preferredInstitutions: Set<UInt16> = []) {
             self.from = from; self.to = to; self.day = day
             self.lineIDs = lineIDs; self.institutions = institutions
             self.preferredLineIDs = preferredLineIDs
+            self.excludedInstitutions = excludedInstitutions
+            self.preferredInstitutions = preferredInstitutions
         }
     }
 
@@ -87,6 +98,10 @@ public struct RailTopology: Sendable {
     }
     /// Link rows sorted by `node` then `link`; a directed link has one entry (A to B), an undirected one two.
     let linkEntries: [LinkEntry]
+    /// Per line: its place in the lines sorted by id (UTF-8 bytes). The router's
+    /// last tie-break, so an answer depends on stable ids and not on the order
+    /// the builder happened to write the lines in.
+    let lineRank: [UInt32]
 
     /// Opens a file from bytes. Throws a ``RailTopologyFormat/FormatError``
     /// for a truncated, corrupt or wrong-version file. When
@@ -101,11 +116,13 @@ public struct RailTopology: Sendable {
         }
         self.header = header
         self.data = data
-        self.linkEntries = try data.withUnsafeBytes { raw in
+        let (entries, ranks) = try data.withUnsafeBytes { raw -> ([LinkEntry], [UInt32]) in
             let view = TopologyView(base: raw, header: header)
             try view.validate()
-            return view.linkIndex()
+            return (view.linkIndex(), view.lineRanks())
         }
+        self.linkEntries = entries
+        self.lineRank = ranks
     }
 
     /// Opens `url` memory-mapped: no copy, no decode.
@@ -393,6 +410,24 @@ struct TopologyView {
             previous = (key, kind)
         }
         for i in 0..<stopNodeTotal where Int(u32(stopNodes + i * 4)) >= nodeTotal { throw fail(.stopNodes) }
+    }
+
+    // MARK: Line ranks
+
+    /// Each line's rank when the lines are sorted by id bytes (ties by index).
+    func lineRanks() -> [UInt32] {
+        let ids: [UnsafeRawBufferPointer?] = (0..<lineCount).map { stringBytes(u32(lineBase($0) + F.Line.id)) }
+        let order = (0..<lineCount).sorted { a, b in
+            switch (ids[a], ids[b]) {
+            case let (x?, y?):
+                let c = Self.compare(x, y)
+                return c != 0 ? c < 0 : a < b
+            default: return a < b
+            }
+        }
+        var rank = [UInt32](repeating: 0, count: lineCount)
+        for (position, line) in order.enumerated() { rank[line] = UInt32(position) }
+        return rank
     }
 
     // MARK: Link index

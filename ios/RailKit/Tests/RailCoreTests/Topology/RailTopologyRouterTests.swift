@@ -254,13 +254,75 @@ struct RailTopologyRouterTests {
         let t = try Self.parallelNetwork().topology()
         let plain = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)])))
         #expect(plain.spans[1].line == t.lineIndex(forID: "p"))
-        // q is 5% longer, a 20% discount wins it, and the reported length is the real one.
+        // q is 5% longer; every line outside the preferred set costs 9 times its length (the
+        // production solver's 1 + 8), and the reported length is the real one.
         let preferred = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)], preferred: ["q"])))
         #expect(preferred.spans[1].line == t.lineIndex(forID: "q") && preferred.lengthCm == 205_000)
-        // A much longer preferred line does not win.
-        let far = try Self.parallelNetwork(q: 160_000).topology()
+        // A preferred line 8 times as long still wins (the other rows are outside the set and cost 9x too).
+        let longer = try Self.parallelNetwork(q: 800_000).topology()
+        let wins = try #require(longer.route(Self.query(longer, [("s", 0)], [("t", 1)], preferred: ["q"])))
+        #expect(wins.spans[1].line == longer.lineIndex(forID: "q"))
+        // A preferred line 10 times as long does not.
+        let far = try Self.parallelNetwork(q: 1_000_000).topology()
         let notWorth = try #require(far.route(Self.query(far, [("s", 0)], [("t", 1)], preferred: ["q"])))
         #expect(notWorth.spans[1].line == far.lineIndex(forID: "p"))
+        // No preference at all: plain length.
+        let plainFar = try #require(far.route(Self.query(far, [("s", 0)], [("t", 1)])))
+        #expect(plainFar.spans[1].line == far.lineIndex(forID: "p"))
+    }
+
+    @Test("a non-preferred institution costs 181 times its length; an excluded institution is never used")
+    func institutionPreferenceAndExclusion() throws {
+        // p (institution 1) and q (institution 2) side by side; q is 50 times as long.
+        var net = Net()
+        net.lines = [
+            .chain("s", ["S0", "S1"], lengths: [50_000], institution: 0),
+            .chain("p", ["P0", "P1"], lengths: [100_000], institution: 1),
+            .chain("q", ["Q0", "Q1"], lengths: [5_000_000], institution: 2),
+            .chain("t", ["T0", "T1"], lengths: [50_000], institution: 0),
+        ]
+        net.links = [
+            .init(a: (0, 1), b: (1, 0)), .init(a: (0, 1), b: (2, 0)),
+            .init(a: (1, 1), b: (3, 0)), .init(a: (2, 1), b: (3, 0)),
+        ]
+        let t = try net.topology()
+        func route(preferred: Set<UInt16> = [], excluded: Set<UInt16> = []) -> RailTopology.SectionPath? {
+            var q = Self.query(t, [("s", 0)], [("t", 1)])
+            q.preferredInstitutions = preferred; q.excludedInstitutions = excluded
+            return t.route(q)
+        }
+        #expect(route()?.spans[1].line == t.lineIndex(forID: "p"))
+        // Institution 0 (unknown) is never penalised; q wins at 50x as long, below the 181 factor.
+        #expect(route(preferred: [2])?.spans[1].line == t.lineIndex(forID: "q"))
+        #expect(route(preferred: [1])?.spans[1].line == t.lineIndex(forID: "p"))
+        // Hard exclusion: p is excluded, q is the only way; excluding both leaves nothing, even unproven.
+        #expect(route(excluded: [1])?.spans[1].line == t.lineIndex(forID: "q"))
+        #expect(route(excluded: [1, 2]) == nil)
+    }
+
+    @Test("equal-cost ties are decided by line id, not by the order of lines in the file")
+    func tiesFollowLineIDsNotFileOrder() throws {
+        func network(_ order: [String]) -> Net {
+            let all: [String: Net.Line] = [
+                "s": .chain("s", ["S0", "S1"], lengths: [50_000]),
+                "p": .chain("p", ["P0", "P1"], lengths: [100_000]),
+                "q": .chain("q", ["Q0", "Q1"], lengths: [100_000]),
+                "t": .chain("t", ["T0", "T1"], lengths: [50_000]),
+            ]
+            var net = Net()
+            net.lines = order.map { all[$0]! }
+            func at(_ id: String, _ node: Int) -> (line: Int, node: Int) { (order.firstIndex(of: id)!, node) }
+            net.links = [
+                .init(a: at("s", 1), b: at("p", 0)), .init(a: at("s", 1), b: at("q", 0)),
+                .init(a: at("p", 1), b: at("t", 0)), .init(a: at("q", 1), b: at("t", 0)),
+            ]
+            return net
+        }
+        for order in [["s", "p", "q", "t"], ["s", "q", "p", "t"], ["t", "q", "p", "s"]] {
+            let t = try network(order).topology()
+            let path = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)])))
+            #expect(t.lineID(path.spans[1].line) == "p", "file order \(order)")
+        }
     }
 
     @Test("withheld edges are not used unless asked for, and count for no distance")
