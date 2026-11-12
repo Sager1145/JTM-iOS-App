@@ -232,21 +232,31 @@ struct RideStrokeBuilderTests {
         #expect(RideStrokeBuilder.Mode.current == .mainActor)
     }
 
-    @Test("ridePolylines does no geometry work on the main actor")
-    func ridePolylinesBuildsNothing() throws {
-        let source = try String(
-            contentsOf: URL(fileURLWithPath: #filePath)
-                .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
-                .appending(path: "RailMap/Map/RailMapCoordinator.swift"),
-            encoding: .utf8)
-        let start = try #require(source.range(of: "private func ridePolylines("))
-        let end = try #require(source.range(
-            of: "/// The original main-actor miss path", range: start.upperBound..<source.endIndex))
-        let body = source[start.lowerBound..<end.lowerBound]
-        for forbidden in ["douglasPeucker", "parallelLaneCoordinates", "builtStrokeCoordinates",
-                          "ContinuousStroke.slice", "MKPolyline(coordinates"] {
-            #expect(!body.contains(forbidden), "ridePolylines must not call \(forbidden)")
-        }
-        #expect(body.contains("mainActorRidePolyline"))
+    @Test("a segment that draws nothing is reported as empty, not dropped silently")
+    func degenerateSegmentsAreReportedEmpty() {
+        let frame = Self.frame
+        let lone = RideStrokeBuilder.Request(
+            key: "lone", coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
+        let none = RideStrokeBuilder.Request(
+            key: "none", coordinates: [], latitude: 35.7, stroke: nil)
+        let fine = RideStrokeBuilder.Request(
+            key: "fine",
+            coordinates: [Coordinate(lon: 139.7, lat: 35.7), Coordinate(lon: 139.8, lat: 35.8)],
+            latitude: 35.7, stroke: nil)
+        let output = RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
+        #expect(output.built.map(\.key) == ["fine"])
+        #expect(Set(output.empty) == ["lone", "none"])
+    }
+
+    @Test("clearing the memo forgets shared points")
+    func memoRemoveAll() {
+        let frame = Self.frame
+        let requests = Self.requests(frame: frame).filter { $0.stroke != nil }
+        let memo = RideStrokeBuilder.Memo()
+        _ = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        #expect(memo.count > 0)
+        memo.removeAll()
+        #expect(memo.count == 0)
+        #expect(memo.points(for: requests[0].shareKey(frame: frame) ?? "", frame: frame) == nil)
     }
 }

@@ -164,6 +164,14 @@ nonisolated enum RideStrokeBuilder {
             entries[shareKey] = points
         }
 
+        /// Forget everything: a chain's stroke was replaced or the lines changed.
+        func removeAll() {
+            lock.lock()
+            defer { lock.unlock() }
+            frameKey = ""
+            entries.removeAll(keepingCapacity: true)
+        }
+
         var count: Int {
             lock.lock()
             defer { lock.unlock() }
@@ -177,6 +185,10 @@ nonisolated enum RideStrokeBuilder {
         var built: [Built]
         /// Requests answered from the memo or from another request in the batch.
         var shared: Int
+        /// Keys of the requests that draw nothing (fewer than two points).
+        /// The coordinator remembers them for the frame so it does not ask
+        /// for them again.
+        var empty: [String]
     }
 
     /// Builds every request. Pure apart from the memo; call from a worker.
@@ -187,6 +199,7 @@ nonisolated enum RideStrokeBuilder {
         var built: [Built] = []
         built.reserveCapacity(requests.count)
         var shared = 0
+        var empty: [String] = []
         for request in requests {
             if Task.isCancelled { break }
             let shareKey = request.shareKey(frame: frame)
@@ -200,11 +213,12 @@ nonisolated enum RideStrokeBuilder {
                     memo.store(fresh.points, for: shareKey, frame: frame)
                 }
             } else {
+                empty.append(request.key)
                 continue
             }
             built.append(Built(
                 key: request.key, polyline: MKPolyline(coordinates: points, count: points.count)))
         }
-        return Output(built: built, shared: shared)
+        return Output(built: built, shared: shared, empty: empty)
     }
 }
