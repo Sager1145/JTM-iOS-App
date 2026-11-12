@@ -83,38 +83,61 @@ struct RideTapIndex: Sendable {
     ///   ordinary case, every category on, states nothing.
     init(
         rides: [RiddenRouteStore.DrawnRide],
-        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]] = { $0.strokes }
+        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [Source] = { $0.strokes.map { .coordinates($0) } }
     ) {
         self.init(snapshot: Snapshot(rides: rides, drawnStrokes: drawnStrokes))
+    }
+
+    /// One run of drawn geometry as the main actor found it. Map points are
+    /// copied out of an already-built polyline as they are; turning them into
+    /// coordinates is left to the (detached) index build.
+    enum Source: Sendable {
+        case coordinates([Coordinate])
+        case mapPoints([MKMapPoint])
+
+        fileprivate var resolved: [Coordinate] {
+            switch self {
+            case .coordinates(let coordinates):
+                return coordinates
+            case .mapPoints(let points):
+                return points.map {
+                    let c = $0.coordinate
+                    return Coordinate(lon: c.longitude, lat: c.latitude)
+                }
+            }
+        }
     }
 
     /// The drawn geometry the index is built from, captured on the main actor
     /// so the build itself can run elsewhere.
     struct Snapshot: Sendable {
         let ids: [String]
-        let strokes: [[[Coordinate]]]
+        let sources: [[Source]]
 
         init(ids: [String], strokes: [[[Coordinate]]]) {
             self.ids = ids
-            self.strokes = strokes
+            self.sources = strokes.map { $0.map { .coordinates($0) } }
+        }
+
+        init(ids: [String], sources: [[Source]]) {
+            self.ids = ids
+            self.sources = sources
         }
 
         init(
             rides: [RiddenRouteStore.DrawnRide],
-            drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]]
+            drawnStrokes: (RiddenRouteStore.DrawnRide) -> [Source]
         ) {
             var ids: [String] = []
-            var strokes: [[[Coordinate]]] = []
+            var sources: [[Source]] = []
             ids.reserveCapacity(rides.count)
-            strokes.reserveCapacity(rides.count)
+            sources.reserveCapacity(rides.count)
             for ride in rides {
-                // `strokes` is a computed property that rebuilds its outer array
-                // on every read; read it once here and never again per tap.
-                strokes.append(drawnStrokes(ride))
+                sources.append(drawnStrokes(ride))
                 ids.append(ride.id)
             }
             self.ids = ids
-            self.strokes = strokes
+            self.sources = sources
         }
     }
 
@@ -125,7 +148,8 @@ struct RideTapIndex: Sendable {
         var vertices = 0
         strokes.reserveCapacity(snapshot.ids.count)
         ids.reserveCapacity(snapshot.ids.count)
-        for (rideIndex, rideStrokes) in snapshot.strokes.enumerated() {
+        for (rideIndex, rideSources) in snapshot.sources.enumerated() {
+            let rideStrokes = rideSources.map(\.resolved)
             for (strokeIndex, stroke) in rideStrokes.enumerated() {
                 vertices += stroke.count
                 for range in RideTapResolver.chunkRanges(count: stroke.count) {

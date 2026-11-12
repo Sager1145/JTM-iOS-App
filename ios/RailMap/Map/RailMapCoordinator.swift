@@ -1902,7 +1902,6 @@ extension RailMapView.Surface {
                 for (id, stroke) in frameStrokes.strokes {
                     networkGeometry.storeStroke(stroke, for: id)
                 }
-                let neededStrokeLineIDs = frameStrokes.neededLineIDs
 #if DEBUG
                 let rideScanMilliseconds = pendingRideScanMilliseconds
                     + frameStrokes.rideScanMilliseconds
@@ -1923,9 +1922,8 @@ extension RailMapView.Surface {
                         || !$0.familyPolylines.isEmpty || !$0.familyFallbacks.isEmpty
                 }
 
-                // The frame-stroke cache just moved, but a ride's tap geometry only
-                // changes when the frame or a referenced chain's stored stroke
-                // does — see ``MapInteractionCoordinator/TapGeometrySignature``.
+                // The tap index is not tied to the frame: it reads drawn polylines
+                // or raw coordinates, within the hit tolerance of any level.
                 if interaction.tapSnapshotProvider == nil {
                     interaction.tapSnapshotProvider = { [weak self] in
                         // Not while a gesture or the camera is settling; the
@@ -1933,24 +1931,12 @@ extension RailMapView.Surface {
                         guard let self, !self.isManipulating,
                             self.lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) != true
                         else { return nil }
+                        let interval = RailSignpost.map.begin("map.tapIndex.snapshot")
+                        defer { RailSignpost.map.end("map.tapIndex.snapshot", interval) }
                         return RideTapIndex.Snapshot(rides: self.rides,
                             drawnStrokes: { self.drawnStrokes(of: $0) })
                     }
                 }
-                // Only the chains some ride references can change a ride's tap
-                // geometry; each is keyed by its stored stroke's identity.
-                var referencedChains: Set<String> = []
-                for matches in strokeRefCache.values {
-                    for ref in matches.refs.values { referencedChains.insert(ref.chainID) }
-                }
-                var residentStrokes: [String: Int] = [:]
-                for id in referencedChains.union(neededStrokeLineIDs) {
-                    if let generation = networkGeometry.strokeGeneration(for: id) {
-                        residentStrokes[id] = generation
-                    }
-                }
-                interaction.updateTapGeometry(signature: .init(
-                    frameKey: geometryFrame.key, residentStrokes: residentStrokes))
 
                 // The budget is applied to what decimation actually produced, not
                 // to the stored vertex count. Budgeting on the raw count cut a
@@ -3934,15 +3920,29 @@ extension RailMapView.Surface {
             /// entirely until a filter is on.
             private func drawnStrokes(
                 of ride: RiddenRouteStore.DrawnRide
-            ) -> [[Coordinate]] {
-                guard layers.categories.anyHidden else {
-                    return ride.segments.map { asCoordinates(drawnCoordinates(of: $0, ride: ride)) }
-                }
-                let riddenStops = ride.stops
+            ) -> [RideTapIndex.Source] {
+                let filtered = layers.categories.anyHidden
+                let riddenStops = filtered ? ride.stops : []
                 return ride.segments.map { segment in
-                    draws(segment: segment, of: ride, riddenStops: riddenStops)
-                        ? asCoordinates(drawnCoordinates(of: segment, ride: ride)) : []
+                    guard !filtered || draws(segment: segment, of: ride, riddenStops: riddenStops)
+                    else { return .coordinates([]) }
+                    return tapSource(of: segment, in: ride)
                 }
+            }
+
+            /// The polyline the worker already built for this segment, copied as
+            /// map points, else the segment's raw coordinates. No geometry
+            /// maths: a tap's tolerance covers the lane offset and rounding.
+            private func tapSource(
+                of segment: RiddenRouteStore.DrawnSegment, in ride: RiddenRouteStore.DrawnRide
+            ) -> RideTapIndex.Source {
+                let ref = strokeRef(for: segment, of: ride)
+                let usesStroke = ref.map { networkGeometry.containsStroke(for: $0.chainID) } ?? false
+                let key = rideLineCacheKey(of: segment, in: ride, stroke: usesStroke ? ref : nil)
+                guard let polyline = networkGeometry.ridePolyline(for: key), polyline.pointCount >= 2
+                else { return .coordinates(segment.coordinates) }
+                return .mapPoints(Array(UnsafeBufferPointer(
+                    start: polyline.points(), count: polyline.pointCount)))
             }
 
             /// Keep unchanged route pixels through progressive arrivals. A new
@@ -4428,13 +4428,6 @@ extension RailMapView.Surface {
                         y: $0.y * built.mapPointsPerScreenPoint
                     ).coordinate
                 }
-            }
-
-            /// `drawnCoordinates(of:ride:)` converted back to `RailCore.Coordinate`
-            /// for the callers — the tap index and the Douglas–Peucker pass —
-            /// that still work in that space.
-            private func asCoordinates(_ points: [CLLocationCoordinate2D]) -> [Coordinate] {
-                points.map { Coordinate(lon: $0.longitude, lat: $0.latitude) }
             }
 
             /// Whether one drawn segment's ridden-line category is switched on.

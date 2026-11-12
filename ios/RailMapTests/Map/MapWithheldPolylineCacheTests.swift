@@ -36,12 +36,4 @@ struct MapWithheldPolylineCacheTests {
         cache.retainLineBuilds(withIDs: [])
         #expect(try #require(cache.withheldPolyline(lineID: "L", runIndex: 0, coordinates: longer)) !== changed)
     }
-
-    @Test func unchangedTapSignatureKeepsTheSignatureStable() {
-        let a = MapInteractionCoordinator.TapGeometrySignature(frameKey: "f", residentStrokes: ["x": 1])
-        let b = MapInteractionCoordinator.TapGeometrySignature(frameKey: "f", residentStrokes: ["x": 1])
-        let c = MapInteractionCoordinator.TapGeometrySignature(frameKey: "f", residentStrokes: ["x": 2])
-        #expect(a == b)
-        #expect(a != c)
-    }
 }

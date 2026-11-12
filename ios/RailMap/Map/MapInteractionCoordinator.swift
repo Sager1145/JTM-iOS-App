@@ -13,18 +13,6 @@ final class MapInteractionCoordinator {
     private var cachedTapIndex: RideTapIndex?
     private var rideAnsweredTap: ContinuousClock.Instant?
 
-    /// What the tap geometry of every ride depends on that the invalidation
-    /// sites above the rebuild do not already cover: the network frame and which
-    /// referenced chains are stroke-resident (with the identity of each stored
-    /// stroke). A ride segment draws from a frame stroke when its chain is
-    /// resident and from raw coordinates otherwise, so only a change here moves
-    /// the drawn geometry on a rebuild.
-    struct TapGeometrySignature: Hashable {
-        let frameKey: String
-        let residentStrokes: [String: Int]
-    }
-
-    private var tapSignature: TapGeometrySignature?
     private var indexGeneration = 0
     private var prebuildTask: Task<Void, Never>?
     /// True while the route store is resolving trips. Each arrival replaces
@@ -38,23 +26,18 @@ final class MapInteractionCoordinator {
     /// prebuild then retries later.
     var tapSnapshotProvider: (@MainActor () -> RideTapIndex.Snapshot?)?
 
+    /// A level change or a stroke rebuild does NOT come through here: the index
+    /// is built from the drawn trip polylines (or raw coordinates), and the
+    /// lane offset and corner rounding that differ between levels are a few
+    /// points, well inside `RideTapResolver.defaultTolerance`.
+    ///
     /// Geometry/filter/matching changes discard the index without rebuilding
     /// inside a SwiftUI update; a coalesced prebuild replaces it once the map
     /// is idle, and a tap that beats it falls back to a synchronous build.
     func invalidateRideGeometry() {
         cachedTapIndex = nil
-        // An external invalidation leaves the signature stale; force the next
-        // rebuild's `updateTapGeometry` to invalidate again.
-        tapSignature = nil
         indexGeneration += 1
         schedulePrebuild()
-    }
-
-    /// Invalidates only when the tap geometry signature moved.
-    func updateTapGeometry(signature: TapGeometrySignature) {
-        guard signature != tapSignature else { return }
-        invalidateRideGeometry()
-        tapSignature = signature
     }
 
     /// Reported from the view update. Starting a load cancels the prebuild;
@@ -125,7 +108,7 @@ final class MapInteractionCoordinator {
     func rideHits(
         at point: CGPoint, on mapView: MKMapView,
         rides: [RiddenRouteStore.DrawnRide],
-        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]]
+        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [RideTapIndex.Source]
     ) -> [String] {
         let index: RideTapIndex
         if let cachedTapIndex {
@@ -176,7 +159,6 @@ final class MapInteractionCoordinator {
         prebuildTask?.cancel()
         prebuildTask = nil
         tapSnapshotProvider = nil
-        tapSignature = nil
         indexGeneration += 1
         cachedTapIndex = nil
         rideAnsweredTap = nil

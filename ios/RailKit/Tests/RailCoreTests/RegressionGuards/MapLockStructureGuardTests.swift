@@ -108,4 +108,28 @@ struct RegressionGuardMapLock {
         #expect(update.contains("prepareArrivalStrokes("))
         #expect(!update.contains("Polylines are built on a worker only from a full"))
     }
+
+    private static let interaction = read("RailMap/Map/MapInteractionCoordinator.swift")
+
+    @Test func tapSnapshotNeverDoesGeometryMathsOnMain() throws {
+        let strokes = try Self.body(
+            Self.coordinator, from: "private func drawnStrokes(", to: "private func retainRidePolylines(")
+        #expect(!strokes.contains("parallelLaneCoordinates"))
+        #expect(!strokes.contains("builtStrokeCoordinates"))
+        #expect(!strokes.contains("drawnCoordinates("))
+        #expect(strokes.contains("networkGeometry.ridePolyline(for:"))
+        let provider = try Self.body(
+            Self.coordinator, from: "interaction.tapSnapshotProvider = {", to: "// The budget is applied")
+        #expect(provider.contains("map.tapIndex.snapshot"))
+        #expect(!provider.contains("parallelLaneCoordinates"))
+        #expect(!provider.contains("builtStrokeCoordinates"))
+    }
+
+    @Test func tapIndexBuildsDetachedAndIsNotKeyedToTheFrame() {
+        #expect(Self.interaction.contains("Task.detached(priority: .utility)"))
+        #expect(Self.interaction.contains("self.indexGeneration == generation"))
+        #expect(!Self.interaction.contains("TapGeometrySignature"))
+        #expect(!Self.interaction.contains("updateTapGeometry"))
+        #expect(!Self.coordinator.contains("updateTapGeometry"))
+    }
 }
