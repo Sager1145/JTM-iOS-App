@@ -591,6 +591,7 @@
         "ios/RailKit/Sources/RailPresentation/Map/DisplayNetworkEra.swift",
         "ios/RailKit/Sources/RailPresentation/Map/LongitudeArc.swift",
         "ios/RailKit/Sources/RailPresentation/Map/MapCameraPolicy.swift",
+        "ios/RailKit/Sources/RailPresentation/Map/MapDrawDecisions.swift",
         "ios/RailKit/Sources/RailPresentation/Map/MapRebuildPolicy.swift",
         "ios/RailKit/Sources/RailPresentation/Map/MapUpdatePlan.swift",
         "ios/RailKit/Sources/RailPresentation/Map/NetworkVisibilityPolicy.swift",

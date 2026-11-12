@@ -82,9 +82,12 @@ struct MapNetworkBuildState {
 /// The coordinator decides what should be drawn. Prepared strokes, line builds
 /// and ride polylines are kept for up to three stroke-bucket frames and reused
 /// when the camera returns to a recent bucket. Accessors read and write the
-/// current frame. `retainLineBuilds`, `retainRidePolylines` and
-/// `clearRidePolylines` apply to every cached frame, so invalidated content
-/// cannot come back from an older entry. `frameStrokes` is the geometry
+/// current frame. `retainLineBuilds` and `retainRidePolylines` apply to every
+/// cached frame, so invalidated content cannot come back from an older entry.
+/// A trip polyline is keyed by ``RideLineCacheKey``, which carries the rail
+/// line's id and its stroke generation: a line rebuilt in one frame only
+/// strands the polylines made from its old build, never another line's.
+/// `frameStrokes` is the geometry
 /// installed for the camera frame in progress and is not stored per entry.
 ///
 /// `joinedChains` is the display-datum join, keyed by content id and chain id,
@@ -100,7 +103,7 @@ final class MapNetworkGeometryCache {
     private struct FrameEntry {
         var strokeBuilds: [String: ContinuousStrokeBuild] = [:]
         var lineBuilds: [String: LineBuild] = [:]
-        var ridePolylines: [String: MKPolyline] = [:]
+        var ridePolylines: [RideLineCacheKey: MKPolyline] = [:]
         /// Identity of the stroke build last stored per id; moves whenever
         /// ``storePrepared(_:key:)`` replaces a build.
         var strokeGenerations: [String: Int] = [:]
@@ -169,38 +172,49 @@ final class MapNetworkGeometryCache {
         frameStrokes.removeAll(keepingCapacity: true)
     }
 
-    func clearRidePolylines() {
-        for key in Array(entries.keys) {
-            entries[key]?.ridePolylines.removeAll(keepingCapacity: true)
-        }
-    }
-
-    static func ridePolylineKey(
-        rideID: String, geometryDigest: Int, segmentIndex: Int, partIndex: Int,
-        usesStroke: Bool
-    ) -> String {
-        "\(rideID)|\(geometryDigest)|\(segmentIndex).\(partIndex)|\(usesStroke)"
-    }
-
-    func retainRidePolylines(withKeys keys: Set<String>) {
-        for key in Array(entries.keys) {
-            if let kept = entries[key]?.ridePolylines.filter({ keys.contains($0.key) }) {
-                entries[key]?.ridePolylines = kept
-            }
-        }
-    }
-
-    /// ``retainRidePolylines(withKeys:)`` restricted to the polylines of
-    /// `rideIDs`; every other ride's polylines are left as they are.
-    func retainRidePolylines(ofRides rideIDs: Set<String>, withKeys keys: Set<String>) {
-        guard !rideIDs.isEmpty else { return }
+    /// Keeps the polylines of the segments in `segments`, whichever line they
+    /// were sliced from, except the line-sliced variants of `rideIDs` (a new
+    /// trip-to-line match moved their span). A polyline made from a line's
+    /// old build is not named here: it falls out through its key's
+    /// generation, see ``dropStaleRidePolylines(in:)``.
+    func retainRidePolylines(
+        ofSegments segments: Set<RideLineCacheKey.SegmentIdentity>,
+        droppingStrokeVariantsOf rideIDs: Set<String> = []
+    ) {
         for key in Array(entries.keys) {
             if let kept = entries[key]?.ridePolylines.filter({ entry in
-                keys.contains(entry.key)
-                    || !rideIDs.contains(String(entry.key.prefix { $0 != "|" }))
+                segments.contains(entry.key.segmentIdentity)
+                    && !(entry.key.stroke != nil && rideIDs.contains(entry.key.rideID))
             }) {
                 entries[key]?.ridePolylines = kept
             }
+        }
+    }
+
+    /// ``retainRidePolylines(ofSegments:droppingStrokeVariantsOf:)``
+    /// restricted to the polylines of `rideIDs`; every other ride's polylines
+    /// are left as they are.
+    func retainRidePolylines(
+        ofRides rideIDs: Set<String>, segments: Set<RideLineCacheKey.SegmentIdentity>
+    ) {
+        guard !rideIDs.isEmpty else { return }
+        for key in Array(entries.keys) {
+            if let kept = entries[key]?.ridePolylines.filter({ entry in
+                !rideIDs.contains(entry.key.rideID) || segments.contains(entry.key.segmentIdentity)
+            }) {
+                entries[key]?.ridePolylines = kept
+            }
+        }
+    }
+
+    /// Frees the polylines whose line build was replaced or left. Correctness
+    /// does not depend on this: such a key can never be asked for again,
+    /// because the line's generation is part of it.
+    private func dropStaleRidePolylines(in key: String) {
+        guard let entry = entries[key], !entry.ridePolylines.isEmpty else { return }
+        let generations = entry.strokeGenerations
+        entries[key]?.ridePolylines = entry.ridePolylines.filter {
+            $0.key.isCurrent(lineGenerations: generations)
         }
     }
 
@@ -221,8 +235,8 @@ final class MapNetworkGeometryCache {
             if let kept = entries[key]?.strokeGenerations.filter({ ids.contains($0.key) }) {
                 entries[key]?.strokeGenerations = kept
             }
+            dropStaleRidePolylines(in: key)
         }
-        clearRidePolylines()
     }
 
     var preparedStrokes: [String: ContinuousStrokeBuild] { currentEntry.strokeBuilds }
@@ -243,6 +257,7 @@ final class MapNetworkGeometryCache {
                 entries[frameKey, default: FrameEntry()].withheldPolylines.filter { $0.value.lineID != id }
         }
         entries[frameKey, default: FrameEntry()].lineBuilds.merge(result.lines) { _, new in new }
+        if !result.strokes.isEmpty { dropStaleRidePolylines(in: frameKey) }
         return true
     }
 
@@ -276,6 +291,14 @@ final class MapNetworkGeometryCache {
         return currentEntry.strokeGenerations[id] ?? 0
     }
 
+    /// Identity of the stroke build stored for `id` in the current frame, the
+    /// one a trip segment is sliced from. Unlike ``strokeGeneration(for:)`` it
+    /// does not need the frame's strokes installed yet, so a rebuild can key a
+    /// polyline before it installs them.
+    func residentStrokeGeneration(for id: String) -> Int {
+        currentEntry.strokeGenerations[id] ?? 0
+    }
+
     /// The dashed polyline of one withheld run, identical across rebuilds of the
     /// same frame so overlay reconciliation can reuse its batch. The content
     /// guard (count, first and last vertex) catches a run that changed without
@@ -304,17 +327,17 @@ final class MapNetworkGeometryCache {
         frameStrokes[id]
     }
 
-    func ridePolyline(for key: String) -> MKPolyline? {
+    func ridePolyline(for key: RideLineCacheKey) -> MKPolyline? {
         currentEntry.ridePolylines[key]
     }
 
-    func storeRidePolyline(_ polyline: MKPolyline, for key: String) {
+    func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey) {
         entries[frameKey, default: FrameEntry()].ridePolylines[key] = polyline
     }
 
     /// Files a polyline built for `frameKey` without moving the current frame.
     /// A frame the cache has already evicted drops it.
-    func storeRidePolyline(_ polyline: MKPolyline, for key: String, frameKey: String) {
+    func storeRidePolyline(_ polyline: MKPolyline, for key: RideLineCacheKey, frameKey: String) {
         entries[frameKey]?.ridePolylines[key] = polyline
     }
 }

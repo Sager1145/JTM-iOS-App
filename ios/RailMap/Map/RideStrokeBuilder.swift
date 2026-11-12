@@ -2,6 +2,7 @@ import CoreLocation
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 
 /// Ride polylines built off the main actor (trip-loading plan, unit U5).
 ///
@@ -59,8 +60,9 @@ nonisolated enum RideStrokeBuilder {
 
     /// One ride segment's inputs, all values.
     struct Request: Sendable {
-        /// `MapNetworkGeometryCache.ridePolylineKey`.
-        var key: String
+        /// The trip-line cache key, which names the rail line and its stroke
+        /// generation when the segment is sliced from a built chain.
+        var key: RideLineCacheKey
         /// The segment's own coordinates (what the fallback draws from).
         var coordinates: [Coordinate]
         /// Latitude of the segment's bounding-rect centre, for the metre epsilon.
@@ -80,7 +82,7 @@ nonisolated enum RideStrokeBuilder {
     /// A built polyline. `MKPolyline` is created off the main actor and then
     /// owned by exactly one consumer, which is why the box is `@unchecked`.
     struct Built: @unchecked Sendable {
-        var key: String
+        var key: RideLineCacheKey
         var polyline: MKPolyline
     }
 
@@ -188,7 +190,7 @@ nonisolated enum RideStrokeBuilder {
         /// Keys of the requests that draw nothing (fewer than two points).
         /// The coordinator remembers them for the frame so it does not ask
         /// for them again.
-        var empty: [String]
+        var empty: [RideLineCacheKey]
     }
 
     /// Builds every request. Pure apart from the memo; call from a worker.
@@ -199,7 +201,7 @@ nonisolated enum RideStrokeBuilder {
         var built: [Built] = []
         built.reserveCapacity(requests.count)
         var shared = 0
-        var empty: [String] = []
+        var empty: [RideLineCacheKey] = []
         for request in requests {
             if Task.isCancelled { break }
             let shareKey = request.shareKey(frame: frame)
