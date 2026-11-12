@@ -93,14 +93,28 @@ public struct TripNoteStation: Codable, Equatable, Sendable {
         try container.encodeIfPresent(n02StationCode, forKey: .n02StationCode)
     }
 
-    /// Whether `stop` is this station. Identifiers win over names: a stop
-    /// with a station id matches only that id.
-    public func matches(_ stop: Stop) -> Bool {
+    /// Whether `stop` is this station by identity: a stop with a station id
+    /// matches only that id; otherwise the n02 code decides.
+    public func matchesIdentity(_ stop: Stop) -> Bool {
         if let stationID, let other = stop.stationID { return stationID == other }
         if let n02StationCode, let other = stop.n02StationCode, n02StationCode == other {
             return true
         }
-        return name == stop.name
+        return false
+    }
+
+    /// Whether `stop` carries this station's name, by UTF-16 code unit as
+    /// ``RecordedRouteMapping/sameStation(code:name:otherCode:otherName:)``.
+    public func matchesName(_ stop: Stop) -> Bool {
+        !name.isEmpty && !stop.name.isEmpty && name.utf16.elementsEqual(stop.name.utf16)
+    }
+
+    /// The test to find this station among `stops`: identity when any stop
+    /// matches by identity (a re-identified station elsewhere never beats the
+    /// true match), otherwise the name.
+    func matcher(in stops: [Stop]) -> (Stop) -> Bool {
+        let byIdentity = stops.contains { matchesIdentity($0) }
+        return { byIdentity ? self.matchesIdentity($0) : self.matchesName($0) }
     }
 }
 
@@ -201,20 +215,22 @@ public enum TripNotePlacement: Equatable, Sendable {
     public static func resolve(_ anchor: TripNoteAnchor, stops: [Stop]) -> TripNotePlacement {
         switch anchor {
         case .station(let station, let fallback):
-            if let index = stops.firstIndex(where: station.matches) {
+            if let index = stops.firstIndex(where: station.matcher(in: stops)) {
                 return .station(stopIndex: index)
             }
             return fallback.map(TripNotePlacement.coordinate) ?? .unplaced
         case .interval(let from, let to, let fraction, let fallback):
             // The first `from` followed by a later `to`; a stop edited in
             // between widens the span rather than losing the note.
-            for start in stops.indices where from.matches(stops[start]) {
-                if let end = stops[(start + 1)...].firstIndex(where: to.matches) {
+            let isFrom = from.matcher(in: stops)
+            let isTo = to.matcher(in: stops)
+            for start in stops.indices where isFrom(stops[start]) {
+                if let end = stops[(start + 1)...].firstIndex(where: isTo) {
                     return .interval(fromStopIndex: start, toStopIndex: end, fraction: fraction)
                 }
             }
             if let fallback { return .coordinate(fallback) }
-            if let index = stops.firstIndex(where: from.matches) ?? stops.firstIndex(where: to.matches) {
+            if let index = stops.firstIndex(where: isFrom) ?? stops.firstIndex(where: isTo) {
                 return .station(stopIndex: index)
             }
             return .unplaced
@@ -252,20 +268,23 @@ public enum TripNoteTime {
     /// The instant `time` names on `serviceDate` in `clock`'s zone. Used only
     /// to drive a date picker that is itself pinned to that zone.
     public static func instant(serviceDate: String?, time: String?, clock: RegionClock) -> Date? {
-        guard let start = clock.startOfDay(serviceDate), let minutes = minutes(time) else { return nil }
-        return clock.calendar.date(byAdding: .minute, value: minutes, to: start)
+        guard let minutes = minutes(time) else { return nil }
+        let printed = String(format: "%02d:%02d", minutes / 60, minutes % 60)
+        return clock.instant(serviceDate: serviceDate, clock: printed)
     }
 
     /// The service-day time `instant` falls on, or nil outside the two-day
     /// window. Without a service date, the plain civil time of day.
     public static func time(at instant: Date, serviceDate: String?, clock: RegionClock) -> String? {
-        guard let start = clock.startOfDay(serviceDate) else {
+        guard clock.startOfDay(serviceDate) != nil else {
             let parts = clock.calendar.dateComponents([.hour, .minute], from: instant)
             return text(minutes: (parts.hour ?? 0) * 60 + (parts.minute ?? 0))
         }
-        let minutes = Int((instant.timeIntervalSince(start) / 60).rounded(.down))
-        guard (0...maximumMinutes).contains(minutes) else { return nil }
-        return text(minutes: minutes)
+        // Notes keep the two-day window even though the shared clock now
+        // counts further: a time past 47:59 is outside the trip.
+        guard let time = clock.serviceClock(of: instant, serviceDate: serviceDate),
+              minutes(time) != nil else { return nil }
+        return time
     }
 
     /// The time a new note starts with: now, when now falls on the trip's

@@ -784,6 +784,7 @@ struct QuietActionGroup: View {
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(
             Text(localization.countryText("ios.journey.moreActions", fallback: "More")))
+        .accessibilityIdentifier("journeyMoreActions")
     }
 
     /// Icon-only menu controls share the header's compact visual size. Accent-coloured glyphs match the quiet
@@ -816,6 +817,7 @@ struct QuietActionGroup: View {
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(
             Text(localization.countryText("ios.journey.moreActions", fallback: "More")))
+        .accessibilityIdentifier("journeyMoreActions")
     }
 
     @ViewBuilder
@@ -839,6 +841,7 @@ struct QuietActionGroup: View {
         } label: {
             Label(appearance.label, systemImage: appearance.systemImage)
         }
+        .accessibilityIdentifier("journeySecondary-\(action)")
     }
 }
 

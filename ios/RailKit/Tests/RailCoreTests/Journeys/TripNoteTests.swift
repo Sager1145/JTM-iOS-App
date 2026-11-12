@@ -162,11 +162,12 @@ struct TripNoteTests {
         #expect(TripNotePlacement.resolve(Self.notes[1].anchor, stops: gone) == .unplaced)
     }
 
-    @Test("a station id wins over a matching name")
-    func identityBeatsName() {
+    @Test("identity matching is by id, and name matching is separate")
+    func identityVersusName() {
         let other = Stop(name: "熱海", stopType: "passenger_stop", rideSegment: true, stationID: "st:jp:9")
-        #expect(!TripNoteStation(stop: Self.stops[1]).matches(other))
-        #expect(TripNoteStation(name: "熱海").matches(other))
+        #expect(!TripNoteStation(stop: Self.stops[1]).matchesIdentity(other))
+        #expect(TripNoteStation(stop: Self.stops[1]).matchesName(other))
+        #expect(!TripNoteStation(name: "熱海").matchesIdentity(other))
     }
 
     // MARK: time
@@ -214,6 +215,52 @@ struct TripNoteTests {
         }
         #expect(results.first?[0] == "24:05")
         #expect(Set(results.map { $0.compactMap { $0 }.joined(separator: "|") }).count == 1)
+    }
+
+    @Test("note times follow the wall clock across summer-time changeovers")
+    func summerTimeWallClock() throws {
+        let clock = RegionClock.forZone("America/New_York", regionCode: nil)
+        for date in ["2026-03-07", "2026-03-08", "2026-10-31", "2026-11-01"] {
+            for time in ["00:30", "01:30", "03:30", "12:00", "23:59", "24:00", "25:30", "47:59"] {
+                let instant = try #require(TripNoteTime.instant(serviceDate: date, time: time, clock: clock))
+                #expect(instant == clock.instant(serviceDate: date, clock: time))
+                #expect(TripNoteTime.time(at: instant, serviceDate: date, clock: clock) == time,
+                        "\(date) \(time)")
+            }
+        }
+    }
+
+    // MARK: station name fallback
+
+    @Test("a re-identified station resolves by name")
+    func reidentifiedByName() {
+        let anchor = TripNoteAnchor.station(
+            TripNoteStation(name: "熱海", stationID: "st:jp:old"), fallback: nil)
+        #expect(TripNotePlacement.resolve(anchor, stops: Self.stops) == .station(stopIndex: 1))
+    }
+
+    @Test("an identity match elsewhere beats a same-name stop")
+    func identityBeatsName() {
+        var stops = Self.stops
+        stops.insert(Stop(name: "静岡", arrival: "24:50", stopType: "passenger_stop", rideSegment: true,
+                          stationID: "st:jp:other"), at: 2)
+        let anchor = TripNoteAnchor.station(
+            TripNoteStation(name: "熱海", stationID: "st:jp:3"), fallback: nil)
+        // "熱海" is a name match at index 1, but st:jp:3 is the true id-match at 3.
+        #expect(TripNotePlacement.resolve(anchor, stops: stops) == .station(stopIndex: 3))
+        let byName = TripNoteAnchor.station(
+            TripNoteStation(name: "静岡", stationID: "st:jp:3"), fallback: nil)
+        #expect(TripNotePlacement.resolve(byName, stops: stops) == .station(stopIndex: 3))
+    }
+
+    @Test("an interval resolves with one re-identified end")
+    func intervalOneEndReidentified() {
+        let anchor = TripNoteAnchor.interval(
+            from: TripNoteStation(name: "東京", stationID: "st:jp:old"),
+            to: TripNoteStation(name: "熱海", stationID: "st:jp:2"),
+            fraction: 0.4, fallback: nil)
+        #expect(TripNotePlacement.resolve(anchor, stops: Self.stops)
+            == .interval(fromStopIndex: 0, toStopIndex: 1, fraction: 0.4))
     }
 
     // MARK: categories

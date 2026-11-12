@@ -346,34 +346,19 @@ extension RailMapView.Surface {
                     })
             }
 
-            private func tripNoteStopName(_ index: Int, of ride: RiddenRouteStore.DrawnRide) -> String {
-                guard ride.stops.indices.contains(index) else { return "" }
-                let stop = ride.stops[index]
-                return localized(stop.name, code: stop.n02StationCode, region: Region(rawValue: ride.country),
-                                 stationID: stop.stationID).display
-            }
-
-            /// "At A", "A → B", "Pinned on map" — the place a note names today.
+            /// "At A", "A → B", "Pinned on map": named from the trip's own stops,
+            /// exactly as the trip card names them.
             private func tripNotePlaceSummary(_ anchor: TripNoteAnchor,
                                               on ride: RiddenRouteStore.DrawnRide) -> String {
-                switch TripNotePlacement.resolve(anchor, stops: ride.stops) {
-                case .station(let index):
-                    return localization?.text(
-                        "ios.tripNotes.placeAtStation",
-                        params: ["station": .string(tripNoteStopName(index, of: ride))],
-                        fallback: "At {station}") ?? tripNoteStopName(index, of: ride)
-                case .interval(let from, let to, _):
-                    return localization?.text(
-                        "ios.tripNotes.placeBetween",
-                        params: ["from": .string(tripNoteStopName(from, of: ride)),
-                                 "to": .string(tripNoteStopName(to, of: ride))],
-                        fallback: "{from} → {to}")
-                        ?? "\(tripNoteStopName(from, of: ride)) → \(tripNoteStopName(to, of: ride))"
-                case .coordinate:
-                    return localization?.text("ios.tripNotes.placeOnMap", fallback: "Pinned on map") ?? ""
-                case .unplaced:
-                    return localization?.text("ios.tripNotes.placeUnplaced", fallback: "No place") ?? ""
-                }
+                guard let localization else { return "" }
+                // The selection snapshot names the trip's stops while it is the
+                // selected one; any other ride is named from its own stops.
+                let snapshot = tripNoteSnapshot
+                let fromTrip = snapshot.selectedTrainID == ride.id && !snapshot.selectedStops.isEmpty
+                return TripNotePlaceNaming.place(
+                    anchor, stops: fromTrip ? snapshot.selectedStops : ride.stops,
+                    region: Region(rawValue: fromTrip ? snapshot.selectedRegion ?? ride.country : ride.country),
+                    localization: localization)
             }
 
             // MARK: trip-note place picking

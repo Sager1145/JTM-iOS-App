@@ -34,10 +34,16 @@ struct RideDetailView: View {
     var onRebuild: (() -> Int?)?
     var suggestionTrains: [Train] = []
     var onEditJourney: ((Train) -> Void)? = nil
+    /// The presenter for this screen's notes, owned by whoever presents the
+    /// screen so an unsaved draft survives the screen stepping aside for a
+    /// map pick. Notes are offered only with it.
+    var tripNoteFlow: TripNoteFlow?
 
     @Environment(AppLocalization.self) private var localization
     @State private var showsEditor = false
-    @State private var tripNoteFlow = TripNoteFlow()
+    /// Stands in for `tripNoteFlow` where notes are not offered, so the
+    /// presentation modifier below always has a flow to watch.
+    @State private var inertTripNoteFlow = TripNoteFlow()
 
     var body: some View {
         RideDetailContent(
@@ -61,11 +67,11 @@ struct RideDetailView: View {
                 { ridden in _ = save(RideLedger.setRidden(train, ridden)) }
             },
             // Notes are offered only where their save can wait for the write.
-            tripNoteFlow: onSaveAwaitingPersistence == nil ? nil : tripNoteFlow)
+            tripNoteFlow: offersNotes ? tripNoteFlow : nil)
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .tripNotesPresentation(
-                flow: tripNoteFlow, train: train, trains: suggestionTrains,
+                flow: tripNoteFlow ?? inertTripNoteFlow, train: train, trains: suggestionTrains,
                 onSet: onSaveAwaitingPersistence.map { save in
                     { (notes: [TripNote]) async -> Bool in
                         var updated = train
@@ -77,7 +83,7 @@ struct RideDetailView: View {
                 // Share is the journey card's header button — the one share
                 // entry for a journey (pass 2). The details sheet opens from
                 // that card, so a second share here was the same verb twice.
-                if onSaveAwaitingPersistence != nil {
+                if offersNotes, let tripNoteFlow {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(localization.text("ios.tripNotes.add"), systemImage: "exclamationmark.bubble") {
                             tripNoteFlow.beginAdd(train: train)
@@ -109,6 +115,8 @@ struct RideDetailView: View {
                 .railSheet(.full)
             }
     }
+
+    private var offersNotes: Bool { onSaveAwaitingPersistence != nil && tripNoteFlow != nil }
 
     private func beginEdit() {
         if let onEditJourney {

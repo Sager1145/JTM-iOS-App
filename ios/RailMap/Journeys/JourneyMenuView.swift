@@ -16,6 +16,13 @@ struct WorkspaceJourneyMenu: View {
     @State private var focusRequested = false
     @State private var detent: PresentationDetent = .height(WorkspaceMenuMetrics.journeyCompactHeight)
     @State private var tripNoteFlow = TripNoteFlow()
+    /// The notes presenter of the details sheet. Held here, not by the sheet,
+    /// so its draft survives the sheet stepping aside for a map pick.
+    @State private var detailsNoteFlow = TripNoteFlow()
+    @State private var detailsStepAside: TripNoteDetailsStepAside?
+    /// The step-aside's own wait for a sheet to settle. Not the host's
+    /// single slot: a later request there would cancel it mid-chain.
+    @State private var stepAsideWait: Task<Void, Never>?
     @State private var hookToken = UUID()
     /// Which menu installed `controller.onTripNote` last, so a menu that is
     /// leaving never clears the hook of the one replacing it.
@@ -100,7 +107,8 @@ struct WorkspaceJourneyMenu: View {
                                 onEditJourney: { train in
                                     showsDetails = false
                                     presentationHost.afterTeardown { onEditJourney(train) }
-                                })
+                                },
+                                tripNoteFlow: detailsNoteFlow)
                                 .disabled(isSaving)
                                 .alert(
                                     localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
@@ -142,8 +150,15 @@ struct WorkspaceJourneyMenu: View {
             controller.journeyMenuBottomObstruction = nil
             // A pick belongs to the menu that started it.
             tripNoteFlow.reset()
+            detailsNoteFlow.reset()
+            // Before the pick is cancelled: its nil answer must not reopen
+            // details on a menu that is leaving.
+            detailsStepAside?.abandon()
+            stepAsideWait?.cancel()
             controller.cancelTripNotePickIfOwned(trainID: recordID)
             tripNoteFlow.pickPlace = nil
+            detailsNoteFlow.pickPlace = nil
+            detailsStepAside = nil
             if Self.hookOwner == hookToken {
                 controller.onTripNote = nil
                 Self.hookOwner = nil
@@ -179,16 +194,47 @@ struct WorkspaceJourneyMenu: View {
             guard trainID == recordID else { return }
             tripNoteFlow.screen = .read(noteID: noteID)
         }
-        tripNoteFlow.pickPlace = { initial, finish in
-            // One pick at a time: a second tap must not capture the lowered
-            // detent as the one to restore.
-            guard controller.tripNotePickTrainID == nil else { finish(nil); return }
-            let restored = detent
-            withAnimation(RailMotion.spring) { detent = lowestDetent }
-            controller.beginTripNotePick(trainID: recordID, initial: initial) { anchor in
-                withAnimation(RailMotion.spring) { detent = restored }
-                finish(anchor)
+        tripNoteFlow.pickPlace = { initial, finish in beginMapPick(initial, finish) }
+        // From the details sheet the sheet steps aside first, and is back
+        // before the form (or nothing, on cancel) is shown.
+        let stepAside = TripNoteDetailsStepAside(
+            closeDetails: { done in
+                showsDetails = false
+                afterSheetSettles(done)
+            },
+            startPick: { initial, finish in beginMapPick(initial, finish) },
+            reopenDetails: { done in
+                showsDetails = true
+                afterSheetSettles(done)
+            })
+        detailsStepAside = stepAside
+        detailsNoteFlow.pickPlace = { initial, finish in stepAside.pick(initial: initial, finish: finish) }
+    }
+
+    /// Runs `done` once the host has had its teardown delay and nothing is
+    /// presenting or dismissing.
+    private func afterSheetSettles(_ done: @escaping @MainActor () -> Void) {
+        stepAsideWait?.cancel()
+        stepAsideWait = Task { @MainActor in
+            do {
+                try await Task.sleep(for: presentationHost.teardown)
+                while !presentationHost.isIdle { try await Task.sleep(for: .milliseconds(16)) }
+            } catch {
+                return
             }
+            done()
+        }
+    }
+
+    private func beginMapPick(_ initial: TripNoteAnchor?, _ finish: @escaping (TripNoteAnchor?) -> Void) {
+        // One pick at a time: a second tap must not capture the lowered
+        // detent as the one to restore.
+        guard controller.tripNotePickTrainID == nil else { finish(nil); return }
+        let restored = detent
+        withAnimation(RailMotion.spring) { detent = lowestDetent }
+        controller.beginTripNotePick(trainID: recordID, initial: initial) { anchor in
+            withAnimation(RailMotion.spring) { detent = restored }
+            finish(anchor)
         }
     }
 
@@ -223,7 +269,7 @@ struct WorkspaceJourneyMenu: View {
     private func saveAwaitingPersistence(_ edited: Train) async -> Bool {
         guard let saving = startSave(edited) else { return false }
         let persisted = await saving.value
-        if !persisted { saveFailureDetail = nil }
+        saveFailureDetail = NoteSaveAlert.journeyFailureDetail(afterNoteSave: persisted, current: saveFailureDetail)
         return persisted
     }
 
@@ -251,5 +297,13 @@ struct WorkspaceJourneyMenu: View {
             }
             return true
         }
+    }
+}
+
+/// Which failure alert a note save may leave up. The form shows its own
+/// "refused" alert, so the journey-level one must stay down.
+enum NoteSaveAlert {
+    static func journeyFailureDetail(afterNoteSave persisted: Bool, current: String?) -> String? {
+        persisted ? current : nil
     }
 }

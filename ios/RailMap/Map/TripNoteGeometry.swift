@@ -144,7 +144,8 @@ enum TripNoteGeometry {
         guard stops.indices.contains(index) else { return nil }
         let station = TripNoteStation(stop: stops[index])
         var fallback: Coordinate?
-        if let ride, ride.stops.indices.contains(index), station.matches(ride.stops[index]) {
+        if let ride, ride.stops.indices.contains(index),
+           station.matchesIdentity(ride.stops[index]) || station.matchesName(ride.stops[index]) {
             fallback = route(of: ride, datum: .wgs84).point(atStop: index)
         }
         return .station(station, fallback: fallback)

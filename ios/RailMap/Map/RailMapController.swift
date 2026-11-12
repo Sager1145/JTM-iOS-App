@@ -807,7 +807,14 @@ final class RailMapController {
     /// The device's location once, for placing a trip note. Asks for
     /// permission only when it has never been asked; never starts following.
     func currentLocationOnce() async -> Result<CLLocation, OneShotLocationFailure> {
-        await withCheckedContinuation { continuation in
+        #if DEBUG
+        // UI tests: `RAILMAP_UI_TEST_LOCATION=lat,lon` stands in for a granted fix.
+        if let raw = UITestLaunchConfiguration.current.environment["RAILMAP_UI_TEST_LOCATION"] {
+            let parts = raw.split(separator: ",").compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
+            if parts.count == 2 { return .success(CLLocation(latitude: parts[0], longitude: parts[1])) }
+        }
+        #endif
+        return await withCheckedContinuation { continuation in
             oneShotWaiters.append(continuation)
             guard oneShotWaiters.count == 1 else { return }
             switch locationManager.authorizationStatus {
