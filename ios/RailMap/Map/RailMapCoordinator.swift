@@ -2232,7 +2232,7 @@ extension RailMapView.Surface {
                 strokeFor: (String) -> MapNetworkGeometryCache.BuiltStroke?
             ) -> [RideStrokeBuilder.Request] {
                 var requests: [RideStrokeBuilder.Request] = []
-                var seen: Set<String> = []
+                var seen: Set<RideLineCacheKey> = []
                 for ride in rides {
                     let riddenStops = ride.stops
                     for segment in ride.segments {
