@@ -228,11 +228,6 @@ struct RideStrokeBuilderTests {
         print("RideStrokeBuilderTests: worker build of \(requests.count) segments took \(elapsed)")
     }
 
-    @Test("the default mode is today's main-actor path")
-    func defaultModeIsMainActor() {
-        #expect(RideStrokeBuilder.Mode.current == .mainActor)
-    }
-
     private static func plainKey(_ ride: String) -> RideLineCacheKey {
         RideLineCacheKey(rideID: ride, geometryDigest: 0, segmentIndex: 0, partIndex: 0, stroke: nil)
     }

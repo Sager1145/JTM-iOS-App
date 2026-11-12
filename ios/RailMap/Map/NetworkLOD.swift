@@ -99,6 +99,16 @@ enum NetworkLOD {
         )
     }
 
+    /// The one area trips and lines are prepared for: the build rect grown by
+    /// the shared padding (``MapBuildArea``).
+    static func tripArea(buildRect: MKMapRect, mapPointsPerScreenPoint: Double) -> MKMapRect {
+        let area = MapBuildArea.expanded(
+            .init(x: buildRect.origin.x, y: buildRect.origin.y,
+                  width: buildRect.size.width, height: buildRect.size.height),
+            mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+        return MKMapRect(x: area.x, y: area.y, width: area.width, height: area.height)
+    }
+
     /// Chooses which lines are eligible: near enough to be seen, and
     /// important enough for this zoom.
     ///

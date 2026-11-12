@@ -6,39 +6,23 @@ import RailPresentation
 
 /// Ride polylines built off the main actor (trip-loading plan, unit U5).
 ///
-/// Today `RailMapCoordinator.ridePolylines` slices, lane-offsets and
-/// Douglas-Peucker-simplifies every ride segment on the main actor; a full
-/// redraw of 500 rides blocked it for about 21.5 s (3,584 polyline misses).
-/// This type is that same arithmetic moved behind one pure function,
+/// Slicing, lane-offsetting and Douglas-Peucker simplification of every ride
+/// segment is one pure function,
 /// ``polylineCoordinates(for:frame:)``, which works on value inputs only, so a
 /// worker can run it. The coordinator captures a ``Request`` per missing
 /// segment on the main actor (cheap: array references, no geometry work), the
 /// worker answers with polylines, and the main actor only stores and installs
 /// them.
 ///
-/// The output is meant to be identical to the main-actor path it replaces:
-/// that path stays in the coordinator (`mainActorRidePolyline`) and ``Mode``
-/// picks which one runs, so the equality test can compare them.
+/// This is the only path: there is no main-actor slicing. The coordinator
+/// applies results on main and drops them when their request generation is
+/// stale.
 ///
 /// Work is shared between rides on the same track: a request that slices a
 /// built chain carries a ``Request/shareKey(frame:)`` of (chain, from, to,
 /// frame), and every ride with the same key reuses one simplified point list
 /// (each ride still gets its own `MKPolyline`).
 nonisolated enum RideStrokeBuilder {
-
-    /// Which implementation the coordinator uses. Selected once per launch.
-    enum Mode: Sendable {
-        /// The original path: built on the main actor inside `ridePolylines`.
-        case mainActor
-        /// Built by ``build(_:frame:memo:)`` on a worker before the rebuild.
-        case offMain
-
-        /// `RAILMAP_RIDE_STROKES=offMain` selects the new path; anything else,
-        /// including unset, keeps today's. The switch is a later decision.
-        static let current: Mode =
-            ProcessInfo.processInfo.environment["RAILMAP_RIDE_STROKES"] == "offMain"
-            ? .offMain : .mainActor
-    }
 
     /// The projection a polyline is drawn for: one zoom frame.
     struct Frame: Sendable, Equatable {

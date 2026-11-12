@@ -132,7 +132,7 @@ extension RailMapView.Surface {
             private var viewportResizeTask: Task<Void, Never>?
             /// Owns zoom-dependent line, stroke and ride-overlay geometry.
             private let networkGeometry = MapNetworkGeometryCache()
-            /// `RideStrokeBuilder.Mode.offMain`: the worker building the frame's
+            /// The worker building the frame's
             /// ride polylines, its identity and the frame it builds for.
             private var rideStrokePreparation: Task<Void, Never>?
             private var rideStrokePreparationID = UUID()
@@ -1308,7 +1308,7 @@ extension RailMapView.Surface {
                     : []
                 var needed = Set(selected.filter(\.continuous).map(\.id))
                 var selectedStrokeLineIDs: Set<String> = []
-                let rideRect = buildRect.insetBy(dx: -256 * mapScale, dy: -256 * mapScale)
+                let rideRect = NetworkLOD.tripArea(buildRect: buildRect, mapPointsPerScreenPoint: mapScale)
 #if DEBUG
                 let rideScanStarted = ContinuousClock.now
 #endif
@@ -1334,7 +1334,7 @@ extension RailMapView.Surface {
                     guard !networkGeometry.hasStrokeBuild(for: id) else { return nil }
                     guard let line = byID[id],
                           selectedStrokeLineIDs.contains(id)
-                            || line.intervalRects.contains(where: { $0.intersects(buildRect) }) else { return nil }
+                            || line.intervalRects.contains(where: { $0.intersects(rideRect) }) else { return nil }
                     return line
                 }
                 let gate = GeometryPreparationGate.decide(
@@ -1551,19 +1551,18 @@ extension RailMapView.Surface {
                 let strokeFrame = MapGeometryFrame(
                     zoom: zoom, laneLOD: networkBuildState.previewLaneLOD(at: zoom),
                     eraKey: geometryEraKey, on: mapView)
-                // The pad covers screen-space lane offsets and rounded corners.
-                let rideBuildRect = buildRect.insetBy(
-                    dx: -256 * strokeFrame.mapPointsPerScreenPoint,
-                    dy: -256 * strokeFrame.mapPointsPerScreenPoint)
+                // One area for trips and lines (covers screen-space lane offsets
+                // and rounded corners); strokes are selected with it too.
+                let rideBuildRect = NetworkLOD.tripArea(
+                    buildRect: buildRect,
+                    mapPointsPerScreenPoint: strokeFrame.mapPointsPerScreenPoint)
                 let frameStrokes = selectFrameStrokes(
                     selection: selection, buildRect: buildRect, rideBuildRect: rideBuildRect,
                     mapPointsPerScreenPoint: strokeFrame.mapPointsPerScreenPoint)
-                if RideStrokeBuilder.Mode.current == .offMain {
-                    guard prepareRideStrokes(
-                        on: mapView, frame: strokeFrame, rideBuildRect: rideBuildRect,
-                        strokes: frameStrokes.strokes
-                    ) else { return }
-                }
+                guard prepareRideStrokes(
+                    on: mapView, frame: strokeFrame, rideBuildRect: rideBuildRect,
+                    strokes: frameStrokes.strokes
+                ) else { return }
                 networkBuildState.commit(
                     zoom: zoom,
                     visibilityBucket: visibilityBucket,
@@ -2100,17 +2099,10 @@ extension RailMapView.Surface {
                         polyline = cached
                     } else {
                         cacheMisses += 1
-                        // `.offMain`: `prepareRideStrokes` built every drawn
-                        // segment on a worker before this rebuild ran, so a
-                        // miss here is a segment that draws nothing. Only
-                        // `.mainActor` builds geometry on this thread.
-                        guard RideStrokeBuilder.Mode.current == .mainActor,
-                            let built = mainActorRidePolyline(
-                                of: segment, ride: ride,
-                                mapPointsPerScreenPoint: mapPointsPerScreenPoint)
-                        else { continue }
-                        polyline = built
-                        networkGeometry.storeRidePolyline(polyline, for: key)
+                        // `prepareRideStrokes` built every drawn segment on a
+                        // worker before this rebuild ran, so a miss here is a
+                        // segment that draws nothing. No geometry on main.
+                        continue
                     }
                     if unprovenSections.contains(segment.segmentIndex) {
                         unproven.append(polyline)
@@ -2123,27 +2115,6 @@ extension RailMapView.Surface {
                     }
                 }
                 return (solid, crossDay, unproven, cacheMisses)
-            }
-
-            /// The original main-actor miss path, kept selectable
-            /// (`RideStrokeBuilder.Mode.mainActor`) so the worker path can be
-            /// compared against it. `RideStrokeBuilder.polylineCoordinates`
-            /// is the same arithmetic on value inputs.
-            private func mainActorRidePolyline(
-                of segment: RiddenRouteStore.DrawnSegment, ride: RiddenRouteStore.DrawnRide,
-                mapPointsPerScreenPoint: Double
-            ) -> MKPolyline? {
-                let built = builtStrokeCoordinates(of: segment, ride: ride)
-                let stroke = asCoordinates(built ?? segment.coordinates.map(\.clLocation))
-                guard stroke.count >= 2 else { return nil }
-                let latitude = MKMapPoint(x: segment.boundingRect.midX,
-                    y: segment.boundingRect.midY).coordinate.latitude
-                let epsilon = built == nil ? MKMetersPerMapPointAtLatitude(latitude)
-                    * mapPointsPerScreenPoint * RailStyle.simplifyTolerance : 0
-                let kept = Geometry.douglasPeuckerIndices(stroke, epsilonMeters: epsilon)
-                let points = kept.map { stroke[$0].clLocation }
-                guard points.count >= 2 else { return nil }
-                return MKPolyline(coordinates: points, count: points.count)
             }
 
             /// What one rebuild installs as this frame's strokes, chosen from the
@@ -2213,7 +2184,7 @@ extension RailMapView.Surface {
                 for id in result.neededLineIDs where result.strokes[id] == nil {
                     guard let line = linesByStrokeID[id],
                         selectedIDs.contains(id)
-                            || line.intervalRects.contains(where: { $0.intersects(buildRect) }),
+                            || line.intervalRects.contains(where: { $0.intersects(rideBuildRect) }),
                         let stroke = networkGeometry.strokeBuild(for: line.id) else { continue }
                     result.anchors[line.id] = stroke.anchors
                     result.strokes[line.id] = (
@@ -2270,7 +2241,7 @@ extension RailMapView.Surface {
                 return requests
             }
 
-            /// `.offMain` only: builds the missing ride polylines of the
+            /// Builds the missing ride polylines of the
             /// frame on a worker, stores them, and re-enters `rebuild`. Answers
             /// `true` when nothing is missing, so the rebuild goes on and only
             /// installs. Mirrors `prepareNetworkGeometry`'s return protocol.
@@ -2410,8 +2381,8 @@ extension RailMapView.Surface {
                 let started = ContinuousClock.now
                 let scope = dateScope
                 let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
-                let rideBuildRect = context.buildRect.insetBy(
-                    dx: -256 * mapPointsPerScreenPoint, dy: -256 * mapPointsPerScreenPoint)
+                let rideBuildRect = NetworkLOD.tripArea(
+                    buildRect: context.buildRect, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
                 let changedRides = rides.filter { change.changed.contains($0.id) }
                 // A full rebuild builds a needed chain the frame lacks; this
                 // path cannot, so such a ride takes the full rebuild.
@@ -2424,16 +2395,15 @@ extension RailMapView.Surface {
                             let ref = strokeRef(for: segment, of: ride),
                             !networkGeometry.containsStroke(for: ref.chainID),
                             let line = linesByStrokeID[ref.chainID],
-                            line.intervalRects.contains(where: { $0.intersects(context.buildRect) })
+                            line.intervalRects.contains(where: { $0.intersects(rideBuildRect) })
                         else { continue }
                         return false
                     }
                 }
 
-                // `.offMain` builds polylines on a worker only from a full
+                // Polylines are built on a worker only from a full
                 // rebuild; a changed ride that still needs one takes it.
-                if RideStrokeBuilder.Mode.current == .offMain,
-                    !rideStrokeRequests(
+                if !rideStrokeRequests(
                         for: changedRides, rideBuildRect: rideBuildRect,
                         strokeFor: { networkGeometry.stroke(for: $0) }).isEmpty {
                     return false
