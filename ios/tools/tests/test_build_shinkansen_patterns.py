@@ -113,7 +113,8 @@ class RealBundledFile(unittest.TestCase):
             findings, _, new_text, original = B.analyse(B.PATTERNS, B.PACKAGE, B.THROUGH, empty, True)
         self.assertEqual(findings.errors, [], findings.errors)
         self.assertEqual(new_text, raw, "generator must not change a file with no sources")
-        self.assertEqual(findings.checked, 34, "every Shinkansen base record is resolved to a corridor")
+        # 34 before the 2026-11 corrections; era splits at 2026-03-14 raised it to 52.
+        self.assertEqual(findings.checked, 52, "every Shinkansen base record is resolved to a corridor")
         # Today's real data also passes the strict base-data rules.
         self.assertEqual(findings.base, [], findings.base)
 
