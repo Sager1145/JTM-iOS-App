@@ -15,8 +15,9 @@ import Foundation
 //     4   2   formatVersion (1)
 //     6   2   semanticsVersion: what a ref means (resolver rules); bumped by
 //             hand whenever the resolver's behaviour changes
-//     8  32   topologyRevision: SHA-256 over the topology files the refs
-//             were resolved against (see `revision(ofTopologyFileHashes:)`)
+//     8  32   topologyRevision: SHA-256 over ALL bundled region topology
+//             files (not only the enabled regions, so enabling a region never
+//             discards the cache) the refs were resolved against (see `revision(ofTopologyFileHashes:)`)
 //    40  32   timetableRevision: SHA-256 of the timetable database the
 //             timetable-evidence step read; a new timetable is a miss
 //    72   4   entryCount
@@ -34,6 +35,7 @@ import Foundation
 //
 // Anything wrong (missing file, truncated, bad magic, bad checksum, bad
 // counts, an entry over the per-trip limit, duplicate keys) reads as empty.
+// A span with fromNode == toNode, or an empty/unknown gap reason, is corrupt.
 // A different topology or timetable revision or semantics version is a miss, also empty:
 // line indices, ordinals and metres mean nothing against another file.
 public enum RideRecordFile {
@@ -165,6 +167,7 @@ public enum RideRecordFile {
                 spans.reserveCapacity(spanCount)
                 for _ in 0..<spanCount {
                     let tag = UInt16(u16(at + 6))
+                    guard u16(at + 2) != u16(at + 4) else { return fail(.corrupt) }
                     spans.append(RideRefs.Span(
                         span: RailTopology.Span(line: UInt16(u16(at)), fromNode: UInt16(u16(at + 2)),
                                                 toNode: UInt16(u16(at + 4)), wraps: tag & (1 << 15) != 0),

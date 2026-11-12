@@ -85,7 +85,7 @@ struct RideRecordFileTests {
         #expect(read.status == .semanticsMismatch && read.entries.isEmpty)
     }
 
-    @Test("corrupt files read as empty", arguments: ["truncated", "magic", "body", "checksum", "extra", "tiny", "empty", "gapReasonZero", "gapReasonUndefined", "gapSection", "disabledRegion"])
+    @Test("corrupt files read as empty", arguments: ["truncated", "magic", "body", "checksum", "extra", "tiny", "empty", "gapReasonZero", "gapReasonUndefined", "gapSection", "disabledRegion", "spanSameNode"])
     func corrupt(_ kind: String) throws {
         let gapped = kind.hasPrefix("gap")
         let rides = gapped ? [Self.ride(1, spans: 1, gaps: 1)] : (1...5).map { Self.ride(UInt64($0)) }
@@ -100,6 +100,9 @@ struct RideRecordFileTests {
         case "gapReasonUndefined": bytes[bytes.count - 1] = 0x40; reseal()
         case "gapSection": bytes[bytes.count - 2] = 0xFF; bytes[bytes.count - 3] = 0xFF; reseal()
         case "disabledRegion": bytes[File.headerSize + 16] = RideRefs.Outcome.disabledRegion.rawValue; reseal()
+        case "spanSameNode":
+            let span = File.headerSize + 22
+            bytes[span + 4] = bytes[span + 2]; bytes[span + 5] = bytes[span + 3]; reseal()
         case "truncated": bytes.removeLast(5)
         case "magic": bytes[0] = 0
         case "body": bytes[File.headerSize + 20] ^= 0xFF
