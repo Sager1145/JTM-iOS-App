@@ -333,6 +333,7 @@ struct TopologyView {
 
         // Lines tile the node and edge tables exactly, so every node and edge belongs to
         // one validated line and no query can reach a record outside its line's range.
+        guard lineCount <= F.maxLinesPerRegion else { throw fail(.lines) }
         var expectedNode = 0, expectedEdge = 0
         for line in 0..<lineCount {
             let b = lineBase(line)

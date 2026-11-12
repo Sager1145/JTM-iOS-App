@@ -31,6 +31,11 @@ extension RailTopology {
     /// Deterministic shortest-length path between the two candidate node
     /// sets; nil when none exists. `includeWithheld` lets the path use
     /// withheld edges (the caller reports ``containsWithheldEdge(_:)``).
+    ///
+    /// A start node that is also a destination, or is joined to one by a
+    /// link, gives a proven path with no spans and zero length. That is not
+    /// a drawable route: the resolver must treat an empty path as a gap, or
+    /// build a full loop circuit itself (two spans, per the format document).
     public func route(_ query: SectionQuery, includeWithheld: Bool = false) -> SectionPath? {
         withView { view in
             if let spans = view.shortestPath(query, applyLineIDs: true, includeWithheld: includeWithheld, links: linkEntries) {

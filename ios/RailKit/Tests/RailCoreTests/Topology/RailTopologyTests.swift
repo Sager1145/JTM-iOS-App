@@ -81,6 +81,14 @@ struct RailTopologyTests {
         }
     }
 
+    @Test("a file with more lines than a region may hold is refused at open")
+    func tooManyLinesRefused() {
+        var net = TestNetwork()
+        net.lines = (0...F.maxLinesPerRegion).map { TestNetwork.Line(id: "l\($0)", nodes: [], edges: []) }
+        let data = net.encode()
+        #expect(throws: F.FormatError.badTable(.lines)) { try RailTopology(data: data) }
+    }
+
     @Test("a node, link or stop that no line covers is refused at open")
     func uncoveredNodesRefused() throws {
         // Two chains of two stations; shrink the last line's node count so its last node is uncovered,
