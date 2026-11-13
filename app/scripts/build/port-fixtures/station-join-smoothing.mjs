@@ -146,15 +146,17 @@ export const SYNTHETIC = {
       kind: "sharedNode",
       nodeKey: "130.42118,33.58958",
       slice: 150,
+      expect: { roundedJoins: 0, relaxed: false, failures: [] },
     },
     {
       // 立野: 豊肥線's two parts plus 高森線. Three candidate pairs, one
       // selected — the fork case where a prong DOES win, and the winning
-      // chain is then accepted under the relaxed radius floor.
+      // chain is accepted at the requested radius (not relaxed).
       label: "fork-resolved-tateno",
       kind: "sharedNode",
       nodeKey: "130.96514,32.87763",
       slice: 150,
+      expect: { roundedJoins: 1, relaxed: false, failures: [] },
     },
     {
       // 新神戸/三宮 area: 神戸市営 山手線 meets 西神線 at 74.8°, and the
@@ -166,27 +168,37 @@ export const SYNTHETIC = {
       kind: "sharedNode",
       nodeKey: "135.14566,34.65832",
       slice: 150,
+      expect: { roundedJoins: 0, relaxed: false, failures: ["radius"] },
     },
     {
-      // 万葉線 新湊港線 meets 高岡軌道線. Radius short, but within
-      // STATION_JOIN_RADIUS_RELAX × requested with both other constraints
-      // met — the relaxation branch, which stamps the accepted floor on the
+      // 富山地方鉄道 上滝線 meets 不二越線 (a real shared display-part
+      // endpoint, found by sweeping the package). Radius short, but within
+      // STATION_JOIN_RADIUS_RELAX x requested with both other constraints
+      // met: the relaxation branch, which stamps the accepted floor on the
       // curve so diagnostics measure against what was accepted.
-      label: "relax-radius-manyo",
+      //
+      // This was 万葉線 新湊港線/高岡軌道線 until 2535b4bee gave the jp package
+      // station-pinned display geometry (displayStationCoordinates): that
+      // join's endpoint moved 40 m onto the station, and at the new endpoint
+      // the pair is no longer relaxed at all. `expect` makes the build fail
+      // if a case stops meaning what its label says.
+      label: "relax-radius-kamidaki-fujikoshi",
       kind: "sharedNode",
-      nodeKey: "137.06635,36.78893",
+      nodeKey: "137.22044,36.67031",
       slice: 150,
       base: true,
+      expect: { roundedJoins: 1, relaxed: true, failures: [] },
     },
     {
       // The same join with the deviation budget turned down to 1500 m: now
       // it misses BOTH constraints, so the failure reason is the joined
       // "radius+deviation" rather than either alone.
-      label: "reject-radius-deviation-manyo",
+      label: "reject-radius-deviation-kamidaki-fujikoshi",
       kind: "sharedNode",
-      nodeKey: "137.06635,36.78893",
+      nodeKey: "137.22044,36.67031",
       slice: 150,
       settings: { fitCurveMaxDeviation: 1500 },
+      expect: { roundedJoins: 0, relaxed: false, failures: ["radius+deviation"] },
     },
     {
       // 成田線 area, deviation budget 1500 m: the refit holds the radius and
@@ -198,6 +210,7 @@ export const SYNTHETIC = {
       nodeKey: "140.38725,35.76969",
       slice: 150,
       settings: { fitCurveMaxDeviation: 1500 },
+      expect: { roundedJoins: 0, relaxed: false, failures: ["deviation"] },
     },
     {
       // 名城線 is Nagoya's loop, but its display part does NOT close (6.3 km
@@ -209,6 +222,7 @@ export const SYNTHETIC = {
       lineId: "jp-名古屋市-4号線名城線",
       part: 0,
       count: 3,
+      expect: { roundedJoins: 0, relaxed: false, failures: ["radius"] },
     },
   ],
   tw: [
@@ -223,6 +237,7 @@ export const SYNTHETIC = {
       lineId: "tw-klrt-c",
       part: 0,
       count: 3,
+      expect: { roundedJoins: 0, relaxed: false, failures: [] },
     },
     {
       // 花蓮: 北迴線 meets 臺東線. A plain two-curve join under the tw
@@ -232,6 +247,7 @@ export const SYNTHETIC = {
       nodeKey: "121.60079,23.99261",
       slice: 150,
       base: true,
+      expect: { roundedJoins: 1, relaxed: false, failures: [] },
     },
     {
       // 阿里山 沼平/祝山: FOUR display parts end at one node — the switchback
@@ -242,6 +258,7 @@ export const SYNTHETIC = {
       kind: "sharedNode",
       nodeKey: "120.80501,23.51062",
       slice: 150,
+      expect: { roundedJoins: 0, relaxed: false, failures: [] },
     },
   ],
 };
@@ -741,6 +758,30 @@ export function build({ APP_DIR }) {
       kind: "real",
       ...result.real,
     });
+    // A case's label is a claim about which branch it reaches. The shipped
+    // package moves under this fixture (2535b4bee shifted an endpoint 40 m
+    // and silently turned a "relaxed" case into a plain join), so every
+    // labelled outcome is asserted at build time rather than recorded blind.
+    for (const spec of SYNTHETIC[country]) {
+      const mirror = result.synthetic.find((m) => m.label === spec.label);
+      if (!mirror) throw new Error(`${country}:${spec.label} missing from the driver output`);
+      const got = {
+        roundedJoins: mirror.expected.roundedJoins,
+        relaxed: mirror.expected.joined.some((c) => c.stationJoinRadiusRelaxed),
+        failures: mirror.expected.failures.map((f) => f.reason),
+      };
+      if (JSON.stringify(got) !== JSON.stringify(spec.expect))
+        throw new Error(
+          `${country}:${spec.label} no longer reaches its labelled branch: ` +
+            `expected ${JSON.stringify(spec.expect)}, got ${JSON.stringify(got)}. ` +
+            `Re-sweep the shared endpoints for a node that does, or rename the case.`,
+        );
+    }
+    // The degenerate mirrors are rearrangements of the `base` pair, which
+    // must JOIN under the ordinary rules or they prove nothing.
+    const alias = result.synthetic.find((m) => m.label === "shared-curve-object");
+    if (!alias || alias.expected.roundedJoins < 1)
+      throw new Error(`${country}: the base pair no longer joins; the degenerate mirrors are vacuous`);
     for (const mirror of result.synthetic)
       cases.push({
         label: `${country}:${mirror.label}`,
