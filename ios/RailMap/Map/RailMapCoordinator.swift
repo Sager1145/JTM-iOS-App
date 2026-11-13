@@ -23,6 +23,10 @@ import OSLog
     static var matchingSkipped = 0
     static var matchingDeferred = 0
     /// How long network-geometry preparations waited for their permit.
+    /// Every overlay mounted on the map after the last rebuild, and how many of
+    /// them are trip (ride) overlays; `RenderStats.overlays` is the network's.
+    static var totalOverlays = 0
+    static var rideOverlays = 0
     static var geometryWaits = 0
     static var lastGeometryWaitMilliseconds = 0
     static var maxGeometryWaitMilliseconds = 0
@@ -2398,6 +2402,8 @@ extension RailMapView.Surface {
                     targetReadiness: targetRideReadiness(on: mapView),
                     selectedTrainID: selectedTrainID, selectedDate: selectedDate)
                 lastDiagnosticSnapshot = snapshot
+                MapRenderProbe.totalOverlays = mapView.overlays.count
+                MapRenderProbe.rideOverlays = rideOverlays.count + selectedRideOverlays.count + rideCasings.count
                 diagnostics.publish(snapshot, on: mapView)
 #endif
                 DispatchQueue.main.async { [onRender] in onRender(stats) }

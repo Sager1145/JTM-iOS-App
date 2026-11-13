@@ -49,7 +49,7 @@ Values parse as JSON when they can, so `save=true`, `timeoutMs=5000`, `via='["�
 
 | Command | Args | Returns |
 |---|---|---|
-| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, reloadProgress), map (ready, `railMapRenderStatus` text, render stats), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
+| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, ridesInTabScope, routeCacheHits, routesSolvedThisLaunch, storedFailures, reloadProgress), map (ready, `railMapRenderStatus` text, render stats, totalOverlays and rideOverlays = every mounted overlay and the trip ones), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
 | `loadSamples` | `samples=train-store,train-store-tw` (default `train-store`; names are `RideLibrary.Sample.all` resources) | merged count and ms per sample |
 | `useStorage` | `id=UUID` | ok if the app runs on that store, else `rejected` with `relaunchRequired` (then `launch --storage UUID`) |
 | `reloadAll` | `wait=true`, `timeoutMs`, `force=false` | ms, rides. Default is the user-facing repair (cached routes read back, only missing ones solved, map stays drawn); `force=true` is the old full rebuild (wipes the route cache and every memo, solves every trip) |

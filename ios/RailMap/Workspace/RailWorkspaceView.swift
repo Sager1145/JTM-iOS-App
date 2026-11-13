@@ -3809,6 +3809,7 @@ extension RailWorkspaceView {
             sheetID: { sheet?.id },
             renderStats: { render },
             drawableRideCount: { mapRides.count },
+            scopedRideCount: { scopedMapRides.count },
             stage: { "\(stageSelection)" },
             tab: { selection.rawValue })
     }

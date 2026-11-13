@@ -2638,7 +2638,8 @@ final class RiddenRouteStore {
             hasDrawableSegments: !segments.isEmpty, storedFailure: cache.failure,
             retryFailures: retryFailures) {
         case .solve: return .miss(computed, digest: digest)
-        case .reuseSolved, .reuseFailure: break
+        case .reuseSolved: noteCacheRead(storedFailure: false)
+        case .reuseFailure: noteCacheRead(storedFailure: true)
         }
         return .hit(drawnRide(
             train,
@@ -2751,6 +2752,11 @@ final class RiddenRouteStore {
             ?? URL.temporaryDirectory
     }
 
+    /// The folder holding every region's route cache and the digest index.
+    nonisolated static var routeCacheFolder: URL {
+        cachesBase.appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+    }
+
     #if DEBUG
     private nonisolated static let cacheRootOverride = OSAllocatedUnfairLock<URL?>(initialState: nil)
 
@@ -2796,8 +2802,28 @@ final class RiddenRouteStore {
     }
     #endif
 
+    #if DEBUG
+    private nonisolated static let loadCounterLog = OSAllocatedUnfairLock(
+        initialState: (cacheHits: 0, storedFailures: 0, solved: 0))
+
+    /// DEBUG diagnostics for the app-control `state`: this launch's route cache
+    /// hits (solved entries), stored failures reused, and routes sent to the solver.
+    nonisolated static var loadCounters: (cacheHits: Int, storedFailures: Int, solved: Int) {
+        loadCounterLog.withLock { $0 }
+    }
+    #endif
+
+    private nonisolated static func noteCacheRead(storedFailure: Bool) {
+        #if DEBUG
+        loadCounterLog.withLock {
+            if storedFailure { $0.storedFailures += 1 } else { $0.cacheHits += 1 }
+        }
+        #endif
+    }
+
     private nonisolated static func noteSolveAttempt(_ trains: [Train]) {
         #if DEBUG
+        loadCounterLog.withLock { $0.solved += trains.filter { !$0.requiresRouteConfirmation }.count }
         solveAttemptLog.withLock { log in
             for train in trains where !train.requiresRouteConfirmation { log[train.id, default: 0] += 1 }
         }

@@ -553,6 +553,10 @@ final class AppControlHost: AppControlDriver {
                 "phase": .string(phase),
                 "rides": .number(Double(routes.rides.count)),
                 "drawable": workspace.map { .number(Double($0.drawableRideCount())) } ?? .null,
+                "ridesInTabScope": workspace.map { .number(Double($0.scopedRideCount())) } ?? .null,
+                "routeCacheHits": .number(Double(RiddenRouteStore.loadCounters.cacheHits)),
+                "routesSolvedThisLaunch": .number(Double(RiddenRouteStore.loadCounters.solved)),
+                "storedFailures": .number(Double(RiddenRouteStore.loadCounters.storedFailures)),
                 "reloadProgress": routes.reloadProgress.map { ["done": .number(Double($0.done)), "total": .number(Double($0.total))] } ?? .null,
             ],
             "map": [
@@ -565,6 +569,8 @@ final class AppControlHost: AppControlDriver {
                         "buildMs": .number(Double(stats.buildMilliseconds)), "culledOffScreen": .number(Double(stats.culledOffScreen)),
                     ]
                 } ?? .null,
+                "totalOverlays": .number(Double(MapRenderProbe.totalOverlays)),
+                "rideOverlays": .number(Double(MapRenderProbe.rideOverlays)),
                 "networkLines": .number(Double(stores.network.lines.count)),
                 "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
                     [
@@ -692,8 +698,7 @@ final class AppControlHost: AppControlDriver {
     /// The solved-route cache on disk plus the process memos a memory warning
     /// releases (the same calls `AppShell` makes then).
     func clearRouteCaches() async -> AppControlJSON {
-        let routes = (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-            ?? URL.temporaryDirectory).appending(path: "RailMap/Routes", directoryHint: .isDirectory)
+        let routes = RiddenRouteStore.routeCacheFolder
         let bytes = await Task.detached(priority: .utility) { AppControlHost.directorySize(routes) }.value
         // The store's own discard (disk cache, solved-journey memo, solver memos), as Reload all uses.
         await RiddenRouteStore.discardSolvedRoutes()
@@ -733,8 +738,7 @@ final class AppControlHost: AppControlDriver {
         var result: [String: AppControlJSON] = [:]
         let roots: [(String, URL?)] = [
             ("caches", fm.urls(for: .cachesDirectory, in: .userDomainMask).first),
-            ("routeCache", fm.urls(for: .cachesDirectory, in: .userDomainMask).first?
-                .appending(path: "RailMap/Routes", directoryHint: .isDirectory)),
+            ("routeCache", RiddenRouteStore.routeCacheFolder),
             ("applicationSupport", URL.applicationSupportDirectory),
             ("documents", fm.urls(for: .documentDirectory, in: .userDomainMask).first),
             ("tmp", URL.temporaryDirectory),
