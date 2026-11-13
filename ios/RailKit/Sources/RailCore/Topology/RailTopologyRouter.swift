@@ -7,51 +7,71 @@ import Foundation
 // (reviewed junction or dated through service). Equal station codes, equal
 // names and shared stations never join two lines.
 //
-// Rules, in the order the plan's resolver relies on them:
-//  - hard filters: `lineIDs` and `institutions` limit which lines may be used,
+// One call is one attempt of the production solver's ladder (`RailTopologySolver.swift`
+// holds the ladder). Rules, each with a unit test in `RailTopologyRouterTests`:
+//  - hard filters: `lineIDs`, `operators` and `institutions` limit which lines may be used,
 //    and so which links (both end lines must be allowed);
 //  - dated rows: a line, an edge or a link is usable on a day when
 //    `validFrom <= day < validTo`; an undated query uses rows without a `validTo`;
-//  - direction: an edge is travelled first-to-second only with `forward`,
-//    second-to-first only with `reverse`; a directed link only A to B;
+//  - direction: the production graph is bidirectional and the solver excludes direction
+//    section-locally (`RouteSolver.directionExclusion`, `:3318-3359`): on a line that holds a
+//    start and an end node, the edges between them are blocked when the line's edge flags
+//    forbid that travel direction. Nowhere else do the flags apply. A directed link is
+//    crossed only A to B;
 //  - withheld edges are not used unless asked for;
-//  - length: edge `lengthCm` times a whole-number factor, the production solver's
-//    cost model (`RouteSolver.swift:21-25`, `:4010-4026`): 1, plus 8 on a line outside a
-//    non-empty preferred-line set, plus 180 on a line whose institution is outside a
-//    non-empty preferred-institution set; links cost nothing. Integer costs only;
+//  - cost: edge `lengthCm` times a whole-number factor, the production solver's cost model
+//    (`RouteSolver.swift:21-25`, `:4010-4026`): 1, plus 8 on a line outside a non-empty
+//    preferred-line set, plus 6 on a line whose operator is outside a non-empty
+//    preferred-operator set, plus 180 on a line whose institution is outside a non-empty
+//    preferred-institution set; and for that institution, 5,000 m for each source step of
+//    each edge (`Edge.fineEdges`). Links cost nothing. Integer costs only;
 //  - hard exclusion: lines with an excluded institution are never used;
+//  - detour guard (`RouteSolver.swift:3636-3640`): a path longer than max(3.8 x straight line
+//    + 6,000 m, 12,000 m) between ends more than 1,500 m apart is rejected, and the search
+//    goes on to the next end node it settles;
+//  - same-name endpoint guard (`:3548-3570`): for an end given by name only, a path whose end
+//    is more than twice as far from the other end as another same-name station, beyond
+//    20 km, is rejected and kept only as the last resort, reported `unproven`;
 //  - ties: among equal costs the path with the fewest row changes (links taken) wins,
 //    then the first path found in settle order, ordered by (cost, row changes,
 //    line id rank, node ordinal): a pure function of the line ids and the query,
-//    independent of the order of `from` and `to` and of the order of lines in the file;
-//  - no path under the line filter: the same search without `lineIDs`
-//    (institutions still apply), reported `unproven`.
+//    independent of the order of `from` and `to` and of the order of lines in the file.
+//  No A*: 751 edges are shorter than the straight line.
 
 extension RailTopology {
-    /// Cost factors of the production solver (`RouteSolver.nonPreferredLineLengthFactor` 8
-    /// and `nonPreferredInstitutionLengthFactor` 180, each added to the length itself).
-    /// The solver's flat 5,000 per fine-geometry edge on a non-preferred institution is not
-    /// ported: a topology edge spans many fine edges and the file does not count them.
+    /// Cost factors of the production solver (`RouteSolver.nonPreferredLineLengthFactor` 8,
+    /// `nonPreferredOperatorLengthFactor` 6 and `nonPreferredInstitutionLengthFactor` 180, each
+    /// added to the length itself).
     public static let nonPreferredLineFactor: UInt64 = 9
+    public static let nonPreferredOperatorFactor: UInt64 = 7
     public static let nonPreferredInstitutionFactor: UInt64 = 181
+    /// `RouteSolver.nonPreferredInstitutionEdgePenalty` 5,000 m, in centimetres, per source step.
+    public static let nonPreferredInstitutionEdgeCm: UInt64 = 500_000
+    /// Detour guard constants (`RouteSolver.swift:3636-3640`), metres.
+    static let detourMinStraightMetres = 1_500.0
+    static let detourStraightFactor = 3.8
+    static let detourSlackMetres = 6_000.0
+    static let detourFloorMetres = 12_000.0
+    /// Same-name endpoint guard constants (`RouteSolver.endpointAmbiguity*`), metres and ratio.
+    static let sameNameMinStraightMetres = 20_000.0
+    static let sameNameDistanceFactor = 2.0
+    /// Nodes closer than this to the node an endpoint ended on are the same station, not an alternative.
+    static let sameStationMetres = 200.0
 
-    /// Deterministic shortest-length path between the two candidate node
-    /// sets; nil when none exists. `includeWithheld` lets the path use
-    /// withheld edges (the caller reports ``containsWithheldEdge(_:)``).
+    /// Deterministic shortest-cost path between the two candidate node sets; nil when none
+    /// exists. `includeWithheld` lets the path use withheld edges (the caller reports
+    /// ``containsWithheldEdge(_:)``).
     ///
-    /// A start node that is also a destination, or is joined to one by a
-    /// link, gives a proven path with no spans and zero length. That is not
-    /// a drawable route: the resolver must treat an empty path as a gap, or
-    /// build a full loop circuit itself (two spans, per the format document).
+    /// A start node that is also a destination, or is joined to one by a link, gives a proven
+    /// path with no spans and zero length. That is not a drawable route: the resolver must
+    /// treat an empty path as a gap, or build a full loop circuit itself (two spans, per the
+    /// format document).
+    ///
+    /// The path is `unproven` only when the same-name guard rejected every path found and this
+    /// one is the first of them.
     public func route(_ query: SectionQuery, includeWithheld: Bool = false) -> SectionPath? {
         withView { view in
-            if let spans = view.shortestPath(query, applyLineIDs: true, includeWithheld: includeWithheld, links: linkEntries, lineRank: lineRank) {
-                return SectionPath(spans: spans, lengthCm: spans.reduce(0) { $0 + view.lengthCm(of: $1) })
-            }
-            guard !query.lineIDs.isEmpty,
-                  let spans = view.shortestPath(query, applyLineIDs: false, includeWithheld: includeWithheld, links: linkEntries, lineRank: lineRank)
-            else { return nil }
-            return SectionPath(spans: spans, lengthCm: spans.reduce(0) { $0 + view.lengthCm(of: $1) }, unproven: true)
+            view.shortestPath(query, includeWithheld: includeWithheld, links: linkEntries, lineRank: lineRank)
         }
     }
 }
@@ -108,12 +128,22 @@ extension TopologyView {
 
     private func idBytes(_ ids: Set<String>) -> [[UInt8]] { ids.map { Array($0.utf8) } }
 
-    /// Per line: 0 when unusable (not valid on the day, or failing a hard filter),
-    /// otherwise the cost factor applied to the length of its edges (at least 1).
-    private func lineFactors(_ query: RailTopology.SectionQuery, applyLineIDs: Bool) -> [UInt64] {
-        let wanted = applyLineIDs ? idBytes(query.lineIDs) : []
+    /// Whether the string at `ref` equals one of `set`; an absent string equals none.
+    private func stringIn(_ ref: UInt32, _ set: [[UInt8]]) -> Bool {
+        guard ref != F.noString else { return false }
+        return set.contains { $0.withUnsafeBytes { stringEquals(ref, $0) } }
+    }
+
+    /// Per line: factor 0 when unusable (not valid on the day, or failing a hard filter),
+    /// otherwise the cost factor applied to the length of its edges (at least 1); and the
+    /// flat centimetres charged for each source step of each of its edges.
+    private func lineCosts(_ query: RailTopology.SectionQuery) -> (factor: [UInt64], perStepCm: [UInt64]) {
+        let wanted = idBytes(query.lineIDs)
+        let wantedOperators = idBytes(query.operators)
         let preferred = idBytes(query.preferredLineIDs)
+        let preferredOperators = idBytes(query.preferredOperators)
         var factors = [UInt64](repeating: 0, count: lineCount)
+        var perStep = [UInt64](repeating: 0, count: lineCount)
         for line in 0..<lineCount {
             let b = lineBase(line)
             guard F.isValid(on: query.day, from: u32(b + F.Line.validFrom), to: u32(b + F.Line.validTo)) else { continue }
@@ -122,24 +152,58 @@ extension TopologyView {
             // (`RouteSolver.edgeHasPreferredInstitution`, `:266-280`).
             if !query.institutions.isEmpty, institution != 0, !query.institutions.contains(institution) { continue }
             if query.excludedInstitutions.contains(institution) { continue }
-            if query.excludeHighSpeed, F.LineFlag(rawValue: u16(b + F.Line.flags)).contains(.highSpeed) { continue }
             let id = u32(b + F.Line.id)
-            if !wanted.isEmpty, !wanted.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) { continue }
+            let operatorRef = u32(b + F.Line.operatorName)
+            if !wanted.isEmpty, !stringIn(id, wanted) { continue }
+            if !wantedOperators.isEmpty, !stringIn(operatorRef, wantedOperators) { continue }
             var factor: UInt64 = 1
-            if !preferred.isEmpty, !preferred.contains(where: { $0.withUnsafeBytes { stringEquals(id, $0) } }) {
+            if !preferred.isEmpty, !stringIn(id, preferred) {
                 factor += RailTopology.nonPreferredLineFactor - 1
+            }
+            if !preferredOperators.isEmpty, operatorRef != F.noString, !stringIn(operatorRef, preferredOperators) {
+                factor += RailTopology.nonPreferredOperatorFactor - 1
             }
             if !query.preferredInstitutions.isEmpty, institution != 0, !query.preferredInstitutions.contains(institution) {
                 factor += RailTopology.nonPreferredInstitutionFactor - 1
+                perStep[line] = RailTopology.nonPreferredInstitutionEdgeCm
             }
             factors[line] = factor
         }
-        return factors
+        return (factors, perStep)
     }
 
-    func shortestPath(_ query: RailTopology.SectionQuery, applyLineIDs: Bool, includeWithheld: Bool,
-                      links: [RailTopology.LinkEntry], lineRank: [UInt32]) -> [RailTopology.Span]? {
-        let factors = lineFactors(query, applyLineIDs: applyLineIDs)
+    /// Global edge indices the section may not use: on each line that holds a start and an end
+    /// node, the edges strictly between them when the edge's flags forbid travelling that way.
+    private func directionBlocked(_ query: RailTopology.SectionQuery) -> Set<Int> {
+        var starts: [Int: [Int]] = [:], ends: [Int: [Int]] = [:]
+        for ref in query.from where global(ref) != nil { starts[Int(ref.line), default: []].append(Int(ref.node)) }
+        for ref in query.to where global(ref) != nil { ends[Int(ref.line), default: []].append(Int(ref.node)) }
+        var blocked = Set<Int>()
+        for (line, fromOrdinals) in starts {
+            guard let toOrdinals = ends[line] else { continue }
+            for f in fromOrdinals {
+                for t in toOrdinals where t != f {
+                    let needed: F.EdgeFlag = f < t ? .forward : .reverse
+                    for k in min(f, t)..<max(f, t) {
+                        let edge = edgeGlobal(line: line, ordinal: k)
+                        if !F.EdgeFlag(rawValue: u16(edgeBase(edge) + F.Edge.flags)).contains(needed) { blocked.insert(edge) }
+                    }
+                }
+            }
+        }
+        return blocked
+    }
+
+    private func coordinate(_ node: Int) -> Coordinate {
+        let b = nodeBase(node)
+        return Coordinate(lon: Double(Float(bitPattern: u32(b + F.Node.longitude))),
+                          lat: Double(Float(bitPattern: u32(b + F.Node.latitude))))
+    }
+
+    func shortestPath(_ query: RailTopology.SectionQuery, includeWithheld: Bool,
+                      links: [RailTopology.LinkEntry], lineRank: [UInt32]) -> RailTopology.SectionPath? {
+        let (factors, perStepCm) = lineCosts(query)
+        let blocked = directionBlocked(query)
         func usable(_ line: Int) -> Bool { factors[line] != 0 }
         /// Settle-order tie-break key: line id rank, then node ordinal.
         func key(_ node: Int) -> UInt64 {
@@ -173,35 +237,84 @@ extension TopologyView {
             }
         }
 
+        // Candidate stations for the same-name guard: every same-name node the caller gave, usable or
+        // not, as the solver compares against every same-name station.
+        let fromCandidates = query.fromNameOnly ? query.from.compactMap { global($0) } : []
+        let toCandidates = query.toNameOnly ? query.to.compactMap { global($0) } : []
+        /// Distance to the nearest candidate that is another station than `node`.
+        func nearestAlternative(_ candidates: [Int], excluding node: Int, from point: Coordinate) -> Double? {
+            let here = coordinate(node)
+            var nearest: Double?
+            for candidate in candidates {
+                let c = coordinate(candidate)
+                if Geometry.distanceMeters(c, here) <= RailTopology.sameStationMetres { continue }
+                let d = Geometry.distanceMeters(c, point)
+                if nearest == nil || d < nearest! { nearest = d }
+            }
+            return nearest
+        }
+        func endpointImplausible(root: Int, target: Int, straight: Double) -> Bool {
+            guard query.fromNameOnly || query.toNameOnly, straight > RailTopology.sameNameMinStraightMetres else { return false }
+            if query.toNameOnly,
+               let alternative = nearestAlternative(toCandidates, excluding: target, from: coordinate(root)),
+               straight > alternative * RailTopology.sameNameDistanceFactor { return true }
+            if query.fromNameOnly,
+               let alternative = nearestAlternative(fromCandidates, excluding: root, from: coordinate(target)),
+               straight > alternative * RailTopology.sameNameDistanceFactor { return true }
+            return false
+        }
+        var lastResort: RailTopology.SectionPath?
+
         while let (_, _, _, node) = heap.pop() {
             let u = Int(node)
             if settled[u] { continue }
             settled[u] = true
-            if targets.contains(node) { return reconstruct(from: u, prev: prev, prevEdge: prevEdge) }
+            if targets.contains(node) {
+                let built = chain(to: u, prev: prev, prevEdge: prevEdge)
+                let straight = Geometry.distanceMeters(coordinate(built.root), coordinate(u))
+                let pathMetres = Double(built.edgeCm) / 100
+                let tooLong = straight > RailTopology.detourMinStraightMetres
+                    && pathMetres > max(straight * RailTopology.detourStraightFactor + RailTopology.detourSlackMetres,
+                                        RailTopology.detourFloorMetres)
+                if !tooLong {
+                    if !endpointImplausible(root: built.root, target: u, straight: straight) {
+                        let spans = spans(of: built.steps)
+                        return RailTopology.SectionPath(spans: spans, lengthCm: spans.reduce(0) { $0 + lengthCm(of: $1) })
+                    }
+                    if lastResort == nil {
+                        let spans = spans(of: built.steps)
+                        lastResort = RailTopology.SectionPath(
+                            spans: spans, lengthCm: spans.reduce(0) { $0 + lengthCm(of: $1) }, unproven: true)
+                    }
+                }
+            }
 
             let line = Int(u16(nodeBase(u) + F.Node.line))
             let n = lineNodeCount(line), firstNode = lineFirstNode(line)
             let ordinal = u - firstNode
             let loop = lineIsLoop(line)
             let weight = factors[line]
+            let stepCm = perStepCm[line]
 
-            func step(edge k: Int, to nextOrdinal: Int, needs direction: F.EdgeFlag) {
+            func step(edge k: Int, to nextOrdinal: Int) {
                 let v = firstNode + nextOrdinal
                 guard !settled[v] else { return }
-                let eb = edgeBase(lineFirstEdge(line) + k)
+                let global = lineFirstEdge(line) + k
+                let eb = edgeBase(global)
                 let edgeFlags = F.EdgeFlag(rawValue: u16(eb + F.Edge.flags))
-                guard edgeFlags.contains(direction),
+                guard !blocked.contains(global),
                       includeWithheld || !edgeFlags.contains(.withheld),
                       F.isValid(on: query.day, from: u32(eb + F.Edge.validFrom), to: u32(eb + F.Edge.validTo))
                 else { return }
-                relax(u, v, cost: UInt64(u32(eb + F.Edge.lengthCm)) * weight, rowChange: 0, edge: UInt32(k))
+                let cost = UInt64(u32(eb + F.Edge.lengthCm)) * weight + stepCm * UInt64(u32(eb + F.Edge.fineEdges))
+                relax(u, v, cost: cost, rowChange: 0, edge: UInt32(k))
             }
             // Towards higher ordinals over edge `ordinal`.
-            if loop { step(edge: ordinal, to: (ordinal + 1) % n, needs: .forward) }
-            else if ordinal + 1 < n { step(edge: ordinal, to: ordinal + 1, needs: .forward) }
+            if loop { step(edge: ordinal, to: (ordinal + 1) % n) }
+            else if ordinal + 1 < n { step(edge: ordinal, to: ordinal + 1) }
             // Towards lower ordinals over edge `ordinal - 1` (the closing edge from node 0 on a loop).
-            if ordinal > 0 { step(edge: ordinal - 1, to: ordinal - 1, needs: .reverse) }
-            else if loop { step(edge: n - 1, to: n - 1, needs: .reverse) }
+            if ordinal > 0 { step(edge: ordinal - 1, to: ordinal - 1) }
+            else if loop { step(edge: n - 1, to: n - 1) }
 
             // Links, found by binary search of the sorted link index.
             var lo = 0, hi = links.count
@@ -222,20 +335,32 @@ extension TopologyView {
                 relax(u, v, cost: 0, rowChange: 1, edge: Self.viaLink)
             }
         }
-        return nil
+        return lastResort
     }
 
-    /// Spans from the predecessor chain: consecutive edge steps on one line in
-    /// one direction make one span; a link ends it.
-    private func reconstruct(from target: Int, prev: [UInt32], prevEdge: [UInt32]) -> [RailTopology.Span] {
-        var steps: [(from: Int, to: Int, edge: UInt32)] = []
+    private struct Step { var from: Int; var to: Int; var edge: UInt32 }
+
+    /// The predecessor chain to `target`: its steps in travel order, the node it started at,
+    /// and the summed length of its edge steps in centimetres.
+    private func chain(to target: Int, prev: [UInt32], prevEdge: [UInt32]) -> (steps: [Step], root: Int, edgeCm: UInt64) {
+        var steps: [Step] = []
         var g = target
+        var edgeCm: UInt64 = 0
         while prev[g] != .max {
-            steps.append((Int(prev[g]), g, prevEdge[g]))
+            steps.append(Step(from: Int(prev[g]), to: g, edge: prevEdge[g]))
+            if prevEdge[g] != Self.viaLink {
+                let line = Int(u16(nodeBase(g) + F.Node.line))
+                edgeCm += UInt64(u32(edgeBase(lineFirstEdge(line) + Int(prevEdge[g])) + F.Edge.lengthCm))
+            }
             g = Int(prev[g])
         }
         steps.reverse()
+        return (steps, g, edgeCm)
+    }
 
+    /// Spans from the steps: consecutive edge steps on one line in one direction make one
+    /// span; a link ends it.
+    private func spans(of steps: [Step]) -> [RailTopology.Span] {
         var spans: [RailTopology.Span] = []
         var current: (line: Int, up: Bool, from: Int, to: Int, wraps: Bool)?
         func flush() {

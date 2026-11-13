@@ -91,9 +91,11 @@ struct TopologyShadowComparisonTests {
 
     static func kmClose(_ a: Double, _ b: Double) -> Bool { abs(a - b) <= max(0.3, 0.01 * max(a, b)) }
 
-    /// What a section asks the router, built the way the production solver builds its hints.
+    /// What a section asks the ladder, built the way the production solver builds its hints
+    /// (`RouteSolver.buildSegmentRouteHints`): explicit lines and operators from the section,
+    /// the trip's preferences, and the lines and operators both ends have in common.
     struct Question {
-        var query: RailTopology.SectionQuery
+        var plan: RailTopology.SectionPlan
         var intervalCodes: [String]
         var fromNodes: [RailTopology.NodeRef]
     }
@@ -122,28 +124,50 @@ struct TopologyShadowComparisonTests {
         let allowed = Set(RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: "jp").compactMap { UInt16($0) })
         let excluded = Set(RouteGraph.hardExcludedInstitutionTypeCodes(
             trainType: train.trainType ?? "", company: train.company ?? "", country: "jp").compactMap { UInt16($0) })
-        var preferredNames = Set((policy?.preferredLineNames ?? []).filter { !$0.isEmpty })
-        preferredNames.formUnion((section.lineNames ?? []).filter { !$0.isEmpty })
-        var query = RailTopology.SectionQuery(from: from, to: to, day: day)
-        query.lineIDs = Set(section.lineIDs ?? [])
-        query.preferredLineIDs = Set(preferredNames.flatMap { lineIDsByName[$0] ?? [] })
-        query.excludedInstitutions = excluded
-        query.excludeHighSpeed = excluded.contains(1)
-        if (policy?.institutionFilterMode ?? "soft") == "hard" { query.institutions = allowed }
-        else { query.preferredInstitutions = allowed }
-        return Question(query: query, intervalCodes: section.sectionCodes ?? [], fromNodes: from)
+        func ids(_ names: [String]) -> Set<String> { Set(names.filter { !$0.isEmpty }.flatMap { lineIDsByName[$0] ?? [] }) }
+
+        // Explicit: the section's own line names and operator names. `lineIDs` is the solver's
+        // `selectedLineIDs` (certification only), never an ordinary routing constraint.
+        let explicitLines = ids(section.lineNames ?? [])
+        let explicitOperators = Set((section.operatorNames ?? []).filter { !$0.isEmpty })
+
+        // Common lines and operators of both ends.
+        func linesOf(_ refs: [RailTopology.NodeRef]) -> Set<UInt16> { Set(refs.map(\.line)) }
+        let commonLineIndexes = linesOf(from).intersection(linesOf(to))
+        let commonLines = Set(commonLineIndexes.compactMap { topology.lineID($0) })
+        func operatorsOf(_ refs: [RailTopology.NodeRef]) -> Set<String> { Set(linesOf(refs).compactMap { topology.operatorName(ofLine: $0) }) }
+        let commonOperators = operatorsOf(from).intersection(operatorsOf(to))
+
+        // Preferences: the trip's lines and operators, plus the explicit ones, plus the common endpoint lines.
+        let serviceLines = Set((policy?.preferredLineNames ?? []).filter { !$0.isEmpty })
+        var preferredLines = ids(Array(serviceLines))
+        preferredLines.formUnion(explicitLines)
+        if serviceLines.isEmpty { preferredLines.formUnion(commonLines) }
+        var preferredOperators = Set((policy?.preferredOperatorNames ?? []).filter { !$0.isEmpty })
+        preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(company: train.company ?? "", country: "jp"))
+        preferredOperators.formUnion(explicitOperators)
+
+        let plan = RailTopology.SectionPlan(
+            from: from, to: to, day: day, explicitLineIDs: explicitLines, explicitOperators: explicitOperators,
+            commonLineIDs: commonLines, commonOperators: commonOperators,
+            preferredLineIDs: preferredLines, preferredOperators: preferredOperators,
+            allowedInstitutions: allowed.isEmpty ? RailTopology.SectionPlan.allInstitutions : allowed,
+            hardInstitutionMode: (policy?.institutionFilterMode ?? "soft") == "hard", excludedInstitutions: excluded)
+        return Question(plan: plan, intervalCodes: section.sectionCodes ?? [], fromNodes: from)
     }
 
     /// Router answers with one rule removed at a time, to say which rule explains a difference.
-    static func variants(_ q: RailTopology.SectionQuery, oldLines: [String]) -> [(name: String, query: RailTopology.SectionQuery)] {
-        var noInstitution = q
-        noInstitution.preferredInstitutions = []; noInstitution.excludedInstitutions = []; noInstitution.excludeHighSpeed = false
-        var noPreference = q
-        noPreference.preferredLineIDs = []; noPreference.preferredInstitutions = []
+    static func variants(_ plan: RailTopology.SectionPlan, oldLines: [String]) -> [(name: String, plan: RailTopology.SectionPlan)] {
+        var noInstitution = plan
+        noInstitution.allowedInstitutions = RailTopology.SectionPlan.allInstitutions; noInstitution.excludedInstitutions = []
+        var noPreference = plan
+        noPreference.preferredLineIDs = []; noPreference.preferredOperators = []
         var lengthOnly = noPreference
-        lengthOnly.excludedInstitutions = []; lengthOnly.excludeHighSpeed = false; lengthOnly.lineIDs = []; lengthOnly.institutions = []
-        var forced = q
-        forced.lineIDs = Set(oldLines)
+        lengthOnly.excludedInstitutions = []; lengthOnly.explicitLineIDs = []; lengthOnly.explicitOperators = []
+        lengthOnly.commonLineIDs = []; lengthOnly.commonOperators = []
+        lengthOnly.allowedInstitutions = RailTopology.SectionPlan.allInstitutions
+        var forced = plan
+        forced.explicitLineIDs = Set(oldLines)
         return [("without the institution rules", noInstitution), ("without any preference", noPreference),
                 ("plain length only", lengthOnly), ("restricted to the old lines", forced)]
     }
@@ -161,8 +185,8 @@ struct TopologyShadowComparisonTests {
 
         var lineIDsByName: [String: [String]] = [:]
         for line in 0..<topology.lineCount {
-            guard let name = topology.lineName(UInt16(line)), let id = topology.lineID(UInt16(line)) else { continue }
-            lineIDsByName[name, default: []].append(id)
+            guard let name = topology.solverName(ofLine: UInt16(line)), let id = topology.lineID(UInt16(line)) else { continue }
+            for each in [name] + topology.aliasNames(ofLine: UInt16(line)) { lineIDsByName[each, default: []].append(id) }
         }
 
         let root = try PortFixtures.repositoryRoot()
@@ -196,7 +220,7 @@ struct TopologyShadowComparisonTests {
                 guard sections.indices.contains(oldSection.index),
                       let question = Self.question(section: sections[oldSection.index], train: train,
                                                    topology: topology, lineIDsByName: lineIDsByName),
-                      !question.query.from.isEmpty, !question.query.to.isEmpty
+                      !question.plan.from.isEmpty, !question.plan.to.isEmpty
                 else { rows.append(row); continue }
 
                 // The old answer's own official interval codes, laid on the topology: can the file
@@ -228,7 +252,7 @@ struct TopologyShadowComparisonTests {
                 }
 
                 let start = ContinuousClock.now
-                let path = topology.route(question.query)
+                let path = topology.solve(question.plan)
                 timings.append((old.id, oldSection.index, Self.millis(start.duration(to: .now))))
                 guard let path else {
                     row.category = oldSection.parts.isEmpty ? .oldGap : .routerNoPath
@@ -272,26 +296,27 @@ struct TopologyShadowComparisonTests {
     // MARK: Explanations
 
     static func explainNoPath(_ q: Question, _ oldLines: [String], _ topology: RailTopology) -> String {
-        var base = q.query
-        base.preferredLineIDs = []; base.preferredInstitutions = []
-        if !oldLines.isEmpty { base.lineIDs = Set(oldLines) }
+        var base = q.plan
+        base.preferredLineIDs = []; base.preferredOperators = []
+        if !oldLines.isEmpty { base.explicitLineIDs = Set(oldLines) }
         func works(date: Bool, institutions: Bool) -> Bool {
-            var query = base
-            if !date { query.day = nil }
-            if !institutions { query.institutions = []; query.excludedInstitutions = []; query.excludeHighSpeed = false }
-            return topology.route(query)?.unproven == false || (oldLines.isEmpty && topology.route(query) != nil)
+            var plan = base
+            if !date { plan.day = nil }
+            if !institutions { plan.allowedInstitutions = RailTopology.SectionPlan.allInstitutions; plan.excludedInstitutions = [] }
+            return topology.solve(plan)?.unproven == false
         }
-        let onOldLines = Set(q.query.from.map(\.line)).union(q.query.to.map(\.line))
+        let onOldLines = Set(q.plan.from.map(\.line)).union(q.plan.to.map(\.line))
         let oldIndexes = Set(oldLines.compactMap { topology.lineIndex(forID: $0) })
         if !oldIndexes.isEmpty, oldIndexes.isDisjoint(with: onOldLines) {
             return "an endpoint station is not on the old lines in the topology (station lookup finds only other lines)"
         }
-        if works(date: false, institutions: true) { return "date rule: the ride date (\(q.query.day.map(String.init) ?? "none")) excludes a dated line or edge the old answer used" }
+        if works(date: false, institutions: true) { return "date rule: the ride date (\(q.plan.day.map(String.init) ?? "none")) excludes a dated line or edge the old answer used" }
         if works(date: true, institutions: false) { return "institution rule: the hard institution exclusion or filter removes a line the old answer used" }
         if works(date: false, institutions: false) { return "date and institution rules together" }
         var free = base
-        free.lineIDs = []; free.institutions = []; free.excludedInstitutions = []; free.excludeHighSpeed = false; free.day = nil
-        return topology.route(free) == nil
+        free.explicitLineIDs = []; free.explicitOperators = []; free.allowedInstitutions = RailTopology.SectionPlan.allInstitutions
+        free.excludedInstitutions = []; free.day = nil
+        return topology.solve(free) == nil
             ? "the two ends are not connected in the topology even without any filter or date (missing link, or the line is outside the file)"
             : "connected only over other lines than the old answer's: a link between the old lines is missing in the topology"
     }
@@ -302,27 +327,27 @@ struct TopologyShadowComparisonTests {
         if temporal.contains(where: { $0 != "current" }) {
             notes.append("old answer uses \(Set(temporal.filter { $0 != "current" }).sorted().joined(separator: "/")) track: date rule")
         }
-        if unproven { notes.append("router dropped the line filter (unproven)") }
+        if unproven { notes.append("the router kept a guard-rejected path as the last resort (unproven)") }
         var matched: String?
-        for variant in variants(q.query, oldLines: old.lines) where variant.name != "restricted to the old lines" {
-            if let path = topology.route(variant.query), Self.answer(of: path.spans, in: topology).lines == old.lines {
+        for variant in variants(q.plan, oldLines: old.lines) where variant.name != "restricted to the old lines" {
+            if let path = topology.solve(variant.plan), Self.answer(of: path.spans, in: topology).lines == old.lines {
                 matched = variant.name; break
             }
         }
         if let matched { notes.append("the router gives the old lines \(matched): that rule decides it") }
         else if !old.lines.isEmpty {
-            var forced = q.query
-            forced.lineIDs = Set(old.lines)
-            if let path = topology.route(forced), Self.answer(of: path.spans, in: topology).lines == old.lines {
+            var forced = q.plan
+            forced.explicitLineIDs = Set(old.lines)
+            if let path = topology.solve(forced), Self.answer(of: path.spans, in: topology).lines == old.lines {
                 notes.append("the old route exists in the topology but costs more than the router's under the ported rules")
-            } else if topology.route(forced) != nil {
+            } else if topology.solve(forced) != nil {
                 notes.append("over the old lines the router finds another way through them")
             } else {
                 notes.append("the old route is not in the topology on that date: a link, a dated edge or line is missing")
             }
         }
-        if new.km + 0.3 < old.km { notes.append("router is shorter: the old solver paid a preference the router prices differently or lacks (operator, per-edge institution penalty, same-name station guard)") }
-        else if new.km > old.km + 0.3 { notes.append("router is longer: it cannot use a connection the old graph had") }
+        if new.km + 0.3 < old.km { notes.append("router is shorter") }
+        else if new.km > old.km + 0.3 { notes.append("router is longer") }
         else { notes.append("equal length: a tie-break") }
         return notes.joined(separator: "; ")
     }

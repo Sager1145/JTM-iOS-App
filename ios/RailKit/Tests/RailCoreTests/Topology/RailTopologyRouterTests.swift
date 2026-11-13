@@ -11,10 +11,12 @@ struct RailTopologyRouterTests {
 
     /// A query between (line id, ordinal) pairs.
     static func query(_ t: RailTopology, _ from: [(String, Int)], _ to: [(String, Int)], day: String? = nil,
-                      lines: Set<String> = [], institutions: Set<UInt16> = [], preferred: Set<String> = []) -> RailTopology.SectionQuery {
+                      lines: Set<String> = [], institutions: Set<UInt16> = [], preferred: Set<String> = [],
+                      operators: Set<String> = [], preferredOperators: Set<String> = []) -> RailTopology.SectionQuery {
         RailTopology.SectionQuery(
             from: from.map { t.ref($0.0, $0.1) }, to: to.map { t.ref($0.0, $0.1) },
-            day: day.map(Self.day), lineIDs: lines, institutions: institutions, preferredLineIDs: preferred)
+            day: day.map(Self.day), lineIDs: lines, operators: operators, institutions: institutions,
+            preferredLineIDs: preferred, preferredOperators: preferredOperators)
     }
 
     /// x (5 stations) with a dated junction to y, a shared-code line z, a loop l, a one-way w.
@@ -156,21 +158,31 @@ struct RailTopologyRouterTests {
         #expect(viaLink.spans == [t.span("x", 0, 1), t.span("l", 0, 3, wraps: true)] && viaLink.lengthCm == 15_000)
     }
 
-    @Test("one-way edges are travelled in their direction only, on chains and on loops")
-    func oneWay() throws {
+    @Test("direction is excluded section-locally: only between a start and an end node on the same line")
+    func directionExclusion() throws {
         var net = Self.network()
         net.lines.append(.chain("r", ["R0", "R1", "R2"], lengths: [10_000, 10_000], flags: [.reverse]))
         net.lines.append(.chain("f", ["F0", "F1", "F2", "F3"], lengths: [10_000, 10_000, 10_000, 10_000], loop: true, flags: [.forward]))
+        net.lines.append(.chain("a", ["A0", "A1"], lengths: [10_000]))
+        net.links.append(.init(a: (7, 1), b: (5, 0), registry: "jct-a-r"))
         let t = try net.topology()
+        // Start and end on the one-way line: the edges between them are blocked against the arrow.
         #expect(t.route(Self.query(t, [("w", 0)], [("w", 2)])) != nil)
         #expect(t.route(Self.query(t, [("w", 2)], [("w", 0)])) == nil)
         #expect(t.route(Self.query(t, [("r", 2)], [("r", 0)]))?.spans == [t.span("r", 2, 0)])
         #expect(t.route(Self.query(t, [("r", 0)], [("r", 2)])) == nil)
-        // A forward-only loop must go all the way round to get back to the previous stop.
+        // The flags apply nowhere else: a path that only passes through r (its start is on a) goes against the arrow.
+        let through = try #require(t.route(Self.query(t, [("a", 0)], [("r", 2)])))
+        #expect(through.spans == [t.span("a", 0, 1), t.span("r", 0, 2)] && through.lengthCm == 30_000)
+        // A loop with forward-only edges: the edges between the two ordinals are blocked, the way round over the
+        // closing edge is not (the solver blocks by station order, not by the wrap).
         let back = try #require(t.route(Self.query(t, [("f", 1)], [("f", 0)])))
         #expect(back.spans == [t.span("f", 1, 0, wraps: true)] && back.lengthCm == 30_000)
         let ahead = try #require(t.route(Self.query(t, [("f", 0)], [("f", 1)])))
         #expect(ahead.spans == [t.span("f", 0, 1)])
+        // Several candidates: the pair decides, the other line's candidate is unaffected.
+        let mixed = try #require(t.route(Self.query(t, [("w", 2), ("x", 0)], [("w", 0), ("x", 2)])))
+        #expect(mixed.spans == [t.span("x", 0, 2)])
     }
 
     // MARK: Dated rows
@@ -225,22 +237,20 @@ struct RailTopologyRouterTests {
         return net
     }
 
-    @Test("hard line filters limit the lines; failing them falls back to an unproven path")
-    func lineFilterAndFallback() throws {
+    @Test("hard line filters limit the lines; a filter that excludes every way finds nothing")
+    func lineFilter() throws {
         let t = try Self.parallelNetwork().topology()
         let free = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)])))
         #expect(free.spans.map(\.line) == [0, 1, 3].map { UInt16($0) } && !free.unproven)
         // Hard filter forcing the longer line.
         let viaQ = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)], lines: ["s", "q", "t"])))
         #expect(viaQ.spans.map(\.line) == [0, 2, 3].map { UInt16($0) } && !viaQ.unproven && viaQ.lengthCm == 205_000)
-        // A filter that excludes the whole way finds nothing proven: same search without the line filter.
-        let unproven = try #require(t.route(Self.query(t, [("s", 0)], [("t", 1)], lines: ["p"])))
-        #expect(unproven.unproven && unproven.spans.map(\.line) == [0, 1, 3].map { UInt16($0) })
-        // A line filter naming nothing known is the same.
-        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)], lines: ["nope"]))?.unproven == true)
+        // A filter that excludes the whole way finds nothing: dropping the filter is the ladder's job, not one attempt's.
+        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)], lines: ["p"])) == nil)
+        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)], lines: ["nope"])) == nil)
     }
 
-    @Test("institution filters are hard and survive the fallback")
+    @Test("institution filters are hard")
     func institutionFilter() throws {
         let t = try Self.parallelNetwork().topology()
         #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)], institutions: [1, 2]))?.unproven == false)
@@ -306,20 +316,6 @@ struct RailTopologyRouterTests {
         #expect(hard([1])?.spans[1].line == t.lineIndex(forID: "p"))
         #expect(hard([2])?.spans[1].line == t.lineIndex(forID: "q"))
         #expect(hard([3]) == nil)
-    }
-
-    @Test("excludeHighSpeed never uses a high-speed line, even when it is the shorter way")
-    func highSpeedExclusion() throws {
-        var net = Self.parallelNetwork(p: 50_000, q: 100_000)
-        net.lines[1].flags.insert(.highSpeed)
-        let t = try net.topology()
-        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)]))?.spans[1].line == t.lineIndex(forID: "p"))
-        var q = Self.query(t, [("s", 0)], [("t", 1)])
-        q.excludeHighSpeed = true
-        #expect(t.route(q)?.spans[1].line == t.lineIndex(forID: "q"))
-        net.lines[2].flags.insert(.highSpeed)
-        let both = try net.topology()
-        #expect(both.route(q) == nil)
     }
 
     @Test("equal-cost ties are decided by line id, not by the order of lines in the file")
@@ -439,5 +435,184 @@ struct RailTopologyRouterTests {
         let path = try #require(t.route(Self.query(t, [("x", 0)], [("w", 2)])))
         for span in path.spans { #expect(span.fromNode != span.toNode) }
         #expect(Set(path.spans.map(\.line)).count == path.spans.count)
+    }
+
+    // MARK: Production rules ported with the topology v2 data
+
+    /// s -> (p | q) -> t as `parallelNetwork`, with operators on the middle lines.
+    static func operatorNetwork(p: UInt32 = 100_000, q: UInt32 = 100_000, pOperator: String? = "OpP",
+                                qOperator: String? = "OpQ") -> Net {
+        var net = parallelNetwork(p: p, q: q)
+        net.lines[1].operatorName = pOperator
+        net.lines[2].operatorName = qOperator
+        return net
+    }
+
+    @Test("a non-preferred operator costs 7 times its length; a line without an operator is never penalised")
+    func preferredOperator() throws {
+        // q is 6.5 times as long as p: below 7, so the preferred operator wins; at 7.5 times it does not.
+        let near = try Self.operatorNetwork(q: 650_000).topology()
+        func line(_ t: RailTopology, preferred: Set<String>) -> String? {
+            t.route(Self.query(t, [("s", 0)], [("t", 1)], preferredOperators: preferred)).flatMap { t.lineID($0.spans[1].line) }
+        }
+        #expect(line(near, preferred: []) == "p")
+        #expect(line(near, preferred: ["OpQ"]) == "q")
+        #expect(line(near, preferred: ["OpP"]) == "p")
+        let far = try Self.operatorNetwork(q: 750_000).topology()
+        #expect(line(far, preferred: ["OpQ"]) == "p")
+        // p has no operator name: it is not penalised even when another operator is preferred.
+        let anonymous = try Self.operatorNetwork(q: 150_000, pOperator: nil).topology()
+        #expect(line(anonymous, preferred: ["OpQ"]) == "p")
+        // The reported length stays the real one.
+        let real = try #require(near.route(Self.query(near, [("s", 0)], [("t", 1)], preferredOperators: ["OpQ"])))
+        #expect(real.lengthCm == 50_000 + 650_000 + 50_000)
+    }
+
+    @Test("a line and an operator that are both non-preferred add up: factor 1 + 8 + 6")
+    func lineAndOperatorFactorsAdd() throws {
+        // p is non-preferred on both counts (factor 15), q on neither. q may be up to 15 times as long.
+        let net = Self.operatorNetwork(p: 100_000, q: 1_400_000)
+        let t = try net.topology()
+        var query = Self.query(t, [("s", 0)], [("t", 1)], preferred: ["q", "s", "t"], preferredOperators: ["OpQ"])
+        #expect(t.lineID(t.route(query)!.spans[1].line) == "q")
+        let beyond = try Self.operatorNetwork(p: 100_000, q: 1_600_000).topology()
+        query = Self.query(beyond, [("s", 0)], [("t", 1)], preferred: ["q", "s", "t"], preferredOperators: ["OpQ"])
+        #expect(beyond.lineID(beyond.route(query)!.spans[1].line) == "p")
+    }
+
+    @Test("the operator is a hard filter when required; a line without an operator name never passes it")
+    func requiredOperators() throws {
+        let t = try Self.operatorNetwork().topology()
+        // s and t have no operator name, so no path survives an operator filter that needs them.
+        #expect(t.route(Self.query(t, [("s", 0)], [("t", 1)], operators: ["OpQ"])) == nil)
+        var net = Self.operatorNetwork()
+        net.lines[0].operatorName = "OpQ"; net.lines[3].operatorName = "OpQ"
+        let named = try net.topology()
+        let path = try #require(named.route(Self.query(named, [("s", 0)], [("t", 1)], operators: ["OpQ"])))
+        #expect(path.spans.map { named.lineID($0.line)! } == ["s", "q", "t"])
+        #expect(named.route(Self.query(named, [("s", 0)], [("t", 1)], operators: ["Nobody"])) == nil)
+    }
+
+    @Test("a non-preferred institution also pays 5,000 m for each source step of each edge")
+    func institutionPaysPerSourceStep() throws {
+        // p: 1 km, institution 1, 40 source steps. q: 1.2 km, institution 2, 1 step. Prefer institution 2:
+        // p pays 181 x 1 km + 40 x 5 km = 381 km of cost, q pays nothing. With 1 step p would pay 186 km.
+        func network(steps: UInt32, qLength: UInt32) -> Net {
+            var net = Net()
+            net.lines = [
+                .chain("s", ["S0", "S1"], lengths: [1_000], institution: 0),
+                .chain("p", ["P0", "P1"], lengths: [100_000], institution: 1, fineEdges: steps),
+                .chain("q", ["Q0", "Q1"], lengths: [qLength], institution: 2),
+                .chain("t", ["T0", "T1"], lengths: [1_000], institution: 0),
+            ]
+            net.links = [.init(a: (0, 1), b: (1, 0)), .init(a: (0, 1), b: (2, 0)),
+                         .init(a: (1, 1), b: (3, 0)), .init(a: (2, 1), b: (3, 0))]
+            return net
+        }
+        func pick(_ net: Net) throws -> String {
+            let t = try net.topology()
+            var q = Self.query(t, [("s", 0)], [("t", 1)])
+            q.preferredInstitutions = [2]
+            return t.lineID(try #require(t.route(q)).spans[1].line)!
+        }
+        // q is 1.9 times... in centimetres: p costs 100_000 x 181 + steps x 500_000.
+        // One step: 18.6 M. q at 15 M wins; at 19 M p wins. Forty steps: p costs 38.1 M, so q at 19 M wins.
+        #expect(try pick(network(steps: 1, qLength: 15_000_000 / 1)) == "q")
+        #expect(try pick(network(steps: 1, qLength: 19_000_000)) == "p")
+        #expect(try pick(network(steps: 40, qLength: 19_000_000)) == "q")
+        // Unknown institution (0) pays nothing, however many steps.
+        var unknown = network(steps: 40, qLength: 19_000_000)
+        unknown.lines[1].institution = 0
+        #expect(try pick(unknown) == "p")
+    }
+
+    /// Nodes of a one-line network placed by latitude (degrees north of 35), 1 degree = about 111.2 km.
+    static func placed(_ id: String, _ lats: [Float], lengths: [UInt32]) -> Net.Line {
+        .chain(id, lats.indices.map { "\(id.uppercased())\($0)" }, lengths: lengths,
+               at: lats.map { (lon: 139, lat: 35 + $0) })
+    }
+
+    @Test("detour guard: a path over 3.8 x the straight line + 6 km (12 km at least) is refused and the next end node is tried")
+    func detourGuard() throws {
+        var net = Net()
+        // From F (35.00) to T1 (5 km away) by 50 km of track, to T2 (40 km away) by 60 km of track.
+        net.lines = [
+            Self.placed("f", [0, 0.045], lengths: [5_000_000]),   // F0 .. T1 candidate F1: 50 km, straight 5 km
+            Self.placed("g", [0, 0.36], lengths: [6_000_000]),    // G0 .. G1: 60 km, straight 40 km
+        ]
+        net.links = [.init(a: (0, 0), b: (1, 0))]
+        let t = try net.topology()
+        // To F1 alone: 50 km over a 5 km straight line; the limit is max(3.8 x 5 + 6, 12) = 25 km. Refused.
+        #expect(t.route(Self.query(t, [("f", 0)], [("f", 1)])) == nil)
+        // To F1 or G1: F1 settles first and is refused, the search goes on and G1 passes (limit 158 km).
+        let path = try #require(t.route(Self.query(t, [("f", 0)], [("f", 1), ("g", 1)])))
+        #expect(path.spans == [t.span("g", 0, 1)] && path.lengthCm == 6_000_000 && !path.unproven)
+        // Ends closer than 1.5 km are never refused: a long way round is allowed.
+        var near = Net()
+        near.lines = [Self.placed("f", [0, 0.01], lengths: [5_000_000])]
+        let n = try near.topology()
+        #expect(n.route(Self.query(n, [("f", 0)], [("f", 1)]))?.lengthCm == 5_000_000)
+        // The floor: a 12 km path over a 4 km straight line is fine (limit 21.2 km); 25 km is not.
+        var floor = Net()
+        floor.lines = [Self.placed("a", [0, 0.036], lengths: [1_200_000]), Self.placed("b", [0, 0.036], lengths: [2_500_000])]
+        let f = try floor.topology()
+        #expect(f.route(Self.query(f, [("a", 0)], [("a", 1)])) != nil)
+        #expect(f.route(Self.query(f, [("b", 0)], [("b", 1)])) == nil)
+    }
+
+    @Test("same-name guard: a name-only end whose station is over twice as far as another same-name station is unproven, last resort")
+    func sameNameGuard() throws {
+        // Start F0 at 35.00. Two stations named alike: NEAR 30 km north, FAR 100 km north. The path to FAR is short
+        // in kilometres of track (the file is hand-built), the path to NEAR is long.
+        var net = Net()
+        net.lines = [
+            Self.placed("f", [0, 0.9], lengths: [1_000_000]),      // F0 .. FAR: 10 km of track, 100 km straight
+            Self.placed("n", [0, 0.27], lengths: [4_000_000]),     // N0 .. NEAR: 40 km of track, 30 km straight
+        ]
+        net.links = [.init(a: (0, 0), b: (1, 0))]
+        let t = try net.topology()
+        func answer(nameOnly: Bool, targets: [(String, Int)]) -> RailTopology.SectionPath? {
+            var q = Self.query(t, [("f", 0)], targets)
+            q.toNameOnly = nameOnly
+            return t.route(q)
+        }
+        // Not named by name only: the cheaper FAR wins, proven.
+        let plain = try #require(answer(nameOnly: false, targets: [("f", 1), ("n", 1)]))
+        #expect(plain.spans == [t.span("f", 0, 1)] && !plain.unproven)
+        // Named by name only: FAR is 100 km straight, NEAR 30 km: 100 > 2 x 30 and beyond 20 km. NEAR is proven.
+        let guarded = try #require(answer(nameOnly: true, targets: [("f", 1), ("n", 1)]))
+        #expect(guarded.spans == [t.span("n", 0, 1)] && !guarded.unproven)
+        // Only FAR is a candidate: nothing to compare, nothing rejected.
+        let alone = try #require(answer(nameOnly: true, targets: [("f", 1)]))
+        #expect(alone.spans == [t.span("f", 0, 1)] && !alone.unproven)
+        // NEAR cannot be reached (its line is filtered out): FAR is kept as the last resort, unproven.
+        var q = Self.query(t, [("f", 0)], [("f", 1), ("n", 1)], lines: ["f"])
+        q.toNameOnly = true
+        let lastResort = try #require(t.route(q))
+        #expect(lastResort.spans == [t.span("f", 0, 1)] && lastResort.unproven)
+        // Under 20 km straight the guard is silent: NEAR at 12 km, FAR at 24 km? FAR 24 > 2 x 12 but is it beyond 20 km: yes.
+        // So test the other side of the threshold: FAR at 18 km, NEAR at 6 km.
+        var small = Net()
+        small.lines = [Self.placed("f", [0, 0.162], lengths: [1_000_000]), Self.placed("n", [0, 0.054], lengths: [4_000_000])]
+        small.links = [.init(a: (0, 0), b: (1, 0))]
+        let s = try small.topology()
+        var sq = Self.query(s, [("f", 0)], [("f", 1), ("n", 1)])
+        sq.toNameOnly = true
+        #expect(s.route(sq)?.spans == [s.span("f", 0, 1)] && s.route(sq)?.unproven == false)
+        // The ratio: FAR at 100 km against NEAR at 60 km is under twice as far: FAR stays.
+        var ratio = Net()
+        ratio.lines = [Self.placed("f", [0, 0.9], lengths: [1_000_000]), Self.placed("n", [0, 0.54], lengths: [4_000_000])]
+        ratio.links = [.init(a: (0, 0), b: (1, 0))]
+        let r = try ratio.topology()
+        var rq = Self.query(r, [("f", 0)], [("f", 1), ("n", 1)])
+        rq.toNameOnly = true
+        #expect(r.route(rq)?.spans == [r.span("f", 0, 1)] && r.route(rq)?.unproven == false)
+        // A start named by name only is checked the same way, from the other end: the best path to F0 starts at the
+        // far station (100 km straight, the near one is 30 km), so it is refused and kept as the last resort. As in the
+        // solver, each end node keeps its single best source: the near one is not tried for the same end node.
+        var back = Self.query(t, [("f", 1), ("n", 1)], [("f", 0)])
+        back.fromNameOnly = true
+        let fromSide = try #require(t.route(back))
+        #expect(fromSide.spans == [t.span("f", 1, 0)] && fromSide.unproven)
     }
 }

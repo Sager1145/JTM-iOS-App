@@ -13,6 +13,7 @@ by path. Three layers:
 from __future__ import annotations
 
 import contextlib
+import dataclasses
 import importlib.util
 import io
 import json
@@ -97,13 +98,13 @@ class FormatContractTests(unittest.TestCase):
             edges = [topology.Edge(e["lengthCm"], e["cumulativeCm"], e["validFrom"], e["validTo"],
                                    e["flags"], [topology.Run(r["chain"], r["fullFrom"], r["fullTo"],
                                                              r["overviewFrom"], r["overviewTo"])
-                                                for r in e["runs"]]) for e in line["edges"]]
+                                                for r in e["runs"]], e["fineEdges"]) for e in line["edges"]]
             identities = [topology.Identity(i["name"], i["family"], i["validFrom"], i["validTo"])
                           for i in decoded["identities"] if i["line"] == index]
             lines.append(topology.LineRecord(
                 line["id"], line["family"], line["name"], line["aliases"], line["institution"],
                 line["categoryMask"], line["flags"], line["chainCount"], line["validFrom"],
-                line["validTo"], nodes, edges, identities))
+                line["validTo"], nodes, edges, identities, line["operator"], line["solverName"]))
         links = [topology.Link(l["nodeA"], l["nodeB"], l["kind"], l["directed"], l["validFrom"],
                                l["validTo"], l["registryID"]) for l in decoded["links"]]
         stops = [topology.Stop(s["key"], s["kind"], s["nodes"]) for s in decoded["stops"]]
@@ -188,9 +189,11 @@ def source(key, line, continuous, fragments, overview=None, chains=(), pieces=()
                   for f in fragments])
 
 
-def build(sources, junctions=None, through=None, registry=None):
+def build(sources, junctions=None, through=None, registry=None, n02=None):
+    """`n02` maps a line id to (institution, operator, solver name); lines not listed get (2, "op", name)."""
+    index = {"lines": {s.line["id"]: (2, "op", s.line["name"]) for s in sources} | dict(n02 or {}), "operators": {}}
     data, report = topology.build_region_topology(
-        "jp", sources, b"\x01" * 32, b"\x02" * 32, junctions, through, registry)
+        "jp", sources, b"\x01" * 32, b"\x02" * 32, junctions, through, registry, index)
     return topology.read_topology(data), report, data
 
 
@@ -899,6 +902,222 @@ class FullBuildTests(unittest.TestCase):
             ids = junction_ids if link["kind"] == topology.LINK_PHYSICAL_JUNCTION else through_ids
             self.assertIn(link["registryID"], ids)
             self.assertNotEqual(owner[link["nodeA"]], owner[link["nodeB"]])
+
+
+# ---------------------------------------------------------------------------
+# Institution, operator and the per-line content hash (topology v2)
+# ---------------------------------------------------------------------------
+
+def n02_document(*rows):
+    return {"features": [{"properties": {"N02_002": str(code), "N02_003": name, "N02_004": operator}}
+                         for operator, name, code in rows]}
+
+
+class InstitutionTests(unittest.TestCase):
+    INDEX = None
+
+    @classmethod
+    def setUpClass(cls):
+        cls.INDEX = topology.build_n02_index(n02_document(
+            ("東日本旅客鉄道", "東海道線", 2), ("東海旅客鉄道", "東海道新幹線", 1),
+            ("京王電鉄", "京王線", 4), ("京王電鉄", "井の頭線", 4),
+            ("広島電鉄", "本線", 4), ("広島電鉄", "宮島線", 4),
+            ("混在鉄道", "甲線", 3), ("混在鉄道", "乙線", 5)))
+
+    def test_a_line_takes_the_code_and_operator_of_its_n02_name(self):
+        self.assertEqual(topology.n02_attributes("jp-東日本旅客鉄道-東海道線", self.INDEX), (2, "東日本旅客鉄道", "東海道線", "line"))
+        self.assertEqual(topology.n02_attributes("jp-東海旅客鉄道-東海道新幹線", self.INDEX), (1, "東海旅客鉄道", "東海道新幹線", "line"))
+
+    def test_a_variant_suffix_is_removed_until_the_name_is_known(self):
+        for line_id in ("jp-東日本旅客鉄道-東海道線-3", "jp-東日本旅客鉄道-東海道線-p1",
+                        "jp-東日本旅客鉄道-東海道線-2-p1"):
+            self.assertEqual(topology.n02_attributes(line_id, self.INDEX), (2, "東日本旅客鉄道", "東海道線", "line"), line_id)
+
+    def test_a_line_n02_does_not_list_takes_the_one_code_of_its_operator(self):
+        self.assertEqual(topology.n02_attributes("jp-京王電鉄-京王新線", self.INDEX), (4, "京王電鉄", None, "operator"))
+        self.assertEqual(topology.n02_attributes("jp-広島電鉄-循環線", self.INDEX), (4, "広島電鉄", None, "operator"))
+
+    def test_an_unknown_line_of_a_mixed_operator_or_of_no_operator_stops_the_build(self):
+        for line_id in ("jp-混在鉄道-丙線", "jp-見知らぬ鉄道-線"):
+            with self.assertRaises(topology.TopologyError, msg=line_id):
+                topology.n02_attributes(line_id, self.INDEX)
+
+    def test_one_line_with_two_codes_or_a_bad_code_stops_the_index(self):
+        with self.assertRaises(topology.TopologyError):
+            topology.build_n02_index(n02_document(("A", "線", 2), ("A", "線", 4)))
+        with self.assertRaises(topology.TopologyError):
+            topology.build_n02_index(n02_document(("A", "線", 9)))
+        with self.assertRaises(topology.TopologyError):
+            topology.build_n02_index({"features": [{"properties": {
+                "N02_002": "x", "N02_003": "線", "N02_004": "A"}}]})
+
+    def test_the_file_carries_institution_and_operator_of_every_jp_line(self):
+        line, chain, fragment, overview, _ = DerivationTests().continuous_line()
+        decoded, report, _ = build(
+            [source("jp|jp-c", line, True, [fragment], [overview], [chain])], n02={"jp-c": (5, "三セク鉄道", "三セク線")})
+        self.assertEqual((decoded["lines"][0]["institution"], decoded["lines"][0]["operator"]), (5, "三セク鉄道"))
+        self.assertEqual(decoded["lines"][0]["solverName"], "三セク線")
+        self.assertEqual(report["institutionLines"], {"5": 1})
+        self.assertEqual(report["institutionByOperatorLines"], [])
+
+    def test_a_jp_line_without_n02_data_stops_the_build(self):
+        line, chain, fragment, overview, _ = DerivationTests().continuous_line()
+        with self.assertRaises(topology.TopologyError):
+            topology.build_region_topology(
+                "jp", [source("jp|jp-c", line, True, [fragment], [overview], [chain])],
+                b"\x01" * 32, b"\x02" * 32, None, None, None, None)
+
+    def test_another_region_has_institution_zero_and_the_package_operator(self):
+        line, chain, fragment, overview, _ = DerivationTests().continuous_line()
+        data, _ = topology.build_region_topology(
+            "tw", [source("tw|jp-c", line, True, [fragment], [overview], [chain])],
+            b"\x01" * 32, b"\x02" * 32, None, None, None, None)
+        decoded = topology.read_topology(data)
+        self.assertEqual((decoded["lines"][0]["institution"], decoded["lines"][0]["operator"]), (0, "op"))
+
+
+class CorridorNameTests(unittest.TestCase):
+    @staticmethod
+    def track(name, lat, points=7, operator="X", code=4):
+        return {"properties": {"N02_002": str(code), "N02_003": name, "N02_004": operator},
+                "geometry": {"type": "LineString",
+                             "coordinates": [[139.0 + 0.001 * i, lat] for i in range(points)]}}
+
+    @staticmethod
+    def package(*rows):
+        """A package line whose intervals are polylines at the given latitude and point count."""
+        return {"segments": [[1.0, 0, [[139.0 + 0.001 * i, lat] for i in range(points)]] for lat, points in rows]}
+
+    def test_a_line_that_runs_on_another_n02_line_carries_its_name_as_an_alias(self):
+        index = topology.build_n02_index({"features": [self.track("A線", 35.0), self.track("B線", 35.01)]})
+        line = self.package((35.0, 7), (35.01, 7))
+        self.assertEqual(topology.n02_corridor_names(line, "A線", index), ["B線"])
+        self.assertEqual(topology.n02_corridor_names(line, "B線", index), ["A線"])
+
+    def test_the_own_name_is_never_an_alias_and_a_small_share_is_ignored(self):
+        index = topology.build_n02_index({"features": [self.track("A線", 35.0, points=60), self.track("B線", 35.01, points=60)]})
+        mostly_a = self.package((35.0, 40), (35.01, 2))        # 7 samples on A, 2 on B: 22%
+        self.assertEqual(topology.n02_corridor_names(mostly_a, "A線", index), [])
+        half = self.package((35.0, 7), (35.01, 7))
+        self.assertEqual(topology.n02_corridor_names(half, "C線", index), ["A線", "B線"])   # most frequent first, ties by name
+        lopsided = self.package((35.0, 40), (35.01, 7))        # 7 against 6 samples
+        self.assertEqual(topology.n02_corridor_names(lopsided, "C線", index), ["A線", "B線"])
+        self.assertEqual(topology.n02_corridor_names(lopsided, "A線", index), ["B線"])
+
+    def test_track_more_than_40_metres_from_any_section_matches_nothing(self):
+        index = topology.build_n02_index({"features": [self.track("A線", 35.0)]})
+        far = self.package((35.0 + 0.0005, 7))                 # about 55 m north
+        self.assertEqual(topology.n02_corridor_names(far, "B線", index), [])
+        self.assertEqual(topology.n02_corridor_names({"segments": []}, "B線", index), [])
+
+    def test_an_index_without_geometry_gives_no_aliases(self):
+        self.assertEqual(topology.n02_corridor_names(self.package((35.0, 7)), "A線",
+                                                     {"lines": {}, "operators": {}}), [])
+
+    def test_the_aliases_reach_the_file_in_the_alias_field_and_the_hash(self):
+        line, chain, fragment, overview, _ = DerivationTests().continuous_line()
+        source_line = source("jp|jp-c", line, True, [fragment], [overview], [chain])
+        feature = {"properties": {"N02_002": "2", "N02_003": "Z線", "N02_004": "op"},
+                   "geometry": {"type": "LineString", "coordinates": [[0.0, 0.0], [0.001, 0.0], [0.004, 0.0]]}}
+        index = topology.build_n02_index({"features": [feature]})
+        index["lines"]["jp-c"] = (2, "op", "A線")
+        bare = {"lines": index["lines"], "operators": {}}
+        plain, _ = topology.build_region_topology("jp", [source_line], b"\x01" * 32, b"\x02" * 32, None, None, None, bare)
+        aliased, _ = topology.build_region_topology("jp", [source_line], b"\x01" * 32, b"\x02" * 32, None, None, None, index)
+        a, b = topology.read_topology(plain)["lines"][0], topology.read_topology(aliased)["lines"][0]
+        self.assertEqual((a["aliases"], b["aliases"]), ("", "Z線"))
+        self.assertEqual(b["solverName"], "A線")
+        self.assertNotEqual(a["contentHash"], b["contentHash"])
+
+
+def hand_line(line_id, lengths, codes=None, operator="op", institution=2):
+    codes = codes or [f"{line_id}-{i}" for i in range(len(lengths) + 1)]
+    nodes = [topology.Node(code, 0, 100 * i, topology.UNSET, 139.0 + 0.01 * i, 35.0, 0)
+             for i, code in enumerate(codes)]
+    edges, cumulative = [], 0
+    for length in lengths:
+        edges.append(topology.Edge(length, cumulative, 0, 0, topology.EDGE_FORWARD | topology.EDGE_REVERSE, []))
+        cumulative += length
+    return topology.LineRecord(line_id, f"fam-{line_id}", line_id, "", institution, 0, 0, 1, 0, 0,
+                               nodes, edges, [], operator)
+
+
+def hashes(lines, links=(), stops=()):
+    data = topology.encode_topology("jp", b"\x01" * 32, b"\x02" * 32, list(lines), list(links), list(stops))
+    return {line["id"]: line["contentHash"] for line in topology.read_topology(data)["lines"]}
+
+
+class ContentHashTests(unittest.TestCase):
+    def test_same_input_same_hash_and_each_line_has_its_own(self):
+        a, b = hand_line("a", [100, 200]), hand_line("b", [100, 200])
+        first = hashes([a, b])
+        self.assertEqual(first, hashes([hand_line("a", [100, 200]), hand_line("b", [100, 200])]))
+        self.assertEqual(len(first["a"]), 8)
+        self.assertNotEqual(first["a"], first["b"])
+
+    def test_changing_one_edge_changes_only_that_line(self):
+        before = hashes([hand_line("a", [100, 200]), hand_line("b", [100, 200])])
+        after = hashes([hand_line("a", [100, 201]), hand_line("b", [100, 200])])
+        self.assertNotEqual(before["a"], after["a"])
+        self.assertEqual(before["b"], after["b"])
+
+    def test_each_field_a_trip_depends_on_is_in_the_hash(self):
+        base = hashes([hand_line("a", [100, 200])])["a"]
+        for label, changed in (
+            ("operator", hand_line("a", [100, 200], operator="other")),
+            ("institution", hand_line("a", [100, 200], institution=4)),
+            ("station code", hand_line("a", [100, 200], codes=["x", "y", "z"])),
+            ("solver name", dataclasses.replace(hand_line("a", [100, 200]), solver_name="renamed")),
+        ):
+            self.assertNotEqual(base, hashes([changed])["a"], label)
+        withheld = hand_line("a", [100, 200])
+        withheld.edges[0].flags |= topology.EDGE_WITHHELD
+        self.assertNotEqual(base, hashes([withheld])["a"], "edge flags")
+        dated = hand_line("a", [100, 200])
+        dated.edges[1].valid_to = 5
+        self.assertNotEqual(base, hashes([dated])["a"], "edge validity")
+        moved = hand_line("a", [100, 200])
+        moved.nodes[1].full += 1
+        self.assertNotEqual(base, hashes([moved])["a"], "node position")
+        loop = hand_line("a", [100, 200])
+        loop.flags |= topology.LINE_LOOP
+        self.assertNotEqual(base, hashes([loop])["a"], "line flags")
+
+    def test_adding_or_reordering_lines_elsewhere_changes_nobody_else(self):
+        a, b, c = hand_line("a", [100]), hand_line("b", [300]), hand_line("c", [50])
+        alone = hashes([a, b])
+        self.assertEqual(alone["a"], hashes([c, a, b])["a"])
+        self.assertEqual(alone["b"], hashes([b, c, a])["b"])
+
+    def test_a_link_changes_both_lines_it_joins_and_no_other(self):
+        lines = [hand_line("a", [100]), hand_line("b", [100]), hand_line("c", [100])]
+        plain = hashes(lines)
+        link = topology.Link(1, 2, topology.LINK_PHYSICAL_JUNCTION, False, 0, 0, "j1")
+        linked = hashes(lines, [link])
+        self.assertNotEqual(plain["a"], linked["a"])
+        self.assertNotEqual(plain["b"], linked["b"])
+        self.assertEqual(plain["c"], linked["c"])
+        redated = topology.Link(1, 2, topology.LINK_PHYSICAL_JUNCTION, False, 7, 0, "j1")
+        self.assertNotEqual(linked["a"], hashes(lines, [redated])["a"])
+        self.assertNotEqual(linked["b"], hashes(lines, [redated])["b"])
+        directed = topology.Link(1, 2, topology.LINK_PHYSICAL_JUNCTION, True, 0, 0, "j1")
+        self.assertNotEqual(linked["a"], hashes(lines, [directed])["a"])
+
+    def test_the_hash_does_not_depend_on_where_the_lines_sit_in_the_file(self):
+        link_ab = topology.Link(1, 2, topology.LINK_PHYSICAL_JUNCTION, False, 0, 0, "j1")
+        first = hashes([hand_line("a", [100]), hand_line("b", [100])], [link_ab])
+        # b first: a's node 1 is now global node 3, b's node 0 is global node 0.
+        link_ba = topology.Link(0, 3, topology.LINK_PHYSICAL_JUNCTION, False, 0, 0, "j1")
+        swapped = hashes([hand_line("b", [100]), hand_line("a", [100])], [link_ba])
+        self.assertEqual(first["a"], swapped["a"])
+        self.assertEqual(first["b"], swapped["b"])
+
+    def test_a_stop_key_that_moves_changes_the_line_it_leaves_and_the_one_it_reaches(self):
+        lines = [hand_line("a", [100]), hand_line("b", [100])]
+        at_a = hashes(lines, stops=[topology.Stop("st:1", topology.STOP_REGISTRY, [1])])
+        at_b = hashes(lines, stops=[topology.Stop("st:1", topology.STOP_REGISTRY, [2])])
+        self.assertNotEqual(at_a["a"], at_b["a"])
+        self.assertNotEqual(at_a["b"], at_b["b"])
 
 
 if __name__ == "__main__":

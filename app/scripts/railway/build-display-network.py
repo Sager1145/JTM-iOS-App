@@ -3174,12 +3174,13 @@ def build_region_history(
 
 def load_topology_inputs(
     junctions_path: Path | None, through_services_path: Path | None,
-    registry_dir: Path | None,
+    registry_dir: Path | None, n02_sections_path: Path | None = None,
 ) -> tuple[dict, dict[str, str]]:
     """The documents the topology's links and stop index are compiled from, and
     their digests for the manifest. A path of None means that input is not part
     of this build; nothing is looked for elsewhere."""
-    documents: dict = {"junctions": None, "throughServices": None, "registryDir": registry_dir}
+    documents: dict = {"junctions": None, "throughServices": None, "registryDir": registry_dir,
+                       "n02Index": None}
     digests: dict[str, str] = {}
     for name, path, label in (
             ("junctions", junctions_path, "topology/physical-rail-junctions.json"),
@@ -3189,6 +3190,11 @@ def load_topology_inputs(
         raw = Path(path).read_bytes()
         documents[name] = json.loads(raw)
         digests[label] = hashlib.sha256(raw).hexdigest()
+    if n02_sections_path is not None:
+        # The production solver's own source of institution and operator per line.
+        raw = Path(n02_sections_path).read_bytes()
+        documents["n02Index"] = display_topology.build_n02_index(json.loads(raw))
+        digests["topology/n02-rail-sections.json"] = hashlib.sha256(raw).hexdigest()
     if registry_dir is not None:
         for region in sorted(TOPOLOGY_REGIONS):
             registry_path = Path(registry_dir) / f"{region}.json"
@@ -3239,7 +3245,8 @@ def build_topology_file(
     through = inputs.get("throughServices")
     data, report = display_topology.build_region_topology(
         region, sources, bytes.fromhex(package_sha256), bytes.fromhex(display_sha256),
-        junctions, through if region == "jp" else None, registry)
+        junctions, through if region == "jp" else None, registry,
+        inputs.get("n02Index") if region == "jp" else None)
     display_topology.enforce_invariants(region, report)
     return data, report
 
@@ -3307,6 +3314,7 @@ def build(
     junctions_path: Path | None = None,
     through_services_path: Path | None = None,
     registry_dir: Path | None = None,
+    n02_sections_path: Path | None = None,
 ) -> dict:
     if output.exists():
         shutil.rmtree(output)
@@ -3484,7 +3492,7 @@ def build(
             (list(scope), render_groups_doc.get("byLineId") or {}))
 
     topology_inputs, topology_input_digests = load_topology_inputs(
-        junctions_path, through_services_path, registry_dir)
+        junctions_path, through_services_path, registry_dir, n02_sections_path)
     input_sha256.update(topology_input_digests)
 
     display_hubs_doc: dict = {}
@@ -4475,13 +4483,17 @@ def main() -> None:
     parser.add_argument("--registry-dir", type=Path, default=None,
                         help="Directory of <region>.json registry bundles for the topology's "
                              "registry and group stop keys. Omit for platform codes only.")
+    parser.add_argument("--n02-sections", type=Path, default=None,
+                        help="rail-sections.json (N02 railroad sections): the institution type "
+                             "(N02_002) and operator (N02_004) of each Japanese line, as the "
+                             "route solver reads them. Required when the jp package has lines.")
     args = parser.parse_args()
     manifest = build(
         args.rail_dir, args.output, args.small_region_max_bytes,
         history_dir=args.history_dir,
         temporal_bank=json.loads(args.temporal_bank.read_bytes()) if args.temporal_bank else None,
         junctions_path=args.junctions, through_services_path=args.through_services,
-        registry_dir=args.registry_dir)
+        registry_dir=args.registry_dir, n02_sections_path=args.n02_sections)
     print(json.dumps({
         "format": manifest["format"], **manifest["source"], **manifest["built"],
         "bytes": {

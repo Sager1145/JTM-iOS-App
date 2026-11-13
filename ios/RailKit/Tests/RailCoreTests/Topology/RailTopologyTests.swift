@@ -145,6 +145,34 @@ struct RailTopologyTests {
         #expect(t.stationCode(of: .init(line: 5, node: 0)) == nil)
     }
 
+    @Test("operator, solver name, aliases and content hash read in place")
+    func v2LineAccessors() throws {
+        let t = try Self.mini()
+        #expect(t.operatorName(ofLine: 0) == "test-op" && t.operatorName(ofLine: 1) == "test-op-2" && t.operatorName(ofLine: 9) == nil)
+        #expect(t.solverName(ofLine: 0) == "solver-a" && t.solverName(ofLine: 1) == "solver-b" && t.solverName(ofLine: 9) == nil)
+        #expect(t.aliasNames(ofLine: 0) == ["A線", "Test A"] && t.aliasNames(ofLine: 1).isEmpty && t.aliasNames(ofLine: 9).isEmpty)
+        #expect(t.contentHash(ofLine: 0) == 0x61AF_AF0D_52B0_ECCF && t.contentHash(ofLine: 1) == 0x4D47_33E5_CE27_4E44)
+        #expect(t.contentHash(ofLine: 0) != t.contentHash(ofLine: 1) && t.contentHash(ofLine: 9) == nil)
+        #expect(t.rideStamps.stamps.count == 2 && t.rideStamps.stamps[0].contentHash == 0x61AF_AF0D_52B0_ECCF)
+    }
+
+    @Test("a line record whose operator or solver name points outside the string table is refused at open")
+    func badV2Strings() throws {
+        let good = try RailTopologyFormatTests.fixture()
+        for field in [F.Line.operatorName, F.Line.solverName] {
+            var bytes = good
+            let h = try F.parseHeader(good)
+            let at = h.offset(.lines) + field
+            bytes[at] = 0xFE; bytes[at + 1] = 0xFF; bytes[at + 2] = 0xFF; bytes[at + 3] = 0x7F
+            #expect(throws: F.FormatError.self) { try RailTopology(data: bytes) }
+        }
+        // A fine-edge count of zero is refused too.
+        var zero = good
+        let h = try F.parseHeader(good)
+        for i in 0..<4 { zero[h.offset(.edges) + F.Edge.fineEdges + i] = 0 }
+        #expect(throws: F.FormatError.self) { try RailTopology(data: zero) }
+    }
+
     @Test("stop keys find nodes across lines in ascending order; unknown keys find none")
     func stopLookup() throws {
         let t = try Self.mini()

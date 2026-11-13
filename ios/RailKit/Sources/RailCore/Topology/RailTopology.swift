@@ -37,7 +37,8 @@ public struct RailTopology: Sendable {
     /// Which chunk's ruler a `StrokeRef` is measured on.
     public enum Detail: Sendable { case full, overview }
 
-    /// One section's routing question.
+    /// One section's routing question: one attempt of the production solver's ladder.
+    /// Costs are integers in centimetres; see ``RailTopology/route(_:includeWithheld:)``.
     public struct SectionQuery: Sendable {
         /// Candidate start and end nodes (a station may have several, one per line).
         public var from: [NodeRef]
@@ -45,34 +46,42 @@ public struct RailTopology: Sendable {
         /// Day number of the ride (see ``RailTopologyFormat/dayNumber(ofISODate:)``);
         /// nil: undated, only rows without a `validTo` count.
         public var day: UInt32?
-        /// Hard filters: when non-empty only these line ids / institution codes may be used
-        /// (a line with institution 0, unknown, passes the institution filter).
+        /// Hard filters: when non-empty only these line ids / operator names / institution
+        /// codes may be used (a line with institution 0, unknown, passes the institution
+        /// filter; a line without an operator name never passes an operator filter).
         public var lineIDs: Set<String>
+        public var operators: Set<String>
         public var institutions: Set<UInt16>
         /// Soft preference: when non-empty, every line outside this set costs
         /// ``RailTopology/nonPreferredLineFactor`` times its length.
         public var preferredLineIDs: Set<String>
+        /// Soft preference: when non-empty, every line with an operator outside this set
+        /// costs ``RailTopology/nonPreferredOperatorFactor`` times its length (a line without
+        /// an operator name is not penalised, as in the solver).
+        public var preferredOperators: Set<String>
         /// Hard exclusion: lines with these institution codes are never used
         /// (the production solver's `hardExcludedInstitutionTypeCodes`).
         public var excludedInstitutions: Set<UInt16>
-        /// Hard exclusion of lines flagged high-speed (Shinkansen). Stands in for excluded
-        /// institution 1 while the file carries no institution codes.
-        public var excludeHighSpeed: Bool
         /// Soft preference: when non-empty, lines whose institution code is not in
         /// this set (and not 0, unknown) cost ``RailTopology/nonPreferredInstitutionFactor``
-        /// times their length.
+        /// times their length plus ``RailTopology/nonPreferredInstitutionEdgeCm`` for each
+        /// source step of each edge.
         public var preferredInstitutions: Set<UInt16>
+        /// The section names that end by station name only, not by an N02 code: the candidate
+        /// list then holds every same-name station, and the same-name guard applies.
+        public var fromNameOnly: Bool
+        public var toNameOnly: Bool
         public init(from: [NodeRef], to: [NodeRef], day: UInt32? = nil,
-                    lineIDs: Set<String> = [], institutions: Set<UInt16> = [],
-                    preferredLineIDs: Set<String> = [],
+                    lineIDs: Set<String> = [], operators: Set<String> = [], institutions: Set<UInt16> = [],
+                    preferredLineIDs: Set<String> = [], preferredOperators: Set<String> = [],
                     excludedInstitutions: Set<UInt16> = [], preferredInstitutions: Set<UInt16> = [],
-                    excludeHighSpeed: Bool = false) {
-            self.excludeHighSpeed = excludeHighSpeed
+                    fromNameOnly: Bool = false, toNameOnly: Bool = false) {
             self.from = from; self.to = to; self.day = day
-            self.lineIDs = lineIDs; self.institutions = institutions
-            self.preferredLineIDs = preferredLineIDs
+            self.lineIDs = lineIDs; self.operators = operators; self.institutions = institutions
+            self.preferredLineIDs = preferredLineIDs; self.preferredOperators = preferredOperators
             self.excludedInstitutions = excludedInstitutions
             self.preferredInstitutions = preferredInstitutions
+            self.fromNameOnly = fromNameOnly; self.toNameOnly = toNameOnly
         }
     }
 
@@ -85,7 +94,8 @@ public struct RailTopology: Sendable {
     public struct SectionPath: Sendable {
         public var spans: [Span]
         public var lengthCm: UInt64
-        /// True when found only after dropping the line filter: drawn dotted, excluded from distance.
+        /// True for a path the same-name endpoint guard rejected and that was kept only as
+        /// the last resort: drawn dotted, excluded from distance.
         public var unproven: Bool
         public init(spans: [Span], lengthCm: UInt64, unproven: Bool = false) {
             self.spans = spans; self.lengthCm = lengthCm; self.unproven = unproven
@@ -179,6 +189,37 @@ public struct RailTopology: Sendable {
     public func institution(ofLine line: UInt16) -> UInt16? {
         guard Int(line) < lineCount else { return nil }
         return withView { v in v.u16(v.lineBase(Int(line)) + RailTopologyFormat.Line.institution) }
+    }
+
+    /// The operator name of a line (`N02_004` for Japan), nil when the file has none or the line is unknown.
+    public func operatorName(ofLine line: UInt16) -> String? {
+        guard Int(line) < lineCount else { return nil }
+        return withView { v in v.string(v.u32(v.lineBase(Int(line)) + RailTopologyFormat.Line.operatorName)) }
+    }
+
+    /// The other names the line answers to, in the order stored: for Japan the N02 line names of
+    /// track it runs along that N02 files under another line (see ``RailTopologyFormat/Line``).
+    public func aliasNames(ofLine line: UInt16) -> [String] {
+        guard Int(line) < lineCount else { return [] }
+        let joined = withView { v in v.string(v.u32(v.lineBase(Int(line)) + RailTopologyFormat.Line.aliases)) } ?? ""
+        return joined.isEmpty ? [] : joined.split(separator: "\u{1F}", omittingEmptySubsequences: true).map(String.init)
+    }
+
+    /// The line's name as the production solver reads it (`N02_003` for Japan), the one trips and
+    /// sections name lines by; nil when absent or the line is unknown.
+    public func solverName(ofLine line: UInt16) -> String? {
+        guard Int(line) < lineCount else { return nil }
+        return withView { v in v.string(v.u32(v.lineBase(Int(line)) + RailTopologyFormat.Line.solverName)) }
+    }
+
+    /// The line's content hash (see ``RailTopologyFormat/Line``): equal exactly when nothing a
+    /// trip over the line depends on changed. Nil for an unknown line.
+    public func contentHash(ofLine line: UInt16) -> UInt64? {
+        guard Int(line) < lineCount else { return nil }
+        return withView { v in
+            let at = v.lineBase(Int(line)) + RailTopologyFormat.Line.contentHash
+            return UInt64(v.u32(at)) | UInt64(v.u32(at + 4)) << 32
+        }
     }
 
     public func nodeCount(ofLine line: UInt16) -> Int {
@@ -369,7 +410,8 @@ struct TopologyView {
                   edgeCount == (nodeCount == 0 ? 0 : (flags.contains(.loop) ? nodeCount : nodeCount - 1)),
                   !(flags.contains(.loop) && nodeCount < 2),
                   stringBytes(u32(b + F.Line.id)) != nil, stringOK(u32(b + F.Line.family)),
-                  stringOK(u32(b + F.Line.name)), stringOK(u32(b + F.Line.aliases))
+                  stringOK(u32(b + F.Line.name)), stringOK(u32(b + F.Line.aliases)),
+                  stringOK(u32(b + F.Line.operatorName)), stringOK(u32(b + F.Line.solverName))
             else { throw fail(.lines) }
             guard firstNode == expectedNode, firstEdge == expectedEdge else { throw fail(.lines) }
             expectedNode += nodeCount; expectedEdge += edgeCount
@@ -386,7 +428,8 @@ struct TopologyView {
                 cumulative += UInt64(u32(eb + F.Edge.lengthCm))
                 let flagBits = F.EdgeFlag(rawValue: u16(eb + F.Edge.flags))
                 let runCount = Int(u16(eb + F.Edge.runCount)), firstRun = Int(u32(eb + F.Edge.firstRun))
-                guard !flagBits.contains(.hasRuns) || (runCount > 0 && firstRun + runCount <= runTotal)
+                guard !flagBits.contains(.hasRuns) || (runCount > 0 && firstRun + runCount <= runTotal),
+                      u32(eb + F.Edge.fineEdges) >= 1
                 else { throw fail(.edges) }
             }
         }

@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - Format contract: `jtm-display-topology-v1`
+// MARK: - Format contract: `jtm-display-topology-v2`
 //
 // One file per region, `rail-display-network/{region}.topology.bin`, written by
 // `app/scripts/railway/build-display-network.py` in the same run as
@@ -129,10 +129,10 @@ import Foundation
 ///  across lane pieces. An edge without `hasRuns` runs directly between its
 ///  two nodes' positions on their shared chain.
 public enum RailTopologyFormat {
-    public static let formatName = "jtm-display-topology-v1"
+    public static let formatName = "jtm-display-topology-v2"
     /// First four bytes of every file: ASCII `JTMT`.
     public static let magic: [UInt8] = [0x4A, 0x54, 0x4D, 0x54]
-    public static let formatVersion: UInt16 = 1
+    public static let formatVersion: UInt16 = 2
     /// Appended to the region code: `{region}.topology.bin`.
     public static let fileSuffix = ".topology.bin"
     public static let noString: UInt32 = 0xFFFF_FFFF
@@ -151,7 +151,7 @@ public enum RailTopologyFormat {
         public static let versionOffset = 4          // UInt16
         public static let headerSizeOffset = 6       // UInt16, always `size`
         public static let regionOffset = 8           // 4 ASCII bytes, NUL padded (`jp`, `tw`, ...)
-        public static let flagsOffset = 12           // UInt32, 0 in v1
+        public static let flagsOffset = 12           // UInt32, 0 in v1 and v2
         public static let packageSHA256Offset = 16   // 32 bytes: SHA-256 of the compact package the builder read
         public static let displaySHA256Offset = 48   // 32 bytes: SHA-256 of `{region}.display.bin`
         public static let fileLengthOffset = 80      // UInt32: total bytes
@@ -184,9 +184,30 @@ public enum RailTopologyFormat {
 
     // MARK: Records
 
-    /// `lines[]`, 56 bytes, in manifest blob order, including retired lines.
+    /// `lines[]`, 72 bytes, in manifest blob order, including retired lines.
+    ///
+    /// ## Institution, operator, content hash (v2)
+    ///  - `institution` is the N02 institution type (`N02_002`) the route solver reads: 1 JR
+    ///    Shinkansen, 2 JR conventional, 3 public, 4 private, 5 third sector. The builder takes
+    ///    it from the N02 railroad sections by line name (a variant suffix such as `-p1` or `-2`
+    ///    is dropped), or from the line's operator when N02 lists no section under that name and
+    ///    all sections of the operator agree. 0 means unknown (every line of a region without N02
+    ///    data) and passes the institution filters.
+    ///  - `operator` is the operator name as the solver reads it (`N02_004` for Japan; the
+    ///    package's operator name elsewhere), or `noString`.
+    ///  - `aliases` (v2 use): for Japan, the other N02 line names of the track the line follows, when
+    ///    N02 files that track under another line (the Yokosuka-Sobu rapid line between Shinagawa and
+    ///    Tsurumi is N02's Tokaido Line): names holding at least 30% of the line's sampled intervals,
+    ///    most frequent first. A section that names such a line must still reach this one.
+    ///  - `solverName` is the line name as the solver reads it (`N02_003` for Japan, the display name
+    ///    elsewhere): the name a section's line names and a trip's preferred line names match against,
+    ///    which is not always the display `name`.
+    ///  - `contentHash` is the first 8 bytes of a SHA-256 over everything a trip drawn over the
+    ///    line depends on: the line row, its nodes, edges, runs and identities, the links that
+    ///    touch it, and the stop keys that resolve to its nodes. Global indices are not hashed,
+    ///    so a change elsewhere in the file leaves it alone. The ride cache keys trips on it.
     public enum Line {
-        public static let size = 56
+        public static let size = 72
         public static let id = 0                 // UInt32 string: line id
         public static let family = 4             // UInt32 string: operator plus normalised name
         public static let name = 8               // UInt32 string: current display name
@@ -204,6 +225,9 @@ public enum RailTopologyFormat {
         public static let firstIdentity = 48     // UInt32 index into `identities`
         public static let identityCount = 52     // UInt16
         public static let reserved = 54          // UInt16
+        public static let operatorName = 56      // UInt32 string: operator name, or `noString`
+        public static let solverName = 60        // UInt32 string: line name as the solver reads it (N02_003 for Japan)
+        public static let contentHash = 64       // 8 bytes: see "Institution, operator, content hash"
     }
 
     /// `nodes[]`, 28 bytes, grouped per line in station order.
@@ -220,9 +244,14 @@ public enum RailTopologyFormat {
         public static let reserved = 26          // UInt16
     }
 
-    /// `edges[]`, 24 bytes, grouped per line in node order.
+    /// `edges[]`, 28 bytes, grouped per line in node order.
+    ///
+    /// `fineEdges` (v2) is the number of steps of the source polyline the edge spans (at
+    /// least 1). The production route solver builds one graph edge per step and charges its
+    /// per-edge institution penalty on each, so the router needs the count to price an edge
+    /// the same way. The builder reads it from the package segment's polyline.
     public enum Edge {
-        public static let size = 24
+        public static let size = 28
         public static let lengthCm = 0           // UInt32 surveyed length; always above zero
         public static let cumulativeCm = 4       // UInt32 length (withheld edges included) from the line's first node to this edge's first node
         public static let validFrom = 8          // UInt32 day number
@@ -230,6 +259,7 @@ public enum RailTopologyFormat {
         public static let flags = 16             // UInt16: ``EdgeFlag``
         public static let runCount = 18          // UInt16
         public static let firstRun = 20          // UInt32 index into `runs`
+        public static let fineEdges = 24         // UInt32 source polyline steps, at least 1
     }
 
     /// `runs[]`, 20 bytes: one piece of an edge on one chain or part.
