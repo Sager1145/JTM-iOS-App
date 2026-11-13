@@ -42,9 +42,9 @@ import re
 import struct
 from dataclasses import dataclass, field
 
-FORMAT_NAME = "jtm-display-topology-v1"
+FORMAT_NAME = "jtm-display-topology-v2"
 MAGIC = b"JTMT"
-FORMAT_VERSION = 1
+FORMAT_VERSION = 2
 HEADER_SIZE = 160
 NO_STRING = 0xFFFFFFFF
 UNSET = 0xFFFFFFFF
@@ -55,14 +55,15 @@ FILE_SUFFIX = ".topology.bin"
 
 TABLES = ("lines", "nodes", "edges", "runs", "links", "identities", "stops", "stopNodes", "strings")
 RECORD_SIZE = {
-    "lines": 56, "nodes": 28, "edges": 24, "runs": 20, "links": 24,
+    "lines": 72, "nodes": 28, "edges": 28, "runs": 20, "links": 24,
     "identities": 20, "stops": 16, "stopNodes": 4, "strings": 1,
 }
 
 LINE_LOOP, LINE_HIGH_SPEED, LINE_PAIRED, LINE_RETIRED, LINE_NON_CONTINUOUS = 1, 2, 4, 8, 16
 NODE_JUNCTION_POINT, NODE_NO_CHAIN_SLOT = 1, 2
 EDGE_FORWARD, EDGE_REVERSE, EDGE_WITHHELD, EDGE_HAS_RUNS = 1, 2, 4, 8
-LINK_PHYSICAL_JUNCTION, LINK_THROUGH_SERVICE = 1, 2
+LINK_PHYSICAL_JUNCTION, LINK_THROUGH_SERVICE, LINK_PAIRED_ALIGNMENT = 1, 2, 3
+ALIGNMENT_LINK_PREFIX = "alignment:"
 STOP_PLATFORM, STOP_REGISTRY, STOP_GROUP = 1, 2, 3
 
 
@@ -161,6 +162,9 @@ class Edge:
     valid_to: int
     flags: int
     runs: list[Run] = field(default_factory=list)
+    # Steps of the source polyline the edge spans: the route solver's graph has one edge
+    # per step, and charges its per-edge institution penalty once for each.
+    fine_edges: int = 1
 
 
 @dataclass
@@ -186,6 +190,8 @@ class LineRecord:
     nodes: list[Node]
     edges: list[Edge]
     identities: list[Identity] = field(default_factory=list)
+    operator: str | None = None     # operator name as the production solver reads it (N02_004 for jp)
+    solver_name: str | None = None  # line name as the production solver reads it (N02_003 for jp)
 
 
 @dataclass
@@ -228,6 +234,83 @@ class _Strings:
         return offset
 
 
+def _frame_text(value: str | None) -> bytes:
+    if value is None:
+        return b"\x00"
+    encoded = value.encode("utf-8")
+    return b"\x01" + struct.pack("<I", len(encoded)) + encoded
+
+
+def line_content_hashes(lines: list[LineRecord], links: list[Link], stops: list[Stop]) -> list[bytes]:
+    """Per line, 8 bytes: the first half of a SHA-256 over everything a trip drawn
+    over this line depends on. A change to any of it gives a different hash, and
+    nothing else does:
+      - the line row (id, family, name, aliases, operator, institution, category,
+        flags, chain count, dates), its identities;
+      - every node (station code, both rulers, coordinates, chain, flags), every
+        edge (length, cumulative length, dates, flags) and run;
+      - every link that touches one of its nodes, as (own node ordinal, other line
+        id, other node ordinal, kind, directed, dates, registry row), sorted, so a
+        junction or through service added, removed or redated changes both lines;
+      - every stop key (and kind) that resolves to one of its nodes, per node.
+    Global node and line indices are not hashed, so adding a line elsewhere in the
+    file changes nobody else's hash. The same input gives the same bytes."""
+    node_base, total = [], 0
+    for line in lines:
+        node_base.append(total)
+        total += len(line.nodes)
+    owner: list[tuple[int, int]] = []       # global node -> (line index, ordinal)
+    for line_index, line in enumerate(lines):
+        owner.extend((line_index, ordinal) for ordinal in range(len(line.nodes)))
+    touching: list[list[tuple]] = [[] for _ in lines]
+    for link in links:
+        (la, oa), (lb, ob) = owner[link.node_a], owner[link.node_b]
+        row = (link.kind, 1 if link.directed else 0, link.valid_from, link.valid_to, link.registry_id)
+        # Only a directed link has a side; an undirected one reads the same from both ends.
+        touching[la].append((oa, lines[lb].id, ob, "A" if link.directed else "U") + row)
+        touching[lb].append((ob, lines[la].id, oa, "B" if link.directed else "U") + row)
+    stops_at: list[list[tuple]] = [[] for _ in range(total)]
+    for stop in stops:
+        for node in stop.nodes:
+            stops_at[node].append((stop.key.encode("utf-8"), stop.kind))
+    hashes = []
+    for line_index, line in enumerate(lines):
+        h = hashlib.sha256()
+        h.update(b"jtm-topology-line-hash-v1")
+        for text in (line.id, line.family, line.name, line.aliases, line.operator, line.solver_name):
+            h.update(_frame_text(text))
+        h.update(struct.pack("<HHHHII", line.institution, line.category_mask, line.flags,
+                             line.chain_count, line.valid_from, line.valid_to))
+        h.update(struct.pack("<II", len(line.nodes), len(line.edges)))
+        for node in line.nodes:
+            h.update(_frame_text(node.code))
+            h.update(struct.pack("<IIffHH", node.full, node.overview, node.lon, node.lat,
+                                 node.chain, node.flags))
+        for ordinal, node in enumerate(line.nodes):
+            marks = sorted(stops_at[node_base[line_index] + ordinal])
+            h.update(struct.pack("<I", len(marks)))
+            for key, kind in marks:
+                h.update(struct.pack("<I", len(key)) + key + bytes([kind]))
+        for edge in line.edges:
+            h.update(struct.pack("<IIIIHHI", edge.length_cm, edge.cumulative_cm, edge.valid_from,
+                                 edge.valid_to, edge.flags, len(edge.runs), edge.fine_edges))
+            for run in edge.runs:
+                h.update(struct.pack("<HIIII", run.chain, run.full_from, run.full_to,
+                                     run.overview_from, run.overview_to))
+        h.update(struct.pack("<I", len(line.identities)))
+        for identity in line.identities:
+            h.update(_frame_text(identity.name) + _frame_text(identity.family))
+            h.update(struct.pack("<II", identity.valid_from, identity.valid_to))
+        rows = sorted(touching[line_index])
+        h.update(struct.pack("<I", len(rows)))
+        for ordinal, other_id, other_ordinal, side, kind, directed, v_from, v_to, registry_id in rows:
+            h.update(struct.pack("<I", ordinal) + _frame_text(other_id))
+            h.update(struct.pack("<IcBBII", other_ordinal, side.encode(), kind, directed, v_from, v_to))
+            h.update(_frame_text(registry_id))
+        hashes.append(h.digest()[:8])
+    return hashes
+
+
 def encode_topology(region: str, package_sha256: bytes, display_sha256: bytes,
                     lines: list[LineRecord], links: list[Link], stops: list[Stop]) -> bytes:
     if len(package_sha256) != 32 or len(display_sha256) != 32:
@@ -256,14 +339,21 @@ def encode_topology(region: str, package_sha256: bytes, display_sha256: bytes,
         node_count += len(line.nodes)
         edge_count += len(line.edges)
         identity_count += len(line.identities)
+    for link in links:
+        if not link.registry_id:
+            raise TopologyError("a link needs the registry row it came from")
+        if not (0 <= link.node_a < node_count and 0 <= link.node_b < node_count):
+            raise TopologyError(f"link {link.registry_id} names a node outside the file")
+    content_hashes = line_content_hashes(lines, links, stops)
     for line_index, line in pending_nodes:
         first_node, first_edge, first_identity = line_fields[line_index]
         line_rows += struct.pack(
-            "<IIIIHHHHIIIIIIIHH",
+            "<IIIIHHHHIIIIIIIHHII8s",
             strings.ref(line.id), strings.ref(line.family), strings.ref(line.name),
             strings.ref(line.aliases), line.institution, line.category_mask, line.flags,
             line.chain_count, line.valid_from, line.valid_to, first_node, len(line.nodes),
-            first_edge, len(line.edges), first_identity, len(line.identities), 0)
+            first_edge, len(line.edges), first_identity, len(line.identities), 0,
+            strings.ref(line.operator), strings.ref(line.solver_name), content_hashes[line_index])
     for line_index, line in pending_nodes:
         for node in line.nodes:
             node_rows += struct.pack(
@@ -272,9 +362,11 @@ def encode_topology(region: str, package_sha256: bytes, display_sha256: bytes,
         for edge in line.edges:
             if edge.length_cm <= 0:
                 raise TopologyError(f"{line.id}: edge length must be above zero")
+            if edge.fine_edges < 1:
+                raise TopologyError(f"{line.id}: an edge spans at least one source step")
             edge_rows += struct.pack(
-                "<IIIIHHI", edge.length_cm, edge.cumulative_cm, edge.valid_from, edge.valid_to,
-                edge.flags, len(edge.runs), run_count)
+                "<IIIIHHII", edge.length_cm, edge.cumulative_cm, edge.valid_from, edge.valid_to,
+                edge.flags, len(edge.runs), run_count, edge.fine_edges)
             for run in edge.runs:
                 run_rows += struct.pack(
                     "<HHIIII", run.chain, 0, run.full_from, run.full_to,
@@ -361,24 +453,24 @@ def read_topology(data: bytes) -> dict:
         return [struct.unpack_from(layout, data, offset + step * index) for index in range(count)]
 
     raw_runs = rows("runs", "<HHIIII")
-    raw_edges = rows("edges", "<IIIIHHI")
+    raw_edges = rows("edges", "<IIIIHHII")
     raw_nodes = rows("nodes", "<IIIffHHHH")
     lines = []
-    for row in rows("lines", "<IIIIHHHHIIIIIIIHH"):
+    for row in rows("lines", "<IIIIHHHHIIIIIIIHHII8s"):
         (line_id, family, name, aliases, institution, category, flags, chain_count,
          valid_from, valid_to, first_node, node_count, first_edge, edge_count,
-         first_identity, identity_count, _) = row
+         first_identity, identity_count, _, operator, solver_name, content_hash) = row
         nodes = [{
             "code": text(code), "full": full, "overview": overview, "lon": lon, "lat": lat,
             "chain": chain, "flags": node_flags,
         } for code, full, overview, lon, lat, _, chain, node_flags, _ in
             raw_nodes[first_node:first_node + node_count]]
         edges = []
-        for length_cm, cumulative, e_from, e_to, e_flags, run_count, first_run in \
+        for length_cm, cumulative, e_from, e_to, e_flags, run_count, first_run, fine_edges in \
                 raw_edges[first_edge:first_edge + edge_count]:
             edges.append({
                 "lengthCm": length_cm, "cumulativeCm": cumulative, "validFrom": e_from,
-                "validTo": e_to, "flags": e_flags,
+                "validTo": e_to, "flags": e_flags, "fineEdges": fine_edges,
                 "runs": [{"chain": chain, "fullFrom": ff, "fullTo": ft, "overviewFrom": of,
                           "overviewTo": ot} for chain, _, ff, ft, of, ot in
                          raw_runs[first_run:first_run + run_count]],
@@ -389,6 +481,7 @@ def read_topology(data: bytes) -> dict:
             "flags": flags, "chainCount": chain_count, "validFrom": valid_from,
             "validTo": valid_to, "firstNode": first_node, "firstEdge": first_edge,
             "identityCount": identity_count, "firstIdentity": first_identity,
+            "operator": text(operator), "solverName": text(solver_name), "contentHash": content_hash,
             "nodes": nodes, "edges": edges,
         })
     stop_nodes = [value for (value,) in rows("stopNodes", "<I")]
@@ -902,7 +995,9 @@ def _edge(source: LineSource, interval: int, length_cm: int, cumulative: int,
             report["edgesWithMixedValidity"] += 1
             report["mixedValidityEdges"].append(
                 {"edge": f"{source.key}#{interval}", "validFrom": valid_from, "validTo": valid_to})
-    return Edge(length_cm, cumulative, valid_from, valid_to, flags, runs)
+    segments = source.line.get("segments") or []
+    steps = len(segments[interval][2]) - 1 if interval < len(segments) and len(segments[interval]) > 2 else 1
+    return Edge(length_cm, cumulative, valid_from, valid_to, flags, runs, max(1, steps))
 
 
 def _settle_runs(edges: list[Edge], nodes: list[Node], station_count: int,
@@ -1326,6 +1421,8 @@ def enforce_invariants(region: str, report: dict, length_ledger: bool = True,
             problems.append(f"KNOWN_UNPLACED_JUNCTION_ROWS entries no longer reported (remove them): {stale_rows[:5]}")
         if report["unplacedThroughServiceRows"]:
             problems.append(f"unplacedThroughServiceRows: {report['unplacedThroughServiceRows'][:5]}")
+        if report["unplacedAlignmentLines"]:
+            problems.append(f"unplacedAlignmentLines: {report['unplacedAlignmentLines'][:5]}")
     if problems:
         raise TopologyError(f"{region}: " + "; ".join(problems))
 
@@ -1335,15 +1432,166 @@ def new_report() -> dict:
         "overviewAlignFailures": 0, "unanchoredStations": [], "slotMismatches": [],
         "edgesWithoutGeometry": [], "edgesWithMixedValidity": 0, "mixedValidityEdges": [], "datedEdges": 0,
         "intervalsOnSeveralChains": 0, "routedEdges": [], "lengthMismatchEdges": [],
+        "unplacedAlignmentLines": [],
     }
+
+
+# --------------------------------------------------------------------------
+# Institution and operator of each Japanese line (N02, the route solver's source)
+# --------------------------------------------------------------------------
+INSTITUTION_CODES = frozenset({1, 2, 3, 4, 5})
+_VARIANT_SUFFIX = re.compile(r"(.*)-(?:p\d+|\d+)")
+
+
+def build_n02_index(document: dict) -> dict:
+    """From the N02 railroad sections (`rail-sections.json`): per line key
+    `jp-{N02_004}-{N02_003}` the institution type `N02_002` and the operator
+    `N02_004`, the two fields the route solver reads from each section
+    (`RouteGraph`, `Statistics.RailProperties`). A line whose sections carry two
+    codes stops the build: the solver would price its sections differently. The index
+    also holds the section vertices in a grid (`cells`), for `n02_corridor_names`."""
+    lines: dict[str, tuple[int, str, str]] = {}
+    operators: dict[str, set[int]] = {}
+    names: list[str] = []            # attribute id -> N02_003
+    name_ids: dict[str, int] = {}
+    cells: dict[tuple[int, int], list[tuple[float, float, int]]] = {}
+    for feature in document.get("features") or []:
+        props = feature.get("properties") or {}
+        operator, name, raw = props.get("N02_004"), props.get("N02_003"), props.get("N02_002")
+        if not operator or not name:
+            continue
+        try:
+            code = int(raw)
+        except (TypeError, ValueError):
+            raise TopologyError(f"N02 section of {operator} {name} has institution {raw!r}")
+        if code not in INSTITUTION_CODES:
+            raise TopologyError(f"N02 section of {operator} {name} has institution {code}")
+        key = f"jp-{operator}-{name}"
+        known = lines.get(key)
+        if known is not None and known[0] != code:
+            raise TopologyError(f"N02 line {key} has institution {known[0]} and {code}")
+        lines[key] = (code, operator, name)
+        operators.setdefault(operator, set()).add(code)
+        geometry = feature.get("geometry") or {}
+        coordinates = geometry.get("coordinates") or []
+        if geometry.get("type") == "MultiLineString":
+            coordinates = [point for part in coordinates for point in part]
+        name_id = name_ids.setdefault(name, len(names))
+        if name_id == len(names):
+            names.append(name)
+        for lon, lat in coordinates:
+            cells.setdefault((int(lon / N02_CELL), int(lat / N02_CELL)), []).append((lon, lat, name_id))
+    return {"lines": lines, "operators": operators, "names": names, "cells": cells}
+
+
+ALIAS_SEPARATOR = "\u001f"
+N02_CELL = 0.0005                 # degrees, about 55 m
+N02_MATCH_METRES = 40.0
+N02_SAMPLES_PER_INTERVAL = 6
+N02_ALIAS_SHARE = 0.30
+
+
+def n02_corridor_names(line: dict, own_name: str, index: dict) -> list[str]:
+    """Other N02 line names that run along this package line. The solver names a track
+    by the N02 section it lies on, one name per section, while a package line can follow
+    track that N02 files under another line (the Yokosuka-Sobu rapid line between
+    Shinagawa and Tsurumi is N02's Tokaido Line). A trip or section that names the other
+    line must still reach this one. Sample each interval's polyline, find the nearest N02
+    vertex within 40 m, and keep every name other than `own_name` that holds at least 30%
+    of the matched samples, most frequent first."""
+    cells = index.get("cells") or {}
+    names = index.get("names") or []
+    votes: dict[int, int] = {}
+    matched = 0
+    for segment in line.get("segments") or []:
+        points = segment[2] if len(segment) > 2 else []
+        step = max(1, len(points) // N02_SAMPLES_PER_INTERVAL)
+        for lon, lat in points[::step]:
+            cx, cy = int(lon / N02_CELL), int(lat / N02_CELL)
+            best, best_distance = None, N02_MATCH_METRES
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    for x, y, name_id in cells.get((cx + dx, cy + dy), ()):
+                        distance = math.hypot((x - lon) * 111320 * math.cos(math.radians(lat)), (y - lat) * 111320)
+                        if distance <= best_distance:
+                            best, best_distance = name_id, distance
+            if best is not None:
+                votes[best] = votes.get(best, 0) + 1
+                matched += 1
+    if not matched:
+        return []
+    kept = [(count, names[name_id]) for name_id, count in votes.items()
+            if names[name_id] != own_name and count / matched >= N02_ALIAS_SHARE]
+    return [name for _, name in sorted(kept, key=lambda item: (-item[0], item[1]))]
+
+
+def n02_attributes(line_id: str, index: dict) -> tuple[int, str, str, str]:
+    """(institution, operator, solver line name, how) for a topology line id. The id is
+    `jp-{operator}-{name}` plus, for a variant of the same line, a `-p1` or `-2`
+    style suffix, removed until the key is known (how = "line"). A line the N02
+    data does not list under its own name (the Keio New Line is part of the Keio
+    Line there; the Hiroden loop is part of its other lines) takes the code of its
+    operator when every section of that operator has the same one (how =
+    "operator"; the line keeps its own name, as N02 has no other). Anything else stops the build."""
+    lines, operators = index["lines"], index["operators"]
+    candidate = line_id
+    while True:
+        found = lines.get(candidate)
+        if found is not None:
+            return found[0], found[1], found[2], "line"
+        match = _VARIANT_SUFFIX.fullmatch(candidate)
+        if match is None:
+            break
+        candidate = match.group(1)
+    for operator in sorted(operators, key=lambda name: (-len(name), name)):
+        if line_id.startswith(f"jp-{operator}-"):
+            codes = operators[operator]
+            if len(codes) == 1:
+                return next(iter(codes)), operator, None, "operator"
+            raise TopologyError(f"{line_id}: not an N02 line, and {operator} has institutions {sorted(codes)}")
+    raise TopologyError(f"{line_id}: no N02 line or operator to take the institution from")
+
+
+def compile_alignment_links(package_lines: list[dict], node_of) -> tuple[list[Link], list[str]]:
+    """The links of paired alignments. A line `{base}-p1` (its `alignmentOf` names `base`) is the
+    second track of one physical railway between two stations of the base line: the same
+    stations, the same code, one physical line, one link per shared station code. Without them
+    the second track is unreachable and a trip against the base line's one-way edges has no
+    path. Only the package's own `alignmentOf` creates these links, never a shared station code
+    alone. The registry row is `alignment:{line id}`. A line whose base is missing, or that
+    shares no station with it, is listed and gets no link."""
+    links: list[Link] = []
+    unplaced: list[str] = []
+    for line in package_lines:
+        base = line.get("alignmentOf")
+        if not base:
+            continue
+        placed = 0
+        for row in line.get("stations") or []:
+            a, b = node_of(line["id"], row[0]), node_of(base, row[0])
+            if a is None or b is None:
+                continue
+            low, high = sorted((a, b))
+            links.append(Link(low, high, LINK_PAIRED_ALIGNMENT, False, NO_DATE, NO_DATE,
+                              ALIGNMENT_LINK_PREFIX + line["id"]))
+            placed += 1
+        if not placed:
+            unplaced.append(line["id"])
+    return links, unplaced
 
 
 def build_region_topology(region: str, sources: list[LineSource], package_sha256: bytes,
                           display_sha256: bytes, junctions: dict | None,
-                          through_services: dict | None, registry: dict | None) -> tuple[bytes, dict]:
+                          through_services: dict | None, registry: dict | None,
+                          n02_index: dict | None = None) -> tuple[bytes, dict]:
     """The bytes of `{region}.topology.bin` and a report. `sources` are the lines
-    with display data in manifest blob order."""
+    with display data in manifest blob order. `n02_index` (see `build_n02_index`)
+    gives each Japanese line its institution and operator; with no index (a region
+    without N02 data, or a build given no `--n02-sections`, as a build given no junctions has
+    no junction links) a line has institution 0 and the package's operator name."""
     report = new_report()
+    report["institutionLines"] = {}
+    report["institutionByOperatorLines"] = []
     lines: list[LineRecord] = []
     for source in sources:
         line = source.line
@@ -1361,10 +1609,21 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
         name = line["name"]
         family = line.get("railwayIdentity") or "-".join(
             [region, line.get("operator") or "", line.get("nameNorm") or name])
+        if region == "jp" and n02_index is not None:
+            institution, operator, solver_name, how = n02_attributes(line["id"], n02_index)
+            if how == "operator":
+                report["institutionByOperatorLines"].append(line["id"])
+            counts = report["institutionLines"]
+            counts[str(institution)] = counts.get(str(institution), 0) + 1
+        else:
+            institution, operator, solver_name = 0, line.get("operator") or None, name
+        aliases = ALIAS_SEPARATOR.join(n02_corridor_names(line, solver_name or name, n02_index)) \
+            if n02_index is not None else ""
         lines.append(LineRecord(
-            id=line["id"], family=family, name=name, aliases="", institution=0,
+            id=line["id"], family=family, name=name, aliases=aliases, institution=institution,
             category_mask=0, flags=_line_flags(source), chain_count=chain_count,
-            valid_from=NO_DATE, valid_to=NO_DATE, nodes=nodes, edges=edges))
+            valid_from=NO_DATE, valid_to=NO_DATE, nodes=nodes, edges=edges, operator=operator,
+            solver_name=solver_name or name))
     node_base, total = [], 0
     for record in lines:
         node_base.append(total)
@@ -1384,6 +1643,8 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
     if through_services is not None:
         found, through_skipped = compile_through_links(through_services, node_of)
         links += found
+    found, unplaced_alignments = compile_alignment_links([source.line for source in sources], node_of)
+    links += found
     links.sort(key=lambda l: (l.kind, l.node_a, l.node_b, l.valid_from, l.valid_to, l.registry_id))
     stops, stop_counts = compile_stops(lines, node_base, registry)
     data = encode_topology(region, package_sha256, display_sha256, lines, links, stops)
@@ -1392,6 +1653,8 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
         "runs": sum(len(e.runs) for l in lines for e in l.edges), "links": len(links),
         "junctionLinks": sum(1 for l in links if l.kind == LINK_PHYSICAL_JUNCTION),
         "throughServiceLinks": sum(1 for l in links if l.kind == LINK_THROUGH_SERVICE),
+        "alignmentLinks": sum(1 for l in links if l.kind == LINK_PAIRED_ALIGNMENT),
+        "unplacedAlignmentLines": unplaced_alignments,
         "stops": len(stops), "stopKeys": stop_counts, "bytes": len(data),
         "sha256": hashlib.sha256(data).hexdigest(),
         "unplacedJunctionRows": skipped, "unplacedThroughServiceRows": through_skipped,

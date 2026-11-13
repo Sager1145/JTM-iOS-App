@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 @testable import RailCore
 
@@ -15,6 +16,7 @@ struct TestNetwork {
         var validFrom: UInt32 = 0
         var validTo: UInt32 = 0
         var runs: [Run] = []
+        var fineEdges: UInt32 = 1
     }
 
     struct Node {
@@ -23,6 +25,8 @@ struct TestNetwork {
         var overview: UInt32 = F.unsetMetres
         var chain: UInt16 = 0
         var flags: F.NodeFlag = []
+        var lon: Float = 0
+        var lat: Float = 0
     }
 
     struct Line {
@@ -32,21 +36,26 @@ struct TestNetwork {
         var chainCount: UInt16 = 1
         var validFrom: UInt32 = 0
         var validTo: UInt32 = 0
+        var operatorName: String?
+        var solverName: String?
         var nodes: [Node]
         var edges: [Edge]
 
         /// A plain chain: stations `codes` joined by edges of the given lengths
         /// (centimetres), positions on one chain equal to the cumulative length.
         static func chain(_ id: String, _ codes: [String], lengths: [UInt32], institution: UInt16 = 1,
-                          loop: Bool = false, flags: F.EdgeFlag = [.forward, .reverse]) -> Line {
+                          loop: Bool = false, flags: F.EdgeFlag = [.forward, .reverse],
+                          operatorName: String? = nil, fineEdges: UInt32 = 1,
+                          at coordinates: [(lon: Float, lat: Float)]? = nil) -> Line {
             var position: UInt32 = 0
             var nodes: [Node] = []
             for (i, code) in codes.enumerated() {
-                nodes.append(Node(code: code, full: position, overview: position))
+                nodes.append(Node(code: code, full: position, overview: position,
+                                  lon: coordinates?[i].lon ?? 0, lat: coordinates?[i].lat ?? 0))
                 if i < lengths.count { position += lengths[i] }
             }
-            return Line(id: id, institution: institution, flags: loop ? [.loop] : [], nodes: nodes,
-                        edges: lengths.map { Edge(length: $0, flags: flags) })
+            return Line(id: id, institution: institution, flags: loop ? [.loop] : [], operatorName: operatorName,
+                        nodes: nodes, edges: lengths.map { Edge(length: $0, flags: flags, fineEdges: fineEdges) })
         }
     }
 
@@ -105,6 +114,12 @@ struct TestNetwork {
             put16(&lineBytes, lb + F.Line.institution, line.institution)
             put16(&lineBytes, lb + F.Line.flags, line.flags.rawValue)
             put16(&lineBytes, lb + F.Line.chainCount, line.chainCount)
+            put32(&lineBytes, lb + F.Line.operatorName, s(line.operatorName))
+            put32(&lineBytes, lb + F.Line.solverName, s(line.solverName))
+            // A stand-in for the builder's hash: it changes when the line, or a link touching it, changes.
+            let touching = links.filter { $0.a.line == li || $0.b.line == li }.map { "\($0)" }.joined()
+            let digest = SHA256.hash(data: Data("\(line)|\(touching)".utf8))
+            for (i, byte) in digest.prefix(8).enumerated() { lineBytes[lb + F.Line.contentHash + i] = byte }
             put32(&lineBytes, lb + F.Line.validFrom, line.validFrom); put32(&lineBytes, lb + F.Line.validTo, line.validTo)
             put32(&lineBytes, lb + F.Line.firstNode, UInt32(firstNode[li])); put32(&lineBytes, lb + F.Line.nodeCount, UInt32(line.nodes.count))
             put32(&lineBytes, lb + F.Line.firstEdge, UInt32(firstEdge[li])); put32(&lineBytes, lb + F.Line.edgeCount, UInt32(line.edges.count))
@@ -114,6 +129,7 @@ struct TestNetwork {
                 put32(&nodeBytes, nb + F.Node.fullMetres, node.full); put32(&nodeBytes, nb + F.Node.overviewMetres, node.overview)
                 put16(&nodeBytes, nb + F.Node.line, UInt16(li)); put16(&nodeBytes, nb + F.Node.chain, node.chain)
                 put16(&nodeBytes, nb + F.Node.flags, node.flags.rawValue)
+                put32(&nodeBytes, nb + F.Node.longitude, node.lon.bitPattern); put32(&nodeBytes, nb + F.Node.latitude, node.lat.bitPattern)
                 if let code = node.code { stopTable[code, default: [:]][.platformCode, default: []].append(firstNode[li] + ni) }
             }
             var cumulative: UInt32 = 0
@@ -125,6 +141,7 @@ struct TestNetwork {
                 put32(&edgeBytes, eb + F.Edge.validFrom, edge.validFrom); put32(&edgeBytes, eb + F.Edge.validTo, edge.validTo)
                 put16(&edgeBytes, eb + F.Edge.flags, flags.rawValue); put16(&edgeBytes, eb + F.Edge.runCount, UInt16(edge.runs.count))
                 put32(&edgeBytes, eb + F.Edge.firstRun, UInt32(nextRun))
+                put32(&edgeBytes, eb + F.Edge.fineEdges, edge.fineEdges)
                 for run in edge.runs {
                     let rb = nextRun * F.Run.size
                     put16(&runBytes, rb + F.Run.chain, run.chain)

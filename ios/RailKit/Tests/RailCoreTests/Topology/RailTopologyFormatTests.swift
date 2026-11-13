@@ -39,12 +39,13 @@ struct RailTopologyFormatTests {
             (F.Line.institution, 2), (F.Line.categoryMask, 2), (F.Line.flags, 2), (F.Line.chainCount, 2),
             (F.Line.validFrom, 4), (F.Line.validTo, 4), (F.Line.firstNode, 4), (F.Line.nodeCount, 4),
             (F.Line.firstEdge, 4), (F.Line.edgeCount, 4), (F.Line.firstIdentity, 4),
-            (F.Line.identityCount, 2), (F.Line.reserved, 2)], "line")
+            (F.Line.identityCount, 2), (F.Line.reserved, 2), (F.Line.operatorName, 4), (F.Line.solverName, 4), (F.Line.contentHash, 8)], "line")
         check(F.Node.size, [(F.Node.stationCode, 4), (F.Node.fullMetres, 4), (F.Node.overviewMetres, 4),
             (F.Node.longitude, 4), (F.Node.latitude, 4), (F.Node.line, 2), (F.Node.chain, 2),
             (F.Node.flags, 2), (F.Node.reserved, 2)], "node")
         check(F.Edge.size, [(F.Edge.lengthCm, 4), (F.Edge.cumulativeCm, 4), (F.Edge.validFrom, 4),
-            (F.Edge.validTo, 4), (F.Edge.flags, 2), (F.Edge.runCount, 2), (F.Edge.firstRun, 4)], "edge")
+            (F.Edge.validTo, 4), (F.Edge.flags, 2), (F.Edge.runCount, 2), (F.Edge.firstRun, 4),
+            (F.Edge.fineEdges, 4)], "edge")
         check(F.Run.size, [(F.Run.chain, 2), (F.Run.reserved, 2), (F.Run.fullFromCm, 4),
             (F.Run.fullToCm, 4), (F.Run.overviewFromCm, 4), (F.Run.overviewToCm, 4)], "run")
         check(F.Link.size, [(F.Link.nodeA, 4), (F.Link.nodeB, 4), (F.Link.kind, 1), (F.Link.flags, 1),
@@ -65,11 +66,11 @@ struct RailTopologyFormatTests {
         let data = try Self.fixture()
         let header = try F.parseHeader(data)
         #expect(header.region == "jp")
-        #expect(header.version == 1 && header.flags == 0)
+        #expect(header.version == 2 && header.flags == 0)
         #expect(header.packageSHA256 == Array(repeating: 0x11, count: 32))
         #expect(header.displaySHA256 == Array(repeating: 0x22, count: 32))
-        #expect(Int(header.fileLength) == data.count && data.count == 972)
-        #expect(F.Table.allCases.map { header.count($0) } == [2, 6, 5, 4, 2, 1, 3, 4, 199])
+        #expect(Int(header.fileLength) == data.count && data.count == 1064)
+        #expect(F.Table.allCases.map { header.count($0) } == [2, 6, 5, 4, 2, 1, 3, 4, 239])
         // Tables are contiguous, 4-aligned, in directory order, and the file ends with the padded strings.
         var cursor = F.Header.size
         for table in F.Table.allCases {
@@ -95,6 +96,12 @@ struct RailTopologyFormatTests {
         #expect(data.u16(a + F.Line.flags) == 0)
         #expect(data.u32(a + F.Line.firstNode) == 0 && data.u32(a + F.Line.nodeCount) == 3)
         #expect(data.u32(a + F.Line.edgeCount) == 2)
+        // v2: the operator name and the 8-byte content hash the builder wrote (Python `line_content_hashes`).
+        #expect(str(data.u32(a + F.Line.operatorName)) == "test-op")
+        #expect(str(data.u32(b + F.Line.operatorName)) == "test-op-2")
+        #expect(str(data.u32(a + F.Line.solverName)) == "solver-a" && str(data.u32(b + F.Line.solverName)) == "solver-b")
+        #expect(data.rawBytes(a + F.Line.contentHash, 8) == MiniTopologyEncoder.hashA)
+        #expect(data.rawBytes(b + F.Line.contentHash, 8) == MiniTopologyEncoder.hashB)
         #expect(str(data.u32(b + F.Line.id)) == "jp.test-b")
         let bFlags = F.LineFlag(rawValue: data.u16(b + F.Line.flags))
         #expect(bFlags == [.loop, .retired, .nonContinuous])
@@ -118,6 +125,7 @@ struct RailTopologyFormatTests {
         // Edges: cumulative length, one-way withheld edge, runs.
         let e0 = rec(.edges, 0), e1 = rec(.edges, 1), e3 = rec(.edges, 3)
         #expect(data.u32(e1 + F.Edge.cumulativeCm) == data.u32(e0 + F.Edge.lengthCm))
+        #expect((0..<5).map { data.u32(rec(.edges, $0) + F.Edge.fineEdges) } == [2, 3, 2, 3, 4])
         #expect(F.EdgeFlag(rawValue: data.u16(e1 + F.Edge.flags)) == [.forward, .withheld])
         #expect(data.u32(e1 + F.Edge.validFrom) == F.dayNumber(ofISODate: "2010-01-01"))
         #expect(F.EdgeFlag(rawValue: data.u16(e3 + F.Edge.flags)) == [.forward, .reverse, .hasRuns])
@@ -209,9 +217,9 @@ struct RailTopologyFormatTests {
         #expect(throws: F.FormatError.truncated) { try F.parseHeader(good.prefix(100)) }
         var bad = good; bad[0] = 0x58
         #expect(throws: F.FormatError.badMagic) { try F.parseHeader(bad) }
-        bad = good; bad[4] = 2
-        #expect(throws: F.FormatError.unsupportedVersion(2)) { try F.parseHeader(bad) }
-        #expect(throws: F.FormatError.lengthMismatch(declared: 972, actual: 971)) {
+        bad = good; bad[4] = 1
+        #expect(throws: F.FormatError.unsupportedVersion(1)) { try F.parseHeader(bad) }
+        #expect(throws: F.FormatError.lengthMismatch(declared: 1064, actual: 1063)) {
             try F.parseHeader(good.dropLast())
         }
         bad = good; bad[F.Header.directoryOffset + 8 + 4] = 0xFF  // nodes count far past the file
@@ -261,6 +269,11 @@ private enum MiniTopologyEncoder {
         mutating func f32(_ at: Int, _ v: Float) { u32(at, v.bitPattern) }
     }
 
+    /// The content hashes the builder wrote into the fixture (the Python test regenerates the same
+    /// bytes from the same records, so these pin the hash algorithm across the two languages).
+    static let hashA: [UInt8] = [0xCF, 0xEC, 0xB0, 0x52, 0x0D, 0xAF, 0xAF, 0x61]
+    static let hashB: [UInt8] = [0x44, 0x4E, 0x27, 0xCE, 0xE5, 0x33, 0x47, 0x4D]
+
     static func encode() -> Data {
         var strings: [UInt8] = []
         var interned: [String: UInt32] = [:]
@@ -282,7 +295,8 @@ private enum MiniTopologyEncoder {
 
         func line(_ id: String, _ fam: String, _ name: String, _ alias: String, _ inst: UInt16,
                   _ cat: UInt16, _ flags: F.LineFlag, _ chains: UInt16, _ vf: UInt32, _ vt: UInt32,
-                  _ fn: UInt32, _ nn: UInt32, _ fe: UInt32, _ ne: UInt32, _ fi: UInt32, _ ni: UInt16) -> [UInt8] {
+                  _ fn: UInt32, _ nn: UInt32, _ fe: UInt32, _ ne: UInt32, _ fi: UInt32, _ ni: UInt16,
+                  _ op: String, _ solver: String, _ hash: [UInt8]) -> [UInt8] {
             var o = Out(size: F.Line.size)
             o.u32(F.Line.id, s(id)); o.u32(F.Line.family, s(fam)); o.u32(F.Line.name, s(name))
             o.u32(F.Line.aliases, s(alias))
@@ -291,12 +305,14 @@ private enum MiniTopologyEncoder {
             o.u32(F.Line.firstNode, fn); o.u32(F.Line.nodeCount, nn)
             o.u32(F.Line.firstEdge, fe); o.u32(F.Line.edgeCount, ne)
             o.u32(F.Line.firstIdentity, fi); o.u16(F.Line.identityCount, ni)
+            o.u32(F.Line.operatorName, s(op)); o.u32(F.Line.solverName, s(solver))
+            for (i, byte) in hash.enumerated() { o.u8(F.Line.contentHash + i, byte) }
             return o.bytes
         }
         let lines = [
-            line("jp.test-a", "test-op/test-a", "テストA線", "A線\u{1F}Test A", 1, 1, [], 1, 0, 0, 0, 3, 0, 2, 0, 1),
+            line("jp.test-a", "test-op/test-a", "テストA線", "A線\u{1F}Test A", 1, 1, [], 1, 0, 0, 0, 3, 0, 2, 0, 1, "test-op", "solver-a", hashA),
             line("jp.test-b", "test-op/test-b", "テストB環状線", "", 2, 2, [.loop, .retired, .nonContinuous],
-                 2, d2010, d2020, 3, 3, 2, 3, 1, 0),
+                 2, d2010, d2020, 3, 3, 2, 3, 1, 0, "test-op-2", "solver-b", hashB),
         ]
 
         func node(_ code: String?, _ full: UInt32, _ ov: UInt32, _ lon: Float, _ lat: Float,
@@ -318,19 +334,19 @@ private enum MiniTopologyEncoder {
         ]
 
         func edge(_ len: UInt32, _ cum: UInt32, _ vf: UInt32, _ vt: UInt32, _ flags: UInt16,
-                  _ runs: UInt16, _ first: UInt32) -> [UInt8] {
+                  _ runs: UInt16, _ first: UInt32, _ fine: UInt32) -> [UInt8] {
             var o = Out(size: F.Edge.size)
             o.u32(F.Edge.lengthCm, len); o.u32(F.Edge.cumulativeCm, cum)
             o.u32(F.Edge.validFrom, vf); o.u32(F.Edge.validTo, vt); o.u16(F.Edge.flags, flags)
-            o.u16(F.Edge.runCount, runs); o.u32(F.Edge.firstRun, first)
+            o.u16(F.Edge.runCount, runs); o.u32(F.Edge.firstRun, first); o.u32(F.Edge.fineEdges, fine)
             return o.bytes
         }
         let edges = [
-            edge(150_000, 0, 0, 0, both, 0, 0),
-            edge(250_050, 150_000, d2010, 0, F.EdgeFlag([.forward, .withheld]).rawValue, 0, 0),
-            edge(50_000, 0, 0, 0, runEdge, 1, 0),
-            edge(90_000, 50_000, 0, 0, runEdge, 2, 1),
-            edge(30_000, 140_000, 0, 0, runEdge, 1, 3),
+            edge(150_000, 0, 0, 0, both, 0, 0, 2),
+            edge(250_050, 150_000, d2010, 0, F.EdgeFlag([.forward, .withheld]).rawValue, 0, 0, 3),
+            edge(50_000, 0, 0, 0, runEdge, 1, 0, 2),
+            edge(90_000, 50_000, 0, 0, runEdge, 2, 1, 3),
+            edge(30_000, 140_000, 0, 0, runEdge, 1, 3, 4),
         ]
 
         func run(_ chain: UInt16, _ a: UInt32, _ b: UInt32, _ c: UInt32, _ d: UInt32) -> [UInt8] {

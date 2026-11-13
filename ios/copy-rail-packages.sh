@@ -88,7 +88,8 @@ python3 "$source_dir/../../scripts/railway/build-display-network.py" \
     --history-dir "$here/../app/data" \
     --junctions "$here/../app/data/physical-rail-junctions.json" \
     --through-services "$here/RailKit/Sources/RailCore/Resources/japan-through-services.json" \
-    --registry-dir "$here/../app/data/registry-bundle"
+    --registry-dir "$here/../app/data/registry-bundle" \
+    --n02-sections "$here/../app/data/rail-sections.json"
 
 # Build timings identify an execution, not the rail snapshot. Keep them in the
 # build log so equal source content produces identical packaged descriptors.

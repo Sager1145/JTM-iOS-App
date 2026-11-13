@@ -1,4 +1,4 @@
-# Rail topology file format `jtm-display-topology-v1`
+# Rail topology file format `jtm-display-topology-v2`
 
 Status: contract for the trip-loading pipeline (plan unit U0b,
 `docs/maintenance/2026-11-11-trip-loading-baseline-and-plan.md`). Nothing reads
@@ -21,7 +21,7 @@ in place; there is no decode step and no resident copy.
   into it, pointing at a `UInt16` byte length and then that many UTF-8 bytes.
   Offset 0 is the empty string. `0xFFFFFFFF` (`noString`) is "absent".
 - Same input, same bytes. No timestamps, no map ordering.
-- Versioning: `formatVersion` in the header is 1. A reader refuses any other
+- Versioning: `formatVersion` in the header is 2 (v2 added the line `operator` and `contentHash` and the edge `fineEdges`). A reader refuses any other
   value. A layout change bumps the version and the format name; there is no
   in-file feature negotiation.
 
@@ -86,7 +86,7 @@ aligned, without overflow. It also rejects the file when the display blob's
 SHA-256 differs from the header's (the manifest's `topologySHA256` is checked
 before the file is opened).
 
-### lines (56 bytes), manifest blob order, retired lines included
+### lines (72 bytes), manifest blob order, retired lines included
 
 | Offset | Size | Field |
 |---|---|---|
@@ -94,7 +94,7 @@ before the file is opened).
 | 4 | 4 | family (string): operator plus normalised name |
 | 8 | 4 | name (string) |
 | 12 | 4 | aliases (string): alias names joined by U+001F, or empty |
-| 16 | 2 | institution type code |
+| 16 | 2 | institution type: the N02 code the route solver reads (1 JR Shinkansen, 2 JR conventional, 3 public, 4 private, 5 third sector); 0 unknown (regions without N02 data) |
 | 18 | 2 | category mask (statistics categories) |
 | 20 | 2 | flags: bit 0 loop, 1 highSpeed, 2 pairedUpDown, 3 retired, 4 nonContinuous |
 | 22 | 2 | chainCount (chains, or parts when nonContinuous) |
@@ -107,6 +107,24 @@ before the file is opened).
 | 48 | 4 | firstIdentity (index into identities) |
 | 52 | 2 | identityCount |
 | 54 | 2 | reserved |
+| 56 | 4 | operator (string): the operator name as the solver reads it (`N02_004` for Japan, the package's name elsewhere), or `noString` |
+| 60 | 4 | solverName (string): the line name as the solver reads it (`N02_003` for Japan, the display name elsewhere); the name trips and sections name lines by, not always the display `name` |
+| 64 | 8 | contentHash: first 8 bytes of a SHA-256 over everything a trip over the line depends on |
+
+**Institution and operator.** The builder reads both from the N02 railroad sections
+(`rail-sections.json`, `--n02-sections`), the data the route solver prices from. A line is
+matched by `jp-{operator}-{name}` (its id, with a `-p1` or `-2` style variant suffix removed until
+the key is known). A line N02 does not list under its own name takes the one institution of its
+operator when every section of that operator has the same one (the Keio New Line, the Hiroden loop);
+anything else stops the build. A line whose sections carry two codes stops the build.
+
+**contentHash.** Covers the line row (id, family, name, aliases, operator, institution, category,
+flags, chain count, dates), its identities, every node (station code, both rulers, coordinates,
+chain, flags), every edge (length, cumulative length, dates, flags, fine edges) with its runs, every
+link that touches one of its nodes (own node ordinal, the other line's id and node ordinal, kind,
+directed side, dates, registry row, sorted), and every stop key that resolves to one of its nodes.
+Global node and line indices are not hashed: adding or reordering lines elsewhere in the file leaves
+the hash alone. The ride cache (`RideRecordFile`) keys trips on it.
 
 ### nodes (28 bytes), grouped per line in station order
 
@@ -126,7 +144,7 @@ A node is a station, or a junction point between stations (no station code).
 Both rulers are unset for a station with no chain slot (205 Japanese
 stations); the span cannot be drawn and the caller treats it as undrawable.
 
-### edges (24 bytes), grouped per line in node order
+### edges (28 bytes), grouped per line in node order
 
 | Offset | Size | Field |
 |---|---|---|
@@ -137,11 +155,13 @@ stations); the span cannot be drawn and the caller treats it as undrawable.
 | 16 | 2 | flags: bit 0 forward, 1 reverse, 2 withheld, 3 hasRuns |
 | 18 | 2 | runCount |
 | 20 | 4 | firstRun (index into runs) |
+| 24 | 4 | fineEdges: steps of the source polyline the edge spans, at least 1 (the solver charges its per-edge institution penalty once per step) |
 
 Edge `k` of a line joins node ordinals `k` and `(k + 1) mod nodeCount`. A loop
 line has `nodeCount` edges, the last one closing the loop; other lines have
 `nodeCount - 1`. `forward` allows travel first node to second, `reverse` the
-other way. A `withheld` edge is drawn dashed and counts for no distance: its `lengthCm` is subtracted from a span's cumulative difference.
+other way. The router applies the flags only as the solver does: section-locally, on a line that holds
+the section's start and end, to the edges between them. A `withheld` edge is drawn dashed and counts for no distance: its `lengthCm` is subtracted from a span's cumulative difference.
 
 ### runs (20 bytes)
 
@@ -164,14 +184,14 @@ direction.
 |---|---|---|
 | 0 | 4 | nodeA (global index) |
 | 4 | 4 | nodeB (global index) |
-| 8 | 1 | kind: 1 physicalJunction, 2 throughService |
+| 8 | 1 | kind: 1 physicalJunction, 2 throughService, 3 pairedAlignment |
 | 9 | 1 | flags: bit 0 directed (A to B only) |
 | 10 | 2 | reserved |
 | 12 | 4 | validFrom |
 | 16 | 4 | validTo (exclusive) |
 | 20 | 4 | registryID (string): the junction or through-service row it was compiled from, never empty |
 
-A link exists only for a reviewed physical junction or a dated through service.
+A link exists only for a reviewed physical junction, a dated through service, or a paired alignment (the package's own `alignmentOf`: the second track of one railway, linked to its base line at each station they share; registry row `alignment:{line id}`).
 Equal station codes, equal names, station complexes, shared display points and
 operator families never create one (`TripConnectivity` grants nothing for
 them). Nodes of the same line need no link.

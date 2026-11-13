@@ -23,19 +23,26 @@ struct RailTopologyRouterBenchmarkTests {
     // MARK: Correctness against Bellman-Ford
 
     /// Shortest length over the same graph, computed the slow way from the
-    /// description (not from the file): arcs for every allowed edge direction
-    /// and every usable link.
+    /// description (not from the file): arcs both ways over every valid edge and every
+    /// usable link, except the section-local direction exclusion: when start and end are
+    /// on one line, the edges between them are removed if their flags forbid that way.
     static func oracleDistance(_ net: Net, from: (Int, Int), to: (Int, Int), day: UInt32?) -> UInt64? {
         var base: [Int] = []
         var total = 0
         for line in net.lines { base.append(total); total += line.nodes.count }
         var arcs: [(Int, Int, UInt64)] = []
+        var blocked = Set<Int>()
+        if from.0 == to.0, from.1 != to.1 {
+            let needed: F.EdgeFlag = from.1 < to.1 ? .forward : .reverse
+            for k in min(from.1, to.1)..<max(from.1, to.1) where !net.lines[from.0].edges[k].flags.contains(needed) { blocked.insert(k) }
+        }
         for (li, line) in net.lines.enumerated() {
             let n = line.nodes.count
             for (k, edge) in line.edges.enumerated() where F.isValid(on: day, from: edge.validFrom, to: edge.validTo) {
+                if li == from.0 && blocked.contains(k) { continue }
                 let a = base[li] + k, b = base[li] + (k + 1) % n
-                if edge.flags.contains(.forward) { arcs.append((a, b, UInt64(edge.length))) }
-                if edge.flags.contains(.reverse) { arcs.append((b, a, UInt64(edge.length))) }
+                arcs.append((a, b, UInt64(edge.length)))
+                arcs.append((b, a, UInt64(edge.length)))
             }
         }
         for link in net.links where F.isValid(on: day, from: link.validFrom, to: link.validTo) {
