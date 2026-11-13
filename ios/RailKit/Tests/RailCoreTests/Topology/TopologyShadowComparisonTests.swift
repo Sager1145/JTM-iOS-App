@@ -69,6 +69,7 @@ struct TopologyShadowComparisonTests {
         var new: Answer?
         var unproven = false
         var explanation: String = ""
+        var straightKm: Double?
     }
 
     // MARK: Helpers
@@ -264,6 +265,11 @@ struct TopologyShadowComparisonTests {
                 }
                 let new = Self.answer(of: path.spans, in: topology)
                 row.new = new; row.unproven = path.unproven
+                if let first = path.spans.first, let last = path.spans.last,
+                   let p = topology.coordinate(of: .init(line: first.line, node: first.fromNode)),
+                   let q = topology.coordinate(of: .init(line: last.line, node: last.toNode)) {
+                    row.straightKm = Geometry.distanceMeters(Coordinate(lon: p.lon, lat: p.lat), Coordinate(lon: q.lon, lat: q.lat)) / 1000
+                }
                 if path.spans.isEmpty { row.category = .routerEmptyPath; rows.append(row); continue }
                 if oldSection.parts.isEmpty || oldSection.gap != "none" && oldSection.parts.isEmpty {
                     row.category = .oldGap; rows.append(row); continue
@@ -278,8 +284,9 @@ struct TopologyShadowComparisonTests {
                     }
                 } else {
                     row.category = .different
-                    row.explanation = Self.explain(question, old: row.old!, new: new, unproven: path.unproven, topology: topology,
-                                                   temporal: oldSection.parts.map(\.temporalKind))
+                    row.explanation = (environment["JTM_TOPOLOGY_SHADOW_DEBUG"] == "1" ? Self.trace(question, topology) : "")
+                        + Self.explain(question, old: row.old!, new: new, unproven: path.unproven, topology: topology,
+                                       temporal: oldSection.parts.map(\.temporalKind))
                 }
                 rows.append(row)
             }
@@ -294,6 +301,7 @@ struct TopologyShadowComparisonTests {
             try report.write(toFile: out, atomically: true, encoding: .utf8)
         }
         #expect(!rows.isEmpty)
+        #expect(!report.contains("UNEXPLAINED"), "every remaining difference needs a reason")
     }
 
     // MARK: Explanations
@@ -301,7 +309,7 @@ struct TopologyShadowComparisonTests {
     /// Plan and attempt trace for a section with no path (`JTM_TOPOLOGY_SHADOW_DEBUG=1`).
     static func trace(_ q: Question, _ topology: RailTopology) -> String {
         func short(_ ids: Set<String>) -> String { ids.sorted().map { $0.replacingOccurrences(of: "jp-", with: "") }.joined(separator: ",") }
-        var out = "TRACE explicit=[\(short(q.plan.explicitLineIDs))] ops=\(q.plan.explicitOperators.sorted()) common=[\(short(q.plan.commonLineIDs))] "
+        var out = "TRACE prefLines=[\(short(q.plan.preferredLineIDs))] prefOps=\(q.plan.preferredOperators.sorted()) hard=\(q.plan.hardInstitutionMode) explicit=[\(short(q.plan.explicitLineIDs))] ops=\(q.plan.explicitOperators.sorted()) common=[\(short(q.plan.commonLineIDs))] "
         out += "from=[\(short(Set(q.plan.from.compactMap { topology.lineID($0.line) })))] to=[\(short(Set(q.plan.to.compactMap { topology.lineID($0.line) })))] "
         out += "allowed=\(q.plan.allowedInstitutions.sorted()) excluded=\(q.plan.excludedInstitutions.sorted()) day=\(q.plan.day.map(String.init) ?? "-") "
         for attempt in RailTopology.attempts(for: q.plan) {
@@ -372,6 +380,38 @@ struct TopologyShadowComparisonTests {
         return notes.joined(separator: "; ")
     }
 
+    // MARK: Reasons
+
+    static func knownKey(_ row: Row) -> String { "\(row.ride.replacingOccurrences(of: "journey_", with: "").prefix(8))#\(row.section)" }
+    static func gapOf(_ row: Row) -> Double { abs((row.new?.km ?? 0) - (row.old?.km ?? 0)) }
+
+    /// Hand-written reasons for the rows that are not a km gap (see the difference list). Keyed by
+    /// the first 8 characters of the trip id and the section index.
+    static let knownReasons: [String: String] = [
+        "6F379655#3": "Same stations, same 23.0 km, same track: both take 日豊線 and its paired track 日豊線-p1 through the 西屋敷-立石 tunnel section. The old answer's label list ends on a second -p1 piece (its labels are read back from the drawn geometry); the router ends on 日豊線. Not a route difference.",
+        "1C77A103#0": "The old label is wrong: 踊り子 is a conventional limited express, so the solver hard-excludes the Shinkansen for it, and 20.3 km against the router's 20.4 km on 東海道線 is the same track; the old label was read back from the drawn geometry, which the parallel Shinkansen alignment also matches.",
+        "1367E2AD#0": "Data difference, not a defect: the file has two parallel lines between 東京 and 品川, 東海道線 (6.8 km) and the Yokosuka-Sobu rapid line 総武線-3 (6.7 km); the router takes the 0.1 km shorter one. The old graph has one track here (6.3 km) named 東海道線. Both are real tracks.",
+        "F3AE7313#23": "The section names 東海道線, and the only track between 大崎 and 西大井 in the file is the branch 大崎支線, a line of its own, so the named-line rule leaves no path. The old solver bridged the gap with 1.7 km of reviewed junction track that has no line name. Needs the branch to answer to the name 東海道線 in the file (not done: the N02 data has no section there to take it from).",
+        "856C6D19#6": "Same as 大崎 to 西大井 above: the section names 東海道線 and 山手線, the only track is the branch 大崎支線, the old solver used 2.6 km of unnamed bridging junction track.",
+        "510175D3#0": "Missing data: 佃 is the station where 徳島線 meets 土讃線 (the same station code on both lines in the file) but no reviewed junction row joins them, and shared station codes never link lines, so 阿波池田 (土讃線) cannot reach 阿波加茂 (徳島線). A junction row at 佃 with a source is needed; not added, no source was at hand.",
+    ]
+
+    /// A km-gap reason from the row's own numbers and the straight line between the ends.
+    static func kmReason(_ row: Row, hasOldLines: Bool) -> String {
+        guard let old = row.old?.km, let new = row.new?.km else { return "no comparison possible" }
+        let gap = abs(new - old)
+        let straight = row.straightKm ?? 0
+        let straightText = String(format: "straight line %.1f km", straight)
+        let who = hasOldLines ? "same lines" : "old track has no line id, the router takes the current line"
+        if old + 0.3 < straight {
+            return String(format: "%@; the old %.1f km is shorter than the %@ between the stations, so the old drawn path is cut short (old answer wrong by %.1f km); the file's %.1f km is plausible.", who, old, straightText, gap, new)
+        }
+        if new < old {
+            return String(format: "%@; the old drawn path is %.1f km longer than the file's surveyed %.1f km (%@): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.", who, gap, new, straightText)
+        }
+        return String(format: "%@; the file's surveyed %.1f km is %.1f km longer than the old drawn path's %.1f km (%@): the old graph's simplified geometry is shorter than the surveyed intervals.", who, new, gap, old, straightText)
+    }
+
     // MARK: Output
 
     static func millis(_ d: Duration) -> Double { Double(d.components.seconds) * 1000 + Double(d.components.attoseconds) / 1e15 }
@@ -421,21 +461,47 @@ struct TopologyShadowComparisonTests {
         line()
         line("Topology file: \(topologyPath.split(separator: "/").last ?? ""),\(topology.lineCount) lines, \(topology.nodeTotal) nodes, \(topology.edgeTotal) edges, \(topology.linkCount) links.")
         line()
-        line("Differences, one row each. Old is the production solver (frozen oracle); new is the router with the ported rules.")
+        line("## Remaining differences, one row each")
         line()
+        line("Old is the production solver (frozen oracle): lines and km. New is the router with the ported rules on this file. Reason: one plain sentence; the first group is explained by hand (see `knownReasons` in the test), the km groups by the numbers of the row.")
+        line()
+        var unexplained = 0
+        func entry(_ row: Row, _ reason: String) {
+            line("- trip \(row.ride.replacingOccurrences(of: "journey_", with: "")) (\(row.store)), section \(row.section) \(row.from) to \(row.to)")
+            line("  - old: \(describe(row.old))")
+            line("  - new: \(describe(row.new))\(row.unproven ? " [unproven]" : "")")
+            line("  - reason: \(reason)")
+        }
         for category in [Category.different, .routerNoPath, .intervalCodesDiffer, .intervalCodesUnresolved, .oldGap, .routerEmptyPath, .endpointNotInTopology] {
-            let list = (byCategory[category] ?? [])
+            let list = byCategory[category] ?? []
             guard !list.isEmpty else { continue }
-            line("## \(category.rawValue) (\(list.count))")
+            line("### \(category.rawValue) (\(list.count))")
             line()
             for row in list {
-                line("- trip \(row.ride.replacingOccurrences(of: "journey_", with: "")) (\(row.store)), section \(row.section) \(row.from) to \(row.to)")
-                line("  - old: \(describe(row.old))")
-                line("  - new: \(describe(row.new))\(row.unproven ? " [unproven]" : "")")
-                if !row.explanation.isEmpty { line("  - likely rule: \(row.explanation)") }
+                let key = knownKey(row)
+                if let reason = knownReasons[key] { entry(row, reason) } else { unexplained += 1; entry(row, "UNEXPLAINED (\(key)): \(row.explanation)") }
             }
             line()
         }
+        let noIDDiffers = noIDs.filter { r in !(r.old.flatMap { o in r.new.map { kmClose(o.km, $0.km) } } ?? true) }
+        if !noIDDiffers.isEmpty {
+            line("### old answer carries no line ids, km disagree (\(noIDDiffers.count))")
+            line()
+            line("The old solver drew these over track with no current line id (relocated, historical or bridged by reviewed junction track).")
+            line()
+            for row in noIDDiffers { entry(row, kmReason(row, hasOldLines: false)) }
+            line()
+        }
+        let gaps = (byCategory[.sameLinesKmDiffers] ?? []).sorted { gapOf($0) > gapOf($1) }
+        if !gaps.isEmpty {
+            line("### same lines, km differs (\(gaps.count))")
+            line()
+            line("Same line sequence; the km differ by more than the larger of 0.3 km and 1%. Largest gap first.")
+            line()
+            for row in gaps { entry(row, kmReason(row, hasOldLines: true)) }
+            line()
+        }
+        if unexplained > 0 { line("UNEXPLAINED ROWS: \(unexplained)"); line() }
         if !skipped.isEmpty {
             line("## Not compared (\(skipped.count))")
             line()

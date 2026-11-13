@@ -966,12 +966,13 @@ class InstitutionTests(unittest.TestCase):
         self.assertEqual(report["institutionLines"], {"5": 1})
         self.assertEqual(report["institutionByOperatorLines"], [])
 
-    def test_a_jp_line_without_n02_data_stops_the_build(self):
+    def test_a_jp_build_given_no_n02_data_has_institution_zero_like_any_other_input_left_out(self):
         line, chain, fragment, overview, _ = DerivationTests().continuous_line()
-        with self.assertRaises(topology.TopologyError):
-            topology.build_region_topology(
-                "jp", [source("jp|jp-c", line, True, [fragment], [overview], [chain])],
-                b"\x01" * 32, b"\x02" * 32, None, None, None, None)
+        data, _ = topology.build_region_topology(
+            "jp", [source("jp|jp-c", line, True, [fragment], [overview], [chain])],
+            b"\x01" * 32, b"\x02" * 32, None, None, None, None)
+        decoded = topology.read_topology(data)["lines"][0]
+        self.assertEqual((decoded["institution"], decoded["operator"], decoded["aliases"]), (0, "op", ""))
 
     def test_another_region_has_institution_zero_and_the_package_operator(self):
         line, chain, fragment, overview, _ = DerivationTests().continuous_line()

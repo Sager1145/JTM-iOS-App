@@ -1581,8 +1581,9 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
                           n02_index: dict | None = None) -> tuple[bytes, dict]:
     """The bytes of `{region}.topology.bin` and a report. `sources` are the lines
     with display data in manifest blob order. `n02_index` (see `build_n02_index`)
-    gives each Japanese line its institution and operator; a region without N02
-    data has institution 0 and the package's operator name."""
+    gives each Japanese line its institution and operator; with no index (a region
+    without N02 data, or a build given no `--n02-sections`, as a build given no junctions has
+    no junction links) a line has institution 0 and the package's operator name."""
     report = new_report()
     report["institutionLines"] = {}
     report["institutionByOperatorLines"] = []
@@ -1603,9 +1604,7 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
         name = line["name"]
         family = line.get("railwayIdentity") or "-".join(
             [region, line.get("operator") or "", line.get("nameNorm") or name])
-        if region == "jp":
-            if n02_index is None:
-                raise TopologyError("jp lines need the N02 sections to take institution and operator from")
+        if region == "jp" and n02_index is not None:
             institution, operator, solver_name, how = n02_attributes(line["id"], n02_index)
             if how == "operator":
                 report["institutionByOperatorLines"].append(line["id"])
@@ -1614,7 +1613,7 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
         else:
             institution, operator, solver_name = 0, line.get("operator") or None, name
         aliases = ALIAS_SEPARATOR.join(n02_corridor_names(line, solver_name or name, n02_index)) \
-            if region == "jp" else ""
+            if n02_index is not None else ""
         lines.append(LineRecord(
             id=line["id"], family=family, name=name, aliases=aliases, institution=institution,
             category_mask=0, flags=_line_flags(source), chain_count=chain_count,

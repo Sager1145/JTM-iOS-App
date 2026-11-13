@@ -191,6 +191,16 @@ public struct RailTopology: Sendable {
         return withView { v in v.u16(v.lineBase(Int(line)) + RailTopologyFormat.Line.institution) }
     }
 
+    /// A node's position (WGS84 degrees, `Float32` precision), for labels and plausibility checks only.
+    public func coordinate(of node: NodeRef) -> (lon: Double, lat: Double)? {
+        withView { v in
+            guard let g = v.global(node) else { return nil }
+            let b = v.nodeBase(g)
+            return (Double(Float(bitPattern: v.u32(b + RailTopologyFormat.Node.longitude))),
+                    Double(Float(bitPattern: v.u32(b + RailTopologyFormat.Node.latitude))))
+        }
+    }
+
     /// The operator name of a line (`N02_004` for Japan), nil when the file has none or the line is unknown.
     public func operatorName(ofLine line: UInt16) -> String? {
         guard Int(line) < lineCount else { return nil }
