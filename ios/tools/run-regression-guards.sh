@@ -22,7 +22,7 @@ FIXTURES=(continuous-stroke playback stats station-display display-parts i18n
 
 # One swift test run: the guards plus the Swift/JS parity suites.
 # Excluded as slow: RailHistoryPackageTests (~15 min), JunctionApproachTests (~11 min).
-SWIFT_FILTER='RegressionGuard|AnnotationDiff|GeometryZoomLevelsTests|OverlaySwapSequencerTests|MapLoadAhead|RideArrivalPlan|AddOnlyBatchLedger|GeometryFrameResidency|SpatialGrid|MarkerPassDebt|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests|StrokeBakeEquality|NetworkStrokeBake|StrokeProjectionParity|RailStrokeTokens|GCJ02Tests'
+SWIFT_FILTER='RegressionGuard|AnnotationDiff|GeometryZoomLevelsTests|OverlaySwapSequencerTests|MapLoadAhead|RideArrivalPlan|AddOnlyBatchLedger|GeometryFrameResidency|SpatialGrid|MarkerPassDebt|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests|StrokeBakeEquality|NetworkStrokeBake|StrokeProjectionParity|RailStrokeTokens|GCJ02Tests|RailPack'
 
 names=(); times=(); results=(); failed=0
 
@@ -51,6 +51,8 @@ step "shinkansen patterns tests" python3 -I "$ROOT/ios/tools/tests/test_build_sh
 # confirmed corrections are reproducible from the tracked baseline (re-running changes nothing).
 step "timetable stops only" python3 -I "$ROOT/ios/tools/check-timetable-stops-only.py"
 step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_apply_train_database_corrections.py"
+# Rail pack cache key and freshness check (docs/maintenance/2026-11-12-prebuilt-rail-map-pack.md, section 6).
+step "rail pack inputs tests" python3 -I "$ROOT/ios/tools/tests/test_rail_pack_inputs.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"
@@ -62,6 +64,14 @@ if [ -f /private/tmp/jtm-heavy-job-run.sh ]; then
   step "swift guards + parity" bash /private/tmp/jtm-heavy-job-run.sh "${swift_cmd[@]}"
 else
   step "swift guards + parity" "${swift_cmd[@]}"
+fi
+
+# The pack baker (piece cutter, assembler, RailBake): its own package, host only.
+bake_cmd=(swift test --package-path "$ROOT/ios/tools/railbake" --scratch-path "${JTM_RAILBAKE_SCRATCH:-/private/tmp/jtm-railbake}")
+if [ -f /private/tmp/jtm-heavy-job-run.sh ]; then
+  step "railbake package tests" bash /private/tmp/jtm-heavy-job-run.sh "${bake_cmd[@]}"
+else
+  step "railbake package tests" "${bake_cmd[@]}"
 fi
 
 if [ "${JTM_NATIVE_GUARDS:-0}" = 1 ]; then
