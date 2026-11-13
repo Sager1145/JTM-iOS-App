@@ -124,7 +124,20 @@
    "validUntil": "2025-03-15",
    "stops": "熊本 水前寺 新水前寺 武蔵塚 光の森 肥後大津 立野 赤水 阿蘇 宮地 豊後荻 豊後竹田 緒方 三重町 中判田 大分 別府"
   },
-  "periodEvidence": "the correction closes the service before the 2026-03-14 timetable (validUntil 2025-03-15); its stops describe the record's own period"
+  "periodEvidence": "the correction closes the service before the 2026-03-14 timetable (validUntil 2025-03-15); its stops describe the record's own period",
+  "successor": {
+   "newId": "asoboy-kumamoto-miyaji-from-2025-03",
+   "from": "2025-03-15",
+   "basis": "the 2025-03-15 timetable revision shortened あそぼーい！ to 熊本〜宮地 (1-4号, 2 round trips); the official guide page lists 熊本 新水前寺 肥後大津 立野 阿蘇 宮地",
+   "set": {
+    "stops": "熊本 新水前寺 肥後大津 立野 阿蘇 宮地",
+    "lines": "豊肥本線",
+    "label": "熊本〜宮地（2025年3月以降）",
+    "confidence": "medium",
+    "source": "https://www.jrkyushu.co.jp/trains/asoboy/",
+    "notes": "2025-03-15のダイヤ改正で熊本〜別府の運転区間を熊本〜宮地に変更し、1日2往復（1〜4号）で運転（JR九州 2024-12-13 リリース）。公式紹介ページ（2026-03-14ダイヤ）の停車駅は熊本・新水前寺・肥後大津・立野・阿蘇・宮地。"
+   }
+  }
  },
  {
   "record": "asoboy-kumamoto-beppu",
