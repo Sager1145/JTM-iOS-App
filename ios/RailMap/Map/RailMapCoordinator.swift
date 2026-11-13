@@ -144,6 +144,8 @@ extension RailMapView.Surface {
             private var rideStrokePreparation: Task<Void, Never>?
             private var rideStrokePreparationID = UUID()
             private var rideStrokePreparationFrame: RideStrokeBuilder.Frame?
+            /// The rides the running ride-stroke build has requests for.
+            private var rideStrokePreparationRideIDs: Set<String> = []
             private let rideStrokeMemo = RideStrokeBuilder.Memo()
             /// Ride polyline keys the worker found draw nothing, for one frame,
             /// so `rideStrokeRequests` does not ask for them again.
@@ -1716,10 +1718,6 @@ extension RailMapView.Surface {
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
-                // Not `beginFrame`: that would make a level that is still
-                // being prepared the cache's current frame and unprotect the
-                // installed one. `rebuild` begins the frame when it installs.
-                networkGeometry.ensureFrame(key: key)
                 // A foreground preparation outranks the idle neighbour prebuild.
                 cancelNeighbourPrebuild()
                 let work = missingGeometryWork(
@@ -1737,6 +1735,13 @@ extension RailMapView.Surface {
                     return true
                 }
                 guard gate.start else { return false }
+                // Not `beginFrame`: that would make a level that is still
+                // being prepared the cache's current frame and unprotect the
+                // installed one. `rebuild` begins the frame when it installs.
+                // Only a preparation that starts pins its frame: a request the
+                // gate makes wait must not unpin the frame the in-flight
+                // preparation stores into.
+                networkGeometry.ensureFrame(key: key)
                 let anchors = lineInputs.mapValues(\.anchors)
                 let cachedStrokes = networkGeometry.preparedStrokes(in: key)
                 let requestID = UUID()
@@ -1820,6 +1825,9 @@ extension RailMapView.Surface {
                     self.pendingMaterializeMilliseconds =
                         (ContinuousClock.now - materializeStarted).milliseconds
 #endif
+                    // The frame may have been evicted or dropped (memory warning)
+                    // while this preparation ran; its result still belongs there.
+                    self.networkGeometry.ensureFrame(key: key)
                     guard self.networkGeometry.storePrepared(prepared, key: key) else {
                         clearPreparationIfCurrent()
                         return
@@ -1845,7 +1853,10 @@ extension RailMapView.Surface {
                     // installed rather than discarded for the newest wanted
                     // one, which could then never land either.
                     let landedZoom = MapProjection.zoomLevel(of: mapView)
-                    if GeometryZoomLevels.installsLanded(
+                    // The wanted level installs through the ordinary rebuild;
+                    // only an ahead-of-wanted level needs the pending install.
+                    if frame.bucket != self.wantedGeometryLevel(at: landedZoom),
+                       GeometryZoomLevels.installsLanded(
                         landed: frame.bucket, installed: self.installedGeometryLevel, zoom: landedZoom,
                         ready: self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)) {
                         self.pendingInstallLevel = frame.bucket
@@ -1890,7 +1901,7 @@ extension RailMapView.Surface {
                     pendingStrokeRefs = nil
                     if pending.revision == matchingRevision {
                         let changedStrokeRideIDs = Set(rides.compactMap { ride in
-                            strokeRefCache[ride.id]?.refs == pending.refs[ride.id]?.refs
+                            strokeMatchUnchanged(strokeRefCache[ride.id], pending.refs[ride.id])
                                 ? nil : ride.id
                         })
                         strokeRefCache = pending.refs
@@ -1899,7 +1910,8 @@ extension RailMapView.Surface {
                         // A running ride build was requested against the old
                         // refs; its keys are superseded, so stop it and let the
                         // rebuild below ask again with the new ones.
-                        if !changedStrokeRideIDs.isEmpty, rideStrokePreparation != nil {
+                        if rideStrokePreparation != nil,
+                           !changedStrokeRideIDs.isDisjoint(with: rideStrokePreparationRideIDs) {
                             rideStrokePreparation?.cancel()
                             rideStrokePreparation = nil
                             rideStrokePreparationID = UUID()
@@ -2012,7 +2024,11 @@ extension RailMapView.Surface {
                 )
                 if pendingInstallLevel != nil {
                     pendingInstallLevel = nil
-                    wantedLevelFollowUpOwed = true
+                    // Only when the camera still wants a different level than
+                    // the one just installed.
+                    wantedLevelFollowUpOwed =
+                        GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)
+                        != strokeFrame.bucket
                 }
                 // A cold display-network request has no geometry to build
                 // yet. Its result changes `lines`, invalidates the build state in
@@ -2669,6 +2685,7 @@ extension RailMapView.Surface {
             private func rideStrokeRequests(
                 for rides: [RiddenRouteStore.DrawnRide], rideBuildRect: MKMapRect,
                 defersUnmatchedFallbacks: Bool = false,
+                noteRequestedRide: ((String) -> Void)? = nil,
                 strokeFor: (String) -> MapNetworkGeometryCache.BuiltStroke?
             ) -> [RideStrokeBuilder.Request] {
                 let matchingPending = defersUnmatchedFallbacks && strokeMatchingPending
@@ -2700,6 +2717,7 @@ extension RailMapView.Surface {
                         guard networkGeometry.ridePolyline(for: key) == nil,
                             !rideStrokeEmptyKeys.contains(key), seen.insert(key).inserted
                         else { continue }
+                        noteRequestedRide?(ride.id)
                         requests.append(.init(
                             key: key, coordinates: segment.coordinates,
                             latitude: MKMapPoint(x: segment.boundingRect.midX,
@@ -2708,6 +2726,16 @@ extension RailMapView.Surface {
                     }
                 }
                 return requests
+            }
+
+            /// Whether a ride's match is the same ride geometry with the same
+            /// refs. A new geometry key with equal refs still changed what the
+            /// ride's deferred fallback segments must draw.
+            private func strokeMatchUnchanged(
+                _ old: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])?,
+                _ new: (geometryKey: String, linesGeneration: Int, refs: [String: StrokeRef])?
+            ) -> Bool {
+                old?.geometryKey == new?.geometryKey && old?.refs == new?.refs
             }
 
             /// A trip-to-line match is debouncing, running or owed.
@@ -2736,11 +2764,14 @@ extension RailMapView.Surface {
                     rideStrokeEmptyKeys.removeAll()
                     rideStrokeEmptyFrameKey = strokeFrame.key
                 }
+                var requestedRideIDs: Set<String> = []
                 let requests = rideStrokeRequests(
                     for: rides, rideBuildRect: rideBuildRect, defersUnmatchedFallbacks: true,
+                    noteRequestedRide: { requestedRideIDs.insert($0) },
                     strokeFor: { strokes[$0] })
                 guard !requests.isEmpty else { return true }
                 guard rideStrokePreparation == nil else { return false }
+                rideStrokePreparationRideIDs = requestedRideIDs
                 let requestID = UUID()
                 rideStrokePreparationID = requestID
                 rideStrokePreparationFrame = strokeFrame
@@ -4467,6 +4498,13 @@ extension RailMapView.Surface {
                     self.matchingInFlight = nil
                     guard let (_, results) = result else {
                         self.runOwedStrokeMatching()
+                        // Ride segments whose fallback waited for this match
+                        // are drawn by a rebuild once nothing is pending.
+                        if !self.strokeMatchingPending, let map = self.mapView {
+                            self.networkBuildState.invalidateZoomBucket()
+                            self.noteRebuildTrigger(.strokeMatching)
+                            self.rebuild(on: map)
+                        }
                         return
                     }
                     self.matchedSignature = signature
@@ -4499,7 +4537,8 @@ extension RailMapView.Surface {
                     return false
                 }
                 let changed = Set(rides.compactMap { ride in
-                    strokeRefCache[ride.id]?.refs == pending.refs[ride.id]?.refs ? nil : ride.id
+                    strokeMatchUnchanged(strokeRefCache[ride.id], pending.refs[ride.id])
+                        ? nil : ride.id
                 })
                 let action = RideArrivalPlan.decide(.init(
                     mapReady: mapView.bounds.width > 1, incrementalBaseCurrent: true,

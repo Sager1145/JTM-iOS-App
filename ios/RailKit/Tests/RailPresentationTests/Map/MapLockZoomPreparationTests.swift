@@ -70,8 +70,11 @@ struct MapLockZoomPreparationTests {
         var installed = GeometryZoomLevels.nearestLevel(zoom: 5)
         var history = [installed]
         var inFlight: (level: Int, remaining: Int)?
-        var zoom = 5.0
-        while zoom <= 12.25 {
+        // The sweep ends at z12.25; the camera then rests there while the
+        // last preparations land, so the final level is a settled one.
+        let sweepSteps = 29
+        for step in 0..<(sweepSteps + 16) {
+            let zoom = min(5.0 + Double(step) * 0.25, 12.25)
             if let flight = inFlight {
                 if flight.remaining == 0 {
                     inFlight = nil
@@ -90,7 +93,6 @@ struct MapLockZoomPreparationTests {
                 let wanted = GeometryZoomLevels.wantedLevel(zoom: zoom, installed: installed)
                 if wanted != installed { inFlight = (wanted, 3) }
             }
-            zoom += 0.25
         }
         return history
     }
@@ -100,7 +102,7 @@ struct MapLockZoomPreparationTests {
         #expect(withRule.count > 3)
         #expect(zip(withRule, withRule.dropFirst()).allSatisfy { $0 < $1 })
         let finalWanted = GeometryZoomLevels.nearestLevel(zoom: 12.25)
-        #expect(abs(finalWanted - (withRule.last ?? 0)) <= 2)
+        #expect(withRule.last == finalWanted)
         // Without it, "latest wins" never lands anything during the sweep.
         #expect(sweep(installsLanded: false).count < withRule.count)
     }

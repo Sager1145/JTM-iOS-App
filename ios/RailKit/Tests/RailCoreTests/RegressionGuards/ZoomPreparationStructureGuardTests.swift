@@ -61,10 +61,39 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func aPreparationNeverMakesItsFrameCurrent() throws {
-        let prepare = try Self.body(
+        let beforeGate = try Self.body(
             Self.coordinator, from: "private func prepareNetworkGeometry(", to: "let gate = GeometryPreparationGate.decide(")
-        #expect(prepare.contains("networkGeometry.ensureFrame(key: key)"))
-        #expect(!prepare.contains("beginFrame("))
+        #expect(!beforeGate.contains("ensureFrame("), "a waiting request must not pin its frame")
+        #expect(!beforeGate.contains("beginFrame("))
+        let start = try Self.body(
+            Self.coordinator, from: "guard gate.start else { return false }", to: "let anchors = lineInputs")
+        #expect(start.contains("networkGeometry.ensureFrame(key: key)"))
+    }
+
+    @Test func aLandingRecreatesAnEvictedFrameBeforeStoring() throws {
+        let landing = try Self.body(
+            Self.coordinator, from: "PreparedGeometryAdmission.admitted(",
+            to: "self.networkGeometry.storePrepared(prepared, key: key)")
+        #expect(landing.contains("self.networkGeometry.ensureFrame(key: key)"))
+    }
+
+    @Test func aLandedWantedLevelOwesNoSecondRebuild() throws {
+        #expect(Self.coordinator.contains("frame.bucket != self.wantedGeometryLevel(at: landedZoom)"))
+        let commit = try Self.body(
+            Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
+        #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))
+        #expect(!commit.contains("wantedLevelFollowUpOwed = true"))
+    }
+
+    @Test func aMatchWithNewGeometryButEqualRefsStillCountsAsChanged() {
+        #expect(Self.coordinator.contains("private func strokeMatchUnchanged("))
+        #expect(!Self.coordinator.contains("strokeRefCache[ride.id]?.refs == pending.refs[ride.id]?.refs"))
+        #expect(Self.coordinator.contains("if !self.strokeMatchingPending, let map = self.mapView"))
+    }
+
+    @Test func aChangedMatchCancelsOnlyABuildThatRequestedThatRide() {
+        #expect(Self.coordinator.contains("!changedStrokeRideIDs.isDisjoint(with: rideStrokePreparationRideIDs)"))
+        #expect(Self.coordinator.contains("rideStrokePreparationRideIDs = requestedRideIDs"))
     }
 
     @Test func memoryWarningRelievesTheMallocZone() {
