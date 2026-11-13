@@ -1,0 +1,232 @@
+import CoreLocation
+import Foundation
+import MapKit
+import RailCore
+import RailPresentation
+import SwiftUI
+
+// Golden capture from the UNMOVED app code path (OldMapLineGeometry.swift is a verbatim copy of
+// ios/RailMap/Map/MapLineGeometry.swift at the base commit). Writes golden.json + golden.bin.
+
+struct Meta: Decodable {
+    var id: String
+    var region: String
+    var name: String
+    var nameRoma: String?
+    var `operator`: String?
+    var rank: Int
+    var color: String
+    var colorDark: String
+    var minZoomMapLibre: Int
+    var visibilityLengthKm: Double
+}
+struct Entry: Decodable { var lineKey: String; var meta: Meta; var chunk: RailDisplayNetworkFile }
+struct FixtureRegion: Decodable { var families: [String: RailDisplayNetworkFile.FamilyColor]; var lines: [Entry] }
+struct Fixture: Decodable { var regions: [String: FixtureRegion] }
+
+let args = CommandLine.arguments
+let fixtureURL = URL(fileURLWithPath: args[1])
+let outDir = URL(fileURLWithPath: args[2])
+let fixture = try JSONDecoder().decode(Fixture.self, from: Data(contentsOf: fixtureURL))
+
+func build(region regionKey: String, _ r: FixtureRegion) -> (lines: [RailNetworkStore.DrawnLine], anchors: [String: [Int]]) {
+    typealias DrawnLine = RailNetworkStore.DrawnLine
+    typealias StrokeFollow = RailNetworkStore.StrokeFollow
+    typealias WithheldSpan = RailNetworkStore.WithheldSpan
+    typealias FamilyWindow = RailNetworkStore.FamilyWindow
+    var out: [DrawnLine] = []
+    var anchors: [String: [Int]] = [:]
+    let families = r.families
+    for entry in r.lines {
+        let metadata = entry.meta
+        let region = Region(rawValue: metadata.region)!
+        let file = entry.chunk
+        for fragment in file.lines {
+            let drawID = fragment.continuous == true
+                ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
+                : "\(fragment.lineKey)@\(fragment.lane ?? 0)"
+            var intervals: [[Coordinate]] = []
+            for part in fragment.parts {
+                let source = part.compactMap(Coordinate.init(pair:))
+                guard source.count >= 2 else { continue }
+                intervals.append(source)
+            }
+            guard !intervals.isEmpty else { continue }
+            out.append(DrawnLine(
+                id: drawID, lineID: metadata.id, region: region, name: metadata.name,
+                nameRoma: metadata.nameRoma, operatorName: metadata.operator,
+                color: .accentColor, colorDark: .accentColor,
+                colorHex: metadata.color.lowercased(), colorDarkHex: metadata.colorDark.lowercased(),
+                rank: metadata.rank, minZoom: metadata.minZoomMapLibre,
+                visibilityLengthKm: metadata.visibilityLengthKm, lodMinZoom: 0,
+                lane: fragment.lane ?? 0, intervals: intervals,
+                continuous: fragment.continuous == true,
+                joinPrevious: fragment.joinPrevious ?? true,
+                laneRows: (fragment.laneRows ?? []).map { ContinuousStroke.LaneRow(from: $0[0], to: $0[1], lane: $0[2]) },
+                totalMetres: fragment.totalMetres ?? 0,
+                follows: (fragment.follows ?? []).map {
+                    StrokeFollow(from: $0.from, to: $0.to, canonicalID: "\($0.canonicalLineKey)#\($0.canonicalChain)",
+                                 canonicalFrom: $0.canonicalFrom, canonicalTo: $0.canonicalTo)
+                },
+                withheld: (fragment.withheld ?? []).compactMap { $0.count >= 2 ? WithheldSpan(from: $0[0], to: $0[1]) : nil },
+                familyWindows: (fragment.familyWindows ?? []).compactMap { window in
+                    guard let group = families[window.groupID] else { return nil }
+                    return FamilyWindow(from: window.from, to: window.to, isLandlord: window.isLandlord,
+                                        groupID: window.groupID, colorHex: group.color.lowercased(),
+                                        colorDarkHex: group.colorDark.lowercased())
+                },
+                partSpans: [],
+                literalDisplaySpansV1: region == .jp && fragment.continuous == true
+                    && (fragment.lane ?? 0) == 0
+                    && (fragment.laneRows ?? []).allSatisfy({ $0[2] == 0 })
+                    && (fragment.follows ?? []).isEmpty && (fragment.familyWindows ?? []).isEmpty
+                    && (fragment.withheld ?? []).isEmpty ? fragment.literalDisplaySpansV1 ?? [] : []))
+        }
+        for station in file.stations {
+            guard let slot = station.slot, let meta = Optional(metadata) else { continue }
+            anchors["\(meta.region)|\(meta.id)#\(slot[0])", default: []].append(slot[1])
+        }
+    }
+    return (out, anchors)
+}
+
+// MARK: recorder
+
+var keys: [(String, Int, Int)] = []
+var values: [Double] = []
+func record(_ key: String, _ numbers: [Double]) {
+    keys.append((key, numbers.count, values.count))
+    values.append(contentsOf: numbers)
+}
+func mp(_ c: CLLocationCoordinate2D) -> [Double] {
+    let p = MKMapPoint(c)
+    return [p.x, p.y]
+}
+/// count, sum, index-weighted sum, sum of squares: a fingerprint for arrays too large to commit.
+func checksum(_ v: [Double]) -> [Double] {
+    var s = 0.0, w = 0.0, q = 0.0
+    for (i, x) in v.enumerated() { s += x; w += x * Double(i % 97 + 1); q += x * x * 1e-6 }
+    return [Double(v.count), s, w, q]
+}
+func flat(_ cs: [CLLocationCoordinate2D]) -> [Double] { cs.flatMap(mp) }
+
+func recordGeometry(_ prefix: String, _ g: MapLineGeometry.PreparedGeometry) {
+    for id in g.strokes.keys.sorted() {
+        let s = g.strokes[id]!
+        let p = "\(prefix)|stroke|\(id)"
+        record("\(p)|runs", checksum(s.runs.flatMap { $0 }.flatMap { mp(CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon)) }) + [Double(s.runs.count)])
+        record("\(p)|anchors", s.anchors.keys.sorted().flatMap { [Double($0)] + mp(s.anchors[$0]!) })
+        record("\(p)|points", checksum(s.stroke.points.flatMap { [$0.x, $0.y] }))
+        record("\(p)|measures", checksum(s.stroke.measures))
+        record("\(p)|sourceMeasures", checksum(s.sourceMeasures))
+        for (i, w) in s.withheldRuns.enumerated() {
+            record("\(p)|withheld|\(i)|\(w.colorHex)|\(w.colorDarkHex)",
+                   w.coordinates.flatMap { mp(CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon)) })
+        }
+        for (i, w) in s.emittedFamilyWindows.enumerated() {
+            record("\(p)|emitted|\(i)|\(w.groupID)", [w.from, w.to])
+        }
+    }
+    for id in g.lines.keys.sorted() {
+        let l = g.lines[id]!
+        let p = "\(prefix)|line|\(id)"
+        for (i, c) in l.coordinateChunks.enumerated() { record("\(p)|chunk|\(i)", flat(c)) }
+        for (i, c) in l.historicalCoordinateChunks.enumerated() { record("\(p)|hist|\(i)", flat(c)) }
+        for key in l.familyCoordinateChunks.keys.sorted() {
+            let f = l.familyCoordinateChunks[key]!
+            for (i, c) in f.coordinateChunks.enumerated() {
+                record("\(p)|family|\(key)|\(f.colorHex)|\(f.colorDarkHex)|\(i)", flat(c) + [f.chunkWindows[i].from, f.chunkWindows[i].to])
+            }
+        }
+        for (n, fb) in l.familyFallbacks.enumerated() {
+            for (i, c) in fb.family.coordinateChunks.enumerated() {
+                record("\(p)|fallback|\(n)|\(fb.window.groupID)|\(fb.window.from)|\(fb.window.to)|\(i)",
+                       flat(c) + [fb.family.chunkWindows[i].from, fb.family.chunkWindows[i].to])
+            }
+        }
+        record("\(p)|reserve", [Double(l.fallbackSplitReserve)])
+    }
+}
+
+// MARK: dated variant — mirrors the host test's part style: part % 3 == 0 solid, 1 historical, 2 hidden
+
+func dated(_ lines: [RailNetworkStore.DrawnLine]) -> [RailNetworkStore.DrawnLine] {
+    func decoration(_ index: Int) -> DisplayTemporalDecoration? {
+        switch index % 3 {
+        case 1: DisplayTemporalDecoration(historyId: "h", validTo: "2000-01-01", kind: .historical)
+        case 2: DisplayTemporalDecoration(historyId: "h", validTo: "2000-01-01", kind: .current)
+        default: nil
+        }
+    }
+    return lines.map { line in
+        let spans: [DisplayTemporalDecoration?]
+        if line.continuous {
+            let chain = Int(line.id.split(separator: "#").last ?? "0") ?? 0
+            spans = [decoration(chain)]
+        } else {
+            spans = line.intervals.indices.map { decoration($0) }
+        }
+        return RailNetworkStore.DrawnLine(
+            id: line.id, lineID: line.lineID, region: line.region, name: line.name,
+            nameRoma: line.nameRoma, operatorName: line.operatorName, color: line.color,
+            colorDark: line.colorDark, colorHex: line.colorHex, colorDarkHex: line.colorDarkHex,
+            rank: line.rank, minZoom: line.minZoom, visibilityLengthKm: line.visibilityLengthKm,
+            lodMinZoom: line.lodMinZoom, lane: line.lane, intervals: line.intervals,
+            continuous: line.continuous, joinPrevious: line.joinPrevious, laneRows: line.laneRows,
+            totalMetres: line.totalMetres, follows: line.follows, withheld: line.withheld,
+            familyWindows: line.familyWindows, partSpans: spans,
+            literalDisplaySpansV1: line.literalDisplaySpansV1)
+    }
+}
+
+let zooms: [Double] = [5, 8, 10.5, 13, 17]
+let world = MKMapSize.world.width
+
+var lines: [RailNetworkStore.DrawnLine] = []
+var anchors: [String: [Int]] = [:]
+for region in fixture.regions.keys.sorted() {
+    let built = build(region: region, fixture.regions[region]!)
+    lines += built.lines
+    anchors.merge(built.anchors) { a, _ in a }
+}
+let datedLines = dated(lines)
+print("lines", lines.count, "continuous", lines.filter(\.continuous).count,
+      "withheld", lines.filter { !$0.withheld.isEmpty }.count,
+      "family", lines.filter { !$0.familyWindows.isEmpty }.count,
+      "follows", lines.filter { !$0.follows.isEmpty }.count)
+
+for zoom in zooms {
+    let mapScale = world / (256 * exp2(zoom))
+    let scale = RailStyle.scale(atZoom: zoom)
+    let laneScale = LaneLOD.resolve(zoom: zoom, previousBucket: nil).scale
+    for (name, set, era) in [("plain", lines, DisplayNetworkEra.current),
+                             ("dated", datedLines, DisplayNetworkEra.historicalOverlay)] {
+        if name == "dated" && ![8, 13].contains(zoom) { continue }
+        let byID = Dictionary(set.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        let joined = JoinedChainCache()
+        let pixels = ChainPixelCache(joinedChains: joined)
+        let geometry = try MapLineGeometry.prepare(
+            lines: set, strokes: set.filter(\.continuous), allLines: byID, anchors: anchors,
+            cachedStrokes: [:], joinedChains: joined, chainPixels: pixels,
+            frameKey: "z\(zoom)", datumToken: "", mapScale: mapScale, scale: scale,
+            laneScale: laneScale, era: era, rideDate: nil, todayByRegion: ["jp": "2026-01-01", "hk": "2026-01-01", "mo": "2026-01-01"])
+        recordGeometry("\(name)|z\(zoom)", geometry)
+        // The parallel-offset helper, called directly on the first non-continuous line.
+        if name == "plain", let probe = set.first(where: { !$0.continuous }) {
+            let coords = probe.intervals[0].map(\.clLocation)
+            for lane in [0.0, 1.0, -2.5] {
+                let out = parallelLaneCoordinates(coords, lane: lane, mapPointsPerScreenPoint: mapScale, scale: scale)
+                record("parallel|z\(zoom)|\(probe.id)|\(lane)", flat(out))
+            }
+        }
+    }
+}
+
+struct Index: Codable { var entries: [Item]; struct Item: Codable { var k: String; var n: Int; var o: Int } }
+let index = Index(entries: keys.map { .init(k: $0.0, n: $0.1, o: $0.2) })
+let encoder = JSONEncoder()
+encoder.outputFormatting = [.sortedKeys]
+try encoder.encode(index).write(to: outDir.appendingPathComponent("golden-index.json"))
+let data = values.withUnsafeBufferPointer { Data(buffer: $0) }
+try data.write(to: outDir.appendingPathComponent("golden.f64"))
+print("entries", keys.count, "doubles", values.count, "bytes", data.count)

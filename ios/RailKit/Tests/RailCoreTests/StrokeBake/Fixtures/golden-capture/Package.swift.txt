@@ -1,0 +1,17 @@
+// swift-tools-version: 6.0
+import PackageDescription
+let package = Package(
+    name: "GoldenCapture",
+    platforms: [.macOS(.v14)],
+    dependencies: [.package(path: "/Users/sager/Documents/GitHub/JTM-iOS-App/.claude/worktrees/wf_96d71d3a-a8f-1/ios/RailKit")],
+    targets: [
+        .executableTarget(
+            name: "GoldenCapture",
+            dependencies: [
+                .product(name: "RailCore", package: "RailKit"),
+                .product(name: "RailPresentation", package: "RailKit"),
+            ],
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        )
+    ]
+)
