@@ -358,7 +358,8 @@ class DerivationTests(unittest.TestCase):
                             ("edgesWithoutGeometry", ["jp|x#0"]), ("overviewAlignFailures", 1),
                             ("lengthMismatchEdges", ledger_lengths + [{"line": "jp|x", "interval": 0}]),
                             ("unplacedJunctionRows", ledger_rows + [{"id": "new-row", "reason": "noTwoLinePair"}]),
-                            ("unplacedThroughServiceRows", [{"id": "T"}])):
+                            ("unplacedThroughServiceRows", [{"id": "T"}]),
+                            ("unplacedAlignmentLines", ["jp-x-p1"])):
             with self.subTest(name=name):
                 report = dict(clean, **{name: value})
                 with self.assertRaises(topology.TopologyError):
@@ -899,8 +900,13 @@ class FullBuildTests(unittest.TestCase):
             for ordinal in range(len(line["nodes"])):
                 owner[line["firstNode"] + ordinal] = line_index
         for link in decoded["links"]:
-            ids = junction_ids if link["kind"] == topology.LINK_PHYSICAL_JUNCTION else through_ids
-            self.assertIn(link["registryID"], ids)
+            if link["kind"] == topology.LINK_PAIRED_ALIGNMENT:      # the package's own alignmentOf
+                line_ids = {line["id"] for line in decoded["lines"]}
+                self.assertTrue(link["registryID"].startswith(topology.ALIGNMENT_LINK_PREFIX))
+                self.assertIn(link["registryID"][len(topology.ALIGNMENT_LINK_PREFIX):], line_ids)
+            else:
+                ids = junction_ids if link["kind"] == topology.LINK_PHYSICAL_JUNCTION else through_ids
+                self.assertIn(link["registryID"], ids)
             self.assertNotEqual(owner[link["nodeA"]], owner[link["nodeB"]])
 
 
@@ -1028,6 +1034,52 @@ class CorridorNameTests(unittest.TestCase):
         self.assertEqual((a["aliases"], b["aliases"]), ("", "Z線"))
         self.assertEqual(b["solverName"], "A線")
         self.assertNotEqual(a["contentHash"], b["contentHash"])
+
+
+class AlignmentLinkTests(unittest.TestCase):
+    NODES = {("jp-a", "001"): 0, ("jp-a", "002"): 1, ("jp-a", "003"): 2, ("jp-a-p1", "002"): 3, ("jp-a-p1", "003"): 4,
+             ("jp-b", "002"): 5}
+
+    def node_of(self, line, code):
+        return self.NODES.get((line, code))
+
+    @staticmethod
+    def line(line_id, codes, **extra):
+        return {"id": line_id, "stations": [[code, code] for code in codes], **extra}
+
+    def test_a_paired_alignment_joins_its_base_line_at_every_station_they_share(self):
+        lines = [self.line("jp-a", ["001", "002", "003"]), self.line("jp-a-p1", ["002", "003"], alignmentOf="jp-a")]
+        links, unplaced = topology.compile_alignment_links(lines, self.node_of)
+        self.assertEqual(unplaced, [])
+        self.assertEqual([(l.node_a, l.node_b, l.kind, l.directed, l.valid_from, l.valid_to, l.registry_id) for l in links],
+                         [(1, 3, topology.LINK_PAIRED_ALIGNMENT, False, 0, 0, "alignment:jp-a-p1"),
+                          (2, 4, topology.LINK_PAIRED_ALIGNMENT, False, 0, 0, "alignment:jp-a-p1")])
+
+    def test_only_alignment_of_makes_a_link_never_a_shared_station_code(self):
+        lines = [self.line("jp-a", ["001", "002", "003"]), self.line("jp-b", ["002"])]
+        self.assertEqual(topology.compile_alignment_links(lines, self.node_of), ([], []))
+
+    def test_a_missing_base_or_no_shared_station_is_listed_and_not_linked(self):
+        lines = [self.line("jp-a-p1", ["002"], alignmentOf="jp-gone"), self.line("jp-b", ["999"], alignmentOf="jp-a")]
+        links, unplaced = topology.compile_alignment_links(lines, self.node_of)
+        self.assertEqual((links, unplaced), ([], ["jp-a-p1", "jp-b"]))
+
+    def test_the_build_writes_the_links_and_reports_them(self):
+        base = package_line("jp-a", [station("S0", 0.0, 0.0), station("S1", 0.001, 0.0), station("S2", 0.002, 0.0)], [0.1, 0.1])
+        pair = package_line("jp-a-p1", [station("S1", 0.001, 0.0), station("S2", 0.002, 0.0)], [0.1], alignmentOf="jp-a")
+        def chain_for(points):
+            return {"polyline": points, "firstInterval": None, "anchorIndexByStation": {i: i for i in range(len(points))}}
+        def fragment_for(key, points):
+            return {"lineKey": key, "continuous": True, "chain": 0, "lane": 0.0, "parts": [[list(p) for p in points]]}
+        points_a = [[0.0, 0.0], [0.001, 0.0], [0.002, 0.0]]
+        points_p = [[0.001, 0.0], [0.002, 0.0]]
+        decoded, report, _ = build([
+            source("jp|jp-a", base, True, [fragment_for("jp|jp-a", points_a)], None, [chain_for(points_a)]),
+            source("jp|jp-a-p1", pair, True, [fragment_for("jp|jp-a-p1", points_p)], None, [chain_for(points_p)])])
+        self.assertEqual(report["alignmentLinks"], 2)
+        self.assertEqual(report["unplacedAlignmentLines"], [])
+        kinds = [(l["kind"], l["registryID"]) for l in decoded["links"]]
+        self.assertEqual(kinds, [(topology.LINK_PAIRED_ALIGNMENT, "alignment:jp-a-p1")] * 2)
 
 
 def hand_line(line_id, lengths, codes=None, operator="op", institution=2):

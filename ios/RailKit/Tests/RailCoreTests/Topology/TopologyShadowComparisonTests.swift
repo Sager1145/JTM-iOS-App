@@ -256,7 +256,10 @@ struct TopologyShadowComparisonTests {
                 timings.append((old.id, oldSection.index, Self.millis(start.duration(to: .now))))
                 guard let path else {
                     row.category = oldSection.parts.isEmpty ? .oldGap : .routerNoPath
-                    if row.category == .routerNoPath { row.explanation = Self.explainNoPath(question, oldLines, topology) }
+                    if row.category == .routerNoPath {
+                        row.explanation = (environment["JTM_TOPOLOGY_SHADOW_DEBUG"] == "1" ? Self.trace(question, topology) : "")
+                            + Self.explainNoPath(question, oldLines, topology)
+                    }
                     rows.append(row); continue
                 }
                 let new = Self.answer(of: path.spans, in: topology)
@@ -294,6 +297,23 @@ struct TopologyShadowComparisonTests {
     }
 
     // MARK: Explanations
+
+    /// Plan and attempt trace for a section with no path (`JTM_TOPOLOGY_SHADOW_DEBUG=1`).
+    static func trace(_ q: Question, _ topology: RailTopology) -> String {
+        func short(_ ids: Set<String>) -> String { ids.sorted().map { $0.replacingOccurrences(of: "jp-", with: "") }.joined(separator: ",") }
+        var out = "TRACE explicit=[\(short(q.plan.explicitLineIDs))] ops=\(q.plan.explicitOperators.sorted()) common=[\(short(q.plan.commonLineIDs))] "
+        out += "from=[\(short(Set(q.plan.from.compactMap { topology.lineID($0.line) })))] to=[\(short(Set(q.plan.to.compactMap { topology.lineID($0.line) })))] "
+        out += "allowed=\(q.plan.allowedInstitutions.sorted()) excluded=\(q.plan.excludedInstitutions.sorted()) day=\(q.plan.day.map(String.init) ?? "-") "
+        for attempt in RailTopology.attempts(for: q.plan) {
+            out += "[\(attempt.name): \(topology.route(topology.query(for: attempt, in: q.plan)) == nil ? "none" : "found")] "
+        }
+        var free = RailTopology.SectionQuery(from: q.plan.from, to: q.plan.to, day: q.plan.day)
+        out += "[plain: \(topology.route(free) == nil ? "none" : "found")] "
+        free.day = nil
+        out += "[plain undated: \(topology.route(free) == nil ? "none" : "found")] "
+        free.excludedInstitutions = []
+        return out + "; "
+    }
 
     static func explainNoPath(_ q: Question, _ oldLines: [String], _ topology: RailTopology) -> String {
         var base = q.plan

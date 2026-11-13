@@ -184,14 +184,14 @@ direction.
 |---|---|---|
 | 0 | 4 | nodeA (global index) |
 | 4 | 4 | nodeB (global index) |
-| 8 | 1 | kind: 1 physicalJunction, 2 throughService |
+| 8 | 1 | kind: 1 physicalJunction, 2 throughService, 3 pairedAlignment |
 | 9 | 1 | flags: bit 0 directed (A to B only) |
 | 10 | 2 | reserved |
 | 12 | 4 | validFrom |
 | 16 | 4 | validTo (exclusive) |
 | 20 | 4 | registryID (string): the junction or through-service row it was compiled from, never empty |
 
-A link exists only for a reviewed physical junction or a dated through service.
+A link exists only for a reviewed physical junction, a dated through service, or a paired alignment (the package's own `alignmentOf`: the second track of one railway, linked to its base line at each station they share; registry row `alignment:{line id}`).
 Equal station codes, equal names, station complexes, shared display points and
 operator families never create one (`TripConnectivity` grants nothing for
 them). Nodes of the same line need no link.

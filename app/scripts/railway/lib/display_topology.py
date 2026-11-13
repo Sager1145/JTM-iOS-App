@@ -62,7 +62,8 @@ RECORD_SIZE = {
 LINE_LOOP, LINE_HIGH_SPEED, LINE_PAIRED, LINE_RETIRED, LINE_NON_CONTINUOUS = 1, 2, 4, 8, 16
 NODE_JUNCTION_POINT, NODE_NO_CHAIN_SLOT = 1, 2
 EDGE_FORWARD, EDGE_REVERSE, EDGE_WITHHELD, EDGE_HAS_RUNS = 1, 2, 4, 8
-LINK_PHYSICAL_JUNCTION, LINK_THROUGH_SERVICE = 1, 2
+LINK_PHYSICAL_JUNCTION, LINK_THROUGH_SERVICE, LINK_PAIRED_ALIGNMENT = 1, 2, 3
+ALIGNMENT_LINK_PREFIX = "alignment:"
 STOP_PLATFORM, STOP_REGISTRY, STOP_GROUP = 1, 2, 3
 
 
@@ -1415,6 +1416,8 @@ def enforce_invariants(region: str, report: dict) -> None:
             problems.append(f"KNOWN_UNPLACED_JUNCTION_ROWS entries no longer reported (remove them): {stale_rows[:5]}")
         if report["unplacedThroughServiceRows"]:
             problems.append(f"unplacedThroughServiceRows: {report['unplacedThroughServiceRows'][:5]}")
+        if report["unplacedAlignmentLines"]:
+            problems.append(f"unplacedAlignmentLines: {report['unplacedAlignmentLines'][:5]}")
     if problems:
         raise TopologyError(f"{region}: " + "; ".join(problems))
 
@@ -1424,6 +1427,7 @@ def new_report() -> dict:
         "overviewAlignFailures": 0, "unanchoredStations": [], "slotMismatches": [],
         "edgesWithoutGeometry": [], "edgesWithMixedValidity": 0, "mixedValidityEdges": [], "datedEdges": 0,
         "intervalsOnSeveralChains": 0, "routedEdges": [], "lengthMismatchEdges": [],
+        "unplacedAlignmentLines": [],
     }
 
 
@@ -1543,6 +1547,34 @@ def n02_attributes(line_id: str, index: dict) -> tuple[int, str, str, str]:
     raise TopologyError(f"{line_id}: no N02 line or operator to take the institution from")
 
 
+def compile_alignment_links(package_lines: list[dict], node_of) -> tuple[list[Link], list[str]]:
+    """The links of paired alignments. A line `{base}-p1` (its `alignmentOf` names `base`) is the
+    second track of one physical railway between two stations of the base line: the same
+    stations, the same code, one physical line, one link per shared station code. Without them
+    the second track is unreachable and a trip against the base line's one-way edges has no
+    path. Only the package's own `alignmentOf` creates these links, never a shared station code
+    alone. The registry row is `alignment:{line id}`. A line whose base is missing, or that
+    shares no station with it, is listed and gets no link."""
+    links: list[Link] = []
+    unplaced: list[str] = []
+    for line in package_lines:
+        base = line.get("alignmentOf")
+        if not base:
+            continue
+        placed = 0
+        for row in line.get("stations") or []:
+            a, b = node_of(line["id"], row[0]), node_of(base, row[0])
+            if a is None or b is None:
+                continue
+            low, high = sorted((a, b))
+            links.append(Link(low, high, LINK_PAIRED_ALIGNMENT, False, NO_DATE, NO_DATE,
+                              ALIGNMENT_LINK_PREFIX + line["id"]))
+            placed += 1
+        if not placed:
+            unplaced.append(line["id"])
+    return links, unplaced
+
+
 def build_region_topology(region: str, sources: list[LineSource], package_sha256: bytes,
                           display_sha256: bytes, junctions: dict | None,
                           through_services: dict | None, registry: dict | None,
@@ -1607,6 +1639,8 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
     if through_services is not None:
         found, through_skipped = compile_through_links(through_services, node_of)
         links += found
+    found, unplaced_alignments = compile_alignment_links([source.line for source in sources], node_of)
+    links += found
     links.sort(key=lambda l: (l.kind, l.node_a, l.node_b, l.valid_from, l.valid_to, l.registry_id))
     stops, stop_counts = compile_stops(lines, node_base, registry)
     data = encode_topology(region, package_sha256, display_sha256, lines, links, stops)
@@ -1615,6 +1649,8 @@ def build_region_topology(region: str, sources: list[LineSource], package_sha256
         "runs": sum(len(e.runs) for l in lines for e in l.edges), "links": len(links),
         "junctionLinks": sum(1 for l in links if l.kind == LINK_PHYSICAL_JUNCTION),
         "throughServiceLinks": sum(1 for l in links if l.kind == LINK_THROUGH_SERVICE),
+        "alignmentLinks": sum(1 for l in links if l.kind == LINK_PAIRED_ALIGNMENT),
+        "unplacedAlignmentLines": unplaced_alignments,
         "stops": len(stops), "stopKeys": stop_counts, "bytes": len(data),
         "sha256": hashlib.sha256(data).hexdigest(),
         "unplacedJunctionRows": skipped, "unplacedThroughServiceRows": through_skipped,

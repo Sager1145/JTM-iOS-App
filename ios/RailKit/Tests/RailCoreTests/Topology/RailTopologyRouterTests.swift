@@ -185,6 +185,29 @@ struct RailTopologyRouterTests {
         #expect(mixed.spans == [t.span("x", 0, 2)])
     }
 
+    @Test("a paired alignment carries the way the base line's one-way edge forbids, joined at the shared stations")
+    func pairedAlignment() throws {
+        var net = Net()
+        net.lines = [
+            .chain("m", ["M0", "M1", "M2", "M3"], lengths: [10_000, 20_000, 10_000]),
+            .chain("p", ["M1", "M2"], lengths: [21_000]),
+        ]
+        net.lines[0].edges[1].flags = [.forward]     // the base line's middle interval: with the arrow only
+        net.lines[1].edges[0].flags = [.reverse]     // its pair carries the other direction
+        net.links = [.init(a: (0, 1), b: (1, 0), kind: .pairedAlignment, registry: "alignment:p"),
+                     .init(a: (0, 2), b: (1, 1), kind: .pairedAlignment, registry: "alignment:p")]
+        let t = try net.topology()
+        // With the arrow: straight along the base line.
+        #expect(t.route(Self.query(t, [("m", 0)], [("m", 3)]))?.spans == [t.span("m", 0, 3)])
+        // Against it: the base line's edge is blocked between the ends, so the trip takes the pair and comes back.
+        let back = try #require(t.route(Self.query(t, [("m", 3)], [("m", 0)])))
+        #expect(back.spans == [t.span("m", 3, 2), t.span("p", 1, 0), t.span("m", 1, 0)] && back.lengthCm == 41_000)
+        // Without the alignment links the pair is unreachable and there is no way.
+        net.links = []
+        let apart = try net.topology()
+        #expect(apart.route(Self.query(apart, [("m", 3)], [("m", 0)])) == nil)
+    }
+
     // MARK: Dated rows
 
     @Test("a retired line is routable the day before it closes and not on the day it closes")

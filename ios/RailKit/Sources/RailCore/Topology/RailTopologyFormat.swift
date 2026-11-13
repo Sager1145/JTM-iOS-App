@@ -276,8 +276,10 @@ public enum RailTopologyFormat {
     /// `links[]`, 24 bytes: the only way to change rows.
     ///
     /// A link joins two nodes of different lines. It exists only for a
-    /// reviewed physical junction (`physical-rail-junctions.json`) or a dated
-    /// through service (`japan-through-services.json`). Equal station codes,
+    /// reviewed physical junction (`physical-rail-junctions.json`), a dated
+    /// through service (`japan-through-services.json`), or the package's own
+    /// paired alignment (`alignmentOf`: the second track of one railway, joined to
+    /// its base line at the stations they share, registry row `alignment:{line id}`). Equal station codes,
     /// equal names, shared stations, station complexes and operator families
     /// never create a link. Nodes of the same line need no link.
     public enum Link {
@@ -354,6 +356,8 @@ public enum RailTopologyFormat {
     public enum LinkKind: UInt8, Sendable {
         case physicalJunction = 1
         case throughService = 2
+        /// The second track of a paired alignment joins the base line at each shared station.
+        case pairedAlignment = 3
     }
 
     public enum StopKind: UInt8, Sendable {
