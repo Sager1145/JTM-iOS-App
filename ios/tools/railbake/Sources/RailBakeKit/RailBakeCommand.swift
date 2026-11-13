@@ -93,7 +93,9 @@ public enum RailBakeCommand {
         let elapsed = try clock.measure {
             data = try PackBake.bake(
                 region: region, directory: URL(fileURLWithPath: directory), datum: datum, levels: levels,
-                inputsSHA256: inputs) { level, count in out("level \(level + 1)/\(count)") }
+                inputsSHA256: inputs) { level, count in
+                    if level < count { out("level \(level + 1)/\(count)") }
+                }
         }
         let url = URL(fileURLWithPath: output)
         try data.write(to: url, options: .atomic)

@@ -157,8 +157,8 @@ struct RegionBakeTests {
                 #expect(baked == again, "\(region) z\(zoom) differs between two bakes")
                 let vertices = baked.chains.reduce(0) { $0 + $1.runs.reduce(0) { $0 + $1.vertices.count } }
                 let nodes = baked.chains.reduce(0) { $0 + $1.nodes.count }
-                print("RegionBake \(region) z\(zoom): \(loaded.network.lines.count) chains, \(vertices) vertices, \(nodes) nodes, load \(loadTime), bake \(time)")
-                #expect(baked.chains.count == loaded.network.lines.count)
+                print("RegionBake \(region) z\(zoom): \(loaded.lines.count) chains, \(vertices) vertices, \(nodes) nodes, load \(loadTime), bake \(time)")
+                #expect(baked.chains.count == loaded.lines.count)
             }
         }
     }
