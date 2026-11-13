@@ -19,13 +19,17 @@ struct GeometryFrameResidencyTests {
             _ = residency.begin(key)
             _ = residency.setBytes(40, for: key)
         }
-        // 120 > 100 after c: a goes, b stays.
-        #expect(residency.order == ["b", "c"])
+        // c is current (pinned): only a and b count, 80 <= 100, nothing goes.
+        #expect(residency.order == ["a", "b", "c"])
+        // d becomes current, so a, b and c are all unpinned: 120 > 100 and the
+        // least recently used (a) goes at once.
+        #expect(residency.begin("d") == ["a"])
+        #expect(residency.order == ["b", "c", "d"])
+        _ = residency.setBytes(40, for: "d")
         _ = residency.begin("b")
-        _ = residency.begin("d")
-        let evicted = residency.setBytes(40, for: "d")
-        #expect(evicted == ["c"])
-        #expect(residency.order == ["b", "d"])
+        // e current: unpinned c, d, b = 120, and c was used least recently.
+        #expect(residency.begin("e") == ["c"])
+        #expect(residency.order == ["d", "b", "e"])
     }
 
     @Test func currentAndOneNeighbourAreNeverEvicted() {
@@ -72,6 +76,10 @@ struct GeometryFrameResidencyTests {
         var residency = GeometryFrameResidency(byteCap: 100)
         _ = residency.begin("a")
         _ = residency.setBytes(99, for: "a")
+        // The current frame is pinned and does not count, however large.
+        #expect(residency.hasRoomToPrebuild)
+        _ = residency.begin("b")
+        // a is now unpinned at 99 < 100.
         #expect(residency.hasRoomToPrebuild)
         _ = residency.setBytes(100, for: "a")
         #expect(!residency.hasRoomToPrebuild)
@@ -103,7 +111,9 @@ struct GeometryFrameResidencyTests {
         #expect(residency.order.contains("a") && residency.order.contains("b"))
         #expect(residency.unpinnedBytes == 60)
         #expect(residency.hasRoomToPrebuild)
-        _ = residency.setBytes(60, for: "b")
+        // Growing the unpinned frames past the cap evicts the oldest: 30 + 80 > 100.
+        _ = residency.setBytes(80, for: "b")
         #expect(!residency.order.contains("a"))
+        #expect(residency.order.contains("b"))
     }
 }

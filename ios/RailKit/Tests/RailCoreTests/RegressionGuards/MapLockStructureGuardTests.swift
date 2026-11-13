@@ -98,7 +98,7 @@ struct RegressionGuardMapLock {
 
     @Test func aRebuildDuringAGestureDoesNotRunTheFullMarkerPass() throws {
         let rebuild = String(try Self.body(
-            Self.coordinator, from: "private func rebuild(on mapView: MKMapView, duringGesture",
+            Self.coordinator, from: "private func rebuild(",
             to: "/// The trip-line cache key of one segment"))
         #expect(rebuild.components(separatedBy: "buildMarkers(").count == 2)
         #expect(!rebuild.contains("annotationReconciler.apply("))

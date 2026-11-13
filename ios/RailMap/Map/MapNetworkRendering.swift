@@ -329,7 +329,8 @@ final class MapNetworkGeometryCache {
     private func addBytes(polylineVertices: Int, to key: String) {
         guard entries[key] != nil else { return }
         guard polylineVertices != 0 else { return }
-        entries[key]?.bytes = max(0, (entries[key]?.bytes ?? 0) + polylineVertices * GeometryFrameBytes.bytesPerPolylineVertex)
+        let current = entries[key]?.bytes ?? 0
+        entries[key]?.bytes = max(0, current + polylineVertices * GeometryFrameBytes.bytesPerPolylineVertex)
         noteBytes(of: key)
     }
 

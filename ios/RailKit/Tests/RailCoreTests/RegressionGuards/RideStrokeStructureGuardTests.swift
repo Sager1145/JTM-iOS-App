@@ -84,7 +84,7 @@ struct RegressionGuardRideStrokeStructure {
     /// install, not whatever the previous rebuild left in the cache.
     @Test func theWorkerSlicesFromTheStrokesTheRebuildInstalls() throws {
         let rebuild = try Self.body(
-            from: "private func rebuild(on mapView: MKMapView, duringGesture: Bool = false) {",
+            from: "private func rebuild(",
             to: "// A cold display-network request has no geometry")
         let selected = try #require(rebuild.range(of: "selectFrameStrokes("))
         let prepared = try #require(rebuild.range(of: "prepareRideStrokes("))
