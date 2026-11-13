@@ -51,12 +51,45 @@ struct NetworkStrokeBakeTests {
                         #expect(abs(a.x - b.x) < 1e-6 && abs(a.y - b.y) < 1e-6, "\(chain.id) at \(zoom)")
                     }
                 }
-                let landlord = geometry.familyCoordinateChunks.keys.sorted().flatMap { key in
-                    geometry.familyCoordinateChunks[key]!.coordinateChunks
+                func same(_ mine: [StrokePoint], _ theirs: [Coordinate], _ what: String) {
+                    #expect(mine.count == theirs.count, "\(what) of \(chain.id) at \(zoom)")
+                    for (a, b) in zip(mine, theirs.map(StrokeProjection.point)) {
+                        #expect(abs(a.x - b.x) < 1e-6 && abs(a.y - b.y) < 1e-6, "\(what) of \(chain.id) at \(zoom)")
+                    }
                 }
-                #expect(chain.landlord.map(\.vertices.count) == landlord.map(\.count), "landlord of \(chain.id)")
-                let fallback = geometry.familyFallbacks.flatMap(\.family.coordinateChunks)
-                #expect(chain.tenantFallback.map(\.vertices.count) == fallback.map(\.count), "fallback of \(chain.id)")
+                var landlord: [(group: String, family: StrokeBake.FamilyRun, index: Int)] = []
+                for key in geometry.familyCoordinateChunks.keys.sorted() {
+                    let family = geometry.familyCoordinateChunks[key]!
+                    landlord += family.coordinateChunks.indices.map { (key, family, $0) }
+                }
+                #expect(chain.landlord.count == landlord.count, "landlord of \(chain.id)")
+                for (mine, theirs) in zip(chain.landlord, landlord) {
+                    #expect(mine.groupID == theirs.group)
+                    #expect(mine.colorHex == theirs.family.colorHex && mine.colorDarkHex == theirs.family.colorDarkHex)
+                    #expect(mine.from == theirs.family.chunkWindows[theirs.index].from)
+                    #expect(mine.to == theirs.family.chunkWindows[theirs.index].to)
+                    same(mine.vertices, theirs.family.coordinateChunks[theirs.index], "landlord")
+                }
+                var fallback: [(group: String, family: StrokeBake.FamilyRun, index: Int)] = []
+                for item in geometry.familyFallbacks {
+                    fallback += item.family.coordinateChunks.indices.map { (item.window.groupID, item.family, $0) }
+                }
+                #expect(chain.tenantFallback.count == fallback.count, "fallback of \(chain.id)")
+                for (mine, theirs) in zip(chain.tenantFallback, fallback) {
+                    #expect(mine.groupID == theirs.group)
+                    #expect(mine.colorHex == theirs.family.colorHex && mine.colorDarkHex == theirs.family.colorDarkHex)
+                    #expect(mine.from == theirs.family.chunkWindows[theirs.index].from)
+                    #expect(mine.to == theirs.family.chunkWindows[theirs.index].to)
+                    same(mine.vertices, theirs.family.coordinateChunks[theirs.index], "fallback")
+                }
+                let withheld = prepared.strokes[chain.id]?.withheldRuns ?? []
+                #expect(chain.withheld.count == withheld.count, "withheld of \(chain.id)")
+                for (mine, theirs) in zip(chain.withheld, withheld) {
+                    #expect(mine.groupID == nil)
+                    #expect(mine.colorHex == theirs.colorHex && mine.colorDarkHex == theirs.colorDarkHex)
+                    #expect(mine.from == theirs.from && mine.to == theirs.to)
+                    same(mine.vertices, theirs.coordinates, "withheld")
+                }
                 // Station nodes are the stroke's anchors.
                 if chain.continuous, let stroke = prepared.strokes[chain.id] {
                     for node in chain.nodes {
@@ -125,5 +158,45 @@ struct NetworkStrokeBakeTests {
         #expect(metres > 100 && metres < 1000, "datum shift of \(metres) m")
         let jp = try #require(wgs.chains.first { $0.region == "jp" })
         #expect(jp == gcj.chains.first { $0.id == jp.id })
+    }
+
+    @Test("pieces that meet on the chain share their boundary vertex exactly, and every piece is a slice of the stroke")
+    func boundariesAreShared() throws {
+        let network = StrokeBakeFixtures.network(try StrokeBakeFixtures.load())
+        let baked = try NetworkStrokeBake.bake(network, level: .init(appZoom: 13))
+        var meetings = 0
+        var withheldWithRange = 0
+        for chain in baked.chains where chain.continuous {
+            #expect(chain.strokePoints.count == chain.strokeMeasures.count, "\(chain.id)")
+            struct Piece { var from: Double; var to: Double; var vertices: [StrokePoint] }
+            let pieces: [Piece] =
+                chain.runs.map { Piece(from: $0.from, to: $0.to, vertices: $0.vertices) }
+                + chain.withheld.map { Piece(from: $0.from, to: $0.to, vertices: $0.vertices) }
+                + chain.landlord.map { Piece(from: $0.from, to: $0.to, vertices: $0.vertices) }
+            for piece in pieces {
+                #expect(piece.from <= piece.to, "\(chain.id)")
+                if let low = chain.strokeMeasures.first, let high = chain.strokeMeasures.last {
+                    #expect(piece.from >= low && piece.to <= high, "\(chain.id)")
+                }
+            }
+            withheldWithRange += chain.withheld.filter { $0.to > $0.from }.count
+            for a in pieces {
+                for b in pieces where abs(a.to - b.from) < 1e-9 && a.to > a.from && b.to > b.from {
+                    let end = try #require(a.vertices.last)
+                    let start = try #require(b.vertices.first)
+                    #expect(end == start, "boundary at \(a.to) m of \(chain.id)")
+                    meetings += 1
+                }
+            }
+            for node in chain.nodes {
+                if let low = chain.strokeMeasures.first, let high = chain.strokeMeasures.last {
+                    #expect(node.measure >= low - 1e-6 && node.measure <= high + 1e-6, "\(chain.id)")
+                }
+            }
+        }
+        #expect(meetings > 0, "some pieces meet")
+        #expect(withheldWithRange > 0, "withheld runs carry their range")
+        let tenant = try #require(baked.chains.first { $0.id.contains("syn-tenant") })
+        #expect(tenant.runs.count >= 2 && tenant.runs.allSatisfy { $0.to > $0.from })
     }
 }

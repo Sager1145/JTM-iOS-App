@@ -33,10 +33,16 @@ public enum NetworkStrokeBake {
         /// For a non-continuous line, the index of the interval (in `StrokeLineInput.intervals`)
         /// the run was drawn from; 0 for a continuous chain.
         public var part: Int
+        /// Metre range on the chain's stroke ruler (`Chain.strokeMeasures`) this run was cut from.
+        /// Zero for a non-continuous line, which has no whole stroke.
+        public var from: Double
+        public var to: Double
         public var vertices: [StrokePoint]
 
-        public init(part: Int, vertices: [StrokePoint]) {
+        public init(part: Int, from: Double = 0, to: Double = 0, vertices: [StrokePoint]) {
             self.part = part
+            self.from = from
+            self.to = to
             self.vertices = vertices
         }
     }
@@ -47,7 +53,7 @@ public enum NetworkStrokeBake {
         public var groupID: String?
         public var colorHex: String
         public var colorDarkHex: String
-        /// Metre window on the chain's own ruler (zero for a withheld run).
+        /// Metre window on the chain's stroke ruler (`Chain.strokeMeasures`).
         public var from: Double
         public var to: Double
         public var vertices: [StrokePoint]
@@ -58,6 +64,8 @@ public enum NetworkStrokeBake {
         /// The chain vertex index the station was requested at.
         public var anchor: Int
         public var point: StrokePoint
+        /// The station's measure on the chain's stroke ruler (`Chain.strokeMeasures`).
+        public var measure: Double
     }
 
     public struct Chain: Sendable, Equatable {
@@ -79,6 +87,11 @@ public enum NetworkStrokeBake {
         public var tenantFallback: [TokenRun]
         /// Station vertices, ascending by anchor.
         public var nodes: [Node]
+        /// The whole built stroke in map points and its metre measure per vertex (empty for a
+        /// non-continuous line). Every run, withheld span and family window above is a slice of
+        /// this stroke, cut at its `from`/`to`; pieces that meet share their boundary vertex exactly.
+        public var strokePoints: [StrokePoint]
+        public var strokeMeasures: [Double]
     }
 
     public struct Baked: Sendable, Equatable {
@@ -119,8 +132,14 @@ public enum NetworkStrokeBake {
             let stroke = strokes[line.id]
             var runs: [Run] = []
             if line.continuous {
-                for run in try StrokeBake.finishedRuns(stroke?.runs ?? line.intervals, line: line, frame: level) {
-                    runs.append(Run(part: 0, vertices: points(run)))
+                let finished = try StrokeBake.finishedRuns(
+                    stroke?.runs ?? line.intervals, line: line, frame: level)
+                let ranges = stroke?.runRanges ?? []
+                precondition(ranges.isEmpty || ranges.count == finished.count, "run ranges follow the runs")
+                for (index, run) in finished.enumerated() {
+                    runs.append(Run(
+                        part: 0, from: ranges.isEmpty ? 0 : ranges[index].from,
+                        to: ranges.isEmpty ? 0 : ranges[index].to, vertices: points(run)))
                 }
             } else {
                 for (index, interval) in line.intervals.enumerated() {
@@ -133,11 +152,17 @@ public enum NetworkStrokeBake {
             var landlord: [TokenRun] = []
             var fallback: [TokenRun] = []
             var nodes: [Node] = []
+            var strokePoints: [StrokePoint] = []
+            var strokeMeasures: [Double] = []
             if let stroke {
+                strokePoints = stroke.stroke.points.map {
+                    StrokeProjection.point(StrokeBake.coordinate(of: $0, mapPointsPerPoint: level.mapPointsPerPoint))
+                }
+                strokeMeasures = stroke.stroke.measures
                 for run in stroke.withheldRuns {
                     withheld.append(TokenRun(
                         groupID: nil, colorHex: run.colorHex, colorDarkHex: run.colorDarkHex,
-                        from: 0, to: 0, vertices: points(run.coordinates)))
+                        from: run.from, to: run.to, vertices: points(run.coordinates)))
                 }
                 let built = try StrokeBake.familyGeometry(
                     for: line, stroke: stroke, strokes: &strokes, cachedStrokes: [:], allLines: byID,
@@ -160,14 +185,22 @@ public enum NetworkStrokeBake {
                             vertices: points(chunk)))
                     }
                 }
+                // The slot an anchor index was requested in (the last, as `strokeBuild` keeps).
+                var slotOf: [Int: Int] = [:]
+                for (slot, index) in (network.anchors[line.id] ?? []).enumerated()
+                where slot < stroke.stroke.anchors.count && slot < stroke.stroke.anchorMeasures.count {
+                    slotOf[index] = slot
+                }
                 nodes = stroke.anchors.keys.sorted().map {
-                    Node(anchor: $0, point: StrokeProjection.point(stroke.anchors[$0]!))
+                    Node(anchor: $0, point: StrokeProjection.point(stroke.anchors[$0]!),
+                         measure: slotOf[$0].map { stroke.stroke.anchorMeasures[$0] } ?? 0)
                 }
             }
             chains.append(Chain(
                 id: line.id, lineID: line.lineID, region: line.region, continuous: line.continuous,
                 lane: line.lane, colorHex: line.colorHex, colorDarkHex: line.colorDarkHex,
-                runs: runs, withheld: withheld, landlord: landlord, tenantFallback: fallback, nodes: nodes))
+                runs: runs, withheld: withheld, landlord: landlord, tenantFallback: fallback, nodes: nodes,
+                strokePoints: strokePoints, strokeMeasures: strokeMeasures))
         }
         return Baked(level: level, chains: chains)
     }

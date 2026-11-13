@@ -50,6 +50,9 @@ public enum StrokeBake {
     public struct Build: Sendable {
         /// Solid runs: the complement of the family windows, as unprojected coordinates.
         public let runs: [[Coordinate]]
+        /// The metre range on the chain's stroke ruler each of `runs` was cut from (clamped to the
+        /// stroke), one per run.
+        public let runRanges: [(from: Double, to: Double)]
         /// Station anchors: the chain vertex index each anchor was requested at, to where the
         /// stroke put it.
         public let anchors: [Int: Coordinate]
@@ -57,17 +60,18 @@ public enum StrokeBake {
         public let stroke: ContinuousStroke.Stroke
         public let sourceMeasures: [Double]
         /// Withheld spans cut out of `stroke`, each with the colour it draws under.
-        public let withheldRuns: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])]
+        public let withheldRuns: [(colorHex: String, colorDarkHex: String, from: Double, to: Double, coordinates: [Coordinate])]
         /// Landlord family windows cut out of `stroke` by metre measure.
         public let emittedFamilyWindows: [ContinuousStroke.WindowSpan]
 
         public init(
-            runs: [[Coordinate]], anchors: [Int: Coordinate], stroke: ContinuousStroke.Stroke,
+            runs: [[Coordinate]], runRanges: [(from: Double, to: Double)], anchors: [Int: Coordinate], stroke: ContinuousStroke.Stroke,
             sourceMeasures: [Double],
-            withheldRuns: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])],
+            withheldRuns: [(colorHex: String, colorDarkHex: String, from: Double, to: Double, coordinates: [Coordinate])],
             emittedFamilyWindows: [ContinuousStroke.WindowSpan]
         ) {
             self.runs = runs
+            self.runRanges = runRanges
             self.anchors = anchors
             self.stroke = stroke
             self.sourceMeasures = sourceMeasures
@@ -523,7 +527,7 @@ extension StrokeBake {
             [], options: .init(rows: [], totalMetres: 0, laneGapPx: 0, minRampPx: 0, cornerRadiusPx: 0, anchors: []))
         guard mapPointsPerPoint > 0 else {
             return Build(
-                runs: [], anchors: [:], stroke: emptyStroke, sourceMeasures: [], withheldRuns: [],
+                runs: [], runRanges: [], anchors: [:], stroke: emptyStroke, sourceMeasures: [], withheldRuns: [],
                 emittedFamilyWindows: [])
         }
         try Task.checkCancellation()
@@ -531,7 +535,7 @@ extension StrokeBake {
         let pixels = chain.points
         guard pixels.count >= 2 else {
             return Build(
-                runs: [], anchors: [:], stroke: emptyStroke, sourceMeasures: [], withheldRuns: [],
+                runs: [], runRanges: [], anchors: [:], stroke: emptyStroke, sourceMeasures: [], withheldRuns: [],
                 emittedFamilyWindows: [])
         }
         // The canonical alignments this chain is drawn from, projected into the same pixel
@@ -600,6 +604,9 @@ extension StrokeBake {
         // own segment is cut — no extra Douglas–Peucker pass here, because this IS the simplified
         // polyline a ride slice already reuses; the lane offset and corner rounding are already
         // baked into `stroke.points`, so unprojecting is the whole job.
+        let strokeLow = stroke.measures.first ?? 0
+        let strokeHigh = stroke.measures.last ?? 0
+        func clamped(_ metres: Double) -> Double { max(strokeLow, min(strokeHigh, metres)) }
         func sliceRun(_ from: Double, _ to: Double) -> [Coordinate]? {
             let sliced = ContinuousStroke.slice(
                 points: stroke.points, measures: stroke.measures, from: from, to: to)
@@ -618,11 +625,13 @@ extension StrokeBake {
             ContinuousStroke.WindowSpan(from: $0.from, to: $0.to, groupID: $0.groupID)
         }
         var runs: [[Coordinate]] = []
+        var runRanges: [(from: Double, to: Double)] = []
         var emittedFamilyWindows: [ContinuousStroke.WindowSpan] = []
         if line.familyWindows.isEmpty {
             // Cache the complete, zoom-dependent stroke. Viewport selection happens on stable
             // polyline chunks after lane offsets and rounding are finished.
             runs = points.count >= 2 ? [points] : []
+            if points.count >= 2 { runRanges = [(strokeLow, strokeHigh)] }
         } else {
             // A family window is a stretch this chain shares with a sibling railway of the same
             // operator collapse — kilometres, not a viewport. So a line with ANY family window
@@ -638,7 +647,10 @@ extension StrokeBake {
                 measureStart: lower, measureEnd: upper)
             for piece in partition.base {
                 try Task.checkCancellation()
-                if let run = sliceRun(piece.from, piece.to) { runs.append(run) }
+                if let run = sliceRun(piece.from, piece.to) {
+                    runs.append(run)
+                    runRanges.append((clamped(piece.from), clamped(piece.to)))
+                }
             }
             for piece in partition.family {
                 try Task.checkCancellation()
@@ -662,7 +674,7 @@ extension StrokeBake {
         // again at every landlord-window edge it crosses, so no single drawn dash spans both a
         // landlord stretch and plain track. A piece inside a landlord window is tinted with that
         // family's colour; a piece on plain track keeps this line's own colour.
-        var withheldRuns: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])] = []
+        var withheldRuns: [(colorHex: String, colorDarkHex: String, from: Double, to: Double, coordinates: [Coordinate])] = []
         for span in line.withheld {
             try Task.checkCancellation()
             let clipped = ContinuousStroke.clipRangesToComplement(
@@ -685,12 +697,12 @@ extension StrokeBake {
                     withheldRuns.append((
                         family?.colorHex ?? line.colorHex,
                         family?.colorDarkHex ?? line.colorDarkHex,
-                        coordinates))
+                        clamped(from), clamped(to), coordinates))
                 }
             }
         }
         return Build(
-            runs: runs, anchors: anchorPoints, stroke: stroke, sourceMeasures: chain.measures,
+            runs: runs, runRanges: runRanges, anchors: anchorPoints, stroke: stroke, sourceMeasures: chain.measures,
             withheldRuns: withheldRuns, emittedFamilyWindows: emittedFamilyWindows)
     }
 
