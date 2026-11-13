@@ -352,7 +352,18 @@ struct UserPathCensusTests {
         })
     }
 
-    static func load(scope: Scope, root: URL, junctions registry: PhysicalRailJunctionRegistry) throws -> ScopeData {
+    /// Node budget of the census graph store. 100k is the historical default,
+    /// under which the whole-country graph is never kept; the app uses
+    /// `ResourceProfile.current.regionalGraphLoadNodeBudget` (900k desktop and
+    /// large phones, 600k compact). `RAIL_CENSUS_GRAPH_BUDGET` overrides it.
+    static var graphNodeBudget: Int {
+        ProcessInfo.processInfo.environment["RAIL_CENSUS_GRAPH_BUDGET"].flatMap(Int.init) ?? 100_000
+    }
+
+    static func load(
+        scope: Scope, root: URL, junctions registry: PhysicalRailJunctionRegistry,
+        graphBudget: Int? = nil
+    ) throws -> ScopeData {
         let data = root.appending(path: "app/data")
         var sections: [RouteGraph.SectionFeature] = []
         var stations: [Stations.Feature] = []
@@ -398,7 +409,7 @@ struct UserPathCensusTests {
             prepared: RideRouteResolution.NetworkInputs(network: network, inputs: inputs),
             graphStore: RouteGraph.RouteGraphStore(
                 sections: inputs.sections, policy: .physicalRailway, junctions: inputs.physicalJunctions,
-                cachePolicy: .bounded(maximumNodes: 100_000),
+                cachePolicy: .bounded(maximumNodes: graphBudget ?? graphNodeBudget),
                 identityPeriods: inputs.identityPeriods, sourceSnapshotID: inputs.snapshotID),
             grid: grid, lineIndices: lineIndices)
     }
