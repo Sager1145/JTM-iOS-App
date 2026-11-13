@@ -17,6 +17,8 @@ Resolved since the start: 横浜 to 東京 (equal length, was a tie-break: the s
 
 Not built (item e): timetable-matched and historical-line oracle trips. Every bundled sample trip is dated 2026 and none matches the stops-only timetable (0 of 287, measured in the cost-model note); a match would need a trip nobody drove. Dated copies for the history cases need the old solver's answers, which means re-exporting the whole frozen oracle (`RIDE_ORACLE_EXPORT=1`), not run here. The cases that could be cut from bundled data are listed in the cost-model note, section 4.
 
+Review round (router keys): the km groups no longer carry one template for every gap. A km gap gets a templated reason only when it is at most 0.5 km, or at most 5% and 1 km with the new km at most 1.5 x the straight line between the ends; every other gap needs a hand reason in the test or fails it. Of the 68 km-gap rows, 58 are inside the bounds and 10 are outside and explained by hand, from the router's spans and the numbers; 3 of those 10 are marked FOR REVIEW because the cause is not settled (馬喰町 to 両国 doubles back over 錦糸町, 浦和 to 池袋, 敦賀 to 新疋田). The earlier template had called 馬喰町 to 両国 and 敦賀 to 新疋田 "simplified geometry". Preferences now use only the lines whose own solver name matches the section's names; an alias lets a line through the hard filter and earns no discount. This did not change 東京 to 品川: that section names no line, so aliases play no part, and 総武線-3 is a common line of both stations by station code (kept as a data difference).
+
 ## Totals
 
 - Trips compared: 256 of 287 (31 not compared: scope outside Japan, or never solved by the app)
@@ -46,7 +48,7 @@ Topology file: jp.topology.bin,658 lines, 10234 nodes, 9580 edges, 752 links.
 
 ## Remaining differences, one row each
 
-Old is the production solver (frozen oracle): lines and km. New is the router with the ported rules on this file. Reason: one plain sentence; the first group is explained by hand (see `knownReasons` in the test), the km groups by the numbers of the row.
+Old is the production solver (frozen oracle): lines and km. New is the router with the ported rules on this file. Reason: one plain sentence; every row is explained by hand (see `knownReasons` in the test; FOR REVIEW means the cause is not settled) or, for a km gap inside the measurement bounds (at most 0.5 km, or 5% and 1 km with the new km at most 1.5 x the straight line), by a template from the row's numbers. A km gap outside those bounds with no hand reason is flagged in capitals as unexplained, which fails the test.
 
 ### different lines (3)
 
@@ -121,11 +123,11 @@ The old solver drew these over track with no current line id (relocated, histori
 - trip 07159EDCA041241C5F7038F2DF87F3F4 (new-year-grand-loop), section 2 馬喰町 to 両国
   - old: no lines (1.1 km)
   - new: 東日本旅客鉄道-総武線 > 東日本旅客鉄道-総武線-2 (4.9 km)
-  - reason: old track has no line id, the router takes the current line; the file's surveyed 4.9 km is 3.8 km longer than the old drawn path's 1.1 km (straight line 1.0 km): the old graph's simplified geometry is shorter than the surveyed intervals.
+  - reason: FOR REVIEW: the router doubles back. Spans: 総武線 3.0 km out to the junction (003639), then 総武線-2 1.9 km back to 両国, 4.9 km for stations 1.0 km apart. The old answer is a 1.1 km straight bridge of unnamed junction track between the two stations. The file has no link that joins them directly, so the longer way is the only path its reviewed links allow; whether a direct track exists is for the user to decide (a junction row, or leave it).
 - trip D8755000FA24D4235A8ED889B3A4AA9C (tokyo-limited-express-loop), section 0 浦和 to 池袋
   - old: no lines (21.7 km)
   - new: 東日本旅客鉄道-東北線 > 東日本旅客鉄道-赤羽線 (16.6 km)
-  - reason: old track has no line id, the router takes the current line; the old drawn path is 5.0 km longer than the file's surveyed 16.6 km (straight line 15.1 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: FOR REVIEW: old 21.7 km with no line id, router 16.6 km (1.1 x the 15.1 km straight line): 東北線 to the 赤羽 junction (11.1 km) and 赤羽線 to 池袋 (5.5 km). The router path has no detour; the old answer is 5.0 km longer over track with no current line id (relocated or bridged). Cause of the extra 5.0 km in the old drawing not established.
 - trip 868731BF1A9520928B670EC3A3B8566D (tokyo-limited-express-loop), section 0 新宿 to 錦糸町
   - old: no lines (12.0 km)
   - new: 東日本旅客鉄道-中央線 > 東日本旅客鉄道-総武線-2 (12.4 km)
@@ -133,40 +135,40 @@ The old solver drew these over track with no current line id (relocated, histori
 
 ### same lines, km differs (56)
 
-Same line sequence; the km differ by more than the larger of 0.3 km and 1%. Largest gap first.
+Same line sequence; the km differ by more than the larger of 0.3 km and 1%. Largest gap first. A gap gets a templated reason only when it is at most 0.5 km, or at most 5% and 1 km, and the new km is at most 1.5 x the straight line; every other row is flagged in capitals as unexplained until a hand-written reason is added.
 
 - trip 6F379655E47131DD2F854B65A847B9F0 (train-store), section 12 折尾 to 赤間
   - old: 九州旅客鉄道-鹿児島線 (23.7 km)
   - new: 九州旅客鉄道-鹿児島線 (16.3 km)
-  - reason: same lines; the old drawn path is 7.3 km longer than the file's surveyed 16.3 km (straight line 14.5 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: Router is one span on one line, 16.3 km for a 14.5 km straight line (1.1 x), no detour; the old answer is 7.3 km longer on the same line. The router's path shows no detour; the extra length is on the old side (not traced further).
 - trip B113D59026AE72C23BC7DCC1E062B3D9 (tokyo-limited-express-loop), section 2 横浜 to 大船
   - old: 東日本旅客鉄道-東海道線 (21.8 km)
   - new: 東日本旅客鉄道-東海道線 (17.4 km)
-  - reason: same lines; the old drawn path is 4.4 km longer than the file's surveyed 17.4 km (straight line 14.9 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: Router is one span on one line, 17.4 km for a 14.9 km straight line (1.2 x), no detour; the old answer is 4.4 km longer on the same line. The router's path shows no detour; the extra length is on the old side (not traced further).
 - trip 65F43AE4739DB31208BF9295B6539472 (train-store), section 0 敦賀 to 新疋田
   - old: 西日本旅客鉄道-北陸線-p1 (6.4 km)
   - new: 西日本旅客鉄道-北陸線-p1 (9.7 km)
-  - reason: same lines; the file's surveyed 9.7 km is 3.3 km longer than the old drawn path's 6.4 km (straight line 6.1 km): the old graph's simplified geometry is shorter than the surveyed intervals.
+  - reason: FOR REVIEW: old 6.4 km, router 9.7 km on the paired track 北陸線-p1, 1.6 x the 6.1 km straight line. One line, one span, no link. The paired alignment is probably the longer of two parallel tracks here (the old graph took the other, shorter one); not checked against the edge flags of the pair.
 - trip 71102CEF82BE99D98F5C7101CD080E07 (train-store), section 1 阿蘇 to 立野
   - old: 九州旅客鉄道-豊肥線 (15.5 km)
   - new: 九州旅客鉄道-豊肥線 (17.5 km)
-  - reason: same lines; the file's surveyed 17.5 km is 2.0 km longer than the old drawn path's 15.5 km (straight line 12.6 km): the old graph's simplified geometry is shorter than the surveyed intervals.
+  - reason: Split of one stretch at 立野 (a switchback station): this section 17.5 km in the router against 15.5 km in the old answer, and the next section (立野 to 肥後大津) 9.6 km against 11.1 km. The two sections add up to 27.1 km against 26.6 km, within 0.5 km: the old graph places 立野 about 2 km differently along the line.
 - trip A9554752F257CDA52831A6C0EED248AF (train-store), section 2 大阪 to 新大阪
   - old: 西日本旅客鉄道-東海道線 (5.7 km)
   - new: 西日本旅客鉄道-東海道線 (3.9 km)
-  - reason: same lines; the old drawn path is 1.8 km longer than the file's surveyed 3.9 km (straight line 3.6 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: Router is one span on one line, 3.9 km for a 3.6 km straight line (1.1 x), no detour; the old answer is 1.8 km longer on the same line. The router's path shows no detour; the extra length is on the old side (not traced further).
 - trip 6F379655E47131DD2F854B65A847B9F0 (train-store), section 9 小倉 to 戸畑
   - old: 九州旅客鉄道-鹿児島線 (7.7 km)
   - new: 九州旅客鉄道-鹿児島線 (6.2 km)
-  - reason: same lines; the old drawn path is 1.5 km longer than the file's surveyed 6.2 km (straight line 5.9 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: Router is one span on one line, 6.2 km for a 5.9 km straight line (1.05 x), no detour; the old answer is 1.5 km longer on the same line. The router's path shows no detour; the extra length is on the old side (not traced further).
 - trip 71102CEF82BE99D98F5C7101CD080E07 (train-store), section 2 立野 to 肥後大津
   - old: 九州旅客鉄道-豊肥線 (11.1 km)
   - new: 九州旅客鉄道-豊肥線 (9.6 km)
-  - reason: same lines; the old drawn path is 1.5 km longer than the file's surveyed 9.6 km (straight line 9.2 km): the old km is the length of the old graph's vertex chain, including any snapping or detour at the ends, the file's is the sum of surveyed edge lengths.
+  - reason: The other half of 阿蘇 to 立野 above: 9.6 km in the router against 11.1 km in the old answer; the pair adds up to 27.1 km against 26.6 km. The station 立野 sits at a different place along the line in the old graph.
 - trip 425FC76FB050394D51554A9A2D6B369B (train-store), section 0 熊本駅前 to 祇園橋
   - old: 熊本市-幹線 (0.0 km)
   - new: 熊本市-幹線 (0.5 km)
-  - reason: same lines; the old 0.0 km is shorter than the straight line 0.5 km between the stations, so the old drawn path is cut short (old answer wrong by 0.5 km); the file's 0.5 km is plausible.
+  - reason: The old drawn path has no length (0.0 km: both tram stops snap to one old graph vertex); the router's 0.5 km is the stop spacing and equals the 0.5 km straight line.
 - trip 856C6D19621F1681AAF99048FEEAED8D (train-store), section 0 新宿 to 原宿
   - old: 東日本旅客鉄道-山手線 (1.7 km)
   - new: 東日本旅客鉄道-山手線 (2.2 km)
@@ -360,6 +362,8 @@ Same line sequence; the km differ by more than the larger of 0.3 km and 1%. Larg
   - new: 東日本旅客鉄道-東海道線 (4.9 km)
   - reason: same lines; the file's surveyed 4.9 km is 0.3 km longer than the old drawn path's 4.6 km (straight line 4.4 km): the old graph's simplified geometry is shorter than the surveyed intervals.
 
+ROWS FOR REVIEW (the numbers are shown, the cause is not settled): 3
+
 ## Not compared (31)
 
 - 1 trips: scope hk: not in the Japan topology
@@ -369,13 +373,13 @@ Same line sequence; the km differ by more than the larger of 0.3 km and 1%. Larg
 
 ## Router timing on this file
 
-Measured by the shadow test around `RailTopology.route` for each of the 1743 sections it solved (not interval-coded ones), one call each, after the file was open and warm. Open (validate and link index): 2.5 ms.
+Measured by the shadow test around `RailTopology.route` for each of the 1743 sections it solved (not interval-coded ones), one call each, after the file was open and warm. Open (validate and link index): 2.6 ms.
 
-- median 0.010 ms, p95 0.015 ms, p99 0.036 ms, max 1.183 ms
+- median 0.010 ms, p95 0.015 ms, p99 0.018 ms, max 1.184 ms
 - slowest: trip journey_510175D3C325909EF4C88C3A42E1108B, section 0
 
 Worst-case probes (no oracle trip is long): seeded random pairs of nodes anywhere in the file, one call each, undated.
 
-- random pair, no filter: 2000 calls, 295 found a path; median 0.013 ms, p95 0.421 ms, p99 0.722 ms, max 1.357 ms
-- random pair, hard filter on the start line (second, unfiltered search when unreachable): 2000 calls, 5 found a path; median 0.004 ms, p95 0.009 ms, p99 0.021 ms, max 0.205 ms
-- five legs in a row between random nodes (every leg must find a path to count): 400 calls, 2 found a path; median 0.667 ms, p95 1.051 ms, p99 1.236 ms, max 1.487 ms
+- random pair, no filter: 2000 calls, 295 found a path; median 0.011 ms, p95 0.358 ms, p99 0.391 ms, max 0.435 ms
+- random pair, hard filter on the start line (second, unfiltered search when unreachable): 2000 calls, 5 found a path; median 0.004 ms, p95 0.005 ms, p99 0.007 ms, max 0.043 ms
+- five legs in a row between random nodes (every leg must find a path to count): 400 calls, 2 found a path; median 0.699 ms, p95 1.094 ms, p99 3.064 ms, max 5.409 ms
