@@ -342,6 +342,21 @@ class DerivationTests(unittest.TestCase):
         with self.assertRaises(topology.TopologyError):
             build([source("jp|jp-d", line, True, fragments, None, chains, origins=[(0, 0), (1, 1)])])
 
+    def test_hand_made_packages_skip_only_the_shipped_network_ledgers(self):
+        """A build given no junction registry (the builder's own test packages,
+        with invented geometry) is not compared with the shipped networks'
+        length and link-row ledgers, but every structural invariant still stops it."""
+        invented = dict(topology.new_report(), lines=1, unplacedJunctionRows=[{"id": "x", "reason": "noTwoLinePair"}],
+                        unplacedThroughServiceRows=[], lengthMismatchEdges=[{"line": "tw|x", "interval": 0}])
+        for region in ("jp", "tw"):
+            with self.subTest(region=region):
+                with self.assertRaises(topology.TopologyError):
+                    topology.enforce_invariants(region, invented)
+                topology.enforce_invariants(region, invented, shipped_ledgers=False)
+                with self.assertRaises(topology.TopologyError):
+                    topology.enforce_invariants(
+                        region, dict(invented, edgesWithoutGeometry=["x#0"]), shipped_ledgers=False)
+
     def test_build_stops_on_what_the_ledgers_do_not_allow(self):
         ledger_lengths = [{"line": line, "interval": interval}
                           for line, interval in sorted(topology.KNOWN_LENGTH_MISMATCHES)]

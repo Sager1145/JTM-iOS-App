@@ -3240,7 +3240,7 @@ def build_topology_file(
     data, report = display_topology.build_region_topology(
         region, sources, bytes.fromhex(package_sha256), bytes.fromhex(display_sha256),
         junctions, through if region == "jp" else None, registry)
-    display_topology.enforce_invariants(region, report)
+    display_topology.enforce_invariants(region, report, shipped_ledgers=junctions is not None)
     return data, report
 
 

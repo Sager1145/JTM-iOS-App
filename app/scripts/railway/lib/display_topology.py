@@ -1288,29 +1288,33 @@ KNOWN_UNPLACED_JUNCTION_ROWS = frozenset({
 })
 
 
-def enforce_invariants(region: str, report: dict) -> None:
+def enforce_invariants(region: str, report: dict, shipped_ledgers: bool = True) -> None:
     """Stop the build on what the file's consumers cannot work around: a station
     with no position, an edge with no geometry, a slot or overview that does not
     line up, an edge length or an unplaced link row outside the ledgers above.
     Only jp has ledger entries; every other region must report none. Link rows
-    are only checked for a region that has lines."""
+    are only checked for a region that has lines. The length and link-row checks
+    describe the shipped networks, so `shipped_ledgers=False` (a build given no
+    physical junction registry: a hand-made test package with invented geometry,
+    never a shipped build) skips them."""
     problems = []
     for name in ("unanchoredStations", "slotMismatches", "edgesWithoutGeometry"):
         if report[name]:
             problems.append(f"{name}: {report[name][:5]}")
     if report["overviewAlignFailures"]:
         problems.append(f"overviewAlignFailures: {report['overviewAlignFailures']}")
-    known_lengths = KNOWN_LENGTH_MISMATCHES if region == "jp" else frozenset()
-    reported_lengths = {(row["line"], row["interval"]) for row in report["lengthMismatchEdges"]}
-    extra = [row for row in report["lengthMismatchEdges"]
-             if (row["line"], row["interval"]) not in known_lengths]
-    if extra:
-        problems.append(f"lengthMismatchEdges outside the ledger: {extra[:5]}")
-    if report["lines"]:     # the ledger is two-sided: a fixed edge must leave it
-        stale = sorted(known_lengths - reported_lengths)
-        if stale:
-            problems.append(f"KNOWN_LENGTH_MISMATCHES entries no longer reported (remove them): {stale[:5]}")
-    if report["lines"]:     # a region with no lines has nothing to place the registry rows on
+    if shipped_ledgers:
+        known_lengths = KNOWN_LENGTH_MISMATCHES if region == "jp" else frozenset()
+        reported_lengths = {(row["line"], row["interval"]) for row in report["lengthMismatchEdges"]}
+        extra = [row for row in report["lengthMismatchEdges"]
+                 if (row["line"], row["interval"]) not in known_lengths]
+        if extra:
+            problems.append(f"lengthMismatchEdges outside the ledger: {extra[:5]}")
+        if report["lines"]:     # the ledger is two-sided: a fixed edge must leave it
+            stale = sorted(known_lengths - reported_lengths)
+            if stale:
+                problems.append(f"KNOWN_LENGTH_MISMATCHES entries no longer reported (remove them): {stale[:5]}")
+    if shipped_ledgers and report["lines"]:     # a region with no lines has nothing to place the registry rows on
         known_rows = KNOWN_UNPLACED_JUNCTION_ROWS if region == "jp" else frozenset()
         rows = [row for row in report["unplacedJunctionRows"]
                 if (row["id"], row["reason"]) not in known_rows]
