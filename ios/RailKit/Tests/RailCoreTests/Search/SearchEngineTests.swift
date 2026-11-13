@@ -307,7 +307,8 @@ struct SearchEngineTests {
     /// `SearchEngine.query`'s worker), its cost is that thread's CPU time, which
     /// excludes time spent waiting for a core, and the best of several rounds drops
     /// rounds disturbed by preemption or a slower core. A real regression slows
-    /// every round, so it still fails (at ~25 ms per keystroke today, 2x does).
+    /// every round, so it still fails: this measures 13-17 ms per keystroke today
+    /// (debug, idle or with every core busy), so the 35 ms budget fails a 3x slowdown.
     @Test func performanceAtJapanScale() throws {
         let catalog = try #require(SearchEngineFixture.catalog)
         let readings = SearchEngineFixture.readings
@@ -330,7 +331,7 @@ struct SearchEngineTests {
               + "memory=\(built.memoryFootprint / 1024)KiB build=\(build) cpu best-of-5 avg=\(average) worst=\(worst)")
         #expect(built.count > 9_000)
         #expect(built.memoryFootprint < 8 * 1024 * 1024)
-        #expect(average < .milliseconds(50))
+        #expect(average < .milliseconds(35))
     }
 
     /// For each of `count` workloads, the least CPU time its thread spent over
