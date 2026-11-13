@@ -6,8 +6,9 @@ import RailCore
 /// and metres on that chain's ruler). The pack and the topology of one build are a pair, so the
 /// pack header repeats this file's `displaySHA256`.
 ///
-/// Read straight from the file's bytes with `RailTopologyFormat`'s constants; the topology reader
-/// itself is not touched.
+/// The file is opened through `RailTopology`, the one topology reader (format v2: magic, version,
+/// directory and table validation), so a file the app would refuse is refused here too; the rows
+/// are then read with `RailTopologyFormat`'s constants.
 public struct PackTopology: Sendable, Equatable {
 
     public struct Line: Sendable, Equatable {
@@ -58,9 +59,9 @@ public struct PackTopology: Sendable, Equatable {
     }
 
     public static func read(from url: URL) throws -> PackTopology {
-        let data = try Data(contentsOf: url, options: .alwaysMapped)
-        let header: RailTopologyFormat.ParsedHeader
-        do { header = try RailTopologyFormat.parseHeader(data) } catch { throw Failure.unreadable("\(error)") }
+        let reader: RailTopology
+        do { reader = try RailTopology(contentsOf: url) } catch { throw Failure.unreadable("\(error)") }
+        let data = reader.data, header = reader.header
         func u16(_ offset: Int) -> Int {
             Int(data[data.startIndex + offset]) | Int(data[data.startIndex + offset + 1]) << 8
         }
