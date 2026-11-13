@@ -61,10 +61,10 @@ struct RegionBakeTests {
         let fixture = try JSONDecoder().decode(
             Fixture.self, from: Data(contentsOf: Self.fixtureURL))
         let expected = fixture.network(region: "hk")
-        #expect(loaded.lines.map(\.id) == expected.lines.map(\.id))
-        #expect(loaded.anchors == expected.anchors)
-        #expect(loaded.lines.count > 20)
-        for (a, b) in zip(loaded.lines, expected.lines) {
+        #expect(loaded.network.lines.map(\.id) == expected.lines.map(\.id))
+        #expect(loaded.network.anchors == expected.anchors)
+        #expect(loaded.network.lines.count > 20)
+        for (a, b) in zip(loaded.network.lines, expected.lines) {
             #expect(a.intervals.count == b.intervals.count)
             #expect(a.laneRows == b.laneRows)
             #expect(a.lane == b.lane)
@@ -82,7 +82,7 @@ struct RegionBakeTests {
         let second = try RegionBake.bake(region: "jp", appZoom: 13, from: directory)
         #expect(first == second)
         let direct = try NetworkStrokeBake.bake(
-            try DisplayInput.load(region: "jp", from: directory), level: .init(appZoom: 13, datumToken: "wgs84"))
+            try DisplayInput.load(region: "jp", from: directory).network, level: .init(appZoom: 13, datumToken: "wgs84"))
         #expect(first == direct)
         #expect(first.chains.count > 40)
         #expect(first.chains.contains { !$0.withheld.isEmpty })
@@ -115,7 +115,7 @@ struct RegionBakeTests {
         #expect(metres > 100 && metres < 1000, "shift of \(metres) m")
         let jpWGS = try DisplayInput.load(region: "jp", from: directory)
         let jpGCJ = try DisplayInput.load(region: "jp", from: directory, datum: .gcj02)
-        #expect(jpWGS.lines.map(\.intervals) == jpGCJ.lines.map(\.intervals))
+        #expect(jpWGS.network.lines.map(\.intervals) == jpGCJ.network.lines.map(\.intervals))
     }
 
     @Test("a missing manifest or region is reported, not baked as empty")
@@ -145,7 +145,7 @@ struct RegionBakeTests {
         let clock = ContinuousClock()
         for region in regions {
             var network: NetworkStrokeBake.Network?
-            let loadTime = try clock.measure { network = try DisplayInput.load(region: region, from: directory) }
+            let loadTime = try clock.measure { network = try DisplayInput.load(region: region, from: directory).network }
             let loaded = try #require(network)
             for zoom in [6.5, 10.5, 14.0] {
                 var first: NetworkStrokeBake.Baked?
@@ -157,8 +157,8 @@ struct RegionBakeTests {
                 #expect(baked == again, "\(region) z\(zoom) differs between two bakes")
                 let vertices = baked.chains.reduce(0) { $0 + $1.runs.reduce(0) { $0 + $1.vertices.count } }
                 let nodes = baked.chains.reduce(0) { $0 + $1.nodes.count }
-                print("RegionBake \(region) z\(zoom): \(loaded.lines.count) chains, \(vertices) vertices, \(nodes) nodes, load \(loadTime), bake \(time)")
-                #expect(baked.chains.count == loaded.lines.count)
+                print("RegionBake \(region) z\(zoom): \(loaded.network.lines.count) chains, \(vertices) vertices, \(nodes) nodes, load \(loadTime), bake \(time)")
+                #expect(baked.chains.count == loaded.network.lines.count)
             }
         }
     }

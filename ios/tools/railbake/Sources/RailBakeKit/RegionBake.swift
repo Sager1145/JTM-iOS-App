@@ -13,7 +13,7 @@ public enum RegionBake {
         region: String, appZoom zoom: Double, from directory: URL,
         datum: DisplayInput.Datum = .wgs84
     ) throws -> NetworkStrokeBake.Baked {
-        let network = try DisplayInput.load(region: region, from: directory, datum: datum)
+        let network = try DisplayInput.load(region: region, from: directory, datum: datum).network
         return try NetworkStrokeBake.bake(network, level: .init(appZoom: zoom, datumToken: datum.rawValue))
     }
 
@@ -23,7 +23,7 @@ public enum RegionBake {
         region: String, appZooms zooms: [Double], from directory: URL,
         datum: DisplayInput.Datum = .wgs84
     ) throws -> [NetworkStrokeBake.Baked] {
-        let network = try DisplayInput.load(region: region, from: directory, datum: datum)
+        let network = try DisplayInput.load(region: region, from: directory, datum: datum).network
         return try zooms.map {
             try NetworkStrokeBake.bake(network, level: .init(appZoom: $0, datumToken: datum.rawValue))
         }
