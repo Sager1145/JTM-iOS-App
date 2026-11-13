@@ -1,0 +1,174 @@
+import Foundation
+
+/// Bake one whole region's network at one level: the entry a host tool calls.
+///
+/// "Whole network resident" is the point. In the app, joints and follows depend on which
+/// neighbouring lines happen to be loaded; here every chain of the region is in the
+/// `allLines` the engine sees, so a chain's joints, follows and family fallbacks no longer depend
+/// on load order. Everything per chain runs through the same `StrokeBake` functions the app
+/// calls (`StrokeBakeEqualityTests` pins the bake against `StrokeBake.prepare`).
+///
+/// The output is plain value geometry in map points: for each chain, the finished runs with the
+/// attributes the piece cutter groups by (colour tokens, lane, source part, family window,
+/// withheld), and the vertices stations sit on. It is not cut into tiles or quantised here.
+public enum NetworkStrokeBake {
+
+    /// The scale one level is drawn at (see `StrokeBake.Frame`).
+    public typealias Level = StrokeBake.Frame
+
+    /// A region's builder output: its chains, and the chain vertex index each station sits on.
+    public struct Network: Sendable {
+        public var lines: [StrokeLineInput]
+        /// Keyed by `StrokeLineInput.id`.
+        public var anchors: [String: [Int]]
+
+        public init(lines: [StrokeLineInput], anchors: [String: [Int]]) {
+            self.lines = lines
+            self.anchors = anchors
+        }
+    }
+
+    /// One finished polyline.
+    public struct Run: Sendable, Equatable {
+        /// For a non-continuous line, the index of the interval (in `StrokeLineInput.intervals`)
+        /// the run was drawn from; 0 for a continuous chain.
+        public var part: Int
+        public var vertices: [StrokePoint]
+
+        public init(part: Int, vertices: [StrokePoint]) {
+            self.part = part
+            self.vertices = vertices
+        }
+    }
+
+    /// A run that draws under a colour of its own: a withheld dash, or a family window.
+    public struct TokenRun: Sendable, Equatable {
+        /// The family group for a family run; nil for a withheld run.
+        public var groupID: String?
+        public var colorHex: String
+        public var colorDarkHex: String
+        /// Metre window on the chain's own ruler (zero for a withheld run).
+        public var from: Double
+        public var to: Double
+        public var vertices: [StrokePoint]
+    }
+
+    /// A vertex of the baked stroke a station sits on.
+    public struct Node: Sendable, Equatable {
+        /// The chain vertex index the station was requested at.
+        public var anchor: Int
+        public var point: StrokePoint
+    }
+
+    public struct Chain: Sendable, Equatable {
+        /// Stable across bakes: `lineKey#chain` for a continuous chain, `lineKey@lane` otherwise.
+        public var id: String
+        public var lineID: String
+        public var region: String
+        public var continuous: Bool
+        public var lane: Double
+        public var colorHex: String
+        public var colorDarkHex: String
+        /// The chain's own ink, in part order.
+        public var runs: [Run]
+        /// Withheld spans, to draw dashed.
+        public var withheld: [TokenRun]
+        /// Stretches this chain draws in a landlord family's colour.
+        public var landlord: [TokenRun]
+        /// This chain's own geometry inside its tenant windows, the fallback ink.
+        public var tenantFallback: [TokenRun]
+        /// Station vertices, ascending by anchor.
+        public var nodes: [Node]
+    }
+
+    public struct Baked: Sendable, Equatable {
+        public var level: Level
+        /// In input order, so equal input gives byte-equal output.
+        public var chains: [Chain]
+    }
+
+    public static func bake(_ network: Network, level: Level) throws -> Baked {
+        let byID = Dictionary(network.lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        let joined = JoinedChainCache()
+        let pixels = ChainPixelCache(joinedChains: joined)
+        let projection = ChainPixelCache.Projection(
+            frameKey: level.key, datumToken: level.datumToken,
+            mapPointsPerScreenPoint: level.mapPointsPerPoint, lodScale: level.laneScale)
+        pixels.begin(projection)
+        let reader = ChainPixelReader(cache: pixels, projection: projection)
+        let junctions = JunctionCandidateIndex(byID, chains: joined)
+
+        // Strokes first: a family owner built while preparing a tenant is recorded here too, and
+        // reused, never rebuilt, when its own turn comes.
+        var strokes: [String: StrokeBake.Build] = [:]
+        for line in network.lines where line.continuous {
+            try Task.checkCancellation()
+            if strokes[line.id] != nil { continue }
+            strokes[line.id] = try StrokeBake.strokeBuild(
+                for: line, anchors: network.anchors[line.id] ?? [], canonical: { byID[$0] },
+                chains: reader, mapPointsPerPoint: level.mapPointsPerPoint, scale: level.scale,
+                laneScale: level.laneScale, junctionCandidates: junctions)
+        }
+        func points(_ coordinates: [Coordinate]) -> [StrokePoint] {
+            coordinates.map(StrokeProjection.point)
+        }
+        var chains: [Chain] = []
+        chains.reserveCapacity(network.lines.count)
+        for line in network.lines {
+            try Task.checkCancellation()
+            let stroke = strokes[line.id]
+            var runs: [Run] = []
+            if line.continuous {
+                for run in try StrokeBake.finishedRuns(stroke?.runs ?? line.intervals, line: line, frame: level) {
+                    runs.append(Run(part: 0, vertices: points(run)))
+                }
+            } else {
+                for (index, interval) in line.intervals.enumerated() {
+                    for run in try StrokeBake.finishedRuns([interval], line: line, frame: level) {
+                        runs.append(Run(part: index, vertices: points(run)))
+                    }
+                }
+            }
+            var withheld: [TokenRun] = []
+            var landlord: [TokenRun] = []
+            var fallback: [TokenRun] = []
+            var nodes: [Node] = []
+            if let stroke {
+                for run in stroke.withheldRuns {
+                    withheld.append(TokenRun(
+                        groupID: nil, colorHex: run.colorHex, colorDarkHex: run.colorDarkHex,
+                        from: 0, to: 0, vertices: points(run.coordinates)))
+                }
+                let built = try StrokeBake.familyGeometry(
+                    for: line, stroke: stroke, strokes: &strokes, cachedStrokes: [:], allLines: byID,
+                    anchors: network.anchors, chains: reader, frame: level, junctionCandidates: junctions)
+                for key in built.families.keys.sorted() {
+                    let family = built.families[key]!
+                    for (index, chunk) in family.coordinateChunks.enumerated() {
+                        landlord.append(TokenRun(
+                            groupID: key, colorHex: family.colorHex, colorDarkHex: family.colorDarkHex,
+                            from: family.chunkWindows[index].from, to: family.chunkWindows[index].to,
+                            vertices: points(chunk)))
+                    }
+                }
+                for item in built.fallbacks {
+                    for (index, chunk) in item.family.coordinateChunks.enumerated() {
+                        fallback.append(TokenRun(
+                            groupID: item.window.groupID, colorHex: item.family.colorHex,
+                            colorDarkHex: item.family.colorDarkHex,
+                            from: item.family.chunkWindows[index].from, to: item.family.chunkWindows[index].to,
+                            vertices: points(chunk)))
+                    }
+                }
+                nodes = stroke.anchors.keys.sorted().map {
+                    Node(anchor: $0, point: StrokeProjection.point(stroke.anchors[$0]!))
+                }
+            }
+            chains.append(Chain(
+                id: line.id, lineID: line.lineID, region: line.region, continuous: line.continuous,
+                lane: line.lane, colorHex: line.colorHex, colorDarkHex: line.colorDarkHex,
+                runs: runs, withheld: withheld, landlord: landlord, tenantFallback: fallback, nodes: nodes))
+        }
+        return Baked(level: level, chains: chains)
+    }
+}

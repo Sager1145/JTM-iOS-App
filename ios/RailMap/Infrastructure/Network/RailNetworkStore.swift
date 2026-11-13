@@ -30,7 +30,7 @@ final class RailNetworkStore {
         let id: String
         /// Identity of this immutable decoded content. Copies retain it; a
         /// re-decoded line gets a new one even if its public ID is unchanged.
-        let contentID = UUID()
+        let contentID: UUID
         /// The canonical package line id. A reviewed screen-space lane can
         /// give one railway several entries, so `id` identifies the drawn
         /// stroke while this identifies the railway beneath stations, badges
@@ -128,6 +128,10 @@ final class RailNetworkStore {
         /// stroke. `NetworkLOD`'s own note measured the lever at a city view:
         /// 22,185 drawn vertices to 2,460.
         let intervalRects: [MKMapRect]
+        /// What the stroke engine (`RailCore.StrokeBake`) reads of this line. Built once, in
+        /// ``init``, from the same values, with this line's `contentID`, so the engine's caches
+        /// key on the identity the rest of the app already uses.
+        let strokeInput: StrokeLineInput
         var vertexCount: Int { intervals.reduce(0) { $0 + $1.count } }
 
         /// The rects are derived rather than passed, because the one thing
@@ -146,8 +150,10 @@ final class RailNetworkStore {
             withheld: [WithheldSpan] = [],
             familyWindows: [FamilyWindow] = [],
             partSpans: [DisplayTemporalDecoration?] = [],
-            literalDisplaySpansV1: [DisplayLiteralSpans.Span] = []
+            literalDisplaySpansV1: [DisplayLiteralSpans.Span] = [],
+            strokeInput: StrokeLineInput? = nil
         ) {
+            self.contentID = strokeInput?.contentID ?? UUID()
             self.id = id
             self.lineID = lineID
             self.region = region
@@ -176,6 +182,23 @@ final class RailNetworkStore {
             let rects = intervals.map(Self.boundingRect(of:))
             self.intervalRects = rects
             self.mapRect = rects.reduce(MKMapRect.null) { $0.union($1) }
+            self.strokeInput = strokeInput ?? StrokeLineInput(
+                id: id, contentID: contentID, lineID: lineID, region: region.rawValue,
+                operatorName: operatorName, colorHex: colorHex, colorDarkHex: colorDarkHex,
+                lane: lane, continuous: continuous, joinPrevious: joinPrevious,
+                laneRows: laneRows, totalMetres: totalMetres,
+                follows: follows.map {
+                    StrokeLineInput.Follow(
+                        from: $0.from, to: $0.to, canonicalID: $0.canonicalID,
+                        canonicalFrom: $0.canonicalFrom, canonicalTo: $0.canonicalTo)
+                },
+                withheld: withheld.map { StrokeLineInput.Withheld(from: $0.from, to: $0.to) },
+                familyWindows: familyWindows.map {
+                    StrokeLineInput.FamilyWindow(
+                        from: $0.from, to: $0.to, isLandlord: $0.isLandlord, groupID: $0.groupID,
+                        colorHex: $0.colorHex, colorDarkHex: $0.colorDarkHex)
+                },
+                literalDisplaySpansV1: literalDisplaySpansV1, intervals: intervals)
         }
 
         /// Union of one interval's vertices, in projected map space.
@@ -1680,78 +1703,67 @@ final class RailNetworkStore {
         let lines = file.lines.compactMap { fragment -> DrawnLine? in
             guard let metadata = catalog[fragment.lineKey],
                   let region = Region(rawValue: metadata.region) else { return nil }
+            // The id rule, the datum shift, the reviewed lane / follow / family rows and the
+            // literal-span eligibility are `RailCore.StrokeLineInput.make`, which the host-side
+            // bake calls too; what is left here is the presentation around the geometry.
             let drawID = fragment.continuous == true
                 ? "\(fragment.lineKey)#\(fragment.chain ?? 0)"
                 : "\(fragment.lineKey)@\(fragment.lane ?? 0)"
-            var intervals: [[Coordinate]] = []
+            let rows = partRows?[drawID] ?? [:]
+            guard let input = StrokeLineInput.make(
+                fragment: fragment,
+                metadata: DisplayLineMetadata(
+                    id: metadata.id, region: metadata.region, operatorName: metadata.operator,
+                    color: metadata.color, colorDark: metadata.colorDark),
+                families: families,
+                shiftToGCJ02: AppleMapDatum.gcj02Countries.contains(region.code),
+                fullDetail: detail == .full, stampedPartIndices: Set(rows.keys))
+            else { return nil }
             var spans: [DisplayTemporalDecoration?] = []
             var stamped = false
-            for (index, part) in fragment.parts.enumerated() {
-                let source = part.compactMap(Coordinate.init(pair:))
-                guard source.count >= 2 else { continue }
-                intervals.append(AppleMapDatum.display(source, country: region.code))
-                if let span = partRows?[drawID]?[index] {
+            for sourceIndex in input.sourcePartIndices {
+                if let span = rows[sourceIndex] {
                     spans.append(span)
                     stamped = true
                 } else {
                     spans.append(nil)
                 }
             }
-            guard !intervals.isEmpty else { return nil }
             return DrawnLine(
                 // One fragment per railway and lane, so the lane is the whole
                 // of what distinguishes two entries of the same line.
-                id: drawID,
+                id: input.id,
                 lineID: metadata.id,
                 region: region, name: metadata.name, nameRoma: metadata.nameRoma,
                 operatorName: metadata.operator,
                 color: Color(hex: metadata.color) ?? .accentColor,
                 colorDark: Color(hex: metadata.colorDark) ?? .accentColor,
-                colorHex: metadata.color.lowercased(),
-                colorDarkHex: metadata.colorDark.lowercased(),
+                colorHex: input.colorHex,
+                colorDarkHex: input.colorDarkHex,
                 rank: metadata.rank, minZoom: metadata.minZoomMapLibre,
                 visibilityLengthKm: metadata.visibilityLengthKm,
                 lodMinZoom: RailStyle.zoom(
                     fromMapLibre: Double(metadata.nativeMinZoomMapLibre)),
-                lane: fragment.lane ?? 0,
-                intervals: intervals,
-                continuous: fragment.continuous == true,
-                joinPrevious: fragment.joinPrevious ?? true,
-                laneRows: (fragment.laneRows ?? []).map {
-                    ContinuousStroke.LaneRow(from: $0[0], to: $0[1], lane: $0[2])
-                },
-                totalMetres: fragment.totalMetres ?? 0,
-                follows: (fragment.follows ?? []).map {
+                lane: input.lane,
+                intervals: input.intervals,
+                continuous: input.continuous,
+                joinPrevious: input.joinPrevious,
+                laneRows: input.laneRows,
+                totalMetres: input.totalMetres,
+                follows: input.follows.map {
                     StrokeFollow(
-                        from: $0.from, to: $0.to,
-                        canonicalID: "\($0.canonicalLineKey)#\($0.canonicalChain)",
+                        from: $0.from, to: $0.to, canonicalID: $0.canonicalID,
                         canonicalFrom: $0.canonicalFrom, canonicalTo: $0.canonicalTo)
                 },
-                withheld: (fragment.withheld ?? []).compactMap {
-                    $0.count >= 2 ? WithheldSpan(from: $0[0], to: $0[1]) : nil
-                },
-                familyWindows: (fragment.familyWindows ?? []).compactMap { window in
-                    // The file already passed `validated()`, which requires
-                    // every window's groupID to resolve — this guard is
-                    // belt-and-braces against a caller that skipped it.
-                    guard let group = families[window.groupID] else { return nil }
-                    return FamilyWindow(
-                        from: window.from, to: window.to,
-                        isLandlord: window.isLandlord, groupID: window.groupID,
-                        colorHex: group.color.lowercased(),
-                        colorDarkHex: group.colorDark.lowercased())
+                withheld: input.withheld.map { WithheldSpan(from: $0.from, to: $0.to) },
+                familyWindows: input.familyWindows.map {
+                    FamilyWindow(
+                        from: $0.from, to: $0.to, isLandlord: $0.isLandlord, groupID: $0.groupID,
+                        colorHex: $0.colorHex, colorDarkHex: $0.colorDarkHex)
                 },
                 partSpans: stamped ? spans : [],
-                // Complete incoming-follow eligibility belongs to the coherent
-                // producer, not this partially resident runtime line catalog.
-                literalDisplaySpansV1: detail == .full && region == .jp
-                    && fragment.continuous == true && !stamped
-                    && (fragment.lane ?? 0) == 0
-                    && (fragment.laneRows ?? []).allSatisfy({ $0[2] == 0 })
-                    && (fragment.follows ?? []).isEmpty
-                    && (fragment.familyWindows ?? []).isEmpty
-                    && (fragment.withheld ?? []).isEmpty
-                    ? fragment.literalDisplaySpansV1 ?? [] : [])
+                literalDisplaySpansV1: input.literalDisplaySpansV1,
+                strokeInput: input)
         }
         let stations = file.stations.compactMap { station -> DrawnStation? in
             guard let metadata = catalog[station.lineKey],
