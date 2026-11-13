@@ -77,10 +77,13 @@ public enum PieceCutter {
         let extent = maxExtent(mapPointsPerPoint: mapPointsPerPoint)
         guard chain.continuous, chain.strokePoints.count >= 2,
               chain.strokePoints.count == chain.strokeMeasures.count else {
-            // No whole stroke (a non-continuous line): its runs are the geometry, one piece each.
+            // No whole stroke (a non-continuous line): its runs are the geometry, one piece each,
+            // measured on their part's own ruler (`Run.measures`).
             var pieces: [Piece] = []
             for run in chain.runs where run.vertices.count >= 2 {
-                let line = Polyline(points: run.vertices, measures: [Double](repeating: 0, count: run.vertices.count))
+                let measures = run.measures.count == run.vertices.count
+                    ? run.measures : [Double](repeating: 0, count: run.vertices.count)
+                let line = Polyline(points: run.vertices, measures: measures)
                 pieces.append(contentsOf: finish(line, kind: .base, part: run.part, long: dated(run.part), extent: extent))
             }
             return pieces

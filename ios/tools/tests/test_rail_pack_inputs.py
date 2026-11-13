@@ -37,7 +37,7 @@ class Fixture:
         self.builder = tmp / "builder"
         for relative in tool.SOURCE_PATHS:
             path = self.repo / relative
-            if relative.endswith(".swift"):
+            if relative.endswith((".swift", ".json")):
                 write(path, f"// {relative}\n")
             else:
                 write(path / "A.swift", f"// {relative}/A\n")
@@ -87,6 +87,7 @@ class KeyTests(unittest.TestCase):
             lambda: write(self.f.repo / "ios/RailKit/Sources/RailCore/Rendering/A.swift", "// edited\n"),
             lambda: write(self.f.repo / "ios/tools/railbake/Sources/A.swift", "// edited\n"),
             lambda: write(self.f.repo / "ios/RailKit/Sources/RailCore/Pack/RailPackFormat.swift", "// edited\n"),
+            lambda: write(self.f.repo / "ios/tools/railbake/pack-budgets.json", "{}"),
             lambda: write(self.f.builder / "hk.display.bin", "changed"),
             lambda: write(self.f.builder / "hk.stations.json", "changed"),
             lambda: write(self.f.builder / "hk.topology.bin", b"\x01" + bytes(159)),
@@ -183,7 +184,10 @@ class RepositoryTests(unittest.TestCase):
             "ios/RailKit/Sources/RailCore/Pack/RailPackWriter.swift",
             "ios/tools/railbake/Sources/RailBakeKit/PieceCutter.swift",
             "ios/tools/railbake/Sources/RailBakeKit/PackAssembler.swift",
+            "ios/tools/railbake/Sources/RailBakeKit/PackBudget.swift",
             "ios/tools/railbake/Sources/RailBake/main.swift",
+            "ios/tools/railbake/pack-budgets.json",
+            "ios/RailKit/Sources/RailCore/Rendering/NetworkStrokeThin.swift",
             "ios/RailKit/Sources/RailPresentation/Map/NetworkVisibilityPolicy.swift",
         ):
             self.assertIn(expected, files)

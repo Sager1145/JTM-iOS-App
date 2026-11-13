@@ -157,21 +157,21 @@ struct RailPackReviewFixTests {
     // MARK: Ladder rule
 
     @Test func switchDistanceFollowsTheLocalSpacing() throws {
-        // Gaps: 4 to 5 is 1.0, 5 to 6 is 1.0, 6 to 6.5 is 0.5, 6.5 to 7 is 0.5.
+        // Camera zooms are the app's (ladder zoom + 1). Gaps: 4 to 5 is 1.0, 5 to 6 is 1.0, 6 to 6.5 is 0.5, 6.5 to 7 is 0.5.
         let ladder = try RailPackLadder(zooms: [4, 5, 6, 6.5, 7])
         #expect(abs(ladder.switchDistance(from: 1, towards: 6) - 0.7) < 1e-12)
         #expect(abs(ladder.switchDistance(from: 2, towards: 6.4) - 0.45) < 1e-12)  // towards the 0.5 gap
         #expect(abs(ladder.switchDistance(from: 2, towards: 5.4) - 0.7) < 1e-12)   // towards the 1.0 gap
         // Installed z5: with 1.0 spacing the camera may pass the midpoint (5.5) and still hold.
-        #expect(ladder.chooseLevel(cameraZoom: 5.65, installed: 1) == 1)
-        #expect(ladder.chooseLevel(cameraZoom: 5.75, installed: 1) == 2)
-        #expect(ladder.chooseLevel(cameraZoom: 4.35, installed: 1) == 1)
-        #expect(ladder.chooseLevel(cameraZoom: 4.25, installed: 1) == 0)
+        #expect(ladder.chooseLevel(cameraZoom: 6.65, installed: 1) == 1)
+        #expect(ladder.chooseLevel(cameraZoom: 6.75, installed: 1) == 2)
+        #expect(ladder.chooseLevel(cameraZoom: 5.35, installed: 1) == 1)
+        #expect(ladder.chooseLevel(cameraZoom: 5.25, installed: 1) == 0)
         // Installed z6: 0.45 upward, 0.7 downward.
-        #expect(ladder.chooseLevel(cameraZoom: 6.44, installed: 2) == 2)
-        #expect(ladder.chooseLevel(cameraZoom: 6.46, installed: 2) == 3)
-        #expect(ladder.chooseLevel(cameraZoom: 5.35, installed: 2) == 2)
-        #expect(ladder.chooseLevel(cameraZoom: 5.25, installed: 2) == 1)
+        #expect(ladder.chooseLevel(cameraZoom: 7.44, installed: 2) == 2)
+        #expect(ladder.chooseLevel(cameraZoom: 7.46, installed: 2) == 3)
+        #expect(ladder.chooseLevel(cameraZoom: 6.35, installed: 2) == 2)
+        #expect(ladder.chooseLevel(cameraZoom: 6.25, installed: 2) == 1)
     }
 
     // MARK: Geometry limits

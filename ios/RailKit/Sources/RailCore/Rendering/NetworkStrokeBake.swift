@@ -38,12 +38,18 @@ public enum NetworkStrokeBake {
         public var from: Double
         public var to: Double
         public var vertices: [StrokePoint]
+        /// For a non-continuous line, the metre measure of every vertex on its part's own ruler
+        /// (0 at the part's first vertex, then the topology ruler's step: 111,320 m per degree,
+        /// longitude scaled by the cosine of the mean latitude). Empty for a continuous chain,
+        /// whose measures are `Chain.strokeMeasures`.
+        public var measures: [Double]
 
-        public init(part: Int, from: Double = 0, to: Double = 0, vertices: [StrokePoint]) {
+        public init(part: Int, from: Double = 0, to: Double = 0, vertices: [StrokePoint], measures: [Double] = []) {
             self.part = part
             self.from = from
             self.to = to
             self.vertices = vertices
+            self.measures = measures
         }
     }
 
@@ -100,6 +106,21 @@ public enum NetworkStrokeBake {
         public var chains: [Chain]
     }
 
+    /// The cumulative metres along a non-continuous part's finished run: the topology ruler's step
+    /// (`StrokeBake.joinedChainCoordinates`) over the run's own vertices, 0 at the first.
+    static func partRuler(_ run: [Coordinate]) -> [Double] {
+        var measures = [Double](repeating: 0, count: run.count)
+        if run.count > 1 {
+            for index in 1..<run.count {
+                let a = run[index - 1], b = run[index]
+                let lat = ((a.lat + b.lat) / 2) * Double.pi / 180
+                measures[index] = measures[index - 1]
+                    + hypot((b.lon - a.lon) * 111_320 * cos(lat), (b.lat - a.lat) * 111_320)
+            }
+        }
+        return measures
+    }
+
     public static func bake(_ network: Network, level: Level) throws -> Baked {
         let byID = Dictionary(network.lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let joined = JoinedChainCache()
@@ -144,7 +165,7 @@ public enum NetworkStrokeBake {
             } else {
                 for (index, interval) in line.intervals.enumerated() {
                     for run in try StrokeBake.finishedRuns([interval], line: line, frame: level) {
-                        runs.append(Run(part: index, vertices: points(run)))
+                        runs.append(Run(part: index, vertices: points(run), measures: partRuler(run)))
                     }
                 }
             }

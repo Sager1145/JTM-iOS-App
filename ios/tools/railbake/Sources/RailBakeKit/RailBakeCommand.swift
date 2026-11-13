@@ -12,10 +12,12 @@ public enum RailBakeCommand {
 
     public static let usage = """
         usage: RailBake --builder-dir DIR --region CODE --inputs-sha256 HEX --output FILE \\
-                        [--datum wgs84|gcj02] [--levels 8...34|8,12,34] [--report]
+                        [--datum wgs84|gcj02] [--levels 8...34|8,12,34] [--budgets FILE] [--report]
                RailBake --report-of FILE
                RailBake --compare A B
         --levels   half-zoom indices k (level zoom k/2); default 8...34, the ladder z4.0 to z17.0
+        --budgets  pack-budgets.json: fail (exit 1, nothing written) when the pack's bytes, a level's
+                   vertices or a phone or pad view's mounted vertices exceed it
         --report   print bytes, pieces, vertices and tiles per level after the bake
         """
 
@@ -37,6 +39,14 @@ public enum RailBakeCommand {
         }
     }
 
+    /// Opens the finished pack bytes and checks them against the budgets file; throws
+    /// `PackBudget.Violation` naming every limit broken.
+    static func enforceBudgets(at url: URL, region: String, data: Data) throws {
+        let reader = try RailPackReader(data: data)
+        try reader.validateContents()
+        try PackBudget.load(from: url).check(region: region, report: PackReport(reader: reader))
+    }
+
     static func execute(arguments: [String], out: @escaping (String) -> Void) throws {
         var options: [String: String] = [:]
         var flags: Set<String> = []
@@ -50,7 +60,7 @@ public enum RailBakeCommand {
         while index < arguments.count {
             let argument = arguments[index]
             switch argument {
-            case "--builder-dir", "--region", "--inputs-sha256", "--output", "--datum", "--levels", "--report-of":
+            case "--builder-dir", "--region", "--inputs-sha256", "--output", "--datum", "--levels", "--report-of", "--budgets":
                 options[argument] = try value(argument)
             case "--compare":
                 compare = [try value(argument), try value(argument)]
@@ -97,6 +107,8 @@ public enum RailBakeCommand {
                     if level < count { out("level \(level + 1)/\(count)") }
                 }
         }
+        // Over budget: fail before anything is written.
+        if let path = options["--budgets"] { try enforceBudgets(at: URL(fileURLWithPath: path), region: region, data: data) }
         let url = URL(fileURLWithPath: output)
         try data.write(to: url, options: .atomic)
         let reader = try RailPackReader(contentsOf: url)

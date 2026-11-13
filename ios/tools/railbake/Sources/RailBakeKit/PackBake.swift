@@ -10,6 +10,7 @@ public enum PackBake {
         case displayHashMismatch(topology: String, actual: String)
         case datumNotForRegion(String)
         case badLevels(String)
+        case noInk([PackInkCheck.Missing])
 
         public var description: String {
             switch self {
@@ -18,6 +19,9 @@ public enum PackBake {
                 "topology.bin was built for display blob \(topology), but the blob is \(actual)"
             case .datumNotForRegion(let region): "\(region) has no GCJ-02 variant"
             case .badLevels(let text): "cannot read --levels \(text)"
+            case .noInk(let missing):
+                "\(missing.count) line/level pairs are visible but have no ink, first: "
+                    + missing.prefix(5).map(\.description).joined(separator: "; ")
             }
         }
     }
@@ -84,6 +88,12 @@ public enum PackBake {
         let source = try PackAssembler.assemble(
             region: region, display: display, topology: topology, ladder: ladder(levels: levels), datum: datum,
             inputsSHA256: inputsSHA256, progress: progress)
-        return try RailPackWriter.write(source)
+        let data = try RailPackWriter.write(source)
+        // Every line visible at a level has ink at that level.
+        let tiers = Dictionary(display.lines.map { ($0.id, $0.tierQuarterZoom) }, uniquingKeysWith: { first, _ in first })
+        let missing = try PackInkCheck.missing(
+            reader: RailPackReader(data: data), lines: topology.lines.map { ($0.id, tiers[$0.id] ?? .max) })
+        guard missing.isEmpty else { throw Failure.noInk(missing) }
+        return data
     }
 }

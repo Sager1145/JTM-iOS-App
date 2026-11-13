@@ -15,6 +15,10 @@ public struct PackReport: Sendable, Equatable {
         public var nodes: Int
         /// Most pieces in any one tile.
         public var largestTilePieces: Int
+        /// Most vertices a phone-sized view plus one ring mounts at this level (`PackWindows`).
+        public var phoneWindowVertices: Int
+        /// The same for a pad-sized view.
+        public var padWindowVertices: Int
     }
 
     public var fileBytes: Int
@@ -40,21 +44,24 @@ public struct PackReport: Sendable, Equatable {
             func rows(_ kind: RailPackFormat.ArrayKind) -> Int { level.rows[kind.rawValue] }
             var largest = 0
             for tile in 0..<rows(.tileDir) { largest = max(largest, Int(try reader.tile(level: index, index: tile).pieceCount)) }
+            let windows = try PackWindows.maxima(reader: reader, level: index)
             levels.append(Level(
                 zoom: level.zoom, bytes: level.totalBytes, pieces: rows(.pieces), longPieces: rows(.longPieces),
                 vertices: rows(.vertices) + rows(.longVertices), tiles: rows(.tileDir),
-                nodes: rows(.nodes), largestTilePieces: largest))
+                nodes: rows(.nodes), largestTilePieces: largest,
+                phoneWindowVertices: windows.phone, padWindowVertices: windows.pad))
         }
         self.levels = levels
     }
 
     /// One line per level and a total line, for the terminal.
     public func text() -> String {
-        var lines = ["level zoom      bytes     pieces   long   vertices    tiles  maxTilePieces"]
+        var lines = ["level zoom      bytes     pieces   long   vertices    tiles  maxTilePieces   phoneWin    padWin"]
         for (index, level) in levels.enumerated() {
             lines.append(String(
-                format: "%5d %4.1f %10d %10d %6d %10d %8d %14d", index, level.zoom, level.bytes, level.pieces,
-                level.longPieces, level.vertices, level.tiles, level.largestTilePieces))
+                format: "%5d %4.1f %10d %10d %6d %10d %8d %14d %10d %9d", index, level.zoom, level.bytes, level.pieces,
+                level.longPieces, level.vertices, level.tiles, level.largestTilePieces,
+                level.phoneWindowVertices, level.padWindowVertices))
         }
         lines.append("total: \(fileBytes) bytes (\(sharedBytes) shared), \(totalPieces) pieces, "
             + "\(totalVertices) vertices, \(chains) chains, \(groups) groups, \(spans) spans")

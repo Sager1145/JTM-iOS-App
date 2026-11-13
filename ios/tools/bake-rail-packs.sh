@@ -9,6 +9,15 @@
 # ios/.build/railpack-cache/{inputsSHA256}/, bakes with `RailBake` only on a miss, copies the pack to
 # DEST_DIR and then runs the freshness guard on what it copied. Packs are not committed to git.
 #
+# Size guards (docs/maintenance/2026-11-13-rail-pack-size-design.md): every bake passes
+# ios/tools/railbake/pack-budgets.json to RailBake (--budgets: a pack over its byte budget, a level over
+# its vertex ceiling or a phone or pad view over its mounted-vertex cap is not written and the script
+# stops), and the script ends with check-rail-pack-budget.sh (all packs together at most 60,000,000
+# bytes). The budgets file is part of every pack's inputsSHA256, so a cached pack was checked against
+# the budgets it was baked under. These guards need the builder output and a release build of RailBake
+# (a few minutes), so they are not in run-regression-guards.sh; the fixture-sized size guards are
+# (PackBudgetTests, NetworkStrokeBakeThinTests.fixtureBudget).
+#
 # Nothing calls this yet: the packs are not in the app bundle or the Xcode project, and the
 # "Copy rail packages" phase (ios/copy-rail-packages.sh) does not run it.
 set -euo pipefail
@@ -60,7 +69,9 @@ while read -r region datum name; do
         mkdir -p "$cache_root/$key"
         echo "baking     $name ($key)"
         "$tool" --builder-dir "$builder_dir" --region "$region" --datum "$datum" --levels "$levels" \
-            --inputs-sha256 "$key" --output "$cached.partial" --report > "$cache_root/$key/$name.report.txt"
+            --inputs-sha256 "$key" --budgets "$here/railbake/pack-budgets.json" \
+            --output "$cached.partial" --report > "$cache_root/$key/$name.report.txt" \
+            || { echo "error: $name is over its size budget (see $cache_root/$key/$name.report.txt)" >&2; cat "$cache_root/$key/$name.report.txt" >&2; exit 1; }
         mv "$cached.partial" "$cached"
         baked=$((baked + 1))
     fi
@@ -68,4 +79,5 @@ while read -r region datum name; do
 done < <(python3 -I "$inputs" variants --regions "$regions")
 
 bash "$here/check-rail-packs-fresh.sh" "$builder_dir" "$dest_dir" --regions "$regions" --levels "$levels"
+bash "$here/check-rail-pack-budget.sh" "$dest_dir" "$here/railbake/pack-budgets.json"
 echo "rail packs in $dest_dir: $baked baked, $hits from cache"

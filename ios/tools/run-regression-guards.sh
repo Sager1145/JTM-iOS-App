@@ -53,6 +53,10 @@ step "timetable stops only" python3 -I "$ROOT/ios/tools/check-timetable-stops-on
 step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_apply_train_database_corrections.py"
 # Rail pack cache key and freshness check (docs/maintenance/2026-11-12-prebuilt-rail-map-pack.md, section 6).
 step "rail pack inputs tests" python3 -I "$ROOT/ios/tools/tests/test_rail_pack_inputs.py"
+# Rail pack size guards: the bundle checker (60,000,000 bytes) and the committed budgets. The real bake
+# guards (per-pack bytes, per-level vertices, phone and pad windows) run in bake-rail-packs.sh; the fixture
+# ones run in the railbake package tests below.
+step "rail pack budget tests" python3 -I "$ROOT/ios/tools/tests/test_check_rail_pack_budget.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"

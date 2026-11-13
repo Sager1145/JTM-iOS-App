@@ -5,7 +5,8 @@ import Foundation
 /// The ladder is data in the file header (one `mapPointsPerPoint` per level); the
 /// default is the half-zoom ladder z4.0 to z17.0 (27 levels, level `k` = zoom `k / 2`).
 /// Level `k` has `mapPointsPerPoint = 2^(19 - k/2)`, the 512-point convention of the
-/// stroke engine.
+/// stroke engine. The app's zoom (the camera, `GeometryZoomLevels`) counts 256-point tiles and is
+/// one higher (``appZoomOffset``); the camera-facing functions below take the app zoom.
 public struct RailPackLadder: Equatable, Sendable {
     /// Zoom of each level, strictly ascending.
     public let zooms: [Double]
@@ -45,10 +46,21 @@ public struct RailPackLadder: Equatable, Sendable {
 
     public func mapPointsPerPoint(level: Int) -> Double { Self.mapPointsPerPoint(forZoom: zooms[level]) }
 
-    /// The level whose zoom is nearest the camera; the lowest or highest level outside the ladder.
+    /// The app's zoom (the camera's, `GeometryZoomLevels`', 256-point tiles) is this much above the
+    /// ladder's zoom (512-point convention, the stroke engine's): ladder z4.0 is app zoom 5.0, the same
+    /// `mapPointsPerPoint`. One mapping, here: every camera-facing entry of the ladder takes the APP
+    /// zoom and subtracts this; nothing outside this file adds or subtracts it by hand.
+    public static let appZoomOffset: Double = 1
+
+    /// The app zoom a level is drawn at.
+    public func appZoom(level: Int) -> Double { zooms[level] + Self.appZoomOffset }
+
+    /// The level whose scale is nearest the camera (`cameraZoom` is the app's zoom); the lowest or
+    /// highest level outside the ladder. A tie goes to the finer level, as `GeometryZoomLevels` rounds.
     public func nearestLevel(cameraZoom: Double) -> Int {
+        let zoom = cameraZoom - Self.appZoomOffset
         var best = 0
-        for index in zooms.indices where abs(zooms[index] - cameraZoom) < abs(zooms[best] - cameraZoom) {
+        for index in zooms.indices where abs(zooms[index] - zoom) <= abs(zooms[best] - zoom) {
             best = index
         }
         return best
@@ -56,13 +68,14 @@ public struct RailPackLadder: Equatable, Sendable {
 
     /// Keeps `installed` until the camera is more than ``switchDistance(from:towards:)`` zoom levels from
     /// it, then takes the nearest level. The end levels absorb every camera beyond them.
-    public func chooseLevel(cameraZoom: Double, installed: Int?) -> Int {
+    public func chooseLevel(cameraZoom appZoom: Double, installed: Int?) -> Int {
         guard let installed, zooms.indices.contains(installed) else {
-            return nearestLevel(cameraZoom: cameraZoom)
+            return nearestLevel(cameraZoom: appZoom)
         }
+        let cameraZoom = appZoom - Self.appZoomOffset
         if installed == 0 && cameraZoom <= zooms[0] { return installed }
         if installed == zooms.count - 1 && cameraZoom >= zooms[zooms.count - 1] { return installed }
         if abs(zooms[installed] - cameraZoom) <= switchDistance(from: installed, towards: cameraZoom) { return installed }
-        return nearestLevel(cameraZoom: cameraZoom)
+        return nearestLevel(cameraZoom: appZoom)
     }
 }

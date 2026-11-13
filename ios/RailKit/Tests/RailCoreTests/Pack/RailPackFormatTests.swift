@@ -81,18 +81,18 @@ struct RailPackFormatTests {
         #expect(ladder.zooms.first == 4 && ladder.zooms.last == 17)
         #expect(ladder.mapPointsPerPoint(level: 0) == 32_768)        // 2^15 at z4
         #expect(ladder.mapPointsPerPoint(level: 26) == 4)            // 2^2 at z17
-        #expect(ladder.nearestLevel(cameraZoom: 10.26) == 13)        // z10.5
-        #expect(ladder.nearestLevel(cameraZoom: 2) == 0)
-        #expect(ladder.nearestLevel(cameraZoom: 20) == 26)
-        // Installed level z10.0 (index 12) holds until the camera is more than 0.45 away.
-        #expect(ladder.chooseLevel(cameraZoom: 10.44, installed: 12) == 12)
-        #expect(ladder.chooseLevel(cameraZoom: 10.46, installed: 12) == 13)
-        #expect(ladder.chooseLevel(cameraZoom: 9.56, installed: 12) == 12)
-        #expect(ladder.chooseLevel(cameraZoom: 9.4, installed: 12) == 11)
-        #expect(ladder.chooseLevel(cameraZoom: 10.3, installed: nil) == 13)
+        #expect(ladder.nearestLevel(cameraZoom: 11.26) == 13)        // ladder z10.5 = app zoom 11.5
+        #expect(ladder.nearestLevel(cameraZoom: 3) == 0)
+        #expect(ladder.nearestLevel(cameraZoom: 21) == 26)
+        // Installed level z10.0 (index 12, app zoom 11.0) holds until the camera is more than 0.45 away.
+        #expect(ladder.chooseLevel(cameraZoom: 11.44, installed: 12) == 12)
+        #expect(ladder.chooseLevel(cameraZoom: 11.46, installed: 12) == 13)
+        #expect(ladder.chooseLevel(cameraZoom: 10.56, installed: 12) == 12)
+        #expect(ladder.chooseLevel(cameraZoom: 10.4, installed: 12) == 11)
+        #expect(ladder.chooseLevel(cameraZoom: 11.3, installed: nil) == 13)
         // The ends absorb anything beyond them.
-        #expect(ladder.chooseLevel(cameraZoom: 1, installed: 0) == 0)
-        #expect(ladder.chooseLevel(cameraZoom: 25, installed: 26) == 26)
+        #expect(ladder.chooseLevel(cameraZoom: 2, installed: 0) == 0)
+        #expect(ladder.chooseLevel(cameraZoom: 26, installed: 26) == 26)
         // A file's ladder is rebuilt from its stored values.
         let reader = try RailPackReader(data: RailPackTestPack.bytes())
         #expect(reader.ladder.zooms == RailPackTestPack.zooms)

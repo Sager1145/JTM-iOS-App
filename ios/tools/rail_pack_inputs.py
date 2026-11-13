@@ -36,10 +36,12 @@ import sys
 from pathlib import Path
 
 # Paths are relative to the repository root. A directory contributes every `*.swift` file in it
-# (recursively); a missing path is an error, never skipped.
+# (recursively); a missing path is an error, never skipped. The budgets file is an input: a changed
+# ceiling forces a rebake and a recheck.
 SOURCE_PATHS = (
     "ios/tools/railbake/Package.swift",
     "ios/tools/railbake/Sources",
+    "ios/tools/railbake/pack-budgets.json",
     "ios/RailKit/Sources/RailCore/Rendering",
     "ios/RailKit/Sources/RailCore/Utilities/Coordinates.swift",
     "ios/RailKit/Sources/RailCore/Utilities/Geometry.swift",

@@ -60,6 +60,42 @@ struct RailBakeCommandTests {
         }
     }
 
+    @Test("--budgets refuses a pack over any limit and names it, and accepts one within them")
+    func budgets() throws {
+        let directory = try RegionBakeTests.makeBuilderDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let (display, topology) = try PackAssemblerTests.fixtureRegion("hk", directory: directory, referenceLevel: 26)
+        let data = try RailPackWriter.write(try PackAssemblerTests.assemble(display, topology, levels: [20, 26]))
+        let report = try PackReport(reader: RailPackReader(data: data))
+        func file(_ bytes: Int, vertices: Int, phone: Int = 1_000_000) throws -> URL {
+            let url = FileManager.default.temporaryDirectory.appending(path: "budgets-\(UUID().uuidString).json")
+            let json = """
+                {"bundleBytes": 60000000, "phoneWindowVertices": \(phone), "padWindowVertices": 1000000,
+                 "packs": {"hk": {"bytes": \(bytes), "levelVertices": {"20": \(vertices), "26": \(vertices)}}}}
+                """
+            try json.write(to: url, atomically: true, encoding: .utf8)
+            return url
+        }
+        let roomy = try file(data.count, vertices: report.levels.map(\.vertices).max()!)
+        let tightBytes = try file(data.count - 1, vertices: report.levels.map(\.vertices).max()!)
+        let tightLevel = try file(data.count, vertices: report.levels[1].vertices - 1)
+        let tightWindow = try file(data.count, vertices: report.levels.map(\.vertices).max()!, phone: report.levels[1].phoneWindowVertices - 1)
+        defer { for url in [roomy, tightBytes, tightLevel, tightWindow] { try? FileManager.default.removeItem(at: url) } }
+        try RailBakeCommand.enforceBudgets(at: roomy, region: "hk", data: data)
+        for (url, word) in [(tightBytes, "bytes"), (tightLevel, "vertices exceeds"), (tightWindow, "phone view")] {
+            do {
+                try RailBakeCommand.enforceBudgets(at: url, region: "hk", data: data)
+                Issue.record("\(word): over budget but accepted")
+            } catch let violation as PackBudget.Violation {
+                #expect(violation.description.contains(word), "\(violation)")
+            }
+        }
+        // A budgets file that is not there is an error, not a pass.
+        #expect(throws: (any Error).self) {
+            try RailBakeCommand.enforceBudgets(at: URL(fileURLWithPath: "/nonexistent/budgets.json"), region: "hk", data: data)
+        }
+    }
+
     @Test("--report-of and --compare work on written packs, and compare notices a difference")
     func reportAndCompare() throws {
         let directory = try RegionBakeTests.makeBuilderDirectory()

@@ -24,9 +24,24 @@ struct PackAssemblerTests {
         var nodes: [PackTopology.Node] = []
         for info in display.lines {
             let first = nodes.count
-            for fragment in info.fragments where fragment.continuous {
-                for node in baked.chains[fragment.inputIndex].nodes {
-                    nodes.append(PackTopology.Node(chain: fragment.chainNumber, metres: node.measure))
+            var flatPart = 0
+            for fragment in info.fragments {
+                if fragment.continuous {
+                    for node in baked.chains[fragment.inputIndex].nodes {
+                        nodes.append(PackTopology.Node(chain: fragment.chainNumber, metres: node.measure))
+                    }
+                    continue
+                }
+                // A non-continuous line: nodes at the start, middle and end of each part's ruler, the
+                // part addressed by its flat number.
+                for part in display.network.lines[fragment.inputIndex].intervals.indices {
+                    if let run = baked.chains[fragment.inputIndex].runs.first(where: { $0.part == part }),
+                       let total = run.measures.last, total > 0 {
+                        for fraction in [0.0, 0.5, 1.0] {
+                            nodes.append(PackTopology.Node(chain: flatPart, metres: total * fraction))
+                        }
+                    }
+                    flatPart += 1
                 }
             }
             lines.append(PackTopology.Line(id: info.id, firstNode: first, nodeCount: nodes.count - first))
@@ -56,19 +71,23 @@ struct PackAssemblerTests {
         }
     }
 
-    /// Distance from each of `points` (in order along the polyline) to the polyline, searching a
-    /// window of segments that advances with the points.
-    static func distances(_ points: [RailPackPoint], toPolyline line: [StrokePoint]) -> [Double] {
+    /// Distance from each of `points` (in order along the polyline) to the polyline: a window of segments
+    /// around the previous nearest one first, the whole polyline when that finds nothing within `slack`
+    /// (a loop, or a point that backtracks).
+    static func distances(_ points: [RailPackPoint], toPolyline line: [StrokePoint], slack: Double = 1e-3) -> [Double] {
         var result: [Double] = []
         var segment = 0
         for p in points {
+            guard line.count >= 2 else { result.append(.infinity); continue }
             var nearest = Double.infinity, nearestSegment = segment
-            let low = max(segment - 2, 0), high = min(segment + 200, line.count - 2)
-            guard low <= high else { result.append(.infinity); continue }
-            for k in low...high {
-                let d = distance(p, from: line[k], to: line[k + 1])
-                if d < nearest { nearest = d; nearestSegment = k }
+            func search(_ low: Int, _ high: Int) {
+                for k in low...high {
+                    let d = distance(p, from: line[k], to: line[k + 1])
+                    if d < nearest { nearest = d; nearestSegment = k }
+                }
             }
+            search(max(segment - 200, 0), min(segment + 200, line.count - 2))
+            if nearest > slack { search(0, line.count - 2) }
             segment = nearestSegment
             result.append(nearest)
         }
@@ -105,7 +124,20 @@ struct PackAssemblerTests {
         }
     }
 
-    @Test("every line's geometry at every level equals the bake core within half a quantum")
+    /// The engine's bake at pack level `level` and the same bake after the pack's thinning stage.
+    static func bakes(
+        _ display: DisplayInput.Region, _ topology: PackTopology, reader: RailPackReader, level: Int
+    ) throws -> (full: NetworkStrokeBake.Baked, thinned: NetworkStrokeBake.Baked) {
+        let frame = try PackAssembler.frame(for: reader.ladder, level: level, datumToken: "wgs84")
+        let full = try NetworkStrokeBake.bake(display.network, level: frame)
+        let layout = try PackAssembler.layout(display: display, topology: topology)
+        let thinned = NetworkStrokeBake.thinned(
+            full, tolerance: RailStrokeTokens.packThinTolerance,
+            keep: PackAssembler.keepMeasures(slots: layout.slots, network: display.network))
+        return (full, thinned)
+    }
+
+    @Test("every line's geometry at every level equals the thinned bake within half a quantum and the full bake within four")
     func equalsBakeCore() throws {
         let directory = try RegionBakeTests.makeBuilderDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -118,14 +150,14 @@ struct PackAssemblerTests {
             #expect(reader.header.levelCount == Self.levels.count)
             #expect(reader.header.lineCount == display.lines.count)
             for (level, k) in Self.levels.enumerated() {
-                let frame = try PackAssembler.frame(for: reader.ladder, level: level, datumToken: "wgs84")
-                let baked = try NetworkStrokeBake.bake(display.network, level: frame)
+                let (full, baked) = try Self.bakes(display, topology, reader: reader, level: level)
                 let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[level].mapPointsPerPoint)
                 let half = quantum / 2 * (1 + 1e-6) + 1e-6
                 for (lineIndex, info) in display.lines.enumerated() {
                     var chain = Int(try reader.line(lineIndex).firstChain)
                     for fragment in info.fragments {
                         let bakedChain = baked.chains[fragment.inputIndex]
+                        let fullChain = full.chains[fragment.inputIndex]
                         let slots: [Int?] = fragment.continuous ? [nil] : display.network.lines[fragment.inputIndex].intervals.indices.map { Optional($0) }
                         for part in slots {
                             let pieces = try Self.pieces(of: chain, level: level, reader: reader)
@@ -149,6 +181,14 @@ struct PackAssemblerTests {
                                 // Every pack vertex lies on the stroke (inserted vertices are collinear).
                                 let off = Self.distances(all, toPolyline: bakedChain.strokePoints).filter { $0 > quantum }
                                 #expect(off.isEmpty, "\(name) \(bakedChain.id) k\(k): \(off.count) vertices off the stroke")
+                                // The full bake's every vertex is within four quanta of the pack chain (thinning
+                                // tolerance 3 quanta, rounding half a quantum, and the bound's own slack).
+                                let fullPoints = fullChain.strokePoints.map { RailPackPoint(x: $0.x, y: $0.y) }
+                                let packLine = all.map { StrokePoint(x: $0.x, y: $0.y) }
+                                if packLine.count >= 2 {
+                                    let far = Self.distances(fullPoints, toPolyline: packLine).filter { $0 > 4 * quantum }
+                                    #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-bake vertices more than 4 quanta from the pack")
+                                }
                                 // Ends agree.
                                 let s = bakedChain.strokePoints
                                 #expect(abs(all[0].x - s[0].x) <= half && abs(all[0].y - s[0].y) <= half)
@@ -169,6 +209,13 @@ struct PackAssemblerTests {
                                 if runs.count >= 2 {
                                     let off = Self.distances(all, toPolyline: runs).filter { $0 > quantum }
                                     #expect(off.isEmpty, "\(name) \(bakedChain.id) k\(k): \(off.count) vertices off the run")
+                                    let fullRun = fullChain.runs.filter { $0.part == (part ?? 0) }.flatMap(\.vertices)
+                                    let packLine = all.map { StrokePoint(x: $0.x, y: $0.y) }
+                                    if packLine.count >= 2 {
+                                        let far = Self.distances(fullRun.map { RailPackPoint(x: $0.x, y: $0.y) }, toPolyline: packLine)
+                                            .filter { $0 > 4 * quantum }
+                                        #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-run vertices more than 4 quanta from the pack")
+                                    }
                                 }
                             }
                             for piece in try reader.pieceRange(level: level, chain: chain - 1) {
@@ -180,7 +227,18 @@ struct PackAssemblerTests {
                         }
                     }
                 }
-                if baked.chains.contains(where: { !$0.landlord.isEmpty }) { sawFamily = true }
+                // A family stretch is in the pack when a piece draws in a colour that is not its own line's.
+                for (lineIndex, info) in display.lines.enumerated() {
+                    let line = try reader.line(lineIndex)
+                    for chain in Int(line.firstChain)..<(Int(line.firstChain) + Int(line.chainCount)) {
+                        let own = PackAssembler.rgba(baked.chains[info.fragments[0].inputIndex].colorHex)
+                        for piece in try reader.pieceRange(level: level, chain: chain) {
+                            let group = try reader.group(Int(try reader.piece(level: level, index: piece).group))
+                            if group.colourLight != own, group.styleClass == 0,
+                               group.tierMin != RailPackFormat.tierNeverDrawn { sawFamily = true }
+                        }
+                    }
+                }
                 for slot in 0..<topology.nodes.count where !(try reader.nodeSlot(level: level, node: slot).isNone) {
                     sawNode = true
                 }
@@ -189,38 +247,110 @@ struct PackAssemblerTests {
         #expect(sawWithheld && sawFamily && sawLong && sawNode && sawMultiPiece)
     }
 
-    @Test("a node sits on the vertex the bake put its station on")
+    @Test("a node sits on the vertex the bake put its station on, on every kind of line")
     func nodesMatchTheBake() throws {
         let directory = try RegionBakeTests.makeBuilderDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
         for name in ["hk", "jp"] {
             let (display, topology) = try Self.fixtureRegion(name, directory: directory, referenceLevel: 26)
-            let reader = try Self.reader(try Self.assemble(display, topology, levels: [26]))
-            try reader.validateContents()
-            let baked = try NetworkStrokeBake.bake(
-                display.network, level: try PackAssembler.frame(for: reader.ladder, level: 0, datumToken: "wgs84"))
-            let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[0].mapPointsPerPoint)
-            var checked = 0
-            for (lineIndex, info) in display.lines.enumerated() {
-                let line = try reader.line(lineIndex)
-                var ordinal = 0
-                for fragment in info.fragments where fragment.continuous {
-                    for node in baked.chains[fragment.inputIndex].nodes {
-                        let slot = try reader.nodeSlot(level: 0, node: Int(line.firstNode) + ordinal)
-                        ordinal += 1
-                        #expect(!slot.isNone)
-                        var points: [RailPackPoint] = []
-                        try reader.appendVertices(level: 0, piece: Int(slot.piece), to: &points)
-                        let at = points[Int(slot.vertex)]
-                        #expect(abs(at.x - node.point.x) <= quantum / 2 * (1 + 1e-6) + 1e-6)
-                        #expect(abs(at.y - node.point.y) <= quantum / 2 * (1 + 1e-6) + 1e-6)
-                        checked += 1
+            for k in [10, 26] {
+                let reader = try Self.reader(try Self.assemble(display, topology, levels: [k]))
+                try reader.validateContents()
+                let (_, baked) = try Self.bakes(display, topology, reader: reader, level: 0)
+                let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[0].mapPointsPerPoint)
+                let half = quantum / 2 * (1 + 1e-6) + 1e-6
+                var checkedContinuous = 0, checkedParts = 0
+                for (lineIndex, info) in display.lines.enumerated() {
+                    let line = try reader.line(lineIndex)
+                    var ordinal = 0
+                    var flatPart = 0
+                    for fragment in info.fragments {
+                        let bakedChain = baked.chains[fragment.inputIndex]
+                        if fragment.continuous {
+                            for node in bakedChain.nodes {
+                                let slot = try reader.nodeSlot(level: 0, node: Int(line.firstNode) + ordinal)
+                                ordinal += 1
+                                #expect(!slot.isNone)
+                                var points: [RailPackPoint] = []
+                                try reader.appendVertices(level: 0, piece: Int(slot.piece), to: &points)
+                                let at = points[Int(slot.vertex)]
+                                #expect(abs(at.x - node.point.x) <= half && abs(at.y - node.point.y) <= half)
+                                checkedContinuous += 1
+                            }
+                            continue
+                        }
+                        for part in display.network.lines[fragment.inputIndex].intervals.indices {
+                            defer { flatPart += 1 }
+                            guard let run = bakedChain.runs.first(where: { $0.part == part }), let total = run.measures.last, total > 0
+                            else { continue }
+                            let stroke = PieceCutter.Polyline(points: run.vertices, measures: run.measures)
+                            for fraction in [0.0, 0.5, 1.0] {
+                                let metres = try #require(topology.nodes[Int(line.firstNode) + ordinal].metres)
+                                let slot = try reader.nodeSlot(level: 0, node: Int(line.firstNode) + ordinal)
+                                ordinal += 1
+                                #expect(!slot.isNone, "\(name) \(bakedChain.id) part \(part): node without a slot")
+                                if slot.isNone { continue }
+                                // The node's piece belongs to this part's chain and the vertex is the part's
+                                // position at that metre on its own ruler.
+                                #expect(try reader.chain(level: 0, ofPiece: Int(slot.piece)) == Int(line.firstChain) + flatPart)
+                                var points: [RailPackPoint] = []
+                                try reader.appendVertices(level: 0, piece: Int(slot.piece), to: &points)
+                                let at = points[Int(slot.vertex)]
+                                let expected = PieceCutter.point(on: stroke, at: metres)
+                                #expect(abs(at.x - expected.x) <= quantum && abs(at.y - expected.y) <= quantum,
+                                        "\(name) \(bakedChain.id) part \(part) at \(fraction)")
+                                checkedParts += 1
+                            }
+                        }
                     }
                 }
+                if name == "jp" { #expect(checkedContinuous > 20, "\(name) k\(k): \(checkedContinuous) continuous nodes") }
+                if name == "hk" { #expect(checkedContinuous == 0 && checkedParts > 20, "\(name) k\(k): \(checkedParts) part nodes") }
             }
-            // hk (like tw and kr) is all non-continuous lines: no station slots, no nodes.
-            #expect(name == "hk" ? checked == 0 : checked > 20, "\(name) checked \(checked) nodes")
         }
+    }
+
+    @Test("a trip between two stations of a non-continuous line has a vertex range on the line itself")
+    func tripOnANonContinuousLine() throws {
+        let directory = try RegionBakeTests.makeBuilderDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let (display, topology) = try Self.fixtureRegion("hk", directory: directory, referenceLevel: 26)
+        let levels = [10, 26]
+        let reader = try Self.reader(try Self.assemble(display, topology, levels: levels))
+        var trips = 0
+        for level in levels.indices {
+            let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[level].mapPointsPerPoint)
+            for lineIndex in 0..<reader.header.lineCount {
+                let line = try reader.line(lineIndex)
+                guard line.nodeCount >= 3 else { continue }
+                // Nodes of one part come in threes (start, middle, end): the first part's start and end.
+                let from = Int(line.firstNode), to = Int(line.firstNode) + 2
+                let result = try reader.vertexRanges(level: level, fromNode: from, toNode: to)
+                #expect(!result.reversed)
+                let a = try reader.nodeSlot(level: level, node: from), b = try reader.nodeSlot(level: level, node: to)
+                let first = try #require(result.ranges.first), last = try #require(result.ranges.last)
+                #expect(first.piece == a.piece && first.first == Int(a.vertex))
+                #expect(last.piece == b.piece && last.last == Int(b.vertex))
+                // The range is contiguous along the part: consecutive pieces share their end vertex.
+                var length = 0.0
+                var previous: RailPackPoint?
+                for range in result.ranges {
+                    var points: [RailPackPoint] = []
+                    try reader.appendVertices(level: level, piece: Int(range.piece), first: range.first, last: range.last, to: &points)
+                    if let previous, let start = points.first {
+                        #expect(abs(previous.x - start.x) <= quantum && abs(previous.y - start.y) <= quantum)
+                    }
+                    for (p, q) in zip(points, points.dropFirst()) { length += hypot(p.x - q.x, p.y - q.y) }
+                    previous = points.last
+                }
+                #expect(length > 0, "a trip from the start to the end of a part draws something")
+                // Reversed: the same ranges walked the other way.
+                let back = try reader.vertexRanges(level: level, fromNode: to, toNode: from)
+                #expect(back.reversed && back.ranges == result.ranges)
+                trips += 1
+            }
+        }
+        #expect(trips >= 2)
     }
 
     @Test("two bakes of one input are byte for byte equal")
@@ -238,6 +368,83 @@ struct PackAssemblerTests {
         #expect(report.fileBytes == a.count)
         #expect(report.totalVertices > 1000)
         #expect(try PackCompare.differences(RailPackReader(data: a), RailPackReader(data: b)).isEmpty)
+
+        // Negative control: a compare that cannot see a moved vertex or a changed group proves nothing.
+        var moved = try Self.assemble(display, topology, levels: Self.levels)
+        let level = try #require(moved.levels.indices.last)
+        let piece = try #require(moved.levels[level].pieces.indices.first { moved.levels[level].pieces[$0].vertices.count >= 2 })
+        moved.levels[level].pieces[piece].vertices[0].x += 3 * RailPackFormat.quantum(mapPointsPerPoint: moved.levels[level].mapPointsPerPoint)
+        let differences = try PackCompare.differences(RailPackReader(data: a), RailPackReader(data: RailPackWriter.write(moved)))
+        #expect(differences.count == 1 && differences[0].contains("level \(level) piece \(piece)"), "\(differences)")
+        var regrouped = try Self.assemble(display, topology, levels: Self.levels)
+        regrouped.levels[0].pieces[0].group = regrouped.levels[0].pieces[0].group &+ 1
+        #expect(try !PackCompare.differences(RailPackReader(data: a), RailPackReader(data: RailPackWriter.write(regrouped))).isEmpty)
+    }
+
+    @Test("at every level every line visible at its tier has ink, and the tenant fallback and its landlord hand over without a gap")
+    func everyVisibleLineHasInk() throws {
+        let directory = try RegionBakeTests.makeBuilderDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        var inked = 0
+        for name in ["hk", "jp", "mo"] {
+            let (display, topology) = try Self.fixtureRegion(name, directory: directory, referenceLevel: 26)
+            let reader = try Self.reader(try Self.assemble(display, topology, levels: PackBake.defaultLevels))
+            let lines = display.lines.map { (id: $0.id, tier: $0.tierQuarterZoom) }
+            let missing = try PackInkCheck.missing(reader: reader, lines: lines)
+            #expect(missing.isEmpty, "\(name): \(missing.prefix(5))")
+            // The check has teeth: count the (level, line) pairs it examined.
+            for level in 0..<reader.header.levelCount {
+                inked += lines.filter { Double($0.tier) <= reader.ladder.appZoom(level: level) * 4 }.count
+            }
+        }
+        #expect(inked > 500)
+    }
+
+    @Test("a tenant's fallback ink hands over to its landlords without a gap at any tier")
+    func fallbackHandover() {
+        let never = RailPackFormat.tierNeverDrawn, unlimited = RailPackFormat.tierNoUpperLimit
+        // No landlord: the tenant draws from its own tier for ever.
+        #expect(PackAssembler.fallbackRange(tenantTier: 20, landlordTier: nil) == (20, unlimited))
+        // A landlord that appears later: fallback ink until it does.
+        #expect(PackAssembler.fallbackRange(tenantTier: 20, landlordTier: 40) == (20, 40))
+        // A landlord that is already drawing: the landlord's pieces are the ink.
+        #expect(PackAssembler.fallbackRange(tenantTier: 40, landlordTier: 40) == (never, never))
+        #expect(PackAssembler.fallbackRange(tenantTier: 60, landlordTier: 40) == (never, never))
+        // For every tenant tier and every landlord tier set, at every tier from the tenant's own up,
+        // either the fallback or some landlord draws. The landlord tier handed over is the highest
+        // of the group's landlords, so no stretch is dark between the first and the last of them.
+        for tenant in stride(from: Int16(0), through: 80, by: 4) {
+            for landlords in [[Int16(40)], [24, 60], [60, 24], [8, 40, 72]] {
+                let range = PackAssembler.fallbackRange(tenantTier: tenant, landlordTier: landlords.max())
+                for tier in stride(from: tenant, through: 100, by: 4) {
+                    let fallback = range.min != never && range.min <= tier && (range.max == unlimited || tier < range.max)
+                    let landlord = landlords.contains { $0 <= tier }
+                    #expect(fallback || landlord, "tenant \(tenant), landlords \(landlords), tier \(tier)")
+                }
+            }
+        }
+    }
+
+    @Test("the ink check finds a line whose pieces stop drawing")
+    func inkCheckFindsAGap() throws {
+        let directory = try RegionBakeTests.makeBuilderDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let (display, topology) = try Self.fixtureRegion("jp", directory: directory, referenceLevel: 26)
+        var source = try Self.assemble(display, topology, levels: [26])
+        // Hide every group: nothing draws, so every visible line is reported.
+        for index in source.groups.indices {
+            source.groups[index].tierMin = RailPackFormat.tierNeverDrawn
+            source.groups[index].tierMax = RailPackFormat.tierNeverDrawn
+        }
+        let reader = try Self.reader(source)
+        let missing = try PackInkCheck.missing(reader: reader, lines: display.lines.map { (id: $0.id, tier: $0.tierQuarterZoom) })
+        var expected = 0
+        for offset in PackInkCheck.defaultOffsets {
+            let visibility = reader.ladder.appZoom(level: 0) + offset
+            expected += display.lines.filter { Double($0.tierQuarterZoom) <= visibility * 4 }.count
+        }
+        #expect(missing.count == expected)
+        #expect(missing.count > 5)
     }
 
     @Test("a dated chain keeps every solid piece whole, with its span and a dashed-capable group")
