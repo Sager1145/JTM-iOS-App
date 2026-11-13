@@ -26,12 +26,12 @@ struct RegressionGuardMapDrawCompletion {
     @Test func aTripsOnlyFallbackDoesNotCancelThePreparation() throws {
         let coordinator = Self.source("RailMap/Map/RailMapCoordinator.swift")
         let owed = try Self.body(
-            of: coordinator, from: "private func rebuildOwed(on mapView: MKMapView, tripsOnly: Bool = false) {",
+            of: coordinator, from: "private func rebuildOwed(",
             to: "/// Everything about one ride that changes what is DRAWN")
-        #expect(owed.contains("MapRebuildOwedPolicy(tripsOnly: tripsOnly)"))
+        #expect(owed.contains("MapRebuildOwedPolicy(tripsOnly: tripsOnly, lineDataOnly: lineDataOnly)"))
         #expect(owed.contains("if policy.cancelsGeometryPreparation { cancelGeometryPreparation() }"))
         #expect(!owed.contains("\n                cancelGeometryPreparation()"))
-        #expect(coordinator.contains("rebuildOwed(on: mapView, tripsOnly: ridesOnly)"))
+        #expect(coordinator.contains("rebuildOwed(on: mapView, tripsOnly: ridesOnly, lineDataOnly: lineDataOnly)"))
     }
 
     /// Fix 3: a finished trip polyline is named by its line and that line's

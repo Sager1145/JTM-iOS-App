@@ -1,3 +1,4 @@
+import Darwin
 import MapKit
 import RailCore
 import RailPresentation
@@ -502,6 +503,8 @@ extension RailMapView.Surface {
                 naming: MapNaming,
                 on mapView: MKMapView
             ) {
+                let updateInterval = RailSignpost.map.begin("map.update")
+                defer { RailSignpost.map.end("map.update", updateInterval) }
                 // Input preparation also rebuilds station and line indexes.
                 // Keep the installed frame stable while fingers move, and
                 // coalesce arriving data into the newest update for release.
@@ -656,7 +659,11 @@ extension RailMapView.Surface {
                 }
 
                 if linesChanged || stationsChanged {
-                    invalidateNetworkTemporalGeometry()
+                    // Residency loads and evictions change `lines` all the
+                    // time while zooming; only a changed temporal era makes
+                    // an in-flight preparation wrong. Otherwise its landing
+                    // keeps the lines whose inputs still match.
+                    invalidateNetworkTemporalGeometry(cancelsPreparation: networkFilterChanged)
                 }
 
                 if linesChanged || extentChanged {
@@ -797,7 +804,10 @@ extension RailMapView.Surface {
                     if ridesOnly, let change = deckUpdate?.change, updateRides(change, on: mapView) {
                         break
                     }
-                    rebuildOwed(on: mapView, tripsOnly: ridesOnly)
+                    let lineDataOnly = (linesChanged || stationsChanged) && !selectionChanged
+                        && !visibilityChanged && !indexesChanged && !displayChanged && !dateChanged
+                        && !networkFilterChanged && !namingChanged
+                    rebuildOwed(on: mapView, tripsOnly: ridesOnly, lineDataOnly: lineDataOnly)
                 }
 #if DEBUG
                 if selectionChanged || ridesChanged {
@@ -816,8 +826,10 @@ extension RailMapView.Surface {
             /// for the same lines and frame, so it is left to finish
             /// (``MapRebuildOwedPolicy``): cancelling it on every arrival is
             /// what kept the first full draw from ever landing during a load.
-            private func rebuildOwed(on mapView: MKMapView, tripsOnly: Bool = false) {
-                let policy = MapRebuildOwedPolicy(tripsOnly: tripsOnly)
+            private func rebuildOwed(
+                on mapView: MKMapView, tripsOnly: Bool = false, lineDataOnly: Bool = false
+            ) {
+                let policy = MapRebuildOwedPolicy(tripsOnly: tripsOnly, lineDataOnly: lineDataOnly)
                 if policy.cancelsGeometryPreparation { cancelGeometryPreparation() }
                 if policy.invalidatesLaneZoom {
                     networkBuildState.invalidateGeometry()
@@ -1295,8 +1307,8 @@ extension RailMapView.Surface {
             /// input invalidation; the complete context guards worker publication.
             private var geometryEraKey: String { networkTemporalContext.cacheKey }
 
-            private func invalidateNetworkTemporalGeometry() {
-                cancelGeometryPreparation()
+            private func invalidateNetworkTemporalGeometry(cancelsPreparation: Bool) {
+                if cancelsPreparation { cancelGeometryPreparation() }
                 cancelNeighbourPrebuild()
                 networkBuildState.invalidateGeometry()
                 annotationsNeedRefresh = true
@@ -1310,7 +1322,7 @@ extension RailMapView.Surface {
                 }
                 guard snapshot != networkTodayByRegion else { return false }
                 networkTodayByRegion = snapshot
-                invalidateNetworkTemporalGeometry()
+                invalidateNetworkTemporalGeometry(cancelsPreparation: true)
                 return true
             }
 
@@ -1335,6 +1347,24 @@ extension RailMapView.Surface {
             /// The level the camera wants, with hysteresis around the installed one.
             private func wantedGeometryLevel(at zoom: Double) -> Int {
                 GeometryZoomLevels.wantedLevel(zoom: zoom, installed: installedGeometryLevel)
+            }
+
+            /// A landed level to install ahead of the wanted one, set by
+            /// `prepareNetworkGeometry`'s landing and cleared when a rebuild
+            /// commits (``GeometryZoomLevels/installsLanded(landed:installed:zoom:ready:)``).
+            private var pendingInstallLevel: Int?
+            /// The installed level changed to a landed one, so the wanted level
+            /// still has to start preparing.
+            private var wantedLevelFollowUpOwed = false
+
+            /// The level a rebuild builds and installs: a landed pending level
+            /// while it is still complete, else the camera's wanted level.
+            private func geometryLevelToBuild(at zoom: Double, on mapView: MKMapView) -> Int {
+                if let pending = pendingInstallLevel {
+                    if isGeometryLevelReady(pending, zoom: zoom, on: mapView) { return pending }
+                    pendingInstallLevel = nil
+                }
+                return wantedGeometryLevel(at: zoom)
             }
 
             private func geometryFrame(level: Int, on mapView: MKMapView) -> MapGeometryFrame {
@@ -1574,6 +1604,9 @@ extension RailMapView.Surface {
                         guard let self else { return }
                         self.cancelNeighbourPrebuild()
                         let droppedFrames = self.networkGeometry.dropNonCurrentFrames()
+                        // Freed small-block pages are otherwise kept by the
+                        // allocator and the footprint does not shrink.
+                        malloc_zone_pressure_relief(nil, 0)
 #if DEBUG
                         MapRenderProbe.droppedFrames += droppedFrames
 #endif
@@ -1678,11 +1711,15 @@ extension RailMapView.Surface {
                 // Preparation can be cancelled. Only installed geometry may
                 // advance the hysteresis bucket used by shouldRebuild.
                 let temporalContext = networkTemporalContext
-                let frame = geometryFrame(level: wantedGeometryLevel(at: zoom), on: mapView)
+                let requestedInputs = lineInputs
+                let frame = geometryFrame(level: geometryLevelToBuild(at: zoom, on: mapView), on: mapView)
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
-                networkGeometry.beginFrame(key: key)
+                // Not `beginFrame`: that would make a level that is still
+                // being prepared the cache's current frame and unprotect the
+                // installed one. `rebuild` begins the frame when it installs.
+                networkGeometry.ensureFrame(key: key)
                 // A foreground preparation outranks the idle neighbour prebuild.
                 cancelNeighbourPrebuild()
                 let work = missingGeometryWork(
@@ -1695,7 +1732,10 @@ extension RailMapView.Surface {
                     inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
                     requestedKey: key,
                     missingWork: !missingLines.isEmpty || !missingStrokes.isEmpty)
-                if gate.drawNow { return true }
+                if gate.drawNow {
+                    networkGeometry.beginFrame(key: key)
+                    return true
+                }
                 guard gate.start else { return false }
                 let anchors = lineInputs.mapValues(\.anchors)
                 let cachedStrokes = networkGeometry.preparedStrokes(in: key)
@@ -1762,13 +1802,20 @@ extension RailMapView.Surface {
 #endif
                     let prepared = await MapLineGeometry.materialize(geometry)
                     RailSignpost.map.end("map.materialize", materializeInterval)
+                    // Lines loaded or evicted meanwhile do not spoil the rest;
+                    // only the era (a captured date) makes every result wrong.
                     guard !Task.isCancelled,
                           self.geometryPreparationID == requestID,
-                          self.networkTemporalContext == temporalContext,
-                          let prepared else {
+                          self.geometryEraKey == temporalContext.cacheKey,
+                          var prepared else {
                         clearPreparationIfCurrent()
                         return
                     }
+                    let admitted = PreparedGeometryAdmission.admitted(
+                        ids: Set(prepared.strokes.keys).union(prepared.lines.keys),
+                        requested: requestedInputs, current: self.lineInputs)
+                    prepared.strokes = prepared.strokes.filter { admitted.contains($0.key) }
+                    prepared.lines = prepared.lines.filter { admitted.contains($0.key) }
 #if DEBUG
                     self.pendingMaterializeMilliseconds =
                         (ContinuousClock.now - materializeStarted).milliseconds
@@ -1793,6 +1840,16 @@ extension RailMapView.Surface {
                         return
                     }
                     clearPreparationIfCurrent()
+                    // The camera has usually moved past this level by now. A
+                    // landed level nearer the camera than the installed one is
+                    // installed rather than discarded for the newest wanted
+                    // one, which could then never land either.
+                    let landedZoom = MapProjection.zoomLevel(of: mapView)
+                    if GeometryZoomLevels.installsLanded(
+                        landed: frame.bucket, installed: self.installedGeometryLevel, zoom: landedZoom,
+                        ready: self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)) {
+                        self.pendingInstallLevel = frame.bucket
+                    }
                     self.noteRebuildTrigger(.geometryPrepared)
                     self.rebuild(on: mapView)
                 }
@@ -1811,7 +1868,19 @@ extension RailMapView.Surface {
                     scheduleCameraRebuild(on: mapView)
                     return
                 }
-                defer { if !duringGesture { scheduleNeighbourPrebuild(on: mapView) } }
+                defer {
+                    if !duringGesture { scheduleNeighbourPrebuild(on: mapView) }
+                    if wantedLevelFollowUpOwed {
+                        wantedLevelFollowUpOwed = false
+                        // Asked after this pass: the installed level is now
+                        // the landed one, so the wanted level starts preparing.
+                        DispatchQueue.main.async { [weak self, weak mapView] in
+                            guard let self, let mapView, self.mapView === mapView else { return }
+                            self.networkBuildState.invalidateZoomBucket()
+                            self.rebuild(on: mapView)
+                        }
+                    }
+                }
                 // Observe a regional midnight before the camera/zoom build
                 // guard can reuse a previous day's derived visibility.
                 refreshNetworkToday()
@@ -1827,6 +1896,14 @@ extension RailMapView.Surface {
                         strokeRefCache = pending.refs
                         matchedLineInputs = pending.inputs
                         retainRidePolylines(excludingStrokeFor: changedStrokeRideIDs)
+                        // A running ride build was requested against the old
+                        // refs; its keys are superseded, so stop it and let the
+                        // rebuild below ask again with the new ones.
+                        if !changedStrokeRideIDs.isEmpty, rideStrokePreparation != nil {
+                            rideStrokePreparation?.cancel()
+                            rideStrokePreparation = nil
+                            rideStrokePreparationID = UUID()
+                        }
                         interaction.invalidateRideGeometry()
                         stationLabels.invalidateGeometry(forRides: changedStrokeRideIDs)
                         networkBuildState.invalidateZoomBucket()
@@ -1913,7 +1990,7 @@ extension RailMapView.Surface {
                 // The strokes this rebuild installs, chosen before anything is
                 // drawn so the worker slices rides from the very chains
                 // `ridePolylines` will key them against.
-                let strokeFrame = geometryFrame(level: wantedGeometryLevel(at: zoom), on: mapView)
+                let strokeFrame = geometryFrame(level: geometryLevelToBuild(at: zoom, on: mapView), on: mapView)
                 // One area for trips and lines (covers screen-space lane offsets
                 // and rounded corners); strokes are selected with it too.
                 let rideBuildRect = NetworkLOD.tripArea(
@@ -1933,6 +2010,10 @@ extension RailMapView.Surface {
                     geometryLevel: strokeFrame.bucket,
                     builtRect: buildRect
                 )
+                if pendingInstallLevel != nil {
+                    pendingInstallLevel = nil
+                    wantedLevelFollowUpOwed = true
+                }
                 // A cold display-network request has no geometry to build
                 // yet. Its result changes `lines`, invalidates the build state in
                 // `update`, and returns through this method with the region's
@@ -2580,14 +2661,23 @@ extension RailMapView.Surface {
             /// The worker requests for every drawn segment of `rides` that has
             /// no polyline cached for the current frame: the same visibility
             /// rules and keys as `ridePolylines`, values only.
+            ///
+            /// `defersUnmatchedFallbacks` leaves out the raw-coordinate fallback
+            /// of a ride whose match is not current while matching is still
+            /// due (``RideStrokeBuildPolicy``): that is the costliest build and
+            /// its key is replaced by the chain-sliced one when matching lands.
             private func rideStrokeRequests(
                 for rides: [RiddenRouteStore.DrawnRide], rideBuildRect: MKMapRect,
+                defersUnmatchedFallbacks: Bool = false,
                 strokeFor: (String) -> MapNetworkGeometryCache.BuiltStroke?
             ) -> [RideStrokeBuilder.Request] {
+                let matchingPending = defersUnmatchedFallbacks && strokeMatchingPending
                 var requests: [RideStrokeBuilder.Request] = []
                 var seen: Set<RideLineCacheKey> = []
                 for ride in rides {
                     let riddenStops = ride.stops
+                    let matchIsCurrent = strokeRefCache[ride.id]?.geometryKey
+                        == "\(ride.id):\(ride.geometryDigest)"
                     for segment in ride.segments {
                         guard (ride.id == selectedTrainID || segment.boundingRect.intersects(rideBuildRect)),
                             draws(segment: segment, of: ride, riddenStops: riddenStops)
@@ -2603,6 +2693,9 @@ extension RailMapView.Surface {
                                 from: ref.from, to: ref.to)
                             sourceRef = ref
                         }
+                        if RideStrokeBuildPolicy.defersFallback(
+                            hasStroke: source != nil, matchIsCurrent: matchIsCurrent,
+                            matchingPending: matchingPending) { continue }
                         let key = rideLineCacheKey(of: segment, in: ride, stroke: sourceRef)
                         guard networkGeometry.ridePolyline(for: key) == nil,
                             !rideStrokeEmptyKeys.contains(key), seen.insert(key).inserted
@@ -2615,6 +2708,11 @@ extension RailMapView.Surface {
                     }
                 }
                 return requests
+            }
+
+            /// A trip-to-line match is debouncing, running or owed.
+            private var strokeMatchingPending: Bool {
+                matchingDebounceTask != nil || matchingInFlight != nil || matchingRerunOwed
             }
 
             /// Builds the missing ride polylines of the
@@ -2639,7 +2737,8 @@ extension RailMapView.Surface {
                     rideStrokeEmptyFrameKey = strokeFrame.key
                 }
                 let requests = rideStrokeRequests(
-                    for: rides, rideBuildRect: rideBuildRect, strokeFor: { strokes[$0] })
+                    for: rides, rideBuildRect: rideBuildRect, defersUnmatchedFallbacks: true,
+                    strokeFor: { strokes[$0] })
                 guard !requests.isEmpty else { return true }
                 guard rideStrokePreparation == nil else { return false }
                 let requestID = UUID()
@@ -4167,6 +4266,8 @@ extension RailMapView.Surface {
             /// country arriving must not discard every other country's pixels.
             /// The junction index and per-line dependency ids update incrementally.
             private func refreshLineInputs() {
+                let refreshInterval = RailSignpost.map.begin("map.refreshLineInputs")
+                defer { RailSignpost.map.end("map.refreshLineInputs", refreshInterval) }
                 // A neighbour prebuild captured the old inputs; its builds would
                 // land as present-but-stale in the neighbour entry.
                 cancelNeighbourPrebuild()

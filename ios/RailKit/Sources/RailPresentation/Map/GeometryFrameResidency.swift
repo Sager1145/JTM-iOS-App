@@ -17,8 +17,10 @@ public enum GeometryFrameBytes {
 /// Which geometry frames stay resident. The current frame and at most one
 /// neighbour (the one being prebuilt in the direction of the last zoom) are
 /// pinned; every other frame is evicted, least recently used first, whenever
-/// the unpinned frames together exceed `byteCap`. A memory warning drops everything
-/// that is not current.
+/// the unpinned frames together exceed `byteCap` or number more than
+/// `maxUnpinnedFrames` (the byte estimate undercounts MapKit's own polyline
+/// storage, so a frame count bounds the real heap too). A memory warning drops
+/// everything that is not current.
 public struct GeometryFrameResidency: Equatable, Sendable {
     /// Least recently used first; the current frame is the last it was made.
     public private(set) var order: [String] = []
@@ -26,8 +28,17 @@ public struct GeometryFrameResidency: Equatable, Sendable {
     public private(set) var neighbour: String?
     public private(set) var frameBytes: [String: Int] = [:]
     public let byteCap: Int
+    public let maxUnpinnedFrames: Int
 
-    public init(byteCap: Int) { self.byteCap = max(byteCap, 0) }
+    public init(byteCap: Int, maxUnpinnedFrames: Int = .max) {
+        self.byteCap = max(byteCap, 0)
+        self.maxUnpinnedFrames = max(maxUnpinnedFrames, 0)
+    }
+
+    /// Frames that are neither current nor the pinned neighbour.
+    public var unpinnedFrameCount: Int {
+        order.filter { $0 != current && $0 != neighbour }.count
+    }
 
     public var totalBytes: Int { frameBytes.values.reduce(0, +) }
 
@@ -88,7 +99,7 @@ public struct GeometryFrameResidency: Equatable, Sendable {
 
     private mutating func evict() -> [String] {
         var evicted: [String] = []
-        while unpinnedBytes > byteCap,
+        while unpinnedBytes > byteCap || unpinnedFrameCount > maxUnpinnedFrames,
               let index = order.firstIndex(where: { $0 != current && $0 != neighbour }) {
             let key = order.remove(at: index)
             frameBytes.removeValue(forKey: key)

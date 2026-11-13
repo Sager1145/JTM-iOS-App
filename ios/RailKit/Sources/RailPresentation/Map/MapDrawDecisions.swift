@@ -34,15 +34,23 @@ public struct MapRebuildOwedPolicy: Equatable, Sendable {
     /// Only trips arrived, changed or left. Lines, stations, camera, layers,
     /// selection, display and date are all as they were.
     public var tripsOnly: Bool
+    /// Only lines and/or stations (residency loads and evictions, a station
+    /// edit) changed, and the temporal era key (`geometryEraKey`) is as it was.
+    /// The preparation's landing keeps just the lines whose inputs still match
+    /// (``PreparedGeometryAdmission``), so nothing in flight needs cancelling.
+    public var lineDataOnly: Bool
 
-    public init(tripsOnly: Bool) { self.tripsOnly = tripsOnly }
+    public init(tripsOnly: Bool, lineDataOnly: Bool = false) {
+        self.tripsOnly = tripsOnly
+        self.lineDataOnly = lineDataOnly
+    }
 
     /// An in-flight line preparation is for the same lines and the same zoom
     /// frame whatever trips arrive, so its result stays valid. Cancelling it
     /// on each arrival restarts an all-or-nothing job that can then never
     /// finish while arrivals keep coming. Anything else that owes a rebuild
     /// may have changed what the preparation was asked for.
-    public var cancelsGeometryPreparation: Bool { !tripsOnly }
+    public var cancelsGeometryPreparation: Bool { !tripsOnly && !lineDataOnly }
 
     /// The zoom bucket is always forgotten: the rebuild guard must let the
     /// rebuild through so the changed trips are drawn.
@@ -56,6 +64,35 @@ public struct MapRebuildOwedPolicy: Equatable, Sendable {
     public var invalidatesMarkerContext: Bool { true }
 
     public var trigger: MapRebuildTrigger { tripsOnly ? .tripsOnly : .update }
+}
+
+/// Which results of a finished line preparation may still be stored. A
+/// preparation is built from a copy of each line's inputs; lines loaded or
+/// evicted while it ran do not invalidate the others. A result is kept only
+/// when its line's current inputs still equal the copy it was built from.
+public enum PreparedGeometryAdmission {
+    public static func admitted<Inputs: Equatable>(
+        ids: some Sequence<String>, requested: [String: Inputs], current: [String: Inputs]
+    ) -> Set<String> {
+        var kept = Set<String>()
+        for id in ids {
+            guard let wanted = requested[id], let now = current[id], wanted == now else { continue }
+            kept.insert(id)
+        }
+        return kept
+    }
+}
+
+/// When a ride segment without a ready chain reference may be built from its
+/// raw surveyed coordinates. That fallback is the most expensive ride build
+/// and its result is discarded once the matched, chain-sliced key arrives, so
+/// it waits while matching is still due.
+public enum RideStrokeBuildPolicy {
+    public static func defersFallback(
+        hasStroke: Bool, matchIsCurrent: Bool, matchingPending: Bool
+    ) -> Bool {
+        !hasStroke && !matchIsCurrent && matchingPending
+    }
 }
 
 /// The life of the line preparation, as counted. The coordinator records

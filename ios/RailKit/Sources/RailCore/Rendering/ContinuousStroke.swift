@@ -673,17 +673,20 @@ public enum ContinuousStroke {
 
     /// Net turn over the vertices within ``curveHardWindowPx`` of vertex `i`:
     /// a corner split into sub-pixel facets is one hard corner, not a curve.
-    static func windowedTurn(_ p: [Point], _ i: Int) -> Double {
-        var sum = turnAt(p, i)
-        var lo = i - 1, used = hypot(p[i].x - p[i - 1].x, p[i].y - p[i - 1].y)
+    /// `turns[j]` is ``turnAt(_:_:)`` at vertex `j` (interior vertices only)
+    /// and `lengths[j]` the length of edge `j` -> `j + 1`; both are computed
+    /// once per polyline so the window walk costs no trigonometry.
+    static func windowedTurn(_ p: [Point], _ i: Int, turns: [Double], lengths: [Double]) -> Double {
+        var sum = turns[i]
+        var lo = i - 1, used = lengths[i - 1]
         while lo >= 1 && used < curveHardWindowPx {
-            sum += turnAt(p, lo)
-            used += hypot(p[lo].x - p[lo - 1].x, p[lo].y - p[lo - 1].y); lo -= 1
+            sum += turns[lo]
+            used += lengths[lo - 1]; lo -= 1
         }
-        var hi = i + 1; used = hypot(p[i + 1].x - p[i].x, p[i + 1].y - p[i].y)
+        var hi = i + 1; used = lengths[i]
         while hi + 1 < p.count && used < curveHardWindowPx {
-            sum += turnAt(p, hi)
-            used += hypot(p[hi + 1].x - p[hi].x, p[hi + 1].y - p[hi].y); hi += 1
+            sum += turns[hi]
+            used += lengths[hi]; hi += 1
         }
         return sum
     }
@@ -692,25 +695,40 @@ public enum ContinuousStroke {
     /// The short connector is compared with its neighboring supports, so
     /// classification does not change with map zoom or a minimum pixel radius.
     static func surveyedCornerIndices(_ points: [Point]) -> Set<Int> {
+        var evaluations = 0
+        return surveyedCornerIndices(points, turnEvaluations: &evaluations)
+    }
+
+    /// `turnEvaluations` counts the `atan2` turn evaluations of one pass
+    /// (at most `points.count - 2`); a guard test pins it.
+    static func surveyedCornerIndices(_ points: [Point], turnEvaluations: inout Int) -> Set<Int> {
         guard points.count >= 3 else { return [] }
+        let count = points.count
+        var turns = [Double](repeating: 0, count: count)
+        var lengths = [Double](repeating: 0, count: count - 1)
+        for j in 0..<(count - 1) {
+            lengths[j] = hypot(points[j + 1].x - points[j].x, points[j + 1].y - points[j].y)
+        }
+        for j in 1..<(count - 1) { turns[j] = turnAt(points, j) }
+        turnEvaluations += count - 2
         var result = Set<Int>()
-        for i in 1..<(points.count - 1) {
-            let turn = turnAt(points, i)
-            if max(abs(turn), abs(windowedTurn(points, i))) > curveHardTurnDegrees * .pi / 180 {
+        for i in 1..<(count - 1) {
+            let turn = turns[i]
+            if max(abs(turn), abs(windowedTurn(points, i, turns: turns, lengths: lengths))) > curveHardTurnDegrees * .pi / 180 {
                 result.insert(i)
             }
             // A localized moderate corner differs from a continuous arc:
             // both neighboring deflections are substantially gentler.
-            let previousTurn = i > 1 ? abs(turnAt(points, i - 1)) : 0
-            let nextTurn = i + 2 < points.count ? abs(turnAt(points, i + 1)) : 0
+            let previousTurn = i > 1 ? abs(turns[i - 1]) : 0
+            let nextTurn = i + 2 < count ? abs(turns[i + 1]) : 0
             if abs(turn) >= .pi / 6, max(previousTurn, nextTurn) < 0.75 * abs(turn) {
                 result.insert(i)
             }
-            guard i + 2 < points.count else { continue }
-            let next = turnAt(points, i + 1)
-            let short = hypot(points[i + 1].x - points[i].x, points[i + 1].y - points[i].y)
-            let before = hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y)
-            let after = hypot(points[i + 2].x - points[i + 1].x, points[i + 2].y - points[i + 1].y)
+            guard i + 2 < count else { continue }
+            let next = turns[i + 1]
+            let short = lengths[i]
+            let before = lengths[i - 1]
+            let after = lengths[i + 1]
             if turn * next < 0, min(abs(turn), abs(next)) >= .pi / 6,
                short < 0.5 * min(before, after) {
                 result.insert(i); result.insert(i + 1)

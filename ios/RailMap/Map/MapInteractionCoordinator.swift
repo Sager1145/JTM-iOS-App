@@ -166,6 +166,7 @@ final class MapInteractionCoordinator {
         stations = []
         stationsByCode.removeAll()
         stationsByName.removeAll()
+        stationIndexesBuilt = true
     }
 
     /// The card one tapped annotation opens, or `nil` when the thing
@@ -265,6 +266,7 @@ final class MapInteractionCoordinator {
     private func networkStation(
         code: String?, name: String, region: Region?, near position: Coordinate, stationID: String? = nil
     ) -> RailNetworkStore.DrawnStation? {
+        buildStationIndexesIfNeeded()
         // A known region is part of station identity, not a ranking hint.
         func nearest(_ indexes: [Int], within metres: Double) -> RailNetworkStore.DrawnStation? {
             indexes.lazy.map { self.stations[$0] }
@@ -308,10 +310,21 @@ final class MapInteractionCoordinator {
     private var stationsByCode: [String: [Int]] = [:]
     private var stationsByName: [String: [Int]] = [:]
 
+    /// `replaceStations` runs inside SwiftUI updates, once per region landing;
+    /// the two maps are built on the first lookup (a tap or ride marker), not
+    /// on every station change.
+    private var stationIndexesBuilt = false
+
     func replaceStations(_ stations: [RailNetworkStore.DrawnStation]) {
         self.stations = stations
         stationsByCode.removeAll(keepingCapacity: true)
         stationsByName.removeAll(keepingCapacity: true)
+        stationIndexesBuilt = false
+    }
+
+    private func buildStationIndexesIfNeeded() {
+        guard !stationIndexesBuilt else { return }
+        stationIndexesBuilt = true
         for (index, station) in stations.enumerated() {
             if !station.stationCode.isEmpty {
                 stationsByCode[station.stationCode, default: []].append(index)

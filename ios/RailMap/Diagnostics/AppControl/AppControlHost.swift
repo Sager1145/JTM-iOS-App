@@ -555,7 +555,7 @@ final class AppControlHost: AppControlDriver {
                 "drawable": workspace.map { .number(Double($0.drawableRideCount())) } ?? .null,
                 "ridesInTabScope": workspace.map { .number(Double($0.scopedRideCount())) } ?? .null,
                 "routeCacheHits": .number(Double(RiddenRouteStore.loadCounters.cacheHits)),
-                "routesSolvedThisLaunch": .number(Double(RiddenRouteStore.loadCounters.solved)),
+                "routeSolveAttemptsThisLaunch": .number(Double(RiddenRouteStore.loadCounters.solved)),
                 "storedFailures": .number(Double(RiddenRouteStore.loadCounters.storedFailures)),
                 "reloadProgress": routes.reloadProgress.map { ["done": .number(Double($0.done)), "total": .number(Double($0.total))] } ?? .null,
             ],
@@ -737,11 +737,24 @@ final class AppControlHost: AppControlDriver {
     nonisolated static func caches() -> AppControlJSON {
         let fm = FileManager.default
         var result: [String: AppControlJSON] = [:]
+        // Unsandboxed Mac Catalyst: the user-domain Caches and Documents
+        // folders are the whole `~/Library/Caches` and `~/Documents`, which
+        // this walk never finishes. Use the app's own caches folder and skip
+        // Documents (the isolated store lives under Application Support).
+        #if targetEnvironment(macCatalyst)
+        let cachesRoot = fm.urls(for: .cachesDirectory, in: .userDomainMask).first.map {
+            $0.appending(path: Bundle.main.bundleIdentifier ?? "com.JRM.RailMap", directoryHint: .isDirectory)
+        }
+        let documentsRoot: URL? = nil
+        #else
+        let cachesRoot = fm.urls(for: .cachesDirectory, in: .userDomainMask).first
+        let documentsRoot = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+        #endif
         let roots: [(String, URL?)] = [
-            ("caches", fm.urls(for: .cachesDirectory, in: .userDomainMask).first),
+            ("caches", cachesRoot),
             ("routeCache", RiddenRouteStore.routeCacheFolder),
             ("applicationSupport", URL.applicationSupportDirectory),
-            ("documents", fm.urls(for: .documentDirectory, in: .userDomainMask).first),
+            ("documents", documentsRoot),
             ("tmp", URL.temporaryDirectory),
             ("appControl", root),
         ]

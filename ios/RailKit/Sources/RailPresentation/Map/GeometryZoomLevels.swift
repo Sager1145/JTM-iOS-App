@@ -65,6 +65,18 @@ public struct GeometryZoomLevels: Equatable, Sendable {
             && abs(zoom - nominalZoom(level: installed)) > gestureSwapDrift
     }
 
+    /// Whether a freshly landed, ready level should be installed even though
+    /// the camera has already moved on to a later wanted level. Preparations
+    /// take longer than the camera needs to cross a level, so "latest wins"
+    /// alone never installs anything while zooming: a landed level is
+    /// installed when it is nearer the camera than the installed one.
+    public static func installsLanded(
+        landed: Int, installed: Int?, zoom: Double, ready: Bool
+    ) -> Bool {
+        guard ready, let installed, landed != installed else { return false }
+        return abs(zoom - nominalZoom(level: landed)) < abs(zoom - nominalZoom(level: installed))
+    }
+
     /// Whether a preparation for `level` is still worth keeping when the
     /// camera is at `zoom` with `installed` on screen: it is the wanted level
     /// or one of its idle neighbours.

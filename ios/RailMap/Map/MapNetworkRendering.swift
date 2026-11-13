@@ -133,13 +133,18 @@ final class MapNetworkGeometryCache {
 
     /// Bytes the unpinned zoom/era frames may hold: 12 MB compact, 24 MB otherwise.
     private static let frameByteCap = ResourceProfile.current.geometryFrameByteCap
+    /// Frames kept besides the current one and the neighbour, whatever their
+    /// estimated bytes: the estimate undercounts MapKit's own polyline storage.
+    private static let maxUnpinnedFrames = ResourceProfile.current.geometryMaxUnpinnedFrames
 
     let joinedChains: JoinedChainCache
     let chainPixels: ChainPixelCache
 
     private var frameKey = ""
     private var entries: [String: FrameEntry] = [:]
-    private var residency = GeometryFrameResidency(byteCap: MapNetworkGeometryCache.frameByteCap)
+    private var residency = GeometryFrameResidency(
+        byteCap: MapNetworkGeometryCache.frameByteCap,
+        maxUnpinnedFrames: MapNetworkGeometryCache.maxUnpinnedFrames)
     private var frameStrokes: [String: BuiltStroke] = [:]
     private var nextStrokeGeneration = 0
 
