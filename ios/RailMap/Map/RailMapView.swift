@@ -94,6 +94,11 @@ struct RailMapView: View {
     /// installed none draws the packages' own names rather than trapping.
     @Environment(AppLocalization.self) private var localization: AppLocalization?
 
+    /// Only for whether the trips are still loading, so the tap index is not
+    /// prebuilt per partial publish. Optional and outside the memberwise
+    /// initialiser, like the two above.
+    @Environment(RiddenRouteStore.self) private var riddenRoutes: RiddenRouteStore?
+
     /// A snapshot of the 顯示調節 values, taken during a SwiftUI update and
     /// then carried by value.
     ///
@@ -189,6 +194,8 @@ struct RailMapView: View {
             categoryIndexes: categoryIndexes,
             autoFocusRequest: controller.autoFocusRequest,
             isMapReady: controller.isMapReady,
+            // Read HERE, in a body, so a load settling schedules an update.
+            ridesAreLoading: riddenRoutes?.isLoading ?? false,
             controller: controller,
             playback: playback,
             display: displaySettings.map(DisplayValues.init) ?? DisplayValues(),
@@ -234,6 +241,7 @@ struct RailMapView: View {
         var categoryIndexes: [String: Statistics.EdgeIndex]
         var autoFocusRequest: MapCameraPolicy.FocusRequest?
         var isMapReady: Bool
+        var ridesAreLoading: Bool
         var controller: RailMapController
         var playback: PlaybackController
         var display: DisplayValues
@@ -387,6 +395,7 @@ struct RailMapView: View {
             mapView.preferredConfiguration = configuration
 
             context.coordinator.mapView = mapView
+            context.coordinator.observeMemoryWarnings()
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
             context.coordinator.onBuildRect = onBuildRect
@@ -498,6 +507,7 @@ struct RailMapView: View {
             context.coordinator.reconcileDraftPins(draftMap, on: mapView)
             playback.mapRenderer = context.coordinator
             playback.mapRendererViewSize = mapView.bounds.size
+            context.coordinator.ridesLoadingChanged(ridesAreLoading)
             context.coordinator.playbackStateChanged(on: mapView)
             playback.drawnCoordinates = { [weak coordinator = context.coordinator] ride, segment in
                 coordinator?.drawnCoordinates(of: segment, ride: ride).map {

@@ -2,6 +2,7 @@ import CoreLocation
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 import Testing
 
 @testable import RailMap
@@ -81,9 +82,9 @@ struct RideStrokeBuilderTests {
         var requests: [RideStrokeBuilder.Request] = []
         for ride in 0..<287 {
             for part in 0..<generator.int(2...14) {
-                let key = MapNetworkGeometryCache.ridePolylineKey(
+                let key = RideLineCacheKey(
                     rideID: "ride-\(ride)", geometryDigest: ride, segmentIndex: part,
-                    partIndex: 0, usesStroke: true)
+                    partIndex: 0, stroke: .init(lineID: "chain", generation: 1, from: 0, to: 1))
                 let coordinates = walk(&generator, count: generator.int(0...80))
                 let latitude = coordinates.first?.lat ?? 35
                 let kind = generator.int(0...9)
@@ -227,25 +228,24 @@ struct RideStrokeBuilderTests {
         print("RideStrokeBuilderTests: worker build of \(requests.count) segments took \(elapsed)")
     }
 
-    @Test("the default mode is today's main-actor path")
-    func defaultModeIsMainActor() {
-        #expect(RideStrokeBuilder.Mode.current == .mainActor)
+    private static func plainKey(_ ride: String) -> RideLineCacheKey {
+        RideLineCacheKey(rideID: ride, geometryDigest: 0, segmentIndex: 0, partIndex: 0, stroke: nil)
     }
 
     @Test("a segment that draws nothing is reported as empty, not dropped silently")
     func degenerateSegmentsAreReportedEmpty() {
         let frame = Self.frame
         let lone = RideStrokeBuilder.Request(
-            key: "lone", coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
+            key: Self.plainKey("lone"), coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
         let none = RideStrokeBuilder.Request(
-            key: "none", coordinates: [], latitude: 35.7, stroke: nil)
+            key: Self.plainKey("none"), coordinates: [], latitude: 35.7, stroke: nil)
         let fine = RideStrokeBuilder.Request(
-            key: "fine",
+            key: Self.plainKey("fine"),
             coordinates: [Coordinate(lon: 139.7, lat: 35.7), Coordinate(lon: 139.8, lat: 35.8)],
             latitude: 35.7, stroke: nil)
         let output = RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
-        #expect(output.built.map(\.key) == ["fine"])
-        #expect(Set(output.empty) == ["lone", "none"])
+        #expect(output.built.map(\.key) == [Self.plainKey("fine")])
+        #expect(Set(output.empty) == [Self.plainKey("lone"), Self.plainKey("none")])
     }
 
     @Test("clearing the memo forgets shared points")

@@ -2,42 +2,27 @@ import CoreLocation
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 
 /// Ride polylines built off the main actor (trip-loading plan, unit U5).
 ///
-/// Today `RailMapCoordinator.ridePolylines` slices, lane-offsets and
-/// Douglas-Peucker-simplifies every ride segment on the main actor; a full
-/// redraw of 500 rides blocked it for about 21.5 s (3,584 polyline misses).
-/// This type is that same arithmetic moved behind one pure function,
+/// Slicing, lane-offsetting and Douglas-Peucker simplification of every ride
+/// segment is one pure function,
 /// ``polylineCoordinates(for:frame:)``, which works on value inputs only, so a
 /// worker can run it. The coordinator captures a ``Request`` per missing
 /// segment on the main actor (cheap: array references, no geometry work), the
 /// worker answers with polylines, and the main actor only stores and installs
 /// them.
 ///
-/// The output is meant to be identical to the main-actor path it replaces:
-/// that path stays in the coordinator (`mainActorRidePolyline`) and ``Mode``
-/// picks which one runs, so the equality test can compare them.
+/// This is the only path: there is no main-actor slicing. The coordinator
+/// applies results on main and drops them when their request generation is
+/// stale.
 ///
 /// Work is shared between rides on the same track: a request that slices a
 /// built chain carries a ``Request/shareKey(frame:)`` of (chain, from, to,
 /// frame), and every ride with the same key reuses one simplified point list
 /// (each ride still gets its own `MKPolyline`).
 nonisolated enum RideStrokeBuilder {
-
-    /// Which implementation the coordinator uses. Selected once per launch.
-    enum Mode: Sendable {
-        /// The original path: built on the main actor inside `ridePolylines`.
-        case mainActor
-        /// Built by ``build(_:frame:memo:)`` on a worker before the rebuild.
-        case offMain
-
-        /// `RAILMAP_RIDE_STROKES=offMain` selects the new path; anything else,
-        /// including unset, keeps today's. The switch is a later decision.
-        static let current: Mode =
-            ProcessInfo.processInfo.environment["RAILMAP_RIDE_STROKES"] == "offMain"
-            ? .offMain : .mainActor
-    }
 
     /// The projection a polyline is drawn for: one zoom frame.
     struct Frame: Sendable, Equatable {
@@ -59,8 +44,9 @@ nonisolated enum RideStrokeBuilder {
 
     /// One ride segment's inputs, all values.
     struct Request: Sendable {
-        /// `MapNetworkGeometryCache.ridePolylineKey`.
-        var key: String
+        /// The trip-line cache key, which names the rail line and its stroke
+        /// generation when the segment is sliced from a built chain.
+        var key: RideLineCacheKey
         /// The segment's own coordinates (what the fallback draws from).
         var coordinates: [Coordinate]
         /// Latitude of the segment's bounding-rect centre, for the metre epsilon.
@@ -80,7 +66,7 @@ nonisolated enum RideStrokeBuilder {
     /// A built polyline. `MKPolyline` is created off the main actor and then
     /// owned by exactly one consumer, which is why the box is `@unchecked`.
     struct Built: @unchecked Sendable {
-        var key: String
+        var key: RideLineCacheKey
         var polyline: MKPolyline
     }
 
@@ -188,7 +174,7 @@ nonisolated enum RideStrokeBuilder {
         /// Keys of the requests that draw nothing (fewer than two points).
         /// The coordinator remembers them for the frame so it does not ask
         /// for them again.
-        var empty: [String]
+        var empty: [RideLineCacheKey]
     }
 
     /// Builds every request. Pure apart from the memo; call from a worker.
@@ -199,7 +185,7 @@ nonisolated enum RideStrokeBuilder {
         var built: [Built] = []
         built.reserveCapacity(requests.count)
         var shared = 0
-        var empty: [String] = []
+        var empty: [RideLineCacheKey] = []
         for request in requests {
             if Task.isCancelled { break }
             let shareKey = request.shareKey(frame: frame)

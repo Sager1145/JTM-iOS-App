@@ -1,5 +1,6 @@
 import MapKit
 import RailCore
+import RailPresentation
 import SwiftUI
 
 /// Preserve MapKit annotation identity when its complete presentation is
@@ -39,37 +40,33 @@ final class MapAnnotationReconciler {
     }
 
     /// Computes annotation identity reuse without touching MapKit or transition state.
+    /// Matching is `AnnotationDiff` (RailKit): identity key alone for annotations
+    /// that move and restyle in place; a coordinate or style difference on any
+    /// other kind still replaces it.
     func plan(_ desired: [MKAnnotation], replacing old: [MKAnnotation]) -> Plan {
-        var available = Dictionary(grouping: old, by: Self.key)
-#if DEBUG
-        let oldByCoordinateIdentity = Dictionary(grouping: old, by: Self.keyIgnoringCoordinate)
-        var coordinateChangedCount = 0
-#endif
+        let diff = AnnotationDiff.make(
+            old: old.map(Self.item), new: desired.map(Self.item),
+            sameStyle: { Self.samePresentation($0, $1) })
+        var keptOld: [Int: MKAnnotation] = [:]
+        var movedCount = 0
+        for kept in diff.kept {
+            keptOld[kept.newIndex] = old[kept.oldIndex]
+            if kept.moved { movedCount += 1 }
+        }
         var exiting = Dictionary(grouping: departures.values, by: { Self.key($0.annotation) })
         var addedCount = 0
-        var retainedCount = 0
-        var retainedOldCount = 0
-        let resolutions = desired.map { candidate -> Plan.Resolution in
-            let id = Self.key(candidate)
-            if let index = available[id]?.firstIndex(where: { Self.sameContent($0, candidate) }),
-               let retained = available[id]?.remove(at: index) {
-                retainedCount += 1
-                retainedOldCount += 1
+        var retainedCount = diff.kept.count
+        let retainedOldCount = diff.kept.count
+        let resolutions = desired.enumerated().map { index, candidate -> Plan.Resolution in
+            if let retained = keptOld[index] {
                 return .retained(retained, candidate: candidate)
             }
-#if DEBUG
-            if oldByCoordinateIdentity[Self.keyIgnoringCoordinate(candidate)]?.contains(where: {
-                !Self.sameCoordinate($0, candidate) && Self.samePresentation($0, candidate)
-            }) == true {
-                coordinateChangedCount += 1
-            }
-#endif
             // A zoom reversal may ask for a label whose departure has not
             // finished. Reuse that annotation and continue from its visible
             // opacity instead of mounting a second copy at zero.
-            if let index = exiting[id]?.firstIndex(where: {
-                Self.sameContent($0.annotation, candidate)
-            }), let departure = exiting[id]?.remove(at: index) {
+            let id = Self.key(candidate)
+            if let slot = exiting[id]?.firstIndex(where: { Self.resumable($0.annotation, as: candidate) }),
+               let departure = exiting[id]?.remove(at: slot) {
                 retainedCount += 1
                 return .resumed(
                     departure.annotation, candidate: candidate,
@@ -78,13 +75,13 @@ final class MapAnnotationReconciler {
             addedCount += 1
             return .added(candidate)
         }
-        let removals = available.values.flatMap { $0 }
+        let removals = diff.removed.map { old[$0] }
         var plan = Plan(
             resolutions: resolutions, removals: removals,
             addedCount: addedCount, removedCount: removals.count,
             retainedCount: retainedCount, retainedOldCount: retainedOldCount)
 #if DEBUG
-        plan.coordinateChangedCount = coordinateChangedCount
+        plan.coordinateChangedCount = movedCount
 #endif
         return plan
     }
@@ -96,11 +93,11 @@ final class MapAnnotationReconciler {
         let installed = plan.resolutions.map { resolution -> MKAnnotation in
             switch resolution {
             case .retained(let retained, let candidate):
-                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
+                updateInPlace(retained, from: candidate, on: mapView, duration: duration)
                 return retained
             case .resumed(let retained, let candidate, let interactionEnabled):
                 departures.removeValue(forKey: ObjectIdentifier(retained))
-                updateNameVisibility(of: retained, from: candidate, on: mapView, duration: duration)
+                updateInPlace(retained, from: candidate, on: mapView, duration: duration)
                 if let view = mapView.view(for: retained) {
                     view.isUserInteractionEnabled = interactionEnabled
                     fade(view, to: Self.targetAlpha(retained), duration: duration)
@@ -221,14 +218,52 @@ final class MapAnnotationReconciler {
         }
     }
 
-    private func updateNameVisibility(of retained: MKAnnotation, from candidate: MKAnnotation,
-                                      on mapView: MKMapView, duration: TimeInterval) {
-        guard let retained = retained as? StationAnnotation,
-              let candidate = candidate as? StationAnnotation,
-              retained.showsName != candidate.showsName else { return }
-        retained.showsName = candidate.showsName
-        (mapView.view(for: retained) as? StationAnnotationView)?
-            .applyNameVisibility(candidate.showsName, duration: duration)
+    /// Brings a kept annotation to the wanted state without remounting it: a
+    /// new coordinate moves it (`dynamic`, so MapKit repositions the view),
+    /// changed style fields are copied across and pushed to the existing view.
+    /// The view is looked up only when something visible changed.
+    private func updateInPlace(_ retained: MKAnnotation, from candidate: MKAnnotation,
+                               on mapView: MKMapView, duration: TimeInterval) {
+        if !Self.sameCoordinate(retained, candidate) {
+            switch retained {
+            case let station as StationAnnotation: station.coordinate = candidate.coordinate
+            case let label as RideLabelAnnotation: label.coordinate = candidate.coordinate
+            case let dot as RideStationAnnotation: dot.coordinate = candidate.coordinate
+            default: break
+            }
+        }
+        switch (retained, candidate) {
+        case let (old as StationAnnotation, new as StationAnnotation):
+            if !Self.samePresentation(old, new) {
+                let alphaChanged = old.markerAlpha != new.markerAlpha
+                old.station = new.station
+                old.displayName = new.displayName
+                old.readings = new.readings
+                old.markerAlpha = new.markerAlpha
+                if let view = mapView.view(for: old) as? StationAnnotationView {
+                    view.refresh()
+                    if alphaChanged { fade(view, to: new.markerAlpha, duration: duration) }
+                }
+            }
+            if old.showsName != new.showsName {
+                old.showsName = new.showsName
+                (mapView.view(for: old) as? StationAnnotationView)?
+                    .applyNameVisibility(new.showsName, duration: duration)
+            }
+        case let (old as RideLabelAnnotation, new as RideLabelAnnotation):
+            if !Self.samePresentation(old, new) {
+                old.text = new.text
+                old.rawName = new.rawName
+                old.stationCode = new.stationCode
+                old.tier = new.tier
+                old.dotRadiusToken = new.dotRadiusToken
+                old.selected = new.selected
+                old.side = new.side
+                (mapView.view(for: old) as? RideLabelAnnotationView)?.refresh()
+            }
+        default:
+            break
+        }
     }
 
     private static func targetAlpha(_ annotation: MKAnnotation) -> CGFloat {
@@ -244,9 +279,9 @@ final class MapAnnotationReconciler {
         case let item as StationAnnotation:
             return "network|\(item.station.region.rawValue)|\(item.station.lineID)|\(item.station.id)"
         case let item as RideStationAnnotation:
-            return "ride|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.role)|\(item.rawName)"
+            return "ride|\(item.rideID)|\(item.role)|\(item.rawName)|\(item.stationCode ?? "")"
         case let item as RideLabelAnnotation:
-            return "label|\(item.coordinate.latitude)|\(item.coordinate.longitude)|\(item.rawName)"
+            return "label|\(item.rawName)|\(item.stationCode ?? "")|\(item.stationID ?? "")|\(item.region?.rawValue ?? "")"
         case let item as EndpointLabelAnnotation:
             return "endpoint|\(item.spec.key)"
         case let item as DraftStopAnnotation:
@@ -260,18 +295,30 @@ final class MapAnnotationReconciler {
         }
     }
 
-#if DEBUG
-    private static func keyIgnoringCoordinate(_ annotation: MKAnnotation) -> String {
-        switch annotation {
-        case let item as RideStationAnnotation:
-            return "ride|\(item.role)|\(item.rawName)"
-        case let item as RideLabelAnnotation:
-            return "label|\(item.rawName)"
-        default:
-            return key(annotation)
-        }
+    private static func item(_ annotation: MKAnnotation) -> AnnotationDiff.Item<MKAnnotation> {
+        AnnotationDiff.Item(
+            key: key(annotation),
+            latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude,
+            canMove: movesInPlace(annotation), canRestyle: restylesInPlace(annotation),
+            style: annotation)
     }
-#endif
+
+    /// Kinds whose coordinate is not part of their identity: the level, not
+    /// the place, decides where they are drawn.
+    private static func movesInPlace(_ annotation: MKAnnotation) -> Bool {
+        annotation is StationAnnotation || annotation is RideLabelAnnotation
+            || annotation is RideStationAnnotation
+    }
+
+    /// Kinds that copy changed style fields onto the kept annotation and
+    /// refresh its view. Everything else is replaced when its style changes.
+    private static func restylesInPlace(_ annotation: MKAnnotation) -> Bool {
+        annotation is StationAnnotation || annotation is RideLabelAnnotation
+    }
+
+    private static func resumable(_ departing: MKAnnotation, as candidate: MKAnnotation) -> Bool {
+        (restylesInPlace(departing) && restylesInPlace(candidate)) || sameContent(departing, candidate)
+    }
 
     private static func sameContent(_ lhs: MKAnnotation, _ rhs: MKAnnotation) -> Bool {
         sameCoordinate(lhs, rhs) && samePresentation(lhs, rhs)

@@ -49,7 +49,7 @@ Values parse as JSON when they can, so `save=true`, `timeoutMs=5000`, `via='["�
 
 | Command | Args | Returns |
 |---|---|---|
-| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, reloadProgress), map (ready, `railMapRenderStatus` text, render stats), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
+| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, ridesInTabScope, routeCacheHits, routeSolveAttemptsThisLaunch, storedFailures, reloadProgress), map (ready, `railMapRenderStatus` text, render stats, totalOverlays and rideOverlays = every mounted overlay and the trip ones), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
 | `loadSamples` | `samples=train-store,train-store-tw` (default `train-store`; names are `RideLibrary.Sample.all` resources) | merged count and ms per sample |
 | `useStorage` | `id=UUID` | ok if the app runs on that store, else `rejected` with `relaunchRequired` (then `launch --storage UUID`) |
 | `reloadAll` | `wait=true`, `timeoutMs`, `force=false` | ms, rides. Default is the user-facing repair (cached routes read back, only missing ones solved, map stays drawn); `force=true` is the old full rebuild (wipes the route cache and every memo, solves every trip) |
@@ -96,7 +96,7 @@ The ball is a draggable button that snaps to the nearer side edge. It lives in i
 - **Triggers:** buttons that call `AppControlHost.submit`, so they go through the same queue, dispatcher, storage guard and result files as the URL channel: load samples (on the real store it offers to switch to a fresh UUID store, quit, and load on reopen), rebuild all routes (`reloadAll force=true`), select or focus a random trip, open the editor, add a demo trip (東京 to 新大阪, today, saved), delete the last trip added there, open Stats, toggle the hide filter (the current year), and screenshot.
 - **State:** inventory, map render stats and layers, rebuild and tap-index counts (from the recorder), storage ID and source, memory, and cache sizes on disk (on demand).
 - **Tools:** switch to a new isolated store or back to the real one. This takes effect on the next launch (`DevStorage`). The launch environment always wins, and the override is ignored for UI-test launches. Also: clear route caches, simulate a memory warning, map layer toggles, export a diagnostics bundle, and hide the ball.
-- **Logs:** this process's OSLog entries for subsystem `com.jtm.railmap`, with a filter.
+- **Logs:** this process's OSLog entries for subsystems `com.jtm.railmap` and `com.JRM.RailMap` (the display batch log), with a filter. For a zoom sweep, start the perf window at the first step, not before the launch settles.
 
 ```sh
 python3 -I ios/tools/app-control.py --target device devtools expand

@@ -13,47 +13,60 @@ final class MapInteractionCoordinator {
     private var cachedTapIndex: RideTapIndex?
     private var rideAnsweredTap: ContinuousClock.Instant?
 
-    /// What the tap geometry of every ride depends on that the invalidation
-    /// sites above the rebuild do not already cover: the network frame and which
-    /// referenced chains are stroke-resident (with the identity of each stored
-    /// stroke). A ride segment draws from a frame stroke when its chain is
-    /// resident and from raw coordinates otherwise, so only a change here moves
-    /// the drawn geometry on a rebuild.
-    struct TapGeometrySignature: Hashable {
-        let frameKey: String
-        let residentStrokes: [String: Int]
-    }
-
-    private var tapSignature: TapGeometrySignature?
     private var indexGeneration = 0
     private var prebuildTask: Task<Void, Never>?
+    /// True while the route store is resolving trips. Each arrival replaces
+    /// the drawn geometry, so a tap index built meanwhile is thrown away; the
+    /// prebuild waits for the load to settle and then builds once. A tap
+    /// during a load still builds on demand (``rideHits``).
+    private(set) var ridesAreLoading = false
+    private(set) var counters = TapIndexCounters()
     /// Captures the drawn geometry on the main actor; set by the map coordinator.
     /// Returns nil while the map is busy (gesture, camera settling); the
     /// prebuild then retries later.
     var tapSnapshotProvider: (@MainActor () -> RideTapIndex.Snapshot?)?
 
+    /// A geometry level change DOES come through here (from the rebuild that
+    /// installs the new frame): the index is built from the level's laned ride
+    /// polylines, whose lane offsets are in screen points at that level, so an
+    /// index built at another level can sit far off the drawn line. A stroke
+    /// rebuild within one level does not: the difference is a few points.
+    ///
     /// Geometry/filter/matching changes discard the index without rebuilding
     /// inside a SwiftUI update; a coalesced prebuild replaces it once the map
     /// is idle, and a tap that beats it falls back to a synchronous build.
     func invalidateRideGeometry() {
         cachedTapIndex = nil
-        // An external invalidation leaves the signature stale; force the next
-        // rebuild's `updateTapGeometry` to invalidate again.
-        tapSignature = nil
         indexGeneration += 1
         schedulePrebuild()
     }
 
-    /// Invalidates only when the tap geometry signature moved.
-    func updateTapGeometry(signature: TapGeometrySignature) {
-        guard signature != tapSignature else { return }
-        invalidateRideGeometry()
-        tapSignature = signature
+    /// Reported from the view update. Starting a load cancels the prebuild;
+    /// a load settling schedules the one build.
+    func setRidesLoading(_ loading: Bool) {
+        guard loading != ridesAreLoading else { return }
+        ridesAreLoading = loading
+        if loading {
+            cancelPrebuild()
+        } else if cachedTapIndex == nil {
+            schedulePrebuild()
+        }
+    }
+
+    private func cancelPrebuild() {
+        guard prebuildTask != nil else { return }
+        prebuildTask?.cancel()
+        prebuildTask = nil
+        counters.noteAbandoned()
     }
 
     private func schedulePrebuild() {
         prebuildTask?.cancel()
-        guard tapSnapshotProvider != nil else { prebuildTask = nil; return }
+        prebuildTask = nil
+        guard TapIndexPrebuildPolicy.mayPrebuild(
+            ridesAreLoading: ridesAreLoading, hasIndex: cachedTapIndex != nil,
+            hasSnapshotProvider: tapSnapshotProvider != nil)
+        else { return }
         let generation = indexGeneration
         prebuildTask = Task { [weak self] in
             while true {
@@ -62,14 +75,26 @@ final class MapInteractionCoordinator {
                     self.cachedTapIndex == nil, let provider = self.tapSnapshotProvider
                 else { return }
                 guard let snapshot = provider() else { continue }
-                let built = await Task.detached(priority: .utility) { () -> RideTapIndex in
+                // Cancelling the prebuild reaches the detached build: one that has
+                // not started yet never does, and a finished one is dropped.
+                let worker = Task.detached(priority: .utility) { () -> RideTapIndex? in
+                    guard !Task.isCancelled else { return nil }
                     let interval = RailSignpost.map.begin("map.tapIndex.prebuild")
                     defer { RailSignpost.map.end("map.tapIndex.prebuild", interval) }
                     return RideTapIndex(snapshot: snapshot)
-                }.value
-                guard self.indexGeneration == generation, self.cachedTapIndex == nil
+                }
+                let built = await withTaskCancellationHandler {
+                    await worker.value
+                } onCancel: {
+                    worker.cancel()
+                }
+                guard let built, !Task.isCancelled, self.indexGeneration == generation,
+                    self.cachedTapIndex == nil, !self.ridesAreLoading
                 else { return }
                 self.cachedTapIndex = built
+                self.prebuildTask = nil
+                self.counters.notePrebuilt()
+                RailSignpost.map.mark("map.tapIndex.built", self.counters.prebuilt, self.counters.onDemand)
                 return
             }
         }
@@ -84,7 +109,7 @@ final class MapInteractionCoordinator {
     func rideHits(
         at point: CGPoint, on mapView: MKMapView,
         rides: [RiddenRouteStore.DrawnRide],
-        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [[Coordinate]]
+        drawnStrokes: (RiddenRouteStore.DrawnRide) -> [RideTapIndex.Source]
     ) -> [String] {
         let index: RideTapIndex
         if let cachedTapIndex {
@@ -95,6 +120,8 @@ final class MapInteractionCoordinator {
             self.cachedTapIndex = index
             prebuildTask?.cancel()
             prebuildTask = nil
+            counters.noteOnDemand()
+            RailSignpost.map.mark("map.tapIndex.built", counters.prebuilt, counters.onDemand)
             RailSignpost.map.end("map.tapIndex.build", interval)
         }
         // The pitch fallback still projects the complete drawn geometry.
@@ -129,16 +156,17 @@ final class MapInteractionCoordinator {
     }
 
     func tearDown() {
+        ridesAreLoading = false
         prebuildTask?.cancel()
         prebuildTask = nil
         tapSnapshotProvider = nil
-        tapSignature = nil
         indexGeneration += 1
         cachedTapIndex = nil
         rideAnsweredTap = nil
         stations = []
         stationsByCode.removeAll()
         stationsByName.removeAll()
+        stationIndexesBuilt = true
     }
 
     /// The card one tapped annotation opens, or `nil` when the thing
@@ -238,6 +266,7 @@ final class MapInteractionCoordinator {
     private func networkStation(
         code: String?, name: String, region: Region?, near position: Coordinate, stationID: String? = nil
     ) -> RailNetworkStore.DrawnStation? {
+        buildStationIndexesIfNeeded()
         // A known region is part of station identity, not a ranking hint.
         func nearest(_ indexes: [Int], within metres: Double) -> RailNetworkStore.DrawnStation? {
             indexes.lazy.map { self.stations[$0] }
@@ -281,10 +310,21 @@ final class MapInteractionCoordinator {
     private var stationsByCode: [String: [Int]] = [:]
     private var stationsByName: [String: [Int]] = [:]
 
+    /// `replaceStations` runs inside SwiftUI updates, once per region landing;
+    /// the two maps are built on the first lookup (a tap or ride marker), not
+    /// on every station change.
+    private var stationIndexesBuilt = false
+
     func replaceStations(_ stations: [RailNetworkStore.DrawnStation]) {
         self.stations = stations
         stationsByCode.removeAll(keepingCapacity: true)
         stationsByName.removeAll(keepingCapacity: true)
+        stationIndexesBuilt = false
+    }
+
+    private func buildStationIndexesIfNeeded() {
+        guard !stationIndexesBuilt else { return }
+        stationIndexesBuilt = true
         for (index, station) in stations.enumerated() {
             if !station.stationCode.isEmpty {
                 stationsByCode[station.stationCode, default: []].append(index)

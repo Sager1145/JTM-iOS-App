@@ -53,8 +53,11 @@ def display_manifest_revision(bundle: Path, region: str) -> str:
     identity["packageSHA256"] = manifest.get("packageSHA256", {}).get(region)
     identity["lines"] = {key: value for key, value in manifest.get("lines", {}).items()
                          if value.get("region") == region}
-    identity["regions"] = [value for value in manifest.get("regions", [])
-                           if value.get("region") == region]
+    # The region record also names topology.bin (file, size, digest); the
+    # solver does not read it, so those fields stay out of the revision.
+    identity["regions"] = [
+        {key: item for key, item in value.items() if not key.startswith("topology")}
+        for value in manifest.get("regions", []) if value.get("region") == region]
     encoded = json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(encoded).hexdigest()
 
@@ -83,10 +86,9 @@ def snapshot_timetable(source: Path, destination: Path) -> None:
 def build_manifest(repo: Path, bundle: Path) -> dict:
     rail = repo / "app/public/rail"
     shared = [(f"display-input/{name}", rail / name) for name in SHARED_DISPLAY_INPUTS]
-    shared += [(f"builder/{name}", repo / "app/scripts/railway" / name) for name in (
-        "build-display-network.py", "lib/display_identity.py", "lib/display_topology.py",
-        "lib/na_geo.py",
-    )]
+    # The display builder's script text is not an input: its outputs
+    # (display.bin, stations.json, display-history.json) are hashed below, so a
+    # script edit that leaves them unchanged must not invalidate stored routes.
     # Legacy matched routes may cover any region; changes invalidate every region.
     shared += [(name, bundle / name) for name in ("matched-routes.json", "matched-stops.json", "physical-rail-junctions.json")]
     regions = {}
@@ -99,7 +101,8 @@ def build_manifest(repo: Path, bundle: Path) -> dict:
             f"{family}{suffix}.json" for family in
             ("stations", "rail-sections", "station-readings", "station-names", "rail-history", "train-store")
         ] + [f"rail-display-network/{region}.{ending}" for ending in
-             ("display.bin", "stations.json", "display-history.json", "topology.bin")]
+             ("display.bin", "stations.json", "display-history.json")]
+        # topology.bin is not read by the solver, so it stays out of the revision.
         inputs = shared + [(name, bundle / name) for name in names]
         # The identity registry (app/data/registry-bundle/<region>.json, shipped
         # as registry-<region>.json) feeds station/operator identity and

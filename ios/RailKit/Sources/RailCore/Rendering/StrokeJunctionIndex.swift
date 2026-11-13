@@ -22,9 +22,21 @@ public struct StrokeJunctionIndex: Sendable {
         }
     }
 
+    /// A vertex key hashes an interned region/operator id, not the two
+    /// Strings: hashing Unicode text for every vertex of every line made one
+    /// line batch cost over a second on the main thread.
     private struct Key: Hashable, Sendable {
+        let group: Int32
+        let coordinate: Coordinate
+    }
+
+    private struct Group: Hashable, Sendable {
         let region: String
         let operatorName: String?
+    }
+
+    private struct ResolvedKey: Hashable {
+        let group: Group
         let coordinate: Coordinate
     }
 
@@ -44,11 +56,22 @@ public struct StrokeJunctionIndex: Sendable {
 
     private var byID: [String: Line]
     private var byVertex: [Key: [String]] = [:]
+    private var groupIDs: [Group: Int32] = [:]
+    private var groups: [Group] = []
+
+    private mutating func intern(_ line: Line) -> Int32 {
+        let group = Group(region: line.region, operatorName: line.operatorName)
+        if let id = groupIDs[group] { return id }
+        let id = Int32(groups.count)
+        groups.append(group)
+        groupIDs[group] = id
+        return id
+    }
 
     public init(_ lines: [Line]) {
         byID = Dictionary(lines.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         for line in byID.values.sorted(by: { $0.id < $1.id }) {
-            for key in Self.vertexKeys(of: line) {
+            for key in Self.vertexKeys(of: line, group: intern(line)) {
                 byVertex[key, default: []].append(line.id)
             }
         }
@@ -57,18 +80,18 @@ public struct StrokeJunctionIndex: Sendable {
     /// The line's deduplicated vertex keys, in first-occurrence order.
     /// A coordinate unequal to itself (NaN) can never be looked up, so it is
     /// not indexed; indexing it would also leak a key on every ``update(_:)``.
-    private static func vertexKeys(of line: Line) -> [Key] {
+    private static func vertexKeys(of line: Line, group: Int32) -> [Key] {
         var seen = Set<Coordinate>()
         return line.coordinates.compactMap { coordinate in
             coordinate == coordinate && seen.insert(coordinate).inserted
-                ? Key(region: line.region, operatorName: line.operatorName, coordinate: coordinate)
+                ? Key(group: group, coordinate: coordinate)
                 : nil
         }
     }
 
-    private static func endpointKeys(of line: Line) -> [Key] {
+    private static func endpointKeys(of line: Line, group: Int32) -> [Key] {
         [line.coordinates.first, line.coordinates.last].compactMap { coordinate in
-            coordinate.map { Key(region: line.region, operatorName: line.operatorName, coordinate: $0) }
+            coordinate.map { Key(group: group, coordinate: $0) }
         }
     }
 
@@ -92,8 +115,10 @@ public struct StrokeJunctionIndex: Sendable {
 
         var touched = Set<Key>()
         for id in changed {
-            let oldKeys = Set(byID[id].map(Self.vertexKeys(of:)) ?? [])
-            let newKeys = Set(next[id].map(Self.vertexKeys(of:)) ?? [])
+            var oldKeys = Set<Key>()
+            if let old = byID[id] { oldKeys = Set(Self.vertexKeys(of: old, group: intern(old))) }
+            var newKeys = Set<Key>()
+            if let new = next[id] { newKeys = Set(Self.vertexKeys(of: new, group: intern(new))) }
             touched.formUnion(oldKeys)
             touched.formUnion(newKeys)
             for key in oldKeys.subtracting(newKeys) {
@@ -113,7 +138,7 @@ public struct StrokeJunctionIndex: Sendable {
         var affected = changed
         for key in touched {
             for id in byVertex[key] ?? [] where !affected.contains(id) {
-                if let line = byID[id], Self.endpointKeys(of: line).contains(key) {
+                if let line = byID[id], Self.endpointKeys(of: line, group: intern(line)).contains(key) {
                     affected.insert(id)
                 }
             }
@@ -131,13 +156,19 @@ public struct StrokeJunctionIndex: Sendable {
     var vertexKeyCount: Int { byVertex.count }
 
     func isStructurallyEqual(to other: StrokeJunctionIndex) -> Bool {
-        byID == other.byID && byVertex == other.byVertex
+        func resolved(_ index: StrokeJunctionIndex) -> [ResolvedKey: [String]] {
+            Dictionary(uniqueKeysWithValues: index.byVertex.map {
+                (ResolvedKey(group: index.groups[Int($0.key.group)], coordinate: $0.key.coordinate), $0.value)
+            })
+        }
+        return byID == other.byID && resolved(self) == resolved(other)
     }
 
     public func candidateIDs(
         sharing coordinate: Coordinate, region: String, operatorName: String?
     ) -> [String] {
-        byVertex[Key(region: region, operatorName: operatorName, coordinate: coordinate)] ?? []
+        guard let group = groupIDs[Group(region: region, operatorName: operatorName)] else { return [] }
+        return byVertex[Key(group: group, coordinate: coordinate)] ?? []
     }
 
     /// Geometry inputs tracked by the native mounted-stroke cache.

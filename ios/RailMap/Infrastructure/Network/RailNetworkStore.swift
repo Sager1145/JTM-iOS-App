@@ -467,6 +467,7 @@ final class RailNetworkStore {
         lastDisplayRequest = nil
         lastRequestedDisplayLine = [:]
         requestSerial = 0
+        noteResidencyChange()
         topologies = [:]
         topologyFailures = []
         currentBatchWave = nil
@@ -630,6 +631,12 @@ final class RailNetworkStore {
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
         guard displayManifest != nil else { return }
+        // The same rect and zoom with nothing resident, loading or failed
+        // changed since: the answer would be the same, and `requestSerial`
+        // (the eviction LRU key) must not advance for a no-op.
+        guard !displayRequestMemo.shouldSkip(
+            x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height,
+            cameraZoom: cameraZoom, epoch: residencyEpoch) else { return }
         // Crossing the overview zoom does not change residency. A full chunk
         // stays until eviction, and an overview chunk is replaced only when
         // its full batch lands and `publishDisplayNetwork()` runs. Publishing
@@ -848,6 +855,15 @@ final class RailNetworkStore {
     /// prefetched it, same as a padded or urgent one.
     @ObservationIgnored private var lastRequestedDisplayLine: [String: Int] = [:]
     @ObservationIgnored private var requestSerial = 0
+    /// Bumped by everything that can change what a camera request would do
+    /// (see ``DisplayRequestMemo``).
+    @ObservationIgnored private var residencyEpoch = 0
+    @ObservationIgnored private var displayRequestMemo = DisplayRequestMemo()
+
+    private func noteResidencyChange() {
+        residencyEpoch += 1
+        displayRequestMemo.reset()
+    }
     /// Lines held by id, per owner (a ridden-line set, the selected trip, ...).
     /// A held line, and the `dependsOn` closure it needs to draw, is requested
     /// whatever the camera shows and is never evicted until its last holder
@@ -896,6 +912,8 @@ final class RailNetworkStore {
     }
 
     private func activateDisplayLines(intersecting rect: MKMapRect, cameraZoom: Double) {
+        let activateInterval = RailSignpost.map.begin("store.activateDisplayLines")
+        defer { RailSignpost.map.end("store.activateDisplayLines", activateInterval) }
         guard let manifest = displayManifest, let index = displayIndex else { return }
         var needed = RailDisplayNetwork.lines(
             intersecting: rect, cameraZoom: cameraZoom, in: index)
@@ -940,6 +958,7 @@ final class RailNetworkStore {
         if displayLoadTask != nil {
             let cameraLeft = currentBatchRect.map { !$0.intersects(rect) } ?? false
             if currentBatchWave == .prefetch || cameraLeft {
+                noteResidencyChange()
                 displayLoadTask?.cancel()
                 loadingDisplayLines.subtract(currentBatchIDs)
                 if currentBatchWave != .prefetch {
@@ -1095,6 +1114,7 @@ final class RailNetworkStore {
             // the replacement's.
             guard !Task.isCancelled else { return }
             let completedWave = currentBatchWave
+            noteResidencyChange()
             displayLoadTask = nil
             currentBatchWave = nil
             currentBatchIDs = []
@@ -1213,6 +1233,7 @@ final class RailNetworkStore {
     /// the owners, their lines or the index change, so a camera request reads
     /// two stored values instead of re-walking the closure per entry.
     private func rebuildHeldCaches() {
+        noteResidencyChange()
         guard let index = displayIndex else {
             heldEntryCache = []
             heldFullDetailIDs = []
@@ -1297,6 +1318,7 @@ final class RailNetworkStore {
                       let prepared = loadedDisplayLines[id] else { continue }
                 loadedDisplayLines.removeValue(forKey: id)
                 displayAttempts.removeValue(forKey: id)
+                noteResidencyChange()
                 for dependency in index.entryByID[id]?.dependsOn ?? [] where dependency != id {
                     dependentCount[dependency, default: 0] -= 1
                 }
@@ -1308,6 +1330,8 @@ final class RailNetworkStore {
     }
 
     private func publishDisplayNetwork() {
+        let publishInterval = RailSignpost.map.begin("store.publishDisplayNetwork")
+        defer { RailSignpost.map.end("store.publishDisplayNetwork", publishInterval) }
         guard let index = displayIndex else {
             guard !mapLines.isEmpty || !mapStations.isEmpty
                     || activeRegionCount != 0 || activeNetworkBytes != 0

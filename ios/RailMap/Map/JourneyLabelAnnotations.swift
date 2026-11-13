@@ -5,21 +5,21 @@ import SwiftUI
 final class RideLabelAnnotation: NSObject, MKAnnotation {
     enum Side { case leading, trailing }
     dynamic var coordinate: CLLocationCoordinate2D
-    let text: String
+    var text: String
     /// The same two keys the dot carries. A caption is a separate
     /// annotation from the dot it names — see below — so a tap that
     /// lands on the NAME must be able to answer with the same card
     /// as a tap on the mark, without going back to the dot for it.
-    let rawName: String
-    let stationCode: String?
+    var rawName: String
+    var stationCode: String?
     let stationID: String?
     /// See ``RideStationAnnotation/region``.
     let region: Region?
-    let tier: StationDisplay.RideLabelTier
+    var tier: StationDisplay.RideLabelTier
     /// Where the dot ends, so the text can sit beside it rather than
     /// on it. A token, like every other size here.
-    let dotRadiusToken: CGFloat
-    let selected: Bool
+    var dotRadiusToken: CGFloat
+    var selected: Bool
     var side: Side = .trailing
     var title: String? { text }
     init(

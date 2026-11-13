@@ -1,5 +1,6 @@
 import MapKit
 import RailCore
+import RailPresentation
 
 /// The map's ride deck as last applied, and which rides a new array changed.
 ///
@@ -207,6 +208,9 @@ struct MarkerSetupCache {
     let stationsByPlace: [String: [RailNetworkStore.DrawnStation]]
     let linesByStrokeID: [String: RailNetworkStore.DrawnLine]
     let connectionsByPlace: [String: Int]
+    /// Positions of `stations` (map points), indexed the way `stations` is
+    /// ordered, so a pass reads only the stations inside the visible rect.
+    let stationGrid: SpatialGrid
 
     init(
         generation: Int, lines: [RailNetworkStore.DrawnLine],
@@ -225,5 +229,15 @@ struct MarkerSetupCache {
             connections[key] = max(connections[key] ?? 0, station.popup.lines.count)
         }
         connectionsByPlace = connections
+        var xs: [Double] = []
+        var ys: [Double] = []
+        xs.reserveCapacity(stations.count)
+        ys.reserveCapacity(stations.count)
+        for station in stations {
+            let point = MKMapPoint(station.coordinate.clLocation)
+            xs.append(point.x)
+            ys.append(point.y)
+        }
+        stationGrid = SpatialGrid(cellSize: 262_144, xs: xs, ys: ys)
     }
 }

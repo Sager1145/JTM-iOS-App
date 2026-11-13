@@ -212,4 +212,20 @@ struct StrokeJunctionIncrementalTests {
         #expect(index.candidateIDs(sharing: junction, region: "jp", operatorName: a.operatorName) == [a.id, b.id])
         #expect(index.dependencyIDs(of: b.id) == full.dependencyIDs(of: b.id))
     }
+
+    @Test func interningKeepsJapaneseOperatorGroupsApart() {
+        func line(_ id: String, _ op: String?, _ region: String) -> Line {
+            Line(id: id, region: region, operatorName: op,
+                 coordinates: (0..<50).map { Self.point($0, 0) }, continuous: true)
+        }
+        let lines = [line("jp|a#0", "東日本旅客鉄道", "jp"), line("jp|b#0", "西日本旅客鉄道", "jp"),
+                     line("jp|c#0", nil, "jp"), line("tw|d#0", "東日本旅客鉄道", "tw")]
+        var index = StrokeJunctionIndex(Array(lines.prefix(1)))
+        _ = index.update(lines)
+        #expect(index.isStructurallyEqual(to: StrokeJunctionIndex(lines)))
+        let at = Self.point(7, 0)
+        #expect(index.candidateIDs(sharing: at, region: "jp", operatorName: "東日本旅客鉄道") == ["jp|a#0"])
+        #expect(index.candidateIDs(sharing: at, region: "jp", operatorName: nil) == ["jp|c#0"])
+        #expect(index.candidateIDs(sharing: at, region: "kr", operatorName: nil).isEmpty)
+    }
 }
