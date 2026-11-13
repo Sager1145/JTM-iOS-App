@@ -66,6 +66,7 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
     private var joinedRequestCount = 0
     private var cacheHitCount = 0
     private var completedOperationCount = 0
+    private var snapshotWaiters = StateWaiters<Snapshot>()
 
     /// `cost` returns an estimated retained cost, or nil to decline admission (for
     /// example, for an empty route). Zero capacities disable retention, not sharing.
@@ -112,10 +113,32 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
         )
     }
 
+    /// Internal observability: returns once the snapshot satisfies `condition`, woken
+    /// by the mutation that makes it true rather than by polling. Cancellable.
+    func waitForSnapshot(where condition: @escaping @Sendable (Snapshot) -> Bool) async throws {
+        let id = UUID()
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                snapshotWaiters.add(id, current: snapshot(), condition: condition, continuation: continuation)
+            }
+        } onCancel: {
+            Task { await self.cancelSnapshotWaiter(id) }
+        }
+    }
+
+    private func cancelSnapshotWaiter(_ id: UUID) {
+        snapshotWaiters.cancel(id)
+    }
+
+    private func publishSnapshot() {
+        snapshotWaiters.publish(snapshot())
+    }
+
     /// Drops retained values and cancels all current subscribers and producers.
     /// New requests can start immediately; old completions cannot affect them.
     /// Lifetime counters are preserved for instrumentation.
     public func clear() {
+        defer { publishSnapshot() }
         cache.removeAll()
         retainedCost = 0
         let abandoned = inFlight
@@ -141,6 +164,7 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
             cached.access = access
             cache[key] = cached
             cacheHitCount += 1
+            publishSnapshot()
             return cached.value
         }
         return try await withCheckedThrowingContinuation { continuation in
@@ -148,6 +172,7 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
                 continuation.resume(throwing: CancellationError())
                 return
             }
+            defer { publishSnapshot() }
             let subscriber = Subscriber(ticket: ticket, continuation: continuation)
             if var entry = inFlight[key] {
                 // Cancellation delivery is asynchronous. Do not attach a new request
@@ -185,6 +210,7 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
     }
 
     private func cancelSubscriber(_ key: Key, id: UUID) {
+        defer { publishSnapshot() }
         guard var entry = inFlight[key], let subscriber = entry.subscribers.removeValue(forKey: id) else { return }
         if entry.subscribers.isEmpty {
             inFlight.removeValue(forKey: key)
@@ -196,6 +222,7 @@ public actor SharedRouteWork<Key: Hashable & Sendable, Value: Sendable> {
     }
 
     private func complete(_ key: Key, token: UUID, result: Result<Value, any Error>) {
+        defer { publishSnapshot() }
         completedOperationCount += 1
         guard let entry = inFlight[key], entry.token == token else { return }
         inFlight.removeValue(forKey: key)

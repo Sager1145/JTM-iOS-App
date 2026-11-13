@@ -14,7 +14,10 @@ public actor RouteSolveLimiter {
 
     private let limit: Int
     private var activeCount = 0
-    private var waiters: [Waiter] = []
+    private var waiters: [Waiter] = [] {
+        didSet { queueWaiters.publish(waiters.count) }
+    }
+    private var queueWaiters = StateWaiters<Int>()
 
     public init(limit: Int) {
         precondition(limit > 0, "Route solve concurrency must be positive")
@@ -23,6 +26,22 @@ public actor RouteSolveLimiter {
 
     // Internal observability also lets tests synchronize on actual queue admission.
     var queuedPermitCount: Int { waiters.count }
+
+    /// Returns once `queuedPermitCount` equals `count`, woken by the queue change itself. Cancellable.
+    func waitForQueuedPermits(_ count: Int) async throws {
+        let id = UUID()
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                queueWaiters.add(id, current: waiters.count, condition: { $0 == count }, continuation: continuation)
+            }
+        } onCancel: {
+            Task { await self.cancelQueueWaiter(id) }
+        }
+    }
+
+    private func cancelQueueWaiter(_ id: UUID) {
+        queueWaiters.cancel(id)
+    }
 
     /// Runs the operation outside this actor's executor and holds its permit until it exits.
     public nonisolated func withPermit<T: Sendable>(
