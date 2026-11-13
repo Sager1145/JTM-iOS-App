@@ -38,9 +38,10 @@ public enum NetworkStrokeBake {
         public var from: Double
         public var to: Double
         public var vertices: [StrokePoint]
-        /// For a non-continuous line, the metre measure of every vertex on its part's own ruler
-        /// (0 at the part's first vertex, then the topology ruler's step: 111,320 m per degree,
-        /// longitude scaled by the cosine of the mean latitude). Empty for a continuous chain,
+        /// For a non-continuous line, the metre measure of every vertex on the part's source ruler:
+        /// the topology's own metres (0 at the part's first vertex, the topology ruler's step over the
+        /// source interval: 111,320 m per degree, longitude scaled by the cosine of the mean latitude),
+        /// reached by projecting the finished vertex onto the source interval. Empty for a continuous chain,
         /// whose measures are `Chain.strokeMeasures`.
         public var measures: [Double]
 
@@ -106,8 +107,9 @@ public enum NetworkStrokeBake {
         public var chains: [Chain]
     }
 
-    /// The cumulative metres along a non-continuous part's finished run: the topology ruler's step
-    /// (`StrokeBake.joinedChainCoordinates`) over the run's own vertices, 0 at the first.
+    /// The cumulative metres along a polyline: the topology ruler's step
+    /// (`StrokeBake.joinedChainCoordinates`) over its vertices, 0 at the first. Applied to a part's
+    /// source interval it is the topology's own metre for that part.
     static func partRuler(_ run: [Coordinate]) -> [Double] {
         var measures = [Double](repeating: 0, count: run.count)
         if run.count > 1 {
@@ -117,6 +119,44 @@ public enum NetworkStrokeBake {
                 measures[index] = measures[index - 1]
                     + hypot((b.lon - a.lon) * 111_320 * cos(lat), (b.lat - a.lat) * 111_320)
             }
+        }
+        return measures
+    }
+
+    /// The metres of a part's finished run on the part's source ruler: each run vertex takes the
+    /// metre of its nearest point on the source interval (`partRuler(source)`, the ruler the topology
+    /// measured stations on). The run is the part after simplification and lane offset, so its own
+    /// length differs from the source's and its vertices are not a subset of the source's; projecting
+    /// keeps a station at its topology metre however the run was reshaped. The projection only moves
+    /// forward along the source, so the result never decreases; it starts at 0 and ends at the source's
+    /// length because the run is anchored at both ends of the part.
+    static func sourceMeasures(of run: [Coordinate], on source: [Coordinate]) -> [Double] {
+        guard source.count >= 2, !run.isEmpty else { return partRuler(run) }
+        let ruler = partRuler(source)
+        let lat0 = source.reduce(0.0) { $0 + $1.lat } / Double(source.count) * Double.pi / 180
+        let kx = 111_320 * cos(lat0), ky = 111_320.0
+        let planar = source.map { ($0.lon * kx, $0.lat * ky) }
+        var measures: [Double] = []
+        measures.reserveCapacity(run.count)
+        var cursor = 0
+        var previous = 0.0
+        for (index, vertex) in run.enumerated() {
+            let px = vertex.lon * kx, py = vertex.lat * ky
+            var bestDistance = Double.infinity, bestSegment = cursor, bestT = 0.0
+            for j in cursor..<(source.count - 1) {
+                let (ax, ay) = planar[j], (bx, by) = planar[j + 1]
+                let dx = bx - ax, dy = by - ay
+                let l2 = dx * dx + dy * dy
+                let t = l2 > 0 ? min(max(((px - ax) * dx + (py - ay) * dy) / l2, 0), 1) : 0
+                let distance = hypot(ax + dx * t - px, ay + dy * t - py)
+                if distance < bestDistance { bestDistance = distance; bestSegment = j; bestT = t }
+            }
+            cursor = bestSegment
+            var metre = ruler[bestSegment] + bestT * (ruler[bestSegment + 1] - ruler[bestSegment])
+            if index == 0 { metre = 0 }
+            if index == run.count - 1 { metre = ruler[ruler.count - 1] }
+            previous = max(previous, metre)
+            measures.append(previous)
         }
         return measures
     }
@@ -165,7 +205,7 @@ public enum NetworkStrokeBake {
             } else {
                 for (index, interval) in line.intervals.enumerated() {
                     for run in try StrokeBake.finishedRuns([interval], line: line, frame: level) {
-                        runs.append(Run(part: index, vertices: points(run), measures: partRuler(run)))
+                        runs.append(Run(part: index, vertices: points(run), measures: sourceMeasures(of: run, on: interval)))
                     }
                 }
             }

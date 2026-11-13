@@ -14,12 +14,10 @@ import RailCore
 ///    with the same scale, `appZoom = 20 - log2(mapPointsPerPoint)`), not from the ladder's zoom
 ///    number: the ladder counts zoom in the 512-point convention, one below the app's.
 ///  - A non-continuous line has one chain per part (the topology's flat part number). A part has
-///    its own ruler (`NetworkStrokeBake.Run.measures`: 0 at its first vertex, the topology ruler's
-///    step over the finished run), and a node is placed on its part's pieces by metres on that
-///    ruler. The run is the part as drawn (simplified, lane-offset), so its ruler can differ from
-///    the topology's, which was measured on the source part, by the length the simplification and
-///    the offset change; the node still lands on the part's line, within that difference of the
-///    station's metre.
+///    the source ruler (`NetworkStrokeBake.Run.measures`: each finished vertex takes the topology's own
+///    metre of its nearest point on the source part), and a node is placed on its part's pieces by
+///    its topology metre on that ruler. The line carries `independentParts`, so the reader never
+///    joins two parts into one trip.
 ///  - Every level is thinned (`NetworkStrokeBake.thinned`, `RailStrokeTokens.packThinTolerance`)
 ///    between the engine's bake and the cutter, with the station metres as forced vertices.
 ///  - A dated chain (history span) keeps every one of its solid pieces whole: the era picks solid or
@@ -91,10 +89,10 @@ public enum PackAssembler {
         var lines: [RailPackLine] = []
         for line in topology.lines {
             let first = slots.count
+            var flatParts: [Int] = []
             if let info = displayByID[line.id] {
                 var byNumber: [Int: Int] = [:]
                 // Slot of each flat part number of a non-continuous line.
-                var flatParts: [Int] = []
                 for fragment in info.fragments {
                     let input = network.lines[fragment.inputIndex]
                     if fragment.continuous {
@@ -126,10 +124,11 @@ public enum PackAssembler {
                     slots[chain].nodes.append((id, metres))
                 }
             }
-            guard slots.count - first <= Int(UInt16.max) else { throw Failure.tooManyChains(line.id) }
+            guard slots.count - first <= Int(RailPackFormat.lineChainCountMask) else { throw Failure.tooManyChains(line.id) }
             lines.append(RailPackLine(
                 firstChain: UInt32(first), chainCount: UInt16(slots.count - first),
-                firstNode: UInt32(line.firstNode), nodeCount: UInt16(line.nodeCount)))
+                firstNode: UInt32(line.firstNode), nodeCount: UInt16(line.nodeCount),
+                independentParts: !flatParts.isEmpty))
         }
         return (slots, lines)
     }

@@ -62,6 +62,10 @@ public enum RailPackFormat {
     /// Top bit of a chains row's count word: the chain is closed (a loop).
     public static let closedChainFlag: UInt32 = 0x8000_0000
     public static let chainCountMask: UInt32 = 0x7FFF_FFFF
+    /// Top bit of a lines row's chain-count word: the line's chains are independent parts (branches or
+    /// lane fragments), not one sequence, so a trip never spans two of them (`vertexRanges` throws).
+    public static let independentPartsFlag: UInt16 = 0x8000
+    public static let lineChainCountMask: UInt16 = 0x7FFF
     /// Accepted `mapPointsPerPoint` range: keeps tile maths inside Int.
     public static let minMapPointsPerPoint = 0.25
     public static let maxMapPointsPerPoint = 1_048_576.0
@@ -166,9 +170,14 @@ public struct RailPackLine: Equatable, Sendable {
     /// Global node index of the line's node ordinal 0.
     public var firstNode: UInt32
     public var nodeCount: UInt16
-    public init(firstChain: UInt32, chainCount: UInt16, firstNode: UInt32, nodeCount: UInt16) {
+    /// The chains are the parts of a non-continuous line: each is its own piece of track and the
+    /// file order of the chains says nothing about which are neighbours. Stored in the top bit of the
+    /// row's chain count (so a line holds at most 32,767 chains).
+    public var independentParts: Bool
+    public init(firstChain: UInt32, chainCount: UInt16, firstNode: UInt32, nodeCount: UInt16, independentParts: Bool = false) {
         self.firstChain = firstChain; self.chainCount = chainCount
         self.firstNode = firstNode; self.nodeCount = nodeCount
+        self.independentParts = independentParts
     }
 }
 

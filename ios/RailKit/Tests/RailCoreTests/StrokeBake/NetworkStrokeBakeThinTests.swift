@@ -133,6 +133,55 @@ struct NetworkStrokeBakeThinTests {
         #expect(checked > 20)
     }
 
+    // MARK: Part rulers
+
+    @Test("a simplified run carries the source part's metres, not its own shorter length")
+    func syntheticRunTakesSourceMetres() {
+        // A wavy source whose simplified run (every other vertex) is shorter than the source.
+        let source = (0...40).map { Coordinate(lon: 139 + 0.001 * Double($0), lat: 35 + 0.0004 * Double($0 % 2)) }
+        let evens = Array(stride(from: 0, to: source.count, by: 2))
+        let run = evens.map { source[$0] }
+        let own = NetworkStrokeBake.partRuler(run), truth = NetworkStrokeBake.partRuler(source)
+        let measures = NetworkStrokeBake.sourceMeasures(of: run, on: source)
+        #expect(own.last! < truth.last! * 0.99, "the run's own ruler is short: that was the defect")
+        #expect(measures.count == run.count && measures.first == 0 && abs(measures.last! - truth.last!) < 1e-6)
+        for (index, vertex) in evens.enumerated() {
+            #expect(abs(measures[index] - truth[vertex]) < 1e-6, "vertex \(vertex)")
+        }
+        #expect(zip(measures, measures.dropFirst()).allSatisfy { $0 <= $1 })
+    }
+
+    @Test("every non-continuous run ends at the topology's metre for its part; lane 0 vertices sit at their source metre")
+    func partRunsKeepTheTopologyRuler() throws {
+        let network = try Self.network()
+        var parts = 0, vertices = 0
+        for zoom in [6.0, 17.0] {
+            let baked = try NetworkStrokeBake.bake(network, level: .init(appZoom: zoom))
+            let reach = 2 * RailStrokeTokens.strokeCornerRadius * baked.level.scale * baked.level.mapPointsPerPoint
+            for (line, chain) in zip(network.lines, baked.chains) where !line.continuous {
+                for run in chain.runs where run.vertices.count >= 2 {
+                    let source = line.intervals[run.part]
+                    let truth = NetworkStrokeBake.partRuler(source)
+                    #expect(run.measures.count == run.vertices.count)
+                    #expect(run.measures.first == 0 && abs(run.measures.last! - truth.last!) < 1e-6, "\(chain.id) part \(run.part) at \(zoom)")
+                    #expect(zip(run.measures, run.measures.dropFirst()).allSatisfy { $0 <= $1 })
+                    parts += 1
+                    guard line.lane == 0 else { continue }
+                    // Without a lane offset the run follows the source: the point at a vertex's metre on
+                    // the source is the vertex, within the corner rounding the finished run applies.
+                    let sourcePoints = source.map(StrokeProjection.point)
+                    for (vertex, metre) in zip(run.vertices, run.measures) {
+                        let expected = Self.point(on: sourcePoints, truth, at: metre)
+                        #expect(hypot(vertex.x - expected.x, vertex.y - expected.y) <= reach,
+                                "\(chain.id) part \(run.part) at \(zoom)")
+                        vertices += 1
+                    }
+                }
+            }
+        }
+        #expect(parts > 20 && vertices > 100, "parts \(parts), vertices \(vertices)")
+    }
+
     // MARK: Synthetic strokes
 
     /// One continuous chain over `points` (map points) with measures equal to the polyline length.

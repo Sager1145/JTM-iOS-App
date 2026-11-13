@@ -78,6 +78,27 @@ struct RailPackReviewFixTests {
         #expect(throws: RailPackError.nodesNotOnOneChain) { try r.vertexRanges(level: 0, fromNode: 4, toNode: 7) }
     }
 
+    @Test func independentPartsLineRefusesATripAcrossParts() throws {
+        var source = L.source()
+        source.lines[1].independentParts = true
+        let r = try RailPackReader(data: RailPackWriter.write(source))
+        try r.validateContents()
+        // The flag round trips and does not leak into the chain count.
+        #expect(try r.line(0).independentParts == false && r.line(1).independentParts && !r.line(2).independentParts)
+        #expect(try r.line(1).chainCount == 3 && r.line(1).firstChain == 1)
+        // Inside one part the trip is unchanged; across parts it is refused both ways, adjacent or not.
+        #expect(try r.vertexRanges(level: 0, fromNode: 4, toNode: 4).ranges.count == 1)
+        for (from, to) in [(4, 5), (5, 4), (4, 6), (6, 5)] {
+            #expect(throws: RailPackError.nodesNotOnOneChain) { try r.vertexRanges(level: 0, fromNode: from, toNode: to) }
+        }
+        // Negative control: the same pack without the flag walks the gap.
+        #expect(try loop().vertexRanges(level: 0, fromNode: 4, toNode: 5).ranges.count == 3)
+        // A line holds at most 32,767 chains.
+        #expect(throws: RailPackError.valueTooLarge("line chain count")) {
+            var s = L.source(); s.lines[1].chainCount = 0x8000; return try RailPackWriter.write(s)
+        }
+    }
+
     // MARK: Shared boundary vertex
 
     @Test func nodesOnASharedBoundaryVertexDropDegenerateRanges() throws {

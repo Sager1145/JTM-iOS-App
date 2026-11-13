@@ -166,7 +166,12 @@ public struct RailPackReader: Sendable {
     public func line(_ index: Int) throws -> RailPackLine {
         guard index >= 0, index < header.lineCount else { throw RailPackError.indexOutOfRange("line \(index)") }
         let o = regionSections[RailPackFormat.Region.lines.rawValue].offset + index * RailPackFormat.lineRow
-        return read { RailPackLine(firstChain: u32($0, o), chainCount: u16($0, o + 4), firstNode: u32($0, o + 6), nodeCount: u16($0, o + 10)) }
+        return read {
+            let word = u16($0, o + 4)
+            return RailPackLine(firstChain: u32($0, o), chainCount: word & RailPackFormat.lineChainCountMask,
+                                firstNode: u32($0, o + 6), nodeCount: u16($0, o + 10),
+                                independentParts: word & RailPackFormat.independentPartsFlag != 0)
+        }
     }
 
     public func group(_ index: Int) throws -> RailPackGroup {
@@ -402,10 +407,13 @@ public struct RailPackReader: Sendable {
     ///   of the first part and the start of the second); `reversed` is true when `fromNode` sits earlier in
     ///   the file than `toNode`. `wraps` on an open chain throws ``RailPackError/chainNotClosed``, and on
     ///   nodes of different chains ``RailPackError/nodesNotOnOneChain``.
-    /// - Different chains of one line (a non-continuous line): the tail of the first chain from its node,
+    /// - Different chains of one line whose chains are a sequence (a line with gaps): the tail of the first chain from its node,
     ///   every chain between, and the head of the last chain up to its node. Each range carries its
     ///   `chain`, and the stroke breaks where `chain` changes: the gap itself draws nothing. Nodes on
     ///   different lines throw ``RailPackError/nodesNotOnOneChain``. This looks the line up by linear scan.
+    ///   A line flagged `independentParts` (a non-continuous line: its chains are branches or lane
+    ///   fragments whose file order is not track order) also throws, because the chains between two parts
+    ///   in file order are not the track the trip rides; such a trip needs the topology's own runs.
     public func vertexRanges(level: Int, fromNode: Int, toNode: Int, wraps: Bool = false) throws -> (ranges: [RailPackVertexRange], reversed: Bool) {
         let a = try nodeSlot(level: level, node: fromNode), b = try nodeSlot(level: level, node: toNode)
         guard !a.isNone, !b.isNone else { throw RailPackError.indexOutOfRange("node without chain slot") }
@@ -426,6 +434,7 @@ public struct RailPackReader: Sendable {
             reversed = (a.piece, a.vertex) > (b.piece, b.vertex)
         } else {
             guard let owner = try lineOwning(nodes: fromNode, toNode) else { throw RailPackError.nodesNotOnOneChain }
+            guard !owner.independentParts else { throw RailPackError.nodesNotOnOneChain }
             let chains = Int(owner.firstChain)..<(Int(owner.firstChain) + Int(owner.chainCount))
             guard chains.contains(ca), chains.contains(cb) else { throw RailPackError.nodesNotOnOneChain }
             let lowFirst = ca < cb

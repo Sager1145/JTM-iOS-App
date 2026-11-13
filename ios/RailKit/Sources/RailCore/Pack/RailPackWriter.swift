@@ -67,7 +67,7 @@ public enum RailPackWriter {
 
         var lines = ByteSink(), groups = ByteSink(), spans = ByteSink()
         for line in source.lines {
-            lines.u32(line.firstChain); lines.u16(line.chainCount); lines.u32(line.firstNode); lines.u16(line.nodeCount)
+            lines.u32(line.firstChain); lines.u16(line.chainCount | (line.independentParts ? RailPackFormat.independentPartsFlag : 0)); lines.u32(line.firstNode); lines.u16(line.nodeCount)
         }
         for group in source.groups {
             groups.u32(group.colourLight); groups.u32(group.colourDark)
@@ -137,6 +137,7 @@ public enum RailPackWriter {
             throw RailPackError.valueTooLarge("chain or node count")
         }
         for line in s.lines {
+            guard line.chainCount <= RailPackFormat.lineChainCountMask else { throw RailPackError.valueTooLarge("line chain count") }
             guard Int(line.firstChain) + Int(line.chainCount) <= s.chainCount,
                   Int(line.firstNode) + Int(line.nodeCount) <= s.nodeCount else {
                 throw RailPackError.invalidInput("line refers beyond chain or node count")

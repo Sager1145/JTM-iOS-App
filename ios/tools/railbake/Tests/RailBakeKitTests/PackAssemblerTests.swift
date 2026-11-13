@@ -351,6 +351,37 @@ struct PackAssemblerTests {
             }
         }
         #expect(trips >= 2)
+
+        // Parts of a non-continuous line are branches or lane fragments, not a sequence: the reader
+        // refuses a trip from one part to another rather than walk the parts between them.
+        var crossPart = 0
+        for level in levels.indices {
+            for lineIndex in 0..<reader.header.lineCount {
+                let line = try reader.line(lineIndex)
+                #expect(line.independentParts, "every hk line is non-continuous")
+                guard line.chainCount >= 2, line.nodeCount >= 4 else { continue }
+                let from = Int(line.firstNode), to = Int(line.firstNode) + Int(line.nodeCount) - 1
+                let a = try reader.nodeSlot(level: level, node: from), b = try reader.nodeSlot(level: level, node: to)
+                guard try reader.chain(level: level, ofPiece: Int(a.piece)) != reader.chain(level: level, ofPiece: Int(b.piece)) else { continue }
+                #expect(throws: RailPackError.nodesNotOnOneChain) { try reader.vertexRanges(level: level, fromNode: from, toNode: to) }
+                #expect(throws: RailPackError.nodesNotOnOneChain) { try reader.vertexRanges(level: level, fromNode: to, toNode: from) }
+                crossPart += 1
+            }
+        }
+        #expect(crossPart >= 2, "the fixture holds lines with two parts")
+    }
+
+    @Test("a continuous line is not flagged as independent parts")
+    func continuousLinesAreNotIndependent() throws {
+        let directory = try RegionBakeTests.makeBuilderDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let (display, topology) = try Self.fixtureRegion("jp", directory: directory, referenceLevel: 26)
+        let reader = try Self.reader(try Self.assemble(display, topology, levels: [10]))
+        var flagged = 0, plain = 0
+        for index in 0..<reader.header.lineCount {
+            if try reader.line(index).independentParts { flagged += 1 } else { plain += 1 }
+        }
+        #expect(flagged == 0 && plain > 10, "the jp fixture holds only continuous lines: \(flagged) flagged / \(plain) plain")
     }
 
     @Test("two bakes of one input are byte for byte equal")
