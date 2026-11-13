@@ -1,43 +1,70 @@
+import Foundation
 import Testing
 @testable import RailCore
 
 struct RouteTestObservationTimeout: Error {}
 
-/// Observe actor state without leaving a suspended observer continuation behind.
+/// A ceiling, not a schedule. Every observation is woken by the event it waits
+/// for, so scheduler load only delays it; this bound exists solely so that a lost
+/// wakeup fails the test instead of hanging the run.
+private let routeTestObservationCeiling: Duration = .seconds(120)
+
+/// Runs an event-driven, cancellable wait; only the ceiling can end it otherwise.
 func waitForRouteTestObservation(
-    _ description: String, condition: @Sendable () async -> Bool
+    _ description: String, _ wait: @escaping @Sendable () async throws -> Void
 ) async throws {
-    let clock = ContinuousClock()
-    let deadline = clock.now.advanced(by: .seconds(5))
-    while !(await condition()) {
-        try Task.checkCancellation()
-        guard clock.now < deadline else {
-            Issue.record("Timed out observing \(description)")
-            throw RouteTestObservationTimeout()
-        }
-        await Task.yield()
+    let observed = try await withThrowingTaskGroup(of: Bool.self) { group in
+        group.addTask { try await wait(); return true }
+        group.addTask { try await Task.sleep(for: routeTestObservationCeiling); return false }
+        defer { group.cancelAll() }
+        return try await group.next() ?? false
+    }
+    guard observed else {
+        Issue.record("No \(description) within \(routeTestObservationCeiling)")
+        throw RouteTestObservationTimeout()
     }
 }
 
-fileprivate actor RouteTestCompletion<Value: Sendable> {
-    var result: Result<Value, any Error>?
-    func finish(_ value: Result<Value, any Error>) { result = value }
+/// Test-owned state whose waiters are resumed by the update that satisfies them.
+actor RouteTestState<State: Sendable> {
+    private(set) var value: State
+    private var waiters = StateWaiters<State>()
+
+    init(_ value: State) { self.value = value }
+
+    func update(_ change: @Sendable (inout State) -> Void) {
+        change(&value)
+        waiters.publish(value)
+    }
+
+    func wait(until condition: @escaping @Sendable (State) -> Bool) async throws {
+        let id = UUID()
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                waiters.add(id, current: value, condition: condition, continuation: continuation)
+            }
+        } onCancel: {
+            Task { await self.cancelWaiter(id) }
+        }
+    }
+
+    private func cancelWaiter(_ id: UUID) { waiters.cancel(id) }
 }
 
-/// The operation publishes its own result; waiting never creates another task
-/// suspended on a potentially lost production continuation.
+/// The operation publishes its own result; waiting suspends only on that
+/// test-owned state, never on a potentially lost production continuation.
 struct ControlledRouteTestTask<Value: Sendable>: Sendable {
     fileprivate let task: Task<Void, Never>
-    fileprivate let completion: RouteTestCompletion<Value>
+    fileprivate let completion: RouteTestState<Result<Value, any Error>?>
 
     func cancel() { task.cancel() }
 
     var value: Value {
         get async throws {
             try await waitForRouteTestObservation("controlled task completion") {
-                await completion.result != nil
+                try await completion.wait { $0 != nil }
             }
-            let result = try #require(await completion.result)
+            let result = try #require(await completion.value)
             return try result.get()
         }
     }
@@ -47,7 +74,7 @@ struct ControlledRouteTestTask<Value: Sendable>: Sendable {
 /// deliberately ignore cancellation to test production permit ownership.
 actor ControlledRouteTestWork {
     private var cancellations: [@Sendable () -> Void] = []
-    private var completions: [@Sendable () async -> Bool] = []
+    private var completions: [@Sendable () async throws -> Void] = []
     private var releases: [@Sendable () async -> Void] = []
 
     func releaseOnExit(_ action: @escaping @Sendable () async -> Void) {
@@ -57,15 +84,15 @@ actor ControlledRouteTestWork {
     func start<Value: Sendable>(
         _ operation: @escaping @Sendable () async throws -> Value
     ) -> ControlledRouteTestTask<Value> {
-        let completion = RouteTestCompletion<Value>()
+        let completion = RouteTestState<Result<Value, any Error>?>(nil)
         let task = Task {
             let result: Result<Value, any Error>
             do { result = .success(try await operation()) }
             catch { result = .failure(error) }
-            await completion.finish(result)
+            await completion.update { $0 = result }
         }
         cancellations.append { task.cancel() }
-        completions.append { await completion.result != nil }
+        completions.append { try await completion.wait { $0 != nil } }
         return ControlledRouteTestTask(task: task, completion: completion)
     }
 
@@ -78,19 +105,11 @@ actor ControlledRouteTestWork {
     func finish() async {
         for cancel in cancellations { cancel() }
         for release in releases { await release() }
-        // Cleanup also has a deadline. A lost production continuation can fail
-        // this observation, but cannot keep a structured task group alive.
-        let clock = ContinuousClock()
-        let deadline = clock.now.advanced(by: .seconds(5))
-        while true {
-            var finished = true
-            for completed in completions where !(await completed()) { finished = false }
-            if finished { break }
-            guard clock.now < deadline else {
-                Issue.record("Controlled route jobs did not finish after cancellation and gate release")
-                break
-            }
-            await Task.yield()
+        // Cleanup is bounded by the same ceiling. A lost production continuation
+        // fails this observation, but cannot keep a structured task group alive.
+        let pending = completions
+        try? await waitForRouteTestObservation("controlled route jobs finishing after cancellation and gate release") {
+            for completed in pending { try await completed() }
         }
         cancellations.removeAll()
         completions.removeAll()
@@ -116,29 +135,39 @@ struct RouteSolveLimiterTests {
         }
     }
 
-    private actor Probe {
-        private(set) var started: [Int] = []
-        private(set) var active = 0
-        private(set) var peak = 0
+    private struct ProbeState: Sendable {
+        var started: [Int] = []
+        var active = 0
+        var peak = 0
+    }
 
-        func enter(_ id: Int) {
-            started.append(id)
-            active += 1
-            peak = max(peak, active)
+    private struct Probe: Sendable {
+        private let state = RouteTestState(ProbeState())
+
+        var started: [Int] { get async { await state.value.started } }
+        var active: Int { get async { await state.value.active } }
+        var peak: Int { get async { await state.value.peak } }
+
+        func enter(_ id: Int) async {
+            await state.update {
+                $0.started.append(id)
+                $0.active += 1
+                $0.peak = max($0.peak, $0.active)
+            }
         }
 
-        func leave() { active -= 1 }
+        func leave() async { await state.update { $0.active -= 1 } }
 
         func waitForStarts(_ count: Int) async throws {
             try await waitForRouteTestObservation("operation starts >= \(count)") {
-                await self.started.count >= count
+                try await state.wait { $0.started.count >= count }
             }
         }
     }
 
     private func waitForQueue(_ count: Int, in limiter: RouteSolveLimiter) async throws {
         try await waitForRouteTestObservation("queued permits == \(count)") {
-            await limiter.queuedPermitCount == count
+            try await limiter.waitForQueuedPermits(count)
         }
     }
 

@@ -301,6 +301,13 @@ struct SearchEngineTests {
 
     /// Per-keystroke latency and memory at the JP station count. Debug numbers
     /// are an upper bound; the printed figures are the evidence.
+    ///
+    /// The budget is checked against CPU time, not wall time, so a loaded machine
+    /// does not fail it: each keystroke runs on a `.userInitiated` thread (the QoS of
+    /// `SearchEngine.query`'s worker), its cost is that thread's CPU time, which
+    /// excludes time spent waiting for a core, and the best of several rounds drops
+    /// rounds disturbed by preemption or a slower core. A real regression slows
+    /// every round, so it still fails (at ~25 ms per keystroke today, 2x does).
     @Test func performanceAtJapanScale() throws {
         let catalog = try #require(SearchEngineFixture.catalog)
         let readings = SearchEngineFixture.readings
@@ -313,20 +320,45 @@ struct SearchEngineTests {
         let keystrokes = ["s", "sh", "shi", "shin", "shinj", "shinjy", "shinjyu", "shinjyuk", "shinjyuku",
                           "と", "とう", "とうき", "東", "東京", "东急 目黑线", "山手綫", "Tokoy", "yamanote", "新宿駅",
                           "shinjkuu", "いけぶくお", "渋矢", "新縮"]
-        _ = built.query("warm", context: context)
-        var worst: Duration = .zero
-        var total: Duration = .zero
-        for text in keystrokes {
-            let elapsed = clock.measure { _ = built.query(text, context: context) }
-            worst = max(worst, elapsed)
-            total += elapsed
+        let context = self.context
+        let costs = Self.bestThreadCPUTimes(rounds: 5, count: keystrokes.count) { slot in
+            _ = built.query(slot.map { keystrokes[$0] } ?? "warm", context: context)
         }
-        let average = total / keystrokes.count
+        let worst = costs.max() ?? .zero
+        let average = costs.reduce(Duration.zero, +) / keystrokes.count
         print("SearchEngine JP: docs=\(built.count) keys=\(built.keys.count) units=\(built.units.count) "
-              + "memory=\(built.memoryFootprint / 1024)KiB build=\(build) avg=\(average) worst=\(worst)")
+              + "memory=\(built.memoryFootprint / 1024)KiB build=\(build) cpu best-of-5 avg=\(average) worst=\(worst)")
         #expect(built.count > 9_000)
         #expect(built.memoryFootprint < 8 * 1024 * 1024)
         #expect(average < .milliseconds(50))
+    }
+
+    /// For each of `count` workloads, the least CPU time its thread spent over
+    /// `rounds` runs. `work(nil)` warms up once; `work(i)` runs workload `i`.
+    private static func bestThreadCPUTimes(
+        rounds: Int, count: Int, _ work: @escaping @Sendable (Int?) -> Void
+    ) -> [Duration] {
+        final class Output: @unchecked Sendable { var costs: [Duration] = [] }
+        let output = Output()
+        let done = DispatchSemaphore(value: 0)
+        let thread = Thread {
+            func cpuTime() -> UInt64 { clock_gettime_nsec_np(CLOCK_THREAD_CPUTIME_ID) }
+            work(nil)
+            var best = [UInt64](repeating: .max, count: count)
+            for _ in 0..<rounds {
+                for slot in 0..<count {
+                    let start = cpuTime()
+                    work(slot)
+                    best[slot] = min(best[slot], cpuTime() - start)
+                }
+            }
+            output.costs = best.map { .nanoseconds(Int64($0)) }
+            done.signal()
+        }
+        thread.qualityOfService = .userInitiated
+        thread.start()
+        done.wait()
+        return output.costs
     }
 }
 
