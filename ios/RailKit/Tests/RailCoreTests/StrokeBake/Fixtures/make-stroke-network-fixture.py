@@ -163,6 +163,26 @@ def synthetic():
     entries.append({"lineKey": "jp|syn-tenant",
                     "meta": dict(base_meta, id="syn-tenant", name="Synthetic tenant", color="#0033aa"),
                     "chunk": tenant_chunk})
+
+    # One railway cut into three chains that meet at shared vertices: chain 1 is a reviewed branch
+    # boundary (joinPrevious false), chain 2 continues chain 1 (joinPrevious true).
+    route = []
+    for i in range(61):
+        t = i / 60
+        route.append([139.800 + 0.10 * t, 35.700 + 0.015 * math.sin(t * 14) - 0.02 * t])
+    fragments = []
+    stations = []
+    for chain, (lo, hi) in enumerate(((0, 20), (20, 40), (40, 60))):
+        points = route[lo:hi + 1]
+        total = metres(points)
+        fragments.append({
+            "lineKey": "jp|syn-branch", "parts": [points[:11], points[10:]], "continuous": True,
+            "chain": chain, "joinPrevious": chain != 1, "laneRows": [[0, total, 0]],
+            "totalMetres": total})
+        stations.append({"id": "syn-branch:%d" % chain, "lineKey": "jp|syn-branch", "slot": [chain, 10]})
+    entries.append({"lineKey": "jp|syn-branch",
+                    "meta": dict(base_meta, id="syn-branch", name="Synthetic branch", color="#33aa00"),
+                    "chunk": {"format": "synthetic", "region": "jp", "lines": fragments, "stations": stations}})
     return entries
 
 
