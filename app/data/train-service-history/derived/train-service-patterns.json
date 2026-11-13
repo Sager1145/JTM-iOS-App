@@ -1814,6 +1814,60 @@
       "reason": "canonical timetable coverage is not yet sufficient for this service",
       "status": "legacy_unverified_fallback"
     },
+    "company": "九州旅客鉄道",
+    "completeness": {
+      "lines": "complete",
+      "stops": "partial",
+      "validity": "partial"
+    },
+    "confidence": "medium",
+    "destination": "宮地",
+    "label": "熊本〜宮地（2025年3月以降）",
+    "lines": [
+      "豊肥本線"
+    ],
+    "name": "あそぼーい！",
+    "notes": "2025-03-15のダイヤ改正で熊本〜別府の運転区間を熊本〜宮地に変更し、1日2往復（1〜4号）で運転（JR九州 2024-12-13 リリース）。公式紹介ページ（2026-03-14ダイヤ）の停車駅は熊本・新水前寺・肥後大津・立野・阿蘇・宮地。 【2026-11-11 recheck: jr-kyushu-east-south#18, jr-kyushu-east-south#19; sources: https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi https://www.jrkyushu.co.jp/trains/asoboy/ https://www.jrkyushu.co.jp/trains/umisachiyamasachi/ https://www.jrkyushu.co.jp/company/info/data/line_km.html https://www.jrkyushu.co.jp/news/__icsFiles/afieldfile/2024/12/13/241213_2025daiya_kaisei_1.pdf https://www.jrkyushu-timetable.jp/cgi-bin/jr-k_time/tt_dep.cgi?c={code}&year_month=YYYYMM&date=DD&disp_tt=1】",
+    "optionalStops": [],
+    "origin": "熊本",
+    "patternId": "asoboy-kumamoto-miyaji-from-2025-03",
+    "serviceId": "asoboy",
+    "source": "https://www.jrkyushu.co.jp/trains/asoboy/",
+    "stops": [
+      {
+        "name": "熊本",
+        "sourceCode": "009785"
+      },
+      {
+        "name": "新水前寺",
+        "sourceCode": "009770"
+      },
+      {
+        "name": "肥後大津",
+        "sourceCode": "009674"
+      },
+      {
+        "name": "立野",
+        "sourceCode": "009672"
+      },
+      {
+        "name": "阿蘇",
+        "sourceCode": "009642"
+      },
+      {
+        "name": "宮地",
+        "sourceCode": "009643"
+      }
+    ],
+    "validFrom": "2025-03-15",
+    "validUntil": null,
+    "via": []
+  },
+  {
+    "_derivation": {
+      "reason": "canonical timetable coverage is not yet sufficient for this service",
+      "status": "legacy_unverified_fallback"
+    },
     "company": "東日本旅客鉄道",
     "completeness": {
       "lines": "complete",

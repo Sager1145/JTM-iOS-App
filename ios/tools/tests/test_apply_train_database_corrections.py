@@ -243,6 +243,11 @@ class SampleOfCorrectedRecordsPerGroup(unittest.TestCase):
 
     def test_jr_kyushu_shikoku_overnight(self):
         self.assertEqual(self.data["asoboy-kumamoto-beppu"]["validUntil"], "2025-03-15")
+        # the 2025-03-15 revision shortened あそぼーい！ to 熊本〜宮地; the current era must stay covered
+        current = self.data["asoboy-kumamoto-miyaji-from-2025-03"]
+        self.assertEqual(current["validFrom"], "2025-03-15")
+        self.assertIsNone(current["validUntil"])
+        self.assertEqual(names(current["stops"]), ["熊本", "新水前寺", "肥後大津", "立野", "阿蘇", "宮地"])
         self.assertEqual(self.data["muroto-tokushima-mugi"]["validUntil"], "2025-03-15")
         kinan = self.data["west-express-ginga-kinan"]
         self.assertIn("和歌山", names(kinan["optionalStops"]))
