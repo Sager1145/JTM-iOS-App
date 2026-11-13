@@ -8,13 +8,17 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT" || exit 2
 
-# Stamped, fast port fixtures that are green. Deliberately excluded: route-graph,
-# route-station-candidates, route-section-solve, route-solver-core, import,
-# station-join-smoothing (known red), historical-routes (slow), operator-branding
-# and route-feature (red today).
+# Stamped, fast port fixtures that are green. Deliberately excluded:
+#  - route-graph, route-station-candidates, route-section-solve, route-solver-core:
+#    legacy coordinate-key solver fixtures pinned at cache version 25; the JS
+#    reference now emits identity keys at version 28, so they are stale until
+#    the user decides whether to regenerate or retire them.
+#  - historical-routes: green but slow, so run by hand
+#    (build-port-fixtures.mjs --check --only=historical-routes.json).
 FIXTURES=(continuous-stroke playback stats station-display display-parts i18n
   dates family-windows grooming overlap-lanes route-hints station-visibility
-  stations store-ops validation)
+  stations store-ops validation import operator-branding route-feature
+  station-join-smoothing)
 
 # One swift test run: the guards plus the Swift/JS parity suites.
 # Excluded as slow: RailHistoryPackageTests (~15 min), JunctionApproachTests (~11 min).
