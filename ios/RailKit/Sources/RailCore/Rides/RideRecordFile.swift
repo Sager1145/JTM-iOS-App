@@ -24,11 +24,23 @@ import Foundation
 // re-solved, and are not returned as entries. A data rebuild therefore lists exactly
 // the trips to re-solve and nothing else.
 //
-// Failures are results too: an `unresolved` trip, and the gaps of a `partial` one,
-// stay as stored. They are returned in `failed` and retried only when the user
-// asks to repair, never at launch, never because a line changed (a trip with no
-// span uses no line). A `partial` trip is still re-solved as a whole when a line
-// its spans use changed.
+// Failures are results too: an `unresolved` trip, and the gaps of a `partial` one, stay
+// as stored and are returned in `failed`, retried only when the user asks to repair,
+// never at launch. A failure has no span (or no span in its gap) to name the line a data
+// fix would touch, so it carries the region's network revision instead: the hash of
+// every line stamp of the region, kept in a region table. When the region's revision
+// differs from the stored one (a junction or link added, any line changed), the failure
+// is listed in `stale` and re-solved once; a failure never waits for a manual repair
+// after a data fix. A `partial` trip is re-solved as a whole when a line its spans use
+// changed too.
+//
+// Known limit, by design: a trip that resolved is checked only against the lines its
+// spans use. It is not re-solved when a line it did not use changes (a new junction
+// that gives a shorter route over another line, a through-service link, an operator or
+// institution change, a stop key that newly resolves). Such a trip keeps its stored
+// route until the semantics version is bumped or the user repairs. So a rebuild lists
+// the trips that use a changed line, plus every stored failure of a region whose
+// network changed; it does not list every trip whose best route changed.
 //
 // Layout, little-endian, no padding:
 //
@@ -39,15 +51,16 @@ import Foundation
 //             hand whenever the resolver's behaviour changes
 //     8  32   timetableRevision: SHA-256 of the timetable database the
 //             timetable-evidence step read; a new timetable is a miss
-//    40   2   reserved (0)
+//    40   2   regionCount
 //    42   2   lineCount
 //    44   4   entryCount
 //    48   4   bodyLength (bytes after the header)
 //    52   4   reserved (0)
 //    56   8   bodyChecksum: first 8 bytes of SHA-256 of the body
 //   body: lineCount line rows sorted ascending by lineKey (lineKey u64 |
-//     contentHash u64), then entryCount entries sorted ascending by
-//     (key.high, key.low): key 16 (high then low) | outcome u8 | reserved u8 (0) |
+//     contentHash u64), then regionCount region rows sorted ascending by regionKey
+//     (regionKey u64 | networkRevision u64), then entryCount entries sorted ascending by
+//     (key.high, key.low): key 16 (high then low) | outcome u8 | region row u8 |
 //     spanCount u16 | gapCount u16 | spans 8 each | gaps 3 each
 //     (section u16, reason u8)
 //
@@ -74,6 +87,8 @@ public enum RideRecordFile {
     private static let entryFixedSize = RideRefs.Key.byteCount + 6
     private static let gapByteCount = 3
     private static let lineRowSize = 16
+    private static let regionRowSize = 16
+    public static let maxRegions = 255
 
     public enum Status: Sendable, Equatable {
         case loaded
@@ -95,6 +110,19 @@ public enum RideRecordFile {
         public var region: String
         public var stamps: [LineStamp]
         public init(region: String, stamps: [LineStamp]) { self.region = region; self.stamps = stamps }
+
+        /// The region's network revision: the first 8 bytes of SHA-256 over every stamp, in
+        /// lineKey order, so independent of line order. Any line added, removed or changed
+        /// (which includes every junction or link edit, they change both end lines) changes it.
+        public var networkRevision: UInt64 {
+            var sha = SHA256()
+            for stamp in stamps.sorted(by: { $0.lineKey < $1.lineKey }) {
+                var key = stamp.lineKey.littleEndian, hash = stamp.contentHash.littleEndian
+                withUnsafeBytes(of: &key) { sha.update(bufferPointer: $0) }
+                withUnsafeBytes(of: &hash) { sha.update(bufferPointer: $0) }
+            }
+            return RideRecordFile.first8(sha.finalize())
+        }
     }
 
     /// A ride and the region whose topology its line indices belong to.
@@ -120,13 +148,25 @@ public enum RideRecordFile {
         /// A ride's span names a line the region's stamps do not have, or a region that was not given.
         case unknownLine
         case tooManyLines
+        case tooManyRegions
     }
 
     /// The line's identity: the first 8 bytes (little-endian) of SHA-256 over region, NUL, line id.
     public static func lineKey(region: String, lineID: String) -> UInt64 {
         var sha = SHA256()
         sha.update(data: Data(region.utf8)); sha.update(data: [0]); sha.update(data: Data(lineID.utf8))
-        return Array(sha.finalize().prefix(8)).enumerated().reduce(UInt64(0)) { $0 | UInt64($1.element) << (8 * UInt64($1.offset)) }
+        return first8(sha.finalize())
+    }
+
+    /// The region's identity in the region table: the first 8 bytes of SHA-256 over a tag and the region.
+    public static func regionKey(_ region: String) -> UInt64 {
+        var sha = SHA256()
+        sha.update(data: Data("region".utf8)); sha.update(data: [0]); sha.update(data: Data(region.utf8))
+        return first8(sha.finalize())
+    }
+
+    fileprivate static func first8(_ digest: SHA256.Digest) -> UInt64 {
+        Array(digest.prefix(8)).enumerated().reduce(UInt64(0)) { $0 | UInt64($1.element) << (8 * UInt64($1.offset)) }
     }
 
     /// Highest valid `GapReason` bit set.
@@ -152,15 +192,20 @@ public enum RideRecordFile {
         let stampsByRegion = Dictionary(stamps.map { ($0.region, $0.stamps) }, uniquingKeysWith: { _, last in last })
         var byKey: [RideRefs.Key: StoredRide] = [:]
         for ride in rides where ride.refs.outcome != .disabledRegion && entryByteCount(of: ride.refs) <= maxBytesPerTrip {
+            // A trip of a region with no stamps cannot be validated on read. With a span it is a write
+            // error; without one it is left out (nothing could ever tell it went stale).
+            if stampsByRegion[ride.region] == nil {
+                if ride.refs.spans.isEmpty { continue }
+                throw WriteError.unknownLine
+            }
             byKey[ride.refs.key] = ride
         }
         let ordered = byKey.values.sorted { ($0.refs.key.high, $0.refs.key.low) < ($1.refs.key.high, $1.refs.key.low) }
         var used: [UInt64: UInt64] = [:]
+        var regionRevisions: [UInt64: UInt64] = [:]
         for ride in ordered {
-            guard let regionStamps = stampsByRegion[ride.region] else {
-                if ride.refs.spans.isEmpty { continue }
-                throw WriteError.unknownLine
-            }
+            let regionStamps = stampsByRegion[ride.region]!
+            regionRevisions[regionKey(ride.region)] = RegionStamps(region: ride.region, stamps: regionStamps).networkRevision
             for span in ride.refs.spans {
                 guard Int(span.span.line) < regionStamps.count else { throw WriteError.unknownLine }
                 let stamp = regionStamps[Int(span.span.line)]
@@ -170,16 +215,20 @@ public enum RideRecordFile {
         guard used.count <= Int(UInt16.max) else { throw WriteError.tooManyLines }
         let table = used.sorted { $0.key < $1.key }
         let rowOf = Dictionary(uniqueKeysWithValues: table.enumerated().map { ($1.key, UInt16($0)) })
+        guard regionRevisions.count <= maxRegions else { throw WriteError.tooManyRegions }
+        let regionTable = regionRevisions.sorted { $0.key < $1.key }
+        let regionRowOf = Dictionary(uniqueKeysWithValues: regionTable.enumerated().map { ($1.key, UInt8($0)) })
 
         var body = [UInt8]()
-        body.reserveCapacity(table.count * lineRowSize + ordered.reduce(0) { $0 + entryByteCount(of: $1.refs) })
+        body.reserveCapacity(table.count * lineRowSize + regionTable.count * regionRowSize + ordered.reduce(0) { $0 + entryByteCount(of: $1.refs) })
         for row in table { append(row.key, to: &body); append(row.value, to: &body) }
+        for row in regionTable { append(row.key, to: &body); append(row.value, to: &body) }
         for ride in ordered {
             let refs = ride.refs
             append(refs.key.high, to: &body)
             append(refs.key.low, to: &body)
             body.append(refs.outcome.rawValue)
-            body.append(0)
+            body.append(regionRowOf[regionKey(ride.region)]!)
             append(UInt16(refs.spans.count), to: &body)
             append(UInt16(refs.gaps.count), to: &body)
             for span in refs.spans {
@@ -198,7 +247,7 @@ public enum RideRecordFile {
         append(formatVersion, to: &out)
         append(semanticsVersion, to: &out)
         out.append(contentsOf: timetableRevision)
-        append(UInt16(0), to: &out)
+        append(UInt16(regionTable.count), to: &out)
         append(UInt16(table.count), to: &out)
         append(UInt32(ordered.count), to: &out)
         append(UInt32(body.count), to: &out)
@@ -215,7 +264,9 @@ public enum RideRecordFile {
         func fail(_ status: Status) -> ReadResult { ReadResult(status: status, entries: [:], stale: [], failed: []) }
         guard timetableRevision.count == revisionByteCount else { return fail(.corrupt) }
         var now: [UInt64: (index: UInt16, hash: UInt64)] = [:]
+        var revisionNow: [UInt64: UInt64] = [:]
         for region in current {
+            revisionNow[regionKey(region.region)] = region.networkRevision
             for (index, stamp) in region.stamps.enumerated() where index <= Int(UInt16.max) {
                 now[stamp.lineKey] = (UInt16(index), stamp.contentHash)
             }
@@ -229,9 +280,10 @@ public enum RideRecordFile {
             guard u16(4) == Int(formatVersion) else { return fail(.corrupt) }
             guard u16(6) == Int(semanticsVersion) else { return fail(.semanticsMismatch) }
             guard raw[8..<40].elementsEqual(timetableRevision) else { return fail(.timetableRevisionMismatch) }
-            guard u16(40) == 0, u32(52) == 0 else { return fail(.corrupt) }
-            let lineCount = u16(42), count = u32(44), bodyLength = u32(48)
-            let tableBytes = lineCount * lineRowSize
+            guard u32(52) == 0 else { return fail(.corrupt) }
+            let regionCount = u16(40), lineCount = u16(42), count = u32(44), bodyLength = u32(48)
+            guard regionCount <= maxRegions else { return fail(.corrupt) }
+            let tableBytes = lineCount * lineRowSize + regionCount * regionRowSize
             guard raw.count == headerSize + bodyLength, tableBytes <= bodyLength,
                   count <= (bodyLength - tableBytes) / entryFixedSize
             else { return fail(.corrupt) }
@@ -249,6 +301,17 @@ public enum RideRecordFile {
                 if let found = now[key], found.hash == hash { remap[row] = found.index }
             }
 
+            // The region table: whether each region's network is the one the file was written against.
+            var regionCurrent = [Bool](repeating: false, count: regionCount)
+            var previousRegion: UInt64?
+            let regionBase = headerSize + lineCount * lineRowSize
+            for row in 0..<regionCount {
+                let key = u64(regionBase + row * regionRowSize), revision = u64(regionBase + row * regionRowSize + 8)
+                if let previousRegion, key <= previousRegion { return fail(.corrupt) }
+                previousRegion = key
+                regionCurrent[row] = revisionNow[key] == revision
+            }
+
             var entries: [RideRefs.Key: RideRefs] = [:]
             var seen = Set<RideRefs.Key>()
             var stale: [RideRefs.Key] = [], failed: [RideRefs.Key] = []
@@ -258,7 +321,8 @@ public enum RideRecordFile {
                 guard cursor + entryFixedSize <= raw.count else { return fail(.corrupt) }
                 let key = RideRefs.Key(high: u64(cursor), low: u64(cursor + 8))
                 guard let outcome = RideRefs.Outcome(rawValue: raw[cursor + 16]),
-                      outcome != .disabledRegion, raw[cursor + 17] == 0 else { return fail(.corrupt) }
+                      outcome != .disabledRegion, Int(raw[cursor + 17]) < regionCount else { return fail(.corrupt) }
+                let regionRow = Int(raw[cursor + 17])
                 let spanCount = u16(cursor + 18), gapCount = u16(cursor + 20)
                 let size = entryFixedSize + spanCount * RideRefs.Span.byteCount + gapCount * gapByteCount
                 guard size <= maxBytesPerTrip, cursor + size <= raw.count, seen.insert(key).inserted
@@ -290,10 +354,11 @@ public enum RideRecordFile {
                     at += gapByteCount
                 }
                 let ride = RideRefs(key: key, outcome: outcome, spans: spans, gaps: gaps)
-                if usesChangedLine { stale.append(key) }
+                let failure = isFailure(ride)
+                if usesChangedLine || (failure && !regionCurrent[regionRow]) { stale.append(key) }
                 else {
                     entries[key] = ride
-                    if isFailure(ride) { failed.append(key) }
+                    if failure { failed.append(key) }
                 }
                 cursor += size
             }

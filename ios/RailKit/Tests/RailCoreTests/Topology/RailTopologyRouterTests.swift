@@ -638,4 +638,57 @@ struct RailTopologyRouterTests {
         let fromSide = try #require(t.route(back))
         #expect(fromSide.spans == [t.span("f", 1, 0)] && fromSide.unproven)
     }
+
+    // MARK: Production mirror: target scoring and direction scope
+
+    /// s -> p or q; the end station has one node on each of p and q, and the two are not joined.
+    static func twoEndNodes(p: UInt32, q: UInt32) -> Net {
+        var net = Net()
+        net.lines = [
+            .chain("s", ["S0", "S1"], lengths: [50_000]),
+            .chain("p", ["P0", "P1"], lengths: [p]),
+            .chain("q", ["Q0", "Q1"], lengths: [q]),
+        ]
+        net.links = [.init(a: (0, 1), b: (1, 0)), .init(a: (0, 1), b: (2, 0))]
+        return net
+    }
+
+    @Test("a target is scored as production does: the line preference penalty counts twice, and can flip the end node")
+    func targetScoreDoublesThePreferencePenalty() throws {
+        func line(_ p: UInt32, _ q: UInt32, preferred: Set<String>) throws -> (String?, UInt64) {
+            let t = try Self.twoEndNodes(p: p, q: q).topology()
+            let path = try #require(t.route(Self.query(t, [("s", 0)], [("p", 1), ("q", 1)], preferred: preferred)))
+            return (t.lineID(path.spans[1].line), path.lengthCm)
+        }
+        // p 100,000 cm, not preferred; q 1,200,000 cm, preferred. Dijkstra cost: p 900,000 against q 1,200,000, so p
+        // settles first. Score: p 900,000 + 800,000 again = 1,700,000 against q 1,200,000: production keeps q.
+        let flipped = try line(100_000, 1_200_000, preferred: ["q", "s"])
+        #expect(flipped.0 == "q" && flipped.1 == 50_000 + 1_200_000)   // the reported length is the real one
+        // Without a preference the plain minimum cost stays: p.
+        #expect(try line(100_000, 1_200_000, preferred: []).0 == "p")
+        // Past the doubled penalty (17 times) the cheaper-cost line wins again.
+        #expect(try line(100_000, 1_800_000, preferred: ["q", "s"]).0 == "p")
+        // Below the single penalty (9 times) q wins on cost already.
+        #expect(try line(100_000, 800_000, preferred: ["q", "s"]).0 == "q")
+    }
+
+    @Test("direction is blocked only when both ends are given by code, and only between each end's first node on the line")
+    func directionNeedsBothCodes() throws {
+        var net = Net()
+        net.lines = [.chain("w", ["W0", "W1", "W2"], lengths: [20_000, 10_000], flags: [.forward])]
+        let t = try net.topology()
+        // By code: W2 -> W0 goes against the one-way line: no path.
+        #expect(t.route(Self.query(t, [("w", 2)], [("w", 0)])) == nil)
+        // A name-only end has no code: production blocks nothing, the path is free.
+        var nameOnly = Self.query(t, [("w", 2)], [("w", 0)])
+        nameOnly.toNameOnly = true
+        #expect(t.route(nameOnly)?.spans == [t.span("w", 2, 0)])
+        var fromName = Self.query(t, [("w", 2)], [("w", 0)])
+        fromName.fromNameOnly = true
+        #expect(t.route(fromName)?.spans == [t.span("w", 2, 0)])
+        // First node per line only: start candidates W0 and W2 towards W1. The solver looks at W0 -> W1 (forward, allowed)
+        // and never at W2 -> W1 (the second node of the start), so W2 -> W1 (10,000) is not blocked and beats W0 -> W1 (20,000).
+        let twice = try #require(t.route(Self.query(t, [("w", 0), ("w", 2)], [("w", 1)])))
+        #expect(twice.spans == [t.span("w", 2, 1)] && twice.lengthCm == 10_000)
+    }
 }

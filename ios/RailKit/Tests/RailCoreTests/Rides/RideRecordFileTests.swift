@@ -157,25 +157,59 @@ struct RideRecordFileTests {
         #expect(read.entries[Self.ride(99).key] == nil && !read.stale.contains(Self.ride(99).key))
     }
 
-    @Test("a failure is stored as it is: not stale when a line changes, not retried unless asked")
+    @Test("a failure is stored as it is and not retried unless asked, while the network is unchanged")
     func failuresStayUntilRepair() throws {
         let failed = Self.ride(1, outcome: .unresolved, spans: 0, gaps: 2)
         let partial = Self.ride(2, outcome: .partial, lines: [5], gaps: 1)
         let good = Self.ride(3, lines: [5])
         let data = try Self.encode([failed, partial, good])
-        // Every line changes: the unresolved trip uses none, so it is untouched.
-        var changed = Self.stamps()
-        for i in changed.stamps.indices { changed.stamps[i].contentHash &+= 7 }
-        let afterRebuild = Self.decode(data, current: [changed])
-        #expect(Set(afterRebuild.stale) == [partial.key, good.key])
-        #expect(afterRebuild.entries[failed.key] == failed)
-        #expect(afterRebuild.failed == [failed.key])
-        // Unchanged data: the stored failures come back as stored and are listed for repair only.
         let same = Self.decode(data)
         #expect(same.stale.isEmpty)
         #expect(Set(same.failed) == [failed.key, partial.key])
-        #expect(same.entries[partial.key] == partial)
+        #expect(same.entries[failed.key] == failed && same.entries[partial.key] == partial)
         #expect(!same.failed.contains(good.key))
+        // Lines moving about without a content change is no change of the network.
+        let reordered = File.RegionStamps(region: "jp", stamps: Self.stamps().stamps.reversed())
+        #expect(Self.decode(data, current: [reordered]).stale.isEmpty)
+    }
+
+    @Test("a change anywhere in the region's network turns a stored failure stale, once")
+    func failureGoesStaleWhenTheNetworkChanges() throws {
+        // An unresolved trip has no span: no line says it depends on anything. A link added between two
+        // lines the trip never used changes the hashes of exactly those two lines.
+        let failed = Self.ride(1, outcome: .unresolved, spans: 0, gaps: 2)
+        let partial = Self.ride(2, outcome: .partial, lines: [5], gaps: 1)   // its gap is on other lines
+        let good = Self.ride(3, lines: [5])
+        let data = try Self.encode([failed, partial, good])
+        var linked = Self.stamps()
+        linked.stamps[8].contentHash &+= 1
+        linked.stamps[9].contentHash &+= 1
+        let read = Self.decode(data, current: [linked])
+        #expect(Set(read.stale) == [failed.key, partial.key])
+        #expect(read.entries[good.key] == good && read.failed.isEmpty)
+        // A line added, or removed, counts the same.
+        #expect(Set(Self.decode(data, current: [Self.stamps(count: 13)]).stale) == [failed.key, partial.key])
+        #expect(Set(Self.decode(data, current: [Self.stamps(count: 11)]).stale) == [failed.key, partial.key])
+        // A resolved trip that did not use a changed line is not listed (documented limit).
+        #expect(read.stale.contains(good.key) == false)
+        // After the re-solve the file is written against the new network and the failure is current again.
+        let rewritten = try Self.encode([failed], stamps: [linked])
+        #expect(Self.decode(rewritten, current: [linked]).failed == [failed.key])
+    }
+
+    @Test("a failure goes stale only with its own region's network")
+    func failureStaleIsPerRegion() throws {
+        let jp = Self.stamps("jp"), tw = Self.stamps("tw", seed: 5000)
+        let a = Self.ride(1, outcome: .unresolved, spans: 0, gaps: 1)
+        let b = Self.ride(2, outcome: .unresolved, spans: 0, gaps: 1)
+        let data = try File.encode(Self.stored([a], region: "jp") + Self.stored([b], region: "tw"),
+                                   stamps: [jp, tw], timetableRevision: Self.timetable)
+        var changedTW = tw
+        changedTW.stamps[0].contentHash += 1
+        let read = Self.decode(data, current: [jp, changedTW])
+        #expect(read.stale == [b.key] && read.entries[a.key] == a && read.failed == [a.key])
+        // A region whose topology is not loaded cannot vouch for its failures.
+        #expect(Self.decode(data, current: [jp]).stale == [b.key])
     }
 
     // MARK: Misses and corruption
@@ -216,7 +250,7 @@ struct RideRecordFileTests {
         let gapped = kind.hasPrefix("gap")
         let rides = gapped ? [Self.ride(1, lines: [1], gaps: 1)] : (1...5).map { Self.ride(UInt64($0), lines: [UInt16($0), 7]) }
         var bytes = [UInt8](try Self.encode(rides))
-        let tableBytes = Int(bytes[42]) * 16
+        let tableBytes = Int(bytes[42]) * 16 + Int(bytes[40]) * 16
         func reseal() {
             let digest = Array(SHA256.hash(data: bytes[File.headerSize...]).prefix(8))
             bytes.replaceSubrange(56..<64, with: digest)
@@ -258,7 +292,8 @@ struct RideRecordFileTests {
             bytes[i] ^= 0x01
             let read = Self.decode(Data(bytes))
             if read.status == .loaded {
-                #expect(Array(read.entries.values).sorted { $0.key.low < $1.key.low } == rides.sorted { $0.key.low < $1.key.low }, "flip at \(i)")
+                // A flip may drop a trip (a region row that no longer matches makes a failure stale), never alter one.
+                for (key, ride) in read.entries { #expect(rides.first { $0.key == key } == ride, "flip at \(i)") }
             } else { #expect(read.entries.isEmpty && read.stale.isEmpty) }
         }
     }
