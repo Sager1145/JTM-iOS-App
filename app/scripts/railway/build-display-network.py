@@ -3174,12 +3174,13 @@ def build_region_history(
 
 def load_topology_inputs(
     junctions_path: Path | None, through_services_path: Path | None,
-    registry_dir: Path | None,
+    registry_dir: Path | None, enforce_shipped_ledgers: bool = True,
 ) -> tuple[dict, dict[str, str]]:
     """The documents the topology's links and stop index are compiled from, and
     their digests for the manifest. A path of None means that input is not part
     of this build; nothing is looked for elsewhere."""
-    documents: dict = {"junctions": None, "throughServices": None, "registryDir": registry_dir}
+    documents: dict = {"junctions": None, "throughServices": None, "registryDir": registry_dir,
+                       "enforceShippedLedgers": enforce_shipped_ledgers}
     digests: dict[str, str] = {}
     for name, path, label in (
             ("junctions", junctions_path, "topology/physical-rail-junctions.json"),
@@ -3240,7 +3241,9 @@ def build_topology_file(
     data, report = display_topology.build_region_topology(
         region, sources, bytes.fromhex(package_sha256), bytes.fromhex(display_sha256),
         junctions, through if region == "jp" else None, registry)
-    display_topology.enforce_invariants(region, report, shipped_ledgers=junctions is not None)
+    display_topology.enforce_invariants(
+        region, report, length_ledger=inputs["enforceShippedLedgers"],
+        junction_ledger=inputs["enforceShippedLedgers"] and junctions is not None)
     return data, report
 
 
@@ -3307,7 +3310,11 @@ def build(
     junctions_path: Path | None = None,
     through_services_path: Path | None = None,
     registry_dir: Path | None = None,
+    enforce_shipped_ledgers: bool = True,
 ) -> dict:
+    """`enforce_shipped_ledgers=False` is for hand-made test packages with
+    invented geometry: it skips the shipped networks' edge-length and link-row
+    ledgers. Every real build keeps the default."""
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
@@ -3484,7 +3491,7 @@ def build(
             (list(scope), render_groups_doc.get("byLineId") or {}))
 
     topology_inputs, topology_input_digests = load_topology_inputs(
-        junctions_path, through_services_path, registry_dir)
+        junctions_path, through_services_path, registry_dir, enforce_shipped_ledgers)
     input_sha256.update(topology_input_digests)
 
     display_hubs_doc: dict = {}

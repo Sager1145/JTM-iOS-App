@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import contextlib
+import functools
 import importlib.util
 import io
 import json
@@ -14,6 +15,11 @@ SPEC = importlib.util.spec_from_file_location("display_network", SCRIPT)
 display_network = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader
 SPEC.loader.exec_module(display_network)
+# Every build in this file runs over hand-made packages with invented geometry,
+# which the shipped networks' edge-length and link-row ledgers do not describe,
+# so they build with those ledgers off. `build_shipped` is the real, strict build.
+build_shipped = display_network.build
+display_network.build = functools.partial(build_shipped, enforce_shipped_ledgers=False)
 
 # North America (us/ca) was removed from the shipped data in a12d072cd ("NA data
 # removal"): app/public/rail has no us-2025.json or ca-2025.json and
@@ -641,39 +647,35 @@ class DisplayNetworkTests(unittest.TestCase):
 
     def test_lane_rows_on_a_withheld_line_stay_inside_their_chain(self):
         """A blocked line's chains still line up with the web's own display
-        parts one-for-one (a withheld interval bridges rather than splits,
-        so most such lines are a single chain now — see
-        `bridgeBlockedIntervals` in rail-network.js), so a blocked line may
-        carry lanes and follows — keyed by the web's part, honoured here as
-        the matching chain — but no row may ever reach past the chain it
-        belongs to.
+        parts one-for-one, so a blocked line may carry lanes and follows, but
+        no row may ever reach past the chain it belongs to.
 
-        Runs the real `build()` over the actual committed rail directory
-        (not a synthetic package) so `chains_by_line` is the genuine
-        `partsByRegion`-driven chain list for every line, including every
-        withheld line's own canonical partners — the fail-closed guard in
-        `chain_follow_rows`/`chain_lane_rows` means a mismatch anywhere in
-        real data now raises rather than silently clipping to nothing, so
-        simply completing without raising is itself part of what this test
-        checks.
+        Runs the strict real `build()` (junction registry included, as
+        `ios/copy-rail-packages.sh` does) over the committed rail directory.
+        Skips, with the reason, when no committed package declares a withheld
+        (`displayBlockedIntervals`) line, since then there is nothing to check.
         """
         rail = Path(__file__).parents[3] / "public" / "rail"
-        comparison_by_region = {}
+        junctions = Path(__file__).parents[3] / "data" / "physical-rail-junctions.json"
+        withheld_by_region = {}
         for region in sorted(display_network.CONTINUOUS_STROKE_REGIONS):
             package = json.loads((rail / f"{region}-2025.json").read_text())
-            comparison_by_region[region] = (
+            comparison = (
                 (package.get("geometrySource") or {})
                 .get("officialGeometryComparison", {})
                 .get("byLine", {}))
+            withheld_by_region[region] = {
+                line_id for line_id, entry in comparison.items()
+                if entry.get("displayBlockedIntervals")}
+        if not any(withheld_by_region.values()):
+            self.skipTest(
+                "no committed package declares officialGeometryComparison "
+                "displayBlockedIntervals, so no withheld line remains to check")
         with tempfile.TemporaryDirectory() as root:
             out = Path(root) / "network"
-            manifest = display_network.build(rail, out)
-            self.assertIsNotNone(manifest)
-            for region in sorted(display_network.CONTINUOUS_STROKE_REGIONS):
-                comparison = comparison_by_region[region]
-                withheld_lines = {
-                    line_id for line_id, entry in comparison.items()
-                    if entry.get("displayBlockedIntervals")}
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                build_shipped(rail, out, junctions_path=junctions)
+            for region, withheld_lines in withheld_by_region.items():
                 payload = DisplayNetworkTests.load_region_payload(out, region)
                 fragments_by_line: dict[str, list[dict]] = {}
                 for fragment in payload["lines"]:
@@ -682,10 +684,7 @@ class DisplayNetworkTests(unittest.TestCase):
                 for line_id in withheld_lines:
                     for fragment in fragments_by_line.get(line_id, []):
                         total = fragment["totalMetres"]
-                        for row in fragment.get("laneRows") or []:
-                            self.assertGreaterEqual(row[0], 0.0)
-                            self.assertLessEqual(row[1], total + 0.2)
-                        for row in fragment.get("follows") or []:
+                        for row in (fragment.get("laneRows") or []) + (fragment.get("follows") or []):
                             self.assertGreaterEqual(row[0], 0.0)
                             self.assertLessEqual(row[1], total + 0.2)
 
