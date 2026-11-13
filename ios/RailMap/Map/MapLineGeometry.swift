@@ -194,7 +194,7 @@ struct ContinuousStrokeBuild: Sendable {
     /// under: ordinarily the line's own, but a span inside a landlord family window carries that
     /// family's colour instead. Unclipped, like `stroke` itself.
     var withheldRuns: [(colorHex: String, colorDarkHex: String, coordinates: [Coordinate])] {
-        core.withheldRuns
+        core.withheldRuns.map { (colorHex: $0.colorHex, colorDarkHex: $0.colorDarkHex, coordinates: $0.coordinates) }
     }
     /// Landlord family windows, sliced out of `stroke` by metre measure.
     var emittedFamilyWindows: [ContinuousStroke.WindowSpan] { core.emittedFamilyWindows }
