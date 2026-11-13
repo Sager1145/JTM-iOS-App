@@ -27,6 +27,8 @@ import OSLog
     /// them are trip (ride) overlays; `RenderStats.overlays` is the network's.
     static var totalOverlays = 0
     static var rideOverlays = 0
+    /// Frame-geometry entries released by memory-pressure drops.
+    static var droppedFrames = 0
     static var geometryWaits = 0
     static var lastGeometryWaitMilliseconds = 0
     static var maxGeometryWaitMilliseconds = 0
@@ -1129,10 +1131,6 @@ extension RailMapView.Surface {
                 refreshTripNotePickWhileMoving(on: mapView)
                 lastCameraChange = .now
                 let zoom = MapProjection.zoomLevel(of: mapView)
-                let preparationFrame = geometryFrame(level: wantedGeometryLevel(at: zoom), on: mapView)
-                if preparationFrame.key != geometryPreparationKey {
-                    cancelGeometryPreparation()
-                }
                 if let last = lastObservedZoom, abs(zoom - last) > 0.001 {
                     lastZoomDirection = zoom > last ? 1 : -1
                 }
@@ -1575,7 +1573,10 @@ extension RailMapView.Surface {
                     MainActor.assumeIsolated {
                         guard let self else { return }
                         self.cancelNeighbourPrebuild()
-                        self.networkGeometry.dropNonCurrentFrames()
+                        let droppedFrames = self.networkGeometry.dropNonCurrentFrames()
+#if DEBUG
+                        MapRenderProbe.droppedFrames += droppedFrames
+#endif
                     }
                 }
             }
@@ -1681,10 +1682,6 @@ extension RailMapView.Surface {
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
-                let staleCancel = GeometryPreparationGate.decide(
-                    inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
-                    requestedKey: key, missingWork: true).cancelInFlight
-                if staleCancel { cancelGeometryPreparation() }
                 networkGeometry.beginFrame(key: key)
                 // A foreground preparation outranks the idle neighbour prebuild.
                 cancelNeighbourPrebuild()
@@ -2838,7 +2835,14 @@ extension RailMapView.Surface {
                 buildMarkers(context, on: mapView, pendingOverlays: desired,
                              networkTransitionDuration: detailDuration)
                 publishRidesOnlyUpdate(
-                    overlays: desired.count, elapsed: ContinuousClock.now - started, on: mapView)
+                    overlays: desired.count,
+                    rideOverlays: desired.reduce(0) { count, overlay in
+                        let key = (overlay.title ?? nil) ?? ""
+                        return count + (MapOverlayStyles.isRideBatchKey(key)
+                            || MapOverlayStyles.isRideCasingKey(key)
+                            || MapOverlayStyles.isRideCoreKey(key) ? 1 : 0)
+                    },
+                    elapsed: ContinuousClock.now - started, on: mapView)
                 return true
             }
 
@@ -2905,9 +2909,15 @@ extension RailMapView.Surface {
             /// rides-only update: the last full rebuild's frame, with this
             /// update's ride counts, overlay count and time.
             private func publishRidesOnlyUpdate(
-                overlays: Int, elapsed: Duration, on mapView: MKMapView
+                overlays: Int, rideOverlays: Int, elapsed: Duration, on mapView: MKMapView
             ) {
                 guard var stats = lastRenderStats else { return }
+#if DEBUG
+                // This path replaces the full rebuild during a load, so the
+                // probe the control channel reports must follow it too.
+                MapRenderProbe.totalOverlays = overlays
+                MapRenderProbe.rideOverlays = rideOverlays
+#endif
                 stats.overlays = overlays
                 stats.buildMilliseconds = elapsed.milliseconds
                 lastRenderStats = stats

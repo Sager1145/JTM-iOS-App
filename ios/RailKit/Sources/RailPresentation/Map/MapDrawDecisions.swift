@@ -111,7 +111,10 @@ public struct GeometryPreparationLedger: Equatable, Sendable {
 /// this for every decision, so the tests pin the rule the app runs.
 public enum GeometryPreparationGate {
     public struct Decision: Equatable, Sendable {
-        /// Cancel the preparation in flight: it was asked for another frame.
+        /// Always false now: a preparation in flight is never cancelled for
+        /// another frame. It finishes and caches its frame, and its landing
+        /// rebuild asks for the newest wanted frame (latest wins). Cancelling
+        /// on every camera step starved every preparation during a zoom.
         public var cancelInFlight: Bool
         /// Start a preparation for the requested frame.
         public var start: Bool
@@ -126,10 +129,8 @@ public enum GeometryPreparationGate {
     }
 
     public static func decide(inFlightKey: String?, requestedKey: String, missingWork: Bool) -> Decision {
-        let cancel = inFlightKey != nil && inFlightKey != requestedKey
-        let inFlight = cancel ? nil : inFlightKey
-        guard missingWork else { return Decision(cancelInFlight: cancel, start: false, drawNow: true) }
-        return Decision(cancelInFlight: cancel, start: inFlight == nil, drawNow: false)
+        guard missingWork else { return Decision(cancelInFlight: false, start: false, drawNow: true) }
+        return Decision(cancelInFlight: false, start: inFlightKey == nil, drawNow: false)
     }
 
     /// Touch-down hands the camera to the reader. A preparation whose

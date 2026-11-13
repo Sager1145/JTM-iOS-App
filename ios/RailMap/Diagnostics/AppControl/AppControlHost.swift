@@ -571,6 +571,7 @@ final class AppControlHost: AppControlDriver {
                 } ?? .null,
                 "totalOverlays": .number(Double(MapRenderProbe.totalOverlays)),
                 "rideOverlays": .number(Double(MapRenderProbe.rideOverlays)),
+                "droppedFrames": .number(Double(MapRenderProbe.droppedFrames)),
                 "networkLines": .number(Double(stores.network.lines.count)),
                 "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
                     [

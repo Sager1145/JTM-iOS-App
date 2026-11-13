@@ -173,8 +173,11 @@ final class MapNetworkGeometryCache {
     var hasRoomToPrebuild: Bool { residency.hasRoomToPrebuild }
 
     /// Memory pressure: every frame but the current one is released.
-    func dropNonCurrentFrames() {
-        for key in residency.dropNonCurrent() { entries.removeValue(forKey: key) }
+    @discardableResult
+    func dropNonCurrentFrames() -> Int {
+        let dropped = residency.dropNonCurrent()
+        for key in dropped { entries.removeValue(forKey: key) }
+        return dropped.count
     }
 
     /// Reports `key`'s size to the residency rule, which may evict others.

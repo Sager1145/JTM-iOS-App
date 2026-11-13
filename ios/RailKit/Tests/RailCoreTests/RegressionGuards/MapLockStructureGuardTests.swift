@@ -39,6 +39,24 @@ struct RegressionGuardMapLock {
         #expect(!outside.isEmpty)
     }
 
+    @Test func cameraMovesNeverCancelAPreparation() throws {
+        let handler = try Self.body(
+            Self.coordinator, from: "func mapViewDidChangeVisibleRegion(",
+            to: "scheduleCameraRebuild(on: mapView)")
+        #expect(!handler.contains("cancelGeometryPreparation()"))
+        let prepare = try Self.body(
+            Self.coordinator, from: "let temporalContext = networkTemporalContext",
+            to: "geometryPreparation = Task")
+        #expect(!prepare.contains("cancelGeometryPreparation()"))
+    }
+
+    @Test func ridesOnlyPublishUpdatesTheOverlayProbe() throws {
+        let publish = try Self.body(
+            Self.coordinator, from: "private func publishRidesOnlyUpdate(",
+            to: "DispatchQueue.main.async { [onRender] in onRender(stats) }")
+        #expect(publish.contains("MapRenderProbe.rideOverlays = rideOverlays"))
+    }
+
     @Test func cameraChangeLoadsAndSwapsWhileMoving() throws {
         let handler = try Self.body(
             Self.coordinator, from: "cancelNeighbourPrebuildIfWantedSetMoved(zoom: zoom)",

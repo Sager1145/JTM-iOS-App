@@ -34,13 +34,33 @@ struct MapDrawDecisionsTests {
         #expect(ledger.started == 2)
     }
 
-    @Test func aTripsOnlyChangeOnAnotherFrameStillCancelsTheStalePreparation() {
+    @Test func aRequestForAnotherFrameLeavesThePreparationRunning() {
         var ledger = GeometryPreparationLedger()
         ledger.request(key: "frame-a")
         let d = arrive(&ledger, tripsOnly: true, key: "frame-b")
-        #expect(d.cancelInFlight && d.start)
-        #expect(ledger.cancelled == 1)
-        #expect(ledger.inFlightKey == "frame-b")
+        #expect(!d.cancelInFlight && !d.start && !d.drawNow)
+        #expect(ledger.cancelled == 0)
+        #expect(ledger.inFlightKey == "frame-a")
+    }
+
+    /// A camera sweep asks for a new level every 1.2 s while one preparation
+    /// takes 2.5 s. The old rule cancelled each, so none finished.
+    @Test func aZoomSweepFinishesPreparationsInsteadOfCancellingEachOne() {
+        var ledger = GeometryPreparationLedger()
+        var busyUntil = 0.0
+        var level = 0
+        var now = 0.0
+        for _ in 0..<40 {
+            if ledger.isInFlight, now >= busyUntil { ledger.finish() }
+            level += 1
+            let d = GeometryPreparationGate.decide(
+                inFlightKey: ledger.inFlightKey, requestedKey: "level-\(level)", missingWork: true)
+            ledger.apply(d, key: "level-\(level)")
+            if d.start { busyUntil = now + 2.5 }
+            now += 1.2
+        }
+        #expect(ledger.finished > 0)
+        #expect(ledger.cancelled == 0)
     }
 
     @Test func manyArrivalsDuringOnePreparationEndInExactlyOneFinishedDraw() {
