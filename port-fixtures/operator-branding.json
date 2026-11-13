@@ -4150,6 +4150,11 @@
     },
     {
       "operator": "東日本旅客鉄道",
+      "lineName": "京葉線",
+      "company": "JR東日本"
+    },
+    {
+      "operator": "東日本旅客鉄道",
       "lineName": "仙山線",
       "company": "JR東日本"
     },
@@ -11634,6 +11639,18 @@
       "country": "jp",
       "input": {
         "lineId": "jp-東日本旅客鉄道-京葉線-2",
+        "id": null,
+        "operator": "東日本旅客鉄道",
+        "logo": "/rail/logos/jp-東日本旅客鉄道-京葉線.png"
+      },
+      "verifiedPackageLineLogo": "/rail/logos/jp-東日本旅客鉄道-京葉線.png",
+      "lineLogo": null,
+      "logoForLine": "/rail/logos/jp-東日本旅客鉄道-京葉線.png"
+    },
+    {
+      "country": "jp",
+      "input": {
+        "lineId": "jp-東日本旅客鉄道-京葉線-3",
         "id": null,
         "operator": "東日本旅客鉄道",
         "logo": "/rail/logos/jp-東日本旅客鉄道-京葉線.png"

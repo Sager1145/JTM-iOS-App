@@ -108,6 +108,12 @@ context.setTimeout = (fn, ms, ...rest) => {
   timers.add(handle);
   return handle;
 };
+// The shipped app is static (`hasBackend` defaults to false, app-api.js), and
+// then saveTrainStore never reaches schedulePendingServerStoreJournal — the
+// marker the "persist" events below are recorded at. The Swift port persists
+// at those points, so the sandbox opts into a backend, as it did when the
+// default was true. Must be set before the scripts are evaluated.
+context.APP_RUNTIME_CONFIG = { hasBackend: true, apiFileSuffix: "" };
 evaluateAppScripts(context);
 
 const run = (expr) => vm.runInContext(expr, context);

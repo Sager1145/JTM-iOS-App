@@ -174,7 +174,7 @@ export const SYNTHETIC = {
       // curve so diagnostics measure against what was accepted.
       label: "relax-radius-manyo",
       kind: "sharedNode",
-      nodeKey: "137.06597,36.78883",
+      nodeKey: "137.06635,36.78893",
       slice: 150,
       base: true,
     },
@@ -184,7 +184,7 @@ export const SYNTHETIC = {
       // "radius+deviation" rather than either alone.
       label: "reject-radius-deviation-manyo",
       kind: "sharedNode",
-      nodeKey: "137.06597,36.78883",
+      nodeKey: "137.06635,36.78893",
       slice: 150,
       settings: { fitCurveMaxDeviation: 1500 },
     },
