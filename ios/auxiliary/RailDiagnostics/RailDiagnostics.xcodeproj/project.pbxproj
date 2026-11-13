@@ -9,10 +9,9 @@
 /* Begin PBXBuildFile section */
 		00DFAEDC5BDF3EDA56BCA26B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927FCF7654F86A6CDEF4700A /* SettingsView.swift */; };
 		01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE68E0947AD261729EDC07C /* MileageStatisticsStore.swift */; };
-		6F3B05964C66C41E8D8CDDC5 /* RailSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */; };
-		60F0F1DB7290E29F394BCF7B /* RailSheetChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */; };
 		047416FC378551E250D9AEF2 /* ControlSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120479A5E14CB2416DCCD6C /* ControlSizing.swift */; };
 		04E42FE7F85CC954178C489C /* RailNetworkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61912458F249FE1872C23B /* RailNetworkStore.swift */; };
+		0819132F9AE65D69FA04450C /* TripNotesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A13D57358153BB8782DB0F4 /* TripNotesCard.swift */; };
 		0B472D15EB446A3FFBB029BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE1270C2F6F2C12D8A0CC57F /* Assets.xcassets */; };
 		0D308CD245C0D0F7D533B0E8 /* DiagnosticTaskCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409427DA6DEFF3A53ACF78 /* DiagnosticTaskCommands.swift */; };
 		0E297E48F831876F7C3A1827 /* VideoExportSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FBF2702B09AC93BB8B5136 /* VideoExportSettings.swift */; };
@@ -27,11 +26,14 @@
 		14D3E59178F630D0278752A6 /* RideStationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E700A556C584EC5F04245 /* RideStationOverlay.swift */; };
 		16C32CA39C57AB6994A009B7 /* ScrollableIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F768F70440743DF88A90046 /* ScrollableIfNeeded.swift */; };
 		174E5E15A9DAA64C7686C310 /* ReduceMotionUITestProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65227D271FB665A3A11364A /* ReduceMotionUITestProbe.swift */; };
+		178D8A4A31C2CF1B9D8EB821 /* RideStrokeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A308130FCF2CF90D3BB3FC2 /* RideStrokeBuilder.swift */; };
 		18248E4B49DBAC2A9C1DA77B /* StationAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863791119DB1DA4A6C687A5 /* StationAnnotations.swift */; };
 		18420F0D71EDA564510F04E0 /* BatchCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234852C6B3D24FF18237549B /* BatchCaptureController.swift */; };
 		1874A5F1D26D734AE93FB6D0 /* JourneyCompletionStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ECD23B5031CE21A760329D /* JourneyCompletionStrings.swift */; };
 		1A4BA1525434FB355AE52808 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D88E062DC33C3FCCB46A7A /* TextRecognizer.swift */; };
+		1A77E58CDF1351E08A38D231 /* TripNoteAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15463E3C3E2A7023B365F23 /* TripNoteAnnotations.swift */; };
 		1C7CADBDE57F914FB6D93FD1 /* JourneyEditorManualEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AF330B4E1234F43C359EB /* JourneyEditorManualEntry.swift */; };
+		1CA11FD90E0B30D3BB14CA6B /* RailSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F545129230A4604CD7BA69 /* RailSpacing.swift */; };
 		1CD3DB78038AFB091F77E756 /* MapStationLabelCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA4189CC9B7527A3B615B20 /* MapStationLabelCoordinator.swift */; };
 		1DD25AA3E41D1429FA413955 /* JourneyCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758DCD65965F7DDE78451DFB /* JourneyCompletionView.swift */; };
 		1E1D9FE828A5F25E3C3411FC /* WorkspaceTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB604E17A80B9AA350312820 /* WorkspaceTabs.swift */; };
@@ -42,11 +44,13 @@
 		1FEA8EFE6B1A6EBBE1FD5A56 /* StatsWidgetShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59890B719D0F1149F6B2D328 /* StatsWidgetShape.swift */; };
 		20426EB73DE8E0AD02C727BD /* PlaybackAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6030348FB1AF4A143D14E3E /* PlaybackAnnotations.swift */; };
 		25672A729A74C727E4484375 /* InspectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA194865498F4ADB2CCC36 /* InspectorModel.swift */; };
+		27EA857FC5EA2D7433B619BD /* TripNoteAnnotationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E968D7FA9B017D3E79614B98 /* TripNoteAnnotationViews.swift */; };
 		2816985D19808AE7129AEF86 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 52D359F79E542B3828E32F20 /* AppIcon.icon */; };
 		2A0A2F0EEC114F8174A39F71 /* NetworkLOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */; };
 		2A687BEC23A6C168EDA54588 /* ResidentMapChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8970A87B1501F4227FC4B2A0 /* ResidentMapChrome.swift */; };
 		2A78EFF38767EFA1BDEE7E89 /* RideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473976D4A7CCB6AE0F1A4ACA /* RideStorage.swift */; };
 		2B994099017736E49CFCCCE3 /* RailMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D385A73FE569610F5A8A52 /* RailMapController.swift */; };
+		2BFF9E74BD93BA9174C6FCE4 /* SearchSuggestionChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB763469F4F1058685E78EC6 /* SearchSuggestionChips.swift */; };
 		2CCF64599147CE5B26302D7C /* PatternDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D1D11AB5058A770383A971 /* PatternDetailView.swift */; };
 		2D4EF9EDFA11ECA2772BCCA7 /* JourneyStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1EBF0E7333C9A27B795DB /* JourneyStrings.swift */; };
 		2ECD5017581FBE27BAEB22FC /* JourneyGroupPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBFE5A60E3375647853C39B /* JourneyGroupPicker.swift */; };
@@ -81,6 +85,7 @@
 		405290EF5BD47BF3FCD8D9B0 /* TimetableTripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAA03F4B1E10146856A3E27 /* TimetableTripDetailView.swift */; };
 		4168FF2DFD7217DD33C9327F /* ShareCardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027E66D13FFA3B4A01C690D /* ShareCardBuilder.swift */; };
 		41D9E5EE4DE93994693B2A5F /* WorkspaceDerived.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92C6BC62194DB632EC5684 /* WorkspaceDerived.swift */; };
+		41F35F09356DE1222705E905 /* EditorSaveStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E0FCF94AFE3B0C8A4E228 /* EditorSaveStatus.swift */; };
 		42A4B8D7C72811912B392A42 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CEDDD18D7E50D6A5EC76EAC /* InfoPlist.strings */; };
 		42AC184359FE3256E340FCD8 /* ShareComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB07775C4140DC05D585A0DC /* ShareComposer.swift */; };
 		44468BFC4E550089B66B9331 /* TransferGuideImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444A70A704D1CA23E31C167E /* TransferGuideImport.swift */; };
@@ -100,13 +105,16 @@
 		51E7FF6601DA7B21FB1FFEB9 /* PassportCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC2A7DF2EE5A8BD0581C87 /* PassportCardStyle.swift */; };
 		543DB9E8C4FBF1D3DC350DB9 /* VideoExportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5CA922E32F752434E94EF4 /* VideoExportOptionsView.swift */; };
 		56F97BDB2CFBA8EE0C198B6A /* WorkspacePanelPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */; };
+		572149C2F3C65D2BD2C1D974 /* TripNoteStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67B490C47B22F625D5076E1 /* TripNoteStrings.swift */; };
 		57532C9D68AEA80B393BF5D0 /* WorkspacePresentations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DD89CCF628141C9F5F5D0 /* WorkspacePresentations.swift */; };
 		5AB65AB0215555CAC84F27A3 /* PanelMorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A566E44F9A8692C586D9E /* PanelMorph.swift */; };
 		5B06E3FD12F632C9BE40738F /* RideOverlayBatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC23127055571695B1E0033 /* RideOverlayBatching.swift */; };
+		5BCCE25003F501BC7C8177D9 /* SearchPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A193461E9B5D1225F70498 /* SearchPreferences.swift */; };
 		5C2739755648283E6D6D8DAC /* InspectionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6F01AA56FB0D35D2593982 /* InspectionPlanView.swift */; };
 		5D6416E72BC819AA0B3BE76F /* LongJourneyDetailTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A587DEB3B20815EF89798 /* LongJourneyDetailTestView.swift */; };
 		5E06FE8478AAA64F376BCC0A /* BundledRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7986EFE0FBDB60FE2A3930 /* BundledRegistry.swift */; };
 		5EAAB25FC510A68947A629B3 /* RideLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86354E99E74D8D60783B878 /* RideLibrary.swift */; };
+		5F577987E68A6E025706576B /* RailSheetChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912E0EE9126A13103DE4A3A /* RailSheetChrome.swift */; };
 		5F96686402CB20252F6E3A71 /* WorkbenchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1C621A1A2AD6320A020584 /* WorkbenchStore.swift */; };
 		60E1F9CE35BAEF3AEA59540D /* MapNetworkRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F096D22CFA63D4532171178 /* MapNetworkRendering.swift */; };
 		611C0457EF9D40DF3BAC3455 /* AddDateAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E1E3AC50FA3390D7F6E023 /* AddDateAlert.swift */; };
@@ -123,6 +131,7 @@
 		6D1DB3C9226BB04654B47838 /* LocalLineServicesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFBF7127536FBF4B838CB54 /* LocalLineServicesSection.swift */; };
 		6D9F80BD5BAF85AC98F02390 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22BF975B7E6FE8690A5E5BCA /* Assets.xcassets */; };
 		6DE652A6666FE32D408DA667 /* EditorLineSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5185DD10291284E08FF728 /* EditorLineSearchView.swift */; };
+		6F87A22FE69183AB46C542CC /* TripNoteGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A7ED3E1684913012CE6F50 /* TripNoteGeometry.swift */; };
 		6FBF2AA7EBFF038466C3A4C9 /* PatchEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2410F497430293B0C31B9D /* PatchEditorView.swift */; };
 		701C8349D652B6D0FC02E5DC /* Duration+Milliseconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255CB1417DEEED553FFB1A04 /* Duration+Milliseconds.swift */; };
 		7069DBE06CF0FA26B95369D5 /* WorkspaceSheetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85831BAB8062A4E28452785D /* WorkspaceSheetContent.swift */; };
@@ -141,6 +150,7 @@
 		78767713974560AF444D73BE /* ServiceRangeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E434A8A1F82EB1EB86B297 /* ServiceRangeEditorView.swift */; };
 		7AD96E2AF7019A302F0E0B2D /* EditorTimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E86E67052CE58114E73F4FA /* EditorTimeSection.swift */; };
 		7BAD72A395B87CD758497122 /* StatisticsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BDF8B22C1170637A92A13 /* StatisticsComponents.swift */; };
+		7DCAAB3D3722E1A01C605D4D /* TripNoteEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024176F48B0C30A56490C245 /* TripNoteEditing.swift */; };
 		7E4BFBF1EC49E8D42F478A9D /* Unifont.otf in Resources */ = {isa = PBXBuildFile; fileRef = AED55969F5A507AA8B6D1427 /* Unifont.otf */; };
 		7F1C5099DB645066F3BACC7A /* EditorCatalogLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDE74EE8A4F12932E79AA3 /* EditorCatalogLoading.swift */; };
 		7FD202A0E97241C23A26F632 /* AppleMapDatumProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C27D1F81144DA10A3B2855A /* AppleMapDatumProbe.swift */; };
@@ -155,8 +165,6 @@
 		891FB0E02720590351AA4727 /* AppControlHandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF0B3A27371242413B9B75 /* AppControlHandles.swift */; };
 		89ACB296A7F253927BF2DF2C /* TimetableQuickMatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333379484BA2846479A6D978 /* TimetableQuickMatchController.swift */; };
 		8B46548573B2E04B8390778B /* StatisticsFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD85C98C65724669DCE47BBB /* StatisticsFormatting.swift */; };
-		922B6CCCA8D06DA97F25C499 /* EditorAutofill.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */; };
-		618E17B0B30DE5F4A0F1B5A9 /* EditorQuickFillSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */; };
 		8BFCBE0EDA69E83E849FDAEB /* EditorServiceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */; };
 		8CC67A2501557D2A80BD6A36 /* WorkspaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E89AF741F770E6C3A32E73 /* WorkspaceLayout.swift */; };
 		8CEC8DDDB95243AB97BD57D1 /* AppControlCameraRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD0F8E8ACB442C0530CD68E /* AppControlCameraRun.swift */; };
@@ -185,6 +193,7 @@
 		A424C37D8D437FA3195AB48A /* tabata-reference.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 4CCEC62379C3256F4EA4E1E8 /* tabata-reference.geojson */; };
 		A57C15CC9E1DA45B5A2E38FF /* BottomChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7701DDDB1EBC7DA1F0849C9A /* BottomChrome.swift */; };
 		A6665182F88E2D7C16916294 /* StopTimingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA3C1710F1F24ACEA2D0918 /* StopTimingStatus.swift */; };
+		A6D45B1E377F4FE906AB2D88 /* RailChoiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC65221C8805DD809126EEE4 /* RailChoiceRow.swift */; };
 		A6E53C6AE6AFA98E6E07D357 /* RiddenRouteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07810C9A038F83787D707F6E /* RiddenRouteStore.swift */; };
 		A7EBBCAD62B337599698A971 /* MapLabelCollisionGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2862DE30BDCCC737665317 /* MapLabelCollisionGrid.swift */; };
 		A8593FC7EA71B7DBA2CE59AD /* RidePersistenceQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B086C40A5B15D428874113E /* RidePersistenceQueue.swift */; };
@@ -202,9 +211,11 @@
 		BE1F77B1CE4173C151A16F91 /* InspectionViewpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0480CC5AB53874842E7F666 /* InspectionViewpoints.swift */; };
 		BE405F1F010C30C44C57474F /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC23652807E051CA7B4714B /* TripMapView.swift */; };
 		BEF2B42A93BC05CFDA879C38 /* ShellStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E294B1BB539393DD59DCE6E /* ShellStrings.swift */; };
+		BF7DBE1306F7A696151F4329 /* EditorAutofill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AF65111E069FC6C87EF03D /* EditorAutofill.swift */; };
 		BF981EBFE93B9883C83B2F21 /* JourneyWorkspaceStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907FCA3FDBDC7E9F39CA9217 /* JourneyWorkspaceStates.swift */; };
 		C056E0F7A3D67799C50BE53C /* WorkbenchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37B9868719AE8EB0C42E3ED /* WorkbenchView.swift */; };
 		C0C47283AA2C969EE9AB196D /* MapPlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D41F5D2DFDF3D6B8AE17588 /* MapPlaybackLayer.swift */; };
+		C0DF04D2E52B034D9D8011E6 /* TripNotePickOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4ADA635EC8EB5E2770198 /* TripNotePickOverlay.swift */; };
 		C159F73A97DAB76F3FE3F227 /* MapProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC120350EE255E2DF1ACB2 /* MapProjection.swift */; };
 		C1F38355A23053DA932EDFD7 /* ImportFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FE017ADC95679633971391 /* ImportFlow.swift */; };
 		C210F8FAF7A0144CF745DA0C /* JourneyEditorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977AD64447C12F1D6F9D44FE /* JourneyEditorDetails.swift */; };
@@ -230,8 +241,10 @@
 		D16036209EFEB9F178749830 /* PassportWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D19FBA18ED13ED9FD95D53 /* PassportWorkspaceView.swift */; };
 		D1F2B3CFBE4421CA4362016C /* JourneyBranding.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDAD40BB68A024D6BC532BB /* JourneyBranding.swift */; };
 		D25D04CA188C73872E263B09 /* JourneyGroupStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DC60C3FF88C3D0EA644733 /* JourneyGroupStrings.swift */; };
+		D44E6C9F027A53F7C40D9374 /* EditorQuickFillSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B33D8A0CFCAEB5F99579C /* EditorQuickFillSection.swift */; };
 		D682B5795C2F11B89553C544 /* AreaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1CC0BC06948FF562D607F068 /* AreaKit */; };
 		D769B4E332A8F0D410F299FD /* StatisticsScopePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DC9072A7D2FA25F72E5320 /* StatisticsScopePicker.swift */; };
+		D7E1F1A5708EB76B273EA2BB /* RailStatusLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90D19F1CA526292687DCFEC /* RailStatusLabel.swift */; };
 		D87AEA1486512EC8EF731939 /* JourneyLabelAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82FF95B639DBB2B0111BFAD /* JourneyLabelAnnotations.swift */; };
 		D930335C1448D353861AAD44 /* StatsWidgetGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656335072EE98A40CD47CCE /* StatsWidgetGrid.swift */; };
 		D97026EB1A6B376453A1B4D0 /* MapLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D70C66B67F200911DE6629 /* MapLabelStyle.swift */; };
@@ -250,6 +263,7 @@
 		E446B56F7023F5FD13D8A462 /* RailDisplayNetworkFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FD448345EFC748874C59DF /* RailDisplayNetworkFormats.swift */; };
 		E50058002DDF4589026A7FE4 /* DisplayNetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A053CFD2FF84F46D8A4DE /* DisplayNetworkCache.swift */; };
 		E54D7335DC8FCE2EE15589D8 /* EditorTripDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353A0886C8363EC87B898F24 /* EditorTripDetailsSection.swift */; };
+		E699930C67C2A436E0D60D27 /* MapTripNoteLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF478F70D89A87E05566424 /* MapTripNoteLayer.swift */; };
 		E6C4BAEB804BCBC8A1299D37 /* CategoryIndexes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA486822AAF10B1ECE1549E /* CategoryIndexes.swift */; };
 		E6D5EF03AD5702B0AF90CE9F /* DiagnosticReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0D02DEB9C48A19B99F7F7 /* DiagnosticReview.swift */; };
 		E71B42CE98C3C8425C3A1491 /* LocalJourneyStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E96ABD0D625B384D99FFCE9 /* LocalJourneyStrings.swift */; };
@@ -272,10 +286,12 @@
 		F201B04DDDC70995BC1BC97E /* JourneyEditorLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1187976A533BD8F191EE8114 /* JourneyEditorLaunch.swift */; };
 		F3A9C32380D396BF26F9AEBB /* MapEndpointLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A379428107FF5C98EE5A5C42 /* MapEndpointLabels.swift */; };
 		F44E2B74582B0B84C5EDBBCA /* PlaybackTransportBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F04855CE2AB709E5403E450 /* PlaybackTransportBar.swift */; };
+		F6793178890D37F4B8A35753 /* SampleTripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19BD9912EC486B88C9A6B08 /* SampleTripsView.swift */; };
 		F6C7A543A0218B9957EF687F /* TransferGuideImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A1BA5672DA3C9BD99C4E79 /* TransferGuideImportView.swift */; };
 		F8450A1D917A797E2E149B14 /* PrimaryTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6934218FDC0837E787D5F0B5 /* PrimaryTab.swift */; };
 		F963AC0632028F00B6070447 /* StationPickerSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4610709E922C93AA4D822234 /* StationPickerSearchController.swift */; };
 		FBEF101412F3A8481C781A38 /* DockedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9658A973534B909966D2AC6F /* DockedCard.swift */; };
+		FD6B6348C5900A3C29C30190 /* TripNotePlaceNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359D5850C1A717096F5FB14 /* TripNotePlaceNaming.swift */; };
 		FDDECEF4812AD8B41D5C5606 /* ImportPreflight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DC354A6019AD2AD3EF8A0D /* ImportPreflight.swift */; };
 		FEB22820C5F4E6C12A3574B7 /* AppleMapDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E4E9E74D8C2C579BCD238 /* AppleMapDatum.swift */; };
 		FF64F5ACFD69F5FE7651D6F7 /* DevPerfSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5D252BC80B2C06F33AADD3 /* DevPerfSampler.swift */; };
@@ -287,7 +303,9 @@
 		008B4541EB8737169ECE9441 /* StatisticsShareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsShareImage.swift; sourceTree = "<group>"; };
 		016E700A556C584EC5F04245 /* RideStationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideStationOverlay.swift; sourceTree = "<group>"; };
 		01BA1698735BBD062668E90C /* JourneyEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditing.swift; sourceTree = "<group>"; };
+		024176F48B0C30A56490C245 /* TripNoteEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteEditing.swift; sourceTree = "<group>"; };
 		07810C9A038F83787D707F6E /* RiddenRouteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiddenRouteStore.swift; sourceTree = "<group>"; };
+		0912E0EE9126A13103DE4A3A /* RailSheetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSheetChrome.swift; sourceTree = "<group>"; };
 		097871E7B684EA392B90634B /* TicketJimon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJimon.swift; sourceTree = "<group>"; };
 		0A3CF1C7C28F466458C9BC9E /* RegionToday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionToday.swift; sourceTree = "<group>"; };
 		0CA18208F466E6861675B203 /* RouteLogoSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLogoSquare.swift; sourceTree = "<group>"; };
@@ -323,8 +341,6 @@
 		285F90EEA8855B98EE537CEF /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2863C959D67B0BE70B7C652D /* InspectionKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InspectionKit; path = Modules/RailAlignmentInspector/InspectionKit; sourceTree = SOURCE_ROOT; };
 		2886D2301E8AA3D63DB0D2F2 /* MapLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLayers.swift; sourceTree = "<group>"; };
-		CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAutofill.swift; sourceTree = "<group>"; };
-		567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorQuickFillSection.swift; sourceTree = "<group>"; };
 		28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorServiceSection.swift; sourceTree = "<group>"; };
 		29DD87A7E0BC158CD3968EDD /* UnifiedDiagnosticCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedDiagnosticCommands.swift; sourceTree = "<group>"; };
 		2B0EB050E48347704B9CADFE /* WorkspacePanelActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelActions.swift; sourceTree = "<group>"; };
@@ -360,6 +376,7 @@
 		4834D7FF5E50EB012674A42D /* AppLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocalization.swift; sourceTree = "<group>"; };
 		48A8E5F9777D70F3604A461B /* ServiceSectionSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSectionSummary.swift; sourceTree = "<group>"; };
 		48F046D66D660D327093FB59 /* AppleMapAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapAnalysisService.swift; sourceTree = "<group>"; };
+		4A308130FCF2CF90D3BB3FC2 /* RideStrokeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideStrokeBuilder.swift; sourceTree = "<group>"; };
 		4A3BDF8B22C1170637A92A13 /* StatisticsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsComponents.swift; sourceTree = "<group>"; };
 		4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCardView.swift; sourceTree = "<group>"; };
 		4B8E69B0BAEAC80141948F06 /* StationPlaceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPlaceStore.swift; sourceTree = "<group>"; };
@@ -380,6 +397,7 @@
 		52F1EBF0E7333C9A27B795DB /* JourneyStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyStrings.swift; sourceTree = "<group>"; };
 		544E7C91AE1CC1064A87B04B /* GlassStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassStyle.swift; sourceTree = "<group>"; };
 		59890B719D0F1149F6B2D328 /* StatsWidgetShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWidgetShape.swift; sourceTree = "<group>"; };
+		59AF65111E069FC6C87EF03D /* EditorAutofill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAutofill.swift; sourceTree = "<group>"; };
 		5A30B8C7B8469A034DD5D639 /* TransferGuideStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferGuideStrings.swift; sourceTree = "<group>"; };
 		5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePanelPage.swift; sourceTree = "<group>"; };
 		5C86791892CE63B90D2341BF /* ActivitySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySheet.swift; sourceTree = "<group>"; };
@@ -422,6 +440,7 @@
 		7E86E67052CE58114E73F4FA /* EditorTimeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTimeSection.swift; sourceTree = "<group>"; };
 		80D84A9559257D935A0EAE75 /* StatisticsStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsStrings.swift; sourceTree = "<group>"; };
 		81762E089BB66C9D4D68BA53 /* MapControlBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapControlBar.swift; sourceTree = "<group>"; };
+		81F545129230A4604CD7BA69 /* RailSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSpacing.swift; sourceTree = "<group>"; };
 		8219453F539E9F11A3EB6070 /* EditorValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorValidation.swift; sourceTree = "<group>"; };
 		822C8B556819AD4284B84465 /* EditorStationsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorStationsSection.swift; sourceTree = "<group>"; };
 		830BE6ECF102B896CB3F6901 /* DevToolsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevToolsViews.swift; sourceTree = "<group>"; };
@@ -436,6 +455,7 @@
 		87409427DA6DEFF3A53ACF78 /* DiagnosticTaskCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticTaskCommands.swift; sourceTree = "<group>"; };
 		88DC354A6019AD2AD3EF8A0D /* ImportPreflight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPreflight.swift; sourceTree = "<group>"; };
 		8970A87B1501F4227FC4B2A0 /* ResidentMapChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentMapChrome.swift; sourceTree = "<group>"; };
+		8A13D57358153BB8782DB0F4 /* TripNotesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNotesCard.swift; sourceTree = "<group>"; };
 		8A88E4CFB1BA2FEBF4DAF8FB /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
 		8A8C285AFFFDAAD5E0EFD01E /* TrainResearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainResearchView.swift; sourceTree = "<group>"; };
 		8B61912458F249FE1872C23B /* RailNetworkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailNetworkStore.swift; sourceTree = "<group>"; };
@@ -461,6 +481,7 @@
 		A2ABAB455889BEFA8D81F5C7 /* JourneyEditorSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyEditorSeed.swift; sourceTree = "<group>"; };
 		A2E3BCF1AF58E656B8DCD4FA /* OperatorBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorBadge.swift; sourceTree = "<group>"; };
 		A379428107FF5C98EE5A5C42 /* MapEndpointLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEndpointLabels.swift; sourceTree = "<group>"; };
+		A46E0FCF94AFE3B0C8A4E228 /* EditorSaveStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSaveStatus.swift; sourceTree = "<group>"; };
 		A4D15F8308CEA166D6AD7332 /* PlaybackVideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackVideoExporter.swift; sourceTree = "<group>"; };
 		A50C0C997F5B567E9C14B736 /* RideCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideCard.swift; sourceTree = "<group>"; };
 		A60DEC98580B467940BB89A9 /* StationNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationNaming.swift; sourceTree = "<group>"; };
@@ -483,14 +504,17 @@
 		BC0FF5EA3D4FA9DD5C06704F /* JourneyPresentationBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyPresentationBridge.swift; sourceTree = "<group>"; };
 		BCD0F8E8ACB442C0530CD68E /* AppControlCameraRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlCameraRun.swift; sourceTree = "<group>"; };
 		BCEB55DD1C3AD742D0A462B1 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		BD5B33D8A0CFCAEB5F99579C /* EditorQuickFillSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorQuickFillSection.swift; sourceTree = "<group>"; };
 		C0B3A37C75AC69FF800622DD /* RailMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapApp.swift; sourceTree = "<group>"; };
 		C1FD448345EFC748874C59DF /* RailDisplayNetworkFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailDisplayNetworkFormats.swift; sourceTree = "<group>"; };
 		C2C0D02DEB9C48A19B99F7F7 /* DiagnosticReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticReview.swift; sourceTree = "<group>"; };
 		C2E89AF741F770E6C3A32E73 /* WorkspaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceLayout.swift; sourceTree = "<group>"; };
 		C33DC348E3F280849BFDE445 /* RideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailView.swift; sourceTree = "<group>"; };
+		C359D5850C1A717096F5FB14 /* TripNotePlaceNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNotePlaceNaming.swift; sourceTree = "<group>"; };
 		C4FC004E191D5E65A73EE177 /* DiagnosticCaptureGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticCaptureGallery.swift; sourceTree = "<group>"; };
 		C59A522BD51A0547FAF02E86 /* RouteGuideStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteGuideStrings.swift; sourceTree = "<group>"; };
 		C668F20E22C8107D0F7F05AC /* StationAnnotationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotationViews.swift; sourceTree = "<group>"; };
+		C67B490C47B22F625D5076E1 /* TripNoteStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteStrings.swift; sourceTree = "<group>"; };
 		C6FE017ADC95679633971391 /* ImportFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFlow.swift; sourceTree = "<group>"; };
 		C710042E911D8C51CDF4DBED /* PassportStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportStatistics.swift; sourceTree = "<group>"; };
 		C863791119DB1DA4A6C687A5 /* StationAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotations.swift; sourceTree = "<group>"; };
@@ -503,10 +527,11 @@
 		CFC23652807E051CA7B4714B /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		D00A587DEB3B20815EF89798 /* LongJourneyDetailTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongJourneyDetailTestView.swift; sourceTree = "<group>"; };
 		D0BC5BEE01933F2C513461D7 /* RouteGlyph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteGlyph.swift; sourceTree = "<group>"; };
+		D0C4ADA635EC8EB5E2770198 /* TripNotePickOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNotePickOverlay.swift; sourceTree = "<group>"; };
 		D0DC2A7DF2EE5A8BD0581C87 /* PassportCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportCardStyle.swift; sourceTree = "<group>"; };
-		67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSpacing.swift; sourceTree = "<group>"; };
-		D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSheetChrome.swift; sourceTree = "<group>"; };
 		D120479A5E14CB2416DCCD6C /* ControlSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSizing.swift; sourceTree = "<group>"; };
+		D15463E3C3E2A7023B365F23 /* TripNoteAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteAnnotations.swift; sourceTree = "<group>"; };
+		D19BD9912EC486B88C9A6B08 /* SampleTripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTripsView.swift; sourceTree = "<group>"; };
 		D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapCoordinator.swift; sourceTree = "<group>"; };
 		D3F7C62370FA6EE21E749FBE /* AppControlHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlHost.swift; sourceTree = "<group>"; };
 		D5C05747E6C3F77CA79099D7 /* EditorFillDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFillDetailsSheet.swift; sourceTree = "<group>"; };
@@ -520,6 +545,7 @@
 		DA1D20B61C1F8C92B5A85147 /* StatsWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWidgetView.swift; sourceTree = "<group>"; };
 		DBC25FE742EF6FD5063DEFC6 /* RailSignpost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailSignpost.swift; sourceTree = "<group>"; };
 		DC1B3938A00CD8A9E09ADDEB /* sample-legacy-ride-ids.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sample-legacy-ride-ids.json"; sourceTree = "<group>"; };
+		DC65221C8805DD809126EEE4 /* RailChoiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailChoiceRow.swift; sourceTree = "<group>"; };
 		DC740C801C266896EEC93A15 /* TransferGuideOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferGuideOCR.swift; sourceTree = "<group>"; };
 		DD85C98C65724669DCE47BBB /* StatisticsFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFormatting.swift; sourceTree = "<group>"; };
 		DDA486822AAF10B1ECE1549E /* CategoryIndexes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIndexes.swift; sourceTree = "<group>"; };
@@ -529,14 +555,19 @@
 		DEAA03F4B1E10146856A3E27 /* TimetableTripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTripDetailView.swift; sourceTree = "<group>"; };
 		DF5234A729BCC53B66C147CD /* JourneyListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyListRow.swift; sourceTree = "<group>"; };
 		DFBFE5A60E3375647853C39B /* JourneyGroupPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyGroupPicker.swift; sourceTree = "<group>"; };
+		E0A193461E9B5D1225F70498 /* SearchPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreferences.swift; sourceTree = "<group>"; };
+		E1A7ED3E1684913012CE6F50 /* TripNoteGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteGeometry.swift; sourceTree = "<group>"; };
 		E1D19FBA18ED13ED9FD95D53 /* PassportWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportWorkspaceView.swift; sourceTree = "<group>"; };
 		E1E1E3AC50FA3390D7F6E023 /* AddDateAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateAlert.swift; sourceTree = "<group>"; };
 		E37B9868719AE8EB0C42E3ED /* WorkbenchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkbenchView.swift; sourceTree = "<group>"; };
 		E3D45C0D613251315591FF85 /* ShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCard.swift; sourceTree = "<group>"; };
 		E3E21D79AC9DC2D0C5461598 /* RailType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailType.swift; sourceTree = "<group>"; };
 		E87204CB003FF05D0910EE74 /* DevToolsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevToolsController.swift; sourceTree = "<group>"; };
+		E90D19F1CA526292687DCFEC /* RailStatusLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailStatusLabel.swift; sourceTree = "<group>"; };
+		E968D7FA9B017D3E79614B98 /* TripNoteAnnotationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteAnnotationViews.swift; sourceTree = "<group>"; };
 		EB07775C4140DC05D585A0DC /* ShareComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareComposer.swift; sourceTree = "<group>"; };
 		EB4288F2FCEED3BAC98807C2 /* ManualDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualDates.swift; sourceTree = "<group>"; };
+		EB763469F4F1058685E78EC6 /* SearchSuggestionChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionChips.swift; sourceTree = "<group>"; };
 		ECC23127055571695B1E0033 /* RideOverlayBatching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideOverlayBatching.swift; sourceTree = "<group>"; };
 		ED6300B33476369A4FD0D8BE /* TraversedLineDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraversedLineDetector.swift; sourceTree = "<group>"; };
 		EE1270C2F6F2C12D8A0CC57F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -559,6 +590,7 @@
 		FA0FB1033DC0A749BF1A6354 /* DataImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImportView.swift; sourceTree = "<group>"; };
 		FB75D3F9F830E75D3A694AE1 /* EditorFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFields.swift; sourceTree = "<group>"; };
 		FC4A053CFD2FF84F46D8A4DE /* DisplayNetworkCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNetworkCache.swift; sourceTree = "<group>"; };
+		FDF478F70D89A87E05566424 /* MapTripNoteLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTripNoteLayer.swift; sourceTree = "<group>"; };
 		FE070076660019A73E6059FF /* RegionCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionCatalog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -715,6 +747,7 @@
 				BA0EBCAE3F2EA7616E6A7B72 /* MapRideStationImportance.swift */,
 				B5CA4534D1B5D2725C10E7B7 /* MapSelectedStationSnapshotController.swift */,
 				3CA4189CC9B7527A3B615B20 /* MapStationLabelCoordinator.swift */,
+				FDF478F70D89A87E05566424 /* MapTripNoteLayer.swift */,
 				A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */,
 				F6030348FB1AF4A143D14E3E /* PlaybackAnnotations.swift */,
 				83D385A73FE569610F5A8A52 /* RailMapController.swift */,
@@ -724,10 +757,15 @@
 				4F6B2D3E89B5DFC50AAA6A7E /* RideIncrementalUpdate.swift */,
 				ECC23127055571695B1E0033 /* RideOverlayBatching.swift */,
 				016E700A556C584EC5F04245 /* RideStationOverlay.swift */,
+				4A308130FCF2CF90D3BB3FC2 /* RideStrokeBuilder.swift */,
 				51A842D865F20B59EE7FAFCD /* RideTapIndex.swift */,
 				C863791119DB1DA4A6C687A5 /* StationAnnotations.swift */,
 				C668F20E22C8107D0F7F05AC /* StationAnnotationViews.swift */,
 				4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */,
+				D15463E3C3E2A7023B365F23 /* TripNoteAnnotations.swift */,
+				E968D7FA9B017D3E79614B98 /* TripNoteAnnotationViews.swift */,
+				E1A7ED3E1684913012CE6F50 /* TripNoteGeometry.swift */,
+				D0C4ADA635EC8EB5E2770198 /* TripNotePickOverlay.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -766,7 +804,12 @@
 				C33DC348E3F280849BFDE445 /* RideDetailView.swift */,
 				52BC568D4B86ECCCEDB1141D /* RideSheet.swift */,
 				D0BC5BEE01933F2C513461D7 /* RouteGlyph.swift */,
+				E0A193461E9B5D1225F70498 /* SearchPreferences.swift */,
+				EB763469F4F1058685E78EC6 /* SearchSuggestionChips.swift */,
 				1DA3C1710F1F24ACEA2D0918 /* StopTimingStatus.swift */,
+				024176F48B0C30A56490C245 /* TripNoteEditing.swift */,
+				C359D5850C1A717096F5FB14 /* TripNotePlaceNaming.swift */,
+				8A13D57358153BB8782DB0F4 /* TripNotesCard.swift */,
 			);
 			path = Journeys;
 			sourceTree = "<group>";
@@ -789,6 +832,7 @@
 				8DFB58907BFAC6E5C32E33B9 /* ImportFileReader.swift */,
 				C6FE017ADC95679633971391 /* ImportFlow.swift */,
 				88DC354A6019AD2AD3EF8A0D /* ImportPreflight.swift */,
+				D19BD9912EC486B88C9A6B08 /* SampleTripsView.swift */,
 				25D88E062DC33C3FCCB46A7A /* TextRecognizer.swift */,
 				25B738B4170964E7BA2BDCD5 /* TrainStoreDocument.swift */,
 				444A70A704D1CA23E31C167E /* TransferGuideImport.swift */,
@@ -819,6 +863,7 @@
 				80D84A9559257D935A0EAE75 /* StatisticsStrings.swift */,
 				D778B40F0272DC7DE6F510E9 /* TicketScanStrings.swift */,
 				5A30B8C7B8469A034DD5D639 /* TransferGuideStrings.swift */,
+				C67B490C47B22F625D5076E1 /* TripNoteStrings.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -827,6 +872,7 @@
 			isa = PBXGroup;
 			children = (
 				D87980F047DC7F7AC572F3DE /* AutoFilledStationLabel.swift */,
+				59AF65111E069FC6C87EF03D /* EditorAutofill.swift */,
 				41BF34EA7764989ACDAEB702 /* EditorBindings.swift */,
 				2CDAA3C1C7799928A9481E1C /* EditorDateTimeFields.swift */,
 				FB75D3F9F830E75D3A694AE1 /* EditorFields.swift */,
@@ -834,10 +880,10 @@
 				F612D1C47B3A58597E103A3E /* EditorLabels.swift */,
 				3C5185DD10291284E08FF728 /* EditorLineSearchView.swift */,
 				478563F733F564E262B3B3B9 /* EditorMapPanel.swift */,
+				BD5B33D8A0CFCAEB5F99579C /* EditorQuickFillSection.swift */,
 				CC6CC9B55C518CF84B935E46 /* EditorRoutePlanning.swift */,
 				519DDE62A619BF8F6CCD534A /* EditorRouteSection.swift */,
-				CDD7A3A2D2A67596F41F7728 /* EditorAutofill.swift */,
-				567B1B26B158E392146249E4 /* EditorQuickFillSection.swift */,
+				A46E0FCF94AFE3B0C8A4E228 /* EditorSaveStatus.swift */,
 				28DE0FBD9B9624299CB7FE01 /* EditorServiceSection.swift */,
 				822C8B556819AD4284B84465 /* EditorStationsSection.swift */,
 				7E86E67052CE58114E73F4FA /* EditorTimeSection.swift */,
@@ -1050,14 +1096,16 @@
 			isa = PBXGroup;
 			children = (
 				A2402F4249CACA47DF190D52 /* AppTypographyPolicy.swift */,
-				67C67285C32FFCBCF82D8EE5 /* RailSpacing.swift */,
-				D3F2F2E4CA4A2980C051ED84 /* RailSheetChrome.swift */,
 				D120479A5E14CB2416DCCD6C /* ControlSizing.swift */,
 				9658A973534B909966D2AC6F /* DockedCard.swift */,
 				544E7C91AE1CC1064A87B04B /* GlassStyle.swift */,
 				393D82E85B02D210F9D17141 /* HexColor.swift */,
 				A2E3BCF1AF58E656B8DCD4FA /* OperatorBadge.swift */,
+				DC65221C8805DD809126EEE4 /* RailChoiceRow.swift */,
 				1080C7CEC7C89F1EF45B4EF5 /* RailMotion.swift */,
+				0912E0EE9126A13103DE4A3A /* RailSheetChrome.swift */,
+				81F545129230A4604CD7BA69 /* RailSpacing.swift */,
+				E90D19F1CA526292687DCFEC /* RailStatusLabel.swift */,
 				71FBCA118CC6AA434E8242B1 /* RailStyle.swift */,
 				E3E21D79AC9DC2D0C5461598 /* RailType.swift */,
 				0CA18208F466E6861675B203 /* RouteLogoSquare.swift */,
@@ -1252,8 +1300,6 @@
 				4F744450DC0714F182D9A2EE /* ChatGPTSubscriptionAuth.swift in Sources */,
 				889B090409BD1BB6AD355B57 /* ChatGPTSubscriptionService.swift in Sources */,
 				A11D9B2EC3D9853CED65D22C /* ClockStrings.swift in Sources */,
-				6F3B05964C66C41E8D8CDDC5 /* RailSpacing.swift in Sources */,
-				60F0F1DB7290E29F394BCF7B /* RailSheetChrome.swift in Sources */,
 				047416FC378551E250D9AEF2 /* ControlSizing.swift in Sources */,
 				E727939DA3A381D99681E83B /* Coordinate+MapKit.swift in Sources */,
 				3BFF4BD4559A34828182498E /* DataImportView.swift in Sources */,
@@ -1274,6 +1320,7 @@
 				FBEF101412F3A8481C781A38 /* DockedCard.swift in Sources */,
 				701C8349D652B6D0FC02E5DC /* Duration+Milliseconds.swift in Sources */,
 				A34EBCC575CE2968A253597C /* EdgeIndexCache.swift in Sources */,
+				BF7DBE1306F7A696151F4329 /* EditorAutofill.swift in Sources */,
 				DC8BC14C6872195CBFA7BAF8 /* EditorBindings.swift in Sources */,
 				7F1C5099DB645066F3BACC7A /* EditorCatalogLoading.swift in Sources */,
 				E329D694B29EEED46C3ADE67 /* EditorDateTimeFields.swift in Sources */,
@@ -1282,10 +1329,10 @@
 				2F57251E8641CE765C7527EA /* EditorLabels.swift in Sources */,
 				6DE652A6666FE32D408DA667 /* EditorLineSearchView.swift in Sources */,
 				E86FDCF8F3FD05733D6FF0D6 /* EditorMapPanel.swift in Sources */,
+				D44E6C9F027A53F7C40D9374 /* EditorQuickFillSection.swift in Sources */,
 				A106B5968A208DE619910C89 /* EditorRoutePlanning.swift in Sources */,
 				3CB69DECDB52B616EAA820E4 /* EditorRouteSection.swift in Sources */,
-				922B6CCCA8D06DA97F25C499 /* EditorAutofill.swift in Sources */,
-				618E17B0B30DE5F4A0F1B5A9 /* EditorQuickFillSection.swift in Sources */,
+				41F35F09356DE1222705E905 /* EditorSaveStatus.swift in Sources */,
 				8BFCBE0EDA69E83E849FDAEB /* EditorServiceSection.swift in Sources */,
 				C366E589F1820BED5D5B7563 /* EditorStationsSection.swift in Sources */,
 				133A4183B28499A0A82B783B /* EditorStrings.swift in Sources */,
@@ -1355,6 +1402,7 @@
 				38AF3A045A04C4E2A89F882D /* MapRideStationImportance.swift in Sources */,
 				EAA09AF44F9BFCFEEAFA5A1F /* MapSelectedStationSnapshotController.swift in Sources */,
 				1CD3DB78038AFB091F77E756 /* MapStationLabelCoordinator.swift in Sources */,
+				E699930C67C2A436E0D60D27 /* MapTripNoteLayer.swift in Sources */,
 				37AE9FAE2CBB0F72B1D55E65 /* MergedStore.swift in Sources */,
 				01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */,
 				2A0A2F0EEC114F8174A39F71 /* NetworkLOD.swift in Sources */,
@@ -1373,6 +1421,7 @@
 				3E701D1CAA2C796549F0E393 /* PlaybackVideoExporter.swift in Sources */,
 				4E81BE6FD4508D2163593B7D /* PresentationHost.swift in Sources */,
 				F8450A1D917A797E2E149B14 /* PrimaryTab.swift in Sources */,
+				A6D45B1E377F4FE906AB2D88 /* RailChoiceRow.swift in Sources */,
 				3987EAE24809F679B3DCF6B1 /* RailDiagnosticsApp.swift in Sources */,
 				6744CAF11327342BBD0E1CC1 /* RailDisplayNetwork.swift in Sources */,
 				E446B56F7023F5FD13D8A462 /* RailDisplayNetworkFormats.swift in Sources */,
@@ -1382,7 +1431,10 @@
 				82A24F0C223E3DBF7FFCBE44 /* RailMapView.swift in Sources */,
 				EAFA84C6B643251C92A20DFC /* RailMotion.swift in Sources */,
 				04E42FE7F85CC954178C489C /* RailNetworkStore.swift in Sources */,
+				5F577987E68A6E025706576B /* RailSheetChrome.swift in Sources */,
 				DC24716C11355E935FA07C10 /* RailSignpost.swift in Sources */,
+				1CA11FD90E0B30D3BB14CA6B /* RailSpacing.swift in Sources */,
+				D7E1F1A5708EB76B273EA2BB /* RailStatusLabel.swift in Sources */,
 				FF8F86F4B3E97B4ECC7DC8E0 /* RailStyle.swift in Sources */,
 				65F2290ADEDA69B7F5DD03EE /* RailType.swift in Sources */,
 				9DED5658A0938326D19B6FA8 /* RailWorkspaceView.swift in Sources */,
@@ -1403,6 +1455,7 @@
 				501678F4FD4E32283A56DEF8 /* RideSheet.swift in Sources */,
 				14D3E59178F630D0278752A6 /* RideStationOverlay.swift in Sources */,
 				2A78EFF38767EFA1BDEE7E89 /* RideStorage.swift in Sources */,
+				178D8A4A31C2CF1B9D8EB821 /* RideStrokeBuilder.swift in Sources */,
 				0FF39D4F6F70077DC758B7B4 /* RideTapIndex.swift in Sources */,
 				80A5A8E55BCAB9B5923C1458 /* RouteBadgeIndex.swift in Sources */,
 				4A25805EDAB7BB35F38C86FA /* RouteDigestIndexStore.swift in Sources */,
@@ -1414,7 +1467,10 @@
 				65FEE0B871EB7C993ABCE463 /* RouteWorkbenchModel.swift in Sources */,
 				ED7EC81EA955E1FEC5638F81 /* RouteWorkbenchView.swift in Sources */,
 				EB67C98274518F774B306EC3 /* SampleLegacyRideIDs.swift in Sources */,
+				F6793178890D37F4B8A35753 /* SampleTripsView.swift in Sources */,
 				16C32CA39C57AB6994A009B7 /* ScrollableIfNeeded.swift in Sources */,
+				5BCCE25003F501BC7C8177D9 /* SearchPreferences.swift in Sources */,
+				2BFF9E74BD93BA9174C6FCE4 /* SearchSuggestionChips.swift in Sources */,
 				AFA70A0C969C96030FF55236 /* ServicePatternPickerView.swift in Sources */,
 				78767713974560AF444D73BE /* ServiceRangeEditorView.swift in Sources */,
 				8764FD262885E567547C6B43 /* ServiceSectionSummary.swift in Sources */,
@@ -1469,6 +1525,14 @@
 				71AE3773D027139A0CCF7B7E /* TripHideFilter.swift in Sources */,
 				70C2EBDD8AE2B84EE0A12ED1 /* TripHideSheet.swift in Sources */,
 				BE405F1F010C30C44C57474F /* TripMapView.swift in Sources */,
+				27EA857FC5EA2D7433B619BD /* TripNoteAnnotationViews.swift in Sources */,
+				1A77E58CDF1351E08A38D231 /* TripNoteAnnotations.swift in Sources */,
+				7DCAAB3D3722E1A01C605D4D /* TripNoteEditing.swift in Sources */,
+				6F87A22FE69183AB46C542CC /* TripNoteGeometry.swift in Sources */,
+				C0DF04D2E52B034D9D8011E6 /* TripNotePickOverlay.swift in Sources */,
+				FD6B6348C5900A3C29C30190 /* TripNotePlaceNaming.swift in Sources */,
+				572149C2F3C65D2BD2C1D974 /* TripNoteStrings.swift in Sources */,
+				0819132F9AE65D69FA04450C /* TripNotesCard.swift in Sources */,
 				644DEC963B5ABA8E435A5DDF /* UnifiedDiagnosticCommands.swift in Sources */,
 				1454B0D4CEE1F04C5D34B7D0 /* UtilityDestination.swift in Sources */,
 				400BB7654221E543E01DBF1E /* VideoExportFlow.swift in Sources */,

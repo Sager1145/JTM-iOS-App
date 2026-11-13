@@ -36,6 +36,7 @@ step() { # step <label> <command...>
 step "ui-test identifiers" bash "$ROOT/ios/tools/check-ui-test-identifiers.sh"
 step "ui tokens" bash "$ROOT/ios/tools/check-ui-tokens.sh"
 step "string keys" bash "$ROOT/ios/tools/check-string-keys.sh"
+step "raildiagnostics membership" bash "$ROOT/ios/tools/check-raildiagnostics-membership.sh"
 # Shinkansen stop-pattern database: fails only on the new keys' rules (allStations,
 # variants, coupled, source files) until the data branches that correct the existing
 # stop lists have landed. Then add --strict here so the base-data rules fail too.
