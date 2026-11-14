@@ -74,6 +74,21 @@ func mapCoordinateChunks(
     }
 }
 
+/// A network polyline with every interior vertex closer than
+/// ``ScreenPolylineThinning/stepPx`` screen points to the last kept one
+/// dropped. Called where network (all-lines) polylines are built, after lane
+/// offsets and corner rounding and before the vertex count `fitToBudget`
+/// weighs; ride polylines never pass through it.
+func thinnedForNetwork(
+    _ coordinates: [CLLocationCoordinate2D], mapPointsPerScreenPoint: Double
+) -> [CLLocationCoordinate2D] {
+    guard coordinates.count > 2, mapPointsPerScreenPoint > 0 else { return coordinates }
+    let points = coordinates.map(MKMapPoint.init)
+    return ScreenPolylineThinning.thinned(
+        coordinates, x: points.map { $0.x / mapPointsPerScreenPoint },
+        y: points.map { $0.y / mapPointsPerScreenPoint })
+}
+
 /// Construct MapKit reference objects only on the main actor, immediately
 /// before they enter the mounted-geometry cache.
 @MainActor
@@ -912,7 +927,9 @@ enum MapLineGeometry {
                     let points = parallelLaneCoordinates(
                         coordinates, lane: line.lane,
                         mapPointsPerScreenPoint: mapScale, scale: scale, alreadyCurved: line.continuous)
-                    result.append(contentsOf: mapCoordinateChunks(points, preservingPattern: preservingPattern))
+                    result.append(contentsOf: mapCoordinateChunks(
+                        thinnedForNetwork(points, mapPointsPerScreenPoint: mapScale),
+                        preservingPattern: preservingPattern))
                 }
                 return result
             }
@@ -967,7 +984,10 @@ enum MapLineGeometry {
                         return PreparedFamilyRunBuild(
                             colorHex: colorHex, colorDarkHex: colorDarkHex,
                             coordinateChunks: chunks.map { chunk in
-                                chunk.points.map {
+                                // Stroke points are already screen points.
+                                ScreenPolylineThinning.thinned(
+                                    chunk.points, x: chunk.points.map(\.x), y: chunk.points.map(\.y)
+                                ).map {
                                     MKMapPoint(x: $0.x * mapScale, y: $0.y * mapScale).coordinate
                                 }
                             }, chunkWindows: chunks.map {
