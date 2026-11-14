@@ -6027,18 +6027,22 @@ extension RailMapView.Surface {
             ) -> MapTapTestReport {
                 interaction.beginTouch()
                 let outcome = answerTap(at: point, on: mapView)
-                // No real touch reaches MapKit here: select what it would have.
-                if outcome.answer == .annotation, let annotation = annotationUnderTap {
+                // No real touch reaches MapKit here: select what it would have. MapKit
+                // selects only after its own double-tap recogniser fails, so a double
+                // tap selects nothing.
+                if !doubleTap, outcome.answer == .annotation, let annotation = annotationUnderTap {
                     self.mapView(mapView, didSelect: annotation)
                 }
+                var report = MapTapTestReport(answer: outcome.answer, hits: outcome.hits)
                 if doubleTap {
                     // The second tap inside the window: cancels what the first banked.
+                    report.cancelledByDoubleTap = bankedTap != nil
                     answerDoubleTap(at: point, on: mapView)
                 } else if let tap = bankedTap {
                     bankedTap = nil
                     deliver(tap)
                 }
-                return MapTapTestReport(answer: outcome.answer, hits: outcome.hits)
+                return report
             }
 #endif
 

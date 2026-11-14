@@ -6,5 +6,7 @@ import RailPresentation
 struct MapTapTestReport {
     var answer: MapTapAnswer
     var hits: MapTapHits
+    /// A double tap dropped the station or line answer the first tap banked.
+    var cancelledByDoubleTap = false
 }
 #endif

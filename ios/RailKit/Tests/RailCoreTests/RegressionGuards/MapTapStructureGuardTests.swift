@@ -93,6 +93,17 @@ struct RegressionGuardMapTap {
         #expect(Self.coordinator.contains("func answerTapForUITest("))
     }
 
+    /// A double tap selects no annotation (MapKit selects only after its double-tap
+    /// recogniser fails) and reports whether it dropped a banked answer.
+    @Test func tapMapDoubleTapSelectsNothingAndReportsCancellation() throws {
+        let c = Self.coordinator
+        let from = try #require(c.range(of: "func answerTapForUITest("))
+        let body = c[from.upperBound...].prefix(1400)
+        #expect(body.contains("if !doubleTap, outcome.answer == .annotation"))
+        #expect(body.contains("report.cancelledByDoubleTap = bankedTap != nil"))
+        #expect(Self.host.contains("\"cancelledByDoubleTap\""))
+    }
+
     private static let hitTest = read("RailMap/Map/NetworkLineHitTest.swift")
 
     /// A trip dot under the finger is its own trip's tap, whatever else passes.

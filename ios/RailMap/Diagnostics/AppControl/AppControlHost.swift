@@ -848,7 +848,7 @@ final class AppControlHost: AppControlDriver {
         return [
             "point": ["x": .number(Double(point.x)), "y": .number(Double(point.y))],
             "doubleTap": .bool(doubleTap),
-            "answer": .string(answerName), "hits": hits,
+            "answer": .string(answerName), "cancelledByDoubleTap": .bool(report.cancelledByDoubleTap), "hits": hits,
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),
         ]
