@@ -17,20 +17,21 @@ public enum SelectionApplyPlan: Equatable, Sendable {
     /// - Parameters:
     ///   - selected: the new selection.
     ///   - standalone: the ride the installed overlays draw standalone.
-    ///   - routeCachedInFrame: every drawable segment of the selected ride has
-    ///     its polyline cached in the installed frame (the whole route, not
-    ///     only the part inside the built rect).
+    ///   - routeAvailableInFrame: every drawable segment of the selected ride
+    ///     has its polyline cached in the installed frame, or is known to
+    ///     build to nothing there (the whole route, not only the part inside
+    ///     the built rect).
     ///   - batchCacheCurrent: the batch cache is the one the installed frame
     ///     drew, with every input unchanged but the selection.
     ///   - contextValid: the marker context and installed build are usable.
     public static func decide(
         selected: String?, standalone: String?,
-        routeCachedInFrame: Bool, batchCacheCurrent: Bool, contextValid: Bool
+        routeAvailableInFrame: Bool, batchCacheCurrent: Bool, contextValid: Bool
     ) -> SelectionApplyPlan {
         guard contextValid else { return .rebuild }
         guard let selected else { return .selectionOnly(rebatch: false) }
         if selected == standalone { return .selectionOnly(rebatch: false) }
-        guard routeCachedInFrame, batchCacheCurrent else { return .rebuild }
+        guard routeAvailableInFrame, batchCacheCurrent else { return .rebuild }
         return .selectionOnly(rebatch: true)
     }
 }

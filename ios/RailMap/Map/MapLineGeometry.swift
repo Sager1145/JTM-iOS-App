@@ -855,10 +855,14 @@ enum MapLineGeometry {
         mapScale: Double, scale: CGFloat, laneScale: Double,
         era: DisplayNetworkEra = .current,
         rideDate: String? = nil,
-        todayByRegion: [String: String] = [:]
+        todayByRegion: [String: String] = [:],
+        prebuild: Bool = false
     ) async throws -> PreparedGeometry {
-        let interval = RailSignpost.map.begin("map.geometry.prepare")
-        defer { RailSignpost.map.end("map.geometry.prepare", interval) }
+        // An idle prebuild is not the foreground's work: it reports under its
+        // own name so `map.geometry.prepare` counts only what a rebuild waits on.
+        let intervalName: StaticString = prebuild ? "map.geometry.prebuild" : "map.geometry.prepare"
+        let interval = RailSignpost.map.begin(intervalName)
+        defer { RailSignpost.map.end(intervalName, interval) }
         let projection = ChainPixelCache.Projection(
             frameKey: frameKey, datumToken: datumToken,
             mapPointsPerScreenPoint: mapScale, lodScale: laneScale)

@@ -153,4 +153,17 @@ struct RegressionGuardZoomPreparation {
             search = call.upperBound..<coordinator.endIndex
         }
     }
+
+    /// Only the idle prebuild passes `prebuild: true`; it reports as
+    /// `map.geometry.prebuild`, so `map.geometry.prepare` counts foreground work.
+    @Test func idlePrebuildReportsUnderItsOwnSignpost() {
+        let coordinator = Self.coordinator
+        #expect(coordinator.components(separatedBy: "prebuild: true").count == 2)
+        let call = coordinator.range(of: "prebuild: true")
+        let prebuildCall = call.map { coordinator[coordinator.startIndex..<$0.lowerBound] }
+        #expect(prebuildCall?.contains("priority: .utility") == true)
+        let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
+        #expect(geometry.contains("prebuild: Bool = false"))
+        #expect(geometry.contains("\"map.geometry.prebuild\""))
+    }
 }

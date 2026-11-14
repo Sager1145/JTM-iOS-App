@@ -1927,7 +1927,8 @@ extension RailMapView.Surface {
                                     junctionIndex: junctionIndex, chainPixels: chainPixels,
                                     frameKey: key, datumToken: datumToken,
                                     mapScale: mapScale, scale: scale, laneScale: laneScale,
-                                    era: era, rideDate: rideDate, todayByRegion: todayByRegion)
+                                    era: era, rideDate: rideDate, todayByRegion: todayByRegion,
+                                    prebuild: true)
                             }
                         }
                         self.neighbourPrebuildWorker = worker
@@ -2962,17 +2963,24 @@ extension RailMapView.Surface {
             }
 
             /// Whether every segment of `ride` that draws has its polyline in
-            /// the installed frame's cache. A standalone ride draws its whole
-            /// route (not only the part inside the built rect), so a ride that
-            /// reaches outside has not been built for it and takes a rebuild.
-            private func routeCachedInFrame(_ ride: RiddenRouteStore.DrawnRide) -> Bool {
+            /// the installed frame's cache, or is known to build to nothing
+            /// (it is drawn from nothing either way). A standalone ride draws
+            /// its whole route (not only the part inside the built rect), so a
+            /// ride that reaches outside has not been built for it and takes a
+            /// rebuild.
+            private func routeAvailableInFrame(_ ride: RiddenRouteStore.DrawnRide) -> Bool {
                 let riddenStops = ride.stops
                 for segment in ride.segments {
                     guard draws(segment: segment, of: ride, riddenStops: riddenStops) else { continue }
                     let ref = strokeRef(for: segment, of: ride)
                     let usesStroke = ref.map { networkGeometry.containsStroke(for: $0.chainID) } ?? false
                     let key = rideLineCacheKey(of: segment, in: ride, stroke: usesStroke ? ref : nil)
-                    guard networkGeometry.ridePolyline(for: key) != nil else { return false }
+                    if networkGeometry.ridePolyline(for: key) != nil { continue }
+                    // The worker built this segment to nothing in this frame:
+                    // `ridePolylines` skips it, and a rebuild would too.
+                    if rideStrokeEmptyFrameKey == currentGeometryFrame?.key,
+                       rideStrokeEmptyKeys.contains(key) { continue }
+                    return false
                 }
                 return true
             }
@@ -6186,7 +6194,7 @@ extension RailMapView.Surface {
                 guard layers.routes, playback?.isActive != true, playbackLayer.lastSnapshot == nil,
                       let id = selectedTrainID, let ride = rides.first(where: { $0.id == id })
                 else { return false }
-                return routeCachedInFrame(ride)
+                return routeAvailableInFrame(ride)
             }
 
             /// The batch cache is the one the installed frame drew, with every
@@ -6302,7 +6310,7 @@ extension RailMapView.Surface {
                 let isNewPick = selectedTrainID != nil && selectedTrainID != fullyBuiltSelectedRideID
                 let plan = SelectionApplyPlan.decide(
                     selected: selectedTrainID, standalone: fullyBuiltSelectedRideID,
-                    routeCachedInFrame: isNewPick && newPickRouteIsCached(),
+                    routeAvailableInFrame: isNewPick && newPickRouteIsCached(),
                     batchCacheCurrent: isNewPick && batchCacheIsCurrent(context: context, on: mapView),
                     contextValid: true)
                 guard case .selectionOnly(let rebatch) = plan else { return false }
