@@ -18,6 +18,10 @@ public struct GeometryZoomLevels: Equatable, Sendable {
 
     public init() {}
 
+    /// The level a zoom-out to the overview lands on (measured). A frame at or
+    /// below it is held resident, see ``GeometryFrameResidency``.
+    public static let overviewLevel = 11
+
     /// The level whose nominal zoom is nearest `zoom`.
     public static func nearestLevel(zoom: Double) -> Int {
         Int((zoom / spacing).rounded())

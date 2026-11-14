@@ -174,12 +174,12 @@ final class MapNetworkGeometryCache {
     /// and stopped before installing leaves it ahead of the installed one.
     var currentFrameKey: String { frameKey }
 
-    func beginFrame(key: String) {
+    func beginFrame(key: String, isOverview: Bool) {
         if entries[key] == nil {
             entries[key] = FrameEntry()
         }
         frameKey = key
-        for evicted in residency.begin(key) { entries.removeValue(forKey: evicted) }
+        for evicted in residency.begin(key, isOverview: isOverview) { entries.removeValue(forKey: evicted) }
     }
 
     /// Whether resident frame geometry leaves room to prebuild a neighbour.
@@ -823,6 +823,10 @@ struct MapGeometryFrame {
     let scale: CGFloat
     let laneScale: Double
     let key: String
+
+    /// Whether this level is at or below the overview the zoom-out lands on,
+    /// so the cache keeps its frame resident.
+    var isOverview: Bool { bucket <= GeometryZoomLevels.overviewLevel }
 
     init(level: Int, eraKey: String, on mapView: MKMapView) {
         let nominalZoom = GeometryZoomLevels.nominalZoom(level: level)

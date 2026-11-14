@@ -2091,7 +2091,7 @@ extension RailMapView.Surface {
                 adoptedPrebuildKey = nil
                 cancelNeighbourPrebuild()
                 if gate.drawNow {
-                    if installs { networkGeometry.beginFrame(key: key) }
+                    if installs { networkGeometry.beginFrame(key: key, isOverview: frame.isOverview) }
                     return true
                 }
                 if gate.cancelInFlight { cancelGeometryPreparation() }
@@ -2504,7 +2504,7 @@ extension RailMapView.Surface {
                     interaction.invalidateRideGeometry()
                 }
                 currentGeometryFrame = geometryFrame
-                networkGeometry.beginFrame(key: geometryFrame.key)
+                networkGeometry.beginFrame(key: geometryFrame.key, isOverview: geometryFrame.isOverview)
 
                 // The per-interval cull, and it is what lets the map hold a
                 // railway whole. `NetworkLOD.select` has already dropped the

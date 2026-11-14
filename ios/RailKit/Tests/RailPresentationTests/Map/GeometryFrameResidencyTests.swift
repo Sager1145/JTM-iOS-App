@@ -116,4 +116,61 @@ struct GeometryFrameResidencyTests {
         #expect(!residency.order.contains("a"))
         #expect(residency.order.contains("b"))
     }
+
+    // MARK: Pinned overview
+
+    @Test func theOverviewSurvivesCountAndByteEviction() {
+        var residency = GeometryFrameResidency(byteCap: 10, maxUnpinnedFrames: 1)
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.setBytes(500, for: "o")
+        for key in ["a", "b", "c", "d"] {
+            _ = residency.begin(key)
+            _ = residency.setBytes(8, for: key)
+        }
+        #expect(residency.order.contains("o"))
+        #expect(residency.overview == "o")
+        #expect(residency.frameBytes["o"] == 500)
+    }
+
+    @Test func theOverviewIsNotCounted() {
+        var residency = GeometryFrameResidency(byteCap: 100, maxUnpinnedFrames: 3)
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.setBytes(900, for: "o")
+        _ = residency.begin("a")
+        #expect(residency.unpinnedFrameCount == 0)
+        #expect(residency.unpinnedBytes == 0)
+        #expect(residency.hasRoomToPrebuild)
+    }
+
+    @Test func aMemoryWarningDropsTheOverview() {
+        var residency = GeometryFrameResidency(byteCap: 100)
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.begin("a")
+        #expect(residency.dropNonCurrent() == ["o"])
+        #expect(residency.overview == nil)
+        #expect(residency.order == ["a"])
+        // Even when the overview is the current frame the pin is cleared.
+        _ = residency.begin("o2", isOverview: true)
+        _ = residency.dropNonCurrent()
+        #expect(residency.overview == nil)
+        #expect(residency.current == "o2")
+    }
+
+    @Test func aNewOverviewKeyUnpinsTheOldOne() {
+        var residency = GeometryFrameResidency(byteCap: 10, maxUnpinnedFrames: 0)
+        _ = residency.begin("o1", isOverview: true)
+        _ = residency.setBytes(5, for: "o1")
+        _ = residency.begin("o2", isOverview: true)
+        #expect(residency.overview == "o2")
+        // o1 is no longer current or pinned: the zero frame cap evicts it.
+        #expect(!residency.order.contains("o1"))
+        // A non-overview frame leaves the pin alone.
+        _ = residency.begin("x")
+        #expect(residency.overview == "o2")
+        #expect(residency.order.contains("o2"))
+    }
+
+    @Test func theOverviewLevelIsTheMeasuredOne() {
+        #expect(GeometryZoomLevels.overviewLevel == 11)
+    }
 }

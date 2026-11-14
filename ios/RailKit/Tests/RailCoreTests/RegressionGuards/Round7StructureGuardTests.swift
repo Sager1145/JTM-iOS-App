@@ -89,7 +89,7 @@ struct RegressionGuardRound7 {
     @Test func aTravelRequestNeverBeginsAFrameAndTheGateGetsTheInstallRule() throws {
         let prepare = try Self.body(
             Self.coordinator, from: "if gate.drawNow {", to: "guard gate.start else { return false }")
-        #expect(prepare.contains("if installs { networkGeometry.beginFrame(key: key) }"))
+        #expect(prepare.contains("if installs { networkGeometry.beginFrame(key: key, isOverview: frame.isOverview) }"))
         #expect(prepare.contains("if gate.cancelInFlight { cancelGeometryPreparation() }"))
         let gate = try Self.body(
             Self.coordinator, from: "let gate = GeometryPreparationGate.decide(", to: "if gate.adoptPrebuild {")
