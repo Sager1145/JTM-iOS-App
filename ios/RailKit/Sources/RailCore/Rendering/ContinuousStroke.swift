@@ -857,7 +857,8 @@ public enum ContinuousStroke {
         var hard = [Bool](repeating: false, count: p.count)
         hard[0] = true; hard[p.count - 1] = true
         for i in surveyedCornerIndices(p) { hard[i] = true }
-        for i in m.indices where allHardMeasures.contains(where: { abs($0 - m[i]) < 1e-9 }) {
+        let hardMatcher = MeasureMatcher(allHardMeasures)
+        for i in m.indices where hardMatcher.matches(m[i]) {
             hard[i] = true
         }
         var constrained = [Int: Int]()
@@ -889,6 +890,7 @@ public enum ContinuousStroke {
         protectedSupports: Set<Int> = [], kept: inout [Int]
     ) {
         let corners = surveyedCornerIndices(points)
+        let anchorMatcher = MeasureMatcher(anchorMeasures)
         for i in 1..<(points.count - 1) {
             let previous = kept.last!
             let a = points[previous], b = points[i], c = points[i + 1]
@@ -899,7 +901,7 @@ public enum ContinuousStroke {
             let nearHard = (max(1, i - 2)...min(points.count - 2, i + 2)).contains {
                 corners.contains($0)
             }
-            let isAnchor = anchorMeasures.contains { abs($0 - measures[i]) < 1e-9 }
+            let isAnchor = anchorMatcher.matches(measures[i])
             if collinear && !nearHard && !isAnchor && !protectedSupports.contains(i) { continue }
             kept.append(i)
         }
@@ -1329,7 +1331,8 @@ public enum ContinuousStroke {
     ) -> (points: [Point], measures: [Double], map: [Int]) {
         var followedAnchors = Set<Int>()
         for index in anchorSet where followed.map[index] >= 0 { followedAnchors.insert(followed.map[index]) }
-        for i in followed.measures.indices where cornerMeasures.contains(where: { abs($0 - followed.measures[i]) < 1e-9 }) {
+        let cornerMatcher = MeasureMatcher(cornerMeasures)
+        for i in followed.measures.indices where cornerMatcher.matches(followed.measures[i]) {
             followedAnchors.insert(i)
         }
         let taperedStep = taperJogs(
@@ -1431,11 +1434,12 @@ public enum ContinuousStroke {
         // ``strokeSimplifyTolerancePx``. Both the anchor set and the measures
         // are carried across; the anchors, the two ends, and nothing else,
         // are forced to survive.
+        let anchorMatcher = MeasureMatcher(anchorMeasures)
         let drawn = curveEnabled
             ? (points: cleaned.points, measures: cleanedMeasures,
                // Anchors that survived as exact vertices keep the through-anchor fillet.
                anchors: Set(cleanedMeasures.indices.filter { index in
-                   anchorMeasures.contains { abs($0 - cleanedMeasures[index]) < 1e-9 }
+                   anchorMatcher.matches(cleanedMeasures[index])
                }))
             : simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
                                 tolerance: strokeSimplifyTolerancePx)
@@ -1458,10 +1462,13 @@ public enum ContinuousStroke {
             hardCornerTolerancePx: tolerance,
             waiveFloorForRounded: gap == 0 || abs(gap) < width
                 || abs(gap) >= hardCornerFloorWaiverGapTolerances * tolerance)
+        // Ascending, so the first match below is still the lowest index.
+        let drawnAnchorIndices = drawn.anchors.sorted()
         let anchors = options.anchors.enumerated().map { anchorIndex, index -> Point in
             finalStrokeAnchor(
                 anchorIndex: anchorIndex, index: index, curveEnabled: curveEnabled,
                 anchorMap: anchorMap, anchorMeasures: anchorMeasures, drawn: drawn,
+                drawnAnchorIndices: drawnAnchorIndices,
                 filleted: filleted, offset: offset, tapered: tapered, cleaned: cleaned, cleanedMeasures: cleanedMeasures)
         }
         // A fillet at a vertex whose neighbour edge is tiny can overshoot its
@@ -1477,14 +1484,14 @@ public enum ContinuousStroke {
 
     private static func finalStrokeAnchor(
         anchorIndex: Int, index: Int, curveEnabled: Bool, anchorMap: [Int], anchorMeasures: [Double],
-        drawn: (points: [Point], measures: [Double], anchors: Set<Int>),
+        drawn: (points: [Point], measures: [Double], anchors: Set<Int>), drawnAnchorIndices: [Int],
         filleted: (points: [Point], measures: [Double]), offset: [Point],
         tapered: (points: [Point], measures: [Double], map: [Int]),
         cleaned: (points: [Point], map: [Int]), cleanedMeasures: [Double]
     ) -> Point {
         if curveEnabled {
             // A surviving anchor vertex is returned exactly (the fillet keeps it as an apex).
-            if let exact = drawn.points.indices.first(where: { drawn.anchors.contains($0) && abs(drawn.measures[$0] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.contains(drawn.points[$0]) && distanceToPolyline(drawn.points[$0], filleted.points) == 0 }) {
+            if let exact = drawnAnchorIndices.first(where: { abs(drawn.measures[$0] - anchorMeasures[anchorIndex]) < 1e-9 && filleted.points.contains(drawn.points[$0]) && distanceToPolyline(drawn.points[$0], filleted.points) == 0 }) {
                 return drawn.points[exact]
             }
             let at = anchorMeasures[anchorIndex]
@@ -1996,8 +2003,9 @@ public enum ContinuousStroke {
         let canonPxTotal = cumulativeLengths(canon).last ?? 0
         let canonMetresTotal = canonCumulative[canonCumulative.count - 1] - canonCumulative[0]
         let metresPerPx = canonPxTotal > 0 && canonMetresTotal > 0 ? canonMetresTotal / canonPxTotal : 0
+        let boundaryMatcher = MeasureMatcher(shapeBoundaryMeasures)
         let boundaryAnchors = Set(canonCumulative.indices.filter { index in
-            shapeBoundaryMeasures.contains { abs($0 - canonCumulative[index]) < 1e-9 }
+            boundaryMatcher.matches(canonCumulative[index])
         })
         let tapered = taperJogs(
             canon, measures: canonCumulative, anchors: boundaryAnchors, metresPerPx: metresPerPx)
@@ -3367,5 +3375,41 @@ public enum ContinuousStroke {
             }
         }
         return best
+    }
+}
+
+/// Membership test for a measure list: `matches(m)` is exactly
+/// `list.contains { abs($0 - m) < 1e-9 }`, answered with a binary search over the
+/// sorted list instead of a scan per query. The scans were O(n * m) per stroke
+/// and, at low zoom where sub-pixel vertices all count as corners, dominated
+/// geometry preparation. `abs(c - m)` is monotone on each side of `m`, so only
+/// the two neighbours of `m` in sorted order can match; they are tested with the
+/// same expression the scan used.
+struct MeasureMatcher {
+    private let sorted: [Double]
+
+    init(_ measures: [Double]) {
+        sorted = measures.filter { !$0.isNaN }.sorted()
+    }
+
+    func matches(_ measure: Double) -> Bool {
+        var comparisons = 0
+        return matches(measure, comparisons: &comparisons)
+    }
+
+    /// `comparisons` counts element comparisons (bisection steps plus the two
+    /// neighbour tests); a guard test holds it to O(log n) per query.
+    func matches(_ measure: Double, comparisons: inout Int) -> Bool {
+        var low = 0, high = sorted.count
+        while low < high {
+            let mid = (low + high) / 2
+            comparisons += 1
+            if sorted[mid] < measure { low = mid + 1 } else { high = mid }
+        }
+        for index in [low - 1, low] where index >= 0 && index < sorted.count {
+            comparisons += 1
+            if abs(sorted[index] - measure) < 1e-9 { return true }
+        }
+        return false
     }
 }

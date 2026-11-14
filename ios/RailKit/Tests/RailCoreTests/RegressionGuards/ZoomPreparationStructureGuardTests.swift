@@ -52,12 +52,12 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func aLandedLevelIsInstalledAndClearedAtCommit() throws {
-        #expect(Self.coordinator.contains("GeometryZoomLevels.installsLanded("))
+        #expect(Self.coordinator.contains("GeometryZoomLevels.landingInstall("))
         #expect(Self.coordinator.contains("geometryLevelToBuild(at: zoom, on: mapView)"))
         #expect(!Self.coordinator.contains("geometryFrame(level: wantedGeometryLevel(at: zoom), on: mapView)\n                let scale"))
         let commit = try Self.body(
             Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
-        #expect(commit.contains("pendingInstallLevel = nil"))
+        #expect(commit.contains("clearPendingInstall()"))
     }
 
     @Test func aPreparationNeverMakesItsFrameCurrent() throws {
@@ -78,11 +78,14 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func aLandedWantedLevelOwesNoSecondRebuild() throws {
-        #expect(Self.coordinator.contains("frame.bucket != self.wantedGeometryLevel(at: landedZoom)"))
+        // A ready wanted level installs through the ordinary rebuild: no pending install.
+        #expect(Self.coordinator.contains("wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView)"))
         let commit = try Self.body(
             Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
         #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))
         #expect(!commit.contains("wantedLevelFollowUpOwed = true"))
+        // The padding is owed only after an install on the prepared rect.
+        #expect(commit.contains("installedOnPreparedRect"))
     }
 
     @Test func aMatchWithNewGeometryButEqualRefsStillCountsAsChanged() {

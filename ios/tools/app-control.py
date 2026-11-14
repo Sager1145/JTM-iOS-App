@@ -17,7 +17,7 @@ Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),
 3 timeout, 4 failed, 1 tool/usage error. One native app job at a time across all chats.
 """
-import argparse, base64, json, os, shutil, subprocess, sys, tempfile, time, uuid
+import argparse, base64, hashlib, json, os, plistlib, shutil, subprocess, sys, tempfile, time, uuid
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -27,7 +27,10 @@ ROOT_NAME = "RailMapAppControl"
 CONTAINER_ROOT = "Library/Application Support/" + ROOT_NAME
 DEFAULT_SIM = "0DBE2488-0BEB-4932-9B55-091B3CC793B6"
 DEFAULT_DEVICE = "00008140-000575142288801C"
-DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData"))
+# One build folder per worktree: sharing one let another session's build replace the app
+# a run was about to measure (the app then ran a different commit than the one under test).
+DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData")) / \
+    hashlib.sha1(str(REPO).encode("utf-8")).hexdigest()[:10]
 PLATFORM_SUFFIX = {"sim": "iphonesimulator", "mac": "maccatalyst", "device": "iphoneos"}
 DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=macOS,variant=Mac Catalyst",
                 "device": "generic/platform=iOS"}  # no unlocked device needed to build
@@ -64,6 +67,37 @@ def run(cmd, check=True, capture=True, timeout=600, env=None):
 
 def device_id(a):
     return a.device or (DEFAULT_SIM if a.target == "sim" else DEFAULT_DEVICE if a.target == "device" else "mac")
+
+
+def head_commit():
+    """Full HEAD sha of this worktree, or None outside git."""
+    p = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True)
+    return p.stdout.strip() if p.returncode == 0 and p.stdout.strip() else None
+
+
+def build_commit_stamp():
+    """HEAD sha stamped into Info.plist at build time; `-dirty` when tracked files differ from HEAD."""
+    head = head_commit()
+    if not head:
+        return "unknown"
+    dirty = subprocess.run(["git", "-C", str(REPO), "diff", "--quiet", "HEAD"]).returncode != 0
+    return head + ("-dirty" if dirty else "")
+
+
+def built_commit(app):
+    """The commit stamped into a built app's Info.plist, or None when the app has none."""
+    for rel in ("Contents/Info.plist", "Info.plist"):
+        try:
+            value = plistlib.loads((Path(app) / rel).read_bytes()).get("JTMBuildCommit")
+        except (OSError, ValueError):
+            continue
+        return value or None
+    return None
+
+
+def commit_mismatch(stamped, head):
+    """True when the stamped build is not HEAD (ignores the `-dirty` suffix)."""
+    return not stamped or not head or stamped.split("-dirty")[0] != head
 
 
 def app_path(a):
@@ -230,7 +264,7 @@ def cmd_build(a):
     dest = DESTINATIONS[a.target].format(device=device_id(a))
     cmd = ["xcodebuild", "-project", str(REPO / "ios/RailMap.xcodeproj"), "-scheme", "RailMap",
            "-configuration", a.configuration, "-destination", dest, "-derivedDataPath", str(DERIVED),
-           "-jobs", str(a.jobs), "build"]
+           "-jobs", str(a.jobs), "build", "JTM_BUILD_COMMIT=" + build_commit_stamp()]
     if a.target != "device":
         cmd.append("CODE_SIGN_IDENTITY=-")  # ad-hoc: no team identity needed for sim or Catalyst
     else:
@@ -320,6 +354,10 @@ def cmd_launch(a):
         app = app_path(a)
         if not app.exists():
             out({"error": "app not built", "app": str(app)}, 1)
+        stamped = built_commit(app)
+        if not a.app and commit_mismatch(stamped, head_commit()):
+            out({"error": "built app is not this worktree's HEAD; run build first",
+                 "builtCommit": stamped, "head": head_commit(), "app": str(app)}, 1)
         cmd = ["open", "-n", "-g", "-a", str(app)]
         for k, v in env.items():
             cmd += ["--env", "{}={}".format(k, v)]

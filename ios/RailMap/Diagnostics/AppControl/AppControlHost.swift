@@ -572,6 +572,7 @@ final class AppControlHost: AppControlDriver {
                 "totalOverlays": .number(Double(MapRenderProbe.totalOverlays)),
                 "rideOverlays": .number(Double(MapRenderProbe.rideOverlays)),
                 "droppedFrames": .number(Double(MapRenderProbe.droppedFrames)),
+                "geometryLevel": Self.geometryLevel(),
                 "networkLines": .number(Double(stores.network.lines.count)),
                 "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
                     [
@@ -600,6 +601,7 @@ final class AppControlHost: AppControlDriver {
                 "months": .array(stores.tripHide.hiddenMonths.sorted().map { .string($0) }),
             ],
             "memory": Self.memory(),
+            "build": ["commit": optional(Self.buildCommit())],
             "storageSource": .string(DevStorage.launch.source.rawValue),
             "layers": Self.layers(stores.controller),
             // The in-process copy of RailSignpost intervals (SignpostRecorder);
@@ -828,6 +830,27 @@ final class AppControlHost: AppControlDriver {
         let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
         for window in windows { if let label = find(window) { return label.text } }
         return nil
+    }
+
+    /// The commit stamped into Info.plist at build time (`JTMBuildCommit`, set by
+    /// `app-control.py build`); nil for a build that was not stamped.
+    nonisolated static func buildCommit() -> String? {
+        guard let value = Bundle.main.object(forInfoDictionaryKey: "JTMBuildCommit") as? String,
+              !value.isEmpty, !value.hasPrefix("$(") else { return nil }
+        return value
+    }
+
+    /// `map.geometryLevel`: the level on screen, the one the camera wants, the one being
+    /// prepared, a landed one waiting to install, the camera zoom, and ms since the last install.
+    static func geometryLevel() -> AppControlJSON {
+        let levels = MapRenderProbe.geometryLevels
+        func level(_ value: Int?) -> AppControlJSON { value.map { .number(Double($0)) } ?? .null }
+        return [
+            "installed": level(levels.installed), "wanted": level(levels.wanted),
+            "preparing": level(levels.preparing), "pending": level(levels.pending),
+            "cameraZoom": .number((levels.cameraZoom * 100).rounded() / 100),
+            "sinceInstallMs": levels.installedAt.map { .number(Double((ContinuousClock.now - $0).milliseconds)) } ?? .null,
+        ]
     }
 
     nonisolated static func memory() -> AppControlJSON {

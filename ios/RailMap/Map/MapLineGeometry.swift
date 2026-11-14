@@ -375,13 +375,12 @@ struct JunctionCandidateIndex {
         index = StrokeJunctionIndex([])
         byID = [:]
     }
-    init(_ lines: [String: RailNetworkStore.DrawnLine], chains: JoinedChainCache) {
+    /// Wraps the coordinator's incrementally maintained index over the same
+    /// lines (see `refreshLineInputs`) instead of rebuilding one over every
+    /// resident line on every preparation, which cost 5-27% of a preparation.
+    init(index: StrokeJunctionIndex, lines: [String: RailNetworkStore.DrawnLine]) {
+        self.index = index
         byID = lines
-        index = StrokeJunctionIndex(lines.values.map { line in
-            .init(id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
-                  coordinates: chains.chain(of: line).points, continuous: line.continuous,
-                  follows: line.follows.map(\.canonicalID))
-        })
     }
     func lines(sharing coordinate: Coordinate, region: Region, operatorName: String?) -> [RailNetworkStore.DrawnLine] {
         index.candidateIDs(sharing: coordinate, region: region.rawValue, operatorName: operatorName)
@@ -838,7 +837,7 @@ enum MapLineGeometry {
         lines: [RailNetworkStore.DrawnLine], strokes: [RailNetworkStore.DrawnLine],
         allLines: [String: RailNetworkStore.DrawnLine], anchors: [String: [Int]],
         cachedStrokes: [String: ContinuousStrokeBuild],
-        joinedChains: JoinedChainCache, chainPixels: ChainPixelCache,
+        junctionIndex: StrokeJunctionIndex, chainPixels: ChainPixelCache,
         frameKey: String, datumToken: String,
         mapScale: Double, scale: CGFloat, laneScale: Double,
         era: DisplayNetworkEra = .current,
@@ -853,7 +852,7 @@ enum MapLineGeometry {
         chainPixels.begin(projection)
         let chains = ChainPixelReader(cache: chainPixels, projection: projection)
         var result = PreparedGeometry()
-        let junctionCandidates = JunctionCandidateIndex(allLines, chains: joinedChains)
+        let junctionCandidates = JunctionCandidateIndex(index: junctionIndex, lines: allLines)
         for line in strokes {
             try Task.checkCancellation()
             result.strokes[line.id] = try continuousStrokeBuild(

@@ -5,6 +5,8 @@
      INFOPLIST_FILE, so the scheme never ships. See ios/tools/app-control.py. -->
 <plist version="1.0">
 <dict>
+	<key>JTMBuildCommit</key>
+	<string>$(JTM_BUILD_COMMIT)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

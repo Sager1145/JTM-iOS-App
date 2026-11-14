@@ -77,6 +77,34 @@ public struct GeometryZoomLevels: Equatable, Sendable {
         return abs(zoom - nominalZoom(level: landed)) < abs(zoom - nominalZoom(level: installed))
     }
 
+    /// What a landed preparation does.
+    public enum LandingInstall: Equatable, Sendable {
+        /// Rebuild as usual: the wanted level installs through the ordinary
+        /// path (when it is ready) or the landing is simply discarded.
+        case ordinary
+        /// Install the landed level now, on the rect it was prepared for.
+        case installLanded
+    }
+
+    /// The landing rule. `installsLanded(ready:)` checks a landed level against
+    /// the CURRENT camera's padded build rect, and every 0.25 zoom step out
+    /// widens that rect by about 19%, so on the way down no landed level was
+    /// ever "ready": the installed level never moved and each landing started
+    /// another preparation (map-lock run 3, finding A). The landed level is
+    /// installed when (a) the wanted level is not itself ready, (b) the landed
+    /// level is nearer the camera than the installed one, and (c) its own
+    /// prepared rect still contains what is on screen (`landedUsable`: the
+    /// landed level has no missing work for that rect and the rect contains
+    /// the visible rect). The padding is then added by a later preparation.
+    public static func landingInstall(
+        landed: Int, installed: Int?, zoom: Double, wantedReady: Bool, landedUsable: Bool
+    ) -> LandingInstall {
+        guard !wantedReady, landedUsable,
+              installsLanded(landed: landed, installed: installed, zoom: zoom, ready: true)
+        else { return .ordinary }
+        return .installLanded
+    }
+
     /// Whether a preparation for `level` is still worth keeping when the
     /// camera is at `zoom` with `installed` on screen: it is the wanted level
     /// or one of its idle neighbours.

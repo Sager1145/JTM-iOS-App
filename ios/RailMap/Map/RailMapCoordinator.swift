@@ -30,6 +30,17 @@ import OSLog
     static var rideOverlays = 0
     /// Frame-geometry entries released by memory-pressure drops.
     static var droppedFrames = 0
+    /// Where the geometry levels stand: installed (on screen), wanted (by the
+    /// camera now), preparing (in flight), pending (landed, to install next).
+    struct GeometryLevels {
+        var installed: Int?
+        var wanted: Int?
+        var preparing: Int?
+        var pending: Int?
+        var cameraZoom: Double = 0
+        var installedAt: ContinuousClock.Instant?
+    }
+    static var geometryLevels = GeometryLevels()
     static var geometryWaits = 0
     static var lastGeometryWaitMilliseconds = 0
     static var maxGeometryWaitMilliseconds = 0
@@ -215,6 +226,8 @@ extension RailMapView.Surface {
             /// Lines whose stored stroke is held while the camera moves.
             private var heldJointLineIDs: Set<String> = []
             private var junctionIndex = StrokeJunctionIndex([])
+            /// The junction line built for each resident line, by content id.
+            private var junctionLineMemo: [String: (contentID: UUID, line: StrokeJunctionIndex.Line)] = [:]
             private var lineDependencyIDs: [String: Set<String>] = [:]
             private var matchedLineInputs: [String: LineInputs] = [:]
             /// Background matching and its display-datum chain index, independent of zoom.
@@ -238,14 +251,11 @@ extension RailMapView.Surface {
             /// The current burst of change requests: when the last match
             /// started (for the max wait) and when the last request arrived.
             private var matchingBurst: (lastStart: ContinuousClock.Instant, lastRequest: ContinuousClock.Instant)?
-            /// Requests closer together than this are one burst — a route
-            /// load's partial publishes (every 750 ms) or regions streaming in.
-            private static let matchingBurstWindow: Duration = .milliseconds(1500)
-            /// Trailing quiet time before a burst's match starts.
-            private static let matchingDebounce: Duration = .milliseconds(1000)
-            /// A long burst still matches this often, so rides do not stay on
-            /// fallback geometry for a whole long load.
-            private static let matchingMaxWait: Duration = .milliseconds(5000)
+            /// Whether the route store is resolving trips (see ``ridesLoadingChanged(_:)``).
+            private var ridesAreLoading = false
+            /// The route load finished in the update pass now running: its final
+            /// publish has nothing left to coalesce (``MatchingSchedule``).
+            private var ridesLoadJustFinished = false
             /// Last `NetworkLOD.select` inputs and answer; see ``networkSelection(zoom:buildRect:)``.
             private var networkSelectionMemo: (generation: Int, zoom: Double, buildRect: MKMapRect,
                 result: (lines: [RailNetworkStore.DrawnLine], culledOffScreen: Int))?
@@ -506,7 +516,10 @@ extension RailMapView.Surface {
                 on mapView: MKMapView
             ) {
                 let updateInterval = RailSignpost.map.begin("map.update")
-                defer { RailSignpost.map.end("map.update", updateInterval) }
+                defer {
+                    RailSignpost.map.end("map.update", updateInterval)
+                    ridesLoadJustFinished = false
+                }
                 // Input preparation also rebuilds station and line indexes.
                 // Keep the installed frame stable while fingers move, and
                 // coalesce arriving data into the newest update for release.
@@ -1019,6 +1032,8 @@ extension RailMapView.Surface {
                 viewportResizeTask = nil
                 matchingTask?.cancel()
                 matchingTask = nil
+                memoryReliefTask?.cancel()
+                memoryReliefTask = nil
                 matchingDebounceTask?.cancel()
                 matchingDebounceTask = nil
                 matchingInFlight = nil
@@ -1149,6 +1164,10 @@ extension RailMapView.Surface {
                     lastZoomDirection = zoom > last ? 1 : -1
                 }
                 lastObservedZoom = zoom
+#if DEBUG
+                MapRenderProbe.geometryLevels.wanted = wantedGeometryLevel(at: zoom)
+                MapRenderProbe.geometryLevels.cameraZoom = zoom
+#endif
                 cancelNeighbourPrebuildIfWantedSetMoved(zoom: zoom)
                 swapGeometryDuringGestureIfReady(zoom: zoom, on: mapView)
                 runMovingLoadPass(zoom: zoom, on: mapView)
@@ -1296,7 +1315,13 @@ extension RailMapView.Surface {
             private var geometryPreparationID = UUID()
             private var geometryPreparationKey: String?
             /// The geometry level the preparation in flight builds.
-            private var geometryPreparationLevel: Int?
+            private var geometryPreparationLevel: Int? {
+                didSet {
+#if DEBUG
+                    MapRenderProbe.geometryLevels.preparing = geometryPreparationLevel
+#endif
+                }
+            }
 
             private var networkTemporalContext: DisplayNetworkTemporalContext {
                 DisplayNetworkTemporalContext(
@@ -1354,7 +1379,23 @@ extension RailMapView.Surface {
             /// A landed level to install ahead of the wanted one, set by
             /// `prepareNetworkGeometry`'s landing and cleared when a rebuild
             /// commits (``GeometryZoomLevels/installsLanded(landed:installed:zoom:ready:)``).
-            private var pendingInstallLevel: Int?
+            private var pendingInstallLevel: Int? {
+                didSet {
+#if DEBUG
+                    MapRenderProbe.geometryLevels.pending = pendingInstallLevel
+#endif
+                }
+            }
+            /// The rect `pendingInstallLevel` was prepared for. Set when the
+            /// landed level is installed ahead of the camera's own padded rect
+            /// (``GeometryZoomLevels/landingInstall``); the install builds and
+            /// commits that rect, and a later preparation adds the padding.
+            private var pendingInstallRect: MKMapRect?
+
+            private func clearPendingInstall() {
+                pendingInstallLevel = nil
+                pendingInstallRect = nil
+            }
             /// The installed level changed to a landed one, so the wanted level
             /// still has to start preparing.
             private var wantedLevelFollowUpOwed = false
@@ -1363,8 +1404,12 @@ extension RailMapView.Surface {
             /// while it is still complete, else the camera's wanted level.
             private func geometryLevelToBuild(at zoom: Double, on mapView: MKMapView) -> Int {
                 if let pending = pendingInstallLevel {
-                    if isGeometryLevelReady(pending, zoom: zoom, on: mapView) { return pending }
-                    pendingInstallLevel = nil
+                    // A pending rect must still contain what is on screen.
+                    let covers = pendingInstallRect.map { $0.contains(mapView.visibleMapRect) } ?? true
+                    if covers, isGeometryLevelReady(pending, zoom: zoom, on: mapView, buildRect: pendingInstallRect) {
+                        return pending
+                    }
+                    clearPendingInstall()
                 }
                 return wantedGeometryLevel(at: zoom)
             }
@@ -1437,9 +1482,13 @@ extension RailMapView.Surface {
             }
             private var linesByIDCache: (generation: Int, byID: [String: RailNetworkStore.DrawnLine])?
 
-            private func isGeometryLevelReady(_ level: Int, zoom: Double, on mapView: MKMapView) -> Bool {
+            /// Whether `level` has everything `buildRect` (default: the camera's
+            /// padded build rect) selects at the camera's zoom.
+            private func isGeometryLevelReady(
+                _ level: Int, zoom: Double, on mapView: MKMapView, buildRect: MKMapRect? = nil
+            ) -> Bool {
                 let visibilityZoom = networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
-                let buildRect = NetworkLOD.buildRect(for: mapView.visibleMapRect)
+                let buildRect = buildRect ?? NetworkLOD.buildRect(for: mapView.visibleMapRect)
                 let work = missingGeometryWork(
                     frame: geometryFrame(level: level, on: mapView),
                     visibilityZoom: visibilityZoom, buildRect: buildRect, recordsDiagnostics: false)
@@ -1668,7 +1717,7 @@ extension RailMapView.Surface {
                         guard !work.lines.isEmpty || !work.strokes.isEmpty else { continue }
                         let anchors = self.lineInputs.mapValues(\.anchors)
                         let cachedStrokes = self.networkGeometry.preparedStrokes(in: key)
-                        let joinedChains = self.networkGeometry.joinedChains
+                        let junctionIndex = self.junctionIndex
                         let chainPixels = self.networkGeometry.chainPixels
                         let datumToken = AppleMapDatum.gcj02Countries.sorted().joined(separator: ",")
                         let mapScale = frame.mapPointsPerScreenPoint
@@ -1685,7 +1734,7 @@ extension RailMapView.Surface {
                                 try MapLineGeometry.prepare(
                                     lines: missingLines, strokes: missingStrokes, allLines: byID,
                                     anchors: anchors, cachedStrokes: cachedStrokes,
-                                    joinedChains: joinedChains, chainPixels: chainPixels,
+                                    junctionIndex: junctionIndex, chainPixels: chainPixels,
                                     frameKey: key, datumToken: datumToken,
                                     mapScale: mapScale, scale: scale, laneScale: laneScale,
                                     era: era, rideDate: rideDate, todayByRegion: todayByRegion)
@@ -1749,12 +1798,12 @@ extension RailMapView.Surface {
                 geometryPreparationKey = key
                 geometryPreparationLevel = frame.bucket
                 drawCounters.preparations.request(key: key)
-                RailSignpost.map.mark("map.geometry.prep.started", drawCounters.preparations.started)
+                RailSignpost.map.mark("map.geometry.prep.started", drawCounters.preparations.started, frame.bucket)
                 let era = temporalContext.era
                 let rideDate = temporalContext.rideDate
                 let todayByRegion = temporalContext.todayByRegion
                 let limiter = geometryWorkLimiter
-                let joinedChains = networkGeometry.joinedChains
+                let junctionIndex = self.junctionIndex
                 let chainPixels = networkGeometry.chainPixels
                 let laneScale = frame.laneScale
                 let datumToken = AppleMapDatum.gcj02Countries.sorted().joined(separator: ",")
@@ -1768,7 +1817,7 @@ extension RailMapView.Surface {
                         return (waited, try MapLineGeometry.prepare(
                             lines: missingLines, strokes: missingStrokes, allLines: byID,
                             anchors: anchors, cachedStrokes: cachedStrokes,
-                            joinedChains: joinedChains, chainPixels: chainPixels,
+                            junctionIndex: junctionIndex, chainPixels: chainPixels,
                             frameKey: key, datumToken: datumToken,
                             mapScale: mapScale, scale: scale, laneScale: laneScale,
                             era: era, rideDate: rideDate, todayByRegion: todayByRegion))
@@ -1841,7 +1890,7 @@ extension RailMapView.Surface {
                         return
                     }
                     self.drawCounters.preparations.finish()
-                    RailSignpost.map.mark("map.geometry.prep.finished", self.drawCounters.preparations.finished)
+                    RailSignpost.map.mark("map.geometry.prep.finished", self.drawCounters.preparations.finished, frame.bucket)
                     if self.playbackLayer.lastSnapshot != nil {
                         self.rebuildDeferredByPlayback = true
                         clearPreparationIfCurrent()
@@ -1853,18 +1902,48 @@ extension RailMapView.Surface {
                     // installed rather than discarded for the newest wanted
                     // one, which could then never land either.
                     let landedZoom = MapProjection.zoomLevel(of: mapView)
-                    // The wanted level installs through the ordinary rebuild;
-                    // only an ahead-of-wanted level needs the pending install.
-                    if frame.bucket != self.wantedGeometryLevel(at: landedZoom),
-                       GeometryZoomLevels.installsLanded(
+                    // The wanted level installs through the ordinary rebuild
+                    // when it is ready. When it is not (zooming out, the
+                    // padded rect outgrows every preparation), the landed
+                    // level installs on the rect it was prepared for.
+                    let wanted = self.wantedGeometryLevel(at: landedZoom)
+                    let landedUsable = buildRect.contains(mapView.visibleMapRect)
+                        && self.isGeometryLevelReady(
+                            frame.bucket, zoom: landedZoom, on: mapView, buildRect: buildRect)
+                    if GeometryZoomLevels.landingInstall(
                         landed: frame.bucket, installed: self.installedGeometryLevel, zoom: landedZoom,
-                        ready: self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)) {
+                        wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView),
+                        landedUsable: landedUsable) == .installLanded {
                         self.pendingInstallLevel = frame.bucket
+                        self.pendingInstallRect = buildRect
                     }
                     self.noteRebuildTrigger(.geometryPrepared)
                     self.rebuild(on: mapView)
+                    self.scheduleMemoryRelief()
                 }
                 return false
+            }
+
+            private var memoryReliefTask: Task<Void, Never>?
+
+            /// A preparation's large temporaries (a slow low-zoom one most of
+            /// all) are freed but stay counted in the footprint until the
+            /// allocator hands them back. Once the map has been idle for a
+            /// moment after a landing, hand them back once: the same call the
+            /// memory-warning handler makes. A later landing reschedules it.
+            private func scheduleMemoryRelief() {
+                memoryReliefTask?.cancel()
+                memoryReliefTask = Task { @MainActor [weak self] in
+                    for _ in 0..<10 {
+                        do { try await Task.sleep(for: .seconds(2)) } catch { return }
+                        guard let self else { return }
+                        // Busy: try again after the next quiet moment.
+                        if self.isManipulating || self.geometryPreparation != nil
+                            || self.rideStrokePreparation != nil { continue }
+                        malloc_zone_pressure_relief(nil, 0)
+                        return
+                    }
+                }
             }
 
             /// `duringGesture` is the mid-pinch level swap: the wanted level is
@@ -1888,6 +1967,7 @@ extension RailMapView.Surface {
                         DispatchQueue.main.async { [weak self, weak mapView] in
                             guard let self, let mapView, self.mapView === mapView else { return }
                             self.networkBuildState.invalidateZoomBucket()
+                            self.noteRebuildTrigger(.wantedLevelFollowUp)
                             self.rebuild(on: mapView)
                         }
                     }
@@ -1987,7 +2067,10 @@ extension RailMapView.Surface {
                     hasLanedLines: hasLanedLines,
                     visibleRect: visibleRect
                 ) else { return }
-                let buildRect = movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
+                // Validates a pending landed install (drops it once it no
+                // longer covers the screen) before its rect is used.
+                if pendingInstallLevel != nil { _ = geometryLevelToBuild(at: zoom, on: mapView) }
+                let buildRect = pendingInstallRect ?? movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
                 onBuildRect(buildRect, visibilityZoom)
                 guard prepareNetworkGeometry(
                     on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: buildRect
@@ -2023,13 +2106,21 @@ extension RailMapView.Surface {
                     builtRect: buildRect
                 )
                 if pendingInstallLevel != nil {
-                    pendingInstallLevel = nil
-                    // Only when the camera still wants a different level than
-                    // the one just installed.
-                    wantedLevelFollowUpOwed =
-                        GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)
+                    let installedOnPreparedRect = pendingInstallRect != nil
+                    clearPendingInstall()
+                    // When the camera still wants a different level than the
+                    // one just installed, or the install used the prepared
+                    // rect and the camera's padding is still owed.
+                    wantedLevelFollowUpOwed = installedOnPreparedRect
+                        || GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)
                         != strokeFrame.bucket
                 }
+#if DEBUG
+                MapRenderProbe.geometryLevels.installed = strokeFrame.bucket
+                MapRenderProbe.geometryLevels.installedAt = .now
+                MapRenderProbe.geometryLevels.wanted = wantedGeometryLevel(at: zoom)
+                MapRenderProbe.geometryLevels.cameraZoom = zoom
+#endif
                 // A cold display-network request has no geometry to build
                 // yet. Its result changes `lines`, invalidates the build state in
                 // `update`, and returns through this method with the region's
@@ -4305,12 +4396,24 @@ extension RailMapView.Surface {
                 let byID = Dictionary(lines.map { ($0.id, $0) },
                     uniquingKeysWith: { first, _ in first })
                 networkGeometry.retainDisplayChains(Set(lines.map(JoinedChainKey.init)))
-                let junctionLines = lines.map { line in
-                    StrokeJunctionIndex.Line(
+                // A line whose content id is unchanged keeps its junction
+                // line (same coordinates buffer), so neither the chain lookup
+                // nor the index's equality check does per-vertex work for it.
+                var nextJunctionLines: [String: (contentID: UUID, line: StrokeJunctionIndex.Line)] = [:]
+                nextJunctionLines.reserveCapacity(lines.count)
+                let junctionLines = lines.map { line -> StrokeJunctionIndex.Line in
+                    if let known = junctionLineMemo[line.id], known.contentID == line.contentID {
+                        nextJunctionLines[line.id] = known
+                        return known.line
+                    }
+                    let built = StrokeJunctionIndex.Line(
                         id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
                         coordinates: networkGeometry.joinedChains.chain(of: line).points,
                         continuous: line.continuous, follows: line.follows.map(\.canonicalID))
+                    nextJunctionLines[line.id] = (line.contentID, built)
+                    return built
                 }
+                junctionLineMemo = nextJunctionLines
                 let change = junctionIndex.update(junctionLines)
                 var anchors: [String: [Int]] = [:]
                 for station in stations {
@@ -4587,11 +4690,11 @@ extension RailMapView.Surface {
             ///
             /// - An input equal to the running or last matched one is skipped.
             /// - The first request after a quiet period starts at once.
-            /// - Requests inside ``matchingBurstWindow`` of the previous one
-            ///   (a route load's 750 ms partial publishes, regions streaming
-            ///   in) wait for ``matchingDebounce`` of quiet, bounded by
-            ///   ``matchingMaxWait`` since the last run started, so the final
-            ///   ride set is matched about a second after the last publish.
+            /// - Requests inside ``MatchingSchedule/burstWindow`` of the previous
+            ///   one (a route load's 750 ms partial publishes, regions
+            ///   streaming in) wait for ``MatchingSchedule/debounce`` of quiet,
+            ///   bounded by ``MatchingSchedule/maxWait`` since the last run
+            ///   started. A load's final publish starts at once.
             /// - At most one worker runs: a same-generation worker is left to
             ///   finish and one rerun is owed; a worker on stale lines is
             ///   cancelled by its replacement and its permit drains first.
@@ -4609,14 +4712,20 @@ extension RailMapView.Surface {
                 let now = ContinuousClock.now
                 matchingDebounceTask?.cancel()
                 matchingDebounceTask = nil
-                guard let burst = matchingBurst, now - burst.lastRequest < Self.matchingBurstWindow else {
+                func seconds(_ duration: Duration) -> Double {
+                    Double(duration.components.seconds) + Double(duration.components.attoseconds) / 1e18
+                }
+                let start = MatchingSchedule.decide(
+                    sinceLastRequest: matchingBurst.map { seconds(now - $0.lastRequest) },
+                    sinceBurstStart: matchingBurst.map { seconds(now - $0.lastStart) },
+                    loadJustFinished: ridesLoadJustFinished)
+                guard case .after(let delaySeconds) = start, let burst = matchingBurst else {
                     matchingBurst = (matchingBurst?.lastStart ?? now, now)
                     startStrokeMatching(signature: signature)
                     return
                 }
                 matchingBurst = (burst.lastStart, now)
-                let delay = max(.zero, min(Self.matchingDebounce,
-                                           burst.lastStart + Self.matchingMaxWait - now))
+                let delay = Duration.seconds(delaySeconds)
 #if DEBUG
                 MapRenderProbe.matchingDeferred += 1
 #endif
@@ -5604,6 +5713,18 @@ extension RailMapView.Surface {
             /// ``MapInteractionCoordinator/setRidesLoading(_:)``.
             func ridesLoadingChanged(_ loading: Bool) {
                 interaction.setRidesLoading(loading)
+                guard loading != ridesAreLoading else { return }
+                ridesAreLoading = loading
+                guard !loading else { return }
+                // The load finished. A match still waiting out the debounce
+                // runs now, and a final publish arriving in this update pass
+                // (`update` follows this call) starts at once too.
+                ridesLoadJustFinished = true
+                if matchingDebounceTask != nil {
+                    matchingDebounceTask?.cancel()
+                    matchingDebounceTask = nil
+                    startStrokeMatching(signature: strokeMatchingSignature())
+                }
             }
 
             func playbackStateChanged(on mapView: MKMapView) {

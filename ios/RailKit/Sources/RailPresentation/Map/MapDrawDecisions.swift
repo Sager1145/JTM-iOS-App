@@ -27,6 +27,9 @@ public enum MapRebuildTrigger: Int, CaseIterable, Sendable {
     case levelSwapped = 10
     /// Newly loaded area was added at the installed level while the camera moved.
     case movingExtended = 11
+    /// The camera still wanted another level after a landed level was
+    /// installed, so the wanted level started preparing (a second rebuild).
+    case wantedLevelFollowUp = 12
 }
 
 /// What the map owes after a change owes it a full rebuild.
