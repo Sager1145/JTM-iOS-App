@@ -171,6 +171,31 @@ struct GCJ02Tests {
         }
     }
 
+    @Test("toWGS84 inverts fromWGS84 to under 1e-9 degrees over the tw, hk, mo and kr boxes")
+    func inverseRoundTrip() {
+        // The pack reader maps a display rectangle back to the file's WGS84 space with this inverse.
+        let boxes: [(lon: ClosedRange<Double>, lat: ClosedRange<Double>)] = [
+            (119.3...122.1, 21.8...25.4),   // tw
+            (113.8...114.5, 22.1...22.6),   // hk
+            (113.5...113.62, 22.1...22.25), // mo
+            (125.9...129.7, 33.0...38.7),   // kr
+        ]
+        var worst = 0.0, checked = 0
+        for box in boxes {
+            for i in 0...40 {
+                for j in 0...40 {
+                    let lon = box.lon.lowerBound + (box.lon.upperBound - box.lon.lowerBound) * Double(i) / 40
+                    let lat = box.lat.lowerBound + (box.lat.upperBound - box.lat.lowerBound) * Double(j) / 40
+                    let back = GCJ02.toWGS84(GCJ02.fromWGS84(Coordinate(lon: lon, lat: lat)))
+                    worst = max(worst, abs(back.lon - lon), abs(back.lat - lat))
+                    checked += 1
+                }
+            }
+        }
+        #expect(checked == 4 * 41 * 41)
+        #expect(worst < 1e-9, "worst round-trip error \(worst) degrees")
+    }
+
     @Test("candidate regions are the five the China map service can shift, never Japan")
     func candidates() {
         #expect(GCJ02.candidateRegions == ["tw", "hk", "mo", "kr", "cn"])

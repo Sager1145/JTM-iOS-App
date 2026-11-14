@@ -8,23 +8,25 @@ A `{region}.railpack` is a function of
     record: colours, ranks and visibility lengths decide groups and tiers, and the other regions'
     lines have no say);
   - the bake sources: RailBakeKit and the RailBake tool, RailCore/Rendering, the coordinate,
-    geometry and GCJ-02 utilities, the pack format, writer and ladder, the topology format
-    constants, and the line visibility policy;
-  - the ladder (`--levels`), the datum, and the Swift toolchain version string.
+    geometry utilities, the pack format, writer and ladder, the topology format constants, and
+    the line visibility policy;
+  - the ladder (`--levels`) and the Swift toolchain version string.
+
+There is one pack per region, always WGS84: the GCJ-02 shift of the China-service regions is
+applied by the reader when the app mounts a level (`RailPackReader(data:display:)`), so no input
+here names a datum.
 
 `inputs_sha256` hashes one canonical text of `name<TAB>sha256` lines (sorted by name), so the
 same inputs give the same key on any machine with the same toolchain string. The bake tool
 (`RailBake --inputs-sha256`) writes it into the pack header at byte 60, and `check_pack`
 recomputes it: a pack whose header differs from the recomputed value is stale.
 
-    python3 -I ios/tools/rail_pack_inputs.py key   --builder-dir DIR --region jp --datum wgs84 --levels 8...34
-    python3 -I ios/tools/rail_pack_inputs.py check --builder-dir DIR --region jp --datum wgs84 --levels 8...34 --pack PACK
+    python3 -I ios/tools/rail_pack_inputs.py key   --builder-dir DIR --region jp --levels 8...34
+    python3 -I ios/tools/rail_pack_inputs.py check --builder-dir DIR --region jp --levels 8...34 --pack PACK
     python3 -I ios/tools/rail_pack_inputs.py variants [--regions "jp tw hk mo kr"]
     python3 -I ios/tools/rail_pack_inputs.py toolchain
 
-`variants` prints one `region datum filename` line per pack the build makes: jp has `jp.railpack`;
-tw, hk, mo and kr (regions drawn on the China map service, `GCJ02.candidateRegions`) have both
-`{region}.railpack` (WGS84) and `{region}.gcj.railpack` (GCJ-02).
+`variants` prints one `region filename` line per pack the build makes: `{region}.railpack`.
 """
 from __future__ import annotations
 
@@ -45,7 +47,6 @@ SOURCE_PATHS = (
     "ios/RailKit/Sources/RailCore/Rendering",
     "ios/RailKit/Sources/RailCore/Utilities/Coordinates.swift",
     "ios/RailKit/Sources/RailCore/Utilities/Geometry.swift",
-    "ios/RailKit/Sources/RailCore/Utilities/GCJ02.swift",
     "ios/RailKit/Sources/RailCore/Pack/RailPackFormat.swift",
     "ios/RailKit/Sources/RailCore/Pack/RailPackWriter.swift",
     "ios/RailKit/Sources/RailCore/Pack/RailPackLadder.swift",
@@ -54,7 +55,6 @@ SOURCE_PATHS = (
 )
 
 DEFAULT_REGIONS = ("jp", "tw", "hk", "mo", "kr")
-GCJ_REGIONS = frozenset({"tw", "hk", "mo", "kr", "cn"})
 
 HEADER_INPUTS_OFFSET = 60
 HEADER_DISPLAY_OFFSET = 28
@@ -109,10 +109,8 @@ def toolchain_string() -> str:
     return " ".join(out.split())
 
 
-def inputs_sha256(repo: Path, builder_dir: Path, region: str, datum: str, levels: str, toolchain: str) -> str:
+def inputs_sha256(repo: Path, builder_dir: Path, region: str, levels: str, toolchain: str) -> str:
     """The hex SHA-256 over every input of one pack."""
-    if datum not in ("wgs84", "gcj02"):
-        raise InputsError(f"datum must be wgs84 or gcj02, not {datum}")
     entries: dict[str, str] = {}
     for path in source_files(repo):
         entries["source/" + path.relative_to(repo).as_posix()] = sha256_file(path)
@@ -128,20 +126,14 @@ def inputs_sha256(repo: Path, builder_dir: Path, region: str, datum: str, levels
         raise InputsError("builder output has no manifest.json")
     entries["input/manifest.json#" + region] = hashlib.sha256(region_manifest_slice(manifest, region)).hexdigest()
     entries["param/ladder"] = levels
-    entries["param/datum"] = datum
     entries["param/toolchain"] = toolchain
     text = "".join(f"{name}\t{value}\n" for name, value in sorted(entries.items()))
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def variants(regions: tuple[str, ...] | list[str] = DEFAULT_REGIONS) -> list[tuple[str, str, str]]:
-    """(region, datum, pack file name) for every pack of the given regions."""
-    rows: list[tuple[str, str, str]] = []
-    for region in regions:
-        rows.append((region, "wgs84", f"{region}.railpack"))
-        if region in GCJ_REGIONS:
-            rows.append((region, "gcj02", f"{region}.gcj.railpack"))
-    return rows
+def variants(regions: tuple[str, ...] | list[str] = DEFAULT_REGIONS) -> list[tuple[str, str]]:
+    """(region, pack file name) for every pack of the given regions: one file per region."""
+    return [(region, f"{region}.railpack") for region in regions]
 
 
 def pack_header_hashes(pack: Path) -> tuple[bytes, bytes]:
@@ -154,10 +146,10 @@ def pack_header_hashes(pack: Path) -> tuple[bytes, bytes]:
             header[HEADER_INPUTS_OFFSET:HEADER_INPUTS_OFFSET + 32])
 
 
-def check_pack(pack: Path, repo: Path, builder_dir: Path, region: str, datum: str, levels: str, toolchain: str) -> None:
+def check_pack(pack: Path, repo: Path, builder_dir: Path, region: str, levels: str, toolchain: str) -> None:
     """Raises InputsError when the pack is stale or does not belong to the region's topology."""
     display, inputs = pack_header_hashes(pack)
-    expected = inputs_sha256(repo, builder_dir, region, datum, levels, toolchain)
+    expected = inputs_sha256(repo, builder_dir, region, levels, toolchain)
     if inputs.hex() != expected:
         raise InputsError(f"{pack.name} is stale: header inputs {inputs.hex()[:12]}, current {expected[:12]}")
     topology = (builder_dir / f"{region}.topology.bin").read_bytes()[TOPOLOGY_DISPLAY_OFFSET:TOPOLOGY_DISPLAY_OFFSET + 32]
@@ -172,7 +164,6 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--builder-dir", type=Path)
     parser.add_argument("--region")
     parser.add_argument("--regions", default=" ".join(DEFAULT_REGIONS))
-    parser.add_argument("--datum", default="wgs84")
     parser.add_argument("--levels", default="8...34")
     parser.add_argument("--toolchain", help="override the Swift toolchain string (tests)")
     parser.add_argument("--pack", type=Path)
@@ -181,19 +172,19 @@ def main(argv: list[str]) -> int:
         print(toolchain_string())
         return 0
     if args.command == "variants":
-        for region, datum, name in variants(args.regions.split()):
-            print(region, datum, name)
+        for region, name in variants(args.regions.split()):
+            print(region, name)
         return 0
     if args.builder_dir is None or args.region is None:
         parser.error("--builder-dir and --region are required")
     try:
         toolchain = args.toolchain if args.toolchain is not None else toolchain_string()
         if args.command == "key":
-            print(inputs_sha256(args.repo, args.builder_dir, args.region, args.datum, args.levels, toolchain))
+            print(inputs_sha256(args.repo, args.builder_dir, args.region, args.levels, toolchain))
         else:
             if args.pack is None:
                 parser.error("check needs --pack")
-            check_pack(args.pack, args.repo, args.builder_dir, args.region, args.datum, args.levels, toolchain)
+            check_pack(args.pack, args.repo, args.builder_dir, args.region, args.levels, toolchain)
             print(f"{args.pack.name} is fresh")
     except InputsError as error:
         print(f"rail_pack_inputs: {error}", file=sys.stderr)

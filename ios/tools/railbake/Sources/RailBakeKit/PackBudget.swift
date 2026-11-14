@@ -1,7 +1,8 @@
 import Foundation
 
-/// The size ceilings of the pack bake (`ios/tools/railbake/pack-budgets.json`, design
-/// docs/maintenance/2026-11-13-rail-pack-size-design.md, section 4.6).
+/// The size ceilings of the pack bake (`ios/tools/railbake/pack-budgets.json`): the limits record
+/// docs/maintenance/2026-11-13-rail-pack-limits.md (all packs 30,000,000 bytes, Japan 22,000,000, at
+/// most 100,000 vertices in a phone view), design docs/maintenance/2026-11-13-rail-pack-size-design.md.
 ///
 /// `RailBake --budgets FILE` checks a finished pack against them before writing it and fails with
 /// every limit it broke. The file is part of the pack's inputs hash, so changing a ceiling forces a
@@ -10,15 +11,15 @@ import Foundation
 public struct PackBudget: Decodable, Equatable, Sendable {
 
     public struct Pack: Decodable, Equatable, Sendable {
-        /// Largest file, in bytes (either datum).
+        /// Largest file, in bytes.
         public var bytes: Int
         /// Vertex ceiling per level, keyed by the level's half-zoom index k (zoom x 2) as text.
         public var levelVertices: [String: Int]
     }
 
-    /// All packs of the bundle together: 60,000,000 bytes (user requirement).
+    /// All packs of the bundle together: 30,000,000 bytes, the hard ceiling (limits record).
     public var bundleBytes: Int
-    /// Most vertices a phone-sized view plus one ring may mount, at any level.
+    /// Most vertices a phone-sized view plus one ring may mount, at any level: 100,000 (limits record).
     public var phoneWindowVertices: Int
     /// The same for a pad-sized view.
     public var padWindowVertices: Int

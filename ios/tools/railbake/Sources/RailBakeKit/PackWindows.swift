@@ -2,7 +2,9 @@ import Foundation
 import RailCore
 
 /// How many vertices a view mounts: the densest window of tiles a pack can be asked for at a level
-/// (docs/maintenance/2026-11-13-rail-pack-size-design.md, section 4.6).
+/// (limits record docs/maintenance/2026-11-13-rail-pack-limits.md: at most 100,000, target 50,000, for a
+/// phone view; design docs/maintenance/2026-11-13-rail-pack-size-design.md, section 4.6). A piece counts
+/// its full vertex count, including the first vertex a joined piece shares with the piece before it.
 ///
 /// A 390 x 844 point view plus one ring, grown by half a tile (a piece reaches half a tile outside
 /// its home tile), touches at most 4 x 5 or 5 x 4 tiles of 1,024 points; a 1,032 x 1,376 view (pad)
@@ -28,30 +30,18 @@ public enum PackWindows {
     }
 
     /// The densest phone-sized and pad-sized window at one level, over every window position.
-    public static func maxima(reader: RailPackReader, level: Int) throws -> Maxima {
-        let info = reader.levels[level]
-        let side = RailPackFormat.tileSide(mapPointsPerPoint: info.mapPointsPerPoint)
-        let quantum = RailPackFormat.quantum(mapPointsPerPoint: info.mapPointsPerPoint)
-        let tileCount = try reader.count(level: level, .tileDir)
-        var perTile = [Int](repeating: 0, count: tileCount)
+    public static func maxima(level: RailPackLevel) throws -> Maxima {
+        let side = RailPackFormat.tileSide(mapPointsPerPoint: level.mapPointsPerPoint)
+        let quantum = RailPackFormat.quantum(mapPointsPerPoint: level.mapPointsPerPoint)
         var longs: [LongPiece] = []
-        let pieceCount = try reader.count(level: level, .pieces)
-        for index in 0..<pieceCount {
-            let row = try reader.piece(level: level, index: index)
-            if !row.isLong { perTile[Int(row.tile)] += Int(row.vertexCount) }
-        }
-        for index in 0..<(try reader.count(level: level, .longPieces)) {
-            let long = try reader.longPieceRow(level: level, index: index)
+        for index in 0..<level.count(.longPieces) {
+            let long = try level.longPieceRow(index)
             func tile(_ q: Int32) -> Int { Int((Double(q) * quantum / side).rounded(.down)) }
             longs.append(LongPiece(
                 x0: tile(long.minX), x1: tile(long.maxX), y0: tile(long.minY), y1: tile(long.maxY),
-                vertices: Int(try reader.piece(level: level, index: Int(long.piece)).vertexCount)))
+                vertices: Int(try level.piece(Int(long.piece)).vertexCount)))
         }
-        var tiles: [(x: Int, y: Int, count: Int)] = []
-        for index in 0..<tileCount where perTile[index] > 0 {
-            let row = try reader.tile(level: level, index: index)
-            tiles.append((Int(row.tileX), Int(row.tileY), perTile[index]))
-        }
+        let tiles = try level.tileSummaries().map { (x: $0.tile.x, y: $0.tile.y, count: $0.vertices) }
         let longTotal = longs.reduce(0) { $0 + $1.vertices }
         func best(_ shapes: [(columns: Int, rows: Int)]) -> Int {
             var maximum = 0

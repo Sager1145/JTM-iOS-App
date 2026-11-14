@@ -9,12 +9,20 @@ struct RailPackFormatTests {
         let b = try RailPackWriter.write(RailPackTestPack.source())
         #expect(a == b)
         #expect(a.starts(with: Array("JTRP".utf8)))
+        #expect(a[6] == 0, "header byte 6 is reserved")
     }
 
     @Test func changingOneVertexChangesTheBytes() throws {
         var source = RailPackTestPack.source()
         source.levels[1].pieces[0].vertices[0].x += 3 * source.levels[1].mapPointsPerPoint
         #expect(try RailPackWriter.write(source) != RailPackTestPack.bytes())
+    }
+
+    static func onePiece(mpp: Double, chains: Int = 1, pieces: [RailPackPieceSource]) -> RailPackSource {
+        RailPackSource(
+            regionCode: "xx", displaySHA256: [UInt8](repeating: 1, count: 32), inputsSHA256: [UInt8](repeating: 2, count: 32),
+            chainCount: chains, nodeCount: 0, lines: [], groups: [RailPackGroup(colourLight: 0, colourDark: 0, tierMin: 0, tierMax: 0x7FFF, styleClass: 0, category: 0)],
+            spans: [], levels: [RailPackLevelSource(mapPointsPerPoint: mpp, laneBucket: 0, pieces: pieces, nodes: [])])
     }
 
     @Test func quantisationErrorStaysWithinHalfAQuantum() throws {
@@ -29,14 +37,10 @@ struct RailPackFormatTests {
             let quantum = mpp / 16
             let base = RailPackPoint(x: 77.3 * 1024 * mpp, y: 31.9 * 1024 * mpp)
             let vertices = (0..<500).map { _ in RailPackPoint(x: base.x + next() * 900 * mpp, y: base.y + next() * 900 * mpp) }
-            let source = RailPackSource(
-                datum: .wgs84, regionCode: "xx", displaySHA256: [UInt8](repeating: 1, count: 32), inputsSHA256: [UInt8](repeating: 2, count: 32),
-                chainCount: 1, nodeCount: 0, lines: [], groups: [RailPackGroup(colourLight: 0, colourDark: 0, tierMin: 0, tierMax: 0x7FFF, styleClass: 0, category: 0)],
-                spans: [], levels: [RailPackLevelSource(mapPointsPerPoint: mpp, laneBucket: 0,
-                                                         pieces: [RailPackPieceSource(chain: 0, group: 0, vertices: vertices)], nodes: [])])
+            let source = Self.onePiece(mpp: mpp, pieces: [RailPackPieceSource(chain: 0, group: 0, vertices: vertices)])
             let reader = try RailPackReader(data: RailPackWriter.write(source))
             var decoded: [RailPackPoint] = []
-            try reader.appendVertices(level: 0, piece: 0, to: &decoded)
+            try reader.level(0).appendVertices(piece: 0, to: &decoded)
             #expect(decoded.count == vertices.count)
             // Half a quantum per axis, plus a little for the double arithmetic at large coordinates.
             let bound = quantum / 2 + mpp * 1e-9 + 1e-3
@@ -65,13 +69,64 @@ struct RailPackFormatTests {
         expectInvalid { $0.regionCode = "jpn" }
         expectInvalid { $0.displaySHA256 = [1, 2, 3] }
         expectInvalid { $0.levels[0].pieces[0].group = 99 }
-        expectInvalid { $0.levels[0].pieces[0].span = 7 }
+        expectInvalid { $0.groups[3].span = 7 }
         expectInvalid { $0.levels[0].pieces[0].vertices = [$0.levels[0].pieces[0].vertices[0]] }
         expectInvalid { $0.levels[0].pieces.swapAt(0, 5) }  // not sorted by chain
         expectInvalid { $0.levels[0].nodes[0] = RailPackNodeSlot(piece: 0, vertex: 99) }
         expectInvalid { $0.levels[0].nodes.removeLast() }
         expectInvalid { $0.levels.reverse() }  // zoom order must ascend
         expectInvalid { $0.lines[0].nodeCount = 99 }
+        // A node whose chain differs between levels has no single region-wide chain.
+        expectInvalid { $0.levels[1].nodes[0] = RailPackNodeSlot(piece: 5, vertex: 0) }
+    }
+
+    // MARK: Format limits (each enforced by the writer)
+
+    @Test func writerRefusesEachFormatLimit() throws {
+        let group = RailPackFormat.maxPieceVertices
+        let mpp = RailPackLadder.mapPointsPerPoint(forZoom: 10)
+        func piece(_ vertices: Int, x: Double = 100 * 1024, long: Bool = false) -> RailPackPieceSource {
+            RailPackPieceSource(chain: 0, group: 0, isLong: long, vertices: (0..<vertices).map {
+                RailPackPoint(x: (x + Double($0 % 2)) * mpp, y: 51 * 1024 * mpp)
+            })
+        }
+        // 32,767 vertices is the most a piece may hold; one more is refused.
+        _ = try RailPackWriter.write(Self.onePiece(mpp: mpp, pieces: [piece(group)]))
+        #expect(throws: RailPackError.valueTooLarge("piece 0 vertex count")) {
+            try RailPackWriter.write(Self.onePiece(mpp: mpp, pieces: [piece(group + 1)]))
+        }
+        #expect(throws: RailPackError.valueTooLarge("piece 0 vertex count")) {
+            try RailPackWriter.write(Self.onePiece(mpp: mpp, pieces: [piece(group + 1, long: true)]))
+        }
+        // A home tile above 65,534: the top level is z17 by format. At mapPointsPerPoint 4 the world has 65,536 tiles.
+        let fine = RailPackLadder.mapPointsPerPoint(forZoom: 17)
+        let side = RailPackFormat.tileSide(mapPointsPerPoint: fine)
+        func atTile(_ tile: Double) -> RailPackSource {
+            Self.onePiece(mpp: fine, pieces: [RailPackPieceSource(chain: 0, group: 0, vertices: [
+                RailPackPoint(x: (tile + 0.5) * side, y: 100 * side), RailPackPoint(x: (tile + 0.5) * side + 4, y: 100 * side)])])
+        }
+        _ = try RailPackWriter.write(atTile(65_534))
+        #expect(throws: RailPackError.valueTooLarge("piece 0 home tile")) { try RailPackWriter.write(atTile(65_535)) }
+        #expect(throws: RailPackError.valueTooLarge("piece 0 home tile")) { try RailPackWriter.write(atTile(-1)) }
+        // More than 65,535 pieces in one chain: a nodes row holds the piece's index in its chain as u16.
+        func manyPieces(_ count: Int) -> RailPackSource {
+            Self.onePiece(mpp: mpp, pieces: (0..<count).map {
+                RailPackPieceSource(chain: 0, group: 0, vertices: [
+                    RailPackPoint(x: (100 * 1024 + Double($0 % 500)) * mpp, y: (51 * 1024 + Double($0 / 500)) * mpp),
+                    RailPackPoint(x: (100 * 1024 + Double($0 % 500) + 0.5) * mpp, y: (51 * 1024 + Double($0 / 500)) * mpp)])
+            })
+        }
+        _ = try RailPackWriter.write(manyPieces(RailPackFormat.maxPiecesPerChain))
+        #expect(throws: RailPackError.valueTooLarge("chain piece count")) {
+            try RailPackWriter.write(manyPieces(RailPackFormat.maxPiecesPerChain + 1))
+        }
+        // A long-piece step must fit Int16 quanta: 2,047 points do, 2,048 do not.
+        func longStep(_ points: Double) -> RailPackSource {
+            Self.onePiece(mpp: mpp, pieces: [RailPackPieceSource(chain: 0, group: 0, isLong: true, vertices: [
+                RailPackPoint(x: 100 * 1024 * mpp, y: 51 * 1024 * mpp), RailPackPoint(x: (100 * 1024 + points) * mpp, y: 51 * 1024 * mpp)])])
+        }
+        _ = try RailPackWriter.write(longStep(2_047))
+        #expect(throws: RailPackError.valueTooLarge("long piece step in piece 0")) { try RailPackWriter.write(longStep(2_048)) }
     }
 
     @Test func ladderIsDataAndChoosesLevelsWithHysteresis() throws {
@@ -120,16 +175,18 @@ struct RailPackFormatTests {
         #expect(report.fileBytes == data.count)
         #expect(report.accountedBytes == data.count)
         #expect(report.levels.count == 3)
-        // Per level: 7 normal pieces, 1 long piece with 8 vertices, 4 + 4 + 4 + 2 + 3 + 3 = 20 normal vertices.
+        // Per level: 7 pieces, 1 of them long with 8 vertices (7 delta rows); 20 normal vertices, 4 of them
+        // the shared first vertex of a joined piece and so not stored: 16 rows.
         for level in report.levels {
             #expect(level.rows[RailPackFormat.ArrayKind.pieces.rawValue] == 7)
-            #expect(level.rows[RailPackFormat.ArrayKind.vertices.rawValue] == 20)
-            #expect(level.rows[RailPackFormat.ArrayKind.longVertices.rawValue] == 8)
-            #expect(level.arrayBytes[RailPackFormat.ArrayKind.vertices.rawValue] == 80)
-            #expect(level.arrayBytes[RailPackFormat.ArrayKind.pieces.rawValue] == 7 * 16)
+            #expect(level.rows[RailPackFormat.ArrayKind.vertices.rawValue] == 16)
+            #expect(level.rows[RailPackFormat.ArrayKind.longVertices.rawValue] == 7)
+            #expect(level.arrayBytes[RailPackFormat.ArrayKind.vertices.rawValue] == 64)
+            #expect(level.arrayBytes[RailPackFormat.ArrayKind.pieces.rawValue] == 7 * 8)
+            #expect(level.arrayBytes[RailPackFormat.ArrayKind.longPieces.rawValue] == 28)
             #expect(level.totalBytes == level.arrayBytes.reduce(0, +))
         }
-        #expect(report.vertexCount == 3 * 28)
-        #expect(report.regionTableBytes == 2 * 12 + 3 * 16 + 1 * 8 + 3 * 120)
+        #expect(report.vertexCount == 3 * (16 + 7))
+        #expect(report.regionTableBytes == 2 * 12 + 4 * 16 + 1 * 8 + 4 * 4 + 3 * 84)
     }
 }

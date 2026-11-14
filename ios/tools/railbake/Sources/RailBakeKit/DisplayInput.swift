@@ -52,19 +52,6 @@ public enum DisplayInput {
         public var lines: [LineInfo]
     }
 
-    /// Which datum the chains are shifted into before anything is built.
-    public enum Datum: String, Sendable {
-        /// Source coordinates as the builder wrote them.
-        case wgs84
-        /// The GCJ-02 displacement applied to every vertex of a region in
-        /// `GCJ02.candidateRegions`; other regions are unchanged, as in the app.
-        case gcj02
-
-        func shifts(region: String) -> Bool {
-            self == .gcj02 && GCJ02.candidateRegions.contains(region)
-        }
-    }
-
     public enum Failure: Error, Equatable, CustomStringConvertible {
         case missing(String)
         case regionNotInManifest(String)
@@ -137,7 +124,7 @@ public enum DisplayInput {
     /// The chains of `region`, in blob order, the vertices its stations sit on, and per package
     /// line its tier and the date span of each part.
     public static func load(
-        region: String, from directory: URL, datum: Datum = .wgs84
+        region: String, from directory: URL
     ) throws -> Region {
         let manifestURL = directory.appending(path: "manifest.json")
         guard FileManager.default.fileExists(atPath: manifestURL.path) else {
@@ -151,7 +138,6 @@ public enum DisplayInput {
         guard FileManager.default.fileExists(atPath: blobURL.path) else { throw Failure.missing(record.file) }
         let blob = try Data(contentsOf: blobURL, options: .alwaysMapped)
         let families = record.families ?? [:]
-        let shift = datum.shifts(region: region)
 
         let entries = manifest.lines.filter { $0.value.region == region && $0.value.chunk != nil }
             .sorted { ($0.value.chunk!.offset, $0.key) < ($1.value.chunk!.offset, $1.key) }
@@ -178,7 +164,7 @@ public enum DisplayInput {
             for fragment in document.lines {
                 guard let meta = metadata[fragment.lineKey] ?? metadata[key],
                       let input = StrokeLineInput.make(
-                        fragment: fragment, metadata: meta, families: families, shiftToGCJ02: shift,
+                        fragment: fragment, metadata: meta, families: families, shiftToGCJ02: false,
                         stampedPartIndices: Set((dated[drawID(fragment)] ?? [:]).keys))
                 else { continue }
                 let rows = dated[input.id] ?? [:]

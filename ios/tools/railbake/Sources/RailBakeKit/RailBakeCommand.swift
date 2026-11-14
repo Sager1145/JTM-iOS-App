@@ -5,19 +5,21 @@ import RailCore
 /// executable's `main.swift` only calls ``run(arguments:)``.
 ///
 ///     RailBake --builder-dir DIR --region jp --inputs-sha256 HEX --output jp.railpack \
-///         [--datum wgs84|gcj02] [--levels 8...34] [--report]
+///         [--levels 8...34] [--budgets FILE] [--report]
 ///     RailBake --report-of jp.railpack
 ///     RailBake --compare a.railpack b.railpack
 public enum RailBakeCommand {
 
     public static let usage = """
         usage: RailBake --builder-dir DIR --region CODE --inputs-sha256 HEX --output FILE \\
-                        [--datum wgs84|gcj02] [--levels 8...34|8,12,34] [--budgets FILE] [--report]
+                        [--levels 8...34|8,12,34] [--budgets FILE] [--report]
                RailBake --report-of FILE
                RailBake --compare A B
+        (the pack is WGS84; the app shifts it to GCJ-02 when it mounts a level)
         --levels   half-zoom indices k (level zoom k/2); default 8...34, the ladder z4.0 to z17.0
         --budgets  pack-budgets.json: fail (exit 1, nothing written) when the pack's bytes, a level's
-                   vertices or a phone or pad view's mounted vertices exceed it
+                   vertices or a phone or pad view's mounted vertices exceed it (limits record
+                   docs/maintenance/2026-11-13-rail-pack-limits.md)
         --report   print bytes, pieces, vertices and tiles per level after the bake
         """
 
@@ -60,7 +62,7 @@ public enum RailBakeCommand {
         while index < arguments.count {
             let argument = arguments[index]
             switch argument {
-            case "--builder-dir", "--region", "--inputs-sha256", "--output", "--datum", "--levels", "--report-of", "--budgets":
+            case "--builder-dir", "--region", "--inputs-sha256", "--output", "--levels", "--report-of", "--budgets":
                 options[argument] = try value(argument)
             case "--compare":
                 compare = [try value(argument), try value(argument)]
@@ -93,16 +95,12 @@ public enum RailBakeCommand {
             throw Failure(description: usage)
         }
         guard let inputs = PackBake.hex(inputsText) else { throw Failure(description: "--inputs-sha256 is not 64 hex digits") }
-        let datumText = options["--datum"] ?? "wgs84"
-        guard let datum = DisplayInput.Datum(rawValue: datumText) else {
-            throw Failure(description: "--datum must be wgs84 or gcj02")
-        }
         let levels = try options["--levels"].map(PackBake.parseLevels) ?? PackBake.defaultLevels
         let clock = ContinuousClock()
         var data = Data()
         let elapsed = try clock.measure {
             data = try PackBake.bake(
-                region: region, directory: URL(fileURLWithPath: directory), datum: datum, levels: levels,
+                region: region, directory: URL(fileURLWithPath: directory), levels: levels,
                 inputsSHA256: inputs) { level, count in
                     if level < count { out("level \(level + 1)/\(count)") }
                 }

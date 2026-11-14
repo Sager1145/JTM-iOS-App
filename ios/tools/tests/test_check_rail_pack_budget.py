@@ -36,10 +36,9 @@ class BudgetScriptTests(unittest.TestCase):
     def test_within_budget_passes(self):
         self.pack("jp.railpack", 500)
         self.pack("hk.railpack", 200)
-        self.pack("hk.gcj.railpack", 200)
         result = run(self.dir, self.budgets)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("900 bytes", result.stdout)
+        self.assertIn("700 bytes", result.stdout)
 
     def test_a_pack_over_its_budget_fails(self):
         self.pack("jp.railpack", 601)
@@ -49,11 +48,11 @@ class BudgetScriptTests(unittest.TestCase):
 
     def test_the_bundle_over_its_budget_fails_even_when_every_pack_fits(self):
         self.pack("jp.railpack", 600)
+        self.write_budgets(bundle=800, packs={"jp": 600, "hk": 300})
         self.pack("hk.railpack", 300)
-        self.pack("hk.gcj.railpack", 300)
         result = run(self.dir, self.budgets)
         self.assertEqual(result.returncode, 1)
-        self.assertIn("over the 1000 byte bundle budget by 200", result.stderr)
+        self.assertIn("over the 800 byte bundle budget by 100", result.stderr)
 
     def test_a_region_without_a_budget_fails(self):
         self.pack("zz.railpack", 10)
@@ -64,10 +63,12 @@ class BudgetScriptTests(unittest.TestCase):
 
     def test_the_committed_budgets_hold_the_user_requirement(self):
         budgets = json.loads(COMMITTED.read_text())
-        self.assertEqual(budgets["bundleBytes"], 60_000_000)
-        gcj = {"tw", "hk", "mo", "kr"}
-        files = sum(entry["bytes"] * (2 if region in gcj else 1) for region, entry in budgets["packs"].items())
-        self.assertLessEqual(files, budgets["bundleBytes"])
+        # Limits record docs/maintenance/2026-11-13-rail-pack-limits.md: hard ceilings.
+        self.assertEqual(budgets["bundleBytes"], 30_000_000)
+        self.assertEqual(budgets["packs"]["jp"]["bytes"], 22_000_000)
+        self.assertEqual(budgets["phoneWindowVertices"], 100_000)
+        # One file per region (the GCJ-02 shift is the reader's), so the budgets simply add up.
+        self.assertLessEqual(sum(entry["bytes"] for entry in budgets["packs"].values()), budgets["bundleBytes"])
         self.assertEqual(set(budgets["packs"]), {"jp", "tw", "hk", "mo", "kr"})
 
 

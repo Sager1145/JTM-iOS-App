@@ -36,14 +36,15 @@ public enum PackInkCheck {
         let groupRows = try (0..<reader.header.groupCount).map { try reader.group($0) }
         for level in 0..<reader.header.levelCount {
             let zoom = reader.ladder.zooms[level]
+            let opened = try reader.level(level)
             // The groups each line's pieces use at this level.
             var groupsOfLine: [[Int]] = []
             for line in 0..<reader.header.lineCount {
                 let row = try reader.line(line)
                 var groups = Set<Int>()
                 for chain in Int(row.firstChain)..<(Int(row.firstChain) + Int(row.chainCount)) {
-                    for piece in try reader.pieceRange(level: level, chain: chain) {
-                        groups.insert(Int(try reader.piece(level: level, index: piece).group))
+                    for piece in try opened.pieceRange(chain: chain) {
+                        groups.insert(Int(try opened.piece(piece).group))
                     }
                 }
                 groupsOfLine.append(groups.sorted())

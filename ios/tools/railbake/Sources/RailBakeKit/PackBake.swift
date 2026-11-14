@@ -8,7 +8,6 @@ public enum PackBake {
     public enum Failure: Error, Equatable, CustomStringConvertible {
         case missing(String)
         case displayHashMismatch(topology: String, actual: String)
-        case datumNotForRegion(String)
         case badLevels(String)
         case noInk([PackInkCheck.Missing])
 
@@ -17,7 +16,6 @@ public enum PackBake {
             case .missing(let name): "builder output has no \(name)"
             case .displayHashMismatch(let topology, let actual):
                 "topology.bin was built for display blob \(topology), but the blob is \(actual)"
-            case .datumNotForRegion(let region): "\(region) has no GCJ-02 variant"
             case .badLevels(let text): "cannot read --levels \(text)"
             case .noInk(let missing):
                 "\(missing.count) line/level pairs are visible but have no ink, first: "
@@ -67,17 +65,16 @@ public enum PackBake {
         Array(SHA256.hash(data: try Data(contentsOf: url, options: .alwaysMapped)))
     }
 
-    /// Bakes `region` of `directory` at `levels` and returns the pack bytes. Deterministic: the
-    /// same directory, levels, datum and `inputsSHA256` give the same bytes.
+    /// Bakes `region` of `directory` at `levels` and returns the pack bytes (WGS84; the GCJ-02 shift is
+    /// the reader's). Deterministic: the same directory, levels and `inputsSHA256` give the same bytes.
     public static func bake(
-        region: String, directory: URL, datum: DisplayInput.Datum, levels: [Int], inputsSHA256: [UInt8],
+        region: String, directory: URL, levels: [Int], inputsSHA256: [UInt8],
         progress: ((Int, Int) -> Void)? = nil
     ) throws -> Data {
-        if datum == .gcj02, !GCJ02.candidateRegions.contains(region) { throw Failure.datumNotForRegion(region) }
         let topologyURL = directory.appending(path: "\(region).topology.bin")
         guard FileManager.default.fileExists(atPath: topologyURL.path) else { throw Failure.missing("\(region).topology.bin") }
         let topology = try PackTopology.read(from: topologyURL)
-        let display = try DisplayInput.load(region: region, from: directory, datum: datum)
+        let display = try DisplayInput.load(region: region, from: directory)
         let blob = directory.appending(path: "\(region).display.bin")
         let actual = try sha256(of: blob)
         guard actual == topology.displaySHA256 else {
@@ -86,7 +83,7 @@ public enum PackBake {
                 actual: actual.map { String(format: "%02x", $0) }.joined())
         }
         let source = try PackAssembler.assemble(
-            region: region, display: display, topology: topology, ladder: ladder(levels: levels), datum: datum,
+            region: region, display: display, topology: topology, ladder: ladder(levels: levels),
             inputsSHA256: inputsSHA256, progress: progress)
         let data = try RailPackWriter.write(source)
         // Every line visible at a level has ink at that level.

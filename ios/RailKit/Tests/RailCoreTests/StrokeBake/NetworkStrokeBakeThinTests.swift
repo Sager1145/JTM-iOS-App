@@ -242,8 +242,15 @@ struct NetworkStrokeBakeThinTests {
 
     // MARK: Size
 
-    /// Measured on the committed fixture with the tolerance above, rounded up by 10%.
-    static let ceilings: [Double: Int] = [6: 1_520, 10: 3_480, 14: 12_500, 17: 38_200]
+    @Test("the pack tolerance stays at or under 4 quanta (1/4 point)")
+    func toleranceStaysUnderTheVisibilityLine() {
+        // Loosening this is a visible change on screen and needs the user (limits record,
+        // docs/maintenance/2026-11-13-rail-pack-limits.md); the size budget is met without it.
+        #expect(RailStrokeTokens.packThinTolerance <= 0.25)
+    }
+
+    /// Measured on the committed fixture at the 4-quantum tolerance, rounded up by 10%.
+    static let ceilings: [Double: Int] = [6: 1_440, 10: 3_090, 14: 10_700, 17: 32_800]
 
     @Test("the thinned fixture is small: vertex and byte ceilings, and a tenth of the engine's at z5")
     func fixtureBudget() throws {

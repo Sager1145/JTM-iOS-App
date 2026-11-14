@@ -50,14 +50,10 @@ struct RailBakeCommandTests {
         // The fixture directory has no topology.bin: the bake must not invent one.
         let missing = status(base)
         #expect(missing.0 != 0 && missing.1.contains { $0.contains("hk.topology.bin") })
-        #expect(status(base + ["--datum", "mercator"]).0 != 0)
+        // One WGS84 pack per region: the GCJ-02 shift is the reader's, so the old flag is gone.
+        #expect(status(base + ["--datum", "gcj02"]).0 != 0)
         #expect(status(base + ["--levels", "34,8"]).0 != 0)
         #expect(status(Array(base.prefix(6)) + ["--inputs-sha256", "xyz", "--output", "/dev/null"]).0 != 0)
-        #expect(throws: PackBake.Failure.datumNotForRegion("jp")) {
-            try PackBake.bake(
-                region: "jp", directory: directory, datum: .gcj02, levels: [26],
-                inputsSHA256: [UInt8](repeating: 0, count: 32))
-        }
     }
 
     @Test("--budgets refuses a pack over any limit and names it, and accepts one within them")

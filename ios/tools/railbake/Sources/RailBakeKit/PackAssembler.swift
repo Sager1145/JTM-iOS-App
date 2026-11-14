@@ -21,7 +21,8 @@ import RailCore
 ///  - Every level is thinned (`NetworkStrokeBake.thinned`, `RailStrokeTokens.packThinTolerance`)
 ///    between the engine's bake and the cutter, with the station metres as forced vertices.
 ///  - A dated chain (history span) keeps every one of its solid pieces whole: the era picks solid or
-///    dashed at run time and a dashed run is never cut.
+///    dashed at run time and a dashed run is never cut. Its span index lives on the group (every piece
+///    of a chain shares one span, so a group key carries it).
 public enum PackAssembler {
 
     public enum Failure: Error, Equatable, CustomStringConvertible {
@@ -74,6 +75,8 @@ public enum PackAssembler {
         var light: UInt32, dark: UInt32
         var tierMin: Int16, tierMax: Int16
         var style: UInt8
+        /// Index into spans; `noSpan` for undated. A chain's pieces share it, so the group carries it.
+        var span: UInt16
     }
 
     /// Chains, region-wide: lines in topology order, chains in fragment order, and each node on its
@@ -157,7 +160,7 @@ public enum PackAssembler {
 
     public static func assemble(
         region: String, display: DisplayInput.Region, topology: PackTopology,
-        ladder: RailPackLadder, datum: DisplayInput.Datum, inputsSHA256: [UInt8],
+        ladder: RailPackLadder, inputsSHA256: [UInt8],
         progress: ((_ level: Int, _ of: Int) -> Void)? = nil
     ) throws -> RailPackSource {
         guard topology.region == region else {
@@ -179,7 +182,7 @@ public enum PackAssembler {
             let index = UInt16(groups.count)
             groups.append(RailPackGroup(
                 colourLight: key.light, colourDark: key.dark, tierMin: key.tierMin, tierMax: key.tierMax,
-                styleClass: key.style, category: 0))
+                styleClass: key.style, category: 0, span: key.span))
             groupIndex[key] = index
             return index
         }
@@ -198,7 +201,7 @@ public enum PackAssembler {
         for level in 0..<ladder.levelCount {
             progress?(level, ladder.levelCount)
             let mpp = ladder.mapPointsPerPoint(level: level)
-            let frame = try frame(for: ladder, level: level, datumToken: datum.rawValue)
+            let frame = try frame(for: ladder, level: level, datumToken: "wgs84")
             let baked = NetworkStrokeBake.thinned(
                 try NetworkStrokeBake.bake(network, level: frame), tolerance: RailStrokeTokens.packThinTolerance, keep: keep)
             let quantum = RailPackFormat.quantum(mapPointsPerPoint: mpp)
@@ -267,27 +270,27 @@ public enum PackAssembler {
                     case .base:
                         key = GroupKey(
                             light: light, dark: dark, tierMin: slot.tier, tierMax: RailPackFormat.tierNoUpperLimit,
-                            style: slot.span != nil ? RailPackFormat.StyleClass.historicalDashed.rawValue : 0)
+                            style: slot.span != nil ? RailPackFormat.StyleClass.historicalDashed.rawValue : 0, span: spanID)
                     case .withheld(let colour, let colourDark):
                         key = GroupKey(
                             light: rgba(colour), dark: rgba(colourDark), tierMin: slot.tier,
                             tierMax: RailPackFormat.tierNoUpperLimit,
-                            style: RailPackFormat.StyleClass.withheldDashed.rawValue)
+                            style: RailPackFormat.StyleClass.withheldDashed.rawValue, span: spanID)
                     case .landlord(_, let colour, let colourDark):
                         key = GroupKey(
                             light: rgba(colour), dark: rgba(colourDark), tierMin: slot.tier,
-                            tierMax: RailPackFormat.tierNoUpperLimit, style: 0)
+                            tierMax: RailPackFormat.tierNoUpperLimit, style: 0, span: spanID)
                     case .fallback(let id, let colour, let colourDark):
                         let range = fallbackRange(tenantTier: slot.tier, landlordTier: landlordTier[id])
                         key = GroupKey(
-                            light: rgba(colour), dark: rgba(colourDark), tierMin: range.min, tierMax: range.max, style: 0)
+                            light: rgba(colour), dark: rgba(colourDark), tierMin: range.min, tierMax: range.max, style: 0, span: spanID)
                     case .gap:
                         key = GroupKey(
                             light: light, dark: dark, tierMin: RailPackFormat.tierNeverDrawn,
-                            tierMax: RailPackFormat.tierNeverDrawn, style: 0)
+                            tierMax: RailPackFormat.tierNeverDrawn, style: 0, span: spanID)
                     }
                     pieces.append(RailPackPieceSource(
-                        chain: chainIndex, group: group(key), span: spanID, isLong: piece.isLong,
+                        chain: chainIndex, group: group(key), isLong: piece.isLong,
                         vertices: piece.line.points.map { RailPackPoint(x: $0.x, y: $0.y) }))
                 }
             }
@@ -296,7 +299,7 @@ public enum PackAssembler {
         }
         progress?(ladder.levelCount, ladder.levelCount)
         return RailPackSource(
-            datum: datum == .gcj02 ? .gcj02 : .wgs84, regionCode: region,
+            regionCode: region,
             displaySHA256: topology.displaySHA256, inputsSHA256: inputsSHA256,
             chainCount: slots.count, nodeCount: topology.nodes.count, lines: lines, groups: groups,
             spans: spans, levels: levels,

@@ -47,7 +47,7 @@ enum RailPackLoopTestPack {
 
     static func source(zooms: [Double] = [12, 12.5]) -> RailPackSource {
         RailPackSource(
-            datum: .wgs84, regionCode: "lp",
+            regionCode: "lp",
             displaySHA256: [UInt8](repeating: 7, count: 32), inputsSHA256: [UInt8](repeating: 9, count: 32),
             chainCount: chainCount, nodeCount: nodeCount,
             lines: [RailPackLine(firstChain: 0, chainCount: 1, firstNode: 0, nodeCount: 4),

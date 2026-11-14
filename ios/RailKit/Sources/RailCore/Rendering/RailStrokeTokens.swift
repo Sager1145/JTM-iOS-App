@@ -51,9 +51,10 @@ public enum RailStrokeTokens {
     public static let simplifyTolerance: Double = 0.0625
 
     /// How far a stored pack vertex may leave the engine's stroke, in points of the level it is
-    /// stored for: 3 quanta (3/16 point). The pack bake thins every finished stroke to this
-    /// (`NetworkStrokeBake.thinned`); see docs/maintenance/2026-11-13-rail-pack-size-design.md.
-    public static let packThinTolerance: Double = 0.1875
+    /// stored for: 4 quanta (1/4 point), the largest step the size rule allows (limits record,
+    /// docs/maintenance/2026-11-13-rail-pack-limits.md). Loosening it is a visible change that needs
+    /// the user. The pack bake thins every finished stroke to this (`NetworkStrokeBake.thinned`); see docs/maintenance/2026-11-13-rail-pack-size-design.md.
+    public static let packThinTolerance: Double = 0.25
 
     // MARK: - the weight ramp
 

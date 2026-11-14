@@ -1,7 +1,7 @@
 #!/bin/bash
-# Size guard for the baked rail map packs (docs/maintenance/2026-11-13-rail-pack-size-design.md,
-# sections 4.6 and 8): every pack in PACK_DIR is within its region's byte budget and all of them
-# together are within the bundle budget (60,000,000 bytes, user requirement). Exits 1 and says which
+# Size guard for the baked rail map packs (limits record docs/maintenance/2026-11-13-rail-pack-limits.md):
+# every pack in PACK_DIR is within its region's byte budget (Japan 22,000,000) and all of them
+# together are within the bundle budget (30,000,000 bytes, the hard ceiling). Exits 1 and says which
 # limit broke; never edit the budgets to make it pass.
 #
 #   ios/tools/check-rail-pack-budget.sh PACK_DIR [BUDGETS_JSON]

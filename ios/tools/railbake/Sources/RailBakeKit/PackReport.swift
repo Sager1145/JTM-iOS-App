@@ -9,7 +9,8 @@ public struct PackReport: Sendable, Equatable {
         public var bytes: Int
         public var pieces: Int
         public var longPieces: Int
-        /// Normal plus long vertices.
+        /// Mounted vertices: the sum of every piece's vertex count (a vertex two neighbouring pieces share
+        /// is stored once but counts for both).
         public var vertices: Int
         public var tiles: Int
         public var nodes: Int
@@ -42,13 +43,13 @@ public struct PackReport: Sendable, Equatable {
         var levels: [Level] = []
         for (index, level) in size.levels.enumerated() {
             func rows(_ kind: RailPackFormat.ArrayKind) -> Int { level.rows[kind.rawValue] }
-            var largest = 0
-            for tile in 0..<rows(.tileDir) { largest = max(largest, Int(try reader.tile(level: index, index: tile).pieceCount)) }
-            let windows = try PackWindows.maxima(reader: reader, level: index)
+            let opened = try reader.level(index)
+            let summaries = try opened.tileSummaries()
+            let windows = try PackWindows.maxima(level: opened)
             levels.append(Level(
                 zoom: level.zoom, bytes: level.totalBytes, pieces: rows(.pieces), longPieces: rows(.longPieces),
-                vertices: rows(.vertices) + rows(.longVertices), tiles: rows(.tileDir),
-                nodes: rows(.nodes), largestTilePieces: largest,
+                vertices: opened.vertexCount, tiles: summaries.count,
+                nodes: rows(.nodes), largestTilePieces: summaries.map(\.pieces).max() ?? 0,
                 phoneWindowVertices: windows.phone, padWindowVertices: windows.pad))
         }
         self.levels = levels
@@ -82,7 +83,7 @@ public enum PackCompare {
         }
         let ha = a.header, hb = b.header
         if ha.levelCount != hb.levelCount { _ = note("level count \(ha.levelCount) vs \(hb.levelCount)"); return found }
-        if ha.datum != hb.datum || ha.regionCode != hb.regionCode { if note("datum or region differ") { return found } }
+        if ha.regionCode != hb.regionCode { if note("region differs") { return found } }
         if ha.chainCount != hb.chainCount || ha.nodeCount != hb.nodeCount || ha.lineCount != hb.lineCount {
             _ = note("chain, node or line count differs"); return found
         }
@@ -91,22 +92,23 @@ public enum PackCompare {
             let mpp = a.levels[level].mapPointsPerPoint
             if mpp != b.levels[level].mapPointsPerPoint { if note("level \(level): scale differs") { return found } }
             let quantum = RailPackFormat.quantum(mapPointsPerPoint: mpp)
-            let pieces = try a.count(level: level, .pieces)
-            if pieces != (try b.count(level: level, .pieces)) {
-                if note("level \(level): \(pieces) vs \(try b.count(level: level, .pieces)) pieces") { return found }
+            let la = try a.level(level), lb = try b.level(level)
+            let pieces = la.pieceCount
+            if pieces != lb.pieceCount {
+                if note("level \(level): \(pieces) vs \(lb.pieceCount) pieces") { return found }
                 continue
             }
             var pa: [RailPackPoint] = [], pb: [RailPackPoint] = []
             for piece in 0..<pieces {
-                let ra = try a.piece(level: level, index: piece), rb = try b.piece(level: level, index: piece)
-                if ra.group != rb.group || ra.span != rb.span || ra.vertexCount != rb.vertexCount || ra.isLong != rb.isLong {
+                let ra = try la.piece(piece), rb = try lb.piece(piece)
+                if ra.group != rb.group || ra.vertexCount != rb.vertexCount || ra.isLong != rb.isLong {
                     if note("level \(level) piece \(piece): row differs") { return found }
                     continue
                 }
                 pa.removeAll(keepingCapacity: true)
                 pb.removeAll(keepingCapacity: true)
-                try a.appendVertices(level: level, piece: piece, to: &pa)
-                try b.appendVertices(level: level, piece: piece, to: &pb)
+                try la.appendVertices(piece: piece, to: &pa)
+                try lb.appendVertices(piece: piece, to: &pb)
                 for (p, q) in zip(pa, pb) where abs(p.x - q.x) > quantum || abs(p.y - q.y) > quantum {
                     if note("level \(level) piece \(piece): vertex differs by more than a quantum") { return found }
                     break

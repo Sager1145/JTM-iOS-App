@@ -24,11 +24,12 @@ struct PackBudgetTests {
         return (reader, try PackReport(reader: reader))
     }
 
-    @Test("the committed budgets: 60 MB bundle, every region and every ladder level present, packs fit the bundle")
+    @Test("the committed budgets are the limits record's: 30 MB bundle, Japan 22 MB, 100k phone view, every region and level present")
     func committedBudgets() throws {
         let budget = try Self.committed()
-        #expect(budget.bundleBytes == 60_000_000)
-        #expect(budget.phoneWindowVertices == 150_000 && budget.padWindowVertices == 300_000)
+        #expect(budget.bundleBytes == 30_000_000)
+        #expect(budget.packs["jp"]?.bytes == 22_000_000)
+        #expect(budget.phoneWindowVertices == 100_000 && budget.padWindowVertices == 200_000)
         #expect(Set(budget.packs.keys) == ["jp", "tw", "hk", "mo", "kr"])
         for (region, pack) in budget.packs {
             #expect(Set(pack.levelVertices.keys) == Set(PackBake.defaultLevels.map(String.init)), "\(region) levels")
@@ -36,15 +37,16 @@ struct PackBudgetTests {
             let values = PackBake.defaultLevels.map { pack.levelVertices[String($0)]! }
             #expect(zip(values, values.dropFirst()).allSatisfy { $0 <= $1 * 2 }, "\(region): ceilings are not wildly out of order")
         }
-        // jp has one file, tw hk mo kr two (WGS84 and GCJ-02): every file at its budget stays in the bundle.
-        let files = budget.packs.reduce(0) { $0 + $1.value.bytes * ($1.key == "jp" ? 1 : 2) }
+        // One file per region (the GCJ-02 shift is the reader's): every file at its budget stays in the bundle.
+        let files = budget.packs.reduce(0) { $0 + $1.value.bytes }
         #expect(files <= budget.bundleBytes, "\(files) bytes of per-pack budgets exceed the bundle")
     }
 
-    /// Bytes of the fixture regions baked at the default ladder, measured, rounded up by 10%. The
+    /// Bytes of the fixture regions baked at the default ladder in format v2 at the 4-quantum tolerance, measured
+    /// (685,276, 28,992 and 848,708), rounded up by 10%. The
     /// fixture is a selection of lines with synthetic station nodes, so these are its own ceilings,
     /// not the real regions'; the real packs are held to `pack-budgets.json` by `RailBake --budgets`.
-    static let fixtureBytes: [String: Int] = ["hk": 1_370_000, "mo": 55_100, "jp": 1_522_000]
+    static let fixtureBytes: [String: Int] = ["hk": 753_900, "mo": 31_900, "jp": 933_600]
 
     @Test("the fixture regions stay under their recorded size and the real window caps")
     func fixturesFit() throws {
@@ -60,11 +62,28 @@ struct PackBudgetTests {
         }
     }
 
+    @Test("the committed budgets fail a bake over 22,000,000 bytes for Japan or 100,000 vertices in a phone view")
+    func committedLimitsBite() throws {
+        let budget = try Self.committed()
+        let (_, report) = try Self.pack()
+        #expect(budget.violations(region: "jp", report: report).isEmpty, "a small pack is within the jp budgets")
+        var big = report
+        big.fileBytes = 22_000_001
+        #expect(budget.violations(region: "jp", report: big).contains { $0.contains("exceeds the pack budget of 22000000") })
+        big.fileBytes = 22_000_000
+        #expect(budget.violations(region: "jp", report: big).isEmpty, "exactly at the ceiling passes")
+        var dense = report
+        dense.levels[0].phoneWindowVertices = 100_001
+        #expect(budget.violations(region: "jp", report: dense).contains { $0.contains("phone view") && $0.contains("over 100000") })
+        dense.levels[0].phoneWindowVertices = 100_000
+        #expect(budget.violations(region: "jp", report: dense).isEmpty)
+    }
+
     @Test("each limit is enforced and named")
     func limitsAreEnforced() throws {
         let (_, report) = try Self.pack()
         let roomy = PackBudget(
-            bundleBytes: 60_000_000, phoneWindowVertices: 1_000_000, padWindowVertices: 1_000_000,
+            bundleBytes: 30_000_000, phoneWindowVertices: 1_000_000, padWindowVertices: 1_000_000,
             packs: ["hk": .init(bytes: 10_000_000, levelVertices: ["10": 1_000_000, "18": 1_000_000, "26": 1_000_000])])
         try roomy.check(region: "hk", report: report)
         #expect(throws: Never.self) { try roomy.check(region: "hk", report: report) }
@@ -94,22 +113,22 @@ struct PackBudgetTests {
 
     /// Brute force: every window position over the occupied bounding box, counted from the pieces.
     static func bruteForce(_ reader: RailPackReader, level: Int, columns: Int, rows: Int) throws -> Int {
+        let opened = try reader.level(level)
         let info = reader.levels[level]
         let side = RailPackFormat.tileSide(mapPointsPerPoint: info.mapPointsPerPoint)
         let quantum = RailPackFormat.quantum(mapPointsPerPoint: info.mapPointsPerPoint)
         var normal: [[Int]: Int] = [:]
-        for index in 0..<(try reader.count(level: level, .pieces)) {
-            let row = try reader.piece(level: level, index: index)
+        for index in 0..<opened.pieceCount {
+            let row = try opened.piece(index)
             if row.isLong { continue }
-            let tile = try reader.tile(level: level, index: Int(row.tile))
-            normal[[Int(tile.tileX), Int(tile.tileY)], default: 0] += Int(row.vertexCount)
+            normal[[Int(row.tileX), Int(row.tileY)], default: 0] += Int(row.vertexCount)
         }
         var longs: [(Int, Int, Int, Int, Int)] = []
-        for index in 0..<(try reader.count(level: level, .longPieces)) {
-            let long = try reader.longPieceRow(level: level, index: index)
+        for index in 0..<opened.count(.longPieces) {
+            let long = try opened.longPieceRow(index)
             func tile(_ q: Int32) -> Int { Int((Double(q) * quantum / side).rounded(.down)) }
             longs.append((tile(long.minX), tile(long.maxX), tile(long.minY), tile(long.maxY),
-                          Int(try reader.piece(level: level, index: Int(long.piece)).vertexCount)))
+                          Int(try opened.piece(Int(long.piece)).vertexCount)))
         }
         let xs = normal.keys.map { $0[0] } + longs.flatMap { [$0.0, $0.1] }
         let ys = normal.keys.map { $0[1] } + longs.flatMap { [$0.2, $0.3] }
@@ -144,12 +163,12 @@ struct PackBudgetTests {
         }
     }
 
-    @Test("a dense view is where the guard bites: fewer than 150k vertices at the densest level of the fixtures")
+    @Test("a dense view is where the guard bites: fewer than 100k vertices at the densest level of the fixtures")
     func windowsAreCountedAtEveryLevel() throws {
         let (_, report) = try Self.pack("jp", levels: PackBake.defaultLevels)
         #expect(report.levels.count == 27)
         // The densest phone window grows with zoom until the tiles thin out; it is the largest somewhere in the middle.
         #expect(report.levels.map(\.phoneWindowVertices).max()! > report.levels[0].phoneWindowVertices)
-        #expect(report.levels.allSatisfy { $0.phoneWindowVertices <= 150_000 })
+        #expect(report.levels.allSatisfy { $0.phoneWindowVertices <= 100_000 })
     }
 }

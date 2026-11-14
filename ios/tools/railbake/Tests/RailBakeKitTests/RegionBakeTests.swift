@@ -103,21 +103,6 @@ struct RegionBakeTests {
         }
     }
 
-    @Test("the GCJ-02 datum shifts the regions that need it and leaves Japan alone")
-    func datum() throws {
-        let directory = try Self.makeBuilderDirectory()
-        defer { try? FileManager.default.removeItem(at: directory) }
-        let wgs = try RegionBake.bake(region: "hk", appZoom: 13, from: directory)
-        let gcj = try RegionBake.bake(region: "hk", appZoom: 13, from: directory, datum: .gcj02)
-        let a = try #require(wgs.chains.first?.runs.first?.vertices.first)
-        let b = try #require(gcj.chains.first?.runs.first?.vertices.first)
-        let metres = hypot(a.x - b.x, a.y - b.y) * StrokeProjection.metresPerMapPoint(atLatitude: 22.3)
-        #expect(metres > 100 && metres < 1000, "shift of \(metres) m")
-        let jpWGS = try DisplayInput.load(region: "jp", from: directory)
-        let jpGCJ = try DisplayInput.load(region: "jp", from: directory, datum: .gcj02)
-        #expect(jpWGS.network.lines.map(\.intervals) == jpGCJ.network.lines.map(\.intervals))
-    }
-
     @Test("a missing manifest or region is reported, not baked as empty")
     func failures() throws {
         let empty = FileManager.default.temporaryDirectory.appending(path: "railbake-empty-\(UUID().uuidString)")

@@ -5,15 +5,17 @@
 #
 # BUILDER_DIR is the directory `build-display-network.py` wrote (manifest.json, {region}.display.bin,
 # {region}.stations.json, {region}.display-history.json, {region}.topology.bin). For every pack the
-# build makes (`rail_pack_inputs.py variants`) the script computes the pack's inputsSHA256, looks in
+# build makes (`rail_pack_inputs.py variants`: one WGS84 file per region; the GCJ-02 shift is applied
+# by the reader at mount) the script computes the pack's inputsSHA256, looks in
 # ios/.build/railpack-cache/{inputsSHA256}/, bakes with `RailBake` only on a miss, copies the pack to
 # DEST_DIR and then runs the freshness guard on what it copied. Packs are not committed to git.
 #
-# Size guards (docs/maintenance/2026-11-13-rail-pack-size-design.md): every bake passes
+# Size guards (limits record docs/maintenance/2026-11-13-rail-pack-limits.md; design
+# docs/maintenance/2026-11-13-rail-pack-size-design.md): every bake passes
 # ios/tools/railbake/pack-budgets.json to RailBake (--budgets: a pack over its byte budget, a level over
-# its vertex ceiling or a phone or pad view over its mounted-vertex cap is not written and the script
-# stops), and the script ends with check-rail-pack-budget.sh (all packs together at most 60,000,000
-# bytes). The budgets file is part of every pack's inputsSHA256, so a cached pack was checked against
+# its vertex ceiling or a phone view over 100,000 (pad 200,000) mounted vertices is not written and the script
+# stops), and the script ends with check-rail-pack-budget.sh (all packs together at most 30,000,000
+# bytes, Japan at most 22,000,000). The budgets file is part of every pack's inputsSHA256, so a cached pack was checked against
 # the budgets it was baked under. These guards need the builder output and a release build of RailBake
 # (a few minutes), so they are not in run-regression-guards.sh; the fixture-sized size guards are
 # (PackBudgetTests, NetworkStrokeBakeThinTests.fixtureBudget).
@@ -57,8 +59,8 @@ ensure_tool() {
 
 baked=0
 hits=0
-while read -r region datum name; do
-    key=$(python3 -I "$inputs" key --builder-dir "$builder_dir" --region "$region" --datum "$datum" \
+while read -r region name; do
+    key=$(python3 -I "$inputs" key --builder-dir "$builder_dir" --region "$region" \
         --levels "$levels" --toolchain "$toolchain")
     cached="$cache_root/$key/$name"
     if [ -f "$cached" ]; then
@@ -68,7 +70,7 @@ while read -r region datum name; do
         ensure_tool
         mkdir -p "$cache_root/$key"
         echo "baking     $name ($key)"
-        "$tool" --builder-dir "$builder_dir" --region "$region" --datum "$datum" --levels "$levels" \
+        "$tool" --builder-dir "$builder_dir" --region "$region" --levels "$levels" \
             --inputs-sha256 "$key" --budgets "$here/railbake/pack-budgets.json" \
             --output "$cached.partial" --report > "$cache_root/$key/$name.report.txt" \
             || { echo "error: $name is over its size budget (see $cache_root/$key/$name.report.txt)" >&2; cat "$cache_root/$key/$name.report.txt" >&2; exit 1; }

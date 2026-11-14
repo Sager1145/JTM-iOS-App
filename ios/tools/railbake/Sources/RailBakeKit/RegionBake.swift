@@ -10,22 +10,20 @@ public enum RegionBake {
     /// One level of one region, from `directory`, at app zoom `zoom` (the 256-point convention
     /// `MapProjection.zoomLevel` uses; `NetworkStrokeBake.Level(appZoom:)`).
     public static func bake(
-        region: String, appZoom zoom: Double, from directory: URL,
-        datum: DisplayInput.Datum = .wgs84
+        region: String, appZoom zoom: Double, from directory: URL
     ) throws -> NetworkStrokeBake.Baked {
-        let network = try DisplayInput.load(region: region, from: directory, datum: datum).network
-        return try NetworkStrokeBake.bake(network, level: .init(appZoom: zoom, datumToken: datum.rawValue))
+        let network = try DisplayInput.load(region: region, from: directory).network
+        return try NetworkStrokeBake.bake(network, level: .init(appZoom: zoom, datumToken: "wgs84"))
     }
 
     /// Several levels of one region, reading the directory once. Levels are independent, so the
     /// result for a level equals a single-level bake of it.
     public static func bake(
-        region: String, appZooms zooms: [Double], from directory: URL,
-        datum: DisplayInput.Datum = .wgs84
+        region: String, appZooms zooms: [Double], from directory: URL
     ) throws -> [NetworkStrokeBake.Baked] {
-        let network = try DisplayInput.load(region: region, from: directory, datum: datum).network
+        let network = try DisplayInput.load(region: region, from: directory).network
         return try zooms.map {
-            try NetworkStrokeBake.bake(network, level: .init(appZoom: $0, datumToken: datum.rawValue))
+            try NetworkStrokeBake.bake(network, level: .init(appZoom: $0, datumToken: "wgs84"))
         }
     }
 }

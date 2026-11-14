@@ -52,21 +52,21 @@ struct PackAssemblerTests {
     }
 
     static func assemble(
-        _ region: DisplayInput.Region, _ topology: PackTopology, levels: [Int], datum: DisplayInput.Datum = .wgs84
+        _ region: DisplayInput.Region, _ topology: PackTopology, levels: [Int]
     ) throws -> RailPackSource {
         try PackAssembler.assemble(
             region: topology.region, display: region, topology: topology, ladder: PackBake.ladder(levels: levels),
-            datum: datum, inputsSHA256: [UInt8](repeating: 0x22, count: 32))
+            inputsSHA256: [UInt8](repeating: 0x22, count: 32))
     }
 
     static func reader(_ source: RailPackSource) throws -> RailPackReader {
         try RailPackReader(data: RailPackWriter.write(source))
     }
 
-    static func pieces(of chain: Int, level: Int, reader: RailPackReader) throws -> [[RailPackPoint]] {
-        try reader.pieceRange(level: level, chain: chain).map { piece in
+    static func pieces(of chain: Int, level: RailPackLevel) throws -> [[RailPackPoint]] {
+        try level.pieceRange(chain: chain).map { piece in
             var points: [RailPackPoint] = []
-            try reader.appendVertices(level: level, piece: piece, to: &points)
+            try level.appendVertices(piece: piece, to: &points)
             return points
         }
     }
@@ -137,7 +137,7 @@ struct PackAssemblerTests {
         return (full, thinned)
     }
 
-    @Test("every line's geometry at every level equals the thinned bake within half a quantum and the full bake within four")
+    @Test("every line's geometry at every level equals the thinned bake within half a quantum and the full bake within five")
     func equalsBakeCore() throws {
         let directory = try RegionBakeTests.makeBuilderDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -151,6 +151,7 @@ struct PackAssemblerTests {
             #expect(reader.header.lineCount == display.lines.count)
             for (level, k) in Self.levels.enumerated() {
                 let (full, baked) = try Self.bakes(display, topology, reader: reader, level: level)
+                let lv = try reader.level(level)
                 let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[level].mapPointsPerPoint)
                 let half = quantum / 2 * (1 + 1e-6) + 1e-6
                 for (lineIndex, info) in display.lines.enumerated() {
@@ -160,7 +161,7 @@ struct PackAssemblerTests {
                         let fullChain = full.chains[fragment.inputIndex]
                         let slots: [Int?] = fragment.continuous ? [nil] : display.network.lines[fragment.inputIndex].intervals.indices.map { Optional($0) }
                         for part in slots {
-                            let pieces = try Self.pieces(of: chain, level: level, reader: reader)
+                            let pieces = try Self.pieces(of: chain, level: lv)
                             chain += 1
                             let all = pieces.flatMap { $0 }
                             if pieces.count > 1 { sawMultiPiece = true }
@@ -181,13 +182,13 @@ struct PackAssemblerTests {
                                 // Every pack vertex lies on the stroke (inserted vertices are collinear).
                                 let off = Self.distances(all, toPolyline: bakedChain.strokePoints).filter { $0 > quantum }
                                 #expect(off.isEmpty, "\(name) \(bakedChain.id) k\(k): \(off.count) vertices off the stroke")
-                                // The full bake's every vertex is within four quanta of the pack chain (thinning
-                                // tolerance 3 quanta, rounding half a quantum, and the bound's own slack).
+                                // The full bake's every vertex is within five quanta of the pack chain (thinning
+                                // tolerance 4 quanta, rounding half a quantum, and the bound's own slack).
                                 let fullPoints = fullChain.strokePoints.map { RailPackPoint(x: $0.x, y: $0.y) }
                                 let packLine = all.map { StrokePoint(x: $0.x, y: $0.y) }
                                 if packLine.count >= 2 {
-                                    let far = Self.distances(fullPoints, toPolyline: packLine).filter { $0 > 4 * quantum }
-                                    #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-bake vertices more than 4 quanta from the pack")
+                                    let far = Self.distances(fullPoints, toPolyline: packLine).filter { $0 > 5 * quantum }
+                                    #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-bake vertices more than 5 quanta from the pack")
                                 }
                                 // Ends agree.
                                 let s = bakedChain.strokePoints
@@ -213,13 +214,13 @@ struct PackAssemblerTests {
                                     let packLine = all.map { StrokePoint(x: $0.x, y: $0.y) }
                                     if packLine.count >= 2 {
                                         let far = Self.distances(fullRun.map { RailPackPoint(x: $0.x, y: $0.y) }, toPolyline: packLine)
-                                            .filter { $0 > 4 * quantum }
-                                        #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-run vertices more than 4 quanta from the pack")
+                                            .filter { $0 > 5 * quantum }
+                                        #expect(far.isEmpty, "\(name) \(bakedChain.id) k\(k): \(far.count) full-run vertices more than 5 quanta from the pack")
                                     }
                                 }
                             }
-                            for piece in try reader.pieceRange(level: level, chain: chain - 1) {
-                                let row = try reader.piece(level: level, index: piece)
+                            for piece in try lv.pieceRange(chain: chain - 1) {
+                                let row = try lv.piece(piece)
                                 let group = try reader.group(Int(row.group))
                                 if group.styleClass == RailPackFormat.StyleClass.withheldDashed.rawValue { sawWithheld = true }
                                 if row.isLong { sawLong = true }
@@ -232,14 +233,14 @@ struct PackAssemblerTests {
                     let line = try reader.line(lineIndex)
                     for chain in Int(line.firstChain)..<(Int(line.firstChain) + Int(line.chainCount)) {
                         let own = PackAssembler.rgba(baked.chains[info.fragments[0].inputIndex].colorHex)
-                        for piece in try reader.pieceRange(level: level, chain: chain) {
-                            let group = try reader.group(Int(try reader.piece(level: level, index: piece).group))
+                        for piece in try lv.pieceRange(chain: chain) {
+                            let group = try reader.group(Int(try lv.piece(piece).group))
                             if group.colourLight != own, group.styleClass == 0,
                                group.tierMin != RailPackFormat.tierNeverDrawn { sawFamily = true }
                         }
                     }
                 }
-                for slot in 0..<topology.nodes.count where !(try reader.nodeSlot(level: level, node: slot).isNone) {
+                for slot in 0..<topology.nodes.count where !(try lv.nodeSlot(node: slot).isNone) {
                     sawNode = true
                 }
             }
@@ -256,6 +257,7 @@ struct PackAssemblerTests {
             for k in [10, 26] {
                 let reader = try Self.reader(try Self.assemble(display, topology, levels: [k]))
                 try reader.validateContents()
+                let lv = try reader.level(0)
                 let (_, baked) = try Self.bakes(display, topology, reader: reader, level: 0)
                 let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[0].mapPointsPerPoint)
                 let half = quantum / 2 * (1 + 1e-6) + 1e-6
@@ -268,11 +270,11 @@ struct PackAssemblerTests {
                         let bakedChain = baked.chains[fragment.inputIndex]
                         if fragment.continuous {
                             for node in bakedChain.nodes {
-                                let slot = try reader.nodeSlot(level: 0, node: Int(line.firstNode) + ordinal)
+                                let slot = try lv.nodeSlot(node: Int(line.firstNode) + ordinal)
                                 ordinal += 1
                                 #expect(!slot.isNone)
                                 var points: [RailPackPoint] = []
-                                try reader.appendVertices(level: 0, piece: Int(slot.piece), to: &points)
+                                try lv.appendVertices(piece: Int(slot.piece), to: &points)
                                 let at = points[Int(slot.vertex)]
                                 #expect(abs(at.x - node.point.x) <= half && abs(at.y - node.point.y) <= half)
                                 checkedContinuous += 1
@@ -286,15 +288,15 @@ struct PackAssemblerTests {
                             let stroke = PieceCutter.Polyline(points: run.vertices, measures: run.measures)
                             for fraction in [0.0, 0.5, 1.0] {
                                 let metres = try #require(topology.nodes[Int(line.firstNode) + ordinal].metres)
-                                let slot = try reader.nodeSlot(level: 0, node: Int(line.firstNode) + ordinal)
+                                let slot = try lv.nodeSlot(node: Int(line.firstNode) + ordinal)
                                 ordinal += 1
                                 #expect(!slot.isNone, "\(name) \(bakedChain.id) part \(part): node without a slot")
                                 if slot.isNone { continue }
                                 // The node's piece belongs to this part's chain and the vertex is the part's
                                 // position at that metre on its own ruler.
-                                #expect(try reader.chain(level: 0, ofPiece: Int(slot.piece)) == Int(line.firstChain) + flatPart)
+                                #expect(try lv.chain(ofPiece: Int(slot.piece)) == Int(line.firstChain) + flatPart)
                                 var points: [RailPackPoint] = []
-                                try reader.appendVertices(level: 0, piece: Int(slot.piece), to: &points)
+                                try lv.appendVertices(piece: Int(slot.piece), to: &points)
                                 let at = points[Int(slot.vertex)]
                                 let expected = PieceCutter.point(on: stroke, at: metres)
                                 #expect(abs(at.x - expected.x) <= quantum && abs(at.y - expected.y) <= quantum,
@@ -319,15 +321,16 @@ struct PackAssemblerTests {
         let reader = try Self.reader(try Self.assemble(display, topology, levels: levels))
         var trips = 0
         for level in levels.indices {
+            let lv = try reader.level(level)
             let quantum = RailPackFormat.quantum(mapPointsPerPoint: reader.levels[level].mapPointsPerPoint)
             for lineIndex in 0..<reader.header.lineCount {
                 let line = try reader.line(lineIndex)
                 guard line.nodeCount >= 3 else { continue }
                 // Nodes of one part come in threes (start, middle, end): the first part's start and end.
                 let from = Int(line.firstNode), to = Int(line.firstNode) + 2
-                let result = try reader.vertexRanges(level: level, fromNode: from, toNode: to)
+                let result = try lv.vertexRanges(fromNode: from, toNode: to)
                 #expect(!result.reversed)
-                let a = try reader.nodeSlot(level: level, node: from), b = try reader.nodeSlot(level: level, node: to)
+                let a = try lv.nodeSlot(node: from), b = try lv.nodeSlot(node: to)
                 let first = try #require(result.ranges.first), last = try #require(result.ranges.last)
                 #expect(first.piece == a.piece && first.first == Int(a.vertex))
                 #expect(last.piece == b.piece && last.last == Int(b.vertex))
@@ -336,7 +339,7 @@ struct PackAssemblerTests {
                 var previous: RailPackPoint?
                 for range in result.ranges {
                     var points: [RailPackPoint] = []
-                    try reader.appendVertices(level: level, piece: Int(range.piece), first: range.first, last: range.last, to: &points)
+                    try lv.appendVertices(piece: Int(range.piece), first: range.first, last: range.last, to: &points)
                     if let previous, let start = points.first {
                         #expect(abs(previous.x - start.x) <= quantum && abs(previous.y - start.y) <= quantum)
                     }
@@ -345,7 +348,7 @@ struct PackAssemblerTests {
                 }
                 #expect(length > 0, "a trip from the start to the end of a part draws something")
                 // Reversed: the same ranges walked the other way.
-                let back = try reader.vertexRanges(level: level, fromNode: to, toNode: from)
+                let back = try lv.vertexRanges(fromNode: to, toNode: from)
                 #expect(back.reversed && back.ranges == result.ranges)
                 trips += 1
             }
@@ -356,15 +359,16 @@ struct PackAssemblerTests {
         // refuses a trip from one part to another rather than walk the parts between them.
         var crossPart = 0
         for level in levels.indices {
+            let lv = try reader.level(level)
             for lineIndex in 0..<reader.header.lineCount {
                 let line = try reader.line(lineIndex)
                 #expect(line.independentParts, "every hk line is non-continuous")
                 guard line.chainCount >= 2, line.nodeCount >= 4 else { continue }
                 let from = Int(line.firstNode), to = Int(line.firstNode) + Int(line.nodeCount) - 1
-                let a = try reader.nodeSlot(level: level, node: from), b = try reader.nodeSlot(level: level, node: to)
-                guard try reader.chain(level: level, ofPiece: Int(a.piece)) != reader.chain(level: level, ofPiece: Int(b.piece)) else { continue }
-                #expect(throws: RailPackError.nodesNotOnOneChain) { try reader.vertexRanges(level: level, fromNode: from, toNode: to) }
-                #expect(throws: RailPackError.nodesNotOnOneChain) { try reader.vertexRanges(level: level, fromNode: to, toNode: from) }
+                let a = try lv.nodeSlot(node: from), b = try lv.nodeSlot(node: to)
+                guard try lv.chain(ofPiece: Int(a.piece)) != lv.chain(ofPiece: Int(b.piece)) else { continue }
+                #expect(throws: RailPackError.nodesNotOnOneChain) { try lv.vertexRanges(fromNode: from, toNode: to) }
+                #expect(throws: RailPackError.nodesNotOnOneChain) { try lv.vertexRanges(fromNode: to, toNode: from) }
                 crossPart += 1
             }
         }
@@ -398,6 +402,19 @@ struct PackAssemblerTests {
         #expect(report.levels.count == Self.levels.count)
         #expect(report.fileBytes == a.count)
         #expect(report.totalVertices > 1000)
+        // The report counts mounted vertices (every piece's own count); a vertex two neighbouring pieces share is
+        // stored once, so the file holds fewer rows than that.
+        let opened = try RailPackReader(data: a)
+        var joined = 0
+        for (index, level) in report.levels.enumerated() {
+            let lv = try opened.level(index)
+            let counts = try (0..<lv.pieceCount).map { try lv.piece($0) }
+            #expect(level.vertices == counts.reduce(0) { $0 + Int($1.vertexCount) })
+            joined += counts.filter(\.joinsPrevious).count
+        }
+        #expect(joined > 0)
+        #expect(opened.sizeAccounting().vertexCount + joined + report.levels.reduce(0) { $0 + $1.longPieces } == report.totalVertices,
+                "stored rows plus the joined first vertices plus one first vertex per long piece are the mounted vertices")
         #expect(try PackCompare.differences(RailPackReader(data: a), RailPackReader(data: b)).isEmpty)
 
         // Negative control: a compare that cannot see a moved vertex or a changed group proves nothing.
@@ -478,7 +495,7 @@ struct PackAssemblerTests {
         #expect(missing.count > 5)
     }
 
-    @Test("a dated chain keeps every solid piece whole, with its span and a dashed-capable group")
+    @Test("a dated chain keeps every solid piece whole, with its span on the group and a dashed-capable style")
     func datedChain() throws {
         let directory = try RegionBakeTests.makeBuilderDirectory()
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -495,13 +512,15 @@ struct PackAssemblerTests {
         let reader = try Self.reader(try Self.assemble(display, topology, levels: [34]))
         try reader.validateContents()
         let line = try reader.line(target)
+        let lv = try reader.level(0)
         var datedPieces = 0
         for chain in Int(line.firstChain)..<(Int(line.firstChain) + Int(line.chainCount)) {
-            for piece in try reader.pieceRange(level: 0, chain: chain) {
-                let row = try reader.piece(level: 0, index: piece)
-                #expect(row.span != RailPackFormat.noSpan)
-                #expect(try reader.span(row.span) == RailPackSpan(fromDay: 100, toDay: 50_000))
+            for piece in try lv.pieceRange(chain: chain) {
+                let row = try lv.piece(piece)
+                // The span is read from the piece's group: every piece of a chain shares one.
                 let group = try reader.group(Int(row.group))
+                #expect(group.span != RailPackFormat.noSpan)
+                #expect(try reader.span(group.span) == RailPackSpan(fromDay: 100, toDay: 50_000))
                 if group.styleClass == RailPackFormat.StyleClass.historicalDashed.rawValue {
                     #expect(row.isLong, "a dated solid piece is a long piece")
                     datedPieces += 1
@@ -539,24 +558,25 @@ struct PackAssemblerTests {
             lines: [.init(id: "loop", firstNode: 0, nodeCount: 4)],
             nodes: [0, 0.3, 0.7, 0.95].map { PackTopology.Node(chain: 0, metres: total * $0) })
         let source = try PackAssembler.assemble(
-            region: "jp", display: region, topology: topology, ladder: ladder, datum: .wgs84,
+            region: "jp", display: region, topology: topology, ladder: ladder,
             inputsSHA256: [UInt8](repeating: 2, count: 32))
         #expect(source.closedChains == [0])
         let reader = try Self.reader(source)
         try reader.validateContents()
         for level in 0..<2 {
-            #expect(try reader.isClosed(level: level, chain: 0))
-            let all = try Self.pieces(of: 0, level: level, reader: reader).flatMap { $0 }
+            let lv = try reader.level(level)
+            #expect(try lv.isClosed(chain: 0))
+            let all = try Self.pieces(of: 0, level: lv).flatMap { $0 }
             #expect(all.first == all.last, "a closed chain's last vertex is its first")
             // Forward trip across the seam: from the late node to the early node.
-            let wrap = try reader.vertexRanges(level: level, fromNode: 3, toNode: 1, wraps: true)
+            let wrap = try lv.vertexRanges(fromNode: 3, toNode: 1, wraps: true)
             #expect(!wrap.reversed)
             let first = try #require(wrap.ranges.first), last = try #require(wrap.ranges.last)
-            let slot3 = try reader.nodeSlot(level: level, node: 3), slot1 = try reader.nodeSlot(level: level, node: 1)
+            let slot3 = try lv.nodeSlot(node: 3), slot1 = try lv.nodeSlot(node: 1)
             #expect(first.piece == slot3.piece && first.first == Int(slot3.vertex))
             #expect(last.piece == slot1.piece && last.last == Int(slot1.vertex))
             // The seam vertex ends the first part and starts the second.
-            let tail = try Self.pieces(of: 0, level: level, reader: reader)
+            let tail = try Self.pieces(of: 0, level: lv)
             let endPiece = tail[tail.count - 1], startPiece = tail[0]
             #expect(endPiece.last == startPiece.first)
         }
@@ -575,7 +595,7 @@ struct PackAssemblerTests {
         #expect(throws: PackAssembler.Failure.regionMismatch(topology: "mo", requested: "hk")) {
             try PackAssembler.assemble(
                 region: "hk", display: display, topology: other, ladder: PackBake.ladder(levels: [26]),
-                datum: .wgs84, inputsSHA256: [UInt8](repeating: 0, count: 32))
+                inputsSHA256: [UInt8](repeating: 0, count: 32))
         }
     }
 }

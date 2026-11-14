@@ -109,6 +109,32 @@ struct PieceCutterTests {
         #expect(count == line.points.count + cuts.count - 2)
     }
 
+    @Test("a long piece's segments are at most 2,047 points, so every step fits the pack's Int16 deltas")
+    func longPieceStepsFitInt16() {
+        let mpp = 32.0
+        // A dated chain (long, never cut) whose one segment is 5,100 points wide and 40 high.
+        let points = [StrokePoint(x: 1_000, y: 1_000), StrokePoint(x: 1_000 + 5_100 * mpp, y: 1_000 + 40 * mpp),
+                      StrokePoint(x: 1_000 + 5_150 * mpp, y: 1_000 + 40 * mpp)]
+        let total = 5_100.2 * mpp + 50 * mpp
+        let measures = [0, 5_100.2 * mpp, total]
+        let polyline = PieceCutter.Polyline(points: points, measures: measures)
+        // `finish` is what `cut` calls for a dashed run (a dated chain's solid piece, a withheld span).
+        let pieces = PieceCutter.finish(
+            polyline, kind: .base, part: 0, long: true, extent: PieceCutter.maxExtent(mapPointsPerPoint: mpp),
+            longStep: PieceCutter.maxLongStep(mapPointsPerPoint: mpp))
+        #expect(pieces.count == 1 && pieces[0].isLong, "a dashed run stays one long piece")
+        let line = pieces[0].line.points
+        #expect(line.count > points.count, "the long segment got collinear vertices")
+        // Original vertices survive in order, and no step is above 2,047 points on either axis.
+        #expect(line.first == points.first && line.last == points.last && line.contains(points[1]))
+        for (p, q) in zip(line, line.dropFirst()) {
+            #expect(abs(q.x - p.x) <= PieceCutter.maxLongStepPoints * mpp && abs(q.y - p.y) <= PieceCutter.maxLongStepPoints * mpp)
+        }
+        #expect(pieces[0].line.points.count == pieces[0].line.measures.count)
+        // The writer stores a step as Int16 quanta of 1/16 point: 2,047 points are 32,752 of them.
+        #expect(RailPackFormat.quantaPerPoint * PieceCutter.maxLongStepPoints < Double(Int16.max))
+    }
+
     @Test("a node reuses a vertex within a quantum or is inserted on the segment")
     func nodes() {
         let line = PieceCutter.Polyline(

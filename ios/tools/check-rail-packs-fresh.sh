@@ -27,14 +27,14 @@ done
 export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 toolchain=$(python3 -I "$inputs" toolchain)
 failed=0
-while read -r region datum name; do
+while read -r region name; do
     pack="$pack_dir/$name"
     if [ ! -f "$pack" ]; then
         echo "error: missing pack $pack" >&2
         failed=1
         continue
     fi
-    python3 -I "$inputs" check --builder-dir "$builder_dir" --region "$region" --datum "$datum" \
+    python3 -I "$inputs" check --builder-dir "$builder_dir" --region "$region" \
         --levels "$levels" --toolchain "$toolchain" --pack "$pack" || failed=1
 done < <(python3 -I "$inputs" variants --regions "$regions")
 if [ "$failed" -ne 0 ]; then

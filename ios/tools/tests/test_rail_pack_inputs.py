@@ -1,7 +1,7 @@
 """Guards for ios/tools/rail_pack_inputs.py: the pack cache key and the freshness check.
 
 The key must move when anything a pack is made of moves (bake sources, the region's builder
-output and manifest slice, ladder, datum, toolchain) and stay put when it is not (another region,
+output and manifest slice, ladder, toolchain) and stay put when it is not (another region,
 files outside the list). A pack whose header hash differs from the recomputed key is stale.
 """
 
@@ -56,8 +56,8 @@ class Fixture:
     def write_manifest(self) -> None:
         write(self.builder / "manifest.json", json.dumps(self.manifest))
 
-    def key(self, region="hk", datum="wgs84", levels="8...34", toolchain="swift 6.0") -> str:
-        return tool.inputs_sha256(self.repo, self.builder, region, datum, levels, toolchain)
+    def key(self, region="hk", levels="8...34", toolchain="swift 6.0") -> str:
+        return tool.inputs_sha256(self.repo, self.builder, region, levels, toolchain)
 
     def pack(self, key_hex: str, display: bytes = bytes([7]) * 32) -> Path:
         header = bytearray(100)
@@ -98,10 +98,9 @@ class KeyTests(unittest.TestCase):
             self.assertNotIn(key, keys)
             keys.add(key)
 
-    def test_key_moves_with_ladder_datum_and_toolchain(self):
+    def test_key_moves_with_ladder_and_toolchain(self):
         base = self.f.key()
         self.assertNotEqual(base, self.f.key(levels="8...30"))
-        self.assertNotEqual(base, self.f.key(datum="gcj02"))
         self.assertNotEqual(base, self.f.key(toolchain="swift 6.1"))
 
     def test_manifest_slice_is_the_regions_own(self):
@@ -125,11 +124,9 @@ class KeyTests(unittest.TestCase):
             self.f.key()
         with self.assertRaises(tool.InputsError):
             self.f.key(region="kr")
-        (self.f.repo / "ios/RailKit/Sources/RailCore/Utilities/GCJ02.swift").unlink()
+        (self.f.repo / "ios/RailKit/Sources/RailCore/Pack/RailPackWriter.swift").unlink()
         with self.assertRaises(tool.InputsError):
             tool.source_files(self.f.repo)
-        with self.assertRaises(tool.InputsError):
-            tool.inputs_sha256(self.f.repo, self.f.builder, "hk", "mercator", "8...34", "t")
 
 
 class CheckTests(unittest.TestCase):
@@ -139,7 +136,7 @@ class CheckTests(unittest.TestCase):
         self.f = Fixture(Path(self._tmp.name))
 
     def check(self, pack: Path):
-        tool.check_pack(pack, self.f.repo, self.f.builder, "hk", "wgs84", "8...34", "swift 6.0")
+        tool.check_pack(pack, self.f.repo, self.f.builder, "hk", "8...34", "swift 6.0")
 
     def test_fresh_pack_passes(self):
         self.check(self.f.pack(self.f.key()))
@@ -180,7 +177,6 @@ class RepositoryTests(unittest.TestCase):
         for expected in (
             "ios/RailKit/Sources/RailCore/Rendering/StrokeBake.swift",
             "ios/RailKit/Sources/RailCore/Rendering/NetworkStrokeBake.swift",
-            "ios/RailKit/Sources/RailCore/Utilities/GCJ02.swift",
             "ios/RailKit/Sources/RailCore/Pack/RailPackWriter.swift",
             "ios/tools/railbake/Sources/RailBakeKit/PieceCutter.swift",
             "ios/tools/railbake/Sources/RailBakeKit/PackAssembler.swift",
@@ -192,18 +188,12 @@ class RepositoryTests(unittest.TestCase):
         ):
             self.assertIn(expected, files)
 
-    def test_variant_table_matches_the_swift_datum_regions(self):
-        text = (ROOT / "ios/RailKit/Sources/RailCore/Utilities/GCJ02.swift").read_text()
-        match = re.search(r"candidateRegions[^=]*=\s*\[([^\]]*)\]", text)
-        self.assertIsNotNone(match)
-        swift_regions = set(re.findall(r'"([a-z]{2})"', match.group(1)))
-        self.assertEqual(set(tool.GCJ_REGIONS), swift_regions)
-
     def test_variants(self):
         rows = tool.variants(("jp", "hk"))
-        self.assertEqual(rows, [("jp", "wgs84", "jp.railpack"), ("hk", "wgs84", "hk.railpack"),
-                                ("hk", "gcj02", "hk.gcj.railpack")])
-        self.assertEqual(len(tool.variants()), 1 + 2 * 4)
+        self.assertEqual(rows, [("jp", "jp.railpack"), ("hk", "hk.railpack")])
+        # One WGS84 file per region: the GCJ-02 shift happens in the reader, not in a second pack.
+        self.assertEqual(len(tool.variants()), 5)
+        self.assertFalse(any("gcj" in name for _, name in tool.variants()))
 
     def test_pack_header_offsets_match_the_format(self):
         text = (ROOT / "ios/RailKit/Sources/RailCore/Pack/RailPackFormat.swift").read_text()

@@ -16,7 +16,9 @@ import RailCore
 ///
 /// Neighbouring pieces share their boundary vertex bit for bit (every cut is one interpolation of
 /// the one stroke), so the pieces of a chain rejoin to the stroke exactly. Dashed runs (withheld
-/// spans, and every piece of a dated chain) are marked long and never cut.
+/// spans, and every piece of a dated chain) are marked long and never cut; they only get collinear
+/// vertices where a segment is longer than ``maxLongStepPoints``, so that every step fits the pack's
+/// Int16 deltas.
 public enum PieceCutter {
 
     /// Largest bounding-box side of a normal piece, in points: a tile, less four quanta so that
@@ -26,6 +28,16 @@ public enum PieceCutter {
     /// Largest bounding-box side of a normal piece, in map points.
     public static func maxExtent(mapPointsPerPoint: Double) -> Double {
         maxExtentPoints * mapPointsPerPoint
+    }
+
+    /// Largest step between two neighbouring vertices of a long piece, in points: a long piece stores
+    /// its steps as Int16 quanta (1/16 point), 32,767 of them at most, so 2,047 points with a quantum of
+    /// rounding to spare. A longer segment is divided by collinear vertices.
+    public static let maxLongStepPoints = 2_047.0
+
+    /// Largest step of a long piece, in map points.
+    public static func maxLongStep(mapPointsPerPoint: Double) -> Double {
+        maxLongStepPoints * mapPointsPerPoint
     }
 
     /// Metres closer than this are one boundary.
@@ -61,7 +73,7 @@ public enum PieceCutter {
         public var kind: Kind
         /// Part (interval) index for a non-continuous line; 0 for a continuous chain.
         public var part: Int
-        /// A dashed run: stored whole, with Int32 vertices, never cut.
+        /// A dashed run: stored whole (first vertex plus Int16 steps), never cut.
         public var isLong: Bool
         public var line: Polyline
         public var from: Double { line.measures.first ?? 0 }
@@ -75,6 +87,7 @@ public enum PieceCutter {
         _ chain: NetworkStrokeBake.Chain, mapPointsPerPoint: Double, dated: (Int) -> Bool
     ) -> [Piece] {
         let extent = maxExtent(mapPointsPerPoint: mapPointsPerPoint)
+        let longStep = maxLongStep(mapPointsPerPoint: mapPointsPerPoint)
         guard chain.continuous, chain.strokePoints.count >= 2,
               chain.strokePoints.count == chain.strokeMeasures.count else {
             // No whole stroke (a non-continuous line): its runs are the geometry, one piece each,
@@ -84,7 +97,7 @@ public enum PieceCutter {
                 let measures = run.measures.count == run.vertices.count
                     ? run.measures : [Double](repeating: 0, count: run.vertices.count)
                 let line = Polyline(points: run.vertices, measures: measures)
-                pieces.append(contentsOf: finish(line, kind: .base, part: run.part, long: dated(run.part), extent: extent))
+                pieces.append(contentsOf: finish(line, kind: .base, part: run.part, long: dated(run.part), extent: extent, longStep: longStep))
             }
             return pieces
         }
@@ -99,13 +112,13 @@ public enum PieceCutter {
             case .base: long = dated(0)
             default: long = false
             }
-            pieces.append(contentsOf: finish(line, kind: span.kind, part: 0, long: long, extent: extent))
+            pieces.append(contentsOf: finish(line, kind: span.kind, part: 0, long: long, extent: extent, longStep: longStep))
         }
         return pieces
     }
 
-    private static func finish(_ line: Polyline, kind: Kind, part: Int, long: Bool, extent: Double) -> [Piece] {
-        if long { return [Piece(kind: kind, part: part, isLong: true, line: line)] }
+    static func finish(_ line: Polyline, kind: Kind, part: Int, long: Bool, extent: Double, longStep: Double) -> [Piece] {
+        if long { return [Piece(kind: kind, part: part, isLong: true, line: densify(line, maxExtent: longStep))] }
         return cutByExtent(line, maxExtent: extent).map { Piece(kind: kind, part: part, isLong: false, line: $0) }
     }
 

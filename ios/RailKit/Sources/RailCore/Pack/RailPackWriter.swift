@@ -7,14 +7,11 @@ public struct RailPackPieceSource: Sendable {
     /// Region-wide chain index. Pieces must be given sorted by chain, in position order inside a chain.
     public var chain: Int
     public var group: UInt16
-    public var span: UInt16
-    public var flags: UInt16
-    /// A dashed run that is never cut: stored as Int32 quanta in `longVertices`.
+    /// A dashed run that is never cut: stored as a first vertex plus Int16 deltas.
     public var isLong: Bool
     public var vertices: [RailPackPoint]
-    public init(chain: Int, group: UInt16, span: UInt16 = RailPackFormat.noSpan, flags: UInt16 = 0, isLong: Bool = false, vertices: [RailPackPoint]) {
-        self.chain = chain; self.group = group; self.span = span
-        self.flags = flags; self.isLong = isLong; self.vertices = vertices
+    public init(chain: Int, group: UInt16, isLong: Bool = false, vertices: [RailPackPoint]) {
+        self.chain = chain; self.group = group; self.isLong = isLong; self.vertices = vertices
     }
 }
 
@@ -32,7 +29,6 @@ public struct RailPackLevelSource: Sendable {
 }
 
 public struct RailPackSource: Sendable {
-    public var datum: RailPackFormat.Datum
     /// Two ASCII characters, for example "jp".
     public var regionCode: String
     public var displaySHA256: [UInt8]
@@ -45,11 +41,11 @@ public struct RailPackSource: Sendable {
     public var levels: [RailPackLevelSource]
     /// Chain indices that are closed loops (flag written to every level's chains rows).
     public var closedChains: Set<Int>
-    public init(datum: RailPackFormat.Datum, regionCode: String, displaySHA256: [UInt8], inputsSHA256: [UInt8],
+    public init(regionCode: String, displaySHA256: [UInt8], inputsSHA256: [UInt8],
                 chainCount: Int, nodeCount: Int, lines: [RailPackLine], groups: [RailPackGroup],
                 spans: [RailPackSpan], levels: [RailPackLevelSource], closedChains: Set<Int> = []) {
         self.closedChains = closedChains
-        self.datum = datum; self.regionCode = regionCode
+        self.regionCode = regionCode
         self.displaySHA256 = displaySHA256; self.inputsSHA256 = inputsSHA256
         self.chainCount = chainCount; self.nodeCount = nodeCount
         self.lines = lines; self.groups = groups; self.spans = spans; self.levels = levels
@@ -65,23 +61,36 @@ public enum RailPackWriter {
         try validateRegion(source)
         let levels = try source.levels.enumerated().map { try encodeLevel($0.element, index: $0.offset, source: source) }
 
-        var lines = ByteSink(), groups = ByteSink(), spans = ByteSink()
+        // The chain of every node, region-wide; a node's chain must be the same at every level that
+        // gives it a slot.
+        var nodeChains = [UInt32](repeating: RailPackFormat.noNode, count: source.nodeCount)
+        for (index, level) in levels.enumerated() {
+            for (node, chain) in level.nodeChains.enumerated() where chain != RailPackFormat.noNode {
+                if nodeChains[node] == RailPackFormat.noNode { nodeChains[node] = chain }
+                else if nodeChains[node] != chain {
+                    throw RailPackError.invalidInput("node \(node): chain differs at level \(index)")
+                }
+            }
+        }
+
+        var lines = ByteSink(), groups = ByteSink(), spans = ByteSink(), nodeChainBytes = ByteSink()
         for line in source.lines {
             lines.u32(line.firstChain); lines.u16(line.chainCount | (line.independentParts ? RailPackFormat.independentPartsFlag : 0)); lines.u32(line.firstNode); lines.u16(line.nodeCount)
         }
         for group in source.groups {
             groups.u32(group.colourLight); groups.u32(group.colourDark)
             groups.i16(group.tierMin); groups.i16(group.tierMax)
-            groups.u8(group.styleClass); groups.u8(group.category); groups.u16(0)
+            groups.u8(group.styleClass); groups.u8(group.category); groups.u16(group.span)
         }
         for span in source.spans { spans.i32(span.fromDay); spans.i32(span.toDay) }
+        for chain in nodeChains { nodeChainBytes.u32(chain) }
 
         let sectionCount = RailPackFormat.regionSectionCount + levels.count
         let regionStart = RailPackFormat.headerSize + sectionCount * RailPackFormat.sectionEntrySize
         var offset = regionStart
         var sections: [(Int, Int)] = []
         let levelsTableSize = levels.count * RailPackFormat.levelRow
-        for length in [lines.bytes.count, groups.bytes.count, spans.bytes.count, levelsTableSize] {
+        for length in [lines.bytes.count, groups.bytes.count, spans.bytes.count, nodeChainBytes.bytes.count, levelsTableSize] {
             sections.append((offset, length)); offset += length
         }
         var levelOffsets: [Int] = []
@@ -96,7 +105,7 @@ public enum RailPackWriter {
         out.bytes.reserveCapacity(fileLength)
         out.bytes.append(contentsOf: RailPackFormat.magic)
         out.u16(RailPackFormat.formatVersion)
-        out.u8(source.datum.rawValue)
+        out.u8(0)
         out.bytes.append(contentsOf: Array(source.regionCode.utf8))
         out.u8(0)
         out.u16(UInt16(levels.count)); out.u16(UInt16(source.lines.count))
@@ -109,6 +118,7 @@ public enum RailPackWriter {
         out.bytes.append(contentsOf: lines.bytes)
         out.bytes.append(contentsOf: groups.bytes)
         out.bytes.append(contentsOf: spans.bytes)
+        out.bytes.append(contentsOf: nodeChainBytes.bytes)
         for (index, level) in levels.enumerated() {
             out.f64(level.mapPointsPerPoint); out.u8(level.laneBucket); out.u8(0); out.u16(0)
             var arrayOffset = levelOffsets[index]
@@ -146,6 +156,9 @@ public enum RailPackWriter {
         for group in s.groups where group.tierMin > group.tierMax && group.tierMin != RailPackFormat.tierNeverDrawn {
             throw RailPackError.invalidInput("group tierMin above tierMax")
         }
+        for group in s.groups where group.span != RailPackFormat.noSpan && Int(group.span) >= s.spans.count {
+            throw RailPackError.invalidInput("group span out of range")
+        }
         for span in s.spans where span.fromDay > span.toDay { throw RailPackError.invalidInput("span from after to") }
         guard s.closedChains.allSatisfy({ $0 >= 0 && $0 < s.chainCount }) else { throw RailPackError.invalidInput("closed chain out of range") }
         var previous = Double.infinity
@@ -170,11 +183,8 @@ public enum RailPackWriter {
         var laneBucket: UInt8
         /// Bytes of each array in `ArrayKind` order.
         var arrayBytes: [[UInt8]]
-    }
-
-    private struct TileKey: Hashable, Comparable {
-        var x: Int, y: Int
-        static func < (a: TileKey, b: TileKey) -> Bool { a.y != b.y ? a.y < b.y : a.x < b.x }
+        /// Chain of each node at this level, `noNode` for a node without a slot.
+        var nodeChains: [UInt32]
     }
 
     private static func encodeLevel(_ level: RailPackLevelSource, index: Int, source: RailPackSource) throws -> EncodedLevel {
@@ -184,14 +194,10 @@ public enum RailPackWriter {
         guard level.nodes.count == source.nodeCount else { throw RailPackError.invalidInput("level \(index): nodes.count != nodeCount") }
         guard level.pieces.count < Int(RailPackFormat.noNode) else { throw RailPackError.valueTooLarge("piece count") }
 
-        // Per piece: home tile, quantised vertices.
-        var homes = [TileKey?](repeating: nil, count: level.pieces.count)
-        var vertexBytes = ByteSink(), longVertexBytes = ByteSink()
+        var pieces = ByteSink(), vertexBytes = ByteSink(), longVertexBytes = ByteSink(), longRows = ByteSink()
         var vertexTotal = 0, longTotal = 0
-        var starts = [UInt32](repeating: 0, count: level.pieces.count)
-        var longRows = ByteSink()
-        /// Stored quanta per piece, so node tiles use exactly what a reader decodes.
-        var storedQuanta: [[(Int, Int)]] = Array(repeating: [], count: level.pieces.count)
+        /// The previous piece's home tile and last vertex in world quanta; nil after a long piece or a chain start.
+        var previous: (chain: Int, tileX: Int, tileY: Int, lastX: Int, lastY: Int)?
 
         var lastChain = 0
         for (pieceIndex, piece) in level.pieces.enumerated() {
@@ -199,126 +205,103 @@ public enum RailPackWriter {
             guard piece.chain >= lastChain else { throw RailPackError.invalidInput("pieces not sorted by chain") }
             lastChain = piece.chain
             guard Int(piece.group) < source.groups.count else { throw RailPackError.invalidInput("piece \(pieceIndex): group out of range") }
-            guard piece.span == RailPackFormat.noSpan || Int(piece.span) < source.spans.count else { throw RailPackError.invalidInput("piece \(pieceIndex): span out of range") }
-            guard piece.vertices.count >= 2, piece.vertices.count <= Int(UInt16.max) else { throw RailPackError.valueTooLarge("piece \(pieceIndex) vertex count") }
+            guard piece.vertices.count >= 2 else { throw RailPackError.valueTooLarge("piece \(pieceIndex) vertex count") }
+            guard piece.vertices.count <= RailPackFormat.maxPieceVertices else { throw RailPackError.valueTooLarge("piece \(pieceIndex) vertex count") }
             guard piece.vertices.allSatisfy({ $0.x.isFinite && $0.y.isFinite }) else { throw RailPackError.invalidInput("piece \(pieceIndex): non-finite vertex") }
             if piece.isLong {
                 var minX = Int32.max, minY = Int32.max, maxX = Int32.min, maxY = Int32.min
-                starts[pieceIndex] = UInt32(longTotal)
-                var quanta: [(Int, Int)] = []
+                var previousQuanta: (Int, Int)?
+                var first: (Int32, Int32) = (0, 0)
                 for v in piece.vertices {
                     let qx = (v.x / quantum).rounded(), qy = (v.y / quantum).rounded()
                     guard abs(qx) <= Double(Int32.max), abs(qy) <= Double(Int32.max) else { throw RailPackError.valueTooLarge("long vertex") }
-                    longVertexBytes.i32(Int32(qx)); longVertexBytes.i32(Int32(qy))
+                    let q = (Int(qx), Int(qy))
+                    if let p = previousQuanta {
+                        guard abs(q.0 - p.0) <= Int(Int16.max), abs(q.1 - p.1) <= Int(Int16.max) else {
+                            throw RailPackError.valueTooLarge("long piece step in piece \(pieceIndex)")
+                        }
+                        longVertexBytes.i16(Int16(q.0 - p.0)); longVertexBytes.i16(Int16(q.1 - p.1))
+                    } else {
+                        first = (Int32(q.0), Int32(q.1))
+                    }
+                    previousQuanta = q
                     minX = min(minX, Int32(qx)); maxX = max(maxX, Int32(qx))
                     minY = min(minY, Int32(qy)); maxY = max(maxY, Int32(qy))
-                    quanta.append((Int(qx), Int(qy)))
                 }
-                storedQuanta[pieceIndex] = quanta
                 longRows.u32(UInt32(pieceIndex)); longRows.i32(minX); longRows.i32(minY); longRows.i32(maxX); longRows.i32(maxY)
-                longTotal += piece.vertices.count
+                longRows.i32(first.0); longRows.i32(first.1)
+                longTotal += piece.vertices.count - 1
+                pieces.u16(RailPackFormat.longPieceTile); pieces.u16(RailPackFormat.longPieceTile)
+                pieces.u16(UInt16(piece.vertices.count)); pieces.u16(piece.group)
+                previous = nil
             } else {
                 let xs = piece.vertices.map(\.x), ys = piece.vertices.map(\.y)
                 let cx = (xs.min()! + xs.max()!) / 2, cy = (ys.min()! + ys.max()!) / 2
-                let home = TileKey(x: RailPackFormat.tile(containing: cx, mapPointsPerPoint: mpp),
-                                   y: RailPackFormat.tile(containing: cy, mapPointsPerPoint: mpp))
-                homes[pieceIndex] = home
-                starts[pieceIndex] = UInt32(vertexTotal)
+                let homeX = RailPackFormat.tile(containing: cx, mapPointsPerPoint: mpp)
+                let homeY = RailPackFormat.tile(containing: cy, mapPointsPerPoint: mpp)
+                guard (0...RailPackFormat.maxHomeTile).contains(homeX), (0...RailPackFormat.maxHomeTile).contains(homeY) else {
+                    throw RailPackError.valueTooLarge("piece \(pieceIndex) home tile")
+                }
                 var quanta: [(Int, Int)] = []
                 for v in piece.vertices {
-                    let qx = ((v.x - (Double(home.x) + 0.5) * side) / quantum).rounded()
-                    let qy = ((v.y - (Double(home.y) + 0.5) * side) / quantum).rounded()
-                    guard abs(qx) <= Double(RailPackFormat.maxHomeTileQuanta), abs(qy) <= Double(RailPackFormat.maxHomeTileQuanta) else {
+                    let qx = ((v.x - (Double(homeX) + 0.5) * side) / quantum).rounded()
+                    let qy = ((v.y - (Double(homeY) + 0.5) * side) / quantum).rounded()
+                    quanta.append((Int(max(min(qx, 1e9), -1e9)), Int(max(min(qy, 1e9), -1e9))))
+                }
+                // The first vertex is not stored when it equals the previous piece's last vertex in world quanta.
+                var joins = false
+                if let p = previous, p.chain == piece.chain,
+                   RailPackFormat.worldQuanta(quanta[0].0, tile: homeX) == p.lastX,
+                   RailPackFormat.worldQuanta(quanta[0].1, tile: homeY) == p.lastY {
+                    joins = true
+                }
+                for (offset, q) in quanta.enumerated() where !(joins && offset == 0) {
+                    guard abs(q.0) <= RailPackFormat.maxHomeTileQuanta, abs(q.1) <= RailPackFormat.maxHomeTileQuanta else {
                         throw RailPackError.pieceOutsideHomeTile(level: index, piece: pieceIndex)
                     }
-                    vertexBytes.i16(Int16(qx)); vertexBytes.i16(Int16(qy))
-                    quanta.append((Int(qx), Int(qy)))
+                    vertexBytes.i16(Int16(q.0)); vertexBytes.i16(Int16(q.1))
                 }
-                storedQuanta[pieceIndex] = quanta
-                vertexTotal += piece.vertices.count
+                vertexTotal += piece.vertices.count - (joins ? 1 : 0)
+                pieces.u16(UInt16(homeX)); pieces.u16(UInt16(homeY))
+                pieces.u16(UInt16(piece.vertices.count) | (joins ? RailPackFormat.joinsPreviousFlag : 0)); pieces.u16(piece.group)
+                let last = quanta[quanta.count - 1]
+                previous = (piece.chain, homeX, homeY,
+                            RailPackFormat.worldQuanta(last.0, tile: homeX), RailPackFormat.worldQuanta(last.1, tile: homeY))
             }
         }
         guard vertexTotal < Int(UInt32.max), longTotal < Int(UInt32.max) else { throw RailPackError.valueTooLarge("vertex total") }
 
-        // Node slots and the tile each node's stored vertex lies in.
-        var nodeTiles = [TileKey?](repeating: nil, count: level.nodes.count)
-        for (node, slot) in level.nodes.enumerated() where !slot.isNone {
-            guard Int(slot.piece) < level.pieces.count, Int(slot.vertex) < level.pieces[Int(slot.piece)].vertices.count else {
-                throw RailPackError.invalidInput("node \(node): slot out of range")
-            }
-            let p = Int(slot.piece)
-            let (qx, qy) = storedQuanta[p][Int(slot.vertex)]
-            let mapX: Double, mapY: Double
-            if let home = homes[p] {
-                mapX = RailPackFormat.decode(qx, tile: home.x, mapPointsPerPoint: mpp)
-                mapY = RailPackFormat.decode(qy, tile: home.y, mapPointsPerPoint: mpp)
-            } else {
-                mapX = RailPackFormat.decodeLong(qx, mapPointsPerPoint: mpp)
-                mapY = RailPackFormat.decodeLong(qy, mapPointsPerPoint: mpp)
-            }
-            nodeTiles[node] = TileKey(x: RailPackFormat.tile(containing: mapX, mapPointsPerPoint: mpp),
-                                      y: RailPackFormat.tile(containing: mapY, mapPointsPerPoint: mpp))
-        }
-
-        // Tile directory: every home tile and every node tile, sorted by (y, x).
-        var keySet = Set<TileKey>()
-        for case let home? in homes { keySet.insert(home) }
-        for case let tile? in nodeTiles { keySet.insert(tile) }
-        let keys = keySet.sorted()
-        var tileIndex: [TileKey: Int] = [:]
-        for (i, key) in keys.enumerated() { tileIndex[key] = i }
-        var piecesByTile = [[Int]](repeating: [], count: keys.count)
-        var nodesByTile = [[Int]](repeating: [], count: keys.count)
-        for (pieceIndex, home) in homes.enumerated() {
-            if let home { piecesByTile[tileIndex[home]!].append(pieceIndex) }
-        }
-        for (node, tile) in nodeTiles.enumerated() {
-            if let tile { nodesByTile[tileIndex[tile]!].append(node) }  // ascending by construction
-        }
-        for i in piecesByTile.indices {
-            piecesByTile[i].sort { a, b in
-                let ga = level.pieces[a].group, gb = level.pieces[b].group
-                return ga != gb ? ga < gb : a < b
-            }
-        }
-        var tileDir = ByteSink(), tilePieces = ByteSink(), tileNodes = ByteSink()
-        var pieceCursor = 0, nodeCursor = 0
-        for (i, key) in keys.enumerated() {
-            guard piecesByTile[i].count <= Int(UInt16.max), nodesByTile[i].count <= Int(UInt16.max) else {
-                throw RailPackError.valueTooLarge("tile \(key.x),\(key.y) piece or node count")
-            }
-            guard abs(key.x) < Int(Int32.max), abs(key.y) < Int(Int32.max) else { throw RailPackError.valueTooLarge("tile coordinate") }
-            tileDir.i32(Int32(key.x)); tileDir.i32(Int32(key.y))
-            tileDir.u32(UInt32(pieceCursor)); tileDir.u16(UInt16(piecesByTile[i].count))
-            tileDir.u16(UInt16(nodesByTile[i].count)); tileDir.u32(UInt32(nodeCursor))
-            for piece in piecesByTile[i] { tilePieces.u32(UInt32(piece)) }
-            for node in nodesByTile[i] { tileNodes.u32(UInt32(node)) }
-            pieceCursor += piecesByTile[i].count; nodeCursor += nodesByTile[i].count
-        }
-
-        // Pieces and chains.
-        var pieces = ByteSink()
-        for (pieceIndex, piece) in level.pieces.enumerated() {
-            pieces.u32(homes[pieceIndex].map { UInt32(tileIndex[$0]!) } ?? RailPackFormat.longPieceTile)
-            pieces.u32(starts[pieceIndex]); pieces.u16(UInt16(piece.vertices.count))
-            pieces.u16(piece.group); pieces.u16(piece.span); pieces.u16(piece.flags)
-        }
+        // Chains: piece counts only; the first piece is the running sum.
         var chains = ByteSink()
+        var chainFirst = [Int](repeating: 0, count: source.chainCount)
         var cursor = 0
         for chain in 0..<source.chainCount {
             let first = cursor
+            chainFirst[chain] = first
             while cursor < level.pieces.count && level.pieces[cursor].chain == chain { cursor += 1 }
-            guard cursor - first <= Int(RailPackFormat.chainCountMask) else { throw RailPackError.valueTooLarge("chain piece count") }
-            chains.u32(UInt32(first))
+            guard cursor - first <= RailPackFormat.maxPiecesPerChain else { throw RailPackError.valueTooLarge("chain piece count") }
             chains.u32(UInt32(cursor - first) | (source.closedChains.contains(chain) ? RailPackFormat.closedChainFlag : 0))
         }
+
+        // Node slots, as the piece's index within its chain.
         var nodes = ByteSink()
-        for slot in level.nodes { nodes.u32(slot.piece); nodes.u16(slot.vertex); nodes.u16(0) }
+        var nodeChains = [UInt32](repeating: RailPackFormat.noNode, count: level.nodes.count)
+        for (node, slot) in level.nodes.enumerated() {
+            if slot.isNone {
+                nodes.u16(RailPackFormat.noNodeSlot); nodes.u16(RailPackFormat.noNodeSlot)
+                continue
+            }
+            guard Int(slot.piece) < level.pieces.count, Int(slot.vertex) < level.pieces[Int(slot.piece)].vertices.count else {
+                throw RailPackError.invalidInput("node \(node): slot out of range")
+            }
+            let chain = level.pieces[Int(slot.piece)].chain
+            nodeChains[node] = UInt32(chain)
+            nodes.u16(UInt16(Int(slot.piece) - chainFirst[chain])); nodes.u16(slot.vertex)
+        }
 
         return EncodedLevel(mapPointsPerPoint: mpp, laneBucket: level.laneBucket, arrayBytes: [
-            tileDir.bytes, tilePieces.bytes, tileNodes.bytes, pieces.bytes, chains.bytes,
-            nodes.bytes, vertexBytes.bytes, longRows.bytes, longVertexBytes.bytes,
-        ])
+            pieces.bytes, chains.bytes, nodes.bytes, vertexBytes.bytes, longRows.bytes, longVertexBytes.bytes,
+        ], nodeChains: nodeChains)
     }
 }
 
