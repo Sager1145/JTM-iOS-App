@@ -601,6 +601,7 @@ final class AppControlHost: AppControlDriver {
                 "months": .array(stores.tripHide.hiddenMonths.sorted().map { .string($0) }),
             ],
             "memory": Self.memory(),
+            "window": Self.window(),
             "build": ["commit": optional(Self.buildCommit())],
             "storageSource": .string(DevStorage.launch.source.rawValue),
             "layers": Self.layers(stores.controller),
@@ -851,6 +852,28 @@ final class AppControlHost: AppControlDriver {
             "cameraZoom": .number((levels.cameraZoom * 100).rounded() / 100),
             "sinceInstallMs": levels.installedAt.map { .number(Double((ContinuousClock.now - $0).milliseconds)) } ?? .null,
         ]
+    }
+
+    /// Scene and application activation, so a poll shows a window hidden mid-sweep
+    /// (a hidden window stops MapKit drawing and changes every memory number).
+    static func window() -> AppControlJSON {
+        let scene: String
+        switch UIApplication.shared.connectedScenes.first?.activationState {
+        case .foregroundActive: scene = "foregroundActive"
+        case .foregroundInactive: scene = "foregroundInactive"
+        case .background: scene = "background"
+        case .unattached: scene = "unattached"
+        case .none: scene = "none"
+        @unknown default: scene = "unknown"
+        }
+        let application: String
+        switch UIApplication.shared.applicationState {
+        case .active: application = "active"
+        case .inactive: application = "inactive"
+        case .background: application = "background"
+        @unknown default: application = "unknown"
+        }
+        return ["sceneState": .string(scene), "applicationState": .string(application)]
     }
 
     nonisolated static func memory() -> AppControlJSON {

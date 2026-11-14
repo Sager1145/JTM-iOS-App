@@ -1129,6 +1129,8 @@ extension RailMapView.Surface {
                         self.rebuildDeferredByGesture = true
                         return
                     }
+                    let settledInterval = RailSignpost.map.begin("map.cameraSettled")
+                    defer { RailSignpost.map.end("map.cameraSettled", settledInterval) }
                     // A line set that landed during the gesture installs now,
                     // before the update that may have been queued behind it.
                     self.applyHeldLineSwap()
@@ -1187,6 +1189,8 @@ extension RailMapView.Surface {
             }
 
             func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+                let regionTickInterval = RailSignpost.map.begin("map.regionTick")
+                defer { RailSignpost.map.end("map.regionTick", regionTickInterval) }
 #if DEBUG
                 let regionTickStarted = ContinuousClock.now
                 defer {
@@ -1859,7 +1863,7 @@ extension RailMapView.Surface {
                         let byID = work.byID
                         let worker = Task.detached(priority: .utility) {
                             try await limiter.withPermit {
-                                try MapLineGeometry.prepare(
+                                try await MapLineGeometry.prepare(
                                     lines: missingLines, strokes: missingStrokes, allLines: byID,
                                     anchors: anchors, cachedStrokes: cachedStrokes,
                                     junctionIndex: junctionIndex, chainPixels: chainPixels,
@@ -1906,9 +1910,11 @@ extension RailMapView.Surface {
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
+                let requestInterval = RailSignpost.map.begin("map.geometry.request")
                 let work = missingGeometryWork(
                     frame: frame, visibilityZoom: visibilityZoom, buildRect: buildRect,
                     recordsDiagnostics: true)
+                RailSignpost.map.end("map.geometry.request", requestInterval)
                 let missingLines = work.lines
                 let missingStrokes = work.strokes
                 let byID = work.byID
@@ -1965,7 +1971,7 @@ extension RailMapView.Surface {
                         // preparation for its permit.
                         let waited = (ContinuousClock.now - requested).milliseconds
                         RailSignpost.map.mark("map.geometry.wait", waited)
-                        return (waited, try MapLineGeometry.prepare(
+                        return (waited, try await MapLineGeometry.prepare(
                             lines: missingLines, strokes: missingStrokes, allLines: byID,
                             anchors: anchors, cachedStrokes: cachedStrokes,
                             junctionIndex: junctionIndex, chainPixels: chainPixels,
@@ -3506,7 +3512,9 @@ extension RailMapView.Surface {
                 func finishMarkerPhase(_ name: String) {
                     guard !isLabelPass else { return }
                     let now = ContinuousClock.now
-                    markerPhaseMilliseconds.append((name, (now - markerPhaseStarted).milliseconds))
+                    let phaseMilliseconds = (now - markerPhaseStarted).milliseconds
+                    RailSignpost.map.mark("map.markers.phase", markerPhaseMilliseconds.count, phaseMilliseconds)
+                    markerPhaseMilliseconds.append((name, phaseMilliseconds))
                     markerPhaseStarted = now
                 }
 #endif
@@ -4660,6 +4668,8 @@ extension RailMapView.Surface {
 
             /// Installs a landed line set: one main-actor turn, no `await`.
             private func applyLineSwap(_ result: LineSwapResult) {
+                let swapInterval = RailSignpost.map.begin("map.lineSwap.apply")
+                defer { RailSignpost.map.end("map.lineSwap.apply", swapInterval) }
                 let linesChanged = Self.changed(result.lines, from: lines, id: \.contentID)
                 let stationsChanged = Self.changed(result.stations, from: stations, id: \.contentID)
                 installLineSwap(result, cancelsPreparation: false)
@@ -5895,6 +5905,8 @@ extension RailMapView.Surface {
             /// network renderers for the rebuild that will replace them.
             @discardableResult
             private func restyle(on mapView: MKMapView, overlays: Bool = true) -> Int {
+                let restyleInterval = RailSignpost.map.begin("map.restyle")
+                defer { RailSignpost.map.end("map.restyle", restyleInterval) }
                 // Keep MapKit's mounted paths and annotation layouts stable
                 // under the fingers. Mutating every renderer's width/font
                 // during a pinch triggers tessellation and collision work.

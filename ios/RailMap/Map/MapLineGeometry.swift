@@ -378,7 +378,7 @@ struct ChainPixelReader: Sendable {
 /// pass through (plus region and operator). Built once per prepare pass in id
 /// order, so `continuousJoin` examines only lines that actually touch the
 /// endpoint instead of every line in the network.
-struct JunctionCandidateIndex {
+struct JunctionCandidateIndex: Sendable {
     private let index: StrokeJunctionIndex
     private let byID: [String: RailNetworkStore.DrawnLine]
     init() {
@@ -843,6 +843,9 @@ enum MapLineGeometry {
         var lines: [String: PreparedLineBuild] = [:]
     }
 
+    /// Fewest summed stroke vertices worth a worker of their own.
+    static let minimumStrokeWeightPerPart = 4_000
+
     static func prepare(
         lines: [RailNetworkStore.DrawnLine], strokes: [RailNetworkStore.DrawnLine],
         allLines: [String: RailNetworkStore.DrawnLine], anchors: [String: [Int]],
@@ -853,7 +856,7 @@ enum MapLineGeometry {
         era: DisplayNetworkEra = .current,
         rideDate: String? = nil,
         todayByRegion: [String: String] = [:]
-    ) throws -> PreparedGeometry {
+    ) async throws -> PreparedGeometry {
         let interval = RailSignpost.map.begin("map.geometry.prepare")
         defer { RailSignpost.map.end("map.geometry.prepare", interval) }
         let projection = ChainPixelCache.Projection(
@@ -863,13 +866,42 @@ enum MapLineGeometry {
         let chains = ChainPixelReader(cache: chainPixels, projection: projection)
         var result = PreparedGeometry()
         let junctionCandidates = JunctionCandidateIndex(index: junctionIndex, lines: allLines)
-        for line in strokes {
-            try Task.checkCancellation()
-            result.strokes[line.id] = try continuousStrokeBuild(
-                for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
-                chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
-                laneScale: laneScale, junctionCandidates: junctionCandidates)
+        // Strokes are independent: each reads only its own line, `allLines` and the
+        // two lock-guarded caches, never `result`. Build them in parts weighted by
+        // vertex count (same width rule as `RideStrokeBuilder.build`) and merge.
+        let strokeInterval = RailSignpost.map.begin("map.geometry.prepare.strokes")
+        let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
+        let strokeParts = RideBuildPartition.partition(
+            weights: strokes.map { $0.intervals.reduce(0) { $0 + $1.count } },
+            maxParts: maxParts, minimumWeightPerPart: minimumStrokeWeightPerPart)
+        let builtParts = try await withThrowingTaskGroup(
+            of: [(String, ContinuousStrokeBuild)].self
+        ) { group in
+            for indices in strokeParts {
+                group.addTask {
+                    var built: [(String, ContinuousStrokeBuild)] = []
+                    built.reserveCapacity(indices.count)
+                    for index in indices {
+                        try Task.checkCancellation()
+                        let line = strokes[index]
+                        built.append((line.id, try continuousStrokeBuild(
+                            for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
+                            chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
+                            laneScale: laneScale, junctionCandidates: junctionCandidates)))
+                    }
+                    return built
+                }
+            }
+            var all: [[(String, ContinuousStrokeBuild)]] = []
+            for try await part in group { all.append(part) }
+            return all
         }
+        for part in builtParts {
+            for (id, build) in part { result.strokes[id] = build }
+        }
+        RailSignpost.map.end("map.geometry.prepare.strokes", strokeInterval)
+        let linesInterval = RailSignpost.map.begin("map.geometry.prepare.lines")
+        defer { RailSignpost.map.end("map.geometry.prepare.lines", linesInterval) }
         for line in lines {
             try Task.checkCancellation()
             let stroke = result.strokes[line.id] ?? cachedStrokes[line.id]

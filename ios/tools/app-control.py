@@ -17,7 +17,7 @@ Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),
 3 timeout, 4 failed, 1 tool/usage error. One native app job at a time across all chats.
 """
-import argparse, base64, hashlib, json, os, plistlib, shutil, subprocess, sys, tempfile, time, uuid
+import argparse, base64, re, hashlib, json, os, plistlib, shutil, subprocess, sys, tempfile, time, uuid
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -492,6 +492,85 @@ def cmd_sweep(a):
          "failedSteps": [s["step"] for s in failed], "steps": steps, "export": export}, 0 if not failed else 4)
 
 
+SIZE_UNITS = {"K": 1 / 1024, "M": 1.0, "G": 1024.0, "T": 1024.0 * 1024}
+
+
+def size_mb(token):
+    """'208K' / '168.1M' / '1.0G' as megabytes (vmmap units are powers of 1024)."""
+    match = re.fullmatch(r"([0-9]+(?:\.[0-9]+)?)([KMGT]?)", token)
+    if not match:
+        return None
+    return float(match.group(1)) * (SIZE_UNITS[match.group(2)] if match.group(2) else 1 / 1048576)
+
+
+def drawing_class(gpu_mb):
+    """What the GPU row says about MapKit: run 4 (not drawing) 0.2 MB, run 5 (drawing) 168 MB."""
+    if gpu_mb is None or gpu_mb < 1:
+        return "none"
+    if gpu_mb < 60:
+        return "hidden"
+    return "backlog" if gpu_mb > 400 else "drawing"
+
+
+def parse_vmmap_summary(text):
+    """Pure parse of `vmmap -summary` text: footprint, peak, app heap, GPU and MapKit pools (MB).
+
+    appHeapMB is DefaultMallocZone bytes allocated, gpuMB the resident size of the
+    'IOAccelerator (graphics)' region, mapKitMB the allocated bytes of the VectorKit* and Geo* zones.
+    A missing row is None; `drawing` is classed from gpuMB (see drawing_class).
+    """
+    footprint = peak = gpu = heap = None
+    map_kit = 0.0
+    saw_map_kit = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        match = re.match(r"Physical footprint( \(peak\))?:\s+(\S+)", stripped)
+        if match:
+            if match.group(1):
+                peak = size_mb(match.group(2))
+            else:
+                footprint = size_mb(match.group(2))
+            continue
+        match = re.match(r"IOAccelerator \(graphics\)\s+((?:\S+\s+){6}\S+)\s+\d+", stripped)
+        if match:
+            gpu = size_mb(match.group(1).split()[1])
+            continue
+        match = re.match(r"([A-Za-z]\w*?)_0x[0-9a-f]+\s+(.*)$", stripped)
+        if match:
+            fields = match.group(2).split()
+            if len(fields) < 6:
+                continue
+            allocated = size_mb(fields[5])
+            if allocated is None:
+                continue
+            name = match.group(1)
+            if name == "DefaultMallocZone":
+                heap = allocated
+            elif name.startswith(("VectorKit", "Geo")):
+                map_kit += allocated
+                saw_map_kit = True
+    return {"footprintMB": round_mb(footprint), "peakMB": round_mb(peak), "appHeapMB": round_mb(heap),
+            "gpuMB": round_mb(gpu), "mapKitMB": round_mb(map_kit) if saw_map_kit else None,
+            "drawing": drawing_class(gpu)}
+
+
+def round_mb(value):
+    return None if value is None else round(value, 1)
+
+
+def cmd_memory_score(a):
+    """memory-score FILE|-: score one `vmmap -summary` capture. Exit 4 when it is not a drawing app's."""
+    if not a.rest:
+        out({"error": "memory-score FILE (a `vmmap -summary` capture, or - for stdin)"}, 1)
+    text = sys.stdin.read() if a.rest[0] == "-" else Path(a.rest[0]).read_text(errors="replace")
+    score = parse_vmmap_summary(text)
+    if score["gpuMB"] is None:
+        out({"error": "no 'IOAccelerator (graphics)' row: not a vmmap -summary of the app", **score}, 4)
+    if score["drawing"] == "none":
+        out({"error": "GPU row under 1 MB: MapKit was not drawing, so the memory number is not comparable", **score}, 4)
+    out(score, 0)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--target", choices=["sim", "mac", "device"], default="sim")
@@ -515,12 +594,14 @@ def main():
                     help="build/install/launch: product configuration (Release only for check-release)")
     ap.add_argument("--dry-run", action="store_true", help="build: print the xcodebuild command")
     ap.add_argument("--data-only", action="store_true", help="print only the result's data on success")
-    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release|sweep")
+    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release|sweep|memory-score")
     ap.add_argument("rest", nargs="*", help="key=value args (or the screenshot name for pull-screenshot)")
     a = ap.parse_args()
 
     if a.action == "build":
         cmd_build(a)
+    if a.action == "memory-score":
+        cmd_memory_score(a)
     if a.action == "check-release":
         cmd_check_release(a)
     if a.action == "sweep":

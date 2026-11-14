@@ -122,4 +122,34 @@ struct RegressionGuardZoomPreparation {
         #expect(Self.host.contains("routeSolveAttemptsThisLaunch"))
         #expect(!Self.host.contains("routesSolvedThisLaunch"))
     }
+
+    @Test func strokePreparationRunsInWeightedParallelPartsInsideOnePermit() throws {
+        let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
+        let prepare = try Self.body(geometry, from: "static func prepare(", to: "for line in lines {")
+        #expect(prepare.contains("async throws -> PreparedGeometry"))
+        #expect(prepare.contains("withThrowingTaskGroup("))
+        #expect(prepare.contains("RideBuildPartition.partition("))
+        #expect(prepare.contains("weights:"))
+        #expect(prepare.contains("min(4, ProcessInfo.processInfo.activeProcessorCount - 1)"))
+        // The lines loop stays serial, after the group.
+        let group = try Self.body(String(prepare), from: "withThrowingTaskGroup(", to: "for part in builtParts")
+        #expect(!group.contains("for line in lines"))
+        #expect(!group.contains("result."), "no child task may read the result")
+        for name in ["map.geometry.prepare.strokes", "map.geometry.prepare.lines"] {
+            #expect(geometry.contains("\"\(name)\""), "\(name)")
+        }
+        #expect(geometry.contains("struct JunctionCandidateIndex: Sendable"))
+        // Each call sits inside the single-permit limiter.
+        let coordinator = Self.coordinator
+        #expect(coordinator.components(separatedBy: "try await MapLineGeometry.prepare(").count == 3)
+        #expect(!coordinator.contains("try MapLineGeometry.prepare("))
+        var search = coordinator.startIndex..<coordinator.endIndex
+        while let call = coordinator.range(of: "try await MapLineGeometry.prepare(", range: search) {
+            let lower = coordinator.index(call.lowerBound, offsetBy: -400, limitedBy: coordinator.startIndex)
+                ?? coordinator.startIndex
+            let before: String = String(coordinator[lower..<call.lowerBound])
+            #expect(before.contains("limiter.withPermit {"), "prepare must sit inside the permit")
+            search = call.upperBound..<coordinator.endIndex
+        }
+    }
 }

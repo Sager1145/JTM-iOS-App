@@ -372,4 +372,14 @@ struct RegressionGuardMapLock {
         let full = try #require(settle.range(of: "fullPass: true"))
         #expect(restyle.lowerBound < full.lowerBound)
     }
+
+    @Test func stallAttributionSignpostsExist() throws {
+        for name in ["map.markers.phase", "map.restyle", "map.lineSwap.apply", "map.geometry.request",
+                     "map.regionTick", "map.cameraSettled"] {
+            #expect(Self.coordinator.contains("\"\(name)\""), "\(name)")
+        }
+        let phase = try Self.body(
+            Self.coordinator, from: "func finishMarkerPhase(", to: "// Reuse an installed dot's position")
+        #expect(phase.contains("RailSignpost.map.mark(\"map.markers.phase\""))
+    }
 }
