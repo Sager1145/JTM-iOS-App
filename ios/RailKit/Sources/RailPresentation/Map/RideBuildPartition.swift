@@ -57,4 +57,33 @@ public enum RideBuildPartition {
         }
         return groups.filter { !$0.isEmpty }.map { $0.sorted() }
     }
+
+    /// Builds `build(index)` for every index of every part, parts running
+    /// concurrently, and merges the answers by index. The result equals the
+    /// serial loop over all indices whatever order the parts finish in.
+    /// Cancellation is checked before each index and rethrown.
+    public static func buildParts<T: Sendable>(
+        _ parts: [[Int]],
+        build: @escaping @Sendable (Int) throws -> T
+    ) async throws -> [Int: T] {
+        let built = try await withThrowingTaskGroup(of: [(Int, T)].self) { group in
+            for indices in parts {
+                group.addTask {
+                    var out: [(Int, T)] = []
+                    out.reserveCapacity(indices.count)
+                    for index in indices {
+                        try Task.checkCancellation()
+                        out.append((index, try build(index)))
+                    }
+                    return out
+                }
+            }
+            var all: [[(Int, T)]] = []
+            for try await part in group { all.append(part) }
+            return all
+        }
+        var merged: [Int: T] = [:]
+        for part in built { for (index, value) in part { merged[index] = value } }
+        return merged
+    }
 }

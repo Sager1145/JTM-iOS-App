@@ -869,37 +869,22 @@ enum MapLineGeometry {
         // Strokes are independent: each reads only its own line, `allLines` and the
         // two lock-guarded caches, never `result`. Build them in parts weighted by
         // vertex count (same width rule as `RideStrokeBuilder.build`) and merge.
-        let strokeInterval = RailSignpost.map.begin("map.geometry.prepare.strokes")
-        let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
-        let strokeParts = RideBuildPartition.partition(
-            weights: strokes.map { $0.intervals.reduce(0) { $0 + $1.count } },
-            maxParts: maxParts, minimumWeightPerPart: minimumStrokeWeightPerPart)
-        let builtParts = try await withThrowingTaskGroup(
-            of: [(String, ContinuousStrokeBuild)].self
-        ) { group in
-            for indices in strokeParts {
-                group.addTask {
-                    var built: [(String, ContinuousStrokeBuild)] = []
-                    built.reserveCapacity(indices.count)
-                    for index in indices {
-                        try Task.checkCancellation()
-                        let line = strokes[index]
-                        built.append((line.id, try continuousStrokeBuild(
-                            for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
-                            chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
-                            laneScale: laneScale, junctionCandidates: junctionCandidates)))
-                    }
-                    return built
-                }
+        do {
+            let strokeInterval = RailSignpost.map.begin("map.geometry.prepare.strokes")
+            defer { RailSignpost.map.end("map.geometry.prepare.strokes", strokeInterval) }
+            let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
+            let strokeParts = RideBuildPartition.partition(
+                weights: strokes.map { $0.intervals.reduce(0) { $0 + $1.count } },
+                maxParts: maxParts, minimumWeightPerPart: minimumStrokeWeightPerPart)
+            let builtParts = try await RideBuildPartition.buildParts(strokeParts) { index in
+                let line = strokes[index]
+                return try continuousStrokeBuild(
+                    for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
+                    chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
+                    laneScale: laneScale, junctionCandidates: junctionCandidates)
             }
-            var all: [[(String, ContinuousStrokeBuild)]] = []
-            for try await part in group { all.append(part) }
-            return all
+            for (index, build) in builtParts { result.strokes[strokes[index].id] = build }
         }
-        for part in builtParts {
-            for (id, build) in part { result.strokes[id] = build }
-        }
-        RailSignpost.map.end("map.geometry.prepare.strokes", strokeInterval)
         let linesInterval = RailSignpost.map.begin("map.geometry.prepare.lines")
         defer { RailSignpost.map.end("map.geometry.prepare.lines", linesInterval) }
         for line in lines {

@@ -450,6 +450,7 @@ def cmd_sweep(a):
         if command == "state" and isinstance(data, dict):
             entry["inventory"] = data.get("inventory")
             entry["memory"] = data.get("memory")
+            entry["window"] = data.get("window")
             entry["signposts"] = [(s["name"], s["count"], s["maxMs"]) for s in
                                   (data.get("signposts") or {}).get("byName", [])[:12]]
         entry["required"] = required

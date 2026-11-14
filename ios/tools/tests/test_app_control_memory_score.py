@@ -67,6 +67,11 @@ class StateCarriesWindow(unittest.TestCase):
         self.assertIn('"window":', text)
         self.assertIn("sceneState", text)
         self.assertIn("applicationState", text)
+        self.assertIn('"scenes"', text)
+
+    def test_sweep_state_step_keeps_the_window_key(self):
+        text = (TOOLS / "app-control.py").read_text()
+        self.assertIn('entry["window"] = data.get("window")', text)
 
 
 if __name__ == "__main__":

@@ -127,14 +127,15 @@ struct RegressionGuardZoomPreparation {
         let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
         let prepare = try Self.body(geometry, from: "static func prepare(", to: "for line in lines {")
         #expect(prepare.contains("async throws -> PreparedGeometry"))
-        #expect(prepare.contains("withThrowingTaskGroup("))
         #expect(prepare.contains("RideBuildPartition.partition("))
         #expect(prepare.contains("weights:"))
         #expect(prepare.contains("min(4, ProcessInfo.processInfo.activeProcessorCount - 1)"))
         // The lines loop stays serial, after the group.
-        let group = try Self.body(String(prepare), from: "withThrowingTaskGroup(", to: "for part in builtParts")
+        let group = try Self.body(String(prepare), from: "RideBuildPartition.buildParts(", to: "for (index, build) in builtParts")
         #expect(!group.contains("for line in lines"))
         #expect(!group.contains("result."), "no child task may read the result")
+        // The strokes interval closes on every exit, a throw from cancellation included.
+        #expect(prepare.contains("defer { RailSignpost.map.end(\"map.geometry.prepare.strokes\", strokeInterval) }"))
         for name in ["map.geometry.prepare.strokes", "map.geometry.prepare.lines"] {
             #expect(geometry.contains("\"\(name)\""), "\(name)")
         }

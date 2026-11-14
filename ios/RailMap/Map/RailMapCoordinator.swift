@@ -1189,8 +1189,11 @@ extension RailMapView.Surface {
             }
 
             func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-                let regionTickInterval = RailSignpost.map.begin("map.regionTick")
-                defer { RailSignpost.map.end("map.regionTick", regionTickInterval) }
+                // Fires at display rate while the camera moves: Instruments only, never the
+                // in-process recorder, whose ring and byName top rows it would flood.
+                let regionTickState = RailSignpost.map.isEnabled && !RailSignpost.isSuppressed
+                    ? RailSignpost.map.beginInterval("map.regionTick", id: RailSignpost.map.makeSignpostID()) : nil
+                defer { if let regionTickState { RailSignpost.map.endInterval("map.regionTick", regionTickState) } }
 #if DEBUG
                 let regionTickStarted = ContinuousClock.now
                 defer {

@@ -212,4 +212,40 @@ struct MapLockLandingAndScheduleTests {
         #expect(RideBuildPartition.partition(shareKeys: keys, maxParts: 3)
             == RideBuildPartition.partition(shareKeys: keys, maxParts: 3))
     }
+
+    // MARK: - parallel part build
+
+    private struct Boom: Error {}
+
+    @Test func buildPartsEqualsTheSerialLoop() async throws {
+        let weights = (0..<500).map { ($0 * 37) % 11 + 1 }
+        let parts = RideBuildPartition.partition(weights: weights, maxParts: 4, minimumWeightPerPart: 10)
+        #expect(parts.count > 1)
+        let merged = try await RideBuildPartition.buildParts(parts) { $0 * $0 + 1 }
+        var serial: [Int: Int] = [:]
+        for index in weights.indices { serial[index] = index * index + 1 }
+        #expect(merged == serial)
+    }
+
+    @Test func buildPartsRethrowsAChildFailure() async {
+        let parts = [Array(0..<10), Array(10..<20)]
+        await #expect(throws: Boom.self) {
+            _ = try await RideBuildPartition.buildParts(parts) { index in
+                if index == 15 { throw Boom() }
+                return index
+            }
+        }
+    }
+
+    @Test func buildPartsStopsWhenCancelled() async {
+        let parts = [Array(0..<100_000), Array(100_000..<200_000)]
+        let task = Task {
+            try await RideBuildPartition.buildParts(parts) { index in
+                Thread.sleep(forTimeInterval: 0.0005)
+                return index
+            }
+        }
+        task.cancel()
+        await #expect(throws: CancellationError.self) { _ = try await task.value }
+    }
 }

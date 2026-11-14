@@ -857,15 +857,20 @@ final class AppControlHost: AppControlDriver {
     /// Scene and application activation, so a poll shows a window hidden mid-sweep
     /// (a hidden window stops MapKit drawing and changes every memory number).
     static func window() -> AppControlJSON {
-        let scene: String
-        switch UIApplication.shared.connectedScenes.first?.activationState {
-        case .foregroundActive: scene = "foregroundActive"
-        case .foregroundInactive: scene = "foregroundInactive"
-        case .background: scene = "background"
-        case .unattached: scene = "unattached"
-        case .none: scene = "none"
-        @unknown default: scene = "unknown"
+        func name(_ state: UIScene.ActivationState) -> String {
+            switch state {
+            case .foregroundActive: return "foregroundActive"
+            case .foregroundInactive: return "foregroundInactive"
+            case .background: return "background"
+            case .unattached: return "unattached"
+            @unknown default: return "unknown"
+            }
         }
+        // `connectedScenes` is an unordered set and Catalyst can open several windows:
+        // report every scene, and keep `sceneState` as the most foreground one.
+        let states = UIApplication.shared.connectedScenes.map { name($0.activationState) }.sorted()
+        let rank = ["foregroundActive", "foregroundInactive", "background", "unattached", "unknown"]
+        let scene = rank.first(where: states.contains) ?? "none"
         let application: String
         switch UIApplication.shared.applicationState {
         case .active: application = "active"
@@ -873,7 +878,8 @@ final class AppControlHost: AppControlDriver {
         case .background: application = "background"
         @unknown default: application = "unknown"
         }
-        return ["sceneState": .string(scene), "applicationState": .string(application)]
+        return ["sceneState": .string(scene), "scenes": .array(states.map { .string($0) }),
+                "applicationState": .string(application)]
     }
 
     nonisolated static func memory() -> AppControlJSON {
