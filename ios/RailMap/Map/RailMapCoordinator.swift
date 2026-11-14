@@ -1579,7 +1579,7 @@ extension RailMapView.Surface {
             /// renderer's width to the live zoom, so widths are not frozen for
             /// the whole gesture.
             private func swapGeometryDuringGestureIfReady(zoom: Double, on mapView: MKMapView) {
-                guard isManipulating, playbackLayer.lastSnapshot == nil, showsNetwork,
+                guard cameraTravelling, playbackLayer.lastSnapshot == nil, showsNetwork,
                       let installed = installedGeometryLevel else { return }
                 let wanted = wantedGeometryLevel(at: zoom)
                 // Cheap test first; readiness walks the selection.
@@ -1658,7 +1658,10 @@ extension RailMapView.Surface {
                 onBuildRect(
                     Self.mapRect(MapLoadAhead.requestRect(visible: visible, velocity: loadAheadVelocity)),
                     visibilityZoom)
-                if isManipulating { startTravelPreparation(zoom: zoom, on: mapView) }
+                if cameraTravelling {
+                    startTravelPreparation(zoom: zoom, on: mapView)
+                    extendTripsAtInstalledLevel(on: mapView)
+                }
                 extendBuiltAreaWhileMoving(zoom: zoom, visible: visible, on: mapView)
             }
 
@@ -2042,14 +2045,11 @@ extension RailMapView.Surface {
                 let byID = work.byID
                 let inFlight = geometryPreparation != nil
                 let canInstall = !inFlight || {
-                    let now = Self.seconds(.now)
                     let visible = mapView.visibleMapRect
                     let coversView = geometryPreparationRect.map { $0.contains(visible) } ?? true
-                    let installedCovers = networkBuildState.builtRect.contains(visible)
                     return GeometryPreparationGate.inFlightCanInstall(
                         rectCoversView: coversView,
-                        stopped: zoomTravel.rate(at: now) == 0 && !isManipulating,
-                        installedCoversView: installedCovers,
+                        stopped: !cameraTravelling,
                         isRequestedLevel: geometryPreparationLevel == frame.bucket)
                 }()
                 let gate = GeometryPreparationGate.decide(
@@ -2206,7 +2206,10 @@ extension RailMapView.Surface {
                         level: frame.bucket, rect: buildRect, visibilityZoom: visibilityZoom,
                         visibilityBucket: visibilityBucket, preparedAhead: !installs, on: mapView)
                     self.noteRebuildTrigger(.geometryPrepared)
-                    self.rebuild(on: mapView)
+                    // A level landed while the camera travels installs now, on
+                    // its prepared rect: no 120 ms quiet deferral.
+                    let installNow = self.pendingInstall != nil && self.cameraTravelling
+                    self.rebuild(on: mapView, duringGesture: installNow, deferMarkers: installNow)
                     self.scheduleMemoryRelief()
                 }
                 return false
@@ -2364,10 +2367,13 @@ extension RailMapView.Surface {
                 // while the camera moves (a settled rebuild still reads the old
                 // rate for 300 ms), and never ahead of a landed install: that
                 // installs first and the next preparation starts after it.
-                let cameraMoving = isManipulating
+                let cameraMoving = cameraTravelling
                 var installedPendingThisPass = false
                 if pendingInstall == nil, cameraMoving,
-                   startTravelPreparation(zoom: zoom, on: mapView) { return }
+                   startTravelPreparation(zoom: zoom, on: mapView) {
+                    extendTripsAtInstalledLevel(on: mapView)
+                    return
+                }
                 let visibilityZoom = pendingInstall?.visibilityZoom ?? cameraVisibilityZoom
                 let visibilityBucket = pendingInstall?.visibilityBucket ?? cameraVisibilityBucket
                 let buildRect = pendingInstall?.rect ?? movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
@@ -2375,7 +2381,10 @@ extension RailMapView.Surface {
                 guard prepareNetworkGeometry(
                     on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: buildRect,
                     visibilityBucket: visibilityBucket
-                ) else { return }
+                ) else {
+                    extendTripsAtInstalledLevel(on: mapView)
+                    return
+                }
                 // What is eligible: near enough to be seen, important enough for
                 // this zoom. See NetworkLOD — that policy is deliberately stricter
                 // than the web app's at low zoom, and deliberately outside the
@@ -2399,6 +2408,7 @@ extension RailMapView.Surface {
                     on: mapView, frame: strokeFrame, rideBuildRect: rideBuildRect,
                     strokes: frameStrokes.strokes
                 ) else { return }
+                installedTripRect = rideBuildRect
                 networkBuildState.commit(
                     zoom: zoom,
                     visibilityBucket: visibilityBucket,
@@ -2739,8 +2749,7 @@ extension RailMapView.Surface {
                     batchPlan.batches, hasSelection: hasSelection, reconciliation: overlayReconciliation)
                 rideBatchCache = layers.routes ? RideBatchCache(
                     stamp: rideBatchStamp(
-                        frameKey: geometryFrame.key, buildRect: buildRect,
-                        hasSelection: hasSelection, dark: dark),
+                        frameKey: geometryFrame.key, hasSelection: hasSelection, dark: dark),
                     entries: Dictionary(batchEntries.map { ($0.rideID, $0) },
                         uniquingKeysWith: { first, _ in first }),
                     batches: batchPlan.batches) : nil
@@ -2767,6 +2776,7 @@ extension RailMapView.Surface {
                 drawCounters.noteRideCacheMisses(rideLineMisses, trigger: rebuildTrigger)
                 RailSignpost.map.mark("map.rideCache.miss", rideLineMisses, rebuildTrigger.rawValue)
                 RailSignpost.map.end("map.rebuild.rideOverlays", rideOverlayInterval)
+                noteTripsDrawn(on: mapView)
                 let context = MarkerBuildContext(
                     zoom: zoom, visibilityZoom: visibilityZoom, scale: scale,
                     buildRect: buildRect, strokeAnchors: strokeAnchors, visible: visible)
@@ -3257,10 +3267,10 @@ extension RailMapView.Surface {
             }
 
             private func rideBatchStamp(
-                frameKey: String, buildRect: MKMapRect, hasSelection: Bool, dark: Bool
+                frameKey: String, hasSelection: Bool, dark: Bool
             ) -> RideBatchCache.Stamp {
                 RideBatchCache.Stamp(
-                    frameKey: frameKey, buildRect: buildRect, linesGeneration: linesGeneration,
+                    frameKey: frameKey, buildRect: installedTripRect, linesGeneration: linesGeneration,
                     selectedTrainID: selectedTrainID,
                     hasSelection: hasSelection, selectedDate: selectedDate, display: display,
                     layers: layers, categoryCountries: Set(categoryIndexes.keys), dark: dark)
@@ -3278,7 +3288,7 @@ extension RailMapView.Surface {
             /// match waiting), or a changed ride needs a chain this frame has
             /// not built, so the caller falls back to a full rebuild.
             private func updateRides(_ change: RideDeckState.Change, on mapView: MKMapView) -> Bool {
-                guard !change.ambiguous, let context = markerBuildContext, var cache = rideBatchCache,
+                guard !change.ambiguous, let context = markerBuildContext, let cache = rideBatchCache,
                     let frame = currentGeometryFrame, !annotationsNeedRefresh,
                     !rebuildDeferredByPlayback, !rebuildDeferredByGesture, pendingStrokeRefs == nil,
                     !selectionNeedsHighlightTransition,
@@ -3302,16 +3312,9 @@ extension RailMapView.Surface {
                 let hasSelection = rides.contains { $0.id == selectedTrainID }
                 let dark = mapView.traitCollection.userInterfaceStyle == .dark
                 guard frameKey == frame.key, cache.stamp == rideBatchStamp(
-                    frameKey: frameKey, buildRect: context.buildRect,
-                    hasSelection: hasSelection, dark: dark) else { return false }
+                    frameKey: frameKey, hasSelection: hasSelection, dark: dark) else { return false }
 
-                let interval = RailSignpost.map.begin("map.rides")
-                defer { RailSignpost.map.end("map.rides", interval) }
-                let started = ContinuousClock.now
-                let scope = dateScope
-                let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
-                let rideBuildRect = NetworkLOD.tripArea(
-                    buildRect: context.buildRect, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+                let rideBuildRect = installedTripRect
                 let changedRides = rides.filter { change.changed.contains($0.id) }
                 // A full rebuild builds a needed chain the frame lacks; this
                 // path cannot, so such a ride takes the full rebuild.
@@ -3329,6 +3332,29 @@ extension RailMapView.Surface {
                         return false
                     }
                 }
+                return applyRideChange(change, frame: frame, context: context, on: mapView)
+            }
+
+            /// The core of a rides-only change: re-forms the batches of the
+            /// changed rides over ``installedTripRect`` and reinstalls the
+            /// overlay stack with the batch block replaced. The caller has
+            /// established that the cache still describes the installed frame.
+            /// `deferMarkers` installs the overlays and leaves the marker pass
+            /// to the settled rebuild (a trip extension during zoom travel).
+            private func applyRideChange(
+                _ change: RideDeckState.Change, frame: MapGeometryFrame, context: MarkerBuildContext,
+                deferMarkers: Bool = false, on mapView: MKMapView
+            ) -> Bool {
+                guard var cache = rideBatchCache else { return false }
+                let interval = RailSignpost.map.begin("map.rides")
+                defer { RailSignpost.map.end("map.rides", interval) }
+                let started = ContinuousClock.now
+                let scope = dateScope
+                let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
+                let rideBuildRect = installedTripRect
+                let hasSelection = rides.contains { $0.id == selectedTrainID }
+                let dark = mapView.traitCollection.userInterfaceStyle == .dark
+                let changedRides = rides.filter { change.changed.contains($0.id) }
 
                 // A changed ride that still needs a line has it built on a
                 // worker for those rides alone, then re-enters here. Never
@@ -3387,8 +3413,15 @@ extension RailMapView.Surface {
                     desired.append(overlay)
                 }
                 if !placed { desired.append(contentsOf: batchOverlays) }
-                buildMarkers(context, on: mapView, pendingOverlays: desired,
-                             networkTransitionDuration: detailDuration)
+                if deferMarkers {
+                    installRideStationOverlays(
+                        on: mapView, scale: context.scale, pendingOverlays: desired,
+                        networkTransitionDuration: detailDuration)
+                    markerPassDebt.noteDeferred()
+                } else {
+                    buildMarkers(context, on: mapView, pendingOverlays: desired,
+                                 networkTransitionDuration: detailDuration)
+                }
                 publishRidesOnlyUpdate(
                     overlays: desired.count,
                     rideOverlays: desired.reduce(0) { count, overlay in
@@ -3399,6 +3432,105 @@ extension RailMapView.Surface {
                     },
                     elapsed: ContinuousClock.now - started, on: mapView)
                 return true
+            }
+
+            /// The area trips were last built for: the full rebuild's trip area,
+            /// grown by ``extendTripsAtInstalledLevel(on:)`` while the camera
+            /// outgrows it. Every ride-path read of "where are trips drawn"
+            /// uses this, never a rect derived from the marker context.
+            private var installedTripRect = MKMapRect.null
+            private var lastTripExtension: Double?
+
+            /// Trips do not wait for the network level. When the view outgrows
+            /// ``installedTripRect``, trips are extended at the INSTALLED level
+            /// over the camera's padded rect: chain strokes are whole-chain, so a
+            /// chain built in the installed frame slices correctly anywhere, and
+            /// a chain with no build draws no network line either, so its trips
+            /// draw from surveyed coordinates beside nothing. Never changes the
+            /// level, the network overlays or the cache's frame, and never takes
+            /// a geometry preparation or its permit.
+            private func extendTripsAtInstalledLevel(on mapView: MKMapView) {
+                guard layers.routes, let frame = currentGeometryFrame,
+                      let context = markerBuildContext, let cache = rideBatchCache,
+                      playback?.isActive != true, playbackLayer.lastSnapshot == nil,
+                      pendingStrokeRefs == nil, arrivalStrokePreparation == nil,
+                      !rides.isEmpty, !installedTripRect.isNull, mapView.bounds.width > 1,
+                      selectedTrainID == nil || selectedTrainID == fullyBuiltSelectedRideID
+                else { return }
+                let now = Self.seconds(.now)
+                guard TripAreaExtension.isDue(now: now, last: lastTripExtension) else { return }
+                let visible = mapView.visibleMapRect
+                let cameraPadded = NetworkLOD.tripArea(
+                    buildRect: NetworkLOD.buildRect(for: visible),
+                    mapPointsPerScreenPoint: frame.mapPointsPerScreenPoint)
+                guard let areaRect = TripAreaExtension.area(
+                    installed: Self.buildAreaRect(installedTripRect),
+                    cameraPadded: Self.buildAreaRect(cameraPadded)) else { return }
+                let hasSelection = rides.contains { $0.id == selectedTrainID }
+                let dark = mapView.traitCollection.userInterfaceStyle == .dark
+                var expected = rideBatchStamp(frameKey: frame.key, hasSelection: hasSelection, dark: dark)
+                expected.buildRect = cache.stamp.buildRect
+                guard cache.stamp == expected else { return }
+                lastTripExtension = now
+                let area = Self.mapRect(areaRect)
+                let previousRect = installedTripRect
+                var changedIDs: Set<String> = []
+                var chainIDs: Set<String> = []
+                for ride in rides where ride.visible && ride.id != selectedTrainID {
+                    let riddenStops = ride.stops
+                    for segment in ride.segments {
+                        guard segment.boundingRect.intersects(area),
+                              !segment.boundingRect.intersects(previousRect),
+                              draws(segment: segment, of: ride, riddenStops: riddenStops)
+                        else { continue }
+                        changedIDs.insert(ride.id)
+                        if let ref = strokeRef(for: segment, of: ride) { chainIDs.insert(ref.chainID) }
+                    }
+                }
+                // The same rule as the tail of `selectFrameStrokes`: a chain the
+                // installed frame has built is sliced from it. A chain with no
+                // build stays surveyed, beside no drawn line.
+                for id in chainIDs where !networkGeometry.containsStroke(for: id) {
+                    guard let build = networkGeometry.strokeBuild(for: id) else { continue }
+                    networkGeometry.storeStroke(
+                        (stroke: build.stroke, mapPointsPerScreenPoint: frame.mapPointsPerScreenPoint),
+                        for: id)
+                }
+                installedTripRect = area
+                var stamped = cache
+                stamped.stamp = rideBatchStamp(frameKey: frame.key, hasSelection: hasSelection, dark: dark)
+                rideBatchCache = stamped
+                if !changedIDs.isEmpty {
+                    let change = RideDeckState.Change(
+                        changed: changedIDs, orderChanged: false, ambiguous: false)
+                    _ = applyRideChange(
+                        change, frame: frame, context: context, deferMarkers: true, on: mapView)
+                }
+                noteTripsDrawn(on: mapView)
+            }
+
+            /// `map.trips.drawn(drawn, wanted)`: visible rides with a drawable
+            /// segment in the camera's rect, and how many of them have one inside
+            /// the area trips are built for. The only way to measure "at the
+            /// stop", because state polls are blocked during motion.
+            private func noteTripsDrawn(on mapView: MKMapView) {
+                guard RailSignpost.map.isEnabled, layers.routes else { return }
+                let visible = mapView.visibleMapRect
+                var wanted = 0
+                var drawn = 0
+                for ride in rides where ride.visible {
+                    let riddenStops = ride.stops
+                    var isWanted = false
+                    var isDrawn = false
+                    for segment in ride.segments where segment.boundingRect.intersects(visible)
+                        && draws(segment: segment, of: ride, riddenStops: riddenStops) {
+                        isWanted = true
+                        if segment.boundingRect.intersects(installedTripRect) { isDrawn = true; break }
+                    }
+                    if isWanted { wanted += 1 }
+                    if isDrawn { drawn += 1 }
+                }
+                RailSignpost.map.mark("map.trips.drawn", drawn, wanted)
             }
 
             /// Builds the missing lines of newly arrived rides on a worker
@@ -3449,11 +3581,28 @@ extension RailMapView.Surface {
                         changed: pending, orderChanged: false, ambiguous: false)
                     if self.playbackLayer.lastSnapshot != nil {
                         self.rebuildDeferredByPlayback = true
+                    } else if self.cameraTravelling, self.reapplyTripsDuringTravel(rebuildChange, on: mapView) {
+                        // An extension's missing polylines landed: re-enter it.
                     } else if !self.updateRides(rebuildChange, on: mapView) {
                         self.noteRebuildTrigger(.rideStrokesPrepared)
                         self.rebuild(on: mapView)
                     }
                 }
+            }
+
+            /// Polylines an extension was missing have landed while the camera
+            /// still travels: apply them to the extended area now.
+            private func reapplyTripsDuringTravel(
+                _ change: RideDeckState.Change, on mapView: MKMapView
+            ) -> Bool {
+                guard layers.routes, let frame = currentGeometryFrame,
+                      let context = markerBuildContext, pendingStrokeRefs == nil,
+                      arrivalStrokePreparation == nil, playback?.isActive != true
+                else { return false }
+                let applied = applyRideChange(
+                    change, frame: frame, context: context, deferMarkers: true, on: mapView)
+                if applied { noteTripsDrawn(on: mapView) }
+                return applied
             }
 
             private var arrivalStrokePreparation: Task<Void, Never>?
@@ -5688,6 +5837,14 @@ extension RailMapView.Surface {
                 }
             }
 
+            /// The camera is moving the zoom right now: a gesture is down, or
+            /// the last zoom change is fresher than ``ZoomTravel/travellingWindow``
+            /// (momentum, wheel, animated moves). Travel preparation and the
+            /// during-motion install are gated on this, not on recognisers.
+            private var cameraTravelling: Bool {
+                isManipulating || zoomTravel.isTravelling(at: Self.seconds(.now))
+            }
+
             /// Set when a region change arrived mid-gesture and its rebuild was
             /// held back, so the release knows there is one owing.
             private var rebuildDeferredByGesture = false
@@ -5876,7 +6033,7 @@ extension RailMapView.Surface {
                       cache.stamp.frameKey == frame.key else { return false }
                 let hasSelection = rides.contains { $0.id == selectedTrainID }
                 var expected = rideBatchStamp(
-                    frameKey: frame.key, buildRect: context.buildRect, hasSelection: hasSelection,
+                    frameKey: frame.key, hasSelection: hasSelection,
                     dark: mapView.traitCollection.userInterfaceStyle == .dark)
                 expected.selectedTrainID = cache.stamp.selectedTrainID
                 expected.hasSelection = cache.stamp.hasSelection
@@ -5897,8 +6054,7 @@ extension RailMapView.Surface {
                       let ride = rides.first(where: { $0.id == selectedID }) else { return nil }
                 let scope = dateScope
                 let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
-                let rideBuildRect = NetworkLOD.tripArea(
-                    buildRect: context.buildRect, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+                let rideBuildRect = installedTripRect
                 let hasSelection = true
                 var affectedCells: Set<Int> = []
                 if let old = cache.entries.removeValue(forKey: selectedID) { affectedCells.insert(old.cell) }
@@ -5921,7 +6077,7 @@ extension RailMapView.Surface {
                     previous: cache.batches, entries: rides.compactMap { cache.entries[$0.id] },
                     affectedCells: affectedCells, selectedRideID: selectedID)
                 cache.stamp = rideBatchStamp(
-                    frameKey: frame.key, buildRect: context.buildRect, hasSelection: hasSelection, dark: dark)
+                    frameKey: frame.key, hasSelection: hasSelection, dark: dark)
                 rideBatchCache = cache
 
                 let (solid, crossDay, unproven, _) = ridePolylines(

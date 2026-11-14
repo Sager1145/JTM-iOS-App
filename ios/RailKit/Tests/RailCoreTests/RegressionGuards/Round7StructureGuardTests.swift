@@ -31,8 +31,8 @@ struct RegressionGuardRound7 {
     @Test func travelPreparationIsStartedFromTheRebuildAndTheMovingLoadPass() throws {
         let c = Self.coordinator
         #expect(c.contains("private func startTravelPreparation("))
-        #expect(c.contains("startTravelPreparation(zoom: zoom, on: mapView) { return }"))
-        #expect(c.contains("if isManipulating { startTravelPreparation(zoom: zoom, on: mapView) }"))
+        #expect(c.contains("startTravelPreparation(zoom: zoom, on: mapView) {\n                    extendTripsAtInstalledLevel(on: mapView)\n                    return\n                }"))
+        #expect(c.contains("startTravelPreparation(zoom: zoom, on: mapView)\n                    extendTripsAtInstalledLevel(on: mapView)"))
         let travel = try Self.body(
             c, from: "private func startTravelPreparation(", to: "private func scheduleTravelStopRebuild(")
         #expect(travel.contains("GeometryZoomLevels.travelLevel("))
@@ -60,7 +60,7 @@ struct RegressionGuardRound7 {
         #expect(validate.lowerBound < early.lowerBound)
         #expect(early.lowerBound < commit.lowerBound)
         #expect(commit.lowerBound < after.lowerBound)
-        #expect(rebuild.contains("let cameraMoving = isManipulating"))
+        #expect(rebuild.contains("let cameraMoving = cameraTravelling"))
         #expect(rebuild.contains("|| pending.visibilityZoom != nil"))
     }
 
