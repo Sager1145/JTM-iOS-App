@@ -31,7 +31,7 @@ struct RegressionGuardMapDrawCompletion {
         #expect(owed.contains("MapRebuildOwedPolicy(tripsOnly: tripsOnly, lineDataOnly: lineDataOnly)"))
         #expect(owed.contains("if policy.cancelsGeometryPreparation { cancelGeometryPreparation() }"))
         #expect(!owed.contains("\n                cancelGeometryPreparation()"))
-        #expect(coordinator.contains("rebuildOwed(on: mapView, tripsOnly: ridesOnly, lineDataOnly: lineDataOnly)"))
+        #expect(coordinator.contains("rebuildOwed(on: mapView, tripsOnly: ridesOnly)"))
     }
 
     /// Fix 3: a finished trip polyline is named by its line and that line's

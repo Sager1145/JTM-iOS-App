@@ -41,8 +41,12 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func linesChangingAloneNeverCancelsAPreparation() throws {
-        #expect(Self.coordinator.contains("invalidateNetworkTemporalGeometry(cancelsPreparation: networkFilterChanged)"))
-        #expect(Self.coordinator.contains("lineDataOnly: lineDataOnly"))
+        // A staged line set installs without cancelling; only the era path
+        // (`networkFilterChanged`) installs with cancellation.
+        #expect(Self.coordinator.contains("installLineSwap(result, cancelsPreparation: true)"))
+        #expect(Self.coordinator.contains("installLineSwap(result, cancelsPreparation: false)"))
+        #expect(Self.coordinator.contains("invalidateNetworkTemporalGeometry(cancelsPreparation: cancelsPreparation)"))
+        #expect(Self.coordinator.contains("rebuildOwed(on: mapView, lineDataOnly: true)"))
         let landing = try Self.body(
             Self.coordinator, from: "let materializeInterval = RailSignpost.map.begin(\"map.materialize\")",
             to: "self.networkGeometry.storePrepared(prepared, key: key)")

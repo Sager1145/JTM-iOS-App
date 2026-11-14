@@ -96,4 +96,33 @@ struct GeometryZoomLevelsTests {
         #expect(worst <= GeometryZoomLevels.spacing / 2 + GeometryZoomLevels.hysteresis)
         #expect(worst < GeometryZoomLevels.spacing)
     }
+
+    @Test func aPrebuildOfTheLevelTheCameraReachedIsKept() {
+        // Installed 24 (zoom 12), prebuilding 23, camera at 11.4 now wants 23.
+        #expect(GeometryZoomLevels.wantedLevel(zoom: 11.4, installed: 24) == 23)
+        #expect(GeometryZoomLevels.keepsNeighbourPrebuild(levels: [23], zoom: 11.4, installed: 24))
+        // Its idle neighbour is kept too.
+        #expect(GeometryZoomLevels.keepsNeighbourPrebuild(levels: [22], zoom: 11.4, installed: 24))
+    }
+
+    @Test func aPrebuildTwoLevelsAwayIsCancelled() {
+        #expect(!GeometryZoomLevels.keepsNeighbourPrebuild(levels: [21], zoom: 11.4, installed: 24))
+        #expect(!GeometryZoomLevels.keepsNeighbourPrebuild(levels: [25, 21], zoom: 11.4, installed: 24))
+    }
+
+    @Test func aCoarserPrebuildRectScalesAboutTheCentre() {
+        let visible = MapBuildArea.Rect(x: 100, y: 200, width: 40, height: 60)
+        // Camera at level 24's nominal zoom (12); level 23 is half a zoom out.
+        let out = GeometryZoomLevels.prebuildVisibleRect(visible: visible, zoom: 12, level: 23)
+        #expect(abs(out.width / visible.width - 2.0.squareRoot()) < 1e-9)
+        #expect(abs(out.height / visible.height - 2.0.squareRoot()) < 1e-9)
+        #expect(abs((out.x + out.width / 2) - (visible.x + visible.width / 2)) < 1e-9)
+        #expect(abs((out.y + out.height / 2) - (visible.y + visible.height / 2)) < 1e-9)
+    }
+
+    @Test func aFinerOrEqualPrebuildRectIsUnchanged() {
+        let visible = MapBuildArea.Rect(x: 100, y: 200, width: 40, height: 60)
+        #expect(GeometryZoomLevels.prebuildVisibleRect(visible: visible, zoom: 12, level: 25) == visible)
+        #expect(GeometryZoomLevels.prebuildVisibleRect(visible: visible, zoom: 12, level: 24) == visible)
+    }
 }

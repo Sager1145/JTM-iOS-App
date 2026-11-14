@@ -22,7 +22,7 @@ struct MapLockZoomPreparationTests {
                 ledger.cancel()
             }
             let gate = GeometryPreparationGate.decide(
-                inFlightKey: ledger.inFlightKey, requestedKey: "frame-a", missingWork: true)
+                inFlightKey: ledger.inFlightKey, requestedKey: "frame-a", prebuildKey: nil, missingWork: true)
             ledger.apply(gate, key: "frame-a")
         }
         ledger.finish()

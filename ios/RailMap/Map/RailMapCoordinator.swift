@@ -225,10 +225,47 @@ extension RailMapView.Surface {
             private var strokeStability = StrokeStabilityLedger()
             /// Lines whose stored stroke is held while the camera moves.
             private var heldJointLineIDs: Set<String> = []
-            private var junctionIndex = StrokeJunctionIndex([])
+            /// The junction index and per-line dependency ids of the APPLIED
+            /// line set. Only ``installLineSwap(_:cancelsPreparation:)`` advances it,
+            /// from a worker's result.
+            private var junctionState = StrokeJunctionState()
+            private var junctionIndex: StrokeJunctionIndex { junctionState.index }
             /// The junction line built for each resident line, by content id.
-            private var junctionLineMemo: [String: (contentID: UUID, line: StrokeJunctionIndex.Line)] = [:]
-            private var lineDependencyIDs: [String: Set<String>] = [:]
+            private var junctionLineMemo: [String: JunctionLineMemo] = [:]
+            private struct JunctionLineMemo: Sendable {
+                let contentID: UUID
+                let line: StrokeJunctionIndex.Line
+            }
+            /// The newest line and station set not yet applied. While it is set,
+            /// `update` compares incoming data against it, not against `lines`.
+            private var pendingLineSwap: (lines: [RailNetworkStore.DrawnLine],
+                                          stations: [RailNetworkStore.DrawnStation])?
+            private var lineSwapSchedule = LineSwapSchedule()
+            private var lineSwapTask: Task<Void, Never>?
+            /// A result that landed during a gesture, installed when it ends.
+            private var heldLineSwap: LineSwapResult?
+
+            /// What the worker needs to compute the next line set. Everything
+            /// is an immutable snapshot of the applied state.
+            private struct LineSwapInput: Sendable {
+                let lines: [RailNetworkStore.DrawnLine]
+                let stations: [RailNetworkStore.DrawnStation]
+                let state: StrokeJunctionState
+                let memo: [String: JunctionLineMemo]
+                let joinedChains: JoinedChainCache
+            }
+
+            /// The next line set with everything derived from it. The main
+            /// actor only assigns these.
+            private struct LineSwapResult: Sendable {
+                let baseSerial: Int
+                let lines: [RailNetworkStore.DrawnLine]
+                let stations: [RailNetworkStore.DrawnStation]
+                let state: StrokeJunctionState
+                let memo: [String: JunctionLineMemo]
+                let chainKeys: Set<JoinedChainKey>
+                let inputs: [String: LineInputs]
+            }
             private var matchedLineInputs: [String: LineInputs] = [:]
             /// Background matching and its display-datum chain index, independent of zoom.
             private var matchingTask: Task<Void, Never>?
@@ -545,8 +582,12 @@ extension RailMapView.Surface {
                 // `updateUIView` every frame while these arrays still share
                 // their exact backing buffers with the coordinator. Take that
                 // O(1) path before allocating thousands of ids/signatures.
-                let linesChanged = Self.changed(lines, from: self.lines, id: \.contentID)
-                let stationsChanged = Self.changed(stations, from: self.stations, id: \.contentID)
+                // Against the newest staged set when a swap is pending, so the
+                // same set arriving again does not start another computation.
+                let linesChanged = Self.changed(
+                    lines, from: pendingLineSwap?.lines ?? self.lines, id: \.contentID)
+                let stationsChanged = Self.changed(
+                    stations, from: pendingLineSwap?.stations ?? self.stations, id: \.contentID)
                 // Digested once per ride of the new array; the applied deck
                 // keeps the old digests, so nothing is hashed twice.
                 let deckUpdate = ArrayGeneration.same(rides, self.rides)
@@ -653,31 +694,27 @@ extension RailMapView.Surface {
                 if ridesChanged || categoriesChanged || indexesChanged {
                     interaction.invalidateRideGeometry()
                 }
-                if stationsChanged {
-                    self.stations = stations
-                    interaction.replaceStations(stations)
-                    // A chain's own `anchors` come off `stations`' slots —
-                    // see `prepareStrokeReferences()` — so a station move is a
-                    // reason to rebuild them too, not only a line move.
-                    linesGeneration += 1
-                }
-
-                if linesChanged {
-                    self.lines = lines
-                    if isManipulating { linesArrivedWhileMoving = true }
-                    // The display-datum chains `prepareStrokeReferences()` reads
-                    // and every `strokeRef(for:of:)` answer keyed on them are
-                    // built from `self.lines` alone; both are stale the
-                    // moment it moves.
-                    linesGeneration += 1
-                }
-
-                if linesChanged || stationsChanged {
-                    // Residency loads and evictions change `lines` all the
-                    // time while zooming; only a changed temporal era makes
-                    // an in-flight preparation wrong. Otherwise its landing
-                    // keeps the lines whose inputs still match.
-                    invalidateNetworkTemporalGeometry(cancelsPreparation: networkFilterChanged)
+                // Residency loads and evictions change `lines` all the time
+                // while zooming, and installing a set costs a junction-index
+                // update over every changed line. So the set is computed on a
+                // worker and installed whole in one main-actor turn
+                // (`applyLineSwap`); the previous set stays drawn meanwhile.
+                // Only a changed temporal era, ride date or day (which makes
+                // every old result wrong) installs it here, synchronously.
+                let swapChanged = linesChanged || stationsChanged
+                let appliesSwapNow = swapChanged && networkFilterChanged
+                if appliesSwapNow {
+                    lineSwapTask?.cancel()
+                    lineSwapTask = nil
+                    heldLineSwap = nil
+                    pendingLineSwap = nil
+                    lineSwapSchedule.appliedSynchronously()
+                    if let result = Self.computeLineSwap(
+                        swapInput(lines: lines, stations: stations),
+                        baseSerial: lineSwapSchedule.appliedSerial, checksCancellation: false
+                    ) {
+                        installLineSwap(result, cancelsPreparation: true)
+                    }
                 }
 
                 if linesChanged || extentChanged {
@@ -705,10 +742,10 @@ extension RailMapView.Surface {
                     DispatchQueue.main.async { controller?.fitRegion = region }
                 }
 
-                if linesChanged || stationsChanged {
-                    refreshLineInputs()
+                if swapChanged && !appliesSwapNow {
+                    stageLineSwap(lines: lines, stations: stations)
                 }
-                if linesChanged || stationsChanged || ridesChanged {
+                if appliesSwapNow || ridesChanged {
                     requestStrokeReferences()
                 }
 
@@ -776,9 +813,11 @@ extension RailMapView.Surface {
                 if selectionChanged {
                     updateRidePaint(on: mapView, animated: playback?.isActive != true)
                 }
+                // A staged set changes nothing drawn yet: its own plan runs when
+                // it is installed, so the rides-only fast path below still works.
                 let changes = MapDrawChanges(
-                    linesChanged: linesChanged,
-                    stationsChanged: stationsChanged,
+                    linesChanged: linesChanged && appliesSwapNow,
+                    stationsChanged: stationsChanged && appliesSwapNow,
                     ridesChanged: ridesChanged,
                     selectionChanged: selectionChanged,
                     visibilityChanged: visibilityChanged,
@@ -790,7 +829,7 @@ extension RailMapView.Surface {
                     namingChanged: namingChanged,
                     showsNetwork: showsNetwork,
                     hasRides: !rides.isEmpty,
-                    hasContinuousLines: lines.contains(where: \.continuous)
+                    hasContinuousLines: self.lines.contains(where: \.continuous)
                 )
                 switch changes.plan {
                 case .none:
@@ -812,16 +851,13 @@ extension RailMapView.Surface {
                 case .rebuild:
                     // Only rides moved: re-form the batches of the cells they
                     // touch and re-mark, instead of the whole map.
-                    let ridesOnly = ridesChanged && !linesChanged && !stationsChanged
+                    let ridesOnly = ridesChanged && !appliesSwapNow
                         && !selectionChanged && !visibilityChanged && !indexesChanged
                         && !displayChanged && !dateChanged && !networkFilterChanged && !namingChanged
                     if ridesOnly, let change = deckUpdate?.change, updateRides(change, on: mapView) {
                         break
                     }
-                    let lineDataOnly = (linesChanged || stationsChanged) && !selectionChanged
-                        && !visibilityChanged && !indexesChanged && !displayChanged && !dateChanged
-                        && !networkFilterChanged && !namingChanged
-                    rebuildOwed(on: mapView, tripsOnly: ridesOnly, lineDataOnly: lineDataOnly)
+                    rebuildOwed(on: mapView, tripsOnly: ridesOnly)
                 }
 #if DEBUG
                 if selectionChanged || ridesChanged {
@@ -1031,6 +1067,10 @@ extension RailMapView.Surface {
                 viewportResizeTask = nil
                 matchingTask?.cancel()
                 matchingTask = nil
+                lineSwapTask?.cancel()
+                lineSwapTask = nil
+                heldLineSwap = nil
+                pendingLineSwap = nil
                 memoryReliefTask?.cancel()
                 memoryReliefTask = nil
                 matchingDebounceTask?.cancel()
@@ -1085,6 +1125,9 @@ extension RailMapView.Surface {
                         self.rebuildDeferredByGesture = true
                         return
                     }
+                    // A line set that landed during the gesture installs now,
+                    // before the update that may have been queued behind it.
+                    self.applyHeldLineSwap()
                     let pendingUpdate = self.pendingViewUpdate
                     self.pendingViewUpdate = nil
                     pendingUpdate?()
@@ -1679,18 +1722,50 @@ extension RailMapView.Surface {
             /// idle camera asks once per installed level, area and era.
             private var neighbourPrebuildTarget: NeighbourPrebuildTarget?
 
+            /// Identity of the running prebuild, so a cancelled one's cleanup
+            /// never clears its successor's state.
+            private var neighbourPrebuildID: UUID?
+            /// The frame the running prebuild is building (set while it builds).
+            private var neighbourPrebuildKey: String?
+            /// The running prebuild's worker, to raise its priority on adoption.
+            private var neighbourPrebuildWorker: Task<MapLineGeometry.PreparedGeometry, Error>?
+            /// Set while a foreground request for the prebuild's own frame waits
+            /// for it instead of starting a second preparation. Always cleared
+            /// by the prebuild's landing or by any exit of it.
+            private var adoptedPrebuildKey: String?
+
             private func cancelNeighbourPrebuild() {
                 neighbourPrebuild?.cancel()
                 neighbourPrebuild = nil
                 neighbourPrebuildTarget = nil
+                neighbourPrebuildID = nil
+                neighbourPrebuildKey = nil
+                neighbourPrebuildWorker = nil
+                releaseAdoptedPrebuild()
             }
 
-            /// Cancelled only when the wanted set (the wanted level's
-            /// neighbours) changes; a touch-down alone does not stop it.
+            /// Ends an adoption that did not land; the request that was waiting
+            /// for it gets one rebuild on the next main turn (never inline:
+            /// the caller may be inside `prepareNetworkGeometry`).
+            private func releaseAdoptedPrebuild() {
+                guard adoptedPrebuildKey != nil else { return }
+                adoptedPrebuildKey = nil
+                Task { @MainActor [weak self] in
+                    guard let self, let mapView = self.mapView else { return }
+                    self.noteRebuildTrigger(.geometryPrepared)
+                    self.rebuild(on: mapView)
+                }
+            }
+
+            /// Cancelled only when its level is no longer the wanted level or one
+            /// of its neighbours; a touch-down alone does not stop it, and a
+            /// prebuild of the level the camera just reached is kept (adopted).
             private func cancelNeighbourPrebuildIfWantedSetMoved(zoom: Double) {
                 guard let target = neighbourPrebuildTarget else { return }
-                let wanted = GeometryZoomLevels.neighbourLevels(of: wantedGeometryLevel(at: zoom))
-                if !target.levels.allSatisfy(wanted.contains) { cancelNeighbourPrebuild() }
+                if !GeometryZoomLevels.keepsNeighbourPrebuild(
+                    levels: target.levels, zoom: zoom, installed: installedGeometryLevel) {
+                    cancelNeighbourPrebuild()
+                }
             }
 
             /// While idle, builds ONE neighbour of the installed level, the one in
@@ -1705,17 +1780,40 @@ extension RailMapView.Surface {
                       networkBuildState.geometryLevel == installed,
                       networkGeometry.hasRoomToPrebuild,
                       let context = markerBuildContext else { return }
+                let prebuildLevel = GeometryZoomLevels.prebuildNeighbour(
+                    of: installed, lastZoomDirection: lastZoomDirection)
+                // The rect the level will use once the camera reaches it
+                // (larger when zooming out), united with what is built. The
+                // installed visibility zoom is kept: a superset of lines.
+                let visible = mapView.visibleMapRect
+                let area = GeometryZoomLevels.prebuildVisibleRect(
+                    visible: .init(x: visible.origin.x, y: visible.origin.y,
+                                   width: visible.size.width, height: visible.size.height),
+                    zoom: MapProjection.zoomLevel(of: mapView), level: prebuildLevel)
+                let prebuildRect = NetworkLOD.buildRect(
+                    for: MKMapRect(x: area.x, y: area.y, width: area.width, height: area.height))
+                    .union(networkBuildState.builtRect)
                 let target = NeighbourPrebuildTarget(
-                    levels: [GeometryZoomLevels.prebuildNeighbour(
-                        of: installed, lastZoomDirection: lastZoomDirection)],
-                    buildRect: networkBuildState.builtRect, eraKey: geometryEraKey,
+                    levels: [prebuildLevel],
+                    buildRect: prebuildRect, eraKey: geometryEraKey,
                     visibilityZoom: context.visibilityZoom)
                 guard target != neighbourPrebuildTarget else { return }
                 cancelNeighbourPrebuild()
                 neighbourPrebuildTarget = target
+                let prebuildID = UUID()
+                neighbourPrebuildID = prebuildID
                 let temporalContext = networkTemporalContext
                 let limiter = geometryWorkLimiter
                 neighbourPrebuild = Task { @MainActor [weak self, weak mapView] in
+                    // Every exit: drop this prebuild's state (unless a successor
+                    // owns it now) and release an adoption that never landed.
+                    defer {
+                        if let self, self.neighbourPrebuildID == prebuildID {
+                            self.neighbourPrebuildKey = nil
+                            self.neighbourPrebuildWorker = nil
+                            self.releaseAdoptedPrebuild()
+                        }
+                    }
                     for level in target.levels {
                         guard !Task.isCancelled, let self, let mapView,
                               self.networkTemporalContext == temporalContext else { return }
@@ -1726,6 +1824,7 @@ extension RailMapView.Surface {
                             frame: frame, visibilityZoom: target.visibilityZoom,
                             buildRect: target.buildRect, recordsDiagnostics: false)
                         guard !work.lines.isEmpty || !work.strokes.isEmpty else { continue }
+                        self.neighbourPrebuildKey = key
                         let anchors = self.lineInputs.mapValues(\.anchors)
                         let cachedStrokes = self.networkGeometry.preparedStrokes(in: key)
                         let junctionIndex = self.junctionIndex
@@ -1751,6 +1850,7 @@ extension RailMapView.Surface {
                                     era: era, rideDate: rideDate, todayByRegion: todayByRegion)
                             }
                         }
+                        self.neighbourPrebuildWorker = worker
                         let geometry = await withTaskCancellationHandler {
                             try? await worker.value
                         } onCancel: {
@@ -1761,6 +1861,16 @@ extension RailMapView.Surface {
                         guard !Task.isCancelled, let prepared,
                               self.networkTemporalContext == temporalContext else { return }
                         _ = self.networkGeometry.storePrepared(prepared, key: key)
+                        // A prebuild the camera has reached (adopted, or now the
+                        // wanted level) installs through the ordinary rebuild.
+                        let prebuildZoom = MapProjection.zoomLevel(of: mapView)
+                        if self.adoptedPrebuildKey == key
+                            || level == self.wantedGeometryLevel(at: prebuildZoom) {
+                            self.adoptedPrebuildKey = nil
+                            self.noteRebuildTrigger(.geometryPrepared)
+                            self.rebuild(on: mapView)
+                            self.scheduleMemoryRelief()
+                        }
                     }
                 }
             }
@@ -1778,8 +1888,6 @@ extension RailMapView.Surface {
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
-                // A foreground preparation outranks the idle neighbour prebuild.
-                cancelNeighbourPrebuild()
                 let work = missingGeometryWork(
                     frame: frame, visibilityZoom: visibilityZoom, buildRect: buildRect,
                     recordsDiagnostics: true)
@@ -1788,8 +1896,22 @@ extension RailMapView.Surface {
                 let byID = work.byID
                 let gate = GeometryPreparationGate.decide(
                     inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
-                    requestedKey: key,
+                    requestedKey: key, prebuildKey: neighbourPrebuildKey,
                     missingWork: !missingLines.isEmpty || !missingStrokes.isEmpty)
+                if gate.adoptPrebuild {
+                    // The idle prebuild is already building this frame: wait
+                    // for it (its landing rebuilds) and let it run at the
+                    // priority of the work the camera now needs.
+                    adoptedPrebuildKey = key
+                    if let worker = neighbourPrebuildWorker {
+                        Task(priority: .userInitiated) { _ = try? await worker.value }
+                    }
+                    return false
+                }
+                // A foreground preparation outranks the idle neighbour prebuild.
+                // Nothing waits on it any more, so it is not an adoption loss.
+                adoptedPrebuildKey = nil
+                cancelNeighbourPrebuild()
                 if gate.drawNow {
                     networkGeometry.beginFrame(key: key)
                     return true
@@ -4400,58 +4522,174 @@ extension RailMapView.Surface {
                 networkGeometry.retainRidePolylines(ofRides: change.changed, segments: segments)
             }
 
+            /// Computes the next line set on a worker thread (or synchronously,
+            /// `checksCancellation: false`, for an era change): the junction
+            /// index and dependency ids, the junction lines, the station
+            /// anchors and every line's inputs. Reads only its input; copy-on-write
+            /// of the index happens here, never on the main actor. Returns nil
+            /// when cancelled between phases.
+            nonisolated private static func computeLineSwap(
+                _ input: LineSwapInput, baseSerial: Int, checksCancellation: Bool
+            ) -> LineSwapResult? {
+                let interval = RailSignpost.map.begin("map.lineSwap.compute")
+                defer { RailSignpost.map.end("map.lineSwap.compute", interval) }
+                func cancelled() -> Bool { checksCancellation && Task.isCancelled }
+                let lines = input.lines
+                let byID = Dictionary(lines.map { ($0.id, $0) },
+                    uniquingKeysWith: { first, _ in first })
+                let chainKeys = Set(lines.map(JoinedChainKey.init))
+                let junctionLineMemo = input.memo
+                if cancelled() { return nil }
+                // A line whose content id is unchanged keeps its junction
+                // line (same coordinates buffer), so neither the chain lookup
+                // nor the index's equality check does per-vertex work for it.
+                var nextMemo: [String: JunctionLineMemo] = [:]
+                nextMemo.reserveCapacity(lines.count)
+                let junctionLines = lines.map { line -> StrokeJunctionIndex.Line in
+                    if let known = junctionLineMemo[line.id], known.contentID == line.contentID {
+                        nextMemo[line.id] = known
+                        return known.line
+                    }
+                    let built = StrokeJunctionIndex.Line(
+                        id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
+                        coordinates: input.joinedChains.chain(of: line).points,
+                        continuous: line.continuous, follows: line.follows.map(\.canonicalID))
+                    nextMemo[line.id] = JunctionLineMemo(contentID: line.contentID, line: built)
+                    return built
+                }
+                if cancelled() { return nil }
+                let advanced = input.state.advanced(to: junctionLines)
+                if cancelled() { return nil }
+                var anchors: [String: [Int]] = [:]
+                for station in input.stations {
+                    guard let slot = station.slot else { continue }
+                    anchors["\(station.region.rawValue)|\(station.lineID)#\(slot.chain)", default: []]
+                        .append(slot.anchor)
+                }
+                var inputs: [String: LineInputs] = [:]
+                inputs.reserveCapacity(lines.count)
+                for line in lines {
+                    var dependencies: [String: UUID] = [:]
+                    for id in advanced.state.dependencyIDs[line.id] ?? [] {
+                        dependencies[id] = byID[id]?.contentID
+                    }
+                    inputs[line.id] = LineInputs(contentID: line.contentID,
+                        anchors: anchors[line.id] ?? [], dependencies: dependencies)
+                }
+                return LineSwapResult(
+                    baseSerial: baseSerial, lines: lines, stations: input.stations,
+                    state: advanced.state, memo: nextMemo, chainKeys: chainKeys, inputs: inputs)
+            }
+
+            private func swapInput(
+                lines: [RailNetworkStore.DrawnLine], stations: [RailNetworkStore.DrawnStation]
+            ) -> LineSwapInput {
+                LineSwapInput(
+                    lines: lines, stations: stations, state: junctionState,
+                    memo: junctionLineMemo, joinedChains: networkGeometry.joinedChains)
+            }
+
+            /// Records the newest line set and starts the worker when none runs.
+            private func stageLineSwap(
+                lines: [RailNetworkStore.DrawnLine], stations: [RailNetworkStore.DrawnStation]
+            ) {
+                pendingLineSwap = (lines, stations)
+                if case .start(let base) = lineSwapSchedule.stage() { startLineSwap(baseSerial: base) }
+            }
+
+            private func startLineSwap(baseSerial: Int) {
+                guard let pending = pendingLineSwap else { return }
+                let input = swapInput(lines: pending.lines, stations: pending.stations)
+                let worker = Task.detached(priority: .userInitiated) {
+                    Self.computeLineSwap(input, baseSerial: baseSerial, checksCancellation: true)
+                }
+                lineSwapTask = Task { @MainActor [weak self] in
+                    let result = await withTaskCancellationHandler {
+                        await worker.value
+                    } onCancel: { worker.cancel() }
+                    self?.landLineSwap(result)
+                }
+            }
+
+            /// The worker finished (nil: it was cancelled, by a synchronous
+            /// install or a tear-down, so its result is stale either way).
+            private func landLineSwap(_ result: LineSwapResult?) {
+                guard let result else {
+                    if case .start(let base) = lineSwapSchedule.abandoned() { startLineSwap(baseSerial: base) }
+                    return
+                }
+                switch lineSwapSchedule.landed(baseSerial: result.baseSerial, duringGesture: isManipulating) {
+                case .apply: applyLineSwap(result)
+                case .hold: heldLineSwap = result
+                case .discard(let restart):
+                    if case .start(let base) = restart { startLineSwap(baseSerial: base) }
+                }
+            }
+
+            /// Installs a held result once the gesture has ended.
+            private func applyHeldLineSwap() {
+                guard lineSwapSchedule.releaseHeld(), let held = heldLineSwap else { return }
+                heldLineSwap = nil
+                applyLineSwap(held)
+            }
+
+            /// Installs a landed line set: one main-actor turn, no `await`.
+            private func applyLineSwap(_ result: LineSwapResult) {
+                let linesChanged = Self.changed(result.lines, from: lines, id: \.contentID)
+                let stationsChanged = Self.changed(result.stations, from: stations, id: \.contentID)
+                installLineSwap(result, cancelsPreparation: false)
+                if case .start(let base) = lineSwapSchedule.applied() {
+                    startLineSwap(baseSerial: base)
+                } else {
+                    pendingLineSwap = nil
+                }
+                requestStrokeReferences()
+                guard let mapView else { return }
+                let changes = MapDrawChanges(
+                    linesChanged: linesChanged, stationsChanged: stationsChanged,
+                    ridesChanged: false, selectionChanged: false, visibilityChanged: false,
+                    indexesChanged: false, displayChanged: false, routePaintOnly: false,
+                    dateChanged: false, networkFilterChanged: false, namingChanged: false,
+                    showsNetwork: showsNetwork, hasRides: !rides.isEmpty,
+                    hasContinuousLines: lines.contains(where: \.continuous))
+                if case .rebuild = changes.plan {
+                    rebuildOwed(on: mapView, lineDataOnly: true)
+                }
+            }
+
+            /// Assigns a computed line set and revalidates what depends on it.
+            /// Residency loads and evictions change `lines` all the time while
+            /// zooming; only a changed temporal era makes an in-flight
+            /// preparation wrong (`cancelsPreparation`). Otherwise its landing
+            /// keeps the lines whose inputs still match.
+            private func installLineSwap(_ result: LineSwapResult, cancelsPreparation: Bool) {
+                lines = result.lines
+                stations = result.stations
+                interaction.replaceStations(result.stations)
+                junctionState = result.state
+                junctionLineMemo = result.memo
+                // A chain's own `anchors` come off `stations`' slots, and the
+                // display-datum chains `prepareStrokeReferences()` reads (and
+                // every `strokeRef(for:of:)` answer keyed on them) are built
+                // from `lines` alone: both are stale the moment either moves.
+                linesGeneration += 1
+                networkGeometry.retainDisplayChains(result.chainKeys)
+                invalidateNetworkTemporalGeometry(cancelsPreparation: cancelsPreparation)
+                refreshLineInputs(newTruth: result.inputs)
+            }
+
             /// Revalidate only the inputs a line build actually reads. A
             /// country arriving must not discard every other country's pixels.
-            /// The junction index and per-line dependency ids update incrementally.
-            private func refreshLineInputs() {
+            /// `newTruth` is the inputs each line would be built from now (from
+            /// the worker); without it the stored truth is refreshed, which is
+            /// what the settle after a gesture needs to release held joints.
+            private func refreshLineInputs(newTruth: [String: LineInputs]? = nil) {
                 let refreshInterval = RailSignpost.map.begin("map.refreshLineInputs")
                 defer { RailSignpost.map.end("map.refreshLineInputs", refreshInterval) }
                 // A neighbour prebuild captured the old inputs; its builds would
                 // land as present-but-stale in the neighbour entry.
                 cancelNeighbourPrebuild()
-                let byID = Dictionary(lines.map { ($0.id, $0) },
-                    uniquingKeysWith: { first, _ in first })
-                networkGeometry.retainDisplayChains(Set(lines.map(JoinedChainKey.init)))
-                // A line whose content id is unchanged keeps its junction
-                // line (same coordinates buffer), so neither the chain lookup
-                // nor the index's equality check does per-vertex work for it.
-                var nextJunctionLines: [String: (contentID: UUID, line: StrokeJunctionIndex.Line)] = [:]
-                nextJunctionLines.reserveCapacity(lines.count)
-                let junctionLines = lines.map { line -> StrokeJunctionIndex.Line in
-                    if let known = junctionLineMemo[line.id], known.contentID == line.contentID {
-                        nextJunctionLines[line.id] = known
-                        return known.line
-                    }
-                    let built = StrokeJunctionIndex.Line(
-                        id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
-                        coordinates: networkGeometry.joinedChains.chain(of: line).points,
-                        continuous: line.continuous, follows: line.follows.map(\.canonicalID))
-                    nextJunctionLines[line.id] = (line.contentID, built)
-                    return built
-                }
-                junctionLineMemo = nextJunctionLines
-                let change = junctionIndex.update(junctionLines)
-                var anchors: [String: [Int]] = [:]
-                for station in stations {
-                    guard let slot = station.slot else { continue }
-                    anchors["\(station.region.rawValue)|\(station.lineID)#\(slot.chain)", default: []]
-                        .append(slot.anchor)
-                }
-                var next: [String: LineInputs] = [:]
-                var nextDependencyIDs: [String: Set<String>] = [:]
-                for line in lines {
-                    let dependencyIDs: Set<String>
-                    if !change.affectedIDs.contains(line.id), let cached = lineDependencyIDs[line.id] {
-                        dependencyIDs = cached
-                    } else {
-                        dependencyIDs = junctionIndex.dependencyIDs(of: line.id)
-                    }
-                    nextDependencyIDs[line.id] = dependencyIDs
-                    var dependencies: [String: UUID] = [:]
-                    for id in dependencyIDs { dependencies[id] = byID[id]?.contentID }
-                    next[line.id] = LineInputs(contentID: line.contentID,
-                        anchors: anchors[line.id] ?? [], dependencies: dependencies)
-                }
+                var next = newTruth ?? trueLineInputs
                 // Stable joints: a line's stroke depends on which junction
                 // neighbours are loaded, so a later wave must not move a line
                 // that is already drawn. While the fingers are down, a drawn
@@ -4476,7 +4714,6 @@ extension RailMapView.Surface {
                 networkGeometry.retainLineBuilds(withIDs: retainedIDs)
                 resetRideStrokeCaches()
                 lineInputs = next
-                lineDependencyIDs = nextDependencyIDs
                 interaction.invalidateRideGeometry()
             }
 
@@ -4537,6 +4774,9 @@ extension RailMapView.Surface {
                 let joinedChains = networkGeometry.joinedChains
                 let worker = Task.detached(priority: .userInitiated) {
                     try await limiter.withPermit {
+                        // The matching itself, off the main thread.
+                        let workInterval = RailSignpost.map.begin("map.matching.work")
+                        defer { RailSignpost.map.end("map.matching.work", workInterval) }
                         let index: StrokeRide.Index
                         // What moved since the prior index; nil when there is
                         // no prior index to compare against.
@@ -4606,6 +4846,9 @@ extension RailMapView.Surface {
                     }
                 }
                 matchingTask = Task { [weak self] in
+                    // `map.matching` is the time spent WAITING for the worker
+                    // (`map.matching.work`), not main-thread work; the main
+                    // thread only pays the snapshot above and `map.matching.apply`.
                     let matchingInterval = RailSignpost.map.begin("map.matching")
                     let result = await withTaskCancellationHandler {
                         try? await worker.value
@@ -4614,6 +4857,8 @@ extension RailMapView.Surface {
                     RailSignpost.map.end("map.matching", matchingInterval)
                     RailSignpost.map.mark("map.matching.completed", completed ? 1 : 0)
                     guard !Task.isCancelled, let self, self.matchingRevision == revision else { return }
+                    let applyInterval = RailSignpost.map.begin("map.matching.apply")
+                    defer { RailSignpost.map.end("map.matching.apply", applyInterval) }
                     self.matchingInFlight = nil
                     guard let (_, results) = result else {
                         self.runOwedStrokeMatching()

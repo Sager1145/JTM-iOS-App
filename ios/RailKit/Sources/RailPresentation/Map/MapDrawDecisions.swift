@@ -160,16 +160,28 @@ public enum GeometryPreparationGate {
         public var start: Bool
         /// Nothing is missing: the rebuild may draw now.
         public var drawNow: Bool
+        /// The idle neighbour prebuild is already building the requested
+        /// frame: do not start a second preparation and do not cancel it.
+        /// Its landing installs the level (adoption).
+        public var adoptPrebuild: Bool
 
-        public init(cancelInFlight: Bool, start: Bool, drawNow: Bool) {
+        public init(cancelInFlight: Bool, start: Bool, drawNow: Bool, adoptPrebuild: Bool = false) {
             self.cancelInFlight = cancelInFlight
             self.start = start
             self.drawNow = drawNow
+            self.adoptPrebuild = adoptPrebuild
         }
     }
 
-    public static func decide(inFlightKey: String?, requestedKey: String, missingWork: Bool) -> Decision {
+    /// `prebuildKey` is the frame the idle neighbour prebuild is building, if
+    /// any. A preparation already in flight wins over adoption.
+    public static func decide(
+        inFlightKey: String?, requestedKey: String, prebuildKey: String?, missingWork: Bool
+    ) -> Decision {
         guard missingWork else { return Decision(cancelInFlight: false, start: false, drawNow: true) }
+        if inFlightKey == nil, let prebuildKey, prebuildKey == requestedKey {
+            return Decision(cancelInFlight: false, start: false, drawNow: false, adoptPrebuild: true)
+        }
         return Decision(cancelInFlight: false, start: inFlightKey == nil, drawNow: false)
     }
 

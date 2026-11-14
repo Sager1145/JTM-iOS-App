@@ -56,6 +56,25 @@ public struct GeometryZoomLevels: Equatable, Sendable {
         lastZoomDirection < 0 ? level - 1 : level + 1
     }
 
+    /// The visible rect a prebuild of `level` should cover at camera `zoom`.
+    /// A level coarser than the camera shows a larger area when the camera
+    /// reaches it, so the rect grows about its centre by
+    /// `2^(zoom - nominalZoom(level))`; a finer (or equal) level keeps the
+    /// rect as is. Without this, an adopted prebuild still left a ring of
+    /// missing work for the foreground to build.
+    public static func prebuildVisibleRect(
+        visible: MapBuildArea.Rect, zoom: Double, level: Int
+    ) -> MapBuildArea.Rect {
+        let factor = exp2(zoom - nominalZoom(level: level))
+        guard factor > 1 else { return visible }
+        let width = visible.width * factor
+        let height = visible.height * factor
+        return MapBuildArea.Rect(
+            x: visible.x + (visible.width - width) / 2,
+            y: visible.y + (visible.height - height) / 2,
+            width: width, height: height)
+    }
+
     /// (c) Whether to swap the installed level now during a gesture.
     public static func shouldSwapDuringGesture(
         zoom: Double, installed: Int, wanted: Int, wantedIsReady: Bool
@@ -111,6 +130,17 @@ public struct GeometryZoomLevels: Equatable, Sendable {
     public static func isStillWanted(level: Int, zoom: Double, installed: Int?) -> Bool {
         let wanted = wantedLevel(zoom: zoom, installed: installed)
         return level == wanted || neighbourLevels(of: wanted).contains(level)
+    }
+
+    /// Whether the idle neighbour prebuild of `levels` survives the camera
+    /// moving to `zoom`. A prebuild whose level the camera has just reached is
+    /// the wanted level itself, not one of its neighbours, so it must be kept
+    /// (and adopted) rather than thrown away: every level passes
+    /// ``isStillWanted(level:zoom:installed:)``.
+    public static func keepsNeighbourPrebuild(
+        levels: [Int], zoom: Double, installed: Int?
+    ) -> Bool {
+        levels.allSatisfy { isStillWanted(level: $0, zoom: zoom, installed: installed) }
     }
 }
 
