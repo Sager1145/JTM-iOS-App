@@ -24,7 +24,7 @@ assert SPEC.loader
 SPEC.loader.exec_module(display_network)
 
 PACKAGE = SCRIPT.parents[2] / "public" / "rail" / "jp-2025.json"
-JOIN_M = 100.0  # same tolerance the builder uses; kept separate on purpose
+END_STATION_M = 500.0  # segment end -> station match; kept separate from the builder on purpose
 
 
 def _metres(a, b):
@@ -32,24 +32,31 @@ def _metres(a, b):
     return math.hypot((a[0] - b[0]) * 111320 * math.cos(lat), (a[1] - b[1]) * 110540)
 
 
-def _termini(line):
-    counts = defaultdict(int)
-    for row in line.get("segments") or []:
-        pts = row[2]
-        if len(pts) >= 2:
-            for p in (pts[0], pts[-1]):
-                counts[(round(p[0], 5), round(p[1], 5))] += 1
-    return [p for p, n in counts.items() if n == 1]
+def _terminal_codes(line):
+    """Station codes at the first point of the first segment and the last point
+    of the last segment (the line's true termini)."""
+    segs = [r for r in line.get("segments") or [] if len(r) > 2 and r[2]]
+    if not segs:
+        return set()
+    codes = set()
+    for end in (segs[0][2][0], segs[-1][2][-1]):
+        near = [(_metres(end, (s[2], s[3])), str(s[0])) for s in line["stations"]]
+        near = [n for n in near if n[0] <= END_STATION_M]
+        if near:
+            codes.add(min(near)[1])
+    return codes
 
 
 def joined_same_name_pairs(lines):
+    """Same-name lines where one's terminus station is also a station of the other."""
     by_name = defaultdict(list)
     for line in lines:
-        by_name[line["name"]].append((line, _termini(line)))
+        by_name[line["name"]].append(
+            (line, _terminal_codes(line), {str(s[0]) for s in line["stations"]}))
     for members in by_name.values():
-        for i, (a, ta) in enumerate(members):
-            for b, tb in members[i + 1:]:
-                if any(_metres(p, q) <= JOIN_M for p in ta for q in tb):
+        for i, (a, ta, sa) in enumerate(members):
+            for b, tb, sb in members[i + 1:]:
+                if ta & sb or tb & sa:
                     yield a, b
 
 
@@ -81,6 +88,38 @@ class CorridorVisibilityTests(unittest.TestCase):
             own = sum(float(r[0]) for r in line.get("segments") or [])
             self.assertGreaterEqual(km + 1e-6, own)
             self.assertLessEqual(rank, int(line.get("rank", 0)))
+
+    def test_known_corridors_joined_and_unrelated_lines_apart(self):
+        groups = display_network.visibility_groups(self.lines)
+        by_id = {l["id"]: l for l in self.lines}
+
+        def tiers(name, operator):
+            return {groups[i] for i, l in by_id.items()
+                    if l["name"] == name and l.get("operator") == operator}
+
+        # JR East + JR Central + JR West 東海道線 are one trunk (shared station 熱海).
+        trunk = [tiers("東海道線", op) for op in ("東日本旅客鉄道", "東海旅客鉄道", "西日本旅客鉄道")]
+        self.assertTrue(all(len(t) == 1 for t in trunk))
+        self.assertEqual(trunk[0], trunk[1])
+        self.assertEqual(trunk[1], trunk[2])
+        # 七尾線 (JR West + のと鉄道) meet at 七尾.
+        self.assertEqual(tiers("七尾線", "のと鉄道"), tiers("七尾線", "西日本旅客鉄道"))
+        # Unrelated same-name lines that only run near each other stay apart.
+        self.assertNotEqual(tiers("日光線", "東日本旅客鉄道"), tiers("日光線", "東武鉄道"))
+        self.assertNotEqual(tiers("京都線", "近畿日本鉄道"), tiers("京都線", "阪急電鉄"))
+        self.assertNotEqual(tiers("本線", "富山地方鉄道"), tiers("本線", "黒部峡谷鉄道"))
+
+    def test_grouping_never_makes_a_line_rank_zero(self):
+        groups = display_network.visibility_groups(self.lines)
+        for line in self.lines:
+            if int(line.get("rank", 0)) > 0:
+                self.assertGreaterEqual(groups[line["id"]][1], 1, line["id"])
+
+    def test_deterministic_under_line_order(self):
+        forward = display_network.visibility_groups(self.lines)
+        backward = display_network.visibility_groups(list(reversed(self.lines)))
+        norm = lambda g: {k: (round(v[0], 6), v[1]) for k, v in g.items()}
+        self.assertEqual(norm(forward), norm(backward))
 
     @unittest.skipUnless(os.environ.get("JTM_DISPLAY_NETWORK_DIR"),
                          "set JTM_DISPLAY_NETWORK_DIR to check a built manifest")

@@ -450,34 +450,50 @@ def wide_min_zoom(km: float) -> int:
     return 7
 
 
-# Two same-name lines whose end points lie within this distance are one
-# physical corridor published as separate package lines (an operator split,
-# e.g. JR East / JR Central / JR West pieces of one trunk).
-CORRIDOR_JOIN_TOLERANCE_M = 100.0
+# A station is matched to a segment end when it lies this close to it.
+CORRIDOR_END_STATION_M = 500.0
 
 
-def _line_end_points(line: dict) -> list[tuple[float, float]]:
-    """Points where the line's own segment graph stops (used by exactly one
-    segment end), i.e. its termini."""
-    counts: dict[tuple[float, float], int] = defaultdict(int)
-    for row in line.get("segments") or []:
-        points = row[2] if len(row) > 2 else None
-        if not points or len(points) < 2:
-            continue
-        for point in (points[0], points[-1]):
-            counts[(round(point[0], 5), round(point[1], 5))] += 1
-    return [point for point, count in counts.items() if count == 1]
+def _line_terminal_station_codes(line: dict) -> set[str]:
+    """Station codes of the line's true termini: the station at the first
+    point of its first segment and the one at the last point of its last
+    segment. Package segment ends inside the line do not coincide exactly, so
+    only these two ends are termini."""
+    segments = [row for row in (line.get("segments") or []) if len(row) > 2 and row[2]]
+    stations = line.get("stations") or []
+    if not segments or not stations:
+        return set()
+    codes: set[str] = set()
+    for lon, lat in (segments[0][2][0], segments[-1][2][-1]):
+        best_code, best_m = None, CORRIDOR_END_STATION_M
+        for station in stations:
+            metres = equirectangular_metres(
+                {"lon": lon, "lat": lat}, {"lon": station[2], "lat": station[3]})
+            if metres <= best_m:
+                best_code, best_m = str(station[0]), metres
+        if best_code is not None:
+            codes.add(best_code)
+    return codes
 
 
 def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
     """Per line id: (group length km, group best rank).
 
     The group starts as operator+name (the designed visibility group), then
-    same-name groups that join end to end (an end point of one within
-    CORRIDOR_JOIN_TOLERANCE_M of an end point of the other, transitively) are
-    one group, so a corridor split across operators gets one minimum zoom.
-    Lines with different names are never merged. The best rank is the lowest
-    one in the group.
+    same-name groups where one has a terminus station that the other also
+    serves (a shared station code, e.g. JR East / JR Central 東海道線 at 熱海),
+    transitively, are one group, so a corridor split across operators gets one minimum zoom.
+    Identity of the terminus station, not distance, decides: unrelated
+    same-name lines that merely end near each other stay apart. Lines with
+    different names are never merged. The group's best rank is the lowest one
+    in it, except that grouping never lowers a line to rank 0 (an always-drawn
+    backbone) from a rank above 0.
+
+    This deliberately differs from the website's operator+name tier
+    (`rail-network.js` `visibilityGroupKey`) for the lines that join: the
+    native app draws a corridor split across operators as one. The website is
+    edited in its own repo; the difference is an iOS-only decision (the
+    builder's `minZoomMapLibre` is therefore not web-identical for them).
     """
     parent: dict[str, str] = {}
 
@@ -490,7 +506,7 @@ def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
     group_of: dict[str, str] = {}
     km: dict[str, float] = defaultdict(float)
     rank: dict[str, int] = {}
-    ends: dict[str, list[tuple[float, float]]] = defaultdict(list)
+    terminals: dict[str, set[str]] = defaultdict(set)
     names: dict[str, str] = {}
     for line in lines:
         key = f"{line.get('operator') or ''}\0{line['name']}"
@@ -500,40 +516,36 @@ def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
         km[key] += sum(float(row[0]) for row in line.get("segments") or [])
         line_rank = int(line.get("rank", 0))
         rank[key] = min(rank.get(key, line_rank), line_rank)
-        ends[key].extend(_line_end_points(line))
+        terminals[key] |= _line_terminal_station_codes(line)
+    # A line joins another same-name line when one's terminus station is a
+    # station of the other (the same station code): the two physically meet
+    # there, whether both end at it or one runs past it.
+    station_codes: dict[str, set[str]] = defaultdict(set)
+    for line in lines:
+        station_codes[group_of[line["id"]]].update(str(row[0]) for row in line.get("stations") or [])
     keys_by_name: dict[str, list[str]] = defaultdict(list)
-    for key, name in names.items():
-        keys_by_name[name].append(key)
-    cell_deg = 0.002
+    for key in sorted(names):
+        keys_by_name[names[key]].append(key)
     for same_name in keys_by_name.values():
-        if len(same_name) < 2:
-            continue
-        cells: dict[tuple[int, int], list[tuple[str, tuple[float, float]]]] = defaultdict(list)
-        for key in same_name:
-            for point in ends[key]:
-                cells[(math.floor(point[0] / cell_deg), math.floor(point[1] / cell_deg))].append((key, point))
-        for (cx, cy), members in cells.items():
-            for dx in (-1, 0, 1):
-                for dy in (-1, 0, 1):
-                    for key_b, point_b in cells.get((cx + dx, cy + dy), ()):
-                        for key_a, point_a in members:
-                            if key_a == key_b or find(key_a) == find(key_b):
-                                continue
-                            if equirectangular_metres(
-                                    {"lon": point_a[0], "lat": point_a[1]},
-                                    {"lon": point_b[0], "lat": point_b[1]}
-                            ) <= CORRIDOR_JOIN_TOLERANCE_M:
-                                parent[find(key_a)] = find(key_b)
+        for i, key_a in enumerate(same_name):
+            for key_b in same_name[i + 1:]:
+                if find(key_a) != find(key_b) and (
+                        terminals[key_a] & station_codes[key_b]
+                        or terminals[key_b] & station_codes[key_a]):
+                    parent[find(key_a)] = find(key_b)
     total_km: dict[str, float] = defaultdict(float)
     best_rank: dict[str, int] = {}
     for key in names:
         root = find(key)
         total_km[root] += km[key]
         best_rank[root] = min(best_rank.get(root, rank[key]), rank[key])
-    return {
-        line_id: (total_km[find(key)], best_rank[find(key)])
-        for line_id, key in group_of.items()
-    }
+    out: dict[str, tuple[float, int]] = {}
+    for line in lines:
+        root = find(group_of[line["id"]])
+        own = int(line.get("rank", 0))
+        grouped = best_rank[root]
+        out[line["id"]] = (total_km[root], max(grouped, 1) if own > 0 else grouped)
+    return out
 
 
 def station_density_min_zoom(line: dict, line_min: int) -> int:
