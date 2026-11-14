@@ -108,7 +108,7 @@ struct RegressionGuardMapLockPerf {
         #expect(Self.builder.contains("withTaskGroup(of: (Int, Part).self)"))
         #expect(!Self.builder.contains("group.wait("))
         let relief = try Self.body(
-            Self.coordinator, from: "private func scheduleMemoryRelief() {",
+            Self.coordinator, from: "private func scheduleMemoryRelief(firstDelay: Duration = .seconds(2)) {",
             to: "/// `duringGesture` is the mid-pinch level swap")
         #expect(relief.contains("Task.detached(priority: .utility)"))
     }
@@ -122,7 +122,7 @@ struct RegressionGuardMapLockPerf {
     @Test func memoryIsHandedBackOnceAfterALandingWhenIdle() throws {
         #expect(Self.coordinator.contains("self.scheduleMemoryRelief()"))
         let relief = try Self.body(
-            Self.coordinator, from: "private func scheduleMemoryRelief() {",
+            Self.coordinator, from: "private func scheduleMemoryRelief(firstDelay: Duration = .seconds(2)) {",
             to: "/// `duringGesture` is the mid-pinch level swap")
         #expect(relief.contains("malloc_zone_pressure_relief(nil, 0)"))
         #expect(relief.contains("self.isManipulating"))

@@ -627,7 +627,7 @@ final class RailNetworkStore {
     /// least-recently-requested by line, never a line the current request
     /// needs or a surviving line's `dependsOn` still names. See
     /// ``activateDisplayLines(intersecting:cameraZoom:)`` and
-    /// ``evictIfNeeded(index:)``.
+    /// ``evictIfNeeded(index:budget:)``.
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
         guard displayManifest != nil else { return }
@@ -1141,7 +1141,7 @@ final class RailNetworkStore {
             }
             loadedDisplayLines.merge(result.items, uniquingKeysWith: { _, new in new })
             if completedWave == .prefetch { prefetchedLineTotal += result.items.count }
-            evictIfNeeded(index: index)
+            evictIfNeeded(index: index, budget: residentByteBudget)
             publishDisplayNetwork()
             // A line that arrived while the camera kept moving may have
             // brought a neighbour into range. Ask again from where the map is
@@ -1205,7 +1205,18 @@ final class RailNetworkStore {
         rebuildHeldCaches()
         guard let index = displayIndex else { return }
         let before = loadedDisplayLines.count
-        evictIfNeeded(index: index)
+        evictIfNeeded(index: index, budget: residentByteBudget)
+        if loadedDisplayLines.count != before { publishDisplayNetwork() }
+    }
+
+    /// A memory warning: evicts every resident line that is neither held nor
+    /// inside the camera's current request (one eviction pass with a budget of
+    /// zero) and publishes when anything went. The line swap that follows
+    /// shrinks what is derived from the lines.
+    func trimForMemoryPressure() {
+        guard let index = displayIndex else { return }
+        let before = loadedDisplayLines.count
+        evictIfNeeded(index: index, budget: 0)
         if loadedDisplayLines.count != before { publishDisplayNetwork() }
     }
 
@@ -1284,9 +1295,9 @@ final class RailNetworkStore {
     /// evicts a line that a surviving line still depends on — evicting X
     /// only to have Y (kept resident) draw without its alignment would be a
     /// worse failure than staying over budget.
-    private func evictIfNeeded(index: RailDisplayNetworkIndex) {
+    private func evictIfNeeded(index: RailDisplayNetworkIndex, budget: Int) {
         let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
-        guard residentBytes > residentByteBudget else { return }
+        guard residentBytes > budget else { return }
         let protectedEntries = lastDisplayRequest.map {
             RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
         } ?? []
@@ -1310,10 +1321,10 @@ final class RailNetworkStore {
             }
         }
         var evicted = true
-        while evicted && bytes > residentByteBudget {
+        while evicted && bytes > budget {
             evicted = false
             for id in candidates {
-                guard bytes > residentByteBudget else { break }
+                guard bytes > budget else { break }
                 guard (dependentCount[id] ?? 0) == 0,
                       let prepared = loadedDisplayLines[id] else { continue }
                 loadedDisplayLines.removeValue(forKey: id)

@@ -134,6 +134,13 @@ public struct StrokeJunctionIndex: Sendable {
             }
         }
         byID = next
+        // A dictionary keeps the storage it grew to after its keys are gone.
+        // Hand back what a much smaller line set no longer needs.
+        if byVertex.capacity > 4 * max(byVertex.count, 1024) {
+            var fresh = [Key: [String]](minimumCapacity: byVertex.count)
+            for (key, ids) in byVertex { fresh[key] = ids }
+            byVertex = fresh
+        }
 
         var affected = changed
         for key in touched {
@@ -154,6 +161,9 @@ public struct StrokeJunctionIndex: Sendable {
 
     /// Number of indexed vertex keys (tests only).
     var vertexKeyCount: Int { byVertex.count }
+
+    /// Storage held for vertex keys (tests only).
+    var vertexCapacity: Int { byVertex.capacity }
 
     func isStructurallyEqual(to other: StrokeJunctionIndex) -> Bool {
         func resolved(_ index: StrokeJunctionIndex) -> [ResolvedKey: [String]] {

@@ -1776,8 +1776,10 @@ extension RailMapView.Surface {
                         self.cancelNeighbourPrebuild()
                         let droppedFrames = self.networkGeometry.dropNonCurrentFrames()
                         // Freed small-block pages are otherwise kept by the
-                        // allocator and the footprint does not shrink.
-                        malloc_zone_pressure_relief(nil, 0)
+                        // allocator and the footprint does not shrink. One
+                        // relief, off the main thread, once the app's own
+                        // releases (AppShell's) have run.
+                        self.scheduleMemoryRelief(firstDelay: .milliseconds(500))
 #if DEBUG
                         MapRenderProbe.droppedFrames += droppedFrames
 #endif
@@ -2239,11 +2241,11 @@ extension RailMapView.Surface {
             /// allocator hands them back. Once the map has been idle for a
             /// moment after a landing, hand them back once: the same call the
             /// memory-warning handler makes. A later landing reschedules it.
-            private func scheduleMemoryRelief() {
+            private func scheduleMemoryRelief(firstDelay: Duration = .seconds(2)) {
                 memoryReliefTask?.cancel()
                 memoryReliefTask = Task { @MainActor [weak self] in
-                    for _ in 0..<10 {
-                        do { try await Task.sleep(for: .seconds(2)) } catch { return }
+                    for attempt in 0..<10 {
+                        do { try await Task.sleep(for: attempt == 0 ? firstDelay : .seconds(2)) } catch { return }
                         guard let self else { return }
                         // Busy: try again after the next quiet moment.
                         if self.isManipulating || self.geometryPreparation != nil
