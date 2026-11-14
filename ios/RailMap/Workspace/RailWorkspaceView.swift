@@ -77,11 +77,7 @@ struct RailWorkspaceView: View {
     @State private var linePreview: RailwayLinePreview?
     /// The selection a journey card took over, and what it replaced. The card
     /// may hand it back on close only while nothing else has claimed it since.
-    private struct JourneyMenuSelection {
-        let previous: String?
-        var revision: Int
-    }
-    @State private var journeyMenuSelection: JourneyMenuSelection?
+    @State private var journeyMenuSelection: JourneyCardLease?
     private var journeyMenuOwnsSelection: Bool { journeyMenuSelection != nil }
     @State private var workspaceMenuIsSuspended = false
     @State private var hasHingedDisplay = false
@@ -696,13 +692,20 @@ struct RailWorkspaceView: View {
                 // Expanding during the child's dismissal competes with UIKit's
                 // sheet transition. Restore only after that presenter is free.
                 workspaceMenuIsSuspended = false
-                if let lease = journeyMenuSelection {
+                var presentedDetail: String?
+                if case .detail(let id)? = sheet { presentedDetail = id }
+                if let lease = journeyMenuSelection,
+                   JourneyCardLease.restoresOnDismiss(
+                       presentedDetail: presentedDetail, editorOpen: journeyEditor != nil)
+                {
                     journeyMenuSelection = nil
-                    // Playback, the editor or another pick has claimed the
-                    // selection since the card opened: theirs stands.
-                    if journeyEditor == nil {
-                        itineraries.restoreSelection(lease.previous, ifUnchangedSince: lease.revision)
-                    }
+                    // Playback or another pick has claimed the selection since
+                    // the card opened: theirs stands. A successor card owns
+                    // the lease, so switching cards restores nothing.
+                    itineraries.restoreSelection(lease.previous, ifUnchangedSince: lease.revision)
+                } else if journeyMenuSelection != nil, journeyEditor != nil {
+                    // Unchanged behaviour: the editor claims the selection.
+                    journeyMenuSelection = nil
                 }
                 if journeyEditor == nil { presentationLayoutMode = nil }
             },
@@ -3454,8 +3457,8 @@ struct RailWorkspaceView: View {
             previous = itineraries.selectedTrainID
         }
         itineraries.selectedTrainID = train.id
-        journeyMenuSelection = JourneyMenuSelection(
-            previous: previous, revision: itineraries.selectionRevision)
+        journeyMenuSelection = JourneyCardLease(
+            owner: train.id, previous: previous, revision: itineraries.selectionRevision)
         controller.requestAutoFocus(
             .journey(train.id), enabled: true, playbackIsActive: playback.isActive)
         sheet = .detail(train.id)
