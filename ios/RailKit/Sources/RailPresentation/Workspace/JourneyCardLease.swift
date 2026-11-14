@@ -15,11 +15,15 @@ public struct JourneyCardLease: Equatable, Sendable {
         self.revision = revision
     }
 
-    /// Whether dismissing a sheet hands the selection back. Switching from
-    /// one journey card to another dismisses the first while the successor is
-    /// already presented: the successor owns the lease, so nothing is
-    /// restored. The editor, when open, claims the selection too.
-    public static func restoresOnDismiss(presentedDetail: String?, editorOpen: Bool) -> Bool {
-        presentedDetail == nil && !editorOpen
+    /// Whether dismissing a sheet hands the selection back. The lease is kept
+    /// only while the presented detail is the lease's owner (switching from one
+    /// journey card to another through `pick` dismisses the first while the
+    /// successor, which owns the lease, is presented). A detail some other
+    /// path opened does not own it, so the lease is returned. The editor, when
+    /// open, claims the selection too.
+    public static func restoresOnDismiss(
+        presentedDetail: String?, owner: String, editorOpen: Bool
+    ) -> Bool {
+        presentedDetail != owner && !editorOpen
     }
 }

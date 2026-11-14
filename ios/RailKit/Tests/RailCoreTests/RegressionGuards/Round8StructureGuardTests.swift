@@ -87,4 +87,24 @@ struct RegressionGuardRound8 {
     @Test func tripsDrawnSignpostExists() {
         #expect(Self.coordinator.contains("\"map.trips.drawn\""))
     }
+
+    /// Both travel-time trip paths must act only on the installed frame: the
+    /// cache can already read the next level's entry after a rebuild stopped.
+    @Test func travelTripPathsRequireTheInstalledCacheFrame() throws {
+        let c = Self.coordinator
+        for (from, to) in [
+            ("private func extendTripsAtInstalledLevel(", "private func noteTripsDrawn("),
+            ("private func reapplyTripsDuringTravel(", "private var arrivalStrokePreparation"),
+        ] {
+            let body = try Self.body(c, from: from, to: to)
+            #expect(body.contains("networkGeometry.currentFrameKey == frame.key"), "\(from) needs the frame key check")
+            #expect(body.contains("!rebuildDeferredByGesture"), "\(from) needs the deferred-rebuild check")
+        }
+        let reapply = try Self.body(
+            c, from: "private func reapplyTripsDuringTravel(", to: "private var arrivalStrokePreparation")
+        #expect(reapply.contains("cache.stamp == expected"))
+        let extend = try Self.body(
+            c, from: "private func extendTripsAtInstalledLevel(", to: "private func noteTripsDrawn(")
+        #expect(extend.contains("<= 1"))
+    }
 }

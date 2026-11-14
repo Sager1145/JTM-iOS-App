@@ -3455,7 +3455,14 @@ extension RailMapView.Surface {
                       playback?.isActive != true, playbackLayer.lastSnapshot == nil,
                       pendingStrokeRefs == nil, arrivalStrokePreparation == nil,
                       !rides.isEmpty, !installedTripRect.isNull, mapView.bounds.width > 1,
-                      selectedTrainID == nil || selectedTrainID == fullyBuiltSelectedRideID
+                      selectedTrainID == nil || selectedTrainID == fullyBuiltSelectedRideID,
+                      // A rebuild that began the next level's frame and stopped
+                      // before installing leaves the cache reading that frame.
+                      networkGeometry.currentFrameKey == frame.key,
+                      !rebuildDeferredByGesture, !annotationsNeedRefresh,
+                      // A level more than one away would build trips over a
+                      // national area that the settled rebuild throws away.
+                      abs(wantedGeometryLevel(at: MapProjection.zoomLevel(of: mapView)) - frame.bucket) <= 1
                 else { return }
                 let now = Self.seconds(.now)
                 guard TripAreaExtension.isDue(now: now, last: lastTripExtension) else { return }
@@ -3596,9 +3603,23 @@ extension RailMapView.Surface {
                 _ change: RideDeckState.Change, on mapView: MKMapView
             ) -> Bool {
                 guard layers.routes, let frame = currentGeometryFrame,
-                      let context = markerBuildContext, pendingStrokeRefs == nil,
-                      arrivalStrokePreparation == nil, playback?.isActive != true
+                      let context = markerBuildContext, let cache = rideBatchCache,
+                      pendingStrokeRefs == nil,
+                      arrivalStrokePreparation == nil, playback?.isActive != true,
+                      networkGeometry.currentFrameKey == frame.key,
+                      !rebuildDeferredByGesture, !annotationsNeedRefresh,
+                      !selectionNeedsHighlightTransition
                 else { return false }
+                if let selectedTrainID {
+                    guard selectedTrainID == fullyBuiltSelectedRideID,
+                          !change.changed.contains(selectedTrainID) else { return false }
+                }
+                let hasSelection = rides.contains { $0.id == selectedTrainID }
+                var expected = rideBatchStamp(
+                    frameKey: frame.key, hasSelection: hasSelection,
+                    dark: mapView.traitCollection.userInterfaceStyle == .dark)
+                expected.buildRect = cache.stamp.buildRect
+                guard cache.stamp == expected else { return false }
                 let applied = applyRideChange(
                     change, frame: frame, context: context, deferMarkers: true, on: mapView)
                 if applied { noteTripsDrawn(on: mapView) }

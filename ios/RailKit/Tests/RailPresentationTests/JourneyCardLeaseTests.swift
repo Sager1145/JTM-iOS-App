@@ -5,15 +5,19 @@ import Testing
 @Suite("JourneyCardLease")
 struct JourneyCardLeaseTests {
     @Test func switchingCardsWhileOpenKeepsTheSelection() {
-        #expect(!JourneyCardLease.restoresOnDismiss(presentedDetail: "B", editorOpen: false))
+        #expect(!JourneyCardLease.restoresOnDismiss(presentedDetail: "B", owner: "B", editorOpen: false))
+    }
+
+    @Test func aDetailOpenedByAnotherPathDoesNotKeepTheLease() {
+        #expect(JourneyCardLease.restoresOnDismiss(presentedDetail: "X", owner: "A", editorOpen: false))
     }
 
     @Test func normalCloseRestoresThePreviousSelection() {
-        #expect(JourneyCardLease.restoresOnDismiss(presentedDetail: nil, editorOpen: false))
+        #expect(JourneyCardLease.restoresOnDismiss(presentedDetail: nil, owner: "A", editorOpen: false))
     }
 
     @Test func anOpenEditorKeepsTheSelection() {
-        #expect(!JourneyCardLease.restoresOnDismiss(presentedDetail: nil, editorOpen: true))
+        #expect(!JourneyCardLease.restoresOnDismiss(presentedDetail: nil, owner: "A", editorOpen: true))
     }
 
     @Test func workspaceDismissHandlerUsesTheRule() throws {

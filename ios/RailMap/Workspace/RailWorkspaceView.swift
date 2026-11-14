@@ -696,7 +696,8 @@ struct RailWorkspaceView: View {
                 if case .detail(let id)? = sheet { presentedDetail = id }
                 if let lease = journeyMenuSelection,
                    JourneyCardLease.restoresOnDismiss(
-                       presentedDetail: presentedDetail, editorOpen: journeyEditor != nil)
+                       presentedDetail: presentedDetail, owner: lease.owner,
+                       editorOpen: journeyEditor != nil)
                 {
                     journeyMenuSelection = nil
                     // Playback or another pick has claimed the selection since

@@ -170,6 +170,10 @@ final class MapNetworkGeometryCache {
         entries[frameKey] ?? FrameEntry()
     }
 
+    /// The frame the cache reads and writes now. A rebuild that began a frame
+    /// and stopped before installing leaves it ahead of the installed one.
+    var currentFrameKey: String { frameKey }
+
     func beginFrame(key: String) {
         if entries[key] == nil {
             entries[key] = FrameEntry()
