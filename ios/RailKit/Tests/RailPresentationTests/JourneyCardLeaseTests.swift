@@ -30,6 +30,8 @@ struct JourneyCardLeaseTests {
         let to = try #require(source.range(of: "private func withPresentations", range: from.upperBound..<source.endIndex))
         let body = source[from.lowerBound..<to.lowerBound]
         #expect(body.contains("JourneyCardLease.restoresOnDismiss("))
+        #expect(source.contains("onSheetDismiss: sheetDidDismiss"))
+        #expect(source.contains("current == nil, sheet == nil { sheetDidDismiss() }"))
         #expect(source.contains("owner: train.id, previous: previous"))
     }
 }

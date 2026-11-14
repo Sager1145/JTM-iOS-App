@@ -544,6 +544,9 @@ def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
         root = find(group_of[line["id"]])
         own = int(line.get("rank", 0))
         grouped = best_rank[root]
+        # A piece with its own rank above 0 never becomes the always-drawn
+        # backbone (tier 0), even when a joined same-name piece is rank 0; that
+        # exception wins over the one-tier-per-corridor rule.
         out[line["id"]] = (total_km[root], max(grouped, 1) if own > 0 else grouped)
     return out
 

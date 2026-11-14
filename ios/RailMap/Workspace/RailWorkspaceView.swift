@@ -328,7 +328,9 @@ struct RailWorkspaceView: View {
             // cleanup runs when the panel's sheet becomes nil, whichever path
             // set it (close, edit, share, delete).
             .onChange(of: panelSheet?.id) { previous, current in
-                if previous != nil, current == nil { sheetDidDismiss() }
+                // A popup handed over to the system sheet (layout change) leaves
+                // `sheet` non-nil: the system dismissal callback cleans up then.
+                if previous != nil, current == nil, sheet == nil { sheetDidDismiss() }
                 panelNestedSurface = false
                 if previous == nil, current != nil {
                     // The hidden search field must not keep taking keystrokes.
@@ -704,14 +706,6 @@ struct RailWorkspaceView: View {
 #endif
     }
 
-    /// Everything this workspace can put OVER itself.
-    ///
-    /// Applied to the resident sheet's content rather than to the map beneath
-    /// it (§9.5.6). A `UIViewController` that is already presenting cannot
-    /// present again, and the resident sheet is always presenting — so an
-    /// editor attached to the map root would be asking the one controller in
-    /// the app that can never take it. Attached here, each of these stacks on
-    /// top of the bottom chrome, which is also where the reader asked for it.
     /// The cleanup after a sheet has gone: the system's dismissal callback for
     /// a system-hosted sheet, the panel's sheet becoming nil for a
     /// panel-hosted one.
@@ -744,6 +738,14 @@ struct RailWorkspaceView: View {
         if journeyEditor == nil { presentationLayoutMode = nil }
     }
 
+    /// Everything this workspace can put OVER itself.
+    ///
+    /// Applied to the resident sheet's content rather than to the map beneath
+    /// it (§9.5.6). A `UIViewController` that is already presenting cannot
+    /// present again, and the resident sheet is always presenting — so an
+    /// editor attached to the map root would be asking the one controller in
+    /// the app that can never take it. Attached here, each of these stacks on
+    /// top of the bottom chrome, which is also where the reader asked for it.
     private func withPresentations(_ content: some View) -> some View {
         content
         .modifier(WorkspacePresentations(

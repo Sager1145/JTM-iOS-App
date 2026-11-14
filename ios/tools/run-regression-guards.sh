@@ -58,14 +58,16 @@ step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_a
 # neither set: only the builder-function tests run (the manifest test skips, and says so).
 corridor_net="${JTM_DISPLAY_NETWORK_DIR:-}"
 if [ -z "$corridor_net" ] && [ "${JTM_GUARD_BUILD_NETWORK:-0}" = 1 ]; then
-  corridor_net="$(mktemp -d)/rail-display-network"
-  step "build display network (corridor guard)" python3 "$ROOT/app/scripts/railway/build-display-network.py" \
+  corridor_tmp="$(mktemp -d)"
+  corridor_net="$corridor_tmp/rail-display-network"
+  step "build display network (corridor guard)" python3 -I "$ROOT/app/scripts/railway/build-display-network.py" \
     --rail-dir "$ROOT/app/public/rail" --output "$corridor_net" --history-dir "$ROOT/app/data" \
     --junctions "$ROOT/app/data/physical-rail-junctions.json" \
     --through-services "$ROOT/ios/RailKit/Sources/RailCore/Resources/japan-through-services.json" \
     --registry-dir "$ROOT/app/data/registry-bundle"
 fi
 step "corridor visibility tiers" env JTM_DISPLAY_NETWORK_DIR="$corridor_net" python3 -I "$ROOT/app/scripts/railway/tests/test_corridor_visibility.py"
+[ -z "${corridor_tmp:-}" ] || rm -rf "$corridor_tmp"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"
