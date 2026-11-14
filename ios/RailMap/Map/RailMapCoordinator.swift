@@ -614,6 +614,9 @@ extension RailMapView.Surface {
                 // Pure route paint updates existing renderers. Marker geometry
                 // and cross-day segmentation still need a layout pass.
                 let displayChanged = display != self.display
+                // Only the ride-date era reads the date; elsewhere it must not
+                // look like a network change (selection picks change it).
+                let networkRideDate = display.networkEra.effectiveRideDate(networkRideDate)
                 let rideDateChanged = networkRideDate != self.networkRideDate
                 let eraChanged = display.networkEra != self.display.networkEra
                 let routePaintOnly = displayChanged
