@@ -1777,6 +1777,50 @@
     }
   }
 
+  // Undo thinning that would rebuild the facets sampleCubic removed: a kept
+  // vertex may not turn more than CURVE_MAX_STEP_DEGREES between two kept edges
+  // longer than CURVE_FACET_EDGE_PX. The farthest dropped vertex of each
+  // adjacent span is restored and the check repeats. Anchor and forced
+  // vertices are compared with their own source turn plus 1 degree.
+  function restoreFacetFlatness(points, keep, anchorSet, forcedSet) {
+    const turn = (a, b, c) => {
+      const ux = b[0] - a[0], uy = b[1] - a[1], vx = c[0] - b[0], vy = c[1] - b[1];
+      const size = Math.hypot(ux, uy) * Math.hypot(vx, vy);
+      if (!(size > 1e-18)) return 0;
+      return Math.acos(Math.max(-1, Math.min(1, (ux * vx + uy * vy) / size))) * 180 / Math.PI;
+    };
+    const edge = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const farthest = (lo, hi) => {
+      let best = -1, bestSq = 0;
+      for (let index = lo + 1; index < hi; index += 1) {
+        const held = segmentDistanceSq(points[index], points[lo], points[hi]);
+        if (best < 0 || held > bestSq) { best = index; bestSq = held; }
+      }
+      return best;
+    };
+    for (let changed = true; changed;) {
+      changed = false;
+      const kept = [];
+      for (let index = 0; index < points.length; index += 1) if (keep[index]) kept.push(index);
+      if (kept.length < 3) return;
+      const restore = [];
+      for (let k = 1; k < kept.length - 1; k += 1) {
+        const prev = kept[k - 1], here = kept[k], next = kept[k + 1];
+        if (!(next > here + 1 || here > prev + 1)) continue;
+        if (!(edge(points[prev], points[here]) > CURVE_FACET_EDGE_PX)
+          || !(edge(points[here], points[next]) > CURVE_FACET_EDGE_PX)) continue;
+        const keptTurn = turn(points[prev], points[here], points[next]);
+        let limit = CURVE_MAX_STEP_DEGREES;
+        if (anchorSet.has(here) || forcedSet.has(here))
+          limit = Math.max(limit, turn(points[here - 1], points[here], points[here + 1]) + 1);
+        if (!(keptTurn > limit)) continue;
+        if (here > prev + 1) restore.push(farthest(prev, here));
+        if (next > here + 1) restore.push(farthest(here, next));
+      }
+      for (const index of restore) if (!keep[index]) { keep[index] = true; changed = true; }
+    }
+  }
+
   // Decimate the stroke to `tolerance` pixels BEFORE its corners are rounded,
   // carrying the measures and the anchor set across.
   //
@@ -1787,7 +1831,10 @@
   // buildStroke must land on the drawn line. Each stretch between two forced
   // vertices is decimated on its own, so a kept vertex can never let a span
   // reach across one.
-  function simplifyForFillet(points, measures, anchorSet, tolerance) {
+  // `forcedSet` vertices (corner and shape-boundary measures, literal
+  // footprints) are kept like anchors but are not reported back as anchors,
+  // so the fillet draws no arc through them.
+  function simplifyForFillet(points, measures, anchorSet, tolerance, forcedSet = new Set(), facetGuard = false) {
     const count = points.length;
     if (!(tolerance > 0) || count < 3)
       return { points, measures, anchors: anchorSet };
@@ -1796,6 +1843,8 @@
     keep[count - 1] = true;
     for (const index of anchorSet)
       if (index > 0 && index + 1 < count) keep[index] = true;
+    for (const index of forcedSet)
+      if (index > 0 && index + 1 < count) keep[index] = true;
     const toleranceSq = tolerance * tolerance;
     let spanStart = 0;
     for (let index = 1; index < count; index += 1) {
@@ -1803,6 +1852,7 @@
       simplifySpan(points, spanStart, index, toleranceSq, keep);
       spanStart = index;
     }
+    if (facetGuard) restoreFacetFlatness(points, keep, anchorSet, forcedSet);
     const outPoints = [];
     const outMeasures = [];
     const anchors = new Set();
@@ -2456,11 +2506,23 @@
     // STROKE_SIMPLIFY_TOLERANCE_PX. Both the anchor set and the measures are
     // carried across; the anchors, the two ends, and nothing else, are forced
     // to survive.
-    const drawn = curveEnabled
-      ? { points: cleaned.points, measures: cleanedMeasures,
-          anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i =>
-            anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
-      : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
+    // A curved stroke is thinned too (the spline samples of a dense survey are
+    // far finer than a pixel and would exhaust the viewport vertex budget).
+    // Its anchors are matched by measure; every vertex the later passes read
+    // by measure stays exact: corners, shape boundaries and the footprints of
+    // applied literal spans.
+    let drawn;
+    if (curveEnabled) {
+      const curveAnchors = new Set(cleanedMeasures.map((_, i) => i).filter(i =>
+        anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9)));
+      const exact = new Set(cleanedMeasures.map((_, i) => i).filter(i =>
+        cornerMeasures.some(c => Math.abs(c - cleanedMeasures[i]) < 1e-9)
+        || protectedFootprints.some(f => f.measures.length
+          && f.measures[0] <= cleanedMeasures[i] && cleanedMeasures[i] <= f.measures.at(-1))));
+      drawn = simplifyForFillet(cleaned.points, cleanedMeasures, curveAnchors, STROKE_SIMPLIFY_TOLERANCE_PX, exact, true);
+    } else {
+      drawn = simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
+    }
     if (protectedFootprints.length && !preservesLiteralFootprints(drawn, protectedFootprints)) return ordinaryStroke();
     // Sharp surveyed corners are rounded within the deviation tolerance;
     // shape boundaries and protected source corners stay exact.
