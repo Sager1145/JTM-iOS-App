@@ -51,6 +51,8 @@ step "shinkansen patterns tests" python3 -I "$ROOT/ios/tools/tests/test_build_sh
 # confirmed corrections are reproducible from the tracked baseline (re-running changes nothing).
 step "timetable stops only" python3 -I "$ROOT/ios/tools/check-timetable-stops-only.py"
 step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_apply_train_database_corrections.py"
+# Corridors split across operators share one visibility tier (display-network visibility groups).
+step "corridor visibility tiers" python3 -I "$ROOT/app/scripts/railway/tests/test_corridor_visibility.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"

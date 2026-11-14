@@ -450,6 +450,92 @@ def wide_min_zoom(km: float) -> int:
     return 7
 
 
+# Two same-name lines whose end points lie within this distance are one
+# physical corridor published as separate package lines (an operator split,
+# e.g. JR East / JR Central / JR West pieces of one trunk).
+CORRIDOR_JOIN_TOLERANCE_M = 100.0
+
+
+def _line_end_points(line: dict) -> list[tuple[float, float]]:
+    """Points where the line's own segment graph stops (used by exactly one
+    segment end), i.e. its termini."""
+    counts: dict[tuple[float, float], int] = defaultdict(int)
+    for row in line.get("segments") or []:
+        points = row[2] if len(row) > 2 else None
+        if not points or len(points) < 2:
+            continue
+        for point in (points[0], points[-1]):
+            counts[(round(point[0], 5), round(point[1], 5))] += 1
+    return [point for point, count in counts.items() if count == 1]
+
+
+def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
+    """Per line id: (group length km, group best rank).
+
+    The group starts as operator+name (the designed visibility group), then
+    same-name groups that join end to end (an end point of one within
+    CORRIDOR_JOIN_TOLERANCE_M of an end point of the other, transitively) are
+    one group, so a corridor split across operators gets one minimum zoom.
+    Lines with different names are never merged. The best rank is the lowest
+    one in the group.
+    """
+    parent: dict[str, str] = {}
+
+    def find(key: str) -> str:
+        while parent[key] != key:
+            parent[key] = parent[parent[key]]
+            key = parent[key]
+        return key
+
+    group_of: dict[str, str] = {}
+    km: dict[str, float] = defaultdict(float)
+    rank: dict[str, int] = {}
+    ends: dict[str, list[tuple[float, float]]] = defaultdict(list)
+    names: dict[str, str] = {}
+    for line in lines:
+        key = f"{line.get('operator') or ''}\0{line['name']}"
+        parent.setdefault(key, key)
+        group_of[line["id"]] = key
+        names[key] = line["name"]
+        km[key] += sum(float(row[0]) for row in line.get("segments") or [])
+        line_rank = int(line.get("rank", 0))
+        rank[key] = min(rank.get(key, line_rank), line_rank)
+        ends[key].extend(_line_end_points(line))
+    keys_by_name: dict[str, list[str]] = defaultdict(list)
+    for key, name in names.items():
+        keys_by_name[name].append(key)
+    cell_deg = 0.002
+    for same_name in keys_by_name.values():
+        if len(same_name) < 2:
+            continue
+        cells: dict[tuple[int, int], list[tuple[str, tuple[float, float]]]] = defaultdict(list)
+        for key in same_name:
+            for point in ends[key]:
+                cells[(math.floor(point[0] / cell_deg), math.floor(point[1] / cell_deg))].append((key, point))
+        for (cx, cy), members in cells.items():
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    for key_b, point_b in cells.get((cx + dx, cy + dy), ()):
+                        for key_a, point_a in members:
+                            if key_a == key_b or find(key_a) == find(key_b):
+                                continue
+                            if equirectangular_metres(
+                                    {"lon": point_a[0], "lat": point_a[1]},
+                                    {"lon": point_b[0], "lat": point_b[1]}
+                            ) <= CORRIDOR_JOIN_TOLERANCE_M:
+                                parent[find(key_a)] = find(key_b)
+    total_km: dict[str, float] = defaultdict(float)
+    best_rank: dict[str, int] = {}
+    for key in names:
+        root = find(key)
+        total_km[root] += km[key]
+        best_rank[root] = min(best_rank.get(root, rank[key]), rank[key])
+    return {
+        line_id: (total_km[find(key)], best_rank[find(key)])
+        for line_id, key in group_of.items()
+    }
+
+
 def station_density_min_zoom(line: dict, line_min: int) -> int:
     """Port of Visibility.stationMinZoomByLineId."""
     count = len(line.get("stations") or [])
@@ -3566,10 +3652,7 @@ def build(
             released_intervals.add((str(line_id), int(interval_index)))
         for name, value in corridor_counts.items():
             shared_corridor_totals[name] += value
-        group_lengths: dict[str, float] = defaultdict(float)
-        for line in package["lines"]:
-            key = f"{line.get('operator') or ''}\0{line['name']}"
-            group_lengths[key] += sum(float(row[0]) for row in line.get("segments") or [])
+        visibility_by_line = visibility_groups(package["lines"])
 
         lane_rows_by_line: dict[str, list[list]] = defaultdict(list)
         for row in lane_rows_by_region.get(region, []):
@@ -3698,10 +3781,8 @@ def build(
         for order, line in enumerate(package["lines"]):
             source_lines += 1
             key = f"{region}|{line['id']}"
-            group_key = f"{line.get('operator') or ''}\0{line['name']}"
-            group_km = group_lengths[group_key]
+            group_km, rank = visibility_by_line[line["id"]]
             ported_min = length_min_zoom(group_km)
-            rank = int(line.get("rank", 0))
             rank_min = (3, 3, 4, 5, 6)[rank] if 0 <= rank < 5 else 0
             lod_min = max(ported_min, rank_min, wide_min_zoom(group_km))
             # A render-group colour override (na-render-groups.json `groups`,
