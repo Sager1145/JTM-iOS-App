@@ -51,6 +51,21 @@ step "shinkansen patterns tests" python3 -I "$ROOT/ios/tools/tests/test_build_sh
 # confirmed corrections are reproducible from the tracked baseline (re-running changes nothing).
 step "timetable stops only" python3 -I "$ROOT/ios/tools/check-timetable-stops-only.py"
 step "train database corrections tests" python3 -I "$ROOT/ios/tools/tests/test_apply_train_database_corrections.py"
+# Corridors split across operators share one visibility tier (display-network visibility groups).
+# The built manifest is the data the app ships, so the guard can check it:
+#   JTM_DISPLAY_NETWORK_DIR=<built rail-display-network dir>  checks that build;
+#   JTM_GUARD_BUILD_NETWORK=1  builds one from this tree first (minutes, scratch dir);
+# neither set: only the builder-function tests run (the manifest test skips, and says so).
+corridor_net="${JTM_DISPLAY_NETWORK_DIR:-}"
+if [ -z "$corridor_net" ] && [ "${JTM_GUARD_BUILD_NETWORK:-0}" = 1 ]; then
+  corridor_net="$(mktemp -d)/rail-display-network"
+  step "build display network (corridor guard)" python3 "$ROOT/app/scripts/railway/build-display-network.py" \
+    --rail-dir "$ROOT/app/public/rail" --output "$corridor_net" --history-dir "$ROOT/app/data" \
+    --junctions "$ROOT/app/data/physical-rail-junctions.json" \
+    --through-services "$ROOT/ios/RailKit/Sources/RailCore/Resources/japan-through-services.json" \
+    --registry-dir "$ROOT/app/data/registry-bundle"
+fi
+step "corridor visibility tiers" env JTM_DISPLAY_NETWORK_DIR="$corridor_net" python3 -I "$ROOT/app/scripts/railway/tests/test_corridor_visibility.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"

@@ -1836,7 +1836,7 @@ final class RailNetworkStore {
     @ObservationIgnored private var stationsByRegion:
         (of: [DrawnStation], grouped: [Region: [DrawnStation]])?
 
-    private struct Decoded: Sendable {
+    struct Decoded: Sendable {
         var lines: [DrawnLine]
         var stations: [DrawnStation]
         var elapsed: Duration
@@ -1887,7 +1887,7 @@ final class RailNetworkStore {
     ///   values the map's own fragments already draw in, so the two stop
     ///   disagreeing. `sourceCoordinates`/routing are read from `package`
     ///   exactly as before; only display metadata is touched.
-    private nonisolated static func decode(
+    nonisolated static func decode(
         region: Region,
         catalog: [String: RailDisplayNetworkManifest.Line] = [:]
     ) async throws -> Decoded {
@@ -1899,10 +1899,36 @@ final class RailNetworkStore {
         // then applies the Apple datum shift.
         let (loaded, sourceParts) = try await DisplayNetworkCache.shared.generation(country: region.code)
         let package = loaded.package
-        let visibilityLengthByLineId = Visibility.groupLengthByLineId(package)
-        let minZoomByLineId = visibilityLengthByLineId.mapValues {
-            Visibility.minZoomForLength(totalKm: $0)
+        // The manifest's key shape (`build-display-network.py`'s
+        // `key = f"{region}|{line['id']}"`) — resolved once per line rather
+        // than reassembling the string per field below.
+        func displayMetadata(for lineID: String) -> RailDisplayNetworkManifest.Line? {
+            catalog["\(region.code)|\(lineID)"]
         }
+        // The visibility tier (group length, best rank, ported zoom) comes from
+        // the manifest wherever it has an entry: the builder's visibility
+        // groups also join a corridor split across operators, which
+        // `Visibility.groupLengthByLineId` (operator + name only) cannot see.
+        // The map's own fragments already read these manifest values
+        // (`RailDisplayNetworkManifest.Line.nativeMinZoomMapLibre`), so taking
+        // them here too keeps the line, its stations and the label election
+        // on ONE threshold. No manifest, or no entry for a line, falls back to
+        // the package's operator+name group exactly as before.
+        let packageLengthByLineId = Visibility.groupLengthByLineId(package)
+        let visibilityLengthByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.visibilityLengthKm
+                    ?? packageLengthByLineId[line.id] ?? 0)
+            }, uniquingKeysWith: { _, last in last })
+        let minZoomByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.minZoomMapLibre
+                    ?? Visibility.minZoomForLength(totalKm: packageLengthByLineId[line.id] ?? 0))
+            }, uniquingKeysWith: { _, last in last })
+        let rankByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.rank ?? line.rank)
+            }, uniquingKeysWith: { _, last in last })
         // The native threshold for every line, in MapLibre's zoom, computed
         // once here because both halves of the network read it: the line, to
         // know when it is drawn, and every station on it, which may not
@@ -1915,17 +1941,11 @@ final class RailNetworkStore {
                     line.id,
                     NetworkLOD.minZoomMapLibre(
                         portedMinZoom: minZoomByLineId[line.id] ?? 0,
-                        rank: line.rank,
+                        rank: rankByLineId[line.id] ?? line.rank,
                         visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0,
                         region: region.code, operator: line.operator, name: line.name)
                 )
             }, uniquingKeysWith: { _, last in last })
-        // The manifest's own key shape (`build-display-network.py`'s
-        // `key = f"{region}|{line['id']}"`) — resolved once per line rather
-        // than reassembling the string per field below.
-        func displayMetadata(for lineID: String) -> RailDisplayNetworkManifest.Line? {
-            catalog["\(region.code)|\(lineID)"]
-        }
         let lines = zip(package.lines, sourceParts).map { line, sourceIntervals in
             // `DisplayParts` stays byte-for-byte WGS84-compatible with the
             // WebUI. Only the coordinates handed to MapKit are shifted for
@@ -1959,12 +1979,12 @@ final class RailNetworkStore {
                 colorDark: Color(hex: colorDarkHex) ?? .accentColor,
                 colorHex: (colorHex ?? "#7a7a7a").lowercased(),
                 colorDarkHex: (colorDarkHex ?? "#7a7a7a").lowercased(),
-                rank: line.rank,
+                rank: rankByLineId[line.id] ?? line.rank,
                 minZoom: portedMinZoom,
                 visibilityLengthKm: visibilityLengthKm,
                 lodMinZoom: NetworkLOD.minZoom(
                     portedMinZoom: portedMinZoom,
-                    rank: line.rank,
+                    rank: rankByLineId[line.id] ?? line.rank,
                     visibilityLengthKm: visibilityLengthKm, region: region.code,
                     operator: line.operator, name: line.name),
                 lane: 0,

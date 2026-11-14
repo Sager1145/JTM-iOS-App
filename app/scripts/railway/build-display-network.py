@@ -450,6 +450,104 @@ def wide_min_zoom(km: float) -> int:
     return 7
 
 
+# A station is matched to a segment end when it lies this close to it.
+CORRIDOR_END_STATION_M = 500.0
+
+
+def _line_terminal_station_codes(line: dict) -> set[str]:
+    """Station codes of the line's true termini: the station at the first
+    point of its first segment and the one at the last point of its last
+    segment. Package segment ends inside the line do not coincide exactly, so
+    only these two ends are termini."""
+    segments = [row for row in (line.get("segments") or []) if len(row) > 2 and row[2]]
+    stations = line.get("stations") or []
+    if not segments or not stations:
+        return set()
+    codes: set[str] = set()
+    for lon, lat in (segments[0][2][0], segments[-1][2][-1]):
+        best_code, best_m = None, CORRIDOR_END_STATION_M
+        for station in stations:
+            metres = equirectangular_metres(
+                {"lon": lon, "lat": lat}, {"lon": station[2], "lat": station[3]})
+            if metres <= best_m:
+                best_code, best_m = str(station[0]), metres
+        if best_code is not None:
+            codes.add(best_code)
+    return codes
+
+
+def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
+    """Per line id: (group length km, group best rank).
+
+    The group starts as operator+name (the designed visibility group), then
+    same-name groups where one has a terminus station that the other also
+    serves (a shared station code, e.g. JR East / JR Central 東海道線 at 熱海),
+    transitively, are one group, so a corridor split across operators gets one minimum zoom.
+    Identity of the terminus station, not distance, decides: unrelated
+    same-name lines that merely end near each other stay apart. Lines with
+    different names are never merged. The group's best rank is the lowest one
+    in it, except that grouping never lowers a line to rank 0 (an always-drawn
+    backbone) from a rank above 0.
+
+    This deliberately differs from the website's operator+name tier
+    (`rail-network.js` `visibilityGroupKey`) for the lines that join: the
+    native app draws a corridor split across operators as one. The website is
+    edited in its own repo; the difference is an iOS-only decision (the
+    builder's `minZoomMapLibre` is therefore not web-identical for them).
+    """
+    parent: dict[str, str] = {}
+
+    def find(key: str) -> str:
+        while parent[key] != key:
+            parent[key] = parent[parent[key]]
+            key = parent[key]
+        return key
+
+    group_of: dict[str, str] = {}
+    km: dict[str, float] = defaultdict(float)
+    rank: dict[str, int] = {}
+    terminals: dict[str, set[str]] = defaultdict(set)
+    names: dict[str, str] = {}
+    for line in lines:
+        key = f"{line.get('operator') or ''}\0{line['name']}"
+        parent.setdefault(key, key)
+        group_of[line["id"]] = key
+        names[key] = line["name"]
+        km[key] += sum(float(row[0]) for row in line.get("segments") or [])
+        line_rank = int(line.get("rank", 0))
+        rank[key] = min(rank.get(key, line_rank), line_rank)
+        terminals[key] |= _line_terminal_station_codes(line)
+    # A line joins another same-name line when one's terminus station is a
+    # station of the other (the same station code): the two physically meet
+    # there, whether both end at it or one runs past it.
+    station_codes: dict[str, set[str]] = defaultdict(set)
+    for line in lines:
+        station_codes[group_of[line["id"]]].update(str(row[0]) for row in line.get("stations") or [])
+    keys_by_name: dict[str, list[str]] = defaultdict(list)
+    for key in sorted(names):
+        keys_by_name[names[key]].append(key)
+    for same_name in keys_by_name.values():
+        for i, key_a in enumerate(same_name):
+            for key_b in same_name[i + 1:]:
+                if find(key_a) != find(key_b) and (
+                        terminals[key_a] & station_codes[key_b]
+                        or terminals[key_b] & station_codes[key_a]):
+                    parent[find(key_a)] = find(key_b)
+    total_km: dict[str, float] = defaultdict(float)
+    best_rank: dict[str, int] = {}
+    for key in names:
+        root = find(key)
+        total_km[root] += km[key]
+        best_rank[root] = min(best_rank.get(root, rank[key]), rank[key])
+    out: dict[str, tuple[float, int]] = {}
+    for line in lines:
+        root = find(group_of[line["id"]])
+        own = int(line.get("rank", 0))
+        grouped = best_rank[root]
+        out[line["id"]] = (total_km[root], max(grouped, 1) if own > 0 else grouped)
+    return out
+
+
 def station_density_min_zoom(line: dict, line_min: int) -> int:
     """Port of Visibility.stationMinZoomByLineId."""
     count = len(line.get("stations") or [])
@@ -3566,10 +3664,7 @@ def build(
             released_intervals.add((str(line_id), int(interval_index)))
         for name, value in corridor_counts.items():
             shared_corridor_totals[name] += value
-        group_lengths: dict[str, float] = defaultdict(float)
-        for line in package["lines"]:
-            key = f"{line.get('operator') or ''}\0{line['name']}"
-            group_lengths[key] += sum(float(row[0]) for row in line.get("segments") or [])
+        visibility_by_line = visibility_groups(package["lines"])
 
         lane_rows_by_line: dict[str, list[list]] = defaultdict(list)
         for row in lane_rows_by_region.get(region, []):
@@ -3698,10 +3793,8 @@ def build(
         for order, line in enumerate(package["lines"]):
             source_lines += 1
             key = f"{region}|{line['id']}"
-            group_key = f"{line.get('operator') or ''}\0{line['name']}"
-            group_km = group_lengths[group_key]
+            group_km, rank = visibility_by_line[line["id"]]
             ported_min = length_min_zoom(group_km)
-            rank = int(line.get("rank", 0))
             rank_min = (3, 3, 4, 5, 6)[rank] if 0 <= rank < 5 else 0
             lod_min = max(ported_min, rank_min, wide_min_zoom(group_km))
             # A render-group colour override (na-render-groups.json `groups`,
