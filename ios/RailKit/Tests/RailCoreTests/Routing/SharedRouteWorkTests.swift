@@ -19,29 +19,29 @@ struct SharedRouteWorkTests {
         }
     }
 
-    private actor Probe {
-        private(set) var starts = 0
+    private struct Probe: Sendable {
+        private let state = RouteTestState(0)
 
-        func enter() {
-            starts += 1
-        }
+        var starts: Int { get async { await state.value } }
+
+        func enter() async { await state.update { $0 += 1 } }
 
         func waitForStarts(_ count: Int) async throws {
             try await waitForRouteTestObservation("operation starts >= \(count)") {
-                await self.starts >= count
+                try await state.wait { $0 >= count }
             }
         }
     }
 
     private func waitForSubscribers(_ count: Int, in work: SharedRouteWork<String, Int>) async throws {
         try await waitForRouteTestObservation("subscriberCount == \(count)") {
-            await work.snapshot().subscriberCount == count
+            try await work.waitForSnapshot { $0.subscriberCount == count }
         }
     }
 
     private func waitForCompletions(_ count: Int, in work: SharedRouteWork<String, Int>) async throws {
         try await waitForRouteTestObservation("completedOperationCount == \(count)") {
-            await work.snapshot().completedOperationCount == count
+            try await work.waitForSnapshot { $0.completedOperationCount == count }
         }
     }
 

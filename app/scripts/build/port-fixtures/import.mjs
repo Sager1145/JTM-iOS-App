@@ -108,6 +108,12 @@ context.setTimeout = (fn, ms, ...rest) => {
   timers.add(handle);
   return handle;
 };
+// The shipped app is static (`hasBackend` defaults to false, app-api.js), and
+// then saveTrainStore never reaches schedulePendingServerStoreJournal — the
+// marker the "persist" events below are recorded at. The Swift port persists
+// at those points, so the sandbox opts into a backend, as it did when the
+// default was true. Must be set before the scripts are evaluated.
+context.APP_RUNTIME_CONFIG = { hasBackend: true, apiFileSuffix: "" };
 evaluateAppScripts(context);
 
 const run = (expr) => vm.runInContext(expr, context);
@@ -1225,5 +1231,16 @@ const fixture = {
 };
 
 export function build() {
+  // Guard: the "persist" events are recorded only while the sandbox's
+  // `hasBackend` is true (see the APP_RUNTIME_CONFIG note above). If the
+  // JavaScript reference's default ever flips again, every case silently
+  // loses its persist events and the Swift parity check would pin a sequence
+  // the port does not emit. Fail loudly here instead.
+  const persistEvents = (JSON.stringify(fixture).match(/"e":"persist"/g) || []).length;
+  if (persistEvents === 0)
+    throw new Error(
+      "import fixture recorded no \"persist\" events: the sandbox's hasBackend " +
+        "opt-in no longer reaches schedulePendingServerStoreJournal",
+    );
   return fixture;
 }

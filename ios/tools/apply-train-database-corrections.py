@@ -182,7 +182,8 @@ def apply_set(record, fields, resolver):
             record["completeness"] = {**record["completeness"], **value}
         elif key == "allStations":
             record["allStations"] = bool(value)
-        elif key in ("validFrom", "validUntil", "origin", "destination", "label", "company", "name", "via"):
+        elif key in ("validFrom", "validUntil", "origin", "destination", "label", "company", "name", "via",
+                     "notes", "source", "confidence"):
             record[key] = value
         else:
             raise Fail(f"unsupported set key {key}")
@@ -446,6 +447,25 @@ def run(check, quiet):
                 touch(clone_id, {"ids": [], "basis": f"older era of {entry['record']} (until {split['at']}), kept as it was; "
                                  "the corrections apply to the record from that date"})
             split_records.update((entry["record"], clone_id))
+        # a successor is the later era of a record that ends: a copy that starts where the record ends
+        successor = entry.get("successor")
+        if successor:
+            new_id = successor["newId"]
+            if new_id in by_id:
+                raise Fail(f"{entry['_where']}: successor target {new_id} already exists")
+            later = copy.deepcopy(record)
+            later["patternId"] = new_id
+            later["validFrom"] = successor["from"]
+            later["validUntil"] = None
+            later["completeness"] = {**later["completeness"], "validity": "partial"}
+            apply_set(later, successor["set"], resolver)
+            for key in ("unsolvableLegs",):
+                later.pop(key, None)
+            patterns.insert(patterns.index(record) + 1, later)
+            by_id[new_id] = later
+            before.setdefault(new_id, None)
+            touch(new_id, {"ids": entry["ids"], "basis": successor["basis"]})
+            explicit_labels.add(new_id)
     pre = {pid: copy.deepcopy(r) for pid, r in by_id.items()}
 
     # phase B: the corrections themselves
