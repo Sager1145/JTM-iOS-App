@@ -101,6 +101,8 @@ extension StationCard {
 struct StationCardView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
+    @Environment(\.popupHost) private var popupHost
     @Environment(\.openURL) private var openURL
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -299,7 +301,7 @@ struct StationCardView: View {
             #if targetEnvironment(macCatalyst)
             if lineIsShown { controller.journeyMenuBottomObstruction = 0 }
             #else
-            if lineIsShown { controller.journeyMenuBottomObstruction = sheetHeight }
+            if lineIsShown { controller.journeyMenuBottomObstruction = bottomCover(sheetHeight) }
             #endif
             focusLineIfReady()
         }
@@ -327,7 +329,7 @@ struct StationCardView: View {
             .accessibilityIdentifier("stationCardShare")
             RailSheetCloseButton(
                 label: Text(localization.text("ios.close", fallback: "Close")),
-                action: { dismiss() })
+                action: { close() })
                 .accessibilityIdentifier("stationCardClose")
         }
         .accessibilityIdentifier("stationCardHeader")
@@ -336,6 +338,17 @@ struct StationCardView: View {
     private struct SheetMeasurements: Equatable {
         var height: CGFloat
         var bottomInset: CGFloat
+    }
+
+    /// The panel closes through the workspace; a system sheet dismisses itself.
+    private func close() {
+        if let closePanelSurface { closePanelSurface() } else { dismiss() }
+    }
+
+    /// What the card covers at the bottom of the map. The docked panel sits
+    /// beside the map, so it covers none of it.
+    private func bottomCover(_ sheetHeight: CGFloat) -> CGFloat {
+        popupHost == .panel ? 0 : sheetHeight
     }
 
     private func requestLineFocus(_ rect: MKMapRect) {
@@ -359,7 +372,7 @@ struct StationCardView: View {
         #if targetEnvironment(macCatalyst)
         controller.journeyMenuBottomObstruction = 0
         #else
-        controller.journeyMenuBottomObstruction = sheetHeight
+        controller.journeyMenuBottomObstruction = bottomCover(sheetHeight)
         #endif
         controller.fit(rect)
     }

@@ -27,6 +27,8 @@ private struct DetailActionSizing: ViewModifier {
 /// then the chronological stop timeline and lower-priority metadata.
 struct RideDetailView: View {
     let train: Train
+    /// Where the notes read card and form are presented; see `WorkspaceSurfacePolicy`.
+    var host: WorkspaceSurfaceHost = .systemSheet
     var onSave: ((Train) -> Bool)?
     /// Answers only once the write has persisted (or failed), for the note
     /// form, which keeps its draft until then.
@@ -71,7 +73,7 @@ struct RideDetailView: View {
             .navigationTitle(train.number)
             .navigationBarTitleDisplayMode(.inline)
             .tripNotesPresentation(
-                flow: tripNoteFlow ?? inertTripNoteFlow, train: train, trains: suggestionTrains,
+                flow: tripNoteFlow ?? inertTripNoteFlow, host: host, train: train, trains: suggestionTrains,
                 onSet: onSaveAwaitingPersistence.map { save in
                     { (notes: [TripNote]) async -> Bool in
                         var updated = train

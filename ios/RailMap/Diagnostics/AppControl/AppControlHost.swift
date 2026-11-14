@@ -596,6 +596,8 @@ final class AppControlHost: AppControlDriver {
             ],
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),
+            "sheetHost": optional(workspace?.sheetHost()),
+            "presented": .bool(Self.rootHasPresentedController()),
             "stage": optional(workspace?.stage()),
             "tab": optional(workspace?.tab()),
             "hidden": [
@@ -903,6 +905,15 @@ final class AppControlHost: AppControlDriver {
             "cameraZoom": .number((levels.cameraZoom * 100).rounded() / 100),
             "sinceInstallMs": levels.installedAt.map { .number(Double((ContinuousClock.now - $0).milliseconds)) } ?? .null,
         ]
+    }
+
+    /// True when a system presentation (sheet, alert, cover) is up over the
+    /// root view controller. A panel-hosted popup leaves this false.
+    static func rootHasPresentedController() -> Bool {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        guard let root = windows.first(where: \.isKeyWindow)?.rootViewController else { return false }
+        return root.presentedViewController != nil
     }
 
     /// Scene and application activation, so a poll shows a window hidden mid-sweep

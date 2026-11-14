@@ -24,6 +24,8 @@ struct AppControlWorkspaceHandle {
     var closeEditor: () -> Void
     var editorState: () -> EditorState
     var sheetID: () -> String?
+    /// "panel" or "systemSheet" for the open sheet; nil with none.
+    var sheetHost: () -> String?
     var renderStats: () -> RailMapView.RenderStats?
     var drawableRideCount: () -> Int
     /// Rides the current tab's scope would draw, before the trip cap.

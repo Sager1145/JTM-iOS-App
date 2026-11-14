@@ -87,6 +87,7 @@ struct JourneyGroupAssignmentView: View {
     let editing: JourneyEditing
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
     @State private var selection: JourneyGroup?
     @State private var saving = false
     @State private var failed = false
@@ -116,7 +117,7 @@ struct JourneyGroupAssignmentView: View {
                 RailEditingToolbar(
                     cancelTitle: Text(localization.text("ios.cancel", fallback: "Cancel")),
                     cancelDisabled: saving,
-                    onCancel: { dismiss() },
+                    onCancel: { close() },
                     confirmTitle: Text(localization.text("ios.save", fallback: "Save")),
                     confirmID: "saveJourneyGroup",
                     canConfirm: !(saving || selection?.name.isEmpty == true),
@@ -125,6 +126,11 @@ struct JourneyGroupAssignmentView: View {
             .disabled(saving)
         }
         .interactiveDismissDisabled(saving)
+    }
+
+    /// The panel closes through the workspace; a system sheet dismisses itself.
+    private func close() {
+        if let closePanelSurface { closePanelSurface() } else { dismiss() }
     }
 
     private func save() {
@@ -138,7 +144,7 @@ struct JourneyGroupAssignmentView: View {
         saving = true
         Task { @MainActor in
             if await persistence.value.saved {
-                dismiss()
+                close()
             } else {
                 _ = result.rollback?()
                 failed = true

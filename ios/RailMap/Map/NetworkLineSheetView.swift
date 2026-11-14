@@ -14,6 +14,7 @@ struct NetworkLineSheetView: View {
     var onPreview: (RailwayLinePreview?) -> Void
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.popupHost) private var popupHost
     @State private var detent: PresentationDetent = .medium
     @State private var lineIsShown = false
     @State private var sheetHeight: CGFloat = 0
@@ -49,7 +50,7 @@ struct NetworkLineSheetView: View {
             #if targetEnvironment(macCatalyst)
             if lineIsShown { controller.journeyMenuBottomObstruction = 0 }
             #else
-            if lineIsShown { controller.journeyMenuBottomObstruction = sheetHeight }
+            if lineIsShown { controller.journeyMenuBottomObstruction = popupHost == .panel ? 0 : sheetHeight }
             #endif
             focusIfReady()
         }
@@ -87,7 +88,7 @@ struct NetworkLineSheetView: View {
         #if targetEnvironment(macCatalyst)
         controller.journeyMenuBottomObstruction = 0
         #else
-        controller.journeyMenuBottomObstruction = sheetHeight
+        controller.journeyMenuBottomObstruction = popupHost == .panel ? 0 : sheetHeight
         #endif
         controller.fit(rect)
     }
@@ -98,6 +99,7 @@ struct NetworkLineSheetView: View {
 struct NetworkLineChooserView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
 
     var targets: [NetworkLineTarget]
     var onPick: (NetworkLineTarget) -> Void
@@ -110,7 +112,7 @@ struct NetworkLineChooserView: View {
                 ) {
                     SheetCloseButton(
                         accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
-                        action: { dismiss() })
+                        action: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })
                         .accessibilityIdentifier("lineChooserClose")
                 }
                 List {
