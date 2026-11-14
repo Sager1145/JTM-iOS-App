@@ -516,10 +516,7 @@ extension RailMapView.Surface {
                 on mapView: MKMapView
             ) {
                 let updateInterval = RailSignpost.map.begin("map.update")
-                defer {
-                    RailSignpost.map.end("map.update", updateInterval)
-                    ridesLoadJustFinished = false
-                }
+                defer { RailSignpost.map.end("map.update", updateInterval) }
                 // Input preparation also rebuilds station and line indexes.
                 // Keep the installed frame stable while fingers move, and
                 // coalesce arriving data into the newest update for release.
@@ -541,6 +538,8 @@ extension RailMapView.Surface {
                 }
                 // A newer normal update supersedes any queued gesture update.
                 pendingViewUpdate = nil
+                // Consumed only by an update that runs (not a deferred one).
+                defer { ridesLoadJustFinished = false }
                 let regionalDayChanged = refreshNetworkToday()
                 // A sheet drag and a menu presentation can call
                 // `updateUIView` every frame while these arrays still share
@@ -1511,7 +1510,19 @@ extension RailMapView.Surface {
                 let now = ContinuousClock.now
                 if let last = lastGestureSwapAttempt, now - last < .milliseconds(250) { return }
                 lastGestureSwapAttempt = now
-                guard isGeometryLevelReady(wanted, zoom: zoom, on: mapView) else { return }
+                if !isGeometryLevelReady(wanted, zoom: zoom, on: mapView) {
+                    // A long pinch outgrows every padded rect, so the wanted
+                    // level never lands ready. A landed level waiting on its
+                    // own prepared rect installs instead, as it would after
+                    // lift-off, when it is nearer the camera than the
+                    // installed one and still covers the screen.
+                    guard let pending = pendingInstallLevel, let rect = pendingInstallRect,
+                          rect.contains(mapView.visibleMapRect),
+                          isGeometryLevelReady(pending, zoom: zoom, on: mapView, buildRect: rect),
+                          GeometryZoomLevels.installsLanded(
+                            landed: pending, installed: installed, zoom: zoom, ready: true)
+                    else { return }
+                }
                 noteRebuildTrigger(.levelSwapped)
                 rebuild(on: mapView, duringGesture: true, deferMarkers: true)
             }
@@ -1907,15 +1918,19 @@ extension RailMapView.Surface {
                     // padded rect outgrows every preparation), the landed
                     // level installs on the rect it was prepared for.
                     let wanted = self.wantedGeometryLevel(at: landedZoom)
-                    let landedUsable = buildRect.contains(mapView.visibleMapRect)
+                    // Ready on the current padded rect: install there, no
+                    // prepared rect needed. Else (zooming out) the landed
+                    // level installs on the rect it was prepared for.
+                    let readyOnPadded = self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)
+                    let readyOnPrepared = !readyOnPadded && buildRect.contains(mapView.visibleMapRect)
                         && self.isGeometryLevelReady(
                             frame.bucket, zoom: landedZoom, on: mapView, buildRect: buildRect)
                     if GeometryZoomLevels.landingInstall(
                         landed: frame.bucket, installed: self.installedGeometryLevel, zoom: landedZoom,
                         wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView),
-                        landedUsable: landedUsable) == .installLanded {
+                        landedUsable: readyOnPadded || readyOnPrepared) == .installLanded {
                         self.pendingInstallLevel = frame.bucket
-                        self.pendingInstallRect = buildRect
+                        self.pendingInstallRect = readyOnPadded ? nil : buildRect
                     }
                     self.noteRebuildTrigger(.geometryPrepared)
                     self.rebuild(on: mapView)
@@ -1940,7 +1955,8 @@ extension RailMapView.Surface {
                         // Busy: try again after the next quiet moment.
                         if self.isManipulating || self.geometryPreparation != nil
                             || self.rideStrokePreparation != nil { continue }
-                        malloc_zone_pressure_relief(nil, 0)
+                        // Tens of ms with a large heap; thread-safe.
+                        Task.detached(priority: .utility) { _ = malloc_zone_pressure_relief(nil, 0) }
                         return
                     }
                 }
@@ -2868,7 +2884,7 @@ extension RailMapView.Surface {
                 rideStrokePreparationFrame = strokeFrame
                 let memo = rideStrokeMemo
                 let worker = Task.detached(priority: .userInitiated) {
-                    RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
+                    await RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
                 }
                 rideStrokePreparation = Task { @MainActor [weak self, weak mapView] in
                     let output = await withTaskCancellationHandler {
@@ -3088,7 +3104,7 @@ extension RailMapView.Surface {
                 arrivalStrokePreparationID = requestID
                 let memo = rideStrokeMemo
                 let worker = Task.detached(priority: .userInitiated) {
-                    RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
+                    await RideStrokeBuilder.build(requests, frame: strokeFrame, memo: memo)
                 }
                 arrivalStrokePreparation = Task { @MainActor [weak self, weak mapView] in
                     let output = await withTaskCancellationHandler {
@@ -5716,15 +5732,11 @@ extension RailMapView.Surface {
                 guard loading != ridesAreLoading else { return }
                 ridesAreLoading = loading
                 guard !loading else { return }
-                // The load finished. A match still waiting out the debounce
-                // runs now, and a final publish arriving in this update pass
-                // (`update` follows this call) starts at once too.
+                // The load finished. The final publish arrives in the update
+                // pass that follows this call, with the new rides, and starts
+                // matching at once (`MatchingSchedule`); matching here would
+                // run on the old ride set.
                 ridesLoadJustFinished = true
-                if matchingDebounceTask != nil {
-                    matchingDebounceTask?.cancel()
-                    matchingDebounceTask = nil
-                    startStrokeMatching(signature: strokeMatchingSignature())
-                }
             }
 
             func playbackStateChanged(on mapView: MKMapView) {

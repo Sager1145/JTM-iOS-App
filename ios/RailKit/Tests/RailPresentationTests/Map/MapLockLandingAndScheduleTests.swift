@@ -79,6 +79,63 @@ struct MapLockLandingAndScheduleTests {
         #expect(old.whileMoving.isEmpty, "the old rule installed \(old.whileMoving)")
     }
 
+    /// A pinch: the camera moves in quarter steps and the only install is the
+    /// mid-gesture swap. Without the fallback the swap needs the wanted level
+    /// ready on the padded rect, which never happens zooming out. With it, a
+    /// landed pending level whose prepared rect still covers the screen
+    /// installs. Returns the levels installed while the fingers were down.
+    private func gesture(from: Double, to: Double, fallback: Bool) -> [Int] {
+        let moveSteps = Int(abs(to - from) / 0.25)
+        let direction: Double = to < from ? -1 : 1
+        var installed = GeometryZoomLevels.nearestLevel(zoom: from)
+        var installs: [Int] = []
+        var inFlight: (level: Int, startZoom: Double, remaining: Int)?
+        var pending: (level: Int, startZoom: Double)?
+        for step in 0...moveSteps {
+            let zoom = from + direction * 0.25 * Double(step)
+            if let flight = inFlight {
+                if flight.remaining == 0 {
+                    inFlight = nil
+                    let wanted = GeometryZoomLevels.wantedLevel(zoom: zoom, installed: installed)
+                    let paddedReady = 2 * Self.visibleWidth(flight.startZoom) >= 2 * Self.visibleWidth(zoom) - 1e-12
+                    if flight.level == wanted, paddedReady {
+                        installed = flight.level
+                        installs.append(installed)
+                    } else if !GeometryZoomLevels.installsLanded(
+                        landed: flight.level, installed: installed, zoom: zoom, ready: true) {
+                        // discarded
+                    } else {
+                        pending = (flight.level, flight.startZoom)
+                    }
+                } else {
+                    inFlight = (flight.level, flight.startZoom, flight.remaining - 1)
+                }
+            }
+            if fallback, let waiting = pending {
+                let covers = 2 * Self.visibleWidth(waiting.startZoom) >= Self.visibleWidth(zoom) - 1e-12
+                if !covers { pending = nil }
+                else if GeometryZoomLevels.installsLanded(
+                    landed: waiting.level, installed: installed, zoom: zoom, ready: true) {
+                    installed = waiting.level
+                    installs.append(installed)
+                    pending = nil
+                }
+            }
+            if inFlight == nil {
+                let wanted = GeometryZoomLevels.wantedLevel(zoom: zoom, installed: installed)
+                if wanted != installed { inFlight = (wanted, zoom, Self.steps(startZoom: zoom)) }
+            }
+        }
+        return installs
+    }
+
+    @Test func aLongPinchOutInstallsOnlyThroughTheSwapFallback() {
+        #expect(gesture(from: 12.25, to: 5, fallback: false).isEmpty)
+        let with = gesture(from: 12.25, to: 5, fallback: true)
+        #expect(with.count >= 3, "installs during the pinch: \(with)")
+        #expect(zip(with, with.dropFirst()).allSatisfy { $0 > $1 })
+    }
+
     @Test func zoomingInStillInstallsSteadilyUnderBothRules() {
         for rule in [Rule.readyAtCurrentPaddedRect, .landingInstall] {
             let result = run(from: 5, to: 12.25, rule: rule)

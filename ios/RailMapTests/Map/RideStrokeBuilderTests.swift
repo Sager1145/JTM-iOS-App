@@ -159,10 +159,10 @@ struct RideStrokeBuilderTests {
     }
 
     @Test("the builder draws the same vertices as the main-actor path for every segment")
-    func builderEqualsMainActorPath() {
+    func builderEqualsMainActorPath() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame)
-        let output = RideStrokeBuilder.build(requests, frame: frame, memo: .init())
+        let output = await RideStrokeBuilder.build(requests, frame: frame, memo: .init())
         let byKey = Dictionary(output.built.map { ($0.key, $0.polyline) }, uniquingKeysWith: { first, _ in first })
 
         var drawn = 0
@@ -190,12 +190,12 @@ struct RideStrokeBuilderTests {
     }
 
     @Test("a second build is answered from the memo with the same vertices")
-    func memoisedBuildIsIdentical() {
+    func memoisedBuildIsIdentical() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame).filter { $0.stroke != nil }
         let memo = RideStrokeBuilder.Memo()
-        let first = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
-        let second = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        let first = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        let second = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
         // Every request whose slice succeeded hits the memo; one whose slice
         // came back empty draws its own coordinates and is never shared.
         #expect(second.shared >= first.shared + 1)
@@ -219,7 +219,7 @@ struct RideStrokeBuilderTests {
         let clock = ContinuousClock()
         let started = clock.now
         let onMain = await Task.detached(priority: .userInitiated) { () -> (Bool, Int) in
-            let output = RideStrokeBuilder.build(requests, frame: frame, memo: .init())
+            let output = await RideStrokeBuilder.build(requests, frame: frame, memo: .init())
             return (pthread_main_np() != 0, output.built.count)
         }.value
         let elapsed = clock.now - started
@@ -233,7 +233,7 @@ struct RideStrokeBuilderTests {
     }
 
     @Test("a segment that draws nothing is reported as empty, not dropped silently")
-    func degenerateSegmentsAreReportedEmpty() {
+    func degenerateSegmentsAreReportedEmpty() async {
         let frame = Self.frame
         let lone = RideStrokeBuilder.Request(
             key: Self.plainKey("lone"), coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
@@ -243,17 +243,17 @@ struct RideStrokeBuilderTests {
             key: Self.plainKey("fine"),
             coordinates: [Coordinate(lon: 139.7, lat: 35.7), Coordinate(lon: 139.8, lat: 35.8)],
             latitude: 35.7, stroke: nil)
-        let output = RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
+        let output = await RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
         #expect(output.built.map(\.key) == [Self.plainKey("fine")])
         #expect(Set(output.empty) == [Self.plainKey("lone"), Self.plainKey("none")])
     }
 
     @Test("clearing the memo forgets shared points")
-    func memoRemoveAll() {
+    func memoRemoveAll() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame).filter { $0.stroke != nil }
         let memo = RideStrokeBuilder.Memo()
-        _ = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        _ = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
         #expect(memo.count > 0)
         memo.removeAll()
         #expect(memo.count == 0)

@@ -77,15 +77,8 @@ struct RegressionGuardZoomPreparation {
         #expect(landing.contains("self.networkGeometry.ensureFrame(key: key)"))
     }
 
-    @Test func aLandedWantedLevelOwesNoSecondRebuild() throws {
-        // A ready wanted level installs through the ordinary rebuild: no pending install.
+    @Test func aReadyWantedLevelInstallsThroughTheOrdinaryRebuildWithNoPendingInstall() {
         #expect(Self.coordinator.contains("wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView)"))
-        let commit = try Self.body(
-            Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
-        #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))
-        #expect(!commit.contains("wantedLevelFollowUpOwed = true"))
-        // The padding is owed only after an install on the prepared rect.
-        #expect(commit.contains("installedOnPreparedRect"))
     }
 
     @Test func aMatchWithNewGeometryButEqualRefsStillCountsAsChanged() {

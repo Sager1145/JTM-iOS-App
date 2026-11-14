@@ -180,11 +180,13 @@ nonisolated enum RideStrokeBuilder {
     /// Builds every request. Pure apart from the memo; call from a worker.
     /// Cancellation returns what was built so far.
     ///
-    /// A large batch is split by share key across a few threads
+    /// A large batch is split by share key across a few child tasks
     /// (``RideBuildPartition``): requests that share a key stay together, so
     /// the sharing counts match one thread's, and the answers are merged back
     /// into request order. One thread took 3.26 s for a warm launch's trips.
-    static func build(_ requests: [Request], frame: Frame, memo: Memo) -> Output {
+    /// The children inherit the caller's cancellation and nothing blocks a
+    /// thread while they run.
+    static func build(_ requests: [Request], frame: Frame, memo: Memo) async -> Output {
         let interval = RailSignpost.map.begin("map.rideStrokes.build")
         defer { RailSignpost.map.end("map.rideStrokes.build", interval) }
         let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
@@ -193,41 +195,24 @@ nonisolated enum RideStrokeBuilder {
         guard parts.count > 1 else {
             return merge([buildPart(Array(requests.indices), requests, frame: frame, memo: memo, cancelled: { Task.isCancelled })])
         }
-        let cancel = CancelFlag()
-        let results = Results(count: parts.count)
-        let group = DispatchGroup()
-        for (position, indices) in parts.enumerated() {
-            DispatchQueue.global(qos: .userInitiated).async(group: group) {
-                results.set(position, buildPart(
-                    indices, requests, frame: frame, memo: memo, cancelled: { cancel.isCancelled }))
+        let results = await withTaskGroup(of: (Int, Part).self) { group in
+            for (position, indices) in parts.enumerated() {
+                group.addTask {
+                    (position, buildPart(
+                        indices, requests, frame: frame, memo: memo, cancelled: { Task.isCancelled }))
+                }
             }
+            var all = Array(repeating: Part(), count: parts.count)
+            for await (position, part) in group { all[position] = part }
+            return all
         }
-        // Task cancellation is only visible from the calling task: poll it.
-        while group.wait(timeout: .now() + .milliseconds(20)) == .timedOut {
-            if Task.isCancelled { cancel.cancel() }
-        }
-        return merge(results.all())
+        return merge(results)
     }
 
     private struct Part: Sendable {
         var built: [(index: Int, value: Built)] = []
         var shared = 0
         var empty: [(index: Int, key: RideLineCacheKey)] = []
-    }
-
-    private final class CancelFlag: @unchecked Sendable {
-        private let lock = NSLock()
-        private var flag = false
-        var isCancelled: Bool { lock.lock(); defer { lock.unlock() }; return flag }
-        func cancel() { lock.lock(); flag = true; lock.unlock() }
-    }
-
-    private final class Results: @unchecked Sendable {
-        private let lock = NSLock()
-        private var parts: [Part]
-        init(count: Int) { parts = Array(repeating: Part(), count: count) }
-        func set(_ position: Int, _ part: Part) { lock.lock(); parts[position] = part; lock.unlock() }
-        func all() -> [Part] { lock.lock(); defer { lock.unlock() }; return parts }
     }
 
     private static func buildPart(

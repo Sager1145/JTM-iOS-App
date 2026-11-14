@@ -45,6 +45,16 @@ class BuildIsolation(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             self.assertIsNone(m.built_commit(tmp))
 
+    def test_state_file_is_keyed_on_the_worktree(self):
+        m = load()
+        class A: target = "mac"; device = None
+        self.assertTrue(m.state_file(A).name.endswith("-" + m.WORKTREE_KEY + ".json"))
+
+    def test_launch_refuses_a_dirty_build_unless_allowed(self):
+        source = PATH.read_text()
+        self.assertIn("--allow-dirty", source)
+        self.assertIn('stamped.endswith("-dirty") and not a.allow_dirty', source)
+
     def test_build_command_stamps_the_commit(self):
         source = PATH.read_text()
         self.assertIn('"JTM_BUILD_COMMIT=" + build_commit_stamp()', source)

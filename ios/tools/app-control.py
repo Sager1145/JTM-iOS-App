@@ -29,8 +29,8 @@ DEFAULT_SIM = "0DBE2488-0BEB-4932-9B55-091B3CC793B6"
 DEFAULT_DEVICE = "00008140-000575142288801C"
 # One build folder per worktree: sharing one let another session's build replace the app
 # a run was about to measure (the app then ran a different commit than the one under test).
-DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData")) / \
-    hashlib.sha1(str(REPO).encode("utf-8")).hexdigest()[:10]
+WORKTREE_KEY = hashlib.sha1(str(REPO).encode("utf-8")).hexdigest()[:10]
+DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData")) / WORKTREE_KEY
 PLATFORM_SUFFIX = {"sim": "iphonesimulator", "mac": "maccatalyst", "device": "iphoneos"}
 DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=macOS,variant=Mac Catalyst",
                 "device": "generic/platform=iOS"}  # no unlocked device needed to build
@@ -76,11 +76,13 @@ def head_commit():
 
 
 def build_commit_stamp():
-    """HEAD sha stamped into Info.plist at build time; `-dirty` when tracked files differ from HEAD."""
+    """HEAD sha stamped into Info.plist at build time; `-dirty` when tracked files or untracked files under ios/ differ from HEAD."""
     head = head_commit()
     if not head:
         return "unknown"
-    dirty = subprocess.run(["git", "-C", str(REPO), "diff", "--quiet", "HEAD"]).returncode != 0
+    status = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--untracked-files=normal", "--", "ios"],
+                            capture_output=True, text=True)
+    dirty = status.returncode != 0 or bool(status.stdout.strip())
     return head + ("-dirty" if dirty else "")
 
 
@@ -107,7 +109,8 @@ def app_path(a):
 
 
 def state_file(a):
-    return STATE_DIR / "{}-{}.json".format(a.target, device_id(a))
+    # Keyed on the worktree too: another worktree's `state` or `quit` must not reach this one's app.
+    return STATE_DIR / "{}-{}-{}.json".format(a.target, device_id(a), WORKTREE_KEY)
 
 
 def remember(a, **values):
@@ -358,6 +361,9 @@ def cmd_launch(a):
         if not a.app and commit_mismatch(stamped, head_commit()):
             out({"error": "built app is not this worktree's HEAD; run build first",
                  "builtCommit": stamped, "head": head_commit(), "app": str(app)}, 1)
+        if not a.app and stamped and stamped.endswith("-dirty") and not a.allow_dirty:
+            out({"error": "built app was made from uncommitted changes that may differ from the tree now; "
+                          "rebuild, or pass --allow-dirty", "builtCommit": stamped, "app": str(app)}, 1)
         cmd = ["open", "-n", "-g", "-a", str(app)]
         for k, v in env.items():
             cmd += ["--env", "{}={}".format(k, v)]
@@ -491,6 +497,8 @@ def main():
     ap.add_argument("--target", choices=["sim", "mac", "device"], default="sim")
     ap.add_argument("--device", help="simulator or device UDID (defaults: iPhone 17 sim / iPhone 16 Pro)")
     ap.add_argument("--app", help="built RailMap.app (default: " + str(DERIVED) + "/Build/Products/<config>)")
+    ap.add_argument("--allow-dirty", action="store_true",
+                    help="launch (mac) a build stamped -dirty, made from uncommitted changes")
     ap.add_argument("--timeout", type=float, default=None,
                     help="seconds to wait for a result (default per command, at least the app's own timeout)")
     ap.add_argument("--transport", choices=["poll", "url", "file"], default="poll",

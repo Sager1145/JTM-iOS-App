@@ -58,8 +58,17 @@ struct RegressionGuardMapLockPerf {
             Self.coordinator, from: "let landedZoom = MapProjection.zoomLevel(of: mapView)",
             to: "self.noteRebuildTrigger(.geometryPrepared)")
         #expect(landing.contains("GeometryZoomLevels.landingInstall("))
-        #expect(landing.contains("buildRect.contains(mapView.visibleMapRect)"))
-        #expect(landing.contains("self.pendingInstallRect = buildRect"))
+        // Ready on the current padded rect installs there (no prepared rect);
+        // the prepared rect is only the fallback.
+        #expect(landing.contains("let readyOnPadded = self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)"))
+        #expect(landing.contains("let readyOnPrepared = !readyOnPadded && buildRect.contains(mapView.visibleMapRect)"))
+        #expect(landing.contains("self.pendingInstallRect = readyOnPadded ? nil : buildRect"))
+        let commit = try Self.body(
+            Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
+        #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))
+        #expect(!commit.contains("wantedLevelFollowUpOwed = true"))
+        // The padding is owed only after an install on the prepared rect.
+        #expect(commit.contains("installedOnPreparedRect"))
         #expect(Self.coordinator.contains("pendingInstallRect ?? movingBuildRect"))
         #expect(Self.coordinator.contains("noteRebuildTrigger(.wantedLevelFollowUp)"))
     }
@@ -73,6 +82,32 @@ struct RegressionGuardMapLockPerf {
         #expect(request.contains("loadJustFinished: ridesLoadJustFinished"))
         #expect(Self.coordinator.contains("ridesLoadJustFinished = true"))
         #expect(!Self.coordinator.contains("matchingDebounce:"))
+    }
+
+    // A pinch installs only through the swap, so the swap falls back to a landed pending level.
+    @Test func theGestureSwapFallsBackToALandedPendingLevel() throws {
+        let swap = try Self.body(
+            Self.coordinator, from: "private func swapGeometryDuringGestureIfReady(",
+            to: "private var lastGestureSwapAttempt")
+        #expect(swap.contains("let pending = pendingInstallLevel, let rect = pendingInstallRect"))
+        #expect(swap.contains("rect.contains(mapView.visibleMapRect)"))
+        #expect(swap.contains("GeometryZoomLevels.installsLanded("))
+    }
+
+    @Test func loadEndMatchingWaitsForTheUpdateWithTheNewRides() throws {
+        let changed = try Self.body(
+            Self.coordinator, from: "func ridesLoadingChanged(", to: "func playbackStateChanged(")
+        #expect(!changed.contains("startStrokeMatching"))
+        #expect(Self.coordinator.contains("defer { ridesLoadJustFinished = false }"))
+    }
+
+    @Test func rideBuildsNeverBlockAThreadAndMemoryReliefRunsOffTheMainThread() throws {
+        #expect(Self.builder.contains("withTaskGroup(of: (Int, Part).self)"))
+        #expect(!Self.builder.contains("group.wait("))
+        let relief = try Self.body(
+            Self.coordinator, from: "private func scheduleMemoryRelief() {",
+            to: "/// `duringGesture` is the mid-pinch level swap")
+        #expect(relief.contains("Task.detached(priority: .utility)"))
     }
 
     @Test func rideStrokesBuildInPartsAndMergeInRequestOrder() {

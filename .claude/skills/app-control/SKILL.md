@@ -42,7 +42,7 @@ python3 -I ios/tools/app-control.py --target device ready         # reads ready.
 
 `launch` also sets `RAILMAP_SIGNPOST_RECORDER=1` (signpost durations in `state`) and `RAILMAP_DEVTOOLS=1` (ball visible). Use `--no-devtools` to hide the ball. The CLI waits per command (`reloadAll` 660 s, `addTrip`/`editTrip` 200 s, `loadSamples` 240 s, otherwise 90 s), at least as long as the app's own default. `--timeout` overrides this.
 
-Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/<Debug|Release>-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>.json`.
+Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/<worktree-hash>/Build/Products/<Debug|Release>-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>-<worktree-hash>.json`. `launch --target mac` refuses a build that is not HEAD, and a `-dirty` one unless `--allow-dirty`.
 
 ## Commands
 
@@ -112,7 +112,7 @@ All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `Rai
 ```sh
 python3 -I ios/tools/app-control.py --target sim --configuration Release build
 python3 -I ios/tools/app-control.py --target sim check-release
-bash ios/tools/app-control/check-release-clean.sh --debug-sanity ~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/Debug-iphonesimulator/RailMap.app
+bash ios/tools/app-control/check-release-clean.sh --debug-sanity ~/Library/Caches/jtm-railmap-app-control/DerivedData/<worktree-hash>/Build/Products/Debug-iphonesimulator/RailMap.app
 ```
 
 ## Troubleshooting
