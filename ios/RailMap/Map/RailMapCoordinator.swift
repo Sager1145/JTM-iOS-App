@@ -1064,6 +1064,7 @@ extension RailMapView.Surface {
                 }
                 memoryWarningObserver = nil
                 cameraRebuildTimer.cancel()
+                travelStopTimer.cancel()
                 stationLabels.tearDown()
                 pendingViewUpdate = nil
                 viewportResizeTask?.cancel()
@@ -1216,10 +1217,8 @@ extension RailMapView.Surface {
                 refreshTripNotePickWhileMoving(on: mapView)
                 lastCameraChange = .now
                 let zoom = MapProjection.zoomLevel(of: mapView)
-                if let last = lastObservedZoom, abs(zoom - last) > 0.001 {
-                    lastZoomDirection = zoom > last ? 1 : -1
-                }
-                lastObservedZoom = zoom
+                zoomTravel.note(zoom: zoom, at: Self.seconds(.now))
+                if travelPreparationOwesStopRebuild { scheduleTravelStopRebuild(on: mapView) }
 #if DEBUG
                 MapRenderProbe.geometryLevels.wanted = wantedGeometryLevel(at: zoom)
                 MapRenderProbe.geometryLevels.cameraZoom = zoom
@@ -1370,6 +1369,8 @@ extension RailMapView.Surface {
             }
             private var geometryPreparationID = UUID()
             private var geometryPreparationKey: String?
+            /// The rect the preparation in flight was prepared for.
+            private var geometryPreparationRect: MKMapRect?
             /// The geometry level the preparation in flight builds.
             private var geometryPreparationLevel: Int? {
                 didSet {
@@ -1417,6 +1418,7 @@ extension RailMapView.Surface {
                 geometryPreparation?.cancel()
                 geometryPreparation = nil
                 geometryPreparationKey = nil
+                geometryPreparationRect = nil
                 geometryPreparationLevel = nil
                 geometryPreparationID = UUID()
             }
@@ -1433,25 +1435,28 @@ extension RailMapView.Surface {
             }
 
             /// A landed level to install ahead of the wanted one, set by
-            /// `prepareNetworkGeometry`'s landing and cleared when a rebuild
-            /// commits (``GeometryZoomLevels/installsLanded(landed:installed:zoom:ready:)``).
-            private var pendingInstallLevel: Int? {
+            /// `landingDecision` and cleared when a rebuild commits
+            /// (``GeometryZoomLevels/installsLanded(landed:installed:zoom:ready:)``).
+            /// `rect` is the rect the level was prepared for (nil: the camera's
+            /// own padded rect is ready); the install builds and commits that
+            /// rect, and a later preparation adds the padding. `visibilityZoom`
+            /// and `visibilityBucket` are the camera zoom the preparation was
+            /// made for when that is not the camera's own (a level prepared
+            /// ahead of a zoom-out), nil otherwise.
+            private struct PendingInstall {
+                var level: Int
+                var rect: MKMapRect?
+                var visibilityZoom: Double?
+                var visibilityBucket: Int?
+            }
+            private var pendingInstall: PendingInstall? {
                 didSet {
 #if DEBUG
-                    MapRenderProbe.geometryLevels.pending = pendingInstallLevel
+                    MapRenderProbe.geometryLevels.pending = pendingInstall?.level
 #endif
                 }
             }
-            /// The rect `pendingInstallLevel` was prepared for. Set when the
-            /// landed level is installed ahead of the camera's own padded rect
-            /// (``GeometryZoomLevels/landingInstall``); the install builds and
-            /// commits that rect, and a later preparation adds the padding.
-            private var pendingInstallRect: MKMapRect?
 
-            private func clearPendingInstall() {
-                pendingInstallLevel = nil
-                pendingInstallRect = nil
-            }
             /// The installed level changed to a landed one, so the wanted level
             /// still has to start preparing.
             private var wantedLevelFollowUpOwed = false
@@ -1459,13 +1464,15 @@ extension RailMapView.Surface {
             /// The level a rebuild builds and installs: a landed pending level
             /// while it is still complete, else the camera's wanted level.
             private func geometryLevelToBuild(at zoom: Double, on mapView: MKMapView) -> Int {
-                if let pending = pendingInstallLevel {
+                if let pending = pendingInstall {
                     // A pending rect must still contain what is on screen.
-                    let covers = pendingInstallRect.map { $0.contains(mapView.visibleMapRect) } ?? true
-                    if covers, isGeometryLevelReady(pending, zoom: zoom, on: mapView, buildRect: pendingInstallRect) {
-                        return pending
+                    let covers = pending.rect.map { $0.contains(mapView.visibleMapRect) } ?? true
+                    if covers, isGeometryLevelReady(
+                        pending.level, zoom: zoom, on: mapView, buildRect: pending.rect,
+                        visibilityZoom: pending.visibilityZoom) {
+                        return pending.level
                     }
-                    clearPendingInstall()
+                    pendingInstall = nil
                 }
                 return wantedGeometryLevel(at: zoom)
             }
@@ -1541,9 +1548,11 @@ extension RailMapView.Surface {
             /// Whether `level` has everything `buildRect` (default: the camera's
             /// padded build rect) selects at the camera's zoom.
             private func isGeometryLevelReady(
-                _ level: Int, zoom: Double, on mapView: MKMapView, buildRect: MKMapRect? = nil
+                _ level: Int, zoom: Double, on mapView: MKMapView, buildRect: MKMapRect? = nil,
+                visibilityZoom: Double? = nil
             ) -> Bool {
-                let visibilityZoom = networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
+                let visibilityZoom = visibilityZoom
+                    ?? networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
                 let buildRect = buildRect ?? NetworkLOD.buildRect(for: mapView.visibleMapRect)
                 let work = missingGeometryWork(
                     frame: geometryFrame(level: level, on: mapView),
@@ -1573,11 +1582,13 @@ extension RailMapView.Surface {
                     // own prepared rect installs instead, as it would after
                     // lift-off, when it is nearer the camera than the
                     // installed one and still covers the screen.
-                    guard let pending = pendingInstallLevel, let rect = pendingInstallRect,
+                    guard let pending = pendingInstall, let rect = pending.rect,
                           rect.contains(mapView.visibleMapRect),
-                          isGeometryLevelReady(pending, zoom: zoom, on: mapView, buildRect: rect),
+                          isGeometryLevelReady(
+                            pending.level, zoom: zoom, on: mapView, buildRect: rect,
+                            visibilityZoom: pending.visibilityZoom),
                           GeometryZoomLevels.installsLanded(
-                            landed: pending, installed: installed, zoom: zoom, ready: true)
+                            landed: pending.level, installed: installed, zoom: zoom, ready: true)
                     else { return }
                 }
                 noteRebuildTrigger(.levelSwapped)
@@ -1634,6 +1645,7 @@ extension RailMapView.Surface {
                 onBuildRect(
                     Self.mapRect(MapLoadAhead.requestRect(visible: visible, velocity: loadAheadVelocity)),
                     visibilityZoom)
+                if isManipulating { startTravelPreparation(zoom: zoom, on: mapView) }
                 extendBuiltAreaWhileMoving(zoom: zoom, visible: visible, on: mapView)
             }
 
@@ -1678,9 +1690,17 @@ extension RailMapView.Surface {
                 }
             }
             private var neighbourPrebuild: Task<Void, Never>?
-            /// The camera's last zoom and which way it last moved (1 in, -1 out).
-            private var lastObservedZoom: Double?
-            private var lastZoomDirection = 0
+            /// The camera's zoom speed and which way it last moved.
+            private var zoomTravel = ZoomTravel()
+            /// How long a preparation takes from request to landing, measured
+            /// (0.5 to 4 s). Sets how far ahead of a zoom-out one aims.
+            private var prepareSeconds: Double = 1
+            /// The coarsest level a preparation ahead of a zoom-out may aim at.
+            private static let travelMinimumLevel = GeometryZoomLevels.nearestLevel(zoom: 2)
+            /// A travel preparation was requested; owes one rebuild once the
+            /// camera has stopped (rate 0) that asks for the wanted level.
+            private var travelPreparationOwesStopRebuild = false
+            private let travelStopTimer = MapDeadlineTimer(delay: .milliseconds(300))
             private var memoryWarningObserver: NSObjectProtocol?
 
             private var voiceOverObserver: NSObjectProtocol?
@@ -1799,7 +1819,7 @@ extension RailMapView.Surface {
                       networkGeometry.hasRoomToPrebuild,
                       let context = markerBuildContext else { return }
                 let prebuildLevel = GeometryZoomLevels.prebuildNeighbour(
-                    of: installed, lastZoomDirection: lastZoomDirection)
+                    of: installed, lastZoomDirection: zoomTravel.direction)
                 // The rect the level will use once the camera reaches it
                 // (larger when zooming out), united with what is built. The
                 // installed visibility zoom is kept: a superset of lines.
@@ -1903,16 +1923,98 @@ extension RailMapView.Surface {
                 }
             }
 
+            /// Whether a landed (or already cached) level installs now, and how.
+            /// Readiness is checked at the visibility zoom it was prepared for.
+            /// The level installs on the camera's own padded rect when that is
+            /// ready, else on the rect it was prepared for while that still
+            /// holds the screen (zooming out, the padded rect outgrows every
+            /// preparation); `GeometryZoomLevels.landingInstall` decides.
+            private func landingDecision(
+                level: Int, rect: MKMapRect, visibilityZoom: Double, visibilityBucket: Int?,
+                on mapView: MKMapView
+            ) -> PendingInstall? {
+                let zoom = MapProjection.zoomLevel(of: mapView)
+                let cameraVisibilityZoom = networkVisibility(on: mapView).visibilityZoom(cameraZoom: zoom)
+                let preparedAhead = abs(visibilityZoom - cameraVisibilityZoom) > 1e-9
+                let override: Double? = preparedAhead ? visibilityZoom : nil
+                let bucket: Int? = preparedAhead ? visibilityBucket : nil
+                let wanted = wantedGeometryLevel(at: zoom)
+                let readyOnPadded = isGeometryLevelReady(
+                    level, zoom: zoom, on: mapView, visibilityZoom: override)
+                let readyOnPrepared = !readyOnPadded && rect.contains(mapView.visibleMapRect)
+                    && isGeometryLevelReady(
+                        level, zoom: zoom, on: mapView, buildRect: rect, visibilityZoom: override)
+                guard GeometryZoomLevels.landingInstall(
+                    landed: level, installed: installedGeometryLevel, zoom: zoom,
+                    wantedReady: isGeometryLevelReady(wanted, zoom: zoom, on: mapView),
+                    landedUsable: readyOnPadded || readyOnPrepared) == .installLanded
+                else { return nil }
+                return PendingInstall(
+                    level: level, rect: readyOnPadded ? nil : rect,
+                    visibilityZoom: override, visibilityBucket: bucket)
+            }
+
+            /// While the camera zooms out fast, prepare the level it will be at
+            /// when a preparation lands (``GeometryZoomLevels/travelLevel``), on
+            /// the rect that level will show, without waiting for the wanted
+            /// level the camera has already left. Returns true when a
+            /// preparation for that target is running or queued: the ordinary
+            /// request is skipped. A target whose geometry is already cached
+            /// becomes the pending install and the ordinary rebuild installs it.
+            @discardableResult
+            private func startTravelPreparation(zoom: Double, on mapView: MKMapView) -> Bool {
+                guard showsNetwork, playbackLayer.lastSnapshot == nil, mapView.bounds.width > 1,
+                      let installed = installedGeometryLevel,
+                      let level = GeometryZoomLevels.travelLevel(
+                        zoom: zoom, rate: zoomTravel.rate(at: Self.seconds(.now)),
+                        prepareSeconds: prepareSeconds, minimumLevel: Self.travelMinimumLevel),
+                      level < installed
+                else { return false }
+                let area = GeometryZoomLevels.prebuildVisibleRect(
+                    visible: Self.buildAreaRect(mapView.visibleMapRect), zoom: zoom, level: level)
+                let rect = NetworkLOD.buildRect(for: Self.mapRect(area))
+                let aheadZoom = GeometryZoomLevels.nominalZoom(level: level)
+                let policy = networkVisibility(on: mapView)
+                let visibilityZoom = policy.visibilityZoom(cameraZoom: aheadZoom)
+                let visibilityBucket = policy.visibilityBucket(cameraZoom: aheadZoom)
+                travelPreparationOwesStopRebuild = true
+                let cached = prepareNetworkGeometry(
+                    on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: rect,
+                    visibilityBucket: visibilityBucket, level: level, installs: false)
+                guard cached else { return true }
+                pendingInstall = landingDecision(
+                    level: level, rect: rect, visibilityZoom: visibilityZoom,
+                    visibilityBucket: visibilityBucket, on: mapView)
+                return false
+            }
+
+            /// 0.3 s after the last camera change the zoom rate reads 0: one
+            /// rebuild then asks for the wanted level on the padded rect.
+            private func scheduleTravelStopRebuild(on mapView: MKMapView) {
+                travelStopTimer.schedule { [weak self, weak mapView] in
+                    guard let self, let mapView, self.mapView === mapView else { return }
+                    self.travelPreparationOwesStopRebuild = false
+                    guard !self.isManipulating else { return }
+                    self.rebuild(on: mapView)
+                }
+            }
+
             /// Prepare immutable line geometry on a worker. Only the current camera/data
             /// generation may publish; MapKit's mounted overlays stay usable meanwhile.
+            /// `level` replaces the level `geometryLevelToBuild` would choose, for
+            /// a preparation ahead of the camera. With `installs: false` the
+            /// request never begins a frame (nothing draws from it now): `true`
+            /// then only says its geometry is already cached.
             private func prepareNetworkGeometry(
-                on mapView: MKMapView, zoom: Double, visibilityZoom: Double, buildRect: MKMapRect
+                on mapView: MKMapView, zoom: Double, visibilityZoom: Double, buildRect: MKMapRect,
+                visibilityBucket: Int? = nil, level: Int? = nil, installs: Bool = true
             ) -> Bool {
                 // Preparation can be cancelled. Only installed geometry may
                 // advance the hysteresis bucket used by shouldRebuild.
                 let temporalContext = networkTemporalContext
                 let requestedInputs = lineInputs
-                let frame = geometryFrame(level: geometryLevelToBuild(at: zoom, on: mapView), on: mapView)
+                let frame = geometryFrame(
+                    level: level ?? geometryLevelToBuild(at: zoom, on: mapView), on: mapView)
                 let scale = frame.scale
                 let mapScale = frame.mapPointsPerScreenPoint
                 let key = frame.key
@@ -1924,10 +2026,23 @@ extension RailMapView.Surface {
                 let missingLines = work.lines
                 let missingStrokes = work.strokes
                 let byID = work.byID
+                let inFlight = geometryPreparation != nil
+                let canInstall = !inFlight || {
+                    let now = Self.seconds(.now)
+                    let visible = mapView.visibleMapRect
+                    let coversView = geometryPreparationRect.map { $0.contains(visible) } ?? true
+                    let installedCovers = networkBuildState.builtRect.contains(visible)
+                    return GeometryPreparationGate.inFlightCanInstall(
+                        rectCoversView: coversView,
+                        stopped: zoomTravel.rate(at: now) == 0 && !isManipulating,
+                        installedCoversView: installedCovers,
+                        isRequestedLevel: geometryPreparationLevel == frame.bucket)
+                }()
                 let gate = GeometryPreparationGate.decide(
-                    inFlightKey: geometryPreparation == nil ? nil : geometryPreparationKey,
+                    inFlightKey: inFlight ? geometryPreparationKey : nil,
                     requestedKey: key, prebuildKey: neighbourPrebuildKey,
-                    missingWork: !missingLines.isEmpty || !missingStrokes.isEmpty)
+                    missingWork: !missingLines.isEmpty || !missingStrokes.isEmpty,
+                    inFlightCanInstall: canInstall)
                 if gate.adoptPrebuild {
                     // The idle prebuild is already building this frame: wait
                     // for it (its landing rebuilds) and let it run at the
@@ -1943,9 +2058,10 @@ extension RailMapView.Surface {
                 adoptedPrebuildKey = nil
                 cancelNeighbourPrebuild()
                 if gate.drawNow {
-                    networkGeometry.beginFrame(key: key)
+                    if installs { networkGeometry.beginFrame(key: key) }
                     return true
                 }
+                if gate.cancelInFlight { cancelGeometryPreparation() }
                 guard gate.start else { return false }
                 // Not `beginFrame`: that would make a level that is still
                 // being prepared the cache's current frame and unprotect the
@@ -1960,6 +2076,7 @@ extension RailMapView.Surface {
                 geometryPreparationID = requestID
                 geometryPreparationKey = key
                 geometryPreparationLevel = frame.bucket
+                geometryPreparationRect = buildRect
                 drawCounters.preparations.request(key: key)
                 RailSignpost.map.mark("map.geometry.prep.started", drawCounters.preparations.started, frame.bucket)
                 let era = temporalContext.era
@@ -2002,6 +2119,7 @@ extension RailMapView.Surface {
                         self.drawCounters.preparations.abort()
                         self.geometryPreparation = nil
                         self.geometryPreparationKey = nil
+                        self.geometryPreparationRect = nil
                         self.geometryPreparationLevel = nil
                     }
                     guard !Task.isCancelled, let mapView,
@@ -2060,30 +2178,19 @@ extension RailMapView.Surface {
                         return
                     }
                     clearPreparationIfCurrent()
+                    // Measured request-to-landing time: how far ahead the next
+                    // zoom-out preparation has to aim.
+                    let landedAfter = ContinuousClock.now - requested
+                    self.prepareSeconds = min(max(
+                        Double(landedAfter.components.seconds)
+                            + Double(landedAfter.components.attoseconds) / 1e18, 0.5), 4)
                     // The camera has usually moved past this level by now. A
                     // landed level nearer the camera than the installed one is
                     // installed rather than discarded for the newest wanted
                     // one, which could then never land either.
-                    let landedZoom = MapProjection.zoomLevel(of: mapView)
-                    // The wanted level installs through the ordinary rebuild
-                    // when it is ready. When it is not (zooming out, the
-                    // padded rect outgrows every preparation), the landed
-                    // level installs on the rect it was prepared for.
-                    let wanted = self.wantedGeometryLevel(at: landedZoom)
-                    // Ready on the current padded rect: install there, no
-                    // prepared rect needed. Else (zooming out) the landed
-                    // level installs on the rect it was prepared for.
-                    let readyOnPadded = self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)
-                    let readyOnPrepared = !readyOnPadded && buildRect.contains(mapView.visibleMapRect)
-                        && self.isGeometryLevelReady(
-                            frame.bucket, zoom: landedZoom, on: mapView, buildRect: buildRect)
-                    if GeometryZoomLevels.landingInstall(
-                        landed: frame.bucket, installed: self.installedGeometryLevel, zoom: landedZoom,
-                        wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView),
-                        landedUsable: readyOnPadded || readyOnPrepared) == .installLanded {
-                        self.pendingInstallLevel = frame.bucket
-                        self.pendingInstallRect = readyOnPadded ? nil : buildRect
-                    }
+                    self.pendingInstall = self.landingDecision(
+                        level: frame.bucket, rect: buildRect, visibilityZoom: visibilityZoom,
+                        visibilityBucket: visibilityBucket, on: mapView)
                     self.noteRebuildTrigger(.geometryPrepared)
                     self.rebuild(on: mapView)
                     self.scheduleMemoryRelief()
@@ -2207,8 +2314,8 @@ extension RailMapView.Surface {
 
                 let zoom = MapProjection.zoomLevel(of: mapView)
                 let visibilityPolicy = networkVisibility(on: mapView)
-                let visibilityZoom = visibilityPolicy.visibilityZoom(cameraZoom: zoom)
-                let visibilityBucket = visibilityPolicy.visibilityBucket(cameraZoom: zoom)
+                let cameraVisibilityZoom = visibilityPolicy.visibilityZoom(cameraZoom: zoom)
+                let cameraVisibilityBucket = visibilityPolicy.visibilityBucket(cameraZoom: zoom)
                 // Every LOD and label floor is an integer in its own scale.
                 // Camera and railway eligibility share the same scale on
                 // every viewport; both buckets cross the same integer floors.
@@ -2230,18 +2337,24 @@ extension RailMapView.Surface {
                 let hasLanedLines = lines.contains(where: { $0.lane != 0 || $0.continuous })
                 guard networkBuildState.shouldRebuild(
                     zoom: zoom,
-                    visibilityBucket: visibilityBucket,
+                    visibilityBucket: cameraVisibilityBucket,
                     viewportSize: mapView.bounds.size,
                     hasLanedLines: hasLanedLines,
                     visibleRect: visibleRect
                 ) else { return }
+                // A fast zoom-out prepares the level the camera will be at
+                // when it lands; the ordinary request waits for the stop.
+                if startTravelPreparation(zoom: zoom, on: mapView) { return }
                 // Validates a pending landed install (drops it once it no
                 // longer covers the screen) before its rect is used.
-                if pendingInstallLevel != nil { _ = geometryLevelToBuild(at: zoom, on: mapView) }
-                let buildRect = pendingInstallRect ?? movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
+                if pendingInstall != nil { _ = geometryLevelToBuild(at: zoom, on: mapView) }
+                let visibilityZoom = pendingInstall?.visibilityZoom ?? cameraVisibilityZoom
+                let visibilityBucket = pendingInstall?.visibilityBucket ?? cameraVisibilityBucket
+                let buildRect = pendingInstall?.rect ?? movingBuildRect ?? NetworkLOD.buildRect(for: visibleRect)
                 onBuildRect(buildRect, visibilityZoom)
                 guard prepareNetworkGeometry(
-                    on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: buildRect
+                    on: mapView, zoom: zoom, visibilityZoom: visibilityZoom, buildRect: buildRect,
+                    visibilityBucket: visibilityBucket
                 ) else { return }
                 // What is eligible: near enough to be seen, important enough for
                 // this zoom. See NetworkLOD — that policy is deliberately stricter
@@ -2273,9 +2386,9 @@ extension RailMapView.Surface {
                     geometryLevel: strokeFrame.bucket,
                     builtRect: buildRect
                 )
-                if pendingInstallLevel != nil {
-                    let installedOnPreparedRect = pendingInstallRect != nil
-                    clearPendingInstall()
+                if let pending = pendingInstall {
+                    let installedOnPreparedRect = pending.rect != nil
+                    pendingInstall = nil
                     // When the camera still wants a different level than the
                     // one just installed, or the install used the prepared
                     // rect and the camera's padding is still owed.
@@ -2286,7 +2399,8 @@ extension RailMapView.Surface {
 #if DEBUG
                 MapRenderProbe.geometryLevels.installed = strokeFrame.bucket
                 MapRenderProbe.geometryLevels.installedAt = .now
-                MapRenderProbe.geometryLevels.wanted = wantedGeometryLevel(at: zoom)
+                MapRenderProbe.geometryLevels.wanted = GeometryZoomLevels.wantedLevel(
+                    zoom: zoom, installed: strokeFrame.bucket)
                 MapRenderProbe.geometryLevels.cameraZoom = zoom
 #endif
                 // A cold display-network request has no geometry to build

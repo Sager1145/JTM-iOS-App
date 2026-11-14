@@ -61,7 +61,7 @@ struct RegressionGuardZoomPreparation {
         #expect(!Self.coordinator.contains("geometryFrame(level: wantedGeometryLevel(at: zoom), on: mapView)\n                let scale"))
         let commit = try Self.body(
             Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
-        #expect(commit.contains("clearPendingInstall()"))
+        #expect(commit.contains("pendingInstall = nil"))
     }
 
     @Test func aPreparationNeverMakesItsFrameCurrent() throws {
@@ -82,7 +82,7 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func aReadyWantedLevelInstallsThroughTheOrdinaryRebuildWithNoPendingInstall() {
-        #expect(Self.coordinator.contains("wantedReady: self.isGeometryLevelReady(wanted, zoom: landedZoom, on: mapView)"))
+        #expect(Self.coordinator.contains("wantedReady: isGeometryLevelReady(wanted, zoom: zoom, on: mapView)"))
     }
 
     @Test func aMatchWithNewGeometryButEqualRefsStillCountsAsChanged() {

@@ -47,7 +47,10 @@ struct RegressionGuardMapLock {
         let prepare = try Self.body(
             Self.coordinator, from: "let temporalContext = networkTemporalContext",
             to: "geometryPreparation = Task")
-        #expect(!prepare.contains("cancelGeometryPreparation()"))
+        // Round 7: the one cancel is the gate's, for an in-flight preparation
+        // whose rect no longer covers the view (never for a camera move alone).
+        #expect(prepare.components(separatedBy: "cancelGeometryPreparation()").count - 1 == 1)
+        #expect(prepare.contains("if gate.cancelInFlight { cancelGeometryPreparation() }"))
     }
 
     @Test func ridesOnlyPublishUpdatesTheOverlayProbe() throws {

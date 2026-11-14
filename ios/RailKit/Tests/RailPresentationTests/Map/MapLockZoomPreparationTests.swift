@@ -132,4 +132,89 @@ struct MapLockZoomPreparationTests {
         memo.reset()
         #expect(ask(2, 7.25, 1) == false)
     }
+
+    // MARK: - continuous zoom-out preparation (round 7)
+
+    private struct ZoomOutResult {
+        var installs: Int
+        var coversAtStop: Bool
+        var installedAtStop: Int
+        var wantedAtStop: Int
+        var coversAfterSettle: Bool
+        var installedAfterSettle: Int
+    }
+
+    /// Model of a fast zoom-out, z11.33 to z5.33 at 0.83 zoom/s, with one
+    /// preparation in flight that lands `prepareSeconds` after its request.
+    /// A prepared rect covers the view down to its level's nominal zoom less
+    /// the build padding; a preparation whose rect no longer covers the view
+    /// is cancelled. The stop is the end of the motion; 0.35 s later the
+    /// stop re-check requests the wanted level once, and it lands one
+    /// preparation after that.
+    private func zoomOutRun(prepareSeconds: Double) -> ZoomOutResult {
+        let padding = 0.26
+        let startZoom = 11.33, endZoom = 5.33, speed = 0.83, dt = 0.1
+        var travel = ZoomTravel()
+        var installed = GeometryZoomLevels.nearestLevel(zoom: startZoom)
+        var installedFloor = GeometryZoomLevels.nominalZoom(level: installed) - padding
+        var flight: (level: Int, floor: Double, lands: Double)?
+        var installs = 0
+        let steps = Int(((startZoom - endZoom) / speed / dt).rounded())
+        for step in 0...steps {
+            let now = Double(step) * dt
+            let zoom = max(startZoom - speed * now, endZoom)
+            travel.note(zoom: zoom, at: now)
+            if let f = flight, now >= f.lands - 1e-9 {
+                flight = nil
+                if zoom >= f.floor {
+                    installed = f.level
+                    installedFloor = f.floor
+                    installs += 1
+                }
+            }
+            if let f = flight, zoom < f.floor { flight = nil }
+            if flight == nil,
+               let level = GeometryZoomLevels.travelLevel(
+                   zoom: zoom, rate: travel.rate(at: now), prepareSeconds: prepareSeconds,
+                   minimumLevel: 4) {
+                let nominal = GeometryZoomLevels.nominalZoom(level: level)
+                flight = (level, nominal - padding, now + prepareSeconds)
+            }
+        }
+        let wanted = GeometryZoomLevels.wantedLevel(zoom: endZoom, installed: installed)
+        let atStop = (endZoom >= installedFloor, installed)
+        // The stop: the rate reads 0, so the wanted level is requested on the
+        // padded rect and lands one preparation later (a travel preparation
+        // still in flight keeps its own rect only if it covers and lands first).
+        var settledLevel = installed, settledFloor = installedFloor
+        if let f = flight, endZoom >= f.floor, f.level == wanted { settledLevel = f.level; settledFloor = f.floor }
+        else if wanted != installed || endZoom < installedFloor {
+            settledLevel = wanted
+            settledFloor = GeometryZoomLevels.nominalZoom(level: wanted) - padding
+        }
+        return ZoomOutResult(
+            installs: installs, coversAtStop: atStop.0, installedAtStop: atStop.1,
+            wantedAtStop: wanted, coversAfterSettle: endZoom >= settledFloor,
+            installedAfterSettle: settledLevel)
+    }
+
+    @Test(arguments: [1.0, 2.0, 3.0, 4.0])
+    func fastZoomOutInstallsALevelAheadAndSettlesOnTheWantedOne(prepareSeconds: Double) {
+        let run = zoomOutRun(prepareSeconds: prepareSeconds)
+        #expect(run.installs >= 1)
+        // One preparation after the stop the exact level covers the view.
+        #expect(run.coversAfterSettle)
+        #expect(run.installedAfterSettle == run.wantedAtStop)
+    }
+
+    /// With preparations short enough to be aimed true (up to two seconds), the
+    /// installed level already covers the view at the stop and is within three
+    /// levels of the wanted one. Slower preparations can be outrun by the
+    /// camera: that is the documented limit, not asserted here.
+    @Test(arguments: [1.0, 2.0])
+    func shortPreparationsCoverTheViewAtTheStop(prepareSeconds: Double) {
+        let run = zoomOutRun(prepareSeconds: prepareSeconds)
+        #expect(run.coversAtStop)
+        #expect(abs(run.installedAtStop - run.wantedAtStop) <= 3)
+    }
 }

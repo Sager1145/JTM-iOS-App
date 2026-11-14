@@ -159,6 +159,62 @@ public struct GeometryZoomLevels: Equatable, Sendable {
     }
 }
 
+/// Smoothed zoom speed of the camera, in zoom levels per second (negative
+/// zooming out). Fed from every camera change; reads 0 once the last zoom
+/// change is older than ``staleAfter``.
+public struct ZoomTravel: Equatable, Sendable {
+    public static let staleAfter: Double = 0.3
+    /// Zoom changes smaller than this are noise, not travel.
+    public static let noise: Double = 0.001
+
+    private var lastZoom: Double?
+    private var lastChangeAt: Double?
+    private var smoothed: Double = 0
+    /// Which way the zoom last moved (1 in, -1 out, 0 none yet). Unlike
+    /// ``rate(at:)`` it survives the camera coming to rest.
+    public private(set) var direction = 0
+    private var hasRate = false
+
+    public init() {}
+
+    public mutating func note(zoom: Double, at now: Double) {
+        guard let lastZoom, let lastChangeAt else {
+            self.lastZoom = zoom
+            self.lastChangeAt = now
+            return
+        }
+        guard abs(zoom - lastZoom) > Self.noise else { return }
+        let elapsed = max(now - lastChangeAt, 0.01)
+        let instant = (zoom - lastZoom) / elapsed
+        // The first interval seeds the rate: averaging it with the initial 0
+        // would halve it and aim the first preparation too short.
+        smoothed = elapsed > Self.staleAfter || !hasRate ? instant : 0.5 * smoothed + 0.5 * instant
+        hasRate = true
+        direction = zoom > lastZoom ? 1 : -1
+        self.lastZoom = zoom
+        self.lastChangeAt = now
+    }
+
+    public func rate(at now: Double) -> Double {
+        guard let lastChangeAt, now - lastChangeAt <= Self.staleAfter else { return 0 }
+        return smoothed
+    }
+}
+
+extension GeometryZoomLevels {
+    /// The level to prepare ahead of a zoom-out: where the camera will be
+    /// when a preparation that takes `prepareSeconds` lands, with a margin of
+    /// half again, at most three zoom levels ahead. nil unless the camera is
+    /// zooming out fast enough to cross more than one spacing in that time.
+    public static func travelLevel(
+        zoom: Double, rate: Double, prepareSeconds: Double, minimumLevel: Int
+    ) -> Int? {
+        guard rate < 0, -rate * prepareSeconds > spacing else { return nil }
+        let aimed = zoom + max(rate * prepareSeconds * 1.5, -3)
+        return max(nearestLevel(zoom: aimed), minimumLevel)
+    }
+}
+
 /// Cache identity of one line's geometry at one level.
 public struct GeometryLevelCacheKey: Hashable, Sendable {
     public var lineID: String

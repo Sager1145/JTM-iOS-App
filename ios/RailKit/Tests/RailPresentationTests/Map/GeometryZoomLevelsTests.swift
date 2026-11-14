@@ -138,4 +138,61 @@ struct GeometryZoomLevelsTests {
         #expect(!GeometryZoomLevels.prebuildStillCovers(
             running: running, wanted: .init(x: 500, y: 500, width: 10, height: 10)))
     }
+
+    // MARK: - travel preparation
+
+    @Test func zoomTravelReadsZeroOnceTheLastChangeIsStale() {
+        var travel = ZoomTravel()
+        for step in 0...10 { travel.note(zoom: 10 - Double(step) * 0.083, at: Double(step) * 0.1) }
+        #expect(abs(travel.rate(at: 1.0) + 0.83) < 0.05)
+        #expect(travel.rate(at: 1.0 + ZoomTravel.staleAfter + 0.01) == 0)
+        // Noise is not travel.
+        var still = ZoomTravel()
+        still.note(zoom: 8, at: 0)
+        still.note(zoom: 8.0004, at: 0.1)
+        #expect(still.rate(at: 0.1) == 0)
+    }
+
+    @Test func travelLevelIsNilUnlessZoomingOutFastEnough() {
+        func level(_ rate: Double, _ seconds: Double = 1) -> Int? {
+            GeometryZoomLevels.travelLevel(zoom: 10, rate: rate, prepareSeconds: seconds, minimumLevel: 4)
+        }
+        #expect(level(0) == nil)
+        #expect(level(0.8) == nil)
+        #expect(level(-0.4) == nil)
+        #expect(level(-0.5) == nil)
+        // -0.8 zoom/s for 1 s: aims 1.2 further out, z8.8, level 18 (nominal 9).
+        #expect(level(-0.8) == GeometryZoomLevels.nearestLevel(zoom: 10 - 1.2))
+        // Never more than three zoom levels ahead, and never below the minimum.
+        #expect(level(-2, 4) == GeometryZoomLevels.nearestLevel(zoom: 7))
+        #expect(GeometryZoomLevels.travelLevel(zoom: 4, rate: -2, prepareSeconds: 4, minimumLevel: 4) == 4)
+    }
+
+    @Test func inFlightInstallsOnlyWhileItsRectCoversTheView() {
+        func can(_ covers: Bool, _ stopped: Bool, _ installedCovers: Bool, _ requested: Bool) -> Bool {
+            GeometryPreparationGate.inFlightCanInstall(
+                rectCoversView: covers, stopped: stopped, installedCoversView: installedCovers,
+                isRequestedLevel: requested)
+        }
+        #expect(!can(false, false, false, true))
+        #expect(!can(false, true, false, false))
+        #expect(can(true, false, true, false))
+        #expect(can(true, true, false, false))
+        #expect(!can(true, true, true, false))
+        #expect(can(true, true, true, true))
+    }
+
+    @Test func gateCancelsOnlyAnInFlightForAnotherKeyThatCannotInstall() {
+        let keep = GeometryPreparationGate.decide(
+            inFlightKey: "a", requestedKey: "b", prebuildKey: nil, missingWork: true)
+        #expect(!keep.cancelInFlight && !keep.start)
+        let drop = GeometryPreparationGate.decide(
+            inFlightKey: "a", requestedKey: "b", prebuildKey: nil, missingWork: true,
+            inFlightCanInstall: false)
+        #expect(drop.cancelInFlight && drop.start)
+        let same = GeometryPreparationGate.decide(
+            inFlightKey: "a", requestedKey: "a", prebuildKey: nil, missingWork: true,
+            inFlightCanInstall: false)
+        #expect(!same.cancelInFlight && !same.start)
+    }
 }

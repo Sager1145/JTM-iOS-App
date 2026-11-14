@@ -55,21 +55,24 @@ struct RegressionGuardMapLockPerf {
     // Landing rule: decided by the pure policy on the prepared rect.
     @Test func landingInstallsThroughThePolicyOnThePreparedRect() throws {
         let landing = try Self.body(
-            Self.coordinator, from: "let landedZoom = MapProjection.zoomLevel(of: mapView)",
-            to: "self.noteRebuildTrigger(.geometryPrepared)")
+            Self.coordinator, from: "private func landingDecision(",
+            to: "/// While the camera zooms out fast, prepare the level")
         #expect(landing.contains("GeometryZoomLevels.landingInstall("))
         // Ready on the current padded rect installs there (no prepared rect);
         // the prepared rect is only the fallback.
-        #expect(landing.contains("let readyOnPadded = self.isGeometryLevelReady(frame.bucket, zoom: landedZoom, on: mapView)"))
-        #expect(landing.contains("let readyOnPrepared = !readyOnPadded && buildRect.contains(mapView.visibleMapRect)"))
-        #expect(landing.contains("self.pendingInstallRect = readyOnPadded ? nil : buildRect"))
+        #expect(landing.contains("let readyOnPadded = isGeometryLevelReady("))
+        #expect(landing.contains("let readyOnPrepared = !readyOnPadded && rect.contains(mapView.visibleMapRect)"))
+        #expect(landing.contains("level: level, rect: readyOnPadded ? nil : rect,"))
+        // The landing and the cached travel target both go through it.
+        #expect(Self.coordinator.contains("self.pendingInstall = self.landingDecision("))
+        #expect(Self.coordinator.contains("pendingInstall = landingDecision("))
         let commit = try Self.body(
             Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
         #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))
         #expect(!commit.contains("wantedLevelFollowUpOwed = true"))
         // The padding is owed only after an install on the prepared rect.
         #expect(commit.contains("installedOnPreparedRect"))
-        #expect(Self.coordinator.contains("pendingInstallRect ?? movingBuildRect"))
+        #expect(Self.coordinator.contains("pendingInstall?.rect ?? movingBuildRect"))
         #expect(Self.coordinator.contains("noteRebuildTrigger(.wantedLevelFollowUp)"))
     }
 
@@ -89,7 +92,7 @@ struct RegressionGuardMapLockPerf {
         let swap = try Self.body(
             Self.coordinator, from: "private func swapGeometryDuringGestureIfReady(",
             to: "private var lastGestureSwapAttempt")
-        #expect(swap.contains("let pending = pendingInstallLevel, let rect = pendingInstallRect"))
+        #expect(swap.contains("let pending = pendingInstall, let rect = pending.rect"))
         #expect(swap.contains("rect.contains(mapView.visibleMapRect)"))
         #expect(swap.contains("GeometryZoomLevels.installsLanded("))
     }
