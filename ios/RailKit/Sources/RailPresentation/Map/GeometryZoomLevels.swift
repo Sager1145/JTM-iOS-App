@@ -75,6 +75,21 @@ public struct GeometryZoomLevels: Equatable, Sendable {
             width: width, height: height)
     }
 
+    /// Whether a running prebuild's rect still covers enough of the rect a
+    /// fresh target would use that restarting it would only throw work away.
+    /// The target follows the camera, so exact equality would cancel a
+    /// multi-second prebuild on every idle pan or settle; at least half of
+    /// the wanted rect inside the running one keeps it (the foreground
+    /// builds whatever is still missing).
+    public static func prebuildStillCovers(
+        running: MapBuildArea.Rect, wanted: MapBuildArea.Rect
+    ) -> Bool {
+        let width = min(running.x + running.width, wanted.x + wanted.width) - max(running.x, wanted.x)
+        let height = min(running.y + running.height, wanted.y + wanted.height) - max(running.y, wanted.y)
+        guard width > 0, height > 0 else { return false }
+        return width * height >= 0.5 * wanted.width * wanted.height
+    }
+
     /// (c) Whether to swap the installed level now during a gesture.
     public static func shouldSwapDuringGesture(
         zoom: Double, installed: Int, wanted: Int, wantedIsReady: Bool

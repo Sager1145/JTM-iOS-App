@@ -125,4 +125,17 @@ struct GeometryZoomLevelsTests {
         #expect(GeometryZoomLevels.prebuildVisibleRect(visible: visible, zoom: 12, level: 25) == visible)
         #expect(GeometryZoomLevels.prebuildVisibleRect(visible: visible, zoom: 12, level: 24) == visible)
     }
+
+    @Test func aRunningPrebuildSurvivesASmallCameraMove() {
+        let running = MapBuildArea.Rect(x: 0, y: 0, width: 100, height: 100)
+        #expect(GeometryZoomLevels.prebuildStillCovers(running: running, wanted: running))
+        // Shifted by a fifth: 80 percent still inside.
+        #expect(GeometryZoomLevels.prebuildStillCovers(
+            running: running, wanted: .init(x: 20, y: 0, width: 100, height: 100)))
+        // Shifted by most of its width, or disjoint: restart.
+        #expect(!GeometryZoomLevels.prebuildStillCovers(
+            running: running, wanted: .init(x: 60, y: 0, width: 100, height: 100)))
+        #expect(!GeometryZoomLevels.prebuildStillCovers(
+            running: running, wanted: .init(x: 500, y: 500, width: 10, height: 10)))
+    }
 }

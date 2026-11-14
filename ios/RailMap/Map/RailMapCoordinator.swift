@@ -1071,6 +1071,10 @@ extension RailMapView.Surface {
                 lineSwapTask = nil
                 heldLineSwap = nil
                 pendingLineSwap = nil
+                // Whatever the worker still delivers is stale: it lands as a
+                // discard (never an apply into the torn-down coordinator) and
+                // frees the schedule.
+                lineSwapSchedule.appliedSynchronously()
                 memoryReliefTask?.cancel()
                 memoryReliefTask = nil
                 matchingDebounceTask?.cancel()
@@ -1772,6 +1776,10 @@ extension RailMapView.Surface {
             /// the direction of the last zoom, on a low-priority worker, so the
             /// next swap finds its geometry ready. Skipped while resident frame
             /// geometry is at its byte cap.
+            private static func buildArea(_ rect: MKMapRect) -> MapBuildArea.Rect {
+                .init(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
+            }
+
             private func scheduleNeighbourPrebuild(on mapView: MKMapView) {
                 guard showsNetwork, !isManipulating, playback?.isActive != true,
                       playbackLayer.lastSnapshot == nil, geometryPreparation == nil,
@@ -1798,6 +1806,16 @@ extension RailMapView.Surface {
                     buildRect: prebuildRect, eraKey: geometryEraKey,
                     visibilityZoom: context.visibilityZoom)
                 guard target != neighbourPrebuildTarget else { return }
+                // An adopted prebuild is the foreground's work now, and a running
+                // one that still covers the camera's rect is not restarted (the
+                // target follows the camera; see `prebuildStillCovers`).
+                guard adoptedPrebuildKey == nil else { return }
+                if let running = neighbourPrebuildTarget, running.levels == target.levels,
+                   running.eraKey == target.eraKey, running.visibilityZoom == target.visibilityZoom,
+                   GeometryZoomLevels.prebuildStillCovers(
+                       running: Self.buildArea(running.buildRect), wanted: Self.buildArea(target.buildRect)) {
+                    return
+                }
                 cancelNeighbourPrebuild()
                 neighbourPrebuildTarget = target
                 let prebuildID = UUID()
@@ -4599,6 +4617,9 @@ extension RailMapView.Surface {
 
             private func startLineSwap(baseSerial: Int) {
                 guard let pending = pendingLineSwap else { return }
+                // Admit the arriving lines' chains before the worker joins them,
+                // or the constrained cache would drop each join it just made.
+                networkGeometry.admitDisplayChains(Set(pending.lines.map(JoinedChainKey.init)))
                 let input = swapInput(lines: pending.lines, stations: pending.stations)
                 let worker = Task.detached(priority: .userInitiated) {
                     Self.computeLineSwap(input, baseSerial: baseSerial, checksCancellation: true)
@@ -4620,7 +4641,11 @@ extension RailMapView.Surface {
                 }
                 switch lineSwapSchedule.landed(baseSerial: result.baseSerial, duringGesture: isManipulating) {
                 case .apply: applyLineSwap(result)
-                case .hold: heldLineSwap = result
+                case .hold:
+                    heldLineSwap = result
+                    // Applied by the settle rebuild; a gesture that never moves
+                    // the camera would otherwise leave it held for good.
+                    rebuildDeferredByGesture = true
                 case .discard(let restart):
                     if case .start(let base) = restart { startLineSwap(baseSerial: base) }
                 }

@@ -157,6 +157,10 @@ final class MapNetworkGeometryCache {
     /// Drop joined chains and their pixels whose content is no longer resident.
     /// Line-build retention stays on ``retainLineBuilds(withIDs:)``, which still
     /// requires matching anchors and junction dependencies.
+    func admitDisplayChains(_ keys: Set<JoinedChainKey>) {
+        joinedChains.admit(keys)
+    }
+
     func retainDisplayChains(_ keys: Set<JoinedChainKey>) {
         joinedChains.retain(keys)
         chainPixels.retain(keys)

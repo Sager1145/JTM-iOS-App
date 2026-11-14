@@ -238,8 +238,7 @@ struct JoinedChainKey: Hashable, Sendable {
 
 /// The one join of each resident display chain. Junction indexing, stroke
 /// matching and pixel projection all read ``chain(of:)``. The join runs only
-/// on a miss, and only while this lock is held, so concurrent readers share
-/// that result. A chain left out of ``retain(_:)`` is not stored again.
+/// on a miss, outside the lock; the first stored result is the one readers share. A chain left out of ``retain(_:)`` is not stored again.
 final class JoinedChainCache: Sendable {
     private struct Storage {
         var constrained = false
@@ -251,14 +250,25 @@ final class JoinedChainCache: Sendable {
 
     func chain(of line: RailNetworkStore.DrawnLine) -> JoinedChain {
         let key = JoinedChainKey(line)
+        if let hit = state.withLock({ $0.chains[key] }) { return hit }
+        // Joined outside the lock so a worker's join never blocks main-thread
+        // readers; two racing misses may both join, and the results are equal.
+        let built = joinedChainCoordinates(of: line)
+        let value = JoinedChain(points: built.points, measures: built.measures)
         return state.withLock { storage in
             if let hit = storage.chains[key] { return hit }
-            let built = joinedChainCoordinates(of: line)
-            let value = JoinedChain(points: built.points, measures: built.measures)
             if !storage.constrained || storage.resident.contains(key) {
                 storage.chains[key] = value
             }
             return value
+        }
+    }
+
+    /// Lets chains about to be joined be stored before the next ``retain(_:)``.
+    func admit(_ keys: Set<JoinedChainKey>) {
+        state.withLock { storage in
+            guard storage.constrained else { return }
+            storage.resident.formUnion(keys)
         }
     }
 

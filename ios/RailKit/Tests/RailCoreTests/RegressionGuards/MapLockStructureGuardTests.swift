@@ -175,6 +175,28 @@ struct RegressionGuardMapLock {
         #expect(Self.coordinator.contains("pendingLineSwap?.lines ?? self.lines"))
     }
 
+    @Test func reviewFixesStayInPlace() throws {
+        // A running or adopted prebuild is not restarted by the camera moving.
+        let prebuild = try Self.body(
+            Self.coordinator, from: "private func scheduleNeighbourPrebuild(", to: "neighbourPrebuild = Task")
+        #expect(prebuild.contains("guard adoptedPrebuildKey == nil else { return }"))
+        #expect(prebuild.contains("GeometryZoomLevels.prebuildStillCovers("))
+        // A swap held during a gesture is applied by the settle rebuild.
+        let landing = try Self.body(
+            Self.coordinator, from: "private func landLineSwap(", to: "private func applyHeldLineSwap(")
+        let hold = try #require(landing.range(of: "case .hold:"))
+        #expect(landing[hold.upperBound...].contains("rebuildDeferredByGesture = true"))
+        // Arriving chains are admitted before the worker joins them.
+        let start = try Self.body(
+            Self.coordinator, from: "private func startLineSwap(", to: "private func landLineSwap(")
+        #expect(start.contains("admitDisplayChains("))
+        // Tear-down makes an in-flight result stale.
+        let tear = try Self.body(
+            Self.coordinator, from: "lineSwapTask?.cancel()\n                lineSwapTask = nil\n                heldLineSwap = nil",
+            to: "memoryReliefTask?.cancel()")
+        #expect(tear.contains("lineSwapSchedule.appliedSynchronously()"))
+    }
+
     @Test func overlaysDrawReportAndSwapWaitsForDraw() {
         #expect(Self.coordinator.contains("DrawReportingMultiPolylineRenderer("))
         #expect(Self.rendering.contains("hasDrawn(forKey:"))
