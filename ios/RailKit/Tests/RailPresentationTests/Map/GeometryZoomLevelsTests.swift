@@ -169,17 +169,16 @@ struct GeometryZoomLevelsTests {
     }
 
     @Test func inFlightInstallsOnlyWhileItsRectCoversTheView() {
-        func can(_ covers: Bool, _ stopped: Bool, _ installedCovers: Bool, _ requested: Bool) -> Bool {
+        func can(_ covers: Bool, _ stopped: Bool, _ requested: Bool) -> Bool {
             GeometryPreparationGate.inFlightCanInstall(
-                rectCoversView: covers, stopped: stopped, installedCoversView: installedCovers,
-                isRequestedLevel: requested)
+                rectCoversView: covers, stopped: stopped, isRequestedLevel: requested)
         }
-        #expect(!can(false, false, false, true))
-        #expect(!can(false, true, false, false))
-        #expect(can(true, false, true, false))
-        #expect(can(true, true, false, false))
-        #expect(!can(true, true, true, false))
-        #expect(can(true, true, true, true))
+        #expect(!can(false, false, true))
+        #expect(!can(false, true, false))
+        #expect(can(true, false, false))
+        // Stopped: only the wanted level may hold the permit.
+        #expect(!can(true, true, false))
+        #expect(can(true, true, true))
     }
 
     @Test func gateCancelsOnlyAnInFlightForAnotherKeyThatCannotInstall() {

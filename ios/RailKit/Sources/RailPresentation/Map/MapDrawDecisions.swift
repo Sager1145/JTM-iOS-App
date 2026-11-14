@@ -152,7 +152,7 @@ public struct GeometryPreparationLedger: Equatable, Sendable {
 public enum GeometryPreparationGate {
     public struct Decision: Equatable, Sendable {
         /// True only when an in-flight preparation for another frame can no
-        /// longer install (``inFlightCanInstall(rectCoversView:stopped:installedCoversView:isRequestedLevel:)``
+        /// longer install (``inFlightCanInstall(rectCoversView:stopped:isRequestedLevel:)``
         /// said so). Otherwise a preparation in flight is never cancelled for
         /// another frame: it finishes and caches its frame, and its landing
         /// rebuild asks for the newest wanted frame (latest wins). Cancelling
@@ -190,12 +190,13 @@ public enum GeometryPreparationGate {
     }
 
     /// Whether the running preparation can still be installed. Its rect must
-    /// cover the view. Once the camera has stopped, a preparation for another
-    /// level is pointless when the installed level already covers the view.
+    /// cover the view. Once the camera has stopped, only the wanted level may
+    /// hold the geometry permit: a preparation for another level is
+    /// cancelled, whether or not the installed level covers the view.
     public static func inFlightCanInstall(
-        rectCoversView: Bool, stopped: Bool, installedCoversView: Bool, isRequestedLevel: Bool
+        rectCoversView: Bool, stopped: Bool, isRequestedLevel: Bool
     ) -> Bool {
-        rectCoversView && (isRequestedLevel || !(stopped && installedCoversView))
+        rectCoversView && (isRequestedLevel || !stopped)
     }
 
     /// Touch-down hands the camera to the reader. A preparation whose

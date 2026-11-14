@@ -195,6 +195,16 @@ public struct ZoomTravel: Equatable, Sendable {
         self.lastChangeAt = now
     }
 
+    /// The camera is zooming right now: the last zoom change is at most
+    /// ``travellingWindow`` old and the rate is non-zero. The window stays
+    /// below the 120 ms settle timer, so the settled rebuild reads "stopped".
+    public static let travellingWindow: Double = 0.1
+
+    public func isTravelling(at now: Double) -> Bool {
+        guard let lastChangeAt, now - lastChangeAt <= Self.travellingWindow else { return false }
+        return rate(at: now) != 0
+    }
+
     public func rate(at now: Double) -> Double {
         guard let lastChangeAt, now - lastChangeAt <= Self.staleAfter else { return 0 }
         return smoothed
