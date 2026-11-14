@@ -27,8 +27,10 @@ final class RailMapController {
     func requestAutoFocus(
         _ target: MapCameraPolicy.FocusTarget, enabled: Bool, playbackIsActive: Bool
     ) {
+        let olderFitRunning = cameraPolicy.focusFitRunning
         autoFocusRequest = cameraPolicy.requestFocus(
             target, enabled: enabled, playbackIsActive: playbackIsActive)
+        if olderFitRunning { stopFocusFit() }
         if autoFocusRequest != nil {
             pendingFollow = false
         }
@@ -48,7 +50,19 @@ final class RailMapController {
         return cameraPolicy.pendingFocusRequest
     }
 
-    func cancelAutoFocus() { cameraPolicy.cancelFocus() }
+    func cancelAutoFocus() {
+        if cameraPolicy.cancelFocus() { stopFocusFit() }
+    }
+
+    /// The coordinator's map reported its settled region: a focus fit is over.
+    func endFocusFit() { cameraPolicy.endFocusFit() }
+
+    /// Stop a focus animation an older request started, where it is, so a
+    /// newer pick's framing is not queued behind it.
+    private func stopFocusFit() {
+        guard let mapView else { return }
+        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: false)
+    }
 
     func isCurrentAutoFocus(_ request: MapCameraPolicy.FocusRequest) -> Bool {
         cameraPolicy.isCurrent(request)
@@ -368,7 +382,7 @@ final class RailMapController {
     private func claimCamera() {
         discardReplacementCamera()
         pendingFollow = false
-        cameraPolicy.claimCamera()
+        if cameraPolicy.claimCamera() { stopFocusFit() }
     }
 
     func playbackWillMoveCamera() {
@@ -457,8 +471,8 @@ final class RailMapController {
     /// The map hands regions rather than rects — `region(covering:)` is what
     /// it computes from a ride's own strokes — so the conversion belongs here,
     /// with the padding rule it feeds, rather than at every caller.
-    func fit(_ region: MKCoordinateRegion, animated: Bool? = nil) {
-        fit(MapProjection.mapRect(of: region), animated: animated)
+    func fit(_ region: MKCoordinateRegion, animated: Bool? = nil, startedByFocus: Bool = false) {
+        fit(MapProjection.mapRect(of: region), animated: animated, startedByFocus: startedByFocus)
     }
 
     /// Frame an extent, clear of the resident sheet.
@@ -473,7 +487,7 @@ final class RailMapController {
     private(set) var lastExplicitFitBottom: CGFloat = 0
 #endif
 
-    func fit(_ rect: MKMapRect, animated: Bool? = nil) {
+    func fit(_ rect: MKMapRect, animated: Bool? = nil, startedByFocus: Bool = false) {
         guard let mapView, !rect.isNull else { return }
 #if DEBUG
         explicitFitRevision += 1
@@ -490,6 +504,7 @@ final class RailMapController {
             // parameter so a caller that has already decided does not have to
             // decide twice.
             animated: animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+        if startedByFocus { cameraPolicy.beginFocusFit() }
     }
 
     /// Automatic focus leaves an already visible subject and the user's zoom
@@ -508,7 +523,7 @@ final class RailMapController {
             corners.allSatisfy({ available.contains(mapView.convert($0.coordinate, toPointTo: mapView)) }) {
             return
         }
-        fit(rect)
+        fit(rect, startedByFocus: true)
     }
 
     /// The room a framed subject is given: the resident sheet's own height at

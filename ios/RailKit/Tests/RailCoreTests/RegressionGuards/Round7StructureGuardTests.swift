@@ -62,4 +62,51 @@ struct RegressionGuardRound7 {
         #expect(c.contains("private struct PendingInstall {"))
         #expect(c.contains("travelStopTimer"))
     }
+
+    // MARK: C. selection
+
+    @Test func theSelectionPathDecidesThroughThePlanAndNeverRebuilds() throws {
+        let c = Self.coordinator
+        let update = try Self.body(
+            c, from: "private func updateSelection(on mapView: MKMapView) -> Bool {",
+            to: "private var detailDuration: TimeInterval")
+        #expect(update.contains("SelectionApplyPlan.decide("))
+        #expect(!update.contains("rebuild("), "updateSelection answers in place or reports false")
+        #expect(!update.contains("rebuildOwed("))
+        // It reads the map's own selection, never an id handed in.
+        #expect(c.contains("private func updateSelection(on mapView: MKMapView) -> Bool {"))
+        #expect(!update.contains("[selectedTrainID"))
+        // One construction of the selected ride's overlays, shared with rebuild.
+        #expect(c.components(separatedBy: "appendSelectedRideOverlays(").count - 1 == 3)
+        let rebatch = try Self.body(
+            c, from: "private func rebatchForNewSelection(", to: "private func updateSelection(")
+        #expect(rebatch.contains("RideOverlayBatching.entry("))
+        #expect(rebatch.contains("RideOverlayBatching.replan("))
+        #expect(rebatch.contains("cache.stamp = rideBatchStamp("))
+        #expect(rebatch.contains("fullyBuiltSelectedRideID = selectedID"))
+    }
+
+    @Test func theMapAppliesOnlyItsOwnSelectionAndTheFallbackCancelsStaleStrokeBuilds() throws {
+        let c = Self.coordinator
+        let fallback = try Self.body(
+            c, from: "} else if !updateSelection(on: mapView) {", to: "case .rebuild:")
+        #expect(fallback.contains("rideStrokePreparationRideIDs.contains(previous)"))
+        #expect(fallback.contains("rideStrokePreparation?.cancel()"))
+        // The update that SwiftUI queued behind a gesture is replaced by any
+        // newer update before it can apply an older id.
+        #expect(c.contains("// A newer normal update supersedes any queued gesture update.\n                pendingViewUpdate = nil"))
+    }
+
+    @Test func aFocusFitIsStoppedByANewerCameraIntentAndEndsWithTheSettledRegion() throws {
+        let controller = Self.read("RailMap/Map/RailMapController.swift")
+        #expect(controller.contains("if olderFitRunning { stopFocusFit() }"))
+        #expect(controller.contains("if cameraPolicy.cancelFocus() { stopFocusFit() }"))
+        #expect(controller.contains("if cameraPolicy.claimCamera() { stopFocusFit() }"))
+        #expect(controller.contains("mapView.setVisibleMapRect(mapView.visibleMapRect, animated: false)"))
+        #expect(controller.contains("if startedByFocus { cameraPolicy.beginFocusFit() }"))
+        let settled = try Self.body(
+            Self.coordinator, from: "func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {",
+            to: "if controller?.tripNotePickTrainID")
+        #expect(settled.contains("controller?.endFocusFit()"))
+    }
 }

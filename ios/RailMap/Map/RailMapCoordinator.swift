@@ -594,7 +594,8 @@ extension RailMapView.Surface {
                     ? nil : rideDeck.advanced(to: rides)
                 let ridesChanged = rides.count != self.rides.count
                     || deckUpdate.map { !$0.change.isEmpty } == true
-                let selectionChanged = selectedTrainID != self.selectedTrainID
+                let previousSelectedTrainID = self.selectedTrainID
+                let selectionChanged = selectedTrainID != previousSelectedTrainID
                 if selectionChanged { selectionNeedsHighlightTransition = true }
                 let focusRequest = controller?.pendingAutoFocusRequest(matching: autoFocusRequest)
                 let visibilityChanged = showsNetwork != self.showsNetwork
@@ -849,6 +850,14 @@ extension RailMapView.Surface {
                     if playback?.isActive == true, playbackLayer.lastSnapshot != nil {
                         rebuildOwed(on: mapView)
                     } else if !updateSelection(on: mapView) {
+                        // A stroke build running for the ride just left is
+                        // wasted: the rebuild asks for the new selection's own.
+                        if let previous = previousSelectedTrainID, rideStrokePreparation != nil,
+                           rideStrokePreparationRideIDs.contains(previous) {
+                            rideStrokePreparation?.cancel()
+                            rideStrokePreparation = nil
+                            rideStrokePreparationID = UUID()
+                        }
                         rebuildOwed(on: mapView)
                     }
                 case .rebuild:
@@ -1283,6 +1292,8 @@ extension RailMapView.Surface {
 
 
             func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+                // A framing animation a focus request started has settled.
+                controller?.endFocusFit()
                 if controller?.tripNotePickTrainID != nil { refreshTripNotePick(on: mapView) }
                 // Not while the reader is still moving the map.
                 //
@@ -2655,10 +2666,6 @@ extension RailMapView.Surface {
 #endif
                 RailSignpost.map.end("map.rebuild.networkOverlays", networkOverlays)
 
-                // A ride's stroke width: see ``RideOverlayStyle/widthToken(display:selected:)``.
-                func rideWidthToken(selected: Bool) -> CGFloat {
-                    RideOverlayStyle.widthToken(display: display, selected: selected)
-                }
                 // The two scopes a ride's stroke answers to, both ported in
                 // `MapDateScope`: the SELECTION spotlight, and the DATE scope
                 // the reader set on the ride list. `dimOpacity` finally has a
@@ -2666,11 +2673,6 @@ extension RailMapView.Surface {
                 // disappearing, which is what makes the slider a control over
                 // something.
                 let scope = dateScope
-                func rideAlpha(_ ride: RiddenRouteStore.DrawnRide, selected: Bool) -> CGFloat {
-                    MapDateScope.alpha(
-                        own: CGFloat(display.riddenOpacity), span: ride.daySpan,
-                        scope: scope, isSelected: selected, hasSelection: hasSelection)
-                }
 
                 let rideOverlayInterval = RailSignpost.map.begin("map.rebuild.rideOverlays")
 #if DEBUG
@@ -2706,51 +2708,10 @@ extension RailMapView.Surface {
                             for: ride, scope: scope, solid: solid, crossDay: crossDay, unproven: unproven))
                         continue
                     }
-                    let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
-                    let width = rideWidthToken(selected: selected)
-                    let alpha = rideAlpha(ride, selected: selected)
-
-                    // Same source, same colour, same width — only the stroke
-                    // pattern says "not this day" (`TRAIN_XDAY_LAYER`), or
-                    // "unproven" (the historical dotted rhythm).
-                    for (suffix, polylines, dashed, historical) in [
-                        ("ride", solid, false, false), ("ride-xday", crossDay, true, false),
-                        ("ride-unproven", unproven, false, true),
-                    ] where !polylines.isEmpty {
-                        let styleKey = "\(suffix)|\(ride.id)"
-                        let multi = overlayReconciliation.multiPolyline(polylines, key: styleKey)
-                        overlayStyles[styleKey] = .init(
-                            color: color, widthToken: width, alpha: alpha, dashed: dashed,
-                            historical: historical)
-                        selectedRideOverlays.append(multi)
-
-                        // §10.5: a selection has to change more than a colour.
-                        // The casing is a dark halo UNDER the selected line,
-                        // 0.7 pt per side at full scale — Apple's restrained
-                        // selected-transit outline rather than a glow — and it
-                        // rides the same ramp, or "selected" would read
-                        // differently at every zoom. It follows the dash too:
-                        // a solid casing under a dashed core would fill the
-                        // gaps back in and undo the distinction.
-                        let casingKey = "\(suffix)-casing|\(ride.id)"
-                        let casing = overlayReconciliation.multiPolyline(polylines, key: casingKey)
-                        overlayStyles[casingKey] = .init(
-                            // `MAP_SURFACE_COLORS[theme].casing`, the same two
-                            // values the web app's selection halo uses.
-                            color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
-                            widthToken: width + RailStyle.selectionCasingEdge * 2,
-                            alpha: 0.9,
-                            dashed: dashed,
-                            historical: historical
-                        )
-                        if selectionNeedsHighlightTransition, playback?.isActive != true {
-                            overlayStyles.animateOpacity(
-                                forKey: casingKey, duration: highlightDuration,
-                                fromAlpha: overlayReconciliation.oldOverlays.contains(where: { $0 === casing })
-                                    ? nil : 0)
-                        }
-                        rideCasings.append(casing)
-                    }
+                    appendSelectedRideOverlays(
+                        of: ride, solid: solid, crossDay: crossDay, unproven: unproven,
+                        dark: dark, hasSelection: hasSelection, reconciliation: overlayReconciliation,
+                        cores: &selectedRideOverlays, casings: &rideCasings)
                 }
                 // Non-selected rides: one overlay per colour x kind x date-scope
                 // class. The style is exactly what `MapDateScope.alpha` gives a
@@ -2892,6 +2853,83 @@ extension RailMapView.Surface {
                             generation: networkGeometry.residentStrokeGeneration(for: $0.chainID),
                             from: $0.from, to: $0.to)
                     })
+            }
+
+            /// The selected ride's cores and their casings, appended to `cores`
+            /// and `casings`: one core per surviving suffix (`ride` /
+            /// `ride-xday` / `ride-unproven`) with its halo. Shared by a full
+            /// rebuild and by a new pick answered in place, so the two cannot
+            /// draw the selected ride differently.
+            private func appendSelectedRideOverlays(
+                of ride: RiddenRouteStore.DrawnRide,
+                solid: [MKPolyline], crossDay: [MKPolyline], unproven: [MKPolyline],
+                dark: Bool, hasSelection: Bool, reconciliation: MapOverlayReconciliation,
+                cores: inout [MKMultiPolyline], casings: inout [MKMultiPolyline]
+            ) {
+                // A ride's stroke width: see ``RideOverlayStyle/widthToken(display:selected:)``.
+                let width = RideOverlayStyle.widthToken(display: display, selected: true)
+                let alpha = MapDateScope.alpha(
+                    own: CGFloat(display.riddenOpacity), span: ride.daySpan,
+                    scope: dateScope, isSelected: true, hasSelection: hasSelection)
+                let color = UIColor(railHex: ride.colorHex) ?? .railDefaultTrip
+
+                // Same source, same colour, same width — only the stroke
+                // pattern says "not this day" (`TRAIN_XDAY_LAYER`), or
+                // "unproven" (the historical dotted rhythm).
+                for (suffix, polylines, dashed, historical) in [
+                    ("ride", solid, false, false), ("ride-xday", crossDay, true, false),
+                    ("ride-unproven", unproven, false, true),
+                ] where !polylines.isEmpty {
+                    let styleKey = "\(suffix)|\(ride.id)"
+                    let multi = reconciliation.multiPolyline(polylines, key: styleKey)
+                    overlayStyles[styleKey] = .init(
+                        color: color, widthToken: width, alpha: alpha, dashed: dashed,
+                        historical: historical)
+                    cores.append(multi)
+
+                    // §10.5: a selection has to change more than a colour.
+                    // The casing is a dark halo UNDER the selected line,
+                    // 0.7 pt per side at full scale — Apple's restrained
+                    // selected-transit outline rather than a glow — and it
+                    // rides the same ramp, or "selected" would read
+                    // differently at every zoom. It follows the dash too:
+                    // a solid casing under a dashed core would fill the
+                    // gaps back in and undo the distinction.
+                    let casingKey = "\(suffix)-casing|\(ride.id)"
+                    let casing = reconciliation.multiPolyline(polylines, key: casingKey)
+                    overlayStyles[casingKey] = .init(
+                        // `MAP_SURFACE_COLORS[theme].casing`, the same two
+                        // values the web app's selection halo uses.
+                        color: UIColor(railHex: dark ? "#F5EEE9" : "#1A1A1A") ?? .label,
+                        widthToken: width + RailStyle.selectionCasingEdge * 2,
+                        alpha: 0.9,
+                        dashed: dashed,
+                        historical: historical
+                    )
+                    if selectionNeedsHighlightTransition, playback?.isActive != true {
+                        overlayStyles.animateOpacity(
+                            forKey: casingKey, duration: highlightDuration,
+                            fromAlpha: reconciliation.oldOverlays.contains(where: { $0 === casing })
+                                ? nil : 0)
+                    }
+                    casings.append(casing)
+                }
+            }
+
+            /// Whether every segment of `ride` that draws has its polyline in
+            /// the installed frame's cache. A standalone ride draws its whole
+            /// route (not only the part inside the built rect), so a ride that
+            /// reaches outside has not been built for it and takes a rebuild.
+            private func routeCachedInFrame(_ ride: RiddenRouteStore.DrawnRide) -> Bool {
+                let riddenStops = ride.stops
+                for segment in ride.segments {
+                    guard draws(segment: segment, of: ride, riddenStops: riddenStops) else { continue }
+                    let ref = strokeRef(for: segment, of: ride)
+                    let usesStroke = ref.map { networkGeometry.containsStroke(for: $0.chainID) } ?? false
+                    let key = rideLineCacheKey(of: segment, in: ride, stroke: usesStroke ? ref : nil)
+                    guard networkGeometry.ridePolyline(for: key) != nil else { return false }
+                }
+                return true
             }
 
             /// One ride's drawable polylines this frame, split into solid,
@@ -3529,7 +3567,7 @@ extension RailMapView.Surface {
                 }
                 guard controller.takeAutoFocusRequest(matching: request) == request else { return }
                 controller.selectionRegion = region
-                controller.fit(region)
+                controller.fit(region, startedByFocus: true)
             }
 
             /// Re-elects names through screen-space collisions while moving passes
@@ -5790,6 +5828,92 @@ extension RailMapView.Surface {
             private let raisedAnnotationViews = NSHashTable<MKAnnotationView>.weakObjects()
             private let stationOverlayRenderers = NSHashTable<RideStationOverlayRenderer>.weakObjects()
 
+            /// What a new pick answered in place built.
+            private struct RebatchedSelection {
+                var cores: [MKMultiPolyline]
+                var casings: [MKMultiPolyline]
+                var batchOverlays: [MKOverlay]
+                var previousStandaloneID: String?
+            }
+
+            private func newPickRouteIsCached() -> Bool {
+                guard layers.routes, playback?.isActive != true, playbackLayer.lastSnapshot == nil,
+                      let id = selectedTrainID, let ride = rides.first(where: { $0.id == id })
+                else { return false }
+                return routeCachedInFrame(ride)
+            }
+
+            /// The batch cache is the one the installed frame drew, with every
+            /// input the same but the selection (which a pick changes).
+            private func batchCacheIsCurrent(context: MarkerBuildContext, on mapView: MKMapView) -> Bool {
+                guard let cache = rideBatchCache, let frame = currentGeometryFrame else { return false }
+                let hasSelection = rides.contains { $0.id == selectedTrainID }
+                var expected = rideBatchStamp(
+                    frameKey: frame.key, buildRect: context.buildRect, hasSelection: hasSelection,
+                    dark: mapView.traitCollection.userInterfaceStyle == .dark)
+                expected.selectedTrainID = cache.stamp.selectedTrainID
+                expected.hasSelection = cache.stamp.hasSelection
+                return cache.stamp == expected
+            }
+
+            /// Moves the new selection out of its batch and the previous
+            /// standalone ride back into one, then builds the new ride's cores
+            /// and casings. After it the standalone ride's cores hold every
+            /// drawable segment and it is in no batch; every other drawn ride is
+            /// in exactly one. nil, with nothing changed, when the cache is gone.
+            private func rebatchForNewSelection(
+                context: MarkerBuildContext, dark: Bool, reconciliation: MapOverlayReconciliation,
+                on mapView: MKMapView
+            ) -> RebatchedSelection? {
+                guard var cache = rideBatchCache, let frame = currentGeometryFrame,
+                      let selectedID = selectedTrainID,
+                      let ride = rides.first(where: { $0.id == selectedID }) else { return nil }
+                let scope = dateScope
+                let mapPointsPerScreenPoint = frame.mapPointsPerScreenPoint
+                let rideBuildRect = NetworkLOD.tripArea(
+                    buildRect: context.buildRect, mapPointsPerScreenPoint: mapPointsPerScreenPoint)
+                let hasSelection = true
+                var affectedCells: Set<Int> = []
+                if let old = cache.entries.removeValue(forKey: selectedID) { affectedCells.insert(old.cell) }
+                batchedRidePartCounts.removeValue(forKey: selectedID)
+                let previousID = fullyBuiltSelectedRideID
+                if let previousID, previousID != selectedID,
+                   let previous = rides.first(where: { $0.id == previousID }), layers.routes {
+                    let (solid, crossDay, unproven, _) = ridePolylines(
+                        of: previous, rideBuildRect: rideBuildRect,
+                        mapPointsPerScreenPoint: mapPointsPerScreenPoint, scope: scope)
+                    if !solid.isEmpty || !crossDay.isEmpty || !unproven.isEmpty {
+                        let entry = RideOverlayBatching.entry(
+                            for: previous, scope: scope, solid: solid, crossDay: crossDay, unproven: unproven)
+                        cache.entries[previousID] = entry
+                        affectedCells.insert(entry.cell)
+                        batchedRidePartCounts[previousID] = solid.count + crossDay.count + unproven.count
+                    }
+                }
+                cache.batches = RideOverlayBatching.replan(
+                    previous: cache.batches, entries: rides.compactMap { cache.entries[$0.id] },
+                    affectedCells: affectedCells, selectedRideID: selectedID)
+                cache.stamp = rideBatchStamp(
+                    frameKey: frame.key, buildRect: context.buildRect, hasSelection: hasSelection, dark: dark)
+                rideBatchCache = cache
+
+                let (solid, crossDay, unproven, _) = ridePolylines(
+                    of: ride, rideBuildRect: rideBuildRect,
+                    mapPointsPerScreenPoint: mapPointsPerScreenPoint, scope: scope)
+                var cores: [MKMultiPolyline] = []
+                var casings: [MKMultiPolyline] = []
+                appendSelectedRideOverlays(
+                    of: ride, solid: solid, crossDay: crossDay, unproven: unproven, dark: dark,
+                    hasSelection: hasSelection, reconciliation: reconciliation,
+                    cores: &cores, casings: &casings)
+                fullyBuiltSelectedRideID = selectedID
+                return RebatchedSelection(
+                    cores: cores, casings: casings,
+                    batchOverlays: rideBatchOverlays(
+                        cache.batches, hasSelection: hasSelection, reconciliation: reconciliation),
+                    previousStandaloneID: previousID == selectedID ? nil : previousID)
+            }
+
             /// Re-applies the one shared factor to everything already on screen.
             ///
             /// Cheap by construction: the strokes are a handful of renderers, the
@@ -5809,6 +5933,13 @@ extension RailMapView.Surface {
             /// (see the long comment in ``rebuildOwed(on:)``); this answers
             /// from state the last rebuild already cached.
             ///
+            /// A NEW pick is answered here too when its whole route is already
+            /// cached in the installed frame (``SelectionApplyPlan``): its
+            /// cores and casings are built from the cache, the previous
+            /// standalone ride returns to its batch, and the batches of the
+            /// two cells are re-formed. A route that reaches outside the
+            /// built rect still takes the full rebuild.
+            ///
             /// Answers `false` — doing nothing — when that state is missing
             /// or stale, so the caller falls back to a full rebuild.
             private func updateSelection(on mapView: MKMapView) -> Bool {
@@ -5818,8 +5949,14 @@ extension RailMapView.Surface {
                 // the debt is paid by `rebuild`, not by trusting the cache.
                 guard let context = markerBuildContext, !annotationsNeedRefresh,
                     !rebuildDeferredByPlayback, !rebuildDeferredByGesture,
-                    pendingStrokeRefs == nil, mapView.bounds.width > 1,
-                    selectedTrainID == nil || selectedTrainID == fullyBuiltSelectedRideID else { return false }
+                    pendingStrokeRefs == nil, mapView.bounds.width > 1 else { return false }
+                let isNewPick = selectedTrainID != nil && selectedTrainID != fullyBuiltSelectedRideID
+                let plan = SelectionApplyPlan.decide(
+                    selected: selectedTrainID, standalone: fullyBuiltSelectedRideID,
+                    routeCachedInFrame: isNewPick && newPickRouteIsCached(),
+                    batchCacheCurrent: isNewPick && batchCacheIsCurrent(context: context, on: mapView),
+                    contextValid: true)
+                guard case .selectionOnly(let rebatch) = plan else { return false }
                 // Mirror rebuild's own gesture guard: a finger on the map
                 // defers the same way, and reports itself handled so the
                 // caller does not also fall back to a full rebuild.
@@ -5843,8 +5980,33 @@ extension RailMapView.Surface {
                 var unselectedCores: [MKMultiPolyline] = []
                 var selectedCores: [MKMultiPolyline] = []
                 var playback: [MKOverlay] = []
+                // A new pick: the ride's own overlays come from the cache, its
+                // batch block is re-formed, and the previous standalone ride's
+                // cores are dropped (it is in a batch again).
+                var rebatched: RebatchedSelection?
+                if rebatch {
+                    guard let result = rebatchForNewSelection(
+                        context: context, dark: dark, reconciliation: reconciliation, on: mapView)
+                    else {
+                        RailSignpost.map.end("map.selection.overlays", overlaysInterval)
+                        return false
+                    }
+                    rebatched = result
+                    selectedCores.append(contentsOf: result.cores)
+                    casings.append(contentsOf: result.casings)
+                }
                 for overlay in installed {
                     guard let key = overlay.title ?? nil else { others.append(overlay); continue }
+                    if rebatched != nil {
+                        // The block is replaced wholesale; the ride that was
+                        // standalone is in it now.
+                        if MapOverlayStyles.isRideBatchKey(key) { continue }
+                        if MapOverlayStyles.isRideCoreKey(key),
+                           let separator = key.firstIndex(of: "|"),
+                           String(key[key.index(after: separator)...]) == rebatched?.previousStandaloneID {
+                            continue
+                        }
+                    }
                     if MapOverlayStyles.isRideCasingKey(key) {
                         // Retain the new selection's casing. Old casings stay
                         // mounted separately until their exit fade completes.
@@ -5903,7 +6065,8 @@ extension RailMapView.Surface {
                 // Other routes first, then the selected casing and core —
                 // the same order as a full rebuild.
                 let retired = retiringCasings(from: installed, on: mapView)
-                let desired: [MKOverlay] = others + retired + unselectedCores + casings + selectedCores + playback
+                let desired: [MKOverlay] = others + retired + (rebatched?.batchOverlays ?? [])
+                    + unselectedCores + casings + selectedCores + playback
                 // The build's own scale, as `rebuild` hands `install`: the
                 // marks below are styled from the same context, and the two
                 // halves must agree on the frame they are drawn.
