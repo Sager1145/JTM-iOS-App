@@ -10,67 +10,74 @@ struct WorkspaceSurfacePolicyTests {
         .lineChooser, .tripNoteRead, .tripNoteForm, .groupPicker,
     ]
 
-    @Test("Every kind has the intended host in every mode")
-    func everyKindEveryMode() {
-        for mode in Self.modes {
-            for kind in WorkspaceSurfaceKind.allCases {
-                let expected: WorkspaceSurfaceHost
-                switch kind {
-                case .shareComposer: expected = .fullWindowCover
-                case .deleteConfirmation: expected = .dialog
-                case .journeyEditor: expected = .panel
-                case .tripCard, .tripDetails, .stationCard, .lineCard,
-                    .overlappingTripsChooser, .lineChooser, .tripNoteRead,
-                    .tripNoteForm, .groupPicker:
-                    expected = mode == .sideBySide ? .panel : .systemSheet
-                }
-                #expect(
-                    WorkspaceSurfacePolicy.host(for: kind, mode: mode) == expected,
-                    "\(kind) in \(mode)")
+    private static func host(
+        _ kind: WorkspaceSurfaceKind, _ mode: WorkspaceLayoutMode, hinged: Bool = false
+    ) -> WorkspaceSurfaceHost {
+        WorkspaceSurfacePolicy.host(for: kind, mode: mode, isHinged: hinged)
+    }
+
+    @Test("Literal decision table: absorbed kinds by layout")
+    func literalTable() {
+        // (mode, hinged, expected host for every absorbed kind)
+        let rows: [(WorkspaceLayoutMode, Bool, WorkspaceSurfaceHost)] = [
+            (.compactOverlay, false, .systemSheet),
+            (.sideBySide, false, .panel),
+            (.compactOverlay, true, .systemSheet),
+            (.sideBySide, true, .systemSheet),
+        ]
+        for (mode, hinged, expected) in rows {
+            for kind in Self.absorbed {
+                #expect(Self.host(kind, mode, hinged: hinged) == expected, "\(kind) \(mode) hinged=\(hinged)")
             }
         }
     }
 
-    @Test("Docked layout hosts every absorbed popup in the panel")
-    func dockedUsesPanel() {
-        for kind in Self.absorbed {
-            #expect(WorkspaceSurfacePolicy.host(for: kind, mode: .sideBySide) == .panel)
-        }
-    }
-
-    @Test("Compact phone layout keeps system sheets")
-    func compactUnchanged() {
-        for kind in Self.absorbed {
-            #expect(WorkspaceSurfacePolicy.host(for: kind, mode: .compactOverlay) == .systemSheet)
-        }
-    }
-
-    @Test("Share composer and delete confirmation never move into the panel")
-    func fixedHosts() {
+    @Test("Literal decision table: fixed kinds in every layout")
+    func literalFixed() {
         for mode in Self.modes {
-            #expect(WorkspaceSurfacePolicy.host(for: .shareComposer, mode: mode) == .fullWindowCover)
-            #expect(WorkspaceSurfacePolicy.host(for: .deleteConfirmation, mode: mode) == .dialog)
-        }
-    }
-
-    @Test("Tabs hide exactly when the surface fills the panel")
-    func tabsHideIffPanel() {
-        for mode in Self.modes {
-            for kind in WorkspaceSurfaceKind.allCases {
-                #expect(
-                    WorkspaceSurfacePolicy.hidesTabsWhilePresented(kind: kind, mode: mode)
-                        == (WorkspaceSurfacePolicy.host(for: kind, mode: mode) == .panel))
+            for hinged in [false, true] {
+                #expect(Self.host(.shareComposer, mode, hinged: hinged) == .fullWindowCover)
+                #expect(Self.host(.deleteConfirmation, mode, hinged: hinged) == .dialog)
+                #expect(Self.host(.journeyEditor, mode, hinged: hinged) == .panel)
             }
         }
-        #expect(WorkspaceSurfacePolicy.hidesTabsWhilePresented(kind: .tripCard, mode: .sideBySide))
-        #expect(!WorkspaceSurfacePolicy.hidesTabsWhilePresented(kind: .tripCard, mode: .compactOverlay))
-        #expect(WorkspaceSurfacePolicy.hidesTabsWhilePresented(kind: .journeyEditor, mode: .compactOverlay))
     }
 
-    @Test("Map obstruction is constant only when docked")
+    @Test("Every kind is covered by the table (absorbed or fixed)")
+    func allKindsClassified() {
+        let fixed: [WorkspaceSurfaceKind] = [.shareComposer, .deleteConfirmation, .journeyEditor]
+        for kind in WorkspaceSurfaceKind.allCases {
+            #expect(Self.absorbed.contains(kind) != fixed.contains(kind), "\(kind)")
+        }
+    }
+
+    @Test("Hinged layout never uses the panel for absorbed popups, even when width says sideBySide")
+    func hingedKeepsSheets() {
+        for kind in Self.absorbed {
+            #expect(Self.host(kind, .sideBySide, hinged: true) != .panel)
+            #expect(!WorkspaceSurfacePolicy.hidesTabsWhilePresented(
+                kind: kind, mode: .sideBySide, isHinged: true))
+        }
+    }
+
+    @Test("Tabs hide only for panel-hosted surfaces")
+    func tabsHide() {
+        let hides = WorkspaceSurfacePolicy.hidesTabsWhilePresented
+        #expect(hides(.tripCard, .sideBySide, false))
+        #expect(!hides(.tripCard, .compactOverlay, false))
+        #expect(!hides(.tripCard, .sideBySide, true))
+        #expect(hides(.journeyEditor, .compactOverlay, false))
+        #expect(!hides(.shareComposer, .sideBySide, false))
+        #expect(!hides(.deleteConfirmation, .sideBySide, false))
+    }
+
+    @Test("Map obstruction is constant only when docked and not hinged")
     func obstruction() {
-        #expect(WorkspaceSurfacePolicy.keepsMapObstructionConstant(mode: .sideBySide))
-        #expect(!WorkspaceSurfacePolicy.keepsMapObstructionConstant(mode: .compactOverlay))
+        let keeps = WorkspaceSurfacePolicy.keepsMapObstructionConstant
+        #expect(keeps(.sideBySide, false))
+        #expect(!keeps(.compactOverlay, false))
+        #expect(!keeps(.sideBySide, true))
+        #expect(!keeps(.compactOverlay, true))
     }
 
     @Test("Mac Catalyst is always docked, so every absorbed popup is panel-hosted")
@@ -78,7 +85,7 @@ struct WorkspaceSurfacePolicyTests {
         let mode = WorkspaceLayoutPolicy(width: 300, height: 300, isMacCatalyst: true).mode
         #expect(mode == .sideBySide)
         for kind in Self.absorbed {
-            #expect(WorkspaceSurfacePolicy.host(for: kind, mode: mode) == .panel)
+            #expect(Self.host(kind, mode) == .panel)
         }
     }
 
@@ -87,41 +94,51 @@ struct WorkspaceSurfacePolicyTests {
         for (child, parent) in [
             (WorkspaceSurfaceKind.tripDetails, WorkspaceSurfaceKind.tripCard),
             (.lineCard, .stationCard), (.tripNoteRead, .tripCard),
-            (.tripNoteForm, .tripNoteRead), (.groupPicker, .tripCard),
+            (.tripNoteForm, .tripNoteRead),
         ] {
             let docked = WorkspaceSurfacePolicy.nestedHost(
-                child: child, from: parent, mode: .sideBySide)
+                child: child, from: parent, mode: .sideBySide, isHinged: false)
             #expect(docked == WorkspaceNestedSurface(host: .panel, hasBackStep: true))
-            let compact = WorkspaceSurfacePolicy.nestedHost(
-                child: child, from: parent, mode: .compactOverlay)
-            #expect(compact == WorkspaceNestedSurface(host: .systemSheet, hasBackStep: false))
+            for (mode, hinged) in [(WorkspaceLayoutMode.compactOverlay, false), (.sideBySide, true)] {
+                let sheet = WorkspaceSurfacePolicy.nestedHost(
+                    child: child, from: parent, mode: mode, isHinged: hinged)
+                #expect(sheet == WorkspaceNestedSurface(host: .systemSheet, hasBackStep: false))
+            }
+        }
+    }
+
+    @Test("Group picker opens from a list row, so it is a panel surface with no parent step")
+    func groupPickerFromList() {
+        #expect(Self.host(.groupPicker, .sideBySide) == .panel)
+        #expect(Self.host(.groupPicker, .compactOverlay) == .systemSheet)
+    }
+
+    @Test("Journey editor replaces its parent: no back step, parent dismissed")
+    func journeyEditorReplaces() {
+        for mode in Self.modes {
+            for hinged in [false, true] {
+                for parent in [WorkspaceSurfaceKind.tripDetails, .tripCard] {
+                    let nested = WorkspaceSurfacePolicy.nestedHost(
+                        child: .journeyEditor, from: parent, mode: mode, isHinged: hinged)
+                    #expect(nested == WorkspaceNestedSurface(
+                        host: .panel, hasBackStep: false, dismissesParent: true))
+                }
+            }
         }
     }
 
     @Test("Nested non-panel children follow their own host with no back step")
     func nestedNonPanel() {
         for mode in Self.modes {
-            for parent in WorkspaceSurfaceKind.allCases {
-                for child in [WorkspaceSurfaceKind.shareComposer, .deleteConfirmation] {
-                    let nested = WorkspaceSurfacePolicy.nestedHost(
-                        child: child, from: parent, mode: mode)
-                    #expect(nested.host == WorkspaceSurfacePolicy.host(for: child, mode: mode))
-                    #expect(!nested.hasBackStep)
-                }
-            }
-        }
-    }
-
-    @Test("A back step exists only for panel-to-panel nesting, for every pair")
-    func nestedExhaustive() {
-        for mode in Self.modes {
-            for parent in WorkspaceSurfaceKind.allCases {
-                for child in WorkspaceSurfaceKind.allCases {
-                    let nested = WorkspaceSurfacePolicy.nestedHost(
-                        child: child, from: parent, mode: mode)
-                    let both = WorkspaceSurfacePolicy.host(for: child, mode: mode) == .panel
-                        && WorkspaceSurfacePolicy.host(for: parent, mode: mode) == .panel
-                    #expect(nested.hasBackStep == both)
+            for hinged in [false, true] {
+                for parent in WorkspaceSurfaceKind.allCases {
+                    for child in [WorkspaceSurfaceKind.shareComposer, .deleteConfirmation] {
+                        let nested = WorkspaceSurfacePolicy.nestedHost(
+                            child: child, from: parent, mode: mode, isHinged: hinged)
+                        #expect(nested.host == Self.host(child, mode, hinged: hinged))
+                        #expect(!nested.hasBackStep)
+                        #expect(!nested.dismissesParent)
+                    }
                 }
             }
         }
