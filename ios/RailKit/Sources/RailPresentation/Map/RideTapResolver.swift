@@ -83,7 +83,7 @@ public enum RideTapResolver {
 
     /// Distance from a point to a line SEGMENT — not to the infinite line, and
     /// not to the nearer endpoint.
-    static func distance(from point: Point, to a: Point, _ b: Point) -> Double {
+    public static func distance(from point: Point, to a: Point, _ b: Point) -> Double {
         let dx = b.x - a.x
         let dy = b.y - a.y
         let denominator = dx * dx + dy * dy

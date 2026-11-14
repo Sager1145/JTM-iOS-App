@@ -112,6 +112,15 @@ extension RailMapView.Surface {
             var onRender: (RailMapView.RenderStats) -> Void = { _ in }
             var onSelectRide: ([String]) -> Void = { _ in }
             var onSelectStation: (StationCard) -> Void = { _ in }
+            var onSelectLines: ([RailNetworkStore.DrawnLine]) -> Void = { _ in }
+            /// The recognisers `makeUIView` installs, so `shouldReceive` can tell them apart.
+            weak var tapRecognizer: UITapGestureRecognizer?
+            weak var settledTapRecognizer: UITapGestureRecognizer?
+            /// The line builds the last rebuild drew, retained for the network
+            /// line tap. They only reference the polylines MapKit already holds.
+            private var drawnLineBuilds: [LineBuild] = []
+            /// An empty-map clear `answerTap` banked for `handleSettledTap`.
+            private var bankedClear = false
             var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
             /// The localisation engine's owner. A `@MainActor` class, and
             /// therefore `Sendable`, so a nonisolated coordinator may hold it;
@@ -1070,6 +1079,7 @@ extension RailMapView.Surface {
             /// identify this coordinator or this exact map view.
             func tearDown(_ dismantledMapView: MKMapView) {
                 selectedStationSnapshots.tearDown()
+                drawnLineBuilds = []
                 if let memoryWarningObserver {
                     NotificationCenter.default.removeObserver(memoryWarningObserver)
                 }
@@ -2539,6 +2549,7 @@ extension RailMapView.Surface {
                 // stored vertices against a budget meant for the ~12,000 drawn.
                 let fitted = NetworkLOD.fitToBudget(builds, zoom: visibilityZoom)
                 let visible = fitted.kept.map(\.line)
+                drawnLineBuilds = fitted.kept
                 var selectedFamilyCoverage: [String: [ContinuousStroke.WindowSpan]] = [:]
                 for build in fitted.kept where !build.familyPolylines.isEmpty {
                     selectedFamilyCoverage[build.line.id] = build.familyPolylines.values.flatMap(\.chunkWindows)
@@ -5574,95 +5585,198 @@ extension RailMapView.Surface {
                 }
             }
 
-            @objc func handleMapTap(_ recognizer: UITapGestureRecognizer) {
-                guard recognizer.state == .ended, let mapView,
-                      !(playback?.isActive == true && playbackLayer.lastSnapshot != nil)
-                else { return }
-                // Picking a note's place: the map only pans; nothing selects.
-                if controller?.tripNotePickTrainID != nil { return }
-                // 列車経路 off takes the rides' HIT AREA with their ink.
-                //
-                // `RailMap.setVisible` moves `TRAIN_PICK_LAYER` and
-                // `TRAIN_PICK_FAN_LAYER` — the layers a click is resolved
-                // against — along with the drawn ones, and MapLibre answers no
-                // rendered feature from a hidden layer, so in the browser a
-                // click over a hidden route is a click on bare ground. Here the
-                // tap index was built from the rides themselves, which do not
-                // know whether they were drawn: with the switch off the reader
-                // tapped an empty basemap and got a journey card, or the
-                // ambiguity chooser offering three journeys none of which was
-                // on screen.
-                //
-                // Answered as a tap on empty map rather than swallowed, which
-                // is what it now is: nothing of the reader's is drawn, so §4.4's
-                // rule that empty ground clears the selection is the same rule
-                // here. `tappedStationOfSelectedRide` is not consulted for the
-                // same reason — `MapLayers.draws(role:)` is gated on this
-                // switch, so there is no bead of any ride on the map to have
-                // been meant.
-                guard layers.routes else {
-                    onSelectRide([])
-                    return
-                }
-                let point = recognizer.location(in: mapView)
-                let interval = RailSignpost.map.begin("map.tap")
-                defer { RailSignpost.map.end("map.tap", interval) }
-                // A trip dot drawn by the station overlay is not a map
-                // annotation, so MapKit never selects it: its touch target is
-                // resolved here, on the tap only, and answers with the same
-                // station card a mounted dot's selection did.
-                if let dot = tappedOverlayRideDot(at: point, on: mapView) {
-                    if let card = stationCard(for: dot) { onSelectStation(card) }
-                    return
-                }
-                // Projection here, arithmetic in `RideTapResolver`.
-                //
-                // Every ride under the finger is handed up, not just the
-                // nearest: `railmap-interactions.js` can afford to pick one
-                // because a mouse hovers first and the reader sees which line
-                // is about to be chosen, while a finger commits on contact —
-                // so the web app hands a coarse-pointer tap over crossing
-                // lines to `handleDeckRouteChoices` and asks. One ride
-                // selects, several are offered, none steps back (§4.4).
-                //
-                // What is projected is decided by ``RideTapIndex``: the
-                // vertices near the finger rather than every vertex the reader
-                // has ever ridden. It answers `nil` for a pitched camera,
-                // where its one-scale argument does not hold, and then the
-                // whole geometry is projected exactly as it always was.
-                let hits = interaction.rideHits(
-                    at: point, on: mapView, rides: rides, drawnStrokes: drawnStrokes)
-                // A tap that found no ride, but landed on a station OF THE
-                // CHOSEN one, is not a tap on empty map — so it must not be
-                // answered as one.
-                //
-                // `gestureRecognizer(_:shouldReceive:)` already keeps a touch
-                // inside a bead's own 44-point target away from this
-                // recogniser, and that is the narrower question. MapKit selects
-                // an annotation from further out than the view itself claims —
-                // `mapView(_:didSelect:)` says so — so a finger that lands
-                // beside a dot, past its target but still within MapKit's,
-                // reached here, found no ride under it (a bead at the very end
-                // of a line has stroke on one side only) and cleared the
-                // selection, and then half a second later the same touch opened
-                // that station's card. One touch, two contradictory answers,
-                // and the reader watching a card appear over a map that has
-                // just gone quiet.
-                if hits.isEmpty, interaction.containsSelectedStation(at: point, on: mapView,
-                    hasSelection: selectedTrainID != nil, annotations: rideStationAnnotations) { return }
-                // The touch is CLAIMED when it lands on a ride, and the claim
-                // is what `mapView(_:didSelect:)` reads half a second later.
-                // See the comment there: this map answers a tap twice
-                // otherwise.
-                onSelectRide(hits)
+            // MARK: - taps
+
+            /// What a tap measured under the finger, beyond what the policy
+            /// needs: the objects an answer opens.
+            private struct TapMeasurement {
+                var hits: MapTapHits
+                /// The trip dot under the finger, mounted or drawn in the overlay.
+                var dot: RideStationAnnotation?
+                /// The station annotation within reach, for ``MapTapAnswer/station``.
+                var stationAnnotation: (any MKAnnotation)?
+                /// Network lines within reach, nearest first.
+                var lines: [RailNetworkStore.DrawnLine] = []
             }
 
-            /// A double tap only ever zooms. See `makeUIView` for why this
-            /// recogniser exists at all — the single tap waits on it, and the
-            /// waiting is the whole feature.
-            @objc func handleMapDoubleTap(_ recognizer: UITapGestureRecognizer) {
-                if recognizer.state == .ended { controller?.readerBeganManipulating() }
+            @objc func handleMapTap(_ recognizer: UITapGestureRecognizer) {
+                guard recognizer.state == .ended, let mapView else { return }
+                answerTap(at: recognizer.location(in: mapView), on: mapView)
             }
+
+            /// Measures what is under the finger, asks ``MapTapPolicy`` and
+            /// performs its answer. Every priority decision is the policy's; this
+            /// only measures and acts. An empty-map clear is banked for
+            /// ``handleSettledTap(_:)``, which delivers it after the double-tap
+            /// window.
+            @discardableResult
+            func answerTap(
+                at point: CGPoint, on mapView: MKMapView, tapCount: Int = 1
+            ) -> (answer: MapTapAnswer, hits: MapTapHits) {
+                bankedClear = false
+                // Playback owns the map; picking a note's place only pans.
+                guard !(playback?.isActive == true && playbackLayer.lastSnapshot != nil),
+                      controller?.tripNotePickTrainID == nil
+                else { return (.ignore, MapTapHits(tapCount: tapCount)) }
+                let interval = RailSignpost.map.begin("map.tap")
+                defer { RailSignpost.map.end("map.tap", interval) }
+                let measured = measureTap(at: point, on: mapView, tapCount: tapCount)
+                let answer = MapTapPolicy.answer(measured.hits)
+                switch answer {
+                case .annotation, .ignore:
+                    // The annotation view under the finger answers through
+                    // `mapView(_:didSelect:)`, which this touch has not claimed.
+                    break
+                case .stationCard:
+                    if let dot = measured.dot, let card = stationCard(for: dot) {
+                        interaction.claimTouch()
+                        onSelectStation(card)
+                    }
+                case .station:
+                    if let annotation = measured.stationAnnotation, let card = stationCard(for: annotation) {
+                        interaction.claimTouch()
+                        onSelectStation(card)
+                    }
+                case .pickTrip(let id):
+                    interaction.claimTouch()
+                    onSelectRide([id])
+                case .tripChooser(let ids):
+                    interaction.claimTouch()
+                    onSelectRide(ids)
+                case .lineCard, .lineChooser:
+                    interaction.claimTouch()
+                    onSelectLines(measured.lines)
+                case .clearWhenSettled:
+                    bankedClear = true
+                }
+                return (answer, measured.hits)
+            }
+
+            /// Delivers the clear `answerTap` banked, once `doubleTap` has failed.
+            @objc func handleSettledTap(_ recognizer: UITapGestureRecognizer) {
+                guard recognizer.state == .ended, bankedClear else { return }
+                bankedClear = false
+                onSelectRide([])
+            }
+
+            private func measureTap(at point: CGPoint, on mapView: MKMapView, tapCount: Int) -> TapMeasurement {
+                var measured = TapMeasurement(hits: MapTapHits(tapCount: tapCount))
+                var view = mapView.hitTest(point, with: nil)
+                var annotationView: MKAnnotationView?
+                while let current = view {
+                    if let found = current as? MKAnnotationView { annotationView = found; break }
+                    view = current.superview
+                }
+                if let annotationView {
+                    if let dot = annotationView.annotation as? RideStationAnnotation {
+                        measured.dot = dot
+                    } else {
+                        measured.hits.annotationViewUnderFinger = true
+                    }
+                } else if layers.routes {
+                    measured.dot = tappedOverlayRideDot(at: point, on: mapView)
+                }
+                // 列車経路 off takes the rides' hit area with their ink: no trip
+                // dot and no trip line can have been meant.
+                if layers.routes, let dot = measured.dot {
+                    if dot.rideID == selectedTrainID {
+                        measured.hits.selectedTripStationDot = true
+                    } else {
+                        measured.hits.tripIDsInReach.append(dot.rideID)
+                    }
+                }
+                if !measured.hits.annotationViewUnderFinger, !measured.hits.selectedTripStationDot {
+                    if layers.routes {
+                        measured.hits.tripIDsInReach += interaction.rideHits(
+                            at: point, on: mapView, rides: rides, drawnStrokes: drawnStrokes)
+                    }
+                    if measured.hits.tripIDsInReach.isEmpty {
+                        measured.stationAnnotation = stationAnnotation(at: point, on: mapView)
+                        measured.hits.stationAnnotationInReach = measured.stationAnnotation != nil
+                        if measured.stationAnnotation == nil {
+                            measured.lines = networkLines(at: point, on: mapView)
+                            measured.hits.networkLineIDsInReach = measured.lines.map(\.lineID)
+                        }
+                    }
+                }
+                return measured
+            }
+
+            /// The nearest station annotation within ``MapTapPolicy/stationReach``:
+            /// a mounted network bead or a dot of the selected trip, or one of its
+            /// dots drawn in the overlay. MapKit selects from further out than a
+            /// view's own target, so this answers the same touch at once.
+            private func stationAnnotation(at point: CGPoint, on mapView: MKMapView) -> (any MKAnnotation)? {
+                var best: (annotation: any MKAnnotation, distance: CGFloat)?
+                func consider(_ annotation: any MKAnnotation, at centre: CGPoint) {
+                    let distance = hypot(centre.x - point.x, centre.y - point.y)
+                    guard distance <= CGFloat(MapTapPolicy.stationReach),
+                          distance < (best?.distance ?? .infinity)
+                    else { return }
+                    best = (annotation, distance)
+                }
+                for view in displayedAnnotationViews.allObjects where view.window != nil {
+                    guard let annotation = view.annotation, let parent = view.superview else { continue }
+                    let eligible = annotation is StationAnnotation
+                        || (annotation as? RideStationAnnotation)?.rideID == selectedTrainID
+                    guard eligible else { continue }
+                    consider(annotation, at: parent.convert(view.center, to: mapView))
+                }
+                for dot in overlayRideDots where dot.rideID == selectedTrainID {
+                    consider(dot, at: mapView.convert(dot.coordinate, toPointTo: mapView))
+                }
+                return best?.annotation
+            }
+
+            /// Network lines within ``MapTapPolicy/networkLineReach`` over the
+            /// line builds the last rebuild drew. Nothing is answered for a
+            /// pitched camera, where one view-point reach has no single scale.
+            private func networkLines(at point: CGPoint, on mapView: MKMapView) -> [RailNetworkStore.DrawnLine] {
+                guard showsNetwork, !drawnLineBuilds.isEmpty,
+                      let scale = RideTapIndex.mapPointsPerViewPoint(on: mapView)
+                else { return [] }
+                let interval = RailSignpost.map.begin("map.tap.lines")
+                defer { RailSignpost.map.end("map.tap.lines", interval) }
+                let tap = MKMapPoint(mapView.convert(point, toCoordinateFrom: mapView))
+                let ids = NetworkLineHitTest.lineIDs(
+                    at: tap, reach: MapTapPolicy.networkLineReach * scale, in: drawnLineBuilds)
+                var byLineID: [String: RailNetworkStore.DrawnLine] = [:]
+                for build in drawnLineBuilds where byLineID[build.line.lineID] == nil {
+                    byLineID[build.line.lineID] = build.line
+                }
+                return ids.compactMap { byLineID[$0] }
+            }
+
+            /// A double tap zooms. One that lands on exactly one trip also
+            /// selects it (`MapTapPolicy.doubleTapAnswer`); the selection comes
+            /// first so that stopping the auto-fit afterwards holds.
+            @objc func handleMapDoubleTap(_ recognizer: UITapGestureRecognizer) {
+                guard recognizer.state == .ended else { return }
+                if let mapView, layers.routes, controller?.tripNotePickTrainID == nil,
+                   !(playback?.isActive == true && playbackLayer.lastSnapshot != nil) {
+                    let measured = measureTap(
+                        at: recognizer.location(in: mapView), on: mapView, tapCount: 2)
+                    if case .selectTripAndZoom(let id) = MapTapPolicy.doubleTapAnswer(measured.hits),
+                       id != selectedTrainID {
+                        interaction.claimTouch()
+                        onSelectRide([id])
+                    }
+                }
+                controller?.readerBeganManipulating()
+            }
+
+#if DEBUG
+            /// The `tapMap` command: the same answer a tap gives, with a banked
+            /// clear delivered at once. It does not exercise the recognisers.
+            func answerTapForUITest(at point: CGPoint, on mapView: MKMapView) -> MapTapTestReport {
+                let outcome = answerTap(at: point, on: mapView)
+                if bankedClear {
+                    bankedClear = false
+                    onSelectRide([])
+                }
+                return MapTapTestReport(answer: outcome.answer, hits: outcome.hits)
+            }
+#endif
 
             func gestureRecognizer(
                 _ gestureRecognizer: UIGestureRecognizer,
@@ -5779,46 +5893,27 @@ extension RailMapView.Surface {
                 }
             }
 
-            /// A tap that landed on a MARK belongs to that mark.
-            ///
-            /// The recogniser is attached to the map view, so it also fires for
-            /// touches inside annotation views — and every dot a ride puts on a
-            /// station sits on that ride's own stroke. Without this, opening a
-            /// station's card from one would select the journey underneath at
-            /// the same time: two answers to one tap, and where two journeys
-            /// call at the station, `handleDeckRouteChoices`' chooser and the
-            /// card both trying to be presented at once — a `confirmationDialog`
-            /// and a `sheet` asked for in the same frame.
-            ///
-            /// A deviation from `handleDeckMarkerClick`, which selects the
-            /// marker's train as well as opening its popup, and a deliberate
-            /// one. That popup is the web app's stop DATA grid — train id, stop
-            /// type, `ride_segment`, route source — which is about the journey
-            /// it belongs to and reasonably comes with it selected. What opens
-            /// here is the station's own card, which is about the place: the
-            /// same answer whichever journey called there, and not a reason to
-            /// move the reader's selection, their camera (自動縮放) and the
-            /// map's whole naming out from under the sheet as it appears.
-            ///
-            /// The origin/destination cards are unaffected and stay transparent
-            /// to route picking, because `EndpointLabelView` turns interaction
-            /// off — a touch on one is delivered as a touch on the map, and this
-            /// asks the touch where it landed rather than asking the map what is
-            /// drawn there.
+            /// Which touches the tap recognisers receive: the first tap of a sequence
+            /// only (`MapTapPolicy.receives`), wherever it lands. A touch on an
+            /// annotation view is measured like any other and the policy answers
+            /// `.annotation`, which `mapView(_:didSelect:)` carries out; one that
+            /// the tap answered itself is claimed there so it is not answered twice.
+            /// `EndpointLabelView` turns interaction off, so a touch on one is a
+            /// touch on the map.
             func gestureRecognizer(
                 _ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch
             ) -> Bool {
-                // Only the tap asks where it landed. The manipulation sensors
-                // want every touch that moves the map, and a pinch very often
-                // starts with a finger on a station bead.
-                guard gestureRecognizer is UITapGestureRecognizer else { return true }
-                // A new touch has been given no answer yet, whichever of the
-                // two answers it ends up getting (`mapView(_:didSelect:)`).
-                interaction.beginTouch()
-                var view = touch.view
-                while let current = view {
-                    if current is MKAnnotationView { return false }
-                    view = current.superview
+                // The second tap of a double tap is never a tap. The
+                // manipulation sensors want every touch that moves the map, and
+                // a pinch very often starts with a finger on a station bead.
+                if gestureRecognizer === tapRecognizer || gestureRecognizer === settledTapRecognizer {
+                    guard MapTapPolicy.receives(tapCount: touch.tapCount) else { return false }
+                }
+                if gestureRecognizer === tapRecognizer {
+                    // A new touch has been given no answer yet, whichever of
+                    // the two answers it ends up getting (`mapView(_:didSelect:)`).
+                    interaction.beginTouch()
+                    bankedClear = false
                 }
                 return true
             }
@@ -6392,11 +6487,10 @@ extension RailMapView.Surface {
             /// station card the reader would have seen never appears. It reads
             /// as a card that opens sometimes and not others.
             ///
-            /// So a touch this map has already answered with a ride is not
-            /// answered again here. A touch that landed ON an annotation never
-            /// reaches the tap recogniser at all (`shouldReceive` returns
-            /// false), and one that found no ride under it makes no claim — so
-            /// both of those still open their card.
+            /// So a touch the tap has already answered (`answerTap` claims it for a
+            /// trip, a chooser, a station card or a line) is not answered again
+            /// here. A touch the tap left to the annotation (`.annotation`), or
+            /// found nothing for, makes no claim — so those still open their card.
             func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
                 if let draft = annotation as? DraftStopAnnotation {
                     mapView.deselectAnnotation(annotation, animated: false)
