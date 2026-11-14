@@ -1,4 +1,5 @@
 import RailCore
+import RailPresentation
 import SwiftUI
 
 // MARK: - what the form edits
@@ -275,32 +276,54 @@ extension View {
     /// Presents the read card and the form for `flow`. `onSet` writes the
     /// trip's whole note list and says whether the save went through.
     func tripNotesPresentation(
-        flow: TripNoteFlow, train: Train, trains: [Train],
+        flow: TripNoteFlow, host: WorkspaceSurfaceHost, train: Train, trains: [Train],
         onSet: (([TripNote]) async -> Bool)?
     ) -> some View {
-        modifier(TripNotesPresentation(flow: flow, train: train, trains: trains, onSet: onSet))
+        modifier(TripNotesPresentation(
+            flow: flow, host: host, train: train, trains: trains, onSet: onSet))
     }
 }
 
 private struct TripNotesPresentation: ViewModifier {
     @Bindable var flow: TripNoteFlow
+    /// Where the surfaces open (`WorkspaceSurfacePolicy`): the docked panel
+    /// shows them over the card, a system sheet presents them.
+    let host: WorkspaceSurfaceHost
     let train: Train
     let trains: [Train]
     let onSet: (([TripNote]) async -> Bool)?
     @Environment(AppLocalization.self) private var localization
 
+    @ViewBuilder
+    private func screenContent(_ screen: TripNoteFlow.Screen) -> some View {
+        Group {
+            switch screen {
+            case .read(let noteID):
+                TripNoteReadCard(flow: flow, train: train, noteID: noteID, onSet: onSet)
+            case .form:
+                TripNoteFormSheet(flow: flow, train: train, trains: trains, onSet: onSet)
+            }
+        }
+        .environment(localization)
+    }
+
+    /// The system sheet's screen; nil while the panel hosts the surface.
+    private var systemScreen: Binding<TripNoteFlow.Screen?> {
+        Binding(
+            get: { host == .panel ? nil : flow.screen },
+            set: { flow.screen = $0 })
+    }
+
     func body(content: Content) -> some View {
-        content.sheet(item: $flow.screen) { screen in
-            Group {
-                switch screen {
-                case .read(let noteID):
-                    TripNoteReadCard(flow: flow, train: train, noteID: noteID, onSet: onSet)
-                case .form:
-                    TripNoteFormSheet(flow: flow, train: train, trains: trains, onSet: onSet)
+        content
+            .sheet(item: systemScreen) { screen in screenContent(screen) }
+            .overlay {
+                if host == .panel, let screen = flow.screen {
+                    screenContent(screen)
+                        .id(screen.id)
+                        .background(Color.railMenuBackground)
                 }
             }
-            .environment(localization)
-        }
     }
 }
 

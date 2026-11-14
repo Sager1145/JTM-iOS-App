@@ -7,6 +7,12 @@ struct WorkspaceJourneyMenu: View {
     @Bindable var itineraries: ItineraryStore
     let library: RideLibrary
     let controller: RailMapController
+    /// Where the card is presented (`WorkspaceSurfacePolicy`). The panel fills
+    /// the docked card and owns its own height; a system sheet resizes with
+    /// detents and tells the map how much of it the sheet covers.
+    let host: WorkspaceSurfaceHost
+    /// Closes the card by clearing the workspace's sheet, in either host.
+    let onClose: () -> Void
     @State private var recordID: String
     @State private var isSaving = false
     @State private var saveFailureDetail: String?
@@ -27,7 +33,6 @@ struct WorkspaceJourneyMenu: View {
     /// Which menu installed `controller.onTripNote` last, so a menu that is
     /// leaving never clears the hook of the one replacing it.
     @MainActor private static var hookOwner: UUID?
-    @Environment(\.dismiss) private var dismiss
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
     @Environment(RailNetworkStore.self) private var network
@@ -40,6 +45,7 @@ struct WorkspaceJourneyMenu: View {
     let onEditJourney: (Train) -> Void
 
     init(trainID: String, itineraries: ItineraryStore, library: RideLibrary, controller: RailMapController,
+         host: WorkspaceSurfaceHost, onClose: @escaping () -> Void,
          presentation: @escaping (Train) -> JourneyPresentation,
          onSave: @escaping (Train, String) -> JourneyEditing.Replaced,
          onRebuild: @escaping (Train) -> Int?,
@@ -49,6 +55,8 @@ struct WorkspaceJourneyMenu: View {
         self.itineraries = itineraries
         self.library = library
         self.controller = controller
+        self.host = host
+        self.onClose = onClose
         _recordID = State(initialValue: trainID)
         self.presentation = presentation
         self.onSave = onSave
@@ -58,6 +66,61 @@ struct WorkspaceJourneyMenu: View {
         self.onEditJourney = onEditJourney
     }
 
+    /// The source panel's compact stage must not hide a system sheet's card
+    /// body, so a sheet draws its own full morph. The docked panel IS the
+    /// card's panel: it follows the dock's stage.
+    private struct CardMorphOverride: ViewModifier {
+        let host: WorkspaceSurfaceHost
+        let morph: PanelMorph
+        @ViewBuilder func body(content: Content) -> some View {
+            if host == .panel { content } else { content.environment(morph) }
+        }
+    }
+
+    /// The system sheet's details; the panel shows them in the card instead.
+    private var systemDetailsPresented: Binding<Bool> {
+        Binding(
+            get: { showsDetails && host != .panel },
+            set: { showsDetails = $0 })
+    }
+
+    /// The full ride detail. In the panel it replaces the card until closed
+    /// (the close button steps back to the card); in a system sheet it opens
+    /// full height.
+    @ViewBuilder
+    private func detailsPage(_ train: Train) -> some View {
+        NavigationStack {
+            RideDetailView(
+                train: train, host: host, onSave: { save($0) },
+                onSaveAwaitingPersistence: { await saveAwaitingPersistence($0) },
+                onRebuild: { onRebuild(train) },
+                suggestionTrains: itineraries.loaded?.trains ?? [],
+                onEditJourney: { train in
+                    showsDetails = false
+                    presentationHost.afterTeardown { onEditJourney(train) }
+                },
+                tripNoteFlow: detailsNoteFlow)
+                .disabled(isSaving)
+                .alert(
+                    localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
+                    isPresented: Binding(get: { saveFailureDetail != nil },
+                        set: { if !$0 { saveFailureDetail = nil } })
+                ) {
+                    Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
+                } message: {
+                    Text(saveFailureDetail ?? "")
+                }
+                .railSheetClose(
+                    Text(localization.text("ios.close", fallback: "Close")),
+                    identifier: "rideDetailClose"
+                ) { showsDetails = false }
+        }
+        .environment(localization)
+        .environment(network)
+        // The full ride detail, so it opens full height.
+        .railSheet(.full)
+    }
+
     private var train: Train? { itineraries.store?.trains.first { $0.id == recordID } }
 
     var body: some View {
@@ -65,7 +128,7 @@ struct WorkspaceJourneyMenu: View {
             if let train {
                 RideCard(
                     train: train, presentation: presentation(train), dateChipTitle: train.date,
-                    onClose: { dismiss() },
+                    onClose: onClose,
                     onPrimary: { action in
                         if action == .save { onEditJourney(train) }
                         else if action == .locate {
@@ -84,7 +147,7 @@ struct WorkspaceJourneyMenu: View {
                     onSetRidden: { _ = save(RideLedger.setRidden(train, $0)) },
                     tripNoteFlow: tripNoteFlow)
                     .tripNotesPresentation(
-                        flow: tripNoteFlow, train: train,
+                        flow: tripNoteFlow, host: host, train: train,
                         trains: itineraries.loaded?.trains ?? [],
                         onSet: { notes in
                             var edited = train
@@ -94,54 +157,33 @@ struct WorkspaceJourneyMenu: View {
                             // holding its draft, offers another try.
                             return await saveAwaitingPersistence(edited)
                         })
-                    // The source panel's compact stage must not hide this card's body.
-                    .environment(cardMorph)
+                    .modifier(CardMorphOverride(host: host, morph: cardMorph))
                     .padding(.top, RailSpacing.s16)
-                    .sheet(isPresented: $showsDetails) {
-                        NavigationStack {
-                            RideDetailView(
-                                train: train, onSave: { save($0) },
-                                onSaveAwaitingPersistence: { await saveAwaitingPersistence($0) },
-                                onRebuild: { onRebuild(train) },
-                                suggestionTrains: itineraries.loaded?.trains ?? [],
-                                onEditJourney: { train in
-                                    showsDetails = false
-                                    presentationHost.afterTeardown { onEditJourney(train) }
-                                },
-                                tripNoteFlow: detailsNoteFlow)
-                                .disabled(isSaving)
-                                .alert(
-                                    localization.countryText("ios.journey.saveFailedTitle", fallback: "Could not save this journey"),
-                                    isPresented: Binding(get: { saveFailureDetail != nil },
-                                        set: { if !$0 { saveFailureDetail = nil } })
-                                ) {
-                                    Button(localization.text("ios.done", fallback: "Done"), role: .cancel) {}
-                                } message: {
-                                    Text(saveFailureDetail ?? "")
-                                }
-                                .railSheetClose(
-                                    Text(localization.text("ios.close", fallback: "Close")),
-                                    identifier: "rideDetailClose"
-                                ) { showsDetails = false }
+                    .sheet(isPresented: systemDetailsPresented) { detailsPage(train) }
+                    .overlay {
+                        if host == .panel, showsDetails {
+                            detailsPage(train)
+                                .background(Color.railMenuBackground)
                         }
-                        .environment(localization)
-                        .environment(network)
-                        // The full ride detail, so it opens full height.
-                        .railSheet(.full)
                     }
             }
         }
         .background(Color.railMenuBackground)
+        .panelNestedSurface(
+            host == .panel
+                && (showsDetails || tripNoteFlow.screen != nil || detailsNoteFlow.screen != nil))
         .onGeometryChange(for: MenuMeasurements.self) { proxy in
             MenuMeasurements(height: proxy.size.height, bottomInset: proxy.safeAreaInsets.bottom)
         } action: { measurements in
             menuMeasurements = measurements
-            controller.journeyMenuBottomObstruction = measurements.height + measurements.bottomInset
+            if host == .systemSheet {
+                controller.journeyMenuBottomObstruction = measurements.height + measurements.bottomInset
+            }
             focusIfReady()
         }
         .onAppear {
             installTripNoteHooks()
-            if menuMeasurements.height > 0 {
+            if host == .systemSheet, menuMeasurements.height > 0 {
                 controller.journeyMenuBottomObstruction =
                     menuMeasurements.height + menuMeasurements.bottomInset
             }
@@ -164,12 +206,10 @@ struct WorkspaceJourneyMenu: View {
                 Self.hookOwner = nil
             }
         }
-        #if !targetEnvironment(macCatalyst)
         .presentationDetents( // ui-token-ok: hand-built detents (spec §0.1 resident surfaces)
             dynamicTypeSize.isAccessibilitySize
                 ? [.large] : [.height(WorkspaceMenuMetrics.journeyCompactHeight), .medium, .large],
             selection: $detent)
-        #endif
         .presentationDragIndicator(.hidden)
         .railMenuPresentationCornerRadius()
         .presentationContentInteraction(.scrolls)
@@ -182,7 +222,7 @@ struct WorkspaceJourneyMenu: View {
                 : .height(WorkspaceMenuMetrics.journeyCompactHeight)
         }
         .onChange(of: train == nil, initial: true) { _, missing in
-            if missing { dismiss() }
+            if missing { onClose() }
         }
     }
 
@@ -231,7 +271,7 @@ struct WorkspaceJourneyMenu: View {
         // detent as the one to restore.
         guard controller.tripNotePickTrainID == nil else { finish(nil); return }
         let restored = detent
-        withAnimation(RailMotion.spring) { detent = lowestDetent }
+        if host == .systemSheet { withAnimation(RailMotion.spring) { detent = lowestDetent } }
         controller.beginTripNotePick(trainID: recordID, initial: initial) { anchor in
             withAnimation(RailMotion.spring) { detent = restored }
             finish(anchor)
@@ -246,13 +286,15 @@ struct WorkspaceJourneyMenu: View {
     /// Fit only after the sheet reports its lowest available visible edge.
     private func focusIfReady() {
         guard focusRequested, menuMeasurements.height > 0, let train else { return }
-        #if !targetEnvironment(macCatalyst)
-        guard dynamicTypeSize.isAccessibilitySize
-            || menuMeasurements.height <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
-        #endif
+        // The panel fits at once: it sits beside the map and has no compact
+        // height to wait for. A sheet waits until it has lowered.
+        if host == .systemSheet {
+            guard dynamicTypeSize.isAccessibilitySize
+                || menuMeasurements.height <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
+            controller.journeyMenuBottomObstruction =
+                menuMeasurements.height + menuMeasurements.bottomInset
+        }
         focusRequested = false
-        controller.journeyMenuBottomObstruction =
-            menuMeasurements.height + menuMeasurements.bottomInset
         onPrimary(.locate, train)
     }
 

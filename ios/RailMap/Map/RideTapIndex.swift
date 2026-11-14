@@ -286,7 +286,7 @@ struct RideTapIndex: Sendable {
     /// the scale grows towards the horizon — and for a degenerate measurement,
     /// which is what a view that has not been laid out yet gives.
     @MainActor
-    private static func mapPointsPerViewPoint(on mapView: MKMapView) -> Double? {
+    static func mapPointsPerViewPoint(on mapView: MKMapView) -> Double? {
         guard mapView.camera.pitch == 0, mapView.bounds.width > 1 else { return nil }
         // A view straddling the antimeridian has no single `x` for a place:
         // MapKit reports such a rect as running past the world's width, and

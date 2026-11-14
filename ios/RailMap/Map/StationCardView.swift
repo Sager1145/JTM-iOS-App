@@ -101,6 +101,8 @@ extension StationCard {
 struct StationCardView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
+    @Environment(\.popupHost) private var popupHost
     @Environment(\.openURL) private var openURL
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -299,7 +301,7 @@ struct StationCardView: View {
             #if targetEnvironment(macCatalyst)
             if lineIsShown { controller.journeyMenuBottomObstruction = 0 }
             #else
-            if lineIsShown { controller.journeyMenuBottomObstruction = sheetHeight }
+            if lineIsShown { controller.journeyMenuBottomObstruction = bottomCover(sheetHeight) }
             #endif
             focusLineIfReady()
         }
@@ -327,7 +329,7 @@ struct StationCardView: View {
             .accessibilityIdentifier("stationCardShare")
             RailSheetCloseButton(
                 label: Text(localization.text("ios.close", fallback: "Close")),
-                action: { dismiss() })
+                action: { close() })
                 .accessibilityIdentifier("stationCardClose")
         }
         .accessibilityIdentifier("stationCardHeader")
@@ -338,12 +340,25 @@ struct StationCardView: View {
         var bottomInset: CGFloat
     }
 
+    /// The panel closes through the workspace; a system sheet dismisses itself.
+    private func close() {
+        if let closePanelSurface { closePanelSurface() } else { dismiss() }
+    }
+
+    /// What the card covers at the bottom of the map. The docked panel sits
+    /// beside the map, so it covers none of it.
+    private func bottomCover(_ sheetHeight: CGFloat) -> CGFloat {
+        popupHost == .panel ? 0 : sheetHeight
+    }
+
     private func requestLineFocus(_ rect: MKMapRect) {
         pendingLineFocus = rect
         #if !targetEnvironment(macCatalyst)
+        if popupHost != .panel {
         withAnimation(RailMotion.spring) {
             detailDetent = dynamicTypeSize.isAccessibilitySize ? .large
                 : .height(WorkspaceMenuMetrics.journeyCompactHeight)
+        }
         }
         #endif
         focusLineIfReady()
@@ -352,14 +367,14 @@ struct StationCardView: View {
     private func focusLineIfReady() {
         guard let rect = pendingLineFocus, sheetHeight > 0 else { return }
         #if !targetEnvironment(macCatalyst)
-        guard dynamicTypeSize.isAccessibilitySize
+        guard popupHost == .panel || dynamicTypeSize.isAccessibilitySize
             || sheetContentHeight <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
         #endif
         pendingLineFocus = nil
         #if targetEnvironment(macCatalyst)
         controller.journeyMenuBottomObstruction = 0
         #else
-        controller.journeyMenuBottomObstruction = sheetHeight
+        controller.journeyMenuBottomObstruction = bottomCover(sheetHeight)
         #endif
         controller.fit(rect)
     }
@@ -395,7 +410,7 @@ struct StationCardView: View {
 /// optical weight. Every mark in this app is drawn in ``RouteLogoSquare``
 /// instead — the artwork keeps its ratio, the box never varies — which is what
 /// lets the names beside them share a left edge.
-private struct StationCardLineRow: View {
+struct StationCardLineRow: View {
     var row: StationDisplay.PopupRow
 
     var body: some View {

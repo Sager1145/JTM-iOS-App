@@ -11,7 +11,7 @@ for by request ID and prints as one compact JSON line.
 
 Commands: loadSamples useStorage reloadAll state selectTrip focusTrip openEditor addTrip editTrip
 saveEditor cancelEditor deleteTrip openStats setHideFilter screenshot wait devtools exportDiagnostics
-clearRouteCaches memoryWarning setLayer camera perf.
+clearRouteCaches memoryWarning setLayer camera perf tapMap.
 Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise they are strings.
 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),
@@ -38,7 +38,7 @@ STATE_DIR = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control"))
 COMMANDS = ["loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
             "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
             "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
-            "camera", "perf"]
+            "camera", "perf", "tapMap"]
 DEVTOOLS_ACTIONS = ["show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export"]
 # CLI wait (seconds) per command when no timeoutMs is passed: at least the app-side default.
 DEFAULT_WAIT = {"reloadAll": 660, "addTrip": 200, "editTrip": 200, "openEditor": 90, "saveEditor": 60,

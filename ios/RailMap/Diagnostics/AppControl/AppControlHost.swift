@@ -1,4 +1,5 @@
 #if DEBUG
+import CoreLocation
 import Darwin
 import RailCore
 import RailPresentation
@@ -322,6 +323,8 @@ final class AppControlHost: AppControlDriver {
             default: throw AppControlError.invalidArgument("name", name)
             }
             return ["layer": .string(name), "on": .bool(on), "layers": Self.layers(controller)]
+        case .tapMap(let target):
+            return try await tapMap(target, stores)
         case .camera(let action):
             return try await AppControlCameraRun(
                 controller: stores.controller, renderStats: { [weak self] in self?.workspace?.renderStats() }
@@ -593,6 +596,8 @@ final class AppControlHost: AppControlDriver {
             ],
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),
+            "sheetHost": optional(workspace?.sheetHost()),
+            "presented": .bool(Self.rootHasPresentedController()),
             "stage": optional(workspace?.stage()),
             "tab": optional(workspace?.tab()),
             "hidden": [
@@ -798,6 +803,54 @@ final class AppControlHost: AppControlDriver {
         return train
     }
 
+    /// The `tapMap` command: the map's own tap answer at a point, with an
+    /// empty-map clear delivered at once. A coordinate is a MapKit coordinate,
+    /// as `camera` takes it. The recognisers are not exercised. Only reachable
+    /// on an isolated store (`allowedOnSharedStore` is false).
+    private func tapMap(_ target: AppControlMapPoint, _ stores: Stores) async throws -> AppControlJSON {
+        guard let mapView = stores.controller.mapView, let answer = stores.controller.answerTapForUITest else {
+            throw AppControlError.unavailable("map not mounted")
+        }
+        let point: CGPoint
+        switch target {
+        case .view(let x, let y):
+            point = CGPoint(x: x, y: y)
+        case .coordinate(let lat, let lon):
+            point = mapView.convert(CLLocationCoordinate2D(latitude: lat, longitude: lon), toPointTo: mapView)
+        }
+        guard mapView.bounds.contains(point) else {
+            throw AppControlError.invalidArgument("point", "outside the map view (\(Int(point.x)), \(Int(point.y)))")
+        }
+        guard let report = answer(point) else { throw AppControlError.unavailable("map not mounted") }
+        // A selection or sheet set by the answer lands on the next run-loop turns.
+        try await Task.sleep(for: .milliseconds(150))
+        func strings(_ values: [String]) -> AppControlJSON { .array(values.map { .string($0) }) }
+        let hits: AppControlJSON = [
+            "annotationView": .bool(report.hits.annotationViewUnderFinger),
+            "selectedTripDot": .bool(report.hits.selectedTripStationDot),
+            "trips": strings(report.hits.tripIDsInReach),
+            "station": .bool(report.hits.stationAnnotationInReach),
+            "lines": strings(report.hits.networkLineIDsInReach),
+        ]
+        let answerName: String
+        switch report.answer {
+        case .annotation: answerName = "annotation"
+        case .stationCard, .station: answerName = "station"
+        case .pickTrip: answerName = "trip"
+        case .tripChooser: answerName = "chooser"
+        case .lineCard: answerName = "line"
+        case .lineChooser: answerName = "lineChooser"
+        case .clearWhenSettled: answerName = "empty"
+        case .ignore: answerName = "ignore"
+        }
+        return [
+            "point": ["x": .number(Double(point.x)), "y": .number(Double(point.y))],
+            "answer": .string(answerName), "hits": hits,
+            "selectedTrip": optional(stores.itineraries.selectedTrainID),
+            "sheet": optional(workspace?.sheetID()),
+        ]
+    }
+
     private func optional(_ value: String?) -> AppControlJSON { value.map { .string($0) } ?? .null }
 
     private func until(_ what: String, timeoutMs: Int, _ condition: @MainActor () -> Bool) async throws {
@@ -852,6 +905,15 @@ final class AppControlHost: AppControlDriver {
             "cameraZoom": .number((levels.cameraZoom * 100).rounded() / 100),
             "sinceInstallMs": levels.installedAt.map { .number(Double((ContinuousClock.now - $0).milliseconds)) } ?? .null,
         ]
+    }
+
+    /// True when a system presentation (sheet, alert, cover) is up over the
+    /// root view controller. A panel-hosted popup leaves this false.
+    static func rootHasPresentedController() -> Bool {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        // Every window, not the key one: a terminal-driven app has no key window.
+        return windows.contains { $0.rootViewController?.presentedViewController != nil }
     }
 
     /// Scene and application activation, so a poll shows a window hidden mid-sweep

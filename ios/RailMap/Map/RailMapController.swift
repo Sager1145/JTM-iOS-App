@@ -620,6 +620,11 @@ final class RailMapController {
     func frameForUITest(_ rect: MKMapRect) {
         mapView?.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
     }
+
+    /// Runs the map's own tap answer at a view point, and delivers an empty-map
+    /// clear at once instead of after the double-tap window. Set by the map
+    /// view; it exercises `answerTap`, not the gesture recognisers.
+    @ObservationIgnored var answerTapForUITest: ((CGPoint) -> MapTapTestReport?)?
 #endif
 
     /// Told by the map when a finger starts moving it.
