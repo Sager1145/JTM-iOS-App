@@ -1454,7 +1454,8 @@ public enum ContinuousStroke {
                     || exactMeasureRanges.contains { $0.0 <= cleanedMeasures[index] && cleanedMeasures[index] <= $0.1 }
             })
             drawn = simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: curveAnchors,
-                                      forced: exact, tolerance: strokeSimplifyTolerancePx)
+                                      forced: exact, tolerance: strokeSimplifyTolerancePx,
+                                      facetGuard: true)
         } else {
             drawn = simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
                                       tolerance: strokeSimplifyTolerancePx)
@@ -3287,6 +3288,50 @@ public enum ContinuousStroke {
         }
     }
 
+    /// Undo thinning that would rebuild the facets ``sampleCubic`` removed: a
+    /// kept vertex may not turn more than ``curveMaxStepDegrees`` between two
+    /// kept edges longer than ``curveFacetEdgePx`` (a 0.0625 px chord tolerance
+    /// alone keeps vertices turning 3-5 degrees on a 100 px radius). The
+    /// farthest dropped vertex of each adjacent span is restored and the check
+    /// repeats. Anchor and forced (`hard`) vertices are compared with their own
+    /// source turn plus one degree, so a real bend never forces a restore.
+    static func restoreFacetFlatness(_ points: [Point], _ keep: inout [Bool], hard: Set<Int>) {
+        func turn(_ a: Point, _ b: Point, _ c: Point) -> Double {
+            vectorAngle(Point(x: b.x - a.x, y: b.y - a.y), Point(x: c.x - b.x, y: c.y - b.y))
+        }
+        func edge(_ a: Point, _ b: Point) -> Double { hypot(b.x - a.x, b.y - a.y) }
+        func farthest(_ lo: Int, _ hi: Int) -> Int {
+            var best = -1, bestSquared = 0.0
+            for index in (lo + 1)..<hi {
+                let held = segmentDistanceSquared(points[index], points[lo], points[hi])
+                if best < 0 || held > bestSquared { best = index; bestSquared = held }
+            }
+            return best
+        }
+        var changed = true
+        while changed {
+            changed = false
+            let kept = points.indices.filter { keep[$0] }
+            guard kept.count >= 3 else { return }
+            var restore: [Int] = []
+            for k in 1..<(kept.count - 1) {
+                let prev = kept[k - 1], here = kept[k], next = kept[k + 1]
+                guard next > here + 1 || here > prev + 1 else { continue }
+                guard edge(points[prev], points[here]) > curveFacetEdgePx,
+                      edge(points[here], points[next]) > curveFacetEdgePx else { continue }
+                let keptTurn = turn(points[prev], points[here], points[next])
+                var limit = curveMaxStepDegrees
+                if hard.contains(here) {
+                    limit = max(limit, turn(points[here - 1], points[here], points[here + 1]) + 1)
+                }
+                guard keptTurn > limit else { continue }
+                if here > prev + 1 { restore.append(farthest(prev, here)) }
+                if next > here + 1 { restore.append(farthest(here, next)) }
+            }
+            for index in restore where !keep[index] { keep[index] = true; changed = true }
+        }
+    }
+
     /// Decimate the stroke to `tolerance` pixels BEFORE its corners are
     /// rounded, carrying the measures and the anchor set across.
     ///
@@ -3302,7 +3347,8 @@ public enum ContinuousStroke {
     /// footprints) are kept exactly like anchors but are NOT reported back as
     /// anchors, so the fillet does not draw an arc through them.
     static func simplifyForFillet(
-        _ points: [Point], measures: [Double], anchors: Set<Int>, forced: Set<Int> = [], tolerance: Double
+        _ points: [Point], measures: [Double], anchors: Set<Int>, forced: Set<Int> = [], tolerance: Double,
+        facetGuard: Bool = false
     ) -> (points: [Point], measures: [Double], anchors: Set<Int>) {
         let count = points.count
         guard tolerance > 0, count >= 3 else { return (points, measures, anchors) }
@@ -3317,6 +3363,7 @@ public enum ContinuousStroke {
             simplifySpan(points, spanStart, index, toleranceSquared, &keep)
             spanStart = index
         }
+        if facetGuard { restoreFacetFlatness(points, &keep, hard: anchors.union(forced)) }
         var outPoints: [Point] = []
         var outMeasures: [Double] = []
         var outAnchors = Set<Int>()

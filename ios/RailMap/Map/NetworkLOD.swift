@@ -28,7 +28,10 @@ enum NetworkLOD {
     /// `ContinuousStroke.strokeSimplifyTolerancePx` again (2026-11-14); the
     /// replayed sweep over Tokyo and Osaka at zoom 8-11 on a phone and a Mac
     /// window now peaks at 26,680 and the z6-7 resident case at 16,993, with no
-    /// line dropped. The importance-led zoom ladder admits short important
+    /// line dropped (an ends-only-forcing replay: production also forces station
+    /// anchors, corners and literal footprints, and the facet guard keeps more
+    /// vertices on tight curves, so the DEBUG `budgetDrops` check on the Mac
+    /// build remains the authority). The importance-led zoom ladder admits short important
     /// lines earlier, which can still increase load.
     /// If a frame exceeds the budget, this is where it shows: branches shed
     /// first, ``fitToBudget`` reports the threshold it stopped at, and the

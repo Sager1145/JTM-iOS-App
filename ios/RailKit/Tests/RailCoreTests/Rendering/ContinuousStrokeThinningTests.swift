@@ -15,11 +15,11 @@ struct ContinuousStrokeThinningTests {
     private static let count = 9_001
     private static let anchorIndex = 4_000
 
-    private func source() -> (points: [Point], measures: [Double]) {
+    private func source(radius: Double = radius) -> (points: [Point], measures: [Double]) {
         let angleStep = 1.5 / Double(Self.count - 1)
         let points = (0..<Self.count).map { index -> Point in
             let angle = Double(index) * angleStep
-            return Point(x: Self.radius * sin(angle), y: Self.radius * (1 - cos(angle)))
+            return Point(x: radius * sin(angle), y: radius * (1 - cos(angle)))
         }
         // 5 m per pixel keeps the spline deviation allowance at its pixel floor.
         var measures = [0.0]
@@ -30,8 +30,8 @@ struct ContinuousStrokeThinningTests {
         return (points, measures)
     }
 
-    private func stroke(anchors: [Int]) -> (stroke: ContinuousStroke.Stroke, source: [Point]) {
-        let (points, measures) = source()
+    private func stroke(anchors: [Int], radius: Double = radius) -> (stroke: ContinuousStroke.Stroke, source: [Point]) {
+        let (points, measures) = source(radius: radius)
         let options = ContinuousStroke.Options(
             measures: measures, rows: [], totalMetres: measures.last! - measures.first!,
             laneGapPx: 0, minRampPx: 24, cornerRadiusPx: 3.6, minCornerRadiusPx: 0,
@@ -69,6 +69,28 @@ struct ContinuousStrokeThinningTests {
             .map { ContinuousStroke.distanceToPolyline($0, built.source) }.max() ?? .infinity
         #expect(worstSourceToStroke <= allowance)
         #expect(worstStrokeToSource <= allowance)
+    }
+
+    /// Thinning must not rebuild the facets `sampleCubic` removed: no vertex may
+    /// turn more than `curveMaxStepDegrees` between two edges longer than
+    /// `curveFacetEdgePx`. A bare 0.0625 px chord tolerance on a 100 px radius
+    /// keeps vertices turning 3-5 degrees between 3-14 px edges.
+    @Test(arguments: [100.0, 160.0, 400.0])
+    func thinnedCurvedChainKeepsTheFacetRule(radius: Double) {
+        let built = stroke(anchors: [0, Self.anchorIndex, Self.count - 1], radius: radius)
+        let points = built.stroke.points
+        #expect(points.count >= 3)
+        #expect(points.count < 1_500)
+        var worst = 0.0
+        for index in 1..<(points.count - 1) {
+            let a = points[index - 1], b = points[index], c = points[index + 1]
+            guard hypot(b.x - a.x, b.y - a.y) > ContinuousStroke.curveFacetEdgePx,
+                  hypot(c.x - b.x, c.y - b.y) > ContinuousStroke.curveFacetEdgePx else { continue }
+            let turn = ContinuousStroke.vectorAngle(
+                Point(x: b.x - a.x, y: b.y - a.y), Point(x: c.x - b.x, y: c.y - b.y))
+            worst = max(worst, turn)
+        }
+        #expect(worst <= ContinuousStroke.curveMaxStepDegrees + 1e-6)
     }
 
     @Test func simplifyForcedVerticesSurviveWithoutBecomingAnchors() {
