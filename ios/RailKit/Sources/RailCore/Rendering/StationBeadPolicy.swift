@@ -26,7 +26,9 @@ public enum StationBeadPolicy {
             self.region = region; self.stationCode = stationCode; self.lineID = lineID
             self.isDrawn = isDrawn; self.anchorMeasure = anchorMeasure; self.windows = windows
         }
-        fileprivate var tenantGroup: String? {
+        /// The family this station is a tenant in, nil when it is not one
+        /// (``StationBeadPolicy/isSuppressed(_:siblings:)`` is then false).
+        public var tenantGroup: String? {
             guard let anchorMeasure else { return nil }
             return windows.first {
                 !$0.isLandlord && $0.from <= anchorMeasure && anchorMeasure <= $0.to

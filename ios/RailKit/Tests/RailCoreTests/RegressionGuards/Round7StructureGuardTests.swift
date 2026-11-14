@@ -109,4 +109,29 @@ struct RegressionGuardRound7 {
             to: "if controller?.tripNotePickTrainID")
         #expect(settled.contains("controller?.endFocusFit()"))
     }
+
+    // MARK: B. station election
+
+    @Test func theStationElectionChecksTheOwnBeadFirstMemoisesWidthsAndNamesItsPhases() throws {
+        let c = Self.coordinator
+        let suppressed = try Self.body(
+            c, from: "func isSuppressedTenantBead(", to: "let era = display.networkEra")
+        let own = try #require(suppressed.range(of: "let own = beadPolicyStation(station)"))
+        let guardRange = try #require(suppressed.range(of: "guard own.tenantGroup != nil else { return false }"))
+        let siblings = try #require(suppressed.range(of: "map(beadPolicyStation)"))
+        #expect(own.lowerBound < guardRange.lowerBound)
+        #expect(guardRange.lowerBound < siblings.lowerBound)
+        // Widths come from the memo, never a fresh NSString measurement.
+        let election = try Self.body(
+            c, from: "var acceptedStationNames: Set<String> = []", to: "finishMarkerPhase(\"networkStations.election\")")
+        #expect(election.contains("stationLabels.labelWidth("))
+        #expect(!election.contains("NSString).size("))
+        let labels = Self.read("RailMap/Map/MapStationLabelCoordinator.swift")
+        #expect(labels.contains("private var labelWidths: [LabelWidthKey: CGFloat]"))
+        #expect(labels.contains("func invalidateLabelWidths()"))
+        #expect(c.contains("if namingChanged { stationLabels.invalidateLabelWidths() }"))
+        for phase in ["networkStations.filter", "networkStations.election", "networkStations.annotations"] {
+            #expect(c.contains("finishMarkerPhase(\"\(phase)\")"), "\(phase)")
+        }
+    }
 }

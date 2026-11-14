@@ -633,6 +633,7 @@ extension RailMapView.Surface {
                 let dateChanged = selectedDate != self.selectedDate
                 let networkFilterChanged = rideDateChanged || eraChanged || regionalDayChanged
                 let namingChanged = naming != self.naming
+                if namingChanged { stationLabels.invalidateLabelWidths() }
                 // `networkExtent` follows the camera's countries, not residency
                 // (see `RailNetworkStore.networkExtent`), so a batch that merely
                 // adds to it without changing `lines` still has to widen the
@@ -4259,12 +4260,16 @@ extension RailMapView.Surface {
                     }
                     var beadStationsByPlace: [String: [StationBeadPolicy.Station]] = [:]
                     func isSuppressedTenantBead(_ station: RailNetworkStore.DrawnStation) -> Bool {
+                        // The station's own policy record first: with no tenant
+                        // group `StationBeadPolicy.isSuppressed` is false whatever
+                        // the siblings are, so they are not even mapped.
+                        let own = beadPolicyStation(station)
+                        guard own.tenantGroup != nil else { return false }
                         let place = "\(station.region.rawValue)|\(station.stationCode)"
                         if beadStationsByPlace[place] == nil {
                             beadStationsByPlace[place] = (stationsByPlace[place] ?? []).map(beadPolicyStation)
                         }
-                        return StationBeadPolicy.isSuppressed(
-                            beadPolicyStation(station), siblings: beadStationsByPlace[place] ?? [])
+                        return StationBeadPolicy.isSuppressed(own, siblings: beadStationsByPlace[place] ?? [])
                     }
                     let era = display.networkEra
                     let rideDate = networkRideDate
@@ -4306,6 +4311,9 @@ extension RailMapView.Surface {
                             alpha: alpha)
                     }
 
+#if DEBUG
+                    finishMarkerPhase("networkStations.filter")
+#endif
                     // The network is the broadest naming layer, so it fills the
                     // spaces left by endpoint cards and journey captions. Among
                     // its own candidates, Apple-style navigational hierarchy
@@ -4330,9 +4338,8 @@ extension RailMapView.Surface {
                             guard canClaimName(station.name, at: station.coordinate) else {
                                 continue
                             }
-                            let measured = (candidate.displayName as NSString).size(
-                                withAttributes: [.font: font])
-                            let width = min(180, ceil(measured.width))
+                            let width = min(180, stationLabels.labelWidth(
+                                of: candidate.displayName, pointSize: textSize, font: font))
                                 + MapLabelStyle.haloWidth * 2
                             let point = mapView.convert(
                                 station.coordinate.clLocation, toPointTo: mapView)
@@ -4349,6 +4356,9 @@ extension RailMapView.Surface {
                         }
                     }
 
+#if DEBUG
+                    finishMarkerPhase("networkStations.election")
+#endif
                     let stationAnnotations = visibleStations.compactMap { candidate -> StationAnnotation? in
                         let station = candidate.station
                         guard station.lodMinZoom <= visibilityZoom
@@ -4391,7 +4401,7 @@ extension RailMapView.Surface {
                     desiredNetworkAnnotations = stationAnnotations
                 }
 #if DEBUG
-                finishMarkerPhase("networkStations")
+                finishMarkerPhase("networkStations.annotations")
 #endif
                 let networkAnnotationPlan = annotationReconciler.plan(
                     desiredNetworkAnnotations, replacing: networkAnnotations)
