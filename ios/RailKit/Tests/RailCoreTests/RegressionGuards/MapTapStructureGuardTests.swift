@@ -157,4 +157,23 @@ struct RegressionGuardMapTap {
         #expect(body.contains("if case .chooseRide = sheet { return }"))
         #expect(body.contains("restoreSelection("))
     }
+
+    /// The three map-tap handlers answer through the policy and keep no
+    /// inline lease or preview guard of their own.
+    @Test func tapHandlersAnswerThroughMapTapAnswer() {
+        let w = Self.workspace
+        #expect(w.contains("WorkspaceSurfacePolicy.mapTapAnswer("))
+        for name in ["selectStation", "selectFromMap", "selectLines"] {
+            guard let start = w.range(of: "private func \(name)(") else {
+                Issue.record("\(name) missing"); continue
+            }
+            let rest = w[start.upperBound...]
+            let end = rest.range(of: "\n    }\n")?.lowerBound ?? rest.endIndex
+            let body = String(rest[..<end])
+            #expect(body.contains("mapTapAnswer("), "\(name) must call mapTapAnswer")
+            #expect(!body.contains("journeyMenuOwnsSelection"), "\(name) holds a bare lease guard")
+            #expect(!body.contains("linePreview == nil"), "\(name) holds a bare preview guard")
+        }
+        #expect(w.contains("onSelectStation: { selectStation($0) }"))
+    }
 }

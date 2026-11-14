@@ -159,6 +159,10 @@ struct RailwayLineCardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
+            if onClose != nil {
+                ToolbarItem(placement: .topBarLeading) { PanelBackButton() }
+                    .railMenuToolbarControl()
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 RailSheetCloseButton(label: Text(localization.text("ios.close", fallback: "Close"))) {
                     if let onClose { onClose() } else { dismiss() }

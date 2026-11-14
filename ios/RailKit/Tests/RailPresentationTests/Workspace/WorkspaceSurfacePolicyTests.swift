@@ -143,4 +143,54 @@ struct WorkspaceSurfacePolicyTests {
             }
         }
     }
+
+    // MARK: Map taps while a card is open
+
+    private static func answer(
+        _ tap: MapTapKind, _ host: WorkspaceSurfaceHost?, lease: Bool, preview: Bool, editor: Bool
+    ) -> MapTapCardAnswer {
+        WorkspaceSurfacePolicy.mapTapAnswer(
+            tap, cardHost: host, leaseHeld: lease, linePreviewShown: preview, editorOpen: editor)
+    }
+
+    @Test("Map tap table: every tap, host, lease, preview and editor state")
+    func mapTapTable() {
+        let hosts: [WorkspaceSurfaceHost?] = [nil, .panel, .systemSheet, .fullWindowCover, .dialog]
+        for tap in MapTapKind.allCases {
+            for host in hosts {
+                for lease in [false, true] {
+                    for preview in [false, true] {
+                        for editor in [false, true] {
+                            let expected: MapTapCardAnswer
+                            if editor, tap == .station || tap == .lines {
+                                expected = .blocked
+                            } else if host == .panel {
+                                expected = tap == .empty ? .clearSelectionAndCloseCard : .proceed
+                            } else {
+                                switch tap {
+                                case .station: expected = lease ? .blocked : .proceed
+                                case .lines: expected = lease || preview ? .blocked : .proceed
+                                case .trips: expected = preview ? .blocked : .proceed
+                                case .empty: expected = preview || lease ? .blocked : .clearSelection
+                                }
+                            }
+                            #expect(
+                                Self.answer(tap, host, lease: lease, preview: preview, editor: editor)
+                                    == expected,
+                                "\(tap) host=\(String(describing: host)) lease=\(lease) preview=\(preview) editor=\(editor)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test("Map tap: the panel keeps answering a station, line or trip tap over a trip card")
+    func panelTapsProceedOverLease() {
+        for tap in [MapTapKind.station, .lines, .trips] {
+            #expect(Self.answer(tap, .panel, lease: true, preview: true, editor: false) == .proceed)
+        }
+        #expect(Self.answer(.empty, .panel, lease: true, preview: true, editor: false)
+            == .clearSelectionAndCloseCard)
+    }
 }

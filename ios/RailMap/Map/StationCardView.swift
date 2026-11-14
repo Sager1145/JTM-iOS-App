@@ -318,6 +318,7 @@ struct StationCardView: View {
             title: card.displayName,
             subtitle: localization.text(card.region.localizationKey, fallback: card.region.fallbackName)
         ) {
+            PanelBackButton()
             SheetIconButton(
                 systemImage: "square.and.arrow.up",
                 accessibilityLabel: Text(localization.text("ios.share", fallback: "Share"))

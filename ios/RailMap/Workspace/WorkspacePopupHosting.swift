@@ -51,4 +51,24 @@ extension EnvironmentValues {
     /// Non-nil only in the docked panel: opens the group picker for a trip id
     /// in the panel, because the row that asks lives in the hidden tabs.
     @Entry var presentGroupPicker: PanelGroupPickerAction?
+
+    /// Non-nil only in a panel-hosted station, line or line-chooser card that
+    /// opened over a trip card: steps back to that trip card.
+    @Entry var panelBackStep: PanelCloseAction?
+}
+
+/// The back step of a panel-hosted card, or nothing when the card has none.
+struct PanelBackButton: View {
+    @Environment(\.panelBackStep) private var panelBackStep
+    @Environment(AppLocalization.self) private var localization
+
+    var body: some View {
+        if let panelBackStep {
+            SheetIconButton(
+                systemImage: "chevron.backward",
+                accessibilityLabel: Text(localization.text("ios.back", fallback: "Back"))
+            ) { panelBackStep() }
+            .accessibilityIdentifier("panelBack")
+        }
+    }
 }

@@ -39,6 +39,23 @@ public enum WorkspaceSurfaceHost: Equatable, Sendable {
     case dialog
 }
 
+/// What a map tap landed on.
+public enum MapTapKind: CaseIterable, Equatable, Sendable {
+    case station, lines, trips, empty
+}
+
+/// What the workspace does with a map tap while a card may be open.
+public enum MapTapCardAnswer: Equatable, Sendable {
+    /// The tap is ignored.
+    case blocked
+    /// The tap does what it normally does.
+    case proceed
+    /// Only the selection is cleared.
+    case clearSelection
+    /// The selection is cleared and the panel card closes.
+    case clearSelectionAndCloseCard
+}
+
 /// How a surface opened from another surface is hosted.
 public struct WorkspaceNestedSurface: Equatable, Sendable {
     public var host: WorkspaceSurfaceHost
@@ -123,5 +140,30 @@ public enum WorkspaceSurfacePolicy {
         let stays = childHost == .panel
             && host(for: parent, mode: mode, isHinged: isHinged) == .panel
         return WorkspaceNestedSurface(host: childHost, hasBackStep: stays)
+    }
+
+    /// Whether a map tap goes through while a card is open. A card in the
+    /// docked panel does not cover the map, so the map keeps answering taps:
+    /// a station, line or trip swaps the card, an empty tap closes it. A card
+    /// in a system sheet keeps today's rules. The journey editor always owns
+    /// station and line taps.
+    public static func mapTapAnswer(
+        _ tap: MapTapKind, cardHost: WorkspaceSurfaceHost?, leaseHeld: Bool,
+        linePreviewShown: Bool, editorOpen: Bool
+    ) -> MapTapCardAnswer {
+        if editorOpen, tap == .station || tap == .lines { return .blocked }
+        if cardHost == .panel {
+            return tap == .empty ? .clearSelectionAndCloseCard : .proceed
+        }
+        switch tap {
+        case .station:
+            return leaseHeld ? .blocked : .proceed
+        case .lines:
+            return leaseHeld || linePreviewShown ? .blocked : .proceed
+        case .trips:
+            return linePreviewShown ? .blocked : .proceed
+        case .empty:
+            return linePreviewShown || leaseHeld ? .blocked : .clearSelection
+        }
     }
 }

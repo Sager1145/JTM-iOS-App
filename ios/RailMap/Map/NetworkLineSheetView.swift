@@ -115,6 +115,7 @@ struct NetworkLineChooserView: View {
                 PopupMenuHeader(
                     title: localization.countryText("popup.line", fallback: "Line")
                 ) {
+                    PanelBackButton()
                     SheetCloseButton(
                         accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
                         action: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })

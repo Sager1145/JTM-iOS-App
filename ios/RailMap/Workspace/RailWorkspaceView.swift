@@ -899,6 +899,18 @@ struct RailWorkspaceView: View {
             ? PanelCloseAction(key: "\(presented.id)") {
                 if self.sheet?.id == presented.id { self.sheet = nil }
             } : nil
+        let panelBackStep: PanelCloseAction? = {
+            guard host == .panel, let lease = journeyMenuSelection else { return nil }
+            switch presented {
+            case .station, .line, .chooseLine:
+                return PanelCloseAction(key: "back-\(presented.id)-\(lease.owner)") {
+                    linePreview = nil
+                    sheet = .detail(lease.owner)
+                }
+            default:
+                return nil
+            }
+        }()
         return Group {
             switch presented {
             case .detail(let id):
@@ -946,8 +958,14 @@ struct RailWorkspaceView: View {
                     onPreview: { linePreview = $0 })
             case .chooseLine(let targets):
                 NetworkLineChooserView(targets: targets) { target in
-                    sheet = nil
-                    presentationHost.afterTeardown { sheet = .line(target) }
+                    if host == .panel {
+                        // Straight swap: a nil step would let the dismissal
+                        // hand the selection back.
+                        sheet = .line(target)
+                    } else {
+                        sheet = nil
+                        presentationHost.afterTeardown { sheet = .line(target) }
+                    }
                 }
             case .groupPicker(let id):
                 if let train = itineraries.store?.trains.first(where: { $0.id == id }) {
@@ -964,6 +982,7 @@ struct RailWorkspaceView: View {
         .environment(store)
         .environment(\.popupHost, host)
         .environment(\.closePanelSurface, closePanelSurface)
+        .environment(\.panelBackStep, panelBackStep)
         .scrollContentBackground(.hidden)
         .railMenuPresentationBackground()
     }
@@ -3437,10 +3456,7 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             onSelectRide: { selectFromMap($0) },
-            onSelectStation: { card in
-                guard journeyEditor == nil, !journeyMenuOwnsSelection else { return }
-                sheet = .station(card)
-            },
+            onSelectStation: { selectStation($0) },
             onSelectLines: { selectLines($0) },
             // Which countries the reader is actually looking at, from the rect
             // the map rebuilt for. Only while the network is on: with it off
@@ -3548,39 +3564,64 @@ struct RailWorkspaceView: View {
     /// rides run the same corridor, "nearest" is decided by a fraction of a
     /// point.
     private func selectFromMap(_ ids: [String]) {
-        guard linePreview == nil else { return }
         let trains = ids.compactMap { id in
             itineraries.loaded?.trains.first { $0.id == id }
         }
-        switch trains.count {
-        case 0:
-            if !journeyMenuOwnsSelection { itineraries.selectedTrainID = nil }
-        case 1:
-            pick(trains[0])
-        default:
-            // Several trips under the finger ask, with a trip card open or not:
-            // a tap that hit something answers.
-            sheet = .chooseRide(trains)
+        switch mapTapAnswer(trains.isEmpty ? .empty : .trips) {
+        case .blocked:
+            return
+        case .clearSelection:
+            itineraries.selectedTrainID = nil
+        case .clearSelectionAndCloseCard:
+            // In this order: the lease goes first so closing the card has
+            // nothing to hand back, then the selection, preview and card.
+            journeyMenuSelection = nil
+            itineraries.selectedTrainID = nil
+            linePreview = nil
+            sheet = nil
+        case .proceed:
+            if trains.count == 1 {
+                pick(trains[0])
+            } else {
+                // Several trips under the finger ask, with a trip card open or
+                // not: a tap that hit something answers.
+                linePreview = nil
+                sheet = .chooseRide(trains)
+            }
         }
+    }
+
+    /// The tap rules of ``WorkspaceSurfacePolicy/mapTapAnswer`` with this
+    /// workspace's state.
+    private func mapTapAnswer(_ tap: MapTapKind) -> MapTapCardAnswer {
+        WorkspaceSurfacePolicy.mapTapAnswer(
+            tap, cardHost: sheet.map(surfaceHost(of:)), leaseHeld: journeyMenuOwnsSelection,
+            linePreviewShown: linePreview != nil, editorOpen: journeyEditor != nil)
+    }
+
+    /// A tap on a station dot. Never clears or closes anything.
+    private func selectStation(_ card: StationCard) {
+        guard mapTapAnswer(.station) == .proceed else { return }
+        linePreview = nil
+        sheet = .station(card)
     }
 
     /// A tap on network lines that found nothing nearer. One line opens its
     /// card, several a list first. A card or the editor already in front keeps
     /// the map's taps, as it does for a station.
     private func selectLines(_ lines: [RailNetworkStore.DrawnLine]) {
-        guard linePreview == nil, journeyEditor == nil, !journeyMenuOwnsSelection else { return }
+        guard mapTapAnswer(.lines) == .proceed else { return }
         let targets = lines.map(NetworkLineTarget.init)
-        switch targets.count {
-        case 0: break
-        case 1: sheet = .line(targets[0])
-        default: sheet = .chooseLine(targets)
-        }
+        guard !targets.isEmpty else { return }
+        linePreview = nil
+        sheet = targets.count == 1 ? .line(targets[0]) : .chooseLine(targets)
     }
 
     /// Focus the tapped journey and open its separate menu. The source
     /// destination, filters and panel size are retained while it slides away.
     private func pick(_ train: Train) {
         guard yieldRun() else { return }
+        linePreview = nil
         if RecentSearchRecordGate.recordsOnPick(recordGateState) { commitRecentJourneySearch() }
         let previous: String?
         if let lease = journeyMenuSelection, itineraries.selectionRevision == lease.revision {

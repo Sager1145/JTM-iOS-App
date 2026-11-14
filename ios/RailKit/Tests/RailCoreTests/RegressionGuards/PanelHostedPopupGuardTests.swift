@@ -65,7 +65,7 @@ struct RegressionGuardPanelHostedPopups {
     @Test func sheetCleanupRunsForBothHosts() {
         #expect(Self.workspace.contains("private func sheetDidDismiss()"))
         #expect(Self.workspace.contains("onSheetDismiss: sheetDidDismiss"))
-        #expect(Self.workspace.contains("if previous != nil, current == nil { sheetDidDismiss() }"))
+        #expect(Self.workspace.contains("if previous != nil, current == nil, sheet == nil { sheetDidDismiss() }"))
     }
 
     /// In the docked layout the map's obstruction does not follow the card:
