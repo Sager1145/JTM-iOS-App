@@ -395,7 +395,7 @@ struct StationCardView: View {
 /// optical weight. Every mark in this app is drawn in ``RouteLogoSquare``
 /// instead — the artwork keeps its ratio, the box never varies — which is what
 /// lets the names beside them share a left edge.
-private struct StationCardLineRow: View {
+struct StationCardLineRow: View {
     var row: StationDisplay.PopupRow
 
     var body: some View {

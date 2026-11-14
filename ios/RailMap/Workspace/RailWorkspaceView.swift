@@ -865,6 +865,14 @@ struct RailWorkspaceView: View {
                     sheet = nil
                     presentationHost.afterTeardown { pick(train) }
                 }
+            case .line(let target):
+                NetworkLineSheetView(target: target, network: store, controller: controller,
+                    onPreview: { linePreview = $0 })
+            case .chooseLine(let targets):
+                NetworkLineChooserView(targets: targets) { target in
+                    sheet = nil
+                    presentationHost.afterTeardown { sheet = .line(target) }
+                }
             case .utility(let destination):
                 UtilityDestinationView(destination: destination, itineraries: itineraries,
                     library: library, appearance: $appearance, network: store, controller: controller)
@@ -2389,7 +2397,7 @@ struct RailWorkspaceView: View {
         switch sheet {
         case .importData, .transferGuide:
             return true
-        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .line, .chooseLine, .utility, nil:
             return false
         }
     }
@@ -3321,6 +3329,7 @@ struct RailWorkspaceView: View {
                 guard journeyEditor == nil, !journeyMenuOwnsSelection else { return }
                 sheet = .station(card)
             },
+            onSelectLines: { selectLines($0) },
             // Which countries the reader is actually looking at, from the rect
             // the map rebuilt for. Only while the network is on: with it off
             // there are no rails and no station dots to draw, so a pan across
@@ -3437,8 +3446,22 @@ struct RailWorkspaceView: View {
         case 1:
             pick(trains[0])
         default:
-            // Background map taps must not replace an open journey card.
-            if !journeyMenuOwnsSelection { sheet = .chooseRide(trains) }
+            // Several trips under the finger ask, with a trip card open or not:
+            // a tap that hit something answers.
+            sheet = .chooseRide(trains)
+        }
+    }
+
+    /// A tap on network lines that found nothing nearer. One line opens its
+    /// card, several a list first. A card or the editor already in front keeps
+    /// the map's taps, as it does for a station.
+    private func selectLines(_ lines: [RailNetworkStore.DrawnLine]) {
+        guard linePreview == nil, journeyEditor == nil, !journeyMenuOwnsSelection else { return }
+        let targets = lines.map(NetworkLineTarget.init)
+        switch targets.count {
+        case 0: break
+        case 1: sheet = .line(targets[0])
+        default: sheet = .chooseLine(targets)
         }
     }
 

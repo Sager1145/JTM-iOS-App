@@ -129,7 +129,7 @@ private extension View {
         // `.detail` presents WorkspaceJourneyMenu, which owns hand-built
         // detents (compact/medium/large, hidden grabber); a second detent set
         // here would fight its `selection`.
-        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility:
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .line, .chooseLine, .utility:
             self
         }
     }
