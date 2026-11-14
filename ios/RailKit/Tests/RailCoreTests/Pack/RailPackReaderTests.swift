@@ -249,6 +249,8 @@ struct RailPackReaderTests {
         // Version 1 files (a tile directory per level, a datum byte) are not read: no pack shipped in it.
         #expect(throws: RailPackError.unsupportedVersion(1)) { try RailPackReader(data: T.patched(data, at: 4, 1, width: 2)) }
         #expect(throws: RailPackError.unsupportedVersion(3)) { try RailPackReader(data: T.patched(data, at: 4, 3, width: 2)) }
+        // The reserved header byte (formerly the datum) must be 0.
+        #expect(throws: RailPackError.corrupt("reserved header byte 6 is 1")) { try RailPackReader(data: T.patched(data, at: 6, 1, width: 1)) }
         #expect(throws: RailPackError.truncated) { try RailPackReader(data: data.prefix(data.count - 1)) }
         #expect(throws: RailPackError.truncated) { try RailPackReader(data: data.prefix(data.count / 2)) }
         #expect(throws: RailPackError.truncated) { try RailPackReader(data: data.prefix(RailPackFormat.headerSize + 8)) }
@@ -422,5 +424,44 @@ struct RailPackReaderTests {
             }
         }
         #expect(rectangles == 1_500 && inside > 5_000, "the rectangles must actually hold vertices: \(inside)")
+    }
+
+    /// `tiles` and `longPieces` called directly on a GCJ-02 reader (no half-tile margin, unlike `mountKeys`):
+    /// a vertex whose shifted position is inside the rectangle has its unshifted position in a tile
+    /// `tiles` returns (when that tile holds pieces) and, for a long piece, the piece is in `longPieces`.
+    @Test func tilesAndLongPiecesUnderGCJCoverEveryShiftedVertexInTheRectangle() throws {
+        let data = try RailPackWriter.write(Self.hongKongSource(pieces: 400, seed: 0x5EED_0002))
+        let plain = try RailPackReader(data: data).level(0)
+        let level = try RailPackReader(data: data, display: .gcj02).level(0)
+        let mpp = level.mapPointsPerPoint
+        let existing = Set(try level.tileSummaries().map { "\($0.tile.x),\($0.tile.y)" })
+        var vertices: [(shifted: RailPackPoint, source: RailPackPoint, piece: Int)] = []
+        for p in 0..<level.pieceCount {
+            var a: [RailPackPoint] = [], b: [RailPackPoint] = []
+            try plain.appendVertices(piece: p, to: &a)
+            try level.appendVertices(piece: p, to: &b)
+            vertices.append(contentsOf: zip(b, a).map { ($0, $1, p) })
+        }
+        var state: UInt64 = 0xFEDC_BA98_7654_3210
+        func next() -> Double {
+            state = state &* 6_364_136_223_846_793_005 &+ 1_442_695_040_888_963_407
+            return Double(state >> 11) / Double(1 << 53)
+        }
+        let perMetre = 7.2
+        var inside = 0
+        for _ in 0..<1_500 {
+            let centre = StrokeProjection.point(Coordinate(lon: 113.6 + next() * 1.1, lat: 22.1 + next() * 0.55))
+            let width = 50 * pow(10, next() * 3) * perMetre, height = 50 * pow(10, next() * 3) * perMetre
+            let rect = (minX: centre.x - width / 2, minY: centre.y - height / 2, maxX: centre.x + width / 2, maxY: centre.y + height / 2)
+            let tiles = Set(try level.tiles(minX: rect.minX, minY: rect.minY, maxX: rect.maxX, maxY: rect.maxY).map { "\($0.x),\($0.y)" })
+            let longs = Set(try level.longPieces(minX: rect.minX, minY: rect.minY, maxX: rect.maxX, maxY: rect.maxY).map(Int.init))
+            for v in vertices where v.shifted.x >= rect.minX && v.shifted.x <= rect.maxX && v.shifted.y >= rect.minY && v.shifted.y <= rect.maxY {
+                inside += 1
+                let key = "\(RailPackFormat.tile(containing: v.source.x, mapPointsPerPoint: mpp)),\(RailPackFormat.tile(containing: v.source.y, mapPointsPerPoint: mpp))"
+                if existing.contains(key) { #expect(tiles.contains(key), "vertex of piece \(v.piece) in tile \(key)") }
+                if try level.piece(v.piece).isLong { #expect(longs.contains(v.piece), "long piece \(v.piece)") }
+            }
+        }
+        #expect(inside > 2_000, "the rectangles must actually hold vertices: \(inside)")
     }
 }

@@ -65,6 +65,7 @@ public struct RailPackReader: Sendable {
             guard Array(raw[0..<4]) == RailPackFormat.magic else { throw RailPackError.badMagic }
             let version = raw.loadUnaligned(fromByteOffset: 4, as: UInt16.self).littleEndian
             guard version == RailPackFormat.formatVersion else { throw RailPackError.unsupportedVersion(version) }
+            guard raw[6] == 0 else { throw RailPackError.corrupt("reserved header byte 6 is \(raw[6])") }
             let region = String(decoding: raw[7..<9], as: UTF8.self)
             func u16(_ o: Int) -> Int { Int(raw.loadUnaligned(fromByteOffset: o, as: UInt16.self).littleEndian) }
             func u32(_ o: Int) -> Int { Int(raw.loadUnaligned(fromByteOffset: o, as: UInt32.self).littleEndian) }

@@ -49,6 +49,10 @@ cache_root="$root/ios/.build/railpack-cache"
 tool_scratch="$root/ios/.build/railbake-tool"
 toolchain=$(python3 -I "$inputs" toolchain)
 mkdir -p "$dest_dir" "$cache_root"
+# Packs are staged and only replace what is in DEST_DIR after the freshness and size checks pass, so a
+# failed check leaves no new file and a stale pack from an older format never sits beside current ones.
+stage=$(mktemp -d "${dest_dir%/}.staging.XXXXXX")
+trap 'rm -rf "$stage"' EXIT
 
 tool=""
 ensure_tool() {
@@ -77,9 +81,11 @@ while read -r region name; do
         mv "$cached.partial" "$cached"
         baked=$((baked + 1))
     fi
-    cp -p "$cached" "$dest_dir/$name"
+    cp -p "$cached" "$stage/$name"
 done < <(python3 -I "$inputs" variants --regions "$regions")
 
-bash "$here/check-rail-packs-fresh.sh" "$builder_dir" "$dest_dir" --regions "$regions" --levels "$levels"
-bash "$here/check-rail-pack-budget.sh" "$dest_dir" "$here/railbake/pack-budgets.json"
+bash "$here/check-rail-packs-fresh.sh" "$builder_dir" "$stage" --regions "$regions" --levels "$levels"
+bash "$here/check-rail-pack-budget.sh" "$stage" "$here/railbake/pack-budgets.json"
+rm -f "$dest_dir"/*.railpack
+mv "$stage"/*.railpack "$dest_dir/"
 echo "rail packs in $dest_dir: $baked baked, $hits from cache"

@@ -57,6 +57,8 @@ step "rail pack inputs tests" python3 -I "$ROOT/ios/tools/tests/test_rail_pack_i
 # guards (per-pack bytes, per-level vertices, phone and pad windows) run in bake-rail-packs.sh; the fixture
 # ones run in the railbake package tests below.
 step "rail pack budget tests" python3 -I "$ROOT/ios/tools/tests/test_check_rail_pack_budget.py"
+# The bake script stages packs and swaps them in only after the checks pass (stale packs removed, over budget changes nothing).
+step "rail pack bake swap tests" python3 -I "$ROOT/ios/tools/tests/test_bake_rail_packs.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"
