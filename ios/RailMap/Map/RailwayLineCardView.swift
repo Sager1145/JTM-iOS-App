@@ -105,6 +105,7 @@ struct RailwayLineCardView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display: DisplaySettings?
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.panelBackStep) private var panelBackStep
     @State private var preview: RailwayLinePreview?
     @State private var failure: String?
     @State private var reload = 0
@@ -159,7 +160,7 @@ struct RailwayLineCardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
-            if onClose != nil {
+            if panelBackStep != nil {
                 ToolbarItem(placement: .topBarLeading) { PanelBackButton() }
                     .railMenuToolbarControl()
             }

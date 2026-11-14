@@ -146,14 +146,21 @@ public enum WorkspaceSurfacePolicy {
     /// docked panel does not cover the map, so the map keeps answering taps:
     /// a station, line or trip swaps the card, an empty tap closes it. A card
     /// in a system sheet keeps today's rules. The journey editor always owns
-    /// station and line taps.
+    /// station and line taps. A panel card with a nested surface up (details,
+    /// a note draft, a group save) blocks every tap, as Esc stands down there,
+    /// and an open editor also keeps an empty tap from closing the card.
+    /// Decision: a station or line tap swaps the panel's card on the first tap
+    /// of a double tap (the back step returns to the trip); only the empty
+    /// clear is banked for the double-tap delay.
     public static func mapTapAnswer(
         _ tap: MapTapKind, cardHost: WorkspaceSurfaceHost?, leaseHeld: Bool,
-        linePreviewShown: Bool, editorOpen: Bool
+        linePreviewShown: Bool, editorOpen: Bool, nestedSurfaceUp: Bool = false
     ) -> MapTapCardAnswer {
         if editorOpen, tap == .station || tap == .lines { return .blocked }
         if cardHost == .panel {
-            return tap == .empty ? .clearSelectionAndCloseCard : .proceed
+            if nestedSurfaceUp { return .blocked }
+            if tap == .empty { return editorOpen ? .blocked : .clearSelectionAndCloseCard }
+            return .proceed
         }
         switch tap {
         case .station:

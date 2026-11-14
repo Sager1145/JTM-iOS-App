@@ -110,6 +110,13 @@ struct RegressionGuardRideStrokeStructure {
         #expect(prepare.contains("rideStrokeEmptyKeys.formUnion(output.empty)"))
     }
 
+    @Test func aPickWhoseSegmentsBuildToNothingStaysInPlace() throws {
+        let check = try Self.body(
+            from: "private func routeAvailableInFrame(", to: "/// One ride's drawable polylines this frame")
+        #expect(check.contains("rideStrokeEmptyFrameKey == currentGeometryFrame?.key"))
+        #expect(check.contains("rideStrokeEmptyKeys.contains(key)"))
+    }
+
     @Test func replacedChainBuildsDropTheStrokeMemo() throws {
         let source = Self.coordinator
         let store = try #require(source.range(of: "guard self.networkGeometry.storePrepared(prepared, key: key)"))

@@ -890,6 +890,20 @@ struct RailWorkspaceView: View {
         return journeys + " · " + regionScopeName + ", " + dateBucketLabel(selectedDate)
     }
 
+    /// The panel card's back step to the trip card it was opened from, if it has one.
+    private func panelBackStep(for presented: WorkspaceSheet) -> PanelCloseAction? {
+        guard surfaceHost(of: presented) == .panel, let lease = journeyMenuSelection else { return nil }
+        switch presented {
+        case .station, .line, .chooseLine:
+            return PanelCloseAction(key: "back-\(presented.id)-\(lease.owner)") {
+                linePreview = nil
+                sheet = .detail(lease.owner)
+            }
+        default:
+            return nil
+        }
+    }
+
     private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
         let host = surfaceHost(of: presented)
         // Closes only its own popup: a save that finishes after another popup
@@ -899,18 +913,7 @@ struct RailWorkspaceView: View {
             ? PanelCloseAction(key: "\(presented.id)") {
                 if self.sheet?.id == presented.id { self.sheet = nil }
             } : nil
-        let panelBackStep: PanelCloseAction? = {
-            guard host == .panel, let lease = journeyMenuSelection else { return nil }
-            switch presented {
-            case .station, .line, .chooseLine:
-                return PanelCloseAction(key: "back-\(presented.id)-\(lease.owner)") {
-                    linePreview = nil
-                    sheet = .detail(lease.owner)
-                }
-            default:
-                return nil
-            }
-        }()
+        let panelBackStep = panelBackStep(for: presented)
         return Group {
             switch presented {
             case .detail(let id):
@@ -950,8 +953,13 @@ struct RailWorkspaceView: View {
             case .chooseRide(let trains):
                 RideChooserView(trains: trains, showsDate: selectedDate == Dates.allDates,
                     presentation: { presentation(for: $0) }) { train in
-                    sheet = nil
-                    presentationHost.afterTeardown { pick(train) }
+                    if host == .panel {
+                        // Straight swap, as chooseLine: no dismissal to hand the selection back.
+                        pick(train)
+                    } else {
+                        sheet = nil
+                        presentationHost.afterTeardown { pick(train) }
+                    }
                 }
             case .line(let target):
                 NetworkLineSheetView(target: target, network: store, controller: controller,
@@ -1082,7 +1090,8 @@ struct RailWorkspaceView: View {
                         // a save), which answers Esc itself.
                         .background {
                             Button(localization.text("ios.close", fallback: "Close")) {
-                                self.sheet = nil
+                                // A card with a back step steps back first.
+                                if let back = panelBackStep(for: panelSheet) { back() } else { self.sheet = nil }
                             }
                             .keyboardShortcut(.cancelAction)
                             .disabled(panelNestedSurface)
@@ -3567,6 +3576,9 @@ struct RailWorkspaceView: View {
         let trains = ids.compactMap { id in
             itineraries.loaded?.trains.first { $0.id == id }
         }
+        // A tap that hit rides (the line preview is drawn as one) is never an
+        // empty tap, even when none of them is a loaded journey.
+        if trains.isEmpty, !ids.isEmpty { return }
         switch mapTapAnswer(trains.isEmpty ? .empty : .trips) {
         case .blocked:
             return
@@ -3596,7 +3608,8 @@ struct RailWorkspaceView: View {
     private func mapTapAnswer(_ tap: MapTapKind) -> MapTapCardAnswer {
         WorkspaceSurfacePolicy.mapTapAnswer(
             tap, cardHost: sheet.map(surfaceHost(of:)), leaseHeld: journeyMenuOwnsSelection,
-            linePreviewShown: linePreview != nil, editorOpen: journeyEditor != nil)
+            linePreviewShown: linePreview != nil, editorOpen: journeyEditor != nil,
+            nestedSurfaceUp: panelNestedSurface)
     }
 
     /// A tap on a station dot. Never clears or closes anything.

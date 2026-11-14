@@ -147,10 +147,12 @@ struct WorkspaceSurfacePolicyTests {
     // MARK: Map taps while a card is open
 
     private static func answer(
-        _ tap: MapTapKind, _ host: WorkspaceSurfaceHost?, lease: Bool, preview: Bool, editor: Bool
+        _ tap: MapTapKind, _ host: WorkspaceSurfaceHost?, lease: Bool, preview: Bool, editor: Bool,
+        nested: Bool = false
     ) -> MapTapCardAnswer {
         WorkspaceSurfacePolicy.mapTapAnswer(
-            tap, cardHost: host, leaseHeld: lease, linePreviewShown: preview, editorOpen: editor)
+            tap, cardHost: host, leaseHeld: lease, linePreviewShown: preview, editorOpen: editor,
+            nestedSurfaceUp: nested)
     }
 
     @Test("Map tap table: every tap, host, lease, preview and editor state")
@@ -165,7 +167,7 @@ struct WorkspaceSurfacePolicyTests {
                             if editor, tap == .station || tap == .lines {
                                 expected = .blocked
                             } else if host == .panel {
-                                expected = tap == .empty ? .clearSelectionAndCloseCard : .proceed
+                                expected = tap == .empty ? (editor ? .blocked : .clearSelectionAndCloseCard) : .proceed
                             } else {
                                 switch tap {
                                 case .station: expected = lease ? .blocked : .proceed
@@ -192,5 +194,18 @@ struct WorkspaceSurfacePolicyTests {
         }
         #expect(Self.answer(.empty, .panel, lease: true, preview: true, editor: false)
             == .clearSelectionAndCloseCard)
+    }
+
+    @Test("Map tap: a nested panel surface keeps every tap from closing or replacing the card")
+    func panelNestedSurfaceBlocksTaps() {
+        for tap in MapTapKind.allCases {
+            for lease in [false, true] {
+                #expect(Self.answer(tap, .panel, lease: lease, preview: false, editor: false, nested: true)
+                    == .blocked, "nested \(tap)")
+            }
+        }
+        // Outside the panel the nested flag changes nothing.
+        #expect(Self.answer(.empty, .systemSheet, lease: false, preview: false, editor: false, nested: true)
+            == .clearSelection)
     }
 }

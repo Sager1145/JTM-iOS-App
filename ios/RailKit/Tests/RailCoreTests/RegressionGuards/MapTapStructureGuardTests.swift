@@ -176,4 +176,19 @@ struct RegressionGuardMapTap {
         }
         #expect(w.contains("onSelectStation: { selectStation($0) }"))
     }
+
+    /// A tap that hit rides is never empty (the line preview is a ride), the
+    /// panel's nested-surface flag reaches the policy, Esc steps back first,
+    /// and the trip chooser swaps directly in the panel.
+    @Test func panelTapAndEscRulesStayWired() throws {
+        let w = Self.workspace
+        let from = try #require(w.range(of: "private func selectFromMap("))
+        let body = String(w[from.upperBound...].prefix(900))
+        #expect(body.contains("if trains.isEmpty, !ids.isEmpty { return }"))
+        #expect(w.contains("nestedSurfaceUp: panelNestedSurface"))
+        #expect(w.contains("if let back = panelBackStep(for: panelSheet) { back() } else { self.sheet = nil }"))
+        let chooser = try #require(w.range(of: "case .chooseRide(let trains):"))
+        let chooserBody = String(w[chooser.upperBound...].prefix(700))
+        #expect(chooserBody.contains("if host == .panel"))
+    }
 }
