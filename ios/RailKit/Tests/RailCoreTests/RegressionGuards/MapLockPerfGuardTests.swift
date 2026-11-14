@@ -65,7 +65,7 @@ struct RegressionGuardMapLockPerf {
         #expect(landing.contains("level: level, rect: readyOnPadded ? nil : rect,"))
         // The landing and the cached travel target both go through it.
         #expect(Self.coordinator.contains("self.pendingInstall = self.landingDecision("))
-        #expect(Self.coordinator.contains("pendingInstall = landingDecision("))
+        #expect(Self.coordinator.contains("if let decision = landingDecision("))
         let commit = try Self.body(
             Self.coordinator, from: "networkBuildState.commit(", to: "A cold display-network request")
         #expect(commit.contains("GeometryZoomLevels.wantedLevel(zoom: zoom, installed: strokeFrame.bucket)"))

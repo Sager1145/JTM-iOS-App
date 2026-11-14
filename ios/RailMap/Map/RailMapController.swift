@@ -30,7 +30,9 @@ final class RailMapController {
         let olderFitRunning = cameraPolicy.focusFitRunning
         autoFocusRequest = cameraPolicy.requestFocus(
             target, enabled: enabled, playbackIsActive: playbackIsActive)
-        if olderFitRunning { stopFocusFit() }
+        // A disabled request (nil) leaves the older animation to finish:
+        // stopping it would freeze the camera mid-flight for nothing.
+        if olderFitRunning, autoFocusRequest != nil { stopFocusFit() }
         if autoFocusRequest != nil {
             pendingFollow = false
         }
@@ -495,6 +497,21 @@ final class RailMapController {
 #endif
         claimCamera()
         stopFollowingUser()
+        let isAnimated = animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion)
+        // The mark goes up before the call and only for a fit that animates
+        // to somewhere else: a non-animated fit reports its region inside the
+        // call, and a fit onto the current rect reports nothing, so either
+        // would leave the mark set with no callback to clear it.
+        if startedByFocus, isAnimated {
+            let target = mapView.mapRectThatFits(rect, edgePadding: framingInsets)
+            let tolerance = max(visibleTolerance(of: mapView), 1)
+            let current = mapView.visibleMapRect
+            let moves = abs(target.origin.x - current.origin.x) > tolerance
+                || abs(target.origin.y - current.origin.y) > tolerance
+                || abs(target.size.width - current.size.width) > tolerance
+                || abs(target.size.height - current.size.height) > tolerance
+            if moves { cameraPolicy.beginFocusFit() }
+        }
         mapView.setVisibleMapRect(
             rect,
             edgePadding: framingInsets,
@@ -503,8 +520,13 @@ final class RailMapController {
             // reduce-motion rule below would have said the same. It is a
             // parameter so a caller that has already decided does not have to
             // decide twice.
-            animated: animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion))
-        if startedByFocus { cameraPolicy.beginFocusFit() }
+            animated: isAnimated)
+    }
+
+    /// One part in a million of the visible width: rect equality that
+    /// survives MapKit's rounding.
+    private func visibleTolerance(of mapView: MKMapView) -> Double {
+        mapView.visibleMapRect.size.width * 1e-6
     }
 
     /// Automatic focus leaves an already visible subject and the user's zoom
