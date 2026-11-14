@@ -23,7 +23,7 @@ public enum GeometryFrameBytes {
 /// overview, is pinned beside them: the coarse frame a zoom-out lands on, so
 /// the zoom-out does not wait to prepare it again. It is outside the count and
 /// the byte cap, unless its own size passes `overviewPinByteCap`: then it is
-/// not pinned and lives under normal residency like any other frame. A memory warning drops everything that is not current,
+/// not pinned and, being over the byte cap, is evicted as soon as it is not current. A memory warning drops everything that is not current,
 /// the overview included.
 public struct GeometryFrameResidency: Equatable, Sendable {
     /// Least recently used first; the current frame is the last it was made.
@@ -125,6 +125,13 @@ public struct GeometryFrameResidency: Equatable, Sendable {
 
     private mutating func evict() -> [String] {
         var evicted: [String] = []
+        // A frame that alone passes the cap can never be kept: drop it first,
+        // so the LRU walk below does not empty the smaller frames before it.
+        for key in order where !isPinned(key) && (frameBytes[key] ?? 0) > byteCap {
+            order.removeAll { $0 == key }
+            frameBytes.removeValue(forKey: key)
+            evicted.append(key)
+        }
         while unpinnedBytes > byteCap || unpinnedFrameCount > maxUnpinnedFrames,
               let index = order.firstIndex(where: { !isPinned($0) }) {
             let key = order.remove(at: index)

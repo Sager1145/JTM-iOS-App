@@ -191,6 +191,18 @@ struct GeometryFrameResidencyTests {
         #expect(!residency.order.contains("o"))
     }
 
+    @Test func anOversizedLeftOverviewDoesNotEmptyTheSmallerFrames() {
+        var residency = GeometryFrameResidency(
+            byteCap: 100, maxUnpinnedFrames: 5, overviewPinByteCap: 1_000)
+        _ = residency.begin("small")
+        _ = residency.setBytes(50, for: "small")
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.setBytes(5_000, for: "o")
+        let evicted = residency.begin("next")
+        #expect(evicted == ["o"])
+        #expect(residency.order.contains("small"))
+    }
+
     @Test func theDefaultOverviewPinCapIsThirtyMegabytes() {
         #expect(GeometryFrameResidency.defaultOverviewPinByteCap == 30 * 1024 * 1024)
         var residency = GeometryFrameResidency(byteCap: 10)

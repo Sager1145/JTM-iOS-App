@@ -97,7 +97,18 @@ struct ScreenPolylineThinningTests {
             contentsOf: root.appendingPathComponent("ios/RailMap/Map/MapLineGeometry.swift"), encoding: .utf8)
         // The network build thins every drawn polyline (solid, historical and
         // family windows) before any chunk reaches a MapKit vertex count.
-        #expect(source.contains("ScreenPolylineThinning.thinned"))
+        let family = try #require(source.range(of: "func measuredFamily("))
+        let familyBody = String(source[family.lowerBound...])
+        let thinCall = try #require(familyBody.range(of: "ScreenPolylineThinning.thinned("))
+        #expect(thinCall.lowerBound < (try #require(familyBody.range(of: "chunkWindows:"))).lowerBound)
+        // A cut fallback's runtime slice is thinned too, so the drawn count
+        // stays inside the budget.
+        let fallback = try #require(source.range(of: "func familyFallbackBuilds("))
+        let fallbackBody = String(source[fallback.lowerBound...])
+        let sliceCall = try #require(fallbackBody.range(of: "ContinuousStroke.slice("))
+        let sliceThin = try #require(fallbackBody.range(of: "ScreenPolylineThinning.thinned("))
+        #expect(sliceCall.lowerBound < sliceThin.lowerBound)
+        #expect(sliceThin.lowerBound < (try #require(fallbackBody.range(of: "mapPolylineChunk(coordinates)"))).lowerBound)
         let prepare = try #require(source.range(of: "static func prepare("))
         let body = String(source[prepare.lowerBound...])
         let lane = try #require(body.range(of: "parallelLaneCoordinates("))

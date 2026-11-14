@@ -444,12 +444,17 @@ func familyFallbackBuilds(
                 chunkWindows.append(chunkWindow)
                 continue
             }
-            let coordinates = ContinuousStroke.slice(
+            // Thinned like the prepared chunks, so the drawn count stays within
+            // the budget `drawnVertexCount` weighed.
+            let slice = ContinuousStroke.slice(
                 points: stroke.stroke.points, measures: stroke.stroke.measures,
-                from: range.from, to: range.to).map {
-                    MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
-                               y: $0.y * mapPointsPerScreenPoint).coordinate
-                }
+                from: range.from, to: range.to)
+            let coordinates = ScreenPolylineThinning.thinned(
+                slice, x: slice.map(\.x), y: slice.map(\.y)
+            ).map {
+                MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
+                           y: $0.y * mapPointsPerScreenPoint).coordinate
+            }
             guard coordinates.count >= 2 else { continue }
             polylines.append(mapPolylineChunk(coordinates))
             chunkWindows.append(chunkWindow)
