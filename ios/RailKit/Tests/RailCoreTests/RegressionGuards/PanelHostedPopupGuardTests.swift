@@ -113,4 +113,73 @@ struct RegressionGuardPanelHostedPopups {
         #expect(Self.host.contains("\"presented\""))
         #expect(Self.host.contains("presentedViewController"))
     }
+
+    private static let station = read("RailMap/Map/StationCardView.swift")
+    private static let lineCard = read("RailMap/Map/RailwayLineCardView.swift")
+    private static let lineSheet = read("RailMap/Map/NetworkLineSheetView.swift")
+    private static let picker = read("RailMap/Journeys/JourneyGroupPicker.swift")
+    private static let hosting = read("RailMap/Workspace/WorkspacePopupHosting.swift")
+
+    /// A popup root's close goes through `closePanelSurface` when there is one.
+    @Test func popupRootsNeverDismissWithoutCheckingThePanel() {
+        #expect(Self.lineCard.contains("onClose: (() -> Void)?"))
+        #expect(Self.lineCard.contains("if let onClose { onClose() } else { dismiss() }"))
+        #expect(Self.lineSheet.contains("onClose: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })"))
+        for (name, source) in [
+            ("StationCardView", Self.station), ("RideChooserView", Self.read("RailMap/Journeys/RideChooserView.swift")),
+            ("JourneyGroupPicker", Self.picker), ("NetworkLineSheetView", Self.lineSheet),
+        ] {
+            for line in source.split(separator: "\n") where line.contains("dismiss()") {
+                #expect(line.contains("closePanelSurface") || line.contains("// ui-token-ok"),
+                        "\(name): \(line)")
+            }
+        }
+    }
+
+    /// Locate runs in the panel: no detent change, no wait for a compact height.
+    @Test func locateDoesNotWaitForADetentInThePanel() {
+        #expect(Self.lineSheet.contains("guard popupHost == .panel || dynamicTypeSize.isAccessibilitySize"))
+        #expect(Self.station.contains("guard popupHost == .panel || dynamicTypeSize.isAccessibilitySize"))
+        #expect(Self.lineSheet.contains("if popupHost != .panel {"))
+        #expect(Self.station.contains("if popupHost != .panel {"))
+    }
+
+    /// Esc stands down over a nested surface, and a popup closes only itself.
+    @Test func escapeAndCloseAreScopedToTheirPopup() {
+        let w = Self.workspace
+        #expect(Self.hosting.contains("struct PanelNestedSurfaceKey: PreferenceKey"))
+        #expect(w.contains(".onPreferenceChange(PanelNestedSurfaceKey.self)"))
+        #expect(w.contains(".disabled(panelNestedSurface)"))
+        #expect(Self.menu.contains(".panelNestedSurface("))
+        #expect(Self.picker.contains(".panelNestedSurface(saving)"))
+        #expect(w.contains("if self.sheet?.id == presented.id { self.sheet = nil }"))
+    }
+
+    /// Hidden tabs take no keys: no search focus, no Space, no ⌘F.
+    @Test func hiddenTabsTakeNoKeyboardInput() {
+        let w = Self.workspace
+        #expect(w.contains("searchFocused = false\n                    if stageSelection == .compact"))
+        #expect(w.contains("guard !self.presentedEditorOwnsShortcuts, self.panelSheet == nil else { return }"))
+        #expect(w.contains(".keyboardShortcut(.space, modifiers: [])\n        .disabled(panelSheet != nil)"))
+    }
+
+    /// The journey editor replaces a panel popup; the dock stays open for a card.
+    @Test func editorReplacesPopupAndDockStaysOpen() {
+        let w = Self.workspace
+        #expect(w.contains("if panelSheet != nil { sheet = nil }"))
+        #expect(w.contains("panelSheet != nil && requested == .compact ? .medium : requested"))
+        #expect(w.contains("stageBeforePopup"))
+    }
+
+    /// The environment carries Equatable wrappers, never bare closures.
+    @Test func environmentActionsAreEquatableWrappers() {
+        #expect(Self.hosting.contains("@Entry var closePanelSurface: PanelCloseAction?"))
+        #expect(Self.hosting.contains("@Entry var presentGroupPicker: PanelGroupPickerAction?"))
+    }
+
+    /// `presented` looks at every window, not only the key one.
+    @Test func presentedLooksAtEveryWindow() {
+        #expect(Self.host.contains("windows.contains { $0.rootViewController?.presentedViewController != nil }"))
+        #expect(!Self.host.contains("windows.first(where: \\.isKeyWindow)?.rootViewController"))
+    }
 }

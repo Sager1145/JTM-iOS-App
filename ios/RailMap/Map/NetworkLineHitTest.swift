@@ -12,7 +12,8 @@ enum NetworkLineHitTest {
     /// Canonical line ids within `reach` map points of `tap`, nearest first.
     /// A historical overlay line is not a railway the line card can load, so
     /// it never answers.
-    static func lineIDs(at tap: MKMapPoint, reach: Double, in builds: [LineBuild]) -> [String] {
+    static func lineIDs(at tap: MKMapPoint, reach: Double, in builds: [LineBuild],
+                        extra: [String: [MKPolyline]] = [:]) -> [String] {
         let point = RideTapResolver.Point(x: tap.x, y: tap.y)
         var nearest: [String: Double] = [:]
         for build in builds where !build.line.id.hasPrefix("hist|") {
@@ -30,6 +31,7 @@ enum NetworkLineHitTest {
             }
             build.polylines.forEach(scan)
             for family in build.familyPolylines.values { family.polylines.forEach(scan) }
+            extra[build.line.lineID]?.forEach(scan)
             if best <= reach { nearest[build.line.lineID] = best }
         }
         return nearest.sorted { $0.value == $1.value ? $0.key < $1.key : $0.value < $1.value }.map(\.key)

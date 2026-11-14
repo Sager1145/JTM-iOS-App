@@ -354,9 +354,11 @@ struct StationCardView: View {
     private func requestLineFocus(_ rect: MKMapRect) {
         pendingLineFocus = rect
         #if !targetEnvironment(macCatalyst)
+        if popupHost != .panel {
         withAnimation(RailMotion.spring) {
             detailDetent = dynamicTypeSize.isAccessibilitySize ? .large
                 : .height(WorkspaceMenuMetrics.journeyCompactHeight)
+        }
         }
         #endif
         focusLineIfReady()
@@ -365,7 +367,7 @@ struct StationCardView: View {
     private func focusLineIfReady() {
         guard let rect = pendingLineFocus, sheetHeight > 0 else { return }
         #if !targetEnvironment(macCatalyst)
-        guard dynamicTypeSize.isAccessibilitySize
+        guard popupHost == .panel || dynamicTypeSize.isAccessibilitySize
             || sheetContentHeight <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
         #endif
         pendingLineFocus = nil

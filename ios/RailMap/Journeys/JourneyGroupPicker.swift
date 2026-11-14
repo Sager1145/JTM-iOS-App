@@ -126,6 +126,7 @@ struct JourneyGroupAssignmentView: View {
             .disabled(saving)
         }
         .interactiveDismissDisabled(saving)
+        .panelNestedSurface(saving)
     }
 
     /// The panel closes through the workspace; a system sheet dismisses itself.

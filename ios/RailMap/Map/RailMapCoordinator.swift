@@ -119,8 +119,13 @@ extension RailMapView.Surface {
             /// The line builds the last rebuild drew, retained for the network
             /// line tap. They only reference the polylines MapKit already holds.
             private var drawnLineBuilds: [LineBuild] = []
+            /// The family-fallback and withheld-run polylines the same rebuild
+            /// handed to MapKit, by canonical line id: drawn, so tappable.
+            private var drawnExtraPolylines: [String: [MKPolyline]] = [:]
             /// An empty-map clear `answerTap` banked for `handleSettledTap`.
             private var bankedClear = false
+            /// The non-station annotation the last `answerTap` left to MapKit.
+            private var annotationUnderTap: (any MKAnnotation)?
             var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
             /// The localisation engine's owner. A `@MainActor` class, and
             /// therefore `Sendable`, so a nonisolated coordinator may hold it;
@@ -1080,6 +1085,7 @@ extension RailMapView.Surface {
             func tearDown(_ dismantledMapView: MKMapView) {
                 selectedStationSnapshots.tearDown()
                 drawnLineBuilds = []
+                drawnExtraPolylines = [:]
                 if let memoryWarningObserver {
                     NotificationCenter.default.removeObserver(memoryWarningObserver)
                 }
@@ -2550,6 +2556,7 @@ extension RailMapView.Surface {
                 let fitted = NetworkLOD.fitToBudget(builds, zoom: visibilityZoom)
                 let visible = fitted.kept.map(\.line)
                 drawnLineBuilds = fitted.kept
+                var extraPolylines: [String: [MKPolyline]] = [:]
                 var selectedFamilyCoverage: [String: [ContinuousStroke.WindowSpan]] = [:]
                 for build in fitted.kept where !build.familyPolylines.isEmpty {
                     selectedFamilyCoverage[build.line.id] = build.familyPolylines.values.flatMap(\.chunkWindows)
@@ -2629,6 +2636,7 @@ extension RailMapView.Surface {
                             colors[familyKey] = colors[familyKey]
                                 ?? UIColor(Color(hex: familyColor) ?? .accentColor)
                             byColor[familyKey, default: []].append(contentsOf: kept)
+                            extraPolylines[build.line.lineID, default: []].append(contentsOf: kept)
                             vertices += kept.reduce(0) { $0 + $1.pointCount }
                         }
                     }
@@ -2642,8 +2650,10 @@ extension RailMapView.Surface {
                             lineID: build.line.id, runIndex: runIndex, coordinates: run.coordinates)
                         else { continue }
                         withheldByColor[runKey, default: []].append(polyline)
+                        extraPolylines[build.line.lineID, default: []].append(polyline)
                     }
                 }
+                drawnExtraPolylines = extraPolylines
 
                 // The scale this build's marks are sized for. One factor, read
                 // once, handed to every weight below — see RailStyle. Rounded
@@ -5593,6 +5603,8 @@ extension RailMapView.Surface {
                 var hits: MapTapHits
                 /// The trip dot under the finger, mounted or drawn in the overlay.
                 var dot: RideStationAnnotation?
+                /// The annotation under the finger that is not a trip dot.
+                var annotation: (any MKAnnotation)?
                 /// The station annotation within reach, for ``MapTapAnswer/station``.
                 var stationAnnotation: (any MKAnnotation)?
                 /// Network lines within reach, nearest first.
@@ -5614,6 +5626,7 @@ extension RailMapView.Surface {
                 at point: CGPoint, on mapView: MKMapView, tapCount: Int = 1
             ) -> (answer: MapTapAnswer, hits: MapTapHits) {
                 bankedClear = false
+                annotationUnderTap = nil
                 // Playback owns the map; picking a note's place only pans.
                 guard !(playback?.isActive == true && playbackLayer.lastSnapshot != nil),
                       controller?.tripNotePickTrainID == nil
@@ -5623,9 +5636,18 @@ extension RailMapView.Surface {
                 let measured = measureTap(at: point, on: mapView, tapCount: tapCount)
                 let answer = MapTapPolicy.answer(measured.hits)
                 switch answer {
-                case .annotation, .ignore:
-                    // The annotation view under the finger answers through
-                    // `mapView(_:didSelect:)`, which this touch has not claimed.
+                case .annotation:
+                    // A network bead answers at once like every other hit; notes,
+                    // badges and draft pins answer through `mapView(_:didSelect:)`,
+                    // which this touch has not claimed.
+                    if let annotation = measured.annotation as? StationAnnotation,
+                       let card = stationCard(for: annotation) {
+                        interaction.claimTouch()
+                        onSelectStation(card)
+                    } else {
+                        annotationUnderTap = measured.annotation
+                    }
+                case .ignore:
                     break
                 case .stationCard:
                     if let dot = measured.dot, let card = stationCard(for: dot) {
@@ -5672,20 +5694,25 @@ extension RailMapView.Surface {
                         measured.dot = dot
                     } else {
                         measured.hits.annotationViewUnderFinger = true
+                        measured.annotation = annotationView.annotation
                     }
                 } else if layers.routes {
                     measured.dot = tappedOverlayRideDot(at: point, on: mapView)
                 }
                 // 列車経路 off takes the rides' hit area with their ink: no trip
                 // dot and no trip line can have been meant.
+                var dotOwnsTap = false
                 if layers.routes, let dot = measured.dot {
                     if dot.rideID == selectedTrainID {
                         measured.hits.selectedTripStationDot = true
                     } else {
-                        measured.hits.tripIDsInReach.append(dot.rideID)
+                        // A dot under the finger is its own trip's, whatever
+                        // other trips pass that station: no line reach added.
+                        measured.hits.tripIDsInReach = [dot.rideID]
+                        dotOwnsTap = true
                     }
                 }
-                if !measured.hits.annotationViewUnderFinger, !measured.hits.selectedTripStationDot {
+                if !measured.hits.annotationViewUnderFinger, !measured.hits.selectedTripStationDot, !dotOwnsTap {
                     if layers.routes {
                         measured.hits.tripIDsInReach += interaction.rideHits(
                             at: point, on: mapView, rides: rides, drawnStrokes: drawnStrokes)
@@ -5716,11 +5743,16 @@ extension RailMapView.Surface {
                     best = (annotation, distance)
                 }
                 for view in displayedAnnotationViews.allObjects where view.window != nil {
-                    guard let annotation = view.annotation, let parent = view.superview else { continue }
+                    // A bead nobody can see (faded, hidden by collision
+                    // handling, or not touchable) answers nothing.
+                    guard !view.isHidden, view.alpha >= 0.01, view.isUserInteractionEnabled,
+                          let annotation = view.annotation else { continue }
                     let eligible = annotation is StationAnnotation
                         || (annotation as? RideStationAnnotation)?.rideID == selectedTrainID
                     guard eligible else { continue }
-                    consider(annotation, at: parent.convert(view.center, to: mapView))
+                    // The bead's own point, not `view.center`: `centerOffset` puts the
+                    // centre in the middle of a named bead's label.
+                    consider(annotation, at: mapView.convert(annotation.coordinate, toPointTo: mapView))
                 }
                 for dot in overlayRideDots where dot.rideID == selectedTrainID {
                     consider(dot, at: mapView.convert(dot.coordinate, toPointTo: mapView))
@@ -5732,14 +5764,25 @@ extension RailMapView.Surface {
             /// line builds the last rebuild drew. Nothing is answered for a
             /// pitched camera, where one view-point reach has no single scale.
             private func networkLines(at point: CGPoint, on mapView: MKMapView) -> [RailNetworkStore.DrawnLine] {
-                guard showsNetwork, !drawnLineBuilds.isEmpty,
-                      let scale = RideTapIndex.mapPointsPerViewPoint(on: mapView)
-                else { return [] }
+                guard showsNetwork, !drawnLineBuilds.isEmpty else { return [] }
+                // A pitched camera has no single scale; use the one at the tap.
+                let scale: Double
+                if let uniform = RideTapIndex.mapPointsPerViewPoint(on: mapView) {
+                    scale = uniform
+                } else {
+                    let a = MKMapPoint(mapView.convert(point, toCoordinateFrom: mapView))
+                    let b = MKMapPoint(mapView.convert(
+                        CGPoint(x: point.x + 10, y: point.y), toCoordinateFrom: mapView))
+                    let local = hypot(b.x - a.x, b.y - a.y) / 10
+                    guard local.isFinite, local > 0 else { return [] }
+                    scale = local
+                }
                 let interval = RailSignpost.map.begin("map.tap.lines")
                 defer { RailSignpost.map.end("map.tap.lines", interval) }
                 let tap = MKMapPoint(mapView.convert(point, toCoordinateFrom: mapView))
                 let ids = NetworkLineHitTest.lineIDs(
-                    at: tap, reach: MapTapPolicy.networkLineReach * scale, in: drawnLineBuilds)
+                    at: tap, reach: MapTapPolicy.networkLineReach * scale, in: drawnLineBuilds,
+                    extra: drawnExtraPolylines)
                 var byLineID: [String: RailNetworkStore.DrawnLine] = [:]
                 for build in drawnLineBuilds where byLineID[build.line.lineID] == nil {
                     byLineID[build.line.lineID] = build.line
@@ -5769,7 +5812,12 @@ extension RailMapView.Surface {
             /// The `tapMap` command: the same answer a tap gives, with a banked
             /// clear delivered at once. It does not exercise the recognisers.
             func answerTapForUITest(at point: CGPoint, on mapView: MKMapView) -> MapTapTestReport {
+                interaction.beginTouch()
                 let outcome = answerTap(at: point, on: mapView)
+                // No real touch reaches MapKit here: select what it would have.
+                if outcome.answer == .annotation, let annotation = annotationUnderTap {
+                    self.mapView(mapView, didSelect: annotation)
+                }
                 if bankedClear {
                     bankedClear = false
                     onSelectRide([])
@@ -5812,6 +5860,8 @@ extension RailMapView.Surface {
             @objc func handleManipulation(_ recognizer: UIGestureRecognizer) {
                 switch recognizer.state {
                 case .began:
+                    // A tap-then-drag zoom is not a tap: drop a banked clear.
+                    bankedClear = false
 #if DEBUG
                     diagnostics.gestureBegan()
 #endif

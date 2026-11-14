@@ -175,6 +175,10 @@ struct RailWorkspaceView: View {
     /// previous window size, and a detent that is not in the set the sheet was
     /// given is a detent SwiftUI silently replaces.
     @State private var stageSelection: SheetStage = Self.launchStage
+    /// The stage a panel popup raised from `.compact`, restored when it closes.
+    @State private var stageBeforePopup: SheetStage?
+    /// A panel popup shows a surface of its own; the workspace Esc stands down.
+    @State private var panelNestedSurface = false
 
     /// The live shape of the menu panel — see ``PanelMorph``. Shared by both
     /// compositions so `PanelHeader`, `RideCard` and `WorkspacePanelPage` read
@@ -329,9 +333,19 @@ struct RailWorkspaceView: View {
             // set it (close, edit, share, delete).
             .onChange(of: panelSheet?.id) { previous, current in
                 if previous != nil, current == nil { sheetDidDismiss() }
-                if previous == nil, current != nil, stageSelection == .compact {
-                    // A card needs room; the compact dock shows a header only.
-                    stageSelection = .medium
+                panelNestedSurface = false
+                if previous == nil, current != nil {
+                    // The hidden search field must not keep taking keystrokes.
+                    searchFocused = false
+                    if stageSelection == .compact {
+                        // A card needs room; the compact dock shows a header only.
+                        stageBeforePopup = .compact
+                        stageSelection = .medium
+                    }
+                }
+                if previous != nil, current == nil, let before = stageBeforePopup {
+                    stageBeforePopup = nil
+                    stageSelection = before
                 }
             }
             .onChange(of: journeyEditor != nil) { wasEditing, isEditing in
@@ -707,6 +721,11 @@ struct RailWorkspaceView: View {
     /// panel-hosted one.
     private func sheetDidDismiss() {
         linePreview = nil
+        // A system sheet replaced by another popup (the trip chooser over a
+        // card, a panel card over Map Layers) is not the end of the selection:
+        // the popup now open owns the lease and the layout pin.
+        if panelSheet != nil { return }
+        if case .chooseRide = sheet { return }
         // Expanding during the child's dismissal competes with UIKit's
         // sheet transition. Restore only after that presenter is free.
         workspaceMenuIsSuspended = false
@@ -867,8 +886,13 @@ struct RailWorkspaceView: View {
 
     private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
         let host = surfaceHost(of: presented)
-        let closePanelSurface: (() -> Void)? =
-            host == .panel ? { self.sheet = nil } : nil
+        // Closes only its own popup: a save that finishes after another popup
+        // opened must not close that one.
+        let closePanelSurface: PanelCloseAction? =
+            host == .panel
+            ? PanelCloseAction(key: "\(presented.id)") {
+                if self.sheet?.id == presented.id { self.sheet = nil }
+            } : nil
         return Group {
             switch presented {
             case .detail(let id):
@@ -1027,12 +1051,16 @@ struct RailWorkspaceView: View {
                 if let panelSheet {
                     presentedSheet(panelSheet)
                         .id(panelSheet.id)
-                        // Esc closes the panel's card, as it does a sheet.
+                        .onPreferenceChange(PanelNestedSurfaceKey.self) { panelNestedSurface = $0 }
+                        // Esc closes the panel's card, as it does a sheet. It
+                        // stands down over a nested surface (details, a note,
+                        // a save), which answers Esc itself.
                         .background {
                             Button(localization.text("ios.close", fallback: "Close")) {
                                 self.sheet = nil
                             }
                             .keyboardShortcut(.cancelAction)
+                            .disabled(panelNestedSurface)
                             .opacity(0)
                             .accessibilityHidden(true)
                         }
@@ -1086,6 +1114,8 @@ struct RailWorkspaceView: View {
 
     private func presentJourneyEditor(_ launch: JourneyEditorLaunch) {
         journeyMenuSelection = nil
+        // The editor replaces a panel popup, as the card's own Edit does.
+        if panelSheet != nil { sheet = nil }
         sidebarMenuHidden = false
         journeyEditorRecordID = nil
         journeySaveAttemptID = nil
@@ -2367,11 +2397,11 @@ struct RailWorkspaceView: View {
     }
 
     /// Non-nil when the policy gives the group picker to the panel.
-    private var groupPickerPresenter: ((String) -> Void)? {
+    private var groupPickerPresenter: PanelGroupPickerAction? {
         let host = WorkspaceSurfacePolicy.host(
             for: .groupPicker, mode: renderedLayoutMode, isHinged: hasHingedDisplay)
         guard host == .panel else { return nil }
-        return { id in self.sheet = .groupPicker(id) }
+        return PanelGroupPickerAction(key: "panel") { id in self.sheet = .groupPicker(id) }
     }
 
     /// Beside the card so narrow windows retain the phone header's reading
@@ -2532,7 +2562,7 @@ struct RailWorkspaceView: View {
                 isNew: true, originalID: nil))
         }
         railCommands.performSearch = {
-            guard !self.presentedEditorOwnsShortcuts else { return }
+            guard !self.presentedEditorOwnsShortcuts, self.panelSheet == nil else { return }
             self.sidebarMenuHidden = false
             if self.selection == .stats { self.selection = self.currentJourneyPage }
             Task { @MainActor in
@@ -2589,7 +2619,8 @@ struct RailWorkspaceView: View {
     }
 
     private func settleDock(at requested: SheetStage, metrics: BottomChromeMetrics) {
-        let target = metrics.available(requested)
+        // A card in the panel needs room: the dock does not drop to compact.
+        let target = metrics.available(panelSheet != nil && requested == .compact ? .medium : requested)
         if target == .compact, stageSelection != .compact {
             lastOpenDockStage = stageSelection
         } else if target != .compact {
@@ -2930,6 +2961,7 @@ struct RailWorkspaceView: View {
             }
         }
         .keyboardShortcut(.space, modifiers: [])
+        .disabled(panelSheet != nil)
         .opacity(0)
         .accessibilityHidden(true)
     }

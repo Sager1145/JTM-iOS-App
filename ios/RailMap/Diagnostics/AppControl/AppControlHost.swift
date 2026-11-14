@@ -912,8 +912,8 @@ final class AppControlHost: AppControlDriver {
     static func rootHasPresentedController() -> Bool {
         let windows = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
-        guard let root = windows.first(where: \.isKeyWindow)?.rootViewController else { return false }
-        return root.presentedViewController != nil
+        // Every window, not the key one: a terminal-driven app has no key window.
+        return windows.contains { $0.rootViewController?.presentedViewController != nil }
     }
 
     /// Scene and application activation, so a poll shows a window hidden mid-sweep

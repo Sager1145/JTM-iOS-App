@@ -15,6 +15,8 @@ struct NetworkLineSheetView: View {
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.popupHost) private var popupHost
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
     @State private var detent: PresentationDetent = .medium
     @State private var lineIsShown = false
     @State private var sheetHeight: CGFloat = 0
@@ -34,7 +36,8 @@ struct NetworkLineSheetView: View {
                         controller.journeyMenuBottomObstruction = nil
                     }
                 },
-                onLocate: requestFocus)
+                onLocate: requestFocus,
+                onClose: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })
         }
         #if !targetEnvironment(macCatalyst)
         .presentationDetents( // ui-token-ok: hand-built detents, as the station card's
@@ -70,9 +73,11 @@ struct NetworkLineSheetView: View {
     private func requestFocus(_ rect: MKMapRect) {
         pendingFocus = rect
         #if !targetEnvironment(macCatalyst)
+        if popupHost != .panel {
         withAnimation(RailMotion.spring) {
             detent = dynamicTypeSize.isAccessibilitySize ? .large
                 : .height(WorkspaceMenuMetrics.journeyCompactHeight)
+        }
         }
         #endif
         focusIfReady()
@@ -81,7 +86,7 @@ struct NetworkLineSheetView: View {
     private func focusIfReady() {
         guard let rect = pendingFocus, sheetHeight > 0 else { return }
         #if !targetEnvironment(macCatalyst)
-        guard dynamicTypeSize.isAccessibilitySize
+        guard popupHost == .panel || dynamicTypeSize.isAccessibilitySize
             || sheetContentHeight <= WorkspaceMenuMetrics.journeyCompactHeight + 1 else { return }
         #endif
         pendingFocus = nil

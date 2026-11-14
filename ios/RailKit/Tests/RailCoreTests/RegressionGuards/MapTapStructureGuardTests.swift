@@ -92,4 +92,69 @@ struct RegressionGuardMapTap {
         #expect(Self.host.contains("answerTapForUITest"))
         #expect(Self.coordinator.contains("func answerTapForUITest("))
     }
+
+    private static let hitTest = read("RailMap/Map/NetworkLineHitTest.swift")
+
+    /// A trip dot under the finger is its own trip's tap, whatever else passes.
+    @Test func tripDotOwnsItsTapAndSkipsLineReach() {
+        let c = Self.coordinator
+        #expect(c.contains("measured.hits.tripIDsInReach = [dot.rideID]"))
+        #expect(c.contains("!measured.hits.selectedTripStationDot, !dotOwnsTap"))
+        #expect(!c.contains("measured.hits.tripIDsInReach.append(dot.rideID)"))
+    }
+
+    /// The station reach is measured from the bead's coordinate, over views
+    /// somebody can see and touch.
+    @Test func stationReachMeasuresTheBeadAndSkipsInvisibleViews() throws {
+        let c = Self.coordinator
+        let from = try #require(c.range(of: "private func stationAnnotation("))
+        let to = try #require(c.range(of: "private func networkLines(", range: from.upperBound..<c.endIndex))
+        let body = c[from.lowerBound..<to.lowerBound]
+        #expect(body.contains("mapView.convert(annotation.coordinate, toPointTo: mapView)"))
+        #expect(!body.contains("convert(view.center"))
+        #expect(body.contains("!view.isHidden"))
+        #expect(body.contains("view.alpha >= 0.01"))
+        #expect(body.contains("view.isUserInteractionEnabled"))
+    }
+
+    /// A tap-then-drag zoom must not deliver a clear banked by its first tap.
+    @Test func manipulationBeginDropsABankedClear() throws {
+        let c = Self.coordinator
+        let from = try #require(c.range(of: "@objc func handleManipulation("))
+        let began = try #require(c.range(of: "case .began:", range: from.upperBound..<c.endIndex))
+        #expect(c[began.upperBound...].prefix(300).contains("bankedClear = false"))
+    }
+
+    /// Every network polyline MapKit draws answers a tap, fallbacks and
+    /// withheld runs included, and a pitched camera still answers.
+    @Test func lineHitTestCoversEveryDrawnPolyline() {
+        let c = Self.coordinator
+        #expect(c.contains("drawnExtraPolylines = extraPolylines"))
+        #expect(c.contains("extraPolylines[build.line.lineID, default: []].append(contentsOf: kept)"))
+        #expect(c.contains("extraPolylines[build.line.lineID, default: []].append(polyline)"))
+        #expect(c.contains("extra: drawnExtraPolylines"))
+        #expect(Self.hitTest.contains("extra[build.line.lineID]?.forEach(scan)"))
+        #expect(c.contains("let local = hypot(b.x - a.x, b.y - a.y) / 10"))
+    }
+
+    /// A tap on a mounted network bead answers at once; `tapMap` selects what
+    /// MapKit would for the other annotations.
+    @Test func beadAnswersAtOnceAndTapMapCoversAnnotations() {
+        let c = Self.coordinator
+        #expect(c.contains("measured.annotation as? StationAnnotation"))
+        #expect(c.contains("annotationUnderTap = measured.annotation"))
+        #expect(c.contains("self.mapView(mapView, didSelect: annotation)"))
+        #expect(c.contains("interaction.beginTouch()\n                let outcome = answerTap("))
+    }
+
+    /// A chooser replacing an open card must keep the card's selection lease,
+    /// and a panel card replacing a system sheet must not run its cleanup.
+    @Test func replacedSystemSheetKeepsTheSelectionLease() throws {
+        let w = Self.workspace
+        let from = try #require(w.range(of: "private func sheetDidDismiss()"))
+        let body = w[from.lowerBound...].prefix(1500)
+        #expect(body.contains("if panelSheet != nil { return }"))
+        #expect(body.contains("if case .chooseRide = sheet { return }"))
+        #expect(body.contains("restoreSelection("))
+    }
 }

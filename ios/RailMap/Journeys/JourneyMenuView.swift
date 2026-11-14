@@ -169,6 +169,9 @@ struct WorkspaceJourneyMenu: View {
             }
         }
         .background(Color.railMenuBackground)
+        .panelNestedSurface(
+            host == .panel
+                && (showsDetails || tripNoteFlow.screen != nil || detailsNoteFlow.screen != nil))
         .onGeometryChange(for: MenuMeasurements.self) { proxy in
             MenuMeasurements(height: proxy.size.height, bottomInset: proxy.safeAreaInsets.bottom)
         } action: { measurements in
