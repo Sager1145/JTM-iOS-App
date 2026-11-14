@@ -21,10 +21,15 @@ enum NetworkLOD {
     /// "Room to spare" is thinner since 2026-08-24, and deliberately so.
     /// Bringing decimation onto the web app's geometry contract — see
     /// `RailStyle.simplifyTolerance`, which was eight times too loose — raised
-    /// the worst build measured anywhere in the five packages from 25,000
-    /// drawn vertices to 38,698 (largest iPad, app zoom 8, over the Kansai and
-    /// Chugoku density). That measurement predates the importance-led zoom
-    /// ladder; earlier admission of short important lines can increase load.
+    /// the worst non-curved build from 25,000 drawn vertices to 38,698.
+    /// Curved continuous strokes were then left undecimated, which put Tokyo
+    /// and Osaka at app zoom 8-11 (and a fully resident z6-7) at 50,000-300,000
+    /// vertices and made this budget drop whole lines. They are thinned within
+    /// `ContinuousStroke.strokeSimplifyTolerancePx` again (2026-11-14); the
+    /// replayed sweep over Tokyo and Osaka at zoom 8-11 on a phone and a Mac
+    /// window now peaks at 26,680 and the z6-7 resident case at 16,993, with no
+    /// line dropped. The importance-led zoom ladder admits short important
+    /// lines earlier, which can still increase load.
     /// If a frame exceeds the budget, this is where it shows: branches shed
     /// first, ``fitToBudget`` reports the threshold it stopped at, and the
     /// diagnostics panel shows a threshold below the zoom. The measured lever

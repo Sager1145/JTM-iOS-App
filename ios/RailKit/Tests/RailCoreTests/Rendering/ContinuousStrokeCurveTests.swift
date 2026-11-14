@@ -322,7 +322,11 @@ struct ContinuousStrokeCurveTests {
         let stroke = ContinuousStroke.buildStroke(source, options: .init(
             measures: measures, rows: [], totalMetres: measures.last!, laneGapPx: 0,
             minRampPx: 0, cornerRadiusPx: 3, anchors: []))
-        #expect(stroke.points.contains { $0.x > 10 && $0.x < 10.2 && $0.y >= 0.009 })
+        // The vertex stands 0.01 px off its chord: below `strokeSimplifyTolerancePx`, so the
+        // drawn stroke may thin it (curved strokes are decimated like every other), but it
+        // must still pass within that tolerance of the survey.
+        #expect(ContinuousStroke.distanceToPolyline(source[2], stroke.points)
+                <= ContinuousStroke.strokeSimplifyTolerancePx)
     }
 
 }

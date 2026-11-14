@@ -1176,7 +1176,10 @@ public enum ContinuousStroke {
         var result = finishTaperedStroke(
             tapered: &tapered, options: options, totalMetres: totalMetres, metresPerPx: metresPerPx,
             gap: gap, anchorSet: protectedAnchorSet, curveEnabled: curveEnabled, cornerMeasures: cornerMeasures,
-            surveyedCornerMeasures: surveyedCornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures)
+            surveyedCornerMeasures: surveyedCornerMeasures, anchorMap: anchorMap, anchorMeasures: anchorMeasures,
+            exactMeasureRanges: protection.footprints.compactMap { footprint in
+                footprint.measures.first.flatMap { first in footprint.measures.last.map { (first, $0) } }
+            })
         if !protection.appliedEdges.isEmpty {
             guard preservesLiteralFootprints(points: result.points, measures: result.measures, footprints: protection.footprints) else {
                 var ordinary = options
@@ -1348,7 +1351,7 @@ public enum ContinuousStroke {
         tapered: inout (points: [Point], measures: [Double], map: [Int]), options: Options,
         totalMetres: Double, metresPerPx: Double, gap: Double, anchorSet: Set<Int>,
         curveEnabled: Bool, cornerMeasures: [Double], surveyedCornerMeasures: [Double],
-        anchorMap: [Int], anchorMeasures: [Double]
+        anchorMap: [Int], anchorMeasures: [Double], exactMeasureRanges: [(Double, Double)]
     ) -> Stroke {
         let width = max(laneRampHalfWidthMetres, options.minRampPx * metresPerPx)
         let resolved = inheritedLaneProfile(
@@ -1371,7 +1374,8 @@ public enum ContinuousStroke {
             tapered: tapered, cleaned: offsetStage.cleaned, cleanedMeasures: offsetStage.cleanedMeasures,
             taperedAnchors: offsetStage.taperedAnchors, offset: offsetStage.offset,
             curveEnabled: curveEnabled, cornerMeasures: cornerMeasures, surveyedCornerMeasures: surveyedCornerMeasures,
-            anchorMap: anchorMap, anchorMeasures: anchorMeasures, options: options)
+            anchorMap: anchorMap, anchorMeasures: anchorMeasures, exactMeasureRanges: exactMeasureRanges,
+            options: options)
     }
 
     private static func offsetTaperedStroke(
@@ -1418,7 +1422,7 @@ public enum ContinuousStroke {
         tapered: (points: [Point], measures: [Double], map: [Int]), cleaned: (points: [Point], map: [Int]),
         cleanedMeasures: [Double], taperedAnchors: Set<Int>, offset: [Point],
         curveEnabled: Bool, cornerMeasures: [Double], surveyedCornerMeasures: [Double],
-        anchorMap: [Int], anchorMeasures: [Double], options: Options
+        anchorMap: [Int], anchorMeasures: [Double], exactMeasureRanges: [(Double, Double)], options: Options
     ) -> Stroke {
         var finalAnchors = Set<Int>()
         for index in taperedAnchors where cleaned.map[index] >= 0 {
@@ -1435,14 +1439,26 @@ public enum ContinuousStroke {
         // are carried across; the anchors, the two ends, and nothing else,
         // are forced to survive.
         let anchorMatcher = MeasureMatcher(anchorMeasures)
-        let drawn = curveEnabled
-            ? (points: cleaned.points, measures: cleanedMeasures,
-               // Anchors that survived as exact vertices keep the through-anchor fillet.
-               anchors: Set(cleanedMeasures.indices.filter { index in
-                   anchorMatcher.matches(cleanedMeasures[index])
-               }))
-            : simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
-                                tolerance: strokeSimplifyTolerancePx)
+        // A curved stroke is thinned too (the spline samples of a dense
+        // survey are far finer than a pixel and would otherwise exhaust the
+        // viewport vertex budget). Its anchors are matched by measure, since
+        // the spline pass does not track vertex indices; every vertex the
+        // later passes read by measure stays exact: corners, shape
+        // boundaries and the footprints of applied literal spans.
+        let drawn: (points: [Point], measures: [Double], anchors: Set<Int>)
+        if curveEnabled {
+            let cornerMatcher = MeasureMatcher(cornerMeasures)
+            let curveAnchors = Set(cleanedMeasures.indices.filter { anchorMatcher.matches(cleanedMeasures[$0]) })
+            let exact = Set(cleanedMeasures.indices.filter { index in
+                cornerMatcher.matches(cleanedMeasures[index])
+                    || exactMeasureRanges.contains { $0.0 <= cleanedMeasures[index] && cleanedMeasures[index] <= $0.1 }
+            })
+            drawn = simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: curveAnchors,
+                                      forced: exact, tolerance: strokeSimplifyTolerancePx)
+        } else {
+            drawn = simplifyForFillet(cleaned.points, measures: cleanedMeasures, anchors: finalAnchors,
+                                      tolerance: strokeSimplifyTolerancePx)
+        }
         // Sharp surveyed corners are rounded within the deviation tolerance;
         // shape boundaries and protected source corners stay exact.
         let corners = classifyCornerMeasures(
@@ -3281,8 +3297,12 @@ public enum ContinuousStroke {
     /// it in `buildStroke` must land on the drawn line. Each stretch between
     /// two forced vertices is decimated on its own, so a kept vertex can
     /// never let a span reach across one.
+    ///
+    /// `forced` vertices (corner and shape-boundary measures, literal
+    /// footprints) are kept exactly like anchors but are NOT reported back as
+    /// anchors, so the fillet does not draw an arc through them.
     static func simplifyForFillet(
-        _ points: [Point], measures: [Double], anchors: Set<Int>, tolerance: Double
+        _ points: [Point], measures: [Double], anchors: Set<Int>, forced: Set<Int> = [], tolerance: Double
     ) -> (points: [Point], measures: [Double], anchors: Set<Int>) {
         let count = points.count
         guard tolerance > 0, count >= 3 else { return (points, measures, anchors) }
@@ -3290,6 +3310,7 @@ public enum ContinuousStroke {
         keep[0] = true
         keep[count - 1] = true
         for index in anchors where index > 0 && index + 1 < count { keep[index] = true }
+        for index in forced where index > 0 && index + 1 < count { keep[index] = true }
         let toleranceSquared = tolerance * tolerance
         var spanStart = 0
         for index in 1..<count where keep[index] {

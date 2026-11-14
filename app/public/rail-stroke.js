@@ -1787,7 +1787,10 @@
   // buildStroke must land on the drawn line. Each stretch between two forced
   // vertices is decimated on its own, so a kept vertex can never let a span
   // reach across one.
-  function simplifyForFillet(points, measures, anchorSet, tolerance) {
+  // `forcedSet` vertices (corner and shape-boundary measures, literal
+  // footprints) are kept like anchors but are not reported back as anchors,
+  // so the fillet draws no arc through them.
+  function simplifyForFillet(points, measures, anchorSet, tolerance, forcedSet = new Set()) {
     const count = points.length;
     if (!(tolerance > 0) || count < 3)
       return { points, measures, anchors: anchorSet };
@@ -1795,6 +1798,8 @@
     keep[0] = true;
     keep[count - 1] = true;
     for (const index of anchorSet)
+      if (index > 0 && index + 1 < count) keep[index] = true;
+    for (const index of forcedSet)
       if (index > 0 && index + 1 < count) keep[index] = true;
     const toleranceSq = tolerance * tolerance;
     let spanStart = 0;
@@ -2456,11 +2461,23 @@
     // STROKE_SIMPLIFY_TOLERANCE_PX. Both the anchor set and the measures are
     // carried across; the anchors, the two ends, and nothing else, are forced
     // to survive.
-    const drawn = curveEnabled
-      ? { points: cleaned.points, measures: cleanedMeasures,
-          anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i =>
-            anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
-      : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
+    // A curved stroke is thinned too (the spline samples of a dense survey are
+    // far finer than a pixel and would exhaust the viewport vertex budget).
+    // Its anchors are matched by measure; every vertex the later passes read
+    // by measure stays exact: corners, shape boundaries and the footprints of
+    // applied literal spans.
+    let drawn;
+    if (curveEnabled) {
+      const curveAnchors = new Set(cleanedMeasures.map((_, i) => i).filter(i =>
+        anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9)));
+      const exact = new Set(cleanedMeasures.map((_, i) => i).filter(i =>
+        cornerMeasures.some(c => Math.abs(c - cleanedMeasures[i]) < 1e-9)
+        || protectedFootprints.some(f => f.measures.length
+          && f.measures[0] <= cleanedMeasures[i] && cleanedMeasures[i] <= f.measures.at(-1))));
+      drawn = simplifyForFillet(cleaned.points, cleanedMeasures, curveAnchors, STROKE_SIMPLIFY_TOLERANCE_PX, exact);
+    } else {
+      drawn = simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
+    }
     if (protectedFootprints.length && !preservesLiteralFootprints(drawn, protectedFootprints)) return ordinaryStroke();
     // Sharp surveyed corners are rounded within the deviation tolerance;
     // shape boundaries and protected source corners stay exact.
