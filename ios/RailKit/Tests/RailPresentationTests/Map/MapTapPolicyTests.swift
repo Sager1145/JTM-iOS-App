@@ -40,6 +40,23 @@ struct MapTapPolicyTests {
         for h in hits { #expect(answer(h).answersImmediately) }
     }
 
+    @Test("Over a panel card only station and line answers wait for the double-tap window")
+    func defersOnlyStationAndLineOverPanel() {
+        let deferred: [MapTapAnswer] = [.station, .stationCard, .lineCard("L"), .lineChooser(["L", "M"])]
+        let immediate: [MapTapAnswer] = [
+            .annotation, .pickTrip("a"), .tripChooser(["a", "b"]), .clearWhenSettled, .ignore,
+        ]
+        for answer in deferred { #expect(MapTapPolicy.defersAnswer(answer, cardHost: .panel)) }
+        for answer in immediate { #expect(!MapTapPolicy.defersAnswer(answer, cardHost: .panel)) }
+        // No card, a system sheet, a window cover or a dialog: every answer is at once.
+        let hosts: [WorkspaceSurfaceHost?] = [nil, .systemSheet, .fullWindowCover, .dialog]
+        for host in hosts {
+            for answer in deferred + immediate {
+                #expect(!MapTapPolicy.defersAnswer(answer, cardHost: host))
+            }
+        }
+    }
+
     @Test("The second tap of a double tap is never answered")
     func secondTapIgnored() {
         #expect(MapTapPolicy.receives(tapCount: 1))

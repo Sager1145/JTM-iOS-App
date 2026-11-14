@@ -11,7 +11,7 @@ for by request ID and prints as one compact JSON line.
 
 Commands: loadSamples useStorage reloadAll state selectTrip focusTrip openEditor addTrip editTrip
 saveEditor cancelEditor deleteTrip openStats setHideFilter screenshot wait devtools exportDiagnostics
-clearRouteCaches memoryWarning setLayer camera perf tapMap.
+clearRouteCaches memoryWarning setLayer camera perf tapMap (tapCount=2 for a double tap).
 Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise they are strings.
 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),

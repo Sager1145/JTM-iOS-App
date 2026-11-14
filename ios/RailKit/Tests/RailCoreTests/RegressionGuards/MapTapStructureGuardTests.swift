@@ -88,7 +88,7 @@ struct RegressionGuardMapTap {
     }
 
     @Test func tapMapRunsTheCoordinatorsAnswer() {
-        #expect(Self.host.contains("case .tapMap(let target):"))
+        #expect(Self.host.contains("case .tapMap(let target, let doubleTap):"))
         #expect(Self.host.contains("answerTapForUITest"))
         #expect(Self.coordinator.contains("func answerTapForUITest("))
     }
@@ -117,12 +117,35 @@ struct RegressionGuardMapTap {
         #expect(body.contains("view.isUserInteractionEnabled"))
     }
 
+    /// Over a panel card a double tap near a station or line only zooms: the
+    /// rule is the policy's, the coordinator banks and the double tap cancels.
+    @Test func doubleTapOverPanelCardCancelsBankedStationOrLine() throws {
+        let c = Self.coordinator
+        #expect(c.contains("MapTapPolicy.defersAnswer("))
+        #expect(c.contains("controller?.mapCardHost"))
+        #expect(c.contains("private func answerOrBank("))
+        let from = try #require(c.range(of: "func answerDoubleTap("))
+        #expect(c[from.upperBound...].prefix(200).contains("bankedTap = nil"))
+        let handler = try #require(c.range(of: "@objc func handleMapDoubleTap("))
+        #expect(c[handler.upperBound...].prefix(300).contains("answerDoubleTap("))
+        // The station and line answers go through the bank, not straight to the card.
+        let tap = try #require(c.range(of: "func answerTap("))
+        let end = try #require(c.range(of: "private func answerOrBank(", range: tap.upperBound..<c.endIndex))
+        let body = c[tap.lowerBound..<end.lowerBound]
+        #expect(!body.contains("onSelectStation("))
+        #expect(!body.contains("onSelectLines("))
+        // tapMap runs the same two answers.
+        #expect(c.contains("answerDoubleTap(at: point, on: mapView)"))
+        #expect(Self.workspace.contains("controller.mapCardHost = host"))
+        #expect(Self.host.contains("doubleTap"))
+    }
+
     /// A tap-then-drag zoom must not deliver a clear banked by its first tap.
     @Test func manipulationBeginDropsABankedClear() throws {
         let c = Self.coordinator
         let from = try #require(c.range(of: "@objc func handleManipulation("))
         let began = try #require(c.range(of: "case .began:", range: from.upperBound..<c.endIndex))
-        #expect(c[began.upperBound...].prefix(300).contains("bankedClear = false"))
+        #expect(c[began.upperBound...].prefix(300).contains("bankedTap = nil"))
     }
 
     /// Every network polyline MapKit draws answers a tap, fallbacks and

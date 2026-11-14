@@ -23,6 +23,11 @@ class TapMap(unittest.TestCase):
     def test_tap_map_is_documented(self):
         self.assertIn("tapMap", load().__doc__)
 
+    def test_tap_count_two_is_documented_and_parses(self):
+        m = load()
+        self.assertIn("tapCount=2", m.__doc__)
+        self.assertEqual(m.parse_value("2"), 2)
+
     def test_both_argument_forms_parse_as_numbers(self):
         m = load()
         self.assertEqual([m.parse_value(v) for v in ("35.68", "139.76")], [35.68, 139.76])

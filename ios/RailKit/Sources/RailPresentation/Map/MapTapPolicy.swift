@@ -77,6 +77,21 @@ public enum MapTapPolicy {
     /// View points within which a network line counts.
     public static let networkLineReach: Double = 12
 
+    /// Whether an answer waits for the double-tap window instead of acting on the
+    /// first tap. Decision: while a panel-hosted card (trip card etc.) is open, a
+    /// double tap near a station dot or a network line only zooms, so a station
+    /// or line answer is banked and the second tap cancels it. Trip answers
+    /// (a double tap on a trip selects it and zooms), annotation views, and
+    /// every host other than the panel (no card, system sheet) answer at once.
+    /// A network station bead is a station answer: pass ``MapTapAnswer/station``.
+    public static func defersAnswer(_ answer: MapTapAnswer, cardHost: WorkspaceSurfaceHost?) -> Bool {
+        guard cardHost == .panel else { return false }
+        switch answer {
+        case .station, .stationCard, .lineCard, .lineChooser: return true
+        case .annotation, .pickTrip, .tripChooser, .clearWhenSettled, .ignore: return false
+        }
+    }
+
     /// The second tap of a double tap is never answered as a tap.
     public static func receives(tapCount: Int) -> Bool { tapCount == 1 }
 

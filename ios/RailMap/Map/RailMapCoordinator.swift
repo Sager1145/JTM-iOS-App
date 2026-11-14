@@ -122,8 +122,15 @@ extension RailMapView.Surface {
             /// The family-fallback and withheld-run polylines the same rebuild
             /// handed to MapKit, by canonical line id: drawn, so tappable.
             private var drawnExtraPolylines: [String: [MKPolyline]] = [:]
-            /// An empty-map clear `answerTap` banked for `handleSettledTap`.
-            private var bankedClear = false
+            /// An answer `answerTap` banked for `handleSettledTap`: the empty-map
+            /// clear, or (over a panel card) a station or line card that a double
+            /// tap cancels (`MapTapPolicy.defersAnswer`).
+            private enum BankedTap {
+                case clear
+                case station(StationCard)
+                case lines([RailNetworkStore.DrawnLine])
+            }
+            private var bankedTap: BankedTap?
             /// The non-station annotation the last `answerTap` left to MapKit.
             private var annotationUnderTap: (any MKAnnotation)?
             var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
@@ -5805,7 +5812,7 @@ extension RailMapView.Surface {
             func answerTap(
                 at point: CGPoint, on mapView: MKMapView, tapCount: Int = 1
             ) -> (answer: MapTapAnswer, hits: MapTapHits) {
-                bankedClear = false
+                bankedTap = nil
                 annotationUnderTap = nil
                 // Playback owns the map; picking a note's place only pans.
                 guard !(playback?.isActive == true && playbackLayer.lastSnapshot != nil),
@@ -5822,8 +5829,7 @@ extension RailMapView.Surface {
                     // which this touch has not claimed.
                     if let annotation = measured.annotation as? StationAnnotation,
                        let card = stationCard(for: annotation) {
-                        interaction.claimTouch()
-                        onSelectStation(card)
+                        answerOrBank(.station, .station(card))
                     } else {
                         annotationUnderTap = measured.annotation
                     }
@@ -5831,13 +5837,11 @@ extension RailMapView.Surface {
                     break
                 case .stationCard:
                     if let dot = measured.dot, let card = stationCard(for: dot) {
-                        interaction.claimTouch()
-                        onSelectStation(card)
+                        answerOrBank(answer, .station(card))
                     }
                 case .station:
                     if let annotation = measured.stationAnnotation, let card = stationCard(for: annotation) {
-                        interaction.claimTouch()
-                        onSelectStation(card)
+                        answerOrBank(answer, .station(card))
                     }
                 case .pickTrip(let id):
                     interaction.claimTouch()
@@ -5846,19 +5850,39 @@ extension RailMapView.Surface {
                     interaction.claimTouch()
                     onSelectRide(ids)
                 case .lineCard, .lineChooser:
-                    interaction.claimTouch()
-                    onSelectLines(measured.lines)
+                    answerOrBank(answer, .lines(measured.lines))
                 case .clearWhenSettled:
-                    bankedClear = true
+                    bankedTap = .clear
                 }
                 return (answer, measured.hits)
             }
 
-            /// Delivers the clear `answerTap` banked, once `doubleTap` has failed.
+            /// Answers a station or line hit at once, or banks it for
+            /// `handleSettledTap` when `MapTapPolicy.defersAnswer` says a double
+            /// tap over the open panel card must only zoom. The touch is claimed
+            /// either way: this tap has been answered, so MapKit must not too.
+            private func answerOrBank(_ answer: MapTapAnswer, _ tap: BankedTap) {
+                interaction.claimTouch()
+                if MapTapPolicy.defersAnswer(answer, cardHost: controller?.mapCardHost) {
+                    bankedTap = tap
+                } else {
+                    deliver(tap)
+                }
+            }
+
+            private func deliver(_ tap: BankedTap) {
+                switch tap {
+                case .clear: onSelectRide([])
+                case .station(let card): onSelectStation(card)
+                case .lines(let lines): onSelectLines(lines)
+                }
+            }
+
+            /// Delivers the answer `answerTap` banked, once `doubleTap` has failed.
             @objc func handleSettledTap(_ recognizer: UITapGestureRecognizer) {
-                guard recognizer.state == .ended, bankedClear else { return }
-                bankedClear = false
-                onSelectRide([])
+                guard recognizer.state == .ended, let tap = bankedTap else { return }
+                bankedTap = nil
+                deliver(tap)
             }
 
             private func measureTap(at point: CGPoint, on mapView: MKMapView, tapCount: Int) -> TapMeasurement {
@@ -5974,11 +5998,18 @@ extension RailMapView.Surface {
             /// selects it (`MapTapPolicy.doubleTapAnswer`); the selection comes
             /// first so that stopping the auto-fit afterwards holds.
             @objc func handleMapDoubleTap(_ recognizer: UITapGestureRecognizer) {
-                guard recognizer.state == .ended else { return }
-                if let mapView, layers.routes, controller?.tripNotePickTrainID == nil,
+                guard recognizer.state == .ended, let mapView else { return }
+                answerDoubleTap(at: recognizer.location(in: mapView), on: mapView)
+            }
+
+            /// The double tap's answer, shared with the `tapMap` command. It
+            /// first cancels the station or line answer the first tap banked, so
+            /// a double tap over a panel card only zooms.
+            func answerDoubleTap(at point: CGPoint, on mapView: MKMapView) {
+                bankedTap = nil
+                if layers.routes, controller?.tripNotePickTrainID == nil,
                    !(playback?.isActive == true && playbackLayer.lastSnapshot != nil) {
-                    let measured = measureTap(
-                        at: recognizer.location(in: mapView), on: mapView, tapCount: 2)
+                    let measured = measureTap(at: point, on: mapView, tapCount: 2)
                     if case .selectTripAndZoom(let id) = MapTapPolicy.doubleTapAnswer(measured.hits),
                        id != selectedTrainID {
                         interaction.claimTouch()
@@ -5991,16 +6022,21 @@ extension RailMapView.Surface {
 #if DEBUG
             /// The `tapMap` command: the same answer a tap gives, with a banked
             /// clear delivered at once. It does not exercise the recognisers.
-            func answerTapForUITest(at point: CGPoint, on mapView: MKMapView) -> MapTapTestReport {
+            func answerTapForUITest(
+                at point: CGPoint, on mapView: MKMapView, doubleTap: Bool = false
+            ) -> MapTapTestReport {
                 interaction.beginTouch()
                 let outcome = answerTap(at: point, on: mapView)
                 // No real touch reaches MapKit here: select what it would have.
                 if outcome.answer == .annotation, let annotation = annotationUnderTap {
                     self.mapView(mapView, didSelect: annotation)
                 }
-                if bankedClear {
-                    bankedClear = false
-                    onSelectRide([])
+                if doubleTap {
+                    // The second tap inside the window: cancels what the first banked.
+                    answerDoubleTap(at: point, on: mapView)
+                } else if let tap = bankedTap {
+                    bankedTap = nil
+                    deliver(tap)
                 }
                 return MapTapTestReport(answer: outcome.answer, hits: outcome.hits)
             }
@@ -6049,7 +6085,7 @@ extension RailMapView.Surface {
                 switch recognizer.state {
                 case .began:
                     // A tap-then-drag zoom is not a tap: drop a banked clear.
-                    bankedClear = false
+                    bankedTap = nil
 #if DEBUG
                     diagnostics.gestureBegan()
 #endif
@@ -6151,7 +6187,7 @@ extension RailMapView.Surface {
                     // A new touch has been given no answer yet, whichever of
                     // the two answers it ends up getting (`mapView(_:didSelect:)`).
                     interaction.beginTouch()
-                    bankedClear = false
+                    bankedTap = nil
                 }
                 return true
             }

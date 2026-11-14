@@ -279,7 +279,8 @@ public enum AppControlCommand: Equatable, Sendable {
     /// under the finger (trip, station and line ids); `selectedTrip` is the selected
     /// trip id or null after the tap; `sheet` names the sheet or card now showing,
     /// or null.
-    case tapMap(AppControlMapPoint)
+    /// `doubleTap` runs the first tap and then the double tap, as two taps in the window.
+    case tapMap(AppControlMapPoint, doubleTap: Bool = false)
 
     /// Every command name the parser accepts, for the CLI's help and tests.
     public static let names = [
@@ -518,13 +519,18 @@ public enum AppControlCommand: Equatable, Sendable {
             if hasCoordinate && hasView {
                 throw AppControlError.invalidArgument("x", "give lat+lon or x+y, not both")
             }
+            let taps = try int("tapCount", default: 1)
+            guard taps == 1 || taps == 2 else { throw AppControlError.invalidArgument("tapCount", "expected 1 or 2") }
+            let doubleTap = taps == 2
             if hasView {
                 return .tapMap(.view(
                     x: try double("x", in: AppControlMapPoint.viewRange),
-                    y: try double("y", in: AppControlMapPoint.viewRange)))
+                    y: try double("y", in: AppControlMapPoint.viewRange)), doubleTap: doubleTap)
             }
             guard hasCoordinate else { throw AppControlError.missingArgument("lat") }
-            return .tapMap(.coordinate(lat: try double("lat", in: -90...90), lon: try double("lon", in: -180...180)))
+            return .tapMap(
+                .coordinate(lat: try double("lat", in: -90...90), lon: try double("lon", in: -180...180)),
+                doubleTap: doubleTap)
         case "perf":
             let action = try string("action")
             guard Self.perfActions.contains(action) else { throw AppControlError.invalidArgument("action", action) }

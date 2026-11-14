@@ -323,8 +323,8 @@ final class AppControlHost: AppControlDriver {
             default: throw AppControlError.invalidArgument("name", name)
             }
             return ["layer": .string(name), "on": .bool(on), "layers": Self.layers(controller)]
-        case .tapMap(let target):
-            return try await tapMap(target, stores)
+        case .tapMap(let target, let doubleTap):
+            return try await tapMap(target, doubleTap: doubleTap, stores)
         case .camera(let action):
             return try await AppControlCameraRun(
                 controller: stores.controller, renderStats: { [weak self] in self?.workspace?.renderStats() }
@@ -804,10 +804,12 @@ final class AppControlHost: AppControlDriver {
     }
 
     /// The `tapMap` command: the map's own tap answer at a point, with an
-    /// empty-map clear delivered at once. A coordinate is a MapKit coordinate,
+    /// empty-map clear (or banked station or line card) delivered at once; with
+    /// `tapCount=2` the second tap follows inside the window and cancels what
+    /// the first banked, through the same `answerTap` / `answerDoubleTap`. A coordinate is a MapKit coordinate,
     /// as `camera` takes it. The recognisers are not exercised. Only reachable
     /// on an isolated store (`allowedOnSharedStore` is false).
-    private func tapMap(_ target: AppControlMapPoint, _ stores: Stores) async throws -> AppControlJSON {
+    private func tapMap(_ target: AppControlMapPoint, doubleTap: Bool, _ stores: Stores) async throws -> AppControlJSON {
         guard let mapView = stores.controller.mapView, let answer = stores.controller.answerTapForUITest else {
             throw AppControlError.unavailable("map not mounted")
         }
@@ -821,7 +823,7 @@ final class AppControlHost: AppControlDriver {
         guard mapView.bounds.contains(point) else {
             throw AppControlError.invalidArgument("point", "outside the map view (\(Int(point.x)), \(Int(point.y)))")
         }
-        guard let report = answer(point) else { throw AppControlError.unavailable("map not mounted") }
+        guard let report = answer(point, doubleTap) else { throw AppControlError.unavailable("map not mounted") }
         // A selection or sheet set by the answer lands on the next run-loop turns.
         try await Task.sleep(for: .milliseconds(150))
         func strings(_ values: [String]) -> AppControlJSON { .array(values.map { .string($0) }) }
@@ -845,6 +847,7 @@ final class AppControlHost: AppControlDriver {
         }
         return [
             "point": ["x": .number(Double(point.x)), "y": .number(Double(point.y))],
+            "doubleTap": .bool(doubleTap),
             "answer": .string(answerName), "hits": hits,
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),

@@ -419,9 +419,9 @@ struct RailMapView: View {
             }
             controller.mapView = mapView
 #if DEBUG
-            controller.answerTapForUITest = { [weak coordinator = context.coordinator, weak mapView] point in
+            controller.answerTapForUITest = { [weak coordinator = context.coordinator, weak mapView] point, doubleTap in
                 guard let coordinator, let mapView else { return nil }
-                return coordinator.answerTapForUITest(at: point, on: mapView)
+                return coordinator.answerTapForUITest(at: point, on: mapView, doubleTap: doubleTap)
             }
 #endif
             let tap = UITapGestureRecognizer(
@@ -450,10 +450,13 @@ struct RailMapView: View {
             // (`MapTapPolicy.doubleTapAnswer`); the second tap of any double
             // tap is never answered as a tap (`MapTapPolicy.receives`).
             //
-            // The one answer that still waits for the double-tap window is the
-            // empty-map clear: zooming in on empty water must not clear the
-            // trip the reader just chose. `tap` only BANKS that clear;
-            // `settledTap` delivers it once `doubleTap` has failed.
+            // The answers that still wait for the double-tap window are the
+            // empty-map clear (zooming in on empty water must not clear the
+            // trip the reader just chose) and, while a panel-hosted card is
+            // open, a station or line card (a double tap there only zooms;
+            // `MapTapPolicy.defersAnswer`). `tap` only BANKS those;
+            // `settledTap` delivers them once `doubleTap` has failed, and
+            // `doubleTap` cancels them.
             //
             // `doubleTap` consumes nothing (`cancelsTouchesInView` and the two
             // touch delays are all off, and the coordinator answers `true` to

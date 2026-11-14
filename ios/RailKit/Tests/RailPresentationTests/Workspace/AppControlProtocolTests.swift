@@ -210,6 +210,20 @@ struct AppControlProtocolTests {
         #expect(!AppControlCommand.tapMap(.view(x: 1, y: 1)).allowedOnSharedStore)
     }
 
+    @Test("tapMap takes tapCount 1 or 2, two meaning a double tap")
+    func tapMapTapCount() throws {
+        #expect(try parse("tapMap", ["x": 1, "y": 2, "tapCount": 2]) == .tapMap(.view(x: 1, y: 2), doubleTap: true))
+        #expect(try parse("tapMap", ["x": 1, "y": 2, "tapCount": 1]) == .tapMap(.view(x: 1, y: 2), doubleTap: false))
+        #expect(try parse("tapMap", ["lat": 35, "lon": 139, "tapCount": 2])
+            == .tapMap(.coordinate(lat: 35, lon: 139), doubleTap: true))
+        #expect(throws: AppControlError.invalidArgument("tapCount", "expected 1 or 2")) {
+            try parse("tapMap", ["x": 1, "y": 2, "tapCount": 3])
+        }
+        #expect(throws: AppControlError.invalidArgument("tapCount", "expected 1 or 2")) {
+            try parse("tapMap", ["x": 1, "y": 2, "tapCount": 0])
+        }
+    }
+
     @Test("tapMap rejects mixed, missing, partial, non-finite and out-of-range points")
     func tapMapRejections() throws {
         #expect(throws: AppControlError.missingArgument("lat")) { try parse("tapMap") }

@@ -624,8 +624,14 @@ final class RailMapController {
     /// Runs the map's own tap answer at a view point, and delivers an empty-map
     /// clear at once instead of after the double-tap window. Set by the map
     /// view; it exercises `answerTap`, not the gesture recognisers.
-    @ObservationIgnored var answerTapForUITest: ((CGPoint) -> MapTapTestReport?)?
+    /// `doubleTap` runs the second tap inside the window too.
+    @ObservationIgnored var answerTapForUITest: ((CGPoint, Bool) -> MapTapTestReport?)?
 #endif
+
+    /// Where the open workspace card is hosted, nil with none. Set by the
+    /// workspace; the map reads it to decide whether a station or line tap
+    /// waits for the double-tap window (`MapTapPolicy.defersAnswer`).
+    @ObservationIgnored var mapCardHost: WorkspaceSurfaceHost?
 
     /// Told by the map when a finger starts moving it.
     func readerBeganManipulating() {

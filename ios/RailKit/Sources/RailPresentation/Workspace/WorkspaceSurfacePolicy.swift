@@ -149,9 +149,11 @@ public enum WorkspaceSurfacePolicy {
     /// station and line taps. A panel card with a nested surface up (details,
     /// a note draft, a group save) blocks every tap, as Esc stands down there,
     /// and an open editor also keeps an empty tap from closing the card.
-    /// Decision: a station or line tap swaps the panel's card on the first tap
-    /// of a double tap (the back step returns to the trip); only the empty
-    /// clear is banked for the double-tap delay.
+    /// Decision (final): over a panel card a DOUBLE tap near a station or line
+    /// only zooms. The single tap still swaps the card (the back step returns
+    /// to the trip), but after the double-tap window, banked like the empty
+    /// clear (`MapTapPolicy/defersAnswer(_:cardHost:)`). Trip taps stay
+    /// immediate. Sheet hosts and no card answer at once.
     public static func mapTapAnswer(
         _ tap: MapTapKind, cardHost: WorkspaceSurfaceHost?, leaseHeld: Bool,
         linePreviewShown: Bool, editorOpen: Bool, nestedSurfaceUp: Bool = false

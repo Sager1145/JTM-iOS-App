@@ -318,6 +318,11 @@ struct RailWorkspaceView: View {
                       presentationLayoutMode == nil else { return }
                 presentationLayoutMode = layout.mode
             }
+            // The map defers a station or line tap over a panel card to the
+            // double-tap window (`MapTapPolicy.defersAnswer`).
+            .onChange(of: sheet.map(surfaceHost(of:)), initial: true) { _, host in
+                controller.mapCardHost = host
+            }
             .onChange(of: sheet?.hidesWorkspaceMenu == true) { _, hidesMenu in
                 if hidesMenu {
                     searchFocused = false
