@@ -25,7 +25,8 @@ struct MapTapPolicyTests {
             MapTapHits(networkLineIDsInReach: ["L"]), MapTapHits(tapCount: 2),
         ]
         for hits in nonEmpty { #expect(answer(hits) != .clearWhenSettled) }
-        for count in [1] { #expect(answer(MapTapHits(tapCount: count)) == .clearWhenSettled) }
+        #expect(answer(MapTapHits(tapCount: 1)) == .clearWhenSettled)
+        for count in [0, 2, 3] { #expect(answer(MapTapHits(tapCount: count)) != .clearWhenSettled) }
     }
 
     @Test("Every hit answers at once")
@@ -44,6 +45,10 @@ struct MapTapPolicyTests {
         #expect(MapTapPolicy.receives(tapCount: 1))
         #expect(!MapTapPolicy.receives(tapCount: 2))
         #expect(!MapTapPolicy.receives(tapCount: 3))
+        #expect(!MapTapPolicy.receives(tapCount: 0))
+        #expect(!MapTapPolicy.receives(tapCount: -1))
+        #expect(answer(MapTapHits(tapCount: 0)) == .ignore)
+        #expect(answer(MapTapHits(tapCount: -1)) == .ignore)
         let everything = MapTapHits(
             annotationViewUnderFinger: true, selectedTripStationDot: true, tripIDsInReach: ["a"],
             stationAnnotationInReach: true, networkLineIDsInReach: ["L"], tapCount: 2)
@@ -85,11 +90,26 @@ struct MapTapPolicyTests {
         #expect(answer(MapTapHits(networkLineIDsInReach: ["L", "M", "L"])) == .lineChooser(["L", "M"]))
     }
 
-    @Test("Decision 3: a dot of an unselected trip selects that trip, only the selected trip's dots open the card")
+    @Test("Decision 3: an unselected trip's mounted dot selects that trip, never .annotation")
     func dotsOfUnselectedTrip() {
-        // The map layer reports an unselected trip's dot as that trip in reach, not as a selected dot.
-        #expect(answer(MapTapHits(tripIDsInReach: ["other"])) == .pickTrip("other"))
-        #expect(answer(MapTapHits(selectedTripStationDot: true, tripIDsInReach: ["sel"])) == .stationCard)
+        // Trip A selected, finger on a dot of trip B: the host reports B in reach and no annotation view.
+        #expect(answer(MapTapHits(tripIDsInReach: ["B"])) == .pickTrip("B"))
+        // Only the selected trip's dot opens the station card.
+        #expect(answer(MapTapHits(selectedTripStationDot: true, tripIDsInReach: ["A"])) == .stationCard)
+    }
+
+    @Test("Duplicate trips are dropped keeping first-seen order")
+    func tripsOrderedDedupe() {
+        #expect(answer(MapTapHits(tripIDsInReach: ["b", "a", "b"])) == .tripChooser(["b", "a"]))
+    }
+
+    @Test("Double tap: one trip selects and zooms, none or several only zoom")
+    func doubleTap() {
+        #expect(MapTapPolicy.doubleTapAnswer(MapTapHits(tripIDsInReach: ["a"], tapCount: 2)) == .selectTripAndZoom("a"))
+        #expect(MapTapPolicy.doubleTapAnswer(MapTapHits(tripIDsInReach: ["a", "a"], tapCount: 2)) == .selectTripAndZoom("a"))
+        #expect(MapTapPolicy.doubleTapAnswer(MapTapHits(tripIDsInReach: ["a", "b"], tapCount: 2)) == .zoom)
+        #expect(MapTapPolicy.doubleTapAnswer(MapTapHits(networkLineIDsInReach: ["L"], tapCount: 2)) == .zoom)
+        #expect(MapTapPolicy.doubleTapAnswer(MapTapHits(tapCount: 2)) == .zoom)
     }
 
     @Test("Decision 4: several trips show the chooser whether or not a trip card is open")
