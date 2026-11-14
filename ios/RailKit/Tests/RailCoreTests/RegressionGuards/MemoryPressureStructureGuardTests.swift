@@ -37,6 +37,19 @@ struct RegressionGuardMemoryPressure {
     @Test func trimIsOneEvictionPassWithABudgetOfZero() {
         let n = Self.read("RailMap/Infrastructure/Network/RailNetworkStore.swift")
         #expect(n.contains("func trimForMemoryPressure()"))
-        #expect(n.contains("evictIfNeeded(index: index, budget: 0)"))
+        #expect(n.contains("evictIfNeeded(index: index, budget: 0, visibleRect: visibleRectProvider?())"))
+    }
+
+    @Test func trimSuspendsThePrefetchRingAndProtectsTheVisibleRect() throws {
+        let n = Self.read("RailMap/Infrastructure/Network/RailNetworkStore.swift")
+        let trim = try #require(n.range(of: "func trimForMemoryPressure()"))
+        let body = String(n[trim.upperBound...].prefix(900))
+        #expect(body.contains("prefetchGate.suspend("))
+        #expect(body.contains("visibleRect: visibleRectProvider?()"))
+        #expect(n.contains("prefetchGate.noteRequest("))
+        #expect(n.contains("guard !prefetchGate.isPrefetchSuspended else { return }"))
+        #expect(n.contains("MemoryTrimProtection.protectedRects("))
+        let w = Self.read("RailMap/Workspace/RailWorkspaceView.swift")
+        #expect(w.contains("store.visibleRectProvider ="))
     }
 }

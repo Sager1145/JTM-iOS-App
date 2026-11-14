@@ -22,7 +22,8 @@ public enum GeometryFrameBytes {
 /// storage, so a frame count bounds the real heap too). One more frame, the
 /// overview, is pinned beside them: the coarse frame a zoom-out lands on, so
 /// the zoom-out does not wait to prepare it again. It is outside the count and
-/// the byte cap. A memory warning drops everything that is not current,
+/// the byte cap, unless its own size passes `overviewPinByteCap`: then it is
+/// not pinned and lives under normal residency like any other frame. A memory warning drops everything that is not current,
 /// the overview included.
 public struct GeometryFrameResidency: Equatable, Sendable {
     /// Least recently used first; the current frame is the last it was made.
@@ -34,14 +35,25 @@ public struct GeometryFrameResidency: Equatable, Sendable {
     public private(set) var frameBytes: [String: Int] = [:]
     public let byteCap: Int
     public let maxUnpinnedFrames: Int
+    /// Largest overview frame that is still pinned outside the caps.
+    public let overviewPinByteCap: Int
+    public static let defaultOverviewPinByteCap = 30 * 1024 * 1024
 
-    public init(byteCap: Int, maxUnpinnedFrames: Int = .max) {
+    public init(
+        byteCap: Int, maxUnpinnedFrames: Int = .max,
+        overviewPinByteCap: Int = GeometryFrameResidency.defaultOverviewPinByteCap
+    ) {
         self.byteCap = max(byteCap, 0)
         self.maxUnpinnedFrames = max(maxUnpinnedFrames, 0)
+        self.overviewPinByteCap = max(overviewPinByteCap, 0)
     }
 
     private func isPinned(_ key: String) -> Bool {
-        key == current || key == neighbour || key == overview
+        key == current || key == neighbour || isPinnedOverview(key)
+    }
+
+    private func isPinnedOverview(_ key: String) -> Bool {
+        key == overview && (frameBytes[key] ?? 0) <= overviewPinByteCap
     }
 
     /// Frames that are neither current, the pinned neighbour nor the overview.

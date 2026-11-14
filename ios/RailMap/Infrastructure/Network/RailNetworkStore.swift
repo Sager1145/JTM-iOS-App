@@ -465,6 +465,7 @@ final class RailNetworkStore {
         displayHistoryOverlayLines = [:]
         displayHistoryOverlayStations = [:]
         lastDisplayRequest = nil
+        prefetchGate.reset()
         lastRequestedDisplayLine = [:]
         requestSerial = 0
         noteResidencyChange()
@@ -630,6 +631,7 @@ final class RailNetworkStore {
     /// ``evictIfNeeded(index:budget:)``.
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
+        prefetchGate.noteRequest(Self.cameraRequest(rect, cameraZoom))
         guard displayManifest != nil else { return }
         // The same rect and zoom with nothing resident, loading or failed
         // changed since: the answer would be the same, and `requestSerial`
@@ -839,6 +841,13 @@ final class RailNetworkStore {
     @ObservationIgnored private var manifestFailure: String?
     @ObservationIgnored private var displayLoadTask: Task<Void, Never>?
     @ObservationIgnored private var lastDisplayRequest: (rect: MKMapRect, cameraZoom: Double)?
+    /// The rect on screen right now, set by the map's owner. A memory-warning
+    /// trim protects it beside the last built rect, since the camera may have
+    /// moved since that build.
+    @ObservationIgnored var visibleRectProvider: (() -> MKMapRect?)?
+    /// Holds the idle prefetch ring back after a memory warning until the
+    /// camera asks for a different rect or zoom.
+    @ObservationIgnored private var prefetchGate = MemoryPressurePrefetchGate()
     /// Which wave a batch belongs to — an urgent one covers the visible
     /// rect, a padded one the rest of the build rect, a prefetch one the
     /// idle ring one build-rect-half further out. Only the wave decides the
@@ -958,19 +967,7 @@ final class RailNetworkStore {
         if displayLoadTask != nil {
             let cameraLeft = currentBatchRect.map { !$0.intersects(rect) } ?? false
             if currentBatchWave == .prefetch || cameraLeft {
-                noteResidencyChange()
-                displayLoadTask?.cancel()
-                loadingDisplayLines.subtract(currentBatchIDs)
-                if currentBatchWave != .prefetch {
-                    for id in currentBatchIDs {
-                        let remaining = (displayAttempts[id] ?? 1) - 1
-                        displayAttempts[id] = remaining > 0 ? remaining : nil
-                    }
-                }
-                displayLoadTask = nil
-                currentBatchWave = nil
-                currentBatchIDs = []
-                currentBatchRect = nil
+                cancelCurrentBatch()
             } else {
                 return
             }
@@ -1016,6 +1013,9 @@ final class RailNetworkStore {
             wave = .padded
             batch = missing(needed)
         } else {
+            // After a memory warning the ring would reload the lines the trim
+            // just evicted for this same camera.
+            guard !prefetchGate.isPrefetchSuspended else { return }
             let prefetchRect = rect.insetBy(
                 dx: -rect.size.width * 0.5, dy: -rect.size.height * 0.5)
             let prefetchNeeded = withoutFailedHistory(RailDisplayNetwork.lines(
@@ -1215,9 +1215,40 @@ final class RailNetworkStore {
     /// shrinks what is derived from the lines.
     func trimForMemoryPressure() {
         guard let index = displayIndex else { return }
+        // An idle prefetch batch in flight would land after the trim and
+        // refill it; the gate then keeps the ring from starting another.
+        if currentBatchWave == .prefetch { cancelCurrentBatch() }
+        prefetchGate.suspend(after: lastDisplayRequest.map { Self.cameraRequest($0.rect, $0.cameraZoom) })
         let before = loadedDisplayLines.count
-        evictIfNeeded(index: index, budget: 0)
+        evictIfNeeded(index: index, budget: 0, visibleRect: visibleRectProvider?())
         if loadedDisplayLines.count != before { publishDisplayNetwork() }
+    }
+
+    private static func displayRect(_ rect: MKMapRect) -> DisplayRectValue {
+        DisplayRectValue(
+            x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
+    }
+
+    private static func cameraRequest(_ rect: MKMapRect, _ cameraZoom: Double) -> DisplayCameraRequest {
+        DisplayCameraRequest(rect: displayRect(rect), cameraZoom: cameraZoom)
+    }
+
+    /// Stops the batch in flight. An urgent or padded one was not a failure,
+    /// so its attempts are refunded.
+    private func cancelCurrentBatch() {
+        noteResidencyChange()
+        displayLoadTask?.cancel()
+        loadingDisplayLines.subtract(currentBatchIDs)
+        if currentBatchWave != .prefetch {
+            for id in currentBatchIDs {
+                let remaining = (displayAttempts[id] ?? 1) - 1
+                displayAttempts[id] = remaining > 0 ? remaining : nil
+            }
+        }
+        displayLoadTask = nil
+        currentBatchWave = nil
+        currentBatchIDs = []
+        currentBatchRect = nil
     }
 
     /// Ids of the lines whose geometry is resident right now.
@@ -1295,12 +1326,24 @@ final class RailNetworkStore {
     /// evicts a line that a surviving line still depends on — evicting X
     /// only to have Y (kept resident) draw without its alignment would be a
     /// worse failure than staying over budget.
-    private func evictIfNeeded(index: RailDisplayNetworkIndex, budget: Int) {
+    ///
+    /// `visibleRect`, when given, is protected beside the last built rect (at
+    /// that request's zoom): a trim runs while the camera may have moved on.
+    private func evictIfNeeded(
+        index: RailDisplayNetworkIndex, budget: Int, visibleRect: MKMapRect? = nil
+    ) {
         let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
         guard residentBytes > budget else { return }
-        let protectedEntries = lastDisplayRequest.map {
-            RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
-        } ?? []
+        let zoom = lastDisplayRequest?.cameraZoom ?? heldRequestZoom
+        let rects = MemoryTrimProtection.protectedRects(
+            lastBuilt: lastDisplayRequest.map { Self.displayRect($0.rect) },
+            visible: visibleRect.map(Self.displayRect))
+        let protectedEntries = rects.flatMap { value in
+            RailDisplayNetwork.lines(
+                intersecting: MKMapRect(
+                    x: value.x, y: value.y, width: value.width, height: value.height),
+                cameraZoom: zoom, in: index)
+        }
         let protected = Set(protectedEntries.map(\.id)).union(heldEntryCache.map(\.id))
         let candidates = loadedDisplayLines.keys.filter { !protected.contains($0) }
             .sorted { a, b in

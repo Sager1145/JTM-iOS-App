@@ -173,4 +173,32 @@ struct GeometryFrameResidencyTests {
     @Test func theOverviewLevelIsTheMeasuredOne() {
         #expect(GeometryZoomLevels.overviewLevel == 11)
     }
+
+    @Test func anOverviewOverTheByteCapIsNotPinned() {
+        var residency = GeometryFrameResidency(
+            byteCap: 100, maxUnpinnedFrames: 5, overviewPinByteCap: 1_000)
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.setBytes(1_000, for: "o")
+        _ = residency.begin("a")
+        // At the cap it is still pinned, outside the unpinned byte count.
+        #expect(residency.order.contains("o"))
+        #expect(residency.unpinnedBytes == 0)
+        // One byte over: normal residency, so it counts and the cap evicts it.
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.begin("a")
+        let evicted = residency.setBytes(1_001, for: "o")
+        #expect(evicted == ["o"])
+        #expect(!residency.order.contains("o"))
+    }
+
+    @Test func theDefaultOverviewPinCapIsThirtyMegabytes() {
+        #expect(GeometryFrameResidency.defaultOverviewPinByteCap == 30 * 1024 * 1024)
+        var residency = GeometryFrameResidency(byteCap: 10)
+        _ = residency.begin("o", isOverview: true)
+        _ = residency.setBytes(30 * 1024 * 1024, for: "o")
+        _ = residency.begin("a")
+        #expect(residency.order.contains("o"))
+        _ = residency.setBytes(30 * 1024 * 1024 + 1, for: "o")
+        #expect(!residency.order.contains("o"))
+    }
 }

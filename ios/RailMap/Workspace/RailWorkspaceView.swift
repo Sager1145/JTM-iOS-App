@@ -3481,6 +3481,9 @@ struct RailWorkspaceView: View {
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(localization.text("ios.map", fallback: "Map")))
         .accessibilityIdentifier("railwayMap")
+        // A memory-warning trim protects what is on screen, not only the last
+        // built rect.
+        .onAppear { store.visibleRectProvider = { [weak controller] in controller?.mapView?.visibleMapRect } }
         .accessibilityValue(Text(mapRouteLoadStatus))
         .ignoresSafeArea()
         // The trip cap, said once and quietly: tap to narrow the scope.
