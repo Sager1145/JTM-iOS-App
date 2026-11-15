@@ -218,7 +218,11 @@ extension RailMapView.Surface {
             /// Set when a rebuild during a gesture skipped the full marker
             /// pass; paid by the first full pass, normally at settle.
             private var markerPassDebt = MarkerPassDebt() {
-                didSet { MapRenderProbe.markerPassOwed = markerPassDebt.isOwed }
+                didSet {
+                    #if DEBUG
+                    MapRenderProbe.markerPassOwed = markerPassDebt.isOwed
+                    #endif
+                }
             }
             /// The next-turn hand-off that pays the camera settle's marker debt.
             private var markerSettleTurn = MarkerSettleTurn()
@@ -1106,6 +1110,11 @@ extension RailMapView.Surface {
                 memoryWarningObserver = nil
                 cameraRebuildTimer.cancel()
                 markerSettleTurn.cancel()
+                #if DEBUG
+                // A new coordinator's initial debt does not fire didSet, so a
+                // debt owed at teardown must not leave the probe stuck true.
+                MapRenderProbe.markerPassOwed = false
+                #endif
                 travelStopTimer.cancel()
                 stationLabels.tearDown()
                 pendingViewUpdate = nil

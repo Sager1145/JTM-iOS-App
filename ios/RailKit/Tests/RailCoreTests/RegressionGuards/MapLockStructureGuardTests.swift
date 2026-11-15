@@ -181,6 +181,20 @@ struct RegressionGuardMapLock {
             .contains("!MapRenderProbe.markerPassOwed"))
     }
 
+    @Test func mapRenderProbeIsReferencedOnlyInsideDebugBlocks() {
+        // MapRenderProbe exists only under #if DEBUG; any other reference breaks Release builds.
+        var depth = 0
+        var offenders: [Int] = []
+        for (index, line) in Self.coordinator.components(separatedBy: "\n").enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.hasPrefix("#if ") { depth += 1 }
+            if trimmed.hasPrefix("#endif") { depth -= 1 }
+            if depth == 0, line.contains("MapRenderProbe.") { offenders.append(index + 1) }
+        }
+        #expect(offenders.isEmpty, "MapRenderProbe referenced outside #if at lines \(offenders)")
+        #expect(Self.coordinator.contains("MapRenderProbe.markerPassOwed = false"))
+    }
+
     @Test func theMarkerPassMemoizesNameKeysAndRegionCodes() {
         #expect(Self.coordinator.contains("StationNameKeyCache.key(name)"))
         #expect(!Self.coordinator.contains("Stations.normalizeStationName(name)"))
