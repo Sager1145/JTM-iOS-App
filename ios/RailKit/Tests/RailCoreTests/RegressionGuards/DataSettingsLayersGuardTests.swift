@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Regression guard for the Data Library, Settings and Layers pass of the
@@ -10,17 +11,6 @@ import Testing
 /// statement about which file owns a function.
 @Suite("RegressionGuardDataSettingsLayers")
 struct DataSettingsLayersGuardTests {
-    private static let ios: URL = URL(fileURLWithPath: #filePath)
-        .deletingLastPathComponent() // RegressionGuards
-        .deletingLastPathComponent() // RailCoreTests
-        .deletingLastPathComponent() // Tests
-        .deletingLastPathComponent() // RailKit
-        .deletingLastPathComponent() // ios
-
-    private static func source(_ path: String) throws -> String {
-        try String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)
-    }
-
     /// The first string literal after `marker`.
     private static func quoted(after marker: String, in text: String) -> String? {
         guard let start = text.range(of: marker) else { return nil }
@@ -39,7 +29,7 @@ struct DataSettingsLayersGuardTests {
 
     @Test("the Data Library has one save retry, no duplicate save/reload/delete buttons")
     func dataLibraryHasNoDuplicateActions() throws {
-        let view = try Self.source("RailMap/Import/DataManagerView.swift")
+        let view = try SourceFiles.text("RailMap/Import/DataManagerView.swift")
         // "Save current rides" and "Save again" both queued the same write.
         #expect(Self.count("saveWorkingSet()", in: view) <= 1)
         // The reload retry, the backup restore and the unreadable-file delete
@@ -58,14 +48,14 @@ struct DataSettingsLayersGuardTests {
 
     @Test("the Data Library title is the menu item's name, not the old one")
     func dataLibraryTitleMatchesItsMenuItem() throws {
-        let view = try Self.source("RailMap/Import/DataManagerView.swift")
+        let view = try SourceFiles.text("RailMap/Import/DataManagerView.swift")
         #expect(view.contains("\"nav.dataLibrary\""))
         #expect(!view.contains("\"nav.data\""))
     }
 
     @Test("no string says the screen falls back to a bundled sample")
     func noBundledSampleFallbackText() throws {
-        let dir = Self.ios.appendingPathComponent("RailMap/Localization")
+        let dir = SourceFiles.ios.appendingPathComponent("RailMap/Localization")
         let files = try FileManager.default.contentsOfDirectory(atPath: dir.path).filter { $0.hasSuffix(".swift") }
         for file in files {
             let text = try String(contentsOf: dir.appendingPathComponent(file), encoding: .utf8)
@@ -78,15 +68,15 @@ struct DataSettingsLayersGuardTests {
 
     @Test("the export section points to Add trip for import, in four languages")
     func exportSectionHasTheImportSignpost() throws {
-        let view = try Self.source("RailMap/Import/DataManagerView.swift")
+        let view = try SourceFiles.text("RailMap/Import/DataManagerView.swift")
         #expect(view.contains("data.importSignpost"))
-        let strings = try Self.source("RailMap/Localization/DataStrings.swift")
+        let strings = try SourceFiles.text("RailMap/Localization/DataStrings.swift")
         let start = try #require(strings.range(of: "\"data.importSignpost\": ["))
         let block = String(strings[start.lowerBound...].prefix(600))
         for language in [".en:", ".ja:", ".zhHans:", ".zhHant:"] { #expect(block.contains(language)) }
         #expect(block.contains("To import a file, use Add trip."))
         // The sentence names the Add trip entry as that language spells it.
-        let shell = try Self.source("RailMap/Localization/ShellStrings.swift")
+        let shell = try SourceFiles.text("RailMap/Localization/ShellStrings.swift")
         let addStart = try #require(shell.range(of: "\"ios.tab.addTrip\": ["))
         let addBlock = String(shell[addStart.lowerBound...].prefix(300))
         for language in [".ja:", ".zhHans:", ".zhHant:"] {
@@ -100,8 +90,8 @@ struct DataSettingsLayersGuardTests {
 
     @Test("samples are added, replaced and removed only on the Sample trips page")
     func samplesLiveOnOnePage() throws {
-        let manager = try Self.source("RailMap/Import/DataManagerView.swift")
-        let page = try Self.source("RailMap/Import/SampleTripsView.swift")
+        let manager = try SourceFiles.text("RailMap/Import/DataManagerView.swift")
+        let page = try SourceFiles.text("RailMap/Import/SampleTripsView.swift")
         #expect(manager.contains("SampleTripsView("))
         for owned in [".merge(", ".replaceAll(", "removeTrains(withIDs:"] {
             #expect(!manager.contains(owned), "\(owned) belongs to SampleTripsView")
@@ -118,7 +108,7 @@ struct DataSettingsLayersGuardTests {
 
     @Test("Reset to defaults is the last row of Settings and asks first")
     func resetIsLastAndConfirmed() throws {
-        let settings = try Self.source("RailMap/Settings/SettingsView.swift")
+        let settings = try SourceFiles.text("RailMap/Settings/SettingsView.swift")
         let body = try #require(settings.range(of: "Form {\n            generalSection"))
         let order = settings[body.lowerBound...].prefix(400)
         let about = try #require(order.range(of: "aboutSection"))
@@ -134,8 +124,8 @@ struct DataSettingsLayersGuardTests {
 
     @Test("Network era, Only the selected date and Auto-focus are edited in the Layers sheet")
     func mapDisplayOptionsAreInLayers() throws {
-        let layers = try Self.source("RailMap/Map/MapLayersView.swift")
-        let settings = try Self.source("RailMap/Settings/SettingsView.swift")
+        let layers = try SourceFiles.text("RailMap/Map/MapLayersView.swift")
+        let settings = try SourceFiles.text("RailMap/Settings/SettingsView.swift")
         #expect(layers.contains("display.networkEra = $0"))
         #expect(layers.contains("isOn: $mapFollowsSelectedDate"))
         #expect(layers.contains("isOn: $autoFocusZoom"))
@@ -148,7 +138,7 @@ struct DataSettingsLayersGuardTests {
 
     @Test("source link labels that are not proper names have catalog or table keys")
     func sourceLinkLabelsHaveKeys() throws {
-        let info = try Self.source("RailMap/Map/MapInfoView.swift")
+        let info = try SourceFiles.text("RailMap/Map/MapInfoView.swift")
         let pattern = try NSRegularExpression(pattern: "labelKey:\\s*\"([A-Za-z0-9_.]+)\"")
         let keys = pattern.matches(in: info, range: NSRange(info.startIndex..., in: info)).compactMap {
             Range($0.range(at: 1), in: info).map { String(info[$0]) }
@@ -157,8 +147,8 @@ struct DataSettingsLayersGuardTests {
         for required in ["ios.info.hkJourneyPlanner", "ios.info.hkOpenData", "ios.info.moLrtLines"] {
             #expect(keys.contains(required))
         }
-        let catalog = try Self.source("Resources/Localizable.xcstrings")
-        let dir = Self.ios.appendingPathComponent("RailMap/Localization")
+        let catalog = try SourceFiles.text("Resources/Localizable.xcstrings")
+        let dir = SourceFiles.ios.appendingPathComponent("RailMap/Localization")
         let tables = try FileManager.default.contentsOfDirectory(atPath: dir.path)
             .filter { $0.hasSuffix(".swift") }
             .map { try String(contentsOf: dir.appendingPathComponent($0), encoding: .utf8) }

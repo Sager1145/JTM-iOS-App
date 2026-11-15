@@ -1,5 +1,6 @@
 import Foundation
 import RailPresentation
+import RailTestSupport
 import Testing
 
 @Suite("JourneyCardLease")
@@ -21,11 +22,7 @@ struct JourneyCardLeaseTests {
     }
 
     @Test func workspaceDismissHandlerUsesTheRule() throws {
-        let url = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent().deletingLastPathComponent()
-            .deletingLastPathComponent().deletingLastPathComponent()
-            .appendingPathComponent("RailMap/Workspace/RailWorkspaceView.swift")
-        let source = try String(contentsOf: url, encoding: .utf8)
+        let source = try SourceFiles.text("RailMap/Workspace/RailWorkspaceView.swift")
         let from = try #require(source.range(of: "private func sheetDidDismiss() {"))
         let to = try #require(source.range(of: "private func withPresentations", range: from.upperBound..<source.endIndex))
         let body = source[from.lowerBound..<to.lowerBound]

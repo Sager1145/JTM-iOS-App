@@ -1,27 +1,15 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the map-lock zoom fixes: the pure rules are
 /// tested in RailPresentation; these pin that the app still uses them.
 @Suite("RegressionGuardZoomPreparation")
 struct RegressionGuardZoomPreparation {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let coordinator = read("RailMap/Map/RailMapCoordinator.swift")
-    private static let store = read("RailMap/Infrastructure/Network/RailNetworkStore.swift")
-    private static let interaction = read("RailMap/Map/MapInteractionCoordinator.swift")
-    private static let host = read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static let store = SourceFiles.textRecording("RailMap/Infrastructure/Network/RailNetworkStore.swift")
+    private static let interaction = SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift")
+    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))
@@ -124,7 +112,7 @@ struct RegressionGuardZoomPreparation {
     }
 
     @Test func strokePreparationRunsInWeightedParallelPartsInsideOnePermit() throws {
-        let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
+        let geometry = SourceFiles.textRecording("RailMap/Map/MapLineGeometry.swift")
         let prepare = try Self.body(geometry, from: "static func prepare(", to: "StrokeBake.prepareLines(")
         #expect(prepare.contains("async throws -> PreparedGeometry"))
         #expect(prepare.contains("RideBuildPartition.partition("))
@@ -140,7 +128,7 @@ struct RegressionGuardZoomPreparation {
             #expect(geometry.contains("\"\(name)\""), "\(name)")
         }
         // The junction candidates are the engine's, in RailCore since the stroke engine moved there.
-        #expect(Self.read("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
+        #expect(SourceFiles.textRecording("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
             .contains("public struct JunctionCandidateIndex: Sendable"))
         // Each call sits inside the single-permit limiter.
         let coordinator = Self.coordinator
@@ -164,7 +152,7 @@ struct RegressionGuardZoomPreparation {
         let call = coordinator.range(of: "prebuild: true")
         let prebuildCall = call.map { coordinator[coordinator.startIndex..<$0.lowerBound] }
         #expect(prebuildCall?.contains("priority: .utility") == true)
-        let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
+        let geometry = SourceFiles.textRecording("RailMap/Map/MapLineGeometry.swift")
         #expect(geometry.contains("prebuild: Bool = false"))
         #expect(geometry.contains("\"map.geometry.prebuild\""))
     }

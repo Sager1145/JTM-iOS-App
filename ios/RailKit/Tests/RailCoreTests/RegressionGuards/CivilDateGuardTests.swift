@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 @testable import RailCore
 
@@ -203,25 +204,12 @@ struct RegressionGuardCivilDate {
 
     // MARK: Source guard — no second civil-date implementation
 
-    private static let sources: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .appendingPathComponent("Sources/RailCore")
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: sources.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
     @Test func callersUseTheSharedHelperAndCarryNoSecondParser() {
         let files = ["Identity/TrainServiceBranding.swift", "Topology/RailTopologyFormat.swift",
                      "Editor/EditorTime.swift", "Timetable/TrainServicePatterns.swift",
                      "Utilities/Dates.swift"]
         for file in files {
-            let text = Self.read(file)
+            let text = SourceFiles.textRecording(file, relativeTo: SourceFiles.railCoreSources)
             #expect(!text.isEmpty, "\(file) not readable")
             #expect(text.contains("CivilDate."), "\(file) must use CivilDate")
             for marker in ["func daysInMonth", "func isLeapYear", "func daysFromCivil",
@@ -229,7 +217,7 @@ struct RegressionGuardCivilDate {
                 #expect(!text.contains(marker), "\(file) re-implements civil-date maths (\(marker))")
             }
         }
-        let shared = Self.read("Utilities/CivilDate.swift")
+        let shared = SourceFiles.textRecording("Utilities/CivilDate.swift", relativeTo: SourceFiles.railCoreSources)
         #expect(shared.contains("enum CivilDate"))
         for forbidden in ["Calendar", "TimeZone", "DateFormatter", "Locale"] {
             let code = shared.split(separator: "\n").filter { !$0.hasPrefix("///") }.joined(separator: "\n")

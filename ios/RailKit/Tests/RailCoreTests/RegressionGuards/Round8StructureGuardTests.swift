@@ -1,23 +1,12 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for map-lock round 8 (continuous zoom-out). The
 /// pure rules are tested in RailPresentation; these pin that the app uses them.
 @Suite("RegressionGuardRound8")
 struct RegressionGuardRound8 {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static let coordinator: String =
-        (try? String(
-            contentsOf: ios.appendingPathComponent("RailMap/Map/RailMapCoordinator.swift"),
-            encoding: .utf8)) ?? ""
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))

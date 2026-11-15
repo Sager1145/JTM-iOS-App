@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the map tap. The rules are tested in
@@ -6,23 +7,10 @@ import Testing
 /// them and still wires the recognisers the way the rules assume.
 @Suite("RegressionGuardMapTap")
 struct RegressionGuardMapTap {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let view = read("RailMap/Map/RailMapView.swift")
-    private static let coordinator = read("RailMap/Map/RailMapCoordinator.swift")
-    private static let workspace = read("RailMap/Workspace/RailWorkspaceView.swift")
-    private static let host = read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static let view = SourceFiles.textRecording("RailMap/Map/RailMapView.swift")
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static let workspace = SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift")
+    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
 
     /// A tap that hits something answers on the lift, so `tap` must not wait for
     /// the double-tap recogniser; only the banked empty-map clear does.
@@ -55,10 +43,10 @@ struct RegressionGuardMapTap {
 
     @Test func policyReachConstantsAreNotRedefinedInTheApp() throws {
         let files = try FileManager.default.subpathsOfDirectory(
-            atPath: Self.ios.appendingPathComponent("RailMap").path
+            atPath: SourceFiles.ios.appendingPathComponent("RailMap").path
         ).filter { $0.hasSuffix(".swift") }
         for file in files {
-            let source = Self.read("RailMap/" + file)
+            let source = SourceFiles.textRecording("RailMap/" + file)
             #expect(!source.contains("networkLineReach ="), "\(file) redefines networkLineReach")
             #expect(!source.contains("networkLineReach:"), "\(file) redefines networkLineReach")
             #expect(!source.contains("static let tripReach"), "\(file) redefines tripReach")
@@ -67,7 +55,7 @@ struct RegressionGuardMapTap {
     }
 
     @Test func lineHitTestReusesTheDrawnBuildsAndTheSharedDistance() {
-        let hit = Self.read("RailMap/Map/NetworkLineHitTest.swift")
+        let hit = SourceFiles.textRecording("RailMap/Map/NetworkLineHitTest.swift")
         #expect(hit.contains("RideTapResolver.distance("))
         #expect(hit.contains("boundingMapRect"))
         let c = Self.coordinator
@@ -104,7 +92,7 @@ struct RegressionGuardMapTap {
         #expect(Self.host.contains("\"cancelledByDoubleTap\""))
     }
 
-    private static let hitTest = read("RailMap/Map/NetworkLineHitTest.swift")
+    private static let hitTest = SourceFiles.textRecording("RailMap/Map/NetworkLineHitTest.swift")
 
     /// A trip dot under the finger is its own trip's tap, whatever else passes.
     @Test func tripDotOwnsItsTapAndSkipsLineReach() {

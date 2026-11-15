@@ -1,25 +1,13 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the map-lock wiring: the pure RailKit rules are
 /// tested on their own; these pin that the app still uses them.
 @Suite("RegressionGuardMapLock")
 struct RegressionGuardMapLock {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let coordinator = read("RailMap/Map/RailMapCoordinator.swift")
-    private static let rendering = read("RailMap/Map/MapNetworkRendering.swift")
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static let rendering = SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift")
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))
@@ -177,7 +165,7 @@ struct RegressionGuardMapLock {
         #expect(turn.contains("self.markerSettleTurn.claim(token)"))
         #expect(turn.contains("runLabelPass(on: mapView, moving: false, fullPass: true)"))
         // app-control idle waits for the owed pass.
-        #expect(Self.read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+        #expect(SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
             .contains("!MapRenderProbe.markerPassOwed"))
     }
 
@@ -198,8 +186,8 @@ struct RegressionGuardMapLock {
     @Test func theMarkerPassMemoizesNameKeysAndRegionCodes() {
         #expect(Self.coordinator.contains("StationNameKeyCache.key(name)"))
         #expect(!Self.coordinator.contains("Stations.normalizeStationName(name)"))
-        #expect(Self.read("RailMap/Map/MapRideMarkers.swift").contains("StationNameKeyCache.key("))
-        #expect(Self.read("RailMap/Infrastructure/Network/RegionCatalog.swift")
+        #expect(SourceFiles.textRecording("RailMap/Map/MapRideMarkers.swift").contains("StationNameKeyCache.key("))
+        #expect(SourceFiles.textRecording("RailMap/Infrastructure/Network/RegionCatalog.swift")
             .contains("stationCodeRegions.value(for: code)"))
     }
 
@@ -307,14 +295,14 @@ struct RegressionGuardMapLock {
         #expect(build.contains("setup.stationGrid.indices("))
         #expect(!build.contains("stations.compactMap"))
         #expect(!build.contains("for item in drawn {"))
-        let setup = Self.read("RailMap/Map/RideIncrementalUpdate.swift")
+        let setup = SourceFiles.textRecording("RailMap/Map/RideIncrementalUpdate.swift")
         #expect(setup.contains("SpatialGrid("))
     }
 
     @Test func strokeInstallInvalidatesOnlyTheChangedTripsRecords() {
         #expect(!Self.coordinator.contains("stationLabels.invalidateGeometry()"))
         #expect(Self.coordinator.components(separatedBy: "stationLabels.invalidateGeometry(forRides:").count == 3)
-        let labels = Self.read("RailMap/Map/MapStationLabelCoordinator.swift")
+        let labels = SourceFiles.textRecording("RailMap/Map/MapStationLabelCoordinator.swift")
         #expect(labels.contains("func invalidateGeometry(forRides"))
     }
 
@@ -352,7 +340,7 @@ struct RegressionGuardMapLock {
         #expect(!update.contains("Polylines are built on a worker only from a full"))
     }
 
-    private static let interaction = read("RailMap/Map/MapInteractionCoordinator.swift")
+    private static let interaction = SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift")
 
     @Test func tapSnapshotNeverDoesGeometryMathsOnMain() throws {
         let strokes = try Self.body(

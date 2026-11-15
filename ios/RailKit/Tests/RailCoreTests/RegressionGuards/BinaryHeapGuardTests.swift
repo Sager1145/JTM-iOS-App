@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 @testable import RailCore
 
@@ -323,24 +324,11 @@ struct RegressionGuardBinaryHeap {
 
     // MARK: Source guard — no second heap implementation
 
-    private static let sources: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .appendingPathComponent("Sources/RailCore")
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: sources.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
     @Test func replacedFilesUseTheSharedHeapAndCarryNoSecondOne() {
         let files = ["Routing/RouteSolver.swift", "Statistics/Statistics.swift",
                      "Topology/RailTopologyRouter.swift", "Routing/LocalJourneySearch.swift"]
         for file in files {
-            let text = Self.read(file)
+            let text = SourceFiles.textRecording(file, relativeTo: SourceFiles.railCoreSources)
             #expect(!text.isEmpty, "\(file) not readable")
             #expect(text.contains("BinaryMinHeap<"), "\(file) must use the shared heap")
             for marker in ["bubbleUp", "bubbleDown", "swapAt(", "struct MinHeap", "struct NodeHeap",
@@ -348,7 +336,7 @@ struct RegressionGuardBinaryHeap {
                 #expect(!text.contains(marker), "\(file) re-implements a heap (\(marker))")
             }
         }
-        let shared = Self.read("Utilities/BinaryHeap.swift")
+        let shared = SourceFiles.textRecording("Utilities/BinaryHeap.swift", relativeTo: SourceFiles.railCoreSources)
         #expect(shared.contains("struct BinaryMinHeap<Element: HeapOrdered>"))
     }
 }

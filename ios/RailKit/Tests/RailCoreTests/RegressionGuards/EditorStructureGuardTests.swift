@@ -1,4 +1,6 @@
 import Foundation
+import RailTestSupport
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the journey editor and the timetable pages
@@ -6,19 +8,8 @@ import Testing
 /// app tests run in the simulator and cannot read the repository folder.
 @Suite("RegressionGuardEditorStructure")
 struct RegressionGuardEditorStructure {
-    private static let ios = URL(fileURLWithPath: #filePath)
-        .deletingLastPathComponent() // RegressionGuards
-        .deletingLastPathComponent() // RailCoreTests
-        .deletingLastPathComponent() // Tests
-        .deletingLastPathComponent() // RailKit
-        .deletingLastPathComponent() // ios
-
-    private static func source(_ relative: String) throws -> String {
-        try String(contentsOf: ios.appendingPathComponent(relative), encoding: .utf8)
-    }
-
     private static func editor(_ name: String) throws -> String {
-        try source("RailMap/JourneyEditor/\(name)")
+        try SourceFiles.text("RailMap/JourneyEditor/\(name)")
     }
 
     @Test func theEditorPushesItsSearchableListsAndKeepsOneSheetForFillDetails() throws {
@@ -69,7 +60,7 @@ struct RegressionGuardEditorStructure {
     }
 
     @Test func timetableViewsPresentNoSheets() throws {
-        let folder = Self.ios.appendingPathComponent("RailMap/Timetable")
+        let folder = SourceFiles.ios.appendingPathComponent("RailMap/Timetable")
         let files = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)
             .filter { $0.pathExtension == "swift" }
         try #require(!files.isEmpty)

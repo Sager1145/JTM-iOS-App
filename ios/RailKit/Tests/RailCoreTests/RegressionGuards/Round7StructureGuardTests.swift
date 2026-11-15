@@ -1,24 +1,12 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for map-lock round 7. The pure rules are tested in
 /// RailPresentation; these pin that the app still uses them.
 @Suite("RegressionGuardRound7")
 struct RegressionGuardRound7 {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let coordinator = read("RailMap/Map/RailMapCoordinator.swift")
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))
@@ -144,7 +132,7 @@ struct RegressionGuardRound7 {
     }
 
     @Test func aFocusFitIsStoppedByANewerCameraIntentAndEndsWithTheSettledRegion() throws {
-        let controller = Self.read("RailMap/Map/RailMapController.swift")
+        let controller = SourceFiles.textRecording("RailMap/Map/RailMapController.swift")
         #expect(controller.contains("if olderFitRunning, autoFocusRequest != nil { stopFocusFit() }"))
         #expect(controller.contains("if cameraPolicy.cancelFocus() { stopFocusFit() }"))
         #expect(controller.contains("if cameraPolicy.claimCamera() { stopFocusFit() }"))
@@ -177,7 +165,7 @@ struct RegressionGuardRound7 {
             c, from: "var acceptedStationNames: Set<String> = []", to: "finishMarkerPhase(\"networkStations.election\")")
         #expect(election.contains("stationLabels.labelWidth("))
         #expect(!election.contains("NSString).size("))
-        let labels = Self.read("RailMap/Map/MapStationLabelCoordinator.swift")
+        let labels = SourceFiles.textRecording("RailMap/Map/MapStationLabelCoordinator.swift")
         #expect(labels.contains("private var labelWidths: [LabelWidthKey: CGFloat]"))
         #expect(labels.contains("func invalidateLabelWidths()"))
         #expect(c.contains("if namingChanged { stationLabels.invalidateLabelWidths() }"))

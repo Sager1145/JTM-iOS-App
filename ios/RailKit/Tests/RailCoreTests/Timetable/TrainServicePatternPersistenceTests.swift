@@ -196,23 +196,10 @@ struct TrainServicePatternPersistenceTests {
     }
 
     private static func jpEditorCatalog() throws -> EditorCatalog {
-        let packageURL = try repositoryRoot().appending(path: "app/public/rail/jp-2025.json")
+        let packageURL = try PortFixtures.repositoryRoot().appending(path: "app/public/rail/jp-2025.json")
         let directory = try JSONDecoder().decode(
             CompactPackage.StationDirectory.self,
             from: Data(contentsOf: packageURL))
         return EditorCatalogBuilder.build(directory.lineSources(regionCode: "jp"))
-    }
-
-    private static func repositoryRoot(from file: StaticString = #filePath) throws -> URL {
-        var directory = URL(filePath: "\(file)").deletingLastPathComponent()
-        for _ in 0..<8 {
-            if FileManager.default.fileExists(
-                atPath: directory.appending(path: "app/public/rail/jp-2025.json").path)
-            {
-                return directory
-            }
-            directory = directory.deletingLastPathComponent()
-        }
-        throw CocoaError(.fileNoSuchFile)
     }
 }

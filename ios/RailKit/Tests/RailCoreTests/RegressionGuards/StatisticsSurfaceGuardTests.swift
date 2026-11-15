@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Regression guard for the Statistics UI decisions of 2026-11-11
@@ -14,19 +15,8 @@ import Testing
 ///   end in a checkmark; the filled/empty circle pair is gone.
 @Suite("RegressionGuardStatisticsSurface")
 struct RegressionGuardStatisticsSurface {
-    private static let ios = URL(fileURLWithPath: #filePath)
-        .deletingLastPathComponent() // RegressionGuards
-        .deletingLastPathComponent() // RailCoreTests
-        .deletingLastPathComponent() // Tests
-        .deletingLastPathComponent() // RailKit
-        .deletingLastPathComponent() // ios
-
-    private static func source(_ relative: String) throws -> String {
-        try String(contentsOf: ios.appendingPathComponent(relative), encoding: .utf8)
-    }
-
     private static func statisticsFiles() throws -> [String] {
-        let dir = ios.appendingPathComponent("RailMap/Statistics")
+        let dir = SourceFiles.ios.appendingPathComponent("RailMap/Statistics")
         let names = try FileManager.default.contentsOfDirectory(atPath: dir.path)
         let files = names.filter { $0.hasSuffix(".swift") }.map { "RailMap/Statistics/\($0)" }
         #expect(!files.isEmpty, "found no Statistics sources; #filePath resolution is broken")
@@ -36,7 +26,7 @@ struct RegressionGuardStatisticsSurface {
     @Test("no Statistics code offers export")
     func noPlaybackOrExport() throws {
         for file in try Self.statisticsFiles() {
-            let text = try Self.source(file)
+            let text = try SourceFiles.text(file)
             for forbidden in ["btn.exportJson", ".fileExporter("] {
                 #expect(!text.contains(forbidden), "\(file) contains \(forbidden)")
             }
@@ -50,7 +40,7 @@ struct RegressionGuardStatisticsSurface {
         for file in files {
             // The two forwarders stay only until `Sharing/ShareCardBuilder.swift`
             // moves to TripDateLabel; their declarations are the one allowed use.
-            let text = try Self.source(file)
+            let text = try SourceFiles.text(file)
                 .split(separator: "\n", omittingEmptySubsequences: false)
                 .filter { !$0.contains("static func dayLabel(") && !$0.contains("static func spelledDate(") }
                 .joined(separator: "\n")
@@ -59,22 +49,22 @@ struct RegressionGuardStatisticsSurface {
                         "\(file) calls \(forbidden); use TripDateLabel")
             }
         }
-        let station = try Self.source("RailMap/Map/StationCardView.swift")
+        let station = try SourceFiles.text("RailMap/Map/StationCardView.swift")
         #expect(station.contains("TripDateLabel.label("), "station validity dates must use TripDateLabel")
     }
 
     @Test("the unconfirmed note offers Show trips and Replay has an interim button")
     func unconfirmedAndPlay() throws {
-        let dash = try Self.source("RailMap/Statistics/StatisticsDashboardContent.swift")
+        let dash = try SourceFiles.text("RailMap/Statistics/StatisticsDashboardContent.swift")
         #expect(dash.contains("ios.stats.showUnconfirmed"))
-        let strings = try Self.source("RailMap/Localization/StatisticsStrings.swift")
+        let strings = try SourceFiles.text("RailMap/Localization/StatisticsStrings.swift")
         #expect(strings.contains("\"ios.stats.showUnconfirmed\""))
-        #expect(!(try Self.source("RailMap/Statistics/PassportWorkspaceView.swift")).contains("btn.exportJson"))
+        #expect(!(try SourceFiles.text("RailMap/Statistics/PassportWorkspaceView.swift")).contains("btn.exportJson"))
     }
 
     @Test("scope picker uses a segmented picker and checkmark rows")
     func scopePickerStyle() throws {
-        let text = try Self.source("RailMap/Statistics/StatisticsScopePicker.swift")
+        let text = try SourceFiles.text("RailMap/Statistics/StatisticsScopePicker.swift")
         #expect(text.contains(".pickerStyle(.segmented)"))
         #expect(!text.contains("checkmark.circle.fill"))
         #expect(!text.contains("\"circle\""))
