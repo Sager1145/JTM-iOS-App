@@ -23,12 +23,35 @@ struct RegressionGuardNoteButtonRow {
                 "RideCard must not draw its own tripNotesAdd button under the control row.")
     }
 
+    /// Four one-row candidates, each with the add-note circle; the third is the
+    /// compact label row (40-pt layout, 44-pt hit area), the last an icon-only
+    /// primary. Add note is never folded into the More menu.
+    @Test func fourCandidatesAllKeepFiveControls() throws {
+        let components = try SourceFiles.text("RailMap/Journeys/JourneyComponents.swift")
+        let start = try #require(components.range(of: "ViewThatFits(in: .horizontal) {\n                journeyControlRow("))
+        let rest = components[start.lowerBound...]
+        let block = String(rest[..<rest.range(of: "\n            }\n")!.lowerBound])
+        #expect(block.components(separatedBy: "journeyControlRow(").count - 1 == 4,
+                "The one-row ViewThatFits needs exactly four candidates.")
+        #expect(block.contains("compact: true)"))
+        #expect(block.contains("compact: true, iconOnlyPrimary: true)"))
+        let row = Self.body(of: "journeyControlRow", in: components)
+        #expect(row.contains("if addNote != nil { journeyRowAddNoteButton(compact: compact) }"),
+                "The add-note circle must be drawn unconditionally in every candidate.")
+        #expect(row.contains("journeyRowIconPrimaryButton"))
+        #expect(!components.contains("tripNotesAddMenuItem"))
+        #expect(!components.contains("includesAddNote"))
+        #expect(components.contains("WorkspaceMenuMetrics.touchSide - SheetIconButton<Image>.visualSide"),
+                "The compact hit area must stay 44 pt.")
+        #expect(components.contains("contentShape(Rectangle().inset(by: -outset))"))
+    }
+
     @Test func journeyControlRowDrawsTheAddNoteButton() throws {
         let components = try SourceFiles.text("RailMap/Journeys/JourneyComponents.swift")
         let row = Self.body(of: "journeyControlRow", in: components)
         #expect(!row.isEmpty)
         #expect(row.contains("journeyRowAddNoteButton"))
-        #expect(components.contains("journeyRowAddNoteButton: some View"))
+        #expect(components.contains("func journeyRowAddNoteButton(compact: Bool)"))
         #expect(components.contains("\"tripNotesAdd\""))
         #expect(components.contains("var addNote: (() -> Void)?"))
     }
