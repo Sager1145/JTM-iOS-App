@@ -1,0 +1,36 @@
+import CoreLocation
+import Foundation
+import RailCore
+
+// Projection shim, added to the capture package on 2026-11-15 (see ../README.md, "Projection").
+//
+// `OldMapLineGeometry.swift` is a verbatim copy of the app engine and calls `MKMapPoint(coordinate)`,
+// `MKMapPoint(x:y:)`, `MKMapPoint.coordinate` and `MKMetersPerMapPointAtLatitude` for every
+// projection step. This module declares types and a function of those exact names, which take
+// precedence over MapKit's inside this package, so the unedited engine code runs on the SAME
+// projection arithmetic RailCore uses (`StrokeProjection`) instead of MapKit's. The recorder in
+// `main.swift` projects through it too. MapKit's `MKMapRect` is still used for the stubs' off-screen
+// rectangles only (no effect on the recorded values).
+struct MKMapPoint {
+    var x: Double
+    var y: Double
+
+    init(x: Double, y: Double) {
+        self.x = x
+        self.y = y
+    }
+
+    init(_ coordinate: CLLocationCoordinate2D) {
+        let point = StrokeProjection.point(Coordinate(lon: coordinate.longitude, lat: coordinate.latitude))
+        self.init(x: point.x, y: point.y)
+    }
+
+    var coordinate: CLLocationCoordinate2D {
+        let c = StrokeProjection.coordinate(StrokePoint(x: x, y: y))
+        return CLLocationCoordinate2D(latitude: c.lat, longitude: c.lon)
+    }
+}
+
+func MKMetersPerMapPointAtLatitude(_ latitude: Double) -> Double {
+    StrokeProjection.metresPerMapPoint(atLatitude: latitude)
+}

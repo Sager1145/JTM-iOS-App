@@ -196,7 +196,7 @@ enum RailNetworkStore {
         private static func boundingRect(of interval: [Coordinate]) -> MKMapRect {
             var rect = MKMapRect.null
             for point in interval {
-                let mapPoint = MKMapPoint(
+                let mapPoint = MapKit.MKMapPoint(
                     CLLocationCoordinate2D(latitude: point.lat, longitude: point.lon))
                 rect = rect.union(
                     MKMapRect(origin: mapPoint, size: MKMapSize(width: 0, height: 0)))
