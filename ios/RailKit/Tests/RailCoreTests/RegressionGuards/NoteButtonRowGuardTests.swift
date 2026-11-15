@@ -32,4 +32,21 @@ struct RegressionGuardNoteButtonRow {
         #expect(components.contains("\"tripNotesAdd\""))
         #expect(components.contains("var addNote: (() -> Void)?"))
     }
+
+    /// The connector's bands come from the endpoint's own fonts, not from
+    /// guessed line heights, so arrow / elapsed time stay on the station / time
+    /// centre lines.
+    @Test func routeTimingConnectorDerivesBandsFromEndpointFonts() throws {
+        let text = try SourceFiles.text("RailMap/Journeys/JourneyComponents.swift")
+        for gone in ["nameLineHeight", "timeLineHeight", "smallTimeLineHeight"] {
+            #expect(!text.contains(gone), "\(gone) is a hard-coded band height and must stay gone.")
+        }
+        #expect(text.contains("private var nameFont: Font"))
+        #expect(text.contains("private var timeFont: Font"))
+        #expect(text.contains(".font(nameFont)"), "endpoint must set the station name in nameFont.")
+        #expect(text.contains(".font(timeFont)"), "endpoint must set the time in timeFont.")
+        #expect(text.contains("band(font: nameFont)"), "connector arrow band must use nameFont.")
+        #expect(text.contains("elapsedLabel(font: timeFont)"), "connector time band must use timeFont.")
+        #expect(text.contains("Text(\"0\").font(font).hidden()"))
+    }
 }
