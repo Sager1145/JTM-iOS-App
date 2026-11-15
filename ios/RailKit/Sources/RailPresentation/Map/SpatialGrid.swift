@@ -120,3 +120,46 @@ public struct MarkerPassDebt: Equatable, Sendable {
     public mutating func noteDeferred() { isOwed = true }
     public mutating func noteFullPassRan() { isOwed = false }
 }
+
+/// The one-turn hand-off that pays a camera settle's marker debt.
+///
+/// A settled camera rebuild installs overlays and leaves the marker pass and
+/// label redraw owed, so a display-link frame can fire between the two. The
+/// owed pass is scheduled for the next main run-loop turn under a token; a
+/// newer schedule, a cancel or a camera move invalidates the token, and the
+/// turn that finds its token stale does nothing, so a stale pass can never
+/// run over newer state. The debt itself (``MarkerPassDebt``) stays owed
+/// until a full pass runs, so a cancelled turn is paid by the next settle.
+public struct MarkerSettleTurn: Equatable, Sendable {
+    public private(set) var pendingToken: Int?
+    private var nextToken = 0
+
+    public init() {}
+
+    /// True while a turn is scheduled and not yet claimed or cancelled.
+    public var isPending: Bool { pendingToken != nil }
+
+    /// Supersedes any scheduled turn and returns the new turn's token.
+    public mutating func schedule() -> Int {
+        nextToken += 1
+        pendingToken = nextToken
+        return nextToken
+    }
+
+    /// Invalidates the scheduled turn, if any.
+    public mutating func cancel() { pendingToken = nil }
+
+    /// Called by the turn when it runs: true exactly once, for the newest
+    /// token that has not been cancelled.
+    public mutating func claim(_ token: Int) -> Bool {
+        guard pendingToken == token else { return false }
+        pendingToken = nil
+        return true
+    }
+
+    /// Whether the claimed turn should run the full pass now: only while the
+    /// debt is still owed and the camera is not moving again.
+    public static func runsFullPass(debtOwed: Bool, cameraMoving: Bool) -> Bool {
+        debtOwed && !cameraMoving
+    }
+}

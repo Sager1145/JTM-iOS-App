@@ -229,6 +229,16 @@ public enum AppControlCameraAction: Equatable, Sendable {
     public static let maximumSteps = 600
 }
 
+/// Where `tapMap` taps: a map coordinate or a point in the map view's own
+/// coordinate space (view points, origin top-left).
+public enum AppControlMapPoint: Equatable, Sendable {
+    case coordinate(lat: Double, lon: Double)
+    case view(x: Double, y: Double)
+
+    /// Largest accepted view coordinate, in points.
+    public static let viewRange = 0.0...10_000.0
+}
+
 public enum AppControlCommand: Equatable, Sendable {
     case loadSamples([String])
     case useStorage(String)
@@ -258,13 +268,26 @@ public enum AppControlCommand: Equatable, Sendable {
     case camera(AppControlCameraAction)
     /// The performance sampler without the panel: start, stop or read its samples.
     case perf(action: String)
+    /// A tap on the map answered by the same ``MapTapPolicy`` as a real tap, with a
+    /// banked clear delivered at once (the recognisers themselves are not exercised).
+    /// Takes `lat`+`lon` or `x`+`y`, exactly one pair. A selection writes the
+    /// last-viewed trip, so it needs an isolated store.
+    ///
+    /// Result: `{point: {lat, lon, x, y}, answer, hits, selectedTrip, sheet}` where
+    /// `answer` is one of `annotation`, `stationCard`, `trip`, `chooser`,
+    /// `station`, `line`, `lineChooser`, `empty` or `ignore`; `hits` lists what was
+    /// under the finger (trip, station and line ids); `selectedTrip` is the selected
+    /// trip id or null after the tap; `sheet` names the sheet or card now showing,
+    /// or null.
+    /// `doubleTap` runs the first tap and then the double tap, as two taps in the window.
+    case tapMap(AppControlMapPoint, doubleTap: Bool = false)
 
     /// Every command name the parser accepts, for the CLI's help and tests.
     public static let names = [
         "loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
         "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
         "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
-        "camera", "perf",
+        "camera", "perf", "tapMap",
     ]
 
     public static let perfActions = ["start", "stop", "read"]
@@ -304,6 +327,7 @@ public enum AppControlCommand: Equatable, Sendable {
         case .setLayer: "setLayer"
         case .camera: "camera"
         case .perf: "perf"
+        case .tapMap: "tapMap"
         }
     }
 
@@ -319,7 +343,7 @@ public enum AppControlCommand: Equatable, Sendable {
         case .state, .screenshot, .wait, .useStorage, .devtools, .exportDiagnostics, .memoryWarning,
              .clearRouteCaches, .setLayer, .focusTrip, .openStats, .camera, .perf:
             true
-        case .loadSamples, .reloadAll, .selectTrip, .openEditor, .addTrip, .editTrip, .saveEditor,
+        case .loadSamples, .reloadAll, .selectTrip, .tapMap, .openEditor, .addTrip, .editTrip, .saveEditor,
              .cancelEditor, .deleteTrip, .setHideFilter:
             false
         }
@@ -489,6 +513,24 @@ public enum AppControlCommand: Equatable, Sendable {
             default:
                 throw AppControlError.invalidArgument("action", action)
             }
+        case "tapMap":
+            let hasCoordinate = args["lat"] != nil || args["lon"] != nil
+            let hasView = args["x"] != nil || args["y"] != nil
+            if hasCoordinate && hasView {
+                throw AppControlError.invalidArgument("x", "give lat+lon or x+y, not both")
+            }
+            let taps = try int("tapCount", default: 1)
+            guard taps == 1 || taps == 2 else { throw AppControlError.invalidArgument("tapCount", "expected 1 or 2") }
+            let doubleTap = taps == 2
+            if hasView {
+                return .tapMap(.view(
+                    x: try double("x", in: AppControlMapPoint.viewRange),
+                    y: try double("y", in: AppControlMapPoint.viewRange)), doubleTap: doubleTap)
+            }
+            guard hasCoordinate else { throw AppControlError.missingArgument("lat") }
+            return .tapMap(
+                .coordinate(lat: try double("lat", in: -90...90), lon: try double("lon", in: -180...180)),
+                doubleTap: doubleTap)
         case "perf":
             let action = try string("action")
             guard Self.perfActions.contains(action) else { throw AppControlError.invalidArgument("action", action) }

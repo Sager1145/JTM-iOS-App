@@ -27,6 +27,9 @@ public enum MapRebuildTrigger: Int, CaseIterable, Sendable {
     case levelSwapped = 10
     /// Newly loaded area was added at the installed level while the camera moved.
     case movingExtended = 11
+    /// The camera still wanted another level after a landed level was
+    /// installed, so the wanted level started preparing (a second rebuild).
+    case wantedLevelFollowUp = 12
 }
 
 /// What the map owes after a change owes it a full rebuild.
@@ -148,8 +151,10 @@ public struct GeometryPreparationLedger: Equatable, Sendable {
 /// this for every decision, so the tests pin the rule the app runs.
 public enum GeometryPreparationGate {
     public struct Decision: Equatable, Sendable {
-        /// Always false now: a preparation in flight is never cancelled for
-        /// another frame. It finishes and caches its frame, and its landing
+        /// True only when an in-flight preparation for another frame can no
+        /// longer install (``inFlightCanInstall(rectCoversView:stopped:isRequestedLevel:)``
+        /// said so). Otherwise a preparation in flight is never cancelled for
+        /// another frame: it finishes and caches its frame, and its landing
         /// rebuild asks for the newest wanted frame (latest wins). Cancelling
         /// on every camera step starved every preparation during a zoom.
         public var cancelInFlight: Bool
@@ -157,17 +162,41 @@ public enum GeometryPreparationGate {
         public var start: Bool
         /// Nothing is missing: the rebuild may draw now.
         public var drawNow: Bool
+        /// The idle neighbour prebuild is already building the requested
+        /// frame: do not start a second preparation and do not cancel it.
+        /// Its landing installs the level (adoption).
+        public var adoptPrebuild: Bool
 
-        public init(cancelInFlight: Bool, start: Bool, drawNow: Bool) {
+        public init(cancelInFlight: Bool, start: Bool, drawNow: Bool, adoptPrebuild: Bool = false) {
             self.cancelInFlight = cancelInFlight
             self.start = start
             self.drawNow = drawNow
+            self.adoptPrebuild = adoptPrebuild
         }
     }
 
-    public static func decide(inFlightKey: String?, requestedKey: String, missingWork: Bool) -> Decision {
+    /// `prebuildKey` is the frame the idle neighbour prebuild is building, if
+    /// any. A preparation already in flight wins over adoption.
+    public static func decide(
+        inFlightKey: String?, requestedKey: String, prebuildKey: String?, missingWork: Bool,
+        inFlightCanInstall: Bool = true
+    ) -> Decision {
         guard missingWork else { return Decision(cancelInFlight: false, start: false, drawNow: true) }
-        return Decision(cancelInFlight: false, start: inFlightKey == nil, drawNow: false)
+        if inFlightKey == nil, let prebuildKey, prebuildKey == requestedKey {
+            return Decision(cancelInFlight: false, start: false, drawNow: false, adoptPrebuild: true)
+        }
+        let cancel = inFlightKey != nil && inFlightKey != requestedKey && !inFlightCanInstall
+        return Decision(cancelInFlight: cancel, start: inFlightKey == nil || cancel, drawNow: false)
+    }
+
+    /// Whether the running preparation can still be installed. Its rect must
+    /// cover the view. Once the camera has stopped, only the wanted level may
+    /// hold the geometry permit: a preparation for another level is
+    /// cancelled, whether or not the installed level covers the view.
+    public static func inFlightCanInstall(
+        rectCoversView: Bool, stopped: Bool, isRequestedLevel: Bool
+    ) -> Bool {
+        rectCoversView && (isRequestedLevel || !stopped)
     }
 
     /// Touch-down hands the camera to the reader. A preparation whose

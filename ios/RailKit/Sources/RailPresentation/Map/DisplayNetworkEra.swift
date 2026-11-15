@@ -13,6 +13,15 @@ public enum DisplayNetworkEra: String, Codable, Sendable, CaseIterable, Identifi
 
     public var id: String { rawValue }
 
+    /// The ride date as the drawn network sees it. Only `.rideDate` reads the
+    /// date (see ``shows(_:today:rideDate:isStation:)``); every other era
+    /// ignores it, so it must not reach the frame key or the station filter
+    /// where a different journey date would look like a different network.
+    public func effectiveRideDate(_ rideDate: String?) -> String? {
+        guard self == .rideDate, let rideDate, Dates.isValidDateString(rideDate) else { return nil }
+        return rideDate
+    }
+
     /// Whether one decorated span is drawn.
     ///
     /// Undecorated geometry — nil id, nil bounds, `.current` — is always

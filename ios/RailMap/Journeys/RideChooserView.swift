@@ -36,6 +36,7 @@ import SwiftUI
 struct RideChooserView: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.closePanelSurface) private var closePanelSurface
 
     /// The rides under the tap, in `RideTapResolver`'s order — the nearest
     /// stroke first, and stable where two rides are coincident.
@@ -61,7 +62,7 @@ struct RideChooserView: View {
                 ) {
                     SheetCloseButton(
                         accessibilityLabel: Text(localization.text("ios.close", fallback: "Close")),
-                        action: { dismiss() })
+                        action: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })
                         .accessibilityIdentifier("rideChooserClose")
                 }
                 List {

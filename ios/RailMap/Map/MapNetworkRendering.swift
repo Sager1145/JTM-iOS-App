@@ -157,6 +157,10 @@ final class MapNetworkGeometryCache {
     /// Drop joined chains and their pixels whose content is no longer resident.
     /// Line-build retention stays on ``retainLineBuilds(withIDs:)``, which still
     /// requires matching anchors and junction dependencies.
+    func admitDisplayChains(_ keys: Set<JoinedChainKey>) {
+        joinedChains.admit(keys)
+    }
+
     func retainDisplayChains(_ keys: Set<JoinedChainKey>) {
         joinedChains.retain(keys)
         chainPixels.retain(keys)
@@ -166,12 +170,16 @@ final class MapNetworkGeometryCache {
         entries[frameKey] ?? FrameEntry()
     }
 
-    func beginFrame(key: String) {
+    /// The frame the cache reads and writes now. A rebuild that began a frame
+    /// and stopped before installing leaves it ahead of the installed one.
+    var currentFrameKey: String { frameKey }
+
+    func beginFrame(key: String, isOverview: Bool) {
         if entries[key] == nil {
             entries[key] = FrameEntry()
         }
         frameKey = key
-        for evicted in residency.begin(key) { entries.removeValue(forKey: evicted) }
+        for evicted in residency.begin(key, isOverview: isOverview) { entries.removeValue(forKey: evicted) }
     }
 
     /// Whether resident frame geometry leaves room to prebuild a neighbour.
@@ -665,11 +673,6 @@ final class MapOverlayInstaller {
                     fromAlpha: returningAlpha[key] ?? 0)
             }
         }
-        mapView.addOverlays(
-            desiredOverlays.filter { !oldIDs.contains(ObjectIdentifier($0)) },
-            level: .aboveLabels
-        )
-
         // Exiting network details stay beneath the ride and selection layers.
         var stack = desiredOverlays
         let networkEnd = stack.lastIndex { ($0.title ?? nil)?.hasPrefix("network") == true }
@@ -680,7 +683,25 @@ final class MapOverlayInstaller {
             let position = stack.firstIndex { ($0.title ?? nil) == batch.originalKey } ?? networkEnd
             stack.insert(batch.overlay, at: position)
         }
-        // Selection changes stacking without changing geometry.
+        // New overlays go straight to their final position: appending them and
+        // swapping each back down cost one exchangeOverlay call per step.
+        let newOverlays = desiredOverlays.filter { !oldIDs.contains(ObjectIdentifier($0)) }
+        if !newOverlays.isEmpty {
+            var byID: [Int: MKOverlay] = [:]
+            func key(_ overlay: MKOverlay) -> Int { Int(bitPattern: ObjectIdentifier(overlay)) }
+            for overlay in stack + newOverlays { byID[key(overlay)] = overlay }
+            let steps = OverlayInsertionPlan.steps(
+                mounted: mapView.overlays(in: .aboveLabels).map(key),
+                target: stack.map(key),
+                new: Set(newOverlays.map(key))
+            )
+            for step in steps {
+                guard let overlay = byID[step.id] else { continue }
+                mapView.insertOverlay(overlay, at: step.index, level: .aboveLabels)
+            }
+        }
+        // Selection changes stacking without changing geometry. The swap loop
+        // below is a safety net: it does nothing when the order is right.
         var installed = mapView.overlays(in: .aboveLabels)
         let mountedIDs = Set(installed.map(ObjectIdentifier.init))
         var orderedIDs: Set<ObjectIdentifier> = []
@@ -815,6 +836,10 @@ struct MapGeometryFrame {
     let scale: CGFloat
     let laneScale: Double
     let key: String
+
+    /// Whether this level is at or below the overview the zoom-out lands on,
+    /// so the cache keeps its frame resident.
+    var isOverview: Bool { bucket <= GeometryZoomLevels.overviewLevel }
 
     init(level: Int, eraKey: String, on mapView: MKMapView) {
         let nominalZoom = GeometryZoomLevels.nominalZoom(level: level)

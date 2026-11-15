@@ -139,6 +139,42 @@ struct StrokeBakeEqualityTests {
         return recorder
     }
 
+    /// `region|id` of the line a key belongs to, with its level prefix (`plain|z17.0`).
+    static func lineIdentity(_ key: String) -> String {
+        let parts = key.split(separator: "|", omittingEmptySubsequences: false)
+        return parts.count > 4 ? ([parts[0], parts[1], parts[3], parts[4]]).joined(separator: "|") : key
+    }
+
+    /// Whether `actual` and `expected` are two decimations of one polyline: every vertex of each
+    /// within `limit` map points of the other's polyline, ends equal. `trailer` numbers at the end
+    /// (a family or fallback window) must be identical.
+    static func sameDecimatedPolyline(
+        _ actual: [Double], _ expected: [Double], trailer: Int, limit: Double
+    ) -> Bool {
+        guard actual.count >= 4 + trailer, expected.count >= 4 + trailer,
+              Array(actual.suffix(trailer)) == Array(expected.suffix(trailer)) else { return false }
+        func points(_ values: [Double]) -> [(Double, Double)] {
+            let flat = Array(values.dropLast(trailer))
+            return stride(from: 0, to: flat.count - 1, by: 2).map { (flat[$0], flat[$0 + 1]) }
+        }
+        let a = points(actual), b = points(expected)
+        func distance(_ q: (Double, Double), to line: [(Double, Double)]) -> Double {
+            var best = Double.infinity
+            for index in 0..<(line.count - 1) {
+                let (ax, ay) = line[index], (bx, by) = line[index + 1]
+                let dx = bx - ax, dy = by - ay
+                let l2 = dx * dx + dy * dy
+                let t = l2 > 0 ? min(max(((q.0 - ax) * dx + (q.1 - ay) * dy) / l2, 0), 1) : 0
+                best = min(best, hypot(ax + dx * t - q.0, ay + dy * t - q.1))
+            }
+            return best
+        }
+        guard abs(a[0].0 - b[0].0) <= 1e-4, abs(a[0].1 - b[0].1) <= 1e-4,
+              abs(a[a.count - 1].0 - b[b.count - 1].0) <= 1e-4,
+              abs(a[a.count - 1].1 - b[b.count - 1].1) <= 1e-4 else { return false }
+        return a.allSatisfy { distance($0, to: b) <= limit } && b.allSatisfy { distance($0, to: a) <= limit }
+    }
+
     @Test("every golden key is produced, with the same length and values")
     func matchesGolden() throws {
         let golden = try Golden.load()
@@ -152,24 +188,68 @@ struct StrokeBakeEqualityTests {
         // (a five-thousandth of a pixel at the highest level) except for a handful of such
         // sensitive vertices, which are held to 0.1 map point (0.05 px at the highest level),
         // with the vertex counts of every run required to be identical.
+        //
+        // Decimation (`ContinuousStroke.drawnStroke`, from 2026-11-14) is greedy and keeps or drops a
+        // vertex on a threshold, so at those same sensitive vertices the noise can pick a different
+        // one of two equally valid decimations of the same curve. Such a drawn chunk is accepted only
+        // when it is the same polyline as the golden within twice the decimation tolerance (the
+        // most two decimations of one curve can stand apart), in either direction and with equal
+        // ends, and its line's stroke fingerprints may then differ by 1e-3 relative; both are
+        // counted and capped below. Measured at the merge: 17 chunks, all at z17, all within
+        // 0.05 px of the golden.
         let pointTolerance = 1e-4
         let sensitiveTolerance = 0.1
         let sensitiveAllowance = 8
+        let decimationFlipAllowance = 24
+        let flippedFingerprintTolerance = 1e-3
+        let flippedFingerprintAllowance = 3
         var worst = 0.0
         var worstKey = ""
         var checked = 0
         var sensitive: [String] = []
-        for (key, expected) in golden.entries.sorted(by: { $0.key < $1.key }) {
-            guard let actual = produced.recorded[key] else { continue }
-            #expect(actual.count == expected.count, "length of \(key)")
-            guard actual.count == expected.count, let want = golden.slice(key) else { continue }
-            checked += 1
+        var flipped: [String] = []
+        var flippedLines: Set<String> = []
+        var flippedFingerprints: [String] = []
+        let sortedEntries = golden.entries.sorted(by: { $0.key < $1.key })
+        func differenceOf(_ actual: [Double], _ want: [Double], fingerprint: Bool) -> Double {
+            guard actual.count == want.count else { return .infinity }
             // Fingerprints are sums of large numbers, so they are compared relatively.
+            return zip(actual, want).map { abs($0 - $1) / (fingerprint ? max(abs($1), 1) : 1) }.max() ?? 0
+        }
+        // First the drawn chunks that are a different decimation of the same curve.
+        for (key, _) in sortedEntries where !Self.isFingerprint(key) {
+            guard let actual = produced.recorded[key], let want = golden.slice(key),
+                  differenceOf(actual, want, fingerprint: false) > pointTolerance,
+                  key.contains("|chunk|") || key.contains("|hist|") || key.contains("|family|")
+                    || key.contains("|fallback|"),
+                  let zoomText = key.split(separator: "|").dropFirst().first?.dropFirst(),
+                  let zoom = Double(zoomText) else { continue }
+            let mapPointsPerPoint = StrokeProjection.worldSize / (256 * exp2(zoom))
+            let trailer = key.contains("|family|") || key.contains("|fallback|") ? 2 : 0
+            if Self.sameDecimatedPolyline(
+                actual, want, trailer: trailer,
+                limit: 2 * RailStrokeTokens.simplifyTolerance * mapPointsPerPoint) {
+                flipped.append(key)
+                flippedLines.insert(Self.lineIdentity(key))
+            }
+        }
+        for (key, expected) in sortedEntries {
+            guard let actual = produced.recorded[key] else { continue }
+            if flipped.contains(key) { checked += 1; continue }
             let fingerprint = Self.isFingerprint(key)
-            let difference = zip(actual, want).map { abs($0 - $1) / (fingerprint ? max(abs($1), 1) : 1) }.max() ?? 0
+            let sameLength = actual.count == expected.count
+            if !sameLength { #expect(sameLength, "length of \(key)") }
+            guard sameLength, let want = golden.slice(key) else { continue }
+            checked += 1
+            let difference = differenceOf(actual, want, fingerprint: fingerprint)
             if difference > worst { worst = difference; worstKey = key }
             if fingerprint {
-                #expect(difference <= 1e-9, "\(key) differs by \(difference)")
+                if difference > 1e-9, flippedLines.contains(Self.lineIdentity(key)),
+                   difference <= flippedFingerprintTolerance {
+                    flippedFingerprints.append(key)
+                } else {
+                    #expect(difference <= 1e-9, "\(key) differs by \(difference)")
+                }
             } else if difference > pointTolerance {
                 sensitive.append(key)
                 #expect(difference <= sensitiveTolerance, "\(key) differs by \(difference)")
@@ -177,7 +257,11 @@ struct StrokeBakeEqualityTests {
         }
         #expect(checked == golden.entries.count)
         #expect(sensitive.count <= sensitiveAllowance, "\(sensitive.count) entries beyond 1e-4: \(sensitive)")
-        print("StrokeBakeEquality: \(checked) entries, \(sensitive.count) beyond 1e-4, worst difference \(worst) at \(worstKey)")
+        #expect(flipped.count <= decimationFlipAllowance, "\(flipped.count) decimation flips: \(flipped)")
+        #expect(
+            flippedFingerprints.count <= flippedFingerprintAllowance,
+            "\(flippedFingerprints.count) fingerprints differ: \(flippedFingerprints)")
+        print("StrokeBakeEquality: \(checked) entries, \(sensitive.count) beyond 1e-4, \(flipped.count) decimation flips, worst difference \(worst) at \(worstKey)")
     }
 
     @Test("the fixture exercises every engine branch the golden claims to cover")

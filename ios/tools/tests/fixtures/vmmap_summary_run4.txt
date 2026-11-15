@@ -1,0 +1,11 @@
+Process:         RailMap [48889]
+Identifier:      com.JRM.RailMap
+Physical footprint:         436.6M
+Physical footprint (peak):  535.3M
+REGION TYPE                           SIZE     SIZE     SIZE     SIZE     SIZE     SIZE     SIZE    COUNT (non-coalesced) 
+IOAccelerator (graphics)              592K     208K       0K     208K       0K     208K       0K       10 
+MALLOC ZONE                                  SIZE       SIZE       SIZE       SIZE      COUNT  ALLOCATED  FRAG SIZE  % FRAG   COUNT
+DefaultMallocZone_0x10463c000              483.9M     131.4M     131.2M     255.9M    1379333     342.9M      44.3M     12%     403
+GeoCSS_0x121dcc000                          9552K         0K         0K      8672K      17709      7417K      1255K     15%      65
+GeoGL_0x110d34000                           3312K         0K         0K      2880K       1856      2258K       622K     22%      43
+VectorKitLabels_0x121da8000                  304K         0K         0K       224K         14        29K       195K     87%      10

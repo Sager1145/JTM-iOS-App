@@ -179,32 +179,75 @@ nonisolated enum RideStrokeBuilder {
 
     /// Builds every request. Pure apart from the memo; call from a worker.
     /// Cancellation returns what was built so far.
-    static func build(_ requests: [Request], frame: Frame, memo: Memo) -> Output {
+    ///
+    /// A large batch is split by share key across a few child tasks
+    /// (``RideBuildPartition``): requests that share a key stay together, so
+    /// the sharing counts match one thread's, and the answers are merged back
+    /// into request order. One thread took 3.26 s for a warm launch's trips.
+    /// The children inherit the caller's cancellation and nothing blocks a
+    /// thread while they run.
+    static func build(_ requests: [Request], frame: Frame, memo: Memo) async -> Output {
         let interval = RailSignpost.map.begin("map.rideStrokes.build")
         defer { RailSignpost.map.end("map.rideStrokes.build", interval) }
-        var built: [Built] = []
-        built.reserveCapacity(requests.count)
+        let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
+        let parts = RideBuildPartition.partition(
+            shareKeys: requests.map { $0.shareKey(frame: frame) }, maxParts: maxParts)
+        guard parts.count > 1 else {
+            return merge([buildPart(Array(requests.indices), requests, frame: frame, memo: memo, cancelled: { Task.isCancelled })])
+        }
+        let results = await withTaskGroup(of: (Int, Part).self) { group in
+            for (position, indices) in parts.enumerated() {
+                group.addTask {
+                    (position, buildPart(
+                        indices, requests, frame: frame, memo: memo, cancelled: { Task.isCancelled }))
+                }
+            }
+            var all = Array(repeating: Part(), count: parts.count)
+            for await (position, part) in group { all[position] = part }
+            return all
+        }
+        return merge(results)
+    }
+
+    private struct Part: Sendable {
+        var built: [(index: Int, value: Built)] = []
         var shared = 0
-        var empty: [RideLineCacheKey] = []
-        for request in requests {
-            if Task.isCancelled { break }
+        var empty: [(index: Int, key: RideLineCacheKey)] = []
+    }
+
+    private static func buildPart(
+        _ indices: [Int], _ requests: [Request], frame: Frame, memo: Memo, cancelled: () -> Bool
+    ) -> Part {
+        var part = Part()
+        part.built.reserveCapacity(indices.count)
+        for index in indices {
+            if cancelled() { break }
+            let request = requests[index]
             let shareKey = request.shareKey(frame: frame)
             let points: [CLLocationCoordinate2D]
             if let shareKey, let known = memo.points(for: shareKey, frame: frame) {
                 points = known
-                shared += 1
+                part.shared += 1
             } else if let fresh = resolve(request, frame: frame) {
                 points = fresh.points
                 if let shareKey, fresh.fromChain {
                     memo.store(fresh.points, for: shareKey, frame: frame)
                 }
             } else {
-                empty.append(request.key)
+                part.empty.append((index, request.key))
                 continue
             }
-            built.append(Built(
-                key: request.key, polyline: MKPolyline(coordinates: points, count: points.count)))
+            part.built.append((index, Built(
+                key: request.key, polyline: MKPolyline(coordinates: points, count: points.count))))
         }
-        return Output(built: built, shared: shared, empty: empty)
+        return part
+    }
+
+    /// The parts' answers in original request order.
+    private static func merge(_ parts: [Part]) -> Output {
+        Output(
+            built: parts.flatMap(\.built).sorted { $0.index < $1.index }.map(\.value),
+            shared: parts.reduce(0) { $0 + $1.shared },
+            empty: parts.flatMap(\.empty).sorted { $0.index < $1.index }.map(\.key))
     }
 }

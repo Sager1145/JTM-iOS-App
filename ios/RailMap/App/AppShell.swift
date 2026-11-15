@@ -143,6 +143,9 @@ struct AppShell: View {
         // files, so dropping them costs a later decode, not an answer.
         .onReceive(NotificationCenter.default.publisher(
             for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
+            // On the main actor, before the detached releases: lines nothing
+            // holds or shows leave the network store first.
+            network.trimForMemoryPressure()
             Task.detached(priority: .utility) {
                 await RiddenRouteStore.releaseCachesForMemoryPressure()
                 await EdgeIndexCache.shared.releaseForMemoryPressure()

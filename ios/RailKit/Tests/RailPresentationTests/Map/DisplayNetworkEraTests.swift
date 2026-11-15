@@ -194,4 +194,21 @@ struct DisplayNetworkEraTests {
             today: refreshed.todayByRegion["jp"] ?? "", rideDate: refreshed.rideDate))
     }
 
+
+    @Test("Only the ride-date era keeps a ride date; the frame key ignores it elsewhere")
+    func effectiveRideDateOnlyForRideDateEra() {
+        func key(_ era: DisplayNetworkEra, _ date: String?) -> String {
+            DisplayNetworkTemporalContext(
+                era: era, rideDate: era.effectiveRideDate(date),
+                todayByRegion: ["jp": today], generation: 0).cacheKey
+        }
+        for era in [DisplayNetworkEra.current, .historicalOverlay] {
+            #expect(era.effectiveRideDate("2025-01-01") == nil)
+            #expect(key(era, "2025-01-01") == key(era, "2024-06-30"))
+            #expect(key(era, "2025-01-01") == key(era, nil))
+        }
+        #expect(DisplayNetworkEra.rideDate.effectiveRideDate("2025-01-01") == "2025-01-01")
+        #expect(DisplayNetworkEra.rideDate.effectiveRideDate("garbage") == nil)
+        #expect(key(.rideDate, "2025-01-01") != key(.rideDate, "2024-06-30"))
+    }
 }

@@ -27,8 +27,12 @@ final class RailMapController {
     func requestAutoFocus(
         _ target: MapCameraPolicy.FocusTarget, enabled: Bool, playbackIsActive: Bool
     ) {
+        let olderFitRunning = cameraPolicy.focusFitRunning
         autoFocusRequest = cameraPolicy.requestFocus(
             target, enabled: enabled, playbackIsActive: playbackIsActive)
+        // A disabled request (nil) leaves the older animation to finish:
+        // stopping it would freeze the camera mid-flight for nothing.
+        if olderFitRunning, autoFocusRequest != nil { stopFocusFit() }
         if autoFocusRequest != nil {
             pendingFollow = false
         }
@@ -48,7 +52,19 @@ final class RailMapController {
         return cameraPolicy.pendingFocusRequest
     }
 
-    func cancelAutoFocus() { cameraPolicy.cancelFocus() }
+    func cancelAutoFocus() {
+        if cameraPolicy.cancelFocus() { stopFocusFit() }
+    }
+
+    /// The coordinator's map reported its settled region: a focus fit is over.
+    func endFocusFit() { cameraPolicy.endFocusFit() }
+
+    /// Stop a focus animation an older request started, where it is, so a
+    /// newer pick's framing is not queued behind it.
+    private func stopFocusFit() {
+        guard let mapView else { return }
+        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: false)
+    }
 
     func isCurrentAutoFocus(_ request: MapCameraPolicy.FocusRequest) -> Bool {
         cameraPolicy.isCurrent(request)
@@ -368,7 +384,7 @@ final class RailMapController {
     private func claimCamera() {
         discardReplacementCamera()
         pendingFollow = false
-        cameraPolicy.claimCamera()
+        if cameraPolicy.claimCamera() { stopFocusFit() }
     }
 
     func playbackWillMoveCamera() {
@@ -457,8 +473,8 @@ final class RailMapController {
     /// The map hands regions rather than rects — `region(covering:)` is what
     /// it computes from a ride's own strokes — so the conversion belongs here,
     /// with the padding rule it feeds, rather than at every caller.
-    func fit(_ region: MKCoordinateRegion, animated: Bool? = nil) {
-        fit(MapProjection.mapRect(of: region), animated: animated)
+    func fit(_ region: MKCoordinateRegion, animated: Bool? = nil, startedByFocus: Bool = false) {
+        fit(MapProjection.mapRect(of: region), animated: animated, startedByFocus: startedByFocus)
     }
 
     /// Frame an extent, clear of the resident sheet.
@@ -473,7 +489,7 @@ final class RailMapController {
     private(set) var lastExplicitFitBottom: CGFloat = 0
 #endif
 
-    func fit(_ rect: MKMapRect, animated: Bool? = nil) {
+    func fit(_ rect: MKMapRect, animated: Bool? = nil, startedByFocus: Bool = false) {
         guard let mapView, !rect.isNull else { return }
 #if DEBUG
         explicitFitRevision += 1
@@ -481,6 +497,21 @@ final class RailMapController {
 #endif
         claimCamera()
         stopFollowingUser()
+        let isAnimated = animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion)
+        // The mark goes up before the call and only for a fit that animates
+        // to somewhere else: a non-animated fit reports its region inside the
+        // call, and a fit onto the current rect reports nothing, so either
+        // would leave the mark set with no callback to clear it.
+        if startedByFocus, isAnimated {
+            let target = mapView.mapRectThatFits(rect, edgePadding: framingInsets)
+            let tolerance = max(visibleTolerance(of: mapView), 1)
+            let current = mapView.visibleMapRect
+            let moves = abs(target.origin.x - current.origin.x) > tolerance
+                || abs(target.origin.y - current.origin.y) > tolerance
+                || abs(target.size.width - current.size.width) > tolerance
+                || abs(target.size.height - current.size.height) > tolerance
+            if moves { cameraPolicy.beginFocusFit() }
+        }
         mapView.setVisibleMapRect(
             rect,
             edgePadding: framingInsets,
@@ -489,7 +520,13 @@ final class RailMapController {
             // reduce-motion rule below would have said the same. It is a
             // parameter so a caller that has already decided does not have to
             // decide twice.
-            animated: animated ?? RailMotion.cameraAnimated(reduceMotion: reduceMotion))
+            animated: isAnimated)
+    }
+
+    /// One part in a million of the visible width: rect equality that
+    /// survives MapKit's rounding.
+    private func visibleTolerance(of mapView: MKMapView) -> Double {
+        mapView.visibleMapRect.size.width * 1e-6
     }
 
     /// Automatic focus leaves an already visible subject and the user's zoom
@@ -508,7 +545,7 @@ final class RailMapController {
             corners.allSatisfy({ available.contains(mapView.convert($0.coordinate, toPointTo: mapView)) }) {
             return
         }
-        fit(rect)
+        fit(rect, startedByFocus: true)
     }
 
     /// The room a framed subject is given: the resident sheet's own height at
@@ -583,7 +620,18 @@ final class RailMapController {
     func frameForUITest(_ rect: MKMapRect) {
         mapView?.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
     }
+
+    /// Runs the map's own tap answer at a view point, and delivers an empty-map
+    /// clear at once instead of after the double-tap window. Set by the map
+    /// view; it exercises `answerTap`, not the gesture recognisers.
+    /// `doubleTap` runs the second tap inside the window too.
+    @ObservationIgnored var answerTapForUITest: ((CGPoint, Bool) -> MapTapTestReport?)?
 #endif
+
+    /// Where the open workspace card is hosted, nil with none. Set by the
+    /// workspace; the map reads it to decide whether a station or line tap
+    /// waits for the double-tap window (`MapTapPolicy.defersAnswer`).
+    @ObservationIgnored var mapCardHost: WorkspaceSurfaceHost?
 
     /// Told by the map when a finger starts moving it.
     func readerBeganManipulating() {

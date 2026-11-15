@@ -22,6 +22,7 @@ struct RegressionGuardStrokeEngineMove {
     /// RailCore files that make up the engine, its inputs and its entry points.
     private static let engineFiles = [
         "RailKit/Sources/RailCore/Rendering/StrokeBake.swift",
+        "RailKit/Sources/RailCore/Rendering/ScreenPolylineThinning.swift",
         "RailKit/Sources/RailCore/Rendering/NetworkStrokeBake.swift",
         "RailKit/Sources/RailCore/Rendering/StrokeLineInput.swift",
         "RailKit/Sources/RailCore/Rendering/StrokeProjection.swift",
@@ -51,7 +52,8 @@ struct RegressionGuardStrokeEngineMove {
         ] {
             #expect(!geometry.contains(moved), "MapLineGeometry.swift must not define or call \(moved)")
         }
-        #expect(geometry.contains("StrokeBake.prepare("))
+        #expect(geometry.contains("StrokeBake.prepareLines("))
+        #expect(geometry.contains("StrokeBake.strokeBuild("))
         #expect(geometry.contains("StrokeBake.parallelLaneCoordinates("))
     }
 

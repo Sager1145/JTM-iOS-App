@@ -488,6 +488,7 @@ final class RailNetworkStore {
         displayHistoryOverlayLines = [:]
         displayHistoryOverlayStations = [:]
         lastDisplayRequest = nil
+        prefetchGate.reset()
         lastRequestedDisplayLine = [:]
         requestSerial = 0
         noteResidencyChange()
@@ -650,9 +651,10 @@ final class RailNetworkStore {
     /// least-recently-requested by line, never a line the current request
     /// needs or a surviving line's `dependsOn` still names. See
     /// ``activateDisplayLines(intersecting:cameraZoom:)`` and
-    /// ``evictIfNeeded(index:)``.
+    /// ``evictIfNeeded(index:budget:)``.
     func ensure(regionsIntersecting rect: MKMapRect, cameraZoom: Double) {
         lastDisplayRequest = (rect, cameraZoom)
+        prefetchGate.noteRequest(Self.cameraRequest(rect, cameraZoom))
         guard displayManifest != nil else { return }
         // The same rect and zoom with nothing resident, loading or failed
         // changed since: the answer would be the same, and `requestSerial`
@@ -862,6 +864,13 @@ final class RailNetworkStore {
     @ObservationIgnored private var manifestFailure: String?
     @ObservationIgnored private var displayLoadTask: Task<Void, Never>?
     @ObservationIgnored private var lastDisplayRequest: (rect: MKMapRect, cameraZoom: Double)?
+    /// The rect on screen right now, set by the map's owner. A memory-warning
+    /// trim protects it beside the last built rect, since the camera may have
+    /// moved since that build.
+    @ObservationIgnored var visibleRectProvider: (() -> MKMapRect?)?
+    /// Holds the idle prefetch ring back after a memory warning until the
+    /// camera asks for a different rect or zoom.
+    @ObservationIgnored private var prefetchGate = MemoryPressurePrefetchGate()
     /// Which wave a batch belongs to — an urgent one covers the visible
     /// rect, a padded one the rest of the build rect, a prefetch one the
     /// idle ring one build-rect-half further out. Only the wave decides the
@@ -981,19 +990,7 @@ final class RailNetworkStore {
         if displayLoadTask != nil {
             let cameraLeft = currentBatchRect.map { !$0.intersects(rect) } ?? false
             if currentBatchWave == .prefetch || cameraLeft {
-                noteResidencyChange()
-                displayLoadTask?.cancel()
-                loadingDisplayLines.subtract(currentBatchIDs)
-                if currentBatchWave != .prefetch {
-                    for id in currentBatchIDs {
-                        let remaining = (displayAttempts[id] ?? 1) - 1
-                        displayAttempts[id] = remaining > 0 ? remaining : nil
-                    }
-                }
-                displayLoadTask = nil
-                currentBatchWave = nil
-                currentBatchIDs = []
-                currentBatchRect = nil
+                cancelCurrentBatch()
             } else {
                 return
             }
@@ -1039,6 +1036,9 @@ final class RailNetworkStore {
             wave = .padded
             batch = missing(needed)
         } else {
+            // After a memory warning the ring would reload the lines the trim
+            // just evicted for this same camera.
+            guard !prefetchGate.isPrefetchSuspended else { return }
             let prefetchRect = rect.insetBy(
                 dx: -rect.size.width * 0.5, dy: -rect.size.height * 0.5)
             let prefetchNeeded = withoutFailedHistory(RailDisplayNetwork.lines(
@@ -1164,7 +1164,7 @@ final class RailNetworkStore {
             }
             loadedDisplayLines.merge(result.items, uniquingKeysWith: { _, new in new })
             if completedWave == .prefetch { prefetchedLineTotal += result.items.count }
-            evictIfNeeded(index: index)
+            evictIfNeeded(index: index, budget: residentByteBudget)
             publishDisplayNetwork()
             // A line that arrived while the camera kept moving may have
             // brought a neighbour into range. Ask again from where the map is
@@ -1228,8 +1228,50 @@ final class RailNetworkStore {
         rebuildHeldCaches()
         guard let index = displayIndex else { return }
         let before = loadedDisplayLines.count
-        evictIfNeeded(index: index)
+        evictIfNeeded(index: index, budget: residentByteBudget)
         if loadedDisplayLines.count != before { publishDisplayNetwork() }
+    }
+
+    /// A memory warning: evicts every resident line that is neither held nor
+    /// inside the camera's current request (one eviction pass with a budget of
+    /// zero) and publishes when anything went. The line swap that follows
+    /// shrinks what is derived from the lines.
+    func trimForMemoryPressure() {
+        guard let index = displayIndex else { return }
+        // An idle prefetch batch in flight would land after the trim and
+        // refill it; the gate then keeps the ring from starting another.
+        if currentBatchWave == .prefetch { cancelCurrentBatch() }
+        prefetchGate.suspend(after: lastDisplayRequest.map { Self.cameraRequest($0.rect, $0.cameraZoom) })
+        let before = loadedDisplayLines.count
+        evictIfNeeded(index: index, budget: 0, visibleRect: visibleRectProvider?())
+        if loadedDisplayLines.count != before { publishDisplayNetwork() }
+    }
+
+    private static func displayRect(_ rect: MKMapRect) -> DisplayRectValue {
+        DisplayRectValue(
+            x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
+    }
+
+    private static func cameraRequest(_ rect: MKMapRect, _ cameraZoom: Double) -> DisplayCameraRequest {
+        DisplayCameraRequest(rect: displayRect(rect), cameraZoom: cameraZoom)
+    }
+
+    /// Stops the batch in flight. An urgent or padded one was not a failure,
+    /// so its attempts are refunded.
+    private func cancelCurrentBatch() {
+        noteResidencyChange()
+        displayLoadTask?.cancel()
+        loadingDisplayLines.subtract(currentBatchIDs)
+        if currentBatchWave != .prefetch {
+            for id in currentBatchIDs {
+                let remaining = (displayAttempts[id] ?? 1) - 1
+                displayAttempts[id] = remaining > 0 ? remaining : nil
+            }
+        }
+        displayLoadTask = nil
+        currentBatchWave = nil
+        currentBatchIDs = []
+        currentBatchRect = nil
     }
 
     /// Ids of the lines whose geometry is resident right now.
@@ -1307,12 +1349,24 @@ final class RailNetworkStore {
     /// evicts a line that a surviving line still depends on — evicting X
     /// only to have Y (kept resident) draw without its alignment would be a
     /// worse failure than staying over budget.
-    private func evictIfNeeded(index: RailDisplayNetworkIndex) {
+    ///
+    /// `visibleRect`, when given, is protected beside the last built rect (at
+    /// that request's zoom): a trim runs while the camera may have moved on.
+    private func evictIfNeeded(
+        index: RailDisplayNetworkIndex, budget: Int, visibleRect: MKMapRect? = nil
+    ) {
         let residentBytes = loadedDisplayLines.values.reduce(0) { $0 + $1.bytes }
-        guard residentBytes > residentByteBudget else { return }
-        let protectedEntries = lastDisplayRequest.map {
-            RailDisplayNetwork.lines(intersecting: $0.rect, cameraZoom: $0.cameraZoom, in: index)
-        } ?? []
+        guard residentBytes > budget else { return }
+        let zoom = lastDisplayRequest?.cameraZoom ?? heldRequestZoom
+        let rects = MemoryTrimProtection.protectedRects(
+            lastBuilt: lastDisplayRequest.map { Self.displayRect($0.rect) },
+            visible: visibleRect.map(Self.displayRect))
+        let protectedEntries = rects.flatMap { value in
+            RailDisplayNetwork.lines(
+                intersecting: MKMapRect(
+                    x: value.x, y: value.y, width: value.width, height: value.height),
+                cameraZoom: zoom, in: index)
+        }
         let protected = Set(protectedEntries.map(\.id)).union(heldEntryCache.map(\.id))
         let candidates = loadedDisplayLines.keys.filter { !protected.contains($0) }
             .sorted { a, b in
@@ -1333,10 +1387,10 @@ final class RailNetworkStore {
             }
         }
         var evicted = true
-        while evicted && bytes > residentByteBudget {
+        while evicted && bytes > budget {
             evicted = false
             for id in candidates {
-                guard bytes > residentByteBudget else { break }
+                guard bytes > budget else { break }
                 guard (dependentCount[id] ?? 0) == 0,
                       let prepared = loadedDisplayLines[id] else { continue }
                 loadedDisplayLines.removeValue(forKey: id)
@@ -1848,7 +1902,7 @@ final class RailNetworkStore {
     @ObservationIgnored private var stationsByRegion:
         (of: [DrawnStation], grouped: [Region: [DrawnStation]])?
 
-    private struct Decoded: Sendable {
+    struct Decoded: Sendable {
         var lines: [DrawnLine]
         var stations: [DrawnStation]
         var elapsed: Duration
@@ -1899,7 +1953,7 @@ final class RailNetworkStore {
     ///   values the map's own fragments already draw in, so the two stop
     ///   disagreeing. `sourceCoordinates`/routing are read from `package`
     ///   exactly as before; only display metadata is touched.
-    private nonisolated static func decode(
+    nonisolated static func decode(
         region: Region,
         catalog: [String: RailDisplayNetworkManifest.Line] = [:]
     ) async throws -> Decoded {
@@ -1911,10 +1965,36 @@ final class RailNetworkStore {
         // then applies the Apple datum shift.
         let (loaded, sourceParts) = try await DisplayNetworkCache.shared.generation(country: region.code)
         let package = loaded.package
-        let visibilityLengthByLineId = Visibility.groupLengthByLineId(package)
-        let minZoomByLineId = visibilityLengthByLineId.mapValues {
-            Visibility.minZoomForLength(totalKm: $0)
+        // The manifest's key shape (`build-display-network.py`'s
+        // `key = f"{region}|{line['id']}"`) — resolved once per line rather
+        // than reassembling the string per field below.
+        func displayMetadata(for lineID: String) -> RailDisplayNetworkManifest.Line? {
+            catalog["\(region.code)|\(lineID)"]
         }
+        // The visibility tier (group length, best rank, ported zoom) comes from
+        // the manifest wherever it has an entry: the builder's visibility
+        // groups also join a corridor split across operators, which
+        // `Visibility.groupLengthByLineId` (operator + name only) cannot see.
+        // The map's own fragments already read these manifest values
+        // (`RailDisplayNetworkManifest.Line.nativeMinZoomMapLibre`), so taking
+        // them here too keeps the line, its stations and the label election
+        // on ONE threshold. No manifest, or no entry for a line, falls back to
+        // the package's operator+name group exactly as before.
+        let packageLengthByLineId = Visibility.groupLengthByLineId(package)
+        let visibilityLengthByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.visibilityLengthKm
+                    ?? packageLengthByLineId[line.id] ?? 0)
+            }, uniquingKeysWith: { _, last in last })
+        let minZoomByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.minZoomMapLibre
+                    ?? Visibility.minZoomForLength(totalKm: packageLengthByLineId[line.id] ?? 0))
+            }, uniquingKeysWith: { _, last in last })
+        let rankByLineId = Dictionary(
+            package.lines.map { line in
+                (line.id, displayMetadata(for: line.id)?.rank ?? line.rank)
+            }, uniquingKeysWith: { _, last in last })
         // The native threshold for every line, in MapLibre's zoom, computed
         // once here because both halves of the network read it: the line, to
         // know when it is drawn, and every station on it, which may not
@@ -1927,17 +2007,11 @@ final class RailNetworkStore {
                     line.id,
                     NetworkLOD.minZoomMapLibre(
                         portedMinZoom: minZoomByLineId[line.id] ?? 0,
-                        rank: line.rank,
+                        rank: rankByLineId[line.id] ?? line.rank,
                         visibilityLengthKm: visibilityLengthByLineId[line.id] ?? 0,
                         region: region.code, operator: line.operator, name: line.name)
                 )
             }, uniquingKeysWith: { _, last in last })
-        // The manifest's own key shape (`build-display-network.py`'s
-        // `key = f"{region}|{line['id']}"`) — resolved once per line rather
-        // than reassembling the string per field below.
-        func displayMetadata(for lineID: String) -> RailDisplayNetworkManifest.Line? {
-            catalog["\(region.code)|\(lineID)"]
-        }
         let lines = zip(package.lines, sourceParts).map { line, sourceIntervals in
             // `DisplayParts` stays byte-for-byte WGS84-compatible with the
             // WebUI. Only the coordinates handed to MapKit are shifted for
@@ -1971,12 +2045,12 @@ final class RailNetworkStore {
                 colorDark: Color(hex: colorDarkHex) ?? .accentColor,
                 colorHex: (colorHex ?? "#7a7a7a").lowercased(),
                 colorDarkHex: (colorDarkHex ?? "#7a7a7a").lowercased(),
-                rank: line.rank,
+                rank: rankByLineId[line.id] ?? line.rank,
                 minZoom: portedMinZoom,
                 visibilityLengthKm: visibilityLengthKm,
                 lodMinZoom: NetworkLOD.minZoom(
                     portedMinZoom: portedMinZoom,
-                    rank: line.rank,
+                    rank: rankByLineId[line.id] ?? line.rank,
                     visibilityLengthKm: visibilityLengthKm, region: region.code,
                     operator: line.operator, name: line.name),
                 lane: 0,

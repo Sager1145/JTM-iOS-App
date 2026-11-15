@@ -65,6 +65,16 @@ struct JourneyListRow: View {
     @Environment(AppLocalization.self) private var localization
     @Environment(PresentationHost.self) private var presentationHost
     @State private var showsGroupAssignment = false
+    /// Set by the docked workspace, whose panel hosts the group picker
+    /// (`WorkspaceSurfacePolicy`); nil where a system sheet does.
+    @Environment(\.presentGroupPicker) private var presentGroupPicker
+
+    /// The row's own sheet, for the layouts the policy gives a system sheet.
+    private var systemGroupAssignment: Binding<Bool> {
+        Binding(
+            get: { presentGroupPicker == nil && showsGroupAssignment },
+            set: { showsGroupAssignment = $0 })
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: RailSpacing.s8) {
@@ -98,7 +108,7 @@ struct JourneyListRow: View {
                                  trailing: WorkspaceMenuMetrics.horizontalInset))
         // §5.1: the row does not expose every verb. Swipe and context menu do.
         .contextMenu { contextMenuItems }
-        .sheet(isPresented: $showsGroupAssignment) {
+        .sheet(isPresented: systemGroupAssignment) {
             JourneyGroupAssignmentView(
                 train: train,
                 groups: JourneyGroupCatalog.groups(in: editing.itineraries.store?.trains ?? []),
@@ -164,7 +174,13 @@ struct JourneyListRow: View {
             }
         }
         Button {
-            presentationHost.afterTeardown { showsGroupAssignment = true }
+            presentationHost.afterTeardown {
+                if let presentGroupPicker {
+                    presentGroupPicker(train.id)
+                } else {
+                    showsGroupAssignment = true
+                }
+            }
         } label: {
             Label(localization.text("ios.journeyGroup.title"), systemImage: "folder")
         }

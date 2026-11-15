@@ -47,7 +47,10 @@ struct RegressionGuardMapLock {
         let prepare = try Self.body(
             Self.coordinator, from: "let temporalContext = networkTemporalContext",
             to: "geometryPreparation = Task")
-        #expect(!prepare.contains("cancelGeometryPreparation()"))
+        // Round 7: the one cancel is the gate's, for an in-flight preparation
+        // whose rect no longer covers the view (never for a camera move alone).
+        #expect(prepare.components(separatedBy: "cancelGeometryPreparation()").count - 1 == 1)
+        #expect(prepare.contains("if gate.cancelInFlight { cancelGeometryPreparation() }"))
     }
 
     @Test func ridesOnlyPublishUpdatesTheOverlayProbe() throws {
@@ -76,9 +79,164 @@ struct RegressionGuardMapLock {
 
     @Test func refreshingLineInputsCancelsTheNeighbourPrebuild() throws {
         let refresh = try Self.body(
-            Self.coordinator, from: "private func refreshLineInputs() {",
-            to: "let byID = Dictionary(")
+            Self.coordinator, from: "private func refreshLineInputs(",
+            to: "var trueGenerations")
         #expect(refresh.contains("cancelNeighbourPrebuild()"))
+    }
+
+    @Test func aPrebuildOfTheRequestedFrameIsAdoptedAndInstalledOnLanding() throws {
+        // The wanted-set check keeps the level the camera reached.
+        let moved = try Self.body(
+            Self.coordinator, from: "private func cancelNeighbourPrebuildIfWantedSetMoved(",
+            to: "/// While idle, builds ONE neighbour")
+        #expect(moved.contains("GeometryZoomLevels.keepsNeighbourPrebuild("))
+        // The foreground request adopts instead of cancelling, and returns
+        // before the unconditional cancel.
+        let prepare = try Self.body(
+            Self.coordinator, from: "let gate = GeometryPreparationGate.decide(",
+            to: "guard gate.start else { return false }")
+        let adopt = try #require(prepare.range(of: "if gate.adoptPrebuild {"))
+        let cancel = try #require(prepare.range(of: "cancelNeighbourPrebuild()"))
+        #expect(adopt.lowerBound < cancel.lowerBound)
+        #expect(prepare.contains("prebuildKey: neighbourPrebuildKey"))
+        // The prebuild's landing rebuilds, only behind the adoption check.
+        let landing = try Self.body(
+            Self.coordinator, from: "_ = self.networkGeometry.storePrepared(prepared, key: key)",
+            to: "private func prepareNetworkGeometry(")
+        let check = try #require(landing.range(of: "self.adoptedPrebuildKey == key"))
+        let rebuild = try #require(landing.range(of: "self.rebuild(on: mapView)"))
+        #expect(check.lowerBound < rebuild.lowerBound)
+        // Every exit releases an adoption.
+        let task = try Self.body(
+            Self.coordinator, from: "neighbourPrebuild = Task { @MainActor",
+            to: "for level in target.levels {")
+        #expect(task.contains("defer {"))
+        #expect(task.contains("releaseAdoptedPrebuild()"))
+    }
+
+    @Test func matchingSignpostsSeparateWaitingFromWorkAndApply() throws {
+        // `map.matching` is waiting time; the work and the main-thread apply have their own.
+        #expect(Self.coordinator.contains("RailSignpost.map.begin(\"map.matching\")"))
+        let work = try Self.body(
+            Self.coordinator, from: "try await limiter.withPermit {\n                        // The matching itself",
+            to: "let index: StrokeRide.Index")
+        #expect(work.contains("RailSignpost.map.begin(\"map.matching.work\")"))
+        #expect(work.contains("RailSignpost.map.end(\"map.matching.work\""))
+        #expect(Self.coordinator.contains("RailSignpost.map.begin(\"map.matching.apply\")"))
+        #expect(Self.coordinator.contains("RailSignpost.map.end(\"map.matching.apply\""))
+    }
+
+    @Test func theIdlePrebuildUsesTheRectTheNextLevelWillUse() throws {
+        let prebuild = try Self.body(
+            Self.coordinator, from: "private func scheduleNeighbourPrebuild(",
+            to: "neighbourPrebuild = Task")
+        #expect(prebuild.contains("GeometryZoomLevels.prebuildVisibleRect("))
+        #expect(prebuild.contains(".union(networkBuildState.builtRect)"))
+    }
+
+    @Test func theLineSetSwapRunsOffTheMainActorAndInstallsInOneTurn() throws {
+        // No junction index work on the coordinator any more; the worker does it.
+        #expect(!Self.coordinator.contains("junctionIndex.update("))
+        #expect(Self.coordinator.contains("\"map.lineSwap.compute\""))
+        let compute = try Self.body(
+            Self.coordinator, from: "private static func computeLineSwap(",
+            to: "private func swapInput(")
+        #expect(compute.contains("input.state.advanced(to: junctionLines)"))
+        #expect(compute.contains("Task.isCancelled"))
+        // Installing is one turn: no suspension point anywhere in it.
+        let apply = try Self.body(
+            Self.coordinator, from: "private func applyLineSwap(",
+            to: "/// Revalidate only the inputs a line build actually reads.")
+        #expect(!apply.contains("await "))
+        #expect(!apply.contains("Task {"))
+        let order = ["lines = result.lines", "junctionState = result.state",
+                     "linesGeneration += 1", "retainDisplayChains(", "invalidateNetworkTemporalGeometry(",
+                     "refreshLineInputs(newTruth: result.inputs)"]
+        var cursor = apply.startIndex
+        for needle in order {
+            let found = try #require(apply.range(of: needle, range: cursor..<apply.endIndex), "\(needle)")
+            cursor = found.upperBound
+        }
+        // A landed result is held during a gesture and installed when it ends.
+        #expect(Self.coordinator.contains("duringGesture: isManipulating"))
+        let settle = try Self.body(
+            Self.coordinator, from: "private func scheduleCameraRebuild(", to: "var preservesCameraDuringResize")
+        #expect(settle.contains("self.applyHeldLineSwap()"))
+    }
+
+    @Test func theCameraSettleDefersMarkersToTheNextRunLoopTurn() throws {
+        let settle = try Self.body(
+            Self.coordinator, from: "private func scheduleCameraRebuild(", to: "var preservesCameraDuringResize")
+        #expect(settle.contains("self.rebuild(on: mapView, deferMarkers: true)"))
+        #expect(!settle.contains("self.rebuild(on: mapView)\n"))
+        #expect(settle.contains("self.scheduleMarkerSettleTurn(on: mapView)"))
+        #expect(settle.contains("markerSettleTurn.cancel()"))
+        let turn = try Self.body(
+            Self.coordinator, from: "private func scheduleMarkerSettleTurn(", to: "var preservesCameraDuringResize")
+        #expect(turn.contains("DispatchQueue.main.async"))
+        #expect(turn.contains("self.markerSettleTurn.claim(token)"))
+        #expect(turn.contains("runLabelPass(on: mapView, moving: false, fullPass: true)"))
+        // app-control idle waits for the owed pass.
+        #expect(Self.read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+            .contains("!MapRenderProbe.markerPassOwed"))
+    }
+
+    @Test func mapRenderProbeIsReferencedOnlyInsideDebugBlocks() {
+        // MapRenderProbe exists only under #if DEBUG; any other reference breaks Release builds.
+        var depth = 0
+        var offenders: [Int] = []
+        for (index, line) in Self.coordinator.components(separatedBy: "\n").enumerated() {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.hasPrefix("#if ") { depth += 1 }
+            if trimmed.hasPrefix("#endif") { depth -= 1 }
+            if depth == 0, line.contains("MapRenderProbe.") { offenders.append(index + 1) }
+        }
+        #expect(offenders.isEmpty, "MapRenderProbe referenced outside #if at lines \(offenders)")
+        #expect(Self.coordinator.contains("MapRenderProbe.markerPassOwed = false"))
+    }
+
+    @Test func theMarkerPassMemoizesNameKeysAndRegionCodes() {
+        #expect(Self.coordinator.contains("StationNameKeyCache.key(name)"))
+        #expect(!Self.coordinator.contains("Stations.normalizeStationName(name)"))
+        #expect(Self.read("RailMap/Map/MapRideMarkers.swift").contains("StationNameKeyCache.key("))
+        #expect(Self.read("RailMap/Infrastructure/Network/RegionCatalog.swift")
+            .contains("stationCodeRegions.value(for: code)"))
+    }
+
+    @Test func updateStagesLineSetsInsteadOfInstallingThemExceptOnAnEraChange() throws {
+        let update = try Self.body(
+            Self.coordinator, from: "let swapChanged = linesChanged || stationsChanged",
+            to: "let selectedRide = rides.first")
+        #expect(update.contains("let appliesSwapNow = swapChanged && networkFilterChanged"))
+        #expect(update.contains("lineSwapSchedule.appliedSynchronously()"))
+        #expect(update.contains("stageLineSwap(lines: lines, stations: stations)"))
+        #expect(!update.contains("self.lines = lines"))
+        // The plan reports line changes only when they were installed here.
+        #expect(Self.coordinator.contains("linesChanged: linesChanged && appliesSwapNow"))
+        // Incoming data is compared against the newest staged set.
+        #expect(Self.coordinator.contains("pendingLineSwap?.lines ?? self.lines"))
+    }
+
+    @Test func reviewFixesStayInPlace() throws {
+        // A running or adopted prebuild is not restarted by the camera moving.
+        let prebuild = try Self.body(
+            Self.coordinator, from: "private func scheduleNeighbourPrebuild(", to: "neighbourPrebuild = Task")
+        #expect(prebuild.contains("guard adoptedPrebuildKey == nil else { return }"))
+        #expect(prebuild.contains("GeometryZoomLevels.prebuildStillCovers("))
+        // A swap held during a gesture is applied by the settle rebuild.
+        let landing = try Self.body(
+            Self.coordinator, from: "private func landLineSwap(", to: "private func applyHeldLineSwap(")
+        let hold = try #require(landing.range(of: "case .hold:"))
+        #expect(landing[hold.upperBound...].contains("rebuildDeferredByGesture = true"))
+        // Arriving chains are admitted before the worker joins them.
+        let start = try Self.body(
+            Self.coordinator, from: "private func startLineSwap(", to: "private func landLineSwap(")
+        #expect(start.contains("admitDisplayChains("))
+        // Tear-down makes an in-flight result stale.
+        let tear = try Self.body(
+            Self.coordinator, from: "lineSwapTask?.cancel()\n                lineSwapTask = nil\n                heldLineSwap = nil",
+            to: "memoryReliefTask?.cancel()")
+        #expect(tear.contains("lineSwapSchedule.appliedSynchronously()"))
     }
 
     @Test func overlaysDrawReportAndSwapWaitsForDraw() {
@@ -255,5 +413,15 @@ struct RegressionGuardMapLock {
         let restyle = try #require(settle.range(of: "self.restyle(on: mapView)"))
         let full = try #require(settle.range(of: "fullPass: true"))
         #expect(restyle.lowerBound < full.lowerBound)
+    }
+
+    @Test func stallAttributionSignpostsExist() throws {
+        for name in ["map.markers.phase", "map.restyle", "map.lineSwap.apply", "map.geometry.request",
+                     "map.regionTick", "map.cameraSettled"] {
+            #expect(Self.coordinator.contains("\"\(name)\""), "\(name)")
+        }
+        let phase = try Self.body(
+            Self.coordinator, from: "func finishMarkerPhase(", to: "// Reuse an installed dot's position")
+        #expect(phase.contains("RailSignpost.map.mark(\"map.markers.phase\""))
     }
 }

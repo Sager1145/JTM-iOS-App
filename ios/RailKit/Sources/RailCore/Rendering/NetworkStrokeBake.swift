@@ -227,7 +227,8 @@ public enum NetworkStrokeBake {
                 }
                 let built = try StrokeBake.familyGeometry(
                     for: line, stroke: stroke, strokes: &strokes, cachedStrokes: [:], allLines: byID,
-                    anchors: network.anchors, chains: reader, frame: level, junctionCandidates: junctions)
+                    anchors: network.anchors, chains: reader, frame: level, junctionCandidates: junctions,
+                    thinStepPx: nil)
                 for key in built.families.keys.sorted() {
                     let family = built.families[key]!
                     for (index, chunk) in family.coordinateChunks.enumerated() {

@@ -252,7 +252,7 @@ struct NetworkStrokeBakeThinTests {
     /// Measured on the committed fixture at the 4-quantum tolerance, rounded up by 10%.
     static let ceilings: [Double: Int] = [6: 1_440, 10: 3_090, 14: 10_700, 17: 32_800]
 
-    @Test("the thinned fixture is small: vertex and byte ceilings, and a tenth of the engine's at z5")
+    @Test("the thinned fixture is small: vertex and byte ceilings, and a fifth of the engine's at z5")
     func fixtureBudget() throws {
         let network = try Self.network()
         for zoom in Self.zooms {
@@ -263,7 +263,11 @@ struct NetworkStrokeBakeThinTests {
             }
             #expect(count(thin) <= Self.ceilings[zoom]!, "vertices at app zoom \(zoom)")
             #expect(4 * count(thin) <= 4 * Self.ceilings[zoom]!, "bytes at app zoom \(zoom)")
-            if zoom == 6 { #expect(count(thin) * 10 < count(full), "z5 keeps under a tenth of the engine's vertices") }
+            // Under a tenth until 2026-11-14: the engine itself now decimates curved continuous
+            // strokes to the stroke tolerance (`ContinuousStroke.drawnStroke`), which took its z5
+            // fixture count from at least 12,620 to 8,043 while the pack's 1,262 stayed inside
+            // the ceilings above, so the ratio is now 6.4. The ceilings are the size guard.
+            if zoom == 6 { #expect(count(thin) * 5 < count(full), "z5 keeps under a fifth of the engine's vertices") }
         }
     }
 }

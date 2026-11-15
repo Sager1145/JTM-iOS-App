@@ -12,7 +12,7 @@ struct MapDrawDecisionsTests {
     ) -> GeometryPreparationGate.Decision {
         if MapRebuildOwedPolicy(tripsOnly: tripsOnly).cancelsGeometryPreparation { ledger.cancel() }
         let d = GeometryPreparationGate.decide(
-            inFlightKey: ledger.inFlightKey, requestedKey: key, missingWork: missingWork)
+            inFlightKey: ledger.inFlightKey, requestedKey: key, prebuildKey: nil, missingWork: missingWork)
         ledger.apply(d, key: key)
         return d
     }
@@ -54,7 +54,7 @@ struct MapDrawDecisionsTests {
             if ledger.isInFlight, now >= busyUntil { ledger.finish() }
             level += 1
             let d = GeometryPreparationGate.decide(
-                inFlightKey: ledger.inFlightKey, requestedKey: "level-\(level)", missingWork: true)
+                inFlightKey: ledger.inFlightKey, requestedKey: "level-\(level)", prebuildKey: nil, missingWork: true)
             ledger.apply(d, key: "level-\(level)")
             if d.start { busyUntil = now + 2.5 }
             now += 1.2
@@ -86,7 +86,31 @@ struct MapDrawDecisionsTests {
     }
 
     @Test func nothingMissingDrawsWithoutStartingAnything() {
-        let d = GeometryPreparationGate.decide(inFlightKey: nil, requestedKey: "a", missingWork: false)
+        let d = GeometryPreparationGate.decide(inFlightKey: nil, requestedKey: "a", prebuildKey: nil, missingWork: false)
+        #expect(d == .init(cancelInFlight: false, start: false, drawNow: true))
+    }
+
+    @Test func aPrebuildOfTheRequestedFrameIsAdoptedNotRestarted() {
+        let d = GeometryPreparationGate.decide(
+            inFlightKey: nil, requestedKey: "a", prebuildKey: "a", missingWork: true)
+        #expect(d == .init(cancelInFlight: false, start: false, drawNow: false, adoptPrebuild: true))
+    }
+
+    @Test func aPrebuildOfAnotherFrameIsNotAdopted() {
+        let d = GeometryPreparationGate.decide(
+            inFlightKey: nil, requestedKey: "a", prebuildKey: "b", missingWork: true)
+        #expect(d == .init(cancelInFlight: false, start: true, drawNow: false))
+    }
+
+    @Test func aForegroundPreparationInFlightWinsOverAdoption() {
+        let d = GeometryPreparationGate.decide(
+            inFlightKey: "x", requestedKey: "a", prebuildKey: "a", missingWork: true)
+        #expect(d == .init(cancelInFlight: false, start: false, drawNow: false))
+    }
+
+    @Test func nothingMissingDrawsNowEvenWithAPrebuildOfThatFrame() {
+        let d = GeometryPreparationGate.decide(
+            inFlightKey: nil, requestedKey: "a", prebuildKey: "a", missingWork: false)
         #expect(d == .init(cancelInFlight: false, start: false, drawNow: true))
     }
 

@@ -19,42 +19,66 @@ public enum GeometryFrameBytes {
 /// pinned; every other frame is evicted, least recently used first, whenever
 /// the unpinned frames together exceed `byteCap` or number more than
 /// `maxUnpinnedFrames` (the byte estimate undercounts MapKit's own polyline
-/// storage, so a frame count bounds the real heap too). A memory warning drops
-/// everything that is not current.
+/// storage, so a frame count bounds the real heap too). One more frame, the
+/// overview, is pinned beside them: the coarse frame a zoom-out lands on, so
+/// the zoom-out does not wait to prepare it again. It is outside the count and
+/// the byte cap, unless its own size passes `overviewPinByteCap`: then it is
+/// not pinned and, being over the byte cap, is evicted as soon as it is not current. A memory warning drops everything that is not current,
+/// the overview included.
 public struct GeometryFrameResidency: Equatable, Sendable {
     /// Least recently used first; the current frame is the last it was made.
     public private(set) var order: [String] = []
     public private(set) var current: String?
     public private(set) var neighbour: String?
+    /// The pinned overview frame, if any. At most one: a new one unpins the old.
+    public private(set) var overview: String?
     public private(set) var frameBytes: [String: Int] = [:]
     public let byteCap: Int
     public let maxUnpinnedFrames: Int
+    /// Largest overview frame that is still pinned outside the caps.
+    public let overviewPinByteCap: Int
+    public static let defaultOverviewPinByteCap = 30 * 1024 * 1024
 
-    public init(byteCap: Int, maxUnpinnedFrames: Int = .max) {
+    public init(
+        byteCap: Int, maxUnpinnedFrames: Int = .max,
+        overviewPinByteCap: Int = GeometryFrameResidency.defaultOverviewPinByteCap
+    ) {
         self.byteCap = max(byteCap, 0)
         self.maxUnpinnedFrames = max(maxUnpinnedFrames, 0)
+        self.overviewPinByteCap = max(overviewPinByteCap, 0)
     }
 
-    /// Frames that are neither current nor the pinned neighbour.
+    private func isPinned(_ key: String) -> Bool {
+        key == current || key == neighbour || isPinnedOverview(key)
+    }
+
+    private func isPinnedOverview(_ key: String) -> Bool {
+        key == overview && (frameBytes[key] ?? 0) <= overviewPinByteCap
+    }
+
+    /// Frames that are neither current, the pinned neighbour nor the overview.
     public var unpinnedFrameCount: Int {
-        order.filter { $0 != current && $0 != neighbour }.count
+        order.filter { !isPinned($0) }.count
     }
 
     public var totalBytes: Int { frameBytes.values.reduce(0, +) }
 
-    /// Bytes held by frames that are neither current nor the pinned neighbour.
-    /// Only these count against `byteCap`.
+    /// Bytes held by frames that are neither current, the pinned neighbour nor
+    /// the overview. Only these count against `byteCap`.
     public var unpinnedBytes: Int {
-        frameBytes.filter { $0.key != current && $0.key != neighbour }.values.reduce(0, +)
+        frameBytes.filter { !isPinned($0.key) }.values.reduce(0, +)
     }
 
     /// Whether another neighbour may be prebuilt: unpinned geometry is under the cap.
     public var hasRoomToPrebuild: Bool { unpinnedBytes < byteCap }
 
-    /// Makes `key` the current frame. Returns the keys evicted.
-    public mutating func begin(_ key: String) -> [String] {
+    /// Makes `key` the current frame. Returns the keys evicted. An overview
+    /// frame also becomes the pinned overview, replacing the previous one; a
+    /// frame that is not an overview leaves the pin alone.
+    public mutating func begin(_ key: String, isOverview: Bool = false) -> [String] {
         touch(key)
         current = key
+        if isOverview { overview = key }
         if neighbour == key { neighbour = nil }
         return evict()
     }
@@ -82,12 +106,14 @@ public struct GeometryFrameResidency: Equatable, Sendable {
         return evict()
     }
 
-    /// Memory pressure: everything but the current frame goes.
+    /// Memory pressure: everything but the current frame goes, the overview
+    /// pin with it.
     public mutating func dropNonCurrent() -> [String] {
         let dropped = order.filter { $0 != current }
         order.removeAll { $0 != current }
         for key in dropped { frameBytes.removeValue(forKey: key) }
         neighbour = nil
+        overview = nil
         return dropped
     }
 
@@ -99,8 +125,15 @@ public struct GeometryFrameResidency: Equatable, Sendable {
 
     private mutating func evict() -> [String] {
         var evicted: [String] = []
+        // A frame that alone passes the cap can never be kept: drop it first,
+        // so the LRU walk below does not empty the smaller frames before it.
+        for key in order where !isPinned(key) && (frameBytes[key] ?? 0) > byteCap {
+            order.removeAll { $0 == key }
+            frameBytes.removeValue(forKey: key)
+            evicted.append(key)
+        }
         while unpinnedBytes > byteCap || unpinnedFrameCount > maxUnpinnedFrames,
-              let index = order.firstIndex(where: { $0 != current && $0 != neighbour }) {
+              let index = order.firstIndex(where: { !isPinned($0) }) {
             let key = order.remove(at: index)
             frameBytes.removeValue(forKey: key)
             evicted.append(key)

@@ -11,28 +11,27 @@ import RailPresentation
 /// RailCore.Visibility retains the independent, fixture-tested Web contract.
 enum NetworkLOD {
 
-    /// Roughly what the renderer can submit without the frame budget showing.
+    /// A safety net, not the working limit: the most the renderer can submit
+    /// without the frame budget showing.
     ///
-    /// Derived from measurement, not taste: Japan at a national view drew
-    /// 12,433 vertices in 98 ms, and the city view's 89,785 in 229 ms was
-    /// already visible as a hitch when crossing a zoom bucket. 40,000 sits
-    /// between them with room to spare.
+    /// Measured history: Japan at a national view drew 12,433 vertices in
+    /// 98 ms, and the city view's 89,785 in 229 ms was already visible as a
+    /// hitch when crossing a zoom bucket.
     ///
-    /// "Room to spare" is thinner since 2026-08-24, and deliberately so.
-    /// Bringing decimation onto the web app's geometry contract — see
-    /// `RailStyle.simplifyTolerance`, which was eight times too loose — raised
-    /// the worst build measured anywhere in the five packages from 25,000
-    /// drawn vertices to 38,698 (largest iPad, app zoom 8, over the Kansai and
-    /// Chugoku density). That measurement predates the importance-led zoom
-    /// ladder; earlier admission of short important lines can increase load.
+    /// Network polylines are thinned in screen space to
+    /// ``ScreenPolylineThinning/stepPx`` before they are counted (2026-11-14):
+    /// at app zoom 8-9 over Tokyo and Osaka the no-budget peak was
+    /// 69,800-77,800 vertices (a 93,000 pan peak), 80% of its segments shorter
+    /// than half a pixel, which dropped 110 of 116 whole lines at z8 and 30 of
+    /// 56 at z9 under the former 40,000. Replayed at 0.5 px the same views peak
+    /// at 30,080 on 1024x768 and an estimated 41,936 on 1440x900, so no line is
+    /// dropped; 64,000 only catches what thinning cannot. These are offline
+    /// replay figures (the DEBUG `budgetDrops` check on the Mac build is the
+    /// authority for the measured after-thinning peak).
     /// If a frame exceeds the budget, this is where it shows: branches shed
     /// first, ``fitToBudget`` reports the threshold it stopped at, and the
-    /// diagnostics panel shows a threshold below the zoom. The measured lever
-    /// if that happens is clipping each interval to the build rect before
-    /// decimating rather than raising the number — it takes a city view from
-    /// 22,185 vertices to 2,460, though it does little at the wide zooms where
-    /// the worst case actually sits.
-    static let vertexBudget = 40_000
+    /// diagnostics panel shows a threshold below the zoom.
+    static let vertexBudget = 64_000
 
     /// How far outside the visible rect to build, as a fraction of its size.
     ///

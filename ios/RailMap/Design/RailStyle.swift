@@ -287,10 +287,10 @@ nonisolated public enum RailStyle {
     /// The cost is vertices, and it was weighed against `NetworkLOD`'s budget
     /// before the change rather than after. Swept over every viewport centre
     /// across the five packages at zooms 5–19, on the largest iPad, the worst
-    /// build grows from 25,000 drawn vertices to 38,698 — still inside the
-    /// 40,000 budget, so no line is dropped anywhere for it, but no longer by
-    /// much. `NetworkLOD.vertexBudget` records what the backstop does if a
-    /// denser package ever pushes past it.
+    /// non-curved build grew from 25,000 drawn vertices to 38,698. Curved
+    /// continuous strokes are decimated at this same tolerance too since
+    /// 2026-11-14 (`ContinuousStroke.drawnStroke`); see
+    /// `NetworkLOD.vertexBudget` for the budget it then measures against.
     static let simplifyTolerance = RailStrokeTokens.simplifyTolerance
 
     // MARK: - the two zoom conventions, spelled once

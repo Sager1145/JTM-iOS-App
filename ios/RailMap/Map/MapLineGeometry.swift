@@ -149,12 +149,17 @@ func familyFallbackBuilds(
                 chunkWindows.append(chunkWindow)
                 continue
             }
-            let coordinates = ContinuousStroke.slice(
+            // Thinned like the prepared chunks, so the drawn count stays within
+            // the budget `drawnVertexCount` weighed.
+            let slice = ContinuousStroke.slice(
                 points: stroke.stroke.points, measures: stroke.stroke.measures,
-                from: range.from, to: range.to).map {
-                    MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
-                               y: $0.y * mapPointsPerScreenPoint).coordinate
-                }
+                from: range.from, to: range.to)
+            let coordinates = ScreenPolylineThinning.thinned(
+                slice, x: slice.map(\.x), y: slice.map(\.y)
+            ).map {
+                MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
+                           y: $0.y * mapPointsPerScreenPoint).coordinate
+            }
             guard coordinates.count >= 2 else { continue }
             polylines.append(mapPolylineChunk(coordinates))
             chunkWindows.append(chunkWindow)
@@ -223,7 +228,7 @@ func parallelLaneCoordinates(
 
 /// The worker owns projection caches; results contain immutable geometry only.
 /// No view, renderer, annotation, or coordinator is accessed here. The geometry itself is
-/// `RailCore.StrokeBake.prepare`; what stays here is the display-era decision (which parts draw,
+/// `RailCore.StrokeBake` (`strokeBuild`, `prepareLines`); what stays here is the display-era decision (which parts draw,
 /// and solid or historical) and the conversion to the types the mounted-geometry cache holds.
 enum MapLineGeometry {
     /// Main-actor product consumed by ``MapNetworkGeometryCache``.
@@ -238,19 +243,26 @@ enum MapLineGeometry {
         var lines: [String: PreparedLineBuild] = [:]
     }
 
+    /// Fewest summed stroke vertices worth a worker of their own.
+    static let minimumStrokeWeightPerPart = 4_000
+
     static func prepare(
         lines: [RailNetworkStore.DrawnLine], strokes: [RailNetworkStore.DrawnLine],
         allLines: [String: RailNetworkStore.DrawnLine], anchors: [String: [Int]],
         cachedStrokes: [String: ContinuousStrokeBuild],
-        joinedChains: JoinedChainCache, chainPixels: ChainPixelCache,
+        junctionIndex: StrokeJunctionIndex, chainPixels: ChainPixelCache,
         frameKey: String, datumToken: String,
         mapScale: Double, scale: CGFloat, laneScale: Double,
         era: DisplayNetworkEra = .current,
         rideDate: String? = nil,
-        todayByRegion: [String: String] = [:]
-    ) throws -> PreparedGeometry {
-        let interval = RailSignpost.map.begin("map.geometry.prepare")
-        defer { RailSignpost.map.end("map.geometry.prepare", interval) }
+        todayByRegion: [String: String] = [:],
+        prebuild: Bool = false
+    ) async throws -> PreparedGeometry {
+        // An idle prebuild is not the foreground's work: it reports under its
+        // own name so `map.geometry.prepare` counts only what a rebuild waits on.
+        let intervalName: StaticString = prebuild ? "map.geometry.prebuild" : "map.geometry.prepare"
+        let interval = RailSignpost.map.begin(intervalName)
+        defer { RailSignpost.map.end(intervalName, interval) }
         let frame = StrokeBake.Frame(
             mapPointsPerPoint: mapScale, scale: Double(scale), laneScale: laneScale,
             key: frameKey, datumToken: datumToken)
@@ -272,12 +284,34 @@ enum MapLineGeometry {
             return era.strokeStyle(for: span, today: today, rideDate: rideDate) == .historical
                 ? .historical : .solid
         }
-        let prepared = try StrokeBake.prepare(
-            lines: lines.map(\.strokeInput), strokes: strokes.map(\.strokeInput),
+        let pass = StrokeBake.Pass(
             allLines: allLines.mapValues(\.strokeInput), anchors: anchors,
-            cachedStrokes: cachedStrokes.mapValues(\.core),
-            joinedChains: joinedChains, chainPixels: chainPixels, frame: frame,
-            partStyle: partStyle)
+            junctionIndex: junctionIndex, chainPixels: chainPixels, frame: frame)
+        // Strokes are independent: each reads only its own line, `allLines` and the
+        // two lock-guarded caches, never the result. Build them in parts weighted by
+        // vertex count (same width rule as `RideStrokeBuilder.build`) and merge.
+        let strokeInputs = strokes.map(\.strokeInput)
+        var builtStrokes: [String: StrokeBake.Build] = [:]
+        do {
+            let strokeInterval = RailSignpost.map.begin("map.geometry.prepare.strokes")
+            defer { RailSignpost.map.end("map.geometry.prepare.strokes", strokeInterval) }
+            let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
+            let strokeParts = RideBuildPartition.partition(
+                weights: strokes.map { $0.intervals.reduce(0) { $0 + $1.count } },
+                maxParts: maxParts, minimumWeightPerPart: minimumStrokeWeightPerPart)
+            let builtParts = try await RideBuildPartition.buildParts(strokeParts) { index in
+                try StrokeBake.strokeBuild(for: strokeInputs[index], in: pass)
+            }
+            for (index, build) in builtParts { builtStrokes[strokeInputs[index].id] = build }
+        }
+        let linesInterval = RailSignpost.map.begin("map.geometry.prepare.lines")
+        defer { RailSignpost.map.end("map.geometry.prepare.lines", linesInterval) }
+        // Network lines are thinned to `ScreenPolylineThinning.stepPx` before they are chunked
+        // (so before `NetworkLOD.fitToBudget` counts them); ride strokes never pass through here.
+        let prepared = try StrokeBake.prepareLines(
+            lines: lines.map(\.strokeInput), builtStrokes: builtStrokes,
+            cachedStrokes: cachedStrokes.mapValues(\.core), in: pass,
+            thinStepPx: ScreenPolylineThinning.stepPx, partStyle: partStyle)
         func locations(_ chunks: [[Coordinate]]) -> [[CLLocationCoordinate2D]] {
             chunks.map { $0.map(\.clLocation) }
         }

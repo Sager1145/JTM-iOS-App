@@ -22,7 +22,7 @@ FIXTURES=(continuous-stroke playback stats station-display display-parts i18n
 
 # One swift test run: the guards plus the Swift/JS parity suites.
 # Excluded as slow: RailHistoryPackageTests (~15 min), JunctionApproachTests (~11 min).
-SWIFT_FILTER='RegressionGuard|AnnotationDiff|GeometryZoomLevelsTests|OverlaySwapSequencerTests|MapLoadAhead|RideArrivalPlan|AddOnlyBatchLedger|GeometryFrameResidency|SpatialGrid|MarkerPassDebt|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests|StrokeBakeEquality|NetworkStrokeBake|StrokeProjectionParity|RailStrokeTokens|GCJ02Tests|RailPack|RailTopology|RideRecordFile|RideKey|TopologyShadowComparison'
+SWIFT_FILTER='RegressionGuard|AnnotationDiff|GeometryZoomLevelsTests|OverlaySwapSequencerTests|OverlayInsertionPlanTests|MapLoadAhead|RideArrivalPlan|AddOnlyBatchLedger|GeometryFrameResidency|SpatialGrid|MarkerPassDebt|MarkerSettleTurn|BoundedLookupCache|StrokeStabilityLedger|MapBuildArea|MapRebuildPolicyTests|TrainPatternVariants|PlaybackParityTests|RouteGraphParityTests|SamplePrecomputeProvenanceTests|LocalizationParityTests|ContinuousStrokeParityTests|TravelDirectionTests|DirectionalAlignmentSelectionTests|StrokeBakeEquality|NetworkStrokeBake|StrokeProjectionParity|RailStrokeTokens|GCJ02Tests|RailPack|RailTopology|RideRecordFile|RideKey|TopologyShadowComparison|ScreenPolylineThinning'
 
 names=(); times=(); results=(); failed=0
 
@@ -59,6 +59,23 @@ step "rail pack inputs tests" python3 -I "$ROOT/ios/tools/tests/test_rail_pack_i
 step "rail pack budget tests" python3 -I "$ROOT/ios/tools/tests/test_check_rail_pack_budget.py"
 # The bake script stages packs and swaps them in only after the checks pass (stale packs removed, over budget changes nothing).
 step "rail pack bake swap tests" python3 -I "$ROOT/ios/tools/tests/test_bake_rail_packs.py"
+# Corridors split across operators share one visibility tier (display-network visibility groups).
+# The built manifest is the data the app ships, so the guard can check it:
+#   JTM_DISPLAY_NETWORK_DIR=<built rail-display-network dir>  checks that build;
+#   JTM_GUARD_BUILD_NETWORK=1  builds one from this tree first (minutes, scratch dir);
+# neither set: only the builder-function tests run (the manifest test skips, and says so).
+corridor_net="${JTM_DISPLAY_NETWORK_DIR:-}"
+if [ -z "$corridor_net" ] && [ "${JTM_GUARD_BUILD_NETWORK:-0}" = 1 ]; then
+  corridor_tmp="$(mktemp -d)"
+  corridor_net="$corridor_tmp/rail-display-network"
+  step "build display network (corridor guard)" python3 -I "$ROOT/app/scripts/railway/build-display-network.py" \
+    --rail-dir "$ROOT/app/public/rail" --output "$corridor_net" --history-dir "$ROOT/app/data" \
+    --junctions "$ROOT/app/data/physical-rail-junctions.json" \
+    --through-services "$ROOT/ios/RailKit/Sources/RailCore/Resources/japan-through-services.json" \
+    --registry-dir "$ROOT/app/data/registry-bundle"
+fi
+step "corridor visibility tiers" env JTM_DISPLAY_NETWORK_DIR="$corridor_net" python3 -I "$ROOT/app/scripts/railway/tests/test_corridor_visibility.py"
+[ -z "${corridor_tmp:-}" ] || rm -rf "$corridor_tmp"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"

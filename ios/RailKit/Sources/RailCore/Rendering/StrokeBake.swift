@@ -209,9 +209,8 @@ public struct JoinedChainKey: Hashable, Sendable {
 }
 
 /// The one join of each resident display chain. Junction indexing, stroke matching and pixel
-/// projection all read ``chain(of:)``. The join runs only on a miss, and only while this lock
-/// is held, so concurrent readers share that result. A chain left out of ``retain(_:)`` is not
-/// stored again.
+/// projection all read ``chain(of:)``. The join runs only on a miss, outside the lock; the first
+/// stored result is the one readers share. A chain left out of ``retain(_:)`` is not stored again.
 public final class JoinedChainCache: Sendable {
     private struct Storage {
         var constrained = false
@@ -225,14 +224,25 @@ public final class JoinedChainCache: Sendable {
 
     public func chain(of line: StrokeLineInput) -> JoinedChain {
         let key = JoinedChainKey(line)
+        if let hit = state.withLock({ $0.chains[key] }) { return hit }
+        // Joined outside the lock so a worker's join never blocks main-thread readers; two racing
+        // misses may both join, and the results are equal.
+        let built = StrokeBake.joinedChainCoordinates(of: line)
+        let value = JoinedChain(points: built.points, measures: built.measures)
         return state.withLock { storage in
             if let hit = storage.chains[key] { return hit }
-            let built = StrokeBake.joinedChainCoordinates(of: line)
-            let value = JoinedChain(points: built.points, measures: built.measures)
             if !storage.constrained || storage.resident.contains(key) {
                 storage.chains[key] = value
             }
             return value
+        }
+    }
+
+    /// Lets chains about to be joined be stored before the next ``retain(_:)``.
+    public func admit(_ keys: Set<JoinedChainKey>) {
+        state.withLock { storage in
+            guard storage.constrained else { return }
+            storage.resident.formUnion(keys)
         }
     }
 
@@ -354,9 +364,23 @@ public struct JunctionCandidateIndex: Sendable {
         byID = [:]
     }
 
-    public init(_ lines: [String: StrokeLineInput], chains: JoinedChainCache) {
+    /// Wraps an incrementally maintained index over the same lines (the app's coordinator keeps
+    /// one, see `refreshLineInputs`) instead of rebuilding one over every resident line on every
+    /// preparation, which cost 5-27% of a preparation.
+    public init(index: StrokeJunctionIndex, lines: [String: StrokeLineInput]) {
+        self.index = index
         byID = lines
-        index = StrokeJunctionIndex(lines.values.map { line in
+    }
+
+    /// Builds the index over `lines` from scratch; for a host with no maintained index (the bake).
+    public init(_ lines: [String: StrokeLineInput], chains: JoinedChainCache) {
+        self.init(index: Self.index(of: lines, chains: chains), lines: lines)
+    }
+
+    public static func index(
+        of lines: [String: StrokeLineInput], chains: JoinedChainCache
+    ) -> StrokeJunctionIndex {
+        StrokeJunctionIndex(lines.values.map { line in
             .init(id: line.id, region: line.region, operatorName: line.operatorName,
                   coordinates: chains.chain(of: line).points, continuous: line.continuous,
                   follows: line.follows.map(\.canonicalID))
@@ -768,7 +792,7 @@ extension StrokeBake {
         for line: StrokeLineInput, stroke: Build, strokes: inout [String: Build],
         cachedStrokes: [String: Build], allLines: [String: StrokeLineInput],
         anchors: [String: [Int]], chains: ChainPixelReader, frame: Frame,
-        junctionCandidates: JunctionCandidateIndex
+        junctionCandidates: JunctionCandidateIndex, thinStepPx: Double?
     ) throws -> (families: [String: FamilyRun], fallbacks: [FamilyFallbackRun], reserve: Int) {
         let mapScale = frame.mapPointsPerPoint
         func measuredFamily(
@@ -779,7 +803,9 @@ extension StrokeBake {
             return FamilyRun(
                 colorHex: colorHex, colorDarkHex: colorDarkHex,
                 coordinateChunks: chunks.map { chunk in
-                    chunk.points.map { coordinate(of: $0, mapPointsPerPoint: mapScale) }
+                    // Stroke points are already screen points.
+                    thinned(chunk.points, stepPx: thinStepPx)
+                        .map { coordinate(of: $0, mapPointsPerPoint: mapScale) }
                 }, chunkWindows: chunks.map {
                     .init(from: $0.from, to: $0.to, groupID: groupID)
                 })
@@ -851,12 +877,61 @@ extension StrokeBake {
 // MARK: - the preparation pass
 
 extension StrokeBake {
-    /// The worker pass: build every requested stroke, then bring every requested line to the
-    /// geometry it draws. `partStyle(line, part)` says whether a part is drawn, and how: the app
-    /// answers from the display era and the part's history stamp; for a continuous line it is
-    /// called once, with part 0, for the whole chain.
-    ///
-    /// The worker owns projection caches; results contain immutable geometry only.
+    /// What one preparation pass shares: the frame, the line set, the pixel reader of the frame
+    /// and the junction candidates. A stroke is built from it by ``strokeBuild(for:in:)``; the
+    /// strokes of one pass are independent and read only the lock-guarded caches, so a host may
+    /// build them on several threads before ``prepareLines``.
+    public struct Pass: Sendable {
+        public let allLines: [String: StrokeLineInput]
+        public let anchors: [String: [Int]]
+        public let chains: ChainPixelReader
+        public let junctionCandidates: JunctionCandidateIndex
+        public let frame: Frame
+
+        public init(
+            allLines: [String: StrokeLineInput], anchors: [String: [Int]],
+            junctionIndex: StrokeJunctionIndex, chainPixels: ChainPixelCache, frame: Frame
+        ) {
+            let projection = ChainPixelCache.Projection(
+                frameKey: frame.key, datumToken: frame.datumToken,
+                mapPointsPerScreenPoint: frame.mapPointsPerPoint, lodScale: frame.laneScale)
+            chainPixels.begin(projection)
+            self.allLines = allLines
+            self.anchors = anchors
+            self.chains = ChainPixelReader(cache: chainPixels, projection: projection)
+            self.junctionCandidates = JunctionCandidateIndex(index: junctionIndex, lines: allLines)
+            self.frame = frame
+        }
+    }
+
+    /// One continuous chain's stroke in a pass.
+    public static func strokeBuild(for line: StrokeLineInput, in pass: Pass) throws -> Build {
+        try strokeBuild(
+            for: line, anchors: pass.anchors[line.id] ?? [], canonical: { pass.allLines[$0] },
+            chains: pass.chains, mapPointsPerPoint: pass.frame.mapPointsPerPoint,
+            scale: pass.frame.scale, laneScale: pass.frame.laneScale,
+            junctionCandidates: pass.junctionCandidates)
+    }
+
+    /// `points` without every interior vertex closer than `stepPx` screen points to the last kept
+    /// one (``ScreenPolylineThinning``); unchanged when `stepPx` is nil.
+    static func thinned(_ points: [ContinuousStroke.Point], stepPx: Double?) -> [ContinuousStroke.Point] {
+        guard let stepPx, points.count > 2 else { return points }
+        return ScreenPolylineThinning.thinned(
+            points, x: points.map(\.x), y: points.map(\.y), stepPx: stepPx)
+    }
+
+    /// A network polyline thinned in screen space, after lane offsets and corner rounding and
+    /// before it is cut into chunks (and so before any vertex count is taken).
+    static func thinned(_ coordinates: [Coordinate], frame: Frame, stepPx: Double?) -> [Coordinate] {
+        guard let stepPx, coordinates.count > 2, frame.mapPointsPerPoint > 0 else { return coordinates }
+        let pixels = coordinates.map { pixel($0, mapPointsPerPoint: frame.mapPointsPerPoint) }
+        return ScreenPolylineThinning.thinned(
+            coordinates, x: pixels.map(\.x), y: pixels.map(\.y), stepPx: stepPx)
+    }
+
+    /// The whole pass, strokes built serially: for a host with no worker threads (the bake, the
+    /// parity tests). No network thinning: the bake thins its own levels (`NetworkStrokeBake`).
     public static func prepare(
         lines: [StrokeLineInput], strokes: [StrokeLineInput],
         allLines: [String: StrokeLineInput], anchors: [String: [Int]],
@@ -865,26 +940,46 @@ extension StrokeBake {
         frame: Frame,
         partStyle: (StrokeLineInput, Int) -> PartStyle
     ) throws -> Prepared {
-        let projection = ChainPixelCache.Projection(
-            frameKey: frame.key, datumToken: frame.datumToken,
-            mapPointsPerScreenPoint: frame.mapPointsPerPoint, lodScale: frame.laneScale)
-        chainPixels.begin(projection)
-        let chains = ChainPixelReader(cache: chainPixels, projection: projection)
-        var result = Prepared()
-        let junctionCandidates = JunctionCandidateIndex(allLines, chains: joinedChains)
+        let pass = Pass(
+            allLines: allLines, anchors: anchors,
+            junctionIndex: JunctionCandidateIndex.index(of: allLines, chains: joinedChains),
+            chainPixels: chainPixels, frame: frame)
+        var built: [String: Build] = [:]
         for line in strokes {
             try Task.checkCancellation()
-            result.strokes[line.id] = try strokeBuild(
-                for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
-                chains: chains, mapPointsPerPoint: frame.mapPointsPerPoint, scale: frame.scale,
-                laneScale: frame.laneScale, junctionCandidates: junctionCandidates)
+            built[line.id] = try strokeBuild(for: line, in: pass)
         }
+        return try prepareLines(
+            lines: lines, builtStrokes: built, cachedStrokes: cachedStrokes, in: pass,
+            thinStepPx: nil, partStyle: partStyle)
+    }
+
+    /// Brings every requested line to the geometry it draws, given the strokes the pass built.
+    /// `partStyle(line, part)` says whether a part is drawn, and how: the app answers from the
+    /// display era and the part's history stamp; for a continuous line it is called once, with
+    /// part 0, for the whole chain.
+    ///
+    /// `thinStepPx` is the network build's screen-space thinning step
+    /// (``ScreenPolylineThinning/stepPx``): every drawn polyline (solid, historical and family
+    /// windows) is thinned after lane offsets and rounding and before it is chunked, so the
+    /// vertex count the app weighs against its budget is the count it draws. Nil leaves the
+    /// geometry unthinned.
+    ///
+    /// The worker owns projection caches; results contain immutable geometry only.
+    public static func prepareLines(
+        lines: [StrokeLineInput], builtStrokes: [String: Build],
+        cachedStrokes: [String: Build], in pass: Pass, thinStepPx: Double?,
+        partStyle: (StrokeLineInput, Int) -> PartStyle
+    ) throws -> Prepared {
+        let frame = pass.frame
+        var result = Prepared()
+        result.strokes = builtStrokes
         for line in lines {
             try Task.checkCancellation()
             let stroke = result.strokes[line.id] ?? cachedStrokes[line.id]
             func chunked(_ runs: [[Coordinate]], preservingPattern: Bool = false) throws -> [[Coordinate]] {
                 try finishedRuns(runs, line: line, frame: frame).flatMap {
-                    chunks($0, preservingPattern: preservingPattern)
+                    chunks(thinned($0, frame: frame, stepPx: thinStepPx), preservingPattern: preservingPattern)
                 }
             }
             // Draw filter only. `intervals` and `strokeBuild` stay whole — a hidden continuous
@@ -926,8 +1021,9 @@ extension StrokeBake {
             if drawFamilies, let stroke {
                 let built = try familyGeometry(
                     for: line, stroke: stroke, strokes: &result.strokes,
-                    cachedStrokes: cachedStrokes, allLines: allLines, anchors: anchors,
-                    chains: chains, frame: frame, junctionCandidates: junctionCandidates)
+                    cachedStrokes: cachedStrokes, allLines: pass.allLines, anchors: pass.anchors,
+                    chains: pass.chains, frame: frame, junctionCandidates: pass.junctionCandidates,
+                    thinStepPx: thinStepPx)
                 families = built.families
                 fallbacks = built.fallbacks
                 fallbackSplitReserve = built.reserve

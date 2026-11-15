@@ -2,7 +2,7 @@ import MapKit
 import RailCore
 import RailPresentation
 
-/// Owns interaction-only indexes and the claim shared by MapKit's two tap paths.
+/// Owns interaction-only indexes and the claim shared by the tap and MapKit's selection.
 /// The coordinator supplies current drawn geometry; this object never selects a
 /// journey or stores an authoritative selection of its own.
 @MainActor
@@ -11,7 +11,7 @@ final class MapInteractionCoordinator {
 
     private var stations: [RailNetworkStore.DrawnStation] = []
     private var cachedTapIndex: RideTapIndex?
-    private var rideAnsweredTap: ContinuousClock.Instant?
+    private var touchAnsweredAt: ContinuousClock.Instant?
 
     private var indexGeneration = 0
     private var prebuildTask: Task<Void, Never>?
@@ -100,10 +100,15 @@ final class MapInteractionCoordinator {
         }
     }
 
-    func beginTouch() { rideAnsweredTap = nil }
+    func beginTouch() { touchAnsweredAt = nil }
+
+    /// The tap answered this touch itself (a trip, a chooser, a station card, a
+    /// line). MapKit's later selection of an annotation beside the finger must
+    /// not answer it a second time.
+    func claimTouch() { touchAnsweredAt = .now }
 
     var suppressesStationSelection: Bool {
-        rideAnsweredTap.map { ContinuousClock.now - $0 < .seconds(1) } ?? false
+        touchAnsweredAt.map { ContinuousClock.now - $0 < .seconds(1) } ?? false
     }
 
     func rideHits(
@@ -133,26 +138,7 @@ final class MapInteractionCoordinator {
             candidates.reduce(0) { $0 + $1.strokes.reduce(0) { $0 + $1.count } }, index.vertexCount)
         let hits = RideTapResolver.hits(
             at: RideTapResolver.Point(x: point.x, y: point.y), among: candidates)
-        if !hits.isEmpty { rideAnsweredTap = .now }
         return hits
-    }
-
-    /// Mounted selected beads, including MapKit's margin beyond their own view
-    /// target, preserve selection when the tap misses the route at an endpoint.
-    func containsSelectedStation(
-        at point: CGPoint, on mapView: MKMapView,
-        hasSelection: Bool, annotations: [MKAnnotation]
-    ) -> Bool {
-        guard hasSelection else { return false }
-        let reach = RailStyle.minimumTouchTarget * 0.75
-        for annotation in annotations {
-            guard let dot = annotation as? RideStationAnnotation, dot.selected else { continue }
-            let centre = mapView.convert(dot.coordinate, toPointTo: mapView)
-            let dx = centre.x - point.x
-            let dy = centre.y - point.y
-            if dx * dx + dy * dy <= reach * reach { return true }
-        }
-        return false
     }
 
     func tearDown() {
@@ -162,7 +148,7 @@ final class MapInteractionCoordinator {
         tapSnapshotProvider = nil
         indexGeneration += 1
         cachedTapIndex = nil
-        rideAnsweredTap = nil
+        touchAnsweredAt = nil
         stations = []
         stationsByCode.removeAll()
         stationsByName.removeAll()

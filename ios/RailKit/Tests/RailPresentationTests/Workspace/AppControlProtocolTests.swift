@@ -33,6 +33,7 @@ struct AppControlProtocolTests {
             "deleteTrip": ["id": "t"], "wait": ["condition": "idle"],
             "devtools": ["action": "show"], "setLayer": ["name": "routes", "on": false],
             "camera": ["action": "fit"], "perf": ["action": "read"],
+            "tapMap": ["x": 10, "y": 20],
         ]
         for name in AppControlCommand.names {
             let command = try parse(name, minimal[name] ?? [:])
@@ -165,6 +166,8 @@ struct AppControlProtocolTests {
         // A selection writes the last-viewed trip into the store's preferences.
         let select = await AppControlDispatcher.run(AppControlRequest(id: "w3", command: "selectTrip", args: ["id": "t"]), driver: driver)
         #expect(select.status == .rejected)
+        let tap = await AppControlDispatcher.run(AppControlRequest(id: "w4", command: "tapMap", args: ["x": 1, "y": 2]), driver: driver)
+        #expect(tap.status == .rejected)
         let read = await AppControlDispatcher.run(AppControlRequest(id: "r", command: "state"), driver: driver)
         #expect(read.status == .ok)
         #expect(driver.performed == [.state(includeTrips: true)])
@@ -198,6 +201,62 @@ struct AppControlProtocolTests {
         #expect(withState.data?.object?["editor"]?.object?["planned"] == true)
         let badID = await AppControlDispatcher.run(AppControlRequest(id: "a/b", command: "state"), driver: driver)
         #expect(badID.status == .rejected)
+    }
+
+    @Test("tapMap takes lat+lon or x+y, exactly one pair")
+    func tapMapParsing() throws {
+        #expect(try parse("tapMap", ["lat": 35.68, "lon": 139.76]) == .tapMap(.coordinate(lat: 35.68, lon: 139.76)))
+        #expect(try parse("tapMap", ["x": 120, "y": 340.5]) == .tapMap(.view(x: 120, y: 340.5)))
+        #expect(!AppControlCommand.tapMap(.view(x: 1, y: 1)).allowedOnSharedStore)
+    }
+
+    @Test("tapMap takes tapCount 1 or 2, two meaning a double tap")
+    func tapMapTapCount() throws {
+        #expect(try parse("tapMap", ["x": 1, "y": 2, "tapCount": 2]) == .tapMap(.view(x: 1, y: 2), doubleTap: true))
+        #expect(try parse("tapMap", ["x": 1, "y": 2, "tapCount": 1]) == .tapMap(.view(x: 1, y: 2), doubleTap: false))
+        #expect(try parse("tapMap", ["lat": 35, "lon": 139, "tapCount": 2])
+            == .tapMap(.coordinate(lat: 35, lon: 139), doubleTap: true))
+        #expect(throws: AppControlError.invalidArgument("tapCount", "expected 1 or 2")) {
+            try parse("tapMap", ["x": 1, "y": 2, "tapCount": 3])
+        }
+        #expect(throws: AppControlError.invalidArgument("tapCount", "expected 1 or 2")) {
+            try parse("tapMap", ["x": 1, "y": 2, "tapCount": 0])
+        }
+    }
+
+    @Test("tapMap rejects mixed, missing, partial, non-finite and out-of-range points")
+    func tapMapRejections() throws {
+        #expect(throws: AppControlError.missingArgument("lat")) { try parse("tapMap") }
+        #expect(throws: AppControlError.missingArgument("lon")) { try parse("tapMap", ["lat": 35]) }
+        #expect(throws: AppControlError.missingArgument("y")) { try parse("tapMap", ["x": 5]) }
+        #expect(throws: AppControlError.missingArgument("x")) { try parse("tapMap", ["y": 5]) }
+        #expect(throws: AppControlError.invalidArgument("x", "give lat+lon or x+y, not both")) {
+            try parse("tapMap", ["lat": 35, "lon": 139, "x": 1, "y": 2])
+        }
+        #expect(throws: AppControlError.invalidArgument("x", "give lat+lon or x+y, not both")) {
+            try parse("tapMap", ["lat": 35, "x": 1])
+        }
+        #expect(throws: AppControlError.invalidArgument("lat", "expected a number in -90.0...90.0")) {
+            try parse("tapMap", ["lat": 91, "lon": 139])
+        }
+        #expect(throws: AppControlError.invalidArgument("lon", "expected a number in -180.0...180.0")) {
+            try parse("tapMap", ["lat": 35, "lon": 181])
+        }
+        #expect(throws: AppControlError.invalidArgument("x", "expected a number in 0.0...10000.0")) {
+            try parse("tapMap", ["x": -1, "y": 5])
+        }
+        #expect(throws: AppControlError.invalidArgument("y", "expected a number in 0.0...10000.0")) {
+            try parse("tapMap", ["x": 5, "y": 10_001])
+        }
+        #expect(throws: AppControlError.invalidArgument("lat", "expected a number in -90.0...90.0")) {
+            try parse("tapMap", ["lat": .number(.nan), "lon": 139])
+        }
+        #expect(throws: AppControlError.invalidArgument("x", "expected a number in 0.0...10000.0")) {
+            try parse("tapMap", ["x": .number(.infinity), "y": 5])
+        }
+        #expect(throws: AppControlError.invalidArgument("x", "expected a number in 0.0...10000.0")) {
+            try parse("tapMap", ["x": "left", "y": 5])
+        }
     }
 
     @Test("camera parses each action with defaults and rejects out-of-range values")

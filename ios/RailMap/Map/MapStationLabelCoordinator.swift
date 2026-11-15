@@ -149,6 +149,29 @@ final class MapStationLabelCoordinator {
         settleTimer.schedule(perform)
     }
 
+    private struct LabelWidthKey: Hashable {
+        var text: String
+        var pointSize: Double
+    }
+    private var labelWidths: [LabelWidthKey: CGFloat] = [:]
+
+    /// The rounded-up width of `text` in `font` (the election's own
+    /// measurement), remembered by (text, point size). Measuring with
+    /// `NSString.size` was a large share of the station election on the main
+    /// actor; the same names at the same size repeat on every pass.
+    func labelWidth(of text: String, pointSize: CGFloat, font: UIFont) -> CGFloat {
+        let key = LabelWidthKey(text: text, pointSize: Double(pointSize))
+        if let known = labelWidths[key] { return known }
+        let width = ceil((text as NSString).size(withAttributes: [.font: font]).width)
+        if labelWidths.count > 8192 { labelWidths.removeAll(keepingCapacity: true) }
+        labelWidths[key] = width
+        return width
+    }
+
+    /// Display names changed (a different naming), so every measured width
+    /// is for a text that may no longer be shown.
+    func invalidateLabelWidths() { labelWidths.removeAll() }
+
     /// Drops everything: a different network, or teardown.
     func invalidateGeometry() {
         markerCache = nil
@@ -174,6 +197,7 @@ final class MapStationLabelCoordinator {
 
     func tearDown() {
         settleTimer.cancel()
+        invalidateLabelWidths()
         invalidateGeometry()
     }
 }

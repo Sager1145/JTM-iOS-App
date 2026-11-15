@@ -1,4 +1,5 @@
 #if DEBUG
+import CoreLocation
 import Darwin
 import RailCore
 import RailPresentation
@@ -322,6 +323,8 @@ final class AppControlHost: AppControlDriver {
             default: throw AppControlError.invalidArgument("name", name)
             }
             return ["layer": .string(name), "on": .bool(on), "layers": Self.layers(controller)]
+        case .tapMap(let target, let doubleTap):
+            return try await tapMap(target, doubleTap: doubleTap, stores)
         case .camera(let action):
             return try await AppControlCameraRun(
                 controller: stores.controller, renderStats: { [weak self] in self?.workspace?.renderStats() }
@@ -561,6 +564,7 @@ final class AppControlHost: AppControlDriver {
             ],
             "map": [
                 "ready": .bool(stores.controller.isMapReady),
+                "markerPassOwed": .bool(MapRenderProbe.markerPassOwed),
                 "renderStatus": optional(Self.renderStatusText()),
                 "render": workspace?.renderStats().map { stats in
                     [
@@ -572,6 +576,7 @@ final class AppControlHost: AppControlDriver {
                 "totalOverlays": .number(Double(MapRenderProbe.totalOverlays)),
                 "rideOverlays": .number(Double(MapRenderProbe.rideOverlays)),
                 "droppedFrames": .number(Double(MapRenderProbe.droppedFrames)),
+                "geometryLevel": Self.geometryLevel(),
                 "networkLines": .number(Double(stores.network.lines.count)),
                 "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
                     [
@@ -592,6 +597,8 @@ final class AppControlHost: AppControlDriver {
             ],
             "selectedTrip": optional(stores.itineraries.selectedTrainID),
             "sheet": optional(workspace?.sheetID()),
+            "sheetHost": optional(workspace?.sheetHost()),
+            "presented": .bool(Self.rootHasPresentedController()),
             "stage": optional(workspace?.stage()),
             "tab": optional(workspace?.tab()),
             "hidden": [
@@ -600,6 +607,8 @@ final class AppControlHost: AppControlDriver {
                 "months": .array(stores.tripHide.hiddenMonths.sorted().map { .string($0) }),
             ],
             "memory": Self.memory(),
+            "window": Self.window(),
+            "build": ["commit": optional(Self.buildCommit())],
             "storageSource": .string(DevStorage.launch.source.rawValue),
             "layers": Self.layers(stores.controller),
             // The in-process copy of RailSignpost intervals (SignpostRecorder);
@@ -643,7 +652,8 @@ final class AppControlHost: AppControlDriver {
         case "editorPlanned": return editorPlanned()
         case "editorClosed": return workspace?.editorState().open != true
         case "idle":
-            return holds("mapReady", stores) && holds("routesLoaded", stores) && workspace?.editorState().saving != true
+            return holds("mapReady", stores) && !MapRenderProbe.markerPassOwed
+                && holds("routesLoaded", stores) && workspace?.editorState().saving != true
         default:
             if condition.hasPrefix("trips>="), let count = Int(condition.dropFirst("trips>=".count)) {
                 return (stores.itineraries.loaded?.trains.count ?? -1) >= count
@@ -795,6 +805,57 @@ final class AppControlHost: AppControlDriver {
         return train
     }
 
+    /// The `tapMap` command: the map's own tap answer at a point, with an
+    /// empty-map clear (or banked station or line card) delivered at once; with
+    /// `tapCount=2` the second tap follows inside the window and cancels what
+    /// the first banked, through the same `answerTap` / `answerDoubleTap`. A coordinate is a MapKit coordinate,
+    /// as `camera` takes it. The recognisers are not exercised. Only reachable
+    /// on an isolated store (`allowedOnSharedStore` is false).
+    private func tapMap(_ target: AppControlMapPoint, doubleTap: Bool, _ stores: Stores) async throws -> AppControlJSON {
+        guard let mapView = stores.controller.mapView, let answer = stores.controller.answerTapForUITest else {
+            throw AppControlError.unavailable("map not mounted")
+        }
+        let point: CGPoint
+        switch target {
+        case .view(let x, let y):
+            point = CGPoint(x: x, y: y)
+        case .coordinate(let lat, let lon):
+            point = mapView.convert(CLLocationCoordinate2D(latitude: lat, longitude: lon), toPointTo: mapView)
+        }
+        guard mapView.bounds.contains(point) else {
+            throw AppControlError.invalidArgument("point", "outside the map view (\(Int(point.x)), \(Int(point.y)))")
+        }
+        guard let report = answer(point, doubleTap) else { throw AppControlError.unavailable("map not mounted") }
+        // A selection or sheet set by the answer lands on the next run-loop turns.
+        try await Task.sleep(for: .milliseconds(150))
+        func strings(_ values: [String]) -> AppControlJSON { .array(values.map { .string($0) }) }
+        let hits: AppControlJSON = [
+            "annotationView": .bool(report.hits.annotationViewUnderFinger),
+            "selectedTripDot": .bool(report.hits.selectedTripStationDot),
+            "trips": strings(report.hits.tripIDsInReach),
+            "station": .bool(report.hits.stationAnnotationInReach),
+            "lines": strings(report.hits.networkLineIDsInReach),
+        ]
+        let answerName: String
+        switch report.answer {
+        case .annotation: answerName = "annotation"
+        case .stationCard, .station: answerName = "station"
+        case .pickTrip: answerName = "trip"
+        case .tripChooser: answerName = "chooser"
+        case .lineCard: answerName = "line"
+        case .lineChooser: answerName = "lineChooser"
+        case .clearWhenSettled: answerName = "empty"
+        case .ignore: answerName = "ignore"
+        }
+        return [
+            "point": ["x": .number(Double(point.x)), "y": .number(Double(point.y))],
+            "doubleTap": .bool(doubleTap),
+            "answer": .string(answerName), "cancelledByDoubleTap": .bool(report.cancelledByDoubleTap), "hits": hits,
+            "selectedTrip": optional(stores.itineraries.selectedTrainID),
+            "sheet": optional(workspace?.sheetID()),
+        ]
+    }
+
     private func optional(_ value: String?) -> AppControlJSON { value.map { .string($0) } ?? .null }
 
     private func until(_ what: String, timeoutMs: Int, _ condition: @MainActor () -> Bool) async throws {
@@ -828,6 +889,64 @@ final class AppControlHost: AppControlDriver {
         let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
         for window in windows { if let label = find(window) { return label.text } }
         return nil
+    }
+
+    /// The commit stamped into Info.plist at build time (`JTMBuildCommit`, set by
+    /// `app-control.py build`); nil for a build that was not stamped.
+    nonisolated static func buildCommit() -> String? {
+        guard let value = Bundle.main.object(forInfoDictionaryKey: "JTMBuildCommit") as? String,
+              !value.isEmpty, !value.hasPrefix("$(") else { return nil }
+        return value
+    }
+
+    /// `map.geometryLevel`: the level on screen, the one the camera wants, the one being
+    /// prepared, a landed one waiting to install, the camera zoom, and ms since the last install.
+    static func geometryLevel() -> AppControlJSON {
+        let levels = MapRenderProbe.geometryLevels
+        func level(_ value: Int?) -> AppControlJSON { value.map { .number(Double($0)) } ?? .null }
+        return [
+            "installed": level(levels.installed), "wanted": level(levels.wanted),
+            "preparing": level(levels.preparing), "pending": level(levels.pending),
+            "cameraZoom": .number((levels.cameraZoom * 100).rounded() / 100),
+            "sinceInstallMs": levels.installedAt.map { .number(Double((ContinuousClock.now - $0).milliseconds)) } ?? .null,
+        ]
+    }
+
+    /// True when a system presentation (sheet, alert, cover) is up over the
+    /// root view controller. A panel-hosted popup leaves this false.
+    static func rootHasPresentedController() -> Bool {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        // Every window, not the key one: a terminal-driven app has no key window.
+        return windows.contains { $0.rootViewController?.presentedViewController != nil }
+    }
+
+    /// Scene and application activation, so a poll shows a window hidden mid-sweep
+    /// (a hidden window stops MapKit drawing and changes every memory number).
+    static func window() -> AppControlJSON {
+        func name(_ state: UIScene.ActivationState) -> String {
+            switch state {
+            case .foregroundActive: return "foregroundActive"
+            case .foregroundInactive: return "foregroundInactive"
+            case .background: return "background"
+            case .unattached: return "unattached"
+            @unknown default: return "unknown"
+            }
+        }
+        // `connectedScenes` is an unordered set and Catalyst can open several windows:
+        // report every scene, and keep `sceneState` as the most foreground one.
+        let states = UIApplication.shared.connectedScenes.map { name($0.activationState) }.sorted()
+        let rank = ["foregroundActive", "foregroundInactive", "background", "unattached", "unknown"]
+        let scene = rank.first(where: states.contains) ?? "none"
+        let application: String
+        switch UIApplication.shared.applicationState {
+        case .active: application = "active"
+        case .inactive: application = "inactive"
+        case .background: application = "background"
+        @unknown default: application = "unknown"
+        }
+        return ["sceneState": .string(scene), "scenes": .array(states.map { .string($0) }),
+                "applicationState": .string(application)]
     }
 
     nonisolated static func memory() -> AppControlJSON {
