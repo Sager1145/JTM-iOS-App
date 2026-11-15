@@ -673,11 +673,6 @@ final class MapOverlayInstaller {
                     fromAlpha: returningAlpha[key] ?? 0)
             }
         }
-        mapView.addOverlays(
-            desiredOverlays.filter { !oldIDs.contains(ObjectIdentifier($0)) },
-            level: .aboveLabels
-        )
-
         // Exiting network details stay beneath the ride and selection layers.
         var stack = desiredOverlays
         let networkEnd = stack.lastIndex { ($0.title ?? nil)?.hasPrefix("network") == true }
@@ -688,7 +683,25 @@ final class MapOverlayInstaller {
             let position = stack.firstIndex { ($0.title ?? nil) == batch.originalKey } ?? networkEnd
             stack.insert(batch.overlay, at: position)
         }
-        // Selection changes stacking without changing geometry.
+        // New overlays go straight to their final position: appending them and
+        // swapping each back down cost one exchangeOverlay call per step.
+        let newOverlays = desiredOverlays.filter { !oldIDs.contains(ObjectIdentifier($0)) }
+        if !newOverlays.isEmpty {
+            var byID: [Int: MKOverlay] = [:]
+            func key(_ overlay: MKOverlay) -> Int { Int(bitPattern: ObjectIdentifier(overlay)) }
+            for overlay in stack + newOverlays { byID[key(overlay)] = overlay }
+            let steps = OverlayInsertionPlan.steps(
+                mounted: mapView.overlays(in: .aboveLabels).map(key),
+                target: stack.map(key),
+                new: Set(newOverlays.map(key))
+            )
+            for step in steps {
+                guard let overlay = byID[step.id] else { continue }
+                mapView.insertOverlay(overlay, at: step.index, level: .aboveLabels)
+            }
+        }
+        // Selection changes stacking without changing geometry. The swap loop
+        // below is a safety net: it does nothing when the order is right.
         var installed = mapView.overlays(in: .aboveLabels)
         let mountedIDs = Set(installed.map(ObjectIdentifier.init))
         var orderedIDs: Set<ObjectIdentifier> = []
