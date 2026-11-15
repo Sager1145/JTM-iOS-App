@@ -600,6 +600,10 @@ struct QuietActionGroup: View {
     }
 
     var body: some View {
+    /// "Add note" for the selected trip. Present, it is the fifth control on
+    /// the one-row layout (icon-only, after Edit) and a labelled button in the
+    /// stacked layout, so the action is never lost at any text size.
+    var addNote: (() -> Void)?
         let quiet = presentation.secondaryActions.filter(\.showsInQuietRow)
         let more = presentation.secondaryActions.filter { !$0.showsInQuietRow }
 
@@ -656,7 +660,7 @@ struct QuietActionGroup: View {
             if let primary = presentation.primaryAction {
                 primaryButton(primary)
             }
-            if !quiet.isEmpty || !more.isEmpty {
+            if !quiet.isEmpty || !more.isEmpty || addNote != nil {
                 quietRow(quiet, more: more)
             }
         }
@@ -697,6 +701,7 @@ struct QuietActionGroup: View {
     ) -> some View {
         let appearance = action.appearance(localization)
         let title = short ? appearance.shortLabel : appearance.label
+            if addNote != nil { journeyRowAddNoteButton }
         return Button { perform(action) } label: {
             Label(title, systemImage: appearance.systemImage)
                 .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
@@ -739,12 +744,14 @@ struct QuietActionGroup: View {
         }
     }
 
+                addNoteButton(multiline: true)
     private func quietButton(
         _ action: SecondaryAction, expands: Bool = true, multiline: Bool = false
     ) -> some View {
         let appearance = action.appearance(localization)
         return Button { performSecondary(action) } label: {
             Label(appearance.label, systemImage: appearance.systemImage)
+                addNoteButton(multiline: false)
                 .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
                 .lineLimit(multiline ? nil : 1)
                 .minimumScaleFactor(expands && !multiline ? 0.85 : 1)
@@ -781,6 +788,39 @@ struct QuietActionGroup: View {
         // one of them a press and the other nothing — things that look alike
         // have to behave alike, or the row teaches the reader that its own
         // controls are inconsistent.
+    private var addNoteLabel: String { localization.text("ios.tripNotes.add") }
+
+    /// The fifth circle of the one-row layout: same icon, size and press style
+    /// as `journeyRowIconButton`. The identifier is the one the UI tests tap.
+    private var journeyRowAddNoteButton: some View {
+        Button {
+            addNote?()
+        } label: {
+            journeyRowIcon("exclamationmark.bubble")
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(RailPressStyle())
+        .accessibilityLabel(Text(addNoteLabel))
+        .accessibilityIdentifier("tripNotesAdd")
+    }
+
+    /// Stacked layouts have the room for the words, so the action keeps them.
+    @ViewBuilder
+    private func addNoteButton(multiline: Bool) -> some View {
+        if let addNote {
+            Button(action: addNote) {
+                Label(addNoteLabel, systemImage: "exclamationmark.bubble")
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
+                    .lineLimit(multiline ? nil : 1)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: multiline)
+            }
+            .buttonStyle(.railSecondary(visualHeight: actionButtonHeight))
+            .accessibilityLabel(Text(addNoteLabel))
+            .accessibilityIdentifier("tripNotesAdd")
+        }
+    }
+
         .buttonStyle(RailPressStyle())
         .accessibilityLabel(
             Text(localization.countryText("ios.journey.moreActions", fallback: "More")))
