@@ -1,29 +1,17 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the map-lock run 3 fixes: the pure rules have
 /// their own tests; these pin that the app still uses them.
 @Suite("RegressionGuardMapLockPerf")
 struct RegressionGuardMapLockPerf {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let coordinator = read("RailMap/Map/RailMapCoordinator.swift")
-    private static let geometry = read("RailMap/Map/MapLineGeometry.swift")
-    private static let stroke = read("RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift")
-    private static let builder = read("RailMap/Map/RideStrokeBuilder.swift")
-    private static let host = read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
-    private static let appControl = read("tools/app-control.py")
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static let geometry = SourceFiles.textRecording("RailMap/Map/MapLineGeometry.swift")
+    private static let stroke = SourceFiles.textRecording("RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift")
+    private static let builder = SourceFiles.textRecording("RailMap/Map/RideStrokeBuilder.swift")
+    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static let appControl = SourceFiles.textRecording("tools/app-control.py")
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))
@@ -49,7 +37,7 @@ struct RegressionGuardMapLockPerf {
     @Test func preparationReusesTheCoordinatorsJunctionIndex() throws {
         #expect(!Self.geometry.contains("JunctionCandidateIndex(allLines"))
         #expect(Self.geometry.contains("junctionIndex: junctionIndex, chainPixels: chainPixels"))
-        let engine = Self.read("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
+        let engine = SourceFiles.textRecording("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
         #expect(engine.contains("JunctionCandidateIndex(index: junctionIndex, lines: allLines)"))
         #expect(Self.coordinator.components(separatedBy: "junctionIndex: junctionIndex,").count - 1 == 2)
     }

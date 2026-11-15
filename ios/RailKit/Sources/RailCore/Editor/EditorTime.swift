@@ -164,7 +164,7 @@ public enum EditorTime {
             }
         }
         guard (1...9999).contains(year), (1...12).contains(month),
-              (1...daysInMonth(year: year, month: month)).contains(day) else { return .invalid(raw: raw) }
+              (1...CivilDate.daysInMonth(year: year, month: month)).contains(day) else { return .invalid(raw: raw) }
         return .valid(year: year, month: month, day: day,
                       canonical: String(format: "%04d-%02d-%02d", year, month, day))
     }
@@ -236,30 +236,11 @@ public enum EditorTime {
         let year = decimal(scalars[0...3])
         let month = decimal(scalars[5...6])
         let day = decimal(scalars[8...9])
-        guard (1...12).contains(month), (1...daysInMonth(year: year, month: month)).contains(day) else {
+        guard (1...12).contains(month), (1...CivilDate.daysInMonth(year: year, month: month)).contains(day) else {
             return nil
         }
         let canonical = String(format: "%04d-%02d-%02d", year, month, day)
         return .valid(year: year, month: month, day: day, canonical: canonical)
-    }
-
-    private static func daysInMonth(year: Int, month: Int) -> Int {
-        switch month {
-        case 1, 3, 5, 7, 8, 10, 12:
-            return 31
-        case 4, 6, 9, 11:
-            return 30
-        case 2:
-            return isLeapYear(year) ? 29 : 28
-        default:
-            return 0
-        }
-    }
-
-    private static func isLeapYear(_ year: Int) -> Bool {
-        if year % 400 == 0 { return true }
-        if year % 100 == 0 { return false }
-        return year % 4 == 0
     }
 
     // MARK: - characters

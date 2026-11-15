@@ -15,35 +15,6 @@ import Testing
 /// is visible.
 struct FixtureParityTests {
 
-    // MARK: - loading
-
-    /// Locates `port-fixtures/` by walking up from this source file.
-    ///
-    /// Deliberately not an SPM resource bundle: the fixtures are shared with
-    /// the JavaScript side and live at the repository root, which is the point
-    /// — a copy inside the package would be a copy that can drift.
-    static func fixture(_ name: String) throws -> Data {
-        var directory = URL(filePath: #filePath).deletingLastPathComponent()
-        for _ in 0..<8 {
-            let candidate = directory.appending(path: "port-fixtures/\(name)")
-            if FileManager.default.fileExists(atPath: candidate.path) {
-                return try Data(contentsOf: candidate)
-            }
-            directory = directory.deletingLastPathComponent()
-        }
-        Issue.record(
-            """
-            port-fixtures/\(name) not found above \(#filePath).
-            Generate it with:  cd app && node scripts/build/build-port-fixtures.mjs
-            """
-        )
-        throw CocoaError(.fileNoSuchFile)
-    }
-
-    static func decode<T: Decodable>(_ type: T.Type, _ name: String) throws -> T {
-        try JSONDecoder().decode(type, from: fixture(name))
-    }
-
     // MARK: - coordinates
 
     struct CoordsFixture: Decodable {
@@ -64,7 +35,7 @@ struct FixtureParityTests {
 
     @Test("quant5 lands on the same 5-decimal grid value")
     func quantisation() throws {
-        let fixture = try Self.decode(CoordsFixture.self, "coords.json")
+        let fixture = try PortFixtures.decode(CoordsFixture.self, "coords.json")
         #expect(fixture.cases.count > 100)
         for item in fixture.cases {
             let coordinate = try #require(Coordinate(pair: item.coord))
@@ -78,7 +49,7 @@ struct FixtureParityTests {
     /// would write `139.0,35.0`.
     @Test("coordKey spells a coordinate exactly as JavaScript does")
     func coordinateKeys() throws {
-        let fixture = try Self.decode(CoordsFixture.self, "coords.json")
+        let fixture = try PortFixtures.decode(CoordsFixture.self, "coords.json")
         for item in fixture.cases {
             let coordinate = try #require(Coordinate(pair: item.coord))
             #expect(
@@ -90,7 +61,7 @@ struct FixtureParityTests {
 
     @Test("segment keys order their two ends the same way")
     func segmentKeys() throws {
-        let fixture = try Self.decode(CoordsFixture.self, "coords.json")
+        let fixture = try PortFixtures.decode(CoordsFixture.self, "coords.json")
         #expect(!fixture.segmentKeys.isEmpty)
         for item in fixture.segmentKeys {
             let a = try #require(Coordinate(pair: item.a))
@@ -136,7 +107,7 @@ struct FixtureParityTests {
     /// library, and the diff is a real behavioural change.
     @Test("haversine distances match JavaScript within the measured libm budget")
     func distances() throws {
-        let fixture = try Self.decode(DistanceFixture.self, "distance.json")
+        let fixture = try PortFixtures.decode(DistanceFixture.self, "distance.json")
         #expect(fixture.cases.count > 100)
 
         var worstULP: Int64 = 0
@@ -180,7 +151,7 @@ struct FixtureParityTests {
 
     @Test("Douglas–Peucker keeps the same vertices")
     func simplification() throws {
-        let fixture = try Self.decode(SimplifyFixture.self, "simplify.json")
+        let fixture = try PortFixtures.decode(SimplifyFixture.self, "simplify.json")
         #expect(fixture.cases.count > 50)
         for item in fixture.cases {
             let points = item.points.compactMap(Coordinate.init(pair:))
@@ -194,7 +165,7 @@ struct FixtureParityTests {
 
     @Test("epsilon 0 retains every index, which lane splitting depends on")
     func zeroEpsilonRetainsEverything() throws {
-        let fixture = try Self.decode(SimplifyFixture.self, "simplify.json")
+        let fixture = try PortFixtures.decode(SimplifyFixture.self, "simplify.json")
         for item in fixture.cases where item.epsilonMeters == 0 {
             #expect(item.keptIndices == Array(0..<item.points.count))
         }
@@ -213,7 +184,7 @@ struct FixtureParityTests {
 
     @Test("decodeIntervals reproduces the drawn geometry vertex for vertex")
     func intervals() throws {
-        let fixture = try Self.decode(IntervalsFixture.self, "intervals.json")
+        let fixture = try PortFixtures.decode(IntervalsFixture.self, "intervals.json")
         #expect(!fixture.cases.isEmpty)
 
         for item in fixture.cases {
@@ -263,7 +234,7 @@ struct FixtureParityTests {
     /// on the map.
     @Test("the level-of-detail rule keeps the same lines at each zoom")
     func visibility() throws {
-        let fixture = try Self.decode(VisibilityFixture.self, "visibility.json")
+        let fixture = try PortFixtures.decode(VisibilityFixture.self, "visibility.json")
         #expect(fixture.cases.count > 500)
 
         for item in fixture.cases {
@@ -283,7 +254,7 @@ struct FixtureParityTests {
     /// and vanish together rather than the map growing a line in fragments.
     @Test("group totals drive visibility, not each piece's own length")
     func visibilityGrouping() throws {
-        let fixture = try Self.decode(VisibilityFixture.self, "visibility.json")
+        let fixture = try PortFixtures.decode(VisibilityFixture.self, "visibility.json")
         #expect(Set(fixture.cases.map(\.country)) == Set(PortFixtures.countries))
         for country in PortFixtures.countries {
             let package = try Self.package(country: country)

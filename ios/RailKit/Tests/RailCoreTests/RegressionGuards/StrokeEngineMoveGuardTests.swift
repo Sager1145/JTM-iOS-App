@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Pins where the stroke engine lives. It moved out of the app target into RailCore so a host
@@ -6,19 +7,6 @@ import Testing
 /// the RailCore side free of anything a host cannot import.
 @Suite("RegressionGuardStrokeEngineMove")
 struct RegressionGuardStrokeEngineMove {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) throws -> String {
-        try String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)
-    }
-
     /// RailCore files that make up the engine, its inputs and its entry points.
     private static let engineFiles = [
         "RailKit/Sources/RailCore/Rendering/StrokeBake.swift",
@@ -34,7 +22,7 @@ struct RegressionGuardStrokeEngineMove {
     @Test("the engine files import no platform UI or map framework")
     func engineIsHostImportable() throws {
         for file in Self.engineFiles {
-            let source = try Self.read(file)
+            let source = try SourceFiles.text(file)
             for forbidden in ["import MapKit", "import CoreLocation", "import SwiftUI", "import UIKit", "import AppKit"] {
                 #expect(!source.contains(forbidden), "\(file) must not contain \(forbidden)")
             }
@@ -43,7 +31,7 @@ struct RegressionGuardStrokeEngineMove {
 
     @Test("the app's map geometry file keeps the adapters and none of the engine")
     func appKeepsNoEngine() throws {
-        let geometry = try Self.read("RailMap/Map/MapLineGeometry.swift")
+        let geometry = try SourceFiles.text("RailMap/Map/MapLineGeometry.swift")
         for moved in [
             "ContinuousStroke.buildStroke(", "StrokeJunctionIndex(", "func continuousJoin(",
             "func continuousStrokeBuild(", "cancellableDouglasPeuckerIndices", "func joinedChainCoordinates(",
@@ -59,7 +47,7 @@ struct RegressionGuardStrokeEngineMove {
 
     @Test("RailStyle takes the stroke tokens from RailStrokeTokens, not from literals of its own")
     func styleAliasesTokens() throws {
-        let style = try Self.read("RailMap/Design/RailStyle.swift")
+        let style = try SourceFiles.text("RailMap/Design/RailStyle.swift")
         for alias in [
             "CGFloat(RailStrokeTokens.stationDiameter)", "CGFloat(RailStrokeTokens.railWidth)",
             "CGFloat(RailStrokeTokens.parallelGap)", "CGFloat(RailStrokeTokens.parallelLaneCentreDistance)",
@@ -80,7 +68,7 @@ struct RegressionGuardStrokeEngineMove {
 
     @Test("the datum shift has one body, in RailCore")
     func gcjHasOneBody() throws {
-        let datum = try Self.read("RailMap/Map/AppleMapDatum.swift")
+        let datum = try SourceFiles.text("RailMap/Map/AppleMapDatum.swift")
         #expect(datum.contains("GCJ02.fromWGS84("))
         #expect(!datum.contains("transformLatitude") && !datum.contains("6_378_245"))
         #expect(datum.contains("GCJ02.candidateRegions"))
@@ -88,10 +76,10 @@ struct RegressionGuardStrokeEngineMove {
 
     @Test("the display chunk document is decoded in one place")
     func chunkDecodedOnce() throws {
-        let formats = try Self.read("RailMap/Infrastructure/Network/RailDisplayNetworkFormats.swift")
+        let formats = try SourceFiles.text("RailMap/Infrastructure/Network/RailDisplayNetworkFormats.swift")
         #expect(formats.contains("typealias LineFragment = DisplayChunk.LineFragment"))
         #expect(!formats.contains("struct LineFragment"))
-        let store = try Self.read("RailMap/Infrastructure/Network/RailNetworkStore.swift")
+        let store = try SourceFiles.text("RailMap/Infrastructure/Network/RailNetworkStore.swift")
         #expect(store.contains("StrokeLineInput.make("))
     }
 }

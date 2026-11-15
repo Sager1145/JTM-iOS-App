@@ -31,7 +31,7 @@ struct TrainServicePatternsTests {
 
     @Test("every station named in a pattern exists in the shipped station table")
     func stationsExistInStationTable() throws {
-        let root = try Self.repositoryRoot()
+        let root = try PortFixtures.repositoryRoot()
         let url = root.appending(path: "app/data/stations.json")
         let data = try Data(contentsOf: url)
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -56,7 +56,7 @@ struct TrainServicePatternsTests {
 
     @Test("every v3 stop resolves to its exact bundled editor station")
     func stationReferencesResolve() throws {
-        let root = try Self.repositoryRoot()
+        let root = try PortFixtures.repositoryRoot()
         let url = root.appending(path: "app/public/rail/jp-2025.json")
         let directory = try JSONDecoder().decode(
             CompactPackage.StationDirectory.self, from: Data(contentsOf: url))
@@ -79,19 +79,6 @@ struct TrainServicePatternsTests {
             }
         }
         #expect(offenders.isEmpty, "\(offenders)")
-    }
-
-    private static func repositoryRoot(from file: StaticString = #filePath) throws -> URL {
-        var directory = URL(filePath: "\(file)").deletingLastPathComponent()
-        for _ in 0..<8 {
-            if FileManager.default.fileExists(
-                atPath: directory.appending(path: "app/data/stations.json").path)
-            {
-                return directory
-            }
-            directory = directory.deletingLastPathComponent()
-        }
-        throw CocoaError(.fileNoSuchFile)
     }
 
     // MARK: - same-name, different-route variants
@@ -372,7 +359,7 @@ struct TrainServicePatternsTests {
 
     @Test("every line named in a pattern exists in the shipped rail-sections table, canonically")
     func lineNamesExistInRailSections() throws {
-        let root = try Self.repositoryRoot()
+        let root = try PortFixtures.repositoryRoot()
         let url = root.appending(path: "app/data/rail-sections.json")
         let data = try Data(contentsOf: url)
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]

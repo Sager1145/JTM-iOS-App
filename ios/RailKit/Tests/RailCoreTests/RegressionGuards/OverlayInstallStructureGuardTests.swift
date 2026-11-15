@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// The overlay install must put new overlays at their final index (rules in
@@ -6,14 +7,7 @@ import Testing
 /// down, which cost 20 to 30 ms per camera settle.
 @Suite("RegressionGuardOverlayInstall")
 struct RegressionGuardOverlayInstall {
-    private static let source: String = {
-        let ios = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent().deletingLastPathComponent()
-            .deletingLastPathComponent().deletingLastPathComponent()
-            .deletingLastPathComponent()
-        return (try? String(contentsOf: ios.appendingPathComponent("RailMap/Map/MapNetworkRendering.swift"),
-                            encoding: .utf8)) ?? ""
-    }()
+    private static let source = SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift")
 
     @Test func installInsertsAtFinalPositionAndNeverBulkAppends() throws {
         let s = Self.source

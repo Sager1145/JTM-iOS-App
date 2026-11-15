@@ -85,48 +85,19 @@ extension RailTopology {
     }
 }
 
-/// Binary min-heap of (cost, row changes, key), ordered lexicographically; `key` is
+/// Heap item ordered lexicographically by (cost, row changes, key, node); `key` is
 /// the line's id rank in the high 32 bits and the node ordinal in the low 32.
-private struct NodeHeap {
-    typealias Item = (cost: UInt64, changes: UInt32, key: UInt64, node: UInt32)
-    private var items: [Item] = []
-    var isEmpty: Bool { items.isEmpty }
+private struct NodeItem: HeapOrdered {
+    var cost: UInt64
+    var changes: UInt32
+    var key: UInt64
+    var node: UInt32
 
     @inline(__always)
-    private static func less(_ a: Item, _ b: Item) -> Bool {
-        if a.cost != b.cost { return a.cost < b.cost }
-        if a.changes != b.changes { return a.changes < b.changes }
-        return a.key != b.key ? a.key < b.key : a.node < b.node
-    }
-
-    mutating func push(_ cost: UInt64, _ changes: UInt32, _ key: UInt64, _ node: UInt32) {
-        items.append((cost, changes, key, node))
-        var i = items.count - 1
-        while i > 0 {
-            let parent = (i - 1) / 2
-            guard Self.less(items[i], items[parent]) else { break }
-            items.swapAt(i, parent)
-            i = parent
-        }
-    }
-
-    mutating func pop() -> Item? {
-        guard let top = items.first else { return nil }
-        let last = items.removeLast()
-        if !items.isEmpty {
-            items[0] = last
-            var i = 0
-            while true {
-                let l = 2 * i + 1, r = l + 1
-                var smallest = i
-                if l < items.count, Self.less(items[l], items[smallest]) { smallest = l }
-                if r < items.count, Self.less(items[r], items[smallest]) { smallest = r }
-                if smallest == i { break }
-                items.swapAt(i, smallest)
-                i = smallest
-            }
-        }
-        return top
+    func precedes(_ b: NodeItem) -> Bool {
+        if cost != b.cost { return cost < b.cost }
+        if changes != b.changes { return changes < b.changes }
+        return key != b.key ? key < b.key : node < b.node
     }
 }
 
@@ -239,18 +210,18 @@ extension TopologyView {
         var prevEdge = [UInt32](repeating: Self.noEdge, count: nodeTotal)
         var changes = [UInt32](repeating: 0, count: nodeTotal)
         var settled = [Bool](repeating: false, count: nodeTotal)
-        var heap = NodeHeap()
+        var heap = BinaryMinHeap<NodeItem>()
         for ref in query.from {
             guard let g = global(ref), usable(Int(ref.line)), dist[g] != 0 else { continue }
             dist[g] = 0
-            heap.push(0, 0, key(g), UInt32(g))
+            heap.push(NodeItem(cost: 0, changes: 0, key: key(g), node: UInt32(g)))
         }
 
         func relax(_ u: Int, _ v: Int, cost: UInt64, rowChange: UInt32, edge: UInt32) {
             let nd = dist[u] + cost, nc = changes[u] + rowChange
             if nd < dist[v] || (nd == dist[v] && nc < changes[v]) {
                 dist[v] = nd; changes[v] = nc; prev[v] = UInt32(u); prevEdge[v] = edge
-                heap.push(nd, nc, key(v), UInt32(v))
+                heap.push(NodeItem(cost: nd, changes: nc, key: key(v), node: UInt32(v)))
             }
         }
 
@@ -285,7 +256,8 @@ extension TopologyView {
         var best: RailTopology.SectionPath?
         var bestScore = UInt64.max
 
-        while let (popCost, _, _, node) = heap.pop() {
+        while let popped = heap.pop() {
+            let popCost = popped.cost, node = popped.node
             // Every target settling from here on costs at least this much, and its score is never lower.
             if popCost > bestScore { break }
             let u = Int(node)

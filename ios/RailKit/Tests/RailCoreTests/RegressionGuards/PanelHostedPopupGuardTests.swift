@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for panel-hosted popups. The host decision is tested
@@ -6,26 +7,13 @@ import Testing
 /// asks the policy, never the platform, and that the panel path stays whole.
 @Suite("RegressionGuardPanelHostedPopups")
 struct RegressionGuardPanelHostedPopups {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static func read(_ path: String) -> String {
-        (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
-    private static let menu = read("RailMap/Journeys/JourneyMenuView.swift")
-    private static let workspace = read("RailMap/Workspace/RailWorkspaceView.swift")
-    private static let presentations = read("RailMap/Workspace/WorkspacePresentations.swift")
-    private static let sheetContent = read("RailMap/Workspace/WorkspaceSheetContent.swift")
-    private static let notes = read("RailMap/Journeys/TripNotesCard.swift")
-    private static let row = read("RailMap/Journeys/JourneyListRow.swift")
-    private static let host = read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static let menu = SourceFiles.textRecording("RailMap/Journeys/JourneyMenuView.swift")
+    private static let workspace = SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift")
+    private static let presentations = SourceFiles.textRecording("RailMap/Workspace/WorkspacePresentations.swift")
+    private static let sheetContent = SourceFiles.textRecording("RailMap/Workspace/WorkspaceSheetContent.swift")
+    private static let notes = SourceFiles.textRecording("RailMap/Journeys/TripNotesCard.swift")
+    private static let row = SourceFiles.textRecording("RailMap/Journeys/JourneyListRow.swift")
+    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
 
     /// `dismiss` from a view that is not in a presentation can close a Catalyst
     /// window, and the platform test is the policy's job.
@@ -91,7 +79,7 @@ struct RegressionGuardPanelHostedPopups {
             "Workspace/RailWorkspaceView.swift", "Journeys/RideCard.swift",
             "JourneyEditor/TicketScanView.swift",
         ]
-        let root = Self.ios.appendingPathComponent("RailMap")
+        let root = SourceFiles.ios.appendingPathComponent("RailMap")
         let files = try FileManager.default.subpathsOfDirectory(atPath: root.path)
             .filter { $0.hasSuffix(".swift") }
         for file in files where !allowed.contains(file) {
@@ -114,11 +102,11 @@ struct RegressionGuardPanelHostedPopups {
         #expect(Self.host.contains("presentedViewController"))
     }
 
-    private static let station = read("RailMap/Map/StationCardView.swift")
-    private static let lineCard = read("RailMap/Map/RailwayLineCardView.swift")
-    private static let lineSheet = read("RailMap/Map/NetworkLineSheetView.swift")
-    private static let picker = read("RailMap/Journeys/JourneyGroupPicker.swift")
-    private static let hosting = read("RailMap/Workspace/WorkspacePopupHosting.swift")
+    private static let station = SourceFiles.textRecording("RailMap/Map/StationCardView.swift")
+    private static let lineCard = SourceFiles.textRecording("RailMap/Map/RailwayLineCardView.swift")
+    private static let lineSheet = SourceFiles.textRecording("RailMap/Map/NetworkLineSheetView.swift")
+    private static let picker = SourceFiles.textRecording("RailMap/Journeys/JourneyGroupPicker.swift")
+    private static let hosting = SourceFiles.textRecording("RailMap/Workspace/WorkspacePopupHosting.swift")
 
     /// A popup root's close goes through `closePanelSurface` when there is one.
     @Test func popupRootsNeverDismissWithoutCheckingThePanel() {
@@ -126,7 +114,7 @@ struct RegressionGuardPanelHostedPopups {
         #expect(Self.lineCard.contains("if let onClose { onClose() } else { dismiss() }"))
         #expect(Self.lineSheet.contains("onClose: { if let closePanelSurface { closePanelSurface() } else { dismiss() } })"))
         for (name, source) in [
-            ("StationCardView", Self.station), ("RideChooserView", Self.read("RailMap/Journeys/RideChooserView.swift")),
+            ("StationCardView", Self.station), ("RideChooserView", SourceFiles.textRecording("RailMap/Journeys/RideChooserView.swift")),
             ("JourneyGroupPicker", Self.picker), ("NetworkLineSheetView", Self.lineSheet),
         ] {
             for line in source.split(separator: "\n") where line.contains("dismiss()") {

@@ -89,7 +89,7 @@ public enum TrainServiceBranding {
                 month = parsedMonth
             }
 
-            let maximumDay = daysInMonth(month, year: year)
+            let maximumDay = CivilDate.daysInMonth(year: year, month: month)
             var day = endOfPeriod ? maximumDay : 1
             if parts.count == 3 {
                 guard parts[2].count == 2, parts[2].allSatisfy(\.isNumber),
@@ -100,18 +100,6 @@ public enum TrainServiceBranding {
             return String(format: "%04d-%02d-%02d", year, month, day)
         }
 
-        private static func daysInMonth(_ month: Int, year: Int) -> Int {
-            switch month {
-            case 2:
-                let leapYear = year.isMultiple(of: 400)
-                    || (year.isMultiple(of: 4) && !year.isMultiple(of: 100))
-                return leapYear ? 29 : 28
-            case 4, 6, 9, 11:
-                return 30
-            default:
-                return 31
-            }
-        }
     }
 
     /// The bundled service catalog. A missing or malformed resource is a

@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Regression guard: recorded train times must never depend on the phone's
@@ -259,12 +260,7 @@ struct RegressionGuardDeviceClock {
 
     @Test("device zone and calendar never decide recorded times")
     func deviceClockRatchet() throws {
-        let ios = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
+        let ios = SourceFiles.ios
         let fix = "use region.clock for recorded times (region.clock.calendar / region.clock.timeZone, instance properties), set .timeZone on every Calendar/DateFormatter you build, and pin every DatePicker with .environment(\\.timeZone, region.clock.timeZone) and .environment(\\.calendar, region.clock.calendar)"
         var problems: [String] = []
         var seen = Set<String>()

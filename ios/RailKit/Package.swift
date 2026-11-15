@@ -23,8 +23,10 @@ let package = Package(
         ),
         .target(name: "RailPresentation", dependencies: ["RailCore"]),
         .target(name: "RailApplication", dependencies: ["RailCore"]),
-        .testTarget(name: "RailCoreTests", dependencies: ["RailCore"]),
-        .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation", "RailCore"]),
+        // Test-only helpers shared by the test targets (source-scanning guards read files through it).
+        .target(name: "RailTestSupport", path: "Tests/RailTestSupport"),
+        .testTarget(name: "RailCoreTests", dependencies: ["RailCore", "RailTestSupport"]),
+        .testTarget(name: "RailPresentationTests", dependencies: ["RailPresentation", "RailCore", "RailTestSupport"]),
         .testTarget(name: "RailApplicationTests", dependencies: ["RailApplication", "RailCore"]),
     ]
 )

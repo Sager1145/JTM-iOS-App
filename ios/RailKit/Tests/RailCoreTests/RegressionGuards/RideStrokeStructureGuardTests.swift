@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source-structure guards for the off-main ride polyline builder (trip-loading
@@ -6,20 +7,7 @@ import Testing
 /// app tests cannot read the repository folder.
 @Suite("RegressionGuardRideStrokeStructure")
 struct RegressionGuardRideStrokeStructure {
-    private static let ios: URL = {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-    }()
-
-    private static let coordinator: String = {
-        (try? String(
-            contentsOf: ios.appendingPathComponent("RailMap/Map/RailMapCoordinator.swift"),
-            encoding: .utf8)) ?? ""
-    }()
+    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
 
     private static func body(from start: String, to end: String) throws -> Substring {
         let source = coordinator
@@ -40,9 +28,7 @@ struct RegressionGuardRideStrokeStructure {
     }
 
     @Test func thereIsNoMainThreadStrokePathOrEnvSwitch() throws {
-        let builder = try String(
-            contentsOf: Self.ios.appendingPathComponent("RailMap/Map/RideStrokeBuilder.swift"),
-            encoding: .utf8)
+        let builder = try SourceFiles.text("RailMap/Map/RideStrokeBuilder.swift")
         let full = Self.coordinator
         for source in [builder, full] {
             #expect(!source.contains("RAILMAP_RIDE_STROKES"))

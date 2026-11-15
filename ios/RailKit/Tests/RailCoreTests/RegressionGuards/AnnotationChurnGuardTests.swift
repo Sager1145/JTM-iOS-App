@@ -1,4 +1,5 @@
 import Foundation
+import RailTestSupport
 import Testing
 
 /// Source guards for the annotation-churn fixes: level changes keep and move
@@ -6,18 +7,8 @@ import Testing
 /// is written only when it changes. They read app sources, so they live in RailKit.
 @Suite("RegressionGuardAnnotationChurn")
 struct RegressionGuardAnnotationChurn {
-    private static func source(_ path: String) -> String {
-        let ios = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // RegressionGuards
-            .deletingLastPathComponent() // RailCoreTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // RailKit
-            .deletingLastPathComponent() // ios
-        return (try? String(contentsOf: ios.appendingPathComponent(path), encoding: .utf8)) ?? ""
-    }
-
     @Test func theReconcilerMatchesThroughTheRailKitDiffAndKeysCarryNoCoordinate() {
-        let text = Self.source("RailMap/Map/MapAnnotationReconciler.swift")
+        let text = SourceFiles.textRecording("RailMap/Map/MapAnnotationReconciler.swift")
         #expect(text.contains("AnnotationDiff.make("))
         #expect(!text.contains("item.coordinate.latitude)|"))
         #expect(!text.contains("keyIgnoringCoordinate"))
@@ -25,7 +16,7 @@ struct RegressionGuardAnnotationChurn {
     }
 
     @Test func overlayDrawnTripDotsAreNotAddedAsAnnotations() throws {
-        let text = Self.source("RailMap/Map/RailMapCoordinator.swift")
+        let text = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
         #expect(text.contains("func placeDot(_ dot: RideStationAnnotation)"))
         #expect(text.contains("if dot.drawsInOverlay { overlayDots.append(dot) }"))
         #expect(!text.contains("markerAnnotations.append(annotation)"))
@@ -38,7 +29,7 @@ struct RegressionGuardAnnotationChurn {
 
     @Test func stackingIsWrittenOnlyWhenItDiffers() {
         for path in ["RailMap/Map/StationAnnotationViews.swift", "RailMap/Map/JourneyLabelAnnotationViews.swift"] {
-            let text = Self.source(path)
+            let text = SourceFiles.textRecording(path)
             #expect(text.contains("if layer.zPosition != "), Comment(rawValue: path))
             #expect(text.contains("if zPriority != "), Comment(rawValue: path))
             #expect(!text.contains("\n        layer.zPosition = "), Comment(rawValue: path))
