@@ -294,40 +294,13 @@ public enum Dates {
         // `day - 1` as an offset rather than a calendar day is what makes an
         // out-of-range day (the 31st of June) roll forward the way `Date.UTC`
         // rolls it, instead of being rejected or clamped.
-        let serial = daysFromCivil(year: year, month: month, day: 1) + (day - 1) + days
-        let (y, m, d) = civilFromDays(serial)
+        let serial = CivilDate.daysFromCivil(year: year, month: month, day: 1) + (day - 1) + days
+        let (y, m, d) = CivilDate.civilFromDays(serial)
         return "\(y)-\(pad2(m))-\(pad2(d))"
     }
 
     private static func pad2(_ value: Int) -> String {
         value >= 0 && value < 10 ? "0\(value)" : "\(value)"
-    }
-
-    /// Days since 1970-01-01 for a proleptic Gregorian civil date.
-    private static func daysFromCivil(year: Int, month: Int, day: Int) -> Int {
-        // The era trick: shift the year so March starts it, which makes the
-        // leap day the last day of the year and removes every special case.
-        let y = year - (month <= 2 ? 1 : 0)
-        let era = (y >= 0 ? y : y - 399) / 400
-        let yearOfEra = y - era * 400                              // 0…399
-        let dayOfYear = (153 * (month + (month > 2 ? -3 : 9)) + 2) / 5 + day - 1
-        let dayOfEra = yearOfEra * 365 + yearOfEra / 4 - yearOfEra / 100 + dayOfYear
-        return era * 146097 + dayOfEra - 719468
-    }
-
-    /// The inverse of ``daysFromCivil(year:month:day:)``.
-    private static func civilFromDays(_ serial: Int) -> (year: Int, month: Int, day: Int) {
-        let z = serial + 719468
-        let era = (z >= 0 ? z : z - 146096) / 146097
-        let dayOfEra = z - era * 146097                            // 0…146096
-        let yearOfEra =
-            (dayOfEra - dayOfEra / 1460 + dayOfEra / 36524 - dayOfEra / 146096) / 365
-        let year = yearOfEra + era * 400
-        let dayOfYear = dayOfEra - (365 * yearOfEra + yearOfEra / 4 - yearOfEra / 100)
-        let mp = (5 * dayOfYear + 2) / 153                         // 0…11, March-based
-        let day = dayOfYear - (153 * mp + 2) / 5 + 1
-        let month = mp + (mp < 10 ? 3 : -9)
-        return (year + (month <= 2 ? 1 : 0), month, day)
     }
 
     // MARK: - times

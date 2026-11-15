@@ -378,8 +378,8 @@ public enum RailTopologyFormat {
         let parts = iso.split(separator: "-", omittingEmptySubsequences: false)
         guard parts.count == 3, parts[0].count == 4, parts[1].count == 2, parts[2].count == 2,
               let y = Int(parts[0]), let m = Int(parts[1]), let d = Int(parts[2]),
-              (1...12).contains(m), d >= 1, d <= daysInMonth(year: y, month: m) else { return nil }
-        let n = daysFromCivil(year: y, month: m, day: d) - daysFromCivil(year: 1799, month: 12, day: 31)
+              (1...12).contains(m), d >= 1, d <= CivilDate.daysInMonth(year: y, month: m) else { return nil }
+        let n = CivilDate.daysFromCivil(year: y, month: m, day: d) - CivilDate.daysFromCivil(year: 1799, month: 12, day: 31)
         return n >= 1 ? UInt32(n) : nil
     }
 
@@ -391,24 +391,6 @@ public enum RailTopologyFormat {
         if validFrom != noDate, day < validFrom { return false }
         if validTo != noDate, day >= validTo { return false }
         return true
-    }
-
-    private static func daysInMonth(year: Int, month: Int) -> Int {
-        switch month {
-        case 2: (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28
-        case 4, 6, 9, 11: 30
-        default: 31
-        }
-    }
-
-    /// Days since 1970-01-01 (proleptic Gregorian).
-    private static func daysFromCivil(year: Int, month: Int, day: Int) -> Int {
-        let y = month <= 2 ? year - 1 : year
-        let era = (y >= 0 ? y : y - 399) / 400
-        let yoe = y - era * 400
-        let doy = (153 * (month + (month > 2 ? -3 : 9)) + 2) / 5 + day - 1
-        let doe = yoe * 365 + yoe / 4 - yoe / 100 + doy
-        return era * 146_097 + doe - 719_468
     }
 
     // MARK: Header parsing

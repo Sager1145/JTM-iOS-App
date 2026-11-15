@@ -308,12 +308,7 @@ public enum TrainServicePatterns {
                 let month = number(5..<7)
                 let day = number(8..<10)
                 guard year > 0, (1...12).contains(month) else { return nil }
-                let leapYear = year.isMultiple(of: 400)
-                    || (year.isMultiple(of: 4) && year.isMultiple(of: 100) == false)
-                let daysInMonth = [
-                    31, leapYear ? 29 : 28, 31, 30, 31, 30,
-                    31, 31, 30, 31, 30, 31,
-                ][month - 1]
+                let daysInMonth = CivilDate.daysInMonth(year: year, month: month)
                 guard (1...daysInMonth).contains(day) else { return nil }
                 self.rawValue = rawValue
             }
