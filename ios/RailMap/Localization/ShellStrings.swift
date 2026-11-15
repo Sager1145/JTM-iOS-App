@@ -301,6 +301,7 @@ enum ShellStrings {
             .zhHans: "全部地区", .zhHant: "全部地區",
         ],
         "ios.close": [.en: "Close", .ja: "閉じる", .zhHans: "关闭", .zhHant: "關閉"],
+        "ios.back": [.en: "Back", .ja: "戻る", .zhHans: "返回", .zhHant: "返回"],
         // The resident sheet's three stops, as accessibility actions. See
         // `SheetStageActions` — with no Pull Bar and a drag-driven resize,
         // these are the only way a reader not using touch can move it.
