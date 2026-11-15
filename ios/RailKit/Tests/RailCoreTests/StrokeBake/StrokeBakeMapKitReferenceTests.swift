@@ -4,12 +4,12 @@ import MapKit
 import Testing
 @testable import RailCore
 
-/// What still ties the moved stroke engine to MapKit now that the goldens in
+/// Projection parity on the vertices the engine draws, now that the goldens in
 /// `StrokeBakeEqualityTests` were captured on `StrokeProjection` (`Fixtures/README.md`,
-/// "Projection"): the engine's own output, projected by `MKMapPoint`, is compared against the
-/// reference MapKit gives, within the projection's documented tolerance (1e-6 map point,
-/// `StrokeProjectionParityTests`). If `StrokeProjection` or the engine's use of it drifted from
-/// MapKit, the exact golden comparison would not notice (it shares the projection); these do.
+/// "Projection"): `MKMapPoint` and `StrokeProjection` are compared at every drawn vertex and at a
+/// lane-0 parallel line's ends, within 1e-6 map point. This is the same projection check as
+/// `StrokeProjectionParityTests`, on the engine's own point set; it cannot tell whether the engine
+/// uses the projection correctly.
 @Suite("StrokeBakeMapKitReference")
 struct StrokeBakeMapKitReferenceTests {
 
@@ -26,8 +26,8 @@ struct StrokeBakeMapKitReferenceTests {
         StrokeBakeFixtures.network(try StrokeBakeFixtures.load())
     }
 
-    @Test("every vertex the engine draws projects through MapKit to where StrokeProjection puts it")
-    func drawnVerticesMatchMapKit() throws {
+    @Test("projection parity on every vertex the engine draws")
+    func drawnVertexProjectionParity() throws {
         let network = try Self.network()
         let byID = Dictionary(network.lines.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         var worst = 0.0

@@ -50,7 +50,7 @@ What independence remains, honestly: the golden pins the moved engine's app-side
 code, that is what `OldMapLineGeometry.swift` does around the engine (chain joining, windows, chunking, family and
 fallback runs, anchors, lane probes, the order of everything). It does NOT pin the projection arithmetic (shared with
 the code under test now), and it never pinned `ContinuousStroke` (the capture calls the same RailCore engine, which
-is why the 2026-11-14 recapture was needed). Drift relative to MapKit is caught by `StrokeBakeMapKitReferenceTests`
+is why the 2026-11-14 recapture was needed). Projection parity with MapKit (not engine correctness) is checked by `StrokeBakeMapKitReferenceTests`
 (the engine's own output vertices projected by `MKMapPoint` against `StrokeProjection`, and a lane-0 parallel line's
 end vertices against the MapKit projection of the source ends, both within 1e-6 map point) and by
 `StrokeProjectionParityTests`. To recapture: put the capture package's `.txt` sources (without the `.txt`) in
