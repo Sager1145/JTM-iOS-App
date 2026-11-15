@@ -564,6 +564,7 @@ final class AppControlHost: AppControlDriver {
             ],
             "map": [
                 "ready": .bool(stores.controller.isMapReady),
+                "markerPassOwed": .bool(MapRenderProbe.markerPassOwed),
                 "renderStatus": optional(Self.renderStatusText()),
                 "render": workspace?.renderStats().map { stats in
                     [
@@ -651,7 +652,8 @@ final class AppControlHost: AppControlDriver {
         case "editorPlanned": return editorPlanned()
         case "editorClosed": return workspace?.editorState().open != true
         case "idle":
-            return holds("mapReady", stores) && holds("routesLoaded", stores) && workspace?.editorState().saving != true
+            return holds("mapReady", stores) && !MapRenderProbe.markerPassOwed
+                && holds("routesLoaded", stores) && workspace?.editorState().saving != true
         default:
             if condition.hasPrefix("trips>="), let count = Int(condition.dropFirst("trips>=".count)) {
                 return (stores.itineraries.loaded?.trains.count ?? -1) >= count

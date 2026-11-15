@@ -30,6 +30,9 @@ import OSLog
     static var rideOverlays = 0
     /// Frame-geometry entries released by memory-pressure drops.
     static var droppedFrames = 0
+    /// A rebuild left the full marker pass owed and it has not run yet; app-control
+    /// `idle` waits for it.
+    static var markerPassOwed = false
     /// Where the geometry levels stand: installed (on screen), wanted (by the
     /// camera now), preparing (in flight), pending (landed, to install next).
     struct GeometryLevels {
@@ -214,7 +217,11 @@ extension RailMapView.Surface {
             private var markerBuildContext: MarkerBuildContext?
             /// Set when a rebuild during a gesture skipped the full marker
             /// pass; paid by the first full pass, normally at settle.
-            private var markerPassDebt = MarkerPassDebt()
+            private var markerPassDebt = MarkerPassDebt() {
+                didSet { MapRenderProbe.markerPassOwed = markerPassDebt.isOwed }
+            }
+            /// The next-turn hand-off that pays the camera settle's marker debt.
+            private var markerSettleTurn = MarkerSettleTurn()
             /// Per-ride digests of `rides`, kept in step with it in `update`.
             private var rideDeck = RideDeckState()
             /// The non-selected rides' installed batches and the inputs they
@@ -1098,6 +1105,7 @@ extension RailMapView.Surface {
                 }
                 memoryWarningObserver = nil
                 cameraRebuildTimer.cancel()
+                markerSettleTurn.cancel()
                 travelStopTimer.cancel()
                 stationLabels.tearDown()
                 pendingViewUpdate = nil
@@ -1161,6 +1169,9 @@ extension RailMapView.Surface {
             }
 
             private func scheduleCameraRebuild(on mapView: MKMapView) {
+                // A newer camera move supersedes a marker pass still waiting
+                // for its turn; the debt stays owed and this settle pays it.
+                markerSettleTurn.cancel()
                 cameraRebuildTimer.schedule { [weak self, weak mapView] in
                     guard let self, let mapView else { return }
                     guard !self.isManipulating else {
@@ -1191,7 +1202,29 @@ extension RailMapView.Surface {
                     let zoom = MapProjection.zoomLevel(of: mapView)
                     self.restyle(on: mapView, overlays: !self.strokeBucketPending(at: zoom))
                     self.noteRebuildTrigger(.cameraSettled)
-                    self.rebuild(on: mapView)
+                    // Overlays now, markers and labels on the next run-loop
+                    // turn: a display-link frame can fire between the two.
+                    self.rebuild(on: mapView, deferMarkers: true)
+                    self.scheduleMarkerSettleTurn(on: mapView)
+                }
+            }
+
+            /// Pays the marker debt a deferred settle rebuild left, on the next
+            /// main run-loop turn. Superseded by a newer schedule or camera move,
+            /// and a no-op once any full pass has run or the camera moves again;
+            /// the debt then stays owed for the next settle. It reads the
+            /// current build context, so it never applies an older build's markers.
+            private func scheduleMarkerSettleTurn(on mapView: MKMapView) {
+                guard markerPassDebt.isOwed else { return }
+                let token = markerSettleTurn.schedule()
+                DispatchQueue.main.async { [weak self, weak mapView] in
+                    guard let self, let mapView, self.mapView === mapView,
+                          self.markerSettleTurn.claim(token) else { return }
+                    let moving = self.isManipulating
+                        || self.lastCameraChange.map({ ContinuousClock.now - $0 < .milliseconds(120) }) == true
+                    guard MarkerSettleTurn.runsFullPass(
+                        debtOwed: self.markerPassDebt.isOwed, cameraMoving: moving) else { return }
+                    self.runLabelPass(on: mapView, moving: false, fullPass: true)
                 }
             }
 
@@ -3950,14 +3983,14 @@ extension RailMapView.Surface {
                 // would leave exactly those pairs doubled.
                 var namedPlaces: [String: [Coordinate]] = [:]
                 func canClaimName(_ name: String, at position: Coordinate) -> Bool {
-                    let key = Stations.normalizeStationName(name)
+                    let key = StationNameKeyCache.key(name)
                     guard !key.isEmpty else { return false }
                     return !(namedPlaces[key]?.contains(where: {
                         Geometry.distanceMeters($0, position) <= Self.labelMergeMeters
                     }) ?? false)
                 }
                 func claimName(_ name: String, at position: Coordinate) -> Bool {
-                    let key = Stations.normalizeStationName(name)
+                    let key = StationNameKeyCache.key(name)
                     guard canClaimName(name, at: position) else { return false }
                     namedPlaces[key, default: []].append(position)
                     return true
@@ -4304,8 +4337,8 @@ extension RailMapView.Surface {
                     // identity rather than drawing two marker sizes over it.
                     func coincides(_ dot: RideStationAnnotation) -> Bool {
                         guard dot.selected == selected,
-                              Stations.normalizeStationName(dot.rawName)
-                                == Stations.normalizeStationName(spec.rawName) else { return false }
+                              StationNameKeyCache.key(dot.rawName)
+                                == StationNameKeyCache.key(spec.rawName) else { return false }
                         return MKMapPoint(dot.coordinate).distance(to: MKMapPoint(position)) < 0.1
                     }
                     markerAnnotations.removeAll { ($0 as? RideStationAnnotation).map(coincides) ?? false }

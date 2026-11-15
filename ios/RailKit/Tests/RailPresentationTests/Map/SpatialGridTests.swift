@@ -1,6 +1,7 @@
 import Testing
 
 @testable import RailPresentation
+import RailCore
 
 @Suite("SpatialGrid")
 struct SpatialGridTests {
@@ -70,5 +71,79 @@ struct MarkerPassDebtTests {
         #expect(debt.isOwed)
         debt.noteFullPassRan()
         #expect(!debt.isOwed)
+    }
+}
+
+@Suite("MarkerSettleTurn")
+struct MarkerSettleTurnTests {
+    @Test func aScheduledTurnIsClaimedExactlyOnce() {
+        var turn = MarkerSettleTurn()
+        let token = turn.schedule()
+        #expect(turn.isPending)
+        let first = turn.claim(token)
+        let second = turn.claim(token)
+        #expect(first)
+        #expect(!turn.isPending)
+        #expect(!second)
+    }
+
+    @Test func aNewerScheduleSupersedesTheOlderTurn() {
+        var turn = MarkerSettleTurn()
+        let old = turn.schedule()
+        let new = turn.schedule()
+        let oldClaimed = turn.claim(old)
+        #expect(!oldClaimed)
+        #expect(turn.isPending)
+        let newClaimed = turn.claim(new)
+        #expect(newClaimed)
+    }
+
+    @Test func aCancelledTurnIsNeverClaimedAndLeavesTheDebtOwed() {
+        var turn = MarkerSettleTurn()
+        var debt = MarkerPassDebt()
+        debt.noteDeferred()
+        let token = turn.schedule()
+        turn.cancel()
+        let claimed = turn.claim(token)
+        #expect(!claimed)
+        #expect(debt.isOwed)
+    }
+
+    @Test func theTurnRunsOnlyWhileDebtIsOwedAndTheCameraIsStill() {
+        #expect(MarkerSettleTurn.runsFullPass(debtOwed: true, cameraMoving: false))
+        #expect(!MarkerSettleTurn.runsFullPass(debtOwed: false, cameraMoving: false))
+        #expect(!MarkerSettleTurn.runsFullPass(debtOwed: true, cameraMoving: true))
+    }
+}
+
+@Suite("BoundedLookupCache")
+struct BoundedLookupCacheTests {
+    @Test func aHitDoesNotRecompute() {
+        let cache = BoundedLookupCache<String, Int>(capacity: 4)
+        var calls = 0
+        _ = cache.value(for: "a") { _ in calls += 1; return 1 }
+        _ = cache.value(for: "a") { _ in calls += 1; return 1 }
+        #expect(calls == 1)
+    }
+
+    @Test func aNilAnswerIsCachedToo() {
+        let cache = BoundedLookupCache<String, Int?>(capacity: 4)
+        var calls = 0
+        _ = cache.value(for: "a") { _ in calls += 1; return nil }
+        _ = cache.value(for: "a") { _ in calls += 1; return nil }
+        #expect(calls == 1)
+    }
+
+    @Test func theCacheStaysBounded() {
+        let cache = BoundedLookupCache<Int, Int>(capacity: 3)
+        for i in 0..<20 { _ = cache.value(for: i) { $0 } }
+        #expect(cache.count <= 3)
+    }
+
+    @Test func theStationNameKeyMatchesTheUncachedRule() {
+        for name in ["東京", "ｸﾞﾗﾝ", "我孫子", "ヶ丘", ""] {
+            #expect(StationNameKeyCache.key(name) == Stations.normalizeStationName(name))
+            #expect(StationNameKeyCache.key(name) == Stations.normalizeStationName(name))
+        }
     }
 }

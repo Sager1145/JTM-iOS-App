@@ -174,8 +174,15 @@ enum Region: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// train store actually carries outside Japan — names no region, and this
     /// answers `nil` for it rather than guessing. See the type's note.
     static func fromStationCode(_ code: String?) -> Region? {
-        scopeRule.regionCode(forStationCode: code).flatMap(Region.init(rawValue:))
+        guard let code else { return nil }
+        // A pure function of the code and the fixed rule: memoized because the
+        // marker pass asks it for every station on every rebuild.
+        return stationCodeRegions.value(for: code) {
+            scopeRule.regionCode(forStationCode: $0).flatMap(Region.init(rawValue:))
+        }
     }
+
+    private static let stationCodeRegions = BoundedLookupCache<String, Region?>(capacity: 16_384)
 
     /// The region an itinerary belongs to, or `nil` when nothing in it says.
     ///

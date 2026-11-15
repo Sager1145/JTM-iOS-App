@@ -164,6 +164,31 @@ struct RegressionGuardMapLock {
         #expect(settle.contains("self.applyHeldLineSwap()"))
     }
 
+    @Test func theCameraSettleDefersMarkersToTheNextRunLoopTurn() throws {
+        let settle = try Self.body(
+            Self.coordinator, from: "private func scheduleCameraRebuild(", to: "var preservesCameraDuringResize")
+        #expect(settle.contains("self.rebuild(on: mapView, deferMarkers: true)"))
+        #expect(!settle.contains("self.rebuild(on: mapView)\n"))
+        #expect(settle.contains("self.scheduleMarkerSettleTurn(on: mapView)"))
+        #expect(settle.contains("markerSettleTurn.cancel()"))
+        let turn = try Self.body(
+            Self.coordinator, from: "private func scheduleMarkerSettleTurn(", to: "var preservesCameraDuringResize")
+        #expect(turn.contains("DispatchQueue.main.async"))
+        #expect(turn.contains("self.markerSettleTurn.claim(token)"))
+        #expect(turn.contains("runLabelPass(on: mapView, moving: false, fullPass: true)"))
+        // app-control idle waits for the owed pass.
+        #expect(Self.read("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+            .contains("!MapRenderProbe.markerPassOwed"))
+    }
+
+    @Test func theMarkerPassMemoizesNameKeysAndRegionCodes() {
+        #expect(Self.coordinator.contains("StationNameKeyCache.key(name)"))
+        #expect(!Self.coordinator.contains("Stations.normalizeStationName(name)"))
+        #expect(Self.read("RailMap/Map/MapRideMarkers.swift").contains("StationNameKeyCache.key("))
+        #expect(Self.read("RailMap/Infrastructure/Network/RegionCatalog.swift")
+            .contains("stationCodeRegions.value(for: code)"))
+    }
+
     @Test func updateStagesLineSetsInsteadOfInstallingThemExceptOnAnEraChange() throws {
         let update = try Self.body(
             Self.coordinator, from: "let swapChanged = linesChanged || stationsChanged",
