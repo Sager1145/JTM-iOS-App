@@ -44,6 +44,7 @@
 		1FEA8EFE6B1A6EBBE1FD5A56 /* StatsWidgetShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59890B719D0F1149F6B2D328 /* StatsWidgetShape.swift */; };
 		20426EB73DE8E0AD02C727BD /* PlaybackAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6030348FB1AF4A143D14E3E /* PlaybackAnnotations.swift */; };
 		25672A729A74C727E4484375 /* InspectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA194865498F4ADB2CCC36 /* InspectorModel.swift */; };
+		269C3E7B2E47B0690076962C /* MapTapTestReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A4BA4988AF2DEC26FBC7FF /* MapTapTestReport.swift */; };
 		27EA857FC5EA2D7433B619BD /* TripNoteAnnotationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E968D7FA9B017D3E79614B98 /* TripNoteAnnotationViews.swift */; };
 		2816985D19808AE7129AEF86 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 52D359F79E542B3828E32F20 /* AppIcon.icon */; };
 		2A0A2F0EEC114F8174A39F71 /* NetworkLOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */; };
@@ -62,6 +63,7 @@
 		33BF7641B4D7AF9ADF5CA489 /* GlassStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544E7C91AE1CC1064A87B04B /* GlassStyle.swift */; };
 		340AEDBE2F19098BA917780D /* JourneySearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5D3A0F933A92A5F795C64 /* JourneySearchField.swift */; };
 		343AD3DC4A58976EABDFE2D9 /* TicketJimon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097871E7B684EA392B90634B /* TicketJimon.swift */; };
+		348E01D89E2AE53661B4E5F8 /* NetworkLineHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E976C02568ECB1AE9989E /* NetworkLineHitTest.swift */; };
 		34AD669A5BDFE773BAFC8521 /* AppShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA14AE98B914FEBA341FC83 /* AppShell.swift */; };
 		35C84D11FE5E931C3E8D33D1 /* RideIncrementalUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B2D3E89B5DFC50AAA6A7E /* RideIncrementalUpdate.swift */; };
 		37AE9FAE2CBB0F72B1D55E65 /* MergedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1BAED36F2B151418B13211 /* MergedStore.swift */; };
@@ -204,6 +206,7 @@
 		AEA2B92C108899B126E78897 /* StationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAAB6D446EBFB0D179456F7 /* StationCardView.swift */; };
 		AFA70A0C969C96030FF55236 /* ServicePatternPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D381153823961DCA716334A /* ServicePatternPickerView.swift */; };
 		B14D33C9F5A4B0C6011A7389 /* TransferGuideStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A30B8C7B8469A034DD5D639 /* TransferGuideStrings.swift */; };
+		B1E6C4D61F4C26FD3A7930FF /* NetworkLineSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EB2AF2C538F1AD1F70F69F /* NetworkLineSheetView.swift */; };
 		B45BF0910337040B23481158 /* RouteGlyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC5BEE01933F2C513461D7 /* RouteGlyph.swift */; };
 		B55EB01CE5A92E032F85F389 /* RailInspection in Frameworks */ = {isa = PBXBuildFile; productRef = 2E98BDEC4045553BA120B100 /* RailInspection */; };
 		B946F8A49F03FA17BFCA8FDE /* StationPlaceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8E69B0BAEAC80141948F06 /* StationPlaceStore.swift */; };
@@ -254,6 +257,7 @@
 		DC8BC14C6872195CBFA7BAF8 /* EditorBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BF34EA7764989ACDAEB702 /* EditorBindings.swift */; };
 		DD5B44CAB658A8EB1356B310 /* RailMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */; };
 		DDA46A3C37CC9998FBF5A2FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB49CBB52FC45184A8CF048 /* Assets.xcassets */; };
+		E02F6A50FA088102D1403FB4 /* WorkspacePopupHosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B7C772EE4DDE40185485C2 /* WorkspacePopupHosting.swift */; };
 		E1DE01ADBFE7789E28739679 /* ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D45C0D613251315591FF85 /* ShareCard.swift */; };
 		E28638CCB0E4D37D08B9A9A9 /* BracketedStationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C63B707E649C55C2C3066 /* BracketedStationText.swift */; };
 		E329D694B29EEED46C3ADE67 /* EditorDateTimeFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAA3C1C7799928A9481E1C /* EditorDateTimeFields.swift */; };
@@ -406,6 +410,7 @@
 		61ECD23B5031CE21A760329D /* JourneyCompletionStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyCompletionStrings.swift; sourceTree = "<group>"; };
 		628DBA7D128F32B95C9901ED /* DataStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStrings.swift; sourceTree = "<group>"; };
 		6397697865248E6D4DF39FDA /* InspectorMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorMap.swift; sourceTree = "<group>"; };
+		65B7C772EE4DDE40185485C2 /* WorkspacePopupHosting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePopupHosting.swift; sourceTree = "<group>"; };
 		65D3961A4DC61FA3CCC5DF8E /* ClockStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockStrings.swift; sourceTree = "<group>"; };
 		67341E2A588503EDB6F7F86A /* TripDraftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDraftModel.swift; sourceTree = "<group>"; };
 		684736F6EB9A5BFE2C5CDF88 /* ShareArtifactWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareArtifactWriter.swift; sourceTree = "<group>"; };
@@ -415,6 +420,7 @@
 		6C8ED17385FD30F1E6443251 /* RailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapView.swift; sourceTree = "<group>"; };
 		6CC03421FDB472439D129682 /* RailwayLineCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayLineCardView.swift; sourceTree = "<group>"; };
 		6D2862DE30BDCCC737665317 /* MapLabelCollisionGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLabelCollisionGrid.swift; sourceTree = "<group>"; };
+		6D8E976C02568ECB1AE9989E /* NetworkLineHitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLineHitTest.swift; sourceTree = "<group>"; };
 		6DF3EC847A54E6378B1F7889 /* RouteStressHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStressHarness.swift; sourceTree = "<group>"; };
 		6E96ABD0D625B384D99FFCE9 /* LocalJourneyStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJourneyStrings.swift; sourceTree = "<group>"; };
 		6EFC75263215445466B0701D /* RouteWorkbenchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteWorkbenchView.swift; sourceTree = "<group>"; };
@@ -450,6 +456,7 @@
 		85B07EAFAE11DB99ED91EAE5 /* StatisticsDashboardContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsDashboardContent.swift; sourceTree = "<group>"; };
 		85BD81A553EA653F38A063D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85CC120350EE255E2DF1ACB2 /* MapProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjection.swift; sourceTree = "<group>"; };
+		86A4BA4988AF2DEC26FBC7FF /* MapTapTestReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTapTestReport.swift; sourceTree = "<group>"; };
 		86EB08C1A0D8E25839A65239 /* AreaRepairModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRepairModel.swift; sourceTree = "<group>"; };
 		8714C78DD769D4024644D6C0 /* TimetableRouteEvidence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableRouteEvidence.swift; sourceTree = "<group>"; };
 		87409427DA6DEFF3A53ACF78 /* DiagnosticTaskCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticTaskCommands.swift; sourceTree = "<group>"; };
@@ -533,6 +540,7 @@
 		D15463E3C3E2A7023B365F23 /* TripNoteAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteAnnotations.swift; sourceTree = "<group>"; };
 		D19BD9912EC486B88C9A6B08 /* SampleTripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTripsView.swift; sourceTree = "<group>"; };
 		D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailMapCoordinator.swift; sourceTree = "<group>"; };
+		D3EB2AF2C538F1AD1F70F69F /* NetworkLineSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLineSheetView.swift; sourceTree = "<group>"; };
 		D3F7C62370FA6EE21E749FBE /* AppControlHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlHost.swift; sourceTree = "<group>"; };
 		D5C05747E6C3F77CA79099D7 /* EditorFillDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFillDetailsSheet.swift; sourceTree = "<group>"; };
 		D60AF9125E2A34070C57C3FF /* StationReadingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationReadingsStore.swift; sourceTree = "<group>"; };
@@ -747,7 +755,10 @@
 				BA0EBCAE3F2EA7616E6A7B72 /* MapRideStationImportance.swift */,
 				B5CA4534D1B5D2725C10E7B7 /* MapSelectedStationSnapshotController.swift */,
 				3CA4189CC9B7527A3B615B20 /* MapStationLabelCoordinator.swift */,
+				86A4BA4988AF2DEC26FBC7FF /* MapTapTestReport.swift */,
 				FDF478F70D89A87E05566424 /* MapTripNoteLayer.swift */,
+				6D8E976C02568ECB1AE9989E /* NetworkLineHitTest.swift */,
+				D3EB2AF2C538F1AD1F70F69F /* NetworkLineSheetView.swift */,
 				A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */,
 				F6030348FB1AF4A143D14E3E /* PlaybackAnnotations.swift */,
 				83D385A73FE569610F5A8A52 /* RailMapController.swift */,
@@ -1084,6 +1095,7 @@
 				75C85DF1D8127968C806FDDE /* WorkspaceMapChrome.swift */,
 				2B0EB050E48347704B9CADFE /* WorkspacePanelActions.swift */,
 				5AF78347D595CA98A91B2E21 /* WorkspacePanelPage.swift */,
+				65B7C772EE4DDE40185485C2 /* WorkspacePopupHosting.swift */,
 				B18DD89CCF628141C9F5F5D0 /* WorkspacePresentations.swift */,
 				85831BAB8062A4E28452785D /* WorkspaceSheetContent.swift */,
 				BB604E17A80B9AA350312820 /* WorkspaceTabs.swift */,
@@ -1402,10 +1414,13 @@
 				38AF3A045A04C4E2A89F882D /* MapRideStationImportance.swift in Sources */,
 				EAA09AF44F9BFCFEEAFA5A1F /* MapSelectedStationSnapshotController.swift in Sources */,
 				1CD3DB78038AFB091F77E756 /* MapStationLabelCoordinator.swift in Sources */,
+				269C3E7B2E47B0690076962C /* MapTapTestReport.swift in Sources */,
 				E699930C67C2A436E0D60D27 /* MapTripNoteLayer.swift in Sources */,
 				37AE9FAE2CBB0F72B1D55E65 /* MergedStore.swift in Sources */,
 				01A9D3777218C54A8EA8A53B /* MileageStatisticsStore.swift in Sources */,
 				2A0A2F0EEC114F8174A39F71 /* NetworkLOD.swift in Sources */,
+				348E01D89E2AE53661B4E5F8 /* NetworkLineHitTest.swift in Sources */,
+				B1E6C4D61F4C26FD3A7930FF /* NetworkLineSheetView.swift in Sources */,
 				9E0DC930029D061AE83EFBD0 /* NewTripStrings.swift in Sources */,
 				3282975A55A1F7FB25CCF68F /* OperatorBadge.swift in Sources */,
 				5AB65AB0215555CAC84F27A3 /* PanelMorph.swift in Sources */,
@@ -1546,6 +1561,7 @@
 				2F0C754842624A08F83A88D1 /* WorkspaceMapChrome.swift in Sources */,
 				E72BC0E966986B0971B55B23 /* WorkspacePanelActions.swift in Sources */,
 				56F97BDB2CFBA8EE0C198B6A /* WorkspacePanelPage.swift in Sources */,
+				E02F6A50FA088102D1403FB4 /* WorkspacePopupHosting.swift in Sources */,
 				57532C9D68AEA80B393BF5D0 /* WorkspacePresentations.swift in Sources */,
 				7069DBE06CF0FA26B95369D5 /* WorkspaceSheetContent.swift in Sources */,
 				1E1D9FE828A5F25E3C3411FC /* WorkspaceTabs.swift in Sources */,

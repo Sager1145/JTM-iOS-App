@@ -11,13 +11,13 @@ for by request ID and prints as one compact JSON line.
 
 Commands: loadSamples useStorage reloadAll state selectTrip focusTrip openEditor addTrip editTrip
 saveEditor cancelEditor deleteTrip openStats setHideFilter screenshot wait devtools exportDiagnostics
-clearRouteCaches memoryWarning setLayer camera perf.
+clearRouteCaches memoryWarning setLayer camera perf tapMap (tapCount=2 for a double tap).
 Values parse as JSON when they can (numbers, true/false, [..], {..}); otherwise they are strings.
 
 Exit: 0 ok, 2 rejected (bad request, or refused because the app is on the shared store),
 3 timeout, 4 failed, 1 tool/usage error. One native app job at a time across all chats.
 """
-import argparse, base64, json, os, shutil, subprocess, sys, tempfile, time, uuid
+import argparse, base64, re, hashlib, json, os, plistlib, shutil, subprocess, sys, tempfile, time, uuid
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -27,7 +27,10 @@ ROOT_NAME = "RailMapAppControl"
 CONTAINER_ROOT = "Library/Application Support/" + ROOT_NAME
 DEFAULT_SIM = "0DBE2488-0BEB-4932-9B55-091B3CC793B6"
 DEFAULT_DEVICE = "00008140-000575142288801C"
-DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData"))
+# One build folder per worktree: sharing one let another session's build replace the app
+# a run was about to measure (the app then ran a different commit than the one under test).
+WORKTREE_KEY = hashlib.sha1(str(REPO).encode("utf-8")).hexdigest()[:10]
+DERIVED = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control/DerivedData")) / WORKTREE_KEY
 PLATFORM_SUFFIX = {"sim": "iphonesimulator", "mac": "maccatalyst", "device": "iphoneos"}
 DESTINATIONS = {"sim": "platform=iOS Simulator,id={device}", "mac": "platform=macOS,variant=Mac Catalyst",
                 "device": "generic/platform=iOS"}  # no unlocked device needed to build
@@ -35,7 +38,7 @@ STATE_DIR = Path(os.path.expanduser("~/Library/Caches/jtm-railmap-app-control"))
 COMMANDS = ["loadSamples", "useStorage", "reloadAll", "state", "selectTrip", "focusTrip", "openEditor",
             "addTrip", "editTrip", "saveEditor", "cancelEditor", "deleteTrip", "openStats", "setHideFilter",
             "screenshot", "wait", "devtools", "exportDiagnostics", "clearRouteCaches", "memoryWarning", "setLayer",
-            "camera", "perf"]
+            "camera", "perf", "tapMap"]
 DEVTOOLS_ACTIONS = ["show", "hide", "expand", "collapse", "recorderOn", "recorderOff", "resetSignposts", "export"]
 # CLI wait (seconds) per command when no timeoutMs is passed: at least the app-side default.
 DEFAULT_WAIT = {"reloadAll": 660, "addTrip": 200, "editTrip": 200, "openEditor": 90, "saveEditor": 60,
@@ -66,6 +69,39 @@ def device_id(a):
     return a.device or (DEFAULT_SIM if a.target == "sim" else DEFAULT_DEVICE if a.target == "device" else "mac")
 
 
+def head_commit():
+    """Full HEAD sha of this worktree, or None outside git."""
+    p = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True)
+    return p.stdout.strip() if p.returncode == 0 and p.stdout.strip() else None
+
+
+def build_commit_stamp():
+    """HEAD sha stamped into Info.plist at build time; `-dirty` when tracked files or untracked files under ios/ differ from HEAD."""
+    head = head_commit()
+    if not head:
+        return "unknown"
+    status = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--untracked-files=normal", "--", "ios"],
+                            capture_output=True, text=True)
+    dirty = status.returncode != 0 or bool(status.stdout.strip())
+    return head + ("-dirty" if dirty else "")
+
+
+def built_commit(app):
+    """The commit stamped into a built app's Info.plist, or None when the app has none."""
+    for rel in ("Contents/Info.plist", "Info.plist"):
+        try:
+            value = plistlib.loads((Path(app) / rel).read_bytes()).get("JTMBuildCommit")
+        except (OSError, ValueError):
+            continue
+        return value or None
+    return None
+
+
+def commit_mismatch(stamped, head):
+    """True when the stamped build is not HEAD (ignores the `-dirty` suffix)."""
+    return not stamped or not head or stamped.split("-dirty")[0] != head
+
+
 def app_path(a):
     if a.app:
         return Path(a.app)
@@ -73,7 +109,8 @@ def app_path(a):
 
 
 def state_file(a):
-    return STATE_DIR / "{}-{}.json".format(a.target, device_id(a))
+    # Keyed on the worktree too: another worktree's `state` or `quit` must not reach this one's app.
+    return STATE_DIR / "{}-{}-{}.json".format(a.target, device_id(a), WORKTREE_KEY)
 
 
 def remember(a, **values):
@@ -230,7 +267,7 @@ def cmd_build(a):
     dest = DESTINATIONS[a.target].format(device=device_id(a))
     cmd = ["xcodebuild", "-project", str(REPO / "ios/RailMap.xcodeproj"), "-scheme", "RailMap",
            "-configuration", a.configuration, "-destination", dest, "-derivedDataPath", str(DERIVED),
-           "-jobs", str(a.jobs), "build"]
+           "-jobs", str(a.jobs), "build", "JTM_BUILD_COMMIT=" + build_commit_stamp()]
     if a.target != "device":
         cmd.append("CODE_SIGN_IDENTITY=-")  # ad-hoc: no team identity needed for sim or Catalyst
     else:
@@ -320,6 +357,13 @@ def cmd_launch(a):
         app = app_path(a)
         if not app.exists():
             out({"error": "app not built", "app": str(app)}, 1)
+        stamped = built_commit(app)
+        if not a.app and commit_mismatch(stamped, head_commit()):
+            out({"error": "built app is not this worktree's HEAD; run build first",
+                 "builtCommit": stamped, "head": head_commit(), "app": str(app)}, 1)
+        if not a.app and stamped and stamped.endswith("-dirty") and not a.allow_dirty:
+            out({"error": "built app was made from uncommitted changes that may differ from the tree now; "
+                          "rebuild, or pass --allow-dirty", "builtCommit": stamped, "app": str(app)}, 1)
         cmd = ["open", "-n", "-g", "-a", str(app)]
         for k, v in env.items():
             cmd += ["--env", "{}={}".format(k, v)]
@@ -406,6 +450,7 @@ def cmd_sweep(a):
         if command == "state" and isinstance(data, dict):
             entry["inventory"] = data.get("inventory")
             entry["memory"] = data.get("memory")
+            entry["window"] = data.get("window")
             entry["signposts"] = [(s["name"], s["count"], s["maxMs"]) for s in
                                   (data.get("signposts") or {}).get("byName", [])[:12]]
         entry["required"] = required
@@ -448,11 +493,92 @@ def cmd_sweep(a):
          "failedSteps": [s["step"] for s in failed], "steps": steps, "export": export}, 0 if not failed else 4)
 
 
+SIZE_UNITS = {"K": 1 / 1024, "M": 1.0, "G": 1024.0, "T": 1024.0 * 1024}
+
+
+def size_mb(token):
+    """'208K' / '168.1M' / '1.0G' as megabytes (vmmap units are powers of 1024)."""
+    match = re.fullmatch(r"([0-9]+(?:\.[0-9]+)?)([KMGT]?)", token)
+    if not match:
+        return None
+    return float(match.group(1)) * (SIZE_UNITS[match.group(2)] if match.group(2) else 1 / 1048576)
+
+
+def drawing_class(gpu_mb):
+    """What the GPU row says about MapKit: run 4 (not drawing) 0.2 MB, run 5 (drawing) 168 MB."""
+    if gpu_mb is None or gpu_mb < 1:
+        return "none"
+    if gpu_mb < 60:
+        return "hidden"
+    return "backlog" if gpu_mb > 400 else "drawing"
+
+
+def parse_vmmap_summary(text):
+    """Pure parse of `vmmap -summary` text: footprint, peak, app heap, GPU and MapKit pools (MB).
+
+    appHeapMB is DefaultMallocZone bytes allocated, gpuMB the resident size of the
+    'IOAccelerator (graphics)' region, mapKitMB the allocated bytes of the VectorKit* and Geo* zones.
+    A missing row is None; `drawing` is classed from gpuMB (see drawing_class).
+    """
+    footprint = peak = gpu = heap = None
+    map_kit = 0.0
+    saw_map_kit = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        match = re.match(r"Physical footprint( \(peak\))?:\s+(\S+)", stripped)
+        if match:
+            if match.group(1):
+                peak = size_mb(match.group(2))
+            else:
+                footprint = size_mb(match.group(2))
+            continue
+        match = re.match(r"IOAccelerator \(graphics\)\s+((?:\S+\s+){6}\S+)\s+\d+", stripped)
+        if match:
+            gpu = size_mb(match.group(1).split()[1])
+            continue
+        match = re.match(r"([A-Za-z]\w*?)_0x[0-9a-f]+\s+(.*)$", stripped)
+        if match:
+            fields = match.group(2).split()
+            if len(fields) < 6:
+                continue
+            allocated = size_mb(fields[5])
+            if allocated is None:
+                continue
+            name = match.group(1)
+            if name == "DefaultMallocZone":
+                heap = allocated
+            elif name.startswith(("VectorKit", "Geo")):
+                map_kit += allocated
+                saw_map_kit = True
+    return {"footprintMB": round_mb(footprint), "peakMB": round_mb(peak), "appHeapMB": round_mb(heap),
+            "gpuMB": round_mb(gpu), "mapKitMB": round_mb(map_kit) if saw_map_kit else None,
+            "drawing": drawing_class(gpu)}
+
+
+def round_mb(value):
+    return None if value is None else round(value, 1)
+
+
+def cmd_memory_score(a):
+    """memory-score FILE|-: score one `vmmap -summary` capture. Exit 4 when it is not a drawing app's."""
+    if not a.rest:
+        out({"error": "memory-score FILE (a `vmmap -summary` capture, or - for stdin)"}, 1)
+    text = sys.stdin.read() if a.rest[0] == "-" else Path(a.rest[0]).read_text(errors="replace")
+    score = parse_vmmap_summary(text)
+    if score["gpuMB"] is None:
+        out({"error": "no 'IOAccelerator (graphics)' row: not a vmmap -summary of the app", **score}, 4)
+    if score["drawing"] == "none":
+        out({"error": "GPU row under 1 MB: MapKit was not drawing, so the memory number is not comparable", **score}, 4)
+    out(score, 0)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--target", choices=["sim", "mac", "device"], default="sim")
     ap.add_argument("--device", help="simulator or device UDID (defaults: iPhone 17 sim / iPhone 16 Pro)")
     ap.add_argument("--app", help="built RailMap.app (default: " + str(DERIVED) + "/Build/Products/<config>)")
+    ap.add_argument("--allow-dirty", action="store_true",
+                    help="launch (mac) a build stamped -dirty, made from uncommitted changes")
     ap.add_argument("--timeout", type=float, default=None,
                     help="seconds to wait for a result (default per command, at least the app's own timeout)")
     ap.add_argument("--transport", choices=["poll", "url", "file"], default="poll",
@@ -469,12 +595,14 @@ def main():
                     help="build/install/launch: product configuration (Release only for check-release)")
     ap.add_argument("--dry-run", action="store_true", help="build: print the xcodebuild command")
     ap.add_argument("--data-only", action="store_true", help="print only the result's data on success")
-    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release|sweep")
+    ap.add_argument("action", help="a command, or build|install|launch|terminate|ready|pull-screenshot|devtools|check-release|sweep|memory-score")
     ap.add_argument("rest", nargs="*", help="key=value args (or the screenshot name for pull-screenshot)")
     a = ap.parse_args()
 
     if a.action == "build":
         cmd_build(a)
+    if a.action == "memory-score":
+        cmd_memory_score(a)
     if a.action == "check-release":
         cmd_check_release(a)
     if a.action == "sweep":

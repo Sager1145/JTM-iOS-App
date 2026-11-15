@@ -17,6 +17,15 @@ struct RailMapApp: App {
         // Decide the device tier before any cache reads a budget from it, so
         // the tier is measured at launch rather than at first use.
         _ = ResourceProfile.detected
+#if DEBUG
+        // An isolated launch keeps its route caches under its own storage
+        // root, before any store reads or wipes them.
+        if let id = DevStorage.launchID {
+            RiddenRouteStore.setCacheRootForTesting(RouteCachesRoot.resolve(
+                storageID: id, applicationSupport: URL.applicationSupportDirectory,
+                userCaches: RiddenRouteStore.cachesBase))
+        }
+#endif
         BundledRegistry.install()
         BundledRegistry.preload(regions: [Region.jp.code])
     }

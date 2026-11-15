@@ -99,9 +99,13 @@ struct RailwayLineCardView: View {
     let network: RailNetworkStore
     let onPreview: (RailwayLinePreview?) -> Void
     let onLocate: (MKMapRect) -> Void
+    /// Close action when the card is a surface's root (the panel has nothing to
+    /// `dismiss`); a card pushed onto a stack leaves it nil and pops.
+    var onClose: (() -> Void)?
     @Environment(AppLocalization.self) private var localization
     @Environment(DisplaySettings.self) private var display: DisplaySettings?
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.panelBackStep) private var panelBackStep
     @State private var preview: RailwayLinePreview?
     @State private var failure: String?
     @State private var reload = 0
@@ -156,9 +160,13 @@ struct RailwayLineCardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
+            if panelBackStep != nil {
+                ToolbarItem(placement: .topBarLeading) { PanelBackButton() }
+                    .railMenuToolbarControl()
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 RailSheetCloseButton(label: Text(localization.text("ios.close", fallback: "Close"))) {
-                    dismiss()
+                    if let onClose { onClose() } else { dismiss() }
                 }
                 .accessibilityIdentifier("railwayLineClose")
             }

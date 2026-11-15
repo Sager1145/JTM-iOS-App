@@ -975,6 +975,7 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
   const arc = Array.from({length: 9}, (_, i) => [400 * Math.sin(i * 0.25), 400 * (1 - Math.cos(i * 0.25))]);
   const probes = [
     {note: "centripetal 400m radius / 100m chords", points: arc},
+    {note: "dense 100px arc keeps the facet rule", points: Array.from({length: 81}, (_, i) => [100 * Math.sin(i * 0.03), 100 * (1 - Math.cos(i * 0.03))])},
     {note: "centripetal S curve", points: Array.from({length: 13}, (_, i) => [i * 100, 80 * Math.sin(i * Math.PI / 6)])},
     {note: "hard Masuda-like reversal", points: [[0,0],[100,0],[200,0],[100,1],[0,1]]},
     {note: "curved station by final measure", points: arc, anchors: [0,4,8]},
@@ -993,7 +994,19 @@ export function build({ RailNetwork, railPackage, APP_DIR }) {
       rows: probe.lane ? [{from:0,to:totalMetres,lane:probe.lane}] : [],
       laneGapPx: 3, minRampPx: 24, cornerRadiusPx: 3.6, minCornerRadiusPx: 3,
       enforceMinimumCornerRadius: true, anchors: probe.anchors || [0,probe.points.length-1] };
-    cases.push({...options, expected: RailStroke.buildStroke(probe.points, options)});
+    const expected = RailStroke.buildStroke(probe.points, options);
+    if (probe.note === "dense 100px arc keeps the facet rule") {
+      // The thinning must not rebuild facets: <= 2 degrees between edges > 2 px.
+      const p = expected.points;
+      for (let i = 1; i < p.length - 1; i++) {
+        const ux = p[i][0] - p[i-1][0], uy = p[i][1] - p[i-1][1], vx = p[i+1][0] - p[i][0], vy = p[i+1][1] - p[i][1];
+        const a = Math.hypot(ux, uy), b = Math.hypot(vx, vy);
+        if (a <= 2 || b <= 2) continue;
+        const turn = Math.acos(Math.max(-1, Math.min(1, (ux*vx + uy*vy) / (a*b)))) * 180 / Math.PI;
+        if (turn > 2 + 1e-6) throw new Error(`continuous-stroke fixture: facet rule broken (${turn} deg)`);
+      }
+    }
+    cases.push({...options, expected});
   }
 
   // slices — RailStroke.sliceStroke() against a handful of the cases above,

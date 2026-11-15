@@ -1,6 +1,7 @@
 import CoreGraphics
 import Foundation
 import RailCore
+import RailPresentation
 
 /// The dots a recorded ride puts on the stations it called at — and on the
 /// ones it rolled through — as the marker RECORDS `RailCore.StationDisplay`
@@ -353,7 +354,7 @@ enum MapRideMarkers {
             // its exclusion set from `train.stops` whole, not from the drawn
             // subset of it.
             var claimedNames = Set<String>()
-            for stop in stops { claimedNames.insert(Stations.normalizeStationName(stop.name)) }
+            for stop in stops { claimedNames.insert(StationNameKeyCache.key(stop.name)) }
 
             func seed(
                 _ position: Coordinate, name: String, code: String?,
@@ -453,7 +454,7 @@ enum MapRideMarkers {
                     (segment.to, segment.coordinates.last),
                 ] {
                     guard let name, !name.isEmpty, let position else { continue }
-                    let key = Stations.normalizeStationName(name)
+                    let key = StationNameKeyCache.key(name)
                     guard !claimedNames.contains(key) else { continue }
                     claimedNames.insert(key)
                     let style = passStyle(active: true, settings: settings)

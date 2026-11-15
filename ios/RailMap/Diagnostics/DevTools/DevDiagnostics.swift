@@ -5,7 +5,7 @@ import RailPresentation
 import UIKit
 
 /// The app's own log lines (OSLogStore, this process, subsystem
-/// `com.jtm.railmap`) and the diagnostics bundle the panel and
+/// `com.jtm.railmap` and `com.JRM.RailMap`) and the diagnostics bundle the panel and
 /// `app-control.py devtools export` write to the container.
 enum DevDiagnostics {
     struct LogLine: Identifiable, Equatable {
@@ -21,7 +21,9 @@ enum DevDiagnostics {
         await Task.detached(priority: .utility) { () -> [LogLine] in
             guard let store = try? OSLogStore(scope: .currentProcessIdentifier) else { return [] }
             let position = store.position(date: Date().addingTimeInterval(-sinceSeconds))
-            let predicate = NSPredicate(format: "subsystem == %@", RailSignpost.subsystem)
+            // `com.JRM.RailMap` carries the display-batch log (`RailNetworkStore`).
+            let predicate = NSPredicate(
+                format: "subsystem == %@ OR subsystem == %@", RailSignpost.subsystem, "com.JRM.RailMap")
             guard let entries = try? store.getEntries(at: position, matching: predicate) else { return [] }
             var lines: [LogLine] = []
             for case let entry as OSLogEntryLog in entries {

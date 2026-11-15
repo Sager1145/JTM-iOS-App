@@ -2,6 +2,7 @@ import CoreLocation
 import Foundation
 import MapKit
 import RailCore
+import RailPresentation
 import Testing
 
 @testable import RailMap
@@ -81,9 +82,9 @@ struct RideStrokeBuilderTests {
         var requests: [RideStrokeBuilder.Request] = []
         for ride in 0..<287 {
             for part in 0..<generator.int(2...14) {
-                let key = MapNetworkGeometryCache.ridePolylineKey(
+                let key = RideLineCacheKey(
                     rideID: "ride-\(ride)", geometryDigest: ride, segmentIndex: part,
-                    partIndex: 0, usesStroke: true)
+                    partIndex: 0, stroke: .init(lineID: "chain", generation: 1, from: 0, to: 1))
                 let coordinates = walk(&generator, count: generator.int(0...80))
                 let latitude = coordinates.first?.lat ?? 35
                 let kind = generator.int(0...9)
@@ -158,10 +159,10 @@ struct RideStrokeBuilderTests {
     }
 
     @Test("the builder draws the same vertices as the main-actor path for every segment")
-    func builderEqualsMainActorPath() {
+    func builderEqualsMainActorPath() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame)
-        let output = RideStrokeBuilder.build(requests, frame: frame, memo: .init())
+        let output = await RideStrokeBuilder.build(requests, frame: frame, memo: .init())
         let byKey = Dictionary(output.built.map { ($0.key, $0.polyline) }, uniquingKeysWith: { first, _ in first })
 
         var drawn = 0
@@ -189,12 +190,12 @@ struct RideStrokeBuilderTests {
     }
 
     @Test("a second build is answered from the memo with the same vertices")
-    func memoisedBuildIsIdentical() {
+    func memoisedBuildIsIdentical() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame).filter { $0.stroke != nil }
         let memo = RideStrokeBuilder.Memo()
-        let first = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
-        let second = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        let first = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        let second = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
         // Every request whose slice succeeded hits the memo; one whose slice
         // came back empty draws its own coordinates and is never shared.
         #expect(second.shared >= first.shared + 1)
@@ -218,7 +219,7 @@ struct RideStrokeBuilderTests {
         let clock = ContinuousClock()
         let started = clock.now
         let onMain = await Task.detached(priority: .userInitiated) { () -> (Bool, Int) in
-            let output = RideStrokeBuilder.build(requests, frame: frame, memo: .init())
+            let output = await RideStrokeBuilder.build(requests, frame: frame, memo: .init())
             return (pthread_main_np() != 0, output.built.count)
         }.value
         let elapsed = clock.now - started
@@ -227,33 +228,32 @@ struct RideStrokeBuilderTests {
         print("RideStrokeBuilderTests: worker build of \(requests.count) segments took \(elapsed)")
     }
 
-    @Test("the default mode is today's main-actor path")
-    func defaultModeIsMainActor() {
-        #expect(RideStrokeBuilder.Mode.current == .mainActor)
+    private static func plainKey(_ ride: String) -> RideLineCacheKey {
+        RideLineCacheKey(rideID: ride, geometryDigest: 0, segmentIndex: 0, partIndex: 0, stroke: nil)
     }
 
     @Test("a segment that draws nothing is reported as empty, not dropped silently")
-    func degenerateSegmentsAreReportedEmpty() {
+    func degenerateSegmentsAreReportedEmpty() async {
         let frame = Self.frame
         let lone = RideStrokeBuilder.Request(
-            key: "lone", coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
+            key: Self.plainKey("lone"), coordinates: [Coordinate(lon: 139.7, lat: 35.7)], latitude: 35.7, stroke: nil)
         let none = RideStrokeBuilder.Request(
-            key: "none", coordinates: [], latitude: 35.7, stroke: nil)
+            key: Self.plainKey("none"), coordinates: [], latitude: 35.7, stroke: nil)
         let fine = RideStrokeBuilder.Request(
-            key: "fine",
+            key: Self.plainKey("fine"),
             coordinates: [Coordinate(lon: 139.7, lat: 35.7), Coordinate(lon: 139.8, lat: 35.8)],
             latitude: 35.7, stroke: nil)
-        let output = RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
-        #expect(output.built.map(\.key) == ["fine"])
-        #expect(Set(output.empty) == ["lone", "none"])
+        let output = await RideStrokeBuilder.build([lone, none, fine], frame: frame, memo: .init())
+        #expect(output.built.map(\.key) == [Self.plainKey("fine")])
+        #expect(Set(output.empty) == [Self.plainKey("lone"), Self.plainKey("none")])
     }
 
     @Test("clearing the memo forgets shared points")
-    func memoRemoveAll() {
+    func memoRemoveAll() async {
         let frame = Self.frame
         let requests = Self.requests(frame: frame).filter { $0.stroke != nil }
         let memo = RideStrokeBuilder.Memo()
-        _ = RideStrokeBuilder.build(requests, frame: frame, memo: memo)
+        _ = await RideStrokeBuilder.build(requests, frame: frame, memo: memo)
         #expect(memo.count > 0)
         memo.removeAll()
         #expect(memo.count == 0)

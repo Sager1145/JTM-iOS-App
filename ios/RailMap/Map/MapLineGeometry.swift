@@ -74,6 +74,21 @@ func mapCoordinateChunks(
     }
 }
 
+/// A network polyline with every interior vertex closer than
+/// ``ScreenPolylineThinning/stepPx`` screen points to the last kept one
+/// dropped. Called where network (all-lines) polylines are built, after lane
+/// offsets and corner rounding and before the vertex count `fitToBudget`
+/// weighs; ride polylines never pass through it.
+func thinnedForNetwork(
+    _ coordinates: [CLLocationCoordinate2D], mapPointsPerScreenPoint: Double
+) -> [CLLocationCoordinate2D] {
+    guard coordinates.count > 2, mapPointsPerScreenPoint > 0 else { return coordinates }
+    let points = coordinates.map(MKMapPoint.init)
+    return ScreenPolylineThinning.thinned(
+        coordinates, x: points.map { $0.x / mapPointsPerScreenPoint },
+        y: points.map { $0.y / mapPointsPerScreenPoint })
+}
+
 /// Construct MapKit reference objects only on the main actor, immediately
 /// before they enter the mounted-geometry cache.
 @MainActor
@@ -238,8 +253,7 @@ struct JoinedChainKey: Hashable, Sendable {
 
 /// The one join of each resident display chain. Junction indexing, stroke
 /// matching and pixel projection all read ``chain(of:)``. The join runs only
-/// on a miss, and only while this lock is held, so concurrent readers share
-/// that result. A chain left out of ``retain(_:)`` is not stored again.
+/// on a miss, outside the lock; the first stored result is the one readers share. A chain left out of ``retain(_:)`` is not stored again.
 final class JoinedChainCache: Sendable {
     private struct Storage {
         var constrained = false
@@ -251,14 +265,25 @@ final class JoinedChainCache: Sendable {
 
     func chain(of line: RailNetworkStore.DrawnLine) -> JoinedChain {
         let key = JoinedChainKey(line)
+        if let hit = state.withLock({ $0.chains[key] }) { return hit }
+        // Joined outside the lock so a worker's join never blocks main-thread
+        // readers; two racing misses may both join, and the results are equal.
+        let built = joinedChainCoordinates(of: line)
+        let value = JoinedChain(points: built.points, measures: built.measures)
         return state.withLock { storage in
             if let hit = storage.chains[key] { return hit }
-            let built = joinedChainCoordinates(of: line)
-            let value = JoinedChain(points: built.points, measures: built.measures)
             if !storage.constrained || storage.resident.contains(key) {
                 storage.chains[key] = value
             }
             return value
+        }
+    }
+
+    /// Lets chains about to be joined be stored before the next ``retain(_:)``.
+    func admit(_ keys: Set<JoinedChainKey>) {
+        state.withLock { storage in
+            guard storage.constrained else { return }
+            storage.resident.formUnion(keys)
         }
     }
 
@@ -368,20 +393,19 @@ struct ChainPixelReader: Sendable {
 /// pass through (plus region and operator). Built once per prepare pass in id
 /// order, so `continuousJoin` examines only lines that actually touch the
 /// endpoint instead of every line in the network.
-struct JunctionCandidateIndex {
+struct JunctionCandidateIndex: Sendable {
     private let index: StrokeJunctionIndex
     private let byID: [String: RailNetworkStore.DrawnLine]
     init() {
         index = StrokeJunctionIndex([])
         byID = [:]
     }
-    init(_ lines: [String: RailNetworkStore.DrawnLine], chains: JoinedChainCache) {
+    /// Wraps the coordinator's incrementally maintained index over the same
+    /// lines (see `refreshLineInputs`) instead of rebuilding one over every
+    /// resident line on every preparation, which cost 5-27% of a preparation.
+    init(index: StrokeJunctionIndex, lines: [String: RailNetworkStore.DrawnLine]) {
+        self.index = index
         byID = lines
-        index = StrokeJunctionIndex(lines.values.map { line in
-            .init(id: line.id, region: line.region.rawValue, operatorName: line.operatorName,
-                  coordinates: chains.chain(of: line).points, continuous: line.continuous,
-                  follows: line.follows.map(\.canonicalID))
-        })
     }
     func lines(sharing coordinate: Coordinate, region: Region, operatorName: String?) -> [RailNetworkStore.DrawnLine] {
         index.candidateIDs(sharing: coordinate, region: region.rawValue, operatorName: operatorName)
@@ -420,12 +444,17 @@ func familyFallbackBuilds(
                 chunkWindows.append(chunkWindow)
                 continue
             }
-            let coordinates = ContinuousStroke.slice(
+            // Thinned like the prepared chunks, so the drawn count stays within
+            // the budget `drawnVertexCount` weighed.
+            let slice = ContinuousStroke.slice(
                 points: stroke.stroke.points, measures: stroke.stroke.measures,
-                from: range.from, to: range.to).map {
-                    MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
-                               y: $0.y * mapPointsPerScreenPoint).coordinate
-                }
+                from: range.from, to: range.to)
+            let coordinates = ScreenPolylineThinning.thinned(
+                slice, x: slice.map(\.x), y: slice.map(\.y)
+            ).map {
+                MKMapPoint(x: $0.x * mapPointsPerScreenPoint,
+                           y: $0.y * mapPointsPerScreenPoint).coordinate
+            }
             guard coordinates.count >= 2 else { continue }
             polylines.append(mapPolylineChunk(coordinates))
             chunkWindows.append(chunkWindow)
@@ -834,33 +863,54 @@ enum MapLineGeometry {
         var lines: [String: PreparedLineBuild] = [:]
     }
 
+    /// Fewest summed stroke vertices worth a worker of their own.
+    static let minimumStrokeWeightPerPart = 4_000
+
     static func prepare(
         lines: [RailNetworkStore.DrawnLine], strokes: [RailNetworkStore.DrawnLine],
         allLines: [String: RailNetworkStore.DrawnLine], anchors: [String: [Int]],
         cachedStrokes: [String: ContinuousStrokeBuild],
-        joinedChains: JoinedChainCache, chainPixels: ChainPixelCache,
+        junctionIndex: StrokeJunctionIndex, chainPixels: ChainPixelCache,
         frameKey: String, datumToken: String,
         mapScale: Double, scale: CGFloat, laneScale: Double,
         era: DisplayNetworkEra = .current,
         rideDate: String? = nil,
-        todayByRegion: [String: String] = [:]
-    ) throws -> PreparedGeometry {
-        let interval = RailSignpost.map.begin("map.geometry.prepare")
-        defer { RailSignpost.map.end("map.geometry.prepare", interval) }
+        todayByRegion: [String: String] = [:],
+        prebuild: Bool = false
+    ) async throws -> PreparedGeometry {
+        // An idle prebuild is not the foreground's work: it reports under its
+        // own name so `map.geometry.prepare` counts only what a rebuild waits on.
+        let intervalName: StaticString = prebuild ? "map.geometry.prebuild" : "map.geometry.prepare"
+        let interval = RailSignpost.map.begin(intervalName)
+        defer { RailSignpost.map.end(intervalName, interval) }
         let projection = ChainPixelCache.Projection(
             frameKey: frameKey, datumToken: datumToken,
             mapPointsPerScreenPoint: mapScale, lodScale: laneScale)
         chainPixels.begin(projection)
         let chains = ChainPixelReader(cache: chainPixels, projection: projection)
         var result = PreparedGeometry()
-        let junctionCandidates = JunctionCandidateIndex(allLines, chains: joinedChains)
-        for line in strokes {
-            try Task.checkCancellation()
-            result.strokes[line.id] = try continuousStrokeBuild(
-                for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
-                chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
-                laneScale: laneScale, junctionCandidates: junctionCandidates)
+        let junctionCandidates = JunctionCandidateIndex(index: junctionIndex, lines: allLines)
+        // Strokes are independent: each reads only its own line, `allLines` and the
+        // two lock-guarded caches, never `result`. Build them in parts weighted by
+        // vertex count (same width rule as `RideStrokeBuilder.build`) and merge.
+        do {
+            let strokeInterval = RailSignpost.map.begin("map.geometry.prepare.strokes")
+            defer { RailSignpost.map.end("map.geometry.prepare.strokes", strokeInterval) }
+            let maxParts = max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1))
+            let strokeParts = RideBuildPartition.partition(
+                weights: strokes.map { $0.intervals.reduce(0) { $0 + $1.count } },
+                maxParts: maxParts, minimumWeightPerPart: minimumStrokeWeightPerPart)
+            let builtParts = try await RideBuildPartition.buildParts(strokeParts) { index in
+                let line = strokes[index]
+                return try continuousStrokeBuild(
+                    for: line, anchors: anchors[line.id] ?? [], canonical: { allLines[$0] },
+                    chains: chains, mapPointsPerScreenPoint: mapScale, scale: scale,
+                    laneScale: laneScale, junctionCandidates: junctionCandidates)
+            }
+            for (index, build) in builtParts { result.strokes[strokes[index].id] = build }
         }
+        let linesInterval = RailSignpost.map.begin("map.geometry.prepare.lines")
+        defer { RailSignpost.map.end("map.geometry.prepare.lines", linesInterval) }
         for line in lines {
             try Task.checkCancellation()
             let stroke = result.strokes[line.id] ?? cachedStrokes[line.id]
@@ -882,7 +932,9 @@ enum MapLineGeometry {
                     let points = parallelLaneCoordinates(
                         coordinates, lane: line.lane,
                         mapPointsPerScreenPoint: mapScale, scale: scale, alreadyCurved: line.continuous)
-                    result.append(contentsOf: mapCoordinateChunks(points, preservingPattern: preservingPattern))
+                    result.append(contentsOf: mapCoordinateChunks(
+                        thinnedForNetwork(points, mapPointsPerScreenPoint: mapScale),
+                        preservingPattern: preservingPattern))
                 }
                 return result
             }
@@ -937,7 +989,10 @@ enum MapLineGeometry {
                         return PreparedFamilyRunBuild(
                             colorHex: colorHex, colorDarkHex: colorDarkHex,
                             coordinateChunks: chunks.map { chunk in
-                                chunk.points.map {
+                                // Stroke points are already screen points.
+                                ScreenPolylineThinning.thinned(
+                                    chunk.points, x: chunk.points.map(\.x), y: chunk.points.map(\.y)
+                                ).map {
                                     MKMapPoint(x: $0.x * mapScale, y: $0.y * mapScale).coordinate
                                 }
                             }, chunkWindows: chunks.map {

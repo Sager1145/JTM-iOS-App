@@ -123,4 +123,30 @@ struct MapCameraPolicyTests {
         #expect(camera.takeFocusRequest() == nil)
     }
 
+    @Test("A running focus fit is stopped by a newer request or the reader, not by its own start")
+    func olderFocusFitIsStoppedByNewerCameraIntent() {
+        var camera = MapCameraPolicy()
+        camera.requestFocus(.journey("a"), enabled: true, playbackIsActive: false)
+        _ = camera.takeFocusRequest()
+        // The fit issues its own claim before it starts; nothing is running.
+        #expect(camera.claimCamera() == false)
+        camera.beginFocusFit()
+        #expect(camera.focusFitRunning)
+        // A newer request sees the older fit and ends it.
+        #expect(camera.cancelFocus() == true)
+        #expect(!camera.focusFitRunning)
+        #expect(camera.cancelFocus() == false)
+
+        camera.beginFocusFit()
+        #expect(camera.claimCamera() == true)
+        #expect(!camera.focusFitRunning)
+
+        camera.beginFocusFit()
+        camera.endFocusFit()
+        #expect(camera.cancelFocus() == false)
+
+        camera.beginFocusFit()
+        camera.requestFocus(.journey("b"), enabled: true, playbackIsActive: false)
+        #expect(!camera.focusFitRunning)
+    }
 }

@@ -1,12 +1,38 @@
 import Foundation
+import MapKit
 import RailCore
+import RailPresentation
 
 /// Owns station-name election caches and the lifetime/cadence of label passes.
 /// Geometry identities come from the mounted scene; the label owner does not
 /// maintain a second ride list or install annotations into another map.
 @MainActor
 final class MapStationLabelCoordinator {
-    private var markerCache: (key: Int, settings: MapRideMarkers.Settings, drawn: [MapRideMarkers.Drawn])?
+    /// The deck's station records and a grid over their positions, so a pass
+    /// reads only the records near the visible rect.
+    struct Records {
+        let drawn: [MapRideMarkers.Drawn]
+        let grid: SpatialGrid
+
+        /// Map-point cell edge: about one city view.
+        static let gridCellSize = 262_144.0
+
+        init(drawn: [MapRideMarkers.Drawn]) {
+            self.drawn = drawn
+            var xs: [Double] = []
+            var ys: [Double] = []
+            xs.reserveCapacity(drawn.count)
+            ys.reserveCapacity(drawn.count)
+            for item in drawn {
+                let point = MKMapPoint(item.record.position.clLocation)
+                xs.append(point.x)
+                ys.append(point.y)
+            }
+            grid = SpatialGrid(cellSize: Self.gridCellSize, xs: xs, ys: ys)
+        }
+    }
+
+    private var markerCache: (key: Int, settings: MapRideMarkers.Settings, records: Records)?
     /// Each ride's own records, so a deck change rebuilds only the rides that
     /// changed. Valid for one `settings` and one stroke generation: stroke
     /// references move with the network's lines and stations.
@@ -14,7 +40,8 @@ final class MapStationLabelCoordinator {
         settings: MapRideMarkers.Settings, strokeGeneration: Int,
         rides: [String: (identity: Int, records: MapRideMarkers.RideRecords)]
     )?
-    private var selectedNameCache: (key: String, settings: MapRideMarkers.Settings, keys: Set<String>)?
+    private var selectedNameCache: (
+        rideID: String, key: String, settings: MapRideMarkers.Settings, keys: Set<String>)?
     /// One timer per quiet period; each camera frame only moves its deadline.
     private let settleTimer = MapDeadlineTimer(delay: .milliseconds(32))
     private var lastPassStep = Double.nan
@@ -34,10 +61,10 @@ final class MapStationLabelCoordinator {
         settings: MapRideMarkers.Settings,
         strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
     )
-        -> [MapRideMarkers.Drawn]
+        -> Records
     {
         if let markerCache, markerCache.key == geometryIdentity, markerCache.settings == settings {
-            return markerCache.drawn
+            return markerCache.records
         }
         // Ids name the cache entries, so a deck that repeats one is not cached.
         let unique = Set(rides.map(\.id)).count == rides.count
@@ -58,9 +85,9 @@ final class MapStationLabelCoordinator {
             return records
         }
         rideRecordCache = (settings, strokeGeneration, next)
-        let drawn = MapRideMarkers.drawn(assembling: perRide)
-        markerCache = (geometryIdentity, settings, drawn)
-        return drawn
+        let records = Records(drawn: MapRideMarkers.drawn(assembling: perRide))
+        markerCache = (geometryIdentity, settings, records)
+        return records
     }
 
     /// The selected ride's election has its own cache: using the all-ride cache
@@ -82,7 +109,7 @@ final class MapStationLabelCoordinator {
         where !item.feature.name.isEmpty {
             keys.insert(Self.markerKey(item.record))
         }
-        selectedNameCache = (geometryIdentity, settings, keys)
+        selectedNameCache = (ride.id, geometryIdentity, settings, keys)
         return keys
     }
 
@@ -122,14 +149,55 @@ final class MapStationLabelCoordinator {
         settleTimer.schedule(perform)
     }
 
+    private struct LabelWidthKey: Hashable {
+        var text: String
+        var pointSize: Double
+    }
+    private var labelWidths: [LabelWidthKey: CGFloat] = [:]
+
+    /// The rounded-up width of `text` in `font` (the election's own
+    /// measurement), remembered by (text, point size). Measuring with
+    /// `NSString.size` was a large share of the station election on the main
+    /// actor; the same names at the same size repeat on every pass.
+    func labelWidth(of text: String, pointSize: CGFloat, font: UIFont) -> CGFloat {
+        let key = LabelWidthKey(text: text, pointSize: Double(pointSize))
+        if let known = labelWidths[key] { return known }
+        let width = ceil((text as NSString).size(withAttributes: [.font: font]).width)
+        if labelWidths.count > 8192 { labelWidths.removeAll(keepingCapacity: true) }
+        labelWidths[key] = width
+        return width
+    }
+
+    /// Display names changed (a different naming), so every measured width
+    /// is for a text that may no longer be shown.
+    func invalidateLabelWidths() { labelWidths.removeAll() }
+
+    /// Drops everything: a different network, or teardown.
     func invalidateGeometry() {
         markerCache = nil
         rideRecordCache = nil
         selectedNameCache = nil
     }
 
+    /// A stroke install moved only `rideIDs`' stroke references: only those
+    /// rides' records are stale. The assembled deck is rebuilt from the other
+    /// rides' cached records.
+    func invalidateGeometry(forRides rideIDs: Set<String>) {
+        guard !rideIDs.isEmpty else { return }
+        markerCache = nil
+        if let cache = rideRecordCache {
+            rideRecordCache = (
+                cache.settings, cache.strokeGeneration,
+                cache.rides.filter { !rideIDs.contains($0.key) })
+        }
+        if let selected = selectedNameCache, rideIDs.contains(selected.rideID) {
+            selectedNameCache = nil
+        }
+    }
+
     func tearDown() {
         settleTimer.cancel()
+        invalidateLabelWidths()
         invalidateGeometry()
     }
 }

@@ -13,6 +13,8 @@ public struct MapCameraPolicy: Sendable {
 
     public private(set) var hasOpened = false
     public private(set) var readerOwnsCamera = false
+    /// A framing animation started by a focus request is still running.
+    public private(set) var focusFitRunning = false
     private var revision: UInt64 = 0
     private var pendingFocus: FocusRequest?
 
@@ -25,15 +27,30 @@ public struct MapCameraPolicy: Sendable {
 
     /// Gestures, keyboard zoom, location requests and explicit framing all
     /// supersede launch framing and any automatic move queued before them.
-    public mutating func claimCamera() {
+    /// Returns whether a running focus fit must be stopped.
+    @discardableResult
+    public mutating func claimCamera() -> Bool {
         readerOwnsCamera = true
-        cancelFocus()
+        return cancelFocus()
     }
 
-    public mutating func cancelFocus() {
+    /// Returns whether a running focus fit must be stopped: it belongs to an
+    /// older request than whatever just cancelled focus.
+    @discardableResult
+    public mutating func cancelFocus() -> Bool {
         revision &+= 1
         pendingFocus = nil
+        defer { focusFitRunning = false }
+        return focusFitRunning
     }
+
+    /// A focus request's own fit starts. Call after the fit has been issued:
+    /// issuing it claims the camera first, which stops any OLDER fit but
+    /// never this one.
+    public mutating func beginFocusFit() { focusFitRunning = true }
+
+    /// The framing animation ended (the map reported its settled region).
+    public mutating func endFocusFit() { focusFitRunning = false }
 
     @discardableResult
     public mutating func openAtLaunch() -> Bool {
@@ -47,7 +64,8 @@ public struct MapCameraPolicy: Sendable {
     public mutating func requestFocus(
         _ target: FocusTarget, enabled: Bool, playbackIsActive: Bool
     ) -> FocusRequest? {
-        // Even a disabled request invalidates an older, queued selection.
+        // Even a disabled request invalidates an older, queued selection and
+        // an older fit still animating (read `focusFitRunning` first to stop it).
         cancelFocus()
         guard enabled, !playbackIsActive else { return nil }
         readerOwnsCamera = true

@@ -57,6 +57,9 @@ struct RailMapView: View {
     /// because the answer is a sheet and a sheet presented from inside the map
     /// is a sheet that disappears with it.
     var onSelectStation: (StationCard) -> Void = { _ in }
+    /// Network lines under a tap that found nothing nearer, nearest first.
+    /// One opens its line card, several a list first.
+    var onSelectLines: ([RailNetworkStore.DrawnLine]) -> Void = { _ in }
     /// The rect the map has just rebuilt for.
     ///
     /// The map is the only thing that knows which countries are on screen, and
@@ -93,6 +96,11 @@ struct RailMapView: View {
     /// the settings panel — and optional for the same reason: a preview that
     /// installed none draws the packages' own names rather than trapping.
     @Environment(AppLocalization.self) private var localization: AppLocalization?
+
+    /// Only for whether the trips are still loading, so the tap index is not
+    /// prebuilt per partial publish. Optional and outside the memberwise
+    /// initialiser, like the two above.
+    @Environment(RiddenRouteStore.self) private var riddenRoutes: RiddenRouteStore?
 
     /// A snapshot of the 顯示調節 values, taken during a SwiftUI update and
     /// then carried by value.
@@ -189,6 +197,8 @@ struct RailMapView: View {
             categoryIndexes: categoryIndexes,
             autoFocusRequest: controller.autoFocusRequest,
             isMapReady: controller.isMapReady,
+            // Read HERE, in a body, so a load settling schedules an update.
+            ridesAreLoading: riddenRoutes?.isLoading ?? false,
             controller: controller,
             playback: playback,
             display: displaySettings.map(DisplayValues.init) ?? DisplayValues(),
@@ -196,6 +206,7 @@ struct RailMapView: View {
             localization: localization,
             onSelectRide: onSelectRide,
             onSelectStation: onSelectStation,
+            onSelectLines: onSelectLines,
             onBuildRect: onBuildRect,
             onRender: onRender
         )
@@ -234,6 +245,7 @@ struct RailMapView: View {
         var categoryIndexes: [String: Statistics.EdgeIndex]
         var autoFocusRequest: MapCameraPolicy.FocusRequest?
         var isMapReady: Bool
+        var ridesAreLoading: Bool
         var controller: RailMapController
         var playback: PlaybackController
         var display: DisplayValues
@@ -244,6 +256,7 @@ struct RailMapView: View {
         var localization: AppLocalization?
         var onSelectRide: ([String]) -> Void
         var onSelectStation: (StationCard) -> Void
+        var onSelectLines: ([RailNetworkStore.DrawnLine]) -> Void
         var onBuildRect: (MKMapRect, Double) -> Void = { _, _ in }
         var onRender: (RenderStats) -> Void
 
@@ -387,8 +400,10 @@ struct RailMapView: View {
             mapView.preferredConfiguration = configuration
 
             context.coordinator.mapView = mapView
+            context.coordinator.observeMemoryWarnings()
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
+            context.coordinator.onSelectLines = onSelectLines
             context.coordinator.onBuildRect = onBuildRect
             context.coordinator.controller = controller
             context.coordinator.playback = playback
@@ -403,35 +418,51 @@ struct RailMapView: View {
                 } ?? segment.coordinates
             }
             controller.mapView = mapView
+#if DEBUG
+            controller.answerTapForUITest = { [weak coordinator = context.coordinator, weak mapView] point, doubleTap in
+                guard let coordinator, let mapView else { return nil }
+                return coordinator.answerTapForUITest(at: point, on: mapView, doubleTap: doubleTap)
+            }
+#endif
             let tap = UITapGestureRecognizer(
                 target: context.coordinator, action: #selector(Coordinator.handleMapTap(_:)))
             tap.delegate = context.coordinator
+            // The tap only reads the touch: an annotation view under the finger
+            // still gets its own touches and MapKit's selection.
+            tap.cancelsTouchesInView = false
+            tap.delaysTouchesBegan = false
+            tap.delaysTouchesEnded = false
+            context.coordinator.tapRecognizer = tap
             mapView.addGestureRecognizer(tap)
+            let settledTap = UITapGestureRecognizer(
+                target: context.coordinator, action: #selector(Coordinator.handleSettledTap(_:)))
+            settledTap.delegate = context.coordinator
+            settledTap.cancelsTouchesInView = false
+            settledTap.delaysTouchesBegan = false
+            settledTap.delaysTouchesEnded = false
+            context.coordinator.settledTapRecognizer = settledTap
+            mapView.addGestureRecognizer(settledTap)
 
-            // A double tap is a ZOOM, and a zoom is not an answer about the
-            // selection.
+            // A tap that hits something answers on the lift. The first tap of a
+            // double tap is therefore NOT held back by the double-tap
+            // recogniser: `tap` no longer requires `doubleTap` to fail. A
+            // double tap that lands on one trip selects it and zooms
+            // (`MapTapPolicy.doubleTapAnswer`); the second tap of any double
+            // tap is never answered as a tap (`MapTapPolicy.receives`).
             //
-            // Without this the single-tap recogniser fires on the FIRST tap of
-            // every double tap, so zooming in on empty water cleared the ride
-            // the reader had just chosen — and a double tap on the chosen line
-            // itself re-picked it, which with 自動縮放 on sent the camera to
-            // frame the selection in the middle of the reader's own zoom.
+            // The answers that still wait for the double-tap window are the
+            // empty-map clear (zooming in on empty water must not clear the
+            // trip the reader just chose) and, while a panel-hosted card is
+            // open, a station or line card (a double tap there only zooms;
+            // `MapTapPolicy.defersAnswer`). `tap` only BANKS those;
+            // `settledTap` delivers them once `doubleTap` has failed, and
+            // `doubleTap` cancels them.
             //
-            // This recogniser exists only to be waited on. MapKit's own
-            // double-tap-to-zoom is a private recogniser this cannot name, so
-            // rather than reaching into `mapView.gestureRecognizers` for
-            // something Apple never promised is there, the map gets one of ours
-            // to fail against. It consumes nothing (`cancelsTouchesInView` and
-            // the two touch delays are all off, and the coordinator answers
-            // `true` to `shouldRecognizeSimultaneouslyWith`), so MapKit's zoom
-            // still sees the same pair of taps it always did.
-            //
-            // The cost is that a single tap is answered when the double-tap
-            // window closes rather than on the lift. That is the tempo this
-            // map already runs at: MapKit's own annotation selection waits for
-            // the same recogniser and lands at 0.51–0.57 s (see
-            // `mapView(_:didSelect:)`), which is still after this, so the
-            // claim/answer order between the two is unchanged.
+            // `doubleTap` consumes nothing (`cancelsTouchesInView` and the two
+            // touch delays are all off, and the coordinator answers `true` to
+            // `shouldRecognizeSimultaneouslyWith`), so MapKit's own
+            // double-tap-to-zoom, a private recogniser this cannot name, still
+            // sees the same pair of taps it always did.
             let doubleTap = UITapGestureRecognizer(
                 target: context.coordinator, action: #selector(Coordinator.handleMapDoubleTap(_:)))
             doubleTap.numberOfTapsRequired = 2
@@ -440,7 +471,7 @@ struct RailMapView: View {
             doubleTap.delaysTouchesBegan = false
             doubleTap.delaysTouchesEnded = false
             mapView.addGestureRecognizer(doubleTap)
-            tap.require(toFail: doubleTap)
+            settledTap.require(toFail: doubleTap)
 
             // Three SENSORS, not gestures: they never move the map and never
             // consume a touch, they only let the coordinator know that a finger
@@ -475,6 +506,7 @@ struct RailMapView: View {
                 // gesture must fail selection, including its final hold.
                 // These are our own sensors; MapKit still receives all input.
                 tap.require(toFail: sensor)
+                settledTap.require(toFail: sensor)
             }
 
             // Dark mode is not just a darker basemap: the packages ship a separate
@@ -493,11 +525,13 @@ struct RailMapView: View {
             context.coordinator.playback = playback
             context.coordinator.onSelectRide = onSelectRide
             context.coordinator.onSelectStation = onSelectStation
+            context.coordinator.onSelectLines = onSelectLines
             context.coordinator.onBuildRect = onBuildRect
             context.coordinator.localization = localization
             context.coordinator.reconcileDraftPins(draftMap, on: mapView)
             playback.mapRenderer = context.coordinator
             playback.mapRendererViewSize = mapView.bounds.size
+            context.coordinator.ridesLoadingChanged(ridesAreLoading)
             context.coordinator.playbackStateChanged(on: mapView)
             playback.drawnCoordinates = { [weak coordinator = context.coordinator] ride, segment in
                 coordinator?.drawnCoordinates(of: segment, ride: ride).map {

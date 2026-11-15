@@ -77,18 +77,36 @@ struct RailWorkspaceView: View {
     @State private var linePreview: RailwayLinePreview?
     /// The selection a journey card took over, and what it replaced. The card
     /// may hand it back on close only while nothing else has claimed it since.
-    private struct JourneyMenuSelection {
-        let previous: String?
-        var revision: Int
-    }
-    @State private var journeyMenuSelection: JourneyMenuSelection?
+    @State private var journeyMenuSelection: JourneyCardLease?
     private var journeyMenuOwnsSelection: Bool { journeyMenuSelection != nil }
     @State private var workspaceMenuIsSuspended = false
     @State private var hasHingedDisplay = false
     @State private var sidebarMenuHidden = false
 
+    /// The layout the body renders, kept so host decisions made outside the
+    /// body (`WorkspaceSurfacePolicy`) read the same mode the body does.
+    @State private var renderedLayoutMode: WorkspaceLayoutMode = .compactOverlay
+
+    /// Where `presented` is shown now. Always asked of the policy.
+    private func surfaceHost(of presented: WorkspaceSheet) -> WorkspaceSurfaceHost {
+        presented.host(mode: renderedLayoutMode, isHinged: hasHingedDisplay)
+    }
+
+    /// The open sheet, only while the panel hosts it.
+    private var panelSheet: WorkspaceSheet? {
+        guard let presented = sheet, surfaceHost(of: presented) == .panel else { return nil }
+        return presented
+    }
+
+    /// The tabs hide for a system-hosted card; a panel-hosted one hides them
+    /// itself and the dock stays where it is.
     private var hidesWorkspaceMenu: Bool {
-        workspaceMenuIsSuspended || sheet?.hidesWorkspaceMenu == true
+        workspaceMenuIsSuspended || systemHostedSheetHidesMenu
+    }
+
+    private var systemHostedSheetHidesMenu: Bool {
+        guard let presented = sheet, presented.hidesWorkspaceMenu else { return false }
+        return surfaceHost(of: presented) == .systemSheet
     }
     /// The journey editor lives in the resident sheet, not a second presentation.
     @State private var journeyEditor: JourneyEditorLaunch?
@@ -153,6 +171,10 @@ struct RailWorkspaceView: View {
     /// previous window size, and a detent that is not in the set the sheet was
     /// given is a detent SwiftUI silently replaces.
     @State private var stageSelection: SheetStage = Self.launchStage
+    /// The stage a panel popup raised from `.compact`, restored when it closes.
+    @State private var stageBeforePopup: SheetStage?
+    /// A panel popup shows a surface of its own; the workspace Esc stands down.
+    @State private var panelNestedSurface = false
 
     /// The live shape of the menu panel — see ``PanelMorph``. Shared by both
     /// compositions so `PanelHeader`, `RideCard` and `WorkspacePanelPage` read
@@ -249,6 +271,9 @@ struct RailWorkspaceView: View {
                     }
                 }
             }
+            .onChange(of: renderedMode, initial: true) { _, mode in
+                renderedLayoutMode = mode
+            }
             .onChange(of: selection, initial: true) { _, tab in
                 if tab == .stats { searchFocused = false }
                 if tab == .upcoming || tab == .all { journeyMode = tab }
@@ -293,10 +318,37 @@ struct RailWorkspaceView: View {
                       presentationLayoutMode == nil else { return }
                 presentationLayoutMode = layout.mode
             }
+            // The map defers a station or line tap over a panel card to the
+            // double-tap window (`MapTapPolicy.defersAnswer`).
+            .onChange(of: sheet.map(surfaceHost(of:)), initial: true) { _, host in
+                controller.mapCardHost = host
+            }
             .onChange(of: sheet?.hidesWorkspaceMenu == true) { _, hidesMenu in
                 if hidesMenu {
                     searchFocused = false
-                    workspaceMenuIsSuspended = true
+                    if systemHostedSheetHidesMenu { workspaceMenuIsSuspended = true }
+                }
+            }
+            // A panel-hosted sheet has no system dismissal callback: its
+            // cleanup runs when the panel's sheet becomes nil, whichever path
+            // set it (close, edit, share, delete).
+            .onChange(of: panelSheet?.id) { previous, current in
+                // A popup handed over to the system sheet (layout change) leaves
+                // `sheet` non-nil: the system dismissal callback cleans up then.
+                if previous != nil, current == nil, sheet == nil { sheetDidDismiss() }
+                panelNestedSurface = false
+                if previous == nil, current != nil {
+                    // The hidden search field must not keep taking keystrokes.
+                    searchFocused = false
+                    if stageSelection == .compact {
+                        // A card needs room; the compact dock shows a header only.
+                        stageBeforePopup = .compact
+                        stageSelection = .medium
+                    }
+                }
+                if previous != nil, current == nil, let before = stageBeforePopup {
+                    stageBeforePopup = nil
+                    stageSelection = before
                 }
             }
             .onChange(of: journeyEditor != nil) { wasEditing, isEditing in
@@ -659,6 +711,38 @@ struct RailWorkspaceView: View {
 #endif
     }
 
+    /// The cleanup after a sheet has gone: the system's dismissal callback for
+    /// a system-hosted sheet, the panel's sheet becoming nil for a
+    /// panel-hosted one.
+    private func sheetDidDismiss() {
+        linePreview = nil
+        // A system sheet replaced by another popup (the trip chooser over a
+        // card, a panel card over Map Layers) is not the end of the selection:
+        // the popup now open owns the lease and the layout pin.
+        if panelSheet != nil { return }
+        if case .chooseRide = sheet { return }
+        // Expanding during the child's dismissal competes with UIKit's
+        // sheet transition. Restore only after that presenter is free.
+        workspaceMenuIsSuspended = false
+        var presentedDetail: String?
+        if case .detail(let id)? = sheet { presentedDetail = id }
+        if let lease = journeyMenuSelection,
+           JourneyCardLease.restoresOnDismiss(
+               presentedDetail: presentedDetail, owner: lease.owner,
+               editorOpen: journeyEditor != nil)
+        {
+            journeyMenuSelection = nil
+            // Playback or another pick has claimed the selection since
+            // the card opened: theirs stands. A successor card owns
+            // the lease, so switching cards restores nothing.
+            itineraries.restoreSelection(lease.previous, ifUnchangedSince: lease.revision)
+        } else if journeyMenuSelection != nil, journeyEditor != nil {
+            // Unchanged behaviour: the editor claims the selection.
+            journeyMenuSelection = nil
+        }
+        if journeyEditor == nil { presentationLayoutMode = nil }
+    }
+
     /// Everything this workspace can put OVER itself.
     ///
     /// Applied to the resident sheet's content rather than to the map beneath
@@ -671,6 +755,7 @@ struct RailWorkspaceView: View {
         content
         .modifier(WorkspacePresentations(
             dialog: $dialog, sheet: $sheet,
+            layoutMode: renderedLayoutMode, isHinged: hasHingedDisplay,
             onAddDate: { typed in
                 guard let added = manualDates.add(typed) else { return }
                 selectDate(added)
@@ -691,21 +776,7 @@ struct RailWorkspaceView: View {
                     }
                 }
             },
-            onSheetDismiss: {
-                linePreview = nil
-                // Expanding during the child's dismissal competes with UIKit's
-                // sheet transition. Restore only after that presenter is free.
-                workspaceMenuIsSuspended = false
-                if let lease = journeyMenuSelection {
-                    journeyMenuSelection = nil
-                    // Playback, the editor or another pick has claimed the
-                    // selection since the card opened: theirs stands.
-                    if journeyEditor == nil {
-                        itineraries.restoreSelection(lease.previous, ifUnchangedSince: lease.revision)
-                    }
-                }
-                if journeyEditor == nil { presentationLayoutMode = nil }
-            },
+            onSheetDismiss: sheetDidDismiss,
             sheetContent: presentedSheet))
         // Canvas editing needs the entire window on iPad and expanded Duo too.
         // One presentation owner also keeps resizing from swapping modal hosts.
@@ -824,19 +895,44 @@ struct RailWorkspaceView: View {
         return journeys + " · " + regionScopeName + ", " + dateBucketLabel(selectedDate)
     }
 
+    /// The panel card's back step to the trip card it was opened from, if it has one.
+    private func panelBackStep(for presented: WorkspaceSheet) -> PanelCloseAction? {
+        guard surfaceHost(of: presented) == .panel, let lease = journeyMenuSelection else { return nil }
+        switch presented {
+        case .station, .line, .chooseLine:
+            return PanelCloseAction(key: "back-\(presented.id)-\(lease.owner)") {
+                linePreview = nil
+                sheet = .detail(lease.owner)
+            }
+        default:
+            return nil
+        }
+    }
+
     private func presentedSheet(_ presented: WorkspaceSheet) -> some View {
-        Group {
+        let host = surfaceHost(of: presented)
+        // Closes only its own popup: a save that finishes after another popup
+        // opened must not close that one.
+        let closePanelSurface: PanelCloseAction? =
+            host == .panel
+            ? PanelCloseAction(key: "\(presented.id)") {
+                if self.sheet?.id == presented.id { self.sheet = nil }
+            } : nil
+        let panelBackStep = panelBackStep(for: presented)
+        return Group {
             switch presented {
             case .detail(let id):
                 WorkspaceJourneyMenu(
                     trainID: id, itineraries: itineraries, library: library, controller: controller,
+                    host: host, onClose: { sheet = nil },
                     presentation: { presentation(for: $0) },
                     onSave: { edited, originalID in
                         editing.replaceAndPersist(edited, replacing: originalID)
                     },
                     onRebuild: rebuildRoute,
                     onPrimary: { action, train in
-                        if action == .locate { stageSelection = .compact }
+                        // Only a system sheet lowers; the panel keeps its stage.
+                        if action == .locate, host == .systemSheet { stageSelection = .compact }
                         perform(action, on: train)
                     },
                     onSecondary: { action, train in perform(action, on: train) },
@@ -862,8 +958,34 @@ struct RailWorkspaceView: View {
             case .chooseRide(let trains):
                 RideChooserView(trains: trains, showsDate: selectedDate == Dates.allDates,
                     presentation: { presentation(for: $0) }) { train in
-                    sheet = nil
-                    presentationHost.afterTeardown { pick(train) }
+                    if host == .panel {
+                        // Straight swap, as chooseLine: no dismissal to hand the selection back.
+                        pick(train)
+                    } else {
+                        sheet = nil
+                        presentationHost.afterTeardown { pick(train) }
+                    }
+                }
+            case .line(let target):
+                NetworkLineSheetView(target: target, network: store, controller: controller,
+                    onPreview: { linePreview = $0 })
+            case .chooseLine(let targets):
+                NetworkLineChooserView(targets: targets) { target in
+                    if host == .panel {
+                        // Straight swap: a nil step would let the dismissal
+                        // hand the selection back.
+                        sheet = .line(target)
+                    } else {
+                        sheet = nil
+                        presentationHost.afterTeardown { sheet = .line(target) }
+                    }
+                }
+            case .groupPicker(let id):
+                if let train = itineraries.store?.trains.first(where: { $0.id == id }) {
+                    JourneyGroupAssignmentView(
+                        train: train,
+                        groups: JourneyGroupCatalog.groups(in: itineraries.store?.trains ?? []),
+                        editing: editing)
                 }
             case .utility(let destination):
                 UtilityDestinationView(destination: destination, itineraries: itineraries,
@@ -871,6 +993,9 @@ struct RailWorkspaceView: View {
             }
         }
         .environment(store)
+        .environment(\.popupHost, host)
+        .environment(\.closePanelSurface, closePanelSurface)
+        .environment(\.panelBackStep, panelBackStep)
         .scrollContentBackground(.hidden)
         .railMenuPresentationBackground()
     }
@@ -946,12 +1071,39 @@ struct RailWorkspaceView: View {
     // MARK: - system destinations (§2.2, revised)
 
     /// Three destinations in the system capsule, with a trailing Search circle.
-    @ViewBuilder private func workspaceTabs() -> some View {
+    ///
+    /// `panelSheet` is the popup the docked panel hosts: it fills the panel
+    /// and the tabs stay mounted underneath, hidden and inert, so the list
+    /// keeps its scroll position for when it closes.
+    @ViewBuilder private func workspaceTabs(panelSheet: WorkspaceSheet? = nil) -> some View {
         if let launch = journeyEditor {
             journeyEditorPage(launch)
         } else {
             WorkspaceTabs(selection: workspaceTabSelection) { tab in
                 workspacePage(pageTab(tab))
+            }
+            .opacity(panelSheet == nil ? 1 : 0)
+            .allowsHitTesting(panelSheet == nil)
+            .accessibilityHidden(panelSheet != nil)
+            .overlay {
+                if let panelSheet {
+                    presentedSheet(panelSheet)
+                        .id(panelSheet.id)
+                        .onPreferenceChange(PanelNestedSurfaceKey.self) { panelNestedSurface = $0 }
+                        // Esc closes the panel's card, as it does a sheet. It
+                        // stands down over a nested surface (details, a note,
+                        // a save), which answers Esc itself.
+                        .background {
+                            Button(localization.text("ios.close", fallback: "Close")) {
+                                // A card with a back step steps back first.
+                                if let back = panelBackStep(for: panelSheet) { back() } else { self.sheet = nil }
+                            }
+                            .keyboardShortcut(.cancelAction)
+                            .disabled(panelNestedSurface)
+                            .opacity(0)
+                            .accessibilityHidden(true)
+                        }
+                }
             }
         }
     }
@@ -1001,6 +1153,8 @@ struct RailWorkspaceView: View {
 
     private func presentJourneyEditor(_ launch: JourneyEditorLaunch) {
         journeyMenuSelection = nil
+        // The editor replaces a panel popup, as the card's own Edit does.
+        if panelSheet != nil { sheet = nil }
         sidebarMenuHidden = false
         journeyEditorRecordID = nil
         journeySaveAttemptID = nil
@@ -2186,12 +2340,6 @@ struct RailWorkspaceView: View {
                 dockPanelToggle(metrics: metrics)
             }
             .environment(panelMorph)
-            .offset(y: hidesWorkspaceMenu ? room + safeAreaBottom : 0)
-            .allowsHitTesting(!hidesWorkspaceMenu)
-            .accessibilityHidden(hidesWorkspaceMenu)
-            .railAnimation(
-                RailMotion.spring, value: hidesWorkspaceMenu,
-                reduceMotion: reduceMotion)
             // The adjacent toggle resizes the docked card with the app's
             // normal spring. Its title has no custom drag behavior.
             .railAnimation(RailMotion.spring, value: stageSelection, reduceMotion: reduceMotion)
@@ -2229,9 +2377,6 @@ struct RailWorkspaceView: View {
         .onChange(of: safeAreaLeading) { _, leading in
             applyDockObstruction(panelWidth, safeAreaLeading: leading)
         }
-        .onChange(of: hidesWorkspaceMenu) { _, _ in
-            applyDockObstruction(panelWidth, safeAreaLeading: safeAreaLeading)
-        }
         // The card is only real while this composition is mounted. Without
         // this, a resize down to `.compactOverlay` would leave the map
         // framing and MapKit's own Legal label shifted off a card that no
@@ -2268,7 +2413,7 @@ struct RailWorkspaceView: View {
     /// rotation that stays on the phone.
     private func dockedMenuContent(metrics: BottomChromeMetrics) -> some View {
         withPresentations(
-            workspaceTabs()
+            workspaceTabs(panelSheet: panelSheet)
                 .environment(\.horizontalSizeClass, .compact)
                 .environment(\.railOnDockSurface, true)
                 // The system bar sits 2 pt closer to the card's bottom than to
@@ -2285,7 +2430,17 @@ struct RailWorkspaceView: View {
                         },
                         stages: metrics.stages)
                 )
+                // The tab pages (the journey rows) ask where their popups go.
+                .environment(\.presentGroupPicker, groupPickerPresenter)
         )
+    }
+
+    /// Non-nil when the policy gives the group picker to the panel.
+    private var groupPickerPresenter: PanelGroupPickerAction? {
+        let host = WorkspaceSurfacePolicy.host(
+            for: .groupPicker, mode: renderedLayoutMode, isHinged: hasHingedDisplay)
+        guard host == .panel else { return nil }
+        return PanelGroupPickerAction(key: "panel") { id in self.sheet = .groupPicker(id) }
     }
 
     /// Beside the card so narrow windows retain the phone header's reading
@@ -2389,7 +2544,7 @@ struct RailWorkspaceView: View {
         switch sheet {
         case .importData, .transferGuide:
             return true
-        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .utility, nil:
+        case .detail, .hideTrips, .mapInfo, .mapLayers, .station, .chooseRide, .line, .chooseLine, .groupPicker, .utility, nil:
             return false
         }
     }
@@ -2446,7 +2601,7 @@ struct RailWorkspaceView: View {
                 isNew: true, originalID: nil))
         }
         railCommands.performSearch = {
-            guard !self.presentedEditorOwnsShortcuts else { return }
+            guard !self.presentedEditorOwnsShortcuts, self.panelSheet == nil else { return }
             self.sidebarMenuHidden = false
             if self.selection == .stats { self.selection = self.currentJourneyPage }
             Task { @MainActor in
@@ -2503,7 +2658,8 @@ struct RailWorkspaceView: View {
     }
 
     private func settleDock(at requested: SheetStage, metrics: BottomChromeMetrics) {
-        let target = metrics.available(requested)
+        // A card in the panel needs room: the dock does not drop to compact.
+        let target = metrics.available(panelSheet != nil && requested == .compact ? .medium : requested)
         if target == .compact, stageSelection != .compact {
             lastOpenDockStage = stageSelection
         } else if target != .compact {
@@ -2547,11 +2703,7 @@ struct RailWorkspaceView: View {
     }
 
     private func applyDockObstruction(_ panelWidth: CGFloat, safeAreaLeading: CGFloat) {
-        if hidesWorkspaceMenu {
-            controller.leadingObstruction = 0
-        } else {
-            controller.leadingObstruction = panelWidth + Self.dockInset * 2 + safeAreaLeading
-        }
+        controller.leadingObstruction = panelWidth + Self.dockInset * 2 + safeAreaLeading
         controller.bottomObstruction = 0
     }
 
@@ -2848,6 +3000,7 @@ struct RailWorkspaceView: View {
             }
         }
         .keyboardShortcut(.space, modifiers: [])
+        .disabled(panelSheet != nil)
         .opacity(0)
         .accessibilityHidden(true)
     }
@@ -3317,10 +3470,8 @@ struct RailWorkspaceView: View {
             controller: controller,
             playback: playback,
             onSelectRide: { selectFromMap($0) },
-            onSelectStation: { card in
-                guard journeyEditor == nil, !journeyMenuOwnsSelection else { return }
-                sheet = .station(card)
-            },
+            onSelectStation: { selectStation($0) },
+            onSelectLines: { selectLines($0) },
             // Which countries the reader is actually looking at, from the rect
             // the map rebuilt for. Only while the network is on: with it off
             // there are no rails and no station dots to draw, so a pan across
@@ -3335,6 +3486,9 @@ struct RailWorkspaceView: View {
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(localization.text("ios.map", fallback: "Map")))
         .accessibilityIdentifier("railwayMap")
+        // A memory-warning trim protects what is on screen, not only the last
+        // built rect.
+        .onAppear { store.visibleRectProvider = { [weak controller] in controller?.mapView?.visibleMapRect } }
         .accessibilityValue(Text(mapRouteLoadStatus))
         .ignoresSafeArea()
         // The trip cap, said once and quietly: tap to narrow the scope.
@@ -3427,25 +3581,68 @@ struct RailWorkspaceView: View {
     /// rides run the same corridor, "nearest" is decided by a fraction of a
     /// point.
     private func selectFromMap(_ ids: [String]) {
-        guard linePreview == nil else { return }
         let trains = ids.compactMap { id in
             itineraries.loaded?.trains.first { $0.id == id }
         }
-        switch trains.count {
-        case 0:
-            if !journeyMenuOwnsSelection { itineraries.selectedTrainID = nil }
-        case 1:
-            pick(trains[0])
-        default:
-            // Background map taps must not replace an open journey card.
-            if !journeyMenuOwnsSelection { sheet = .chooseRide(trains) }
+        // A tap that hit rides (the line preview is drawn as one) is never an
+        // empty tap, even when none of them is a loaded journey.
+        if trains.isEmpty, !ids.isEmpty { return }
+        switch mapTapAnswer(trains.isEmpty ? .empty : .trips) {
+        case .blocked:
+            return
+        case .clearSelection:
+            itineraries.selectedTrainID = nil
+        case .clearSelectionAndCloseCard:
+            // In this order: the lease goes first so closing the card has
+            // nothing to hand back, then the selection, preview and card.
+            journeyMenuSelection = nil
+            itineraries.selectedTrainID = nil
+            linePreview = nil
+            sheet = nil
+        case .proceed:
+            if trains.count == 1 {
+                pick(trains[0])
+            } else {
+                // Several trips under the finger ask, with a trip card open or
+                // not: a tap that hit something answers.
+                linePreview = nil
+                sheet = .chooseRide(trains)
+            }
         }
+    }
+
+    /// The tap rules of ``WorkspaceSurfacePolicy/mapTapAnswer`` with this
+    /// workspace's state.
+    private func mapTapAnswer(_ tap: MapTapKind) -> MapTapCardAnswer {
+        WorkspaceSurfacePolicy.mapTapAnswer(
+            tap, cardHost: sheet.map(surfaceHost(of:)), leaseHeld: journeyMenuOwnsSelection,
+            linePreviewShown: linePreview != nil, editorOpen: journeyEditor != nil,
+            nestedSurfaceUp: panelNestedSurface)
+    }
+
+    /// A tap on a station dot. Never clears or closes anything.
+    private func selectStation(_ card: StationCard) {
+        guard mapTapAnswer(.station) == .proceed else { return }
+        linePreview = nil
+        sheet = .station(card)
+    }
+
+    /// A tap on network lines that found nothing nearer. One line opens its
+    /// card, several a list first. A card or the editor already in front keeps
+    /// the map's taps, as it does for a station.
+    private func selectLines(_ lines: [RailNetworkStore.DrawnLine]) {
+        guard mapTapAnswer(.lines) == .proceed else { return }
+        let targets = lines.map(NetworkLineTarget.init)
+        guard !targets.isEmpty else { return }
+        linePreview = nil
+        sheet = targets.count == 1 ? .line(targets[0]) : .chooseLine(targets)
     }
 
     /// Focus the tapped journey and open its separate menu. The source
     /// destination, filters and panel size are retained while it slides away.
     private func pick(_ train: Train) {
         guard yieldRun() else { return }
+        linePreview = nil
         if RecentSearchRecordGate.recordsOnPick(recordGateState) { commitRecentJourneySearch() }
         let previous: String?
         if let lease = journeyMenuSelection, itineraries.selectionRevision == lease.revision {
@@ -3454,8 +3651,8 @@ struct RailWorkspaceView: View {
             previous = itineraries.selectedTrainID
         }
         itineraries.selectedTrainID = train.id
-        journeyMenuSelection = JourneyMenuSelection(
-            previous: previous, revision: itineraries.selectionRevision)
+        journeyMenuSelection = JourneyCardLease(
+            owner: train.id, previous: previous, revision: itineraries.selectionRevision)
         controller.requestAutoFocus(
             .journey(train.id), enabled: true, playbackIsActive: playback.isActive)
         sheet = .detail(train.id)
@@ -3807,8 +4004,13 @@ extension RailWorkspaceView {
                     saving: journeySaveAttemptID != nil, saveFailure: journeySaveFailureDetail)
             },
             sheetID: { sheet?.id },
+            sheetHost: {
+                guard let presented = sheet else { return nil }
+                return surfaceHost(of: presented) == .panel ? "panel" : "systemSheet"
+            },
             renderStats: { render },
             drawableRideCount: { mapRides.count },
+            scopedRideCount: { scopedMapRides.count },
             stage: { "\(stageSelection)" },
             tab: { selection.rawValue })
     }

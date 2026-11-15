@@ -21,6 +21,7 @@ Transport (default `--transport poll`): the CLI writes `inbox/<id>.json` into th
 
 ## Safety rules
 
+- **One build folder per worktree.** `build` writes to `~/Library/Caches/jtm-railmap-app-control/DerivedData/<hash of the worktree path>`, so another worktree's build can never replace the app under test. `build` stamps `JTMBuildCommit` into Info.plist, and `launch --target mac` refuses (exit 1) when the built app's commit is not this worktree's HEAD (not checked with an explicit `--app`). Check `state.build.commit` after launch.
 - **Isolated storage only.** `launch` always passes `RAILMAP_UI_TEST_STORAGE_ID=<UUID>` (new by default, or `--storage UUID`). On the real store the app runs only commands that persist nothing: `state`, `screenshot`, `wait`, `useStorage`, `devtools`, `exportDiagnostics`, `memoryWarning`, `clearRouteCaches`, `setLayer`, `focusTrip`, `openStats`, `camera` and `perf`. Everything else, including `selectTrip` (it writes the last-viewed trip) and every editor command, is `rejected`. Never write to the real `com.JRM.RailMap` store. Do not launch the app any other way before sending write commands.
 - **One native job at a time, machine-wide.** That covers builds, simulator runs and device runs across all chats. Coordinate before building or launching.
 - **A single simulator:** iPhone 17 `0DBE2488-0BEB-4932-9B55-091B3CC793B6`. Don't boot or create others.
@@ -41,7 +42,7 @@ python3 -I ios/tools/app-control.py --target device ready         # reads ready.
 
 `launch` also sets `RAILMAP_SIGNPOST_RECORDER=1` (signpost durations in `state`) and `RAILMAP_DEVTOOLS=1` (ball visible). Use `--no-devtools` to hide the ball. The CLI waits per command (`reloadAll` 660 s, `addTrip`/`editTrip` 200 s, `loadSamples` 240 s, otherwise 90 s), at least as long as the app's own default. `--timeout` overrides this.
 
-Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/<Debug|Release>-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>.json`.
+Products go to `~/Library/Caches/jtm-railmap-app-control/DerivedData/<worktree-hash>/Build/Products/<Debug|Release>-{iphonesimulator,maccatalyst,iphoneos}/RailMap.app`. Use `--app PATH` to drive a build made elsewhere. `launch --env KEY=VALUE` adds other `RAILMAP_UI_TEST_*` hooks. The last storage and pid per target are kept in `~/Library/Caches/jtm-railmap-app-control/<target>-<device>-<worktree-hash>.json`. `launch --target mac` refuses a build that is not HEAD, and a `-dirty` one unless `--allow-dirty`.
 
 ## Commands
 
@@ -49,7 +50,7 @@ Values parse as JSON when they can, so `save=true`, `timeoutMs=5000`, `via='["�
 
 | Command | Args | Returns |
 |---|---|---|
-| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, reloadProgress), map (ready, `railMapRenderStatus` text, render stats), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
+| `state` | `trips=false` to omit the trip list | storageID, inventory (registered, route phase, rides, drawable, ridesInTabScope, routeCacheHits, routeSolveAttemptsThisLaunch, storedFailures, reloadProgress), map (ready, `railMapRenderStatus` text, render stats, totalOverlays and rideOverlays = every mounted overlay and the trip ones, `geometryLevel` = `{installed, wanted, preparing, pending, cameraZoom, sinceInstallMs}`: the geometry level on screen, the one the camera wants, the one being prepared, a landed one waiting to install (null when none), the camera zoom and ms since the last install), selectedTrip, sheet, stage, tab, hidden filter, editor (+draft), memory (footprint/resident/peak MB), build (`commit` = the git sha stamped into the app at build time, `-dirty` suffix when tracked files differed from HEAD; null for an unstamped build), trips[≤500]. `signposts` is null because RailSignpost intervals only reach Instruments |
 | `loadSamples` | `samples=train-store,train-store-tw` (default `train-store`; names are `RideLibrary.Sample.all` resources) | merged count and ms per sample |
 | `useStorage` | `id=UUID` | ok if the app runs on that store, else `rejected` with `relaunchRequired` (then `launch --storage UUID`) |
 | `reloadAll` | `wait=true`, `timeoutMs`, `force=false` | ms, rides. Default is the user-facing repair (cached routes read back, only missing ones solved, map stays drawn); `force=true` is the old full rebuild (wipes the route cache and every memo, solves every trip) |
@@ -96,7 +97,7 @@ The ball is a draggable button that snaps to the nearer side edge. It lives in i
 - **Triggers:** buttons that call `AppControlHost.submit`, so they go through the same queue, dispatcher, storage guard and result files as the URL channel: load samples (on the real store it offers to switch to a fresh UUID store, quit, and load on reopen), rebuild all routes (`reloadAll force=true`), select or focus a random trip, open the editor, add a demo trip (東京 to 新大阪, today, saved), delete the last trip added there, open Stats, toggle the hide filter (the current year), and screenshot.
 - **State:** inventory, map render stats and layers, rebuild and tap-index counts (from the recorder), storage ID and source, memory, and cache sizes on disk (on demand).
 - **Tools:** switch to a new isolated store or back to the real one. This takes effect on the next launch (`DevStorage`). The launch environment always wins, and the override is ignored for UI-test launches. Also: clear route caches, simulate a memory warning, map layer toggles, export a diagnostics bundle, and hide the ball.
-- **Logs:** this process's OSLog entries for subsystem `com.jtm.railmap`, with a filter.
+- **Logs:** this process's OSLog entries for subsystems `com.jtm.railmap` and `com.JRM.RailMap` (the display batch log), with a filter. For a zoom sweep, start the perf window at the first step, not before the launch settles.
 
 ```sh
 python3 -I ios/tools/app-control.py --target device devtools expand
@@ -111,7 +112,7 @@ All of this is `#if DEBUG`. The URL scheme is only in the Debug Info.plist. `Rai
 ```sh
 python3 -I ios/tools/app-control.py --target sim --configuration Release build
 python3 -I ios/tools/app-control.py --target sim check-release
-bash ios/tools/app-control/check-release-clean.sh --debug-sanity ~/Library/Caches/jtm-railmap-app-control/DerivedData/Build/Products/Debug-iphonesimulator/RailMap.app
+bash ios/tools/app-control/check-release-clean.sh --debug-sanity ~/Library/Caches/jtm-railmap-app-control/DerivedData/<worktree-hash>/Build/Products/Debug-iphonesimulator/RailMap.app
 ```
 
 ## Troubleshooting

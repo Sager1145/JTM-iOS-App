@@ -27,7 +27,8 @@ struct ResourceProfileTests {
         #expect(compact.trimsRegionalGraphsAfterEachRide)
         #expect(compact.countryCacheSlots == 1)
         #expect(compact.displayResidentByteBudget == 16 * 1024 * 1024)
-        #expect(compact.geometryFrameCapacity == 5)
+        #expect(compact.geometryFrameByteCap == 12 * 1024 * 1024)
+        #expect(compact.geometryMaxUnpinnedFrames == 1)
 
         let large = ResourceProfile(tier: .large)
         #expect(large.regionalGraphNodeBudget == 450_000)
@@ -35,14 +36,15 @@ struct ResourceProfileTests {
         #expect(!large.trimsRegionalGraphsAfterEachRide)
         #expect(large.countryCacheSlots == 2)
         #expect(large.displayResidentByteBudget == 48 * 1024 * 1024)
-        #expect(large.geometryFrameCapacity == 16)
+        #expect(large.geometryFrameByteCap == 24 * 1024 * 1024)
+        #expect(large.geometryMaxUnpinnedFrames == 2)
 
         let desktop = ResourceProfile(tier: .desktop)
         #expect(desktop.regionalGraphNodeBudget == 450_000)
         #expect(desktop.regionalGraphLoadNodeBudget == 900_000)
         #expect(desktop.countryCacheSlots == 2)
         #expect(desktop.displayResidentByteBudget == 128 * 1024 * 1024)
-        #expect(desktop.geometryFrameCapacity == 16)
+        #expect(desktop.geometryFrameByteCap == 24 * 1024 * 1024)
     }
 
     @Test("the map trip limit is a flat 500 whatever the tier")

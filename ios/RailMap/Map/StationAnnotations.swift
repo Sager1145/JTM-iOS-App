@@ -3,7 +3,7 @@ import RailCore
 import SwiftUI
 
 final class StationAnnotation: NSObject, MKAnnotation {
-    let station: RailNetworkStore.DrawnStation
+    var station: RailNetworkStore.DrawnStation
     dynamic var coordinate: CLLocationCoordinate2D
     /// The callout header, in the reader's language.
     ///
@@ -14,11 +14,11 @@ final class StationAnnotation: NSObject, MKAnnotation {
     /// instead, which also means a language change is picked up by
     /// the next rebuild rather than needing the package decoded
     /// again.
-    let displayName: String
+    var displayName: String
     /// `nameReadingsList` — one line per enabled reading. Empty is
     /// a real answer (every toggle off), and different from the
     /// standalone case the `nameRoma` fallback covers.
-    let readings: [String]?
+    var readings: [String]?
     /// Whether this dot prints its name.
     ///
     /// `DrawnStation.showsLabel` is the election result — which of
@@ -30,7 +30,7 @@ final class StationAnnotation: NSObject, MKAnnotation {
     var showsName: Bool
     /// 1 for an open platform. A closed overlay station uses the same dot
     /// at a lower alpha — never the cross-day diamond.
-    let markerAlpha: CGFloat
+    var markerAlpha: CGFloat
     var title: String? { displayName }
     var subtitle: String? {
         if let first = readings?.first { return first }
