@@ -87,7 +87,7 @@ extension RailTopology {
 
 /// Heap item ordered lexicographically by (cost, row changes, key, node); `key` is
 /// the line's id rank in the high 32 bits and the node ordinal in the low 32.
-private struct NodeItem: HeapOrdered {
+struct NodeItem: HeapOrdered {
     var cost: UInt64
     var changes: UInt32
     var key: UInt64

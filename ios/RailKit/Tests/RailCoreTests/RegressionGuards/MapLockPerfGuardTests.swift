@@ -6,12 +6,12 @@ import Testing
 /// their own tests; these pin that the app still uses them.
 @Suite("RegressionGuardMapLockPerf")
 struct RegressionGuardMapLockPerf {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let geometry = SourceFiles.textRecording("RailMap/Map/MapLineGeometry.swift")
-    private static let stroke = SourceFiles.textRecording("RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift")
-    private static let builder = SourceFiles.textRecording("RailMap/Map/RideStrokeBuilder.swift")
-    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
-    private static let appControl = SourceFiles.textRecording("tools/app-control.py")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var geometry: String { SourceFiles.textRecording("RailMap/Map/MapLineGeometry.swift") }
+    private static var stroke: String { SourceFiles.textRecording("RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift") }
+    private static var builder: String { SourceFiles.textRecording("RailMap/Map/RideStrokeBuilder.swift") }
+    private static var host: String { SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift") }
+    private static var appControl: String { SourceFiles.textRecording("tools/app-control.py") }
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))

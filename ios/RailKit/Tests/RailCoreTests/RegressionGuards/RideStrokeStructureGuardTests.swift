@@ -7,7 +7,7 @@ import Testing
 /// app tests cannot read the repository folder.
 @Suite("RegressionGuardRideStrokeStructure")
 struct RegressionGuardRideStrokeStructure {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
 
     private static func body(from start: String, to end: String) throws -> Substring {
         let source = coordinator

@@ -2087,7 +2087,7 @@ public enum RouteSolver {
     }
 
     /// A station feature index, popped in ascending order.
-    private struct StationGroupIndex: HeapOrdered {
+    struct StationGroupIndex: HeapOrdered {
         var index: Int
         @inline(__always)
         func precedes(_ other: StationGroupIndex) -> Bool { index < other.index }
@@ -4527,12 +4527,12 @@ public enum RouteSolver {
         return edges.reversed()
     }
 
-    private struct DijkstraState: Hashable {
+    struct DijkstraState: Hashable {
         var key: String
         var usedRequiredRail: Bool
     }
 
-    private struct Item: HeapOrdered {
+    struct Item: HeapOrdered {
         var state: DijkstraState
         var priority: Double
         @inline(__always)

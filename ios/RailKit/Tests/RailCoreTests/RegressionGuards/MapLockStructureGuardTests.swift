@@ -6,8 +6,8 @@ import Testing
 /// tested on their own; these pin that the app still uses them.
 @Suite("RegressionGuardMapLock")
 struct RegressionGuardMapLock {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let rendering = SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var rendering: String { SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift") }
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))
@@ -340,7 +340,7 @@ struct RegressionGuardMapLock {
         #expect(!update.contains("Polylines are built on a worker only from a full"))
     }
 
-    private static let interaction = SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift")
+    private static var interaction: String { SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift") }
 
     @Test func tapSnapshotNeverDoesGeometryMathsOnMain() throws {
         let strokes = try Self.body(

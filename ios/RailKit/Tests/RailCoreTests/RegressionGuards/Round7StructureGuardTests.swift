@@ -6,7 +6,7 @@ import Testing
 /// RailPresentation; these pin that the app still uses them.
 @Suite("RegressionGuardRound7")
 struct RegressionGuardRound7 {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))

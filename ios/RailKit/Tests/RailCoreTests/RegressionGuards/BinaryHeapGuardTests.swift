@@ -7,6 +7,12 @@ import Testing
 /// renamed with a `Legacy` prefix) and the shared `BinaryMinHeap` must pop the
 /// identical sequence on seeded, tie-heavy random inputs: route answers and
 /// statistics depend on the order equal-priority items pop.
+///
+/// The shared heap is always filled with the PRODUCTION element types
+/// (`RouteSolver.Item`, `RouteSolver.StationGroupIndex`, `Statistics.CorridorHeapItem`,
+/// `NodeItem`, `LocalJourneySearch.Entry`), so their real `precedes` is what is
+/// compared against the frozen legacy ordering: an edit to a production comparator
+/// fails here. Never replace them with copies declared in this file.
 @Suite("RegressionGuardBinaryHeap")
 struct RegressionGuardBinaryHeap {
 
@@ -46,6 +52,8 @@ struct RegressionGuardBinaryHeap {
     private struct LegacyMinHeap {
         private var items: [LegacyItem] = []
         var isEmpty: Bool { items.isEmpty }
+        /// Test-only read of the next priority (not part of the legacy algorithm).
+        var peekPriority: Double? { items.first?.priority }
 
         mutating func push(_ item: LegacyItem) {
             items.append(item)
@@ -127,34 +135,65 @@ struct RegressionGuardBinaryHeap {
         }
     }
 
-    private struct NewItem: HeapOrdered {
-        var tag: Int
-        var priority: Double
-        func precedes(_ other: NewItem) -> Bool { priority < other.priority }
-    }
-
+    /// `RouteSolver.Item` and `Statistics.CorridorHeapItem` order by priority alone,
+    /// so equal priorities are real ties; the tag (carried in the production payload
+    /// field) shows which of the tied items popped.
     @Test func priorityOnlyHeapsPopTiesIdentically() {
         for seed in Self.seeds {
             var g = SplitMix64(state: seed ^ 0xA5A5)
             var legacy = LegacyMinHeap()
             var legacyTuple = LegacyTupleMinHeap()
-            var shared = BinaryMinHeap<NewItem>()
+            var solver = BinaryMinHeap<RouteSolver.Item>()
+            var corridor = BinaryMinHeap<Statistics.CorridorHeapItem>()
             var tag = 0
+            var tiedPops = 0
             for isPush in Self.script(seed: seed) {
                 if isPush {
                     // Few distinct priorities (and fractional ones) force ties.
                     let p = Double(g.below(6)) * 0.5
                     legacy.push(LegacyItem(tag: tag, priority: p))
                     legacyTuple.push(p, tag)
-                    shared.push(NewItem(tag: tag, priority: p))
+                    solver.push(RouteSolver.Item(
+                        state: .init(key: String(tag), usedRequiredRail: tag % 2 == 0), priority: p))
+                    corridor.push(Statistics.CorridorHeapItem(priority: p, value: String(tag)))
                     tag += 1
                 } else {
-                    let a = legacy.pop(), b = legacyTuple.pop(), c = shared.pop()
-                    #expect(a?.tag == c?.tag && b.value == c?.tag && b.priority == c?.priority,
+                    let a = legacy.pop(), b = legacyTuple.pop(), c = solver.pop(), d = corridor.pop()
+                    let expected = a.map { String($0.tag) }
+                    #expect(expected != nil && String(b.value) == expected
+                            && c?.state.key == expected && d?.value == expected
+                            && c?.priority == a?.priority && d?.priority == a?.priority
+                            && b.priority == a?.priority,
                             "seed \(seed): pop diverged")
+                    if let a, let next = legacy.peekPriority, next == a.priority { tiedPops += 1 }
                 }
             }
-            #expect(legacy.isEmpty && legacyTuple.size == 0 && shared.isEmpty)
+            #expect(legacy.isEmpty && legacyTuple.size == 0 && solver.isEmpty && corridor.isEmpty)
+            #expect(tiedPops > 20, "seed \(seed): the input must be tie-heavy (\(tiedPops) tied pops)")
+        }
+    }
+
+    /// `RouteSolver.StationGroupIndex` orders by the index alone. The app never
+    /// queues an index twice (`enqueueStationGroupIndex` goes through a `queued`
+    /// set), and two items with the same index are the same value, so a tie
+    /// cannot change what pops: there is no tie order to pin. Repeats are pushed
+    /// here anyway, to show the pops still match the legacy heap.
+    @Test func stationGroupIndexHeapPopsIdentically() {
+        for seed in Self.seeds {
+            var g = SplitMix64(state: seed ^ 0x0F0F)
+            var legacy = LegacyMinHeap()
+            var shared = BinaryMinHeap<RouteSolver.StationGroupIndex>()
+            for isPush in Self.script(seed: seed) {
+                if isPush {
+                    let index = g.below(40)
+                    legacy.push(LegacyItem(tag: index, priority: Double(index)))
+                    shared.push(RouteSolver.StationGroupIndex(index: index))
+                } else {
+                    let a = legacy.pop(), b = shared.pop()
+                    #expect(a != nil && a?.tag == b?.index, "seed \(seed): pop diverged")
+                }
+            }
+            #expect(legacy.isEmpty && shared.isEmpty)
         }
     }
 
@@ -203,38 +242,52 @@ struct RegressionGuardBinaryHeap {
         }
     }
 
-    private struct NewNodeItem: HeapOrdered {
-        var cost: UInt64
-        var changes: UInt32
-        var key: UInt64
-        var node: UInt32
-        func precedes(_ b: NewNodeItem) -> Bool {
-            if cost != b.cost { return cost < b.cost }
-            if changes != b.changes { return changes < b.changes }
-            return key != b.key ? key < b.key : node < b.node
-        }
-    }
-
+    /// Why this test has no tie order to pin: `NodeItem.precedes` compares every
+    /// stored field (cost, changes, key, node), so two items that neither precede
+    /// the other are equal in all four fields, that is the same value, and which of
+    /// them pops first cannot be observed. `nodeItemOrderingIsTotal` proves that
+    /// property on the production comparator, so a future field left out of
+    /// `precedes` (which would make real ties possible) fails there and must then
+    /// get a tie-order test here.
     @Test func nodeHeapPopsIdentically() {
         for seed in Self.seeds {
             var g = SplitMix64(state: seed ^ 0x5A5A)
             var legacy = LegacyNodeHeap()
-            var shared = BinaryMinHeap<NewNodeItem>()
+            var shared = BinaryMinHeap<NodeItem>()
             for isPush in Self.script(seed: seed) {
                 if isPush {
                     // Tiny ranges on every field, including duplicate whole items.
                     let cost = UInt64(g.below(3)), changes = UInt32(g.below(3))
                     let key = UInt64(g.below(3)), node = UInt32(g.below(4))
                     legacy.push(cost, changes, key, node)
-                    shared.push(NewNodeItem(cost: cost, changes: changes, key: key, node: node))
+                    shared.push(NodeItem(cost: cost, changes: changes, key: key, node: node))
                 } else {
                     let a = legacy.pop(), b = shared.pop()
-                    #expect(a?.cost == b?.cost && a?.changes == b?.changes
+                    #expect(a != nil && a?.cost == b?.cost && a?.changes == b?.changes
                             && a?.key == b?.key && a?.node == b?.node,
                             "seed \(seed): pop diverged")
                 }
             }
             #expect(legacy.isEmpty && shared.isEmpty)
+        }
+    }
+
+    /// Every pair of the small field ranges: exactly one of "a pops first",
+    /// "b pops first", "a and b are the same value" holds for the production
+    /// `NodeItem.precedes`, and it agrees with the frozen legacy ordering.
+    @Test func nodeItemOrderingIsTotal() {
+        var all: [NodeItem] = []
+        for cost in 0..<3 { for changes in 0..<3 { for key in 0..<3 { for node in 0..<3 {
+            all.append(NodeItem(cost: UInt64(cost), changes: UInt32(changes), key: UInt64(key), node: UInt32(node)))
+        } } } }
+        for a in all {
+            for b in all {
+                let same = a.cost == b.cost && a.changes == b.changes && a.key == b.key && a.node == b.node
+                let ab = a.precedes(b), ba = b.precedes(a)
+                #expect((ab ? 1 : 0) + (ba ? 1 : 0) + (same ? 1 : 0) == 1, "not a strict total order")
+                let legacy = (a.cost, a.changes, a.key, a.node) < (b.cost, b.changes, b.key, b.node)
+                #expect(ab == legacy, "NodeItem.precedes left the (cost, changes, key, node) order")
+            }
         }
     }
 
@@ -283,24 +336,18 @@ struct RegressionGuardBinaryHeap {
         }
     }
 
-    private struct NewEntry: HeapOrdered {
-        let id: Int
-        let distance: Double
-        let transfers: Int
-        let hops: Int
-        func precedes(_ other: NewEntry) -> Bool {
-            if distance != other.distance { return distance < other.distance }
-            if transfers != other.transfers { return transfers < other.transfers }
-            if hops != other.hops { return hops < other.hops }
-            return id < other.id
-        }
-    }
-
+    /// Why this test has no tie order to pin: `LocalJourneySearch.Entry.precedes`
+    /// ends on `id`, and the app gives every entry its own id (the index of its
+    /// record), so two different entries never tie. Entries with the same id AND
+    /// the same other three fields are the same value. Distance, transfers and
+    /// hops do tie heavily below (three values each), which exercises every
+    /// fall-through of the comparator down to the id. `journeyEntryOrderingIsTotal`
+    /// proves the no-tie property on the production comparator.
     @Test func journeyEntryHeapPopsIdentically() {
         for seed in Self.seeds {
             var g = SplitMix64(state: seed ^ 0x1234)
             var legacy = LegacyEntryHeap()
-            var shared = BinaryMinHeap<NewEntry>()
+            var shared = BinaryMinHeap<LocalJourneySearch.Entry>()
             var id = 0
             for isPush in Self.script(seed: seed) {
                 if isPush {
@@ -309,16 +356,35 @@ struct RegressionGuardBinaryHeap {
                     let d = Double(g.below(3)), t = g.below(3), h = g.below(3)
                     let scrambled = (id &* 7) % 1009
                     legacy.push(LegacyEntry(id: scrambled, distance: d, transfers: t, hops: h))
-                    shared.push(NewEntry(id: scrambled, distance: d, transfers: t, hops: h))
+                    shared.push(LocalJourneySearch.Entry(id: scrambled, distance: d, transfers: t, hops: h))
                     id += 1
                 } else {
                     let a = legacy.pop(), b = shared.pop()
-                    #expect(a?.id == b?.id && a?.distance == b?.distance
+                    #expect(a != nil && a?.id == b?.id && a?.distance == b?.distance
                             && a?.transfers == b?.transfers && a?.hops == b?.hops,
                             "seed \(seed): pop diverged")
                 }
             }
             #expect(legacy.items.isEmpty && shared.isEmpty)
+        }
+    }
+
+    /// Exactly one of "a pops first", "b pops first", "same value" holds for the
+    /// production `Entry.precedes`, and it agrees with the frozen legacy ordering.
+    @Test func journeyEntryOrderingIsTotal() {
+        var all: [LocalJourneySearch.Entry] = []
+        for d in 0..<3 { for t in 0..<3 { for h in 0..<3 { for id in 0..<3 {
+            all.append(LocalJourneySearch.Entry(id: id, distance: Double(d) * 0.5, transfers: t, hops: h))
+        } } } }
+        for a in all {
+            for b in all {
+                let same = a.id == b.id && a.distance == b.distance && a.transfers == b.transfers && a.hops == b.hops
+                let ab = a.precedes(b), ba = b.precedes(a)
+                #expect((ab ? 1 : 0) + (ba ? 1 : 0) + (same ? 1 : 0) == 1, "not a strict total order")
+                let legacy = LegacyEntry(id: a.id, distance: a.distance, transfers: a.transfers, hops: a.hops)
+                    .precedes(LegacyEntry(id: b.id, distance: b.distance, transfers: b.transfers, hops: b.hops))
+                #expect(ab == legacy, "Entry.precedes left the (distance, transfers, hops, id) order")
+            }
         }
     }
 
@@ -338,5 +404,35 @@ struct RegressionGuardBinaryHeap {
         }
         let shared = SourceFiles.textRecording("Utilities/BinaryHeap.swift", relativeTo: SourceFiles.railCoreSources)
         #expect(shared.contains("struct BinaryMinHeap<Element: HeapOrdered>"))
+    }
+
+    /// The differential tests above must run the production comparators. A
+    /// `HeapOrdered` type declared in this file would be a copy that keeps passing
+    /// after the production one changes.
+    @Test func thisGuardDeclaresNoComparatorCopy() throws {
+        let own = try SourceFiles.text("RailKit/Tests/RailCoreTests/RegressionGuards/BinaryHeapGuardTests.swift")
+        let conformance = ": " + "HeapOrdered {"
+        #expect(!own.contains(conformance), "declare no HeapOrdered type in the guard; use the production ones")
+        for type in ["BinaryMinHeap<RouteSolver.Item>", "BinaryMinHeap<RouteSolver.StationGroupIndex>",
+                     "BinaryMinHeap<Statistics.CorridorHeapItem>", "BinaryMinHeap<NodeItem>",
+                     "BinaryMinHeap<LocalJourneySearch.Entry>"] {
+            #expect(own.contains(type), "the guard no longer exercises \(type)")
+        }
+        // Every HeapOrdered type in RailCore is one of the five exercised above.
+        let known: Set<String> = ["Item", "StationGroupIndex", "CorridorHeapItem", "NodeItem", "Entry"]
+        let root = SourceFiles.railCoreSources
+        let files = try #require(FileManager.default.enumerator(atPath: root.path)).compactMap { $0 as? String }
+            .filter { $0.hasSuffix(".swift") }
+        #expect(files.count > 50, "RailCore sources not found")
+        var found: Set<String> = []
+        for file in files {
+            let text = try SourceFiles.text(file, relativeTo: root)
+            for line in text.split(separator: "\n") where line.contains(conformance) && line.contains("struct ") {
+                let name = line.components(separatedBy: "struct ")[1].prefix { $0.isLetter || $0.isNumber }
+                found.insert(String(name))
+                #expect(!line.contains("private "), "\(file): \(name) must stay internal so this guard can use it")
+            }
+        }
+        #expect(found == known, "HeapOrdered types changed (\(found.sorted())): add a differential test for each new one")
     }
 }

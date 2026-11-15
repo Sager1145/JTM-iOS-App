@@ -6,10 +6,10 @@ import Testing
 /// tested in RailPresentation; these pin that the app still uses them.
 @Suite("RegressionGuardZoomPreparation")
 struct RegressionGuardZoomPreparation {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let store = SourceFiles.textRecording("RailMap/Infrastructure/Network/RailNetworkStore.swift")
-    private static let interaction = SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift")
-    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var store: String { SourceFiles.textRecording("RailMap/Infrastructure/Network/RailNetworkStore.swift") }
+    private static var interaction: String { SourceFiles.textRecording("RailMap/Map/MapInteractionCoordinator.swift") }
+    private static var host: String { SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift") }
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))

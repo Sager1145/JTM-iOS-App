@@ -364,7 +364,7 @@ public enum LocalJourneySearch {
         let transfers: Int
         let hops: Int
     }
-    private struct Entry: HeapOrdered {
+    struct Entry: HeapOrdered {
         let id: Int
         let distance: Double
         let transfers: Int

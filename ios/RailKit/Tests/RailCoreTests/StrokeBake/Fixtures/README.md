@@ -54,8 +54,10 @@ is why the 2026-11-14 recapture was needed). Projection parity with MapKit (not 
 (the engine's own output vertices projected by `MKMapPoint` against `StrokeProjection`, and a lane-0 parallel line's
 end vertices against the MapKit projection of the source ends, both within 1e-6 map point) and by
 `StrokeProjectionParityTests`. To recapture: put the capture package's `.txt` sources (without the `.txt`) in
-`Sources/GoldenCapture`, point its `Package.swift` dependency at the RailKit checkout, `swift build -c release`, run with the
-fixture and an output directory, raw-DEFLATE the two outputs.
+`Sources/GoldenCapture`, point its `Package.swift` dependency at the RailKit checkout (replace the
+`RAILKIT_CHECKOUT_PATH` placeholder in `Package.swift.txt` with the absolute path of `ios/RailKit`; the committed file
+keeps the placeholder, never a real path), `swift build -c release`, run with the fixture and an output directory,
+raw-DEFLATE the two outputs.
 
 Format: `stroke-golden-index.json.deflate` is `{entries: [{k, n, o}]}` (key, double count, double offset);
 `stroke-golden.f64.deflate` is the little-endian Float64 array those offsets index. Both are raw DEFLATE.

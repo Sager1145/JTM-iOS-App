@@ -19,26 +19,45 @@ public enum SourceFiles {
     /// `ios/RailKit/Sources/RailCore`.
     public static let railCoreSources: URL = ios.appendingPathComponent("RailKit/Sources/RailCore")
 
-    /// The file at `path` relative to `ios/`, or throws when it cannot be read.
+    /// The file at `path` relative to `ios/`, or throws when it cannot be read or
+    /// holds no text (an empty file would also be scanned as "nothing found").
     public static func text(_ path: String, relativeTo base: URL = ios) throws -> String {
         let url = base.appendingPathComponent(path)
+        let text: String
         do {
-            return try String(contentsOf: url, encoding: .utf8)
+            text = try String(contentsOf: url, encoding: .utf8)
         } catch {
             throw SourceFileError(path: url.path, underlying: error)
         }
+        guard text.contains(where: { !$0.isWhitespace }) else {
+            throw SourceFileError(path: url.path, underlying: EmptySourceFile())
+        }
+        return text
     }
 
-    /// For call sites that cannot throw (static lets, plain functions): an unreadable
-    /// file records a test failure first, so the test cannot pass on empty text.
-    public static func textRecording(_ path: String, relativeTo base: URL = ios) -> String {
+    /// For call sites that cannot throw (computed properties, plain functions): an
+    /// unreadable or empty file records a test failure in the CALLING test, so the
+    /// test cannot pass on empty text.
+    ///
+    /// Call it from a computed property (`static var x: String { ... }`) or inside
+    /// the test, never from a stored `static let`: a stored property runs once, so
+    /// only the first test to touch it would get the failure and every later test
+    /// in the suite would scan "" and pass. `RegressionGuardSourceFiles` enforces
+    /// this.
+    public static func textRecording(
+        _ path: String, relativeTo base: URL = ios, sourceLocation: SourceLocation = #_sourceLocation
+    ) -> String {
         do {
             return try text(path, relativeTo: base)
         } catch {
-            Issue.record("\(error)")
+            Issue.record("\(error)", sourceLocation: sourceLocation)
             return ""
         }
     }
+}
+
+struct EmptySourceFile: Error, CustomStringConvertible {
+    var description: String { "the file is empty" }
 }
 
 public struct SourceFileError: Error, CustomStringConvertible {
