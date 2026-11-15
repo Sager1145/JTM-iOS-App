@@ -1,0 +1,397 @@
+import CoreLocation
+import Foundation
+import MapKit
+import RailCore
+import RailPresentation
+import SwiftUI
+
+extension Coordinate {
+    var clLocation: CLLocationCoordinate2D { CLLocationCoordinate2D(latitude: lat, longitude: lon) }
+}
+enum Region: String { case jp, tw, hk, mo, kr, cn
+    var code: String { rawValue } }
+struct Sig { func begin(_ n: String) -> Int { 0 }; func end(_ n: String, _ i: Int) {} }
+enum RailSignpost { static let map = Sig() }
+enum RailStyle {
+    static let stationDiameter: CGFloat = 6
+    static let railWidthToStationDiameter: CGFloat = 0.25
+    static let railWidth: CGFloat = stationDiameter * railWidthToStationDiameter
+    static let parallelGap: CGFloat = 1.2
+    static let parallelLaneCentreDistance: CGFloat = railWidth + parallelGap
+    static let minCornerRadius: CGFloat = railWidth * 2
+    static let minimumScreenCornerRadius: CGFloat = 1
+    static func minimumCornerRadius(atScale scale: CGFloat) -> CGFloat { max(minimumScreenCornerRadius, minCornerRadius * scale) }
+    static func hardCornerMaxDeviation(atScale scale: CGFloat) -> CGFloat { railWidth * scale / 2 }
+    static let strokeCornerRadius: CGFloat = stationDiameter * 0.6
+    static let strokeMinRamp: Double = 24
+    static let simplifyTolerance: Double = 0.0625
+    static let fullWeightZoom: Double = 8
+    static let weightZoomBase: Double = 2.0.squareRoot()
+    static let minWeightScale: Double = 1.0 / 3.0
+    static func scale(atZoom zoom: Double) -> CGFloat {
+        guard zoom.isFinite else { return 1 }
+        let raw = pow(2, (zoom - fullWeightZoom) / 2)
+        return CGFloat(min(max(raw, minWeightScale), 1))
+    }
+}
+enum RailNetworkStore {
+    struct DrawnLine: Identifiable, Sendable {
+        let id: String
+        /// Identity of this immutable decoded content. Copies retain it; a
+        /// re-decoded line gets a new one even if its public ID is unchanged.
+        let contentID = UUID()
+        /// The canonical package line id. A reviewed screen-space lane can
+        /// give one railway several entries, so `id` identifies the drawn
+        /// stroke while this identifies the railway beneath stations, badges
+        /// and LOD policy.
+        let lineID: String
+        /// Which package this line came out of. Nothing about *drawing* needs
+        /// it — every line draws in its own colour on its own geometry — but
+        /// the statistics screen and the ride editor both scope by region, and
+        /// re-deriving it from the id at every call site would be a rule
+        /// spelled out in several places instead of one.
+        let region: Region
+        let name: String
+        let nameRoma: String?
+        /// The package's `operator` — `東日本旅客鉄道`, the official name and
+        /// not the `JR東日本` a journey record carries. Held because the
+        /// screenshot importer writes `preferred_operator_names`, which the
+        /// solver reads in the package's own spelling, and because
+        /// `OperatorBranding.companyLabel` needs the official name to produce
+        /// the short one.
+        let operatorName: String?
+        let color: Color
+        /// The operator's dark-mode colour where it publishes one. The
+        /// packages have always carried this — `rail-network.js` reads
+        /// `colorDark || color` — and the web app switches palettes with the
+        /// theme. Ignoring it would have made dark mode a different map, not
+        /// a darker one.
+        let colorDark: Color
+        /// Kept alongside the resolved `Color`s because the renderer batches
+        /// lines by colour, and a hex string is a cheap, stable bucket key
+        /// where `Color` is neither.
+        let colorHex: String
+        let colorDarkHex: String
+        let rank: Int
+        /// The zoom below which this line is not drawn — the web app's own
+        /// rule, ported in `RailCore.Visibility`, not a performance knob.
+        let minZoom: Int
+        /// Complete visibility-group length, not this administrative piece's
+        /// own length. The native low-zoom policy uses the unbucketed value so
+        /// very long trunks can survive wider views than merely long lines.
+        let visibilityLengthKm: Double
+        /// The threshold this app actually uses: the ported rule plus the rank
+        /// and finer wide-view length terms. See `NetworkLOD` — it is
+        /// deliberately stricter than the web app at low zoom, and
+        /// deliberately not in `RailCore`.
+        let lodMinZoom: Double
+        /// Signed screen-space corridor lane. Zero keeps canonical geometry;
+        /// fractional values form the short entry/exit ramps.
+        let lane: Double
+        /// A continuous stroke: `intervals` is one uncut
+        /// chain, drawn as ONE polyline with the lane offset and corner
+        /// rounding baked in on device from `laneRows` (metres along the
+        /// chain) — see `RailCore.ContinuousStroke`.
+        let continuous: Bool
+        /// Whether a continuous chain may share terminal tangents with the
+        /// preceding chain of the same line. False marks a reviewed branch
+        /// boundary whose coincident station anchor is not a continuation.
+        let joinPrevious: Bool
+        let laneRows: [ContinuousStroke.LaneRow]
+        let totalMetres: Double
+        /// Corridor follows: over `from…to` this chain is drawn from the
+        /// named stroke's alignment (`DrawnLine.id` of the canonical chain).
+        let follows: [StrokeFollow]
+        /// Spans this chain bridges rather than cuts (see `WithheldSpan`).
+        /// Always empty for a non-continuous line — the alignment gate still
+        /// splits those, exactly as before.
+        let withheld: [WithheldSpan]
+        /// Family-collapse windows along this chain (see `FamilyWindow`).
+        /// Always empty for a non-continuous line.
+        let familyWindows: [FamilyWindow]
+        /// Producer-admitted full Japan identity-datum constraints. Exact joined
+        /// witnesses are rebound to this immutable geometry before rendering.
+        let literalDisplaySpansV1: [DisplayLiteralSpans.Span]
+        /// Bounding box in projected map space, computed once at decode time
+        /// so the per-rebuild off-screen test is a rectangle intersection
+        /// rather than a walk over 394,285 coordinates.
+        let mapRect: MKMapRect
+        /// One polyline per station-to-station interval, exactly as the web
+        /// app draws them.
+        let intervals: [[Coordinate]]
+        /// Parallel to ``intervals`` when any part of this fragment is dated.
+        /// Empty means every part is today's undecorated network. A nil entry
+        /// is an unstamped part beside a stamped one — not one span for the
+        /// whole fragment.
+        let partSpans: [DisplayTemporalDecoration?]
+        /// The same off-screen test one level down, and the reason a whole
+        /// railway can be resident without a whole railway being drawn.
+        ///
+        /// The line's own rect answers "is any of this near the camera". Over
+        /// a long corridor that can be true far beyond the visible intervals,
+        /// so the build would then decimate every interval to draw the few that
+        /// are on screen — which is exactly what tiling used to avoid by
+        /// cutting the railway up in the bundle instead. One rect per
+        /// interval, computed here beside the geometry so it cannot fall out
+        /// of step with it, turns that into the same cheap rectangle test per
+        /// stroke. `NetworkLOD`'s own note measured the lever at a city view:
+        /// 22,185 drawn vertices to 2,460.
+        let intervalRects: [MKMapRect]
+        var vertexCount: Int { intervals.reduce(0) { $0 + $1.count } }
+
+        /// The rects are derived rather than passed, because the one thing
+        /// that must never happen to them is disagreeing with `intervals`.
+        init(
+            id: String, lineID: String, region: Region, name: String,
+            nameRoma: String?, operatorName: String?, color: Color,
+            colorDark: Color, colorHex: String, colorDarkHex: String,
+            rank: Int, minZoom: Int, visibilityLengthKm: Double,
+            lodMinZoom: Double, lane: Double, intervals: [[Coordinate]],
+            continuous: Bool = false,
+            joinPrevious: Bool = true,
+            laneRows: [ContinuousStroke.LaneRow] = [],
+            totalMetres: Double = 0,
+            follows: [StrokeFollow] = [],
+            withheld: [WithheldSpan] = [],
+            familyWindows: [FamilyWindow] = [],
+            partSpans: [DisplayTemporalDecoration?] = [],
+            literalDisplaySpansV1: [DisplayLiteralSpans.Span] = []
+        ) {
+            self.id = id
+            self.lineID = lineID
+            self.region = region
+            self.name = name
+            self.nameRoma = nameRoma
+            self.operatorName = operatorName
+            self.color = color
+            self.colorDark = colorDark
+            self.colorHex = colorHex
+            self.colorDarkHex = colorDarkHex
+            self.rank = rank
+            self.minZoom = minZoom
+            self.visibilityLengthKm = visibilityLengthKm
+            self.lodMinZoom = lodMinZoom
+            self.lane = lane
+            self.continuous = continuous
+            self.joinPrevious = joinPrevious
+            self.laneRows = laneRows
+            self.totalMetres = totalMetres
+            self.follows = follows
+            self.withheld = withheld
+            self.familyWindows = familyWindows
+            self.partSpans = partSpans
+            self.literalDisplaySpansV1 = literalDisplaySpansV1
+            self.intervals = intervals
+            let rects = intervals.map(Self.boundingRect(of:))
+            self.intervalRects = rects
+            self.mapRect = rects.reduce(MKMapRect.null) { $0.union($1) }
+        }
+
+        /// Union of one interval's vertices, in projected map space.
+        ///
+        /// `MKMapRect` rather than a latitude/longitude box because the
+        /// off-screen test compares against `MKMapView.visibleMapRect`, and
+        /// converting one rect per interval per rebuild would undo the point
+        /// of precomputing it.
+        private static func boundingRect(of interval: [Coordinate]) -> MKMapRect {
+            var rect = MKMapRect.null
+            for point in interval {
+                let mapPoint = MapKit.MKMapPoint(
+                    CLLocationCoordinate2D(latitude: point.lat, longitude: point.lon))
+                rect = rect.union(
+                    MKMapRect(origin: mapPoint, size: MKMapSize(width: 0, height: 0)))
+            }
+            return rect
+        }
+    }
+    struct StrokeFollow: Sendable, Hashable {
+        let from: Double
+        let to: Double
+        /// `DrawnLine.id` of the canonical chain (`lineKey#chain`).
+        let canonicalID: String
+        let canonicalFrom: Double
+        let canonicalTo: Double
+    }
+
+    /// A span a continuous-stroke chain draws THROUGH rather than around: the
+    /// alignment gate withheld it from the official-geometry comparison, but
+    /// the geometry is real, so `displayPartsForLine`
+    /// (`bridgeBlockedIntervals`) and this app's own `continuous_chains`
+    /// (`build-display-network.py`) both bridge it instead of cutting the
+    /// chain there. Metres, in the chain's own measure space — the same ruler
+    /// `laneRows`/`totalMetres` use — so the renderer can slice it straight
+    /// out of the already-built stroke the way a ride's own slice is cut.
+    struct WithheldSpan: Sendable, Hashable {
+        let from: Double
+        let to: Double
+    }
+
+    /// A stretch this chain shares its stroke with a sibling railway of the
+    /// same operator collapse (`na-render-groups.json`, `build-display-
+    /// network.py`'s `chain_family_windows`). Metres, in the chain's own
+    /// measure space — the same ruler `laneRows`/`totalMetres`/`withheld`
+    /// use — sliced straight out of the already-built stroke the same way
+    /// `WithheldSpan` is.
+    ///
+    /// `isLandlord` true: this chain draws the shared family stroke over the
+    /// window, in `colorHex`/`colorDarkHex` (the group's own colour, resolved
+    /// at load time from `RailDisplayNetworkFile.families` — see
+    /// `prepareDisplayLine`). `isLandlord` false (tenant): this chain's own
+    /// stroke is withheld over the window; the chain is still built whole
+    /// underneath, so a ride or playback can still slice it there.
+    struct FamilyWindow: Sendable, Hashable {
+        let from: Double
+        let to: Double
+        let isLandlord: Bool
+        let groupID: String
+        let colorHex: String
+        let colorDarkHex: String
+    }
+}
+struct RailDisplayNetworkFile: Decodable, Sendable {
+    struct LineFragment: Decodable, Sendable {
+        var lineKey: String
+        var lane: Double?
+        /// One part per station-to-station interval — or per lane piece where
+        /// a reviewed lane cuts one. The renderer culls at this granularity,
+        /// so a part is both the unit of continuity and the unit of work.
+        var parts: [[[Double]]]
+        /// A reviewed continuous-stroke fragment: the parts are one
+        /// uncut chain of intervals sharing their endpoints, the reviewed lane
+        /// rows ride along in metres from the chain's start, and the device
+        /// bakes the screen-space offset in (`RailCore.ContinuousStroke`).
+        var continuous: Bool?
+        /// Which chain of the line this is; a withheld interval breaks one.
+        var chain: Int?
+        /// False when this chain shares a station anchor with the preceding
+        /// chain but represents a different branch, not its continuation.
+        var joinPrevious: Bool?
+        /// `[fromMetres, toMetres, lane]` rows along the chain.
+        var laneRows: [[Double]]?
+        var totalMetres: Double?
+        /// `[from, to, canonicalLineKey, canonicalChain, canonicalFrom,
+        /// canonicalTo]`: over `from…to` this chain is drawn from that chain's
+        /// alignment (see `RailCore.ContinuousStroke.Follow`).
+        var follows: [FollowRow]?
+        /// `[fromMetres, toMetres]` rows: spans the alignment gate withheld
+        /// from the official-geometry comparison that this chain bridges
+        /// rather than cuts (`build-display-network.py`'s
+        /// `continuous_chains`). Metres along the chain, same ruler as
+        /// `laneRows`. Absent or empty for a chain with nothing withheld.
+        var withheld: [[Double]]?
+        /// Family-collapse windows along this chain (`build-display-
+        /// network.py`'s `chain_family_windows`, from the web agent's
+        /// `familyWindowsByRegion`): a stretch this chain shares its stroke
+        /// with a sibling railway of the same operator collapse
+        /// (`na-render-groups.json`). Role 0 (`isLandlord`) draws the shared
+        /// family stroke over the window, in that group's colour
+        /// (`RailDisplayNetworkFile.families`); role 1 withholds this
+        /// chain's own stroke over the window — the chain is still built
+        /// whole underneath, for a ride or playback to slice, only what the
+        /// network overlay draws there changes. Absent or empty for a chain
+        /// with no family collapse.
+        var familyWindows: [FamilyWindowRow]?
+        /// Exact P,A,B,Q witnesses compiled from the full written joined chain.
+        /// Optional drawing metadata must never invalidate required geometry.
+        var literalDisplaySpansV1: [DisplayLiteralSpans.Span]?
+
+        private enum CodingKeys: String, CodingKey {
+            case lineKey, lane, parts, continuous, chain, joinPrevious, laneRows
+            case totalMetres, follows, withheld, familyWindows, literalDisplaySpansV1
+        }
+
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            lineKey = try container.decode(String.self, forKey: .lineKey)
+            lane = try container.decodeIfPresent(Double.self, forKey: .lane)
+            parts = try container.decode([[[Double]]].self, forKey: .parts)
+            continuous = try container.decodeIfPresent(Bool.self, forKey: .continuous)
+            chain = try container.decodeIfPresent(Int.self, forKey: .chain)
+            joinPrevious = try container.decodeIfPresent(Bool.self, forKey: .joinPrevious)
+            laneRows = try container.decodeIfPresent([[Double]].self, forKey: .laneRows)
+            totalMetres = try container.decodeIfPresent(Double.self, forKey: .totalMetres)
+            follows = try container.decodeIfPresent([FollowRow].self, forKey: .follows)
+            withheld = try container.decodeIfPresent([[Double]].self, forKey: .withheld)
+            familyWindows = try container.decodeIfPresent([FamilyWindowRow].self, forKey: .familyWindows)
+            literalDisplaySpansV1 = (try? container.decodeIfPresent(
+                LiteralSpanRows.self, forKey: .literalDisplaySpansV1))?.spans
+        }
+
+        private struct LiteralSpanRows: Decodable {
+            var spans: [DisplayLiteralSpans.Span] = []
+
+            init(from decoder: any Decoder) throws {
+                var rows = try decoder.unkeyedContainer()
+                while !rows.isAtEnd {
+                    let child = try rows.superDecoder()
+                    if let span = try? DisplayLiteralSpans.Span(from: child) {
+                        spans.append(span)
+                    }
+                }
+            }
+        }
+    }
+
+    /// A family window row decodes from a mixed JSON array, the same way a
+    /// `FollowRow` does.
+    struct FamilyWindowRow: Decodable, Sendable {
+        var from: Double
+        var to: Double
+        /// 0 (landlord: this chain draws the shared family stroke over the
+        /// window) or 1 (tenant: this chain's own stroke is withheld over
+        /// it). Kept as the raw value — see `validated()` — rather than an
+        /// enum, so a role outside 0/1 is a validation failure rather than
+        /// something an enum's decode silently coerces.
+        var role: Int
+        var groupID: String
+        var isLandlord: Bool { role == 0 }
+
+        init(from decoder: any Decoder) throws {
+            var container = try decoder.unkeyedContainer()
+            from = try container.decode(Double.self)
+            to = try container.decode(Double.self)
+            role = try container.decode(Int.self)
+            groupID = try container.decode(String.self)
+        }
+    }
+
+    /// One family's resolved colours (`RailDisplayNetworkFile.families`,
+    /// `build-display-network.py`'s `region_families`, sourced from
+    /// `na-render-groups.json`'s `groups[groupId]`).
+    struct FamilyColor: Decodable, Sendable {
+        var color: String
+        var colorDark: String
+    }
+
+    /// A follow row decodes from a mixed JSON array.
+    struct FollowRow: Decodable, Sendable {
+        var from: Double
+        var to: Double
+        var canonicalLineKey: String
+        var canonicalChain: Int
+        var canonicalFrom: Double
+        var canonicalTo: Double
+
+        init(from decoder: any Decoder) throws {
+            var container = try decoder.unkeyedContainer()
+            from = try container.decode(Double.self)
+            to = try container.decode(Double.self)
+            canonicalLineKey = try container.decode(String.self)
+            canonicalChain = try container.decode(Int.self)
+            canonicalFrom = try container.decode(Double.self)
+            canonicalTo = try container.decode(Double.self)
+        }
+    }
+
+    struct StationLite: Decodable, Sendable { var id: String; var lineKey: String; var slot: [Int]? }
+    var families: [String: FamilyColor]
+    var lines: [LineFragment]
+    var stations: [StationLite]
+    private enum CodingKeys: String, CodingKey { case families, lines, stations }
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        families = try c.decodeIfPresent([String: FamilyColor].self, forKey: .families) ?? [:]
+        lines = try c.decode([LineFragment].self, forKey: .lines)
+        stations = try c.decode([StationLite].self, forKey: .stations)
+    }
+}

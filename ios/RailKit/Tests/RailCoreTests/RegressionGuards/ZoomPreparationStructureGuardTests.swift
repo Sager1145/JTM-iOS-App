@@ -125,12 +125,12 @@ struct RegressionGuardZoomPreparation {
 
     @Test func strokePreparationRunsInWeightedParallelPartsInsideOnePermit() throws {
         let geometry = Self.read("RailMap/Map/MapLineGeometry.swift")
-        let prepare = try Self.body(geometry, from: "static func prepare(", to: "for line in lines {")
+        let prepare = try Self.body(geometry, from: "static func prepare(", to: "StrokeBake.prepareLines(")
         #expect(prepare.contains("async throws -> PreparedGeometry"))
         #expect(prepare.contains("RideBuildPartition.partition("))
         #expect(prepare.contains("weights:"))
         #expect(prepare.contains("min(4, ProcessInfo.processInfo.activeProcessorCount - 1)"))
-        // The lines loop stays serial, after the group.
+        // The lines pass (`StrokeBake.prepareLines`, serial) runs after the group.
         let group = try Self.body(String(prepare), from: "RideBuildPartition.buildParts(", to: "for (index, build) in builtParts")
         #expect(!group.contains("for line in lines"))
         #expect(!group.contains("result."), "no child task may read the result")
@@ -139,7 +139,9 @@ struct RegressionGuardZoomPreparation {
         for name in ["map.geometry.prepare.strokes", "map.geometry.prepare.lines"] {
             #expect(geometry.contains("\"\(name)\""), "\(name)")
         }
-        #expect(geometry.contains("struct JunctionCandidateIndex: Sendable"))
+        // The junction candidates are the engine's, in RailCore since the stroke engine moved there.
+        #expect(Self.read("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
+            .contains("public struct JunctionCandidateIndex: Sendable"))
         // Each call sits inside the single-permit limiter.
         let coordinator = Self.coordinator
         #expect(coordinator.components(separatedBy: "try await MapLineGeometry.prepare(").count == 3)

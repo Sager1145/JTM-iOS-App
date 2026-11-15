@@ -1,5 +1,5 @@
 import Foundation
-import RailPresentation
+@testable import RailCore
 import Testing
 
 struct ScreenPolylineThinningTests {
@@ -95,11 +95,14 @@ struct ScreenPolylineThinningTests {
         for _ in 0..<6 { root.deleteLastPathComponent() }
         let source = try String(
             contentsOf: root.appendingPathComponent("ios/RailMap/Map/MapLineGeometry.swift"), encoding: .utf8)
+        let engine = try String(
+            contentsOf: root.appendingPathComponent("ios/RailKit/Sources/RailCore/Rendering/StrokeBake.swift"),
+            encoding: .utf8)
         // The network build thins every drawn polyline (solid, historical and
         // family windows) before any chunk reaches a MapKit vertex count.
-        let family = try #require(source.range(of: "func measuredFamily("))
-        let familyBody = String(source[family.lowerBound...])
-        let thinCall = try #require(familyBody.range(of: "ScreenPolylineThinning.thinned("))
+        let family = try #require(engine.range(of: "func measuredFamily("))
+        let familyBody = String(engine[family.lowerBound...])
+        let thinCall = try #require(familyBody.range(of: "thinned(chunk.points, stepPx: thinStepPx)"))
         #expect(thinCall.lowerBound < (try #require(familyBody.range(of: "chunkWindows:"))).lowerBound)
         // A cut fallback's runtime slice is thinned too, so the drawn count
         // stays inside the budget.
@@ -109,14 +112,17 @@ struct ScreenPolylineThinningTests {
         let sliceThin = try #require(fallbackBody.range(of: "ScreenPolylineThinning.thinned("))
         #expect(sliceCall.lowerBound < sliceThin.lowerBound)
         #expect(sliceThin.lowerBound < (try #require(fallbackBody.range(of: "mapPolylineChunk(coordinates)"))).lowerBound)
-        let prepare = try #require(source.range(of: "static func prepare("))
-        let body = String(source[prepare.lowerBound...])
-        let lane = try #require(body.range(of: "parallelLaneCoordinates("))
         // Thinning is the argument of the chunking call: it runs after the lane
-        // offset and rounding and before any chunk becomes a counted polyline.
+        // offset and rounding (`finishedRuns`) and before any chunk becomes a
+        // counted polyline.
+        let prepare = try #require(engine.range(of: "public static func prepareLines("))
+        let body = String(engine[prepare.lowerBound...])
         let flat = body.split(whereSeparator: \.isWhitespace).joined(separator: " ")
-        #expect(flat.contains("mapCoordinateChunks( thinnedForNetwork(points,"))
-        #expect(lane.lowerBound < (try #require(body.range(of: "thinnedForNetwork(points"))).lowerBound)
+        #expect(flat.contains("finishedRuns(runs, line: line, frame: frame).flatMap { chunks(thinned($0, frame: frame, stepPx: thinStepPx),"))
+        // The app asks for the network build's thinning at the one call that prepares lines.
+        let appPrepare = try #require(source.range(of: "StrokeBake.prepareLines("))
+        let appBody = String(source[appPrepare.lowerBound...])
+        #expect(appBody.contains("thinStepPx: ScreenPolylineThinning.stepPx"))
         let coordinator = try String(
             contentsOf: root.appendingPathComponent("ios/RailMap/Map/RailMapCoordinator.swift"), encoding: .utf8)
         #expect(coordinator.contains("NetworkLOD.fitToBudget"))

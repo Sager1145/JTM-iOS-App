@@ -1,5 +1,6 @@
 import CoreGraphics
 import Foundation
+import RailCore
 import RailPresentation
 
 /// The railway's screen-space weight contract, as renderer parameters.
@@ -43,7 +44,7 @@ nonisolated public enum RailStyle {
     // MARK: - tokens (full-scale weights, in points)
 
     /// Diameter of an ordinary network station dot.
-    static let stationDiameter: CGFloat = 6
+    static let stationDiameter = CGFloat(RailStrokeTokens.stationDiameter)
     static let stationRadius: CGFloat = stationDiameter / 2
     /// Ring around that dot so it stays legible over its own line — an eighth
     /// of the dot, the proportion Apple's bead/keyline pair reads at. The
@@ -52,8 +53,8 @@ nonisolated public enum RailStyle {
     /// makes a stop read like a station on Apple Maps instead of a map pin.
     static let stationRing: CGFloat = stationDiameter / 8
     /// Rail stroke = a quarter of the dot. Derived, never set independently.
-    static let railWidthToStationDiameter: CGFloat = 0.25
-    static let railWidth: CGFloat = stationDiameter * railWidthToStationDiameter
+    static let railWidthToStationDiameter = CGFloat(RailStrokeTokens.railWidthToStationDiameter)
+    static let railWidth = CGFloat(RailStrokeTokens.railWidth)
 
     /// How far the RIDDEN layer stands above the field it is drawn over — one
     /// third again, applied to the two marks that carry the ride: its stroke,
@@ -99,11 +100,11 @@ nonisolated public enum RailStyle {
     /// The clear map a reader needs between two DISTINCT railways sharing one
     /// corridor, edge to edge.
     ///
-    static let parallelGap: CGFloat = 1.2
+    static let parallelGap = CGFloat(RailStrokeTokens.parallelGap)
     /// Centre-to-centre spacing for distinct display lanes. It follows the
     /// same scale ramp as the stroke, keeping the clear gap constant relative
     /// to the railway rather than widening geographically during a zoom.
-    static let parallelLaneCentreDistance: CGFloat = railWidth + parallelGap
+    static let parallelLaneCentreDistance = CGFloat(RailStrokeTokens.parallelLaneCentreDistance)
 
     /// The smallest radius a corner may PRESENT on screen: two stroke widths.
     /// One stroke width (R = W) was the original floor — `line-join: round`
@@ -117,13 +118,13 @@ nonisolated public enum RailStyle {
     /// 2W also buys a visible margin over the single stroke width rather
     /// than sitting right at its edge. Must equal the web app's
     /// `RAILWAY_STYLE.minCornerRadiusPx` (app/public/railmap-style.js).
-    static let minCornerRadius: CGFloat = railWidth * 2
+    static let minCornerRadius = CGFloat(RailStrokeTokens.minCornerRadius)
 
     /// Absolute screen-space floor, including the widest zoom's weight ramp.
-    static let minimumScreenCornerRadius: CGFloat = 1
+    static let minimumScreenCornerRadius = CGFloat(RailStrokeTokens.minimumScreenCornerRadius)
 
     static func minimumCornerRadius(atScale scale: CGFloat) -> CGFloat {
-        max(minimumScreenCornerRadius, minCornerRadius * scale)
+        CGFloat(RailStrokeTokens.minimumCornerRadius(atScale: Double(scale)))
     }
 
     /// How far rounding a SHARP surveyed corner may move the drawn line off
@@ -131,7 +132,7 @@ nonisolated public enum RailStyle {
     /// covers the surveyed corner. `ContinuousStroke` caps each such corner's
     /// radius to it (`Options.hardCornerMaxDeviationPx`).
     static func hardCornerMaxDeviation(atScale scale: CGFloat) -> CGFloat {
-        railWidth * scale / 2
+        CGFloat(RailStrokeTokens.hardCornerMaxDeviation(atScale: Double(scale)))
     }
 
 
@@ -139,10 +140,10 @@ nonisolated public enum RailStyle {
     /// rail-stroke.js) rounds its corners to where the surveyed polyline turns
     /// on a vertex. The web app's `RAILWAY_STYLE.strokeCornerRadiusPx`: a
     /// little over half a station dot, on the same scale ramp as the stroke.
-    static let strokeCornerRadius: CGFloat = stationDiameter * 0.6
+    static let strokeCornerRadius = CGFloat(RailStrokeTokens.strokeCornerRadius)
     /// A lane change drifts over at least this many points, whatever the zoom
     /// makes of the 300 m ramp — railmap.js's STROKE_MIN_RAMP_PX.
-    static let strokeMinRamp: Double = 24
+    static let strokeMinRamp = RailStrokeTokens.strokeMinRamp
 
     // MARK: - §6.4's radius tokens
 
@@ -215,18 +216,18 @@ nonisolated public enum RailStyle {
     /// So the anchor is 8 in this file. Anyone comparing these numbers against
     /// `railmap-style.js` has to add one, and anyone feeding a MapLibre-derived
     /// zoom in here has to add one first.
-    static let fullWeightZoom: Double = 8
+    static let fullWeightZoom = RailStrokeTokens.fullWeightZoom
 
     /// Below the anchor the weight halves every TWO zoom levels. The ground
     /// area on screen quadruples per level, so a weight that tracked it would
     /// be a quarter of a point by the time a country fits; the square root
     /// thins the network visibly while every line on it stays a line.
-    static let weightZoomBase: Double = 2.0.squareRoot()
+    static let weightZoomBase = RailStrokeTokens.weightZoomBase
 
     /// …and it stops thinning at a third of token weight. Past that the marks
     /// stop being marks, and what a wider view needs from there is the LOD
     /// gates dropping lines and stations, not finer ones.
-    static let minWeightScale: Double = 1.0 / 3.0
+    static let minWeightScale = RailStrokeTokens.minWeightScale
 
     /// The zoom at which the floor is reached: anchor + log₍√2₎(1/3).
     static let minWeightZoom: Double =
@@ -244,9 +245,7 @@ nonisolated public enum RailStyle {
     /// `zoom` is this app's own zoom (see ``fullWeightZoom`` for the one-level
     /// difference from `railmap-style.js`).
     static func scale(atZoom zoom: Double) -> CGFloat {
-        guard zoom.isFinite else { return 1 }
-        let raw = pow(2, (zoom - fullWeightZoom) / 2)
-        return CGFloat(min(max(raw, minWeightScale), 1))
+        CGFloat(RailStrokeTokens.scale(atZoom: zoom))
     }
 
     /// A weight in points at full scale, brought to the weight it draws at.
@@ -292,7 +291,7 @@ nonisolated public enum RailStyle {
     /// continuous strokes are decimated at this same tolerance too since
     /// 2026-11-14 (`ContinuousStroke.drawnStroke`); see
     /// `NetworkLOD.vertexBudget` for the budget it then measures against.
-    static let simplifyTolerance: Double = 0.0625
+    static let simplifyTolerance = RailStrokeTokens.simplifyTolerance
 
     // MARK: - the two zoom conventions, spelled once
 

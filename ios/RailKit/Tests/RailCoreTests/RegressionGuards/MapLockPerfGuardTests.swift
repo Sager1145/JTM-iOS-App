@@ -48,7 +48,9 @@ struct RegressionGuardMapLockPerf {
     // Junction index: the coordinator's index is passed in, never rebuilt per preparation.
     @Test func preparationReusesTheCoordinatorsJunctionIndex() throws {
         #expect(!Self.geometry.contains("JunctionCandidateIndex(allLines"))
-        #expect(Self.geometry.contains("JunctionCandidateIndex(index: junctionIndex, lines: allLines)"))
+        #expect(Self.geometry.contains("junctionIndex: junctionIndex, chainPixels: chainPixels"))
+        let engine = Self.read("RailKit/Sources/RailCore/Rendering/StrokeBake.swift")
+        #expect(engine.contains("JunctionCandidateIndex(index: junctionIndex, lines: allLines)"))
         #expect(Self.coordinator.components(separatedBy: "junctionIndex: junctionIndex,").count - 1 == 2)
     }
 
