@@ -1157,45 +1157,14 @@ public enum Statistics {
         return best
     }
 
-    /// Minimal binary min-heap over `(priority, value)` tuples — `AppCore`'s
-    /// shared heap, ported comparison for comparison because equal priorities
-    /// are ordinary here and the pop order they resolve to decides which
-    /// predecessor a node keeps.
-    struct TupleMinHeap {
-        private var items: [(priority: Double, value: String)] = []
-        var size: Int { items.count }
-
-        mutating func push(_ priority: Double, _ value: String) {
-            items.append((priority, value))
-            var i = items.count - 1
-            while i > 0 {
-                let p = (i - 1) >> 1
-                if items[p].priority <= items[i].priority { break }
-                items.swapAt(p, i)
-                i = p
-            }
-        }
-
-        mutating func pop() -> (priority: Double, value: String) {
-            let top = items[0]
-            let last = items.removeLast()
-            if !items.isEmpty {
-                items[0] = last
-                var i = 0
-                let n = items.count
-                while true {
-                    let l = 2 * i + 1
-                    let r = l + 1
-                    var s = i
-                    if l < n && items[l].priority < items[s].priority { s = l }
-                    if r < n && items[r].priority < items[s].priority { s = r }
-                    if s == i { break }
-                    items.swapAt(s, i)
-                    i = s
-                }
-            }
-            return top
-        }
+    /// Heap item for the corridor trace: ordered by `priority` alone, because equal
+    /// priorities are ordinary here and the pop order they resolve to (the shared
+    /// `BinaryMinHeap`'s, ported from `AppCore`) decides which predecessor a node keeps.
+    struct CorridorHeapItem: HeapOrdered {
+        var priority: Double
+        var value: String
+        @inline(__always)
+        func precedes(_ other: CorridorHeapItem) -> Bool { priority < other.priority }
     }
 
     /// Dijkstra shortest path between two nodes of a single-line subgraph,
@@ -1209,10 +1178,10 @@ public enum Statistics {
         if fromKey == toKey || adj[fromKey] == nil || adj[toKey] == nil { return edges }
         var dist: [String: Double] = [fromKey: 0]
         var prev: [String: (node: String, edge: Int)] = [:]
-        var heap = TupleMinHeap()
-        heap.push(0, fromKey)
-        while heap.size > 0 {
-            let (d, u) = heap.pop()
+        var heap = BinaryMinHeap<CorridorHeapItem>()
+        heap.push(CorridorHeapItem(priority: 0, value: fromKey))
+        while let top = heap.pop() {
+            let d = top.priority, u = top.value
             if u == toKey { break }
             if d > (dist[u] ?? .infinity) { continue }
             for (v, ei) in adj[u] ?? [] {
@@ -1220,7 +1189,7 @@ public enum Statistics {
                 if nd < (dist[v] ?? .infinity) {
                     dist[v] = nd
                     prev[v] = (u, ei)
-                    heap.push(nd, v)
+                    heap.push(CorridorHeapItem(priority: nd, value: v))
                 }
             }
         }

@@ -2034,14 +2034,15 @@ public enum RouteSolver {
         // min-heap keeps that order without rescanning the whole candidate
         // set on every step.
         var lastProcessedIndex = -1
-        var pending: [Int] = []
+        var pending = BinaryMinHeap<StationGroupIndex>()
         var queued = Set<Int>()
         for key in codes.union(groups) {
             for index in stations.featureIndices(matchingTrimmedCodeOrGroup: key) {
                 enqueueStationGroupIndex(index, lastProcessedIndex: lastProcessedIndex, queued: &queued, pending: &pending)
             }
         }
-        while let index = popStationGroupIndex(&pending) {
+        while let popped = pending.pop() {
+            let index = popped.index
             lastProcessedIndex = index
             let feature = stations.features[index]
             guard stationFeatureIsCurrent(feature, rideDate: rideDate) else { continue }
@@ -2085,36 +2086,19 @@ public enum RouteSolver {
         return inserted
     }
 
-    private static func enqueueStationGroupIndex(
-        _ index: Int, lastProcessedIndex: Int, queued: inout Set<Int>, pending: inout [Int]
-    ) {
-        guard index > lastProcessedIndex, queued.insert(index).inserted else { return }
-        pending.append(index)
-        var cursor = pending.count - 1
-        while cursor > 0 {
-            let parent = (cursor - 1) / 2
-            guard pending[cursor] < pending[parent] else { break }
-            pending.swapAt(cursor, parent)
-            cursor = parent
-        }
+    /// A station feature index, popped in ascending order.
+    private struct StationGroupIndex: HeapOrdered {
+        var index: Int
+        @inline(__always)
+        func precedes(_ other: StationGroupIndex) -> Bool { index < other.index }
     }
 
-    private static func popStationGroupIndex(_ pending: inout [Int]) -> Int? {
-        guard !pending.isEmpty else { return nil }
-        let first = pending[0]
-        let last = pending.removeLast()
-        if pending.isEmpty { return first }
-        pending[0] = last
-        var cursor = 0
-        while cursor * 2 + 1 < pending.count {
-            let left = cursor * 2 + 1
-            let right = left + 1
-            let child = right < pending.count && pending[right] < pending[left] ? right : left
-            guard pending[child] < pending[cursor] else { break }
-            pending.swapAt(cursor, child)
-            cursor = child
-        }
-        return first
+    private static func enqueueStationGroupIndex(
+        _ index: Int, lastProcessedIndex: Int, queued: inout Set<Int>,
+        pending: inout BinaryMinHeap<StationGroupIndex>
+    ) {
+        guard index > lastProcessedIndex, queued.insert(index).inserted else { return }
+        pending.push(StationGroupIndex(index: index))
     }
 
     private static func stationFeatureIsCurrent(
@@ -4106,7 +4090,7 @@ public enum RouteSolver {
         var previousEdgeIndex: [DijkstraState: Int] = [:]
         var sourceOf: [DijkstraState: DijkstraState] = [:]
         var seedCost: [DijkstraState: Double] = [:]
-        var heap = MinHeap()
+        var heap = BinaryMinHeap<Item>()
 
         seedDijkstraSources(
             sourceCandidates, requiresPhysicalRail: requiresPhysicalRail,
@@ -4135,7 +4119,7 @@ public enum RouteSolver {
         hardInstitutionFilter: Bool, distance: inout [DijkstraState: Double],
         previous: inout [DijkstraState: DijkstraState], previousEdgeIndex: inout [DijkstraState: Int],
         sourceOf: inout [DijkstraState: DijkstraState], seedCost: [DijkstraState: Double],
-        heap: inout MinHeap,
+        heap: inout BinaryMinHeap<Item>,
         settled: inout [(targetState: DijkstraState, settledCost: Double)],
         settledTargetBound: ((SolvedTarget) -> Double)?,
         boundedTargets: inout [SolvedTarget]
@@ -4196,7 +4180,7 @@ public enum RouteSolver {
     private static func seedDijkstraSources(
         _ sourceCandidates: [Candidate], requiresPhysicalRail: Bool,
         distance: inout [DijkstraState: Double], sourceOf: inout [DijkstraState: DijkstraState],
-        seedCost: inout [DijkstraState: Double], heap: inout MinHeap
+        seedCost: inout [DijkstraState: Double], heap: inout BinaryMinHeap<Item>
     ) {
         for candidate in sourceCandidates {
             let initial = candidate.distance * stationSnapCostFactor
@@ -4216,7 +4200,7 @@ public enum RouteSolver {
         traversalPolicy: TraversalPolicy, excludedInstitutions: Set<String>, preferredCodes: Set<String>,
         hardInstitutionFilter: Bool, rideDate: String?, distance: inout [DijkstraState: Double],
         previous: inout [DijkstraState: DijkstraState], previousEdgeIndex: inout [DijkstraState: Int],
-        sourceOf: inout [DijkstraState: DijkstraState], heap: inout MinHeap
+        sourceOf: inout [DijkstraState: DijkstraState], heap: inout BinaryMinHeap<Item>
     ) {
         for (edgeIndex, edge) in (graph.adjacency[current.state.key] ?? []).enumerated() {
             guard traversalPolicy.permits(edge),
@@ -4548,55 +4532,10 @@ public enum RouteSolver {
         var usedRequiredRail: Bool
     }
 
-    private struct Item {
+    private struct Item: HeapOrdered {
         var state: DijkstraState
         var priority: Double
-    }
-
-    private struct MinHeap {
-        private var items: [Item] = []
-        var isEmpty: Bool { items.isEmpty }
-
-        mutating func push(_ item: Item) {
-            items.append(item)
-            bubbleUp(items.count - 1)
-        }
-
-        mutating func pop() -> Item? {
-            guard !items.isEmpty else { return nil }
-            if items.count == 1 { return items.removeLast() }
-            let top = items[0]
-            items[0] = items.removeLast()
-            bubbleDown(0)
-            return top
-        }
-
-        private mutating func bubbleUp(_ start: Int) {
-            var index = start
-            while index > 0 {
-                let parent = (index - 1) / 2
-                if items[parent].priority <= items[index].priority { break }
-                items.swapAt(parent, index)
-                index = parent
-            }
-        }
-
-        private mutating func bubbleDown(_ start: Int) {
-            var index = start
-            while true {
-                let left = index * 2 + 1
-                let right = left + 1
-                var smallest = index
-                if left < items.count && items[left].priority < items[smallest].priority {
-                    smallest = left
-                }
-                if right < items.count && items[right].priority < items[smallest].priority {
-                    smallest = right
-                }
-                if smallest == index { break }
-                items.swapAt(smallest, index)
-                index = smallest
-            }
-        }
+        @inline(__always)
+        func precedes(_ other: Item) -> Bool { priority < other.priority }
     }
 }

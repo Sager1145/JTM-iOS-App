@@ -168,7 +168,7 @@ public enum LocalJourneySearch {
 
     private static func enqueue(
         edgeIndex: Int, parent: Int?, queueBudget: Int, edges: [Edge], nodes: [Node],
-        anchors: [String], records: inout [Record], heap: inout Heap, truncated: inout Bool
+        anchors: [String], records: inout [Record], heap: inout BinaryMinHeap<Entry>, truncated: inout Bool
     ) {
         guard records.count < queueBudget else { truncated = true; return }
         let edge = edges[edgeIndex]
@@ -234,7 +234,7 @@ public enum LocalJourneySearch {
         nodes: [Node], edges: [Edge], lines: [CompactPackage.Line], anchors: [String],
         outgoing: [String: [Int]], reachable: Set<String>,
         continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
-        queueBudget: Int, records: inout [Record], heap: inout Heap, truncated: inout Bool
+        queueBudget: Int, records: inout [Record], heap: inout BinaryMinHeap<Entry>, truncated: inout Bool
     ) {
         for edgeIndex in outgoing[code] ?? [] {
             let edge = edges[edgeIndex]
@@ -264,11 +264,11 @@ public enum LocalJourneySearch {
         reachable: Set<String>, budget: Int, limit: Int,
         destinationLineIDs: Set<String>?,
         continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?,
-        queueBudget: Int, records: inout [Record], heap: inout Heap, settled: inout [Int],
+        queueBudget: Int, records: inout [Record], heap: inout BinaryMinHeap<Entry>, settled: inout [Int],
         results: inout [RailwayRouteChoices.Choice], seen: inout Set<String>,
         expansions: inout Int, truncated: inout Bool
     ) {
-        while !heap.items.isEmpty {
+        while !heap.isEmpty {
             guard expansions < budget, results.count < limit else { truncated = true; break }
             guard let entry = heap.pop() else { break }
             guard !Task.isCancelled else { truncated = true; return }
@@ -301,7 +301,7 @@ public enum LocalJourneySearch {
         continuation: ((CompactPackage.Line, CompactPackage.Line, String) -> Bool)?
     ) -> (choices: [RailwayRouteChoices.Choice], truncated: Bool) {
         var records: [Record] = []
-        var heap = Heap()
+        var heap = BinaryMinHeap<Entry>()
         var settled = Array(repeating: 0, count: nodes.count * anchors.count)
         var results: [RailwayRouteChoices.Choice] = []
         var seen: Set<String> = []
@@ -364,7 +364,7 @@ public enum LocalJourneySearch {
         let transfers: Int
         let hops: Int
     }
-    private struct Entry {
+    private struct Entry: HeapOrdered {
         let id: Int
         let distance: Double
         let transfers: Int
@@ -374,35 +374,6 @@ public enum LocalJourneySearch {
             if transfers != other.transfers { return transfers < other.transfers }
             if hops != other.hops { return hops < other.hops }
             return id < other.id
-        }
-    }
-    private struct Heap {
-        var items: [Entry] = []
-        mutating func push(_ entry: Entry) {
-            items.append(entry)
-            var index = items.count - 1
-            while index > 0 {
-                let parent = (index - 1) / 2
-                guard items[index].precedes(items[parent]) else { break }
-                items.swapAt(index, parent)
-                index = parent
-            }
-        }
-        mutating func pop() -> Entry? {
-            guard !items.isEmpty else { return nil }
-            let first = items[0]
-            let last = items.removeLast()
-            if items.isEmpty { return first }
-            items[0] = last
-            var index = 0
-            while index * 2 + 1 < items.count {
-                let left = index * 2 + 1, right = left + 1
-                let child = right < items.count && items[right].precedes(items[left]) ? right : left
-                guard items[child].precedes(items[index]) else { break }
-                items.swapAt(index, child)
-                index = child
-            }
-            return first
         }
     }
 
