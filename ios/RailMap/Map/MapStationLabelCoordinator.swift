@@ -40,8 +40,9 @@ final class MapStationLabelCoordinator {
         settings: MapRideMarkers.Settings, strokeGeneration: Int,
         rides: [String: (identity: Int, records: MapRideMarkers.RideRecords)]
     )?
-    private var selectedNameCache: (
-        rideID: String, key: String, settings: MapRideMarkers.Settings, keys: Set<String>)?
+    private var selectedCache: (
+        rideID: String, key: String, settings: MapRideMarkers.Settings, keys: Set<String>,
+        tiers: SelectedTripStationTiers.Ranking)?
     /// One timer per quiet period; each camera frame only moves its deadline.
     private let settleTimer = MapDeadlineTimer(delay: .milliseconds(32))
     private var lastPassStep = Double.nan
@@ -99,23 +100,50 @@ final class MapStationLabelCoordinator {
     )
         -> Set<String>
     {
-        if let selectedNameCache, selectedNameCache.key == geometryIdentity,
-            selectedNameCache.settings == settings
+        selected(ride, geometryIdentity: geometryIdentity, settings: settings, strokeRef: strokeRef).keys
+    }
+
+    /// The selected trip's station ranking (`SelectedTripStationTiers`),
+    /// built once per trip geometry: a zoom or a pan only reads it.
+    func selectedTripTiers(
+        of ride: RiddenRouteStore.DrawnRide, geometryIdentity: String,
+        settings: MapRideMarkers.Settings,
+        strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
+    ) -> SelectedTripStationTiers.Ranking {
+        selected(ride, geometryIdentity: geometryIdentity, settings: settings, strokeRef: strokeRef).tiers
+    }
+
+    private func selected(
+        _ ride: RiddenRouteStore.DrawnRide, geometryIdentity: String,
+        settings: MapRideMarkers.Settings,
+        strokeRef: (RiddenRouteStore.DrawnRide, RiddenRouteStore.DrawnSegment) -> StrokeRef?
+    ) -> (keys: Set<String>, tiers: SelectedTripStationTiers.Ranking) {
+        // The geometry identity does not cover what a station's class reads
+        // beyond its stop type: whether a pass was generated, and the
+        // sections' line names.
+        let key = geometryIdentity + "|" + String(MapRideMarkers.tierClassDigest(of: ride))
+        if let selectedCache, selectedCache.rideID == ride.id, selectedCache.key == key,
+            selectedCache.settings == settings
         {
-            return selectedNameCache.keys
+            return (selectedCache.keys, selectedCache.tiers)
         }
+        let interval = RailSignpost.map.begin("map.selectedTripTiers")
+        defer { RailSignpost.map.end("map.selectedTripTiers", interval) }
+        let drawn = MapRideMarkers.drawn(rides: [ride], settings: settings, strokeRef: strokeRef)
         var keys: Set<String> = []
-        for item in MapRideMarkers.drawn(rides: [ride], settings: settings, strokeRef: strokeRef)
-        where !item.feature.name.isEmpty {
+        for item in drawn where !item.feature.name.isEmpty {
             keys.insert(Self.markerKey(item.record))
         }
-        selectedNameCache = (ride.id, geometryIdentity, settings, keys)
-        return keys
+        // A railway preview is not a trip: it keeps the zoom floors.
+        let tiers = RailwayLinePreview.isPreviewRide(ride.id) ? .empty
+            : SelectedTripStationTiers.rank(MapRideMarkers.tierStations(of: ride, drawn: drawn))
+        selectedCache = (ride.id, key, settings, keys, tiers)
+        return (keys, tiers)
     }
 
     /// Shared identity between the complete and selected elections. Role is
     /// omitted so the same named station matches when its dot role changes.
-    static func markerKey(_ record: StationDisplay.MarkerRecord) -> String {
+    nonisolated static func markerKey(_ record: StationDisplay.MarkerRecord) -> String {
         "\(record.position.lat)|\(record.position.lon)|\(record.name)"
     }
 
@@ -176,7 +204,7 @@ final class MapStationLabelCoordinator {
     func invalidateGeometry() {
         markerCache = nil
         rideRecordCache = nil
-        selectedNameCache = nil
+        selectedCache = nil
     }
 
     /// A stroke install moved only `rideIDs`' stroke references: only those
@@ -190,8 +218,8 @@ final class MapStationLabelCoordinator {
                 cache.settings, cache.strokeGeneration,
                 cache.rides.filter { !rideIDs.contains($0.key) })
         }
-        if let selected = selectedNameCache, rideIDs.contains(selected.rideID) {
-            selectedNameCache = nil
+        if let selected = selectedCache, rideIDs.contains(selected.rideID) {
+            selectedCache = nil
         }
     }
 

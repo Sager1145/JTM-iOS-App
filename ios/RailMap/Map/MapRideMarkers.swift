@@ -538,6 +538,57 @@ enum MapRideMarkers {
         return densityByRide
     }
 
+    // MARK: - the selected trip's tiers
+
+    /// One ride's drawn stations as `SelectedTripStationTiers` input, keyed
+    /// the way the marker pass keys a record
+    /// (``MapStationLabelCoordinator/markerKey(_:)``).
+    ///
+    /// The class comes from the stop record the trip card's timeline reads —
+    /// `stopType`, `routeEditing.generatedBy` and the stop's times — through
+    /// ``SelectedTripStationTiers/stationClass(stopType:isBoundary:changesLine:isGenerated:hasTime:)``,
+    /// so the map and the timeline cannot classify a station differently. A
+    /// record with no stop behind it (a route-section endpoint) is on-route.
+    /// What ``tierStations(of:drawn:)`` reads that the ride's geometry and
+    /// stop digests leave out.
+    static func tierClassDigest(of ride: RiddenRouteStore.DrawnRide) -> Int {
+        var hasher = Hasher()
+        for stop in ride.stops { hasher.combine(stop.routeEditing?.generatedBy != nil) }
+        for section in ride.expectedSections { hasher.combine(section.lineNames) }
+        return hasher.finalize()
+    }
+
+    static func tierStations(
+        of ride: RiddenRouteStore.DrawnRide, drawn: [Drawn]
+    ) -> [SelectedTripStationTiers.Station] {
+        let stops = ride.stops
+        var stopByKey: [String: Int] = [:]
+        for (index, position) in stopPositions(of: ride).sorted(by: { $0.key < $1.key })
+        where stops.indices.contains(index) {
+            let key = "\(position.lat)|\(position.lon)|\(stops[index].name)"
+            if stopByKey[key] == nil { stopByKey[key] = index }
+        }
+        let lineChanges = SelectedTripStationTiers.lineChangeStopIndices(
+            sectionLineNames: ride.expectedSections.map { $0.lineNames ?? [] },
+            boundaryStop: { ride.recordedRouteMapping?.stopIndex(atSectionBoundary: $0) })
+        return drawn.compactMap { item in
+            let role = item.feature.role
+            guard role != "stop-center" else { return nil }
+            let key = MapStationLabelCoordinator.markerKey(item.record)
+            let index = stopByKey[key]
+            let stop = index.map { stops[$0] }
+            return SelectedTripStationTiers.Station(
+                key: key,
+                stationClass: SelectedTripStationTiers.stationClass(
+                    stopType: stop?.stopType,
+                    isBoundary: role == "terminal" || role == "xday",
+                    changesLine: index.map(lineChanges.contains) ?? false,
+                    isGenerated: stop?.routeEditing?.generatedBy != nil,
+                    hasTime: stop?.arrival?.isEmpty == false || stop?.departure?.isEmpty == false),
+                coordinate: item.record.position)
+        }
+    }
+
     /// The deck's records with their elected names, from each ride's own
     /// records in ride order. The election is deck-wide by design: a shared
     /// station's name goes to whichever record arrives first.

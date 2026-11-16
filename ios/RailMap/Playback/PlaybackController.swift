@@ -320,8 +320,9 @@ final class PlaybackController {
                         region: train.region)
                     let localized: String
                     if display.unresolved {
-                        let word = localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved"
-                        localized = stop.name + "\n" + word
+                        // The stored name alone: an identity state is not
+                        // part of a station's name on the map.
+                        localized = stop.name
                     } else {
                         let namingRegion = (train.region?.isEmpty == false ? train.region : nil)
                             .flatMap(Region.init(rawValue:))
