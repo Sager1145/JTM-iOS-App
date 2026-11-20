@@ -476,6 +476,27 @@ def _line_terminal_station_codes(line: dict) -> set[str]:
     return codes
 
 
+# Same-name lines of different operators that share a terminus station code but
+# are NOT one corridor: separate railways with no shared track and no through
+# running. The package keys a station by its N02 group code, so two operators'
+# stations in one interchange group look like one terminus. Each entry is
+# (line name, the operators that must stay apart from each other).
+#  - 甘木線: 西日本鉄道 宮の陣–甘木 (17.9 km) and 甘木鉄道 基山–甘木 (13.7 km)
+#    are two operators' railways (MLIT Kyushu: wwwtb.mlit.go.jp/kyushu/content/
+#    000263721.pdf and 000332673.pdf). They end at two different 甘木 stations
+#    about 190 m apart: N02 station codes 009297 and 009296 under one group
+#    code 009296 (app/data/stations.json).
+UNRELATED_SAME_NAME_LINES: tuple[tuple[str, frozenset[str]], ...] = (
+    ("甘木線", frozenset({"甘木鉄道", "西日本鉄道"})),
+)
+
+
+def _reviewed_unrelated(name: str, operator_a: str, operator_b: str) -> bool:
+    return operator_a != operator_b and any(
+        name == entry_name and operator_a in operators and operator_b in operators
+        for entry_name, operators in UNRELATED_SAME_NAME_LINES)
+
+
 def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
     """Per line id: (group length km, group best rank).
 
@@ -484,8 +505,10 @@ def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
     serves (a shared station code, e.g. JR East / JR Central 東海道線 at 熱海),
     transitively, are one group, so a corridor split across operators gets one minimum zoom.
     Identity of the terminus station, not distance, decides: unrelated
-    same-name lines that merely end near each other stay apart. Lines with
-    different names are never merged. The group's best rank is the lowest one
+    same-name lines that merely end near each other stay apart, and the
+    reviewed pairs in UNRELATED_SAME_NAME_LINES stay apart even though the
+    package gives their two stations one code. Lines with different names are
+    never merged. The group's best rank is the lowest one
     in it, except that grouping never lowers a line to rank 0 (an always-drawn
     backbone) from a rank above 0.
 
@@ -529,6 +552,9 @@ def visibility_groups(lines: list[dict]) -> dict[str, tuple[float, int]]:
     for same_name in keys_by_name.values():
         for i, key_a in enumerate(same_name):
             for key_b in same_name[i + 1:]:
+                if _reviewed_unrelated(
+                        names[key_a], key_a.split("\0")[0], key_b.split("\0")[0]):
+                    continue
                 if find(key_a) != find(key_b) and (
                         terminals[key_a] & station_codes[key_b]
                         or terminals[key_b] & station_codes[key_a]):
