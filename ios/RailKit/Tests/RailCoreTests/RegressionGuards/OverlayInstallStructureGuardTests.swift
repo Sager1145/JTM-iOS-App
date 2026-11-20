@@ -7,7 +7,7 @@ import Testing
 /// down, which cost 20 to 30 ms per camera settle.
 @Suite("RegressionGuardOverlayInstall")
 struct RegressionGuardOverlayInstall {
-    private static let source = SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift")
+    private static var source: String { SourceFiles.textRecording("RailMap/Map/MapNetworkRendering.swift") }
 
     @Test func installInsertsAtFinalPositionAndNeverBulkAppends() throws {
         let s = Self.source

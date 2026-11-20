@@ -7,10 +7,10 @@ import Testing
 /// them and still wires the recognisers the way the rules assume.
 @Suite("RegressionGuardMapTap")
 struct RegressionGuardMapTap {
-    private static let view = SourceFiles.textRecording("RailMap/Map/RailMapView.swift")
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let workspace = SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift")
-    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static var view: String { SourceFiles.textRecording("RailMap/Map/RailMapView.swift") }
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var workspace: String { SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift") }
+    private static var host: String { SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift") }
 
     /// A tap that hits something answers on the lift, so `tap` must not wait for
     /// the double-tap recogniser; only the banked empty-map clear does.
@@ -92,7 +92,7 @@ struct RegressionGuardMapTap {
         #expect(Self.host.contains("\"cancelledByDoubleTap\""))
     }
 
-    private static let hitTest = SourceFiles.textRecording("RailMap/Map/NetworkLineHitTest.swift")
+    private static var hitTest: String { SourceFiles.textRecording("RailMap/Map/NetworkLineHitTest.swift") }
 
     /// A trip dot under the finger is its own trip's tap, whatever else passes.
     @Test func tripDotOwnsItsTapAndSkipsLineReach() {

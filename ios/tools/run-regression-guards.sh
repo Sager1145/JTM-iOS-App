@@ -59,6 +59,8 @@ step "rail pack inputs tests" python3 -I "$ROOT/ios/tools/tests/test_rail_pack_i
 step "rail pack budget tests" python3 -I "$ROOT/ios/tools/tests/test_check_rail_pack_budget.py"
 # The bake script stages packs and swaps them in only after the checks pass (stale packs removed, over budget changes nothing).
 step "rail pack bake swap tests" python3 -I "$ROOT/ios/tools/tests/test_bake_rail_packs.py"
+# The freshness guard itself: stale, foreign and missing packs fail, and so does a run that checked no pack.
+step "rail pack freshness guard tests" python3 -I "$ROOT/ios/tools/tests/test_check_rail_packs_fresh.py"
 # Corridors split across operators share one visibility tier (display-network visibility groups).
 # The built manifest is the data the app ships, so the guard can check it:
 #   JTM_DISPLAY_NETWORK_DIR=<built rail-display-network dir>  checks that build;

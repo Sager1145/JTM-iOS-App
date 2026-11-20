@@ -3,7 +3,9 @@ import PackageDescription
 let package = Package(
     name: "GoldenCapture",
     platforms: [.macOS(.v14)],
-    dependencies: [.package(path: "/Users/sager/Documents/GitHub/JTM-iOS-App/.claude/worktrees/wf_96d71d3a-a8f-1/ios/RailKit")],
+    // Placeholder: replace RAILKIT_CHECKOUT_PATH with the absolute path of `ios/RailKit` in the
+    // checkout you capture against (see ../README.md, "To recapture"). Never commit a real path.
+    dependencies: [.package(path: "RAILKIT_CHECKOUT_PATH")],
     targets: [
         .executableTarget(
             name: "GoldenCapture",

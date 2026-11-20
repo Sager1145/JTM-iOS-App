@@ -26,8 +26,15 @@ done
 
 export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 toolchain=$(python3 -I "$inputs" toolchain)
+# The pack list is read into a variable first: a `variants` call that fails must stop the guard
+# (the status of a process substitution is lost), and a list with no pack in it is an error, never
+# a pass with nothing checked.
+pack_list=$(python3 -I "$inputs" variants --regions "$regions")
 failed=0
+checked=0
 while read -r region name; do
+    [ -n "$region" ] || continue
+    checked=$((checked + 1))
     pack="$pack_dir/$name"
     if [ ! -f "$pack" ]; then
         echo "error: missing pack $pack" >&2
@@ -36,7 +43,11 @@ while read -r region name; do
     fi
     python3 -I "$inputs" check --builder-dir "$builder_dir" --region "$region" \
         --levels "$levels" --toolchain "$toolchain" --pack "$pack" || failed=1
-done < <(python3 -I "$inputs" variants --regions "$regions")
+done <<< "$pack_list"
+if [ "$checked" -eq 0 ]; then
+    echo "error: no packs to check (regions: '$regions')" >&2
+    exit 1
+fi
 if [ "$failed" -ne 0 ]; then
     echo "rail packs are stale: re-run ios/tools/bake-rail-packs.sh" >&2
     exit 1
