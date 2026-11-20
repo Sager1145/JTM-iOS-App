@@ -47,8 +47,36 @@ def _terminal_codes(line):
     return codes
 
 
-def joined_same_name_pairs(lines):
-    """Same-name lines where one's terminus station is also a station of the other."""
+# Reviewed: same name, one shared station code, but two separate railways (no
+# shared track, no through running). Kept apart from the builder's own list on
+# purpose, so dropping an entry there fails here.
+UNRELATED = {("甘木線", frozenset({"甘木鉄道", "西日本鉄道"}))}
+
+# Every cross-operator join the shipped jp package produces, reviewed. A new
+# pair must be checked against the operators' own material (is it one corridor,
+# or two railways whose stations share an interchange code?) before it is
+# added here or to the builder's UNRELATED_SAME_NAME_LINES.
+REVIEWED_CROSS_OPERATOR_JOINS = {
+    ("七尾線", frozenset({"のと鉄道", "西日本旅客鉄道"})),
+    ("中央線", frozenset({"東日本旅客鉄道", "東海旅客鉄道"})),
+    ("北陸新幹線", frozenset({"東日本旅客鉄道", "西日本旅客鉄道"})),
+    ("大糸線", frozenset({"東日本旅客鉄道", "西日本旅客鉄道"})),
+    ("山陽線", frozenset({"九州旅客鉄道", "西日本旅客鉄道"})),
+    ("本四備讃線", frozenset({"四国旅客鉄道", "西日本旅客鉄道"})),
+    ("東海道線", frozenset({"東日本旅客鉄道", "東海旅客鉄道"})),
+    ("東海道線", frozenset({"東海旅客鉄道", "西日本旅客鉄道"})),
+    ("神戸高速線", frozenset({"神戸電鉄", "阪急電鉄"})),
+    ("神戸高速線", frozenset({"神戸電鉄", "阪神電気鉄道"})),
+    ("神戸高速線", frozenset({"阪急電鉄", "阪神電気鉄道"})),
+    ("紀勢線", frozenset({"東海旅客鉄道", "西日本旅客鉄道"})),
+    ("関西線", frozenset({"東海旅客鉄道", "西日本旅客鉄道"})),
+    ("高山線", frozenset({"東海旅客鉄道", "西日本旅客鉄道"})),
+}
+
+
+def shared_terminus_pairs(lines):
+    """Same-name lines where one's terminus station is also a station of the
+    other, including the reviewed unrelated ones."""
     by_name = defaultdict(list)
     for line in lines:
         by_name[line["name"]].append(
@@ -58,6 +86,17 @@ def joined_same_name_pairs(lines):
             for b, tb, sb in members[i + 1:]:
                 if ta & sb or tb & sa:
                     yield a, b
+
+
+def _pair_key(a, b):
+    return (a["name"], frozenset({a.get("operator"), b.get("operator")}))
+
+
+def joined_same_name_pairs(lines):
+    """The shared-terminus pairs that are one corridor (reviewed unrelated pairs removed)."""
+    for a, b in shared_terminus_pairs(lines):
+        if _pair_key(a, b) not in UNRELATED:
+            yield a, b
 
 
 class CorridorVisibilityTests(unittest.TestCase):
@@ -108,6 +147,35 @@ class CorridorVisibilityTests(unittest.TestCase):
         self.assertNotEqual(tiers("日光線", "東日本旅客鉄道"), tiers("日光線", "東武鉄道"))
         self.assertNotEqual(tiers("京都線", "近畿日本鉄道"), tiers("京都線", "阪急電鉄"))
         self.assertNotEqual(tiers("本線", "富山地方鉄道"), tiers("本線", "黒部峡谷鉄道"))
+
+    def test_amagi_lines_of_two_operators_stay_apart(self):
+        # 西鉄甘木線 (宮の陣–甘木) and 甘木鉄道甘木線 (基山–甘木) are two railways
+        # whose 甘木 stations share one package station code. Each keeps its own
+        # length and rank; neither is drawn at the other's tier.
+        groups = display_network.visibility_groups(self.lines)
+        by_id = {l["id"]: l for l in self.lines}
+        nishitetsu, amagi = by_id["jp-西日本鉄道-甘木線"], by_id["jp-甘木鉄道-甘木線"]
+        shared = {frozenset({a["id"], b["id"]}) for a, b in shared_terminus_pairs(self.lines)}
+        self.assertIn(frozenset({nishitetsu["id"], amagi["id"]}), shared,
+                      "the package no longer gives the two 甘木 stations one code; "
+                      "the reviewed exception can go")
+        for line in (nishitetsu, amagi):
+            own_km = sum(float(r[0]) for r in line["segments"])
+            km, rank = groups[line["id"]]
+            self.assertAlmostEqual(km, own_km, places=6, msg=line["id"])
+            self.assertEqual(rank, int(line["rank"]), line["id"])
+        self.assertNotEqual(nishitetsu["operator"], amagi["operator"])
+        self.assertNotEqual(nishitetsu["color"], amagi["color"])
+        for line in (nishitetsu, amagi):
+            self.assertEqual(display_network.length_min_zoom(groups[line["id"]][0]), 6, line["id"])
+
+    def test_every_cross_operator_join_is_reviewed(self):
+        found = {_pair_key(a, b) for a, b in shared_terminus_pairs(self.lines)
+                 if a.get("operator") != b.get("operator")}
+        self.assertEqual(found - UNRELATED, REVIEWED_CROSS_OPERATOR_JOINS)
+        self.assertTrue(UNRELATED <= found, "an UNRELATED entry no longer matches the package")
+        builder = {(n, frozenset(o)) for n, o in display_network.UNRELATED_SAME_NAME_LINES}
+        self.assertEqual(builder, UNRELATED)
 
     def test_grouping_never_makes_a_line_rank_zero(self):
         groups = display_network.visibility_groups(self.lines)
