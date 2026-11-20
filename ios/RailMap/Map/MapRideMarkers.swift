@@ -225,22 +225,41 @@ enum MapRideMarkers {
                   let last = segment.coordinates.last else { continue }
             let endpoints = ride.recordedStopIndices(for: segment)
             if let index = endpoints.from, stops.indices.contains(index),
-               agrees(segment.from, stop: stops[index], region: ride.country), result[index] == nil {
+               agrees(ride, segment, start: true, stop: stops[index]), result[index] == nil {
                 result[index] = first
             }
             if !unproven.contains(segment.segmentIndex),
                let index = endpoints.to, stops.indices.contains(index),
-               agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
+               agrees(ride, segment, start: false, stop: stops[index]), result[index] == nil {
                 result[index] = last
             }
         }
         return result
     }
 
-    /// A declared endpoint against the stop the index says it is. An absent
-    /// declaration is not a disagreement. Equal names are not the same stop.
-    private static func agrees(_ declared: String?, stop: Stop, region: String) -> Bool {
-        SolverRegistryInput.markerAgrees(declared: declared, stop: stop, region: region)
+    /// A segment end against the stop the index says it is, by the same rule
+    /// ``RecordedRouteMapping`` used to assign that index: codes decide when
+    /// both sides carry one, names otherwise. `DrawnSegment.from`/`to` hold
+    /// station NAMES (`section.from`), so they are compared with the stop's
+    /// name, never with its identifier. An absent declaration is not a
+    /// disagreement.
+    private static func agrees(
+        _ ride: RiddenRouteStore.DrawnRide, _ segment: RiddenRouteStore.DrawnSegment,
+        start: Bool, stop: Stop
+    ) -> Bool {
+        let name = start ? segment.from : segment.to
+        let section = ride.expectedSections.indices.contains(segment.segmentIndex)
+            ? ride.expectedSections[segment.segmentIndex] : nil
+        let code = start ? section?.fromN02StationCode : section?.toN02StationCode
+        guard (name?.isEmpty == false) || (code?.isEmpty == false) else { return true }
+        // Without authoritative `segment_index` values the index is only the
+        // stroke's position, so the stroke's own name must agree as well.
+        if !ride.indicesAreAuthoritative, let name, !name.isEmpty,
+           !RecordedRouteMapping.sameStation(code: nil, name: name, otherCode: nil, otherName: stop.name) {
+            return false
+        }
+        return RecordedRouteMapping.sameStation(
+            code: code, name: name, otherCode: stop.n02StationCode, otherName: stop.name)
     }
 
     /// Which continuous-stroke chain a stop's bead belongs on, and where —
@@ -294,14 +313,14 @@ enum MapRideMarkers {
             guard let ref = strokeRef(segment) else { continue }
             let endpoints = ride.recordedStopIndices(for: segment)
             if let index = endpoints.from, stops.indices.contains(index),
-               agrees(segment.from, stop: stops[index], region: ride.country), result[index] == nil {
+               agrees(ride, segment, start: true, stop: stops[index]), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.fromAnchor,
                     segmentIndex: segment.segmentIndex, partIndex: segment.partIndex, isSegmentStart: true)
             }
             if !unproven.contains(segment.segmentIndex),
                let index = endpoints.to, stops.indices.contains(index),
-               agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
+               agrees(ride, segment, start: false, stop: stops[index]), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.toAnchor,
                     segmentIndex: segment.segmentIndex, partIndex: segment.partIndex, isSegmentStart: false)
@@ -536,6 +555,55 @@ enum MapRideMarkers {
             }
         }
         return densityByRide
+    }
+
+    // MARK: - the selected trip's tiers
+
+    /// One ride's drawn stations as `SelectedTripStationTiers` input, keyed
+    /// the way the marker pass keys a record
+    /// (``MapStationLabelCoordinator/markerKey(_:)``).
+    ///
+    /// The class comes from the stop's `callEvidence`, the evidence the trip
+    /// card's timeline reads, through
+    /// ``SelectedTripStationTiers/stationClass(callEvidence:isBoundary:changesLine:)``,
+    /// so the map and the timeline cannot classify a station differently. A
+    /// record with no stop behind it (a route-section endpoint) is on-route.
+    /// What ``tierStations(of:drawn:)`` reads that the ride's geometry and
+    /// stop digests leave out.
+    static func tierClassDigest(of ride: RiddenRouteStore.DrawnRide) -> Int {
+        var hasher = Hasher()
+        for stop in ride.stops { hasher.combine(stop.routeEditing?.generatedBy != nil) }
+        for section in ride.expectedSections { hasher.combine(section.lineNames) }
+        return hasher.finalize()
+    }
+
+    static func tierStations(
+        of ride: RiddenRouteStore.DrawnRide, drawn: [Drawn]
+    ) -> [SelectedTripStationTiers.Station] {
+        let stops = ride.stops
+        var stopByKey: [String: Int] = [:]
+        for (index, position) in stopPositions(of: ride).sorted(by: { $0.key < $1.key })
+        where stops.indices.contains(index) {
+            let key = "\(position.lat)|\(position.lon)|\(stops[index].name)"
+            if stopByKey[key] == nil { stopByKey[key] = index }
+        }
+        let lineChanges = SelectedTripStationTiers.lineChangeStopIndices(
+            sectionLineNames: ride.expectedSections.map { $0.lineNames ?? [] },
+            boundaryStop: { ride.recordedRouteMapping?.stopIndex(atSectionBoundary: $0) })
+        return drawn.compactMap { item in
+            let role = item.feature.role
+            guard role != "stop-center" else { return nil }
+            let key = MapStationLabelCoordinator.markerKey(item.record)
+            let index = stopByKey[key]
+            let stop = index.map { stops[$0] }
+            return SelectedTripStationTiers.Station(
+                key: key,
+                stationClass: SelectedTripStationTiers.stationClass(
+                    callEvidence: stop?.callEvidence,
+                    isBoundary: role == "terminal" || role == "xday",
+                    changesLine: index.map(lineChanges.contains) ?? false),
+                coordinate: item.record.position)
+        }
     }
 
     /// The deck's records with their elected names, from each ride's own

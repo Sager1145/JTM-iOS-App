@@ -602,6 +602,7 @@
         "ios/RailKit/Sources/RailPresentation/Map/MapUpdatePlan.swift",
         "ios/RailKit/Sources/RailPresentation/Map/NetworkVisibilityPolicy.swift",
         "ios/RailKit/Sources/RailPresentation/Map/RideTapResolver.swift",
+        "ios/RailKit/Sources/RailPresentation/Map/SelectedTripStationTiers.swift",
         "ios/RailKit/Sources/RailPresentation/Regions/RegionClock.swift",
         "ios/RailKit/Sources/RailPresentation/Regions/RegionScopeRule.swift",
         "ios/RailKit/Sources/RailPresentation/Stations/StationLabelVisibility.swift",

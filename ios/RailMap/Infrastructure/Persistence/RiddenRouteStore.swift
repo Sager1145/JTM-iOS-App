@@ -1352,7 +1352,7 @@ final class RiddenRouteStore {
     /// carries its segments' indices, and the sections it was solved for are
     /// recomputed from the train beside it. A stored copy would be a second
     /// answer that could disagree with the first.
-    private nonisolated static func drawnRide(
+    nonisolated static func drawnRide(
         _ train: Train,
         country: String,
         segments: [DrawnSegment],

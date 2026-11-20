@@ -18,6 +18,9 @@ import OSLog
         var overlayStations: Int
     }
     static var rideStationDots: RideStationDots?
+    /// The selected trip's marks in the built area, by tier class:
+    /// `<class>.dots`, `<class>.names` (names offered, before collisions).
+    static var selectedTripMarks: [String: Int]?
     /// Matching workers started, requests skipped as unchanged, and requests
     /// that waited for a burst's trailing debounce.
     static var matchingRuns = 0
@@ -1075,7 +1078,7 @@ extension RailMapView.Surface {
                 // A code is a package id, not a name. Name lookup is not an identity.
                 if !lookupByName || code?.isEmpty != false {
                     let word = localization.text(RegistryStationDisplay.unresolvedKey)
-                    return Named(display: name + "\n" + word, readings: [
+                    return Named(display: name, readings: [
                         .init(kind: .zh, text: word)
                     ])
                 }
@@ -1086,6 +1089,16 @@ extension RailMapView.Surface {
                         readings: localization.nameReadingsTyped(
                             name, code: code, region: region, allowNameFallback: false))
                 }
+            }
+
+            /// A station name as a map marker prints it: the localized name
+            /// only. A stop with no registry identity keeps its stored name;
+            /// the identity state is the trip card's to show, never a marker's.
+            func mapStationLabel(
+                _ name: String, code: String?, region: Region?, stationID: String?
+            ) -> String {
+                guard let stationID, !stationID.isEmpty else { return name }
+                return localized(name, code: code, region: region, stationID: stationID).display
             }
 
             /// Keep mounted layers while the camera moves. One deadline timer
@@ -4057,10 +4070,23 @@ extension RailMapView.Surface {
                 // ride unnamed at exactly its busiest stations. The election is
                 // re-run over that ride's own records instead.
                 var selectedRideNames: Set<String> = []
+                // The selected trip's stations show by `SelectedTripStationTiers`:
+                // one ranking per trip, read at this pass's scale. The layer
+                // switches gate each record's role above the lookup
+                // (`layers.draws(role:)`), so the ranking is asked with all
+                // tiers on. A railway preview is not a trip and keeps the
+                // zoom floors.
+                var selectedTiers: SelectedTripStationTiers.Ranking?
                 if let ride = rides.first(where: { $0.id == selectedTrainID }) {
+                    let signature = Self.rideSignature(ride)
                     selectedRideNames = stationLabels.namedRecordKeys(
-                        of: ride, geometryIdentity: Self.rideSignature(ride), settings: display.markers,
+                        of: ride, geometryIdentity: signature, settings: display.markers,
                         strokeRef: { [self] ride, segment in strokeRef(for: segment, of: ride) })
+                    if !RailwayLinePreview.isPreviewRide(ride.id) {
+                        selectedTiers = stationLabels.selectedTripTiers(
+                            of: ride, geometryIdentity: signature, settings: display.markers,
+                            strokeRef: { [self] ride, segment in strokeRef(for: segment, of: ride) })
+                    }
                 }
 #if DEBUG
                 finishMarkerPhase("selectedNames")
@@ -4087,7 +4113,7 @@ extension RailMapView.Surface {
                     strokeGeneration: linesGeneration, settings: display.markers,
                     strokeRef: { [self] ride, segment in strokeRef(for: segment, of: ride) })
                 let drawn = deckRecords.drawn
-                let selectedCallCount = selectedTrainID == nil ? 0 : Set(drawn.filter {
+                let selectedCallCount = selectedTrainID == nil || selectedTiers != nil ? 0 : Set(drawn.filter {
                     $0.feature.tid == selectedTrainID
                         && ["terminal", "xday", "stop"].contains($0.feature.role)
                 }.map(\.record.position)).count
@@ -4157,6 +4183,7 @@ extension RailMapView.Surface {
                 var networkTerminalStatuses: [StationPlaceKey: Bool] = [:]
                 var routeColors: [String: UIColor] = [:]
 #if DEBUG
+                var selectedTripMarks: [String: Int] = [:]
                 var culledRecordCount = 0
                 finishMarkerPhase("hiddenRides")
 #endif
@@ -4222,7 +4249,11 @@ extension RailMapView.Surface {
                         role: feature.role, preservesCalls: preservesSelectedCalls,
                         densityMinimum: item.mapLibreMinZoom, lineCount: connectionCount,
                         isNetworkTerminal: isNetworkTerminal)
-                    let drawsDot = MapRideMarkers.drawsDot(
+                    let tierMark = selected ? selectedTiers?.mark(
+                        for: MapStationLabelCoordinator.markerKey(record),
+                        metresPerPoint: markerMapPointsPerScreenPoint
+                            / MKMapPointsPerMeterAtLatitude(record.position.lat)) : nil
+                    let drawsDot = tierMark?.drawsDot ?? MapRideMarkers.drawsDot(
                         item, atZoom: zoom, isSelected: selected, selectedCallMinimum: selectedMinimum)
                     // Gate both the dot and its name: label collision placement
                     // can otherwise restore a supporting dot below its floor.
@@ -4263,6 +4294,11 @@ extension RailMapView.Surface {
                         stop.name == record.name
                             && (item.stationCode == nil || stop.n02StationCode == item.stationCode)
                     }?.stationID
+                    // A pass is a smaller hollow ring in the route colour. An
+                    // on-route station (no source says stop or pass) is smaller
+                    // still, with a neutral grey ring: not a claim either way.
+                    let onRoute = tierMark?.stationClass == .onRoute
+                    let markScale: CGFloat = onRoute ? 0.6 : feature.role == "pass" ? 0.75 : 1
                     let annotation = RideStationAnnotation(
                         rideID: feature.tid, drawsInOverlay: tripDotsDrawInOverlay(hasSelection: hasSelection),
                         coordinate: displayCoordinate,
@@ -4272,15 +4308,15 @@ extension RailMapView.Surface {
                         region: item.region,
                         role: feature.role,
                         stationID: stationID,
-                        radius: CGFloat(feature.radius) * (feature.role == "pass" ? 0.75 : 1),
-                        lineWidth: CGFloat(feature.lineWidth) * (feature.role == "pass" ? 0.75 : 1),
+                        radius: CGFloat(feature.radius) * markScale,
+                        lineWidth: CGFloat(feature.lineWidth) * markScale,
                         ordinaryRadius: CGFloat(display.markers.passRadius),
                         ordinaryLineWidth: CGFloat(MapRideMarkers.ringWidth(
                             1, settings: display.markers)),
-                        focusScale: CGFloat(feature.focusScale) * (feature.role == "pass" ? 0.75 : 1),
+                        focusScale: CGFloat(feature.focusScale) * markScale,
                         // Calls are solid; only pass-throughs have a hollow centre.
                         fill: feature.role == "pass" ? .white : routeColor,
-                        stroke: feature.role == "pass" ? routeColor : .white,
+                        stroke: onRoute ? .systemGray : feature.role == "pass" ? routeColor : .white,
                         // The record's OWN alpha, put through the same two
                         // scopes the ride's stroke goes through — a dot on an
                         // off-date ride dims with the line it sits on.
@@ -4290,6 +4326,14 @@ extension RailMapView.Surface {
                         focusBoost: CGFloat(display.focusBoost),
                         selected: selected)
                     if drawsDot { placeDot(annotation) }
+#if DEBUG
+                    if let tierMark, drawsDot {
+                        selectedTripMarks["\(tierMark.stationClass).dots", default: 0] += 1
+                        if tierMark.offersName {
+                            selectedTripMarks["\(tierMark.stationClass).names", default: 0] += 1
+                        }
+                    }
+#endif
                     // …and its name, if it won one. Unselected rides retain
                     // their tier floor; a selected ride offers every name to
                     // collision placement. Elect the new visible names first;
@@ -4301,17 +4345,18 @@ extension RailMapView.Surface {
                         ? record.name : feature.name
                     guard !labelName.isEmpty, let tier = annotation.labelTier,
                           selected || !showsNetwork
-                            || zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom))
+                            || zoom >= RailStyle.zoom(fromMapLibre: Double(tier.minZoom)),
+                          tierMark?.offersName ?? true
                     else { continue }
                     // The election runs on the package's own names — see
                     // The cached marker election names only its winner, so
                     // which record carries a name never depends on the
                     // reader's language.
-                    let stationName = localized(
+                    let stationName = mapStationLabel(
                         labelName, code: item.stationCode, region: item.region,
-                        stationID: annotation.stationID, lookupByName: false).display
+                        stationID: annotation.stationID)
                     let roleTag = selected && !RailwayLinePreview.isPreviewRide(feature.tid)
-                        ? (feature.role == "pass" ? naming.passTag
+                        ? (onRoute ? "" : feature.role == "pass" ? naming.passTag
                         : feature.role == "stop" ? naming.stopTag : "") : ""
                     let displayedName = roleTag.isEmpty
                         ? stationName : "\(stationName) · \(roleTag)"
@@ -4324,7 +4369,11 @@ extension RailMapView.Surface {
                         dotRadiusToken: annotation.drawnRadiusToken(atZoom: zoom),
                         selected: annotation.selected,
                         stationID: annotation.stationID)
-                    let importance = StationLabelVisibility.rideLabelPriority(
+                    let importance = tierMark.map {
+                        SelectedTripStationTiers.labelPriority(
+                            $0.stationClass, lineCount: connectionCount,
+                            isNetworkTerminal: isNetworkTerminal)
+                    } ?? StationLabelVisibility.rideLabelPriority(
                         role: feature.role, lineCount: connectionCount,
                         isNetworkTerminal: isNetworkTerminal)
                     pendingRideLabels.append((
@@ -4336,6 +4385,7 @@ extension RailMapView.Surface {
                         supportingDot: drawsDot ? nil : annotation))
                 }
 #if DEBUG
+                MapRenderProbe.selectedTripMarks = selectedTiers == nil ? nil : selectedTripMarks
                 finishMarkerPhase("rideDotLoop")
 #endif
                 for spec in endpointSpecList {
@@ -5768,7 +5818,12 @@ extension RailMapView.Surface {
                     endpoint.stop.name, code: endpoint.stop.n02StationCode,
                     region: Region(rawValue: ride.country), stationID: endpoint.stop.stationID,
                     lookupByName: false)
+                // No usable registry identity: none recorded, or one the
+                // registry cannot name.
                 let unresolved = endpoint.stop.stationID?.isEmpty != false
+                    || RegistryStationDisplay.resolve(
+                        storedName: endpoint.stop.name, stationID: endpoint.stop.stationID,
+                        region: Region(rawValue: ride.country)?.code).unresolved
                 // An origin shows when the ride LEFT and a destination when it
                 // arrived — never both, because a card that showed both would
                 // be describing the timetable rather than the journey's end.
@@ -5776,14 +5831,16 @@ extension RailMapView.Surface {
                 let tag = kind == .origin ? naming.departureTag : naming.arrivalTag
                 let time = (clock?.isEmpty == false) ? "\(tag) \(clock!)" : ""
                 let badge = kind == .origin ? naming.startTag : naming.endTag
-                let unresolvedWord = localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved"
                 return MapEndpointLabels.spec(
                     trainID: ride.id, kind: kind,
                     at: Coordinate(lon: position.longitude, lat: position.latitude),
                     name: unresolved ? endpoint.stop.name : named.display,
                     rawName: endpoint.stop.name,
                     badge: badge, time: time,
-                    readings: unresolved ? [unresolvedWord] : named.readings.map(\.text))
+                    // A stop with no registry id keeps its stored name and
+                    // shows no readings: the identity state belongs to the
+                    // trip card, not under a station the map placed.
+                    readings: unresolved ? [] : named.readings.map(\.text))
             }
 
             /// Re-runs the endpoint cards' overlap-avoidance layout.

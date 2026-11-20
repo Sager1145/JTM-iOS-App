@@ -536,6 +536,31 @@ final class AppControlHost: AppControlDriver {
 
     // MARK: state
 
+    /// The free map area a fit centres in and where the last explicit fit's
+    /// subject is now, both in the map view's coordinates, so the centring can
+    /// be checked without the screen.
+    private static func focusFrame(_ controller: RailMapController) -> AppControlJSON {
+        func rect(_ rect: CGRect) -> AppControlJSON {
+            [
+                "x": .number((rect.minX * 100).rounded() / 100), "y": .number((rect.minY * 100).rounded() / 100),
+                "width": .number((rect.width * 100).rounded() / 100),
+                "height": .number((rect.height * 100).rounded() / 100),
+                "midX": .number((rect.midX * 100).rounded() / 100),
+            ]
+        }
+        let padding = controller.fitPadding
+        return [
+            "mapWidth": .number(Double(controller.mapView?.bounds.width ?? 0)),
+            "usesFreeArea": .bool(controller.focusFramePolicy.usesFreeArea),
+            "free": rect(controller.focusFreeRect),
+            "mapPadding": [
+                "left": .number((padding.left * 100).rounded() / 100),
+                "right": .number((padding.right * 100).rounded() / 100),
+            ],
+            "lastFit": controller.lastFitSubjectViewRect.map(rect) ?? .null,
+        ]
+    }
+
     /// Cache sizes walk directories; only the diagnostics export asks for them (off the main actor).
     func state(_ stores: Stores, includeTrips: Bool, includeCaches: Bool = false) -> AppControlJSON {
         let routes = stores.riddenRoutes
@@ -577,12 +602,16 @@ final class AppControlHost: AppControlDriver {
                 "rideOverlays": .number(Double(MapRenderProbe.rideOverlays)),
                 "droppedFrames": .number(Double(MapRenderProbe.droppedFrames)),
                 "geometryLevel": Self.geometryLevel(),
+                "focusFrame": Self.focusFrame(stores.controller),
                 "networkLines": .number(Double(stores.network.lines.count)),
                 "rideStationDots": MapRenderProbe.rideStationDots.map { dots in
                     [
                         "drawn": .number(Double(dots.drawn)), "stations": .number(Double(dots.stations)),
                         "overlayStations": .number(Double(dots.overlayStations)),
                     ]
+                } ?? .null,
+                "selectedTripMarks": MapRenderProbe.selectedTripMarks.map { marks in
+                    .object(marks.mapValues { .number(Double($0)) })
                 } ?? .null,
                 "matching": [
                     "runs": .number(Double(MapRenderProbe.matchingRuns)),

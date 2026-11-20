@@ -277,7 +277,10 @@ final class MapPlaybackLayer {
             MKMapRect(
                 x: centre.x - spanX / 2, y: centre.y - spanY / 2,
                 width: spanX, height: spanY),
-            edgePadding: insets,
+            // The sides go through the fit's own padding rule: MapKit
+            // measures padding from its inner area, not from the view's edge
+            // (`RailMapController.fitPadding`). Unchanged with no docked menu.
+            edgePadding: controller?.fitPadding(for: insets) ?? insets,
             animated: false)
     }
 
