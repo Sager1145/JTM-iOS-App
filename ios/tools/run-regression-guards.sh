@@ -76,6 +76,9 @@ if [ -z "$corridor_net" ] && [ "${JTM_GUARD_BUILD_NETWORK:-0}" = 1 ]; then
 fi
 step "corridor visibility tiers" env JTM_DISPLAY_NETWORK_DIR="$corridor_net" python3 -I "$ROOT/app/scripts/railway/tests/test_corridor_visibility.py"
 [ -z "${corridor_tmp:-}" ] || rm -rf "$corridor_tmp"
+# Mainland China data: no drawn-line breaks, every junction row sits on its lines, lines that share a
+# vertex are joined, and the open terminus sites (need a reviewed lead-in) do not grow.
+step "cn gap audit" python3 -I "$ROOT/app/scripts/railway/tests/test_cn_gap_audit.py"
 
 for f in "${FIXTURES[@]}"; do
   step "fixture $f" node "$ROOT/app/scripts/build/build-port-fixtures.mjs" --check "--only=$f.json"
