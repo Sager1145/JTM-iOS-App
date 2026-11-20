@@ -19,6 +19,13 @@ final class MapAnnotationReconciler {
         let interactionEnabled: Bool
     }
 
+    /// The fades started by one reconcile. Their annotations leave MapKit in a
+    /// single `removeAnnotations` call once the last fade has finished.
+    private final class RetireBatch {
+        var pending = 0
+        var survivors: [MKAnnotation] = []
+    }
+
     private var arrivals: [ObjectIdentifier: Arrival] = [:]
     private var departures: [ObjectIdentifier: Departure] = [:]
 
@@ -114,8 +121,9 @@ final class MapAnnotationReconciler {
         }
         // One MapKit update for every annotation that is not riding out a fade.
         var immediateRemovals: [MKAnnotation] = []
+        let batch = RetireBatch()
         for removed in plan.removals {
-            if !retire(removed, on: mapView, duration: duration) {
+            if !retire(removed, on: mapView, duration: duration, batch: batch) {
                 immediateRemovals.append(removed)
             }
         }
@@ -179,7 +187,7 @@ final class MapAnnotationReconciler {
     /// Starts an exit fade when the view can animate out.
     /// Returns false when the caller should remove the annotation in this reconcile.
     private func retire(_ annotation: MKAnnotation, on mapView: MKMapView,
-                        duration: TimeInterval) -> Bool {
+                        duration: TimeInterval, batch: RetireBatch) -> Bool {
         let id = ObjectIdentifier(annotation)
         arrivals.removeValue(forKey: id)
         guard duration > 0, !(annotation is DraftStopAnnotation),
@@ -191,13 +199,20 @@ final class MapAnnotationReconciler {
         departures[id] = departure
         // A disappearing caption must not intercept a tap on the new one.
         view.isUserInteractionEnabled = false
+        batch.pending += 1
         fade(view, to: 0, duration: duration) { [weak self, weak mapView, weak view] in
-            guard let self, self.departures[id]?.token == departure.token else { return }
-            self.departures.removeValue(forKey: id)
-            if let view, view.annotation.map({ ObjectIdentifier($0) }) == id {
-                view.isUserInteractionEnabled = departure.interactionEnabled
+            batch.pending -= 1
+            if let self, self.departures[id]?.token == departure.token {
+                self.departures.removeValue(forKey: id)
+                if let view, view.annotation.map({ ObjectIdentifier($0) }) == id {
+                    view.isUserInteractionEnabled = departure.interactionEnabled
+                }
+                batch.survivors.append(annotation)
             }
-            mapView?.removeAnnotation(annotation)
+            if batch.pending == 0, !batch.survivors.isEmpty {
+                mapView?.removeAnnotations(batch.survivors)
+                batch.survivors.removeAll()
+            }
         }
         return true
     }

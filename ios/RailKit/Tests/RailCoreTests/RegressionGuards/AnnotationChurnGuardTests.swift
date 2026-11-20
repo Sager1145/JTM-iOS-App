@@ -15,6 +15,18 @@ struct RegressionGuardAnnotationChurn {
         #expect(text.contains("private func updateInPlace("))
     }
 
+    @Test func reconcileRemovesAndAddsAnnotationsInOneBatchedCallEach() {
+        let text = SourceFiles.textRecording("RailMap/Map/MapAnnotationReconciler.swift")
+        #expect(text.contains("mapView.removeAnnotations(immediateRemovals)"))
+        #expect(text.contains("mapView.addAnnotations(added)"))
+        // Faded-out departures share one RetireBatch and leave in one call.
+        #expect(text.contains("mapView?.removeAnnotations(batch.survivors)"))
+        #expect(!text.contains("removeAnnotation(annotation)"))
+        #expect(!text.contains("removeAnnotation(departure"))
+        #expect(!text.contains(".removeAnnotation("))
+        #expect(text.contains("self.departures[id]?.token == departure.token"))
+    }
+
     @Test func overlayDrawnTripDotsAreNotAddedAsAnnotations() throws {
         let text = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
         #expect(text.contains("func placeDot(_ dot: RideStationAnnotation)"))
