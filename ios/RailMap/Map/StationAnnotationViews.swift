@@ -20,6 +20,8 @@ final class StationAnnotationView: MKAnnotationView {
     /// The factor the dot below is currently drawn at. Held so a
     /// rescale is a resize rather than a rebuild.
     private var scale: CGFloat = 1
+    private var measureCache = LabelMeasureCache()
+    private var appliedFontSize: CGFloat?
 
     override init(annotation: (any MKAnnotation)?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -154,12 +156,23 @@ final class StationAnnotationView: MKAnnotationView {
         if names || !nameLabel.isHidden {
             let size = MapLabelStyle.stationLabelSize(atZoom: zoom)
             nameLabel.isHidden = !names
-            nameLabel.font = MapLabelStyle.font(ofSize: size)
+            // Assigning a font invalidates the label's measured size, so it is
+            // written only when the point size changed.
+            if appliedFontSize != size {
+                nameLabel.font = MapLabelStyle.font(ofSize: size)
+                appliedFontSize = size
+            }
             nameLabel.textColor = MapLabelStyle.ink(dark: dark)
             nameLabel.haloColor = MapLabelStyle.halo(dark: dark)
 
+            let bound = CGSize(width: 180, height: 24)
             let labelSize = names
-                ? nameLabel.sizeThatFits(CGSize(width: 180, height: 24)) : .zero
+                ? measureCache.size(for: .init(
+                    text: nameLabel.text, pointSize: size,
+                    contentSizeCategory: traitCollection.preferredContentSizeCategory.rawValue,
+                    bound: bound)) {
+                    nameLabel.sizeThatFits(bound)
+                } : .zero
             // `text-radial-offset` is in ems, so the gap grows with
             // the text rather than holding a pixel count while the
             // label around it changes size. The halo needs room of

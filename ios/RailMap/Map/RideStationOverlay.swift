@@ -55,7 +55,10 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     /// CADisplayLink retains its target; this bridge keeps the renderer weak.
     private final class FrameTarget: NSObject {
         weak var renderer: RideStationOverlayRenderer?
-        @objc func tick(_ link: CADisplayLink) { renderer?.advance(at: link.timestamp) }
+        @objc func tick(_ link: CADisplayLink) {
+            guard let renderer, renderer.tickThrottle.admit(link.timestamp) else { return }
+            renderer.advance(at: link.timestamp)
+        }
     }
 
     // Marker and clock state are updated by the coordinator on the main thread.
@@ -77,6 +80,8 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
     private var hasPublishedStations = false
     private var batchArrival: Fade?
     private var displayLink: CADisplayLink?
+    /// Fade invalidations are capped at 60 Hz (see `FadeTickThrottle`).
+    fileprivate var tickThrottle = FadeTickThrottle()
     private let frameTarget = FrameTarget()
 
     deinit { displayLink?.invalidate() }
@@ -236,11 +241,13 @@ final class RideStationOverlayRenderer: MKOverlayRenderer {
             guard displayLink == nil else { return }
             frameTarget.renderer = self
             let link = CADisplayLink(target: frameTarget, selector: #selector(FrameTarget.tick(_:)))
+            link.preferredFrameRateRange = CAFrameRateRange(minimum: 30, maximum: 60, preferred: 60)
             link.add(to: .main, forMode: .common)
             displayLink = link
         } else {
             displayLink?.invalidate()
             displayLink = nil
+            tickThrottle.reset()
         }
     }
 

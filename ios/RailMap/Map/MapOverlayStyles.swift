@@ -1,4 +1,5 @@
 import MapKit
+import RailCore
 import UIKit
 
 /// Every stroke on the map, and the renderer MapKit built for it.
@@ -110,6 +111,8 @@ final class MapOverlayStyles {
 
     private var opacityTransitions: [String: OpacityTransition] = [:]
     private var displayLink: CADisplayLink?
+    /// Fade invalidations are capped at 60 Hz (see `FadeTickThrottle`).
+    private var tickThrottle = FadeTickThrottle()
 
     @MainActor
     private final class OpacityClock: NSObject {
@@ -117,6 +120,7 @@ final class MapOverlayStyles {
         init(owner: MapOverlayStyles) { self.owner = owner }
         @objc func tick(_ link: CADisplayLink) {
             guard let owner else { link.invalidate(); return }
+            guard owner.tickThrottle.admit(link.timestamp) else { return }
             owner.advanceOpacity(at: link.timestamp)
         }
     }
@@ -125,6 +129,7 @@ final class MapOverlayStyles {
         guard opacityTransitions.isEmpty else { return }
         displayLink?.invalidate()
         displayLink = nil
+        tickThrottle.reset()
     }
 
     /// A pending transition whose renderer never showed up within this long
@@ -186,6 +191,7 @@ final class MapOverlayStyles {
             duration: duration, completion: completion)
         if displayLink == nil {
             let link = CADisplayLink(target: OpacityClock(owner: self), selector: #selector(OpacityClock.tick(_:)))
+            link.preferredFrameRateRange = CAFrameRateRange(minimum: 30, maximum: 60, preferred: 60)
             link.add(to: .main, forMode: .common)
             displayLink = link
         }

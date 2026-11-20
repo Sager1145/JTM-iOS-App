@@ -239,6 +239,18 @@ enum RailDisplayNetwork {
         of entries: [RailDisplayNetworkIndex.Entry],
         in index: RailDisplayNetworkIndex
     ) -> [RailDisplayNetworkIndex.Entry] {
+        closureScanningRegions(of: entries, in: index).entries
+    }
+
+    /// ``closure(of:in:)`` plus the regions whose entry lists it walked.
+    /// Only regions that hold a selected line are walked (the manifest also
+    /// lists regions that are disabled or far away; their line lists are
+    /// large and cannot contribute), in `index.orderedRegions` order, so the
+    /// output order is unchanged.
+    static func closureScanningRegions(
+        of entries: [RailDisplayNetworkIndex.Entry],
+        in index: RailDisplayNetworkIndex
+    ) -> (entries: [RailDisplayNetworkIndex.Entry], scannedRegions: [String]) {
         let allEntries = index.entryByID
         var selected = Set(entries.map(\.id))
         var frontier = Array(selected)
@@ -254,9 +266,15 @@ enum RailDisplayNetwork {
             }
             frontier = next
         }
-        return index.orderedRegions.flatMap { region in
-            (index.entriesByRegion[region] ?? []).filter { selected.contains($0.id) }
+        var selectedRegions: Set<String> = []
+        for id in selected { selectedRegions.formUnion(index.regionsByID[id] ?? []) }
+        var result: [RailDisplayNetworkIndex.Entry] = []
+        var scanned: [String] = []
+        for region in index.orderedRegions where selectedRegions.contains(region) {
+            scanned.append(region)
+            result.append(contentsOf: (index.entriesByRegion[region] ?? []).filter { selected.contains($0.id) })
         }
+        return (result, scanned)
     }
 
     static func popup(

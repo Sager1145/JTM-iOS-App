@@ -582,6 +582,10 @@ struct RailDisplayNetworkIndex: Sendable {
     /// Every entry by bare line id, for resolving `dependsOn` without
     /// rebuilding a dictionary on each camera callback.
     var entryByID: [String: Entry]
+    /// Every region that lists a line id. A bare id may appear in more than
+    /// one region (manifest keys are `region|id`), and the closure must keep
+    /// all of them, not only the one `entryByID` happens to hold.
+    var regionsByID: [String: [String]]
     /// Regions the builder loads whole rather than a line at a time
     /// (manifest A1) — `activateDisplayLines` folds every entry of one of
     /// these into a single batch once any of it is needed. A manifest
@@ -613,6 +617,10 @@ struct RailDisplayNetworkIndex: Sendable {
         for entries in entriesByRegion.values {
             for entry in entries { entryByID[entry.id] = entry }
         }
+        var regionsByID: [String: [String]] = [:]
+        for (region, entries) in entriesByRegion {
+            for entry in entries { regionsByID[entry.id, default: []].append(region) }
+        }
         let wholeRegions = Set(manifest.regions.compactMap { record -> String? in
             if let strategy = record.loadStrategy {
                 return strategy == "whole" ? record.region : nil
@@ -622,7 +630,7 @@ struct RailDisplayNetworkIndex: Sendable {
         return RailDisplayNetworkIndex(
             entriesByRegion: entriesByRegion, recordsByRegion: recordsByRegion,
             regionFloors: regionFloors, orderedRegions: manifest.regions.map(\.region),
-            entryByID: entryByID, wholeRegions: wholeRegions)
+            entryByID: entryByID, regionsByID: regionsByID, wholeRegions: wholeRegions)
     }
 }
 

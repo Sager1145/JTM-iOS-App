@@ -176,3 +176,31 @@ final class HaloLabel: UILabel {
         super.drawText(in: rect)
     }
 }
+
+/// The measured size of one name label, kept with the inputs it was measured
+/// from. `sizeThatFits` is type measurement; a settle that leaves the point
+/// size, text, content size category and bound unchanged must not repeat it.
+struct LabelMeasureCache {
+    struct Key: Equatable {
+        let text: String?
+        let pointSize: CGFloat
+        let contentSizeCategory: String
+        let bound: CGSize
+    }
+
+    private var key: Key?
+    private var size: CGSize = .zero
+    /// How many times the measure closure actually ran (read by tests).
+    private(set) var measureCount = 0
+
+    /// The cached size when `key` equals the last one measured; otherwise
+    /// `measure()` runs once and its result is kept.
+    mutating func size(for key: Key, measure: () -> CGSize) -> CGSize {
+        if self.key == key { return size }
+        let measured = measure()
+        self.key = key
+        size = measured
+        measureCount += 1
+        return measured
+    }
+}
