@@ -252,6 +252,12 @@ enum MapRideMarkers {
             ? ride.expectedSections[segment.segmentIndex] : nil
         let code = start ? section?.fromN02StationCode : section?.toN02StationCode
         guard (name?.isEmpty == false) || (code?.isEmpty == false) else { return true }
+        // Without authoritative `segment_index` values the index is only the
+        // stroke's position, so the stroke's own name must agree as well.
+        if !ride.indicesAreAuthoritative, let name, !name.isEmpty,
+           !RecordedRouteMapping.sameStation(code: nil, name: name, otherCode: nil, otherName: stop.name) {
+            return false
+        }
         return RecordedRouteMapping.sameStation(
             code: code, name: name, otherCode: stop.n02StationCode, otherName: stop.name)
     }

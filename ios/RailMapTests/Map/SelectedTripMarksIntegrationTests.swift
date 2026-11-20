@@ -27,7 +27,7 @@ struct SelectedTripMarksIntegrationTests {
     private static let settings = MapRideMarkers.Settings(
         terminalRadius: 6, passRadius: 3, stopCentreRadius: 3, markerStrokeScale: 1, focusBoost: 1)
 
-    private static func ride(part file: String) throws -> RiddenRouteStore.DrawnRide {
+    private static func ride(part file: String, authoritative: Bool = true, renameEnds: String? = nil) throws -> RiddenRouteStore.DrawnRide {
         var url = URL(fileURLWithPath: #filePath)
         for _ in 0..<4 { url.deleteLastPathComponent() }
         url.appendPathComponent("app/data/sample-data/\(file)")
@@ -35,13 +35,13 @@ struct SelectedTripMarksIntegrationTests {
         let segments = part.route.features.map { feature in
             RiddenRouteStore.DrawnSegment(
                 segmentIndex: feature.properties.segment_index,
-                from: feature.properties.from, to: feature.properties.to,
+                from: renameEnds ?? feature.properties.from, to: renameEnds ?? feature.properties.to,
                 coordinates: feature.geometry.coordinates.map { Coordinate(lon: $0[0], lat: $0[1]) },
                 country: part.train.region ?? "jp")
         }
         return RiddenRouteStore.drawnRide(
             part.train, country: part.train.region ?? "jp", segments: segments,
-            expectedSections: part.train.routeSections ?? [])
+            expectedSections: part.train.routeSections ?? [], indicesAreAuthoritative: authoritative)
     }
 
     private static func ranking(of ride: RiddenRouteStore.DrawnRide)
@@ -96,5 +96,37 @@ struct SelectedTripMarksIntegrationTests {
         #expect(close[.terminal] == 2)
         #expect(close[.stop] == 1)
         #expect(close[.pass] == 7)
+    }
+
+    @Test("each station of a stored trip carries its own class and a position on the drawn route")
+    func perStationClassAndPlace() throws {
+        let ride = try Self.ride(part: "part-067.json")
+        let drawn = MapRideMarkers.drawn(rides: [ride], settings: Self.settings)
+        let stations = MapRideMarkers.tierStations(of: ride, drawn: drawn)
+        func named(_ station: SelectedTripStationTiers.Station) -> String {
+            String(station.key.split(separator: "|", maxSplits: 2, omittingEmptySubsequences: false).last ?? "")
+        }
+        let classes = Dictionary(stations.map { (named($0), $0.stationClass) }, uniquingKeysWith: { first, _ in first })
+        #expect(classes[ride.stops.first?.name ?? ""] == .terminal)
+        #expect(classes[ride.stops.last?.name ?? ""] == .terminal)
+        let passNames = Set(ride.stops.filter { $0.callEvidence == .recordedPass }.map(\.name))
+        #expect(passNames.count == 18)
+        for name in passNames { #expect(classes[name] == .pass, "\(name)") }
+        // Every position is an end of one of the ride's own drawn strokes.
+        let ends = Set(ride.segments.flatMap { segment in
+            [segment.coordinates.first, segment.coordinates.last].compactMap { $0 }.map { "\($0.lat)|\($0.lon)" }
+        })
+        for station in stations {
+            #expect(ends.contains("\(station.coordinate.lat)|\(station.coordinate.lon)"), "\(named(station))")
+        }
+    }
+
+    @Test("strokes without authoritative indices take a position only when their name agrees")
+    func nonAuthoritativeIndicesNeedNames() throws {
+        let full = MapRideMarkers.stopPositions(
+            of: try Self.ride(part: "part-008.json", authoritative: false)).count
+        #expect(full == 8)
+        let renamed = try Self.ride(part: "part-008.json", authoritative: false, renameEnds: "存在しない駅")
+        #expect(MapRideMarkers.stopPositions(of: renamed).isEmpty)
     }
 }
