@@ -182,23 +182,11 @@ struct RideCard: View {
                         QuietActionGroup(
                             presentation: presentation,
                             arrangesJourneyControlsInOneRow: true,
+                            addNote: tripNoteFlow.map { flow in { flow.beginAdd(train: train) } },
                             perform: onPrimary,
                             performSecondary: onSecondary
                         )
                         .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
-
-                        if let tripNoteFlow {
-                            Button {
-                                tripNoteFlow.beginAdd(train: train)
-                            } label: {
-                                Label(localization.text("ios.tripNotes.add"),
-                                      systemImage: "exclamationmark.bubble")
-                            }
-                            .buttonStyle(.railSecondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, WorkspaceMenuMetrics.horizontalInset)
-                            .accessibilityIdentifier("tripNotesAdd")
-                        }
 
                         // The stop timeline and the service metadata — L3 and
                         // L4 (§3.1), below the Hero that answers L1 and L2.

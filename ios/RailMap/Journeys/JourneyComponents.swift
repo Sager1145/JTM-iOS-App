@@ -168,18 +168,14 @@ struct RouteTimingView: View {
     var usesSmallTimes = false
 
     @Environment(AppLocalization.self) private var localization
-    /// The two bands an endpoint prints in: one line of `.headline` for the
-    /// station and one of `.title3` for the time.
-    ///
-    /// The connector reserves the same two, which is what puts its arrow on
-    /// the STATIONS' line and the elapsed time on the TIMES' line instead of
-    /// both floating between the two. Scaled rather than fixed for the reason
-    /// every other measured line in this app is: at an accessibility size the
-    /// bands grow and the connector has to grow with them, or the row that was
-    /// aligned at `.large` is a stack of three drifting things at `.xxxLarge`.
-    @ScaledMetric(relativeTo: .headline) private var nameLineHeight: CGFloat = 22
-    @ScaledMetric(relativeTo: .title3) private var timeLineHeight: CGFloat = 25
-    @ScaledMetric(relativeTo: .caption) private var smallTimeLineHeight: CGFloat = 16
+    /// The two fonts an endpoint prints in, and the only definition of them.
+    /// `endpoint` sets its station name and time in these, and the connector
+    /// builds its two bands from a hidden line in these same fonts, so the
+    /// arrow's centre is the station line's centre and the elapsed time's
+    /// centre is the time line's centre at every Dynamic Type size, without
+    /// any measured constant that could drift from what `endpoint` renders.
+    private var nameFont: Font { .headline }
+    private var timeFont: Font { (usesSmallTimes ? Font.caption : Font.title3).weight(.semibold) }
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -243,14 +239,13 @@ struct RouteTimingView: View {
             // the connector, that `ViewThatFits` is protecting when it drops
             // to the stacked form.
             //
-            // The two bands and the 2-point gap between them are `endpoint`'s
-            // own, so this column is the same two lines the endpoints either
-            // side of it are: arrow beside the stations, minutes beside the
-            // times.
+            // Each band is one hidden line in `endpoint`'s own font (`nameFont`,
+            // `timeFont`) with the arrow / minutes centred on it, and the gap
+            // between them is `endpoint`'s 2 points, so this column is the same
+            // two lines the endpoints either side of it are.
             VStack(spacing: 2) {
-                arrow(direction)
-                    .frame(height: nameLineHeight)
-                elapsedLabel(band: usesSmallTimes ? smallTimeLineHeight : timeLineHeight)
+                band(font: nameFont) { arrow(direction) }
+                elapsedLabel(font: timeFont)
             }
         case .downwards:
             // Beside the arrow here, for the mirror-image reason: the stacked
@@ -259,7 +254,7 @@ struct RouteTimingView: View {
             // columns left to line up with.
             HStack(spacing: RailSpacing.s4) {
                 arrow(direction)
-                elapsedLabel(band: nil)
+                elapsedLabel(font: nil)
             }
         }
     }
@@ -271,17 +266,29 @@ struct RouteTimingView: View {
             .accessibilityHidden(true)
     }
 
-    /// The elapsed time, centred in the band it is given.
+    /// One line tall in `font`, with `content` centred on it. The line is a
+    /// hidden `Text` set in the endpoint's font, so the band is exactly as tall
+    /// as the endpoint's real line.
+    private func band<Content: View>(
+        font: Font, @ViewBuilder content: () -> Content
+    ) -> some View {
+        ZStack {
+            Text("0").font(font).hidden()
+            content()
+        }
+    }
+
+    /// The elapsed time, centred on the endpoints' time line when `font` (the
+    /// endpoint's time font) is given.
     ///
-    /// The band is passed in rather than applied outside, because a `nil`
-    /// duration must take no height at all: a frame wrapped around the empty
-    /// case would reserve a line for a number that is not there, and the row
-    /// would open a gap under the arrow on exactly the records that have the
-    /// least to say.
+    /// The band is applied here rather than outside, because a `nil` duration
+    /// must take no height at all: a frame wrapped around the empty case would
+    /// reserve a line for a number that is not there, and the row would open a
+    /// gap under the arrow on exactly the records that have the least to say.
     @ViewBuilder
-    private func elapsedLabel(band: CGFloat?) -> some View {
+    private func elapsedLabel(font: Font?) -> some View {
         if let elapsed {
-            Text(elapsed)
+            let label = Text(elapsed)
                 .font(.caption.weight(.semibold))
                 .monospacedDigit()
                 .foregroundStyle(.secondary)
@@ -290,8 +297,12 @@ struct RouteTimingView: View {
                 // honestly whether it fits — the same reason every label in
                 // `QuietActionGroup` carries it.
                 .fixedSize()
-                .frame(height: band)
                 .accessibilityHidden(true)
+            if let font {
+                band(font: font) { label }
+            } else {
+                label
+            }
         }
     }
 
@@ -327,14 +338,14 @@ struct RouteTimingView: View {
     ) -> some View {
         VStack(alignment: alignment, spacing: 2) {
             Text(localization.stationName(name, code: code, region: region))
-                .font(.headline)
+                .font(nameFont)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(
                     alignment == .center ? .center : alignment == .trailing ? .trailing : .leading)
             if let time {
                 HStack(spacing: RailSpacing.s4) {
                     Text(time.shown)
-                        .font((usesSmallTimes ? Font.caption : Font.title3).weight(.semibold))
+                        .font(timeFont)
                         .monospacedDigit()
                         .foregroundStyle(.secondary)
                     if let scheduled = time.scheduled {
@@ -589,6 +600,10 @@ struct QuietActionGroup: View {
     /// primary, playback, edit, then More. Other surfaces retain the stacked
     /// layout because their action sets are not constrained to those roles.
     var arrangesJourneyControlsInOneRow = false
+    /// "Add note" for the selected trip. Present, it is the fifth control on
+    /// the one-row layout (icon-only, after Edit) and a labelled button in the
+    /// stacked layout, so the action is never lost at any text size.
+    var addNote: (() -> Void)?
     var perform: (JourneyPresentation.PrimaryAction) -> Void
     var performSecondary: (SecondaryAction) -> Void
 
@@ -621,19 +636,35 @@ struct QuietActionGroup: View {
             //      the quiet verbs become the icons they already are next to
             //      編集, which is the degradation a system toolbar makes when
             //      it narrows
+            //   3. COMPACT: the same short label with less padding, and the
+            //      circles laid out at their 40-pt visual width with the 44-pt
+            //      hit area extended into the gaps. Five controls in about
+            //      262 pt for "Focus", so a 300-pt docked panel (~268 pt
+            //      inside its insets) keeps the label
+            //   4. last resort: the filled primary drops to its icon, so the
+            //      row cannot overflow when a label is longer than candidate 3
+            //      allows (フォーカス). The user's decision of 2026-11-15: the
+            //      label goes only when no labelled candidate fits
             //
-            // There is deliberately no third, stacked candidate at these text
+            // Add note is the fifth control, a circle, in every candidate.
+            // There is deliberately no stacked candidate at these text
             // sizes. A stacked group in a 300-point landscape sidebar puts its
             // second row under the floating tab bar, so "it fitted" was true
             // of the layout and false of the screen — a fallback that hides
             // three of the four controls is worse than the crowding it was
-            // avoiding. Candidate 2 is four fixed-width controls and always
+            // avoiding. Candidate 4 is five fixed-width controls and always
             // fits; stacking belongs to the accessibility sizes below, where
             // the panel is tall and the tab bar is not over the content.
             ViewThatFits(in: .horizontal) {
                 journeyControlRow(quiet, more: more, labelsQuietActions: true)
                 journeyControlRow(
                     quiet, more: more, labelsQuietActions: false, shortPrimary: true)
+                journeyControlRow(
+                    quiet, more: more, labelsQuietActions: false, shortPrimary: true,
+                    compact: true)
+                journeyControlRow(
+                    quiet, more: more, labelsQuietActions: false, shortPrimary: true,
+                    compact: true, iconOnlyPrimary: true)
             }
         } else if arrangesJourneyControlsInOneRow {
             // An accessibility text size does not get a narrower font, it gets
@@ -656,7 +687,7 @@ struct QuietActionGroup: View {
             if let primary = presentation.primaryAction {
                 primaryButton(primary)
             }
-            if !quiet.isEmpty || !more.isEmpty {
+            if !quiet.isEmpty || !more.isEmpty || addNote != nil {
                 quietRow(quiet, more: more)
             }
         }
@@ -671,29 +702,36 @@ struct QuietActionGroup: View {
     /// not say what it does.
     private func journeyControlRow(
         _ quiet: [SecondaryAction], more: [SecondaryAction],
-        labelsQuietActions: Bool, shortPrimary: Bool = false
+        labelsQuietActions: Bool, shortPrimary: Bool = false,
+        compact: Bool = false, iconOnlyPrimary: Bool = false
     ) -> some View {
         HStack(spacing: RailSpacing.s8) {
             if let primary = presentation.primaryAction {
-                primaryButton(primary, short: shortPrimary)
-                    .layoutPriority(1)
+                if iconOnlyPrimary {
+                    journeyRowIconPrimaryButton(primary)
+                } else {
+                    primaryButton(primary, short: shortPrimary, compact: compact)
+                        .layoutPriority(1)
+                }
             }
             ForEach(quiet, id: \.self) { action in
                 if action == .edit || !labelsQuietActions {
-                    journeyRowIconButton(action)
+                    journeyRowIconButton(action, compact: compact)
                 } else {
                     quietButton(action, expands: false)
                         .layoutPriority(1)
                 }
             }
-            if !more.isEmpty { journeyRowMoreMenu(more) }
+            if addNote != nil { journeyRowAddNoteButton(compact: compact) }
+            if !more.isEmpty { journeyRowMoreMenu(more, compact: compact) }
         }
         // All circular commands occupy their actual 40-point visual bounds.
         .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private func primaryButton(
-        _ action: JourneyPresentation.PrimaryAction, short: Bool = false
+        _ action: JourneyPresentation.PrimaryAction, short: Bool = false,
+        compact: Bool = false
     ) -> some View {
         let appearance = action.appearance(localization)
         let title = short ? appearance.shortLabel : appearance.label
@@ -712,7 +750,11 @@ struct QuietActionGroup: View {
         // A compact visual button with a 44-point landing area (built into the style).
         // The action stays easy to hit without reading as a
         // full-width call-to-action that overwhelms the journey itself.
-        .buttonStyle(.railPrimary(visualHeight: actionButtonHeight))
+        .buttonStyle(
+            compact
+                ? .railPrimary(visualHeight: actionButtonHeight, horizontalPadding: 6)
+                : .railPrimary(visualHeight: actionButtonHeight)
+        )
         .accessibilityLabel(Text(appearance.label))
         // Which action this IS varies by state — 経路 / 播放 / 聚焦 — and its
         // label is the reader's language on top of that, so a harness has no
@@ -728,12 +770,14 @@ struct QuietActionGroup: View {
         if dynamicTypeSize.isAccessibilitySize {
             VStack(alignment: .leading, spacing: RailSpacing.s8) {
                 ForEach(quiet, id: \.self) { quietButton($0, multiline: true) }
+                addNoteButton(multiline: true)
                 if !more.isEmpty { moreMenu(more) }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } else {
             HStack(spacing: RailSpacing.s8) {
                 ForEach(quiet, id: \.self) { quietButton($0) }
+                addNoteButton(multiline: false)
                 if !more.isEmpty { moreMenu(more) }
             }
         }
@@ -757,12 +801,37 @@ struct QuietActionGroup: View {
         .accessibilityLabel(Text(appearance.label))
     }
 
-    private func journeyRowIconButton(_ action: SecondaryAction) -> some View {
+    /// Last-resort primary: the same filled tint, the action's icon only, in a
+    /// 40-pt circle with the 44-pt hit area like its neighbours. The full label
+    /// stays as the accessibility label and the identifier is unchanged.
+    private func journeyRowIconPrimaryButton(
+        _ action: JourneyPresentation.PrimaryAction
+    ) -> some View {
+        let appearance = action.appearance(localization)
+        return Button { perform(action) } label: {
+            Image(systemName: appearance.systemImage)
+                .railGlyph(.control)
+                .foregroundStyle(Color.white)
+                .frame(
+                    width: SheetIconButton<Image>.visualSide,
+                    height: SheetIconButton<Image>.visualSide)
+                .background(.tint, in: Circle())
+                .modifier(CompactHitArea(compact: true))
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(RailPressStyle())
+        .accessibilityLabel(Text(appearance.label))
+        .accessibilityIdentifier("journeyPrimaryAction")
+    }
+
+    private func journeyRowIconButton(
+        _ action: SecondaryAction, compact: Bool = false
+    ) -> some View {
         let appearance = action.appearance(localization)
         return Button {
             performSecondary(action)
         } label: {
-            journeyRowIcon(appearance.systemImage)
+            journeyRowIcon(appearance.systemImage, compact: compact)
                 .accessibilityHidden(true)
         }
         .buttonStyle(RailPressStyle())
@@ -770,11 +839,46 @@ struct QuietActionGroup: View {
         .accessibilityIdentifier(action == .edit ? "journeyMenuEdit" : "journeySecondary-\(action)")
     }
 
-    private func journeyRowMoreMenu(_ actions: [SecondaryAction]) -> some View {
+    private var addNoteLabel: String { localization.text("ios.tripNotes.add") }
+
+    /// The fifth circle of the one-row layout: same icon, size and press style
+    /// as `journeyRowIconButton`. The identifier is the one the UI tests tap.
+    private func journeyRowAddNoteButton(compact: Bool) -> some View {
+        Button {
+            addNote?()
+        } label: {
+            journeyRowIcon("exclamationmark.bubble", compact: compact)
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(RailPressStyle())
+        .accessibilityLabel(Text(addNoteLabel))
+        .accessibilityIdentifier("tripNotesAdd")
+    }
+
+    /// Stacked layouts have the room for the words, so the action keeps them.
+    @ViewBuilder
+    private func addNoteButton(multiline: Bool) -> some View {
+        if let addNote {
+            Button(action: addNote) {
+                Label(addNoteLabel, systemImage: "exclamationmark.bubble")
+                    .font(.footnote.weight(.semibold)) // ui-token-ok: compact action label
+                    .lineLimit(multiline ? nil : 1)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: multiline)
+            }
+            .buttonStyle(.railSecondary(visualHeight: actionButtonHeight))
+            .accessibilityLabel(Text(addNoteLabel))
+            .accessibilityIdentifier("tripNotesAdd")
+        }
+    }
+
+    private func journeyRowMoreMenu(
+        _ actions: [SecondaryAction], compact: Bool = false
+    ) -> some View {
         Menu {
             menuItems(actions)
         } label: {
-            journeyRowIcon("ellipsis")
+            journeyRowIcon("ellipsis", compact: compact)
         }
         // The same feedback as `journeyRowIconButton` beside it. These two are
         // the same circle at the same size in the same row, and `.plain` gave
@@ -789,7 +893,7 @@ struct QuietActionGroup: View {
 
     /// Icon-only menu controls share the header's compact visual size. Accent-coloured glyphs match the quiet
     /// playback button while the neutral fill keeps the primary action unique.
-    private func journeyRowIcon(_ systemImage: String) -> some View {
+    private func journeyRowIcon(_ systemImage: String, compact: Bool = false) -> some View {
         Image(systemName: systemImage)
             // A fixed point size, not `.subheadline`. A text style scales with
             // Dynamic Type and this glyph lives in a 40-point circle that does
@@ -803,9 +907,7 @@ struct QuietActionGroup: View {
                 width: SheetIconButton<Image>.visualSide,
                 height: SheetIconButton<Image>.visualSide)
             .railMenuControlSurface(in: Circle())
-            .frame(minWidth: WorkspaceMenuMetrics.touchSide,
-                   minHeight: WorkspaceMenuMetrics.touchSide)
-            .contentShape(.rect)
+            .modifier(CompactHitArea(compact: compact))
     }
 
     private func moreMenu(_ actions: [SecondaryAction]) -> some View {
@@ -898,6 +1000,32 @@ private struct JourneyRowCardSurface: ViewModifier {
                 .railGlass(in: shape)
         } else {
             content
+        }
+    }
+}
+
+
+/// The landing area of a 40-pt circle in the journey control row. Normally the
+/// layout frame is 44 pt. In the compact candidate the layout frame is the
+/// 40-pt visual and the hit shape extends 2 pt on every side into the 8-pt
+/// gaps, so the tappable size stays 44 pt (`WorkspaceMenuMetrics.touchSide`)
+/// while five controls take less width.
+private struct CompactHitArea: ViewModifier {
+    var compact: Bool
+
+    func body(content: Content) -> some View {
+        if compact {
+            let outset = (WorkspaceMenuMetrics.touchSide - SheetIconButton<Image>.visualSide) / 2
+            content
+                .frame(
+                    width: SheetIconButton<Image>.visualSide,
+                    height: SheetIconButton<Image>.visualSide)
+                .contentShape(Rectangle().inset(by: -outset))
+        } else {
+            content
+                .frame(minWidth: WorkspaceMenuMetrics.touchSide,
+                       minHeight: WorkspaceMenuMetrics.touchSide)
+                .contentShape(.rect)
         }
     }
 }
