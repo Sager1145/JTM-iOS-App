@@ -27,6 +27,14 @@ struct RegressionGuardAnnotationChurn {
         #expect(text.contains("self.departures[id]?.token == departure.token"))
     }
 
+    @Test func interruptedDepartureFadeLeavesMapKitAtOnce() {
+        let text = SourceFiles.textRecording("RailMap/Map/MapAnnotationReconciler.swift")
+        #expect(text.contains("{ [weak self, weak mapView, weak view] finished in"))
+        #expect(text.contains("if finished {"))
+        #expect(text.contains("mapView?.removeAnnotations([annotation])"))
+        #expect(text.contains("completion: ((Bool) -> Void)? = nil"))
+    }
+
     @Test func overlayDrawnTripDotsAreNotAddedAsAnnotations() throws {
         let text = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
         #expect(text.contains("func placeDot(_ dot: RideStationAnnotation)"))

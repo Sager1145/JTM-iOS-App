@@ -79,4 +79,28 @@ struct RegressionGuardDisplayClosureBehaviourTests {
         let new = RailDisplayNetwork.closure(of: sample, in: index).map(\.id)
         #expect(new == Self.legacyClosure(of: sample, in: index).map(\.id))
     }
+
+    @Test("the same line id in two regions keeps both regions' lines")
+    func sameIDInTwoRegions() throws {
+        var index = RailDisplayNetworkIndex.lineIndex(for: try RailDisplayNetwork.manifest())
+        let regions = index.orderedRegions.filter { !(index.entriesByRegion[$0] ?? []).isEmpty }
+        try #require(regions.count >= 2)
+        let source = try #require(index.entriesByRegion[regions[0]]?.first)
+        let other = regions[1]
+        // The twin carries the same bare id in a second region, as `region|id` keys allow.
+        let twin = RailDisplayNetworkIndex.Entry(
+            id: source.id, region: other, mapRect: source.mapRect,
+            minimumCameraZoom: source.minimumCameraZoom, chunk: source.chunk,
+            overview: source.overview, dependsOn: [], format: source.format,
+            temporalBank: source.temporalBank)
+        index.entriesByRegion[other, default: []].append(twin)
+        index.regionsByID[source.id, default: []].append(other)
+        index.entryByID[source.id] = twin   // last region wins, as in lineIndex
+        let legacy = Self.legacyClosure(of: [source], in: index)
+        let new = RailDisplayNetwork.closureScanningRegions(of: [source], in: index)
+        #expect(legacy.count >= 2)
+        #expect(new.entries.map(\.region) == legacy.map(\.region))
+        #expect(new.entries.map(\.id) == legacy.map(\.id))
+        #expect(Set(new.scannedRegions).isSuperset(of: [regions[0], other]))
+    }
 }

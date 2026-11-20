@@ -267,7 +267,7 @@ enum RailDisplayNetwork {
             frontier = next
         }
         var selectedRegions: Set<String> = []
-        for id in selected { if let entry = allEntries[id] { selectedRegions.insert(entry.region) } }
+        for id in selected { selectedRegions.formUnion(index.regionsByID[id] ?? []) }
         var result: [RailDisplayNetworkIndex.Entry] = []
         var scanned: [String] = []
         for region in index.orderedRegions where selectedRegions.contains(region) {

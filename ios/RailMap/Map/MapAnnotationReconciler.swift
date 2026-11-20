@@ -200,14 +200,21 @@ final class MapAnnotationReconciler {
         // A disappearing caption must not intercept a tap on the new one.
         view.isUserInteractionEnabled = false
         batch.pending += 1
-        fade(view, to: 0, duration: duration) { [weak self, weak mapView, weak view] in
+        fade(view, to: 0, duration: duration) { [weak self, weak mapView, weak view] finished in
             batch.pending -= 1
             if let self, self.departures[id]?.token == departure.token {
                 self.departures.removeValue(forKey: id)
                 if let view, view.annotation.map({ ObjectIdentifier($0) }) == id {
                     view.isUserInteractionEnabled = departure.interactionEnabled
                 }
-                batch.survivors.append(annotation)
+                if finished {
+                    batch.survivors.append(annotation)
+                } else {
+                    // The fade was cut short (view recycled or off screen):
+                    // leave MapKit now so the retired annotation cannot be
+                    // shown again at full opacity until the batch ends.
+                    mapView?.removeAnnotations([annotation])
+                }
             }
             if batch.pending == 0, !batch.survivors.isEmpty {
                 mapView?.removeAnnotations(batch.survivors)
@@ -218,18 +225,18 @@ final class MapAnnotationReconciler {
     }
 
     private func fade(_ view: MKAnnotationView, to alpha: CGFloat,
-                      duration: TimeInterval, completion: (() -> Void)? = nil) {
+                      duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
         guard duration > 0 else {
             view.layer.removeAnimation(forKey: "opacity")
             view.alpha = alpha
-            completion?()
+            completion?(true)
             return
         }
         UIView.animate(withDuration: duration, delay: 0,
                        options: [.beginFromCurrentState, .curveEaseOut, .allowUserInteraction]) {
             view.alpha = alpha
-        } completion: { _ in
-            completion?()
+        } completion: { finished in
+            completion?(finished)
         }
     }
 
