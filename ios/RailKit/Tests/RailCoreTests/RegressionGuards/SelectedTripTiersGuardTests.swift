@@ -8,9 +8,9 @@ import Testing
 /// label prints the registry-identity word ("unresolved").
 @Suite("RegressionGuardSelectedTripTiers")
 struct RegressionGuardSelectedTripTiers {
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let labels = SourceFiles.textRecording("RailMap/Map/MapStationLabelCoordinator.swift")
-    private static let markers = SourceFiles.textRecording("RailMap/Map/MapRideMarkers.swift")
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var labels: String { SourceFiles.textRecording("RailMap/Map/MapStationLabelCoordinator.swift") }
+    private static var markers: String { SourceFiles.textRecording("RailMap/Map/MapRideMarkers.swift") }
 
     private static func body(_ source: String, from start: String, to end: String) throws -> Substring {
         let from = try #require(source.range(of: start))

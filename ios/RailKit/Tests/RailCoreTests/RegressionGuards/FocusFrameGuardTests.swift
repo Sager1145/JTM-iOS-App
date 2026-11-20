@@ -8,13 +8,13 @@ import Testing
 /// the frames feeding it are stored without moving the camera.
 @Suite("RegressionGuardFocusFrameWiring")
 struct RegressionGuardFocusFrameWiring {
-    private static let controller = SourceFiles.textRecording("RailMap/Map/RailMapController.swift")
-    private static let focusFrame = SourceFiles.textRecording("RailMap/Map/RailMapController+FocusFrame.swift")
-    private static let coordinator = SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift")
-    private static let playback = SourceFiles.textRecording("RailMap/Map/MapPlaybackLayer.swift")
-    private static let workspace = SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift")
-    private static let phoneChrome = SourceFiles.textRecording("RailMap/Workspace/ResidentMapChrome.swift")
-    private static let host = SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift")
+    private static var controller: String { SourceFiles.textRecording("RailMap/Map/RailMapController.swift") }
+    private static var focusFrame: String { SourceFiles.textRecording("RailMap/Map/RailMapController+FocusFrame.swift") }
+    private static var coordinator: String { SourceFiles.textRecording("RailMap/Map/RailMapCoordinator.swift") }
+    private static var playback: String { SourceFiles.textRecording("RailMap/Map/MapPlaybackLayer.swift") }
+    private static var workspace: String { SourceFiles.textRecording("RailMap/Workspace/RailWorkspaceView.swift") }
+    private static var phoneChrome: String { SourceFiles.textRecording("RailMap/Workspace/ResidentMapChrome.swift") }
+    private static var host: String { SourceFiles.textRecording("RailMap/Diagnostics/AppControl/AppControlHost.swift") }
 
     /// Code lines only: a comment may talk about `edgePadding:` freely.
     private static func codeLines(_ source: String) -> [String] {
