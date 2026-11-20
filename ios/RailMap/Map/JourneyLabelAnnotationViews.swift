@@ -4,6 +4,8 @@ import SwiftUI
 
 final class RideLabelAnnotationView: MKAnnotationView {
     private let text = HaloLabel()
+    private var measureCache = LabelMeasureCache()
+    private var appliedFontSize: CGFloat?
     private var item: RideLabelAnnotation?
     private var scale: CGFloat = 1
     private var zoom: Double = 0
@@ -80,11 +82,20 @@ final class RideLabelAnnotationView: MKAnnotationView {
         let dark = traitCollection.userInterfaceStyle == .dark
         let points = CGFloat(
             item.tier.textSize(atZoom: RailStyle.mapLibreZoom(from: zoom)))
-        text.font = MapLabelStyle.font(ofSize: points)
+        if appliedFontSize != points {
+            text.font = MapLabelStyle.font(ofSize: points)
+            appliedFontSize = points
+        }
         text.textColor = MapLabelStyle.ink(dark: dark)
         text.haloColor = MapLabelStyle.halo(dark: dark)
         let inset = MapLabelStyle.haloWidth
-        let size = text.sizeThatFits(CGSize(width: 190, height: 24))
+        let bound = CGSize(width: 190, height: 24)
+        let size = measureCache.size(for: .init(
+            text: text.text, pointSize: points,
+            contentSizeCategory: traitCollection.preferredContentSizeCategory.rawValue,
+            bound: bound)) {
+            text.sizeThatFits(bound)
+        }
         let height = max(size.height, 16)
         let width = size.width + inset * 2
         text.frame = CGRect(x: 0, y: 0, width: width, height: height)
