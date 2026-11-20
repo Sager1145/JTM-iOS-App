@@ -610,6 +610,9 @@ final class AppControlHost: AppControlDriver {
                         "overlayStations": .number(Double(dots.overlayStations)),
                     ]
                 } ?? .null,
+                "selectedTripMarks": MapRenderProbe.selectedTripMarks.map { marks in
+                    .object(marks.mapValues { .number(Double($0)) })
+                } ?? .null,
                 "matching": [
                     "runs": .number(Double(MapRenderProbe.matchingRuns)),
                     "skipped": .number(Double(MapRenderProbe.matchingSkipped)),
