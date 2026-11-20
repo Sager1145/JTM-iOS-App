@@ -36,9 +36,11 @@ enum RouteGuideStrings {
             .zhHant: "這些是候選走向，不能證明路線唯一。路網覆蓋尚未核實或搜尋受限；請選擇能夠確認的走向，或保留待確認。",
             .ja: "候補は経路が唯一である証明ではありません。網羅性が未確認または探索が制限されています。確認できる経路を選ぶか、確認待ちにしてください。",
         ],
-        "ios.routeGuide.inferredPass": [
-            .en: "Inferred passing station · time unknown", .zhHans: "推测通过站 · 通过、时刻未知",
-            .zhHant: "推測通過站 · 通過、時刻未知", .ja: "推定通過駅・時刻不明",
+        // A station the route planner put between two calls. Nothing says whether
+        // the train stopped there, so the text must not say "passing".
+        "ios.routeGuide.onRouteUnknown": [
+            .en: "On route · stop or pass not recorded", .zhHans: "途经站 · 未记录停车或通过",
+            .zhHant: "途經站 · 未記錄停車或通過", .ja: "経路上の駅・停車か通過かは未記録",
         ],
         "ios.routeGuide.passUnknown": [
             .en: "Passing · time unknown", .zhHans: "通过、时刻未知", .zhHant: "通過、時刻未知", .ja: "通過・時刻不明",

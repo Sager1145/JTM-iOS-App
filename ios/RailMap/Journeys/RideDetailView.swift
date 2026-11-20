@@ -576,16 +576,19 @@ struct RideDetailContent: View {
                              lines: [(name: String, color: Color)], identity: StationLabel.Text,
                              showsLineNames: Bool) -> some View {
         let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
+        // Stop: filled 12 pt. Recorded pass: hollow 9 pt. On the route with no
+        // record of stopping or passing: a small filled dot, no pass marker.
+        let evidence = stop.callEvidence
+        let markerSize: CGFloat = evidence == .stop ? 12 : evidence == .recordedPass ? 9 : 6
         return HStack(alignment: .top, spacing: RailSpacing.s12) {
             VStack(spacing: 0) {
                 Circle()
-                    .fill(stop.stopType == "pass_through" ? Color.clear : markerColor)
+                    .fill(evidence == .recordedPass ? Color.clear : markerColor)
                     .overlay {
-                        Circle().stroke(stop.stopType == "pass_through" ? markerColor : .white,
+                        Circle().stroke(evidence == .recordedPass ? markerColor : .white,
                                         lineWidth: 1)
                     }
-                    .frame(width: stop.stopType == "pass_through" ? 9 : 12,
-                           height: stop.stopType == "pass_through" ? 9 : 12)
+                    .frame(width: markerSize, height: markerSize)
                     .opacity(stop.rideSegment ? 1 : 0.4)
                     .frame(width: 18, height: 18)
                     .accessibilityHidden(true)
@@ -614,7 +617,7 @@ struct RideDetailContent: View {
                                 stop.name, code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
                                 region: detailRegion),
                             regionCode: detailRegion.code, localization: localization))
-                            .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
+                            .font(.body.weight(evidence == .stop ? .semibold : .regular))
                             .foregroundStyle(stop.rideSegment ? .primary : .secondary)
                             .lineLimit(3)
                             .fixedSize(horizontal: false, vertical: true)
@@ -636,10 +639,12 @@ struct RideDetailContent: View {
                             .fixedSize()
                     }
                 }
-                if stop.stopType == "pass_through",
-                   stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
-                    Text(localization.text(stop.routeEditing?.generatedBy != nil
-                        ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+                if evidence == .onRouteUnknown {
+                    Text(localization.text("ios.routeGuide.onRouteUnknown"))
+                        .railText(.tertiary)
+                } else if evidence == .recordedPass,
+                          stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
+                    Text(localization.text("ios.routeGuide.passUnknown"))
                         .railText(.tertiary)
                 }
                 if showsLineNames {
@@ -781,7 +786,7 @@ struct RideDetailContent: View {
     /// so the column does not reshuffle from row to row.
     private func timeColumn(_ stop: Stop) -> some View {
         VStack(alignment: .trailing, spacing: 2) {
-            if stop.stopType == "pass_through",
+            if stop.callEvidence == .recordedPass,
                stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
                 Text("レ")
                     .font(.subheadline.monospaced())
@@ -1111,11 +1116,13 @@ struct RideDetailContent: View {
 
     /// §7.4's reading order: 站名，类型，到达时间，出发时间，是否乘坐.
     private func accessibilityLabel(for stop: Stop, stationSpoken: String) -> String {
-        var values = [stationSpoken, stopTypeName(stop.stopType)]
-        if stop.stopType == "pass_through",
+        let evidence = stop.callEvidence
+        // A station the planner put on the route is not announced as a pass.
+        var values = [stationSpoken, evidence == .onRouteUnknown
+            ? localization.text("ios.routeGuide.onRouteUnknown") : stopTypeName(stop.stopType)]
+        if evidence == .recordedPass,
            stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
-            values.append(localization.text(stop.routeEditing?.generatedBy != nil
-                ? "ios.routeGuide.inferredPass" : "ios.routeGuide.passUnknown"))
+            values.append(localization.text("ios.routeGuide.passUnknown"))
         }
         if let arrival = stop.arrival, !arrival.isEmpty {
             values.append(
