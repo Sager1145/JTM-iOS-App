@@ -17,12 +17,20 @@ struct SelectedTripStationTiersTests {
             Tiers.Station(
                 key: stop.name,
                 stationClass: Tiers.stationClass(
-                    stopType: stop.stopType,
+                    callEvidence: Self.evidence(stop.stopType, generated: inferred.contains(stop.name)),
                     isBoundary: index == 0 || index == stops.count - 1,
-                    changesLine: transfers.contains(stop.name),
-                    isGenerated: inferred.contains(stop.name), hasTime: false),
+                    changesLine: transfers.contains(stop.name)),
                 coordinate: Coordinate(lon: stop.lon, lat: stop.lat))
         }
+    }
+
+    /// The evidence the app reads from a stored stop: the stop's own
+    /// `callEvidence`, with the planner's marker when `generated`.
+    private static func evidence(_ stopType: String?, generated: Bool = false) -> StopCallEvidence? {
+        guard let stopType else { return nil }
+        var stop = Stop(name: "x", stopType: stopType, rideSegment: true)
+        if generated { stop.routeEditing = Stop.RouteEditingMetadata(generatedBy: "route_guide") }
+        return stop.callEvidence
     }
 
     private func totals(_ ranking: Tiers.Ranking, _ scale: Double, _ layers: Tiers.Layers = .init())
@@ -135,27 +143,22 @@ struct SelectedTripStationTiersTests {
     }
 
     @Test func unknownClassIsItsOwnStateNotAPass() {
-        #expect(Tiers.stationClass(
-            stopType: nil, isBoundary: false, changesLine: false, isGenerated: false, hasTime: false) == .onRoute)
-        // The timeline's "inferred passing station": generated, no time.
-        #expect(Tiers.stationClass(
-            stopType: "pass_through", isBoundary: false, changesLine: false,
-            isGenerated: true, hasTime: false) == .onRoute)
-        #expect(Tiers.stationClass(
-            stopType: "pass_through", isBoundary: false, changesLine: false,
-            isGenerated: true, hasTime: true) == .pass)
-        #expect(Tiers.stationClass(
-            stopType: "pass_through", isBoundary: false, changesLine: true,
-            isGenerated: false, hasTime: false) == .pass)
-        #expect(Tiers.stationClass(
-            stopType: "passenger_stop", isBoundary: false, changesLine: false,
-            isGenerated: false, hasTime: false) == .stop)
-        #expect(Tiers.stationClass(
-            stopType: "passenger_stop", isBoundary: false, changesLine: true,
-            isGenerated: false, hasTime: false) == .transfer)
-        #expect(Tiers.stationClass(
-            stopType: "pass_through", isBoundary: true, changesLine: false,
-            isGenerated: false, hasTime: false) == .terminal)
+        func cls(_ type: String?, generated: Bool = false, boundary: Bool = false, change: Bool = false)
+            -> Tiers.StationClass
+        {
+            Tiers.stationClass(
+                callEvidence: Self.evidence(type, generated: generated),
+                isBoundary: boundary, changesLine: change)
+        }
+        #expect(cls(nil) == .onRoute)
+        // A planner-filled pass is on-route whatever times it carries: the
+        // class comes from `Stop.callEvidence`, as the timeline does.
+        #expect(cls("pass_through", generated: true) == .onRoute)
+        #expect(cls("pass_through", generated: true, change: true) == .onRoute)
+        #expect(cls("pass_through", change: true) == .pass)
+        #expect(cls("passenger_stop") == .stop)
+        #expect(cls("passenger_stop", change: true) == .transfer)
+        #expect(cls("pass_through", boundary: true) == .terminal)
 
         let inferred = Set(Fixtures.hayabusa.filter { $0.stopType == "pass_through" }.prefix(5).map(\.name))
         let ranking = Tiers.rank(stations(Fixtures.hayabusa, inferred: inferred))

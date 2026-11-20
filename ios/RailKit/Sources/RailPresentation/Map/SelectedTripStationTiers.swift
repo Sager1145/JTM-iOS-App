@@ -194,23 +194,23 @@ public enum SelectedTripStationTiers {
 
     // MARK: - classification
 
-    /// A trip stop's class, from the same fields the trip card's timeline
-    /// reads (`Stop.stopType`, `Stop.routeEditing.generatedBy`, its times).
+    /// A trip stop's class, from the same evidence the trip card's timeline
+    /// reads (`Stop.callEvidence`), so the map and the timeline cannot
+    /// classify a station differently.
     ///
-    /// A pass-through that the route guide generated and that carries no time
-    /// is the timeline's "inferred passing station": nothing recorded says the
-    /// train ran through, so it is ``StationClass/onRoute``. A station with no
-    /// stop record at all (`stopType == nil`, a route-section endpoint) is
-    /// on-route for the same reason.
+    /// A planner-filled station that nothing records as a stop or a pass
+    /// (``StopCallEvidence/onRouteUnknown``) is ``StationClass/onRoute``. A
+    /// station with no stop record at all (`callEvidence == nil`, a
+    /// route-section endpoint) is on-route for the same reason.
     public static func stationClass(
-        stopType: String?, isBoundary: Bool, changesLine: Bool, isGenerated: Bool, hasTime: Bool
+        callEvidence: StopCallEvidence?, isBoundary: Bool, changesLine: Bool
     ) -> StationClass {
         if isBoundary { return .terminal }
-        guard let stopType else { return .onRoute }
-        if stopType == "pass_through" {
-            return isGenerated && !hasTime ? .onRoute : .pass
+        switch callEvidence {
+        case nil, .onRouteUnknown?: return .onRoute
+        case .recordedPass?: return .pass
+        case .stop?: return changesLine ? .transfer : .stop
         }
-        return changesLine ? .transfer : .stop
     }
 
     /// The stops where the recorded line changes: section `k - 1` and section

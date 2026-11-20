@@ -544,9 +544,9 @@ enum MapRideMarkers {
     /// the way the marker pass keys a record
     /// (``MapStationLabelCoordinator/markerKey(_:)``).
     ///
-    /// The class comes from the stop record the trip card's timeline reads —
-    /// `stopType`, `routeEditing.generatedBy` and the stop's times — through
-    /// ``SelectedTripStationTiers/stationClass(stopType:isBoundary:changesLine:isGenerated:hasTime:)``,
+    /// The class comes from the stop's `callEvidence`, the evidence the trip
+    /// card's timeline reads, through
+    /// ``SelectedTripStationTiers/stationClass(callEvidence:isBoundary:changesLine:)``,
     /// so the map and the timeline cannot classify a station differently. A
     /// record with no stop behind it (a route-section endpoint) is on-route.
     /// What ``tierStations(of:drawn:)`` reads that the ride's geometry and
@@ -580,11 +580,9 @@ enum MapRideMarkers {
             return SelectedTripStationTiers.Station(
                 key: key,
                 stationClass: SelectedTripStationTiers.stationClass(
-                    stopType: stop?.stopType,
+                    callEvidence: stop?.callEvidence,
                     isBoundary: role == "terminal" || role == "xday",
-                    changesLine: index.map(lineChanges.contains) ?? false,
-                    isGenerated: stop?.routeEditing?.generatedBy != nil,
-                    hasTime: stop?.arrival?.isEmpty == false || stop?.departure?.isEmpty == false),
+                    changesLine: index.map(lineChanges.contains) ?? false),
                 coordinate: item.record.position)
         }
     }

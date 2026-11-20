@@ -62,13 +62,12 @@ struct RegressionGuardSelectedTripTiers {
         let stations = try Self.body(
             Self.markers, from: "static func tierStations(", to: "static func drawn(assembling")
         #expect(stations.contains("SelectedTripStationTiers.stationClass("))
-        #expect(stations.contains("stopType: stop?.stopType"))
-        #expect(stations.contains("isGenerated: stop?.routeEditing?.generatedBy != nil"))
+        #expect(stations.contains("callEvidence: stop?.callEvidence"))
+        #expect(!stations.contains("isGenerated"))
         #expect(stations.contains("MapStationLabelCoordinator.markerKey(item.record)"))
-        // The timeline reads the same two fields for its pass rows.
+        // The timeline reads the same evidence for its pass rows.
         let timeline = SourceFiles.textRecording("RailMap/Journeys/RideDetailView.swift")
-        #expect(timeline.contains("stop.stopType == \"pass_through\""))
-        #expect(timeline.contains("stop.routeEditing?.generatedBy != nil"))
+        #expect(timeline.contains("stop.callEvidence"))
     }
 
     @Test func noMapMarkerLabelPrintsTheIdentityWord() throws {
