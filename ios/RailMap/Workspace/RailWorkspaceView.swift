@@ -2306,6 +2306,7 @@ struct RailWorkspaceView: View {
 
     private func syncDuoObstruction(trailing: CGFloat, bottom: CGFloat) {
         controller.leadingObstruction = 0
+        controller.dockedMenuEdge = nil
         controller.bottomObstruction = bottom
         controller.dockedBottomMargin = bottom > 0 ? bottom : nil
         controller.trailingObstruction = trailing
@@ -2384,6 +2385,7 @@ struct RailWorkspaceView: View {
         // this handoff.
         .onDisappear {
             controller.leadingObstruction = 0
+            controller.dockedMenuEdge = nil
             controller.dockedBottomMargin = nil
         }
     }
@@ -2704,6 +2706,10 @@ struct RailWorkspaceView: View {
 
     private func applyDockObstruction(_ panelWidth: CGFloat, safeAreaLeading: CGFloat) {
         controller.leadingObstruction = panelWidth + Self.dockInset * 2 + safeAreaLeading
+        // The card's own far edge, for the focus fit's free area
+        // (`FocusFramePolicy`). Stored, not acted on: a fit reads it when one
+        // is requested, so this never moves the camera.
+        controller.dockedMenuEdge = panelWidth + Self.dockInset + safeAreaLeading
         controller.bottomObstruction = 0
     }
 
@@ -2763,6 +2769,15 @@ struct RailWorkspaceView: View {
                 mapView: mapView, controller: controller,
                 onLayers: { sheet = .mapLayers },
                 onInfo: { sheet = .mapInfo })
+            // The buttons' real frame, for the focus fit's free area
+            // (`FocusFramePolicy`): measured on the bar itself, inside the
+            // bleed padding and the offset below, so it is where the buttons
+            // are drawn. Stored only; a fit reads it when one is requested.
+            .onGeometryChange(for: CGRect.self) { proxy in
+                proxy.frame(in: .global)
+            } action: { frame in
+                controller.controlColumnFrame = frame
+            }
             // The native interactive glass grows beyond its resting shape on
             // touch-down. This is drawing room, not a clipping viewport.
             .padding(MapControlBar.interactionBleed)

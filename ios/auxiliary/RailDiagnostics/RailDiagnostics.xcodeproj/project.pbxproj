@@ -142,6 +142,7 @@
 		72963A074691699884FE4D06 /* StationAnnotationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C668F20E22C8107D0F7F05AC /* StationAnnotationViews.swift */; };
 		736D429998F31A98E2CC401B /* StationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22128C2633F9AAF26AD68536 /* StationPickerView.swift */; };
 		74095F12BE17C779EDAB0A8C /* JourneyListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5234A729BCC53B66C147CD /* JourneyListRow.swift */; };
+		74126F50961162D68551C8D0 /* RailMapController+FocusFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E751EDAF026F195441F525 /* RailMapController+FocusFrame.swift */; };
 		744CB7D05A6277ABB489686A /* AppStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D16F9E74CE4A266B504BEF /* AppStrings.swift */; };
 		745D033A955F65F68FB57CDF /* DataStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628DBA7D128F32B95C9901ED /* DataStrings.swift */; };
 		748561037DFFC22D1A0A02BE /* EditorValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8219453F539E9F11A3EB6070 /* EditorValidation.swift */; };
@@ -524,6 +525,7 @@
 		C67B490C47B22F625D5076E1 /* TripNoteStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteStrings.swift; sourceTree = "<group>"; };
 		C6FE017ADC95679633971391 /* ImportFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFlow.swift; sourceTree = "<group>"; };
 		C710042E911D8C51CDF4DBED /* PassportStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassportStatistics.swift; sourceTree = "<group>"; };
+		C7E751EDAF026F195441F525 /* RailMapController+FocusFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RailMapController+FocusFrame.swift"; sourceTree = "<group>"; };
 		C863791119DB1DA4A6C687A5 /* StationAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotations.swift; sourceTree = "<group>"; };
 		C977AF579EE91719C9FA82AF /* MapRenderDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRenderDiagnostics.swift; sourceTree = "<group>"; };
 		CC6CC9B55C518CF84B935E46 /* EditorRoutePlanning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorRoutePlanning.swift; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				A9A3BBE3DF573FCBEEF16087 /* NetworkLOD.swift */,
 				F6030348FB1AF4A143D14E3E /* PlaybackAnnotations.swift */,
 				83D385A73FE569610F5A8A52 /* RailMapController.swift */,
+				C7E751EDAF026F195441F525 /* RailMapController+FocusFrame.swift */,
 				D1B69C00F3064310840D4D76 /* RailMapCoordinator.swift */,
 				6C8ED17385FD30F1E6443251 /* RailMapView.swift */,
 				6CC03421FDB472439D129682 /* RailwayLineCardView.swift */,
@@ -1441,6 +1444,7 @@
 				6744CAF11327342BBD0E1CC1 /* RailDisplayNetwork.swift in Sources */,
 				E446B56F7023F5FD13D8A462 /* RailDisplayNetworkFormats.swift in Sources */,
 				C3112B8971B43C51140BDED4 /* RailMapApp.swift in Sources */,
+				74126F50961162D68551C8D0 /* RailMapController+FocusFrame.swift in Sources */,
 				2B994099017736E49CFCCCE3 /* RailMapController.swift in Sources */,
 				DD5B44CAB658A8EB1356B310 /* RailMapCoordinator.swift in Sources */,
 				82A24F0C223E3DBF7FFCBE44 /* RailMapView.swift in Sources */,

@@ -46,6 +46,7 @@ struct ResidentMapChrome<MapContent: View, PlaybackContent: View, Controls: View
         .ignoresSafeArea()
         .onAppear {
             controller.leadingObstruction = 0
+            controller.dockedMenuEdge = nil
             syncMeasurements()
         }
         .onChange(of: selectedStage) { _, _ in syncMeasurements() }

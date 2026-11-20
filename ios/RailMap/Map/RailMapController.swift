@@ -239,7 +239,7 @@ final class RailMapController {
         guard !rect.isNull else { return }
         claimCamera()
         stopFollowingUser()
-        mapView.setVisibleMapRect(rect, edgePadding: tripNotePickInsets, animated: false)
+        mapView.setVisibleMapRect(rect, edgePadding: fitPadding(for: tripNotePickInsets), animated: false)
     }
 
     /// Move the camera so the centre pin sits on `coordinate`, keeping zoom
@@ -487,6 +487,7 @@ final class RailMapController {
 #if DEBUG
     private(set) var explicitFitRevision = 0
     private(set) var lastExplicitFitBottom: CGFloat = 0
+    @ObservationIgnored private(set) var lastExplicitFitRect: MKMapRect?
 #endif
 
     func fit(_ rect: MKMapRect, animated: Bool? = nil, startedByFocus: Bool = false) {
@@ -494,6 +495,7 @@ final class RailMapController {
 #if DEBUG
         explicitFitRevision += 1
         lastExplicitFitBottom = framingInsets.bottom
+        lastExplicitFitRect = rect
 #endif
         claimCamera()
         stopFollowingUser()
@@ -503,7 +505,7 @@ final class RailMapController {
         // call, and a fit onto the current rect reports nothing, so either
         // would leave the mark set with no callback to clear it.
         if startedByFocus, isAnimated {
-            let target = mapView.mapRectThatFits(rect, edgePadding: framingInsets)
+            let target = mapView.mapRectThatFits(rect, edgePadding: fitPadding)
             let tolerance = max(visibleTolerance(of: mapView), 1)
             let current = mapView.visibleMapRect
             let moves = abs(target.origin.x - current.origin.x) > tolerance
@@ -514,7 +516,7 @@ final class RailMapController {
         }
         mapView.setVisibleMapRect(
             rect,
-            edgePadding: framingInsets,
+            edgePadding: fitPadding,
             // `animated` overrides only downwards in practice: the transport
             // passes false when the reader asked for less motion, and the
             // reduce-motion rule below would have said the same. It is a
@@ -556,7 +558,12 @@ final class RailMapController {
     /// the same padding the reader's own "frame this" calls use — a debug
     /// camera set with a bare `UIEdgeInsets(40,40,40,40)` would land a shot
     /// half hidden under the card on any window wide enough to show one.
-    var framingInsets: UIEdgeInsets {
+    ///
+    /// This is the rule before the free-area rule: `framingInsets` (in
+    /// `RailMapController+FocusFrame.swift`) is what every fit reads, and it
+    /// uses these numbers whole when no menu is docked beside the map, and
+    /// for top and bottom always.
+    var baseFramingInsets: UIEdgeInsets {
         UIEdgeInsets(
             top: 40,
             left: max(40, leadingObstruction + 20),
@@ -585,7 +592,7 @@ final class RailMapController {
         guard let mapView else { return false }
         let rect = MapProjection.mapRect(of: region)
         guard !rect.isNull, cameraPolicy.openAtLaunch() else { return false }
-        mapView.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
+        mapView.setVisibleMapRect(rect, edgePadding: fitPadding, animated: false)
         return true
     }
 
@@ -618,7 +625,7 @@ final class RailMapController {
     /// Package-bounds audit framing, after the normal opening move. Unlike the
     /// explicit region override, it does not change launch ownership flags.
     func frameForUITest(_ rect: MKMapRect) {
-        mapView?.setVisibleMapRect(rect, edgePadding: framingInsets, animated: false)
+        mapView?.setVisibleMapRect(rect, edgePadding: fitPadding, animated: false)
     }
 
     /// Runs the map's own tap answer at a view point, and delivers an empty-map
@@ -668,6 +675,18 @@ final class RailMapController {
     @ObservationIgnored var trailingObstruction: CGFloat = 0 {
         didSet { applyLayoutMargins() }
     }
+
+    /// The docked menu card's far edge, as a distance from the map's leading
+    /// edge; nil while no menu is docked beside the map. Read only when a fit
+    /// is requested (`focusFramePolicy`); writing it moves nothing.
+    @ObservationIgnored var dockedMenuEdge: CGFloat?
+    /// The map control button column's frame in window coordinates, as
+    /// SwiftUI last laid it out; nil until it has been. Counted only while a
+    /// menu is docked, and read only when a fit is requested.
+    @ObservationIgnored var controlColumnFrame: CGRect?
+    /// Which area MapKit fits into, for the bounds and margins it was
+    /// measured at (`fittingSpan`).
+    @ObservationIgnored var fittingSpanCache: (bounds: CGRect, margins: UIEdgeInsets, minX: CGFloat, maxX: CGFloat)?
 
     /// The map's bottom layout margin in the docked-card composition, so
     /// MapKit's Apple Maps logo and Legal label sit on the same line as the
